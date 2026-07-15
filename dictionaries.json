@@ -66,19 +66,33 @@
           "active": true
         },
         {
-          "valueCode": "BARE_METAL_CLUSTER",
-          "displayName": "Bare Metal Cluster",
+          "valueCode": "BARE_METAL_HOST_POOL",
+          "displayName": "Bare Metal Host Pool",
           "displayOrder": 40,
-          "description": "Bare metal infrastructure managed by the participant.",
+          "description": "Bare metal hosts managed directly by the participant.",
+          "active": true
+        },
+        {
+          "valueCode": "DOCKER_COMPOSE_HOST",
+          "displayName": "Docker Compose Host",
+          "displayOrder": 50,
+          "description": "Single host or VM running runtime services through Docker Compose.",
+          "active": true
+        },
+        {
+          "valueCode": "LOCAL_PROCESS_HOST",
+          "displayName": "Local Process Host",
+          "displayOrder": 60,
+          "description": "Single host or developer machine running runtime services as local processes.",
           "active": true
         }
       ]
     },
     {
-      "dictionaryCode": "RUNTIME_ORCHESTRATOR_TYPE",
-      "dictionaryName": "Runtime Orchestrator Type",
+      "dictionaryCode": "RUNTIME_ENVIRONMENT_TYPE",
+      "dictionaryName": "Runtime Environment Type",
       "ownerContext": "RuntimeOnboarding",
-      "description": "Container or job orchestrators supported by runtime deployments.",
+      "description": "Runtime environment targets supported by runtime installation plans.",
       "multiTenant": false,
       "values": [
         {
@@ -96,26 +110,26 @@
           "active": true
         },
         {
-          "valueCode": "OPENSHIFT",
-          "displayName": "OpenShift",
+          "valueCode": "DOCKER_COMPOSE",
+          "displayName": "Docker Compose",
           "displayOrder": 30,
-          "description": "OpenShift-based runtime orchestration.",
+          "description": "Runtime environment managed through Docker Compose on a host.",
           "active": true
         },
         {
-          "valueCode": "NOMAD",
-          "displayName": "Nomad",
+          "valueCode": "HOST_PROCESS",
+          "displayName": "Host Process",
           "displayOrder": 40,
-          "description": "Nomad-based runtime orchestration.",
+          "description": "Runtime environment running directly as host processes for local or physical-machine testing.",
           "active": true
         }
       ]
     },
     {
-      "dictionaryCode": "RUNTIME_ORCHESTRATOR_VERSION",
-      "dictionaryName": "Runtime Orchestrator Version",
+      "dictionaryCode": "RUNTIME_ENVIRONMENT_VERSION",
+      "dictionaryName": "Runtime Environment Version",
       "ownerContext": "RuntimeOnboarding",
-      "description": "Supported orchestrator versions for runtime installation planning.",
+      "description": "Supported runtime environment versions for runtime installation planning.",
       "multiTenant": false,
       "values": [
         {
@@ -140,10 +154,54 @@
           "active": true
         },
         {
-          "valueCode": "OPENSHIFT_4_15",
-          "displayName": "OpenShift 4.15",
+          "valueCode": "DOCKER_COMPOSE_V2",
+          "displayName": "Docker Compose v2",
           "displayOrder": 40,
-          "description": "OpenShift version 4.15.",
+          "description": "Docker Compose v2 local runtime environment.",
+          "active": true
+        },
+        {
+          "valueCode": "HOST_PROCESS_LOCAL",
+          "displayName": "Host Process Local",
+          "displayOrder": 50,
+          "description": "Local host-process runtime environment without a container platform.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_AGENT_INSTALL_MODE",
+      "dictionaryName": "Runtime Agent Install Mode",
+      "ownerContext": "RuntimeOnboarding",
+      "description": "Runtime agent installation modes used by platform-side installation requests.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "HELM_RELEASE",
+          "displayName": "Helm Release",
+          "displayOrder": 10,
+          "description": "Install runtime agent into Kubernetes-compatible environments through Helm.",
+          "active": true
+        },
+        {
+          "valueCode": "KUBERNETES_MANIFEST",
+          "displayName": "Kubernetes Manifest",
+          "displayOrder": 20,
+          "description": "Install runtime agent through Kubernetes manifests.",
+          "active": true
+        },
+        {
+          "valueCode": "DOCKER_COMPOSE_SERVICE",
+          "displayName": "Docker Compose Service",
+          "displayOrder": 30,
+          "description": "Install or start runtime agent as a Docker Compose service.",
+          "active": true
+        },
+        {
+          "valueCode": "HOST_PROCESS",
+          "displayName": "Host Process",
+          "displayOrder": 40,
+          "description": "Install or start runtime agent directly as a host process.",
           "active": true
         }
       ]
