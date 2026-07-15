@@ -1,0 +1,189 @@
+{
+  "dictionaries": [
+    {
+      "dictionaryCode": "RUNTIME_CONNECTIVITY_MODE",
+      "dictionaryName": "Runtime Connectivity Mode",
+      "ownerContext": "RuntimeOnboarding",
+      "description": "Connectivity modes used by runtime network profiles.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "PUBLIC_ENDPOINT",
+          "displayName": "Public Endpoint",
+          "displayOrder": 10,
+          "description": "Runtime connects through a public platform endpoint.",
+          "active": true
+        },
+        {
+          "valueCode": "PRIVATE_LINK",
+          "displayName": "Private Link",
+          "displayOrder": 20,
+          "description": "Runtime connects through a private cloud link.",
+          "active": true
+        },
+        {
+          "valueCode": "VPN_TUNNEL",
+          "displayName": "VPN Tunnel",
+          "displayOrder": 30,
+          "description": "Runtime connects through a site-to-site VPN tunnel.",
+          "active": true
+        },
+        {
+          "valueCode": "OFFLINE_PACKAGE",
+          "displayName": "Offline Package",
+          "displayOrder": 40,
+          "description": "Runtime bootstrap is prepared for restricted or offline environments.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_INFRASTRUCTURE_TYPE",
+      "dictionaryName": "Runtime Infrastructure Type",
+      "ownerContext": "RuntimeOnboarding",
+      "description": "Infrastructure categories supported by runtime installation plans.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "MANAGED_CLOUD_CLUSTER",
+          "displayName": "Managed Cloud Cluster",
+          "displayOrder": 10,
+          "description": "Managed Kubernetes or equivalent cloud runtime cluster.",
+          "active": true
+        },
+        {
+          "valueCode": "PRIVATE_KUBERNETES_CLUSTER",
+          "displayName": "Private Kubernetes Cluster",
+          "displayOrder": 20,
+          "description": "Self-managed Kubernetes cluster in a private environment.",
+          "active": true
+        },
+        {
+          "valueCode": "EDGE_NODE_POOL",
+          "displayName": "Edge Node Pool",
+          "displayOrder": 30,
+          "description": "A smaller edge-oriented runtime node pool.",
+          "active": true
+        },
+        {
+          "valueCode": "BARE_METAL_CLUSTER",
+          "displayName": "Bare Metal Cluster",
+          "displayOrder": 40,
+          "description": "Bare metal infrastructure managed by the participant.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_ORCHESTRATOR_TYPE",
+      "dictionaryName": "Runtime Orchestrator Type",
+      "ownerContext": "RuntimeOnboarding",
+      "description": "Container or job orchestrators supported by runtime deployments.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "KUBERNETES",
+          "displayName": "Kubernetes",
+          "displayOrder": 10,
+          "description": "Standard Kubernetes runtime orchestration.",
+          "active": true
+        },
+        {
+          "valueCode": "K3S",
+          "displayName": "K3s",
+          "displayOrder": 20,
+          "description": "Lightweight Kubernetes runtime orchestration.",
+          "active": true
+        },
+        {
+          "valueCode": "OPENSHIFT",
+          "displayName": "OpenShift",
+          "displayOrder": 30,
+          "description": "OpenShift-based runtime orchestration.",
+          "active": true
+        },
+        {
+          "valueCode": "NOMAD",
+          "displayName": "Nomad",
+          "displayOrder": 40,
+          "description": "Nomad-based runtime orchestration.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_ORCHESTRATOR_VERSION",
+      "dictionaryName": "Runtime Orchestrator Version",
+      "ownerContext": "RuntimeOnboarding",
+      "description": "Supported orchestrator versions for runtime installation planning.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "K8S_1_29",
+          "displayName": "Kubernetes 1.29",
+          "displayOrder": 10,
+          "description": "Kubernetes version 1.29.",
+          "active": true
+        },
+        {
+          "valueCode": "K8S_1_30",
+          "displayName": "Kubernetes 1.30",
+          "displayOrder": 20,
+          "description": "Kubernetes version 1.30.",
+          "active": true
+        },
+        {
+          "valueCode": "K3S_1_29",
+          "displayName": "K3s 1.29",
+          "displayOrder": 30,
+          "description": "K3s version 1.29.",
+          "active": true
+        },
+        {
+          "valueCode": "OPENSHIFT_4_15",
+          "displayName": "OpenShift 4.15",
+          "displayOrder": 40,
+          "description": "OpenShift version 4.15.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_INSTALL_PROFILE",
+      "dictionaryName": "Runtime Install Profile",
+      "ownerContext": "RuntimeOnboarding",
+      "description": "Installation profiles used to shape runtime bootstrap and deployment behavior.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "STANDARD",
+          "displayName": "Standard",
+          "displayOrder": 10,
+          "description": "Default runtime installation profile.",
+          "active": true
+        },
+        {
+          "valueCode": "GPU_ACCELERATED",
+          "displayName": "GPU Accelerated",
+          "displayOrder": 20,
+          "description": "Runtime installation profile for GPU-capable training nodes.",
+          "active": true
+        },
+        {
+          "valueCode": "EDGE_LIGHTWEIGHT",
+          "displayName": "Edge Lightweight",
+          "displayOrder": 30,
+          "description": "Lightweight runtime installation profile for edge deployments.",
+          "active": true
+        },
+        {
+          "valueCode": "SECURE_ISOLATED",
+          "displayName": "Secure Isolated",
+          "displayOrder": 40,
+          "description": "Hardened runtime installation profile for isolated environments.",
+          "active": true
+        }
+      ]
+    }
+  ]
+}
