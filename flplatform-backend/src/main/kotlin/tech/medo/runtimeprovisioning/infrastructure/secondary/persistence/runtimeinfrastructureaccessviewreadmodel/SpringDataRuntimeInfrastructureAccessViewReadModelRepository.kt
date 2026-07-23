@@ -1,0 +1,9 @@
+package tech.medo.runtimeprovisioning.infrastructure.secondary.persistence.runtimeinfrastructureaccessviewreadmodel
+
+import org.springframework.data.jpa.repository.JpaRepository
+import java.util.UUID;
+
+
+interface SpringDataRuntimeInfrastructureAccessViewReadModelRepository : JpaRepository<RuntimeInfrastructureAccessViewReadModelEntity, UUID> {
+
+}

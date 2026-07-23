@@ -1,0 +1,42 @@
+package tech.medo.runtimemonitoring.infrastructure.secondary.persistence.runtimenodeinventoryviewreadmodel
+
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.Id
+import jakarta.persistence.IdClass
+import tech.medo.shared.application.metadata.MetadataProjection
+import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
+@Entity
+class RuntimeNodeInventoryViewReadModelEntity : MetadataProjection {
+    @Id
+    var nodeId: UUID? = null
+    var runtimeNodeInventoryReportId: UUID? = null
+    var organizationId: UUID? = null
+    var runtimeInfrastructureId: UUID? = null
+    var runtimeAgentId: UUID? = null
+    var organizationName: String? = null
+    var runtimeName: String? = null
+    var runtimeNodeName: String? = null
+    var infrastructureNodeId: String? = null
+    var runtimeNodeRole: String? = null
+    var nodeReady: Boolean? = null
+    var runtimeEngineVersion: String? = null
+    var containerEngineVersion: String? = null
+    var operatingSystem: String? = null
+    var architecture: String? = null
+    var inventoryHash: String? = null
+    var discoveredAt: LocalDateTime? = null
+    var recordedAt: LocalDateTime? = null
+    override var userId: String? = null
+    override var sessionId: String? = null
+    override var correlationId: String? = null
+    override var causationId: String? = null
+    override var traceId: String? = null
+    override var tenantId: String? = null
+}

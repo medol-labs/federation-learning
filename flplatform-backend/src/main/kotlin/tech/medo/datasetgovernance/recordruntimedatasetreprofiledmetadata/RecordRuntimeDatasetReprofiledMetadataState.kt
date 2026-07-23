@@ -1,0 +1,50 @@
+package tech.medo.datasetgovernance.recordruntimedatasetreprofiledmetadata
+
+import org.axonframework.eventsourcing.annotation.EventCriteriaBuilder
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler
+import org.axonframework.eventsourcing.annotation.reflection.EntityCreator
+import org.axonframework.extension.spring.stereotype.EventSourced
+import org.axonframework.messaging.eventstreaming.EventCriteria
+import org.axonframework.messaging.eventstreaming.Tag
+import tech.medo.datasetgovernance.events.DatasetMetadataReportedEvent
+
+import java.util.UUID;
+import java.math.BigDecimal;
+
+
+@EventSourced(idType = UUID::class, tagKey = RecordRuntimeDatasetReprofiledMetadataTags.METADATA_REPORT_ID)
+class RecordRuntimeDatasetReprofiledMetadataState @EntityCreator constructor() {
+
+    private var metadataReportId: UUID? = null
+    private var datasetId: UUID? = null
+    private var organizationId: UUID? = null
+    private var runtimeId: UUID? = null
+    private var featureSchemaId: UUID? = null
+    private var sampleCount: Int? = null
+    private var featureCount: Int? = null
+    private var schemaCompatible: Boolean? = null
+    private var labelCompatible: Boolean? = null
+    private var missingValueRate: BigDecimal? = null
+    private var duplicateRate: BigDecimal? = null
+    private var qualityScore: BigDecimal? = null
+    private var nonIidScore: BigDecimal? = null
+    private var classBalanceScore: BigDecimal? = null
+
+    @EventSourcingHandler
+    fun evolve(event: DatasetMetadataReportedEvent): RecordRuntimeDatasetReprofiledMetadataState = apply {
+        metadataReportId = event.metadataReportId
+        datasetId = event.datasetId
+        organizationId = event.organizationId
+        runtimeId = event.runtimeId
+        featureSchemaId = event.featureSchemaId
+        sampleCount = event.sampleCount
+        featureCount = event.featureCount
+        schemaCompatible = event.schemaCompatible
+        labelCompatible = event.labelCompatible
+        missingValueRate = event.missingValueRate
+        duplicateRate = event.duplicateRate
+        qualityScore = event.qualityScore
+        nonIidScore = event.nonIidScore
+        classBalanceScore = event.classBalanceScore
+    }
+}

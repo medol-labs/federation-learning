@@ -1,0 +1,15 @@
+package tech.medo.runtimeagentoperations.events
+
+import org.axonframework.eventsourcing.annotation.EventTag
+import org.axonframework.messaging.eventhandling.annotation.Event
+import java.util.UUID;
+
+
+
+@Event
+data class RuntimeAgentStartedEvent(
+    @EventTag(key = "runtimeAgentId")
+    val runtimeAgentId: UUID,
+    val runtimeInfrastructureId: UUID,
+    val agentVersion: String
+)

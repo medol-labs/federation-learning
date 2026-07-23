@@ -1,0 +1,85 @@
+services:
+  axon-server:
+    image: axoniq/axonserver:2026.0.3-jdk-21
+    hostname: axon-server
+    profiles:
+      - axon-server
+    ports:
+      - "${AXON_SERVER_HTTP_PORT:-8024}:8024"
+      - "${AXON_SERVER_GRPC_PORT:-8124}:8124"
+    environment:
+      axoniq_axonserver_hostname: axon-server
+      axoniq_axonserver_autocluster_first: axon-server
+      axoniq_axonserver_autocluster_dcb: "true"
+      axoniq_axonserver_autocluster_contexts: _admin,default
+    volumes:
+      - axon_server_data:/axonserver/data
+      - axon_server_events:/axonserver/events
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8024/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  umadb:
+    image: umadb/umadb:latest
+    ports:
+      - "50051:50051"
+    volumes:
+      - ./volumes/umadb:/data
+
+  fldictionary-backend-postgres:
+    image: postgres:16
+    ports:
+      - "${FLDICTIONARY_BACKEND_DB_PORT:-5432}:5432"
+    environment:
+      POSTGRES_USER: medol
+      POSTGRES_PASSWORD: medol
+      POSTGRES_DB: fldictionary_backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medol -d fldictionary_backend"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - fldictionary-backend_postgres_data:/var/lib/postgresql/data
+
+  flplatform-backend-postgres:
+    image: postgres:16
+    ports:
+      - "${FLPLATFORM_BACKEND_DB_PORT:-5433}:5432"
+    environment:
+      POSTGRES_USER: medol
+      POSTGRES_PASSWORD: medol
+      POSTGRES_DB: flplatform_backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medol -d flplatform_backend"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - flplatform-backend_postgres_data:/var/lib/postgresql/data
+
+  flruntime-agent-postgres:
+    image: postgres:16
+    ports:
+      - "${FLRUNTIME_AGENT_DB_PORT:-5434}:5432"
+    environment:
+      POSTGRES_USER: medol
+      POSTGRES_PASSWORD: medol
+      POSTGRES_DB: flruntime_agent
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medol -d flruntime_agent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - flruntime-agent_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  axon_server_data:
+  axon_server_events:
+  fldictionary-backend_postgres_data:
+  flplatform-backend_postgres_data:
+  flruntime-agent_postgres_data:
