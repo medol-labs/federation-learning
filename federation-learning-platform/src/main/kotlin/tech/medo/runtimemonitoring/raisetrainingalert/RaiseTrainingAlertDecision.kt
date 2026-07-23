@@ -1,0 +1,20 @@
+package tech.medo.runtimemonitoring.raisetrainingalert
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimemonitoring.raisetrainingalert.RaiseTrainingAlertCommand
+
+import tech.medo.runtimemonitoring.events.TrainingAlertRaisedEvent
+import tech.medo.runtimemonitoring.trainingalert.TrainingAlertState
+
+
+
+
+
+@Component
+class RaiseTrainingAlertDecision {
+    fun decide(command: RaiseTrainingAlertCommand): List<Any> {
+        return listOf(
+            TrainingAlertRaisedEvent(alertId = command.alertId, nodeId = command.nodeId, trainingJobId = command.trainingJobId, severity = command.severity, message = command.message)
+        )
+    }
+}
