@@ -1,0 +1,127 @@
+// Generated from config.json by the refine generator.
+import { useShow, useTranslate } from "@refinedev/core";
+
+import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+
+const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  return String(value);
+};
+
+export const RuntimeInstallationGuideShow = () => {
+  const t = useTranslate();
+  const { result: record } = useShow({
+    dataProviderName: "flplatform-backend",
+    meta: {
+      tableName: "runtime_installation_guide_read_model_entity",
+      idField: "runtimeInstallationPlanId",
+      label: t("resources.runtime_installation_guide.label", "Runtime Installation Guide"),
+      aggregateRoute: "runtimeinstallationplan",
+      queryRoute: "runtimeinstallationguide",
+      dataProviderName: "flplatform-backend",
+    },
+  });
+
+  return (
+    <ShowView>
+      <ShowViewHeader />
+      <div className="space-y-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>{record?.runtimeInstallationPlanId ?? t("resources.runtime_installation_guide.label", "Runtime Installation Guide")}</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInstallationPlanId.label", "Runtime Installation Plan Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInstallationPlanId, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.organizationId.label", "Organization Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.organizationId, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructureId, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInfrastructurePackageId.label", "Runtime Infrastructure Package Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructurePackageId, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInfrastructurePackageName.label", "Runtime Infrastructure Package Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructurePackageName, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInfrastructurePackageVersion.label", "Runtime Infrastructure Package Version")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructurePackageVersion, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.infrastructureInstallGuide.label", "Infrastructure Install Guide")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.infrastructureInstallGuide, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.organizationName.label", "Organization Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.organizationName, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeName.label", "Runtime Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeName, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.bootstrapCommand.label", "Bootstrap Command")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.bootstrapCommand, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeDeploymentTargetType, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeEnvironmentType.label", "Runtime Environment Type")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEnvironmentType, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.agentInstallMode.label", "Agent Install Mode")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.agentInstallMode, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.installProfile.label", "Install Profile")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.installProfile, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.architecture.label", "Architecture")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.architecture, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.expectedNodeCount.label", "Expected Node Count")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.expectedNodeCount, t)}</p>
+            </div>
+            <Separator />
+          </CardContent>
+        </Card>
+      </div>
+    </ShowView>
+  );
+};

@@ -1,0 +1,133 @@
+// Generated from config.json by the refine generator.
+import { useParsed } from "@refinedev/core";
+import { useTranslate } from "@refinedev/core";
+import { useNavigate, useSearchParams } from "react-router";
+
+import {
+  CreateView,
+  CreateViewHeader,
+} from "@/components/refine-ui/views/create-view";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RecordRuntimeConnectionEstablishedCommandSchema, type RecordRuntimeConnectionEstablishedCommandInput } from "@/domain/schemas";
+import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
+
+
+export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionEstablished = () => {
+  const t = useTranslate();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { id } = useParsed();
+  const defaultValues = {
+    runtimeAgentId: searchParams.get("runtimeAgentId") ?? undefined,
+    runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
+  } as Partial<RecordRuntimeConnectionEstablishedCommandInput>;
+
+  const { refineCore: { onFinish }, ...form } = useCommandForm<RecordRuntimeConnectionEstablishedCommandInput, RecordRuntimeConnectionEstablishedCommandInput>({
+    resource: "agent_runtime_infrastructure_connection_catalog",
+    command: "recordRuntimeConnectionEstablished",
+    aggregateId: id?.toString(),
+    redirect: "list",
+    dataProviderName: "flruntime-agent",
+    queryDataProviderName: "flruntime-agent",
+    meta: {
+      tableName: "agent_runtime_infrastructure_connection_catalog_read_model_entity",
+      idField: "runtimeInfrastructureId",
+      label: t("resources.agent_runtime_infrastructure_connection_catalog.label", "Agent Runtime Infrastructure Connection Catalog"),
+      aggregateRoute: "runtimeinfrastructure",
+      queryRoute: "agentruntimeinfrastructureconnectioncatalog",
+      dataProviderName: "flruntime-agent",
+    },
+    queryMeta: {
+      tableName: "agent_runtime_infrastructure_connection_catalog_read_model_entity",
+      idField: "runtimeInfrastructureId",
+      label: t("resources.agent_runtime_infrastructure_connection_catalog.label", "Agent Runtime Infrastructure Connection Catalog"),
+      aggregateRoute: "agentruntimeinfrastructureconnection",
+      queryRoute: "agentruntimeinfrastructureconnectioncatalog",
+      dataProviderName: "flruntime-agent",
+    },
+    formProps: {
+      defaultValues,
+      resolver: zodResolver(RecordRuntimeConnectionEstablishedCommandSchema) as never,
+    },
+  });
+
+  function onSubmit(values: RecordRuntimeConnectionEstablishedCommandInput) {
+    return onFinish({
+      ...defaultValues,
+      ...values,
+    });
+  }
+
+  return (
+    <CreateView>
+      <CreateViewHeader title={t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.label", "Record Runtime Connection Established")} />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <input type="hidden" {...form.register("runtimeInfrastructureId" as never)} />
+          <FormField
+            control={form.control}
+            name="runtimeAgentId"
+            rules={{ required: "Runtime Agent Id is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.label", "Runtime Agent Id")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="runtime_agent_lifecycle_catalog"
+                  dataProviderName="flruntime-agent"
+                  optionLabel="agentVersion"
+                  optionValue="runtimeAgentId"
+                  value={field.value || ""}
+                  onValueChange={field.onChange}
+                  placeholder={t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.placeholder", "Select Runtime Agent Id")}
+                  meta={{
+                    idField: "runtimeAgentId",
+                    label: t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.label", "Runtime Agent Lifecycle Catalog"),
+                    aggregateRoute: "runtimeagentlifecycle",
+                    queryRoute: "runtimeagentlifecyclecatalog",
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex gap-2">
+            <Button
+              type="submit"
+              {...form.saveButtonProps}
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => navigate(-1)}
+            >
+              {t("buttons.cancel", "Cancel")}
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </CreateView>
+  );
+};
