@@ -1,207 +1,82 @@
 {
   "dictionaries": [
     {
-      "dictionaryCode": "RUNTIME_CONNECTIVITY_MODE",
-      "dictionaryName": "Runtime Connectivity Mode",
-      "ownerContext": "RuntimeOnboarding",
-      "description": "Connectivity modes used by runtime network profiles.",
-      "multiTenant": false,
-      "values": [
-        {
-          "valueCode": "PUBLIC_ENDPOINT",
-          "displayName": "Public Endpoint",
-          "displayOrder": 10,
-          "description": "Runtime connects through a public platform endpoint.",
-          "active": true
-        },
-        {
-          "valueCode": "PRIVATE_LINK",
-          "displayName": "Private Link",
-          "displayOrder": 20,
-          "description": "Runtime connects through a private cloud link.",
-          "active": true
-        },
-        {
-          "valueCode": "VPN_TUNNEL",
-          "displayName": "VPN Tunnel",
-          "displayOrder": 30,
-          "description": "Runtime connects through a site-to-site VPN tunnel.",
-          "active": true
-        },
-        {
-          "valueCode": "OFFLINE_PACKAGE",
-          "displayName": "Offline Package",
-          "displayOrder": 40,
-          "description": "Runtime bootstrap is prepared for restricted or offline environments.",
-          "active": true
-        }
-      ]
-    },
-    {
-      "dictionaryCode": "RUNTIME_INFRASTRUCTURE_TYPE",
-      "dictionaryName": "Runtime Infrastructure Type",
-      "ownerContext": "RuntimeOnboarding",
-      "description": "Infrastructure categories supported by runtime installation plans.",
-      "multiTenant": false,
-      "values": [
-        {
-          "valueCode": "MANAGED_CLOUD_CLUSTER",
-          "displayName": "Managed Cloud Cluster",
-          "displayOrder": 10,
-          "description": "Managed Kubernetes or equivalent cloud runtime cluster.",
-          "active": true
-        },
-        {
-          "valueCode": "PRIVATE_KUBERNETES_CLUSTER",
-          "displayName": "Private Kubernetes Cluster",
-          "displayOrder": 20,
-          "description": "Self-managed Kubernetes cluster in a private environment.",
-          "active": true
-        },
-        {
-          "valueCode": "EDGE_NODE_POOL",
-          "displayName": "Edge Node Pool",
-          "displayOrder": 30,
-          "description": "A smaller edge-oriented runtime node pool.",
-          "active": true
-        },
-        {
-          "valueCode": "BARE_METAL_HOST_POOL",
-          "displayName": "Bare Metal Host Pool",
-          "displayOrder": 40,
-          "description": "Bare metal hosts managed directly by the participant.",
-          "active": true
-        },
-        {
-          "valueCode": "DOCKER_COMPOSE_HOST",
-          "displayName": "Docker Compose Host",
-          "displayOrder": 50,
-          "description": "Single host or VM running runtime services through Docker Compose.",
-          "active": true
-        },
-        {
-          "valueCode": "LOCAL_PROCESS_HOST",
-          "displayName": "Local Process Host",
-          "displayOrder": 60,
-          "description": "Single host or developer machine running runtime services as local processes.",
-          "active": true
-        }
-      ]
-    },
-    {
       "dictionaryCode": "RUNTIME_ENVIRONMENT_TYPE",
       "dictionaryName": "Runtime Environment Type",
       "ownerContext": "RuntimeOnboarding",
-      "description": "Runtime environment targets supported by runtime installation plans.",
+      "description": "Runtime environment categories supported by infrastructure packages.",
       "multiTenant": false,
       "values": [
         {
-          "valueCode": "KUBERNETES",
-          "displayName": "Kubernetes",
+          "valueCode": "K3S",
+          "displayName": "K3s",
           "displayOrder": 10,
-          "description": "Standard Kubernetes runtime orchestration.",
+          "description": "Lightweight Kubernetes distribution installed for runtime infrastructure.",
           "active": true
         },
         {
-          "valueCode": "K3S",
-          "displayName": "K3s",
+          "valueCode": "KUBERNETES",
+          "displayName": "Kubernetes",
           "displayOrder": 20,
-          "description": "Lightweight Kubernetes runtime orchestration.",
+          "description": "Standard Kubernetes-compatible runtime environment.",
           "active": true
         },
         {
           "valueCode": "DOCKER_COMPOSE",
           "displayName": "Docker Compose",
           "displayOrder": 30,
-          "description": "Runtime environment managed through Docker Compose on a host.",
+          "description": "Single-host runtime environment managed by Docker Compose.",
           "active": true
         },
         {
           "valueCode": "HOST_PROCESS",
           "displayName": "Host Process",
           "displayOrder": 40,
-          "description": "Runtime environment running directly as host processes for local or physical-machine testing.",
+          "description": "Runtime infrastructure started directly on a host for local or physical-machine testing.",
           "active": true
         }
       ]
     },
     {
-      "dictionaryCode": "RUNTIME_ENVIRONMENT_VERSION",
-      "dictionaryName": "Runtime Environment Version",
+      "dictionaryCode": "RUNTIME_DEPLOYMENT_TARGET_TYPE",
+      "dictionaryName": "Runtime Deployment Target Type",
       "ownerContext": "RuntimeOnboarding",
-      "description": "Supported runtime environment versions for runtime installation planning.",
+      "description": "Where the runtime infrastructure package is intended to be installed.",
       "multiTenant": false,
       "values": [
         {
-          "valueCode": "K8S_1_29",
-          "displayName": "Kubernetes 1.29",
+          "valueCode": "K3S_CLUSTER",
+          "displayName": "K3s Cluster",
           "displayOrder": 10,
-          "description": "Kubernetes version 1.29.",
+          "description": "Runtime infrastructure package for a K3s cluster.",
           "active": true
         },
         {
-          "valueCode": "K8S_1_30",
-          "displayName": "Kubernetes 1.30",
+          "valueCode": "KUBERNETES_CLUSTER",
+          "displayName": "Kubernetes Cluster",
           "displayOrder": 20,
-          "description": "Kubernetes version 1.30.",
+          "description": "Runtime infrastructure package for a Kubernetes cluster.",
           "active": true
         },
         {
-          "valueCode": "K3S_1_29",
-          "displayName": "K3s 1.29",
+          "valueCode": "DOCKER_COMPOSE_HOST",
+          "displayName": "Docker Compose Host",
           "displayOrder": 30,
-          "description": "K3s version 1.29.",
+          "description": "Runtime infrastructure package for a Docker Compose host.",
           "active": true
         },
         {
-          "valueCode": "DOCKER_COMPOSE_V2",
-          "displayName": "Docker Compose v2",
+          "valueCode": "LOCAL_HOST",
+          "displayName": "Local Host",
           "displayOrder": 40,
-          "description": "Docker Compose v2 local runtime environment.",
+          "description": "Runtime infrastructure package for local testing on one host.",
           "active": true
         },
         {
-          "valueCode": "HOST_PROCESS_LOCAL",
-          "displayName": "Host Process Local",
+          "valueCode": "PHYSICAL_HOST",
+          "displayName": "Physical Host",
           "displayOrder": 50,
-          "description": "Local host-process runtime environment without a container platform.",
-          "active": true
-        }
-      ]
-    },
-    {
-      "dictionaryCode": "RUNTIME_AGENT_INSTALL_MODE",
-      "dictionaryName": "Runtime Agent Install Mode",
-      "ownerContext": "RuntimeOnboarding",
-      "description": "Runtime agent installation modes used by platform-side installation requests.",
-      "multiTenant": false,
-      "values": [
-        {
-          "valueCode": "HELM_RELEASE",
-          "displayName": "Helm Release",
-          "displayOrder": 10,
-          "description": "Install runtime agent into Kubernetes-compatible environments through Helm.",
-          "active": true
-        },
-        {
-          "valueCode": "KUBERNETES_MANIFEST",
-          "displayName": "Kubernetes Manifest",
-          "displayOrder": 20,
-          "description": "Install runtime agent through Kubernetes manifests.",
-          "active": true
-        },
-        {
-          "valueCode": "DOCKER_COMPOSE_SERVICE",
-          "displayName": "Docker Compose Service",
-          "displayOrder": 30,
-          "description": "Install or start runtime agent as a Docker Compose service.",
-          "active": true
-        },
-        {
-          "valueCode": "HOST_PROCESS",
-          "displayName": "Host Process",
-          "displayOrder": 40,
-          "description": "Install or start runtime agent directly as a host process.",
+          "description": "Runtime infrastructure package for a directly managed physical machine.",
           "active": true
         }
       ]
@@ -210,35 +85,749 @@
       "dictionaryCode": "RUNTIME_INSTALL_PROFILE",
       "dictionaryName": "Runtime Install Profile",
       "ownerContext": "RuntimeOnboarding",
-      "description": "Installation profiles used to shape runtime bootstrap and deployment behavior.",
+      "description": "Installation profiles maintained with runtime infrastructure packages.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "STANDARD",
           "displayName": "Standard",
           "displayOrder": 10,
-          "description": "Default runtime installation profile.",
+          "description": "Default production-ready runtime installation profile.",
           "active": true
         },
         {
-          "valueCode": "GPU_ACCELERATED",
-          "displayName": "GPU Accelerated",
+          "valueCode": "LIGHTWEIGHT",
+          "displayName": "Lightweight",
           "displayOrder": 20,
-          "description": "Runtime installation profile for GPU-capable training nodes.",
+          "description": "Reduced resource profile for small or local environments.",
           "active": true
         },
         {
-          "valueCode": "EDGE_LIGHTWEIGHT",
-          "displayName": "Edge Lightweight",
+          "valueCode": "LOCAL_TEST",
+          "displayName": "Local Test",
           "displayOrder": 30,
-          "description": "Lightweight runtime installation profile for edge deployments.",
+          "description": "Developer or local validation profile.",
           "active": true
         },
         {
           "valueCode": "SECURE_ISOLATED",
           "displayName": "Secure Isolated",
           "displayOrder": 40,
-          "description": "Hardened runtime installation profile for isolated environments.",
+          "description": "Hardened profile for restricted runtime environments.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_AGENT_INSTALL_MODE",
+      "dictionaryName": "Runtime Agent Install Mode",
+      "ownerContext": "RuntimeOnboarding",
+      "description": "Whether platform automation deploys the runtime agent or provides operator guidance.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "PLATFORM_MANAGED",
+          "displayName": "Platform Managed",
+          "displayOrder": 10,
+          "description": "Platform requests and executes runtime agent deployment after infrastructure verification.",
+          "active": true
+        },
+        {
+          "valueCode": "MANUAL_GUIDED",
+          "displayName": "Manual Guided",
+          "displayOrder": 20,
+          "description": "Platform provides installation guidance and an operator triggers the deployment path manually.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "FEATURE_SCHEMA_DATA_MODALITY",
+      "dictionaryName": "Feature Schema Data Modality",
+      "ownerContext": "FeatureSchemaManagement",
+      "description": "Shape of data described by a feature schema.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "TABULAR",
+          "displayName": "Tabular",
+          "displayOrder": 10,
+          "description": "Structured rows and columns.",
+          "active": true
+        },
+        {
+          "valueCode": "TEXT",
+          "displayName": "Text",
+          "displayOrder": 20,
+          "description": "Text documents, sentences, prompts, or extracted text.",
+          "active": true
+        },
+        {
+          "valueCode": "IMAGE",
+          "displayName": "Image",
+          "displayOrder": 30,
+          "description": "Image files or image-derived tensors.",
+          "active": true
+        },
+        {
+          "valueCode": "AUDIO",
+          "displayName": "Audio",
+          "displayOrder": 40,
+          "description": "Audio clips, speech, or audio-derived features.",
+          "active": true
+        },
+        {
+          "valueCode": "DOCUMENT",
+          "displayName": "Document",
+          "displayOrder": 50,
+          "description": "Documents such as PDF, Word, or mixed-layout files.",
+          "active": true
+        },
+        {
+          "valueCode": "EMBEDDING",
+          "displayName": "Embedding",
+          "displayOrder": 60,
+          "description": "Vector embeddings used as model inputs.",
+          "active": true
+        },
+        {
+          "valueCode": "MULTIMODAL",
+          "displayName": "Multimodal",
+          "displayOrder": 70,
+          "description": "A dataset combining multiple input modalities.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "FEATURE_DATA_TYPE",
+      "dictionaryName": "Feature Data Type",
+      "ownerContext": "FeatureSchemaManagement",
+      "description": "Logical value types for feature and label definitions.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "STRING",
+          "displayName": "String",
+          "displayOrder": 10,
+          "description": "Textual scalar value.",
+          "active": true
+        },
+        {
+          "valueCode": "INTEGER",
+          "displayName": "Integer",
+          "displayOrder": 20,
+          "description": "Whole-number scalar value.",
+          "active": true
+        },
+        {
+          "valueCode": "DECIMAL",
+          "displayName": "Decimal",
+          "displayOrder": 30,
+          "description": "Numeric scalar with decimals.",
+          "active": true
+        },
+        {
+          "valueCode": "BOOLEAN",
+          "displayName": "Boolean",
+          "displayOrder": 40,
+          "description": "True or false value.",
+          "active": true
+        },
+        {
+          "valueCode": "DATETIME",
+          "displayName": "DateTime",
+          "displayOrder": 50,
+          "description": "Timestamp or date-time value.",
+          "active": true
+        },
+        {
+          "valueCode": "CATEGORY",
+          "displayName": "Category",
+          "displayOrder": 60,
+          "description": "Finite category value.",
+          "active": true
+        },
+        {
+          "valueCode": "VECTOR",
+          "displayName": "Vector",
+          "displayOrder": 70,
+          "description": "Numeric vector or embedding.",
+          "active": true
+        },
+        {
+          "valueCode": "TEXT",
+          "displayName": "Text",
+          "displayOrder": 80,
+          "description": "Long text content.",
+          "active": true
+        },
+        {
+          "valueCode": "IMAGE",
+          "displayName": "Image",
+          "displayOrder": 90,
+          "description": "Image payload or image path.",
+          "active": true
+        },
+        {
+          "valueCode": "AUDIO",
+          "displayName": "Audio",
+          "displayOrder": 100,
+          "description": "Audio payload or audio path.",
+          "active": true
+        },
+        {
+          "valueCode": "JSON",
+          "displayName": "JSON",
+          "displayOrder": 110,
+          "description": "Nested or semi-structured JSON value.",
+          "active": true
+        },
+        {
+          "valueCode": "BINARY",
+          "displayName": "Binary",
+          "displayOrder": 120,
+          "description": "Opaque binary payload.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "FEATURE_ENCODING_STRATEGY",
+      "dictionaryName": "Feature Encoding Strategy",
+      "ownerContext": "FeatureSchemaManagement",
+      "description": "Expected feature encoding before local training.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "NONE",
+          "displayName": "None",
+          "displayOrder": 10,
+          "description": "No encoding is required.",
+          "active": true
+        },
+        {
+          "valueCode": "ONE_HOT",
+          "displayName": "One Hot",
+          "displayOrder": 20,
+          "description": "Encode categories as one-hot vectors.",
+          "active": true
+        },
+        {
+          "valueCode": "ORDINAL",
+          "displayName": "Ordinal",
+          "displayOrder": 30,
+          "description": "Encode ordered categories as numeric ranks.",
+          "active": true
+        },
+        {
+          "valueCode": "LABEL",
+          "displayName": "Label",
+          "displayOrder": 40,
+          "description": "Encode categories as integer labels.",
+          "active": true
+        },
+        {
+          "valueCode": "NORMALIZED",
+          "displayName": "Normalized",
+          "displayOrder": 50,
+          "description": "Scale numeric values to a normalized range.",
+          "active": true
+        },
+        {
+          "valueCode": "STANDARDIZED",
+          "displayName": "Standardized",
+          "displayOrder": 60,
+          "description": "Scale numeric values by mean and standard deviation.",
+          "active": true
+        },
+        {
+          "valueCode": "TOKENIZED",
+          "displayName": "Tokenized",
+          "displayOrder": 70,
+          "description": "Tokenize text-like inputs.",
+          "active": true
+        },
+        {
+          "valueCode": "EMBEDDED",
+          "displayName": "Embedded",
+          "displayOrder": 80,
+          "description": "Transform values into embedding vectors.",
+          "active": true
+        },
+        {
+          "valueCode": "HASHED",
+          "displayName": "Hashed",
+          "displayOrder": 90,
+          "description": "Use hashing-based feature encoding.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "TRAINING_STRATEGY",
+      "dictionaryName": "Training Strategy",
+      "ownerContext": "TrainingConfiguration",
+      "description": "Federated training strategies selectable in training run configurations.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "FED_AVG",
+          "displayName": "FedAvg",
+          "displayOrder": 10,
+          "description": "Federated averaging strategy.",
+          "active": true
+        },
+        {
+          "valueCode": "FED_PROX",
+          "displayName": "FedProx",
+          "displayOrder": 20,
+          "description": "Federated optimization with proximal regularization.",
+          "active": true
+        },
+        {
+          "valueCode": "FED_SGD",
+          "displayName": "FedSGD",
+          "displayOrder": 30,
+          "description": "Federated stochastic gradient descent.",
+          "active": true
+        },
+        {
+          "valueCode": "SCAFFOLD",
+          "displayName": "SCAFFOLD",
+          "displayOrder": 40,
+          "description": "Federated strategy using control variates to reduce client drift.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "AGGREGATION_ALGORITHM",
+      "dictionaryName": "Aggregation Algorithm",
+      "ownerContext": "TrainingConfiguration",
+      "description": "Global model update aggregation algorithms.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "FEDERATED_AVERAGING",
+          "displayName": "Federated Averaging",
+          "displayOrder": 10,
+          "description": "Weighted average of participant model updates.",
+          "active": true
+        },
+        {
+          "valueCode": "WEIGHTED_AVERAGE",
+          "displayName": "Weighted Average",
+          "displayOrder": 20,
+          "description": "Average weighted by sample count or configured participant weight.",
+          "active": true
+        },
+        {
+          "valueCode": "SECURE_WEIGHTED_AVERAGE",
+          "displayName": "Secure Weighted Average",
+          "displayOrder": 30,
+          "description": "Weighted average performed over encrypted participant updates.",
+          "active": true
+        },
+        {
+          "valueCode": "MEDIAN",
+          "displayName": "Median",
+          "displayOrder": 40,
+          "description": "Coordinate-wise median aggregation.",
+          "active": true
+        },
+        {
+          "valueCode": "TRIMMED_MEAN",
+          "displayName": "Trimmed Mean",
+          "displayOrder": 50,
+          "description": "Robust aggregation after trimming outliers.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "TRAINING_OPTIMIZER",
+      "dictionaryName": "Training Optimizer",
+      "ownerContext": "TrainingConfiguration",
+      "description": "Local optimizer options for runtime training.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "SGD",
+          "displayName": "SGD",
+          "displayOrder": 10,
+          "description": "Stochastic gradient descent.",
+          "active": true
+        },
+        {
+          "valueCode": "ADAM",
+          "displayName": "Adam",
+          "displayOrder": 20,
+          "description": "Adaptive moment estimation optimizer.",
+          "active": true
+        },
+        {
+          "valueCode": "ADAMW",
+          "displayName": "AdamW",
+          "displayOrder": 30,
+          "description": "Adam optimizer with decoupled weight decay.",
+          "active": true
+        },
+        {
+          "valueCode": "RMSPROP",
+          "displayName": "RMSProp",
+          "displayOrder": 40,
+          "description": "Root mean square propagation optimizer.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "TRAINING_LOSS_FUNCTION",
+      "dictionaryName": "Training Loss Function",
+      "ownerContext": "TrainingConfiguration",
+      "description": "Loss functions selectable for local training.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "CROSS_ENTROPY",
+          "displayName": "Cross Entropy",
+          "displayOrder": 10,
+          "description": "Cross-entropy loss for classification.",
+          "active": true
+        },
+        {
+          "valueCode": "BINARY_CROSS_ENTROPY",
+          "displayName": "Binary Cross Entropy",
+          "displayOrder": 20,
+          "description": "Binary cross-entropy loss.",
+          "active": true
+        },
+        {
+          "valueCode": "MEAN_SQUARED_ERROR",
+          "displayName": "Mean Squared Error",
+          "displayOrder": 30,
+          "description": "MSE loss for regression.",
+          "active": true
+        },
+        {
+          "valueCode": "MEAN_ABSOLUTE_ERROR",
+          "displayName": "Mean Absolute Error",
+          "displayOrder": 40,
+          "description": "MAE loss for regression.",
+          "active": true
+        },
+        {
+          "valueCode": "HUBER",
+          "displayName": "Huber",
+          "displayOrder": 50,
+          "description": "Huber loss for robust regression.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "MODEL_RELEASE_CHANNEL",
+      "dictionaryName": "Model Release Channel",
+      "ownerContext": "ModelLifecycle",
+      "description": "Release channels for promoted model versions.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "EXPERIMENTAL",
+          "displayName": "Experimental",
+          "displayOrder": 10,
+          "description": "Early model release for controlled validation.",
+          "active": true
+        },
+        {
+          "valueCode": "CANARY",
+          "displayName": "Canary",
+          "displayOrder": 20,
+          "description": "Limited production exposure.",
+          "active": true
+        },
+        {
+          "valueCode": "STAGING",
+          "displayName": "Staging",
+          "displayOrder": 30,
+          "description": "Pre-production validation channel.",
+          "active": true
+        },
+        {
+          "valueCode": "PRODUCTION",
+          "displayName": "Production",
+          "displayOrder": 40,
+          "description": "Main production serving channel.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "MODEL_PRODUCTION_STAGE",
+      "dictionaryName": "Model Production Stage",
+      "ownerContext": "ModelLifecycle",
+      "description": "Production lifecycle stage of a model version.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "SHADOW",
+          "displayName": "Shadow",
+          "displayOrder": 10,
+          "description": "Model receives production-like traffic without serving decisions.",
+          "active": true
+        },
+        {
+          "valueCode": "CANARY",
+          "displayName": "Canary",
+          "displayOrder": 20,
+          "description": "Model serves a small controlled portion of traffic.",
+          "active": true
+        },
+        {
+          "valueCode": "ACTIVE",
+          "displayName": "Active",
+          "displayOrder": 30,
+          "description": "Model is actively used for production decisions.",
+          "active": true
+        },
+        {
+          "valueCode": "DEPRECATED",
+          "displayName": "Deprecated",
+          "displayOrder": 40,
+          "description": "Model remains available but should be replaced.",
+          "active": true
+        },
+        {
+          "valueCode": "RETIRED",
+          "displayName": "Retired",
+          "displayOrder": 50,
+          "description": "Model is no longer intended for production use.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_CAPABILITY_TYPE",
+      "dictionaryName": "Runtime Capability Type",
+      "ownerContext": "RuntimeGovernance",
+      "description": "Capabilities detected from runtime infrastructure and runtime agent environment.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "CPU_TRAINING",
+          "displayName": "CPU Training",
+          "displayOrder": 10,
+          "description": "Runtime can execute CPU-based local training.",
+          "active": true
+        },
+        {
+          "valueCode": "GPU_TRAINING",
+          "displayName": "GPU Training",
+          "displayOrder": 20,
+          "description": "Runtime can execute GPU-accelerated local training.",
+          "active": true
+        },
+        {
+          "valueCode": "SECURE_AGGREGATION",
+          "displayName": "Secure Aggregation",
+          "displayOrder": 30,
+          "description": "Runtime supports encrypted model update submission.",
+          "active": true
+        },
+        {
+          "valueCode": "DIFFERENTIAL_PRIVACY",
+          "displayName": "Differential Privacy",
+          "displayOrder": 40,
+          "description": "Runtime supports local differential privacy processing.",
+          "active": true
+        },
+        {
+          "valueCode": "TABULAR_DATA",
+          "displayName": "Tabular Data",
+          "displayOrder": 50,
+          "description": "Runtime can train on tabular datasets.",
+          "active": true
+        },
+        {
+          "valueCode": "TEXT_DATA",
+          "displayName": "Text Data",
+          "displayOrder": 60,
+          "description": "Runtime can train on text datasets.",
+          "active": true
+        },
+        {
+          "valueCode": "IMAGE_DATA",
+          "displayName": "Image Data",
+          "displayOrder": 70,
+          "description": "Runtime can train on image datasets.",
+          "active": true
+        },
+        {
+          "valueCode": "LOCAL_ENGINE_SCHEDULING",
+          "displayName": "Local Engine Scheduling",
+          "displayOrder": 80,
+          "description": "Runtime can start the training engine on demand for round execution.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "SECURE_AGGREGATION_ENCRYPTION_SCHEME",
+      "dictionaryName": "Secure Aggregation Encryption Scheme",
+      "ownerContext": "SecureAggregation",
+      "description": "Abstract homomorphic encryption schemes supported by secure aggregation.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "ADDITIVE_HOMOMORPHIC",
+          "displayName": "Additive Homomorphic",
+          "displayOrder": 10,
+          "description": "Supports aggregation by adding encrypted participant updates.",
+          "active": true
+        },
+        {
+          "valueCode": "APPROXIMATE_HOMOMORPHIC",
+          "displayName": "Approximate Homomorphic",
+          "displayOrder": 20,
+          "description": "Supports approximate encrypted numeric aggregation.",
+          "active": true
+        },
+        {
+          "valueCode": "THRESHOLD_HOMOMORPHIC",
+          "displayName": "Threshold Homomorphic",
+          "displayOrder": 30,
+          "description": "Supports encrypted aggregation with threshold key material or threshold decryption.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_DATA_SOURCE_TYPE",
+      "dictionaryName": "Runtime Data Source Type",
+      "ownerContext": "RuntimeAgentOperations",
+      "description": "Local data source types configurable inside a runtime agent.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "POSTGRESQL",
+          "displayName": "PostgreSQL",
+          "displayOrder": 10,
+          "description": "PostgreSQL database table or query source.",
+          "active": true
+        },
+        {
+          "valueCode": "MYSQL",
+          "displayName": "MySQL",
+          "displayOrder": 20,
+          "description": "MySQL database table or query source.",
+          "active": true
+        },
+        {
+          "valueCode": "SQLSERVER",
+          "displayName": "SQL Server",
+          "displayOrder": 30,
+          "description": "Microsoft SQL Server table or query source.",
+          "active": true
+        },
+        {
+          "valueCode": "ORACLE",
+          "displayName": "Oracle",
+          "displayOrder": 40,
+          "description": "Oracle database table or query source.",
+          "active": true
+        },
+        {
+          "valueCode": "CSV_FILE",
+          "displayName": "CSV File",
+          "displayOrder": 50,
+          "description": "Local or mounted CSV file source.",
+          "active": true
+        },
+        {
+          "valueCode": "PARQUET_FILE",
+          "displayName": "Parquet File",
+          "displayOrder": 60,
+          "description": "Local or mounted Parquet file source.",
+          "active": true
+        },
+        {
+          "valueCode": "OBJECT_STORAGE",
+          "displayName": "Object Storage",
+          "displayOrder": 70,
+          "description": "Object bucket and prefix source.",
+          "active": true
+        },
+        {
+          "valueCode": "LOCAL_DIRECTORY",
+          "displayName": "Local Directory",
+          "displayOrder": 80,
+          "description": "Directory of files on the runtime host.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "DATA_FORMAT",
+      "dictionaryName": "Data Format",
+      "ownerContext": "RuntimeAgentOperations",
+      "description": "Physical or logical format of runtime dataset data.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "TABLE",
+          "displayName": "Table",
+          "displayOrder": 10,
+          "description": "Relational table or query result.",
+          "active": true
+        },
+        {
+          "valueCode": "CSV",
+          "displayName": "CSV",
+          "displayOrder": 20,
+          "description": "Comma-separated values file.",
+          "active": true
+        },
+        {
+          "valueCode": "PARQUET",
+          "displayName": "Parquet",
+          "displayOrder": 30,
+          "description": "Apache Parquet file.",
+          "active": true
+        },
+        {
+          "valueCode": "JSON",
+          "displayName": "JSON",
+          "displayOrder": 40,
+          "description": "JSON or JSON Lines file.",
+          "active": true
+        },
+        {
+          "valueCode": "IMAGE_DIRECTORY",
+          "displayName": "Image Directory",
+          "displayOrder": 50,
+          "description": "Directory layout containing image files.",
+          "active": true
+        },
+        {
+          "valueCode": "TEXT_DIRECTORY",
+          "displayName": "Text Directory",
+          "displayOrder": 60,
+          "description": "Directory layout containing text files.",
+          "active": true
+        },
+        {
+          "valueCode": "AUDIO_DIRECTORY",
+          "displayName": "Audio Directory",
+          "displayOrder": 70,
+          "description": "Directory layout containing audio files.",
+          "active": true
+        },
+        {
+          "valueCode": "EMBEDDING_MATRIX",
+          "displayName": "Embedding Matrix",
+          "displayOrder": 80,
+          "description": "Vector or embedding matrix data.",
           "active": true
         }
       ]
