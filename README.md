@@ -27,7 +27,7 @@ Default ports:
 
 - Application: `8080`; override with `SERVER_PORT`
 - PostgreSQL host port: `5432`; override with `DB_PORT`
-- PostgreSQL database: `federation_learning_platform`; override the full connection with `DB_URL`
+- PostgreSQL database: `federation_learning_platform_parent`; override the full connection with `DB_URL`
 - Axon Server UI: `http://localhost:8024`; override with `AXON_SERVER_HTTP_PORT`
 - Axon Server gRPC: `localhost:8124`; override with `AXON_SERVER_SERVERS`
 

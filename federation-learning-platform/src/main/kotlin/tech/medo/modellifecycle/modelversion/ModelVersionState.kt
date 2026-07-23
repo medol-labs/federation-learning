@@ -9,7 +9,9 @@ import org.axonframework.messaging.eventstreaming.Tag
 import tech.medo.modellifecycle.events.ModelCandidateRegisteredEvent
 import tech.medo.modellifecycle.events.ModelEvaluationPackageRecordedEvent
 import tech.medo.modellifecycle.events.ModelApprovedEvent
+import tech.medo.modellifecycle.events.ModelPromotedToProductionEvent
 import tech.medo.modellifecycle.events.ModelVersionRolledBackEvent
+import tech.medo.modellifecycle.events.ModelVersionRetiredEvent
 import tech.medo.modellifecycle.domain.states.ModelVersionStateEnum
 
 import java.util.UUID;
@@ -33,8 +35,11 @@ class ModelVersionState @EntityCreator constructor() {
     private var modelCardId: UUID? = null
     private var baselineModelVersionId: UUID? = null
     private var approvalNote: String? = null
+    private var releaseChannel: String? = null
+    private var productionStage: String? = null
     private var previousModelVersionId: UUID? = null
     private var rollbackReason: String? = null
+    private var retirementReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: ModelCandidateRegisteredEvent): ModelVersionState = apply {
@@ -69,10 +74,25 @@ class ModelVersionState @EntityCreator constructor() {
     }
 
     @EventSourcingHandler
+    fun evolve(event: ModelPromotedToProductionEvent): ModelVersionState = apply {
+        currentState = ModelVersionStateEnum.PRODUCTION
+        modelVersionId = event.modelVersionId
+        releaseChannel = event.releaseChannel
+        productionStage = event.productionStage
+    }
+
+    @EventSourcingHandler
     fun evolve(event: ModelVersionRolledBackEvent): ModelVersionState = apply {
         currentState = ModelVersionStateEnum.ROLLED_BACK
         modelVersionId = event.modelVersionId
         previousModelVersionId = event.previousModelVersionId
         rollbackReason = event.rollbackReason
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: ModelVersionRetiredEvent): ModelVersionState = apply {
+        currentState = ModelVersionStateEnum.RETIRED
+        modelVersionId = event.modelVersionId
+        retirementReason = event.retirementReason
     }
 }
