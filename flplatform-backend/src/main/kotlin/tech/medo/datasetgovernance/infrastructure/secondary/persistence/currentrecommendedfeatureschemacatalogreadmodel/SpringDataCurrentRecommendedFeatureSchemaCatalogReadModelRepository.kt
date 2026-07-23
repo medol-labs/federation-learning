@@ -1,8 +1,0 @@
-package tech.medo.datasetgovernance.infrastructure.secondary.persistence.currentrecommendedfeatureschemacatalogreadmodel
-
-import org.springframework.data.jpa.repository.JpaRepository
-
-
-interface SpringDataCurrentRecommendedFeatureSchemaCatalogReadModelRepository : JpaRepository<CurrentRecommendedFeatureSchemaCatalogReadModelEntity, String> {
-
-}

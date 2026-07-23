@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.infrastructure.secondary.persistence.tra
 
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID;
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
 
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelKey
 

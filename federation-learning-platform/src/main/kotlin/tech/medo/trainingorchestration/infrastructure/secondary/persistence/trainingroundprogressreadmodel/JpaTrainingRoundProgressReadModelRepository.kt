@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
 
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModel
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelKey

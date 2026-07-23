@@ -57,8 +57,8 @@ external:
 integration:
   federation-learning-dictionary:
     endpoint: ${FEDERATION_LEARNING_DICTIONARY_URL:}
-  federation-learning-console:
-    endpoint: ${FEDERATION_LEARNING_CONSOLE_URL:}
+  federation-learning-runtime-agent:
+    endpoint: ${FEDERATION_LEARNING_RUNTIME_AGENT_URL:}
 
 management:
   endpoints:

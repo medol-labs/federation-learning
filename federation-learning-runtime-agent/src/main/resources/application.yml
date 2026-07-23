@@ -1,11 +1,11 @@
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${SERVER_PORT:8082}
 
 spring:
   config:
     import: optional:file:../.env[.properties]
   application:
-    name: federation-learning-dictionary
+    name: federation-learning-runtime-agent
   docker:
     compose:
       enabled: ${SPRING_DOCKER_COMPOSE_ENABLED:false}
@@ -14,7 +14,7 @@ spring:
       profiles:
         active: axon-server
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/federation_learning_dictionary}
+    url: ${DB_URL:jdbc:postgresql://localhost:5434/federation_learning_runtime_agent}
     username: ${DB_USERNAME:medol}
     password: ${DB_PASSWORD:medol}
     driver-class-name: org.postgresql.Driver
@@ -51,10 +51,10 @@ medol:
       request-timeout: ${UMADB_REQUEST_TIMEOUT:PT10S}
 
 integration:
+  federation-learning-dictionary:
+    endpoint: ${FEDERATION_LEARNING_DICTIONARY_URL:}
   federation-learning-platform:
     endpoint: ${FEDERATION_LEARNING_PLATFORM_URL:}
-  federation-learning-runtime-agent:
-    endpoint: ${FEDERATION_LEARNING_RUNTIME_AGENT_URL:}
 
 management:
   endpoints:

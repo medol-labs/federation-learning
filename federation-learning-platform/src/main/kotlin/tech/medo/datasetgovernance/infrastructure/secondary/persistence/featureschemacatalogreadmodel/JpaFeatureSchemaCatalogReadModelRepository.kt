@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
+import tech.medo.datasetgovernance.domain.types.FeatureDefinition;
+import tech.medo.datasetgovernance.domain.types.LabelDefinition;
 
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModel
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelProjection

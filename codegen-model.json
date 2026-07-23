@@ -143,9 +143,9 @@
       ]
     },
     {
-      "id": "deployment-c1af8180",
-      "name": "FederationLearningConsole",
-      "title": "Federation Learning Console",
+      "id": "deployment-3215593e",
+      "name": "FederationLearningRuntimeAgent",
+      "title": "Federation Learning Runtime Agent",
       "domain": "FederationLearningPlatform",
       "contexts": [
         {
