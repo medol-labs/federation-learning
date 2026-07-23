@@ -60,6 +60,16 @@ integration:
   federation-learning-runtime-agent:
     endpoint: ${FEDERATION_LEARNING_RUNTIME_AGENT_URL:}
 
+platform:
+  runtime:
+    docker-compose:
+      enabled: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_ENABLED:true}
+      compose-file: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_FILE:../docker-compose.yml}
+      project-directory: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_PROJECT_DIRECTORY:}
+      agent-service-name: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_AGENT_SERVICE:federation-learning-runtime-agent}
+      agent-version: ${PLATFORM_RUNTIME_AGENT_VERSION:docker-compose}
+      command-timeout: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_COMMAND_TIMEOUT:PT60S}
+
 management:
   endpoints:
     web:
