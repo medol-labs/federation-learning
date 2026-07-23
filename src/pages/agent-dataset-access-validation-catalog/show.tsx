@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const AgentDatasetAccessValidationCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flruntime-agent",
+    dataProviderName: "federation-learning-console",
     meta: {
       tableName: "agent_dataset_access_validation_catalog_read_model_entity",
       idField: "datasetAccessValidationId",
       label: t("resources.agent_dataset_access_validation_catalog.label", "Agent Dataset Access Validation Catalog"),
       aggregateRoute: "agentdatasetaccessvalidation",
       queryRoute: "agentdatasetaccessvalidationcatalog",
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
     },
   });
 

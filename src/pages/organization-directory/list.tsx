@@ -160,7 +160,7 @@ export const OrganizationDirectoryList = () => {
     },
     getRowId: (row) => String(row.organizationId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "organization_directory_read_model_entity",
@@ -169,7 +169,7 @@ export const OrganizationDirectoryList = () => {
         label: t("resources.organization_directory.label", "Organization Directory"),
         aggregateRoute: "organization",
         queryRoute: "organizationdirectory",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

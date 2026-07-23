@@ -44,15 +44,15 @@ export const RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure = () =
     command: "registerRuntimeInfrastructure",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_infrastructure_access_view_read_model_entity",
       idField: "runtimeInfrastructureId",
       label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
       aggregateRoute: "runtimeinfrastructure",
       queryRoute: "runtimeinfrastructureaccessview",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "runtime_infrastructure_access_view_read_model_entity",
@@ -60,7 +60,7 @@ export const RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure = () =
       label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
       aggregateRoute: "runtimeinfrastructure",
       queryRoute: "runtimeinfrastructureaccessview",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,

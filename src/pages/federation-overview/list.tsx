@@ -176,7 +176,7 @@ export const FederationOverviewList = () => {
     },
     getRowId: (row) => String(row.federationId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "federation_overview_read_model_entity",
@@ -185,7 +185,7 @@ export const FederationOverviewList = () => {
         label: t("resources.federation_overview.label", "Federation Overview"),
         aggregateRoute: "federation",
         queryRoute: "federationoverview",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

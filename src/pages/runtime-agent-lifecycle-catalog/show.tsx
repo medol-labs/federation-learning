@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const RuntimeAgentLifecycleCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flruntime-agent",
+    dataProviderName: "federation-learning-console",
     meta: {
       tableName: "runtime_agent_lifecycle_catalog_read_model_entity",
       idField: "runtimeAgentId",
       label: t("resources.runtime_agent_lifecycle_catalog.label", "Runtime Agent Lifecycle Catalog"),
       aggregateRoute: "runtimeagentlifecycle",
       queryRoute: "runtimeagentlifecyclecatalog",
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
     },
   });
 

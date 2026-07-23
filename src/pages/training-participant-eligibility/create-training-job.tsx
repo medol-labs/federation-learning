@@ -46,15 +46,15 @@ export const TrainingParticipantEligibilityCreateTrainingJob = () => {
     command: "createTrainingJob",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "training_participant_eligibility_read_model_entity",
       idField: "trainingJobId",
       label: t("resources.training_participant_eligibility.label", "Training Participant Eligibility"),
       aggregateRoute: "trainingjob",
       queryRoute: "trainingparticipanteligibility",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "training_participant_eligibility_read_model_entity",
@@ -62,7 +62,7 @@ export const TrainingParticipantEligibilityCreateTrainingJob = () => {
       label: t("resources.training_participant_eligibility.label", "Training Participant Eligibility"),
       aggregateRoute: "trainingjob",
       queryRoute: "trainingparticipanteligibility",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -92,7 +92,7 @@ export const TrainingParticipantEligibilityCreateTrainingJob = () => {
                 <ResourceSelect
                   withFormControl
                   resource="federation_overview"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="federationId"
                   value={field.value || ""}
@@ -119,7 +119,7 @@ export const TrainingParticipantEligibilityCreateTrainingJob = () => {
                 <ResourceSelect
                   withFormControl
                   resource="training_run_configuration_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}

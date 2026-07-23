@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const RuntimeIdentityCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_identity_catalog_read_model_entity",
       idField: "runtimeId",
       label: t("resources.runtime_identity_catalog.label", "Runtime Identity Catalog"),
       aggregateRoute: "runtimeidentity",
       queryRoute: "runtimeidentitycatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

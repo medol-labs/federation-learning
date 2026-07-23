@@ -50,15 +50,15 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
     command: "registerModelArtifact",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "model_artifact_catalog_read_model_entity",
       idField: "modelVersionId",
       label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
       aggregateRoute: "modelartifact",
       queryRoute: "modelartifactcatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "model_artifact_catalog_read_model_entity",
@@ -66,7 +66,7 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
       label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
       aggregateRoute: "modelartifact",
       queryRoute: "modelartifactcatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,

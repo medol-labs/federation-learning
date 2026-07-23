@@ -45,15 +45,15 @@ export const FeatureSchemaCatalogSupersedeFeatureSchemaVersion = () => {
     command: "supersedeFeatureSchemaVersion",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "feature_schema_catalog_read_model_entity",
       idField: "featureSchemaId",
       label: t("resources.feature_schema_catalog.label", "Feature Schema Catalog"),
       aggregateRoute: "featureschema",
       queryRoute: "featureschemacatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "feature_schema_catalog_read_model_entity",
@@ -61,7 +61,7 @@ export const FeatureSchemaCatalogSupersedeFeatureSchemaVersion = () => {
       label: t("resources.feature_schema_catalog.label", "Feature Schema Catalog"),
       aggregateRoute: "featureschema",
       queryRoute: "featureschemacatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,

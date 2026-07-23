@@ -336,7 +336,7 @@ export const RuntimeInfrastructureAccessViewList = () => {
     },
     getRowId: (row) => String(row.runtimeInfrastructureId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_infrastructure_access_view_read_model_entity",
@@ -345,7 +345,7 @@ export const RuntimeInfrastructureAccessViewList = () => {
         label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
         aggregateRoute: "runtimeinfrastructure",
         queryRoute: "runtimeinfrastructureaccessview",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

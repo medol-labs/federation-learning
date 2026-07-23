@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const RoundExecutionCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flruntime-agent",
+    dataProviderName: "federation-learning-console",
     meta: {
       tableName: "round_execution_catalog_read_model_entity",
       idField: "roundExecutionId",
       label: t("resources.round_execution_catalog.label", "Round Execution Catalog"),
       aggregateRoute: "roundexecution",
       queryRoute: "roundexecutioncatalog",
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
     },
   });
 

@@ -51,15 +51,15 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
     command: "addDictionaryValue",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "fldictionary-backend",
-    queryDataProviderName: "fldictionary-backend",
+    dataProviderName: "federation-learning-dictionary",
+    queryDataProviderName: "federation-learning-dictionary",
     meta: {
       tableName: "dictionary_value_catalog_read_model_entity",
       idField: "dictionaryValueId",
       label: t("resources.dictionary_value_catalog.label", "Dictionary Value Catalog"),
       aggregateRoute: "dictionaryvalue",
       queryRoute: "dictionaryvaluecatalog",
-      dataProviderName: "fldictionary-backend",
+      dataProviderName: "federation-learning-dictionary",
     },
     queryMeta: {
       tableName: "dictionary_value_catalog_read_model_entity",
@@ -67,7 +67,7 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
       label: t("resources.dictionary_value_catalog.label", "Dictionary Value Catalog"),
       aggregateRoute: "dictionaryvalue",
       queryRoute: "dictionaryvaluecatalog",
-      dataProviderName: "fldictionary-backend",
+      dataProviderName: "federation-learning-dictionary",
     },
     formProps: {
       defaultValues,
@@ -97,7 +97,7 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_catalog"
-                  dataProviderName="fldictionary-backend"
+                  dataProviderName="federation-learning-dictionary"
                   optionLabel="dictionaryName"
                   optionValue="dictionaryId"
                   value={field.value || ""}

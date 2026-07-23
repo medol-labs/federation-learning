@@ -45,15 +45,15 @@ export const ModelVersionCatalogRollbackModelVersion = () => {
     command: "rollbackModelVersion",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "model_version_catalog_read_model_entity",
       idField: "modelVersionId",
       label: t("resources.model_version_catalog.label", "Model Version Catalog"),
       aggregateRoute: "modelversion",
       queryRoute: "modelversioncatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "model_version_catalog_read_model_entity",
@@ -61,7 +61,7 @@ export const ModelVersionCatalogRollbackModelVersion = () => {
       label: t("resources.model_version_catalog.label", "Model Version Catalog"),
       aggregateRoute: "modelversion",
       queryRoute: "modelversioncatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,

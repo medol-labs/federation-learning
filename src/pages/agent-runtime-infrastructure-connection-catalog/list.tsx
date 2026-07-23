@@ -190,7 +190,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
     },
     getRowId: (row) => String(row.runtimeInfrastructureId),
     refineCoreProps: {
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
       syncWithLocation: true,
       meta: {
         tableName: "agent_runtime_infrastructure_connection_catalog_read_model_entity",
@@ -199,7 +199,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
         label: t("resources.agent_runtime_infrastructure_connection_catalog.label", "Agent Runtime Infrastructure Connection Catalog"),
         aggregateRoute: "agentruntimeinfrastructureconnection",
         queryRoute: "agentruntimeinfrastructureconnectioncatalog",
-        dataProviderName: "flruntime-agent",
+        dataProviderName: "federation-learning-console",
       },
     },
   });

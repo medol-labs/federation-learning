@@ -49,15 +49,15 @@ export const RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan = () =>
     command: "createRuntimeInstallationPlan",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_installation_plan_catalog_read_model_entity",
       idField: "runtimeInstallationPlanId",
       label: t("resources.runtime_installation_plan_catalog.label", "Runtime Installation Plan Catalog"),
       aggregateRoute: "runtimeinstallationplan",
       queryRoute: "runtimeinstallationplancatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "runtime_installation_plan_catalog_read_model_entity",
@@ -65,7 +65,7 @@ export const RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan = () =>
       label: t("resources.runtime_installation_plan_catalog.label", "Runtime Installation Plan Catalog"),
       aggregateRoute: "runtimeinstallationplan",
       queryRoute: "runtimeinstallationplancatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -95,7 +95,7 @@ export const RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan = () =>
                 <ResourceSelect
                   withFormControl
                   resource="organization_directory"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
@@ -122,7 +122,7 @@ export const RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan = () =>
                 <ResourceSelect
                   withFormControl
                   resource="runtime_infrastructure_package_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="packageName"
                   optionValue="runtimeInfrastructurePackageId"
                   value={field.value || ""}
@@ -167,7 +167,7 @@ export const RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan = () =>
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="fldictionary-backend"
+                  dataProviderName="federation-learning-dictionary"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}

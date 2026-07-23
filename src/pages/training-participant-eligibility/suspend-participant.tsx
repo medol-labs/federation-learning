@@ -46,15 +46,15 @@ export const TrainingParticipantEligibilitySuspendParticipant = () => {
     command: "suspendParticipant",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "training_participant_eligibility_read_model_entity",
       idField: "trainingJobId",
       label: t("resources.training_participant_eligibility.label", "Training Participant Eligibility"),
       aggregateRoute: "federationmembership",
       queryRoute: "trainingparticipanteligibility",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "training_participant_eligibility_read_model_entity",
@@ -62,7 +62,7 @@ export const TrainingParticipantEligibilitySuspendParticipant = () => {
       label: t("resources.training_participant_eligibility.label", "Training Participant Eligibility"),
       aggregateRoute: "trainingjob",
       queryRoute: "trainingparticipanteligibility",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -93,7 +93,7 @@ export const TrainingParticipantEligibilitySuspendParticipant = () => {
                 <ResourceSelect
                   withFormControl
                   resource="organization_directory"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}

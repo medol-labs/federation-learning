@@ -289,7 +289,7 @@ export const RuntimeDatasetBindingCatalogList = () => {
     },
     getRowId: (row) => String(row.runtimeDatasetBindingId),
     refineCoreProps: {
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_dataset_binding_catalog_read_model_entity",
@@ -298,7 +298,7 @@ export const RuntimeDatasetBindingCatalogList = () => {
         label: t("resources.runtime_dataset_binding_catalog.label", "Runtime Dataset Binding Catalog"),
         aggregateRoute: "runtimedatasetbinding",
         queryRoute: "runtimedatasetbindingcatalog",
-        dataProviderName: "flruntime-agent",
+        dataProviderName: "federation-learning-console",
       },
     },
   });

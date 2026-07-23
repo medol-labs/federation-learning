@@ -269,7 +269,7 @@ export const RuntimeInstallationGuideList = () => {
     },
     getRowId: (row) => String(row.runtimeInstallationPlanId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_installation_guide_read_model_entity",
@@ -278,7 +278,7 @@ export const RuntimeInstallationGuideList = () => {
         label: t("resources.runtime_installation_guide.label", "Runtime Installation Guide"),
         aggregateRoute: "runtimeinstallationplan",
         queryRoute: "runtimeinstallationguide",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

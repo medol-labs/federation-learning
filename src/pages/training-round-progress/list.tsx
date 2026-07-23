@@ -682,7 +682,7 @@ export const TrainingRoundProgressList = () => {
     },
     getRowId: (row) => String(row.trainingJobId) + ":" + String(row.roundId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "training_round_progress_read_model_entity",
@@ -691,7 +691,7 @@ export const TrainingRoundProgressList = () => {
         label: t("resources.training_round_progress.label", "Training Round Progress"),
         aggregateRoute: "traininground",
         queryRoute: "trainingroundprogress",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

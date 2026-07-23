@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const RuntimeNodeInventoryViewShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_node_inventory_view_read_model_entity",
       idField: "nodeId",
       label: t("resources.runtime_node_inventory_view.label", "Runtime Node Inventory View"),
       aggregateRoute: "runtimenodeinventory",
       queryRoute: "runtimenodeinventoryview",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

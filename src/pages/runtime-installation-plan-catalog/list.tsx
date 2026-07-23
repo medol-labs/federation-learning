@@ -349,7 +349,7 @@ export const RuntimeInstallationPlanCatalogList = () => {
     },
     getRowId: (row) => String(row.runtimeInstallationPlanId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_installation_plan_catalog_read_model_entity",
@@ -358,7 +358,7 @@ export const RuntimeInstallationPlanCatalogList = () => {
         label: t("resources.runtime_installation_plan_catalog.label", "Runtime Installation Plan Catalog"),
         aggregateRoute: "runtimeinstallationplan",
         queryRoute: "runtimeinstallationplancatalog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

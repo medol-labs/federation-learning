@@ -46,15 +46,15 @@ export const DictionaryCatalogRegisterDictionary = () => {
     command: "registerDictionary",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "fldictionary-backend",
-    queryDataProviderName: "fldictionary-backend",
+    dataProviderName: "federation-learning-dictionary",
+    queryDataProviderName: "federation-learning-dictionary",
     meta: {
       tableName: "dictionary_catalog_read_model_entity",
       idField: "dictionaryId",
       label: t("resources.dictionary_catalog.label", "Dictionary Catalog"),
       aggregateRoute: "dictionary",
       queryRoute: "dictionarycatalog",
-      dataProviderName: "fldictionary-backend",
+      dataProviderName: "federation-learning-dictionary",
     },
     queryMeta: {
       tableName: "dictionary_catalog_read_model_entity",
@@ -62,7 +62,7 @@ export const DictionaryCatalogRegisterDictionary = () => {
       label: t("resources.dictionary_catalog.label", "Dictionary Catalog"),
       aggregateRoute: "dictionary",
       queryRoute: "dictionarycatalog",
-      dataProviderName: "fldictionary-backend",
+      dataProviderName: "federation-learning-dictionary",
     },
     formProps: {
       defaultValues,

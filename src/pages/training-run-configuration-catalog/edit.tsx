@@ -68,15 +68,15 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
     command: "updateTrainingRunConfiguration",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "training_run_configuration_catalog_read_model_entity",
       idField: "trainingRunConfigurationId",
       label: t("resources.training_run_configuration_catalog.label", "Training Run Configuration Catalog"),
       aggregateRoute: "trainingrunconfiguration",
       queryRoute: "trainingrunconfigurationcatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "training_run_configuration_catalog_read_model_entity",
@@ -84,7 +84,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
       label: t("resources.training_run_configuration_catalog.label", "Training Run Configuration Catalog"),
       aggregateRoute: "trainingrunconfiguration",
       queryRoute: "trainingrunconfigurationcatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -115,7 +115,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                 <ResourceSelect
                   withFormControl
                   resource="federation_overview"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="federationId"
                   value={field.value || ""}
@@ -142,7 +142,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                 <ResourceSelect
                   withFormControl
                   resource="feature_schema_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="featureDomain"
                   optionValue="featureSchemaId"
                   value={field.value || ""}
@@ -187,7 +187,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="fldictionary-backend"
+                  dataProviderName="federation-learning-dictionary"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -218,7 +218,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="fldictionary-backend"
+                  dataProviderName="federation-learning-dictionary"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -381,7 +381,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="fldictionary-backend"
+                  dataProviderName="federation-learning-dictionary"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -412,7 +412,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="fldictionary-backend"
+                  dataProviderName="federation-learning-dictionary"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}

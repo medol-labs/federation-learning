@@ -51,15 +51,15 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
     command: "registerRuntimeInfrastructurePackage",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_infrastructure_package_catalog_read_model_entity",
       idField: "runtimeInfrastructurePackageId",
       label: t("resources.runtime_infrastructure_package_catalog.label", "Runtime Infrastructure Package Catalog"),
       aggregateRoute: "runtimeinfrastructurepackage",
       queryRoute: "runtimeinfrastructurepackagecatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "runtime_infrastructure_package_catalog_read_model_entity",
@@ -67,7 +67,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
       label: t("resources.runtime_infrastructure_package_catalog.label", "Runtime Infrastructure Package Catalog"),
       aggregateRoute: "runtimeinfrastructurepackage",
       queryRoute: "runtimeinfrastructurepackagecatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -133,7 +133,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="fldictionary-backend"
+                  dataProviderName="federation-learning-dictionary"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -164,7 +164,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="fldictionary-backend"
+                  dataProviderName="federation-learning-dictionary"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -195,7 +195,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="fldictionary-backend"
+                  dataProviderName="federation-learning-dictionary"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}

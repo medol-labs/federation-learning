@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const RuntimeTelemetryLatestShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_telemetry_latest_read_model_entity",
       idField: "nodeId",
       label: t("resources.runtime_telemetry_latest.label", "Runtime Telemetry Latest"),
       aggregateRoute: "noderuntimehealth",
       queryRoute: "runtimetelemetrylatest",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

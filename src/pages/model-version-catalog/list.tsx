@@ -398,7 +398,7 @@ export const ModelVersionCatalogList = () => {
     },
     getRowId: (row) => String(row.modelVersionId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "model_version_catalog_read_model_entity",
@@ -407,7 +407,7 @@ export const ModelVersionCatalogList = () => {
         label: t("resources.model_version_catalog.label", "Model Version Catalog"),
         aggregateRoute: "modelversion",
         queryRoute: "modelversioncatalog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

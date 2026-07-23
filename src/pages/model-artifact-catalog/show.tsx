@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const ModelArtifactCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "model_artifact_catalog_read_model_entity",
       idField: "modelVersionId",
       label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
       aggregateRoute: "modelartifact",
       queryRoute: "modelartifactcatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

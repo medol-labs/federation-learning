@@ -46,15 +46,15 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
     command: "recordRuntimeConnectionEstablished",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flruntime-agent",
-    queryDataProviderName: "flruntime-agent",
+    dataProviderName: "federation-learning-console",
+    queryDataProviderName: "federation-learning-console",
     meta: {
       tableName: "agent_runtime_infrastructure_connection_catalog_read_model_entity",
       idField: "runtimeInfrastructureId",
       label: t("resources.agent_runtime_infrastructure_connection_catalog.label", "Agent Runtime Infrastructure Connection Catalog"),
       aggregateRoute: "runtimeinfrastructure",
       queryRoute: "agentruntimeinfrastructureconnectioncatalog",
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
     },
     queryMeta: {
       tableName: "agent_runtime_infrastructure_connection_catalog_read_model_entity",
@@ -62,7 +62,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
       label: t("resources.agent_runtime_infrastructure_connection_catalog.label", "Agent Runtime Infrastructure Connection Catalog"),
       aggregateRoute: "agentruntimeinfrastructureconnection",
       queryRoute: "agentruntimeinfrastructureconnectioncatalog",
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
     },
     formProps: {
       defaultValues,
@@ -93,7 +93,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
                 <ResourceSelect
                   withFormControl
                   resource="runtime_agent_lifecycle_catalog"
-                  dataProviderName="flruntime-agent"
+                  dataProviderName="federation-learning-console"
                   optionLabel="agentVersion"
                   optionValue="runtimeAgentId"
                   value={field.value || ""}

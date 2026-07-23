@@ -186,7 +186,7 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
     },
     getRowId: (row) => String(row.runtimeInfrastructurePackageId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_infrastructure_package_catalog_read_model_entity",
@@ -195,7 +195,7 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         label: t("resources.runtime_infrastructure_package_catalog.label", "Runtime Infrastructure Package Catalog"),
         aggregateRoute: "runtimeinfrastructurepackage",
         queryRoute: "runtimeinfrastructurepackagecatalog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

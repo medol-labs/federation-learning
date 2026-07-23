@@ -226,7 +226,7 @@ export const RuntimeTelemetryLatestList = () => {
     },
     getRowId: (row) => String(row.nodeId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_telemetry_latest_read_model_entity",
@@ -235,7 +235,7 @@ export const RuntimeTelemetryLatestList = () => {
         label: t("resources.runtime_telemetry_latest.label", "Runtime Telemetry Latest"),
         aggregateRoute: "noderuntimehealth",
         queryRoute: "runtimetelemetrylatest",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

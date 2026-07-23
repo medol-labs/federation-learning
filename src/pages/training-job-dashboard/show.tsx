@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const TrainingJobDashboardShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "training_job_dashboard_read_model_entity",
       idField: "trainingJobId",
       label: t("resources.training_job_dashboard.label", "Training Job Dashboard"),
       aggregateRoute: "trainingjob",
       queryRoute: "trainingjobdashboard",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

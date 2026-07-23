@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const FederationMembershipDirectoryShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "federation_membership_directory_read_model_entity",
       idField: "federationId",
       label: t("resources.federation_membership_directory.label", "Federation Membership Directory"),
       aggregateRoute: "federationmembership",
       queryRoute: "federationmembershipdirectory",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

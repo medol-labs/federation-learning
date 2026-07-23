@@ -47,15 +47,15 @@ export const RuntimeAgentLifecycleCatalogReportRuntimeAgentStarted = () => {
     command: "reportRuntimeAgentStarted",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flruntime-agent",
-    queryDataProviderName: "flruntime-agent",
+    dataProviderName: "federation-learning-console",
+    queryDataProviderName: "federation-learning-console",
     meta: {
       tableName: "runtime_agent_lifecycle_catalog_read_model_entity",
       idField: "runtimeAgentId",
       label: t("resources.runtime_agent_lifecycle_catalog.label", "Runtime Agent Lifecycle Catalog"),
       aggregateRoute: "runtimeagentlifecycle",
       queryRoute: "runtimeagentlifecyclecatalog",
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
     },
     queryMeta: {
       tableName: "runtime_agent_lifecycle_catalog_read_model_entity",
@@ -63,7 +63,7 @@ export const RuntimeAgentLifecycleCatalogReportRuntimeAgentStarted = () => {
       label: t("resources.runtime_agent_lifecycle_catalog.label", "Runtime Agent Lifecycle Catalog"),
       aggregateRoute: "runtimeagentlifecycle",
       queryRoute: "runtimeagentlifecyclecatalog",
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
     },
     formProps: {
       defaultValues,
@@ -94,7 +94,7 @@ export const RuntimeAgentLifecycleCatalogReportRuntimeAgentStarted = () => {
                 <ResourceSelect
                   withFormControl
                   resource="runtime_infrastructure_access_view"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="runtimeInfrastructurePackageName"
                   optionValue="runtimeInfrastructureId"
                   value={field.value || ""}

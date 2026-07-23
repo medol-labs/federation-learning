@@ -406,7 +406,7 @@ export const TrainingJobDashboardList = () => {
     },
     getRowId: (row) => String(row.trainingJobId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "training_job_dashboard_read_model_entity",
@@ -415,7 +415,7 @@ export const TrainingJobDashboardList = () => {
         label: t("resources.training_job_dashboard.label", "Training Job Dashboard"),
         aggregateRoute: "trainingjob",
         queryRoute: "trainingjobdashboard",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

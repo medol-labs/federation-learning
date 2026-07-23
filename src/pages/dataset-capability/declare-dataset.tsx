@@ -48,15 +48,15 @@ export const DatasetCapabilityDeclareDataset = () => {
     command: "declareDataset",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "dataset_capability_read_model_entity",
       idField: "datasetId",
       label: t("resources.dataset_capability.label", "Dataset Capability"),
       aggregateRoute: "dataset",
       queryRoute: "datasetcapability",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "dataset_capability_read_model_entity",
@@ -64,7 +64,7 @@ export const DatasetCapabilityDeclareDataset = () => {
       label: t("resources.dataset_capability.label", "Dataset Capability"),
       aggregateRoute: "dataset",
       queryRoute: "datasetcapability",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -94,7 +94,7 @@ export const DatasetCapabilityDeclareDataset = () => {
                 <ResourceSelect
                   withFormControl
                   resource="organization_directory"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
@@ -121,7 +121,7 @@ export const DatasetCapabilityDeclareDataset = () => {
                 <ResourceSelect
                   withFormControl
                   resource="feature_schema_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="featureDomain"
                   optionValue="featureSchemaId"
                   value={field.value || ""}

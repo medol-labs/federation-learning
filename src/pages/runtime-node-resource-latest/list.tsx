@@ -286,7 +286,7 @@ export const RuntimeNodeResourceLatestList = () => {
     },
     getRowId: (row) => String(row.nodeId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_node_resource_latest_read_model_entity",
@@ -295,7 +295,7 @@ export const RuntimeNodeResourceLatestList = () => {
         label: t("resources.runtime_node_resource_latest.label", "Runtime Node Resource Latest"),
         aggregateRoute: "runtimenoderesourcetelemetry",
         queryRoute: "runtimenoderesourcelatest",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

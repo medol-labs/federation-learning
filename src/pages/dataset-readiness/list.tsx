@@ -481,7 +481,7 @@ export const DatasetReadinessList = () => {
     },
     getRowId: (row) => String(row.datasetId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "dataset_readiness_read_model_entity",
@@ -490,7 +490,7 @@ export const DatasetReadinessList = () => {
         label: t("resources.dataset_readiness.label", "Dataset Readiness"),
         aggregateRoute: "dataset",
         queryRoute: "datasetreadiness",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

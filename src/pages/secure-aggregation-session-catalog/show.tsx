@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const SecureAggregationSessionCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "secure_aggregation_session_catalog_read_model_entity",
       idField: "secureAggregationSessionId",
       label: t("resources.secure_aggregation_session_catalog.label", "Secure Aggregation Session Catalog"),
       aggregateRoute: "secureaggregationsession",
       queryRoute: "secureaggregationsessioncatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

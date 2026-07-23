@@ -286,7 +286,7 @@ export const RuntimeHealthDashboardList = () => {
     },
     getRowId: (row) => String(row.nodeId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_health_dashboard_read_model_entity",
@@ -295,7 +295,7 @@ export const RuntimeHealthDashboardList = () => {
         label: t("resources.runtime_health_dashboard.label", "Runtime Health Dashboard"),
         aggregateRoute: "noderuntimehealth",
         queryRoute: "runtimehealthdashboard",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

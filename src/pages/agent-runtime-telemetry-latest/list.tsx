@@ -196,7 +196,7 @@ export const AgentRuntimeTelemetryLatestList = () => {
     },
     getRowId: (row) => String(row.nodeId),
     refineCoreProps: {
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
       syncWithLocation: true,
       meta: {
         tableName: "agent_runtime_telemetry_latest_read_model_entity",
@@ -205,7 +205,7 @@ export const AgentRuntimeTelemetryLatestList = () => {
         label: t("resources.agent_runtime_telemetry_latest.label", "Agent Runtime Telemetry Latest"),
         aggregateRoute: "agentruntimetelemetry",
         queryRoute: "agentruntimetelemetrylatest",
-        dataProviderName: "flruntime-agent",
+        dataProviderName: "federation-learning-console",
       },
     },
   });

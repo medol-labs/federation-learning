@@ -44,15 +44,15 @@ export const RuntimeNodeInventoryViewRegisterRuntimeInfrastructure = () => {
     command: "registerRuntimeInfrastructure",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_node_inventory_view_read_model_entity",
       idField: "nodeId",
       label: t("resources.runtime_node_inventory_view.label", "Runtime Node Inventory View"),
       aggregateRoute: "runtimeinfrastructure",
       queryRoute: "runtimenodeinventoryview",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "runtime_node_inventory_view_read_model_entity",
@@ -60,7 +60,7 @@ export const RuntimeNodeInventoryViewRegisterRuntimeInfrastructure = () => {
       label: t("resources.runtime_node_inventory_view.label", "Runtime Node Inventory View"),
       aggregateRoute: "runtimenodeinventory",
       queryRoute: "runtimenodeinventoryview",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,

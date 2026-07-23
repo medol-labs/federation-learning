@@ -321,7 +321,7 @@ export const RuntimeDatasetMetadataCatalogList = () => {
     },
     getRowId: (row) => String(row.metadataReportId),
     refineCoreProps: {
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_dataset_metadata_catalog_read_model_entity",
@@ -330,7 +330,7 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         label: t("resources.runtime_dataset_metadata_catalog.label", "Runtime Dataset Metadata Catalog"),
         aggregateRoute: "runtimedatasetmetadata",
         queryRoute: "runtimedatasetmetadatacatalog",
-        dataProviderName: "flruntime-agent",
+        dataProviderName: "federation-learning-console",
       },
     },
   });

@@ -186,7 +186,7 @@ export const RuntimeIdentityCatalogList = () => {
     },
     getRowId: (row) => String(row.runtimeId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_identity_catalog_read_model_entity",
@@ -195,7 +195,7 @@ export const RuntimeIdentityCatalogList = () => {
         label: t("resources.runtime_identity_catalog.label", "Runtime Identity Catalog"),
         aggregateRoute: "runtimeidentity",
         queryRoute: "runtimeidentitycatalog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

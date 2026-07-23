@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const RuntimeInfrastructureAccessViewShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_infrastructure_access_view_read_model_entity",
       idField: "runtimeInfrastructureId",
       label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
       aggregateRoute: "runtimeinfrastructure",
       queryRoute: "runtimeinfrastructureaccessview",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

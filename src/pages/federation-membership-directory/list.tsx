@@ -243,7 +243,7 @@ export const FederationMembershipDirectoryList = () => {
     },
     getRowId: (row) => String(row.federationId) + ":" + String(row.organizationId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "federation_membership_directory_read_model_entity",
@@ -252,7 +252,7 @@ export const FederationMembershipDirectoryList = () => {
         label: t("resources.federation_membership_directory.label", "Federation Membership Directory"),
         aggregateRoute: "federationmembership",
         queryRoute: "federationmembershipdirectory",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

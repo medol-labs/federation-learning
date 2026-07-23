@@ -52,15 +52,15 @@ export const ModelVersionCatalogRecordModelEvaluationPackage = () => {
     command: "recordModelEvaluationPackage",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "model_version_catalog_read_model_entity",
       idField: "modelVersionId",
       label: t("resources.model_version_catalog.label", "Model Version Catalog"),
       aggregateRoute: "modelversion",
       queryRoute: "modelversioncatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "model_version_catalog_read_model_entity",
@@ -68,7 +68,7 @@ export const ModelVersionCatalogRecordModelEvaluationPackage = () => {
       label: t("resources.model_version_catalog.label", "Model Version Catalog"),
       aggregateRoute: "modelversion",
       queryRoute: "modelversioncatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -99,7 +99,7 @@ export const ModelVersionCatalogRecordModelEvaluationPackage = () => {
                 <ResourceSelect
                   withFormControl
                   resource="training_participant_eligibility"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="trainingJobId"
                   value={field.value || ""}

@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const FeatureSchemaCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "feature_schema_catalog_read_model_entity",
       idField: "featureSchemaId",
       label: t("resources.feature_schema_catalog.label", "Feature Schema Catalog"),
       aggregateRoute: "featureschema",
       queryRoute: "featureschemacatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

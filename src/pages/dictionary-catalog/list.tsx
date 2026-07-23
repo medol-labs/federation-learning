@@ -202,7 +202,7 @@ export const DictionaryCatalogList = () => {
     },
     getRowId: (row) => String(row.dictionaryId),
     refineCoreProps: {
-      dataProviderName: "fldictionary-backend",
+      dataProviderName: "federation-learning-dictionary",
       syncWithLocation: true,
       meta: {
         tableName: "dictionary_catalog_read_model_entity",
@@ -211,7 +211,7 @@ export const DictionaryCatalogList = () => {
         label: t("resources.dictionary_catalog.label", "Dictionary Catalog"),
         aggregateRoute: "dictionary",
         queryRoute: "dictionarycatalog",
-        dataProviderName: "fldictionary-backend",
+        dataProviderName: "federation-learning-dictionary",
       },
     },
   });

@@ -44,15 +44,15 @@ export const RuntimeInstallationGuideRegisterRuntimeInfrastructure = () => {
     command: "registerRuntimeInfrastructure",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_installation_guide_read_model_entity",
       idField: "runtimeInstallationPlanId",
       label: t("resources.runtime_installation_guide.label", "Runtime Installation Guide"),
       aggregateRoute: "runtimeinfrastructure",
       queryRoute: "runtimeinstallationguide",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "runtime_installation_guide_read_model_entity",
@@ -60,7 +60,7 @@ export const RuntimeInstallationGuideRegisterRuntimeInfrastructure = () => {
       label: t("resources.runtime_installation_guide.label", "Runtime Installation Guide"),
       aggregateRoute: "runtimeinstallationplan",
       queryRoute: "runtimeinstallationguide",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,

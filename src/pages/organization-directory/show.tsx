@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const OrganizationDirectoryShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "organization_directory_read_model_entity",
       idField: "organizationId",
       label: t("resources.organization_directory.label", "Organization Directory"),
       aggregateRoute: "organization",
       queryRoute: "organizationdirectory",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

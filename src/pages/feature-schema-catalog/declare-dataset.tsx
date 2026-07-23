@@ -45,15 +45,15 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
     command: "declareDataset",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "feature_schema_catalog_read_model_entity",
       idField: "featureSchemaId",
       label: t("resources.feature_schema_catalog.label", "Feature Schema Catalog"),
       aggregateRoute: "dataset",
       queryRoute: "featureschemacatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "feature_schema_catalog_read_model_entity",
@@ -61,7 +61,7 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
       label: t("resources.feature_schema_catalog.label", "Feature Schema Catalog"),
       aggregateRoute: "featureschema",
       queryRoute: "featureschemacatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -91,7 +91,7 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
                 <ResourceSelect
                   withFormControl
                   resource="organization_directory"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
@@ -118,7 +118,7 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
                 <ResourceSelect
                   withFormControl
                   resource="feature_schema_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="featureDomain"
                   optionValue="featureSchemaId"
                   value={field.value || ""}

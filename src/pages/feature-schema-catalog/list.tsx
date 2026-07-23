@@ -223,7 +223,7 @@ export const FeatureSchemaCatalogList = () => {
     },
     getRowId: (row) => String(row.featureSchemaId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "feature_schema_catalog_read_model_entity",
@@ -232,7 +232,7 @@ export const FeatureSchemaCatalogList = () => {
         label: t("resources.feature_schema_catalog.label", "Feature Schema Catalog"),
         aggregateRoute: "featureschema",
         queryRoute: "featureschemacatalog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

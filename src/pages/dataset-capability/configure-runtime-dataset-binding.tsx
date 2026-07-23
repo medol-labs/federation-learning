@@ -47,15 +47,15 @@ export const DatasetCapabilityConfigureRuntimeDatasetBinding = () => {
     command: "configureRuntimeDatasetBinding",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "dataset_capability_read_model_entity",
       idField: "datasetId",
       label: t("resources.dataset_capability.label", "Dataset Capability"),
       aggregateRoute: "runtimedatasetbinding",
       queryRoute: "datasetcapability",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "dataset_capability_read_model_entity",
@@ -63,7 +63,7 @@ export const DatasetCapabilityConfigureRuntimeDatasetBinding = () => {
       label: t("resources.dataset_capability.label", "Dataset Capability"),
       aggregateRoute: "dataset",
       queryRoute: "datasetcapability",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -93,7 +93,7 @@ export const DatasetCapabilityConfigureRuntimeDatasetBinding = () => {
                 <ResourceSelect
                   withFormControl
                   resource="dataset_capability"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="organizationName"
                   optionValue="datasetId"
                   value={field.value || ""}
@@ -120,7 +120,7 @@ export const DatasetCapabilityConfigureRuntimeDatasetBinding = () => {
                 <ResourceSelect
                   withFormControl
                   resource="organization_directory"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
@@ -147,7 +147,7 @@ export const DatasetCapabilityConfigureRuntimeDatasetBinding = () => {
                 <ResourceSelect
                   withFormControl
                   resource="runtime_identity_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="organizationName"
                   optionValue="runtimeId"
                   value={field.value || ""}
@@ -174,7 +174,7 @@ export const DatasetCapabilityConfigureRuntimeDatasetBinding = () => {
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="fldictionary-backend"
+                  dataProviderName="federation-learning-dictionary"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -368,7 +368,7 @@ export const DatasetCapabilityConfigureRuntimeDatasetBinding = () => {
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="fldictionary-backend"
+                  dataProviderName="federation-learning-dictionary"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}

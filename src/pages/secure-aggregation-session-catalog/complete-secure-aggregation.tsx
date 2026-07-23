@@ -52,15 +52,15 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
     command: "completeSecureAggregation",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "secure_aggregation_session_catalog_read_model_entity",
       idField: "secureAggregationSessionId",
       label: t("resources.secure_aggregation_session_catalog.label", "Secure Aggregation Session Catalog"),
       aggregateRoute: "traininground",
       queryRoute: "secureaggregationsessioncatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "secure_aggregation_session_catalog_read_model_entity",
@@ -68,7 +68,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
       label: t("resources.secure_aggregation_session_catalog.label", "Secure Aggregation Session Catalog"),
       aggregateRoute: "secureaggregationsession",
       queryRoute: "secureaggregationsessioncatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -99,7 +99,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
                 <ResourceSelect
                   withFormControl
                   resource="training_run_configuration_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
@@ -126,7 +126,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
                 <ResourceSelect
                   withFormControl
                   resource="feature_schema_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="featureDomain"
                   optionValue="featureSchemaId"
                   value={field.value || ""}
@@ -171,7 +171,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
                 <ResourceSelect
                   withFormControl
                   resource="secure_aggregation_session_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="encryptionScheme"
                   optionValue="secureAggregationSessionId"
                   value={field.value || ""}

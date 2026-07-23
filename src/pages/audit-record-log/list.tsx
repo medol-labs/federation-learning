@@ -146,7 +146,7 @@ export const AuditRecordLogList = () => {
     },
     getRowId: (row) => String(row.auditRecordId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "audit_record_log_read_model_entity",
@@ -155,7 +155,7 @@ export const AuditRecordLogList = () => {
         label: t("resources.audit_record_log.label", "Audit Record Log"),
         aggregateRoute: "auditrecord",
         queryRoute: "auditrecordlog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

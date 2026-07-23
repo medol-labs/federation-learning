@@ -455,7 +455,7 @@ export const TrainingRunConfigurationCatalogList = () => {
     },
     getRowId: (row) => String(row.trainingRunConfigurationId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "training_run_configuration_catalog_read_model_entity",
@@ -464,7 +464,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         label: t("resources.training_run_configuration_catalog.label", "Training Run Configuration Catalog"),
         aggregateRoute: "trainingrunconfiguration",
         queryRoute: "trainingrunconfigurationcatalog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

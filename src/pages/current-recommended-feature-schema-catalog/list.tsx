@@ -146,7 +146,7 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
     },
     getRowId: (row) => String(row.featureDomain),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "current_recommended_feature_schema_catalog_read_model_entity",
@@ -155,7 +155,7 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
         label: t("resources.current_recommended_feature_schema_catalog.label", "Current Recommended Feature Schema Catalog"),
         aggregateRoute: "featureschema",
         queryRoute: "currentrecommendedfeatureschemacatalog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

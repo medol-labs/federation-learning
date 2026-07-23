@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const RuntimeNodeResourceLatestShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_node_resource_latest_read_model_entity",
       idField: "nodeId",
       label: t("resources.runtime_node_resource_latest.label", "Runtime Node Resource Latest"),
       aggregateRoute: "runtimenoderesourcetelemetry",
       queryRoute: "runtimenoderesourcelatest",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

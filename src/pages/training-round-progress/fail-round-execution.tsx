@@ -53,15 +53,15 @@ export const TrainingRoundProgressFailRoundExecution = () => {
     command: "failRoundExecution",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "training_round_progress_read_model_entity",
       idField: "trainingJobId",
       label: t("resources.training_round_progress.label", "Training Round Progress"),
       aggregateRoute: "roundexecution",
       queryRoute: "trainingroundprogress",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "training_round_progress_read_model_entity",
@@ -69,7 +69,7 @@ export const TrainingRoundProgressFailRoundExecution = () => {
       label: t("resources.training_round_progress.label", "Training Round Progress"),
       aggregateRoute: "traininground",
       queryRoute: "trainingroundprogress",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -136,7 +136,7 @@ export const TrainingRoundProgressFailRoundExecution = () => {
                 <ResourceSelect
                   withFormControl
                   resource="training_participant_eligibility"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="trainingJobId"
                   value={field.value || ""}
@@ -163,7 +163,7 @@ export const TrainingRoundProgressFailRoundExecution = () => {
                 <ResourceSelect
                   withFormControl
                   resource="training_run_configuration_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
@@ -208,7 +208,7 @@ export const TrainingRoundProgressFailRoundExecution = () => {
                 <ResourceSelect
                   withFormControl
                   resource="runtime_identity_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="organizationName"
                   optionValue="runtimeId"
                   value={field.value || ""}

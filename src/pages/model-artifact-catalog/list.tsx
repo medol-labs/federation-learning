@@ -241,7 +241,7 @@ export const ModelArtifactCatalogList = () => {
     },
     getRowId: (row) => String(row.modelVersionId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "model_artifact_catalog_read_model_entity",
@@ -250,7 +250,7 @@ export const ModelArtifactCatalogList = () => {
         label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
         aggregateRoute: "modelartifact",
         queryRoute: "modelartifactcatalog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

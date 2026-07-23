@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const TrainingAlertCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "training_alert_catalog_read_model_entity",
       idField: "alertId",
       label: t("resources.training_alert_catalog.label", "Training Alert Catalog"),
       aggregateRoute: "trainingalert",
       queryRoute: "trainingalertcatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

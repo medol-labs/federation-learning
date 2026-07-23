@@ -45,15 +45,15 @@ export const FederationOverviewCreateFederation = () => {
     command: "createFederation",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "federation_overview_read_model_entity",
       idField: "federationId",
       label: t("resources.federation_overview.label", "Federation Overview"),
       aggregateRoute: "federation",
       queryRoute: "federationoverview",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "federation_overview_read_model_entity",
@@ -61,7 +61,7 @@ export const FederationOverviewCreateFederation = () => {
       label: t("resources.federation_overview.label", "Federation Overview"),
       aggregateRoute: "federation",
       queryRoute: "federationoverview",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,

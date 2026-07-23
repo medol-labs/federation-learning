@@ -51,15 +51,15 @@ export const ModelArtifactCatalogSubmitGlobalModelEvaluation = () => {
     command: "submitGlobalModelEvaluation",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "model_artifact_catalog_read_model_entity",
       idField: "modelVersionId",
       label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
       aggregateRoute: "traininground",
       queryRoute: "modelartifactcatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "model_artifact_catalog_read_model_entity",
@@ -67,7 +67,7 @@ export const ModelArtifactCatalogSubmitGlobalModelEvaluation = () => {
       label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
       aggregateRoute: "modelartifact",
       queryRoute: "modelartifactcatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -98,7 +98,7 @@ export const ModelArtifactCatalogSubmitGlobalModelEvaluation = () => {
                 <ResourceSelect
                   withFormControl
                   resource="training_run_configuration_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
@@ -125,7 +125,7 @@ export const ModelArtifactCatalogSubmitGlobalModelEvaluation = () => {
                 <ResourceSelect
                   withFormControl
                   resource="feature_schema_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="featureDomain"
                   optionValue="featureSchemaId"
                   value={field.value || ""}

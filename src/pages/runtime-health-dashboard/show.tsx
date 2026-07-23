@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const RuntimeHealthDashboardShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_health_dashboard_read_model_entity",
       idField: "nodeId",
       label: t("resources.runtime_health_dashboard.label", "Runtime Health Dashboard"),
       aggregateRoute: "noderuntimehealth",
       queryRoute: "runtimehealthdashboard",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

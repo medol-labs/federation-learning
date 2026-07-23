@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const AgentRuntimeInfrastructureConnectionCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flruntime-agent",
+    dataProviderName: "federation-learning-console",
     meta: {
       tableName: "agent_runtime_infrastructure_connection_catalog_read_model_entity",
       idField: "runtimeInfrastructureId",
       label: t("resources.agent_runtime_infrastructure_connection_catalog.label", "Agent Runtime Infrastructure Connection Catalog"),
       aggregateRoute: "agentruntimeinfrastructureconnection",
       queryRoute: "agentruntimeinfrastructureconnectioncatalog",
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
     },
   });
 

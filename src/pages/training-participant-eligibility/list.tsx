@@ -510,7 +510,7 @@ export const TrainingParticipantEligibilityList = () => {
     },
     getRowId: (row) => String(row.trainingJobId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "training_participant_eligibility_read_model_entity",
@@ -519,7 +519,7 @@ export const TrainingParticipantEligibilityList = () => {
         label: t("resources.training_participant_eligibility.label", "Training Participant Eligibility"),
         aggregateRoute: "trainingjob",
         queryRoute: "trainingparticipanteligibility",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

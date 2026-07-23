@@ -136,7 +136,7 @@ export const RuntimeCapabilityCatalogList = () => {
     },
     getRowId: (row) => String(row.runtimeId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_capability_catalog_read_model_entity",
@@ -145,7 +145,7 @@ export const RuntimeCapabilityCatalogList = () => {
         label: t("resources.runtime_capability_catalog.label", "Runtime Capability Catalog"),
         aggregateRoute: "runtimecapability",
         queryRoute: "runtimecapabilitycatalog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

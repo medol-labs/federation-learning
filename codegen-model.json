@@ -72,9 +72,9 @@
   ],
   "deployments": [
     {
-      "id": "deployment-ce87cbca",
-      "name": "FLDictionaryBackend",
-      "title": "FLDictionary Backend",
+      "id": "deployment-b68f10f3",
+      "name": "FederationLearningDictionary",
+      "title": "Federation Learning Dictionary",
       "domain": "FederationLearningPlatform",
       "contexts": [
         {
@@ -85,9 +85,9 @@
       ]
     },
     {
-      "id": "deployment-9aab77f3",
-      "name": "FLPlatformBackend",
-      "title": "FLPlatform Backend",
+      "id": "deployment-d327a424",
+      "name": "FederationLearningPlatform",
+      "title": "Federation Learning Platform",
       "domain": "FederationLearningPlatform",
       "contexts": [
         {
@@ -143,9 +143,9 @@
       ]
     },
     {
-      "id": "deployment-6ddc6bcf",
-      "name": "FLRuntimeAgent",
-      "title": "FLRuntime Agent",
+      "id": "deployment-c1af8180",
+      "name": "FederationLearningConsole",
+      "title": "Federation Learning Console",
       "domain": "FederationLearningPlatform",
       "contexts": [
         {

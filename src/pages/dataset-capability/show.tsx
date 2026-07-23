@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const DatasetCapabilityShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "dataset_capability_read_model_entity",
       idField: "datasetId",
       label: t("resources.dataset_capability.label", "Dataset Capability"),
       aggregateRoute: "dataset",
       queryRoute: "datasetcapability",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

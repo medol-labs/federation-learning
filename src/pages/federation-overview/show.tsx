@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const FederationOverviewShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "federation_overview_read_model_entity",
       idField: "federationId",
       label: t("resources.federation_overview.label", "Federation Overview"),
       aggregateRoute: "federation",
       queryRoute: "federationoverview",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

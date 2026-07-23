@@ -46,15 +46,15 @@ export const TrainingRunConfigurationCatalogCreateTrainingJob = () => {
     command: "createTrainingJob",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "training_run_configuration_catalog_read_model_entity",
       idField: "trainingRunConfigurationId",
       label: t("resources.training_run_configuration_catalog.label", "Training Run Configuration Catalog"),
       aggregateRoute: "trainingjob",
       queryRoute: "trainingrunconfigurationcatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "training_run_configuration_catalog_read_model_entity",
@@ -62,7 +62,7 @@ export const TrainingRunConfigurationCatalogCreateTrainingJob = () => {
       label: t("resources.training_run_configuration_catalog.label", "Training Run Configuration Catalog"),
       aggregateRoute: "trainingrunconfiguration",
       queryRoute: "trainingrunconfigurationcatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -92,7 +92,7 @@ export const TrainingRunConfigurationCatalogCreateTrainingJob = () => {
                 <ResourceSelect
                   withFormControl
                   resource="federation_overview"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="federationId"
                   value={field.value || ""}
@@ -119,7 +119,7 @@ export const TrainingRunConfigurationCatalogCreateTrainingJob = () => {
                 <ResourceSelect
                   withFormControl
                   resource="training_run_configuration_catalog"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}

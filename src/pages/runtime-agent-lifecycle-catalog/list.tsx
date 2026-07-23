@@ -226,7 +226,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
     },
     getRowId: (row) => String(row.runtimeAgentId),
     refineCoreProps: {
-      dataProviderName: "flruntime-agent",
+      dataProviderName: "federation-learning-console",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_agent_lifecycle_catalog_read_model_entity",
@@ -235,7 +235,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         label: t("resources.runtime_agent_lifecycle_catalog.label", "Runtime Agent Lifecycle Catalog"),
         aggregateRoute: "runtimeagentlifecycle",
         queryRoute: "runtimeagentlifecyclecatalog",
-        dataProviderName: "flruntime-agent",
+        dataProviderName: "federation-learning-console",
       },
     },
   });

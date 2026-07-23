@@ -226,7 +226,7 @@ export const TrainingAlertCatalogList = () => {
     },
     getRowId: (row) => String(row.alertId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "training_alert_catalog_read_model_entity",
@@ -235,7 +235,7 @@ export const TrainingAlertCatalogList = () => {
         label: t("resources.training_alert_catalog.label", "Training Alert Catalog"),
         aggregateRoute: "trainingalert",
         queryRoute: "trainingalertcatalog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

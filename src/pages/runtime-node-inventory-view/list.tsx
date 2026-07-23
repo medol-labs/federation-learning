@@ -289,7 +289,7 @@ export const RuntimeNodeInventoryViewList = () => {
     },
     getRowId: (row) => String(row.nodeId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "runtime_node_inventory_view_read_model_entity",
@@ -298,7 +298,7 @@ export const RuntimeNodeInventoryViewList = () => {
         label: t("resources.runtime_node_inventory_view.label", "Runtime Node Inventory View"),
         aggregateRoute: "runtimenodeinventory",
         queryRoute: "runtimenodeinventoryview",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });

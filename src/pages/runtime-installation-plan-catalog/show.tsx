@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const RuntimeInstallationPlanCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_installation_plan_catalog_read_model_entity",
       idField: "runtimeInstallationPlanId",
       label: t("resources.runtime_installation_plan_catalog.label", "Runtime Installation Plan Catalog"),
       aggregateRoute: "runtimeinstallationplan",
       queryRoute: "runtimeinstallationplancatalog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

@@ -46,15 +46,15 @@ export const FederationMembershipDirectoryRemoveParticipant = () => {
     command: "removeParticipant",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "flplatform-backend",
-    queryDataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "federation_membership_directory_read_model_entity",
       idField: "federationId",
       label: t("resources.federation_membership_directory.label", "Federation Membership Directory"),
       aggregateRoute: "federationmembership",
       queryRoute: "federationmembershipdirectory",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
       tableName: "federation_membership_directory_read_model_entity",
@@ -62,7 +62,7 @@ export const FederationMembershipDirectoryRemoveParticipant = () => {
       label: t("resources.federation_membership_directory.label", "Federation Membership Directory"),
       aggregateRoute: "federationmembership",
       queryRoute: "federationmembershipdirectory",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -93,7 +93,7 @@ export const FederationMembershipDirectoryRemoveParticipant = () => {
                 <ResourceSelect
                   withFormControl
                   resource="organization_directory"
-                  dataProviderName="flplatform-backend"
+                  dataProviderName="federation-learning-platform"
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}

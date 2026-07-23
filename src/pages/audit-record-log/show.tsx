@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const AuditRecordLogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "flplatform-backend",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "audit_record_log_read_model_entity",
       idField: "auditRecordId",
       label: t("resources.audit_record_log.label", "Audit Record Log"),
       aggregateRoute: "auditrecord",
       queryRoute: "auditrecordlog",
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

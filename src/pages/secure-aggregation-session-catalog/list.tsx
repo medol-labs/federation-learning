@@ -366,7 +366,7 @@ export const SecureAggregationSessionCatalogList = () => {
     },
     getRowId: (row) => String(row.secureAggregationSessionId),
     refineCoreProps: {
-      dataProviderName: "flplatform-backend",
+      dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "secure_aggregation_session_catalog_read_model_entity",
@@ -375,7 +375,7 @@ export const SecureAggregationSessionCatalogList = () => {
         label: t("resources.secure_aggregation_session_catalog.label", "Secure Aggregation Session Catalog"),
         aggregateRoute: "secureaggregationsession",
         queryRoute: "secureaggregationsessioncatalog",
-        dataProviderName: "flplatform-backend",
+        dataProviderName: "federation-learning-platform",
       },
     },
   });
