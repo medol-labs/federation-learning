@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class PrepareEncryptionContextWhenParticipantsSelectedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: SecureAggregationParticipantsSelectedEvent): java.util.concurrent.CompletableFuture<PrepareHomomorphicEncryptionContextCommand> =
-        commandGateway.send(PrepareHomomorphicEncryptionContextCommand(secureAggregationSessionId = event.secureAggregationSessionId, encryptionScheme = "" /* TODO: provide encryptionScheme */, publicKeyVersion = "" /* TODO: provide publicKeyVersion */, encryptedParameterScale = 0 /* TODO: provide encryptedParameterScale */)).resultMessage.thenApply { it.payload() as PrepareHomomorphicEncryptionContextCommand }
+    fun on(event: SecureAggregationParticipantsSelectedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(PrepareHomomorphicEncryptionContextCommand(secureAggregationSessionId = event.secureAggregationSessionId, encryptionScheme = "" /* TODO: provide encryptionScheme */, publicKeyVersion = "" /* TODO: provide publicKeyVersion */, encryptedParameterScale = 0 /* TODO: provide encryptedParameterScale */)).resultMessage
 }

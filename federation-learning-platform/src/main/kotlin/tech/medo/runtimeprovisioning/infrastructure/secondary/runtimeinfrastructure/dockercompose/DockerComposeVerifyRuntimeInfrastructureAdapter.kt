@@ -1,5 +1,6 @@
 package tech.medo.runtimeprovisioning.infrastructure.secondary.runtimeinfrastructure.dockercompose
 
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.RuntimeInfrastructureVerification
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.RuntimeInfrastructureVerificationInput
@@ -11,41 +12,41 @@ class DockerComposeVerifyRuntimeInfrastructureAdapter(
     private val lookup: RuntimeProvisioningLookup,
     private val runner: DockerComposeCommandRunner
 ) : VerifyRuntimeInfrastructureService {
-    override fun supports(input: RuntimeInfrastructureVerificationInput): Boolean =
-        properties.enabled &&
+    override fun supports(input: RuntimeInfrastructureVerificationInput): Boolean {
+        val supported = properties.enabled &&
             (lookup.isDockerComposeRuntimeInfrastructure(input.runtimeInfrastructureId, properties) ?: true)
+        log.debug(
+            "Docker Compose verify supports runtimeInfrastructureId={}, enabled={}, supported={}",
+            input.runtimeInfrastructureId,
+            properties.enabled,
+            supported
+        )
+        return supported
+    }
 
     override fun verify(input: RuntimeInfrastructureVerificationInput): RuntimeInfrastructureVerification {
+        log.debug("Verifying Docker Compose runtime infrastructure runtimeInfrastructureId={}", input.runtimeInfrastructureId)
         val plan = lookup.findPlanByRuntimeInfrastructureId(input.runtimeInfrastructureId)
-            ?: return RuntimeInfrastructureVerification.Rejected(
-                observedNodeCount = 0,
-                failureReason = "Runtime installation plan was not found for runtimeInfrastructureId=${input.runtimeInfrastructureId}."
-            )
+            ?: return rejected("Runtime installation plan was not found for runtimeInfrastructureId=${input.runtimeInfrastructureId}.")
         val runtimePackage = lookup.findPackage(plan)
-            ?: return RuntimeInfrastructureVerification.Rejected(
-                observedNodeCount = 0,
-                failureReason = "Runtime infrastructure package was not found for runtimeInfrastructurePackageId=${plan.runtimeInfrastructurePackageId}."
-            )
+            ?: return rejected("Runtime infrastructure package was not found for runtimeInfrastructurePackageId=${plan.runtimeInfrastructurePackageId}.")
         if (!isDockerComposePackage(runtimePackage.runtimeDeploymentTargetType, runtimePackage.runtimeEnvironmentType)) {
-            return RuntimeInfrastructureVerification.Rejected(
-                observedNodeCount = 0,
-                failureReason = "Runtime infrastructure package is not a Docker Compose target."
-            )
+            return rejected("Runtime infrastructure package is not a Docker Compose target.")
         }
 
         val version = runner.run(properties, listOf("version"))
         if (!version.succeeded) {
-            return RuntimeInfrastructureVerification.Unavailable(commandFailure("docker compose version", version))
+            val failure = commandFailure("docker compose version", version)
+            log.debug("Docker Compose verification unavailable: {}", failure)
+            return RuntimeInfrastructureVerification.Unavailable(failure)
         }
 
         val config = runner.run(properties, listOf("config", "--services"))
         if (!config.succeeded) {
-            return RuntimeInfrastructureVerification.Rejected(
-                observedNodeCount = 0,
-                failureReason = commandFailure("docker compose config --services", config)
-            )
+            return rejected(commandFailure("docker compose config --services", config))
         }
 
+        log.debug("Docker Compose runtime infrastructure verified runtimeInfrastructureId={}", input.runtimeInfrastructureId)
         return RuntimeInfrastructureVerification.Succeeded(
             agentInstallMode = plan.agentInstallMode ?: input.agentInstallMode,
             observedNodeCount = 1
@@ -62,4 +63,13 @@ class DockerComposeVerifyRuntimeInfrastructureAdapter(
         } else {
             "$command failed with exitCode=${result.exitCode}: ${result.output}"
         }
+
+    private fun rejected(failureReason: String): RuntimeInfrastructureVerification.Rejected {
+        log.debug("Docker Compose verification rejected: {}", failureReason)
+        return RuntimeInfrastructureVerification.Rejected(observedNodeCount = 0, failureReason = failureReason)
+    }
+
+    companion object {
+        private val log = LoggerFactory.getLogger(DockerComposeVerifyRuntimeInfrastructureAdapter::class.java)
+    }
 }

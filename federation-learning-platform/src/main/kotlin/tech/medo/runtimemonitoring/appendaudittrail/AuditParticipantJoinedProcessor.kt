@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class AuditParticipantJoinedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: ParticipantJoinedEvent): java.util.concurrent.CompletableFuture<AppendAuditTrailCommand> =
-        commandGateway.send(AppendAuditTrailCommand(auditRecordId = java.util.UUID.randomUUID() /* TODO: provide auditRecordId */, sourceEventName = "" /* TODO: provide sourceEventName */, sourceEntityId = null /* TODO: provide sourceEntityId */, severity = "" /* TODO: provide severity */, payloadHash = "" /* TODO: provide payloadHash */)).resultMessage.thenApply { it.payload() as AppendAuditTrailCommand }
+    fun on(event: ParticipantJoinedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(AppendAuditTrailCommand(auditRecordId = java.util.UUID.randomUUID() /* TODO: provide auditRecordId */, sourceEventName = "" /* TODO: provide sourceEventName */, sourceEntityId = null /* TODO: provide sourceEntityId */, severity = "" /* TODO: provide severity */, payloadHash = "" /* TODO: provide payloadHash */)).resultMessage
 }

@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class FailRoundWhenRejectedUpdatesBreakQuorumProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: ModelUpdateSubmissionRejectedEvent): java.util.concurrent.CompletableFuture<FailTrainingRoundCommand> =
-        commandGateway.send(FailTrainingRoundCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = java.util.UUID.randomUUID() /* TODO: provide featureSchemaId */, roundId = event.roundId, selectedRuntimeCount = 0 /* TODO: provide selectedRuntimeCount */, minimumNodesPerRound = 0 /* TODO: provide minimumNodesPerRound */, failureReason = "" /* TODO: provide failureReason */)).resultMessage.thenApply { it.payload() as FailTrainingRoundCommand }
+    fun on(event: ModelUpdateSubmissionRejectedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(FailTrainingRoundCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = java.util.UUID.randomUUID() /* TODO: provide featureSchemaId */, roundId = event.roundId, selectedRuntimeCount = 0 /* TODO: provide selectedRuntimeCount */, minimumNodesPerRound = 0 /* TODO: provide minimumNodesPerRound */, failureReason = "" /* TODO: provide failureReason */)).resultMessage
 }

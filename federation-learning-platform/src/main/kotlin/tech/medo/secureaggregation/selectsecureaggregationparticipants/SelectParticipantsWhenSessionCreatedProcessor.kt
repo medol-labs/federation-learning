@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class SelectParticipantsWhenSessionCreatedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: SecureAggregationSessionCreatedEvent): java.util.concurrent.CompletableFuture<SelectSecureAggregationParticipantsCommand> =
-        commandGateway.send(SelectSecureAggregationParticipantsCommand(secureAggregationSessionId = event.secureAggregationSessionId, roundId = event.roundId, acceptedRuntimeIds = event.acceptedRuntimeIds, selectedRuntimeIds = emptyList() /* TODO: provide selectedRuntimeIds */, selectedParticipantCount = 0 /* TODO: provide selectedParticipantCount */)).resultMessage.thenApply { it.payload() as SelectSecureAggregationParticipantsCommand }
+    fun on(event: SecureAggregationSessionCreatedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(SelectSecureAggregationParticipantsCommand(secureAggregationSessionId = event.secureAggregationSessionId, roundId = event.roundId, acceptedRuntimeIds = event.acceptedRuntimeIds, selectedRuntimeIds = emptyList() /* TODO: provide selectedRuntimeIds */, selectedParticipantCount = 0 /* TODO: provide selectedParticipantCount */)).resultMessage
 }

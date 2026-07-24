@@ -11,6 +11,6 @@ import org.springframework.stereotype.Component
 @Component
 class EvaluateModelUpdateWhenReceivedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: ModelUpdateSubmissionReceivedEvent): java.util.concurrent.CompletableFuture<EvaluateModelUpdateSubmissionCommand> =
-        commandGateway.send(EvaluateModelUpdateSubmissionCommand(modelUpdateSubmissionId = event.modelUpdateSubmissionId, executionSessionId = event.executionSessionId, executionPlanId = event.executionPlanId, trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, roundId = event.roundId, runtimeId = event.runtimeId, anomalyScore = java.math.BigDecimal.ZERO /* TODO: provide anomalyScore */)).resultMessage.thenApply { it.payload() as EvaluateModelUpdateSubmissionCommand }
+    fun on(event: ModelUpdateSubmissionReceivedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(EvaluateModelUpdateSubmissionCommand(modelUpdateSubmissionId = event.modelUpdateSubmissionId, executionSessionId = event.executionSessionId, executionPlanId = event.executionPlanId, trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, roundId = event.roundId, runtimeId = event.runtimeId, anomalyScore = java.math.BigDecimal.ZERO /* TODO: provide anomalyScore */)).resultMessage
 }

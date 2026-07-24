@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class ReleaseRuntimeEngineJobWhenRoundExecutionCompletedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: RoundExecutionCompletedEvent): java.util.concurrent.CompletableFuture<ReleaseRuntimeEngineJobAfterCompletionCommand> =
-        commandGateway.send(ReleaseRuntimeEngineJobAfterCompletionCommand(roundExecutionId = event.roundExecutionId, runtimeEngineJobId = event.runtimeEngineJobId, executionPlanId = event.executionPlanId)).resultMessage.thenApply { it.payload() as ReleaseRuntimeEngineJobAfterCompletionCommand }
+    fun on(event: RoundExecutionCompletedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(ReleaseRuntimeEngineJobAfterCompletionCommand(roundExecutionId = event.roundExecutionId, runtimeEngineJobId = event.runtimeEngineJobId, executionPlanId = event.executionPlanId)).resultMessage
 }

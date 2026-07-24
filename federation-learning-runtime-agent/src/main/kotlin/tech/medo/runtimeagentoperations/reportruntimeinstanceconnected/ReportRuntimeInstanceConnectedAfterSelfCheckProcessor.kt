@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class ReportRuntimeInstanceConnectedAfterSelfCheckProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: RuntimeInstanceSelfCheckPassedEvent): java.util.concurrent.CompletableFuture<ReportRuntimeInstanceConnectedCommand> =
-        commandGateway.send(ReportRuntimeInstanceConnectedCommand(runtimeInfrastructureId = event.runtimeInfrastructureId, runtimeAgentId = event.runtimeAgentId, runtimePlatformConnectionReady = false /* TODO: provide runtimePlatformConnectionReady */, platformApiReachable = false /* TODO: provide platformApiReachable */, agentAuthenticationSucceeded = false /* TODO: provide agentAuthenticationSucceeded */, controlChannelEstablished = false /* TODO: provide controlChannelEstablished */, heartbeatAccepted = false /* TODO: provide heartbeatAccepted */)).resultMessage.thenApply { it.payload() as ReportRuntimeInstanceConnectedCommand }
+    fun on(event: RuntimeInstanceSelfCheckPassedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(ReportRuntimeInstanceConnectedCommand(runtimeInfrastructureId = event.runtimeInfrastructureId, runtimeAgentId = event.runtimeAgentId, runtimePlatformConnectionReady = false /* TODO: provide runtimePlatformConnectionReady */, platformApiReachable = false /* TODO: provide platformApiReachable */, agentAuthenticationSucceeded = false /* TODO: provide agentAuthenticationSucceeded */, controlChannelEstablished = false /* TODO: provide controlChannelEstablished */, heartbeatAccepted = false /* TODO: provide heartbeatAccepted */)).resultMessage
 }

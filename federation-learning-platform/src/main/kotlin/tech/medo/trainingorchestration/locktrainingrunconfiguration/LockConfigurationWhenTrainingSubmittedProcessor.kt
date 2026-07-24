@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class LockConfigurationWhenTrainingSubmittedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: TrainingJobSubmittedEvent): java.util.concurrent.CompletableFuture<LockTrainingRunConfigurationCommand> =
-        commandGateway.send(LockTrainingRunConfigurationCommand(trainingRunConfigurationId = java.util.UUID.randomUUID() /* TODO: provide trainingRunConfigurationId */, trainingJobId = event.trainingJobId)).resultMessage.thenApply { it.payload() as LockTrainingRunConfigurationCommand }
+    fun on(event: TrainingJobSubmittedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(LockTrainingRunConfigurationCommand(trainingRunConfigurationId = java.util.UUID.randomUUID() /* TODO: provide trainingRunConfigurationId */, trainingJobId = event.trainingJobId)).resultMessage
 }

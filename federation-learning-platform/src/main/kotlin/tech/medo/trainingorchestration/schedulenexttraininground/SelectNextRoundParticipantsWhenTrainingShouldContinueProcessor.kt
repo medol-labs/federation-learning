@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class SelectNextRoundParticipantsWhenTrainingShouldContinueProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: TrainingRoundCompletedEvent): java.util.concurrent.CompletableFuture<SelectTrainingRoundParticipantsCommand> =
-        commandGateway.send(SelectTrainingRoundParticipantsCommand(trainingJobId = event.trainingJobId)).resultMessage.thenApply { it.payload() as SelectTrainingRoundParticipantsCommand }
+    fun on(event: TrainingRoundCompletedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(SelectTrainingRoundParticipantsCommand(trainingJobId = event.trainingJobId)).resultMessage
 }

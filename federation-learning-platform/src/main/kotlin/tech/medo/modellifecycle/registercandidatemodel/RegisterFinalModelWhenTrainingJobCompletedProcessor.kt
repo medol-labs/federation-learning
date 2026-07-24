@@ -11,6 +11,6 @@ import org.springframework.stereotype.Component
 @Component
 class RegisterFinalModelWhenTrainingJobCompletedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: TrainingJobCompletedEvent): java.util.concurrent.CompletableFuture<RegisterCandidateModelCommand> =
-        commandGateway.send(RegisterCandidateModelCommand(modelVersionId = java.util.UUID.randomUUID() /* TODO: provide modelVersionId */, trainingJobId = event.trainingJobId, finalRoundId = event.finalRoundId, modelArtifactId = java.util.UUID.randomUUID() /* TODO: provide modelArtifactId */, modelHash = "" /* TODO: provide modelHash */, evaluationReportId = java.util.UUID.randomUUID() /* TODO: provide evaluationReportId */, finalGlobalAccuracy = java.math.BigDecimal.ZERO /* TODO: provide finalGlobalAccuracy */)).resultMessage.thenApply { it.payload() as RegisterCandidateModelCommand }
+    fun on(event: TrainingJobCompletedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(RegisterCandidateModelCommand(modelVersionId = java.util.UUID.randomUUID() /* TODO: provide modelVersionId */, trainingJobId = event.trainingJobId, finalRoundId = event.finalRoundId, modelArtifactId = java.util.UUID.randomUUID() /* TODO: provide modelArtifactId */, modelHash = "" /* TODO: provide modelHash */, evaluationReportId = java.util.UUID.randomUUID() /* TODO: provide evaluationReportId */, finalGlobalAccuracy = java.math.BigDecimal.ZERO /* TODO: provide finalGlobalAccuracy */)).resultMessage
 }

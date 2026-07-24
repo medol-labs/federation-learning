@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class DetectRuntimeCapabilitiesWhenRuntimeActivatedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: RuntimeIdentityActivatedEvent): java.util.concurrent.CompletableFuture<DetectRuntimeCapabilitiesCommand> =
-        commandGateway.send(DetectRuntimeCapabilitiesCommand(runtimeId = event.runtimeId, capabilityTypes = emptyList() /* TODO: provide capabilityTypes */)).resultMessage.thenApply { it.payload() as DetectRuntimeCapabilitiesCommand }
+    fun on(event: RuntimeIdentityActivatedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(DetectRuntimeCapabilitiesCommand(runtimeId = event.runtimeId, capabilityTypes = emptyList() /* TODO: provide capabilityTypes */)).resultMessage
 }

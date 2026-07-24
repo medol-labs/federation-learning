@@ -1,0 +1,54 @@
+services:
+  runtime-agent-umadb:
+    image: umadb/umadb:latest
+    ports:
+      - "${RUNTIME_AGENT_UMADB_PORT:-50052}:50051"
+    volumes:
+      - runtime_agent_umadb_data:/data
+
+  runtime-agent-postgres:
+    image: postgres:16
+    ports:
+      - "${FEDERATION_LEARNING_RUNTIME_AGENT_DB_PORT:-5434}:5432"
+    environment:
+      POSTGRES_USER: medol
+      POSTGRES_PASSWORD: medol
+      POSTGRES_DB: federation_learning_runtime_agent
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medol -d federation_learning_runtime_agent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - runtime_agent_postgres_data:/var/lib/postgresql/data
+
+  federation-learning-runtime-agent:
+    image: ${FEDERATION_LEARNING_RUNTIME_AGENT_IMAGE:-medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT}
+    depends_on:
+      runtime-agent-postgres:
+        condition: service_healthy
+      runtime-agent-umadb:
+        condition: service_started
+    ports:
+      - "${FEDERATION_LEARNING_RUNTIME_AGENT_PORT:-8082}:8082"
+    environment:
+      SERVER_PORT: 8082
+      SPRING_DOCKER_COMPOSE_ENABLED: "false"
+      DB_URL: jdbc:postgresql://runtime-agent-postgres:5432/federation_learning_runtime_agent
+      DB_USERNAME: medol
+      DB_PASSWORD: medol
+      MEDOL_AXON_EVENT_STORAGE: ${RUNTIME_AGENT_AXON_EVENT_STORAGE:-umadb}
+      UMADB_TARGET: ${RUNTIME_AGENT_UMADB_TARGET:-runtime-agent-umadb:50051}
+      UMADB_PLAINTEXT: ${RUNTIME_AGENT_UMADB_PLAINTEXT:-true}
+      UMADB_API_KEY: ${RUNTIME_AGENT_UMADB_API_KEY:-}
+      UMADB_BATCH_SIZE: ${RUNTIME_AGENT_UMADB_BATCH_SIZE:-256}
+      UMADB_REQUEST_TIMEOUT: ${RUNTIME_AGENT_UMADB_REQUEST_TIMEOUT:-PT10S}
+      AXON_SERVER_ENABLED: "false"
+      AXON_SERVER_EVENT_STORE_ENABLED: "false"
+      AXON_UPDATE_CHECK_DISABLED: ${AXON_UPDATE_CHECK_DISABLED:-true}
+      FEDERATION_LEARNING_PLATFORM_URL: ${FEDERATION_LEARNING_PLATFORM_URL:-}
+      FEDERATION_LEARNING_DICTIONARY_URL: ${FEDERATION_LEARNING_DICTIONARY_URL:-}
+
+volumes:
+  runtime_agent_umadb_data:
+  runtime_agent_postgres_data:

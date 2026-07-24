@@ -1,5 +1,6 @@
 package tech.medo.runtimeprovisioning.infrastructure.secondary.runtimeinfrastructure.dockercompose
 
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import tech.medo.runtimeprovisioning.retryruntimeagentdeployment.RetryRuntimeAgentDeploymentInput
 import tech.medo.runtimeprovisioning.retryruntimeagentdeployment.RetryRuntimeAgentDeploymentResult
@@ -11,30 +12,47 @@ class DockerComposeRetryRuntimeAgentDeploymentAdapter(
     private val lookup: RuntimeProvisioningLookup,
     private val runner: DockerComposeCommandRunner
 ) : RetryRuntimeAgentDeploymentService {
-    override fun supports(input: RetryRuntimeAgentDeploymentInput): Boolean =
-        properties.enabled &&
+    override fun supports(input: RetryRuntimeAgentDeploymentInput): Boolean {
+        val supported = properties.enabled &&
             (lookup.isDockerComposeRuntimeInfrastructure(input.runtimeInfrastructureId, properties) ?: true)
+        log.debug(
+            "Docker Compose retry supports runtimeInfrastructureId={}, runtimeAgentId={}, enabled={}, supported={}",
+            input.runtimeInfrastructureId,
+            input.runtimeAgentId,
+            properties.enabled,
+            supported
+        )
+        return supported
+    }
 
     override fun execute(input: RetryRuntimeAgentDeploymentInput): RetryRuntimeAgentDeploymentResult {
+        log.debug(
+            "Retrying runtime agent deployment with Docker Compose runtimeInfrastructureId={}, runtimeAgentId={}, service={}",
+            input.runtimeInfrastructureId,
+            input.runtimeAgentId,
+            properties.agentServiceName
+        )
         val plan = lookup.findPlanByRuntimeInfrastructureId(input.runtimeInfrastructureId)
-            ?: return RetryRuntimeAgentDeploymentResult.Rejected(
-                failureReason = "Runtime installation plan was not found for runtimeInfrastructureId=${input.runtimeInfrastructureId}."
-            )
+            ?: return rejected("Runtime installation plan was not found for runtimeInfrastructureId=${input.runtimeInfrastructureId}.")
         val runtimePackage = lookup.findPackage(plan)
-            ?: return RetryRuntimeAgentDeploymentResult.Rejected(
-                failureReason = "Runtime infrastructure package was not found for runtimeInfrastructurePackageId=${plan.runtimeInfrastructurePackageId}."
-            )
+            ?: return rejected("Runtime infrastructure package was not found for runtimeInfrastructurePackageId=${plan.runtimeInfrastructurePackageId}.")
         if (!isDockerComposePackage(runtimePackage.runtimeDeploymentTargetType, runtimePackage.runtimeEnvironmentType)) {
-            return RetryRuntimeAgentDeploymentResult.Rejected(
-                failureReason = "Runtime infrastructure package is not a Docker Compose target."
-            )
+            return rejected("Runtime infrastructure package is not a Docker Compose target.")
         }
 
         val result = runner.run(properties, listOf("up", "-d", properties.agentServiceName))
         if (!result.succeeded) {
-            return RetryRuntimeAgentDeploymentResult.Unavailable(commandFailure(result))
+            val failure = commandFailure(result)
+            log.debug("Docker Compose runtime agent deployment retry unavailable: {}", failure)
+            return RetryRuntimeAgentDeploymentResult.Unavailable(failure)
         }
 
+        log.debug(
+            "Docker Compose runtime agent deployment retried runtimeInfrastructureId={}, runtimeAgentId={}, agentVersion={}",
+            input.runtimeInfrastructureId,
+            input.runtimeAgentId,
+            properties.agentVersion
+        )
         return RetryRuntimeAgentDeploymentResult.Succeeded(
             runtimeAgentId = input.runtimeAgentId,
             agentVersion = properties.agentVersion
@@ -51,4 +69,13 @@ class DockerComposeRetryRuntimeAgentDeploymentAdapter(
         } else {
             "docker compose up failed with exitCode=${result.exitCode}: ${result.output}"
         }
+
+    private fun rejected(failureReason: String): RetryRuntimeAgentDeploymentResult.Rejected {
+        log.debug("Docker Compose runtime agent deployment retry rejected: {}", failureReason)
+        return RetryRuntimeAgentDeploymentResult.Rejected(failureReason)
+    }
+
+    companion object {
+        private val log = LoggerFactory.getLogger(DockerComposeRetryRuntimeAgentDeploymentAdapter::class.java)
+    }
 }

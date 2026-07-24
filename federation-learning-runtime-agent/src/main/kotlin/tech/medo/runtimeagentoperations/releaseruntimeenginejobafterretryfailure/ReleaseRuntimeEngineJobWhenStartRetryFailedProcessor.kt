@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class ReleaseRuntimeEngineJobWhenStartRetryFailedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: RoundExecutionStartRetryFailedEvent): java.util.concurrent.CompletableFuture<ReleaseRuntimeEngineJobAfterRetryFailureCommand> =
-        commandGateway.send(ReleaseRuntimeEngineJobAfterRetryFailureCommand(roundExecutionId = event.roundExecutionId, runtimeEngineJobId = event.runtimeEngineJobId, executionPlanId = event.executionPlanId)).resultMessage.thenApply { it.payload() as ReleaseRuntimeEngineJobAfterRetryFailureCommand }
+    fun on(event: RoundExecutionStartRetryFailedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(ReleaseRuntimeEngineJobAfterRetryFailureCommand(roundExecutionId = event.roundExecutionId, runtimeEngineJobId = event.runtimeEngineJobId, executionPlanId = event.executionPlanId)).resultMessage
 }

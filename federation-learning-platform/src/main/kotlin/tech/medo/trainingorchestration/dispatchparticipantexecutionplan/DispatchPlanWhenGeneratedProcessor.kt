@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class DispatchPlanWhenGeneratedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: ParticipantExecutionPlanGeneratedEvent): java.util.concurrent.CompletableFuture<DispatchParticipantExecutionPlanCommand> =
-        commandGateway.send(DispatchParticipantExecutionPlanCommand(executionPlanId = event.executionPlanId, executionSessionId = event.executionSessionId, trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber, runtimeId = event.runtimeId, organizationId = event.organizationId, baseModelVersionId = event.baseModelVersionId)).resultMessage.thenApply { it.payload() as DispatchParticipantExecutionPlanCommand }
+    fun on(event: ParticipantExecutionPlanGeneratedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(DispatchParticipantExecutionPlanCommand(executionPlanId = event.executionPlanId, executionSessionId = event.executionSessionId, trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber, runtimeId = event.runtimeId, organizationId = event.organizationId, baseModelVersionId = event.baseModelVersionId)).resultMessage
 }

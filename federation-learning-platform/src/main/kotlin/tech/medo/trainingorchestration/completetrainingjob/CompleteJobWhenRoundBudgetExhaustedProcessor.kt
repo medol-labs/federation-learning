@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class CompleteJobWhenRoundBudgetExhaustedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: TrainingRoundCompletedEvent): java.util.concurrent.CompletableFuture<CompleteTrainingJobCommand> =
-        commandGateway.send(CompleteTrainingJobCommand(trainingJobId = event.trainingJobId, finalRoundId = java.util.UUID.randomUUID() /* TODO: provide finalRoundId */, finalModelVersionId = java.util.UUID.randomUUID() /* TODO: provide finalModelVersionId */, stopReason = "" /* TODO: provide stopReason */)).resultMessage.thenApply { it.payload() as CompleteTrainingJobCommand }
+    fun on(event: TrainingRoundCompletedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(CompleteTrainingJobCommand(trainingJobId = event.trainingJobId, finalRoundId = java.util.UUID.randomUUID() /* TODO: provide finalRoundId */, finalModelVersionId = java.util.UUID.randomUUID() /* TODO: provide finalModelVersionId */, stopReason = "" /* TODO: provide stopReason */)).resultMessage
 }

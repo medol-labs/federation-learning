@@ -11,6 +11,6 @@ import org.springframework.stereotype.Component
 @Component
 class FinishRoundAfterGlobalModelEvaluatedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
-    fun on(event: GlobalModelEvaluationSubmittedEvent): java.util.concurrent.CompletableFuture<CompleteTrainingRoundCommand> =
-        commandGateway.send(CompleteTrainingRoundCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, aggregatedModelVersionId = event.aggregatedModelVersionId, modelFormat = event.modelFormat, modelHash = event.modelHash, globalAccuracy = event.globalAccuracy)).resultMessage.thenApply { it.payload() as CompleteTrainingRoundCommand }
+    fun on(event: GlobalModelEvaluationSubmittedEvent): java.util.concurrent.CompletableFuture<*> =
+        commandGateway.send(CompleteTrainingRoundCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, aggregatedModelVersionId = event.aggregatedModelVersionId, modelFormat = event.modelFormat, modelHash = event.modelHash, globalAccuracy = event.globalAccuracy)).resultMessage
 }
