@@ -1,16 +1,21 @@
-package tech.medo.runtimeprovisioning.infrastructure.secondary.runtimeinfrastructure.dockercompose
+package tech.medo.runtimeprovisioning.infrastructure.secondary.runtimeinfrastructure.k3s
 
 import org.springframework.stereotype.Component
-import java.io.File
 import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 @Component
-class ProcessDockerComposeCommandRunner : DockerComposeCommandRunner {
-    override fun run(properties: DockerComposeRuntimeInfrastructureProperties, arguments: List<String>): DockerComposeCommandResult {
-        val command = listOf("docker", "compose", "-f", properties.composeFile) + arguments
+class ProcessK3sCommandRunner : K3sCommandRunner {
+    override fun run(properties: K3sRuntimeInfrastructureProperties, arguments: List<String>): K3sCommandResult {
+        val command = buildList {
+            add(properties.kubectlExecutable)
+            properties.kubeconfig?.takeIf { it.isNotBlank() }?.let {
+                add("--kubeconfig")
+                add(it)
+            }
+            addAll(arguments)
+        }
         val process = ProcessBuilder(command)
-            .directory(properties.projectDirectory?.takeIf { it.isNotBlank() }?.let(::File))
             .redirectErrorStream(true)
             .start()
 
@@ -27,14 +32,14 @@ class ProcessDockerComposeCommandRunner : DockerComposeCommandRunner {
         val completed = process.waitFor(timeout.toMillis(), TimeUnit.MILLISECONDS)
         if (!completed) {
             process.destroyForcibly()
-            return DockerComposeCommandResult(
+            return K3sCommandResult(
                 exitCode = -1,
                 output = output.toString().trim(),
                 timedOut = true
             )
         }
         readerThread.join(1000)
-        return DockerComposeCommandResult(
+        return K3sCommandResult(
             exitCode = process.exitValue(),
             output = output.toString().trim(),
             timedOut = false
@@ -42,11 +47,11 @@ class ProcessDockerComposeCommandRunner : DockerComposeCommandRunner {
     }
 }
 
-interface DockerComposeCommandRunner {
-    fun run(properties: DockerComposeRuntimeInfrastructureProperties, arguments: List<String>): DockerComposeCommandResult
+interface K3sCommandRunner {
+    fun run(properties: K3sRuntimeInfrastructureProperties, arguments: List<String>): K3sCommandResult
 }
 
-data class DockerComposeCommandResult(
+data class K3sCommandResult(
     val exitCode: Int,
     val output: String,
     val timedOut: Boolean
