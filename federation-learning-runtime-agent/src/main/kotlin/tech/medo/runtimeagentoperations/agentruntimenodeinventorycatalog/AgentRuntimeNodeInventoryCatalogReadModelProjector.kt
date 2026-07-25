@@ -8,6 +8,7 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 import tech.medo.runtimeagentoperations.events.AgentRuntimeNodeInventoryReportedEvent
 
 
+
 @Component
 class AgentRuntimeNodeInventoryCatalogReadModelProjector(private val repository: AgentRuntimeNodeInventoryCatalogReadModelRepository) {
     @EventHandler
@@ -35,4 +36,5 @@ class AgentRuntimeNodeInventoryCatalogReadModelProjector(private val repository:
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

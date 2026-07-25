@@ -11,6 +11,9 @@ import tech.medo.runtimemonitoring.events.TrainingAlertRaisedEvent
 import tech.medo.runtimemonitoring.events.TrainingAlertAcknowledgedEvent
 import tech.medo.runtimemonitoring.events.TrainingAlertResolvedEvent
 import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 
 @Component
 class TrainingAlertCatalogReadModelProjector(private val repository: TrainingAlertCatalogReadModelRepository) {
@@ -54,6 +57,7 @@ class TrainingAlertCatalogReadModelProjector(private val repository: TrainingAle
         }
             entity.alertId = event.alertId
             entity.state = TrainingAlertStateEnum.ACKNOWLEDGED
+            entity.acknowledgedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -70,7 +74,12 @@ class TrainingAlertCatalogReadModelProjector(private val repository: TrainingAle
             entity.alertId = event.alertId
             entity.resolutionSummary = event.resolutionSummary
             entity.state = TrainingAlertStateEnum.RESOLVED
+            entity.resolvedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

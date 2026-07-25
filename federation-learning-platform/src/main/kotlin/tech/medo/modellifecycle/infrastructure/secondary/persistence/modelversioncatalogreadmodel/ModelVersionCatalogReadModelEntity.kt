@@ -42,6 +42,7 @@ class ModelVersionCatalogReadModelEntity : MetadataProjection {
     var canPromoteToProduction: Boolean? = null
     var canRollback: Boolean? = null
     var canRetire: Boolean? = null
+    @Column(columnDefinition = "text")
     var blockedReason: String? = null
     override var userId: String? = null
     override var sessionId: String? = null

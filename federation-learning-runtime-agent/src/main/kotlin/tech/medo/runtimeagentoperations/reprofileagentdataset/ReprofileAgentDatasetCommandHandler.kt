@@ -6,7 +6,7 @@ import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.reprofileagentdataset.ReprofileAgentDatasetCommand
 
-import tech.medo.runtimeagentoperations.runtimedatasetmetadata.RuntimeDatasetMetadataState
+import tech.medo.runtimeagentoperations.agentdatasetprofile.AgentDatasetProfileState
 
 
 
@@ -17,7 +17,7 @@ class ReprofileAgentDatasetCommandHandler(
     @CommandHandler
     fun handle(
         command: ReprofileAgentDatasetCommand,
-        @InjectEntity(idProperty = "metadataReportId") state: RuntimeDatasetMetadataState,
+        @InjectEntity(idProperty = "metadataReportId") state: AgentDatasetProfileState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))

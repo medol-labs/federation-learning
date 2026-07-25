@@ -16,6 +16,7 @@ import tech.medo.federationmanagement.events.ParticipantSuspendedEvent
 import tech.medo.federationmanagement.events.ParticipantRemovedEvent
 
 
+
 @Component
 class FederationMembershipDirectoryReadModelProjector(private val repository: FederationMembershipDirectoryReadModelRepository) {
     @EventHandler
@@ -156,4 +157,5 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

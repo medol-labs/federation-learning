@@ -12,6 +12,9 @@ import tech.medo.secureaggregation.events.EncryptedModelUpdateReceivedEvent
 import tech.medo.secureaggregation.events.SecureAggregationCompletedEvent
 import tech.medo.secureaggregation.events.SecureAggregationFailedEvent
 import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 
 @Component
 class SecureAggregationSessionCatalogReadModelProjector(private val repository: SecureAggregationSessionCatalogReadModelRepository) {
@@ -69,6 +72,7 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
             entity.publicKeyVersion = event.publicKeyVersion
             entity.encryptedParameterScale = event.encryptedParameterScale
             entity.state = SecureAggregationSessionStateEnum.ENCRYPTION_CONTEXT_PREPARED
+            entity.encryptionContextPreparedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -105,6 +109,7 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
             entity.modelFormat = event.modelFormat
             entity.modelHash = event.modelHash
             entity.state = SecureAggregationSessionStateEnum.COMPLETED
+            entity.completedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -121,7 +126,12 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
             entity.secureAggregationSessionId = event.secureAggregationSessionId
             entity.failureReason = event.failureReason
             entity.state = SecureAggregationSessionStateEnum.FAILED
+            entity.failedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

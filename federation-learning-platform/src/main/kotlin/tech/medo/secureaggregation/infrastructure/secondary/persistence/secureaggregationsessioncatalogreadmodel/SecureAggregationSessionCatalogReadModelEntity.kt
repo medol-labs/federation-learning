@@ -38,6 +38,7 @@ class SecureAggregationSessionCatalogReadModelEntity : MetadataProjection {
     var modelHash: String? = null
     @Enumerated(EnumType.STRING)
     var state: SecureAggregationSessionStateEnum? = null
+    @Column(columnDefinition = "text")
     var failureReason: String? = null
     var createdAt: LocalDateTime? = null
     var selectedAt: LocalDateTime? = null

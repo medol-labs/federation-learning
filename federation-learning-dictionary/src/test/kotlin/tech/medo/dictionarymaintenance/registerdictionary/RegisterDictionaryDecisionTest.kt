@@ -22,7 +22,7 @@ class RegisterDictionaryDecisionTest {
             DictionaryCodeReservedEvent(
                 dictionaryId = java.util.UUID.randomUUID(),
                 dictionaryCode = DictionaryCode(""),
-                normalizedName = DictionaryCode("").toString().trim().lowercase()
+                normalizedName = DictionaryCode("").value.trim().lowercase()
             )
         )
 

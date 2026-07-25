@@ -51,9 +51,12 @@ class RoundExecutionCatalogReadModelEntity : MetadataProjection {
     var completedAt: LocalDateTime? = null
     var failedAt: LocalDateTime? = null
     var submittedAt: LocalDateTime? = null
+    @Column(columnDefinition = "text")
     var failureReason: String? = null
+    @Column(columnDefinition = "text")
     var retryReason: String? = null
     var runtimeEngineReleased: Boolean? = null
+    @Column(columnDefinition = "text")
     var runtimeEngineReleaseFailureReason: String? = null
     @Column(columnDefinition = "text")
     var rejectionReasons: String? = null

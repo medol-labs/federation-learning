@@ -142,6 +142,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ModelUpdateSubmissionRejectedEvent): TrainingRoundState = apply {
+        currentState = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
         modelUpdateSubmissionId = event.modelUpdateSubmissionId
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
@@ -179,6 +180,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: GlobalModelEvaluationSubmittedEvent): TrainingRoundState = apply {
+        currentState = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId

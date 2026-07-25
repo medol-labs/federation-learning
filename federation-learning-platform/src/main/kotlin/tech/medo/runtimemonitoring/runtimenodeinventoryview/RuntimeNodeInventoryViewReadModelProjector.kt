@@ -11,6 +11,7 @@ import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureRegisteredEvent
 import tech.medo.runtimemonitoring.events.RuntimeNodeInventoryReportedEvent
 
 
+
 @Component
 class RuntimeNodeInventoryViewReadModelProjector(private val repository: RuntimeNodeInventoryViewReadModelRepository) {
     @EventHandler
@@ -54,4 +55,5 @@ class RuntimeNodeInventoryViewReadModelProjector(private val repository: Runtime
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

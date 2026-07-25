@@ -12,11 +12,7 @@ import tech.medo.federationmanagement.events.ParticipantSuspendedEvent
 import tech.medo.federationmanagement.events.ParticipantRemovedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeConnectionEstablishedEvent
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
-import tech.medo.datasetgovernance.events.DatasetDeclaredEvent
 import tech.medo.datasetgovernance.events.DatasetMetadataReportedEvent
-import tech.medo.datasetgovernance.events.DatasetContractValidatedEvent
-import tech.medo.datasetgovernance.events.DatasetApprovedForTrainingEvent
-import tech.medo.datasetgovernance.events.DatasetTrainingApprovalRevokedEvent
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
 import tech.medo.trainingorchestration.events.TrainingJobSubmittedEvent
 import tech.medo.runtimemonitoring.events.RuntimeAgentOfflineDetectedEvent
@@ -24,6 +20,7 @@ import tech.medo.runtimemonitoring.events.RuntimeAgentRecoveredEvent
 import tech.medo.runtimegovernance.events.RuntimeIdentityActivatedEvent
 import tech.medo.runtimegovernance.events.RuntimeIdentityRevokedEvent
 import tech.medo.runtimegovernance.events.RuntimeCapabilitiesDetectedEvent
+
 
 
 @Component
@@ -64,28 +61,8 @@ class TrainingParticipantEligibilityReadModelProjector(private val repository: T
     }
 
     @EventHandler
-    fun on(event: DatasetDeclaredEvent) {
-        // Skipped: DatasetDeclaredEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
-    }
-
-    @EventHandler
     fun on(event: DatasetMetadataReportedEvent) {
         // Skipped: DatasetMetadataReportedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
-    }
-
-    @EventHandler
-    fun on(event: DatasetContractValidatedEvent) {
-        // Skipped: DatasetContractValidatedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
-    }
-
-    @EventHandler
-    fun on(event: DatasetApprovedForTrainingEvent) {
-        // Skipped: DatasetApprovedForTrainingEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
-    }
-
-    @EventHandler
-    fun on(event: DatasetTrainingApprovalRevokedEvent) {
-        // Skipped: DatasetTrainingApprovalRevokedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
     @EventHandler
@@ -142,4 +119,5 @@ class TrainingParticipantEligibilityReadModelProjector(private val repository: T
     fun on(event: RuntimeCapabilitiesDetectedEvent) {
         // Skipped: RuntimeCapabilitiesDetectedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
+
 }

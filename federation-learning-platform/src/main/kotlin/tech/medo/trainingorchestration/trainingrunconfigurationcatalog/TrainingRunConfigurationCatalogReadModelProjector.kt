@@ -12,6 +12,7 @@ import tech.medo.trainingorchestration.events.TrainingRunConfigurationUpdatedEve
 import tech.medo.trainingorchestration.events.TrainingRunConfigurationLockedEvent
 import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum
 
+
 @Component
 class TrainingRunConfigurationCatalogReadModelProjector(private val repository: TrainingRunConfigurationCatalogReadModelRepository) {
     @EventHandler
@@ -120,7 +121,9 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
         }
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.state = TrainingRunConfigurationStateEnum.LOCKED
+            entity.lockedByTrainingJobId = event.trainingJobId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

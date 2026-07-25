@@ -7,6 +7,9 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimegovernance.events.RuntimeCapabilitiesDetectedEvent
 
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 
 @Component
 class RuntimeCapabilityCatalogReadModelProjector(private val repository: RuntimeCapabilityCatalogReadModelRepository) {
@@ -21,7 +24,12 @@ class RuntimeCapabilityCatalogReadModelProjector(private val repository: Runtime
         }
             entity.runtimeId = event.runtimeId
             entity.capabilityTypes = event.capabilityTypes
+            entity.detectedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

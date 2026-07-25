@@ -20,6 +20,7 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
+
 @Component
 class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: RuntimeInfrastructureAccessViewReadModelRepository) {
     @EventHandler
@@ -48,6 +49,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
             entity.runtimeName = event.runtimeName
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
+            entity.agentDeploymentFailedAt = null
+            entity.agentDeploymentFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -63,6 +66,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.state = RuntimeInfrastructureStateEnum.REGISTERED
+            entity.infrastructureVerificationFailedAt = null
+            entity.infrastructureVerificationFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -78,10 +83,10 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.agentInstallMode = event.agentInstallMode
+            entity.state = RuntimeInfrastructureStateEnum.VERIFIED
             entity.infrastructureVerifiedAt = eventTime(message)
             entity.infrastructureVerificationFailedAt = null
             entity.infrastructureVerificationFailureReason = null
-            entity.state = RuntimeInfrastructureStateEnum.VERIFIED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -114,13 +119,13 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.state = RuntimeInfrastructureStateEnum.AGENT_READY
             entity.runtimeAgentVersion = event.agentVersion
             entity.agentReadyAt = eventTime(message)
             entity.agentDeploymentFailedAt = null
             entity.agentDeploymentFailureReason = null
             entity.agentDeploymentRetryFailedAt = null
             entity.agentDeploymentRetryFailureReason = null
-            entity.state = RuntimeInfrastructureStateEnum.AGENT_READY
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -153,13 +158,13 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.state = RuntimeInfrastructureStateEnum.AGENT_READY
             entity.runtimeAgentVersion = event.agentVersion
             entity.agentReadyAt = eventTime(message)
             entity.agentDeploymentFailedAt = null
             entity.agentDeploymentFailureReason = null
             entity.agentDeploymentRetryFailedAt = null
             entity.agentDeploymentRetryFailureReason = null
-            entity.state = RuntimeInfrastructureStateEnum.AGENT_READY
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -192,12 +197,13 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
-            entity.connectedAt = eventTime(message)
             entity.state = RuntimeInfrastructureStateEnum.CONNECTED
+            entity.connectedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

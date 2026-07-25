@@ -46,6 +46,7 @@ class TrainingRunConfigurationCatalogReadModelEntity : MetadataProjection {
     var minimumAccuracy: BigDecimal? = null
     var minimumFairnessScore: BigDecimal? = null
     var failureToleranceRatio: BigDecimal? = null
+    @Column(columnDefinition = "text")
     var updateReason: String? = null
     var lockedByTrainingJobId: UUID? = null
     @Enumerated(EnumType.STRING)

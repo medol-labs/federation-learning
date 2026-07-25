@@ -13,6 +13,7 @@ import tech.medo.datasetgovernance.events.FeatureSchemaVersionSupersededEvent
 import tech.medo.datasetgovernance.events.CurrentRecommendedFeatureSchemaVersionMarkedEvent
 
 
+
 @Component
 class FeatureSchemaCatalogReadModelProjector(private val repository: FeatureSchemaCatalogReadModelRepository) {
     @EventHandler
@@ -31,6 +32,7 @@ class FeatureSchemaCatalogReadModelProjector(private val repository: FeatureSche
             entity.features = event.features
             entity.labels = event.labels
             entity.featureCount = event.featureCount
+            entity.supersededByFeatureSchemaId = event.featureSchemaId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -45,6 +47,7 @@ class FeatureSchemaCatalogReadModelProjector(private val repository: FeatureSche
                 this.featureSchemaId = event.featureSchemaId
         }
             entity.featureSchemaId = event.featureSchemaId
+            entity.supersededByFeatureSchemaId = event.featureSchemaId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -59,6 +62,7 @@ class FeatureSchemaCatalogReadModelProjector(private val repository: FeatureSche
                 this.featureSchemaId = event.featureSchemaId
         }
             entity.featureSchemaId = event.featureSchemaId
+            entity.supersededByFeatureSchemaId = event.featureSchemaId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -73,6 +77,7 @@ class FeatureSchemaCatalogReadModelProjector(private val repository: FeatureSche
                 this.featureSchemaId = event.featureSchemaId
         }
             entity.featureSchemaId = event.featureSchemaId
+            entity.supersededByFeatureSchemaId = event.featureSchemaId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -104,7 +109,9 @@ class FeatureSchemaCatalogReadModelProjector(private val repository: FeatureSche
         }
             entity.featureSchemaId = event.featureSchemaId
             entity.featureDomain = event.featureDomain
+            entity.supersededByFeatureSchemaId = event.featureSchemaId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

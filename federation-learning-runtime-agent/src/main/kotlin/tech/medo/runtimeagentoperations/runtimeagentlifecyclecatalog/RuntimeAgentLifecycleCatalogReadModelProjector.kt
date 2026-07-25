@@ -8,6 +8,9 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 import tech.medo.runtimeagentoperations.events.RuntimeAgentStartedEvent
 import tech.medo.runtimeagentoperations.events.RuntimeInstanceSelfCheckPassedEvent
 
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 
 @Component
 class RuntimeAgentLifecycleCatalogReadModelProjector(private val repository: RuntimeAgentLifecycleCatalogReadModelRepository) {
@@ -23,6 +26,7 @@ class RuntimeAgentLifecycleCatalogReadModelProjector(private val repository: Run
             entity.runtimeAgentId = event.runtimeAgentId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.agentVersion = event.agentVersion
+            entity.startedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -46,7 +50,12 @@ class RuntimeAgentLifecycleCatalogReadModelProjector(private val repository: Run
             entity.modelRepositoryClientReady = event.modelRepositoryClientReady
             entity.localDatasetBindingStoreReady = event.localDatasetBindingStoreReady
             entity.workingDirectoryWritable = event.workingDirectoryWritable
+            entity.readyAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

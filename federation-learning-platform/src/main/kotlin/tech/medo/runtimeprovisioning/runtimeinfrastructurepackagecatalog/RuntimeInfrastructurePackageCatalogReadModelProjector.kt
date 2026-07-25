@@ -8,6 +8,7 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegisteredEvent
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum
 
+
 @Component
 class RuntimeInfrastructurePackageCatalogReadModelProjector(private val repository: RuntimeInfrastructurePackageCatalogReadModelRepository) {
     @EventHandler
@@ -31,4 +32,5 @@ class RuntimeInfrastructurePackageCatalogReadModelProjector(private val reposito
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

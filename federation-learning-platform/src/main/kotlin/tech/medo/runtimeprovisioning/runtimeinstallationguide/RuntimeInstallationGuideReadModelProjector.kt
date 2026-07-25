@@ -10,6 +10,7 @@ import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegister
 import tech.medo.runtimeprovisioning.events.RuntimeInstallationPlanCreatedEvent
 
 
+
 @Component
 class RuntimeInstallationGuideReadModelProjector(private val repository: RuntimeInstallationGuideReadModelRepository) {
     @EventHandler
@@ -41,4 +42,5 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

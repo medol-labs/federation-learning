@@ -1,0 +1,23 @@
+package tech.medo.runtimeagentoperations.revokedatasettrainingapproval
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.revokedatasettrainingapproval.RevokeDatasetTrainingApprovalCommand
+
+import tech.medo.runtimeagentoperations.events.DatasetTrainingApprovalRevokedEvent
+import tech.medo.runtimeagentoperations.dataset.DatasetState
+
+
+import tech.medo.runtimeagentoperations.domain.states.DatasetStateEnum
+
+
+@Component
+class RevokeDatasetTrainingApprovalDecision {
+    fun decide(command: RevokeDatasetTrainingApprovalCommand, state: DatasetState): List<Any> {
+        require(state.currentState == DatasetStateEnum.APPROVED) {
+            "RevokeDatasetTrainingApproval requires Dataset to be Approved."
+        }
+        return listOf(
+            DatasetTrainingApprovalRevokedEvent(datasetId = command.datasetId, revokeReason = command.revokeReason)
+        )
+    }
+}

@@ -23,6 +23,9 @@ import tech.medo.runtimeagentoperations.events.RuntimeEngineJobReleaseFailedOrSk
 import tech.medo.runtimeagentoperations.events.RuntimeEngineJobReleaseFailedOrSkippedAfterRetryEvent
 import tech.medo.runtimeagentoperations.events.RuntimeEngineJobReleaseFailedOrSkippedAfterRuntimeRetryEvent
 import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 
 @Component
 class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecutionCatalogReadModelRepository) {
@@ -89,6 +92,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.baseModelVersionId = event.baseModelVersionId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
+            entity.runtimeEngineReleaseFailureReason = event.failureReason
+            entity.state = RoundExecutionStateEnum.START_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -111,6 +116,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.runtimeId = event.runtimeId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.state = RoundExecutionStateEnum.COMPLETED
+            entity.completedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -134,6 +140,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.state = RoundExecutionStateEnum.FAILED
+            entity.failedAt = eventTime(message)
+            entity.runtimeEngineReleaseFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -188,6 +196,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.retryReason = event.retryReason
+            entity.runtimeEngineReleaseFailureReason = event.failureReason
+            entity.state = RoundExecutionStateEnum.START_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -242,6 +252,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.retryReason = event.retryReason
+            entity.runtimeEngineReleaseFailureReason = event.failureReason
+            entity.state = RoundExecutionStateEnum.FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -284,6 +296,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.roundExecutionId = event.roundExecutionId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.state = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASED
+            entity.runtimeEngineReleaseFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -301,6 +314,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.state = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
+            entity.runtimeEngineReleaseFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -318,6 +332,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.state = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
+            entity.runtimeEngineReleaseFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -335,6 +350,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.state = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
+            entity.runtimeEngineReleaseFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -352,7 +368,12 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.state = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
+            entity.runtimeEngineReleaseFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

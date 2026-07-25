@@ -9,6 +9,9 @@ import tech.medo.modelrepository.events.ModelArtifactRegisteredEvent
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
 import tech.medo.trainingorchestration.events.GlobalModelUpdatedEvent
 import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 
 @Component
 class ModelArtifactCatalogReadModelProjector(private val repository: ModelArtifactCatalogReadModelRepository) {
@@ -30,6 +33,7 @@ class ModelArtifactCatalogReadModelProjector(private val repository: ModelArtifa
             entity.modelSizeBytes = event.modelSizeBytes
             entity.sourceType = event.sourceType
             entity.state = ModelArtifactStateEnum.REGISTERED
+            entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -43,4 +47,8 @@ class ModelArtifactCatalogReadModelProjector(private val repository: ModelArtifa
     fun on(event: GlobalModelUpdatedEvent) {
         // Skipped: GlobalModelUpdatedEvent does not provide enough key fields to locate ModelArtifactCatalogReadModelProjection.
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

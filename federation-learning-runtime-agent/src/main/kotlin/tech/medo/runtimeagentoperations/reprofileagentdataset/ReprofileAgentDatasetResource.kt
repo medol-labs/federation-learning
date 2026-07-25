@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 
 @CrossOrigin
 @RestController
-@RequestMapping("/runtimedatasetmetadata")
+@RequestMapping("/agentdatasetprofile")
 class ReprofileAgentDatasetResource(private val commandGateway: CommandGateway) {
     @PostMapping("/reprofileagentdataset")
     fun ReprofileAgentDataset(

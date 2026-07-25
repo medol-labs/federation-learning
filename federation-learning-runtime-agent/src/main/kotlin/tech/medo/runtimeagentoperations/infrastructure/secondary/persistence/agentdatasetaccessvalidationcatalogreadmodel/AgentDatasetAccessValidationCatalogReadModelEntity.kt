@@ -25,6 +25,7 @@ class AgentDatasetAccessValidationCatalogReadModelEntity : MetadataProjection {
     var schemaReadable: Boolean? = null
     var sampleBatchReadable: Boolean? = null
     var validationStatus: String? = null
+    @Column(columnDefinition = "text")
     var failureReason: String? = null
     var validatedAt: LocalDateTime? = null
     override var userId: String? = null

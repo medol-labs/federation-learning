@@ -5,7 +5,7 @@ import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetC
 
 import tech.medo.runtimeagentoperations.events.AgentDatasetMetadataReportedEvent
 import tech.medo.runtimeagentoperations.events.AgentDatasetProfilingFailedEvent
-import tech.medo.runtimeagentoperations.runtimedatasetmetadata.RuntimeDatasetMetadataState
+import tech.medo.runtimeagentoperations.agentdatasetprofile.AgentDatasetProfileState
 
 
 

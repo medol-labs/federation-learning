@@ -9,8 +9,8 @@ import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.organizationmanagement.events.OrganizationActivatedEvent
 import tech.medo.organizationmanagement.events.OrganizationDeactivatedEvent
 import tech.medo.organizationmanagement.events.OrganizationReactivatedEvent
-import tech.medo.datasetgovernance.events.DatasetApprovedForTrainingEvent
 import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
+
 
 @Component
 class OrganizationDirectoryReadModelProjector(private val repository: OrganizationDirectoryReadModelRepository) {
@@ -76,17 +76,4 @@ class OrganizationDirectoryReadModelProjector(private val repository: Organizati
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
-        event: DatasetApprovedForTrainingEvent,
-        message: EventMessage
-    ) {
-
-        val entity = repository.findProjectionById(event.organizationId) ?: OrganizationDirectoryReadModelProjection().apply {
-                this.organizationId = event.organizationId
-        }
-            entity.organizationId = event.organizationId
-            ProjectionMetadata.assign(entity, message)
-        repository.save(entity)
-    }
 }

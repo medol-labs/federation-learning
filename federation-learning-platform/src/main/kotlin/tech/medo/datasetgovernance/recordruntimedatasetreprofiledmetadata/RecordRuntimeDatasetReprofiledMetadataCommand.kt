@@ -2,6 +2,7 @@ package tech.medo.datasetgovernance.recordruntimedatasetreprofiledmetadata
 
 import org.axonframework.messaging.commandhandling.annotation.Command
 import org.axonframework.modelling.annotation.TargetEntityId
+import tech.medo.datasetgovernance.runtimedatasetmetadata.RuntimeDatasetMetadataSelection
 import java.util.UUID;
 import java.math.BigDecimal;
 
@@ -24,6 +25,6 @@ data class RecordRuntimeDatasetReprofiledMetadataCommand(
     val classBalanceScore: BigDecimal?
 ) {
     @TargetEntityId
-    val selection: RecordRuntimeDatasetReprofiledMetadataSelection = RecordRuntimeDatasetReprofiledMetadataSelection(metadataReportId = metadataReportId)
+    val selection: RuntimeDatasetMetadataSelection = RuntimeDatasetMetadataSelection(metadataReportId = metadataReportId)
 
 }

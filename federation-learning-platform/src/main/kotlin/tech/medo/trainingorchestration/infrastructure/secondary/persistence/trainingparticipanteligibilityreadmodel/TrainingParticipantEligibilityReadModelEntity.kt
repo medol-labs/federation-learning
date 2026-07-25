@@ -46,6 +46,7 @@ class TrainingParticipantEligibilityReadModelEntity : MetadataProjection {
     var eligibleRuntimeCount: Int? = null
     var minimumNodesPerRound: Int? = null
     var selectionReady: Boolean? = null
+    @Column(columnDefinition = "text")
     var eligibilityReason: String? = null
     @Column(columnDefinition = "text")
     var ineligibleReasons: String? = null

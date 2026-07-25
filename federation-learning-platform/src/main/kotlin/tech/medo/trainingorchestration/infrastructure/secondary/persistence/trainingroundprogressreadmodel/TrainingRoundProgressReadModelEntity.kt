@@ -59,7 +59,9 @@ class TrainingRoundProgressReadModelEntity : MetadataProjection {
     var progressPercent: Int? = null
     var currentPhase: String? = null
     var nextAction: String? = null
+    @Column(columnDefinition = "text")
     var blockedReason: String? = null
+    @Column(columnDefinition = "text")
     var delayedReason: String? = null
     var roundStartedAt: LocalDateTime? = null
     var contributionDeadlineAt: LocalDateTime? = null
@@ -75,6 +77,7 @@ class TrainingRoundProgressReadModelEntity : MetadataProjection {
     var aggregatedModelVersionId: UUID? = null
     var globalAccuracy: BigDecimal? = null
     var globalFairnessScore: BigDecimal? = null
+    @Column(columnDefinition = "text")
     var failureReason: String? = null
     override var userId: String? = null
     override var sessionId: String? = null

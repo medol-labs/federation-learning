@@ -17,6 +17,7 @@ import tech.medo.trainingorchestration.events.TrainingRoundStartedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundCompletedEvent
 import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
 
+
 @Component
 class TrainingJobDashboardReadModelProjector(private val repository: TrainingJobDashboardReadModelRepository) {
     @EventHandler
@@ -138,6 +139,7 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.minimumNodesPerRound = event.minimumNodesPerRound
+            entity.currentRoundNumber = event.roundNumber
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -158,4 +160,5 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

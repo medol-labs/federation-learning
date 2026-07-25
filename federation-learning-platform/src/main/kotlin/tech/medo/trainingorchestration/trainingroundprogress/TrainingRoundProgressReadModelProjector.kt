@@ -21,6 +21,9 @@ import tech.medo.trainingorchestration.events.GlobalModelEvaluationSubmittedEven
 import tech.medo.trainingorchestration.events.TrainingRoundCompletedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundFailedEvent
 import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 
 @Component
 class TrainingRoundProgressReadModelProjector(private val repository: TrainingRoundProgressReadModelRepository) {
@@ -39,6 +42,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingJobId = event.trainingJobId
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
+            entity.trainingJobObjective = event.objective
             ProjectionMetadata.assign(entity, message)
             repository.save(entity)
         }
@@ -115,6 +119,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.failureReason = event.failureReason
+            entity.state = TrainingRoundStateEnum.FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -290,6 +295,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.aggregatedModelVersionId = event.aggregatedModelVersionId
             entity.globalAccuracy = event.globalAccuracy
             entity.state = TrainingRoundStateEnum.COMPLETED
+            entity.completedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -312,7 +318,12 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.failureReason = event.failureReason
             entity.state = TrainingRoundStateEnum.FAILED
+            entity.failedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

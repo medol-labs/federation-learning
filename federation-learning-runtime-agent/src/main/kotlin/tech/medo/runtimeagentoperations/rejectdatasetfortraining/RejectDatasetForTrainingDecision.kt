@@ -1,0 +1,23 @@
+package tech.medo.runtimeagentoperations.rejectdatasetfortraining
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.rejectdatasetfortraining.RejectDatasetForTrainingCommand
+
+import tech.medo.runtimeagentoperations.events.DatasetRejectedForTrainingEvent
+import tech.medo.runtimeagentoperations.dataset.DatasetState
+
+
+import tech.medo.runtimeagentoperations.domain.states.DatasetStateEnum
+
+
+@Component
+class RejectDatasetForTrainingDecision {
+    fun decide(command: RejectDatasetForTrainingCommand, state: DatasetState): List<Any> {
+        require(state.currentState == DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED) {
+            "RejectDatasetForTraining requires Dataset to be ContractValidationCompleted."
+        }
+        return listOf(
+            DatasetRejectedForTrainingEvent(datasetId = command.datasetId, rejectionReason = command.rejectionReason)
+        )
+    }
+}

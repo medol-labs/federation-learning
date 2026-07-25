@@ -20,6 +20,7 @@ import tech.medo.runtimegovernance.events.RuntimeIdentityActivatedEvent
 import tech.medo.runtimegovernance.events.RuntimeIdentityRevokedEvent
 import tech.medo.federationmanagement.domain.states.FederationStateEnum
 
+
 @Component
 class FederationOverviewReadModelProjector(private val repository: FederationOverviewReadModelRepository) {
     @EventHandler
@@ -182,4 +183,5 @@ class FederationOverviewReadModelProjector(private val repository: FederationOve
     fun on(event: RuntimeIdentityRevokedEvent) {
         // Skipped: RuntimeIdentityRevokedEvent does not provide enough key fields to locate FederationOverviewReadModelProjection.
     }
+
 }

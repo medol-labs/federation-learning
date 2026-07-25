@@ -20,12 +20,14 @@ class DictionaryCatalogReadModelEntity : MetadataProjection {
     var dictionaryId: UUID? = null
     var dictionaryCode: String? = null
     var dictionaryName: String? = null
+    @Column(columnDefinition = "text")
     var description: String? = null
     @Enumerated(EnumType.STRING)
     var state: DictionaryStateEnum? = null
     var registeredAt: LocalDateTime? = null
     var updatedAt: LocalDateTime? = null
     var archivedAt: LocalDateTime? = null
+    @Column(columnDefinition = "text")
     var archiveReason: String? = null
     override var userId: String? = null
     override var sessionId: String? = null

@@ -23,6 +23,7 @@ class TrainingAlertCatalogReadModelEntity : MetadataProjection {
     var runtimeNodeName: String? = null
     var trainingJobObjective: String? = null
     var severity: String? = null
+    @Column(columnDefinition = "text")
     var message: String? = null
     @Enumerated(EnumType.STRING)
     var state: TrainingAlertStateEnum? = null

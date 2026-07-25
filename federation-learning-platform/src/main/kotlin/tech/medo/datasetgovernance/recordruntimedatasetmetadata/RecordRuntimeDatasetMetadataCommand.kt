@@ -2,7 +2,7 @@ package tech.medo.datasetgovernance.recordruntimedatasetmetadata
 
 import org.axonframework.messaging.commandhandling.annotation.Command
 import org.axonframework.modelling.annotation.TargetEntityId
-import tech.medo.datasetgovernance.dataset.DatasetSelection
+import tech.medo.datasetgovernance.runtimedatasetmetadata.RuntimeDatasetMetadataSelection
 import java.util.UUID;
 import java.math.BigDecimal;
 
@@ -22,10 +22,9 @@ data class RecordRuntimeDatasetMetadataCommand(
     val duplicateRate: BigDecimal?,
     val qualityScore: BigDecimal?,
     val nonIidScore: BigDecimal?,
-    val classBalanceScore: BigDecimal?,
-    val datasetName: String
+    val classBalanceScore: BigDecimal?
 ) {
     @TargetEntityId
-    val selection: DatasetSelection = DatasetSelection(organizationId = organizationId, featureSchemaId = featureSchemaId, datasetName = datasetName)
+    val selection: RuntimeDatasetMetadataSelection = RuntimeDatasetMetadataSelection(metadataReportId = metadataReportId)
 
 }

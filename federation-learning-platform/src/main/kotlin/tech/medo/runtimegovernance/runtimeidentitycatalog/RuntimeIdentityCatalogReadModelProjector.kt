@@ -9,6 +9,9 @@ import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.runtimegovernance.events.RuntimeIdentityActivatedEvent
 import tech.medo.runtimegovernance.events.RuntimeIdentityRevokedEvent
 
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 
 @Component
 class RuntimeIdentityCatalogReadModelProjector(private val repository: RuntimeIdentityCatalogReadModelRepository) {
@@ -45,7 +48,12 @@ class RuntimeIdentityCatalogReadModelProjector(private val repository: RuntimeId
                 this.runtimeId = event.runtimeId
         }
             entity.runtimeId = event.runtimeId
+            entity.revokedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

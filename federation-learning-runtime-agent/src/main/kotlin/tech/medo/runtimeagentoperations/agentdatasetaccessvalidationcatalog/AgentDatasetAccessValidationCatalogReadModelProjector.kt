@@ -5,12 +5,19 @@ import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+import tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent
 import tech.medo.runtimeagentoperations.events.AgentDatasetAccessValidatedEvent
 import tech.medo.runtimeagentoperations.events.AgentDatasetAccessValidationFailedEvent
 
 
+
 @Component
 class AgentDatasetAccessValidationCatalogReadModelProjector(private val repository: AgentDatasetAccessValidationCatalogReadModelRepository) {
+    @EventHandler
+    fun on(event: DatasetDeclaredEvent) {
+        // Skipped: DatasetDeclaredEvent does not provide enough key fields to locate AgentDatasetAccessValidationCatalogReadModelProjection.
+    }
+
     @EventHandler
     fun on(
         event: AgentDatasetAccessValidatedEvent,
@@ -48,4 +55,5 @@ class AgentDatasetAccessValidationCatalogReadModelProjector(private val reposito
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

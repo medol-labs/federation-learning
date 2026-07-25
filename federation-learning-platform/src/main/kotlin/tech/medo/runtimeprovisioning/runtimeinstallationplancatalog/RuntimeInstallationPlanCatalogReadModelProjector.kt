@@ -17,6 +17,9 @@ import tech.medo.runtimeprovisioning.events.RuntimeAgentDeploymentRetrySucceeded
 import tech.medo.runtimeprovisioning.events.RuntimeAgentDeploymentRetryFailedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeConnectionEstablishedEvent
 
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 
 @Component
 class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: RuntimeInstallationPlanCatalogReadModelRepository) {
@@ -46,6 +49,9 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.plannedAt = eventTime(message)
+            entity.agentDeploymentFailedAt = null
+            entity.agentDeploymentFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -89,4 +95,8 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
     fun on(event: RuntimeConnectionEstablishedEvent) {
         // Skipped: RuntimeConnectionEstablishedEvent does not provide enough key fields to locate RuntimeInstallationPlanCatalogReadModelProjection.
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

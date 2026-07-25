@@ -15,6 +15,7 @@ import tech.medo.runtimemonitoring.events.RuntimeNodeCapacityChangedEvent
 import tech.medo.runtimemonitoring.events.TrainingAlertRaisedEvent
 
 
+
 @Component
 class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHealthDashboardReadModelRepository) {
     @EventHandler
@@ -118,4 +119,5 @@ class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHe
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

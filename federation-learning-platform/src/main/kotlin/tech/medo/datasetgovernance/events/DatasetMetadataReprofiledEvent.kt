@@ -6,16 +6,14 @@ import java.util.UUID;
 import java.math.BigDecimal;
 
 
-/* TODO: provide values for selection tags: datasetName */
 
 @Event
 data class DatasetMetadataReprofiledEvent(
+    @EventTag(key = "metadataReportId")
     val metadataReportId: UUID,
     val datasetId: UUID,
-    @EventTag(key = "organizationId")
     val organizationId: UUID,
     val runtimeId: UUID,
-    @EventTag(key = "featureSchemaId")
     val featureSchemaId: UUID,
     val sampleCount: Int,
     val featureCount: Int,

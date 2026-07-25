@@ -8,6 +8,7 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 import tech.medo.datasetgovernance.events.CurrentRecommendedFeatureSchemaVersionMarkedEvent
 
 
+
 @Component
 class CurrentRecommendedFeatureSchemaCatalogReadModelProjector(private val repository: CurrentRecommendedFeatureSchemaCatalogReadModelRepository) {
     @EventHandler
@@ -22,7 +23,9 @@ class CurrentRecommendedFeatureSchemaCatalogReadModelProjector(private val repos
             entity.featureDomain = event.featureDomain
             entity.recommendedVersion = event.recommendedVersion
             entity.recommendationNote = event.recommendationNote
+            entity.recommendedFeatureSchemaId = event.featureSchemaId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

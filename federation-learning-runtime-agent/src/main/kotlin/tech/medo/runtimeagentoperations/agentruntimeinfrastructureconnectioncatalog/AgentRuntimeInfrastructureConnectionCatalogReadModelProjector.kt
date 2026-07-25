@@ -7,6 +7,9 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimeagentoperations.events.AgentRuntimeConnectionEstablishedEvent
 
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 
 @Component
 class AgentRuntimeInfrastructureConnectionCatalogReadModelProjector(private val repository: AgentRuntimeInfrastructureConnectionCatalogReadModelRepository) {
@@ -26,7 +29,12 @@ class AgentRuntimeInfrastructureConnectionCatalogReadModelProjector(private val 
             entity.agentAuthenticationSucceeded = event.agentAuthenticationSucceeded
             entity.controlChannelEstablished = event.controlChannelEstablished
             entity.heartbeatAccepted = event.heartbeatAccepted
+            entity.connectedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

@@ -5,11 +5,20 @@ import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+import tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent
 import tech.medo.runtimeagentoperations.events.RuntimeDatasetBindingConfiguredEvent
+
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 
 @Component
 class RuntimeDatasetBindingCatalogReadModelProjector(private val repository: RuntimeDatasetBindingCatalogReadModelRepository) {
+    @EventHandler
+    fun on(event: DatasetDeclaredEvent) {
+        // Skipped: DatasetDeclaredEvent does not provide enough key fields to locate RuntimeDatasetBindingCatalogReadModelProjection.
+    }
+
     @EventHandler
     fun on(
         event: RuntimeDatasetBindingConfiguredEvent,
@@ -35,7 +44,12 @@ class RuntimeDatasetBindingCatalogReadModelProjector(private val repository: Run
             entity.objectPrefix = event.objectPrefix
             entity.dataFormat = event.dataFormat
             entity.credentialSecretName = event.credentialSecretName
+            entity.configuredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

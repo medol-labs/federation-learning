@@ -2,7 +2,7 @@ package tech.medo.runtimeagentoperations.reprofileagentdataset
 
 import org.axonframework.messaging.commandhandling.annotation.Command
 import org.axonframework.modelling.annotation.TargetEntityId
-import tech.medo.runtimeagentoperations.runtimedatasetmetadata.RuntimeDatasetMetadataSelection
+import tech.medo.runtimeagentoperations.agentdatasetprofile.AgentDatasetProfileSelection
 import java.util.UUID;
 
 
@@ -12,6 +12,6 @@ data class ReprofileAgentDatasetCommand(
     val runtimeDatasetBindingId: UUID
 ) {
     @TargetEntityId
-    val selection: RuntimeDatasetMetadataSelection = RuntimeDatasetMetadataSelection(metadataReportId = metadataReportId)
+    val selection: AgentDatasetProfileSelection = AgentDatasetProfileSelection(metadataReportId = metadataReportId)
 
 }

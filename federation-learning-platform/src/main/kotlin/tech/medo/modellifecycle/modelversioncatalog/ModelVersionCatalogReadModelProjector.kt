@@ -14,6 +14,7 @@ import tech.medo.modellifecycle.events.ModelVersionRolledBackEvent
 import tech.medo.modellifecycle.events.ModelVersionRetiredEvent
 import tech.medo.modellifecycle.domain.states.ModelVersionStateEnum
 
+
 @Component
 class ModelVersionCatalogReadModelProjector(private val repository: ModelVersionCatalogReadModelRepository) {
     @EventHandler
@@ -38,6 +39,7 @@ class ModelVersionCatalogReadModelProjector(private val repository: ModelVersion
             entity.evaluationReportId = event.evaluationReportId
             entity.finalGlobalAccuracy = event.finalGlobalAccuracy
             entity.state = ModelVersionStateEnum.CANDIDATE
+            entity.previousModelVersionId = event.modelVersionId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -60,6 +62,7 @@ class ModelVersionCatalogReadModelProjector(private val repository: ModelVersion
             entity.modelCardId = event.modelCardId
             entity.baselineModelVersionId = event.baselineModelVersionId
             entity.state = ModelVersionStateEnum.EVALUATION_PACKAGED
+            entity.previousModelVersionId = event.modelVersionId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -75,6 +78,7 @@ class ModelVersionCatalogReadModelProjector(private val repository: ModelVersion
         }
             entity.modelVersionId = event.modelVersionId
             entity.state = ModelVersionStateEnum.APPROVED
+            entity.previousModelVersionId = event.modelVersionId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -92,6 +96,7 @@ class ModelVersionCatalogReadModelProjector(private val repository: ModelVersion
             entity.releaseChannel = event.releaseChannel
             entity.productionStage = event.productionStage
             entity.state = ModelVersionStateEnum.PRODUCTION
+            entity.previousModelVersionId = event.modelVersionId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -108,6 +113,7 @@ class ModelVersionCatalogReadModelProjector(private val repository: ModelVersion
             entity.modelVersionId = event.modelVersionId
             entity.previousModelVersionId = event.previousModelVersionId
             entity.state = ModelVersionStateEnum.ROLLED_BACK
+            entity.baselineModelVersionId = event.modelVersionId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -123,7 +129,9 @@ class ModelVersionCatalogReadModelProjector(private val repository: ModelVersion
         }
             entity.modelVersionId = event.modelVersionId
             entity.state = ModelVersionStateEnum.RETIRED
+            entity.previousModelVersionId = event.modelVersionId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }

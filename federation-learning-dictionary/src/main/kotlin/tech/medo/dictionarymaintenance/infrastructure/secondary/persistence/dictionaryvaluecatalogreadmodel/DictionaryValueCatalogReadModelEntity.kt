@@ -23,6 +23,7 @@ class DictionaryValueCatalogReadModelEntity : MetadataProjection {
     var valueCode: String? = null
     var displayName: String? = null
     var displayOrder: Int? = null
+    @Column(columnDefinition = "text")
     var description: String? = null
     var active: Boolean? = null
     @Enumerated(EnumType.STRING)
@@ -30,6 +31,7 @@ class DictionaryValueCatalogReadModelEntity : MetadataProjection {
     var addedAt: LocalDateTime? = null
     var updatedAt: LocalDateTime? = null
     var disabledAt: LocalDateTime? = null
+    @Column(columnDefinition = "text")
     var disabledReason: String? = null
     var enabledAt: LocalDateTime? = null
     override var userId: String? = null

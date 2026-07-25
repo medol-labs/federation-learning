@@ -9,6 +9,9 @@ import tech.medo.dictionarymaintenance.events.DictionaryValueAddedEvent
 import tech.medo.dictionarymaintenance.events.DictionaryValueDisabledEvent
 import tech.medo.dictionarymaintenance.events.DictionaryValueEnabledEvent
 import tech.medo.dictionarymaintenance.domain.states.DictionaryValueStateEnum
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 
 @Component
 class DictionaryValueCatalogReadModelProjector(private val repository: DictionaryValueCatalogReadModelRepository) {
@@ -46,6 +49,7 @@ class DictionaryValueCatalogReadModelProjector(private val repository: Dictionar
             entity.dictionaryValueId = event.dictionaryValueId
             entity.disabledReason = event.disabledReason
             entity.state = DictionaryValueStateEnum.DISABLED
+            entity.disabledAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -64,4 +68,8 @@ class DictionaryValueCatalogReadModelProjector(private val repository: Dictionar
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
+
 }

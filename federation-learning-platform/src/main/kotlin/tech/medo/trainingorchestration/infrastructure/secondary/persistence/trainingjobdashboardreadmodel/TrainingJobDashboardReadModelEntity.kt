@@ -33,6 +33,7 @@ class TrainingJobDashboardReadModelEntity : MetadataProjection {
     var nextAction: String? = null
     @Column(columnDefinition = "text")
     var availableActions: String? = null
+    @Column(columnDefinition = "text")
     var blockedReason: String? = null
     var canSubmit: Boolean? = null
     var canStartRound: Boolean? = null
@@ -47,6 +48,7 @@ class TrainingJobDashboardReadModelEntity : MetadataProjection {
     var roundProgressPercent: Int? = null
     var globalAccuracy: BigDecimal? = null
     var finalModelVersionId: UUID? = null
+    @Column(columnDefinition = "text")
     var stopReason: String? = null
     override var userId: String? = null
     override var sessionId: String? = null

@@ -8,6 +8,7 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 import tech.medo.runtimemonitoring.events.AuditTrailAppendedEvent
 
 
+
 @Component
 class AuditRecordLogReadModelProjector(private val repository: AuditRecordLogReadModelRepository) {
     @EventHandler
@@ -27,4 +28,5 @@ class AuditRecordLogReadModelProjector(private val repository: AuditRecordLogRea
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
 }
