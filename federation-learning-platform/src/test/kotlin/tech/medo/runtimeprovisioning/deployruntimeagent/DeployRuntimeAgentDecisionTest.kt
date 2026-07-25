@@ -73,4 +73,34 @@ class DeployRuntimeAgentDecisionTest {
         val event = events.filterIsInstance<RuntimeAgentInstallationFailedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()), event.runtimeInfrastructureId)
     }
+
+    @Test
+    fun RuntimeAgentDeploymentUnavailable() {
+        val state = RuntimeInfrastructureState()
+        state.evolve(
+            RuntimeInfrastructureVerifiedEvent(
+            runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-unavailable".toByteArray()),
+            agentInstallMode = "",
+            observedNodeCount = 0
+            )
+        )
+
+        val command = DeployRuntimeAgentCommand(
+            runtimeAgentId = java.util.UUID.randomUUID(),
+            runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-unavailable".toByteArray())
+        )
+
+        val events = DeployRuntimeAgentDecision().decide(
+            command,
+            state = state,
+            portResult = DeployRuntimeAgentResult.Unavailable(
+                failureReason = "docker compose up failed"
+            ),
+            now = LocalDateTime.parse("2026-01-01T00:00:00")
+        )
+
+        val event = events.filterIsInstance<RuntimeAgentInstallationFailedEvent>().single()
+        assertEquals(command.runtimeInfrastructureId, event.runtimeInfrastructureId)
+        assertEquals("docker compose up failed", event.failureReason)
+    }
 }

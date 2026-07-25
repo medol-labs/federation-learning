@@ -33,11 +33,14 @@ class RuntimeInstallationPlanCatalogReadModelEntity : MetadataProjection {
     var plannedAt: LocalDateTime? = null
     var verifiedAt: LocalDateTime? = null
     var verificationFailedAt: LocalDateTime? = null
+    @Column(columnDefinition = "text")
     var verificationFailureReason: String? = null
     var agentReadyAt: LocalDateTime? = null
     var agentDeploymentFailedAt: LocalDateTime? = null
+    @Column(columnDefinition = "text")
     var agentDeploymentFailureReason: String? = null
     var agentDeploymentRetryFailedAt: LocalDateTime? = null
+    @Column(columnDefinition = "text")
     var agentDeploymentRetryFailureReason: String? = null
     var lastConnectedAt: LocalDateTime? = null
     override var userId: String? = null

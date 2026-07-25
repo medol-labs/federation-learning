@@ -67,3 +67,9 @@ springdoc:
     path: /swagger-ui.html
   api-docs:
     path: /v3/api-docs
+
+logging:
+  level:
+    org.axonframework: INFO
+    tech.medo.dictionarymaintenance: DEBUG
+    tech.medo.infra.umadb: DEBUG

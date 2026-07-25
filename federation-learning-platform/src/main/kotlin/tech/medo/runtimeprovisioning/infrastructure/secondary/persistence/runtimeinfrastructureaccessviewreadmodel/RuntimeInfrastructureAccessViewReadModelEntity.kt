@@ -33,11 +33,14 @@ class RuntimeInfrastructureAccessViewReadModelEntity : MetadataProjection {
     var runtimeAgentVersion: String? = null
     var infrastructureVerifiedAt: LocalDateTime? = null
     var infrastructureVerificationFailedAt: LocalDateTime? = null
+    @Column(columnDefinition = "text")
     var infrastructureVerificationFailureReason: String? = null
     var agentReadyAt: LocalDateTime? = null
     var agentDeploymentFailedAt: LocalDateTime? = null
+    @Column(columnDefinition = "text")
     var agentDeploymentFailureReason: String? = null
     var agentDeploymentRetryFailedAt: LocalDateTime? = null
+    @Column(columnDefinition = "text")
     var agentDeploymentRetryFailureReason: String? = null
     var connectedAt: LocalDateTime? = null
     @Enumerated(EnumType.STRING)

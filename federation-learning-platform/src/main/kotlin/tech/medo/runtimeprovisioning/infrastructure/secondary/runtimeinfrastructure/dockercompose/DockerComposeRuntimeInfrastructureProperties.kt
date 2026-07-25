@@ -7,6 +7,7 @@ import java.time.Duration
 class DockerComposeRuntimeInfrastructureProperties {
     var enabled: Boolean = true
     var composeFile: String = "../docker-compose.yml"
+    var projectName: String? = null
     var projectDirectory: String? = null
     var agentServiceName: String = "federation-learning-runtime-agent"
     var agentVersion: String = "docker-compose"

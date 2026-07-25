@@ -17,6 +17,8 @@ import tech.medo.runtimeprovisioning.events.RuntimeAgentDeploymentRetrySucceeded
 import tech.medo.runtimeprovisioning.events.RuntimeAgentDeploymentRetryFailedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeConnectionEstablishedEvent
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 @Component
 class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: RuntimeInfrastructureAccessViewReadModelRepository) {
@@ -76,6 +78,9 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.agentInstallMode = event.agentInstallMode
+            entity.infrastructureVerifiedAt = eventTime(message)
+            entity.infrastructureVerificationFailedAt = null
+            entity.infrastructureVerificationFailureReason = null
             entity.state = RuntimeInfrastructureStateEnum.VERIFIED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -91,6 +96,9 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.infrastructureVerificationFailedAt = eventTime(message)
+            entity.infrastructureVerificationFailureReason = event.failureReason
+            entity.state = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -106,6 +114,12 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.runtimeAgentVersion = event.agentVersion
+            entity.agentReadyAt = eventTime(message)
+            entity.agentDeploymentFailedAt = null
+            entity.agentDeploymentFailureReason = null
+            entity.agentDeploymentRetryFailedAt = null
+            entity.agentDeploymentRetryFailureReason = null
             entity.state = RuntimeInfrastructureStateEnum.AGENT_READY
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -121,6 +135,9 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.agentDeploymentFailedAt = eventTime(message)
+            entity.agentDeploymentFailureReason = event.failureReason
+            entity.state = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -136,6 +153,12 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.runtimeAgentVersion = event.agentVersion
+            entity.agentReadyAt = eventTime(message)
+            entity.agentDeploymentFailedAt = null
+            entity.agentDeploymentFailureReason = null
+            entity.agentDeploymentRetryFailedAt = null
+            entity.agentDeploymentRetryFailureReason = null
             entity.state = RuntimeInfrastructureStateEnum.AGENT_READY
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -151,6 +174,9 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.agentDeploymentRetryFailedAt = eventTime(message)
+            entity.agentDeploymentRetryFailureReason = event.failureReason
+            entity.state = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -166,8 +192,12 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.connectedAt = eventTime(message)
             entity.state = RuntimeInfrastructureStateEnum.CONNECTED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
+
+    private fun eventTime(message: EventMessage): LocalDateTime =
+        LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 }

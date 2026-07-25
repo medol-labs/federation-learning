@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 @Component
 class ProcessDockerComposeCommandRunner : DockerComposeCommandRunner {
     override fun run(properties: DockerComposeRuntimeInfrastructureProperties, arguments: List<String>): DockerComposeCommandResult {
-        val command = listOf("docker", "compose", "-f", properties.composeFile) + arguments
+        val command = dockerComposeCommand(properties, arguments)
         val workingDirectory = properties.projectDirectory?.takeIf { it.isNotBlank() }?.let(::File)
         log.debug("Running Docker Compose command cwd={}, command={}", workingDirectory?.absolutePath, command.joinToString(" "))
         val process = ProcessBuilder(command)
@@ -65,6 +65,18 @@ class ProcessDockerComposeCommandRunner : DockerComposeCommandRunner {
 interface DockerComposeCommandRunner {
     fun run(properties: DockerComposeRuntimeInfrastructureProperties, arguments: List<String>): DockerComposeCommandResult
 }
+
+internal fun dockerComposeCommand(
+    properties: DockerComposeRuntimeInfrastructureProperties,
+    arguments: List<String>
+): List<String> =
+    listOf("docker", "compose") +
+        properties.projectName
+            ?.takeIf { it.isNotBlank() }
+            ?.let { listOf("-p", it) }
+            .orEmpty() +
+        listOf("-f", properties.composeFile) +
+        arguments
 
 data class DockerComposeCommandResult(
     val exitCode: Int,

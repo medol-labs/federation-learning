@@ -62,6 +62,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentInstallationFailedEvent): RuntimeInfrastructureState = apply {
+        currentState = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
         runtimeInfrastructureId = event.runtimeInfrastructureId
         failureReason = event.failureReason
     }
@@ -76,6 +77,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentDeploymentRetryFailedEvent): RuntimeInfrastructureState = apply {
+        currentState = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
         runtimeInfrastructureId = event.runtimeInfrastructureId
         failureReason = event.failureReason
     }

@@ -23,8 +23,8 @@ class DictionaryValueState @EntityCreator constructor() {
         @JvmStatic
         @EventCriteriaBuilder
         fun resolveCriteria(selection: DictionaryValueSelection): EventCriteria = EventCriteria.either(
-                EventCriteria.havingTags(Tag.of(DictionaryValueTags.DICTIONARY_CODE, selection.dictionaryCode.toString())),
-                EventCriteria.havingTags(Tag.of(DictionaryValueTags.VALUE_CODE, selection.valueCode.toString()))
+                EventCriteria.havingTags(Tag.of(DictionaryValueTags.DICTIONARY_CODE, selection.dictionaryCode.value)),
+                EventCriteria.havingTags(Tag.of(DictionaryValueTags.VALUE_CODE, selection.valueCode.value))
         )
     }
 

@@ -65,6 +65,7 @@ platform:
     docker-compose:
       enabled: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_ENABLED:true}
       compose-file: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_FILE:../docker-compose.yml}
+      project-name: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_PROJECT_NAME:}
       project-directory: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_PROJECT_DIRECTORY:}
       agent-service-name: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_AGENT_SERVICE:federation-learning-runtime-agent}
       agent-version: ${PLATFORM_RUNTIME_AGENT_VERSION:docker-compose}
