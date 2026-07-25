@@ -71,5 +71,3 @@ springdoc:
 logging:
   level:
     org.axonframework: INFO
-    tech.medo.dictionarymaintenance: DEBUG
-    tech.medo.infra.umadb: DEBUG

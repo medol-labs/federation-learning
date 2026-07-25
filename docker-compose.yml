@@ -61,21 +61,21 @@ services:
     volumes:
       - federation-learning-platform_postgres_data:/var/lib/postgresql/data
 
-  # federation-learning-runtime-agent-postgres:
-  #   image: postgres:16
-  #   ports:
-  #     - "${FEDERATION_LEARNING_RUNTIME_AGENT_DB_PORT:-5434}:5432"
-  #   environment:
-  #     POSTGRES_USER: medol
-  #     POSTGRES_PASSWORD: medol
-  #     POSTGRES_DB: federation_learning_runtime_agent
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U medol -d federation_learning_runtime_agent"]
-  #     interval: 5s
-  #     timeout: 5s
-  #     retries: 10
-  #   volumes:
-  #     - federation-learning-runtime-agent_postgres_data:/var/lib/postgresql/data
+  federation-learning-runtime-agent-postgres:
+    image: postgres:16
+    ports:
+      - "${FEDERATION_LEARNING_RUNTIME_AGENT_DB_PORT:-5434}:5432"
+    environment:
+      POSTGRES_USER: medol
+      POSTGRES_PASSWORD: medol
+      POSTGRES_DB: federation_learning_runtime_agent
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medol -d federation_learning_runtime_agent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - federation-learning-runtime-agent_postgres_data:/var/lib/postgresql/data
 
 volumes:
   axon_server_data:
