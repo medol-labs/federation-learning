@@ -598,7 +598,11 @@ export const RoundExecutionCatalogList = () => {
       <RefineDataTable table={table} actionBar={
         null
       }>
-        <ListToolbar table={table.reactTable} />
+        <ListToolbar
+          table={table.reactTable}
+          isQuerying={table.refineCore.tableQuery.isFetching}
+          onQuery={() => table.refineCore.tableQuery.refetch()}
+        />
       </RefineDataTable>
     </ListView>
   );

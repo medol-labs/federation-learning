@@ -182,7 +182,7 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
                   placeholder={t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.dataSourceType.placeholder", "Select Data Source Type")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_DATA_SOURCE_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"current":1,"currentPage":1,"pageSize":100,"mode":"server"}}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
                     label: t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.dataSourceType.label", "Dictionary Value Catalog"),
@@ -376,7 +376,7 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
                   placeholder={t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.dataFormat.placeholder", "Select Data Format")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"DATA_FORMAT"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"current":1,"currentPage":1,"pageSize":100,"mode":"server"}}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
                     label: t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.dataFormat.label", "Dictionary Value Catalog"),

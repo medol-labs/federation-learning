@@ -195,7 +195,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                   placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.strategyName.placeholder", "Select Strategy Name")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_STRATEGY"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"current":1,"currentPage":1,"pageSize":100,"mode":"server"}}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
                     label: t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.strategyName.label", "Dictionary Value Catalog"),
@@ -226,7 +226,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                   placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.aggregationAlgorithm.placeholder", "Select Aggregation Algorithm")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"AGGREGATION_ALGORITHM"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"current":1,"currentPage":1,"pageSize":100,"mode":"server"}}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
                     label: t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.aggregationAlgorithm.label", "Dictionary Value Catalog"),
@@ -389,7 +389,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                   placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.optimizer.placeholder", "Select Optimizer")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_OPTIMIZER"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"current":1,"currentPage":1,"pageSize":100,"mode":"server"}}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
                     label: t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.optimizer.label", "Dictionary Value Catalog"),
@@ -420,7 +420,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                   placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.lossFunction.placeholder", "Select Loss Function")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_LOSS_FUNCTION"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"current":1,"currentPage":1,"pageSize":100,"mode":"server"}}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
                     label: t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.lossFunction.label", "Dictionary Value Catalog"),

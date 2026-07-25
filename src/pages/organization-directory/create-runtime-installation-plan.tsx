@@ -171,7 +171,7 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
                   placeholder={t("resources.organization_directory.commands.createRuntimeInstallationPlan.fields.agentInstallMode.placeholder", "Select Agent Install Mode")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_INSTALL_MODE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"current":1,"currentPage":1,"pageSize":100,"mode":"server"}}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
                     label: t("resources.organization_directory.commands.createRuntimeInstallationPlan.fields.agentInstallMode.label", "Dictionary Value Catalog"),

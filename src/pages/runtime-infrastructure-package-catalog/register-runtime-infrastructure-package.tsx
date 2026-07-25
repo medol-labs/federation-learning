@@ -141,7 +141,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                   placeholder={t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.runtimeEnvironmentType.placeholder", "Select Runtime Environment Type")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_ENVIRONMENT_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"current":1,"currentPage":1,"pageSize":100,"mode":"server"}}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
                     label: t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.runtimeEnvironmentType.label", "Dictionary Value Catalog"),
@@ -172,7 +172,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                   placeholder={t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.runtimeDeploymentTargetType.placeholder", "Select Runtime Deployment Target Type")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_DEPLOYMENT_TARGET_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"current":1,"currentPage":1,"pageSize":100,"mode":"server"}}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
                     label: t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.runtimeDeploymentTargetType.label", "Dictionary Value Catalog"),
@@ -203,7 +203,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                   placeholder={t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.installProfile.placeholder", "Select Install Profile")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_INSTALL_PROFILE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"current":1,"currentPage":1,"pageSize":100,"mode":"server"}}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
                     label: t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.installProfile.label", "Dictionary Value Catalog"),

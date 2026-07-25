@@ -265,7 +265,11 @@ export const FederationMembershipDirectoryList = () => {
       <RefineDataTable table={table} actionBar={
         <CommandButton variant="destructive" command="removeParticipant" size="sm" />
       }>
-        <ListToolbar table={table.reactTable} />
+        <ListToolbar
+          table={table.reactTable}
+          isQuerying={table.refineCore.tableQuery.isFetching}
+          onQuery={() => table.refineCore.tableQuery.refetch()}
+        />
       </RefineDataTable>
     </ListView>
   );
