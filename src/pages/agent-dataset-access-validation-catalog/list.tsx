@@ -220,7 +220,7 @@ export const AgentDatasetAccessValidationCatalogList = () => {
     },
     getRowId: (row) => String(row.datasetAccessValidationId),
     refineCoreProps: {
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
       syncWithLocation: true,
       meta: {
         tableName: "agent_dataset_access_validation_catalog_read_model_entity",
@@ -229,7 +229,7 @@ export const AgentDatasetAccessValidationCatalogList = () => {
         label: t("resources.agent_dataset_access_validation_catalog.label", "Agent Dataset Access Validation Catalog"),
         aggregateRoute: "agentdatasetaccessvalidation",
         queryRoute: "agentdatasetaccessvalidationcatalog",
-        dataProviderName: "federation-learning-console",
+        dataProviderName: "federation-learning-runtime-agent",
       },
     },
   });

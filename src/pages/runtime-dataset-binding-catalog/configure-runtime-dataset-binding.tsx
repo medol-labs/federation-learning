@@ -59,15 +59,15 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
     command: "configureRuntimeDatasetBinding",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-console",
-    queryDataProviderName: "federation-learning-console",
+    dataProviderName: "federation-learning-runtime-agent",
+    queryDataProviderName: "federation-learning-runtime-agent",
     meta: {
       tableName: "runtime_dataset_binding_catalog_read_model_entity",
       idField: "runtimeDatasetBindingId",
       label: t("resources.runtime_dataset_binding_catalog.label", "Runtime Dataset Binding Catalog"),
       aggregateRoute: "runtimedatasetbinding",
       queryRoute: "runtimedatasetbindingcatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     queryMeta: {
       tableName: "runtime_dataset_binding_catalog_read_model_entity",
@@ -75,7 +75,7 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
       label: t("resources.runtime_dataset_binding_catalog.label", "Runtime Dataset Binding Catalog"),
       aggregateRoute: "runtimedatasetbinding",
       queryRoute: "runtimedatasetbindingcatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     formProps: {
       defaultValues,
@@ -105,7 +105,7 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
                 <ResourceSelect
                   withFormControl
                   resource="dataset_capability"
-                  dataProviderName="federation-learning-platform"
+                  dataProviderName="federation-learning-runtime-agent"
                   optionLabel="organizationName"
                   optionValue="datasetId"
                   value={field.value || ""}

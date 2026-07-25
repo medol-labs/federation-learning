@@ -48,15 +48,15 @@ export const DatasetReadinessDeclareDataset = () => {
     command: "declareDataset",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-platform",
-    queryDataProviderName: "federation-learning-platform",
+    dataProviderName: "federation-learning-runtime-agent",
+    queryDataProviderName: "federation-learning-runtime-agent",
     meta: {
       tableName: "dataset_readiness_read_model_entity",
       idField: "datasetId",
       label: t("resources.dataset_readiness.label", "Dataset Readiness"),
       aggregateRoute: "dataset",
       queryRoute: "datasetreadiness",
-      dataProviderName: "federation-learning-platform",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     queryMeta: {
       tableName: "dataset_readiness_read_model_entity",
@@ -64,7 +64,7 @@ export const DatasetReadinessDeclareDataset = () => {
       label: t("resources.dataset_readiness.label", "Dataset Readiness"),
       aggregateRoute: "dataset",
       queryRoute: "datasetreadiness",
-      dataProviderName: "federation-learning-platform",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     formProps: {
       defaultValues,

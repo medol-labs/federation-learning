@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const RuntimeDatasetMetadataCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "federation-learning-console",
+    dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_dataset_metadata_catalog_read_model_entity",
       idField: "metadataReportId",
       label: t("resources.runtime_dataset_metadata_catalog.label", "Runtime Dataset Metadata Catalog"),
       aggregateRoute: "runtimedatasetmetadata",
       queryRoute: "runtimedatasetmetadatacatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-platform",
     },
   });
 

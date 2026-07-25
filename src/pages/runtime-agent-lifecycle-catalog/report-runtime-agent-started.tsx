@@ -47,15 +47,15 @@ export const RuntimeAgentLifecycleCatalogReportRuntimeAgentStarted = () => {
     command: "reportRuntimeAgentStarted",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-console",
-    queryDataProviderName: "federation-learning-console",
+    dataProviderName: "federation-learning-runtime-agent",
+    queryDataProviderName: "federation-learning-runtime-agent",
     meta: {
       tableName: "runtime_agent_lifecycle_catalog_read_model_entity",
       idField: "runtimeAgentId",
       label: t("resources.runtime_agent_lifecycle_catalog.label", "Runtime Agent Lifecycle Catalog"),
       aggregateRoute: "runtimeagentlifecycle",
       queryRoute: "runtimeagentlifecyclecatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     queryMeta: {
       tableName: "runtime_agent_lifecycle_catalog_read_model_entity",
@@ -63,7 +63,7 @@ export const RuntimeAgentLifecycleCatalogReportRuntimeAgentStarted = () => {
       label: t("resources.runtime_agent_lifecycle_catalog.label", "Runtime Agent Lifecycle Catalog"),
       aggregateRoute: "runtimeagentlifecycle",
       queryRoute: "runtimeagentlifecyclecatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     formProps: {
       defaultValues,

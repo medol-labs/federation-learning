@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const AgentRuntimeNodeInventoryCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "federation-learning-console",
+    dataProviderName: "federation-learning-runtime-agent",
     meta: {
       tableName: "agent_runtime_node_inventory_catalog_read_model_entity",
       idField: "runtimeNodeInventoryReportId",
       label: t("resources.agent_runtime_node_inventory_catalog.label", "Agent Runtime Node Inventory Catalog"),
       aggregateRoute: "agentruntimenodeinventory",
       queryRoute: "agentruntimenodeinventorycatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
   });
 

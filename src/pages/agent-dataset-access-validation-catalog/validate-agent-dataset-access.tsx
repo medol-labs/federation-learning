@@ -45,15 +45,15 @@ export const AgentDatasetAccessValidationCatalogValidateAgentDatasetAccess = () 
     command: "validateAgentDatasetAccess",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-console",
-    queryDataProviderName: "federation-learning-console",
+    dataProviderName: "federation-learning-runtime-agent",
+    queryDataProviderName: "federation-learning-runtime-agent",
     meta: {
       tableName: "agent_dataset_access_validation_catalog_read_model_entity",
       idField: "datasetAccessValidationId",
       label: t("resources.agent_dataset_access_validation_catalog.label", "Agent Dataset Access Validation Catalog"),
       aggregateRoute: "agentdatasetaccessvalidation",
       queryRoute: "agentdatasetaccessvalidationcatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     queryMeta: {
       tableName: "agent_dataset_access_validation_catalog_read_model_entity",
@@ -61,7 +61,7 @@ export const AgentDatasetAccessValidationCatalogValidateAgentDatasetAccess = () 
       label: t("resources.agent_dataset_access_validation_catalog.label", "Agent Dataset Access Validation Catalog"),
       aggregateRoute: "agentdatasetaccessvalidation",
       queryRoute: "agentdatasetaccessvalidationcatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     formProps: {
       defaultValues,
@@ -91,7 +91,7 @@ export const AgentDatasetAccessValidationCatalogValidateAgentDatasetAccess = () 
                 <ResourceSelect
                   withFormControl
                   resource="runtime_dataset_binding_catalog"
-                  dataProviderName="federation-learning-console"
+                  dataProviderName="federation-learning-runtime-agent"
                   optionLabel="datasetName"
                   optionValue="runtimeDatasetBindingId"
                   value={field.value || ""}

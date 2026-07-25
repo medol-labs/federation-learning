@@ -577,7 +577,7 @@ export const RoundExecutionCatalogList = () => {
     },
     getRowId: (row) => String(row.roundExecutionId),
     refineCoreProps: {
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
       syncWithLocation: true,
       meta: {
         tableName: "round_execution_catalog_read_model_entity",
@@ -586,7 +586,7 @@ export const RoundExecutionCatalogList = () => {
         label: t("resources.round_execution_catalog.label", "Round Execution Catalog"),
         aggregateRoute: "roundexecution",
         queryRoute: "roundexecutioncatalog",
-        dataProviderName: "federation-learning-console",
+        dataProviderName: "federation-learning-runtime-agent",
       },
     },
   });

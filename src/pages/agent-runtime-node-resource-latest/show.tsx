@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const AgentRuntimeNodeResourceLatestShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "federation-learning-console",
+    dataProviderName: "federation-learning-runtime-agent",
     meta: {
       tableName: "agent_runtime_node_resource_latest_read_model_entity",
       idField: "nodeId",
       label: t("resources.agent_runtime_node_resource_latest.label", "Agent Runtime Node Resource Latest"),
       aggregateRoute: "agentruntimenoderesourcetelemetry",
       queryRoute: "agentruntimenoderesourcelatest",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
   });
 

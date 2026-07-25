@@ -53,15 +53,15 @@ export const RoundExecutionCatalogFailRoundExecution = () => {
     command: "failRoundExecution",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-console",
-    queryDataProviderName: "federation-learning-console",
+    dataProviderName: "federation-learning-runtime-agent",
+    queryDataProviderName: "federation-learning-runtime-agent",
     meta: {
       tableName: "round_execution_catalog_read_model_entity",
       idField: "roundExecutionId",
       label: t("resources.round_execution_catalog.label", "Round Execution Catalog"),
       aggregateRoute: "roundexecution",
       queryRoute: "roundexecutioncatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     queryMeta: {
       tableName: "round_execution_catalog_read_model_entity",
@@ -69,7 +69,7 @@ export const RoundExecutionCatalogFailRoundExecution = () => {
       label: t("resources.round_execution_catalog.label", "Round Execution Catalog"),
       aggregateRoute: "roundexecution",
       queryRoute: "roundexecutioncatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     formProps: {
       defaultValues,

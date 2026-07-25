@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const RuntimeDatasetBindingCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "federation-learning-console",
+    dataProviderName: "federation-learning-runtime-agent",
     meta: {
       tableName: "runtime_dataset_binding_catalog_read_model_entity",
       idField: "runtimeDatasetBindingId",
       label: t("resources.runtime_dataset_binding_catalog.label", "Runtime Dataset Binding Catalog"),
       aggregateRoute: "runtimedatasetbinding",
       queryRoute: "runtimedatasetbindingcatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
   });
 

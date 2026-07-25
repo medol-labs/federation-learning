@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const DatasetReadinessShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "federation-learning-platform",
+    dataProviderName: "federation-learning-runtime-agent",
     meta: {
       tableName: "dataset_readiness_read_model_entity",
       idField: "datasetId",
       label: t("resources.dataset_readiness.label", "Dataset Readiness"),
       aggregateRoute: "dataset",
       queryRoute: "datasetreadiness",
-      dataProviderName: "federation-learning-platform",
+      dataProviderName: "federation-learning-runtime-agent",
     },
   });
 

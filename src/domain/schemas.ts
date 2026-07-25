@@ -267,32 +267,6 @@ export const MarkCurrentRecommendedFeatureSchemaVersionCommandSchema = z.object(
 });
 export type MarkCurrentRecommendedFeatureSchemaVersionCommandInput = z.infer<typeof MarkCurrentRecommendedFeatureSchemaVersionCommandSchema>;
 
-export const DeclareDatasetCommandSchema = z.object({
-  organizationId: z.string().uuid(),
-  featureSchemaId: z.string().uuid(),
-  datasetName: z.string(),
-  datasetType: z.string(),
-  datasetUsage: z.string(),
-});
-export type DeclareDatasetCommandInput = z.infer<typeof DeclareDatasetCommandSchema>;
-
-export const RejectDatasetForTrainingCommandSchema = z.object({
-  datasetId: z.string().uuid(),
-  rejectionReason: z.string(),
-});
-export type RejectDatasetForTrainingCommandInput = z.infer<typeof RejectDatasetForTrainingCommandSchema>;
-
-export const ApproveDatasetForTrainingCommandSchema = z.object({
-  datasetId: z.string().uuid(),
-});
-export type ApproveDatasetForTrainingCommandInput = z.infer<typeof ApproveDatasetForTrainingCommandSchema>;
-
-export const RevokeDatasetTrainingApprovalCommandSchema = z.object({
-  datasetId: z.string().uuid(),
-  revokeReason: z.string(),
-});
-export type RevokeDatasetTrainingApprovalCommandInput = z.infer<typeof RevokeDatasetTrainingApprovalCommandSchema>;
-
 export const RegisterModelArtifactCommandSchema = z.object({
   modelArtifactRef: z.string(),
   modelRepositoryRef: z.string(),
@@ -500,6 +474,15 @@ export const FailSecureAggregationSessionCommandSchema = z.object({
 });
 export type FailSecureAggregationSessionCommandInput = z.infer<typeof FailSecureAggregationSessionCommandSchema>;
 
+export const DeclareDatasetCommandSchema = z.object({
+  organizationId: z.string().uuid(),
+  featureSchemaId: z.string().uuid(),
+  datasetName: z.string(),
+  datasetType: z.string(),
+  datasetUsage: z.string(),
+});
+export type DeclareDatasetCommandInput = z.infer<typeof DeclareDatasetCommandSchema>;
+
 export const ConfigureRuntimeDatasetBindingCommandSchema = z.object({
   datasetId: z.string().uuid(),
   organizationId: z.string().uuid(),
@@ -523,6 +506,23 @@ export const ReprofileAgentDatasetCommandSchema = z.object({
   runtimeDatasetBindingId: z.string().uuid(),
 });
 export type ReprofileAgentDatasetCommandInput = z.infer<typeof ReprofileAgentDatasetCommandSchema>;
+
+export const RejectDatasetForTrainingCommandSchema = z.object({
+  datasetId: z.string().uuid(),
+  rejectionReason: z.string(),
+});
+export type RejectDatasetForTrainingCommandInput = z.infer<typeof RejectDatasetForTrainingCommandSchema>;
+
+export const ApproveDatasetForTrainingCommandSchema = z.object({
+  datasetId: z.string().uuid(),
+});
+export type ApproveDatasetForTrainingCommandInput = z.infer<typeof ApproveDatasetForTrainingCommandSchema>;
+
+export const RevokeDatasetTrainingApprovalCommandSchema = z.object({
+  datasetId: z.string().uuid(),
+  revokeReason: z.string(),
+});
+export type RevokeDatasetTrainingApprovalCommandInput = z.infer<typeof RevokeDatasetTrainingApprovalCommandSchema>;
 
 export const ValidateAgentDatasetAccessCommandSchema = z.object({
   runtimeDatasetBindingId: z.string().uuid(),

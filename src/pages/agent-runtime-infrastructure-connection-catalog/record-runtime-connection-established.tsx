@@ -46,15 +46,15 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
     command: "recordRuntimeConnectionEstablished",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-console",
-    queryDataProviderName: "federation-learning-console",
+    dataProviderName: "federation-learning-runtime-agent",
+    queryDataProviderName: "federation-learning-runtime-agent",
     meta: {
       tableName: "agent_runtime_infrastructure_connection_catalog_read_model_entity",
       idField: "runtimeInfrastructureId",
       label: t("resources.agent_runtime_infrastructure_connection_catalog.label", "Agent Runtime Infrastructure Connection Catalog"),
       aggregateRoute: "runtimeinfrastructure",
       queryRoute: "agentruntimeinfrastructureconnectioncatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     queryMeta: {
       tableName: "agent_runtime_infrastructure_connection_catalog_read_model_entity",
@@ -62,7 +62,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
       label: t("resources.agent_runtime_infrastructure_connection_catalog.label", "Agent Runtime Infrastructure Connection Catalog"),
       aggregateRoute: "agentruntimeinfrastructureconnection",
       queryRoute: "agentruntimeinfrastructureconnectioncatalog",
-      dataProviderName: "federation-learning-console",
+      dataProviderName: "federation-learning-runtime-agent",
     },
     formProps: {
       defaultValues,
@@ -93,7 +93,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
                 <ResourceSelect
                   withFormControl
                   resource="runtime_agent_lifecycle_catalog"
-                  dataProviderName="federation-learning-console"
+                  dataProviderName="federation-learning-runtime-agent"
                   optionLabel="agentVersion"
                   optionValue="runtimeAgentId"
                   value={field.value || ""}

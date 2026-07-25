@@ -311,7 +311,7 @@ export const DatasetCapabilityList = () => {
     },
     getRowId: (row) => String(row.datasetId),
     refineCoreProps: {
-      dataProviderName: "federation-learning-platform",
+      dataProviderName: "federation-learning-runtime-agent",
       syncWithLocation: true,
       meta: {
         tableName: "dataset_capability_read_model_entity",
@@ -320,7 +320,7 @@ export const DatasetCapabilityList = () => {
         label: t("resources.dataset_capability.label", "Dataset Capability"),
         aggregateRoute: "dataset",
         queryRoute: "datasetcapability",
-        dataProviderName: "federation-learning-platform",
+        dataProviderName: "federation-learning-runtime-agent",
       },
     },
   });

@@ -93,7 +93,7 @@ export const TrainingParticipantEligibilityConfigureRuntimeDatasetBinding = () =
                 <ResourceSelect
                   withFormControl
                   resource="dataset_capability"
-                  dataProviderName="federation-learning-platform"
+                  dataProviderName="federation-learning-runtime-agent"
                   optionLabel="organizationName"
                   optionValue="datasetId"
                   value={field.value || ""}
