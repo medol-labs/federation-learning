@@ -74,6 +74,16 @@ function App() {
               options={{
                 syncWithLocation: true,
                 warnWhenUnsavedChanges: true,
+                title: {
+                  text: "Federation Learning Platform",
+                  icon: (
+                    <img
+                      src={`${import.meta.env.BASE_URL}medol-logo.png`}
+                      alt="Federation Learning Platform logo"
+                      className="block h-full w-full shrink-0 object-contain"
+                    />
+                  ),
+                },
                 projectId: "yKo8Ul-25eSBl-weC1qb",
               }}
             // accessControlProvider={accessControlProvider}
