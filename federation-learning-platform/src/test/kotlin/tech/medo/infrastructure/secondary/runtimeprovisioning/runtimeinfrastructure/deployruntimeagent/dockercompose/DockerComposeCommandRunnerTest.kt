@@ -5,6 +5,26 @@ import org.junit.jupiter.api.Test
 
 class DockerComposeCommandRunnerTest {
     @Test
+    fun `default command uses runtime agent compose file`() {
+        val properties = DockerComposeRuntimeInfrastructureProperties()
+
+        val command = dockerComposeCommand(properties, listOf("up", "-d", properties.agentServiceName))
+
+        assertEquals(
+            listOf(
+                "docker",
+                "compose",
+                "-f",
+                "../docker-compose-runtime-agent.yml",
+                "up",
+                "-d",
+                "federation-learning-runtime-agent"
+            ),
+            command
+        )
+    }
+
+    @Test
     fun `command includes configured compose project name`() {
         val properties = DockerComposeRuntimeInfrastructureProperties().apply {
             composeFile = "../docker-compose-runtime-agent.yml"

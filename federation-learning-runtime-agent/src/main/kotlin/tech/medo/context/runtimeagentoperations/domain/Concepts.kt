@@ -13,16 +13,16 @@ object Concepts {
         val states = listOf("Registered", "ContractValidationCompleted", "Approved", "Rejected", "ApprovalRevoked")
     }
 
-    data object AgentDatasetProfile {
-        const val NAME = "AgentDatasetProfile"
-        val slices = listOf("ProfileAgentDataset", "ReprofileAgentDataset")
-        val states = listOf("Reported")
-    }
-
     data object AgentDatasetAccessValidation {
         const val NAME = "AgentDatasetAccessValidation"
         val slices = listOf("ValidateAgentDatasetAccess", "AgentDatasetAccessValidationCatalog")
         val states = listOf("Checked")
+    }
+
+    data object AgentDatasetProfile {
+        const val NAME = "AgentDatasetProfile"
+        val slices = listOf("ProfileAgentDataset", "ReprofileAgentDataset")
+        val states = listOf("Reported")
     }
 
     data object RoundExecution {

@@ -2,7 +2,7 @@ package tech.medo.runtimeagentoperations.validatedatasetcontract
 
 import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractCommand
-
+import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractResult
 import tech.medo.runtimeagentoperations.events.DatasetContractValidatedEvent
 import tech.medo.runtimeagentoperations.events.DatasetContractValidationFailedEvent
 import tech.medo.runtimeagentoperations.dataset.DatasetState
@@ -13,10 +13,12 @@ import tech.medo.runtimeagentoperations.dataset.DatasetState
 
 @Component
 class ValidateDatasetContractDecision {
-    fun decide(command: ValidateDatasetContractCommand, state: DatasetState): List<Any> {
+    fun decide(command: ValidateDatasetContractCommand, state: DatasetState, portResult: ValidateDatasetContractResult, now: java.time.LocalDateTime): List<Any> {
         // TODO: validate domain rules against state before appending events.
-        return listOf(
-            DatasetContractValidatedEvent(datasetId = command.datasetId, featureSchemaId = command.featureSchemaId, metadataReportId = command.metadataReportId, schemaCompatible = false /* TODO: derive value */, labelCompatible = false /* TODO: derive value */, qualityScore = java.math.BigDecimal.ZERO /* TODO: derive value */, nonIidScore = java.math.BigDecimal.ZERO /* TODO: derive value */)
-        )
+        return when (portResult) {
+                    is ValidateDatasetContractResult.Succeeded -> listOf(DatasetContractValidatedEvent(datasetId = command.datasetId, featureSchemaId = portResult.featureSchemaId, metadataReportId = portResult.metadataReportId, schemaCompatible = portResult.schemaCompatible, labelCompatible = portResult.labelCompatible, qualityScore = portResult.qualityScore, nonIidScore = portResult.nonIidScore))
+                    is ValidateDatasetContractResult.Rejected -> listOf(DatasetContractValidationFailedEvent(datasetId = command.datasetId, featureSchemaId = portResult.featureSchemaId, metadataReportId = portResult.metadataReportId, schemaCompatible = portResult.schemaCompatible, labelCompatible = portResult.labelCompatible, qualityScore = portResult.qualityScore, nonIidScore = portResult.nonIidScore, failureReason = "Dataset contract validation rejected."))
+                    is ValidateDatasetContractResult.Unavailable -> listOf(DatasetContractValidationFailedEvent(datasetId = command.datasetId, featureSchemaId = command.featureSchemaId, metadataReportId = command.metadataReportId, schemaCompatible = false /* TODO: provide schemaCompatible */, labelCompatible = false /* TODO: provide labelCompatible */, qualityScore = java.math.BigDecimal.ZERO /* TODO: provide qualityScore */, nonIidScore = java.math.BigDecimal.ZERO /* TODO: provide nonIidScore */, failureReason = portResult.failureReason))
+                }
     }
 }

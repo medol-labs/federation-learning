@@ -3,13 +3,13 @@ server:
 
 spring:
   config:
-    import: optional:file:../.env[.properties]
+    import: optional:file:federation-learning-dictionary/.env[.properties]
   application:
     name: federation-learning-dictionary
   docker:
     compose:
-      enabled: ${SPRING_DOCKER_COMPOSE_ENABLED:false}
-      file: ${DOCKER_COMPOSE_FILE:../docker-compose.yml}
+      enabled: ${SPRING_DOCKER_COMPOSE_ENABLED:true}
+      file: ${DOCKER_COMPOSE_FILE:federation-learning-dictionary/docker-compose.yml}
       lifecycle-management: start-and-stop
       profiles:
         active: axon-server
@@ -70,4 +70,4 @@ springdoc:
 
 logging:
   level:
-    org.axonframework: INFO
+    org.axonframework: ${AXON_LOG_LEVEL:INFO}

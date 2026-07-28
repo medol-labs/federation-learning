@@ -9,11 +9,11 @@ Generated from Medol CodegenModel for Axon Framework 5.1.1.
 
 ## Run
 
-Run this module from the generated multi-module root so Maven can include the sibling `shared-kernel` and `axon-event-storage-umadb` modules in the reactor:
+Run this module from the generated multi-module root so Maven can include the sibling `shared-kernel` and `axon-event-storage-umadb` modules in the reactor. Spring Boot uses this module's own `docker-compose.yml`:
 
 ```bash
 cd ..
-docker compose --profile axon-server up -d
+cp federation-learning-dictionary/.env.example federation-learning-dictionary/.env
 ./mvnw -pl federation-learning-dictionary -am spring-boot:run
 ```
 
@@ -27,8 +27,9 @@ OpenAPI endpoints:
 Default ports:
 
 - Application: `8080`; override with `SERVER_PORT`
-- PostgreSQL host port: `5432`; override with `DB_PORT`
+- PostgreSQL host port: `5432`; override with `DB_PORT` in this module's `.env`
 - PostgreSQL database: `federation_learning_dictionary`; override the full connection with `DB_URL`
+- UmaDB host port: `50051`; override with `UMADB_PORT` in this module's `.env`
 - Axon Server UI: `http://localhost:8024`; override with `AXON_SERVER_HTTP_PORT`
 - Axon Server gRPC: `localhost:8124`; override with `AXON_SERVER_SERVERS`
 
@@ -48,13 +49,20 @@ cd ..
 MEDOL_AXON_EVENT_STORAGE=inmemory AXON_SERVER_ENABLED=false ./mvnw -pl federation-learning-dictionary -am spring-boot:run
 ```
 
-Use the generated UmaDB DCB event store adapter from the `axon-event-storage-umadb` module with the root `.env` file:
+Use the generated UmaDB DCB event store adapter from the `axon-event-storage-umadb` module with this deployment module's `.env` file:
 
 ```bash
 cd ..
-cp .env.example .env
-# Edit .env if local ports or endpoints differ.
-docker compose up -d umadb federation-learning-dictionary-postgres./mvnw -pl federation-learning-dictionary -am spring-boot:run
+cp federation-learning-dictionary/.env.example federation-learning-dictionary/.env
+docker compose -f federation-learning-dictionary/docker-compose.yml up -d postgres umadb
+./mvnw -pl federation-learning-dictionary -am spring-boot:run
+```
+
+To run the generated application as a container instead of `spring-boot:run`:
+
+```bash
+cd ..
+docker compose -f federation-learning-dictionary/docker-compose.yml up -d federation-learning-dictionary
 ```
 
 The UmaDB adapter implements Axon Framework's `EventStorageEngine` boundary over UmaDB's official `umadb.v1.DCB` gRPC service: events are stored with DCB tags, Axon event criteria are mapped to UmaDB queries, conditional append uses UmaDB's DCB conflict condition, and source/stream tokens use Axon's global next-position semantics. Axon processor checkpoints still use the generated `token_entry` table; UmaDB's optional `TrackingInfo` API is not used as an Axon token store.

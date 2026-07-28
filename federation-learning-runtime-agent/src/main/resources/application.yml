@@ -3,13 +3,13 @@ server:
 
 spring:
   config:
-    import: optional:file:../.env[.properties]
+    import: optional:file:federation-learning-runtime-agent/.env[.properties]
   application:
     name: federation-learning-runtime-agent
   docker:
     compose:
-      enabled: ${SPRING_DOCKER_COMPOSE_ENABLED:false}
-      file: ${DOCKER_COMPOSE_FILE:../docker-compose.yml}
+      enabled: ${SPRING_DOCKER_COMPOSE_ENABLED:true}
+      file: ${DOCKER_COMPOSE_FILE:federation-learning-runtime-agent/docker-compose.yml}
       lifecycle-management: start-and-stop
       profiles:
         active: axon-server
@@ -44,7 +44,7 @@ medol:
   axon:
     event-storage: ${MEDOL_AXON_EVENT_STORAGE:umadb}
     umadb:
-      target: ${UMADB_TARGET:localhost:50051}
+      target: ${UMADB_TARGET:localhost:50053}
       plaintext: ${UMADB_PLAINTEXT:true}
       api-key: ${UMADB_API_KEY:}
       batch-size: ${UMADB_BATCH_SIZE:256}
@@ -70,4 +70,4 @@ springdoc:
 
 logging:
   level:
-    org.axonframework: INFO
+    org.axonframework: ${AXON_LOG_LEVEL:INFO}

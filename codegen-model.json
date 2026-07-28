@@ -1318,19 +1318,19 @@
           ]
         },
         {
-          "id": "concept-0aeec694",
-          "name": "AgentDatasetProfile",
-          "title": "Agent Dataset Profile",
-          "states": [
-            "Reported"
-          ]
-        },
-        {
           "id": "concept-e24fab76",
           "name": "AgentDatasetAccessValidation",
           "title": "Agent Dataset Access Validation",
           "states": [
             "Checked"
+          ]
+        },
+        {
+          "id": "concept-0aeec694",
+          "name": "AgentDatasetProfile",
+          "title": "Agent Dataset Profile",
+          "states": [
+            "Reported"
           ]
         },
         {
@@ -1407,6 +1407,21 @@
           "title": "Runtime Dataset Binding Catalog"
         },
         {
+          "id": "slice-c31ba9a1",
+          "name": "ValidateAgentDatasetAccess",
+          "title": "Validate Agent Dataset Access"
+        },
+        {
+          "id": "slice-aa47e014",
+          "name": "RevalidateAgentDatasetAccess",
+          "title": "Revalidate Agent Dataset Access"
+        },
+        {
+          "id": "slice-ba3dc29b",
+          "name": "AgentDatasetAccessValidationCatalog",
+          "title": "Agent Dataset Access Validation Catalog"
+        },
+        {
           "id": "slice-f44b66bc",
           "name": "ProfileAgentDataset",
           "title": "Profile Agent Dataset"
@@ -1445,16 +1460,6 @@
           "id": "slice-ff9e2f26",
           "name": "DatasetReadiness",
           "title": "Dataset Readiness"
-        },
-        {
-          "id": "slice-c31ba9a1",
-          "name": "ValidateAgentDatasetAccess",
-          "title": "Validate Agent Dataset Access"
-        },
-        {
-          "id": "slice-ba3dc29b",
-          "name": "AgentDatasetAccessValidationCatalog",
-          "title": "Agent Dataset Access Validation Catalog"
         },
         {
           "id": "slice-5bf739cd",
@@ -2840,6 +2845,32 @@
       ]
     },
     {
+      "id": "concept-e24fab76",
+      "name": "AgentDatasetAccessValidation",
+      "title": "Agent Dataset Access Validation",
+      "context": "RuntimeAgentOperations",
+      "states": [
+        "Checked"
+      ],
+      "slices": [
+        {
+          "id": "slice-c31ba9a1",
+          "name": "ValidateAgentDatasetAccess",
+          "title": "Validate Agent Dataset Access"
+        },
+        {
+          "id": "slice-aa47e014",
+          "name": "RevalidateAgentDatasetAccess",
+          "title": "Revalidate Agent Dataset Access"
+        },
+        {
+          "id": "slice-ba3dc29b",
+          "name": "AgentDatasetAccessValidationCatalog",
+          "title": "Agent Dataset Access Validation Catalog"
+        }
+      ]
+    },
+    {
       "id": "concept-0aeec694",
       "name": "AgentDatasetProfile",
       "title": "Agent Dataset Profile",
@@ -2857,27 +2888,6 @@
           "id": "slice-d6f2a3cf",
           "name": "ReprofileAgentDataset",
           "title": "Reprofile Agent Dataset"
-        }
-      ]
-    },
-    {
-      "id": "concept-e24fab76",
-      "name": "AgentDatasetAccessValidation",
-      "title": "Agent Dataset Access Validation",
-      "context": "RuntimeAgentOperations",
-      "states": [
-        "Checked"
-      ],
-      "slices": [
-        {
-          "id": "slice-c31ba9a1",
-          "name": "ValidateAgentDatasetAccess",
-          "title": "Validate Agent Dataset Access"
-        },
-        {
-          "id": "slice-ba3dc29b",
-          "name": "AgentDatasetAccessValidationCatalog",
-          "title": "Agent Dataset Access Validation Catalog"
         }
       ]
     },
@@ -5519,6 +5529,71 @@
       "startsLifecycle": true
     },
     {
+      "id": "transition-7f074198",
+      "context": "RuntimeAgentOperations",
+      "owner": {
+        "id": "concept-e24fab76",
+        "type": "concept",
+        "name": "AgentDatasetAccessValidation",
+        "title": "Agent Dataset Access Validation"
+      },
+      "slice": {
+        "id": "slice-c31ba9a1",
+        "name": "ValidateAgentDatasetAccess",
+        "title": "Validate Agent Dataset Access"
+      },
+      "command": {
+        "id": "command-71a67e13",
+        "name": "ValidateAgentDatasetAccess",
+        "title": "Validate Agent Dataset Access"
+      },
+      "event": {
+        "id": "event-3304eec8",
+        "name": "AgentDatasetAccessValidated",
+        "title": "Agent Dataset Access Validated"
+      },
+      "trigger": {
+        "id": "event-03df6f7e",
+        "name": "RuntimeDatasetBindingConfigured",
+        "title": "Runtime Dataset Binding Configured"
+      },
+      "to": "Checked",
+      "startsLifecycle": true
+    },
+    {
+      "id": "transition-49163791",
+      "context": "RuntimeAgentOperations",
+      "owner": {
+        "id": "concept-e24fab76",
+        "type": "concept",
+        "name": "AgentDatasetAccessValidation",
+        "title": "Agent Dataset Access Validation"
+      },
+      "slice": {
+        "id": "slice-aa47e014",
+        "name": "RevalidateAgentDatasetAccess",
+        "title": "Revalidate Agent Dataset Access"
+      },
+      "command": {
+        "id": "command-bdd9dc49",
+        "name": "RevalidateAgentDatasetAccess",
+        "title": "Revalidate Agent Dataset Access"
+      },
+      "event": {
+        "id": "event-0b52ea8a",
+        "name": "AgentDatasetAccessRevalidated",
+        "title": "Agent Dataset Access Revalidated"
+      },
+      "trigger": {
+        "id": "event-7a1293f0",
+        "name": "AgentDatasetAccessValidationFailed",
+        "title": "Agent Dataset Access Validation Failed"
+      },
+      "from": "Checked",
+      "to": "Checked",
+      "startsLifecycle": false
+    },
+    {
       "id": "transition-5617ded5",
       "context": "RuntimeAgentOperations",
       "owner": {
@@ -5608,9 +5683,9 @@
         "title": "Dataset Contract Validated"
       },
       "trigger": {
-        "id": "event-62d7fe8f",
-        "name": "DatasetMetadataReported",
-        "title": "Dataset Metadata Reported"
+        "id": "event-cbbad845",
+        "name": "AgentDatasetMetadataReported",
+        "title": "Agent Dataset Metadata Reported"
       },
       "to": "ContractValidationCompleted",
       "startsLifecycle": false
@@ -5713,38 +5788,6 @@
       "from": "Approved",
       "to": "ApprovalRevoked",
       "startsLifecycle": false
-    },
-    {
-      "id": "transition-7f074198",
-      "context": "RuntimeAgentOperations",
-      "owner": {
-        "id": "concept-e24fab76",
-        "type": "concept",
-        "name": "AgentDatasetAccessValidation",
-        "title": "Agent Dataset Access Validation"
-      },
-      "slice": {
-        "id": "slice-c31ba9a1",
-        "name": "ValidateAgentDatasetAccess",
-        "title": "Validate Agent Dataset Access"
-      },
-      "command": {
-        "id": "command-71a67e13",
-        "name": "ValidateAgentDatasetAccess",
-        "title": "Validate Agent Dataset Access"
-      },
-      "event": {
-        "id": "event-3304eec8",
-        "name": "AgentDatasetAccessValidated",
-        "title": "Agent Dataset Access Validated"
-      },
-      "trigger": {
-        "id": "event-03df6f7e",
-        "name": "RuntimeDatasetBindingConfigured",
-        "title": "Runtime Dataset Binding Configured"
-      },
-      "to": "Checked",
-      "startsLifecycle": true
     },
     {
       "id": "transition-4d9f92b0",
@@ -16882,12 +16925,6 @@
               "direction": "OUTBOUND",
               "title": "Training Participant Eligibility",
               "elementType": "READMODEL"
-            },
-            {
-              "id": "automation-67478d9c",
-              "direction": "OUTBOUND",
-              "title": "Validate Dataset Contract Automatically",
-              "elementType": "PROCESSOR"
             },
             {
               "id": "readmodel-b0bcb7c7",
@@ -37154,6 +37191,12 @@
               "elementType": "READMODEL"
             },
             {
+              "id": "readmodel-c7489867",
+              "direction": "OUTBOUND",
+              "title": "Agent Dataset Access Validation Catalog",
+              "elementType": "READMODEL"
+            },
+            {
               "id": "readmodel-b0bcb7c7",
               "direction": "OUTBOUND",
               "title": "Dataset Capability",
@@ -37163,12 +37206,6 @@
               "id": "readmodel-1a190595",
               "direction": "OUTBOUND",
               "title": "Dataset Readiness",
-              "elementType": "READMODEL"
-            },
-            {
-              "id": "readmodel-c7489867",
-              "direction": "OUTBOUND",
-              "title": "Agent Dataset Access Validation Catalog",
               "elementType": "READMODEL"
             }
           ]
@@ -37614,10 +37651,10 @@
               "elementType": "READMODEL"
             },
             {
-              "id": "command-71a67e13",
+              "id": "automation-c82b846e",
               "direction": "OUTBOUND",
-              "title": "Validate Agent Dataset Access",
-              "elementType": "COMMAND"
+              "title": "Validate Agent Dataset Access When Binding Configured",
+              "elementType": "PROCESSOR"
             }
           ]
         }
@@ -37894,8 +37931,1409 @@
       "hotspots": []
     },
     {
-      "id": "slice-f44b66bc",
+      "id": "slice-c31ba9a1",
       "index": 111,
+      "name": "ValidateAgentDatasetAccess",
+      "title": "Validate Agent Dataset Access",
+      "chapter": "RuntimeAgentOperations",
+      "context": "RuntimeAgentOperations",
+      "tags": [],
+      "port": true,
+      "concepts": [
+        "AgentDatasetAccessValidation"
+      ],
+      "commands": [
+        {
+          "id": "command-71a67e13",
+          "name": "ValidateAgentDatasetAccess",
+          "title": "Validate Agent Dataset Access",
+          "type": "COMMAND",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Validate Agent Dataset Access",
+          "fields": [
+            {
+              "name": "datasetAccessValidationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": true,
+              "technicalAttribute": true,
+              "query": false
+            },
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.runtimeDatasetBindingId"
+                ]
+              }
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.datasetId"
+                ]
+              }
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "dataSourceType",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.dataSourceType"
+                ]
+              }
+            },
+            {
+              "name": "host",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.host"
+                ]
+              }
+            },
+            {
+              "name": "port",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.port"
+                ]
+              }
+            },
+            {
+              "name": "url",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.url"
+                ]
+              }
+            },
+            {
+              "name": "databaseName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.databaseName"
+                ]
+              }
+            },
+            {
+              "name": "schemaName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.schemaName"
+                ]
+              }
+            },
+            {
+              "name": "tableName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.tableName"
+                ]
+              }
+            },
+            {
+              "name": "filePath",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.filePath"
+                ]
+              }
+            },
+            {
+              "name": "objectBucket",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.objectBucket"
+                ]
+              }
+            },
+            {
+              "name": "objectPrefix",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.objectPrefix"
+                ]
+              }
+            },
+            {
+              "name": "dataFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.dataFormat"
+                ]
+              }
+            },
+            {
+              "name": "credentialSecretName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.credentialSecretName"
+                ]
+              }
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "automation-c82b846e",
+              "direction": "INBOUND",
+              "title": "Validate Agent Dataset Access When Binding Configured",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "event-3304eec8",
+              "direction": "OUTBOUND",
+              "title": "Agent Dataset Access Validated",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-7a1293f0",
+              "direction": "OUTBOUND",
+              "title": "Agent Dataset Access Validation Failed",
+              "elementType": "EVENT"
+            }
+          ],
+          "startsLifecycle": true,
+          "port": true
+        }
+      ],
+      "events": [
+        {
+          "id": "event-3304eec8",
+          "name": "AgentDatasetAccessValidated",
+          "title": "Agent Dataset Access Validated",
+          "type": "EVENT",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Validate Agent Dataset Access",
+          "fields": [
+            {
+              "name": "datasetAccessValidationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false
+            },
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.datasetId"
+                ]
+              }
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "readable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "schemaReadable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "sampleBatchReadable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "readmodel-9aa4f7c7",
+              "direction": "OUTBOUND",
+              "title": "Training Participant Eligibility",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "command-71a67e13",
+              "direction": "INBOUND",
+              "title": "Validate Agent Dataset Access",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-c7489867",
+              "direction": "OUTBOUND",
+              "title": "Agent Dataset Access Validation Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "automation-9658af0c",
+              "direction": "OUTBOUND",
+              "title": "Profile Dataset When Access Validated",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "readmodel-1a190595",
+              "direction": "OUTBOUND",
+              "title": "Dataset Readiness",
+              "elementType": "READMODEL"
+            }
+          ]
+        },
+        {
+          "id": "event-7a1293f0",
+          "name": "AgentDatasetAccessValidationFailed",
+          "title": "Agent Dataset Access Validation Failed",
+          "type": "EVENT",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Validate Agent Dataset Access",
+          "fields": [
+            {
+              "name": "datasetAccessValidationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false
+            },
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.datasetId"
+                ]
+              }
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "failureReason",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-bdd9dc49",
+              "direction": "OUTBOUND",
+              "title": "Revalidate Agent Dataset Access",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-c7489867",
+              "direction": "OUTBOUND",
+              "title": "Agent Dataset Access Validation Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-1a190595",
+              "direction": "OUTBOUND",
+              "title": "Dataset Readiness",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "command-71a67e13",
+              "direction": "INBOUND",
+              "title": "Validate Agent Dataset Access",
+              "elementType": "COMMAND"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "processors": [
+        {
+          "id": "automation-c82b846e",
+          "name": "ValidateAgentDatasetAccessWhenBindingConfigured",
+          "title": "Validate Agent Dataset Access When Binding Configured",
+          "type": "PROCESSOR",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Validate Agent Dataset Access",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "event-03df6f7e",
+              "direction": "INBOUND",
+              "title": "Runtime Dataset Binding Configured",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "command-71a67e13",
+              "direction": "OUTBOUND",
+              "title": "Validate Agent Dataset Access",
+              "elementType": "COMMAND"
+            }
+          ],
+          "metadata": {
+            "on": "RuntimeDatasetBindingConfigured",
+            "onKind": "event",
+            "emits": "ValidateAgentDatasetAccess"
+          }
+        }
+      ],
+      "specifications": [
+        {
+          "id": "gwt-2f5c4dd7",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Validate Agent Dataset Access",
+          "title": "Agent Dataset Access Validated",
+          "specification": "Agent Dataset Access Validation Outcome",
+          "rule": "The runtime agent validates that the configured local dataset binding is readable and can expose schema and sample batches before profiling starts.",
+          "expressions": [],
+          "validates": [],
+          "given": [],
+          "when": [
+            {
+              "title": "Validate Agent Dataset Access",
+              "id": "command-71a67e13",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "datasetAccessValidationId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "33333333-3333-4333-8333-333333333333"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "44444444-4444-4444-8444-444444444444"
+                },
+                {
+                  "name": "dataSourceType",
+                  "example": "FILE"
+                },
+                {
+                  "name": "host"
+                },
+                {
+                  "name": "port"
+                },
+                {
+                  "name": "url"
+                },
+                {
+                  "name": "databaseName"
+                },
+                {
+                  "name": "schemaName"
+                },
+                {
+                  "name": "tableName"
+                },
+                {
+                  "name": "filePath",
+                  "example": "/data/credit-risk.csv"
+                },
+                {
+                  "name": "objectBucket"
+                },
+                {
+                  "name": "objectPrefix"
+                },
+                {
+                  "name": "dataFormat",
+                  "example": "CSV"
+                },
+                {
+                  "name": "credentialSecretName"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Agent Dataset Access Validated",
+              "id": "event-3304eec8",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "datasetAccessValidationId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "33333333-3333-4333-8333-333333333333"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "44444444-4444-4444-8444-444444444444"
+                },
+                {
+                  "name": "readable"
+                },
+                {
+                  "name": "schemaReadable"
+                },
+                {
+                  "name": "sampleBatchReadable"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-b7dfa5bd",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Validate Agent Dataset Access",
+          "title": "Agent Dataset Access Validation Failed",
+          "specification": "Agent Dataset Access Validation Outcome",
+          "rule": "The runtime agent validates that the configured local dataset binding is readable and can expose schema and sample batches before profiling starts.",
+          "expressions": [],
+          "validates": [],
+          "given": [],
+          "when": [
+            {
+              "title": "Validate Agent Dataset Access",
+              "id": "command-71a67e13",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "datasetAccessValidationId",
+                  "example": "33333333-3333-4333-8333-333333333333"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "44444444-4444-4444-8444-444444444444"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "66666666-6666-4666-8666-666666666666"
+                },
+                {
+                  "name": "dataSourceType",
+                  "example": "FILE"
+                },
+                {
+                  "name": "host"
+                },
+                {
+                  "name": "port"
+                },
+                {
+                  "name": "url"
+                },
+                {
+                  "name": "databaseName"
+                },
+                {
+                  "name": "schemaName"
+                },
+                {
+                  "name": "tableName"
+                },
+                {
+                  "name": "filePath",
+                  "example": "/data/missing.csv"
+                },
+                {
+                  "name": "objectBucket"
+                },
+                {
+                  "name": "objectPrefix"
+                },
+                {
+                  "name": "dataFormat",
+                  "example": "CSV"
+                },
+                {
+                  "name": "credentialSecretName"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Agent Dataset Access Validation Failed",
+              "id": "event-7a1293f0",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "datasetAccessValidationId",
+                  "example": "33333333-3333-4333-8333-333333333333"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "44444444-4444-4444-8444-444444444444"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "66666666-6666-4666-8666-666666666666"
+                },
+                {
+                  "name": "failureReason"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "actors": [
+        {
+          "id": "actor-a0cd7014",
+          "name": "RuntimeAgent",
+          "title": "Runtime Agent"
+        }
+      ],
+      "hotspots": [],
+      "stateChange": {
+        "event": "AgentDatasetAccessValidated",
+        "eventId": "event-3304eec8",
+        "to": "Checked"
+      }
+    },
+    {
+      "id": "slice-aa47e014",
+      "index": 112,
+      "name": "RevalidateAgentDatasetAccess",
+      "title": "Revalidate Agent Dataset Access",
+      "chapter": "RuntimeAgentOperations",
+      "context": "RuntimeAgentOperations",
+      "tags": [],
+      "port": true,
+      "concepts": [
+        "AgentDatasetAccessValidation"
+      ],
+      "commands": [
+        {
+          "id": "command-bdd9dc49",
+          "name": "RevalidateAgentDatasetAccess",
+          "title": "Revalidate Agent Dataset Access",
+          "type": "COMMAND",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Revalidate Agent Dataset Access",
+          "fields": [
+            {
+              "name": "datasetAccessValidationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": true,
+              "technicalAttribute": true,
+              "query": false
+            },
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidationFailed.runtimeDatasetBindingId"
+                ]
+              }
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-7a1293f0",
+              "direction": "INBOUND",
+              "title": "Agent Dataset Access Validation Failed",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "screen-990ab9ef",
+              "direction": "INBOUND",
+              "title": "Runtime Dataset Binding Screen",
+              "elementType": "SCREEN"
+            },
+            {
+              "id": "event-0b52ea8a",
+              "direction": "OUTBOUND",
+              "title": "Agent Dataset Access Revalidated",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-3218e68a",
+              "direction": "OUTBOUND",
+              "title": "Agent Dataset Access Revalidation Failed",
+              "elementType": "EVENT"
+            }
+          ],
+          "port": true
+        }
+      ],
+      "events": [
+        {
+          "id": "event-0b52ea8a",
+          "name": "AgentDatasetAccessRevalidated",
+          "title": "Agent Dataset Access Revalidated",
+          "type": "EVENT",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Revalidate Agent Dataset Access",
+          "fields": [
+            {
+              "name": "datasetAccessValidationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false
+            },
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidationFailed.datasetId"
+                ]
+              }
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidationFailed.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "readable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "schemaReadable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "sampleBatchReadable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-bdd9dc49",
+              "direction": "INBOUND",
+              "title": "Revalidate Agent Dataset Access",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-c7489867",
+              "direction": "OUTBOUND",
+              "title": "Agent Dataset Access Validation Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "automation-deaf431b",
+              "direction": "OUTBOUND",
+              "title": "Profile Dataset When Access Revalidated",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "readmodel-1a190595",
+              "direction": "OUTBOUND",
+              "title": "Dataset Readiness",
+              "elementType": "READMODEL"
+            }
+          ]
+        },
+        {
+          "id": "event-3218e68a",
+          "name": "AgentDatasetAccessRevalidationFailed",
+          "title": "Agent Dataset Access Revalidation Failed",
+          "type": "EVENT",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Revalidate Agent Dataset Access",
+          "fields": [
+            {
+              "name": "datasetAccessValidationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false
+            },
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidationFailed.datasetId"
+                ]
+              }
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidationFailed.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "failureReason",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "readmodel-c7489867",
+              "direction": "OUTBOUND",
+              "title": "Agent Dataset Access Validation Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-1a190595",
+              "direction": "OUTBOUND",
+              "title": "Dataset Readiness",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "command-bdd9dc49",
+              "direction": "INBOUND",
+              "title": "Revalidate Agent Dataset Access",
+              "elementType": "COMMAND"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [
+        {
+          "id": "screen-990ab9ef",
+          "name": "RuntimeDatasetBindingScreen",
+          "title": "Runtime Dataset Binding Screen",
+          "type": "SCREEN",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Revalidate Agent Dataset Access",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "command-bdd9dc49",
+              "direction": "OUTBOUND",
+              "title": "Revalidate Agent Dataset Access",
+              "elementType": "COMMAND"
+            }
+          ]
+        }
+      ],
+      "processors": [],
+      "specifications": [
+        {
+          "id": "gwt-c14836d0",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Revalidate Agent Dataset Access",
+          "title": "Agent Dataset Access Revalidated",
+          "specification": "Agent Dataset Access Revalidation Outcome",
+          "rule": "Node operators can manually retry dataset access validation after correcting local credentials or data source configuration.",
+          "expressions": [],
+          "validates": [],
+          "given": [],
+          "when": [
+            {
+              "title": "Revalidate Agent Dataset Access",
+              "id": "command-bdd9dc49",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "datasetAccessValidationId",
+                  "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Agent Dataset Access Revalidated",
+              "id": "event-0b52ea8a",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "datasetAccessValidationId",
+                  "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "datasetId"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "readable"
+                },
+                {
+                  "name": "schemaReadable"
+                },
+                {
+                  "name": "sampleBatchReadable"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-2002b7f6",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Revalidate Agent Dataset Access",
+          "title": "Agent Dataset Access Revalidation Failed",
+          "specification": "Agent Dataset Access Revalidation Outcome",
+          "rule": "Node operators can manually retry dataset access validation after correcting local credentials or data source configuration.",
+          "expressions": [],
+          "validates": [],
+          "given": [],
+          "when": [
+            {
+              "title": "Revalidate Agent Dataset Access",
+              "id": "command-bdd9dc49",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "datasetAccessValidationId",
+                  "example": "66666666-6666-4666-8666-666666666666"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "44444444-4444-4444-8444-444444444444"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Agent Dataset Access Revalidation Failed",
+              "id": "event-3218e68a",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "datasetAccessValidationId",
+                  "example": "66666666-6666-4666-8666-666666666666"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "44444444-4444-4444-8444-444444444444"
+                },
+                {
+                  "name": "datasetId"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "failureReason"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "actors": [
+        {
+          "id": "actor-4721a6f9",
+          "name": "NodeOperator",
+          "title": "Node Operator"
+        }
+      ],
+      "hotspots": [],
+      "stateChange": {
+        "event": "AgentDatasetAccessRevalidated",
+        "eventId": "event-0b52ea8a",
+        "to": "Checked"
+      }
+    },
+    {
+      "id": "slice-ba3dc29b",
+      "index": 113,
+      "name": "AgentDatasetAccessValidationCatalog",
+      "title": "Agent Dataset Access Validation Catalog",
+      "chapter": "RuntimeAgentOperations",
+      "context": "RuntimeAgentOperations",
+      "tags": [],
+      "concepts": [
+        "AgentDatasetAccessValidation"
+      ],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-c7489867",
+          "name": "AgentDatasetAccessValidationCatalog",
+          "title": "Agent Dataset Access Validation Catalog",
+          "type": "READMODEL",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Agent Dataset Access Validation Catalog",
+          "fields": [
+            {
+              "name": "datasetAccessValidationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "runtimeDatasetBindingId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "DatasetDeclared.datasetName"
+                ],
+                "rule": "Lookup by datasetId and denormalize the dataset display name into the agent dataset access validation catalog."
+              }
+            },
+            {
+              "name": "readable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "schemaReadable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "sampleBatchReadable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "validationStatus",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "failureReason",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            },
+            {
+              "name": "validatedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-b85fc68a",
+              "direction": "INBOUND",
+              "title": "Dataset Declared",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-3304eec8",
+              "direction": "INBOUND",
+              "title": "Agent Dataset Access Validated",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-7a1293f0",
+              "direction": "INBOUND",
+              "title": "Agent Dataset Access Validation Failed",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-0b52ea8a",
+              "direction": "INBOUND",
+              "title": "Agent Dataset Access Revalidated",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-3218e68a",
+              "direction": "INBOUND",
+              "title": "Agent Dataset Access Revalidation Failed",
+              "elementType": "EVENT"
+            }
+          ],
+          "listElement": true
+        }
+      ],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [],
+      "hotspots": []
+    },
+    {
+      "id": "slice-f44b66bc",
+      "index": 114,
       "name": "ProfileAgentDataset",
       "title": "Profile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -37946,6 +39384,12 @@
               "id": "automation-9658af0c",
               "direction": "INBOUND",
               "title": "Profile Dataset When Access Validated",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "automation-deaf431b",
+              "direction": "INBOUND",
+              "title": "Profile Dataset When Access Revalidated",
               "elementType": "PROCESSOR"
             },
             {
@@ -38175,6 +39619,12 @@
               "direction": "INBOUND",
               "title": "Profile Agent Dataset",
               "elementType": "COMMAND"
+            },
+            {
+              "id": "automation-67478d9c",
+              "direction": "OUTBOUND",
+              "title": "Validate Dataset Contract Automatically",
+              "elementType": "PROCESSOR"
             }
           ]
         },
@@ -38295,6 +39745,34 @@
             "onKind": "event",
             "emits": "ProfileAgentDataset"
           }
+        },
+        {
+          "id": "automation-deaf431b",
+          "name": "ProfileDatasetWhenAccessRevalidated",
+          "title": "Profile Dataset When Access Revalidated",
+          "type": "PROCESSOR",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Profile Agent Dataset",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "event-0b52ea8a",
+              "direction": "INBOUND",
+              "title": "Agent Dataset Access Revalidated",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "command-9e8a213b",
+              "direction": "OUTBOUND",
+              "title": "Profile Agent Dataset",
+              "elementType": "COMMAND"
+            }
+          ],
+          "metadata": {
+            "on": "AgentDatasetAccessRevalidated",
+            "onKind": "event",
+            "emits": "ProfileAgentDataset"
+          }
         }
       ],
       "specifications": [],
@@ -38314,7 +39792,7 @@
     },
     {
       "id": "slice-d6f2a3cf",
-      "index": 112,
+      "index": 115,
       "name": "ReprofileAgentDataset",
       "title": "Reprofile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -38721,7 +40199,7 @@
     },
     {
       "id": "slice-2529cf36",
-      "index": 113,
+      "index": 116,
       "name": "ValidateDatasetContract",
       "title": "Validate Dataset Contract",
       "chapter": "RuntimeAgentOperations",
@@ -38752,7 +40230,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetMetadataReported.datasetId"
+                  "AgentDatasetMetadataReported.datasetId"
                 ]
               }
             },
@@ -38768,7 +40246,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetMetadataReported.metadataReportId"
+                  "AgentDatasetMetadataReported.metadataReportId"
                 ]
               }
             },
@@ -38784,7 +40262,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetMetadataReported.featureSchemaId"
+                  "AgentDatasetMetadataReported.featureSchemaId"
                 ]
               }
             }
@@ -38800,6 +40278,12 @@
               "id": "event-24cfe996",
               "direction": "OUTBOUND",
               "title": "Dataset Contract Validated",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-cb50e94e",
+              "direction": "OUTBOUND",
+              "title": "Dataset Contract Validation Failed",
               "elementType": "EVENT"
             }
           ],
@@ -38857,7 +40341,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetMetadataReported.schemaCompatible"
+                  "AgentDatasetMetadataReported.schemaCompatible"
                 ]
               }
             },
@@ -38873,7 +40357,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetMetadataReported.labelCompatible"
+                  "AgentDatasetMetadataReported.labelCompatible"
                 ]
               }
             },
@@ -38889,7 +40373,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetMetadataReported.qualityScore"
+                  "AgentDatasetMetadataReported.qualityScore"
                 ]
               }
             },
@@ -38905,7 +40389,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetMetadataReported.nonIidScore"
+                  "AgentDatasetMetadataReported.nonIidScore"
                 ]
               }
             }
@@ -38999,7 +40483,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetMetadataReported.schemaCompatible"
+                  "AgentDatasetMetadataReported.schemaCompatible"
                 ]
               }
             },
@@ -39015,7 +40499,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetMetadataReported.labelCompatible"
+                  "AgentDatasetMetadataReported.labelCompatible"
                 ]
               }
             },
@@ -39031,7 +40515,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetMetadataReported.qualityScore"
+                  "AgentDatasetMetadataReported.qualityScore"
                 ]
               }
             },
@@ -39047,7 +40531,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetMetadataReported.nonIidScore"
+                  "AgentDatasetMetadataReported.nonIidScore"
                 ]
               }
             },
@@ -39074,6 +40558,12 @@
               "direction": "OUTBOUND",
               "title": "Dataset Readiness",
               "elementType": "READMODEL"
+            },
+            {
+              "id": "command-7cf7ad3f",
+              "direction": "INBOUND",
+              "title": "Validate Dataset Contract",
+              "elementType": "COMMAND"
             }
           ]
         }
@@ -39091,9 +40581,9 @@
           "fields": [],
           "dependencies": [
             {
-              "id": "event-62d7fe8f",
+              "id": "event-cbbad845",
               "direction": "INBOUND",
-              "title": "Dataset Metadata Reported",
+              "title": "Agent Dataset Metadata Reported",
               "elementType": "EVENT"
             },
             {
@@ -39104,13 +40594,147 @@
             }
           ],
           "metadata": {
-            "on": "DatasetMetadataReported",
+            "on": "AgentDatasetMetadataReported",
             "onKind": "event",
             "emits": "ValidateDatasetContract"
           }
         }
       ],
-      "specifications": [],
+      "specifications": [
+        {
+          "id": "gwt-328a7d6e",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Validate Dataset Contract",
+          "title": "Dataset Contract Validation Succeeded",
+          "specification": "Dataset Contract Validation Outcome",
+          "rule": "Dataset contract validation succeeds only when the reported dataset metadata is compatible with the expected feature schema and label contract.",
+          "expressions": [],
+          "validates": [],
+          "given": [],
+          "when": [
+            {
+              "title": "Validate Dataset Contract",
+              "id": "command-7cf7ad3f",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "dataset-1"
+                },
+                {
+                  "name": "metadataReportId",
+                  "example": "metadata-report-1"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "feature-schema-1"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Dataset Contract Validated",
+              "id": "event-24cfe996",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "dataset-1"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "feature-schema-1"
+                },
+                {
+                  "name": "metadataReportId",
+                  "example": "metadata-report-1"
+                },
+                {
+                  "name": "schemaCompatible"
+                },
+                {
+                  "name": "labelCompatible"
+                },
+                {
+                  "name": "qualityScore"
+                },
+                {
+                  "name": "nonIidScore"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-a039e428",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Validate Dataset Contract",
+          "title": "Dataset Contract Validation Failed",
+          "specification": "Dataset Contract Validation Outcome",
+          "rule": "Dataset contract validation succeeds only when the reported dataset metadata is compatible with the expected feature schema and label contract.",
+          "expressions": [],
+          "validates": [],
+          "given": [],
+          "when": [
+            {
+              "title": "Validate Dataset Contract",
+              "id": "command-7cf7ad3f",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "dataset-2"
+                },
+                {
+                  "name": "metadataReportId",
+                  "example": "metadata-report-2"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "feature-schema-1"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Dataset Contract Validation Failed",
+              "id": "event-cb50e94e",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "dataset-2"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "feature-schema-1"
+                },
+                {
+                  "name": "metadataReportId",
+                  "example": "metadata-report-2"
+                },
+                {
+                  "name": "schemaCompatible"
+                },
+                {
+                  "name": "labelCompatible"
+                },
+                {
+                  "name": "qualityScore"
+                },
+                {
+                  "name": "nonIidScore"
+                },
+                {
+                  "name": "failureReason"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "actors": [],
       "hotspots": [],
       "stateChange": {
@@ -39121,7 +40745,7 @@
     },
     {
       "id": "slice-d28aff88",
-      "index": 114,
+      "index": 117,
       "name": "RejectDatasetForTraining",
       "title": "Reject Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -39272,7 +40896,7 @@
     },
     {
       "id": "slice-284a72da",
-      "index": 115,
+      "index": 118,
       "name": "ApproveDatasetForTraining",
       "title": "Approve Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -39547,7 +41171,7 @@
     },
     {
       "id": "slice-847c2855",
-      "index": 116,
+      "index": 119,
       "name": "RevokeDatasetTrainingApproval",
       "title": "Revoke Dataset Training Approval",
       "chapter": "RuntimeAgentOperations",
@@ -39710,7 +41334,7 @@
     },
     {
       "id": "slice-30869f70",
-      "index": 117,
+      "index": 120,
       "name": "DatasetCapability",
       "title": "Dataset Capability",
       "chapter": "RuntimeAgentOperations",
@@ -40025,7 +41649,7 @@
     },
     {
       "id": "slice-ff9e2f26",
-      "index": 118,
+      "index": 121,
       "name": "DatasetReadiness",
       "title": "Dataset Readiness",
       "chapter": "RuntimeAgentOperations",
@@ -40511,6 +42135,18 @@
               "elementType": "EVENT"
             },
             {
+              "id": "event-0b52ea8a",
+              "direction": "INBOUND",
+              "title": "Agent Dataset Access Revalidated",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-3218e68a",
+              "direction": "INBOUND",
+              "title": "Agent Dataset Access Revalidation Failed",
+              "elementType": "EVENT"
+            },
+            {
               "id": "event-cb350a25",
               "direction": "INBOUND",
               "title": "Runtime Connection Established",
@@ -40539,497 +42175,8 @@
       "hotspots": []
     },
     {
-      "id": "slice-c31ba9a1",
-      "index": 119,
-      "name": "ValidateAgentDatasetAccess",
-      "title": "Validate Agent Dataset Access",
-      "chapter": "RuntimeAgentOperations",
-      "context": "RuntimeAgentOperations",
-      "tags": [],
-      "port": true,
-      "concepts": [
-        "AgentDatasetAccessValidation"
-      ],
-      "commands": [
-        {
-          "id": "command-71a67e13",
-          "name": "ValidateAgentDatasetAccess",
-          "title": "Validate Agent Dataset Access",
-          "type": "COMMAND",
-          "modelContext": "RuntimeAgentOperations",
-          "slice": "Validate Agent Dataset Access",
-          "fields": [
-            {
-              "name": "datasetAccessValidationId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": true,
-              "generated": true,
-              "technicalAttribute": true,
-              "query": false
-            },
-            {
-              "name": "runtimeDatasetBindingId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "RuntimeDatasetBindingConfigured.runtimeDatasetBindingId"
-                ]
-              }
-            }
-          ],
-          "dependencies": [
-            {
-              "id": "event-03df6f7e",
-              "direction": "INBOUND",
-              "title": "Runtime Dataset Binding Configured",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "screen-819c1910",
-              "direction": "INBOUND",
-              "title": "Runtime Dataset Binding Screen",
-              "elementType": "SCREEN"
-            },
-            {
-              "id": "event-3304eec8",
-              "direction": "OUTBOUND",
-              "title": "Agent Dataset Access Validated",
-              "elementType": "EVENT"
-            }
-          ],
-          "startsLifecycle": true,
-          "port": true
-        }
-      ],
-      "events": [
-        {
-          "id": "event-3304eec8",
-          "name": "AgentDatasetAccessValidated",
-          "title": "Agent Dataset Access Validated",
-          "type": "EVENT",
-          "modelContext": "RuntimeAgentOperations",
-          "slice": "Validate Agent Dataset Access",
-          "fields": [
-            {
-              "name": "datasetAccessValidationId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": true,
-              "generated": false,
-              "technicalAttribute": true,
-              "query": false
-            },
-            {
-              "name": "runtimeDatasetBindingId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "datasetId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "RuntimeDatasetBindingConfigured.datasetId"
-                ]
-              }
-            },
-            {
-              "name": "runtimeId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "RuntimeDatasetBindingConfigured.runtimeId"
-                ]
-              }
-            },
-            {
-              "name": "readable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "schemaReadable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "sampleBatchReadable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            }
-          ],
-          "dependencies": [
-            {
-              "id": "readmodel-9aa4f7c7",
-              "direction": "OUTBOUND",
-              "title": "Training Participant Eligibility",
-              "elementType": "READMODEL"
-            },
-            {
-              "id": "automation-9658af0c",
-              "direction": "OUTBOUND",
-              "title": "Profile Dataset When Access Validated",
-              "elementType": "PROCESSOR"
-            },
-            {
-              "id": "readmodel-1a190595",
-              "direction": "OUTBOUND",
-              "title": "Dataset Readiness",
-              "elementType": "READMODEL"
-            },
-            {
-              "id": "command-71a67e13",
-              "direction": "INBOUND",
-              "title": "Validate Agent Dataset Access",
-              "elementType": "COMMAND"
-            },
-            {
-              "id": "readmodel-c7489867",
-              "direction": "OUTBOUND",
-              "title": "Agent Dataset Access Validation Catalog",
-              "elementType": "READMODEL"
-            }
-          ]
-        },
-        {
-          "id": "event-7a1293f0",
-          "name": "AgentDatasetAccessValidationFailed",
-          "title": "Agent Dataset Access Validation Failed",
-          "type": "EVENT",
-          "modelContext": "RuntimeAgentOperations",
-          "slice": "Validate Agent Dataset Access",
-          "fields": [
-            {
-              "name": "datasetAccessValidationId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": true,
-              "generated": false,
-              "technicalAttribute": true,
-              "query": false
-            },
-            {
-              "name": "runtimeDatasetBindingId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "datasetId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "RuntimeDatasetBindingConfigured.datasetId"
-                ]
-              }
-            },
-            {
-              "name": "runtimeId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "RuntimeDatasetBindingConfigured.runtimeId"
-                ]
-              }
-            },
-            {
-              "name": "failureReason",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            }
-          ],
-          "dependencies": [
-            {
-              "id": "readmodel-1a190595",
-              "direction": "OUTBOUND",
-              "title": "Dataset Readiness",
-              "elementType": "READMODEL"
-            },
-            {
-              "id": "readmodel-c7489867",
-              "direction": "OUTBOUND",
-              "title": "Agent Dataset Access Validation Catalog",
-              "elementType": "READMODEL"
-            }
-          ]
-        }
-      ],
-      "readmodels": [],
-      "screens": [
-        {
-          "id": "screen-819c1910",
-          "name": "RuntimeDatasetBindingScreen",
-          "title": "Runtime Dataset Binding Screen",
-          "type": "SCREEN",
-          "modelContext": "RuntimeAgentOperations",
-          "slice": "Validate Agent Dataset Access",
-          "fields": [],
-          "dependencies": [
-            {
-              "id": "command-71a67e13",
-              "direction": "OUTBOUND",
-              "title": "Validate Agent Dataset Access",
-              "elementType": "COMMAND"
-            }
-          ]
-        }
-      ],
-      "processors": [],
-      "specifications": [],
-      "actors": [
-        {
-          "id": "actor-4721a6f9",
-          "name": "NodeOperator",
-          "title": "Node Operator"
-        }
-      ],
-      "hotspots": [],
-      "stateChange": {
-        "event": "AgentDatasetAccessValidated",
-        "eventId": "event-3304eec8",
-        "to": "Checked"
-      }
-    },
-    {
-      "id": "slice-ba3dc29b",
-      "index": 120,
-      "name": "AgentDatasetAccessValidationCatalog",
-      "title": "Agent Dataset Access Validation Catalog",
-      "chapter": "RuntimeAgentOperations",
-      "context": "RuntimeAgentOperations",
-      "tags": [],
-      "concepts": [
-        "AgentDatasetAccessValidation"
-      ],
-      "commands": [],
-      "events": [],
-      "readmodels": [
-        {
-          "id": "readmodel-c7489867",
-          "name": "AgentDatasetAccessValidationCatalog",
-          "title": "Agent Dataset Access Validation Catalog",
-          "type": "READMODEL",
-          "modelContext": "RuntimeAgentOperations",
-          "slice": "Agent Dataset Access Validation Catalog",
-          "fields": [
-            {
-              "name": "datasetAccessValidationId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": true,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "runtimeDatasetBindingId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "datasetId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "runtimeId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "datasetName",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "DatasetDeclared.datasetName"
-                ],
-                "rule": "Lookup by datasetId and denormalize the dataset display name into the agent dataset access validation catalog."
-              }
-            },
-            {
-              "name": "readable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "schemaReadable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "sampleBatchReadable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "validationStatus",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "failureReason",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            },
-            {
-              "name": "validatedAt",
-              "type": "DateTime",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false
-            }
-          ],
-          "dependencies": [
-            {
-              "id": "event-b85fc68a",
-              "direction": "INBOUND",
-              "title": "Dataset Declared",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "event-3304eec8",
-              "direction": "INBOUND",
-              "title": "Agent Dataset Access Validated",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "event-7a1293f0",
-              "direction": "INBOUND",
-              "title": "Agent Dataset Access Validation Failed",
-              "elementType": "EVENT"
-            }
-          ],
-          "listElement": true
-        }
-      ],
-      "screens": [],
-      "processors": [],
-      "specifications": [],
-      "actors": [],
-      "hotspots": []
-    },
-    {
       "id": "slice-5bf739cd",
-      "index": 121,
+      "index": 122,
       "name": "ReceiveParticipantExecutionPlan",
       "title": "Receive Participant Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -41406,7 +42553,7 @@
     },
     {
       "id": "slice-64faaa9b",
-      "index": 122,
+      "index": 123,
       "name": "AcceptExecutionPlan",
       "title": "Accept Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -41783,7 +42930,7 @@
     },
     {
       "id": "slice-df2e65a6",
-      "index": 123,
+      "index": 124,
       "name": "RejectExecutionPlan",
       "title": "Reject Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -42174,7 +43321,7 @@
     },
     {
       "id": "slice-4d4016d0",
-      "index": 124,
+      "index": 125,
       "name": "StartRoundExecution",
       "title": "Start Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -42812,7 +43959,7 @@
     },
     {
       "id": "slice-b1a48287",
-      "index": 125,
+      "index": 126,
       "name": "CompleteRoundExecution",
       "title": "Complete Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -43065,7 +44212,7 @@
     },
     {
       "id": "slice-45c663e8",
-      "index": 126,
+      "index": 127,
       "name": "FailRoundExecution",
       "title": "Fail Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -43344,7 +44491,7 @@
     },
     {
       "id": "slice-ff352882",
-      "index": 127,
+      "index": 128,
       "name": "RetryRoundExecutionAfterStartFailure",
       "title": "Retry Round Execution After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -43953,7 +45100,7 @@
     },
     {
       "id": "slice-2cb34062",
-      "index": 128,
+      "index": 129,
       "name": "RetryRoundExecutionAfterRuntimeFailure",
       "title": "Retry Round Execution After Runtime Failure",
       "chapter": "RuntimeAgentOperations",
@@ -44590,7 +45737,7 @@
     },
     {
       "id": "slice-d54dcc12",
-      "index": 129,
+      "index": 130,
       "name": "SubmitAgentLocalModelUpdate",
       "title": "Submit Agent Local Model Update",
       "chapter": "RuntimeAgentOperations",
@@ -45037,7 +46184,7 @@
     },
     {
       "id": "slice-6485fdce",
-      "index": 130,
+      "index": 131,
       "name": "ReleaseRuntimeEngineJobAfterCompletion",
       "title": "Release Runtime Engine Job After Completion",
       "chapter": "RuntimeAgentOperations",
@@ -45195,7 +46342,7 @@
     },
     {
       "id": "slice-ef8420f2",
-      "index": 131,
+      "index": 132,
       "name": "ReleaseRuntimeEngineJobAfterFailure",
       "title": "Release Runtime Engine Job After Failure",
       "chapter": "RuntimeAgentOperations",
@@ -45363,7 +46510,7 @@
     },
     {
       "id": "slice-30156076",
-      "index": 132,
+      "index": 133,
       "name": "ReleaseRuntimeEngineJobAfterStartFailure",
       "title": "Release Runtime Engine Job After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -45531,7 +46678,7 @@
     },
     {
       "id": "slice-5d7a0380",
-      "index": 133,
+      "index": 134,
       "name": "ReleaseRuntimeEngineJobAfterRetryFailure",
       "title": "Release Runtime Engine Job After Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -45699,7 +46846,7 @@
     },
     {
       "id": "slice-bc1eac14",
-      "index": 134,
+      "index": 135,
       "name": "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure",
       "title": "Release Runtime Engine Job After Runtime Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -45867,7 +47014,7 @@
     },
     {
       "id": "slice-eb00f5f7",
-      "index": 135,
+      "index": 136,
       "name": "RoundExecutionCatalog",
       "title": "Round Execution Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -46379,7 +47526,7 @@
     },
     {
       "id": "slice-c7d2df46",
-      "index": 136,
+      "index": 137,
       "name": "ReportRuntimeAgentStarted",
       "title": "Report Runtime Agent Started",
       "chapter": "RuntimeAgentOperations",
@@ -46521,7 +47668,7 @@
     },
     {
       "id": "slice-75635ed7",
-      "index": 137,
+      "index": 138,
       "name": "ReportRuntimeInstanceSelfCheckPassed",
       "title": "Report Runtime Instance Self Check Passed",
       "chapter": "RuntimeAgentOperations",
@@ -46858,7 +48005,7 @@
     },
     {
       "id": "slice-574f1d44",
-      "index": 138,
+      "index": 139,
       "name": "RuntimeAgentLifecycleCatalog",
       "title": "Runtime Agent Lifecycle Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -47034,7 +48181,7 @@
     },
     {
       "id": "slice-e5b0caa2",
-      "index": 139,
+      "index": 140,
       "name": "ReportRuntimeInstanceConnected",
       "title": "Report Runtime Instance Connected",
       "chapter": "RuntimeAgentOperations",
@@ -47300,7 +48447,7 @@
     },
     {
       "id": "slice-8d5d066d",
-      "index": 140,
+      "index": 141,
       "name": "AgentRuntimeInfrastructureConnectionCatalog",
       "title": "Agent Runtime Infrastructure Connection Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -47420,7 +48567,7 @@
     },
     {
       "id": "slice-ff0c55e7",
-      "index": 141,
+      "index": 142,
       "name": "AgentRuntimeTelemetryLatest",
       "title": "Agent Runtime Telemetry Latest",
       "chapter": "RuntimeAgentOperations",
@@ -47553,7 +48700,7 @@
     },
     {
       "id": "slice-d8eaacb9",
-      "index": 142,
+      "index": 143,
       "name": "ReportAgentRuntimeNodeInventory",
       "title": "Report Agent Runtime Node Inventory",
       "chapter": "RuntimeAgentOperations",
@@ -47917,7 +49064,7 @@
     },
     {
       "id": "slice-6a815e36",
-      "index": 143,
+      "index": 144,
       "name": "AgentRuntimeNodeInventoryCatalog",
       "title": "Agent Runtime Node Inventory Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -48120,7 +49267,7 @@
     },
     {
       "id": "slice-a56419ba",
-      "index": 144,
+      "index": 145,
       "name": "AgentRuntimeNodeResourceLatest",
       "title": "Agent Runtime Node Resource Latest",
       "chapter": "RuntimeAgentOperations",

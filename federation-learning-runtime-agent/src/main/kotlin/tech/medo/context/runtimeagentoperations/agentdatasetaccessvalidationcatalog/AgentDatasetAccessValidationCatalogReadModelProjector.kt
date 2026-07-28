@@ -8,6 +8,8 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 import tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent
 import tech.medo.runtimeagentoperations.events.AgentDatasetAccessValidatedEvent
 import tech.medo.runtimeagentoperations.events.AgentDatasetAccessValidationFailedEvent
+import tech.medo.runtimeagentoperations.events.AgentDatasetAccessRevalidatedEvent
+import tech.medo.runtimeagentoperations.events.AgentDatasetAccessRevalidationFailedEvent
 
 
 
@@ -41,6 +43,44 @@ class AgentDatasetAccessValidationCatalogReadModelProjector(private val reposito
     @EventHandler
     fun on(
         event: AgentDatasetAccessValidationFailedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.datasetAccessValidationId) ?: AgentDatasetAccessValidationCatalogReadModelProjection().apply {
+                this.datasetAccessValidationId = event.datasetAccessValidationId
+        }
+            entity.datasetAccessValidationId = event.datasetAccessValidationId
+            entity.runtimeDatasetBindingId = event.runtimeDatasetBindingId
+            entity.datasetId = event.datasetId
+            entity.runtimeId = event.runtimeId
+            entity.failureReason = event.failureReason
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetAccessRevalidatedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.datasetAccessValidationId) ?: AgentDatasetAccessValidationCatalogReadModelProjection().apply {
+                this.datasetAccessValidationId = event.datasetAccessValidationId
+        }
+            entity.datasetAccessValidationId = event.datasetAccessValidationId
+            entity.runtimeDatasetBindingId = event.runtimeDatasetBindingId
+            entity.datasetId = event.datasetId
+            entity.runtimeId = event.runtimeId
+            entity.readable = event.readable
+            entity.schemaReadable = event.schemaReadable
+            entity.sampleBatchReadable = event.sampleBatchReadable
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetAccessRevalidationFailedEvent,
         message: EventMessage
     ) {
 
