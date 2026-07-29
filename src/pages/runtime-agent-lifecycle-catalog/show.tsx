@@ -60,6 +60,16 @@ export const RuntimeAgentLifecycleCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_lifecycle_catalog.fields.bootstrapConfigurationLoaded.label", "Bootstrap Configuration Loaded")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.bootstrapConfigurationLoaded, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_lifecycle_catalog.fields.bootstrapFailureReason.label", "Bootstrap Failure Reason")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.bootstrapFailureReason, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_lifecycle_catalog.fields.runtimeAgentSelfCheckPassed.label", "Runtime Agent Self Check Passed")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentSelfCheckPassed, t)}</p>
             </div>
@@ -92,6 +102,16 @@ export const RuntimeAgentLifecycleCatalogShow = () => {
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_lifecycle_catalog.fields.workingDirectoryWritable.label", "Working Directory Writable")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.workingDirectoryWritable, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_lifecycle_catalog.fields.bootstrappedAt.label", "Bootstrapped At")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.bootstrappedAt, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_lifecycle_catalog.fields.bootstrapFailedAt.label", "Bootstrap Failed At")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.bootstrapFailedAt, t)}</p>
             </div>
             <Separator />
             <div>

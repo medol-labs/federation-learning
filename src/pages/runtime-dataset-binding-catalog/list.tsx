@@ -256,19 +256,6 @@ export const RuntimeDatasetBindingCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="validateAgentDatasetAccess"
-                    recordItemId={row.original.runtimeDatasetBindingId}
-                    size="sm"
-                    query={{
-                      runtimeDatasetBindingId: row.original.runtimeDatasetBindingId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.runtimeDatasetBindingId} size="sm" />
                 </DropdownMenuItem>

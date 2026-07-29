@@ -16,7 +16,7 @@ import { Register } from "../pages/register";
 import {
   AgentDatasetAccessValidationCatalogList,
   AgentDatasetAccessValidationCatalogShow,
-  AgentDatasetAccessValidationCatalogValidateAgentDatasetAccess,
+  AgentDatasetAccessValidationCatalogRevalidateAgentDatasetAccess,
   AgentDatasetAccessValidationCatalogConfigureRuntimeDatasetBinding,
 } from "../pages/agent-dataset-access-validation-catalog";
 import {
@@ -120,7 +120,7 @@ import {
 import {
   RuntimeAgentLifecycleCatalogList,
   RuntimeAgentLifecycleCatalogShow,
-  RuntimeAgentLifecycleCatalogReportRuntimeAgentStarted,
+  RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration,
 } from "../pages/runtime-agent-lifecycle-catalog";
 import {
   RuntimeCapabilityCatalogList,
@@ -130,7 +130,6 @@ import {
   RuntimeDatasetBindingCatalogList,
   RuntimeDatasetBindingCatalogShow,
   RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding,
-  RuntimeDatasetBindingCatalogValidateAgentDatasetAccess,
 } from "../pages/runtime-dataset-binding-catalog";
 import {
   RuntimeDatasetMetadataCatalogList,
@@ -241,8 +240,8 @@ export const AppRouter = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/agent-dataset-access-validation-catalog">
           <Route index element={<AgentDatasetAccessValidationCatalogList />} />
-          <Route path="command/validate-agent-dataset-access" element={<AgentDatasetAccessValidationCatalogValidateAgentDatasetAccess />} />
           <Route path="show/:id" element={<AgentDatasetAccessValidationCatalogShow />} />
+          <Route path=":id/command/revalidate-agent-dataset-access" element={<AgentDatasetAccessValidationCatalogRevalidateAgentDatasetAccess />} />
           <Route path=":id/command/configure-runtime-dataset-binding" element={<AgentDatasetAccessValidationCatalogConfigureRuntimeDatasetBinding />} />
         </Route>
         <Route path="/agent-runtime-infrastructure-connection-catalog">
@@ -345,7 +344,7 @@ export const AppRouter = () => {
         </Route>
         <Route path="/runtime-agent-lifecycle-catalog">
           <Route index element={<RuntimeAgentLifecycleCatalogList />} />
-          <Route path="command/report-runtime-agent-started" element={<RuntimeAgentLifecycleCatalogReportRuntimeAgentStarted />} />
+          <Route path="command/load-runtime-agent-bootstrap-configuration" element={<RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration />} />
           <Route path="show/:id" element={<RuntimeAgentLifecycleCatalogShow />} />
         </Route>
         <Route path="/runtime-capability-catalog">
@@ -356,7 +355,6 @@ export const AppRouter = () => {
           <Route index element={<RuntimeDatasetBindingCatalogList />} />
           <Route path="command/configure-runtime-dataset-binding" element={<RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding />} />
           <Route path="show/:id" element={<RuntimeDatasetBindingCatalogShow />} />
-          <Route path=":id/command/validate-agent-dataset-access" element={<RuntimeDatasetBindingCatalogValidateAgentDatasetAccess />} />
         </Route>
         <Route path="/runtime-dataset-metadata-catalog">
           <Route index element={<RuntimeDatasetMetadataCatalogList />} />

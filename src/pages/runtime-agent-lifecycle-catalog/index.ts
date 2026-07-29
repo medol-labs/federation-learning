@@ -1,4 +1,4 @@
 // Generated from config.json by the refine generator.
 export * from "./list";
 export * from "./show";
-export * from "./report-runtime-agent-started";
+export * from "./load-runtime-agent-bootstrap-configuration";

@@ -186,6 +186,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "validationStatus", ["Checked"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="revalidateAgentDatasetAccess"
+                    recordItemId={row.original.datasetAccessValidationId}
+                    size="sm"
+                    query={{
+                      runtimeDatasetBindingId: row.original.runtimeDatasetBindingId,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
                 {isCommandVisible(row.original, "", "", []) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -237,7 +250,6 @@ export const AgentDatasetAccessValidationCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="validateAgentDatasetAccess" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

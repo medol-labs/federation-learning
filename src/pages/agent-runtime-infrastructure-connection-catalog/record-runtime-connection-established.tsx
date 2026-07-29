@@ -110,6 +110,82 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="agentInstallMode"
+            rules={{ required: "Agent Install Mode is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.label", "Agent Install Mode")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="dictionary_value_catalog"
+                  dataProviderName="federation-learning-dictionary"
+                  optionLabel="displayName"
+                  optionValue="valueCode"
+                  value={field.value || ""}
+                  onValueChange={field.onChange}
+                  placeholder={t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.placeholder", "Select Agent Install Mode")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_INSTALL_MODE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.label", "Dictionary Value Catalog"),
+                    aggregateRoute: "dictionaryvalue",
+                    queryRoute: "dictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="organizationId"
+            rules={{ required: "Organization Id is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.organizationId.label", "Organization Id")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="organization_directory"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="organizationName"
+                  optionValue="organizationId"
+                  value={field.value || ""}
+                  onValueChange={field.onChange}
+                  placeholder={t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.organizationId.placeholder", "Select Organization Id")}
+                  meta={{
+                    idField: "organizationId",
+                    label: t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.organizationId.label", "Organization Directory"),
+                    aggregateRoute: "organization",
+                    queryRoute: "organizationdirectory",
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="runtimeName"
+            rules={{ required: "Runtime Name is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeName.label", "Runtime Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Runtime Name"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="flex gap-2">
             <Button
               type="submit"

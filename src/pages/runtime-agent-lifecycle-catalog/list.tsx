@@ -24,6 +24,8 @@ type RuntimeAgentLifecycleCatalogRecord = {
   runtimeInfrastructureId: string;
   agentVersion: string;
   lifecycleStatus: string;
+  bootstrapConfigurationLoaded?: boolean;
+  bootstrapFailureReason?: string;
   runtimeAgentSelfCheckPassed?: boolean;
   configurationLoaded?: boolean;
   secretStoreAccessible?: boolean;
@@ -31,6 +33,8 @@ type RuntimeAgentLifecycleCatalogRecord = {
   modelRepositoryClientReady?: boolean;
   localDatasetBindingStoreReady?: boolean;
   workingDirectoryWritable?: boolean;
+  bootstrappedAt?: string;
+  bootstrapFailedAt?: string;
   startedAt?: string;
   readyAt?: string;
 };
@@ -113,6 +117,24 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("bootstrapConfigurationLoaded", {
+        id: "bootstrapConfigurationLoaded",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.bootstrapConfigurationLoaded.label", "Bootstrap Configuration Loaded")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: false,
+        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+      }),
+      columnHelper.accessor("bootstrapFailureReason", {
+        id: "bootstrapFailureReason",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.bootstrapFailureReason.label", "Bootstrap Failure Reason")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("runtimeAgentSelfCheckPassed", {
         id: "runtimeAgentSelfCheckPassed",
         header: ({ column }) => (
@@ -175,6 +197,24 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         enableSorting: true,
         enableColumnFilter: false,
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
+      }),
+      columnHelper.accessor("bootstrappedAt", {
+        id: "bootstrappedAt",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.bootstrappedAt.label", "Bootstrapped At")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: false,
+        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("bootstrapFailedAt", {
+        id: "bootstrapFailedAt",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.bootstrapFailedAt.label", "Bootstrap Failed At")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: false,
+        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("startedAt", {
         id: "startedAt",
@@ -243,7 +283,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="reportRuntimeAgentStarted" />
+        <CommandButton variant="default" command="loadRuntimeAgentBootstrapConfiguration" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

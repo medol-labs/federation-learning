@@ -1,12 +1,15 @@
 // Generated from config.json by the refine generator.
 import { useParsed } from "@refinedev/core";
 import { useTranslate } from "@refinedev/core";
+import { useOne } from "@refinedev/core";
 import { useNavigate, useSearchParams } from "react-router";
 
 import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -30,6 +33,31 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ValidateAgentDatasetAccessCommandSchema, type ValidateAgentDatasetAccessCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
+type RuntimeDatasetBindingRecord = Partial<ValidateAgentDatasetAccessCommandInput> & {
+  runtimeDatasetBindingId?: string;
+};
+
+function missingValidationFields(values: Partial<ValidateAgentDatasetAccessCommandInput>) {
+  const missing: string[] = [];
+  const hasText = (value: unknown) => typeof value === "string" && value.trim().length > 0;
+  const normalizedSource = values.dataSourceType?.trim().toLowerCase().replace(/-/g, "_") ?? "";
+  const normalizedFormat = values.dataFormat?.trim().toLowerCase().replace(/-/g, "_") ?? "";
+
+  if (!hasText(values.runtimeDatasetBindingId)) missing.push("Runtime Dataset Binding Id");
+  if (!hasText(values.datasetId)) missing.push("Dataset Id");
+  if (!hasText(values.runtimeId)) missing.push("Runtime Id");
+  if (!hasText(values.dataSourceType)) missing.push("Data Source Type");
+  if (!hasText(values.dataFormat)) missing.push("Data Format");
+
+  const isCsvFile =
+    normalizedFormat === "csv" ||
+    normalizedSource === "csv" ||
+    normalizedSource === "file_csv" ||
+    (normalizedSource === "file" && normalizedFormat === "csv");
+
+  if (isCsvFile && !hasText(values.filePath)) missing.push("File Path");
+  return missing;
+}
 
 export const AgentDatasetAccessValidationCatalogValidateAgentDatasetAccess = () => {
   const t = useTranslate();
@@ -70,11 +98,38 @@ export const AgentDatasetAccessValidationCatalogValidateAgentDatasetAccess = () 
   });
 
   function onSubmit(values: ValidateAgentDatasetAccessCommandInput) {
+    const payload = {
+      ...values,
+      ...selectedBinding,
+      runtimeDatasetBindingId: values.runtimeDatasetBindingId,
+    };
     return onFinish({
       ...defaultValues,
-      ...values,
+      ...payload,
     });
   }
+
+  const runtimeDatasetBindingId = form.watch("runtimeDatasetBindingId");
+  const bindingQuery = useOne<RuntimeDatasetBindingRecord>({
+    resource: "runtime_dataset_binding_catalog",
+    id: runtimeDatasetBindingId,
+    dataProviderName: "federation-learning-runtime-agent",
+    meta: {
+      idField: "runtimeDatasetBindingId",
+      label: t("resources.agent_dataset_access_validation_catalog.commands.validateAgentDatasetAccess.fields.runtimeDatasetBindingId.label", "Runtime Dataset Binding Catalog"),
+      aggregateRoute: "runtimedatasetbinding",
+      queryRoute: "runtimedatasetbindingcatalog",
+    },
+    queryOptions: {
+      enabled: !!runtimeDatasetBindingId,
+    },
+  });
+  const selectedBinding = bindingQuery.result as RuntimeDatasetBindingRecord | undefined;
+  const missingFields = missingValidationFields({
+    ...selectedBinding,
+    runtimeDatasetBindingId,
+  });
+  const fieldsComplete = missingFields.length === 0;
 
   return (
     <CreateView>
@@ -108,11 +163,22 @@ export const AgentDatasetAccessValidationCatalogValidateAgentDatasetAccess = () 
               </FormItem>
             )}
           />
+          <Alert variant={fieldsComplete ? "default" : "destructive"}>
+            {fieldsComplete ? <CheckCircle2 /> : <AlertCircle />}
+            <AlertTitle>
+              {fieldsComplete ? "Validation fields complete" : "Validation fields incomplete"}
+            </AlertTitle>
+            <AlertDescription>
+              {fieldsComplete
+                ? "Binding details are ready to submit."
+                : `Missing: ${missingFields.join(", ")}`}
+            </AlertDescription>
+          </Alert>
           <div className="flex gap-2">
             <Button
               type="submit"
               {...form.saveButtonProps}
-              disabled={form.formState.isSubmitting}
+              disabled={form.formState.isSubmitting || !fieldsComplete}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}
             </Button>

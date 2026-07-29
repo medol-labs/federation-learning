@@ -138,7 +138,6 @@ export const resources: IResourceItem[] = [
   {
     name: "agent_dataset_access_validation_catalog",
     list: "/agent-dataset-access-validation-catalog",
-    create: "/agent-dataset-access-validation-catalog/command/validate-agent-dataset-access",
     show: "/agent-dataset-access-validation-catalog/show/:id",
     meta: {
       parent: "runtimeagentoperations",
@@ -156,7 +155,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Runtime Agent",
       commandRoute: "/agent-dataset-access-validation-catalog/:id/command/:command",
       commands: {
-        validateAgentDatasetAccess: { label: "Validate Agent Dataset Access", i18nKey: "resources.agent_dataset_access_validation_catalog.commands.validateAgentDatasetAccess.label", route: "/agent-dataset-access-validation-catalog/command/validate-agent-dataset-access", dataProviderName: "federation-learning-runtime-agent" },
+        revalidateAgentDatasetAccess: { label: "Revalidate Agent Dataset Access", i18nKey: "resources.agent_dataset_access_validation_catalog.commands.revalidateAgentDatasetAccess.label", route: "/agent-dataset-access-validation-catalog/:id/command/revalidate-agent-dataset-access", dataProviderName: "federation-learning-runtime-agent", stateField: "validationStatus", allowedStates: ["Checked"] },
         configureRuntimeDatasetBinding: { label: "Configure Runtime Dataset Binding", i18nKey: "resources.agent_dataset_access_validation_catalog.commands.configureRuntimeDatasetBinding.label", route: "/agent-dataset-access-validation-catalog/:id/command/configure-runtime-dataset-binding", dataProviderName: "federation-learning-runtime-agent" },
       },
       canDelete: false,
@@ -597,7 +596,7 @@ export const resources: IResourceItem[] = [
   {
     name: "runtime_agent_lifecycle_catalog",
     list: "/runtime-agent-lifecycle-catalog",
-    create: "/runtime-agent-lifecycle-catalog/command/report-runtime-agent-started",
+    create: "/runtime-agent-lifecycle-catalog/command/load-runtime-agent-bootstrap-configuration",
     show: "/runtime-agent-lifecycle-catalog/show/:id",
     meta: {
       parent: "runtimeagentoperations",
@@ -615,7 +614,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Runtime Agent",
       commandRoute: "/runtime-agent-lifecycle-catalog/:id/command/:command",
       commands: {
-        reportRuntimeAgentStarted: { label: "Report Runtime Agent Started", i18nKey: "resources.runtime_agent_lifecycle_catalog.commands.reportRuntimeAgentStarted.label", route: "/runtime-agent-lifecycle-catalog/command/report-runtime-agent-started", dataProviderName: "federation-learning-runtime-agent" },
+        loadRuntimeAgentBootstrapConfiguration: { label: "Load Runtime Agent Bootstrap Configuration", i18nKey: "resources.runtime_agent_lifecycle_catalog.commands.loadRuntimeAgentBootstrapConfiguration.label", route: "/runtime-agent-lifecycle-catalog/command/load-runtime-agent-bootstrap-configuration", dataProviderName: "federation-learning-runtime-agent" },
       },
       canDelete: false,
     },
@@ -663,7 +662,6 @@ export const resources: IResourceItem[] = [
       commandRoute: "/runtime-dataset-binding-catalog/:id/command/:command",
       commands: {
         configureRuntimeDatasetBinding: { label: "Configure Runtime Dataset Binding", i18nKey: "resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.label", route: "/runtime-dataset-binding-catalog/command/configure-runtime-dataset-binding", dataProviderName: "federation-learning-runtime-agent" },
-        validateAgentDatasetAccess: { label: "Validate Agent Dataset Access", i18nKey: "resources.runtime_dataset_binding_catalog.commands.validateAgentDatasetAccess.label", route: "/runtime-dataset-binding-catalog/:id/command/validate-agent-dataset-access", dataProviderName: "federation-learning-runtime-agent" },
       },
       canDelete: false,
     },
