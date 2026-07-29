@@ -5,6 +5,8 @@ import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+import tech.medo.runtimeagentoperations.events.RuntimeAgentBootstrapConfigurationLoadedEvent
+import tech.medo.runtimeagentoperations.events.RuntimeAgentBootstrapConfigurationLoadFailedEvent
 import tech.medo.runtimeagentoperations.events.RuntimeAgentStartedEvent
 import tech.medo.runtimeagentoperations.events.RuntimeInstanceSelfCheckPassedEvent
 
@@ -14,6 +16,33 @@ import java.time.ZoneOffset
 
 @Component
 class RuntimeAgentLifecycleCatalogReadModelProjector(private val repository: RuntimeAgentLifecycleCatalogReadModelRepository) {
+    @EventHandler
+    fun on(
+        event: RuntimeAgentBootstrapConfigurationLoadedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeAgentId) ?: RuntimeAgentLifecycleCatalogReadModelProjection().apply {
+                this.runtimeAgentId = event.runtimeAgentId
+        }
+            entity.runtimeAgentId = event.runtimeAgentId
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.agentVersion = event.agentVersion
+            entity.bootstrapConfigurationLoaded = event.bootstrapConfigurationLoaded
+            entity.bootstrapFailureReason = null
+            entity.bootstrapFailedAt = null
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentBootstrapConfigurationLoadFailedEvent,
+        message: EventMessage
+    ) {
+        // Bootstrap load failures happen before a runtimeAgentId can be trusted, so they cannot be attached to this catalog.
+    }
+
     @EventHandler
     fun on(
         event: RuntimeAgentStartedEvent,
@@ -50,6 +79,7 @@ class RuntimeAgentLifecycleCatalogReadModelProjector(private val repository: Run
             entity.modelRepositoryClientReady = event.modelRepositoryClientReady
             entity.localDatasetBindingStoreReady = event.localDatasetBindingStoreReady
             entity.workingDirectoryWritable = event.workingDirectoryWritable
+            entity.bootstrapConfigurationLoaded = event.configurationLoaded
             entity.readyAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

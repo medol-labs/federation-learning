@@ -25,7 +25,8 @@ class RegisterRuntimeInfrastructureIntegrationTest(
     @Test
     fun RegisterRuntimeInfrastructureintegration() {
         val command = RegisterRuntimeInfrastructureCommand(
-            runtimeInfrastructureId = java.util.UUID.randomUUID()
+            runtimeInfrastructureId = java.util.UUID.randomUUID(),
+            runtimeAgentId = java.util.UUID.randomUUID()
         )
 
         commandGateway.send(command).getResultMessage().join()

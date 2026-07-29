@@ -16,7 +16,8 @@ class RegisterRuntimeInfrastructureDecisionTest {
     fun RegisterRuntimeInfrastructureEmitsRuntimeInfrastructureRegisteredEvent() {
         val events = RegisterRuntimeInfrastructureDecision().decide(
             RegisterRuntimeInfrastructureCommand(
-            runtimeInfrastructureId = java.util.UUID.randomUUID()
+            runtimeInfrastructureId = java.util.UUID.randomUUID(),
+            runtimeAgentId = java.util.UUID.randomUUID()
             )
         )
 

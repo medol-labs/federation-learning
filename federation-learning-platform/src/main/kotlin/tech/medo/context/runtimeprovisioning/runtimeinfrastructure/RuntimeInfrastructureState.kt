@@ -24,22 +24,26 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     var currentState: RuntimeInfrastructureStateEnum? = null
     private var runtimeInfrastructureId: UUID? = null
+    private var runtimeAgentId: UUID? = null
     private var agentInstallMode: String? = null
     private var observedNodeCount: Int? = null
     private var failureReason: String? = null
-    private var runtimeAgentId: UUID? = null
     private var agentVersion: String? = null
+    private var organizationId: UUID? = null
+    private var runtimeName: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructureRegisteredEvent): RuntimeInfrastructureState = apply {
         currentState = RuntimeInfrastructureStateEnum.REGISTERED
         runtimeInfrastructureId = event.runtimeInfrastructureId
+        runtimeAgentId = event.runtimeAgentId
     }
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructureVerifiedEvent): RuntimeInfrastructureState = apply {
         currentState = RuntimeInfrastructureStateEnum.VERIFIED
         runtimeInfrastructureId = event.runtimeInfrastructureId
+        runtimeAgentId = event.runtimeAgentId
         agentInstallMode = event.agentInstallMode
         observedNodeCount = event.observedNodeCount
     }
@@ -87,5 +91,8 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
         currentState = RuntimeInfrastructureStateEnum.CONNECTED
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeAgentId = event.runtimeAgentId
+        agentInstallMode = event.agentInstallMode
+        organizationId = event.organizationId
+        runtimeName = event.runtimeName
     }
 }

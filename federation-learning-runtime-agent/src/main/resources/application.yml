@@ -3,13 +3,13 @@ server:
 
 spring:
   config:
-    import: optional:file:federation-learning-runtime-agent/.env[.properties]
+    import: optional:file:.env[.properties]
   application:
     name: federation-learning-runtime-agent
   docker:
     compose:
       enabled: ${SPRING_DOCKER_COMPOSE_ENABLED:true}
-      file: ${DOCKER_COMPOSE_FILE:federation-learning-runtime-agent/docker-compose.yml}
+      file: ${DOCKER_COMPOSE_FILE:docker-compose.yml}
       lifecycle-management: start-and-stop
       profiles:
         active: axon-server
@@ -55,6 +55,13 @@ integration:
     endpoint: ${FEDERATION_LEARNING_DICTIONARY_URL:}
   federation-learning-platform:
     endpoint: ${FEDERATION_LEARNING_PLATFORM_URL:}
+
+runtime-agent:
+  bootstrap:
+    enabled: ${RUNTIME_AGENT_BOOTSTRAP_ENABLED:true}
+    runtime-agent-id: ${RUNTIME_AGENT_ID:}
+    runtime-infrastructure-id: ${RUNTIME_INFRASTRUCTURE_ID:}
+    agent-version: ${RUNTIME_AGENT_VERSION:local-dev}
 
 management:
   endpoints:

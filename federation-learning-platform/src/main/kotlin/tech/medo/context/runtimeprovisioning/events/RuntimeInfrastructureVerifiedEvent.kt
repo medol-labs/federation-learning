@@ -10,6 +10,7 @@ import java.util.UUID;
 data class RuntimeInfrastructureVerifiedEvent(
     @EventTag(key = "runtimeInfrastructureId")
     val runtimeInfrastructureId: UUID,
+    val runtimeAgentId: UUID,
     val agentInstallMode: String,
     val observedNodeCount: Int
 )

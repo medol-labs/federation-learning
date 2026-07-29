@@ -65,6 +65,7 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeAgentId = event.runtimeAgentId
             entity.state = RuntimeInfrastructureStateEnum.REGISTERED
             entity.infrastructureVerificationFailedAt = null
             entity.infrastructureVerificationFailureReason = null
@@ -83,6 +84,7 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.agentInstallMode = event.agentInstallMode
+            entity.runtimeAgentId = event.runtimeAgentId
             entity.state = RuntimeInfrastructureStateEnum.VERIFIED
             entity.infrastructureVerifiedAt = eventTime(message)
             entity.infrastructureVerificationFailedAt = null
@@ -196,6 +198,9 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.organizationId = event.organizationId
+            entity.runtimeName = event.runtimeName
+            entity.agentInstallMode = event.agentInstallMode
             entity.runtimeAgentId = event.runtimeAgentId
             entity.state = RuntimeInfrastructureStateEnum.CONNECTED
             entity.connectedAt = eventTime(message)

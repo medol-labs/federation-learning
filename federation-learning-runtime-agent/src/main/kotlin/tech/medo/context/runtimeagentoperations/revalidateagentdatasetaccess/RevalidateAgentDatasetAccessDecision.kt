@@ -19,7 +19,7 @@ class RevalidateAgentDatasetAccessDecision {
         }
         return when (portResult) {
                     is RevalidateAgentDatasetAccessResult.Succeeded -> listOf(AgentDatasetAccessRevalidatedEvent(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = portResult.runtimeDatasetBindingId, datasetId = portResult.datasetId, runtimeId = portResult.runtimeId, readable = portResult.readable, schemaReadable = portResult.schemaReadable, sampleBatchReadable = portResult.sampleBatchReadable))
-                    is RevalidateAgentDatasetAccessResult.Rejected -> listOf(AgentDatasetAccessRevalidationFailedEvent(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = portResult.runtimeDatasetBindingId, datasetId = portResult.datasetId, runtimeId = portResult.runtimeId, failureReason = portResult.failureReason))
+                    is RevalidateAgentDatasetAccessResult.Rejected -> listOf(AgentDatasetAccessRevalidationFailedEvent(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = portResult.runtimeDatasetBindingId, datasetId = portResult.datasetId, runtimeId = portResult.runtimeId, failureReason = "Revalidate Agent Dataset Access rejected."))
                     is RevalidateAgentDatasetAccessResult.Unavailable -> listOf(AgentDatasetAccessRevalidationFailedEvent(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = command.runtimeDatasetBindingId, datasetId = java.util.UUID.randomUUID() /* TODO: provide datasetId */, runtimeId = java.util.UUID.randomUUID() /* TODO: provide runtimeId */, failureReason = portResult.failureReason))
                 }
     }

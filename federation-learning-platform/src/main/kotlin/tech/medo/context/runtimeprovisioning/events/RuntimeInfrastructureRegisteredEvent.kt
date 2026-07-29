@@ -9,5 +9,6 @@ import java.util.UUID;
 @Event
 data class RuntimeInfrastructureRegisteredEvent(
     @EventTag(key = "runtimeInfrastructureId")
-    val runtimeInfrastructureId: UUID
+    val runtimeInfrastructureId: UUID,
+    val runtimeAgentId: UUID
 )

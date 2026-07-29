@@ -20,6 +20,7 @@ class DeployRuntimeAgentDecisionTest {
         state.evolve(
             RuntimeInfrastructureVerifiedEvent(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()),
+            runtimeAgentId = java.util.UUID.randomUUID(),
             agentInstallMode = "",
             observedNodeCount = 0
             )
@@ -51,6 +52,7 @@ class DeployRuntimeAgentDecisionTest {
         state.evolve(
             RuntimeInfrastructureVerifiedEvent(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
+            runtimeAgentId = java.util.UUID.randomUUID(),
             agentInstallMode = "",
             observedNodeCount = 0
             )

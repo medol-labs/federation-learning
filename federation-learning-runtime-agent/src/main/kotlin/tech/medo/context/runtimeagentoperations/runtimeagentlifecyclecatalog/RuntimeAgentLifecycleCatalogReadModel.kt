@@ -16,6 +16,8 @@ class RuntimeAgentLifecycleCatalogReadModelProjection : MetadataProjection {
     var runtimeInfrastructureId: UUID? = null
     var agentVersion: String? = null
     var lifecycleStatus: String? = null
+    var bootstrapConfigurationLoaded: Boolean? = null
+    var bootstrapFailureReason: String? = null
     var runtimeAgentSelfCheckPassed: Boolean? = null
     var configurationLoaded: Boolean? = null
     var secretStoreAccessible: Boolean? = null
@@ -23,6 +25,8 @@ class RuntimeAgentLifecycleCatalogReadModelProjection : MetadataProjection {
     var modelRepositoryClientReady: Boolean? = null
     var localDatasetBindingStoreReady: Boolean? = null
     var workingDirectoryWritable: Boolean? = null
+    var bootstrappedAt: LocalDateTime? = null
+    var bootstrapFailedAt: LocalDateTime? = null
     var startedAt: LocalDateTime? = null
     var readyAt: LocalDateTime? = null
     override var userId: String? = null
@@ -39,6 +43,8 @@ fun RuntimeAgentLifecycleCatalogReadModelProjection.toReadModel(): RuntimeAgentL
     runtimeInfrastructureId = runtimeInfrastructureId,
     agentVersion = agentVersion,
     lifecycleStatus = lifecycleStatus,
+    bootstrapConfigurationLoaded = bootstrapConfigurationLoaded,
+    bootstrapFailureReason = bootstrapFailureReason,
     runtimeAgentSelfCheckPassed = runtimeAgentSelfCheckPassed,
     configurationLoaded = configurationLoaded,
     secretStoreAccessible = secretStoreAccessible,
@@ -46,6 +52,8 @@ fun RuntimeAgentLifecycleCatalogReadModelProjection.toReadModel(): RuntimeAgentL
     modelRepositoryClientReady = modelRepositoryClientReady,
     localDatasetBindingStoreReady = localDatasetBindingStoreReady,
     workingDirectoryWritable = workingDirectoryWritable,
+    bootstrappedAt = bootstrappedAt,
+    bootstrapFailedAt = bootstrapFailedAt,
     startedAt = startedAt,
     readyAt = readyAt,
     userId = userId,
@@ -68,6 +76,8 @@ data class RuntimeAgentLifecycleCatalogReadModel(
     val runtimeInfrastructureId: UUID?,
     val agentVersion: String?,
     val lifecycleStatus: String?,
+    val bootstrapConfigurationLoaded: Boolean?,
+    val bootstrapFailureReason: String?,
     val runtimeAgentSelfCheckPassed: Boolean?,
     val configurationLoaded: Boolean?,
     val secretStoreAccessible: Boolean?,
@@ -75,6 +85,8 @@ data class RuntimeAgentLifecycleCatalogReadModel(
     val modelRepositoryClientReady: Boolean?,
     val localDatasetBindingStoreReady: Boolean?,
     val workingDirectoryWritable: Boolean?,
+    val bootstrappedAt: LocalDateTime?,
+    val bootstrapFailedAt: LocalDateTime?,
     val startedAt: LocalDateTime?,
     val readyAt: LocalDateTime?,
     val userId: String?,

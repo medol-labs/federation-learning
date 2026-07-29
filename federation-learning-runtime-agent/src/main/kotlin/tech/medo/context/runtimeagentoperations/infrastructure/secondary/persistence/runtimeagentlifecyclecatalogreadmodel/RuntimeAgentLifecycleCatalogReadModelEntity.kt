@@ -20,6 +20,9 @@ class RuntimeAgentLifecycleCatalogReadModelEntity : MetadataProjection {
     var runtimeInfrastructureId: UUID? = null
     var agentVersion: String? = null
     var lifecycleStatus: String? = null
+    var bootstrapConfigurationLoaded: Boolean? = null
+    @Column(columnDefinition = "text")
+    var bootstrapFailureReason: String? = null
     var runtimeAgentSelfCheckPassed: Boolean? = null
     var configurationLoaded: Boolean? = null
     var secretStoreAccessible: Boolean? = null
@@ -27,6 +30,8 @@ class RuntimeAgentLifecycleCatalogReadModelEntity : MetadataProjection {
     var modelRepositoryClientReady: Boolean? = null
     var localDatasetBindingStoreReady: Boolean? = null
     var workingDirectoryWritable: Boolean? = null
+    var bootstrappedAt: LocalDateTime? = null
+    var bootstrapFailedAt: LocalDateTime? = null
     var startedAt: LocalDateTime? = null
     var readyAt: LocalDateTime? = null
     override var userId: String? = null

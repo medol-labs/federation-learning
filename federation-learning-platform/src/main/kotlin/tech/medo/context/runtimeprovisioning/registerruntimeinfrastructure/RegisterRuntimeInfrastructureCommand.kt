@@ -8,7 +8,8 @@ import java.util.UUID;
 
 @Command
 data class RegisterRuntimeInfrastructureCommand(
-    val runtimeInfrastructureId: UUID
+    val runtimeInfrastructureId: UUID,
+    val runtimeAgentId: UUID = java.util.UUID.randomUUID()
 ) {
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)

@@ -32,6 +32,8 @@ class JpaRuntimeAgentLifecycleCatalogReadModelRepository(private val jpaReposito
             it.runtimeInfrastructureId = this@toProjection.runtimeInfrastructureId
             it.agentVersion = this@toProjection.agentVersion
             it.lifecycleStatus = this@toProjection.lifecycleStatus
+            it.bootstrapConfigurationLoaded = this@toProjection.bootstrapConfigurationLoaded
+            it.bootstrapFailureReason = this@toProjection.bootstrapFailureReason
             it.runtimeAgentSelfCheckPassed = this@toProjection.runtimeAgentSelfCheckPassed
             it.configurationLoaded = this@toProjection.configurationLoaded
             it.secretStoreAccessible = this@toProjection.secretStoreAccessible
@@ -39,6 +41,8 @@ class JpaRuntimeAgentLifecycleCatalogReadModelRepository(private val jpaReposito
             it.modelRepositoryClientReady = this@toProjection.modelRepositoryClientReady
             it.localDatasetBindingStoreReady = this@toProjection.localDatasetBindingStoreReady
             it.workingDirectoryWritable = this@toProjection.workingDirectoryWritable
+            it.bootstrappedAt = this@toProjection.bootstrappedAt
+            it.bootstrapFailedAt = this@toProjection.bootstrapFailedAt
             it.startedAt = this@toProjection.startedAt
             it.readyAt = this@toProjection.readyAt
             it.userId = this@toProjection.userId
@@ -55,6 +59,8 @@ class JpaRuntimeAgentLifecycleCatalogReadModelRepository(private val jpaReposito
             it.runtimeInfrastructureId = this@toEntity.runtimeInfrastructureId
             it.agentVersion = this@toEntity.agentVersion
             it.lifecycleStatus = this@toEntity.lifecycleStatus
+            it.bootstrapConfigurationLoaded = this@toEntity.bootstrapConfigurationLoaded
+            it.bootstrapFailureReason = this@toEntity.bootstrapFailureReason
             it.runtimeAgentSelfCheckPassed = this@toEntity.runtimeAgentSelfCheckPassed
             it.configurationLoaded = this@toEntity.configurationLoaded
             it.secretStoreAccessible = this@toEntity.secretStoreAccessible
@@ -62,6 +68,8 @@ class JpaRuntimeAgentLifecycleCatalogReadModelRepository(private val jpaReposito
             it.modelRepositoryClientReady = this@toEntity.modelRepositoryClientReady
             it.localDatasetBindingStoreReady = this@toEntity.localDatasetBindingStoreReady
             it.workingDirectoryWritable = this@toEntity.workingDirectoryWritable
+            it.bootstrappedAt = this@toEntity.bootstrappedAt
+            it.bootstrapFailedAt = this@toEntity.bootstrapFailedAt
             it.startedAt = this@toEntity.startedAt
             it.readyAt = this@toEntity.readyAt
             it.userId = this@toEntity.userId

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Command
 data class DeployRuntimeAgentCommand(
-    val runtimeAgentId: UUID = java.util.UUID.randomUUID(),
+    val runtimeAgentId: UUID,
     val runtimeInfrastructureId: UUID
 ) {
     @TargetEntityId

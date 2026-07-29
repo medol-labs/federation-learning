@@ -19,7 +19,7 @@ class DeployRuntimeAgentDecision {
         }
         return when (portResult) {
                     is DeployRuntimeAgentResult.Succeeded -> listOf(RuntimeAgentInstallationSucceededEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = portResult.runtimeAgentId, agentVersion = portResult.agentVersion))
-                    is DeployRuntimeAgentResult.Rejected -> listOf(RuntimeAgentInstallationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, failureReason = portResult.failureReason))
+                    is DeployRuntimeAgentResult.Rejected -> listOf(RuntimeAgentInstallationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, failureReason = "Deploy Runtime Agent rejected."))
                     is DeployRuntimeAgentResult.Unavailable -> listOf(RuntimeAgentInstallationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, failureReason = portResult.failureReason))
                 }
     }

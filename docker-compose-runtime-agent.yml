@@ -2,7 +2,7 @@ services:
   runtime-agent-umadb:
     image: umadb/umadb:latest
     ports:
-      - "${RUNTIME_AGENT_UMADB_PORT:-50052}:50051"
+      - "${RUNTIME_AGENT_UMADB_PORT:-50053}:50051"
     volumes:
       - runtime_agent_umadb_data:/data
 

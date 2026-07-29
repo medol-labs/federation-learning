@@ -6,6 +6,8 @@ import org.axonframework.eventsourcing.annotation.reflection.EntityCreator
 import org.axonframework.extension.spring.stereotype.EventSourced
 import org.axonframework.messaging.eventstreaming.EventCriteria
 import org.axonframework.messaging.eventstreaming.Tag
+import tech.medo.runtimeagentoperations.events.RuntimeAgentBootstrapConfigurationLoadedEvent
+import tech.medo.runtimeagentoperations.events.RuntimeAgentBootstrapConfigurationLoadFailedEvent
 import tech.medo.runtimeagentoperations.events.RuntimeAgentStartedEvent
 import tech.medo.runtimeagentoperations.events.RuntimeInstanceSelfCheckPassedEvent
 import tech.medo.runtimeagentoperations.domain.states.RuntimeAgentLifecycleStateEnum
@@ -20,6 +22,8 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
     private var runtimeAgentId: UUID? = null
     private var runtimeInfrastructureId: UUID? = null
     private var agentVersion: String? = null
+    private var bootstrapConfigurationLoaded: Boolean? = null
+    private var failureReason: String? = null
     private var runtimeAgentSelfCheckPassed: Boolean? = null
     private var configurationLoaded: Boolean? = null
     private var secretStoreAccessible: Boolean? = null
@@ -27,6 +31,21 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
     private var modelRepositoryClientReady: Boolean? = null
     private var localDatasetBindingStoreReady: Boolean? = null
     private var workingDirectoryWritable: Boolean? = null
+
+    @EventSourcingHandler
+    fun evolve(event: RuntimeAgentBootstrapConfigurationLoadedEvent): RuntimeAgentLifecycleState = apply {
+        currentState = RuntimeAgentLifecycleStateEnum.BOOTSTRAP_LOADED
+        runtimeAgentId = event.runtimeAgentId
+        runtimeInfrastructureId = event.runtimeInfrastructureId
+        agentVersion = event.agentVersion
+        bootstrapConfigurationLoaded = event.bootstrapConfigurationLoaded
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: RuntimeAgentBootstrapConfigurationLoadFailedEvent): RuntimeAgentLifecycleState = apply {
+        currentState = RuntimeAgentLifecycleStateEnum.BOOTSTRAP_LOADED
+        failureReason = event.failureReason
+    }
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentStartedEvent): RuntimeAgentLifecycleState = apply {

@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component
 class VerifyInfrastructureWhenRegisteredProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: RuntimeInfrastructureRegisteredEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(VerifyRuntimeInfrastructureCommand(runtimeInfrastructureId = event.runtimeInfrastructureId, agentInstallMode = "" /* TODO: provide agentInstallMode */, verificationPassed = false /* TODO: provide verificationPassed */, observedNodeCount = 0 /* TODO: provide observedNodeCount */, failureReason = null /* TODO: provide failureReason */)).resultMessage
+        commandGateway.send(VerifyRuntimeInfrastructureCommand(runtimeInfrastructureId = event.runtimeInfrastructureId, runtimeAgentId = event.runtimeAgentId, agentInstallMode = "" /* TODO: provide agentInstallMode */, verificationPassed = false /* TODO: provide verificationPassed */, observedNodeCount = 0 /* TODO: provide observedNodeCount */, failureReason = null /* TODO: provide failureReason */)).resultMessage
 }

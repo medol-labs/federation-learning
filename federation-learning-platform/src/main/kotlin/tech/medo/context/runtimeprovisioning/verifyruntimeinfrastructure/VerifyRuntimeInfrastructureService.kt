@@ -9,6 +9,7 @@ interface VerifyRuntimeInfrastructureService {
 
 data class RuntimeInfrastructureVerificationInput(
     val runtimeInfrastructureId: UUID,
+    val runtimeAgentId: UUID,
     val agentInstallMode: String,
     val observedNodeCount: Int
 )

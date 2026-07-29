@@ -16,7 +16,7 @@ class ValidateAgentDatasetAccessDecision {
     fun decide(command: ValidateAgentDatasetAccessCommand, portResult: ValidateAgentDatasetAccessResult, now: java.time.LocalDateTime): List<Any> {
         return when (portResult) {
                     is ValidateAgentDatasetAccessResult.Succeeded -> listOf(AgentDatasetAccessValidatedEvent(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = portResult.runtimeDatasetBindingId, datasetId = portResult.datasetId, runtimeId = portResult.runtimeId, readable = portResult.readable, schemaReadable = portResult.schemaReadable, sampleBatchReadable = portResult.sampleBatchReadable))
-                    is ValidateAgentDatasetAccessResult.Rejected -> listOf(AgentDatasetAccessValidationFailedEvent(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = portResult.runtimeDatasetBindingId, datasetId = portResult.datasetId, runtimeId = portResult.runtimeId, failureReason = portResult.failureReason))
+                    is ValidateAgentDatasetAccessResult.Rejected -> listOf(AgentDatasetAccessValidationFailedEvent(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = portResult.runtimeDatasetBindingId, datasetId = portResult.datasetId, runtimeId = portResult.runtimeId, failureReason = "Validate Agent Dataset Access rejected."))
                     is ValidateAgentDatasetAccessResult.Unavailable -> listOf(AgentDatasetAccessValidationFailedEvent(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = command.runtimeDatasetBindingId, datasetId = command.datasetId, runtimeId = command.runtimeId, failureReason = portResult.failureReason))
                 }
     }

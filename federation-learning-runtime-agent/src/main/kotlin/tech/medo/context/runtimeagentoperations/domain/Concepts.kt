@@ -15,7 +15,7 @@ object Concepts {
 
     data object AgentDatasetAccessValidation {
         const val NAME = "AgentDatasetAccessValidation"
-        val slices = listOf("ValidateAgentDatasetAccess", "AgentDatasetAccessValidationCatalog")
+        val slices = listOf("ValidateAgentDatasetAccess", "RevalidateAgentDatasetAccess", "AgentDatasetAccessValidationCatalog")
         val states = listOf("Checked")
     }
 
@@ -33,8 +33,8 @@ object Concepts {
 
     data object RuntimeAgentLifecycle {
         const val NAME = "RuntimeAgentLifecycle"
-        val slices = listOf("ReportRuntimeAgentStarted", "ReportRuntimeInstanceSelfCheckPassed", "RuntimeAgentLifecycleCatalog")
-        val states = listOf("Started", "Ready")
+        val slices = listOf("LoadRuntimeAgentBootstrapConfiguration", "ReportRuntimeAgentStarted", "ReportRuntimeInstanceSelfCheckPassed", "RuntimeAgentLifecycleCatalog")
+        val states = listOf("BootstrapLoaded", "Started", "Ready")
     }
 
     data object AgentRuntimeInfrastructureConnection {

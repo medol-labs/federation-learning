@@ -18,8 +18,8 @@ class VerifyRuntimeInfrastructureDecision {
             "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Registered."
         }
         return when (portResult) {
-                    is RuntimeInfrastructureVerification.Succeeded -> listOf(RuntimeInfrastructureVerifiedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, agentInstallMode = portResult.agentInstallMode, observedNodeCount = portResult.observedNodeCount))
-                    is RuntimeInfrastructureVerification.Rejected -> listOf(RuntimeInfrastructureVerificationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, observedNodeCount = portResult.observedNodeCount, failureReason = portResult.failureReason))
+                    is RuntimeInfrastructureVerification.Succeeded -> listOf(RuntimeInfrastructureVerifiedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId, agentInstallMode = portResult.agentInstallMode, observedNodeCount = portResult.observedNodeCount))
+                    is RuntimeInfrastructureVerification.Rejected -> listOf(RuntimeInfrastructureVerificationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, observedNodeCount = portResult.observedNodeCount, failureReason = command.failureReason ?: "" /* TODO: provide non-null failureReason */))
                     is RuntimeInfrastructureVerification.Unavailable -> listOf(RuntimeInfrastructureVerificationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, observedNodeCount = command.observedNodeCount, failureReason = portResult.failureReason))
                 }
     }

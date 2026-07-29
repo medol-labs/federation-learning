@@ -19,12 +19,14 @@ class VerifyRuntimeInfrastructureDecisionTest {
         val state = RuntimeInfrastructureState()
         state.evolve(
             RuntimeInfrastructureRegisteredEvent(
-            runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray())
+            runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()),
+            runtimeAgentId = java.util.UUID.randomUUID()
             )
         )
 
         val command = VerifyRuntimeInfrastructureCommand(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()),
+            runtimeAgentId = java.util.UUID.randomUUID(),
             agentInstallMode = "PLATFORM_MANAGED",
             verificationPassed = true,
             observedNodeCount = 3,
@@ -43,6 +45,7 @@ class VerifyRuntimeInfrastructureDecisionTest {
 
         val event = events.filterIsInstance<RuntimeInfrastructureVerifiedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()), event.runtimeInfrastructureId)
+        assertEquals(command.runtimeAgentId, event.runtimeAgentId)
         assertEquals("PLATFORM_MANAGED", event.agentInstallMode)
         assertEquals(3, event.observedNodeCount)
     }
@@ -52,12 +55,14 @@ class VerifyRuntimeInfrastructureDecisionTest {
         val state = RuntimeInfrastructureState()
         state.evolve(
             RuntimeInfrastructureRegisteredEvent(
-            runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray())
+            runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
+            runtimeAgentId = java.util.UUID.randomUUID()
             )
         )
 
         val command = VerifyRuntimeInfrastructureCommand(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
+            runtimeAgentId = java.util.UUID.randomUUID(),
             agentInstallMode = "",
             verificationPassed = false,
             observedNodeCount = 0,

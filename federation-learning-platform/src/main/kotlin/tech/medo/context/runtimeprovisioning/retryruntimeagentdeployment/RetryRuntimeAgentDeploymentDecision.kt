@@ -17,7 +17,7 @@ class RetryRuntimeAgentDeploymentDecision {
         // TODO: validate domain rules against state before appending events.
         return when (portResult) {
                     is RetryRuntimeAgentDeploymentResult.Succeeded -> listOf(RuntimeAgentDeploymentRetrySucceededEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = portResult.runtimeAgentId, agentVersion = portResult.agentVersion))
-                    is RetryRuntimeAgentDeploymentResult.Rejected -> listOf(RuntimeAgentDeploymentRetryFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, failureReason = portResult.failureReason))
+                    is RetryRuntimeAgentDeploymentResult.Rejected -> listOf(RuntimeAgentDeploymentRetryFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, failureReason = "Retry Runtime Agent Deployment rejected."))
                     is RetryRuntimeAgentDeploymentResult.Unavailable -> listOf(RuntimeAgentDeploymentRetryFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, failureReason = portResult.failureReason))
                 }
     }

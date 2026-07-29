@@ -14,7 +14,7 @@ import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructure
 class RegisterRuntimeInfrastructureDecision {
     fun decide(command: RegisterRuntimeInfrastructureCommand): List<Any> {
         return listOf(
-            RuntimeInfrastructureRegisteredEvent(runtimeInfrastructureId = command.runtimeInfrastructureId)
+            RuntimeInfrastructureRegisteredEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId)
         )
     }
 }

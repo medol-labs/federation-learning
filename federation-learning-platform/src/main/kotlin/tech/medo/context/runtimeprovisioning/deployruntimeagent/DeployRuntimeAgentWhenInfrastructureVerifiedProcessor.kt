@@ -11,5 +11,9 @@ import org.springframework.stereotype.Component
 class DeployRuntimeAgentWhenInfrastructureVerifiedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: RuntimeInfrastructureVerifiedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(DeployRuntimeAgentCommand(runtimeAgentId = java.util.UUID.randomUUID() /* TODO: provide runtimeAgentId */, runtimeInfrastructureId = event.runtimeInfrastructureId)).resultMessage
+        if (event.agentInstallMode == "PLATFORM_MANAGED") {
+            commandGateway.send(DeployRuntimeAgentCommand(runtimeAgentId = event.runtimeAgentId, runtimeInfrastructureId = event.runtimeInfrastructureId)).resultMessage
+        } else {
+            java.util.concurrent.CompletableFuture.completedFuture(null)
+        }
 }

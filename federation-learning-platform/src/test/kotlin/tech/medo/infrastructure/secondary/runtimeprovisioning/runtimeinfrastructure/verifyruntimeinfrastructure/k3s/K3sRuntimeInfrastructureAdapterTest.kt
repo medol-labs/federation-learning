@@ -42,6 +42,7 @@ class K3sRuntimeInfrastructureAdapterTest {
         val result = adapter.verify(
             RuntimeInfrastructureVerificationInput(
                 runtimeInfrastructureId = runtimeInfrastructureId,
+                runtimeAgentId = runtimeAgentId,
                 agentInstallMode = "MANUAL",
                 observedNodeCount = 0
             )
@@ -64,6 +65,7 @@ class K3sRuntimeInfrastructureAdapterTest {
         val result = adapter.verify(
             RuntimeInfrastructureVerificationInput(
                 runtimeInfrastructureId = runtimeInfrastructureId,
+                runtimeAgentId = runtimeAgentId,
                 agentInstallMode = "MANUAL",
                 observedNodeCount = 0
             )

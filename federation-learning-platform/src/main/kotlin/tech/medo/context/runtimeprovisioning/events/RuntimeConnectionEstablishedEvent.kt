@@ -10,5 +10,8 @@ import java.util.UUID;
 data class RuntimeConnectionEstablishedEvent(
     @EventTag(key = "runtimeInfrastructureId")
     val runtimeInfrastructureId: UUID,
-    val runtimeAgentId: UUID
+    val runtimeAgentId: UUID,
+    val agentInstallMode: String,
+    val organizationId: UUID,
+    val runtimeName: String
 )

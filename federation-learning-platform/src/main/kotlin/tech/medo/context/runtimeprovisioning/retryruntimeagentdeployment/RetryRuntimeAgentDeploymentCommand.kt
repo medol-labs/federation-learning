@@ -9,7 +9,7 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 
 @Command
 data class RetryRuntimeAgentDeploymentCommand(
-    val runtimeAgentId: UUID = java.util.UUID.randomUUID(),
+    val runtimeAgentId: UUID,
     val runtimeInfrastructureId: UUID,
     val currentRuntimeInfrastructureState: RuntimeInfrastructureStateEnum,
     val retryReason: String
