@@ -25,9 +25,6 @@ class CsvFileValidateAgentDatasetAccessAdapterTest {
 
         assertTrue(result is ValidateAgentDatasetAccessResult.Succeeded)
         result as ValidateAgentDatasetAccessResult.Succeeded
-        assertEquals(input.runtimeDatasetBindingId, result.runtimeDatasetBindingId)
-        assertEquals(input.datasetId, result.datasetId)
-        assertEquals(input.runtimeId, result.runtimeId)
         assertTrue(result.readable)
         assertTrue(result.schemaReadable)
         assertTrue(result.sampleBatchReadable)
@@ -42,8 +39,6 @@ class CsvFileValidateAgentDatasetAccessAdapterTest {
 
         assertTrue(result is ValidateAgentDatasetAccessResult.Rejected)
         result as ValidateAgentDatasetAccessResult.Rejected
-        assertEquals(input.datasetId, result.datasetId)
-        assertEquals(input.runtimeId, result.runtimeId)
         assertTrue(result.failureReason.contains("does not exist"))
     }
 

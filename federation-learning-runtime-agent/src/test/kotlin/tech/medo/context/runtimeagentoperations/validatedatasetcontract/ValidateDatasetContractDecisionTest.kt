@@ -31,8 +31,6 @@ class ValidateDatasetContractDecisionTest {
             command,
             state = state,
             portResult = ValidateDatasetContractResult.Succeeded(
-                featureSchemaId = UUID.nameUUIDFromBytes("feature-schema-1".toByteArray()),
-                metadataReportId = UUID.nameUUIDFromBytes("metadata-report-1".toByteArray()),
                 schemaCompatible = false,
                 labelCompatible = false,
                 qualityScore = java.math.BigDecimal.ZERO,
@@ -64,12 +62,11 @@ class ValidateDatasetContractDecisionTest {
             command,
             state = state,
             portResult = ValidateDatasetContractResult.Rejected(
-                featureSchemaId = UUID.nameUUIDFromBytes("feature-schema-1".toByteArray()),
-                metadataReportId = UUID.nameUUIDFromBytes("metadata-report-2".toByteArray()),
                 schemaCompatible = false,
                 labelCompatible = false,
                 qualityScore = java.math.BigDecimal.ZERO,
-                nonIidScore = java.math.BigDecimal.ZERO
+                nonIidScore = java.math.BigDecimal.ZERO,
+                failureReason = ""
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
         )

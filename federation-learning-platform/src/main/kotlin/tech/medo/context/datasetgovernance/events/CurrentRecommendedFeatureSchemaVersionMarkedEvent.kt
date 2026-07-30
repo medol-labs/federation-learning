@@ -5,7 +5,6 @@ import org.axonframework.messaging.eventhandling.annotation.Event
 import java.util.UUID;
 
 
-/* TODO: provide values for selection tags: version */
 
 @Event
 data class CurrentRecommendedFeatureSchemaVersionMarkedEvent(
@@ -13,5 +12,7 @@ data class CurrentRecommendedFeatureSchemaVersionMarkedEvent(
     @EventTag(key = "featureDomain")
     val featureDomain: String,
     val recommendedVersion: String,
-    val recommendationNote: String?
+    val recommendationNote: String?,
+    @EventTag(key = "version")
+    val version: String
 )

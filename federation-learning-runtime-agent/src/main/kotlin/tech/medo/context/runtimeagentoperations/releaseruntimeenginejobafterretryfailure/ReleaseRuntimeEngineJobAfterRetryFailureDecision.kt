@@ -17,7 +17,7 @@ class ReleaseRuntimeEngineJobAfterRetryFailureDecision {
             "ReleaseRuntimeEngineJobAfterRetryFailure requires RoundExecution to be Retried."
         }
         return listOf(
-            RuntimeEngineJobReleaseFailedOrSkippedAfterRetryEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, failureReason = null /* TODO: derive value */)
+            RuntimeEngineJobReleaseFailedOrSkippedAfterRetryEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, failureReason = null /* TODO: derive value */, executionPlanId = command.executionPlanId)
         )
     }
 }

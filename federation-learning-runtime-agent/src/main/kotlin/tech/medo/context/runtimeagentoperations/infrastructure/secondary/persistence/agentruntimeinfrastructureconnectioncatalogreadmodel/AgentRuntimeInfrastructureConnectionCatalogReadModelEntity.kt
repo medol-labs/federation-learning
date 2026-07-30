@@ -24,6 +24,10 @@ class AgentRuntimeInfrastructureConnectionCatalogReadModelEntity : MetadataProje
     var controlChannelEstablished: Boolean? = null
     var heartbeatAccepted: Boolean? = null
     var connectedAt: LocalDateTime? = null
+    var connectionReportFailedAt: LocalDateTime? = null
+    @Column(columnDefinition = "text")
+    var connectionReportFailureReason: String? = null
+    var connectionReportRetryable: Boolean? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

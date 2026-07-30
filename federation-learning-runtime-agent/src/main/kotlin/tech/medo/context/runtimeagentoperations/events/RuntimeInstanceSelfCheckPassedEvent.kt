@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @Event
 data class RuntimeInstanceSelfCheckPassedEvent(
-    @EventTag(key = "runtimeAgentId")
     val runtimeAgentId: UUID,
     val runtimeInfrastructureId: UUID,
     val agentVersion: String,
@@ -18,5 +17,7 @@ data class RuntimeInstanceSelfCheckPassedEvent(
     val runtimeEngineAdapterReady: Boolean,
     val modelRepositoryClientReady: Boolean,
     val localDatasetBindingStoreReady: Boolean,
-    val workingDirectoryWritable: Boolean
+    val workingDirectoryWritable: Boolean,
+    @EventTag(key = "bootstrapRequestId")
+    val bootstrapRequestId: UUID
 )

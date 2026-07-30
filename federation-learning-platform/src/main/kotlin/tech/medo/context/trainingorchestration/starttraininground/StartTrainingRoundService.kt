@@ -23,30 +23,9 @@ data class StartTrainingRoundInput(
 )
 
 sealed interface StartTrainingRoundResult {
-    data class Succeeded(
-        val trainingRunConfigurationId: UUID,
-        val featureSchemaId: UUID,
-        val roundId: UUID,
-        val roundNumber: Int,
-        val selectedOrganizationIds: List<UUID>,
-        val selectedRuntimeIds: List<UUID>,
-        val selectedParticipants: List<TrainingRoundParticipant>,
-        val selectedOrganizationCount: Int,
-        val selectedRuntimeCount: Int,
-        val minimumNodesPerRound: Int
-    ) : StartTrainingRoundResult
+    class Succeeded : StartTrainingRoundResult
 
     data class Rejected(
-        val trainingRunConfigurationId: UUID,
-        val featureSchemaId: UUID,
-        val roundId: UUID,
-        val roundNumber: Int,
-        val selectedOrganizationIds: List<UUID>,
-        val selectedRuntimeIds: List<UUID>,
-        val selectedParticipants: List<TrainingRoundParticipant>,
-        val selectedOrganizationCount: Int,
-        val selectedRuntimeCount: Int,
-        val minimumNodesPerRound: Int,
         val failureReason: String
     ) : StartTrainingRoundResult
 

@@ -17,7 +17,7 @@ class ReleaseRuntimeEngineJobAfterStartFailureDecision {
             "ReleaseRuntimeEngineJobAfterStartFailure requires RoundExecution to be Running."
         }
         return listOf(
-            RuntimeEngineJobReleaseFailedOrSkippedAfterStartFailureEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, failureReason = null /* TODO: derive value */)
+            RuntimeEngineJobReleaseFailedOrSkippedAfterStartFailureEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, failureReason = null /* TODO: derive value */, executionPlanId = command.executionPlanId)
         )
     }
 }

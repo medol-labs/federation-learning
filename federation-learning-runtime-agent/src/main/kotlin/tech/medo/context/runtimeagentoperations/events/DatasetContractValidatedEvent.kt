@@ -6,7 +6,6 @@ import java.util.UUID;
 import java.math.BigDecimal;
 
 
-/* TODO: provide values for selection tags: organizationId, datasetName */
 
 @Event
 data class DatasetContractValidatedEvent(
@@ -17,5 +16,9 @@ data class DatasetContractValidatedEvent(
     val schemaCompatible: Boolean,
     val labelCompatible: Boolean,
     val qualityScore: BigDecimal,
-    val nonIidScore: BigDecimal
+    val nonIidScore: BigDecimal,
+    @EventTag(key = "organizationId")
+    val organizationId: UUID,
+    @EventTag(key = "datasetName")
+    val datasetName: String
 )

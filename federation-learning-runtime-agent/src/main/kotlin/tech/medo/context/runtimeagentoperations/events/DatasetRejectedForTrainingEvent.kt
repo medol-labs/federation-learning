@@ -5,10 +5,15 @@ import org.axonframework.messaging.eventhandling.annotation.Event
 import java.util.UUID;
 
 
-/* TODO: provide values for selection tags: organizationId, featureSchemaId, datasetName */
 
 @Event
 data class DatasetRejectedForTrainingEvent(
     val datasetId: UUID,
-    val rejectionReason: String
+    val rejectionReason: String,
+    @EventTag(key = "organizationId")
+    val organizationId: UUID,
+    @EventTag(key = "featureSchemaId")
+    val featureSchemaId: UUID,
+    @EventTag(key = "datasetName")
+    val datasetName: String
 )

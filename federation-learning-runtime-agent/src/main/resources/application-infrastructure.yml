@@ -1,0 +1,12 @@
+runtime-agent:
+  bootstrap:
+    enabled: ${RUNTIME_AGENT_BOOTSTRAP_ENABLED:true}
+    runtime-agent-id: ${RUNTIME_AGENT_ID:}
+    runtime-infrastructure-id: ${RUNTIME_INFRASTRUCTURE_ID:}
+    agent-version: ${RUNTIME_AGENT_VERSION:local-dev}
+  platform-connection-reporting:
+    enabled: ${RUNTIME_AGENT_PLATFORM_CONNECTION_REPORTING_ENABLED:true}
+    platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
+    agent-install-mode: ${RUNTIME_AGENT_INSTALL_MODE:MANUAL_GUIDED}
+    organization-id: ${RUNTIME_AGENT_ORGANIZATION_ID:}
+    runtime-name: ${RUNTIME_AGENT_RUNTIME_NAME:}

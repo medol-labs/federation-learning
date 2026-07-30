@@ -35,7 +35,6 @@ class DeployRuntimeAgentDecisionTest {
             command,
             state = state,
             portResult = DeployRuntimeAgentResult.Succeeded(
-                runtimeAgentId = command.runtimeAgentId,
                 agentVersion = ""
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")

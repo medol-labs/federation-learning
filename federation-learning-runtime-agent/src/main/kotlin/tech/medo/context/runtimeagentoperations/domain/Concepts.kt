@@ -40,7 +40,7 @@ object Concepts {
     data object AgentRuntimeInfrastructureConnection {
         const val NAME = "AgentRuntimeInfrastructureConnection"
         val slices = listOf("ReportRuntimeInstanceConnected", "AgentRuntimeInfrastructureConnectionCatalog")
-        val states = listOf("Connected")
+        val states = listOf("Connected", "ConnectionReportFailed")
     }
 
     data object AgentRuntimeTelemetry {

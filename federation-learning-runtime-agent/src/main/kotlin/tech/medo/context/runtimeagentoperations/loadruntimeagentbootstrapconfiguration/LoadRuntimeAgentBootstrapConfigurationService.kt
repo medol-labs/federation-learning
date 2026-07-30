@@ -20,7 +20,6 @@ sealed interface LoadRuntimeAgentBootstrapConfigurationResult {
     ) : LoadRuntimeAgentBootstrapConfigurationResult
 
     data class Rejected(
-        val bootstrapRequestId: UUID,
         val failureReason: String
     ) : LoadRuntimeAgentBootstrapConfigurationResult
 

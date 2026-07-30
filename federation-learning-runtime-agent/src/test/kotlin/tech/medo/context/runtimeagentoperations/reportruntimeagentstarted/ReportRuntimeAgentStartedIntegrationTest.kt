@@ -4,7 +4,7 @@ import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import tech.medo.runtimeagentoperations.reportruntimeagentstarted.ReportRuntimeAgentStartedCommand
+import tech.medo.runtimeagentoperations.loadruntimeagentbootstrapconfiguration.LoadRuntimeAgentBootstrapConfigurationCommand
 import java.util.UUID;
 
 @SpringBootTest(properties = [
@@ -17,19 +17,17 @@ import java.util.UUID;
     "spring.jpa.hibernate.ddl-auto=create-drop",
     "axon.axonserver.enabled=false",
     "axon.axonserver.event-store.enabled=false",
-    "medol.axon.event-storage=inmemory"
+    "medol.axon.event-storage=inmemory",
+    "runtime-agent.bootstrap.runtime-agent-id=11111111-1111-4111-8111-111111111111",
+    "runtime-agent.bootstrap.runtime-infrastructure-id=22222222-2222-4222-8222-222222222222",
+    "runtime-agent.bootstrap.agent-version=local-test"
 ])
 class ReportRuntimeAgentStartedIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
     @Test
     fun ReportRuntimeAgentStartedintegration() {
-        val command = ReportRuntimeAgentStartedCommand(
-            runtimeAgentId = java.util.UUID.randomUUID(),
-            runtimeInfrastructureId = java.util.UUID.randomUUID(),
-            agentVersion = ""
-        )
-
-        commandGateway.send(command).getResultMessage().join()
+        val bootstrapRequestId = java.util.UUID.randomUUID()
+        commandGateway.send(LoadRuntimeAgentBootstrapConfigurationCommand(bootstrapRequestId = bootstrapRequestId)).getResultMessage().join()
     }
 }

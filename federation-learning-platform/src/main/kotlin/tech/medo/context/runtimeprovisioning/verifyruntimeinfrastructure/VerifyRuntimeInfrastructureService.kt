@@ -15,13 +15,9 @@ data class RuntimeInfrastructureVerificationInput(
 )
 
 sealed interface RuntimeInfrastructureVerification {
-    data class Succeeded(
-        val agentInstallMode: String,
-        val observedNodeCount: Int
-    ) : RuntimeInfrastructureVerification
+    class Succeeded : RuntimeInfrastructureVerification
 
     data class Rejected(
-        val observedNodeCount: Int,
         val failureReason: String
     ) : RuntimeInfrastructureVerification
 

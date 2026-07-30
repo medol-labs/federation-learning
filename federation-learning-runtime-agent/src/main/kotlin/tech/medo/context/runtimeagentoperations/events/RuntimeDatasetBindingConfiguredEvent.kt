@@ -8,10 +8,11 @@ import java.util.UUID;
 
 @Event
 data class RuntimeDatasetBindingConfiguredEvent(
-    @EventTag(key = "runtimeDatasetBindingId")
     val runtimeDatasetBindingId: UUID,
+    @EventTag(key = "datasetId")
     val datasetId: UUID,
     val organizationId: UUID,
+    @EventTag(key = "runtimeId")
     val runtimeId: UUID,
     val dataSourceType: String,
     val host: String?,

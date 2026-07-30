@@ -17,7 +17,7 @@ class ReleaseRuntimeEngineJobAfterCompletionDecision {
             "ReleaseRuntimeEngineJobAfterCompletion requires RoundExecution to be Completed."
         }
         return listOf(
-            RuntimeEngineJobReleasedEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId)
+            RuntimeEngineJobReleasedEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, executionPlanId = command.executionPlanId)
         )
     }
 }

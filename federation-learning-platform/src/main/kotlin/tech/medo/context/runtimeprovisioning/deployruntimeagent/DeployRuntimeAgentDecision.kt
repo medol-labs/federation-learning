@@ -18,8 +18,8 @@ class DeployRuntimeAgentDecision {
             "DeployRuntimeAgent requires RuntimeInfrastructure to be Verified."
         }
         return when (portResult) {
-                    is DeployRuntimeAgentResult.Succeeded -> listOf(RuntimeAgentInstallationSucceededEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = portResult.runtimeAgentId, agentVersion = portResult.agentVersion))
-                    is DeployRuntimeAgentResult.Rejected -> listOf(RuntimeAgentInstallationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, failureReason = "Deploy Runtime Agent rejected."))
+                    is DeployRuntimeAgentResult.Succeeded -> listOf(RuntimeAgentInstallationSucceededEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId, agentVersion = portResult.agentVersion))
+                    is DeployRuntimeAgentResult.Rejected -> listOf(RuntimeAgentInstallationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, failureReason = portResult.failureReason))
                     is DeployRuntimeAgentResult.Unavailable -> listOf(RuntimeAgentInstallationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, failureReason = portResult.failureReason))
                 }
     }

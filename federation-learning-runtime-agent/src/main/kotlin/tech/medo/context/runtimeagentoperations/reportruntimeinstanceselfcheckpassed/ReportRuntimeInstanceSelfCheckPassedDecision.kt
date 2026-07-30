@@ -17,7 +17,7 @@ class ReportRuntimeInstanceSelfCheckPassedDecision {
             "ReportRuntimeInstanceSelfCheckPassed requires RuntimeAgentLifecycle to be Started."
         }
         return listOf(
-            RuntimeInstanceSelfCheckPassedEvent(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId, agentVersion = command.agentVersion, runtimeAgentSelfCheckPassed = command.runtimeAgentSelfCheckPassed, configurationLoaded = command.configurationLoaded, secretStoreAccessible = command.secretStoreAccessible, runtimeEngineAdapterReady = command.runtimeEngineAdapterReady, modelRepositoryClientReady = command.modelRepositoryClientReady, localDatasetBindingStoreReady = command.localDatasetBindingStoreReady, workingDirectoryWritable = command.workingDirectoryWritable)
+            RuntimeInstanceSelfCheckPassedEvent(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId, agentVersion = command.agentVersion, runtimeAgentSelfCheckPassed = command.runtimeAgentSelfCheckPassed, configurationLoaded = command.configurationLoaded, secretStoreAccessible = command.secretStoreAccessible, runtimeEngineAdapterReady = command.runtimeEngineAdapterReady, modelRepositoryClientReady = command.modelRepositoryClientReady, localDatasetBindingStoreReady = command.localDatasetBindingStoreReady, workingDirectoryWritable = command.workingDirectoryWritable, bootstrapRequestId = command.bootstrapRequestId)
         )
     }
 }

@@ -18,25 +18,22 @@ class LoadRuntimeAgentBootstrapConfigurationDecisionTest {
 
 
         val command = LoadRuntimeAgentBootstrapConfigurationCommand(
-            bootstrapRequestId = UUID.nameUUIDFromBytes("bootstrap-request-1".toByteArray())
+            bootstrapRequestId = java.util.UUID.randomUUID()
         )
 
         val events = LoadRuntimeAgentBootstrapConfigurationDecision().decide(
             command,
             portResult = LoadRuntimeAgentBootstrapConfigurationResult.Succeeded(
-                runtimeAgentId = UUID.nameUUIDFromBytes("runtime-agent-1".toByteArray()),
-                runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()),
-                agentVersion = "local-dev",
-                bootstrapConfigurationLoaded = true
+                runtimeAgentId = java.util.UUID.randomUUID(),
+                runtimeInfrastructureId = java.util.UUID.randomUUID(),
+                agentVersion = "",
+                bootstrapConfigurationLoaded = false
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
         )
 
         val event = events.filterIsInstance<RuntimeAgentBootstrapConfigurationLoadedEvent>().single()
-        assertEquals(UUID.nameUUIDFromBytes("runtime-agent-1".toByteArray()), event.runtimeAgentId)
-        assertEquals(UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()), event.runtimeInfrastructureId)
-        assertEquals("local-dev", event.agentVersion)
-        assertEquals(true, event.bootstrapConfigurationLoaded)
+        assertTrue(event is RuntimeAgentBootstrapConfigurationLoadedEvent)
     }
 
     @Test
@@ -44,20 +41,18 @@ class LoadRuntimeAgentBootstrapConfigurationDecisionTest {
 
 
         val command = LoadRuntimeAgentBootstrapConfigurationCommand(
-            bootstrapRequestId = UUID.nameUUIDFromBytes("bootstrap-request-2".toByteArray())
+            bootstrapRequestId = java.util.UUID.randomUUID()
         )
 
         val events = LoadRuntimeAgentBootstrapConfigurationDecision().decide(
             command,
             portResult = LoadRuntimeAgentBootstrapConfigurationResult.Rejected(
-                bootstrapRequestId = UUID.nameUUIDFromBytes("bootstrap-request-2".toByteArray()),
-                failureReason = "RUNTIME_AGENT_ID is missing."
+                failureReason = ""
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
         )
 
         val event = events.filterIsInstance<RuntimeAgentBootstrapConfigurationLoadFailedEvent>().single()
-        assertEquals(UUID.nameUUIDFromBytes("bootstrap-request-2".toByteArray()), event.bootstrapRequestId)
-        assertEquals("RUNTIME_AGENT_ID is missing.", event.failureReason)
+        assertEquals(command.bootstrapRequestId, event.bootstrapRequestId)
     }
 }

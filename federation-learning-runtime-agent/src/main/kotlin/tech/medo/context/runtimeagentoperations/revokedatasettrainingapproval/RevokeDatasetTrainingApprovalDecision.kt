@@ -17,7 +17,7 @@ class RevokeDatasetTrainingApprovalDecision {
             "RevokeDatasetTrainingApproval requires Dataset to be Approved."
         }
         return listOf(
-            DatasetTrainingApprovalRevokedEvent(datasetId = command.datasetId, revokeReason = command.revokeReason)
+            DatasetTrainingApprovalRevokedEvent(datasetId = command.datasetId, revokeReason = command.revokeReason, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName)
         )
     }
 }

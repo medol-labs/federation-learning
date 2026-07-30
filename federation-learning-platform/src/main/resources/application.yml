@@ -3,7 +3,10 @@ server:
 
 spring:
   config:
-    import: optional:file:.env[.properties]
+    import:
+      - optional:classpath:application-infrastructure.yml
+      - optional:file:./config/application-infrastructure.yml
+      - optional:file:.env[.properties]
   application:
     name: federation-learning-platform
   docker:
@@ -42,6 +45,8 @@ axon:
 
 medol:
   axon:
+    flow-logging:
+      enabled: ${MEDOL_AXON_FLOW_LOGGING_ENABLED:true}
     event-storage: ${MEDOL_AXON_EVENT_STORAGE:umadb}
     umadb:
       target: ${UMADB_TARGET:localhost:50052}
@@ -74,4 +79,5 @@ springdoc:
 
 logging:
   level:
+    tech.medo.shared.application.axon: ${MEDOL_AXON_FLOW_LOG_LEVEL:INFO}
     org.axonframework: ${AXON_LOG_LEVEL:INFO}

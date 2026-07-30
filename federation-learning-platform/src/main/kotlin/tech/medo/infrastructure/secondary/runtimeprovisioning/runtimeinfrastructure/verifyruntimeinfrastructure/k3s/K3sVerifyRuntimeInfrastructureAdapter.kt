@@ -64,15 +64,12 @@ class K3sVerifyRuntimeInfrastructureAdapter(
             input.runtimeInfrastructureId,
             observedNodeCount
         )
-        return RuntimeInfrastructureVerification.Succeeded(
-            agentInstallMode = plan.agentInstallMode ?: input.agentInstallMode,
-            observedNodeCount = observedNodeCount
-        )
+        return RuntimeInfrastructureVerification.Succeeded()
     }
 
     private fun rejected(failureReason: String): RuntimeInfrastructureVerification.Rejected {
         log.debug("K3S verification rejected: {}", failureReason)
-        return RuntimeInfrastructureVerification.Rejected(observedNodeCount = 0, failureReason = failureReason)
+        return RuntimeInfrastructureVerification.Rejected(failureReason)
     }
 
     companion object {

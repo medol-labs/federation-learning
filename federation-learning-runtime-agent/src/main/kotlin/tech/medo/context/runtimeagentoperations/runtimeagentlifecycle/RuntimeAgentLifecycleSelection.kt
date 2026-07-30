@@ -4,11 +4,11 @@ import java.util.UUID;
 
 
 data class RuntimeAgentLifecycleSelection(
-    val runtimeAgentId: UUID
+    val bootstrapRequestId: UUID
 )
 
 object RuntimeAgentLifecycleTags {
-    const val RUNTIME_AGENT_ID = "runtimeAgentId"
+    const val BOOTSTRAP_REQUEST_ID = "bootstrapRequestId"
 }
 
 object RuntimeAgentLifecycleMetadata {

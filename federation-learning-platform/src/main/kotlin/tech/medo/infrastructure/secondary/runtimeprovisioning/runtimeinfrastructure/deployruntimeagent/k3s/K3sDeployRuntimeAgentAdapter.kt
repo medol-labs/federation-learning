@@ -71,7 +71,6 @@ class K3sDeployRuntimeAgentAdapter(
             properties.agentVersion
         )
         return DeployRuntimeAgentResult.Succeeded(
-            runtimeAgentId = input.runtimeAgentId,
             agentVersion = properties.agentVersion
         )
     }

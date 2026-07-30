@@ -17,7 +17,7 @@ class DeprecateFeatureSchemaDecision {
             "DeprecateFeatureSchema requires FeatureSchema to be Published."
         }
         return listOf(
-            FeatureSchemaDeprecatedEvent(featureSchemaId = command.featureSchemaId, deprecationReason = command.deprecationReason)
+            FeatureSchemaDeprecatedEvent(featureSchemaId = command.featureSchemaId, deprecationReason = command.deprecationReason, featureDomain = command.featureDomain, version = command.version)
         )
     }
 }

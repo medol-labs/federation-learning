@@ -17,7 +17,7 @@ class ReportRuntimeInstanceSelfCheckPassedCommandHandler(
     @CommandHandler
     fun handle(
         command: ReportRuntimeInstanceSelfCheckPassedCommand,
-        @InjectEntity(idProperty = "runtimeAgentId") state: RuntimeAgentLifecycleState,
+        @InjectEntity(idProperty = "bootstrapRequestId") state: RuntimeAgentLifecycleState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))

@@ -20,6 +20,9 @@ class AgentRuntimeInfrastructureConnectionCatalogReadModelProjection : MetadataP
     var controlChannelEstablished: Boolean? = null
     var heartbeatAccepted: Boolean? = null
     var connectedAt: LocalDateTime? = null
+    var connectionReportFailedAt: LocalDateTime? = null
+    var connectionReportFailureReason: String? = null
+    var connectionReportRetryable: Boolean? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -38,6 +41,9 @@ fun AgentRuntimeInfrastructureConnectionCatalogReadModelProjection.toReadModel()
     controlChannelEstablished = controlChannelEstablished,
     heartbeatAccepted = heartbeatAccepted,
     connectedAt = connectedAt,
+    connectionReportFailedAt = connectionReportFailedAt,
+    connectionReportFailureReason = connectionReportFailureReason,
+    connectionReportRetryable = connectionReportRetryable,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -62,6 +68,9 @@ data class AgentRuntimeInfrastructureConnectionCatalogReadModel(
     val controlChannelEstablished: Boolean?,
     val heartbeatAccepted: Boolean?,
     val connectedAt: LocalDateTime?,
+    val connectionReportFailedAt: LocalDateTime?,
+    val connectionReportFailureReason: String?,
+    val connectionReportRetryable: Boolean?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

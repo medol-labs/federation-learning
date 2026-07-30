@@ -52,16 +52,7 @@ class StartTrainingRoundDecisionTest {
             command,
             state = state,
             portResult = StartTrainingRoundResult.Succeeded(
-                trainingRunConfigurationId = UUID.nameUUIDFromBytes("config-1".toByteArray()),
-                featureSchemaId = command.featureSchemaId,
-                roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
-                roundNumber = command.roundNumber,
-                selectedOrganizationIds = command.selectedOrganizationIds,
-                selectedRuntimeIds = command.selectedRuntimeIds,
-                selectedParticipants = command.selectedParticipants,
-                selectedOrganizationCount = command.selectedOrganizationCount,
-                selectedRuntimeCount = 3,
-                minimumNodesPerRound = command.minimumNodesPerRound
+
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
         )
@@ -117,16 +108,6 @@ class StartTrainingRoundDecisionTest {
             command,
             state = state,
             portResult = StartTrainingRoundResult.Rejected(
-                trainingRunConfigurationId = UUID.nameUUIDFromBytes("config-1".toByteArray()),
-                featureSchemaId = command.featureSchemaId,
-                roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
-                roundNumber = command.roundNumber,
-                selectedOrganizationIds = command.selectedOrganizationIds,
-                selectedRuntimeIds = command.selectedRuntimeIds,
-                selectedParticipants = command.selectedParticipants,
-                selectedOrganizationCount = command.selectedOrganizationCount,
-                selectedRuntimeCount = 2,
-                minimumNodesPerRound = command.minimumNodesPerRound,
                 failureReason = ""
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")

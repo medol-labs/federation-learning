@@ -17,7 +17,7 @@ class DisableDictionaryValueDecision {
             "DisableDictionaryValue requires DictionaryValue to be Active."
         }
         return listOf(
-            DictionaryValueDisabledEvent(dictionaryValueId = command.dictionaryValueId, disabledReason = command.disabledReason)
+            DictionaryValueDisabledEvent(dictionaryValueId = command.dictionaryValueId, disabledReason = command.disabledReason, dictionaryCode = command.dictionaryCode, valueCode = command.valueCode)
         )
     }
 }

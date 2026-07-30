@@ -36,6 +36,9 @@ class JpaAgentRuntimeInfrastructureConnectionCatalogReadModelRepository(private 
             it.controlChannelEstablished = this@toProjection.controlChannelEstablished
             it.heartbeatAccepted = this@toProjection.heartbeatAccepted
             it.connectedAt = this@toProjection.connectedAt
+            it.connectionReportFailedAt = this@toProjection.connectionReportFailedAt
+            it.connectionReportFailureReason = this@toProjection.connectionReportFailureReason
+            it.connectionReportRetryable = this@toProjection.connectionReportRetryable
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -54,6 +57,9 @@ class JpaAgentRuntimeInfrastructureConnectionCatalogReadModelRepository(private 
             it.controlChannelEstablished = this@toEntity.controlChannelEstablished
             it.heartbeatAccepted = this@toEntity.heartbeatAccepted
             it.connectedAt = this@toEntity.connectedAt
+            it.connectionReportFailedAt = this@toEntity.connectionReportFailedAt
+            it.connectionReportFailureReason = this@toEntity.connectionReportFailureReason
+            it.connectionReportRetryable = this@toEntity.connectionReportRetryable
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

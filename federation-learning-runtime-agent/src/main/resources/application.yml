@@ -3,7 +3,10 @@ server:
 
 spring:
   config:
-    import: optional:file:.env[.properties]
+    import:
+      - optional:classpath:application-infrastructure.yml
+      - optional:file:./config/application-infrastructure.yml
+      - optional:file:.env[.properties]
   application:
     name: federation-learning-runtime-agent
   docker:
@@ -42,6 +45,8 @@ axon:
 
 medol:
   axon:
+    flow-logging:
+      enabled: ${MEDOL_AXON_FLOW_LOGGING_ENABLED:true}
     event-storage: ${MEDOL_AXON_EVENT_STORAGE:umadb}
     umadb:
       target: ${UMADB_TARGET:localhost:50053}
@@ -55,13 +60,6 @@ integration:
     endpoint: ${FEDERATION_LEARNING_DICTIONARY_URL:}
   federation-learning-platform:
     endpoint: ${FEDERATION_LEARNING_PLATFORM_URL:}
-
-runtime-agent:
-  bootstrap:
-    enabled: ${RUNTIME_AGENT_BOOTSTRAP_ENABLED:true}
-    runtime-agent-id: ${RUNTIME_AGENT_ID:}
-    runtime-infrastructure-id: ${RUNTIME_INFRASTRUCTURE_ID:}
-    agent-version: ${RUNTIME_AGENT_VERSION:local-dev}
 
 management:
   endpoints:
@@ -77,4 +75,5 @@ springdoc:
 
 logging:
   level:
+    tech.medo.shared.application.axon: ${MEDOL_AXON_FLOW_LOG_LEVEL:INFO}
     org.axonframework: ${AXON_LOG_LEVEL:INFO}

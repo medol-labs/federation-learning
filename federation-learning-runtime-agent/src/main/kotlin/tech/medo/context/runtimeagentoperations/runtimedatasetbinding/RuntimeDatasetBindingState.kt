@@ -12,8 +12,17 @@ import tech.medo.runtimeagentoperations.domain.states.RuntimeDatasetBindingState
 import java.util.UUID;
 
 
-@EventSourced(idType = UUID::class, tagKey = RuntimeDatasetBindingTags.RUNTIME_DATASET_BINDING_ID)
+@EventSourced(idType = RuntimeDatasetBindingSelection::class)
 class RuntimeDatasetBindingState @EntityCreator constructor() {
+    companion object {
+        @JvmStatic
+        @EventCriteriaBuilder
+        fun resolveCriteria(selection: RuntimeDatasetBindingSelection): EventCriteria = EventCriteria.either(
+                EventCriteria.havingTags(Tag.of(RuntimeDatasetBindingTags.DATASET_ID, selection.datasetId.toString())),
+                EventCriteria.havingTags(Tag.of(RuntimeDatasetBindingTags.RUNTIME_ID, selection.runtimeId.toString()))
+        )
+    }
+
 
     var currentState: RuntimeDatasetBindingStateEnum? = null
     private var runtimeDatasetBindingId: UUID? = null

@@ -5,6 +5,7 @@ import org.axonframework.modelling.annotation.TargetEntityId
 import tech.medo.runtimeagentoperations.runtimedatasetbinding.RuntimeDatasetBindingSelection
 import java.util.UUID;
 
+import tech.medo.runtimeagentoperations.runtimedatasetbinding.RuntimeDatasetBindingRuntimeIdDatasetIdSelection
 
 @Command
 data class ConfigureRuntimeDatasetBindingCommand(
@@ -26,6 +27,7 @@ data class ConfigureRuntimeDatasetBindingCommand(
     val credentialSecretName: String?
 ) {
     @TargetEntityId
-    val selection: RuntimeDatasetBindingSelection = RuntimeDatasetBindingSelection(runtimeDatasetBindingId = runtimeDatasetBindingId)
+    val selection: RuntimeDatasetBindingSelection = RuntimeDatasetBindingSelection(datasetId = datasetId, runtimeId = runtimeId)
 
+    val runtimeDatasetBindingRuntimeIdDatasetIdSelection: RuntimeDatasetBindingRuntimeIdDatasetIdSelection = RuntimeDatasetBindingRuntimeIdDatasetIdSelection(normalizedRuntimeId = runtimeId.toString().trim().lowercase(), normalizedDatasetId = datasetId.toString().trim().lowercase())
 }

@@ -17,7 +17,7 @@ class RejectDatasetForTrainingDecision {
             "RejectDatasetForTraining requires Dataset to be ContractValidationCompleted."
         }
         return listOf(
-            DatasetRejectedForTrainingEvent(datasetId = command.datasetId, rejectionReason = command.rejectionReason)
+            DatasetRejectedForTrainingEvent(datasetId = command.datasetId, rejectionReason = command.rejectionReason, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName)
         )
     }
 }

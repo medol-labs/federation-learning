@@ -17,7 +17,7 @@ class RetireFeatureSchemaDecision {
             "RetireFeatureSchema requires FeatureSchema to be Deprecated."
         }
         return listOf(
-            FeatureSchemaRetiredEvent(featureSchemaId = command.featureSchemaId, retirementReason = command.retirementReason)
+            FeatureSchemaRetiredEvent(featureSchemaId = command.featureSchemaId, retirementReason = command.retirementReason, featureDomain = command.featureDomain, version = command.version)
         )
     }
 }

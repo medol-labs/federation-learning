@@ -37,8 +37,7 @@ class VerifyRuntimeInfrastructureDecisionTest {
             command,
             state = state,
             portResult = RuntimeInfrastructureVerification.Succeeded(
-                agentInstallMode = "PLATFORM_MANAGED",
-                observedNodeCount = 3
+
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
         )
@@ -73,7 +72,6 @@ class VerifyRuntimeInfrastructureDecisionTest {
             command,
             state = state,
             portResult = RuntimeInfrastructureVerification.Rejected(
-                observedNodeCount = 0,
                 failureReason = "Runtime infrastructure is unreachable."
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")

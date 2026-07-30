@@ -14,7 +14,6 @@ class ConfiguredLoadRuntimeAgentBootstrapConfigurationAdapter(
         val missingFields = missingFields()
         if (missingFields.isNotEmpty()) {
             return LoadRuntimeAgentBootstrapConfigurationResult.Rejected(
-                bootstrapRequestId = input.bootstrapRequestId,
                 failureReason = "Runtime agent bootstrap configuration is incomplete: ${missingFields.joinToString(", ")}."
             )
         }

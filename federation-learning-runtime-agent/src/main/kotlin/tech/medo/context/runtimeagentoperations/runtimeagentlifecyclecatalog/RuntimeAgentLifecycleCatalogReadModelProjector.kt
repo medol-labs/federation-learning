@@ -36,11 +36,8 @@ class RuntimeAgentLifecycleCatalogReadModelProjector(private val repository: Run
     }
 
     @EventHandler
-    fun on(
-        event: RuntimeAgentBootstrapConfigurationLoadFailedEvent,
-        message: EventMessage
-    ) {
-        // Bootstrap load failures happen before a runtimeAgentId can be trusted, so they cannot be attached to this catalog.
+    fun on(event: RuntimeAgentBootstrapConfigurationLoadFailedEvent) {
+        // Skipped: RuntimeAgentBootstrapConfigurationLoadFailedEvent does not provide enough key fields to locate RuntimeAgentLifecycleCatalogReadModelProjection.
     }
 
     @EventHandler

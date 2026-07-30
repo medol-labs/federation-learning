@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component
 class AuditFederationReactivatedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: FederationReactivatedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(AppendAuditTrailCommand(auditRecordId = java.util.UUID.randomUUID() /* TODO: provide auditRecordId */, sourceEventName = "" /* TODO: provide sourceEventName */, sourceEntityId = null /* TODO: provide sourceEntityId */, severity = "" /* TODO: provide severity */, payloadHash = "" /* TODO: provide payloadHash */)).resultMessage
+        commandGateway.send(AppendAuditTrailCommand(sourceEventName = "" /* TODO: provide sourceEventName */, sourceEntityId = null /* TODO: provide sourceEntityId */, severity = "" /* TODO: provide severity */, payloadHash = "" /* TODO: provide payloadHash */)).resultMessage
 }

@@ -54,7 +54,6 @@ class DockerComposeRetryRuntimeAgentDeploymentAdapter(
             properties.agentVersion
         )
         return RetryRuntimeAgentDeploymentResult.Succeeded(
-            runtimeAgentId = input.runtimeAgentId,
             agentVersion = properties.agentVersion
         )
     }

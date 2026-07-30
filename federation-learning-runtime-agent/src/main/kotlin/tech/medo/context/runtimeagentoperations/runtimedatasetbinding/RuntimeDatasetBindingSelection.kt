@@ -4,11 +4,13 @@ import java.util.UUID;
 
 
 data class RuntimeDatasetBindingSelection(
-    val runtimeDatasetBindingId: UUID
+    val datasetId: UUID,
+    val runtimeId: UUID
 )
 
 object RuntimeDatasetBindingTags {
-    const val RUNTIME_DATASET_BINDING_ID = "runtimeDatasetBindingId"
+    const val DATASET_ID = "datasetId"
+    const val RUNTIME_ID = "runtimeId"
 }
 
 object RuntimeDatasetBindingMetadata {

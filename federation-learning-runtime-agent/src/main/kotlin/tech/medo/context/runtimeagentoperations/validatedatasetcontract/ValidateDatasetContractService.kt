@@ -16,8 +16,6 @@ data class ValidateDatasetContractInput(
 
 sealed interface ValidateDatasetContractResult {
     data class Succeeded(
-        val featureSchemaId: UUID,
-        val metadataReportId: UUID,
         val schemaCompatible: Boolean,
         val labelCompatible: Boolean,
         val qualityScore: BigDecimal,
@@ -25,12 +23,11 @@ sealed interface ValidateDatasetContractResult {
     ) : ValidateDatasetContractResult
 
     data class Rejected(
-        val featureSchemaId: UUID,
-        val metadataReportId: UUID,
         val schemaCompatible: Boolean,
         val labelCompatible: Boolean,
         val qualityScore: BigDecimal,
-        val nonIidScore: BigDecimal
+        val nonIidScore: BigDecimal,
+        val failureReason: String
     ) : ValidateDatasetContractResult
 
     data class Unavailable(

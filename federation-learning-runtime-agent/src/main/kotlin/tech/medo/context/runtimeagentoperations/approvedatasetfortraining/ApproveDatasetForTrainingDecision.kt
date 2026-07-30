@@ -17,7 +17,7 @@ class ApproveDatasetForTrainingDecision {
             "ApproveDatasetForTraining requires Dataset to be ContractValidationCompleted."
         }
         return listOf(
-            DatasetApprovedForTrainingEvent(datasetId = command.datasetId, organizationId = command.organizationId)
+            DatasetApprovedForTrainingEvent(datasetId = command.datasetId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName)
         )
     }
 }

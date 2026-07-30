@@ -47,7 +47,6 @@ class ConfiguredLoadRuntimeAgentBootstrapConfigurationAdapterTest {
 
         assertTrue(result is LoadRuntimeAgentBootstrapConfigurationResult.Rejected)
         result as LoadRuntimeAgentBootstrapConfigurationResult.Rejected
-        assertEquals(input().bootstrapRequestId, result.bootstrapRequestId)
         assertTrue(result.failureReason.contains("runtime-agent.bootstrap.runtime-infrastructure-id"))
     }
 

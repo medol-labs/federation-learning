@@ -48,9 +48,7 @@ class K3sRuntimeInfrastructureAdapterTest {
             )
         )
 
-        val succeeded = assertInstanceOf(RuntimeInfrastructureVerification.Succeeded::class.java, result)
-        assertEquals("AUTO", succeeded.agentInstallMode)
-        assertEquals(2, succeeded.observedNodeCount)
+        assertInstanceOf(RuntimeInfrastructureVerification.Succeeded::class.java, result)
         assertEquals(listOf(listOf("version", "--client"), listOf("get", "nodes", "-o", "name")), runner.calls)
     }
 
@@ -72,7 +70,6 @@ class K3sRuntimeInfrastructureAdapterTest {
         )
 
         val rejected = assertInstanceOf(RuntimeInfrastructureVerification.Rejected::class.java, result)
-        assertEquals(0, rejected.observedNodeCount)
         assertEquals("K3S cluster has no observable nodes.", rejected.failureReason)
     }
 
@@ -92,7 +89,6 @@ class K3sRuntimeInfrastructureAdapterTest {
         )
 
         val succeeded = assertInstanceOf(DeployRuntimeAgentResult.Succeeded::class.java, result)
-        assertEquals(runtimeAgentId, succeeded.runtimeAgentId)
         assertEquals("test-k3s-agent-version", succeeded.agentVersion)
         assertEquals(
             listOf(

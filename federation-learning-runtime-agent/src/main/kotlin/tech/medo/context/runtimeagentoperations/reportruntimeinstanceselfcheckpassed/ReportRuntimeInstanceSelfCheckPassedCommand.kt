@@ -17,9 +17,10 @@ data class ReportRuntimeInstanceSelfCheckPassedCommand(
     val runtimeEngineAdapterReady: Boolean,
     val modelRepositoryClientReady: Boolean,
     val localDatasetBindingStoreReady: Boolean,
-    val workingDirectoryWritable: Boolean
+    val workingDirectoryWritable: Boolean,
+    val bootstrapRequestId: UUID
 ) {
     @TargetEntityId
-    val selection: RuntimeAgentLifecycleSelection = RuntimeAgentLifecycleSelection(runtimeAgentId = runtimeAgentId)
+    val selection: RuntimeAgentLifecycleSelection = RuntimeAgentLifecycleSelection(bootstrapRequestId = bootstrapRequestId)
 
 }

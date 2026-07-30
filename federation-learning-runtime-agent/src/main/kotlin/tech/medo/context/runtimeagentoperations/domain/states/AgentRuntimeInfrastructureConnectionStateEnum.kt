@@ -1,5 +1,6 @@
 package tech.medo.runtimeagentoperations.domain.states
 
 enum class AgentRuntimeInfrastructureConnectionStateEnum {
-    CONNECTED
+    CONNECTED,
+    CONNECTION_REPORT_FAILED
 }

@@ -48,9 +48,7 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
             )
         )
 
-        val succeeded = assertInstanceOf(RuntimeInfrastructureVerification.Succeeded::class.java, result)
-        assertEquals("AUTO", succeeded.agentInstallMode)
-        assertEquals(1, succeeded.observedNodeCount)
+        assertInstanceOf(RuntimeInfrastructureVerification.Succeeded::class.java, result)
         assertEquals(listOf(listOf("version"), listOf("config", "--services")), runner.calls)
     }
 
@@ -90,7 +88,6 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
         )
 
         val succeeded = assertInstanceOf(DeployRuntimeAgentResult.Succeeded::class.java, result)
-        assertEquals(runtimeAgentId, succeeded.runtimeAgentId)
         assertEquals("test-agent-version", succeeded.agentVersion)
         assertEquals(listOf(listOf("up", "-d", "runtime-agent-test")), runner.calls)
     }

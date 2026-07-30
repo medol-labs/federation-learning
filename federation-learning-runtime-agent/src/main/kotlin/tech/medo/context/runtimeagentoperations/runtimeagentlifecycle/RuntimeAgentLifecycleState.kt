@@ -15,7 +15,7 @@ import tech.medo.runtimeagentoperations.domain.states.RuntimeAgentLifecycleState
 import java.util.UUID;
 
 
-@EventSourced(idType = UUID::class, tagKey = RuntimeAgentLifecycleTags.RUNTIME_AGENT_ID)
+@EventSourced(idType = UUID::class, tagKey = RuntimeAgentLifecycleTags.BOOTSTRAP_REQUEST_ID)
 class RuntimeAgentLifecycleState @EntityCreator constructor() {
 
     var currentState: RuntimeAgentLifecycleStateEnum? = null
@@ -23,6 +23,7 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
     private var runtimeInfrastructureId: UUID? = null
     private var agentVersion: String? = null
     private var bootstrapConfigurationLoaded: Boolean? = null
+    private var bootstrapRequestId: UUID? = null
     private var failureReason: String? = null
     private var runtimeAgentSelfCheckPassed: Boolean? = null
     private var configurationLoaded: Boolean? = null
@@ -44,6 +45,7 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentBootstrapConfigurationLoadFailedEvent): RuntimeAgentLifecycleState = apply {
         currentState = RuntimeAgentLifecycleStateEnum.BOOTSTRAP_LOADED
+        bootstrapRequestId = event.bootstrapRequestId
         failureReason = event.failureReason
     }
 

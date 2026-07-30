@@ -10,9 +10,10 @@ import java.util.UUID;
 data class ReportRuntimeAgentStartedCommand(
     val runtimeAgentId: UUID,
     val runtimeInfrastructureId: UUID,
-    val agentVersion: String
+    val agentVersion: String,
+    val bootstrapRequestId: UUID
 ) {
     @TargetEntityId
-    val selection: RuntimeAgentLifecycleSelection = RuntimeAgentLifecycleSelection(runtimeAgentId = runtimeAgentId)
+    val selection: RuntimeAgentLifecycleSelection = RuntimeAgentLifecycleSelection(bootstrapRequestId = bootstrapRequestId)
 
 }

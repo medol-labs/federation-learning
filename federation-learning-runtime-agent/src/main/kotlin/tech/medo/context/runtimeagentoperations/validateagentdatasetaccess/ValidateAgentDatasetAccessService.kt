@@ -28,18 +28,12 @@ data class ValidateAgentDatasetAccessInput(
 
 sealed interface ValidateAgentDatasetAccessResult {
     data class Succeeded(
-        val runtimeDatasetBindingId: UUID,
-        val datasetId: UUID,
-        val runtimeId: UUID,
         val readable: Boolean,
         val schemaReadable: Boolean,
         val sampleBatchReadable: Boolean
     ) : ValidateAgentDatasetAccessResult
 
     data class Rejected(
-        val runtimeDatasetBindingId: UUID,
-        val datasetId: UUID,
-        val runtimeId: UUID,
         val failureReason: String
     ) : ValidateAgentDatasetAccessResult
 

@@ -6,6 +6,7 @@ import org.axonframework.eventsourcing.annotation.reflection.EntityCreator
 import org.axonframework.extension.spring.stereotype.EventSourced
 import org.axonframework.messaging.eventstreaming.EventCriteria
 import org.axonframework.messaging.eventstreaming.Tag
+import tech.medo.runtimeagentoperations.events.AgentRuntimeConnectionReportFailedEvent
 import tech.medo.runtimeagentoperations.events.AgentRuntimeConnectionEstablishedEvent
 import tech.medo.runtimeagentoperations.domain.states.AgentRuntimeInfrastructureConnectionStateEnum
 
@@ -23,6 +24,22 @@ class AgentRuntimeInfrastructureConnectionState @EntityCreator constructor() {
     private var agentAuthenticationSucceeded: Boolean? = null
     private var controlChannelEstablished: Boolean? = null
     private var heartbeatAccepted: Boolean? = null
+    private var failureReason: String? = null
+    private var retryable: Boolean? = null
+
+    @EventSourcingHandler
+    fun evolve(event: AgentRuntimeConnectionReportFailedEvent): AgentRuntimeInfrastructureConnectionState = apply {
+        currentState = AgentRuntimeInfrastructureConnectionStateEnum.CONNECTED
+        runtimeInfrastructureId = event.runtimeInfrastructureId
+        runtimeAgentId = event.runtimeAgentId
+        runtimePlatformConnectionReady = event.runtimePlatformConnectionReady
+        platformApiReachable = event.platformApiReachable
+        agentAuthenticationSucceeded = event.agentAuthenticationSucceeded
+        controlChannelEstablished = event.controlChannelEstablished
+        heartbeatAccepted = event.heartbeatAccepted
+        failureReason = event.failureReason
+        retryable = event.retryable
+    }
 
     @EventSourcingHandler
     fun evolve(event: AgentRuntimeConnectionEstablishedEvent): AgentRuntimeInfrastructureConnectionState = apply {

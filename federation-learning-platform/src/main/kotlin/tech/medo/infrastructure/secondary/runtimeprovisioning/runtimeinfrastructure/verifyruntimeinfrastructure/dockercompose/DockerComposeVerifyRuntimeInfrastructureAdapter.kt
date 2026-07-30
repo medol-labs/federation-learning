@@ -51,10 +51,7 @@ class DockerComposeVerifyRuntimeInfrastructureAdapter(
         }
 
         log.debug("Docker Compose runtime infrastructure verified runtimeInfrastructureId={}", input.runtimeInfrastructureId)
-        return RuntimeInfrastructureVerification.Succeeded(
-            agentInstallMode = plan.agentInstallMode ?: input.agentInstallMode,
-            observedNodeCount = 1
-        )
+        return RuntimeInfrastructureVerification.Succeeded()
     }
 
     private fun isDockerComposePackage(targetType: String?, environmentType: String?): Boolean =
@@ -70,7 +67,7 @@ class DockerComposeVerifyRuntimeInfrastructureAdapter(
 
     private fun rejected(failureReason: String): RuntimeInfrastructureVerification.Rejected {
         log.debug("Docker Compose verification rejected: {}", failureReason)
-        return RuntimeInfrastructureVerification.Rejected(observedNodeCount = 0, failureReason = failureReason)
+        return RuntimeInfrastructureVerification.Rejected(failureReason)
     }
 
     companion object {

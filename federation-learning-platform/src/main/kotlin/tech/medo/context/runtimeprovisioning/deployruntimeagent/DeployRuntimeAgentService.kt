@@ -14,7 +14,6 @@ data class DeployRuntimeAgentInput(
 
 sealed interface DeployRuntimeAgentResult {
     data class Succeeded(
-        val runtimeAgentId: UUID,
         val agentVersion: String
     ) : DeployRuntimeAgentResult
 

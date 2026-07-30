@@ -27,7 +27,6 @@ class RevalidateAgentDatasetAccessDecisionTest {
             command,
             state = state,
             portResult = RevalidateAgentDatasetAccessResult.Succeeded(
-                runtimeDatasetBindingId = UUID.fromString("22222222-2222-4222-8222-222222222222"),
                 datasetId = java.util.UUID.randomUUID(),
                 runtimeId = java.util.UUID.randomUUID(),
                 readable = false,
@@ -56,7 +55,6 @@ class RevalidateAgentDatasetAccessDecisionTest {
             command,
             state = state,
             portResult = RevalidateAgentDatasetAccessResult.Rejected(
-                runtimeDatasetBindingId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
                 datasetId = java.util.UUID.randomUUID(),
                 runtimeId = java.util.UUID.randomUUID(),
                 failureReason = ""

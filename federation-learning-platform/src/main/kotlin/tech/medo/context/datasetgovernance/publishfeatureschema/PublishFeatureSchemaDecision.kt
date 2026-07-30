@@ -17,7 +17,7 @@ class PublishFeatureSchemaDecision {
             "PublishFeatureSchema requires FeatureSchema to be Draft."
         }
         return listOf(
-            FeatureSchemaPublishedEvent(featureSchemaId = command.featureSchemaId, publishNote = command.publishNote)
+            FeatureSchemaPublishedEvent(featureSchemaId = command.featureSchemaId, publishNote = command.publishNote, featureDomain = command.featureDomain, version = command.version)
         )
     }
 }

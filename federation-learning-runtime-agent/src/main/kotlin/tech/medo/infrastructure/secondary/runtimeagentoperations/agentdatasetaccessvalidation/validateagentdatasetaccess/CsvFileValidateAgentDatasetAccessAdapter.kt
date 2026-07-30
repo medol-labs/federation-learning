@@ -12,9 +12,6 @@ class CsvFileValidateAgentDatasetAccessAdapter : ValidateAgentDatasetAccessServi
     override fun execute(input: ValidateAgentDatasetAccessInput): ValidateAgentDatasetAccessResult {
         fun rejected(reason: String): ValidateAgentDatasetAccessResult.Rejected =
             ValidateAgentDatasetAccessResult.Rejected(
-                runtimeDatasetBindingId = input.runtimeDatasetBindingId,
-                datasetId = input.datasetId,
-                runtimeId = input.runtimeId,
                 failureReason = reason
             )
 
@@ -38,9 +35,6 @@ class CsvFileValidateAgentDatasetAccessAdapter : ValidateAgentDatasetAccessServi
         val readResult = readCsvShape(path)
         return if (readResult.failureReason == null) {
             ValidateAgentDatasetAccessResult.Succeeded(
-                runtimeDatasetBindingId = input.runtimeDatasetBindingId,
-                datasetId = input.datasetId,
-                runtimeId = input.runtimeId,
                 readable = true,
                 schemaReadable = true,
                 sampleBatchReadable = true

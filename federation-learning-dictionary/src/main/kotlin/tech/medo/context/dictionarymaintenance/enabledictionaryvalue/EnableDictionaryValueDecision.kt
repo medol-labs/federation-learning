@@ -17,7 +17,7 @@ class EnableDictionaryValueDecision {
             "EnableDictionaryValue requires DictionaryValue to be Disabled."
         }
         return listOf(
-            DictionaryValueEnabledEvent(dictionaryValueId = command.dictionaryValueId, enableReason = command.enableReason)
+            DictionaryValueEnabledEvent(dictionaryValueId = command.dictionaryValueId, enableReason = command.enableReason, dictionaryCode = command.dictionaryCode, valueCode = command.valueCode)
         )
     }
 }

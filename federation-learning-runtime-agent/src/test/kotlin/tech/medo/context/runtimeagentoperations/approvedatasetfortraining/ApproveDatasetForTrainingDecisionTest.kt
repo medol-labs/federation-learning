@@ -25,7 +25,9 @@ class ApproveDatasetForTrainingDecisionTest {
             schemaCompatible = true,
             labelCompatible = true,
             qualityScore = BigDecimal("0.86"),
-            nonIidScore = java.math.BigDecimal.ZERO
+            nonIidScore = java.math.BigDecimal.ZERO,
+            organizationId = java.util.UUID.randomUUID(),
+            datasetName = ""
             )
         )
 

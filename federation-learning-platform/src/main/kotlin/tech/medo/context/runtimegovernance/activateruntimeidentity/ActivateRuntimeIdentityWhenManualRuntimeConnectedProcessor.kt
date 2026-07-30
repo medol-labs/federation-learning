@@ -12,7 +12,7 @@ class ActivateRuntimeIdentityWhenManualRuntimeConnectedProcessor(private val com
     @EventHandler
     fun on(event: RuntimeConnectionEstablishedEvent): java.util.concurrent.CompletableFuture<*> =
         if (event.agentInstallMode == "MANUAL_GUIDED") {
-            commandGateway.send(ActivateRuntimeIdentityCommand(runtimeId = java.util.UUID.randomUUID() /* TODO: provide runtimeId */, runtimeInfrastructureId = event.runtimeInfrastructureId, runtimeAgentId = event.runtimeAgentId, organizationId = event.organizationId, runtimeName = event.runtimeName)).resultMessage
+            commandGateway.send(ActivateRuntimeIdentityCommand(runtimeInfrastructureId = event.runtimeInfrastructureId, runtimeAgentId = event.runtimeAgentId, organizationId = event.organizationId, runtimeName = event.runtimeName)).resultMessage
         } else {
             java.util.concurrent.CompletableFuture.completedFuture(null)
         }

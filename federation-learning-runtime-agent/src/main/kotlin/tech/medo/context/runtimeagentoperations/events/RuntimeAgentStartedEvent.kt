@@ -8,8 +8,9 @@ import java.util.UUID;
 
 @Event
 data class RuntimeAgentStartedEvent(
-    @EventTag(key = "runtimeAgentId")
     val runtimeAgentId: UUID,
     val runtimeInfrastructureId: UUID,
-    val agentVersion: String
+    val agentVersion: String,
+    @EventTag(key = "bootstrapRequestId")
+    val bootstrapRequestId: UUID
 )
