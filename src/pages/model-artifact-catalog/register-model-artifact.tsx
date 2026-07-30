@@ -85,7 +85,7 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.model_artifact_catalog.commands.registerModelArtifact.label", "Register Model Artifact")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RegisterModelArtifact validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="modelArtifactRef"

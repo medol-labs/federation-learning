@@ -28,6 +28,9 @@ type AgentRuntimeInfrastructureConnectionCatalogRecord = {
   controlChannelEstablished: boolean;
   heartbeatAccepted: boolean;
   connectedAt: string;
+  connectionReportFailedAt?: string;
+  connectionReportFailureReason?: string;
+  connectionReportRetryable?: boolean;
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -143,6 +146,33 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
         enableSorting: true,
         enableColumnFilter: false,
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("connectionReportFailedAt", {
+        id: "connectionReportFailedAt",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectionReportFailedAt.label", "Connection Report Failed At")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: false,
+        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("connectionReportFailureReason", {
+        id: "connectionReportFailureReason",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectionReportFailureReason.label", "Connection Report Failure Reason")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("connectionReportRetryable", {
+        id: "connectionReportRetryable",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectionReportRetryable.label", "Connection Report Retryable")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: false,
+        cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.display({
         id: "actions",

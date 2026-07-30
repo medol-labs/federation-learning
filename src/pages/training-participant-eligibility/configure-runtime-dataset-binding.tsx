@@ -7,8 +7,6 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -32,39 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ConfigureRuntimeDatasetBindingCommandSchema, type ConfigureRuntimeDatasetBindingCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-function requiredBindingFields(values: Partial<ConfigureRuntimeDatasetBindingCommandInput>) {
-  const missing: string[] = [];
-  const hasText = (value: unknown) => typeof value === "string" && value.trim().length > 0;
-  const normalizedSource = values.dataSourceType?.trim().toLowerCase().replace(/-/g, "_") ?? "";
-  const normalizedFormat = values.dataFormat?.trim().toLowerCase().replace(/-/g, "_") ?? "";
-
-  if (!hasText(values.datasetId)) missing.push("Dataset Id");
-  if (!hasText(values.organizationId)) missing.push("Organization Id");
-  if (!hasText(values.runtimeId)) missing.push("Runtime Id");
-  if (!hasText(values.dataSourceType)) missing.push("Data Source Type");
-  if (!hasText(values.dataFormat)) missing.push("Data Format");
-
-  const isCsvFile =
-    normalizedFormat === "csv" ||
-    normalizedSource === "csv" ||
-    normalizedSource === "file_csv" ||
-    (normalizedSource === "file" && normalizedFormat === "csv");
-  const isObjectStorage = ["s3", "object_storage", "minio", "oss"].includes(normalizedSource);
-  const isDatabase = ["postgres", "postgresql", "mysql", "database", "jdbc"].includes(normalizedSource);
-
-  if (isCsvFile && !hasText(values.filePath)) missing.push("File Path");
-  if (isObjectStorage) {
-    if (!hasText(values.objectBucket)) missing.push("Object Bucket");
-    if (!hasText(values.objectPrefix)) missing.push("Object Prefix");
-  }
-  if (isDatabase) {
-    if (!hasText(values.host) && !hasText(values.url)) missing.push("Host or Url");
-    if (!hasText(values.databaseName)) missing.push("Database Name");
-    if (!hasText(values.tableName)) missing.push("Table Name");
-  }
-
-  return missing;
-}
 
 export const TrainingParticipantEligibilityConfigureRuntimeDatasetBinding = () => {
   const t = useTranslate();
@@ -113,18 +78,11 @@ export const TrainingParticipantEligibilityConfigureRuntimeDatasetBinding = () =
     });
   }
 
-  const watchedValues = form.watch();
-  const missingBindingFields = requiredBindingFields({
-    ...defaultValues,
-    ...watchedValues,
-  });
-  const bindingFieldsComplete = missingBindingFields.length === 0;
-
   return (
     <CreateView>
       <CreateViewHeader title={t("resources.training_participant_eligibility.commands.configureRuntimeDatasetBinding.label", "Configure Runtime Dataset Binding")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("ConfigureRuntimeDatasetBinding validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="datasetId"
@@ -136,7 +94,7 @@ export const TrainingParticipantEligibilityConfigureRuntimeDatasetBinding = () =
                   withFormControl
                   resource="dataset_capability"
                   dataProviderName="federation-learning-runtime-agent"
-                  optionLabel="organizationName"
+                  optionLabel="datasetName"
                   optionValue="datasetId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
@@ -190,7 +148,7 @@ export const TrainingParticipantEligibilityConfigureRuntimeDatasetBinding = () =
                   withFormControl
                   resource="runtime_identity_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="organizationName"
+                  optionLabel="runtimeName"
                   optionValue="runtimeId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
@@ -449,22 +407,11 @@ export const TrainingParticipantEligibilityConfigureRuntimeDatasetBinding = () =
               </FormItem>
             )}
           />
-          <Alert variant={bindingFieldsComplete ? "default" : "destructive"}>
-            {bindingFieldsComplete ? <CheckCircle2 /> : <AlertCircle />}
-            <AlertTitle>
-              {bindingFieldsComplete ? "Binding fields complete" : "Binding fields incomplete"}
-            </AlertTitle>
-            <AlertDescription>
-              {bindingFieldsComplete
-                ? "Required binding fields are ready to submit."
-                : `Missing: ${missingBindingFields.join(", ")}`}
-            </AlertDescription>
-          </Alert>
           <div className="flex gap-2">
             <Button
               type="submit"
               {...form.saveButtonProps}
-              disabled={form.formState.isSubmitting || !bindingFieldsComplete}
+              disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}
             </Button>

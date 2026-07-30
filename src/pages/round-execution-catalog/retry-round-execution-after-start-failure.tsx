@@ -92,8 +92,10 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.label", "Retry Round Execution After Start Failure")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <input type="hidden" {...form.register("roundExecutionId" as never)} />
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RetryRoundExecutionAfterStartFailure validation failed", errors))} className="space-y-8">
+          {defaultValues.roundExecutionId !== undefined && defaultValues.roundExecutionId !== null ? (
+            <input type="hidden" {...form.register("roundExecutionId" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="executionSessionId"
@@ -232,7 +234,7 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
                   withFormControl
                   resource="runtime_identity_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="organizationName"
+                  optionLabel="runtimeName"
                   optionValue="runtimeId"
                   value={field.value || ""}
                   onValueChange={field.onChange}

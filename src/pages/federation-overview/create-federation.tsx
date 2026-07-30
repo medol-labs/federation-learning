@@ -80,7 +80,7 @@ export const FederationOverviewCreateFederation = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.federation_overview.commands.createFederation.label", "Create Federation")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("CreateFederation validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="federationName"

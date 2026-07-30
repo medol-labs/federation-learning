@@ -87,8 +87,10 @@ export const ModelVersionCatalogRecordModelEvaluationPackage = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.model_version_catalog.commands.recordModelEvaluationPackage.label", "Record Model Evaluation Package")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <input type="hidden" {...form.register("modelVersionId" as never)} />
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RecordModelEvaluationPackage validation failed", errors))} className="space-y-8">
+          {defaultValues.modelVersionId !== undefined && defaultValues.modelVersionId !== null ? (
+            <input type="hidden" {...form.register("modelVersionId" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="trainingJobId"

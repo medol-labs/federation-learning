@@ -216,13 +216,6 @@ export const RecordRuntimeConnectionEstablishedCommandSchema = z.object({
 });
 export type RecordRuntimeConnectionEstablishedCommandInput = z.infer<typeof RecordRuntimeConnectionEstablishedCommandSchema>;
 
-export const ReportRuntimeAgentStartedCommandSchema = z.object({
-  runtimeAgentId: z.string().uuid(),
-  runtimeInfrastructureId: z.string().uuid(),
-  agentVersion: z.string(),
-});
-export type ReportRuntimeAgentStartedCommandInput = z.infer<typeof ReportRuntimeAgentStartedCommandSchema>;
-
 export const DefineFeatureSchemaCommandSchema = z.object({
   featureDomain: z.string(),
   dataModality: z.string(),
@@ -513,26 +506,6 @@ export const ConfigureRuntimeDatasetBindingCommandSchema = z.object({
 });
 export type ConfigureRuntimeDatasetBindingCommandInput = z.infer<typeof ConfigureRuntimeDatasetBindingCommandSchema>;
 
-export const ValidateAgentDatasetAccessCommandSchema = z.object({
-  datasetAccessValidationId: z.string().uuid().optional().nullable(),
-  runtimeDatasetBindingId: z.string().uuid(),
-  datasetId: z.string().uuid().optional().nullable(),
-  runtimeId: z.string().uuid().optional().nullable(),
-  dataSourceType: z.string().optional().nullable(),
-  host: z.string().optional().nullable(),
-  port: z.coerce.number().int().optional().nullable(),
-  url: z.string().optional().nullable(),
-  databaseName: z.string().optional().nullable(),
-  schemaName: z.string().optional().nullable(),
-  tableName: z.string().optional().nullable(),
-  filePath: z.string().optional().nullable(),
-  objectBucket: z.string().optional().nullable(),
-  objectPrefix: z.string().optional().nullable(),
-  dataFormat: z.string().optional().nullable(),
-  credentialSecretName: z.string().optional().nullable(),
-});
-export type ValidateAgentDatasetAccessCommandInput = z.infer<typeof ValidateAgentDatasetAccessCommandSchema>;
-
 export const RevalidateAgentDatasetAccessCommandSchema = z.object({
   runtimeDatasetBindingId: z.string().uuid(),
 });
@@ -620,6 +593,6 @@ export const RetryRoundExecutionAfterRuntimeFailureCommandSchema = z.object({
 export type RetryRoundExecutionAfterRuntimeFailureCommandInput = z.infer<typeof RetryRoundExecutionAfterRuntimeFailureCommandSchema>;
 
 export const LoadRuntimeAgentBootstrapConfigurationCommandSchema = z.object({
-  bootstrapRequestId: z.string().uuid().optional().nullable(),
 });
 export type LoadRuntimeAgentBootstrapConfigurationCommandInput = z.infer<typeof LoadRuntimeAgentBootstrapConfigurationCommandSchema>;
+

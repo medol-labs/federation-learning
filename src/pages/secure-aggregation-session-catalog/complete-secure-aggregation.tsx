@@ -87,8 +87,10 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.label", "Complete Secure Aggregation")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <input type="hidden" {...form.register("trainingJobId" as never)} />
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("CompleteSecureAggregation validation failed", errors))} className="space-y-8">
+          {defaultValues.trainingJobId !== undefined && defaultValues.trainingJobId !== null ? (
+            <input type="hidden" {...form.register("trainingJobId" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="trainingRunConfigurationId"
@@ -172,7 +174,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
                   withFormControl
                   resource="secure_aggregation_session_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="encryptionScheme"
+                  optionLabel="publicKeyVersion"
                   optionValue="secureAggregationSessionId"
                   value={field.value || ""}
                   onValueChange={field.onChange}

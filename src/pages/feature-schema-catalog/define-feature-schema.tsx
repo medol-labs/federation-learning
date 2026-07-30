@@ -187,7 +187,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.feature_schema_catalog.commands.defineFeatureSchema.label", "Define Feature Schema")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DefineFeatureSchema validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="featureDomain"

@@ -88,8 +88,10 @@ export const TrainingRoundProgressFailRoundExecution = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.training_round_progress.commands.failRoundExecution.label", "Fail Round Execution")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <input type="hidden" {...form.register("roundExecutionId" as never)} />
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("FailRoundExecution validation failed", errors))} className="space-y-8">
+          {defaultValues.roundExecutionId !== undefined && defaultValues.roundExecutionId !== null ? (
+            <input type="hidden" {...form.register("roundExecutionId" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="executionSessionId"
@@ -209,7 +211,7 @@ export const TrainingRoundProgressFailRoundExecution = () => {
                   withFormControl
                   resource="runtime_identity_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="organizationName"
+                  optionLabel="runtimeName"
                   optionValue="runtimeId"
                   value={field.value || ""}
                   onValueChange={field.onChange}

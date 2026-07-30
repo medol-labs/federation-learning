@@ -84,7 +84,7 @@ export const RuntimeInstallationGuideCreateRuntimeInstallationPlan = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.runtime_installation_guide.commands.createRuntimeInstallationPlan.label", "Create Runtime Installation Plan")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("CreateRuntimeInstallationPlan validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="organizationId"

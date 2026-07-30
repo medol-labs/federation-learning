@@ -80,7 +80,7 @@ export const AgentDatasetAccessValidationCatalogRevalidateAgentDatasetAccess = (
     <CreateView>
       <CreateViewHeader title={t("resources.agent_dataset_access_validation_catalog.commands.revalidateAgentDatasetAccess.label", "Revalidate Agent Dataset Access")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RevalidateAgentDatasetAccess validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="runtimeDatasetBindingId"

@@ -81,7 +81,7 @@ export const DictionaryCatalogRegisterDictionary = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.dictionary_catalog.commands.registerDictionary.label", "Register Dictionary")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RegisterDictionary validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="dictionaryCode"

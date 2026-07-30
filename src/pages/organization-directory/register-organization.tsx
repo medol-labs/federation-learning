@@ -80,7 +80,7 @@ export const OrganizationDirectoryRegisterOrganization = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.organization_directory.commands.registerOrganization.label", "Register Organization")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RegisterOrganization validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="organizationName"

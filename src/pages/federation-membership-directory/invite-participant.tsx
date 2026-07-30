@@ -82,8 +82,10 @@ export const FederationMembershipDirectoryInviteParticipant = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.federation_membership_directory.commands.inviteParticipant.label", "Invite Participant")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <input type="hidden" {...form.register("federationId" as never)} />
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("InviteParticipant validation failed", errors))} className="space-y-8">
+          {defaultValues.federationId !== undefined && defaultValues.federationId !== null ? (
+            <input type="hidden" {...form.register("federationId" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="organizationId"

@@ -82,7 +82,7 @@ export const RuntimeDatasetMetadataCatalogConfigureRuntimeDatasetBinding = () =>
     <CreateView>
       <CreateViewHeader title={t("resources.runtime_dataset_metadata_catalog.commands.configureRuntimeDatasetBinding.label", "Configure Runtime Dataset Binding")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("ConfigureRuntimeDatasetBinding validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="datasetId"
@@ -94,7 +94,7 @@ export const RuntimeDatasetMetadataCatalogConfigureRuntimeDatasetBinding = () =>
                   withFormControl
                   resource="dataset_capability"
                   dataProviderName="federation-learning-runtime-agent"
-                  optionLabel="organizationName"
+                  optionLabel="datasetName"
                   optionValue="datasetId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
@@ -148,7 +148,7 @@ export const RuntimeDatasetMetadataCatalogConfigureRuntimeDatasetBinding = () =>
                   withFormControl
                   resource="runtime_identity_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="organizationName"
+                  optionLabel="runtimeName"
                   optionValue="runtimeId"
                   value={field.value || ""}
                   onValueChange={field.onChange}

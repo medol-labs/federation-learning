@@ -81,7 +81,7 @@ export const TrainingRunConfigurationCatalogCreateTrainingJob = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.training_run_configuration_catalog.commands.createTrainingJob.label", "Create Training Job")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("CreateTrainingJob validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="federationId"

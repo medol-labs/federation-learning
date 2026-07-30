@@ -79,8 +79,10 @@ export const RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure = () =
     <CreateView>
       <CreateViewHeader title={t("resources.runtime_infrastructure_access_view.commands.registerRuntimeInfrastructure.label", "Register Runtime Infrastructure")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <input type="hidden" {...form.register("runtimeInfrastructureId" as never)} />
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RegisterRuntimeInfrastructure validation failed", errors))} className="space-y-8">
+          {defaultValues.runtimeInfrastructureId !== undefined && defaultValues.runtimeInfrastructureId !== null ? (
+            <input type="hidden" {...form.register("runtimeInfrastructureId" as never)} />
+          ) : null}
           <div className="flex gap-2">
             <Button
               type="submit"

@@ -79,6 +79,21 @@ export const AgentRuntimeInfrastructureConnectionCatalogShow = () => {
               <p className="text-sm text-muted-foreground">{formatValue(record?.connectedAt, t)}</p>
             </div>
             <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectionReportFailedAt.label", "Connection Report Failed At")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.connectionReportFailedAt, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectionReportFailureReason.label", "Connection Report Failure Reason")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.connectionReportFailureReason, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectionReportRetryable.label", "Connection Report Retryable")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.connectionReportRetryable, t)}</p>
+            </div>
+            <Separator />
           </CardContent>
         </Card>
       </div>

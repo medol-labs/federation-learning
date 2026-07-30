@@ -103,8 +103,10 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
     <CreateView>
       <CreateViewHeader title={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.label", "Update Training Run Configuration")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <input type="hidden" {...form.register("trainingRunConfigurationId" as never)} />
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("UpdateTrainingRunConfiguration validation failed", errors))} className="space-y-8">
+          {defaultValues.trainingRunConfigurationId !== undefined && defaultValues.trainingRunConfigurationId !== null ? (
+            <input type="hidden" {...form.register("trainingRunConfigurationId" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="federationId"

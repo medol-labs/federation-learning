@@ -92,7 +92,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.label", "Submit Model Update Submission")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("SubmitModelUpdateSubmission validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="executionSessionId"
@@ -239,7 +239,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   withFormControl
                   resource="runtime_identity_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="organizationName"
+                  optionLabel="runtimeName"
                   optionValue="runtimeId"
                   value={field.value || ""}
                   onValueChange={field.onChange}

@@ -80,7 +80,7 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.feature_schema_catalog.commands.declareDataset.label", "Declare Dataset")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DeclareDataset validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="organizationId"

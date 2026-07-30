@@ -10,7 +10,21 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadRuntimeAgentBootstrapConfigurationCommandSchema, type LoadRuntimeAgentBootstrapConfigurationCommandInput } from "@/domain/schemas";
@@ -22,7 +36,6 @@ export const RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration 
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
-    bootstrapRequestId: searchParams.get("bootstrapRequestId") ?? undefined,
   } as Partial<LoadRuntimeAgentBootstrapConfigurationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<LoadRuntimeAgentBootstrapConfigurationCommandInput, LoadRuntimeAgentBootstrapConfigurationCommandInput>({
@@ -66,9 +79,6 @@ export const RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration 
       <CreateViewHeader title={t("resources.runtime_agent_lifecycle_catalog.commands.loadRuntimeAgentBootstrapConfiguration.label", "Load Runtime Agent Bootstrap Configuration")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("LoadRuntimeAgentBootstrapConfiguration validation failed", errors))} className="space-y-8">
-          {defaultValues.bootstrapRequestId !== undefined && defaultValues.bootstrapRequestId !== null ? (
-            <input type="hidden" {...form.register("bootstrapRequestId" as never)} />
-          ) : null}
           <div className="flex gap-2">
             <Button
               type="submit"

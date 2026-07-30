@@ -86,7 +86,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
     <CreateView>
       <CreateViewHeader title={t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.label", "Register Runtime Infrastructure Package")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RegisterRuntimeInfrastructurePackage validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="packageName"

@@ -101,7 +101,7 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
     <CreateView>
       <CreateViewHeader title={t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.label", "Define Training Run Configuration")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DefineTrainingRunConfiguration validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
             name="federationId"

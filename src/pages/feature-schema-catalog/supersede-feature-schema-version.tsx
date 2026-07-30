@@ -80,8 +80,10 @@ export const FeatureSchemaCatalogSupersedeFeatureSchemaVersion = () => {
     <CreateView>
       <CreateViewHeader title={t("resources.feature_schema_catalog.commands.supersedeFeatureSchemaVersion.label", "Supersede Feature Schema Version")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <input type="hidden" {...form.register("featureSchemaId" as never)} />
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("SupersedeFeatureSchemaVersion validation failed", errors))} className="space-y-8">
+          {defaultValues.featureSchemaId !== undefined && defaultValues.featureSchemaId !== null ? (
+            <input type="hidden" {...form.register("featureSchemaId" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="supersededByFeatureSchemaId"
