@@ -1,6 +1,5 @@
 package tech.medo.runtimeagentoperations.approvedatasetfortraining
 
-import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.approvedatasetfortraining.ApproveDatasetForTrainingCommand
 
 import tech.medo.runtimeagentoperations.events.DatasetApprovedForTrainingEvent
@@ -10,8 +9,7 @@ import tech.medo.runtimeagentoperations.dataset.DatasetState
 import tech.medo.runtimeagentoperations.domain.states.DatasetStateEnum
 
 
-@Component
-class ApproveDatasetForTrainingDecision {
+interface ApproveDatasetForTrainingDecision {
     fun decide(command: ApproveDatasetForTrainingCommand, state: DatasetState): List<Any> {
         require(state.currentState == DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED) {
             "ApproveDatasetForTraining requires Dataset to be ContractValidationCompleted."

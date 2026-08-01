@@ -4,6 +4,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
+import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition;
+import tech.medo.runtimeagentoperations.domain.types.LabelDefinition;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +19,8 @@ class DatasetCapabilityReadModelProjection : MetadataProjection {
     var organizationId: UUID? = null
     var runtimeId: UUID? = null
     var featureSchemaId: UUID? = null
+    var features: List<FeatureDefinition> = emptyList()
+    var labels: List<LabelDefinition> = emptyList()
     var organizationName: String? = null
     var featureDomain: String? = null
     var featureSchemaVersion: String? = null
@@ -30,6 +34,7 @@ class DatasetCapabilityReadModelProjection : MetadataProjection {
     var nonIidScore: BigDecimal? = null
     var metadataReportId: UUID? = null
     var metadataStatus: String? = null
+    var contractStatus: String? = null
     var approvalStatus: String? = null
     var approved: Boolean? = null
     var lastProfiledAt: LocalDateTime? = null
@@ -47,6 +52,8 @@ fun DatasetCapabilityReadModelProjection.toReadModel(): DatasetCapabilityReadMod
     organizationId = organizationId,
     runtimeId = runtimeId,
     featureSchemaId = featureSchemaId,
+    features = features,
+    labels = labels,
     organizationName = organizationName,
     featureDomain = featureDomain,
     featureSchemaVersion = featureSchemaVersion,
@@ -60,6 +67,7 @@ fun DatasetCapabilityReadModelProjection.toReadModel(): DatasetCapabilityReadMod
     nonIidScore = nonIidScore,
     metadataReportId = metadataReportId,
     metadataStatus = metadataStatus,
+    contractStatus = contractStatus,
     approvalStatus = approvalStatus,
     approved = approved,
     lastProfiledAt = lastProfiledAt,
@@ -83,6 +91,8 @@ data class DatasetCapabilityReadModel(
     val organizationId: UUID?,
     val runtimeId: UUID?,
     val featureSchemaId: UUID?,
+    val features: List<FeatureDefinition>,
+    val labels: List<LabelDefinition>,
     val organizationName: String?,
     val featureDomain: String?,
     val featureSchemaVersion: String?,
@@ -96,6 +106,7 @@ data class DatasetCapabilityReadModel(
     val nonIidScore: BigDecimal?,
     val metadataReportId: UUID?,
     val metadataStatus: String?,
+    val contractStatus: String?,
     val approvalStatus: String?,
     val approved: Boolean?,
     val lastProfiledAt: LocalDateTime?,

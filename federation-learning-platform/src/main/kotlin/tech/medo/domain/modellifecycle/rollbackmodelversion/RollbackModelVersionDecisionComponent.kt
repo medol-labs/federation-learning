@@ -1,0 +1,7 @@
+package tech.medo.domain.modellifecycle.rollbackmodelversion
+
+import org.springframework.stereotype.Component
+import tech.medo.modellifecycle.rollbackmodelversion.RollbackModelVersionDecision
+
+@Component
+class RollbackModelVersionDecisionComponent : RollbackModelVersionDecision

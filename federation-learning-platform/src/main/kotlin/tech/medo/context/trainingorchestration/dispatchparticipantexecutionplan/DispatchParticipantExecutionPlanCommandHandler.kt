@@ -5,14 +5,16 @@ import org.axonframework.messaging.eventhandling.gateway.EventAppender
 import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.dispatchparticipantexecutionplan.DispatchParticipantExecutionPlanCommand
-
+import tech.medo.trainingorchestration.dispatchparticipantexecutionplan.DispatchParticipantExecutionPlanInput
+import tech.medo.trainingorchestration.dispatchparticipantexecutionplan.DispatchParticipantExecutionPlanService
 import tech.medo.trainingorchestration.participantexecutionplan.ParticipantExecutionPlanState
 
 
 
 @Component
 class DispatchParticipantExecutionPlanCommandHandler(
-    private val decision: DispatchParticipantExecutionPlanDecision
+    private val decision: DispatchParticipantExecutionPlanDecision,
+    private val dispatchParticipantExecutionPlanService: DispatchParticipantExecutionPlanService
 ) {
     @CommandHandler
     fun handle(
@@ -20,6 +22,9 @@ class DispatchParticipantExecutionPlanCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: ParticipantExecutionPlanState,
         eventAppender: EventAppender
     ) {
-        eventAppender.append(decision.decide(command, state))
+        val input = DispatchParticipantExecutionPlanInput(executionPlanId = command.executionPlanId, executionSessionId = command.executionSessionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, featureSchemaId = command.featureSchemaId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, baseModelVersionId = command.baseModelVersionId)
+        val portResult = dispatchParticipantExecutionPlanService.execute(input)
+
+        eventAppender.append(decision.decide(command, state, portResult))
     }
 }

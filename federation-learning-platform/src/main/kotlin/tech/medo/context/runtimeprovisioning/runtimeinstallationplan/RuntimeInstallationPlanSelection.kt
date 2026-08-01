@@ -4,11 +4,11 @@ import java.util.UUID;
 
 
 data class RuntimeInstallationPlanSelection(
-    val runtimeInstallationPlanId: UUID
+    val organizationId: UUID
 )
 
 object RuntimeInstallationPlanTags {
-    const val RUNTIME_INSTALLATION_PLAN_ID = "runtimeInstallationPlanId"
+    const val ORGANIZATION_ID = "organizationId"
 }
 
 object RuntimeInstallationPlanMetadata {

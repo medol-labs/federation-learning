@@ -17,12 +17,12 @@ import java.util.UUID;
 class RuntimeIdentityState @EntityCreator constructor() {
 
     var currentState: RuntimeIdentityStateEnum? = null
-    private var runtimeId: UUID? = null
-    private var runtimeInfrastructureId: UUID? = null
-    private var runtimeAgentId: UUID? = null
-    private var organizationId: UUID? = null
-    private var runtimeName: String? = null
-    private var revocationReason: String? = null
+    var runtimeId: UUID? = null
+    var runtimeInfrastructureId: UUID? = null
+    var runtimeAgentId: UUID? = null
+    var organizationId: UUID? = null
+    var runtimeName: String? = null
+    var revocationReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeIdentityActivatedEvent): RuntimeIdentityState = apply {

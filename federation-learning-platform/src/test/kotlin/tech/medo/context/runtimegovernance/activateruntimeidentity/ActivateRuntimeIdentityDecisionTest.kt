@@ -14,7 +14,7 @@ import java.util.UUID;
 class ActivateRuntimeIdentityDecisionTest {
     @Test
     fun ActivateRuntimeIdentityEmitsRuntimeIdentityActivatedEvent() {
-        val events = ActivateRuntimeIdentityDecision().decide(
+        val events = (object : ActivateRuntimeIdentityDecision {}).decide(
             ActivateRuntimeIdentityCommand(
             runtimeId = java.util.UUID.randomUUID(),
             runtimeInfrastructureId = java.util.UUID.randomUUID(),

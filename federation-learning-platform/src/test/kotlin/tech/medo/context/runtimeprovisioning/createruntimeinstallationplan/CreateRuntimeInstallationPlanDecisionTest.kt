@@ -14,7 +14,7 @@ import java.util.UUID;
 class CreateRuntimeInstallationPlanDecisionTest {
     @Test
     fun CreateRuntimeInstallationPlanEmitsRuntimeInstallationPlanCreatedEvent() {
-        val events = CreateRuntimeInstallationPlanDecision().decide(
+        val events = (object : CreateRuntimeInstallationPlanDecision {}).decide(
             CreateRuntimeInstallationPlanCommand(
             runtimeInstallationPlanId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),

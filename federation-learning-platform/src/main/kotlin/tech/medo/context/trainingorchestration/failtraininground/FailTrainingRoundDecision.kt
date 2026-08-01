@@ -1,6 +1,5 @@
 package tech.medo.trainingorchestration.failtraininground
 
-import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.failtraininground.FailTrainingRoundCommand
 
 import tech.medo.trainingorchestration.events.TrainingRoundFailedEvent
@@ -10,8 +9,7 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
-@Component
-class FailTrainingRoundDecision {
+interface FailTrainingRoundDecision {
     fun decide(command: FailTrainingRoundCommand, state: TrainingRoundState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(

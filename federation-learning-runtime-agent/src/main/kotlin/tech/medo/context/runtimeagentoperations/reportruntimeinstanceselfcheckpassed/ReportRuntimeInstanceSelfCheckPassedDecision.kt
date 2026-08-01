@@ -1,6 +1,5 @@
 package tech.medo.runtimeagentoperations.reportruntimeinstanceselfcheckpassed
 
-import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.reportruntimeinstanceselfcheckpassed.ReportRuntimeInstanceSelfCheckPassedCommand
 
 import tech.medo.runtimeagentoperations.events.RuntimeInstanceSelfCheckPassedEvent
@@ -10,8 +9,7 @@ import tech.medo.runtimeagentoperations.runtimeagentlifecycle.RuntimeAgentLifecy
 import tech.medo.runtimeagentoperations.domain.states.RuntimeAgentLifecycleStateEnum
 
 
-@Component
-class ReportRuntimeInstanceSelfCheckPassedDecision {
+interface ReportRuntimeInstanceSelfCheckPassedDecision {
     fun decide(command: ReportRuntimeInstanceSelfCheckPassedCommand, state: RuntimeAgentLifecycleState): List<Any> {
         require(state.currentState == RuntimeAgentLifecycleStateEnum.STARTED) {
             "ReportRuntimeInstanceSelfCheckPassed requires RuntimeAgentLifecycle to be Started."

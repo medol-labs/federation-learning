@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 class RecordRuntimeDatasetMetadataDecisionTest {
     @Test
     fun RecordRuntimeDatasetMetadataEmitsDatasetMetadataReportedEvent() {
-        val events = RecordRuntimeDatasetMetadataDecision().decide(
+        val events = (object : RecordRuntimeDatasetMetadataDecision {}).decide(
             RecordRuntimeDatasetMetadataCommand(
             metadataReportId = java.util.UUID.randomUUID(),
             datasetId = java.util.UUID.randomUUID(),

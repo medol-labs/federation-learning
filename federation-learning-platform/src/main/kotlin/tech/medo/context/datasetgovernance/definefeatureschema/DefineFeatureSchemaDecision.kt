@@ -1,6 +1,5 @@
 package tech.medo.datasetgovernance.definefeatureschema
 
-import org.springframework.stereotype.Component
 import tech.medo.datasetgovernance.definefeatureschema.DefineFeatureSchemaCommand
 
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
@@ -11,8 +10,7 @@ import tech.medo.datasetgovernance.featureschema.FeatureSchemaFeatureDomainVersi
 
 
 
-@Component
-class DefineFeatureSchemaDecision {
+interface DefineFeatureSchemaDecision {
     fun decide(command: DefineFeatureSchemaCommand, featureSchemaFeatureDomainVersionReservation: FeatureSchemaFeatureDomainVersionReservationState): List<Any> {
         require(!featureSchemaFeatureDomainVersionReservation.reserved) {
             "FeatureDomain Version already exists."

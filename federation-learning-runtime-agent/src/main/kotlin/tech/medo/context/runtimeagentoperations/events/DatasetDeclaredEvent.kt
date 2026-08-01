@@ -3,6 +3,8 @@ package tech.medo.runtimeagentoperations.events
 import org.axonframework.eventsourcing.annotation.EventTag
 import org.axonframework.messaging.eventhandling.annotation.Event
 import java.util.UUID;
+import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition;
+import tech.medo.runtimeagentoperations.domain.types.LabelDefinition;
 
 
 
@@ -16,5 +18,7 @@ data class DatasetDeclaredEvent(
     @EventTag(key = "datasetName")
     val datasetName: String,
     val datasetType: String,
-    val datasetUsage: String
+    val datasetUsage: String,
+    val features: List<FeatureDefinition>,
+    val labels: List<LabelDefinition>
 )

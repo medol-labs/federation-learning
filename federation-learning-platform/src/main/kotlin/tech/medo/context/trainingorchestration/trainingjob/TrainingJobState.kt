@@ -21,17 +21,17 @@ import java.util.UUID;
 class TrainingJobState @EntityCreator constructor() {
 
     var currentState: TrainingJobStateEnum? = null
-    private var trainingJobId: UUID? = null
-    private var federationId: UUID? = null
-    private var featureSchemaId: UUID? = null
-    private var trainingRunConfigurationId: UUID? = null
-    private var objective: String? = null
-    private var pauseReason: String? = null
-    private var resumeReason: String? = null
-    private var cancelReason: String? = null
-    private var finalRoundId: UUID? = null
-    private var finalModelVersionId: UUID? = null
-    private var stopReason: String? = null
+    var trainingJobId: UUID? = null
+    var federationId: UUID? = null
+    var featureSchemaId: UUID? = null
+    var trainingRunConfigurationId: UUID? = null
+    var objective: String? = null
+    var pauseReason: String? = null
+    var resumeReason: String? = null
+    var cancelReason: String? = null
+    var finalRoundId: UUID? = null
+    var finalModelVersionId: UUID? = null
+    var stopReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: TrainingJobCreatedEvent): TrainingJobState = apply {

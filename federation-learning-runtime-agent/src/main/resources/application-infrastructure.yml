@@ -10,3 +10,8 @@ runtime-agent:
     agent-install-mode: ${RUNTIME_AGENT_INSTALL_MODE:MANUAL_GUIDED}
     organization-id: ${RUNTIME_AGENT_ORGANIZATION_ID:}
     runtime-name: ${RUNTIME_AGENT_RUNTIME_NAME:}
+  csv-dataset:
+    label-columns: ${RUNTIME_AGENT_CSV_DATASET_LABEL_COLUMNS:}
+  feature-schema-lookup:
+    enabled: ${RUNTIME_AGENT_FEATURE_SCHEMA_LOOKUP_ENABLED:true}
+    platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}

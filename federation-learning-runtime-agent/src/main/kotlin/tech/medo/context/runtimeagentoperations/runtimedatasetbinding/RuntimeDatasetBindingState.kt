@@ -25,22 +25,23 @@ class RuntimeDatasetBindingState @EntityCreator constructor() {
 
 
     var currentState: RuntimeDatasetBindingStateEnum? = null
-    private var runtimeDatasetBindingId: UUID? = null
-    private var datasetId: UUID? = null
-    private var organizationId: UUID? = null
-    private var runtimeId: UUID? = null
-    private var dataSourceType: String? = null
-    private var host: String? = null
-    private var port: Int? = null
-    private var url: String? = null
-    private var databaseName: String? = null
-    private var schemaName: String? = null
-    private var tableName: String? = null
-    private var filePath: String? = null
-    private var objectBucket: String? = null
-    private var objectPrefix: String? = null
-    private var dataFormat: String? = null
-    private var credentialSecretName: String? = null
+    var runtimeDatasetBindingId: UUID? = null
+    var datasetId: UUID? = null
+    var organizationId: UUID? = null
+    var featureSchemaId: UUID? = null
+    var runtimeId: UUID? = null
+    var dataSourceType: String? = null
+    var host: String? = null
+    var port: Int? = null
+    var url: String? = null
+    var databaseName: String? = null
+    var schemaName: String? = null
+    var tableName: String? = null
+    var filePath: String? = null
+    var objectBucket: String? = null
+    var objectPrefix: String? = null
+    var dataFormat: String? = null
+    var credentialSecretName: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeDatasetBindingConfiguredEvent): RuntimeDatasetBindingState = apply {
@@ -48,6 +49,7 @@ class RuntimeDatasetBindingState @EntityCreator constructor() {
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
         organizationId = event.organizationId
+        featureSchemaId = event.featureSchemaId
         runtimeId = event.runtimeId
         dataSourceType = event.dataSourceType
         host = event.host

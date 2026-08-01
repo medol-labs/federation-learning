@@ -30,16 +30,16 @@ class DictionaryValueState @EntityCreator constructor() {
 
 
     var currentState: DictionaryValueStateEnum? = null
-    private var dictionaryValueId: UUID? = null
-    private var dictionaryId: UUID? = null
-    private var dictionaryCode: DictionaryCode? = null
-    private var valueCode: DictionaryValueCode? = null
-    private var displayName: String? = null
-    private var displayOrder: DisplayOrder? = null
-    private var description: String? = null
-    private var active: Boolean? = null
-    private var disabledReason: String? = null
-    private var enableReason: String? = null
+    var dictionaryValueId: UUID? = null
+    var dictionaryId: UUID? = null
+    var dictionaryCode: DictionaryCode? = null
+    var valueCode: DictionaryValueCode? = null
+    var displayName: String? = null
+    var displayOrder: DisplayOrder? = null
+    var description: String? = null
+    var active: Boolean? = null
+    var disabledReason: String? = null
+    var enableReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: DictionaryValueAddedEvent): DictionaryValueState = apply {

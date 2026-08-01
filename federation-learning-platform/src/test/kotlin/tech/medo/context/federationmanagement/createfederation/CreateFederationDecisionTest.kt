@@ -26,7 +26,7 @@ class CreateFederationDecisionTest {
         )
 
         assertThrows<IllegalArgumentException> {
-            CreateFederationDecision().decide(
+            (object : CreateFederationDecision {}).decide(
                         CreateFederationCommand(
                         federationId = java.util.UUID.randomUUID(),
                         federationName = "B",

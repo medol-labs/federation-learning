@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.revalidateagentdatasetaccess
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.revalidateagentdatasetaccess.RevalidateAgentDatasetAccessDecision
+
+@Component
+class RevalidateAgentDatasetAccessDecisionComponent : RevalidateAgentDatasetAccessDecision

@@ -1,8 +1,7 @@
 package tech.medo.runtimeagentoperations.releaseruntimeenginejobafterfailure
 
-import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterfailure.ReleaseRuntimeEngineJobAfterFailureCommand
-
+import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterfailure.ReleaseRuntimeEngineJobAfterFailureResult
 import tech.medo.runtimeagentoperations.events.RuntimeEngineJobReleaseFailedOrSkippedEvent
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
@@ -10,14 +9,13 @@ import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 
-@Component
-class ReleaseRuntimeEngineJobAfterFailureDecision {
-    fun decide(command: ReleaseRuntimeEngineJobAfterFailureCommand, state: RoundExecutionState): List<Any> {
+interface ReleaseRuntimeEngineJobAfterFailureDecision {
+    fun decide(command: ReleaseRuntimeEngineJobAfterFailureCommand, state: RoundExecutionState, portResult: ReleaseRuntimeEngineJobAfterFailureResult): List<Any> {
         require(state.currentState == RoundExecutionStateEnum.FAILED) {
             "ReleaseRuntimeEngineJobAfterFailure requires RoundExecution to be Failed."
         }
-        return listOf(
-            RuntimeEngineJobReleaseFailedOrSkippedEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, failureReason = null /* TODO: derive value */, executionPlanId = command.executionPlanId)
-        )
+        return when (portResult) {
+                    is ReleaseRuntimeEngineJobAfterFailureResult.Succeeded -> listOf(RuntimeEngineJobReleaseFailedOrSkippedEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, failureReason = portResult.failureReason, executionPlanId = command.executionPlanId))
+                }
     }
 }

@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.configureruntimedatasetbinding
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.configureruntimedatasetbinding.ConfigureRuntimeDatasetBindingDecision
+
+@Component
+class ConfigureRuntimeDatasetBindingDecisionComponent : ConfigureRuntimeDatasetBindingDecision

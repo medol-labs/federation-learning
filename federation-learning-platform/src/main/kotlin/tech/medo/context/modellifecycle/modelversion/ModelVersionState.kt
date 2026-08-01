@@ -22,24 +22,24 @@ import java.math.BigDecimal;
 class ModelVersionState @EntityCreator constructor() {
 
     var currentState: ModelVersionStateEnum? = null
-    private var modelVersionId: UUID? = null
-    private var trainingJobId: UUID? = null
-    private var finalRoundId: UUID? = null
-    private var modelArtifactId: UUID? = null
-    private var modelHash: String? = null
-    private var evaluationReportId: UUID? = null
-    private var finalGlobalAccuracy: BigDecimal? = null
-    private var experimentId: UUID? = null
-    private var hyperparameterSnapshotId: UUID? = null
-    private var reproducibilityManifestId: UUID? = null
-    private var modelCardId: UUID? = null
-    private var baselineModelVersionId: UUID? = null
-    private var approvalNote: String? = null
-    private var releaseChannel: String? = null
-    private var productionStage: String? = null
-    private var previousModelVersionId: UUID? = null
-    private var rollbackReason: String? = null
-    private var retirementReason: String? = null
+    var modelVersionId: UUID? = null
+    var trainingJobId: UUID? = null
+    var finalRoundId: UUID? = null
+    var modelArtifactId: UUID? = null
+    var modelHash: String? = null
+    var evaluationReportId: UUID? = null
+    var finalGlobalAccuracy: BigDecimal? = null
+    var experimentId: UUID? = null
+    var hyperparameterSnapshotId: UUID? = null
+    var reproducibilityManifestId: UUID? = null
+    var modelCardId: UUID? = null
+    var baselineModelVersionId: UUID? = null
+    var approvalNote: String? = null
+    var releaseChannel: String? = null
+    var productionStage: String? = null
+    var previousModelVersionId: UUID? = null
+    var rollbackReason: String? = null
+    var retirementReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: ModelCandidateRegisteredEvent): ModelVersionState = apply {

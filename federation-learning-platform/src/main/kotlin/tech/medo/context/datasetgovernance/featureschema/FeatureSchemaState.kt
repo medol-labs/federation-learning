@@ -32,21 +32,21 @@ class FeatureSchemaState @EntityCreator constructor() {
 
 
     var currentState: FeatureSchemaStateEnum? = null
-    private var featureSchemaId: UUID? = null
-    private var featureDomain: String? = null
-    private var version: String? = null
-    private var dataModality: String? = null
-    private var features: List<FeatureDefinition> = emptyList()
-    private var labels: List<LabelDefinition> = emptyList()
-    private var featureCount: Int? = null
-    private var publishNote: String? = null
-    private var deprecationReason: String? = null
-    private var retirementReason: String? = null
-    private var supersededByFeatureSchemaId: UUID? = null
-    private var supersededVersion: String? = null
-    private var supersessionReason: String? = null
-    private var recommendedVersion: String? = null
-    private var recommendationNote: String? = null
+    var featureSchemaId: UUID? = null
+    var featureDomain: String? = null
+    var version: String? = null
+    var dataModality: String? = null
+    var features: List<FeatureDefinition> = emptyList()
+    var labels: List<LabelDefinition> = emptyList()
+    var featureCount: Int? = null
+    var publishNote: String? = null
+    var deprecationReason: String? = null
+    var retirementReason: String? = null
+    var supersededByFeatureSchemaId: UUID? = null
+    var supersededVersion: String? = null
+    var supersessionReason: String? = null
+    var recommendedVersion: String? = null
+    var recommendationNote: String? = null
 
     @EventSourcingHandler
     fun evolve(event: FeatureSchemaDefinedEvent): FeatureSchemaState = apply {

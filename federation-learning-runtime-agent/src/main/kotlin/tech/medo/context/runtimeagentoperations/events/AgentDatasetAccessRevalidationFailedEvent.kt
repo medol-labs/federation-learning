@@ -12,6 +12,8 @@ data class AgentDatasetAccessRevalidationFailedEvent(
     val datasetAccessValidationId: UUID,
     val runtimeDatasetBindingId: UUID,
     val datasetId: UUID,
+    val organizationId: UUID,
+    val featureSchemaId: UUID,
     val runtimeId: UUID,
     val failureReason: String
 )

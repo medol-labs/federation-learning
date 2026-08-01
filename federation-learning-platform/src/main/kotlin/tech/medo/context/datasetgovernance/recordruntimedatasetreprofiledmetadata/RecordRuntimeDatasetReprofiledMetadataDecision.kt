@@ -1,6 +1,5 @@
 package tech.medo.datasetgovernance.recordruntimedatasetreprofiledmetadata
 
-import org.springframework.stereotype.Component
 import tech.medo.datasetgovernance.recordruntimedatasetreprofiledmetadata.RecordRuntimeDatasetReprofiledMetadataCommand
 
 import tech.medo.datasetgovernance.events.DatasetMetadataReprofiledEvent
@@ -10,8 +9,7 @@ import tech.medo.datasetgovernance.runtimedatasetmetadata.RuntimeDatasetMetadata
 
 
 
-@Component
-class RecordRuntimeDatasetReprofiledMetadataDecision {
+interface RecordRuntimeDatasetReprofiledMetadataDecision {
     fun decide(command: RecordRuntimeDatasetReprofiledMetadataCommand, state: RuntimeDatasetMetadataState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(

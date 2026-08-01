@@ -1,6 +1,5 @@
 package tech.medo.trainingorchestration.requestsecureaggregation
 
-import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.requestsecureaggregation.RequestSecureAggregationCommand
 
 import tech.medo.trainingorchestration.events.SecureAggregationRequestedEvent
@@ -10,8 +9,7 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
-@Component
-class RequestSecureAggregationDecision {
+interface RequestSecureAggregationDecision {
     fun decide(command: RequestSecureAggregationCommand, state: TrainingRoundState): List<Any> {
         // TODO: validate child/member state before appending events.
         return listOf(

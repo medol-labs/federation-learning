@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.definetrainingrunconfiguration
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.definetrainingrunconfiguration.DefineTrainingRunConfigurationDecision
+
+@Component
+class DefineTrainingRunConfigurationDecisionComponent : DefineTrainingRunConfigurationDecision

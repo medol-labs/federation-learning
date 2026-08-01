@@ -27,7 +27,7 @@ class RegisterModelArtifactDecisionTest {
             sourceType = "INITIAL"
         )
 
-        val events = RegisterModelArtifactDecision().decide(
+        val events = (object : RegisterModelArtifactDecision {}).decide(
             command
         )
 

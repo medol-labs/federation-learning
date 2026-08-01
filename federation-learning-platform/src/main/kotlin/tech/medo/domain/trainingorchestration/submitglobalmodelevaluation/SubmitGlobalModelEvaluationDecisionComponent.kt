@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.submitglobalmodelevaluation
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.submitglobalmodelevaluation.SubmitGlobalModelEvaluationDecision
+
+@Component
+class SubmitGlobalModelEvaluationDecisionComponent : SubmitGlobalModelEvaluationDecision

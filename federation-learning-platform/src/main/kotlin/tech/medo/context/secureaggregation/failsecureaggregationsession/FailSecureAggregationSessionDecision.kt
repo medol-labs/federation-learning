@@ -1,6 +1,5 @@
 package tech.medo.secureaggregation.failsecureaggregationsession
 
-import org.springframework.stereotype.Component
 import tech.medo.secureaggregation.failsecureaggregationsession.FailSecureAggregationSessionCommand
 
 import tech.medo.secureaggregation.events.SecureAggregationFailedEvent
@@ -10,8 +9,7 @@ import tech.medo.secureaggregation.secureaggregationsession.SecureAggregationSes
 import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
 
 
-@Component
-class FailSecureAggregationSessionDecision {
+interface FailSecureAggregationSessionDecision {
     fun decide(command: FailSecureAggregationSessionCommand, state: SecureAggregationSessionState): List<Any> {
         require(state.currentState == SecureAggregationSessionStateEnum.PLANNED) {
             "FailSecureAggregationSession requires SecureAggregationSession to be Planned."

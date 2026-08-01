@@ -16,20 +16,20 @@ import java.util.UUID;
 class RuntimeNodeInventoryState @EntityCreator constructor() {
 
     var currentState: RuntimeNodeInventoryStateEnum? = null
-    private var nodeId: UUID? = null
-    private var runtimeNodeInventoryReportId: UUID? = null
-    private var organizationId: UUID? = null
-    private var runtimeInfrastructureId: UUID? = null
-    private var runtimeAgentId: UUID? = null
-    private var runtimeNodeName: String? = null
-    private var infrastructureNodeId: String? = null
-    private var runtimeNodeRole: String? = null
-    private var nodeReady: Boolean? = null
-    private var runtimeEngineVersion: String? = null
-    private var containerEngineVersion: String? = null
-    private var operatingSystem: String? = null
-    private var architecture: String? = null
-    private var inventoryHash: String? = null
+    var nodeId: UUID? = null
+    var runtimeNodeInventoryReportId: UUID? = null
+    var organizationId: UUID? = null
+    var runtimeInfrastructureId: UUID? = null
+    var runtimeAgentId: UUID? = null
+    var runtimeNodeName: String? = null
+    var infrastructureNodeId: String? = null
+    var runtimeNodeRole: String? = null
+    var nodeReady: Boolean? = null
+    var runtimeEngineVersion: String? = null
+    var containerEngineVersion: String? = null
+    var operatingSystem: String? = null
+    var architecture: String? = null
+    var inventoryHash: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeNodeInventoryReportedEvent): RuntimeNodeInventoryState = apply {

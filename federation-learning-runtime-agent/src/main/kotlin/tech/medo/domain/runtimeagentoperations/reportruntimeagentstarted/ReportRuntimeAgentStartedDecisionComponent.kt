@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.reportruntimeagentstarted
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.reportruntimeagentstarted.ReportRuntimeAgentStartedDecision
+
+@Component
+class ReportRuntimeAgentStartedDecisionComponent : ReportRuntimeAgentStartedDecision

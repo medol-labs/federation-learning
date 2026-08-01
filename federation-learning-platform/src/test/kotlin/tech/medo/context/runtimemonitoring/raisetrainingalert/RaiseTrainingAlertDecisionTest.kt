@@ -14,7 +14,7 @@ import java.util.UUID;
 class RaiseTrainingAlertDecisionTest {
     @Test
     fun RaiseTrainingAlertEmitsTrainingAlertRaisedEvent() {
-        val events = RaiseTrainingAlertDecision().decide(
+        val events = (object : RaiseTrainingAlertDecision {}).decide(
             RaiseTrainingAlertCommand(
             alertId = java.util.UUID.randomUUID(),
             nodeId = java.util.UUID.randomUUID(),

@@ -16,11 +16,11 @@ import java.util.UUID;
 class AuditRecordState @EntityCreator constructor() {
 
     var currentState: AuditRecordStateEnum? = null
-    private var auditRecordId: UUID? = null
-    private var sourceEventName: String? = null
-    private var sourceEntityId: UUID? = null
-    private var severity: String? = null
-    private var payloadHash: String? = null
+    var auditRecordId: UUID? = null
+    var sourceEventName: String? = null
+    var sourceEntityId: UUID? = null
+    var severity: String? = null
+    var payloadHash: String? = null
 
     @EventSourcingHandler
     fun evolve(event: AuditTrailAppendedEvent): AuditRecordState = apply {

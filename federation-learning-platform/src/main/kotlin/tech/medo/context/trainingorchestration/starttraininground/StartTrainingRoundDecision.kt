@@ -1,6 +1,5 @@
 package tech.medo.trainingorchestration.starttraininground
 
-import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundCommand
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundResult
 import tech.medo.trainingorchestration.events.TrainingRoundStartedEvent
@@ -11,8 +10,7 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
 
 
-@Component
-class StartTrainingRoundDecision {
+interface StartTrainingRoundDecision {
     fun decide(command: StartTrainingRoundCommand, state: TrainingRoundState, portResult: StartTrainingRoundResult, now: java.time.LocalDateTime): List<Any> {
         require(state.currentState == TrainingRoundStateEnum.PARTICIPANTS_SELECTED) {
             "StartTrainingRound requires TrainingRound to be ParticipantsSelected."

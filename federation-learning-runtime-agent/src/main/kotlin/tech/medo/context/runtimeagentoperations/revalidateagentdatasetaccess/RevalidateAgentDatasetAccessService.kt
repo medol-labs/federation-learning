@@ -14,16 +14,12 @@ data class RevalidateAgentDatasetAccessInput(
 
 sealed interface RevalidateAgentDatasetAccessResult {
     data class Succeeded(
-        val datasetId: UUID,
-        val runtimeId: UUID,
         val readable: Boolean,
         val schemaReadable: Boolean,
         val sampleBatchReadable: Boolean
     ) : RevalidateAgentDatasetAccessResult
 
     data class Rejected(
-        val datasetId: UUID,
-        val runtimeId: UUID,
         val failureReason: String
     ) : RevalidateAgentDatasetAccessResult
 

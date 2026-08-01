@@ -1,6 +1,5 @@
 package tech.medo.federationmanagement.approveparticipant
 
-import org.springframework.stereotype.Component
 import tech.medo.federationmanagement.approveparticipant.ApproveParticipantCommand
 
 import tech.medo.federationmanagement.events.ParticipantJoinedEvent
@@ -10,8 +9,7 @@ import tech.medo.federationmanagement.federationmembership.FederationMembershipS
 import tech.medo.federationmanagement.domain.states.FederationMembershipStateEnum
 
 
-@Component
-class ApproveParticipantDecision {
+interface ApproveParticipantDecision {
     fun decide(command: ApproveParticipantCommand, state: FederationMembershipState): List<Any> {
         require(state.currentState == FederationMembershipStateEnum.INVITED) {
             "ApproveParticipant requires FederationMembership to be Invited."

@@ -31,7 +31,7 @@ class DeployRuntimeAgentDecisionTest {
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray())
         )
 
-        val events = DeployRuntimeAgentDecision().decide(
+        val events = (object : DeployRuntimeAgentDecision {}).decide(
             command,
             state = state,
             portResult = DeployRuntimeAgentResult.Succeeded(
@@ -62,7 +62,7 @@ class DeployRuntimeAgentDecisionTest {
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray())
         )
 
-        val events = DeployRuntimeAgentDecision().decide(
+        val events = (object : DeployRuntimeAgentDecision {}).decide(
             command,
             state = state,
             portResult = DeployRuntimeAgentResult.Rejected(

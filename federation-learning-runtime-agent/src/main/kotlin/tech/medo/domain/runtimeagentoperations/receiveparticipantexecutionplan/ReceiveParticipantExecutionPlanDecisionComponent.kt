@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.receiveparticipantexecutionplan
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.receiveparticipantexecutionplan.ReceiveParticipantExecutionPlanDecision
+
+@Component
+class ReceiveParticipantExecutionPlanDecisionComponent : ReceiveParticipantExecutionPlanDecision

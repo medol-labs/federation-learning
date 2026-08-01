@@ -30,7 +30,7 @@ class SubmitTrainingJobDecisionTest {
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray())
         )
 
-        val events = SubmitTrainingJobDecision().decide(
+        val events = (object : SubmitTrainingJobDecision {}).decide(
             command,
             state = state
         )

@@ -11,6 +11,8 @@ data class ValidateAgentDatasetAccessInput(
     val datasetAccessValidationId: UUID,
     val runtimeDatasetBindingId: UUID,
     val datasetId: UUID,
+    val organizationId: UUID,
+    val featureSchemaId: UUID,
     val runtimeId: UUID,
     val dataSourceType: String,
     val host: String?,

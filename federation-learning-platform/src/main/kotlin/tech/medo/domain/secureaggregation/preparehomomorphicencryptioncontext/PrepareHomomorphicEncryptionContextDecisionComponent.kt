@@ -1,0 +1,7 @@
+package tech.medo.domain.secureaggregation.preparehomomorphicencryptioncontext
+
+import org.springframework.stereotype.Component
+import tech.medo.secureaggregation.preparehomomorphicencryptioncontext.PrepareHomomorphicEncryptionContextDecision
+
+@Component
+class PrepareHomomorphicEncryptionContextDecisionComponent : PrepareHomomorphicEncryptionContextDecision

@@ -18,20 +18,20 @@ import java.math.BigDecimal;
 class RuntimeDatasetMetadataState @EntityCreator constructor() {
 
     var currentState: RuntimeDatasetMetadataStateEnum? = null
-    private var metadataReportId: UUID? = null
-    private var datasetId: UUID? = null
-    private var organizationId: UUID? = null
-    private var runtimeId: UUID? = null
-    private var featureSchemaId: UUID? = null
-    private var sampleCount: Int? = null
-    private var featureCount: Int? = null
-    private var schemaCompatible: Boolean? = null
-    private var labelCompatible: Boolean? = null
-    private var missingValueRate: BigDecimal? = null
-    private var duplicateRate: BigDecimal? = null
-    private var qualityScore: BigDecimal? = null
-    private var nonIidScore: BigDecimal? = null
-    private var classBalanceScore: BigDecimal? = null
+    var metadataReportId: UUID? = null
+    var datasetId: UUID? = null
+    var organizationId: UUID? = null
+    var runtimeId: UUID? = null
+    var featureSchemaId: UUID? = null
+    var sampleCount: Int? = null
+    var featureCount: Int? = null
+    var schemaCompatible: Boolean? = null
+    var labelCompatible: Boolean? = null
+    var missingValueRate: BigDecimal? = null
+    var duplicateRate: BigDecimal? = null
+    var qualityScore: BigDecimal? = null
+    var nonIidScore: BigDecimal? = null
+    var classBalanceScore: BigDecimal? = null
 
     @EventSourcingHandler
     fun evolve(event: DatasetMetadataReportedEvent): RuntimeDatasetMetadataState = apply {

@@ -21,6 +21,10 @@ class DatasetCapabilityReadModelEntity : MetadataProjection {
     var organizationId: UUID? = null
     var runtimeId: UUID? = null
     var featureSchemaId: UUID? = null
+    @Column(columnDefinition = "text")
+    var features: String? = null
+    @Column(columnDefinition = "text")
+    var labels: String? = null
     var organizationName: String? = null
     var featureDomain: String? = null
     var featureSchemaVersion: String? = null
@@ -34,6 +38,7 @@ class DatasetCapabilityReadModelEntity : MetadataProjection {
     var nonIidScore: BigDecimal? = null
     var metadataReportId: UUID? = null
     var metadataStatus: String? = null
+    var contractStatus: String? = null
     var approvalStatus: String? = null
     var approved: Boolean? = null
     var lastProfiledAt: LocalDateTime? = null

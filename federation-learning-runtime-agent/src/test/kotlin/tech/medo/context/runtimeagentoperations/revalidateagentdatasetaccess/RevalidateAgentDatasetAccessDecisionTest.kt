@@ -23,12 +23,10 @@ class RevalidateAgentDatasetAccessDecisionTest {
             runtimeDatasetBindingId = UUID.fromString("22222222-2222-4222-8222-222222222222")
         )
 
-        val events = RevalidateAgentDatasetAccessDecision().decide(
+        val events = (object : RevalidateAgentDatasetAccessDecision {}).decide(
             command,
             state = state,
             portResult = RevalidateAgentDatasetAccessResult.Succeeded(
-                datasetId = java.util.UUID.randomUUID(),
-                runtimeId = java.util.UUID.randomUUID(),
                 readable = false,
                 schemaReadable = false,
                 sampleBatchReadable = false
@@ -51,12 +49,10 @@ class RevalidateAgentDatasetAccessDecisionTest {
             runtimeDatasetBindingId = UUID.fromString("44444444-4444-4444-8444-444444444444")
         )
 
-        val events = RevalidateAgentDatasetAccessDecision().decide(
+        val events = (object : RevalidateAgentDatasetAccessDecision {}).decide(
             command,
             state = state,
             portResult = RevalidateAgentDatasetAccessResult.Rejected(
-                datasetId = java.util.UUID.randomUUID(),
-                runtimeId = java.util.UUID.randomUUID(),
                 failureReason = ""
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")

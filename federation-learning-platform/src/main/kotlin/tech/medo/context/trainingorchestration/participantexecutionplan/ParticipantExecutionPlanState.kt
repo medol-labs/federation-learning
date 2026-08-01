@@ -17,16 +17,16 @@ import java.util.UUID;
 class ParticipantExecutionPlanState @EntityCreator constructor() {
 
     var currentState: ParticipantExecutionPlanStateEnum? = null
-    private var executionPlanId: UUID? = null
-    private var executionSessionId: UUID? = null
-    private var trainingJobId: UUID? = null
-    private var trainingRunConfigurationId: UUID? = null
-    private var featureSchemaId: UUID? = null
-    private var roundId: UUID? = null
-    private var roundNumber: Int? = null
-    private var runtimeId: UUID? = null
-    private var organizationId: UUID? = null
-    private var baseModelVersionId: UUID? = null
+    var executionPlanId: UUID? = null
+    var executionSessionId: UUID? = null
+    var trainingJobId: UUID? = null
+    var trainingRunConfigurationId: UUID? = null
+    var featureSchemaId: UUID? = null
+    var roundId: UUID? = null
+    var roundNumber: Int? = null
+    var runtimeId: UUID? = null
+    var organizationId: UUID? = null
+    var baseModelVersionId: UUID? = null
 
     @EventSourcingHandler
     fun evolve(event: ParticipantExecutionPlanGeneratedEvent): ParticipantExecutionPlanState = apply {

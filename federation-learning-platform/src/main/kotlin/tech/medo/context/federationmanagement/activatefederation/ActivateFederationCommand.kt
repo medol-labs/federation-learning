@@ -9,9 +9,10 @@ import java.util.UUID;
 @Command
 data class ActivateFederationCommand(
     val federationId: UUID,
-    val activationNote: String?
+    val activationNote: String?,
+    val federationName: String
 ) {
     @TargetEntityId
-    val selection: FederationSelection = FederationSelection(federationId = federationId)
+    val selection: FederationSelection = FederationSelection(federationName = federationName)
 
 }

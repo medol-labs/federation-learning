@@ -47,7 +47,7 @@ class EvaluateModelUpdateSubmissionDecisionTest {
             anomalyScore = BigDecimal("0.98")
         )
 
-        val events = EvaluateModelUpdateSubmissionDecision().decide(
+        val events = (object : EvaluateModelUpdateSubmissionDecision {}).decide(
             command,
             state = state
         )

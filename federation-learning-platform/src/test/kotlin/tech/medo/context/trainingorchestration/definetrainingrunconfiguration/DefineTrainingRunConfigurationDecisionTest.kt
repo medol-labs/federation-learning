@@ -43,7 +43,7 @@ class DefineTrainingRunConfigurationDecisionTest {
             failureToleranceRatio = BigDecimal("0.2")
         )
 
-        val events = DefineTrainingRunConfigurationDecision().decide(
+        val events = (object : DefineTrainingRunConfigurationDecision {}).decide(
             command
         )
 

@@ -17,10 +17,10 @@ import java.util.UUID;
 class NodeRuntimeHealthState @EntityCreator constructor() {
 
     var currentState: NodeRuntimeHealthStateEnum? = null
-    private var nodeId: UUID? = null
-    private var runtimeAgentId: UUID? = null
-    private var offlineReason: String? = null
-    private var recoveryReason: String? = null
+    var nodeId: UUID? = null
+    var runtimeAgentId: UUID? = null
+    var offlineReason: String? = null
+    var recoveryReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentOfflineDetectedEvent): NodeRuntimeHealthState = apply {

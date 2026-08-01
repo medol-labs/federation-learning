@@ -14,7 +14,7 @@ import java.util.UUID;
 class RecordRuntimeNodeInventoryDecisionTest {
     @Test
     fun RecordRuntimeNodeInventoryEmitsRuntimeNodeInventoryReportedEvent() {
-        val events = RecordRuntimeNodeInventoryDecision().decide(
+        val events = (object : RecordRuntimeNodeInventoryDecision {}).decide(
             RecordRuntimeNodeInventoryCommand(
             nodeId = java.util.UUID.randomUUID(),
             runtimeNodeInventoryReportId = java.util.UUID.randomUUID(),

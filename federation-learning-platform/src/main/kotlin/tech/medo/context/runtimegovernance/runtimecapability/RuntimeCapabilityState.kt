@@ -16,8 +16,8 @@ import java.util.UUID;
 class RuntimeCapabilityState @EntityCreator constructor() {
 
     var currentState: RuntimeCapabilityStateEnum? = null
-    private var runtimeId: UUID? = null
-    private var capabilityTypes: List<String> = emptyList()
+    var runtimeId: UUID? = null
+    var capabilityTypes: List<String> = emptyList()
 
     @EventSourcingHandler
     fun evolve(event: RuntimeCapabilitiesDetectedEvent): RuntimeCapabilityState = apply {

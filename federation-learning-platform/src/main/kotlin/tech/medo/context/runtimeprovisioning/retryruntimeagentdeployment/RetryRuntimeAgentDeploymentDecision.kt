@@ -1,6 +1,5 @@
 package tech.medo.runtimeprovisioning.retryruntimeagentdeployment
 
-import org.springframework.stereotype.Component
 import tech.medo.runtimeprovisioning.retryruntimeagentdeployment.RetryRuntimeAgentDeploymentCommand
 import tech.medo.runtimeprovisioning.retryruntimeagentdeployment.RetryRuntimeAgentDeploymentResult
 import tech.medo.runtimeprovisioning.events.RuntimeAgentDeploymentRetrySucceededEvent
@@ -11,8 +10,7 @@ import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructure
 
 
 
-@Component
-class RetryRuntimeAgentDeploymentDecision {
+interface RetryRuntimeAgentDeploymentDecision {
     fun decide(command: RetryRuntimeAgentDeploymentCommand, state: RuntimeInfrastructureState, portResult: RetryRuntimeAgentDeploymentResult, now: java.time.LocalDateTime): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return when (portResult) {

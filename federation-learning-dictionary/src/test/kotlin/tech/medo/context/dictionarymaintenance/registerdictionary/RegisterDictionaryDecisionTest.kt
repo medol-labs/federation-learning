@@ -27,7 +27,7 @@ class RegisterDictionaryDecisionTest {
         )
 
         assertThrows<IllegalArgumentException> {
-            RegisterDictionaryDecision().decide(
+            (object : RegisterDictionaryDecision {}).decide(
                         RegisterDictionaryCommand(
                         dictionaryId = java.util.UUID.randomUUID(),
                         dictionaryCode = DictionaryCode(""),

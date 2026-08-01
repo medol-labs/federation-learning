@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimemonitoring.appendaudittrail
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimemonitoring.appendaudittrail.AppendAuditTrailDecision
+
+@Component
+class AppendAuditTrailDecisionComponent : AppendAuditTrailDecision

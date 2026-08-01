@@ -49,7 +49,7 @@ class SupersedeFeatureSchemaVersionDecisionTest {
             version = ""
         )
 
-        val events = SupersedeFeatureSchemaVersionDecision().decide(
+        val events = (object : SupersedeFeatureSchemaVersionDecision {}).decide(
             command,
             state = state
         )

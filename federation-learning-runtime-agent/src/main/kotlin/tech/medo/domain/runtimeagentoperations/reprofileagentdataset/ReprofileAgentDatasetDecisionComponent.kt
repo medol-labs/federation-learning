@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.reprofileagentdataset
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.reprofileagentdataset.ReprofileAgentDatasetDecision
+
+@Component
+class ReprofileAgentDatasetDecisionComponent : ReprofileAgentDatasetDecision

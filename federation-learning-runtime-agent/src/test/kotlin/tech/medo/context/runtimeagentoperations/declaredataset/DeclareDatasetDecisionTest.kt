@@ -7,24 +7,40 @@ import tech.medo.runtimeagentoperations.declaredataset.DeclareDatasetCommand
 import tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent
 
 
-
+import tech.medo.runtimeagentoperations.declaredataset.DeclareDatasetResult
 import java.util.UUID;
+import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition;
+import tech.medo.runtimeagentoperations.domain.types.LabelDefinition;
 
 
 class DeclareDatasetDecisionTest {
     @Test
-    fun DeclareDatasetEmitsDatasetDeclaredEvent() {
-        val events = DeclareDatasetDecision().decide(
-            DeclareDatasetCommand(
-            datasetId = java.util.UUID.randomUUID(),
-            organizationId = java.util.UUID.randomUUID(),
-            featureSchemaId = java.util.UUID.randomUUID(),
-            datasetName = "",
-            datasetType = "",
-            datasetUsage = ""
+    fun DeclareDatasetWithFeatureSchemaSnapshot() {
+
+
+        val command = DeclareDatasetCommand(
+            datasetId = UUID.fromString("11111111-1111-4111-8111-111111111111"),
+            organizationId = UUID.fromString("22222222-2222-4222-8222-222222222222"),
+            featureSchemaId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
+            datasetName = "credit-risk",
+            datasetType = "TABULAR",
+            datasetUsage = "TRAINING"
+        )
+
+        val events = (object : DeclareDatasetDecision {}).decide(
+            command,
+            portResult = DeclareDatasetResult.Succeeded(
+                features = emptyList(),
+                labels = emptyList()
             )
         )
 
-        assertTrue(events.any { it is DatasetDeclaredEvent })
+        val event = events.filterIsInstance<DatasetDeclaredEvent>().single()
+        assertEquals(UUID.fromString("11111111-1111-4111-8111-111111111111"), event.datasetId)
+        assertEquals(UUID.fromString("22222222-2222-4222-8222-222222222222"), event.organizationId)
+        assertEquals(UUID.fromString("33333333-3333-4333-8333-333333333333"), event.featureSchemaId)
+        assertEquals("credit-risk", event.datasetName)
+        assertEquals("TABULAR", event.datasetType)
+        assertEquals("TRAINING", event.datasetUsage)
     }
 }

@@ -33,6 +33,7 @@ class FeatureSchemaCatalogReadModelProjector(private val repository: FeatureSche
             entity.labels = event.labels
             entity.featureCount = event.featureCount
             entity.supersededByFeatureSchemaId = event.featureSchemaId
+            entity.schemaStatus = "Draft"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -48,6 +49,7 @@ class FeatureSchemaCatalogReadModelProjector(private val repository: FeatureSche
         }
             entity.featureSchemaId = event.featureSchemaId
             entity.supersededByFeatureSchemaId = event.featureSchemaId
+            entity.schemaStatus = "Published"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -63,6 +65,7 @@ class FeatureSchemaCatalogReadModelProjector(private val repository: FeatureSche
         }
             entity.featureSchemaId = event.featureSchemaId
             entity.supersededByFeatureSchemaId = event.featureSchemaId
+            entity.schemaStatus = "Deprecated"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -78,6 +81,7 @@ class FeatureSchemaCatalogReadModelProjector(private val repository: FeatureSche
         }
             entity.featureSchemaId = event.featureSchemaId
             entity.supersededByFeatureSchemaId = event.featureSchemaId
+            entity.schemaStatus = "Retired"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

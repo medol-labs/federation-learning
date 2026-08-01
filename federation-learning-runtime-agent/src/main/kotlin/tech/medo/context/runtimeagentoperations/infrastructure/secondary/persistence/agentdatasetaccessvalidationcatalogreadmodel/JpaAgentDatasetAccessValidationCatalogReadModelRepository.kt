@@ -31,6 +31,8 @@ class JpaAgentDatasetAccessValidationCatalogReadModelRepository(private val jpaR
             it.datasetAccessValidationId = this@toProjection.datasetAccessValidationId
             it.runtimeDatasetBindingId = this@toProjection.runtimeDatasetBindingId
             it.datasetId = this@toProjection.datasetId
+            it.organizationId = this@toProjection.organizationId
+            it.featureSchemaId = this@toProjection.featureSchemaId
             it.runtimeId = this@toProjection.runtimeId
             it.datasetName = this@toProjection.datasetName
             it.readable = this@toProjection.readable
@@ -52,6 +54,8 @@ class JpaAgentDatasetAccessValidationCatalogReadModelRepository(private val jpaR
             it.datasetAccessValidationId = this@toEntity.datasetAccessValidationId
             it.runtimeDatasetBindingId = this@toEntity.runtimeDatasetBindingId
             it.datasetId = this@toEntity.datasetId
+            it.organizationId = this@toEntity.organizationId
+            it.featureSchemaId = this@toEntity.featureSchemaId
             it.runtimeId = this@toEntity.runtimeId
             it.datasetName = this@toEntity.datasetName
             it.readable = this@toEntity.readable

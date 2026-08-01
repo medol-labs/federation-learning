@@ -1,0 +1,7 @@
+package tech.medo.domain.dictionarymaintenance.archivedictionary
+
+import org.springframework.stereotype.Component
+import tech.medo.dictionarymaintenance.archivedictionary.ArchiveDictionaryDecision
+
+@Component
+class ArchiveDictionaryDecisionComponent : ArchiveDictionaryDecision

@@ -9,7 +9,7 @@ object Concepts {
 
     data object Dataset {
         const val NAME = "Dataset"
-        val slices = listOf("DeclareDataset", "ValidateDatasetContract", "RejectDatasetForTraining", "ApproveDatasetForTraining", "RevokeDatasetTrainingApproval", "DatasetCapability", "DatasetReadiness")
+        val slices = listOf("DeclareDataset", "ValidateDatasetContract", "RetryDatasetContractValidation", "RejectDatasetForTraining", "ApproveDatasetForTraining", "RevokeDatasetTrainingApproval", "DatasetCapability", "DatasetReadiness")
         val states = listOf("Registered", "ContractValidationCompleted", "Approved", "Rejected", "ApprovalRevoked")
     }
 

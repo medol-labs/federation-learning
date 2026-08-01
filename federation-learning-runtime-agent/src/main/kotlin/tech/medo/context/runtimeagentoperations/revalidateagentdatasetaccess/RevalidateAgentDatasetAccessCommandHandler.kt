@@ -25,6 +25,7 @@ class RevalidateAgentDatasetAccessCommandHandler(
         val input = RevalidateAgentDatasetAccessInput(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = command.runtimeDatasetBindingId)
         val portResult = revalidateAgentDatasetAccessService.execute(input)
         val now = java.time.LocalDateTime.now()
+
         eventAppender.append(decision.decide(command, state, portResult, now))
     }
 }

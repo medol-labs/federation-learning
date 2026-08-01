@@ -5,14 +5,16 @@ import org.axonframework.messaging.eventhandling.gateway.EventAppender
 import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionCommand
-
+import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionInput
+import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionService
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
 
 
 @Component
 class StartRoundExecutionCommandHandler(
-    private val decision: StartRoundExecutionDecision
+    private val decision: StartRoundExecutionDecision,
+    private val startRoundExecutionService: StartRoundExecutionService
 ) {
     @CommandHandler
     fun handle(
@@ -20,6 +22,9 @@ class StartRoundExecutionCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        eventAppender.append(decision.decide(command, state))
+        val input = StartRoundExecutionInput(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, baseModelVersionId = command.baseModelVersionId, runtimeEngineJobId = command.runtimeEngineJobId)
+        val portResult = startRoundExecutionService.execute(input)
+
+        eventAppender.append(decision.decide(command, state, portResult))
     }
 }

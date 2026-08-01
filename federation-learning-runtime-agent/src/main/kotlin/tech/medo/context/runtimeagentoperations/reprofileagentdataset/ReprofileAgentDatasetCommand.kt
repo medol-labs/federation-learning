@@ -12,6 +12,6 @@ data class ReprofileAgentDatasetCommand(
     val runtimeDatasetBindingId: UUID
 ) {
     @TargetEntityId
-    val selection: AgentDatasetProfileSelection = AgentDatasetProfileSelection(metadataReportId = metadataReportId)
+    val selection: AgentDatasetProfileSelection = AgentDatasetProfileSelection(runtimeDatasetBindingId = runtimeDatasetBindingId)
 
 }

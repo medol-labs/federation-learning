@@ -32,7 +32,7 @@ class RetryRuntimeAgentDeploymentDecisionTest {
             retryReason = "Retry after fixing registry credentials."
         )
 
-        val events = RetryRuntimeAgentDeploymentDecision().decide(
+        val events = (object : RetryRuntimeAgentDeploymentDecision {}).decide(
             command,
             state = state,
             portResult = RetryRuntimeAgentDeploymentResult.Succeeded(
@@ -58,7 +58,7 @@ class RetryRuntimeAgentDeploymentDecisionTest {
             retryReason = "Reconnect runtime agent."
         )
 
-        val events = RetryRuntimeAgentDeploymentDecision().decide(
+        val events = (object : RetryRuntimeAgentDeploymentDecision {}).decide(
             command,
             state = state,
             portResult = RetryRuntimeAgentDeploymentResult.Succeeded(
@@ -89,7 +89,7 @@ class RetryRuntimeAgentDeploymentDecisionTest {
             retryReason = "Retry after transient failure."
         )
 
-        val events = RetryRuntimeAgentDeploymentDecision().decide(
+        val events = (object : RetryRuntimeAgentDeploymentDecision {}).decide(
             command,
             state = state,
             portResult = RetryRuntimeAgentDeploymentResult.Rejected(

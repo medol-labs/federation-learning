@@ -23,14 +23,14 @@ import java.util.UUID;
 class RuntimeInfrastructureState @EntityCreator constructor() {
 
     var currentState: RuntimeInfrastructureStateEnum? = null
-    private var runtimeInfrastructureId: UUID? = null
-    private var runtimeAgentId: UUID? = null
-    private var agentInstallMode: String? = null
-    private var observedNodeCount: Int? = null
-    private var failureReason: String? = null
-    private var agentVersion: String? = null
-    private var organizationId: UUID? = null
-    private var runtimeName: String? = null
+    var runtimeInfrastructureId: UUID? = null
+    var runtimeAgentId: UUID? = null
+    var agentInstallMode: String? = null
+    var observedNodeCount: Int? = null
+    var failureReason: String? = null
+    var agentVersion: String? = null
+    var organizationId: UUID? = null
+    var runtimeName: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructureRegisteredEvent): RuntimeInfrastructureState = apply {

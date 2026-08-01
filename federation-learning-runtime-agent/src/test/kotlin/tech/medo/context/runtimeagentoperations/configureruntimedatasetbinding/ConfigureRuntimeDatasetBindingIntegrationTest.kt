@@ -28,6 +28,7 @@ class ConfigureRuntimeDatasetBindingIntegrationTest(
             runtimeDatasetBindingId = java.util.UUID.randomUUID(),
             datasetId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
+            featureSchemaId = java.util.UUID.randomUUID(),
             runtimeId = java.util.UUID.randomUUID(),
             dataSourceType = "",
             host = null,

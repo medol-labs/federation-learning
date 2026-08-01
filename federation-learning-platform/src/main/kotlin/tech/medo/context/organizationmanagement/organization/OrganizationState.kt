@@ -16,17 +16,17 @@ import java.util.UUID;
 import tech.medo.organizationmanagement.domain.types.OrganizationType;
 
 
-@EventSourced(idType = UUID::class, tagKey = OrganizationTags.ORGANIZATION_ID)
+@EventSourced(idType = String::class, tagKey = OrganizationTags.ORGANIZATION_NAME)
 class OrganizationState @EntityCreator constructor() {
 
     var currentState: OrganizationStateEnum? = null
-    private var organizationId: UUID? = null
-    private var organizationName: String? = null
-    private var organizationType: OrganizationType? = null
-    private var contactEmail: String? = null
-    private var activationNote: String? = null
-    private var deactivationReason: String? = null
-    private var reactivationReason: String? = null
+    var organizationId: UUID? = null
+    var organizationName: String? = null
+    var organizationType: OrganizationType? = null
+    var contactEmail: String? = null
+    var activationNote: String? = null
+    var deactivationReason: String? = null
+    var reactivationReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: OrganizationRegisteredEvent): OrganizationState = apply {

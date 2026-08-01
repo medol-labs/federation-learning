@@ -1,6 +1,5 @@
 package tech.medo.trainingorchestration.locktrainingrunconfiguration
 
-import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.locktrainingrunconfiguration.LockTrainingRunConfigurationCommand
 
 import tech.medo.trainingorchestration.events.TrainingRunConfigurationLockedEvent
@@ -10,8 +9,7 @@ import tech.medo.trainingorchestration.trainingrunconfiguration.TrainingRunConfi
 
 
 
-@Component
-class LockTrainingRunConfigurationDecision {
+interface LockTrainingRunConfigurationDecision {
     fun decide(command: LockTrainingRunConfigurationCommand, state: TrainingRunConfigurationState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(

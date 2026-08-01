@@ -14,7 +14,7 @@ import java.util.UUID;
 class DetectRuntimeAgentOfflineDecisionTest {
     @Test
     fun DetectRuntimeAgentOfflineEmitsRuntimeAgentOfflineDetectedEvent() {
-        val events = DetectRuntimeAgentOfflineDecision().decide(
+        val events = (object : DetectRuntimeAgentOfflineDecision {}).decide(
             DetectRuntimeAgentOfflineCommand(
             nodeId = java.util.UUID.randomUUID(),
             runtimeAgentId = java.util.UUID.randomUUID(),

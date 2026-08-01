@@ -1,8 +1,7 @@
 package tech.medo.runtimegovernance.detectruntimecapabilities
 
-import org.springframework.stereotype.Component
 import tech.medo.runtimegovernance.detectruntimecapabilities.DetectRuntimeCapabilitiesCommand
-
+import tech.medo.runtimegovernance.detectruntimecapabilities.DetectRuntimeCapabilitiesResult
 import tech.medo.runtimegovernance.events.RuntimeCapabilitiesDetectedEvent
 import tech.medo.runtimegovernance.runtimecapability.RuntimeCapabilityState
 
@@ -10,11 +9,10 @@ import tech.medo.runtimegovernance.runtimecapability.RuntimeCapabilityState
 
 
 
-@Component
-class DetectRuntimeCapabilitiesDecision {
-    fun decide(command: DetectRuntimeCapabilitiesCommand): List<Any> {
-        return listOf(
-            RuntimeCapabilitiesDetectedEvent(runtimeId = command.runtimeId, capabilityTypes = command.capabilityTypes)
-        )
+interface DetectRuntimeCapabilitiesDecision {
+    fun decide(command: DetectRuntimeCapabilitiesCommand, portResult: DetectRuntimeCapabilitiesResult): List<Any> {
+        return when (portResult) {
+                    is DetectRuntimeCapabilitiesResult.Succeeded -> listOf(RuntimeCapabilitiesDetectedEvent(runtimeId = command.runtimeId, capabilityTypes = command.capabilityTypes))
+                }
     }
 }

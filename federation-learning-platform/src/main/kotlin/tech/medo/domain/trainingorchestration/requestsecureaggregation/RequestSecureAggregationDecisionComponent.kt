@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.requestsecureaggregation
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.requestsecureaggregation.RequestSecureAggregationDecision
+
+@Component
+class RequestSecureAggregationDecisionComponent : RequestSecureAggregationDecision

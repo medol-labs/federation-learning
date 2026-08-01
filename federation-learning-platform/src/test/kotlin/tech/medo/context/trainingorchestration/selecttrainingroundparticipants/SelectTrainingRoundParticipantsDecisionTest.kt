@@ -22,7 +22,7 @@ class SelectTrainingRoundParticipantsDecisionTest {
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray())
         )
 
-        val events = SelectTrainingRoundParticipantsDecision().decide(
+        val events = (object : SelectTrainingRoundParticipantsDecision {}).decide(
             command
         )
 

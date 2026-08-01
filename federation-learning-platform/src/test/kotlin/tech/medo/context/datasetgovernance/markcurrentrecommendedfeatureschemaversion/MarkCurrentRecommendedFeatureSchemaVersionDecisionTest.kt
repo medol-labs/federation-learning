@@ -37,7 +37,7 @@ class MarkCurrentRecommendedFeatureSchemaVersionDecisionTest {
             version = ""
         )
 
-        val events = MarkCurrentRecommendedFeatureSchemaVersionDecision().decide(
+        val events = (object : MarkCurrentRecommendedFeatureSchemaVersionDecision {}).decide(
             command,
             state = state
         )

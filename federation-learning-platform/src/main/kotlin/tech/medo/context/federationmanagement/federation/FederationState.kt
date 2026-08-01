@@ -15,17 +15,17 @@ import tech.medo.federationmanagement.domain.states.FederationStateEnum
 import java.util.UUID;
 
 
-@EventSourced(idType = UUID::class, tagKey = FederationTags.FEDERATION_ID)
+@EventSourced(idType = String::class, tagKey = FederationTags.FEDERATION_NAME)
 class FederationState @EntityCreator constructor() {
 
     var currentState: FederationStateEnum? = null
-    private var federationId: UUID? = null
-    private var federationName: String? = null
-    private var description: String? = null
-    private var minimumParticipantCount: Int? = null
-    private var activationNote: String? = null
-    private var suspensionReason: String? = null
-    private var reactivationReason: String? = null
+    var federationId: UUID? = null
+    var federationName: String? = null
+    var description: String? = null
+    var minimumParticipantCount: Int? = null
+    var activationNote: String? = null
+    var suspensionReason: String? = null
+    var reactivationReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: FederationCreatedEvent): FederationState = apply {

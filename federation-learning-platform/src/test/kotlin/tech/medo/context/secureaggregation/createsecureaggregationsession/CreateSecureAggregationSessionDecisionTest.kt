@@ -14,7 +14,7 @@ import java.util.UUID;
 class CreateSecureAggregationSessionDecisionTest {
     @Test
     fun CreateSecureAggregationSessionEmitsSecureAggregationSessionCreatedEvent() {
-        val events = CreateSecureAggregationSessionDecision().decide(
+        val events = (object : CreateSecureAggregationSessionDecision {}).decide(
             CreateSecureAggregationSessionCommand(
             secureAggregationSessionId = java.util.UUID.randomUUID(),
             trainingJobId = java.util.UUID.randomUUID(),

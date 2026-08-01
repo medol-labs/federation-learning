@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.approvedatasetfortraining
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.approvedatasetfortraining.ApproveDatasetForTrainingDecision
+
+@Component
+class ApproveDatasetForTrainingDecisionComponent : ApproveDatasetForTrainingDecision

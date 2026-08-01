@@ -9,9 +9,10 @@ import java.util.UUID;
 @Command
 data class ActivateOrganizationCommand(
     val organizationId: UUID,
-    val activationNote: String?
+    val activationNote: String?,
+    val organizationName: String
 ) {
     @TargetEntityId
-    val selection: OrganizationSelection = OrganizationSelection(organizationId = organizationId)
+    val selection: OrganizationSelection = OrganizationSelection(organizationName = organizationName.trim().lowercase())
 
 }

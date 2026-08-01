@@ -8,10 +8,12 @@ import java.util.UUID;
 
 @Event
 data class AgentDatasetProfilingFailedEvent(
-    @EventTag(key = "metadataReportId")
     val metadataReportId: UUID,
+    @EventTag(key = "runtimeDatasetBindingId")
     val runtimeDatasetBindingId: UUID,
     val datasetId: UUID,
+    val organizationId: UUID,
+    val featureSchemaId: UUID,
     val runtimeId: UUID,
     val failureReason: String
 )

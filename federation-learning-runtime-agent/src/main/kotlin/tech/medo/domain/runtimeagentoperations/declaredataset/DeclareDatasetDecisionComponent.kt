@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.declaredataset
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.declaredataset.DeclareDatasetDecision
+
+@Component
+class DeclareDatasetDecisionComponent : DeclareDatasetDecision

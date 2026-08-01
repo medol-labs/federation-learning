@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 class RegisterCandidateModelDecisionTest {
     @Test
     fun RegisterCandidateModelEmitsModelCandidateRegisteredEvent() {
-        val events = RegisterCandidateModelDecision().decide(
+        val events = (object : RegisterCandidateModelDecision {}).decide(
             RegisterCandidateModelCommand(
             modelVersionId = java.util.UUID.randomUUID(),
             trainingJobId = java.util.UUID.randomUUID(),

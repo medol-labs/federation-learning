@@ -17,7 +17,7 @@ class UpdateDictionaryCommandHandler(
     @CommandHandler
     fun handle(
         command: UpdateDictionaryCommand,
-        @InjectEntity(idProperty = "dictionaryId") state: DictionaryState,
+        @InjectEntity(idProperty = "dictionaryCode") state: DictionaryState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))

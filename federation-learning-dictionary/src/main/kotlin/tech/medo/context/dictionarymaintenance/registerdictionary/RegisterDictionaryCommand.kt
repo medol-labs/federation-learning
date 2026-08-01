@@ -16,7 +16,7 @@ data class RegisterDictionaryCommand(
     val description: String?
 ) {
     @TargetEntityId
-    val selection: DictionarySelection = DictionarySelection(dictionaryId = dictionaryId)
+    val selection: DictionarySelection = DictionarySelection(dictionaryCode = dictionaryCode)
 
     val dictionaryCodeSelection: DictionaryCodeSelection = DictionaryCodeSelection(normalizedName = dictionaryCode.value.trim().lowercase())
 }

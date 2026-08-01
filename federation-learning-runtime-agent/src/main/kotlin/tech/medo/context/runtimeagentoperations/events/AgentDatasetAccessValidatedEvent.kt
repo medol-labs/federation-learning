@@ -12,6 +12,8 @@ data class AgentDatasetAccessValidatedEvent(
     val datasetAccessValidationId: UUID,
     val runtimeDatasetBindingId: UUID,
     val datasetId: UUID,
+    val organizationId: UUID,
+    val featureSchemaId: UUID,
     val runtimeId: UUID,
     val readable: Boolean,
     val schemaReadable: Boolean,

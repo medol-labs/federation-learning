@@ -17,15 +17,15 @@ import java.util.UUID;
 class AgentRuntimeInfrastructureConnectionState @EntityCreator constructor() {
 
     var currentState: AgentRuntimeInfrastructureConnectionStateEnum? = null
-    private var runtimeInfrastructureId: UUID? = null
-    private var runtimeAgentId: UUID? = null
-    private var runtimePlatformConnectionReady: Boolean? = null
-    private var platformApiReachable: Boolean? = null
-    private var agentAuthenticationSucceeded: Boolean? = null
-    private var controlChannelEstablished: Boolean? = null
-    private var heartbeatAccepted: Boolean? = null
-    private var failureReason: String? = null
-    private var retryable: Boolean? = null
+    var runtimeInfrastructureId: UUID? = null
+    var runtimeAgentId: UUID? = null
+    var runtimePlatformConnectionReady: Boolean? = null
+    var platformApiReachable: Boolean? = null
+    var agentAuthenticationSucceeded: Boolean? = null
+    var controlChannelEstablished: Boolean? = null
+    var heartbeatAccepted: Boolean? = null
+    var failureReason: String? = null
+    var retryable: Boolean? = null
 
     @EventSourcingHandler
     fun evolve(event: AgentRuntimeConnectionReportFailedEvent): AgentRuntimeInfrastructureConnectionState = apply {

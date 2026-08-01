@@ -16,13 +16,13 @@ import java.util.UUID;
 class RuntimeNodeCapacityState @EntityCreator constructor() {
 
     var currentState: RuntimeNodeCapacityStateEnum? = null
-    private var nodeId: UUID? = null
-    private var runtimeAgentId: UUID? = null
-    private var previousCapacityHash: String? = null
-    private var currentCapacityHash: String? = null
-    private var allocatableCpuCores: Int? = null
-    private var allocatableMemoryGb: Int? = null
-    private var allocatableGpuCount: Int? = null
+    var nodeId: UUID? = null
+    var runtimeAgentId: UUID? = null
+    var previousCapacityHash: String? = null
+    var currentCapacityHash: String? = null
+    var allocatableCpuCores: Int? = null
+    var allocatableMemoryGb: Int? = null
+    var allocatableGpuCount: Int? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeNodeCapacityChangedEvent): RuntimeNodeCapacityState = apply {

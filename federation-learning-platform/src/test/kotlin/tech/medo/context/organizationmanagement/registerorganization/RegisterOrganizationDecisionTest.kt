@@ -27,7 +27,7 @@ class RegisterOrganizationDecisionTest {
         )
 
         assertThrows<IllegalArgumentException> {
-            RegisterOrganizationDecision().decide(
+            (object : RegisterOrganizationDecision {}).decide(
                         RegisterOrganizationCommand(
                         organizationId = java.util.UUID.randomUUID(),
                         organizationName = "Acme",

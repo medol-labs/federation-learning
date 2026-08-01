@@ -1,14 +1,13 @@
 package tech.medo.organizationmanagement.organization
 
-import java.util.UUID;
 
 
 data class OrganizationSelection(
-    val organizationId: UUID
+    val organizationName: String
 )
 
 object OrganizationTags {
-    const val ORGANIZATION_ID = "organizationId"
+    const val ORGANIZATION_NAME = "organizationName"
 }
 
 object OrganizationMetadata {

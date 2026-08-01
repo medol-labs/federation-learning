@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.selecttrainingroundparticipants
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsDecision
+
+@Component
+class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundParticipantsDecision

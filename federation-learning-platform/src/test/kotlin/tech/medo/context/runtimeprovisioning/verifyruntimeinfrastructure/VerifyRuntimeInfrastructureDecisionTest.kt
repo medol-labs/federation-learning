@@ -33,7 +33,7 @@ class VerifyRuntimeInfrastructureDecisionTest {
             failureReason = null
         )
 
-        val events = VerifyRuntimeInfrastructureDecision().decide(
+        val events = (object : VerifyRuntimeInfrastructureDecision {}).decide(
             command,
             state = state,
             portResult = RuntimeInfrastructureVerification.Succeeded(
@@ -68,7 +68,7 @@ class VerifyRuntimeInfrastructureDecisionTest {
             failureReason = "Runtime infrastructure is unreachable."
         )
 
-        val events = VerifyRuntimeInfrastructureDecision().decide(
+        val events = (object : VerifyRuntimeInfrastructureDecision {}).decide(
             command,
             state = state,
             portResult = RuntimeInfrastructureVerification.Rejected(

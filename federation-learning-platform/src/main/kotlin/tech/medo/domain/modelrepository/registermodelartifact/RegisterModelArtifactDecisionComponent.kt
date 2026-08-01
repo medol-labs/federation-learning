@@ -1,0 +1,7 @@
+package tech.medo.domain.modelrepository.registermodelartifact
+
+import org.springframework.stereotype.Component
+import tech.medo.modelrepository.registermodelartifact.RegisterModelArtifactDecision
+
+@Component
+class RegisterModelArtifactDecisionComponent : RegisterModelArtifactDecision

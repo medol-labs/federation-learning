@@ -9,12 +9,16 @@ import org.axonframework.messaging.eventstreaming.Tag
 import tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent
 import tech.medo.runtimeagentoperations.events.DatasetContractValidatedEvent
 import tech.medo.runtimeagentoperations.events.DatasetContractValidationFailedEvent
+import tech.medo.runtimeagentoperations.events.DatasetContractRevalidatedEvent
+import tech.medo.runtimeagentoperations.events.DatasetContractRevalidationFailedEvent
 import tech.medo.runtimeagentoperations.events.DatasetRejectedForTrainingEvent
 import tech.medo.runtimeagentoperations.events.DatasetApprovedForTrainingEvent
 import tech.medo.runtimeagentoperations.events.DatasetTrainingApprovalRevokedEvent
 import tech.medo.runtimeagentoperations.domain.states.DatasetStateEnum
 
 import java.util.UUID;
+import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition;
+import tech.medo.runtimeagentoperations.domain.types.LabelDefinition;
 import java.math.BigDecimal;
 
 
@@ -32,20 +36,22 @@ class DatasetState @EntityCreator constructor() {
 
 
     var currentState: DatasetStateEnum? = null
-    private var datasetId: UUID? = null
-    private var organizationId: UUID? = null
-    private var featureSchemaId: UUID? = null
-    private var datasetName: String? = null
-    private var datasetType: String? = null
-    private var datasetUsage: String? = null
-    private var metadataReportId: UUID? = null
-    private var schemaCompatible: Boolean? = null
-    private var labelCompatible: Boolean? = null
-    private var qualityScore: BigDecimal? = null
-    private var nonIidScore: BigDecimal? = null
-    private var failureReason: String? = null
-    private var rejectionReason: String? = null
-    private var revokeReason: String? = null
+    var datasetId: UUID? = null
+    var organizationId: UUID? = null
+    var featureSchemaId: UUID? = null
+    var datasetName: String? = null
+    var datasetType: String? = null
+    var datasetUsage: String? = null
+    var features: List<FeatureDefinition> = emptyList()
+    var labels: List<LabelDefinition> = emptyList()
+    var metadataReportId: UUID? = null
+    var schemaCompatible: Boolean? = null
+    var labelCompatible: Boolean? = null
+    var qualityScore: BigDecimal? = null
+    var nonIidScore: BigDecimal? = null
+    var failureReason: String? = null
+    var rejectionReason: String? = null
+    var revokeReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: DatasetDeclaredEvent): DatasetState = apply {
@@ -56,6 +62,8 @@ class DatasetState @EntityCreator constructor() {
         datasetName = event.datasetName
         datasetType = event.datasetType
         datasetUsage = event.datasetUsage
+        features = event.features
+        labels = event.labels
     }
 
     @EventSourcingHandler
@@ -72,6 +80,31 @@ class DatasetState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetContractValidationFailedEvent): DatasetState = apply {
+        currentState = DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED
+        datasetId = event.datasetId
+        featureSchemaId = event.featureSchemaId
+        metadataReportId = event.metadataReportId
+        schemaCompatible = event.schemaCompatible
+        labelCompatible = event.labelCompatible
+        qualityScore = event.qualityScore
+        nonIidScore = event.nonIidScore
+        failureReason = event.failureReason
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: DatasetContractRevalidatedEvent): DatasetState = apply {
+        currentState = DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED
+        datasetId = event.datasetId
+        featureSchemaId = event.featureSchemaId
+        metadataReportId = event.metadataReportId
+        schemaCompatible = event.schemaCompatible
+        labelCompatible = event.labelCompatible
+        qualityScore = event.qualityScore
+        nonIidScore = event.nonIidScore
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: DatasetContractRevalidationFailedEvent): DatasetState = apply {
         currentState = DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED
         datasetId = event.datasetId
         featureSchemaId = event.featureSchemaId

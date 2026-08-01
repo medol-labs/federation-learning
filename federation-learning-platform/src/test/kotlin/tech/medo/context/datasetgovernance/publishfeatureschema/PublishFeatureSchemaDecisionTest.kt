@@ -37,7 +37,7 @@ class PublishFeatureSchemaDecisionTest {
             version = ""
         )
 
-        val events = PublishFeatureSchemaDecision().decide(
+        val events = (object : PublishFeatureSchemaDecision {}).decide(
             command,
             state = state
         )

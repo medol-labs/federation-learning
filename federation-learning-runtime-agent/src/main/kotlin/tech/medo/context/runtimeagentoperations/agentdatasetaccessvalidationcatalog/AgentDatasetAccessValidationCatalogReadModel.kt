@@ -15,6 +15,8 @@ class AgentDatasetAccessValidationCatalogReadModelProjection : MetadataProjectio
     var datasetAccessValidationId: UUID? = null
     var runtimeDatasetBindingId: UUID? = null
     var datasetId: UUID? = null
+    var organizationId: UUID? = null
+    var featureSchemaId: UUID? = null
     var runtimeId: UUID? = null
     var datasetName: String? = null
     var readable: Boolean? = null
@@ -36,6 +38,8 @@ fun AgentDatasetAccessValidationCatalogReadModelProjection.toReadModel(): AgentD
     datasetAccessValidationId = datasetAccessValidationId,
     runtimeDatasetBindingId = runtimeDatasetBindingId,
     datasetId = datasetId,
+    organizationId = organizationId,
+    featureSchemaId = featureSchemaId,
     runtimeId = runtimeId,
     datasetName = datasetName,
     readable = readable,
@@ -63,6 +67,8 @@ data class AgentDatasetAccessValidationCatalogReadModel(
     val datasetAccessValidationId: UUID?,
     val runtimeDatasetBindingId: UUID?,
     val datasetId: UUID?,
+    val organizationId: UUID?,
+    val featureSchemaId: UUID?,
     val runtimeId: UUID?,
     val datasetName: String?,
     val readable: Boolean?,

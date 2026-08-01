@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.retrydatasetcontractvalidation
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.retrydatasetcontractvalidation.RetryDatasetContractValidationDecision
+
+@Component
+class RetryDatasetContractValidationDecisionComponent : RetryDatasetContractValidationDecision

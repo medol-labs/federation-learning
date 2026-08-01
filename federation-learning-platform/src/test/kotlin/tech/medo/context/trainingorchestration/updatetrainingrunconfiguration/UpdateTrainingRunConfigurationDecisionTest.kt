@@ -77,7 +77,7 @@ class UpdateTrainingRunConfigurationDecisionTest {
             updateReason = "Tune round budget before submission."
         )
 
-        val events = UpdateTrainingRunConfigurationDecision().decide(
+        val events = (object : UpdateTrainingRunConfigurationDecision {}).decide(
             command,
             state = state
         )

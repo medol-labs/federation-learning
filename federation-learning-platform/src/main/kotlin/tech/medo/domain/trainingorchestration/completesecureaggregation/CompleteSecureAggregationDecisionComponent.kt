@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.completesecureaggregation
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.completesecureaggregation.CompleteSecureAggregationDecision
+
+@Component
+class CompleteSecureAggregationDecisionComponent : CompleteSecureAggregationDecision

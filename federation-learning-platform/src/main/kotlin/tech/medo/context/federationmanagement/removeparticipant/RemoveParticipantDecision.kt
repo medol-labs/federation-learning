@@ -1,6 +1,5 @@
 package tech.medo.federationmanagement.removeparticipant
 
-import org.springframework.stereotype.Component
 import tech.medo.federationmanagement.removeparticipant.RemoveParticipantCommand
 
 import tech.medo.federationmanagement.events.ParticipantRemovedEvent
@@ -10,8 +9,7 @@ import tech.medo.federationmanagement.federationmembership.FederationMembershipS
 import tech.medo.federationmanagement.domain.states.FederationMembershipStateEnum
 
 
-@Component
-class RemoveParticipantDecision {
+interface RemoveParticipantDecision {
     fun decide(command: RemoveParticipantCommand, state: FederationMembershipState): List<Any> {
         require(state.currentState == FederationMembershipStateEnum.SUSPENDED) {
             "RemoveParticipant requires FederationMembership to be Suspended."

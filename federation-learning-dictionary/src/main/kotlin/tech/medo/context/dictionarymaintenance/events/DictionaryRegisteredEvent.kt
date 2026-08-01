@@ -9,7 +9,6 @@ import tech.medo.dictionarymaintenance.domain.types.DictionaryCode;
 
 @Event
 data class DictionaryRegisteredEvent(
-    @EventTag(key = "dictionaryId")
     val dictionaryId: UUID,
     @EventTag(key = "dictionaryCode")
     val dictionaryCode: DictionaryCode,

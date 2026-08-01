@@ -6,8 +6,14 @@ import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent
+import tech.medo.runtimeagentoperations.events.AgentDatasetMetadataReportedEvent
+import tech.medo.runtimeagentoperations.events.AgentDatasetProfilingFailedEvent
+import tech.medo.runtimeagentoperations.events.AgentDatasetReprofiledEvent
+import tech.medo.runtimeagentoperations.events.AgentDatasetReprofilingFailedEvent
 import tech.medo.runtimeagentoperations.events.DatasetContractValidatedEvent
 import tech.medo.runtimeagentoperations.events.DatasetContractValidationFailedEvent
+import tech.medo.runtimeagentoperations.events.DatasetContractRevalidatedEvent
+import tech.medo.runtimeagentoperations.events.DatasetContractRevalidationFailedEvent
 import tech.medo.runtimeagentoperations.events.DatasetRejectedForTrainingEvent
 import tech.medo.runtimeagentoperations.events.DatasetApprovedForTrainingEvent
 import tech.medo.runtimeagentoperations.events.DatasetTrainingApprovalRevokedEvent
@@ -28,8 +34,98 @@ class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabil
             entity.datasetId = event.datasetId
             entity.organizationId = event.organizationId
             entity.featureSchemaId = event.featureSchemaId
+            entity.features = event.features
+            entity.labels = event.labels
             entity.datasetName = event.datasetName
             entity.datasetUsage = event.datasetUsage
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetMetadataReportedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.datasetId) ?: DatasetCapabilityReadModelProjection().apply {
+                this.datasetId = event.datasetId
+        }
+            entity.datasetId = event.datasetId
+            entity.organizationId = event.organizationId
+            entity.runtimeId = event.runtimeId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.sampleCount = event.sampleCount
+            entity.featureCount = event.featureCount
+            entity.schemaCompatible = event.schemaCompatible
+            entity.labelCompatible = event.labelCompatible
+            entity.qualityScore = event.qualityScore
+            entity.nonIidScore = event.nonIidScore
+            entity.metadataReportId = event.metadataReportId
+            entity.metadataStatus = "Reported"
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetProfilingFailedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.datasetId) ?: DatasetCapabilityReadModelProjection().apply {
+                this.datasetId = event.datasetId
+        }
+            entity.datasetId = event.datasetId
+            entity.organizationId = event.organizationId
+            entity.runtimeId = event.runtimeId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.metadataReportId = event.metadataReportId
+            entity.metadataStatus = "Failed"
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetReprofiledEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.datasetId) ?: DatasetCapabilityReadModelProjection().apply {
+                this.datasetId = event.datasetId
+        }
+            entity.datasetId = event.datasetId
+            entity.organizationId = event.organizationId
+            entity.runtimeId = event.runtimeId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.sampleCount = event.sampleCount
+            entity.featureCount = event.featureCount
+            entity.schemaCompatible = event.schemaCompatible
+            entity.labelCompatible = event.labelCompatible
+            entity.qualityScore = event.qualityScore
+            entity.nonIidScore = event.nonIidScore
+            entity.metadataReportId = event.metadataReportId
+            entity.metadataStatus = "Reported"
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetReprofilingFailedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.datasetId) ?: DatasetCapabilityReadModelProjection().apply {
+                this.datasetId = event.datasetId
+        }
+            entity.datasetId = event.datasetId
+            entity.organizationId = event.organizationId
+            entity.runtimeId = event.runtimeId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.metadataReportId = event.metadataReportId
+            entity.metadataStatus = "Failed"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -50,6 +146,7 @@ class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabil
             entity.qualityScore = event.qualityScore
             entity.nonIidScore = event.nonIidScore
             entity.metadataReportId = event.metadataReportId
+            entity.contractStatus = "ContractValidationCompleted"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -70,6 +167,49 @@ class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabil
             entity.qualityScore = event.qualityScore
             entity.nonIidScore = event.nonIidScore
             entity.metadataReportId = event.metadataReportId
+            entity.contractStatus = "Failed"
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: DatasetContractRevalidatedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.datasetId) ?: DatasetCapabilityReadModelProjection().apply {
+                this.datasetId = event.datasetId
+        }
+            entity.datasetId = event.datasetId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.schemaCompatible = event.schemaCompatible
+            entity.labelCompatible = event.labelCompatible
+            entity.qualityScore = event.qualityScore
+            entity.nonIidScore = event.nonIidScore
+            entity.metadataReportId = event.metadataReportId
+            entity.contractStatus = "ContractValidationCompleted"
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: DatasetContractRevalidationFailedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.datasetId) ?: DatasetCapabilityReadModelProjection().apply {
+                this.datasetId = event.datasetId
+        }
+            entity.datasetId = event.datasetId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.schemaCompatible = event.schemaCompatible
+            entity.labelCompatible = event.labelCompatible
+            entity.qualityScore = event.qualityScore
+            entity.nonIidScore = event.nonIidScore
+            entity.metadataReportId = event.metadataReportId
+            entity.contractStatus = "Failed"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -113,6 +253,7 @@ class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabil
                 this.datasetId = event.datasetId
         }
             entity.datasetId = event.datasetId
+            entity.approvalStatus = "ApprovalRevoked"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

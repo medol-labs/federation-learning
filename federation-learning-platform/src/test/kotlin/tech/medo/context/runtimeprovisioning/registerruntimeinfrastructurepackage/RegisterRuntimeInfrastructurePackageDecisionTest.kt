@@ -14,7 +14,7 @@ import java.util.UUID;
 class RegisterRuntimeInfrastructurePackageDecisionTest {
     @Test
     fun RegisterRuntimeInfrastructurePackageEmitsRuntimeInfrastructurePackageRegisteredEvent() {
-        val events = RegisterRuntimeInfrastructurePackageDecision().decide(
+        val events = (object : RegisterRuntimeInfrastructurePackageDecision {}).decide(
             RegisterRuntimeInfrastructurePackageCommand(
             runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
             packageName = "",

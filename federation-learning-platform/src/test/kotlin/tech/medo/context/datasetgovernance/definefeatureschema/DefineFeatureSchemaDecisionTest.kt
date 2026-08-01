@@ -30,7 +30,7 @@ class DefineFeatureSchemaDecisionTest {
         )
 
         assertThrows<IllegalArgumentException> {
-            DefineFeatureSchemaDecision().decide(
+            (object : DefineFeatureSchemaDecision {}).decide(
                         DefineFeatureSchemaCommand(
                         featureSchemaId = java.util.UUID.randomUUID(),
                         featureDomain = "CreditRisk",

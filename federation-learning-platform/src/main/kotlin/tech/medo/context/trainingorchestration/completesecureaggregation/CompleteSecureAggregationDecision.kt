@@ -1,6 +1,5 @@
 package tech.medo.trainingorchestration.completesecureaggregation
 
-import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.completesecureaggregation.CompleteSecureAggregationCommand
 
 import tech.medo.trainingorchestration.events.GlobalModelUpdatedEvent
@@ -10,8 +9,7 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
-@Component
-class CompleteSecureAggregationDecision {
+interface CompleteSecureAggregationDecision {
     fun decide(command: CompleteSecureAggregationCommand, state: TrainingRoundState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(

@@ -18,13 +18,13 @@ import java.util.UUID;
 class TrainingAlertState @EntityCreator constructor() {
 
     var currentState: TrainingAlertStateEnum? = null
-    private var alertId: UUID? = null
-    private var nodeId: UUID? = null
-    private var trainingJobId: UUID? = null
-    private var severity: String? = null
-    private var message: String? = null
-    private var acknowledgementNote: String? = null
-    private var resolutionSummary: String? = null
+    var alertId: UUID? = null
+    var nodeId: UUID? = null
+    var trainingJobId: UUID? = null
+    var severity: String? = null
+    var message: String? = null
+    var acknowledgementNote: String? = null
+    var resolutionSummary: String? = null
 
     @EventSourcingHandler
     fun evolve(event: TrainingAlertRaisedEvent): TrainingAlertState = apply {

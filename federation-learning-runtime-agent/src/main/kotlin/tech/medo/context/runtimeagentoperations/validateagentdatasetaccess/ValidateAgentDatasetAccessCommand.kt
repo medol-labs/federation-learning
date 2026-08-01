@@ -11,6 +11,8 @@ data class ValidateAgentDatasetAccessCommand(
     val datasetAccessValidationId: UUID = java.util.UUID.randomUUID(),
     val runtimeDatasetBindingId: UUID,
     val datasetId: UUID,
+    val organizationId: UUID,
+    val featureSchemaId: UUID,
     val runtimeId: UUID,
     val dataSourceType: String,
     val host: String?,

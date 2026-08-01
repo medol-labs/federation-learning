@@ -14,7 +14,7 @@ import java.util.UUID;
 class DetectRuntimeNodeCapacityChangeDecisionTest {
     @Test
     fun DetectRuntimeNodeCapacityChangeEmitsRuntimeNodeCapacityChangedEvent() {
-        val events = DetectRuntimeNodeCapacityChangeDecision().decide(
+        val events = (object : DetectRuntimeNodeCapacityChangeDecision {}).decide(
             DetectRuntimeNodeCapacityChangeCommand(
             nodeId = java.util.UUID.randomUUID(),
             runtimeAgentId = java.util.UUID.randomUUID(),

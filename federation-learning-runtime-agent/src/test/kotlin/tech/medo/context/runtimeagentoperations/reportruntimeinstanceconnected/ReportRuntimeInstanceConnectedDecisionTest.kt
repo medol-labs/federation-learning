@@ -28,7 +28,7 @@ class ReportRuntimeInstanceConnectedDecisionTest {
             heartbeatAccepted = true
         )
 
-        val events = ReportRuntimeInstanceConnectedDecision().decide(
+        val events = (object : ReportRuntimeInstanceConnectedDecision {}).decide(
             command,
             portResult = ReportRuntimeInstanceConnectedResult.Succeeded(
 
@@ -60,7 +60,7 @@ class ReportRuntimeInstanceConnectedDecisionTest {
             heartbeatAccepted = false
         )
 
-        val events = ReportRuntimeInstanceConnectedDecision().decide(
+        val events = (object : ReportRuntimeInstanceConnectedDecision {}).decide(
             command,
             portResult = ReportRuntimeInstanceConnectedResult.Rejected(
                 failureReason = "",

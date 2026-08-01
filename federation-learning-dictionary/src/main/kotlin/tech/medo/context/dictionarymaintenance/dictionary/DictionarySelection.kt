@@ -1,14 +1,14 @@
 package tech.medo.dictionarymaintenance.dictionary
 
-import java.util.UUID;
+import tech.medo.dictionarymaintenance.domain.types.DictionaryCode;
 
 
 data class DictionarySelection(
-    val dictionaryId: UUID
+    val dictionaryCode: DictionaryCode
 )
 
 object DictionaryTags {
-    const val DICTIONARY_ID = "dictionaryId"
+    const val DICTIONARY_CODE = "dictionaryCode"
 }
 
 object DictionaryMetadata {

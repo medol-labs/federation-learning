@@ -1,14 +1,13 @@
 package tech.medo.federationmanagement.federation
 
-import java.util.UUID;
 
 
 data class FederationSelection(
-    val federationId: UUID
+    val federationName: String
 )
 
 object FederationTags {
-    const val FEDERATION_ID = "federationId"
+    const val FEDERATION_NAME = "federationName"
 }
 
 object FederationMetadata {

@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @Event
 data class RuntimeInstallationPlanCreatedEvent(
-    @EventTag(key = "runtimeInstallationPlanId")
     val runtimeInstallationPlanId: UUID,
     val runtimeInfrastructureId: UUID,
     @EventTag(key = "organizationId")

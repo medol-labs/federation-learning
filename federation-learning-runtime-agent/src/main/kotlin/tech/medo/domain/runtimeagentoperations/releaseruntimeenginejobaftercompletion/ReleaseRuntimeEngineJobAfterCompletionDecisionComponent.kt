@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.releaseruntimeenginejobaftercompletion
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.ReleaseRuntimeEngineJobAfterCompletionDecision
+
+@Component
+class ReleaseRuntimeEngineJobAfterCompletionDecisionComponent : ReleaseRuntimeEngineJobAfterCompletionDecision

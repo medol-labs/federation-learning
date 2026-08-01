@@ -16,26 +16,26 @@ import java.util.UUID;
 import java.math.BigDecimal;
 
 
-@EventSourced(idType = UUID::class, tagKey = AgentDatasetProfileTags.METADATA_REPORT_ID)
+@EventSourced(idType = UUID::class, tagKey = AgentDatasetProfileTags.RUNTIME_DATASET_BINDING_ID)
 class AgentDatasetProfileState @EntityCreator constructor() {
 
     var currentState: AgentDatasetProfileStateEnum? = null
-    private var metadataReportId: UUID? = null
-    private var runtimeDatasetBindingId: UUID? = null
-    private var datasetId: UUID? = null
-    private var organizationId: UUID? = null
-    private var runtimeId: UUID? = null
-    private var featureSchemaId: UUID? = null
-    private var sampleCount: Int? = null
-    private var featureCount: Int? = null
-    private var schemaCompatible: Boolean? = null
-    private var labelCompatible: Boolean? = null
-    private var missingValueRate: BigDecimal? = null
-    private var duplicateRate: BigDecimal? = null
-    private var qualityScore: BigDecimal? = null
-    private var nonIidScore: BigDecimal? = null
-    private var classBalanceScore: BigDecimal? = null
-    private var failureReason: String? = null
+    var metadataReportId: UUID? = null
+    var runtimeDatasetBindingId: UUID? = null
+    var datasetId: UUID? = null
+    var organizationId: UUID? = null
+    var runtimeId: UUID? = null
+    var featureSchemaId: UUID? = null
+    var sampleCount: Int? = null
+    var featureCount: Int? = null
+    var schemaCompatible: Boolean? = null
+    var labelCompatible: Boolean? = null
+    var missingValueRate: BigDecimal? = null
+    var duplicateRate: BigDecimal? = null
+    var qualityScore: BigDecimal? = null
+    var nonIidScore: BigDecimal? = null
+    var classBalanceScore: BigDecimal? = null
+    var failureReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: AgentDatasetMetadataReportedEvent): AgentDatasetProfileState = apply {
@@ -62,6 +62,8 @@ class AgentDatasetProfileState @EntityCreator constructor() {
         metadataReportId = event.metadataReportId
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
+        organizationId = event.organizationId
+        featureSchemaId = event.featureSchemaId
         runtimeId = event.runtimeId
         failureReason = event.failureReason
     }
@@ -91,6 +93,8 @@ class AgentDatasetProfileState @EntityCreator constructor() {
         metadataReportId = event.metadataReportId
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
+        organizationId = event.organizationId
+        featureSchemaId = event.featureSchemaId
         runtimeId = event.runtimeId
         failureReason = event.failureReason
     }

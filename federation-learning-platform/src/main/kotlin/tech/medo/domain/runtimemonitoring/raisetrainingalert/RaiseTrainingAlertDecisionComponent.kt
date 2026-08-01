@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimemonitoring.raisetrainingalert
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimemonitoring.raisetrainingalert.RaiseTrainingAlertDecision
+
+@Component
+class RaiseTrainingAlertDecisionComponent : RaiseTrainingAlertDecision

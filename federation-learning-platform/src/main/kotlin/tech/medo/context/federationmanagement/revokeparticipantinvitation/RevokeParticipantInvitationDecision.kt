@@ -1,6 +1,5 @@
 package tech.medo.federationmanagement.revokeparticipantinvitation
 
-import org.springframework.stereotype.Component
 import tech.medo.federationmanagement.revokeparticipantinvitation.RevokeParticipantInvitationCommand
 
 import tech.medo.federationmanagement.events.ParticipantInvitationRevokedEvent
@@ -10,8 +9,7 @@ import tech.medo.federationmanagement.federationmembership.FederationMembershipS
 import tech.medo.federationmanagement.domain.states.FederationMembershipStateEnum
 
 
-@Component
-class RevokeParticipantInvitationDecision {
+interface RevokeParticipantInvitationDecision {
     fun decide(command: RevokeParticipantInvitationCommand, state: FederationMembershipState): List<Any> {
         require(state.currentState == FederationMembershipStateEnum.INVITED) {
             "RevokeParticipantInvitation requires FederationMembership to be Invited."

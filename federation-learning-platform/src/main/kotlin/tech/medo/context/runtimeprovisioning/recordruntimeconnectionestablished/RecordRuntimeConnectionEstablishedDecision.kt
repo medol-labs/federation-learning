@@ -1,6 +1,5 @@
 package tech.medo.runtimeprovisioning.recordruntimeconnectionestablished
 
-import org.springframework.stereotype.Component
 import tech.medo.runtimeprovisioning.recordruntimeconnectionestablished.RecordRuntimeConnectionEstablishedCommand
 
 import tech.medo.runtimeprovisioning.events.RuntimeConnectionEstablishedEvent
@@ -10,8 +9,7 @@ import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructure
 
 
 
-@Component
-class RecordRuntimeConnectionEstablishedDecision {
+interface RecordRuntimeConnectionEstablishedDecision {
     fun decide(command: RecordRuntimeConnectionEstablishedCommand, state: RuntimeInfrastructureState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(

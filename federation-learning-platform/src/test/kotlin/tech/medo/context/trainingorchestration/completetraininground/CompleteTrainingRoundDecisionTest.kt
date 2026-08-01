@@ -42,7 +42,7 @@ class CompleteTrainingRoundDecisionTest {
             globalAccuracy = BigDecimal("0.91")
         )
 
-        val events = CompleteTrainingRoundDecision().decide(
+        val events = (object : CompleteTrainingRoundDecision {}).decide(
             command,
             state = state
         )

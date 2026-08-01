@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.reportagentruntimenodeinventory
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.reportagentruntimenodeinventory.ReportAgentRuntimeNodeInventoryDecision
+
+@Component
+class ReportAgentRuntimeNodeInventoryDecisionComponent : ReportAgentRuntimeNodeInventoryDecision

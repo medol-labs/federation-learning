@@ -25,6 +25,7 @@ class DeployRuntimeAgentCommandHandler(
         val input = DeployRuntimeAgentInput(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId)
         val portResult = deployRuntimeAgentService.execute(input)
         val now = java.time.LocalDateTime.now()
+
         eventAppender.append(decision.decide(command, state, portResult, now))
     }
 }

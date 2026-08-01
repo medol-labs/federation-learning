@@ -38,7 +38,7 @@ class ApproveDatasetForTrainingDecisionTest {
             datasetName = ""
         )
 
-        val events = ApproveDatasetForTrainingDecision().decide(
+        val events = (object : ApproveDatasetForTrainingDecision {}).decide(
             command,
             state = state
         )

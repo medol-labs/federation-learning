@@ -25,6 +25,7 @@ class StartTrainingRoundCommandHandler(
         val input = StartTrainingRoundInput(trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, featureSchemaId = command.featureSchemaId, roundId = command.roundId, roundNumber = command.roundNumber, selectedOrganizationIds = command.selectedOrganizationIds, selectedRuntimeIds = command.selectedRuntimeIds, selectedParticipants = command.selectedParticipants, selectedOrganizationCount = command.selectedOrganizationCount, selectedRuntimeCount = command.selectedRuntimeCount, minimumNodesPerRound = command.minimumNodesPerRound)
         val portResult = startTrainingRoundService.execute(input)
         val now = java.time.LocalDateTime.now()
+
         eventAppender.append(decision.decide(command, state, portResult, now))
     }
 }

@@ -14,7 +14,7 @@ import java.util.UUID;
 class InviteParticipantDecisionTest {
     @Test
     fun InviteParticipantEmitsParticipantInvitedEvent() {
-        val events = InviteParticipantDecision().decide(
+        val events = (object : InviteParticipantDecision {}).decide(
             InviteParticipantCommand(
             federationId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),

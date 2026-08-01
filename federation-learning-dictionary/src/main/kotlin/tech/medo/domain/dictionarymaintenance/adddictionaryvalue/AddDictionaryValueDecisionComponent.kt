@@ -1,0 +1,7 @@
+package tech.medo.domain.dictionarymaintenance.adddictionaryvalue
+
+import org.springframework.stereotype.Component
+import tech.medo.dictionarymaintenance.adddictionaryvalue.AddDictionaryValueDecision
+
+@Component
+class AddDictionaryValueDecisionComponent : AddDictionaryValueDecision

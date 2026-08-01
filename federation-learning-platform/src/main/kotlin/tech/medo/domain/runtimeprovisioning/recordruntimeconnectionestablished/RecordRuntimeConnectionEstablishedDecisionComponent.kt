@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeprovisioning.recordruntimeconnectionestablished
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeprovisioning.recordruntimeconnectionestablished.RecordRuntimeConnectionEstablishedDecision
+
+@Component
+class RecordRuntimeConnectionEstablishedDecisionComponent : RecordRuntimeConnectionEstablishedDecision

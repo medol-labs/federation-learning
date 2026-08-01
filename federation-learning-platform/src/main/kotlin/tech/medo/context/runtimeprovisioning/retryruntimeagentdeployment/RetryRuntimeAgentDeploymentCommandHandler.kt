@@ -25,6 +25,7 @@ class RetryRuntimeAgentDeploymentCommandHandler(
         val input = RetryRuntimeAgentDeploymentInput(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId, currentRuntimeInfrastructureState = command.currentRuntimeInfrastructureState, retryReason = command.retryReason)
         val portResult = retryRuntimeAgentDeploymentService.execute(input)
         val now = java.time.LocalDateTime.now()
+
         eventAppender.append(decision.decide(command, state, portResult, now))
     }
 }

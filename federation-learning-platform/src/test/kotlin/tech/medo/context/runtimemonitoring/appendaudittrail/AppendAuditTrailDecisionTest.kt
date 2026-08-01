@@ -14,7 +14,7 @@ import java.util.UUID;
 class AppendAuditTrailDecisionTest {
     @Test
     fun AppendAuditTrailEmitsAuditTrailAppendedEvent() {
-        val events = AppendAuditTrailDecision().decide(
+        val events = (object : AppendAuditTrailDecision {}).decide(
             AppendAuditTrailCommand(
             auditRecordId = java.util.UUID.randomUUID(),
             sourceEventName = "",

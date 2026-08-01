@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimemonitoring.detectruntimenodecapacitychange
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimemonitoring.detectruntimenodecapacitychange.DetectRuntimeNodeCapacityChangeDecision
+
+@Component
+class DetectRuntimeNodeCapacityChangeDecisionComponent : DetectRuntimeNodeCapacityChangeDecision

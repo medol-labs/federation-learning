@@ -5,14 +5,16 @@ import org.axonframework.messaging.eventhandling.gateway.EventAppender
 import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.secureaggregation.completehomomorphicaggregationsession.CompleteHomomorphicAggregationSessionCommand
-
+import tech.medo.secureaggregation.completehomomorphicaggregationsession.CompleteHomomorphicAggregationSessionInput
+import tech.medo.secureaggregation.completehomomorphicaggregationsession.CompleteHomomorphicAggregationSessionService
 import tech.medo.secureaggregation.secureaggregationsession.SecureAggregationSessionState
 
 
 
 @Component
 class CompleteHomomorphicAggregationSessionCommandHandler(
-    private val decision: CompleteHomomorphicAggregationSessionDecision
+    private val decision: CompleteHomomorphicAggregationSessionDecision,
+    private val completeHomomorphicAggregationSessionService: CompleteHomomorphicAggregationSessionService
 ) {
     @CommandHandler
     fun handle(
@@ -20,6 +22,9 @@ class CompleteHomomorphicAggregationSessionCommandHandler(
         @InjectEntity(idProperty = "secureAggregationSessionId") state: SecureAggregationSessionState,
         eventAppender: EventAppender
     ) {
-        eventAppender.append(decision.decide(command, state))
+        val input = CompleteHomomorphicAggregationSessionInput(secureAggregationSessionId = command.secureAggregationSessionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, featureSchemaId = command.featureSchemaId, roundId = command.roundId, aggregatedModelVersionId = command.aggregatedModelVersionId, modelFormat = command.modelFormat, modelHash = command.modelHash)
+        val portResult = completeHomomorphicAggregationSessionService.execute(input)
+
+        eventAppender.append(decision.decide(command, state, portResult))
     }
 }

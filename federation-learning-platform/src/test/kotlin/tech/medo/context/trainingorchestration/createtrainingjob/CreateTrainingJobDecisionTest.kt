@@ -25,7 +25,7 @@ class CreateTrainingJobDecisionTest {
             objective = ""
         )
 
-        val events = CreateTrainingJobDecision().decide(
+        val events = (object : CreateTrainingJobDecision {}).decide(
             command
         )
 

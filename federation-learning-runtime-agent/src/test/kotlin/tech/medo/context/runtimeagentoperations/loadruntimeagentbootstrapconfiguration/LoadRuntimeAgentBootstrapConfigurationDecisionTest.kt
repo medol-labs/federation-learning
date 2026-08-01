@@ -21,7 +21,7 @@ class LoadRuntimeAgentBootstrapConfigurationDecisionTest {
             bootstrapRequestId = java.util.UUID.randomUUID()
         )
 
-        val events = LoadRuntimeAgentBootstrapConfigurationDecision().decide(
+        val events = (object : LoadRuntimeAgentBootstrapConfigurationDecision {}).decide(
             command,
             portResult = LoadRuntimeAgentBootstrapConfigurationResult.Succeeded(
                 runtimeAgentId = java.util.UUID.randomUUID(),
@@ -44,7 +44,7 @@ class LoadRuntimeAgentBootstrapConfigurationDecisionTest {
             bootstrapRequestId = java.util.UUID.randomUUID()
         )
 
-        val events = LoadRuntimeAgentBootstrapConfigurationDecision().decide(
+        val events = (object : LoadRuntimeAgentBootstrapConfigurationDecision {}).decide(
             command,
             portResult = LoadRuntimeAgentBootstrapConfigurationResult.Rejected(
                 failureReason = ""

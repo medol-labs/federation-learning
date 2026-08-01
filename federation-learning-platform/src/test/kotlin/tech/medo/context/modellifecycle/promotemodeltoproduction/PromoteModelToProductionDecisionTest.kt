@@ -29,7 +29,7 @@ class PromoteModelToProductionDecisionTest {
             productionStage = "production"
         )
 
-        val events = PromoteModelToProductionDecision().decide(
+        val events = (object : PromoteModelToProductionDecision {}).decide(
             command,
             state = state
         )

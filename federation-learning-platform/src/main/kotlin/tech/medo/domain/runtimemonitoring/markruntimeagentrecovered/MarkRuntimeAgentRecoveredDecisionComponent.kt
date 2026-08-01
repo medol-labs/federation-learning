@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimemonitoring.markruntimeagentrecovered
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimemonitoring.markruntimeagentrecovered.MarkRuntimeAgentRecoveredDecision
+
+@Component
+class MarkRuntimeAgentRecoveredDecisionComponent : MarkRuntimeAgentRecoveredDecision

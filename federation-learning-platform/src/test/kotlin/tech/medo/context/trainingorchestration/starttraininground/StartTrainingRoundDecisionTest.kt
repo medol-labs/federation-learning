@@ -48,7 +48,7 @@ class StartTrainingRoundDecisionTest {
             minimumNodesPerRound = 0
         )
 
-        val events = StartTrainingRoundDecision().decide(
+        val events = (object : StartTrainingRoundDecision {}).decide(
             command,
             state = state,
             portResult = StartTrainingRoundResult.Succeeded(
@@ -104,7 +104,7 @@ class StartTrainingRoundDecisionTest {
             minimumNodesPerRound = 0
         )
 
-        val events = StartTrainingRoundDecision().decide(
+        val events = (object : StartTrainingRoundDecision {}).decide(
             command,
             state = state,
             portResult = StartTrainingRoundResult.Rejected(

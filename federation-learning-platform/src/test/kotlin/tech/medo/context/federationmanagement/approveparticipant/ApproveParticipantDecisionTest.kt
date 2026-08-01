@@ -30,7 +30,7 @@ class ApproveParticipantDecisionTest {
             approvalNote = null
         )
 
-        val events = ApproveParticipantDecision().decide(
+        val events = (object : ApproveParticipantDecision {}).decide(
             command,
             state = state
         )

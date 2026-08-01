@@ -1,0 +1,7 @@
+package tech.medo.domain.modellifecycle.promotemodeltoproduction
+
+import org.springframework.stereotype.Component
+import tech.medo.modellifecycle.promotemodeltoproduction.PromoteModelToProductionDecision
+
+@Component
+class PromoteModelToProductionDecisionComponent : PromoteModelToProductionDecision

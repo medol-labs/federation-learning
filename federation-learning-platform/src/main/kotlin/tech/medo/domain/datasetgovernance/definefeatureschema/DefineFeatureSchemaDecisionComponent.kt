@@ -1,0 +1,7 @@
+package tech.medo.domain.datasetgovernance.definefeatureschema
+
+import org.springframework.stereotype.Component
+import tech.medo.datasetgovernance.definefeatureschema.DefineFeatureSchemaDecision
+
+@Component
+class DefineFeatureSchemaDecisionComponent : DefineFeatureSchemaDecision

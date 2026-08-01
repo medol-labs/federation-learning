@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.reportruntimeinstanceconnected
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.reportruntimeinstanceconnected.ReportRuntimeInstanceConnectedDecision
+
+@Component
+class ReportRuntimeInstanceConnectedDecisionComponent : ReportRuntimeInstanceConnectedDecision

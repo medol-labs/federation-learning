@@ -28,11 +28,12 @@ class ConfigureRuntimeDatasetBindingDecisionTest {
         )
 
         assertThrows<IllegalArgumentException> {
-            ConfigureRuntimeDatasetBindingDecision().decide(
+            (object : ConfigureRuntimeDatasetBindingDecision {}).decide(
                         ConfigureRuntimeDatasetBindingCommand(
                         runtimeDatasetBindingId = java.util.UUID.randomUUID(),
                         datasetId = UUID.nameUUIDFromBytes("dataset-1".toByteArray()),
                         organizationId = java.util.UUID.randomUUID(),
+                        featureSchemaId = java.util.UUID.randomUUID(),
                         runtimeId = UUID.nameUUIDFromBytes("runtime-1".toByteArray()),
                         dataSourceType = "",
                         host = null,

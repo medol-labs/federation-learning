@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.completetrainingjob
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.completetrainingjob.CompleteTrainingJobDecision
+
+@Component
+class CompleteTrainingJobDecisionComponent : CompleteTrainingJobDecision

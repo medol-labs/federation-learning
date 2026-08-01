@@ -21,25 +21,25 @@ import java.util.UUID;
 class SecureAggregationSessionState @EntityCreator constructor() {
 
     var currentState: SecureAggregationSessionStateEnum? = null
-    private var secureAggregationSessionId: UUID? = null
-    private var trainingJobId: UUID? = null
-    private var trainingRunConfigurationId: UUID? = null
-    private var featureSchemaId: UUID? = null
-    private var roundId: UUID? = null
-    private var requiredParticipantCount: Int? = null
-    private var acceptedRuntimeIds: List<UUID> = emptyList()
-    private var selectedRuntimeIds: List<UUID> = emptyList()
-    private var selectedParticipantCount: Int? = null
-    private var encryptionScheme: String? = null
-    private var publicKeyVersion: String? = null
-    private var encryptedParameterScale: Int? = null
-    private var submissionId: UUID? = null
-    private var runtimeId: UUID? = null
-    private var encryptedUpdateDigest: String? = null
-    private var aggregatedModelVersionId: UUID? = null
-    private var modelFormat: String? = null
-    private var modelHash: String? = null
-    private var failureReason: String? = null
+    var secureAggregationSessionId: UUID? = null
+    var trainingJobId: UUID? = null
+    var trainingRunConfigurationId: UUID? = null
+    var featureSchemaId: UUID? = null
+    var roundId: UUID? = null
+    var requiredParticipantCount: Int? = null
+    var acceptedRuntimeIds: List<UUID> = emptyList()
+    var selectedRuntimeIds: List<UUID> = emptyList()
+    var selectedParticipantCount: Int? = null
+    var encryptionScheme: String? = null
+    var publicKeyVersion: String? = null
+    var encryptedParameterScale: Int? = null
+    var submissionId: UUID? = null
+    var runtimeId: UUID? = null
+    var encryptedUpdateDigest: String? = null
+    var aggregatedModelVersionId: UUID? = null
+    var modelFormat: String? = null
+    var modelHash: String? = null
+    var failureReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: SecureAggregationSessionCreatedEvent): SecureAggregationSessionState = apply {

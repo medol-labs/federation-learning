@@ -1,0 +1,7 @@
+package tech.medo.domain.organizationmanagement.reactivateorganization
+
+import org.springframework.stereotype.Component
+import tech.medo.organizationmanagement.reactivateorganization.ReactivateOrganizationDecision
+
+@Component
+class ReactivateOrganizationDecisionComponent : ReactivateOrganizationDecision

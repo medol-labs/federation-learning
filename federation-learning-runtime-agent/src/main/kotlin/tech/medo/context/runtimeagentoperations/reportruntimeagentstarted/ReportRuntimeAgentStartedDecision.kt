@@ -1,6 +1,5 @@
 package tech.medo.runtimeagentoperations.reportruntimeagentstarted
 
-import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.reportruntimeagentstarted.ReportRuntimeAgentStartedCommand
 
 import tech.medo.runtimeagentoperations.events.RuntimeAgentStartedEvent
@@ -10,8 +9,7 @@ import tech.medo.runtimeagentoperations.runtimeagentlifecycle.RuntimeAgentLifecy
 import tech.medo.runtimeagentoperations.domain.states.RuntimeAgentLifecycleStateEnum
 
 
-@Component
-class ReportRuntimeAgentStartedDecision {
+interface ReportRuntimeAgentStartedDecision {
     fun decide(command: ReportRuntimeAgentStartedCommand, state: RuntimeAgentLifecycleState): List<Any> {
         require(state.currentState == RuntimeAgentLifecycleStateEnum.BOOTSTRAP_LOADED) {
             "ReportRuntimeAgentStarted requires RuntimeAgentLifecycle to be BootstrapLoaded."

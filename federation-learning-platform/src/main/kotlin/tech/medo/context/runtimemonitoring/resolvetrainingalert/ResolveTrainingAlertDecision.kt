@@ -1,6 +1,5 @@
 package tech.medo.runtimemonitoring.resolvetrainingalert
 
-import org.springframework.stereotype.Component
 import tech.medo.runtimemonitoring.resolvetrainingalert.ResolveTrainingAlertCommand
 
 import tech.medo.runtimemonitoring.events.TrainingAlertResolvedEvent
@@ -10,8 +9,7 @@ import tech.medo.runtimemonitoring.trainingalert.TrainingAlertState
 import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum
 
 
-@Component
-class ResolveTrainingAlertDecision {
+interface ResolveTrainingAlertDecision {
     fun decide(command: ResolveTrainingAlertCommand, state: TrainingAlertState): List<Any> {
         require(state.currentState == TrainingAlertStateEnum.ACKNOWLEDGED) {
             "ResolveTrainingAlert requires TrainingAlert to be Acknowledged."

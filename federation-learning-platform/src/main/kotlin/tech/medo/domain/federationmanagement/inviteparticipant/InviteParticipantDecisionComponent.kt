@@ -1,0 +1,7 @@
+package tech.medo.domain.federationmanagement.inviteparticipant
+
+import org.springframework.stereotype.Component
+import tech.medo.federationmanagement.inviteparticipant.InviteParticipantDecision
+
+@Component
+class InviteParticipantDecisionComponent : InviteParticipantDecision

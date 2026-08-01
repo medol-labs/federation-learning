@@ -1,6 +1,5 @@
 package tech.medo.trainingorchestration.submitglobalmodelevaluation
 
-import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.submitglobalmodelevaluation.SubmitGlobalModelEvaluationCommand
 
 import tech.medo.trainingorchestration.events.GlobalModelEvaluationSubmittedEvent
@@ -10,8 +9,7 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
-@Component
-class SubmitGlobalModelEvaluationDecision {
+interface SubmitGlobalModelEvaluationDecision {
     fun decide(command: SubmitGlobalModelEvaluationCommand, state: TrainingRoundState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(

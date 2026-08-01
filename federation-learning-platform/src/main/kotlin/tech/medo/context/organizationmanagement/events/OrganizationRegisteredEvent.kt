@@ -9,7 +9,6 @@ import tech.medo.organizationmanagement.domain.types.OrganizationType;
 
 @Event
 data class OrganizationRegisteredEvent(
-    @EventTag(key = "organizationId")
     val organizationId: UUID,
     val organizationName: String,
     val organizationType: OrganizationType,

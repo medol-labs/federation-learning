@@ -27,14 +27,11 @@ class ValidateDatasetContractDecisionTest {
             datasetName = ""
         )
 
-        val events = ValidateDatasetContractDecision().decide(
+        val events = (object : ValidateDatasetContractDecision {}).decide(
             command,
             state = state,
             portResult = ValidateDatasetContractResult.Succeeded(
-                schemaCompatible = false,
-                labelCompatible = false,
-                qualityScore = java.math.BigDecimal.ZERO,
-                nonIidScore = java.math.BigDecimal.ZERO
+
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
         )
@@ -58,14 +55,10 @@ class ValidateDatasetContractDecisionTest {
             datasetName = ""
         )
 
-        val events = ValidateDatasetContractDecision().decide(
+        val events = (object : ValidateDatasetContractDecision {}).decide(
             command,
             state = state,
             portResult = ValidateDatasetContractResult.Rejected(
-                schemaCompatible = false,
-                labelCompatible = false,
-                qualityScore = java.math.BigDecimal.ZERO,
-                nonIidScore = java.math.BigDecimal.ZERO,
                 failureReason = ""
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")

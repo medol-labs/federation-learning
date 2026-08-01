@@ -1,0 +1,7 @@
+package tech.medo.domain.federationmanagement.activatefederation
+
+import org.springframework.stereotype.Component
+import tech.medo.federationmanagement.activatefederation.ActivateFederationDecision
+
+@Component
+class ActivateFederationDecisionComponent : ActivateFederationDecision

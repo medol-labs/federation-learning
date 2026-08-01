@@ -34,6 +34,7 @@ class RuntimeIdentityCatalogReadModelProjector(private val repository: RuntimeId
             entity.runtimeAgentId = event.runtimeAgentId
             entity.organizationId = event.organizationId
             entity.runtimeName = event.runtimeName
+            entity.identityStatus = "Active"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -48,6 +49,7 @@ class RuntimeIdentityCatalogReadModelProjector(private val repository: RuntimeId
                 this.runtimeId = event.runtimeId
         }
             entity.runtimeId = event.runtimeId
+            entity.identityStatus = "Revoked"
             entity.revokedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

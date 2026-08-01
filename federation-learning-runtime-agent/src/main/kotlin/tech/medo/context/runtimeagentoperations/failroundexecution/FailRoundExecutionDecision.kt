@@ -1,6 +1,5 @@
 package tech.medo.runtimeagentoperations.failroundexecution
 
-import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.failroundexecution.FailRoundExecutionCommand
 
 import tech.medo.runtimeagentoperations.events.RoundExecutionFailedEvent
@@ -10,8 +9,7 @@ import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 
-@Component
-class FailRoundExecutionDecision {
+interface FailRoundExecutionDecision {
     fun decide(command: FailRoundExecutionCommand, state: RoundExecutionState): List<Any> {
         require(state.currentState == RoundExecutionStateEnum.RUNNING) {
             "FailRoundExecution requires RoundExecution to be Running."

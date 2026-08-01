@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 class DetectRuntimeNodeResourcePressureDecisionTest {
     @Test
     fun DetectRuntimeNodeResourcePressureEmitsRuntimeNodeResourcePressureDetectedEvent() {
-        val events = DetectRuntimeNodeResourcePressureDecision().decide(
+        val events = (object : DetectRuntimeNodeResourcePressureDecision {}).decide(
             DetectRuntimeNodeResourcePressureCommand(
             nodeId = java.util.UUID.randomUUID(),
             runtimeAgentId = java.util.UUID.randomUUID(),

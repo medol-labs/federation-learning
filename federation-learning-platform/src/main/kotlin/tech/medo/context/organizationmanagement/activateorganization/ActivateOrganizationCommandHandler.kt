@@ -17,7 +17,7 @@ class ActivateOrganizationCommandHandler(
     @CommandHandler
     fun handle(
         command: ActivateOrganizationCommand,
-        @InjectEntity(idProperty = "organizationId") state: OrganizationState,
+        @InjectEntity(idProperty = "organizationName") state: OrganizationState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))

@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.submitagentlocalmodelupdate
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.submitagentlocalmodelupdate.SubmitAgentLocalModelUpdateDecision
+
+@Component
+class SubmitAgentLocalModelUpdateDecisionComponent : SubmitAgentLocalModelUpdateDecision

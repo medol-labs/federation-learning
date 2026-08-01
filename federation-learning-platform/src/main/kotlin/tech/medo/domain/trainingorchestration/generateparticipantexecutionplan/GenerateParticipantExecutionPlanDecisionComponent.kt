@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.generateparticipantexecutionplan
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.generateparticipantexecutionplan.GenerateParticipantExecutionPlanDecision
+
+@Component
+class GenerateParticipantExecutionPlanDecisionComponent : GenerateParticipantExecutionPlanDecision

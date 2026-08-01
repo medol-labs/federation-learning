@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.canceltrainingjob
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.canceltrainingjob.CancelTrainingJobDecision
+
+@Component
+class CancelTrainingJobDecisionComponent : CancelTrainingJobDecision

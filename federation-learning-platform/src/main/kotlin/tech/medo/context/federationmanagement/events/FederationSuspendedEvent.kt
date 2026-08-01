@@ -8,7 +8,8 @@ import java.util.UUID;
 
 @Event
 data class FederationSuspendedEvent(
-    @EventTag(key = "federationId")
     val federationId: UUID,
-    val suspensionReason: String
+    val suspensionReason: String,
+    @EventTag(key = "federationName")
+    val federationName: String
 )

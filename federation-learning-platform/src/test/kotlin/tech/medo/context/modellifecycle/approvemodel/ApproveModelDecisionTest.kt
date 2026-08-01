@@ -34,7 +34,7 @@ class ApproveModelDecisionTest {
             approvalNote = null
         )
 
-        val events = ApproveModelDecision().decide(
+        val events = (object : ApproveModelDecision {}).decide(
             command,
             state = state
         )

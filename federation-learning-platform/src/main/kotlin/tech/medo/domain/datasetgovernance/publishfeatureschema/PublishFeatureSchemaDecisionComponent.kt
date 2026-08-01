@@ -1,0 +1,7 @@
+package tech.medo.domain.datasetgovernance.publishfeatureschema
+
+import org.springframework.stereotype.Component
+import tech.medo.datasetgovernance.publishfeatureschema.PublishFeatureSchemaDecision
+
+@Component
+class PublishFeatureSchemaDecisionComponent : PublishFeatureSchemaDecision

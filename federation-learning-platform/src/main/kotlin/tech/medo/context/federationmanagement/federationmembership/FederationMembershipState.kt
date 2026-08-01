@@ -30,14 +30,14 @@ class FederationMembershipState @EntityCreator constructor() {
 
 
     var currentState: FederationMembershipStateEnum? = null
-    private var federationId: UUID? = null
-    private var organizationId: UUID? = null
-    private var invitationNote: String? = null
-    private var approvalNote: String? = null
-    private var rejectionReason: String? = null
-    private var revokeReason: String? = null
-    private var suspensionReason: String? = null
-    private var removalReason: String? = null
+    var federationId: UUID? = null
+    var organizationId: UUID? = null
+    var invitationNote: String? = null
+    var approvalNote: String? = null
+    var rejectionReason: String? = null
+    var revokeReason: String? = null
+    var suspensionReason: String? = null
+    var removalReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: ParticipantInvitedEvent): FederationMembershipState = apply {

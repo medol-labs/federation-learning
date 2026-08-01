@@ -2,6 +2,8 @@ package tech.medo.infrastructure.secondary.runtimeagentoperations.dataset.valida
 
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModel
+import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModelRepository
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractInput
@@ -14,9 +16,21 @@ import java.nio.file.Path
 
 @Component
 class CsvFileValidateDatasetContractAdapter(
-    private val bindingRepository: RuntimeDatasetBindingCatalogReadModelRepository
+    private val bindingRepository: RuntimeDatasetBindingCatalogReadModelRepository,
+    private val datasetCapabilityRepository: DatasetCapabilityReadModelRepository
 ) : ValidateDatasetContractService {
     override fun execute(input: ValidateDatasetContractInput): ValidateDatasetContractResult {
+        val datasetCapability = datasetCapabilityRepository.findById(input.datasetId)
+            ?: return rejected("Dataset feature schema snapshot was not found for dataset ${input.datasetId}.")
+        if (datasetCapability.featureSchemaId != input.featureSchemaId) {
+            return rejected(
+                "Dataset feature schema mismatch. Expected ${input.featureSchemaId}, found ${datasetCapability.featureSchemaId}."
+            )
+        }
+        if (datasetCapability.features.isEmpty()) {
+            return rejected("Dataset feature schema snapshot has no features for dataset ${input.datasetId}.")
+        }
+
         val binding = bindingRepository.findAll(Pageable.unpaged())
             .content
             .filter { it.datasetId == input.datasetId }
@@ -47,34 +61,18 @@ class CsvFileValidateDatasetContractAdapter(
             return rejected("CSV dataset file has no readable sample row: $filePath")
         }
 
-        val hasLabel = profile.headerColumns.any { it.normalized() in LABEL_COLUMNS }
-        val qualityScore = profile.qualityScore()
-        val nonIidScore = profile.nonIidScore()
-
-        return if (hasLabel) {
-            ValidateDatasetContractResult.Succeeded(
-                schemaCompatible = true,
-                labelCompatible = true,
-                qualityScore = qualityScore,
-                nonIidScore = nonIidScore
-            )
+        val schemaResult = profile.validateSchema(datasetCapability)
+        return if (schemaResult.schemaCompatible && schemaResult.labelCompatible) {
+            ValidateDatasetContractResult.Succeeded()
         } else {
             ValidateDatasetContractResult.Rejected(
-                schemaCompatible = true,
-                labelCompatible = false,
-                qualityScore = qualityScore,
-                nonIidScore = nonIidScore,
-                failureReason = "CSV dataset label column is required. Expected one of: ${LABEL_COLUMNS.joinToString(", ")}."
+                failureReason = schemaResult.failureReason
             )
         }
     }
 
     private fun rejected(reason: String): ValidateDatasetContractResult.Rejected =
         ValidateDatasetContractResult.Rejected(
-            schemaCompatible = false,
-            labelCompatible = false,
-            qualityScore = BigDecimal.ZERO,
-            nonIidScore = BigDecimal.ZERO,
             failureReason = reason
         )
 
@@ -135,7 +133,7 @@ class CsvFileValidateDatasetContractAdapter(
         split(',').map { it.trim().trim('"') }
 
     private fun String?.normalized(): String =
-        this?.trim()?.lowercase()?.replace("-", "_") ?: ""
+        normalize(this)
 
     private data class CsvProfile(
         val headerColumns: List<String>,
@@ -159,7 +157,39 @@ class CsvFileValidateDatasetContractAdapter(
 
         fun nonIidScore(): BigDecimal =
             BigDecimal.ZERO.setScale(SCORE_SCALE, RoundingMode.HALF_UP)
+
+        fun validateSchema(datasetCapability: DatasetCapabilityReadModel): SchemaValidationResult {
+            val actualColumns = headerColumns.map { normalize(it) }.toSet()
+            val missingFeatures = datasetCapability.features
+                .map { it.featureName }
+                .filter { it.isNotBlank() }
+                .filterNot { normalize(it) in actualColumns }
+            val missingLabels = datasetCapability.labels
+                .map { it.labelName }
+                .filter { it.isNotBlank() }
+                .filterNot { normalize(it) in actualColumns }
+            val schemaCompatible = missingFeatures.isEmpty()
+            val labelCompatible = missingLabels.isEmpty()
+            return SchemaValidationResult(
+                schemaCompatible = schemaCompatible,
+                labelCompatible = labelCompatible,
+                failureReason = buildList {
+                    if (missingFeatures.isNotEmpty()) {
+                        add("CSV dataset is missing feature columns: ${missingFeatures.joinToString(", ")}.")
+                    }
+                    if (missingLabels.isNotEmpty()) {
+                        add("CSV dataset is missing label columns: ${missingLabels.joinToString(", ")}.")
+                    }
+                }.joinToString(" ")
+            )
+        }
     }
+
+    private data class SchemaValidationResult(
+        val schemaCompatible: Boolean,
+        val labelCompatible: Boolean,
+        val failureReason: String
+    )
 
     private fun BigDecimal.coerceIn(minimum: BigDecimal, maximum: BigDecimal): BigDecimal =
         when {
@@ -170,6 +200,8 @@ class CsvFileValidateDatasetContractAdapter(
 
     private companion object {
         private const val SCORE_SCALE = 4
-        private val LABEL_COLUMNS = setOf("label", "target", "y")
+
+        private fun normalize(value: String?): String =
+            value?.trim()?.lowercase()?.replace("-", "_") ?: ""
     }
 }

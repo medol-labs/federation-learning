@@ -12,6 +12,7 @@ data class ConfigureRuntimeDatasetBindingCommand(
     val runtimeDatasetBindingId: UUID = java.util.UUID.randomUUID(),
     val datasetId: UUID,
     val organizationId: UUID,
+    val featureSchemaId: UUID,
     val runtimeId: UUID,
     val dataSourceType: String,
     val host: String?,

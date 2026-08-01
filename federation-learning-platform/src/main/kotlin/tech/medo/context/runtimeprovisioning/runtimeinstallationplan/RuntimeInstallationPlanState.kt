@@ -12,17 +12,17 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInstallationPlanStateE
 import java.util.UUID;
 
 
-@EventSourced(idType = UUID::class, tagKey = RuntimeInstallationPlanTags.RUNTIME_INSTALLATION_PLAN_ID)
+@EventSourced(idType = UUID::class, tagKey = RuntimeInstallationPlanTags.ORGANIZATION_ID)
 class RuntimeInstallationPlanState @EntityCreator constructor() {
 
     var currentState: RuntimeInstallationPlanStateEnum? = null
-    private var runtimeInstallationPlanId: UUID? = null
-    private var runtimeInfrastructureId: UUID? = null
-    private var organizationId: UUID? = null
-    private var runtimeInfrastructurePackageId: UUID? = null
-    private var runtimeName: String? = null
-    private var agentInstallMode: String? = null
-    private var expectedNodeCount: Int? = null
+    var runtimeInstallationPlanId: UUID? = null
+    var runtimeInfrastructureId: UUID? = null
+    var organizationId: UUID? = null
+    var runtimeInfrastructurePackageId: UUID? = null
+    var runtimeName: String? = null
+    var agentInstallMode: String? = null
+    var expectedNodeCount: Int? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInstallationPlanCreatedEvent): RuntimeInstallationPlanState = apply {

@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeprovisioning.retryruntimeagentdeployment
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeprovisioning.retryruntimeagentdeployment.RetryRuntimeAgentDeploymentDecision
+
+@Component
+class RetryRuntimeAgentDeploymentDecisionComponent : RetryRuntimeAgentDeploymentDecision

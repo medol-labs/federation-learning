@@ -25,14 +25,14 @@ class RuntimeInfrastructurePackageState @EntityCreator constructor() {
 
 
     var currentState: RuntimeInfrastructurePackageStateEnum? = null
-    private var runtimeInfrastructurePackageId: UUID? = null
-    private var packageName: String? = null
-    private var packageVersion: String? = null
-    private var runtimeEnvironmentType: String? = null
-    private var runtimeDeploymentTargetType: String? = null
-    private var installProfile: String? = null
-    private var architecture: String? = null
-    private var installGuide: String? = null
+    var runtimeInfrastructurePackageId: UUID? = null
+    var packageName: String? = null
+    var packageVersion: String? = null
+    var runtimeEnvironmentType: String? = null
+    var runtimeDeploymentTargetType: String? = null
+    var installProfile: String? = null
+    var architecture: String? = null
+    var installGuide: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructurePackageRegisteredEvent): RuntimeInfrastructurePackageState = apply {

@@ -40,7 +40,7 @@ class RecordModelEvaluationPackageDecisionTest {
             baselineModelVersionId = null
         )
 
-        val events = RecordModelEvaluationPackageDecision().decide(
+        val events = (object : RecordModelEvaluationPackageDecision {}).decide(
             command,
             state = state
         )

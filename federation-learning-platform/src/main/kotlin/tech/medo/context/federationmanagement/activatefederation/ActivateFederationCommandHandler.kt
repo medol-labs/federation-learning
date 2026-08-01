@@ -17,7 +17,7 @@ class ActivateFederationCommandHandler(
     @CommandHandler
     fun handle(
         command: ActivateFederationCommand,
-        @InjectEntity(idProperty = "federationId") state: FederationState,
+        @InjectEntity(idProperty = "federationName") state: FederationState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))

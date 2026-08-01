@@ -17,7 +17,7 @@ import tech.medo.dictionarymaintenance.domain.types.DisplayOrder;
 class AddDictionaryValueDecisionTest {
     @Test
     fun AddDictionaryValueEmitsDictionaryValueAddedEvent() {
-        val events = AddDictionaryValueDecision().decide(
+        val events = (object : AddDictionaryValueDecision {}).decide(
             AddDictionaryValueCommand(
             dictionaryValueId = java.util.UUID.randomUUID(),
             dictionaryId = java.util.UUID.randomUUID(),

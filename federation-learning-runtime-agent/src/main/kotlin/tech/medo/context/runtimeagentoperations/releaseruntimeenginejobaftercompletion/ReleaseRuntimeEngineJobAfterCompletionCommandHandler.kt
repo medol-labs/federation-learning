@@ -5,14 +5,16 @@ import org.axonframework.messaging.eventhandling.gateway.EventAppender
 import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.ReleaseRuntimeEngineJobAfterCompletionCommand
-
+import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.ReleaseRuntimeEngineJobAfterCompletionInput
+import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.ReleaseRuntimeEngineJobAfterCompletionService
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
 
 
 @Component
 class ReleaseRuntimeEngineJobAfterCompletionCommandHandler(
-    private val decision: ReleaseRuntimeEngineJobAfterCompletionDecision
+    private val decision: ReleaseRuntimeEngineJobAfterCompletionDecision,
+    private val releaseRuntimeEngineJobAfterCompletionService: ReleaseRuntimeEngineJobAfterCompletionService
 ) {
     @CommandHandler
     fun handle(
@@ -20,6 +22,9 @@ class ReleaseRuntimeEngineJobAfterCompletionCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        eventAppender.append(decision.decide(command, state))
+        val input = ReleaseRuntimeEngineJobAfterCompletionInput(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId)
+        val portResult = releaseRuntimeEngineJobAfterCompletionService.execute(input)
+
+        eventAppender.append(decision.decide(command, state, portResult))
     }
 }

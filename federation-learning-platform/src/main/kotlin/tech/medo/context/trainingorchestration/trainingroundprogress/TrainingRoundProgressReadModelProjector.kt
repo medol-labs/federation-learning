@@ -233,6 +233,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.acceptedModelUpdateCount = event.acceptedModelUpdateCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.state = TrainingRoundStateEnum.AGGREGATING
+            entity.secureAggregationStatus = "Aggregating"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

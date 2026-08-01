@@ -1,6 +1,5 @@
 package tech.medo.trainingorchestration.submitmodelupdatesubmission
 
-import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.submitmodelupdatesubmission.SubmitModelUpdateSubmissionCommand
 
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionReceivedEvent
@@ -10,8 +9,7 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
-@Component
-class SubmitModelUpdateSubmissionDecision {
+interface SubmitModelUpdateSubmissionDecision {
     fun decide(command: SubmitModelUpdateSubmissionCommand, state: TrainingRoundState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(

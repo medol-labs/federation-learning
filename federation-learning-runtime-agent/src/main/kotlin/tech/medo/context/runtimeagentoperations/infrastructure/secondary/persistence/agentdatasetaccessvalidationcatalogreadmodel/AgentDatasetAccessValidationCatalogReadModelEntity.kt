@@ -19,6 +19,8 @@ class AgentDatasetAccessValidationCatalogReadModelEntity : MetadataProjection {
     var datasetAccessValidationId: UUID? = null
     var runtimeDatasetBindingId: UUID? = null
     var datasetId: UUID? = null
+    var organizationId: UUID? = null
+    var featureSchemaId: UUID? = null
     var runtimeId: UUID? = null
     var datasetName: String? = null
     var readable: Boolean? = null

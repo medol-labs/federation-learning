@@ -15,15 +15,15 @@ import java.util.UUID;
 import tech.medo.dictionarymaintenance.domain.types.DictionaryCode;
 
 
-@EventSourced(idType = UUID::class, tagKey = DictionaryTags.DICTIONARY_ID)
+@EventSourced(idType = DictionaryCode::class, tagKey = DictionaryTags.DICTIONARY_CODE)
 class DictionaryState @EntityCreator constructor() {
 
     var currentState: DictionaryStateEnum? = null
-    private var dictionaryId: UUID? = null
-    private var dictionaryCode: DictionaryCode? = null
-    private var dictionaryName: String? = null
-    private var description: String? = null
-    private var archiveReason: String? = null
+    var dictionaryId: UUID? = null
+    var dictionaryCode: DictionaryCode? = null
+    var dictionaryName: String? = null
+    var description: String? = null
+    var archiveReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: DictionaryRegisteredEvent): DictionaryState = apply {

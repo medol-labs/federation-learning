@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.completeroundexecution
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.completeroundexecution.CompleteRoundExecutionDecision
+
+@Component
+class CompleteRoundExecutionDecisionComponent : CompleteRoundExecutionDecision

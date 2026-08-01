@@ -16,14 +16,14 @@ import java.util.UUID;
 class ModelArtifactState @EntityCreator constructor() {
 
     var currentState: ModelArtifactStateEnum? = null
-    private var modelVersionId: UUID? = null
-    private var modelArtifactRef: String? = null
-    private var modelRepositoryRef: String? = null
-    private var modelFormat: String? = null
-    private var modelHash: String? = null
-    private var modelSignatureRef: String? = null
-    private var modelSizeBytes: Int? = null
-    private var sourceType: String? = null
+    var modelVersionId: UUID? = null
+    var modelArtifactRef: String? = null
+    var modelRepositoryRef: String? = null
+    var modelFormat: String? = null
+    var modelHash: String? = null
+    var modelSignatureRef: String? = null
+    var modelSizeBytes: Int? = null
+    var sourceType: String? = null
 
     @EventSourcingHandler
     fun evolve(event: ModelArtifactRegisteredEvent): ModelArtifactState = apply {

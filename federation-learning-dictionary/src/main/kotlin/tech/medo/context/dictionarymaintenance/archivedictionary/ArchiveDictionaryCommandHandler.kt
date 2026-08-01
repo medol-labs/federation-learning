@@ -17,7 +17,7 @@ class ArchiveDictionaryCommandHandler(
     @CommandHandler
     fun handle(
         command: ArchiveDictionaryCommand,
-        @InjectEntity(idProperty = "dictionaryId") state: DictionaryState,
+        @InjectEntity(idProperty = "dictionaryCode") state: DictionaryState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))

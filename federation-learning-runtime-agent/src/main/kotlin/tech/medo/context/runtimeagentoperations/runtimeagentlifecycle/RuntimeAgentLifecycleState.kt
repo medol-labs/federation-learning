@@ -19,19 +19,19 @@ import java.util.UUID;
 class RuntimeAgentLifecycleState @EntityCreator constructor() {
 
     var currentState: RuntimeAgentLifecycleStateEnum? = null
-    private var runtimeAgentId: UUID? = null
-    private var runtimeInfrastructureId: UUID? = null
-    private var agentVersion: String? = null
-    private var bootstrapConfigurationLoaded: Boolean? = null
-    private var bootstrapRequestId: UUID? = null
-    private var failureReason: String? = null
-    private var runtimeAgentSelfCheckPassed: Boolean? = null
-    private var configurationLoaded: Boolean? = null
-    private var secretStoreAccessible: Boolean? = null
-    private var runtimeEngineAdapterReady: Boolean? = null
-    private var modelRepositoryClientReady: Boolean? = null
-    private var localDatasetBindingStoreReady: Boolean? = null
-    private var workingDirectoryWritable: Boolean? = null
+    var runtimeAgentId: UUID? = null
+    var runtimeInfrastructureId: UUID? = null
+    var agentVersion: String? = null
+    var bootstrapConfigurationLoaded: Boolean? = null
+    var bootstrapRequestId: UUID? = null
+    var failureReason: String? = null
+    var runtimeAgentSelfCheckPassed: Boolean? = null
+    var configurationLoaded: Boolean? = null
+    var secretStoreAccessible: Boolean? = null
+    var runtimeEngineAdapterReady: Boolean? = null
+    var modelRepositoryClientReady: Boolean? = null
+    var localDatasetBindingStoreReady: Boolean? = null
+    var workingDirectoryWritable: Boolean? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentBootstrapConfigurationLoadedEvent): RuntimeAgentLifecycleState = apply {

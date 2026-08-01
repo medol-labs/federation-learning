@@ -3,8 +3,12 @@ package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.da
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
+import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition;
+import tech.medo.runtimeagentoperations.domain.types.LabelDefinition;
 
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModel
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModelProjection
@@ -12,7 +16,7 @@ import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadM
 import tech.medo.runtimeagentoperations.datasetcapability.toReadModel
 
 @Repository
-class JpaDatasetCapabilityReadModelRepository(private val jpaRepository: SpringDataDatasetCapabilityReadModelRepository) : DatasetCapabilityReadModelRepository {
+class JpaDatasetCapabilityReadModelRepository(private val jpaRepository: SpringDataDatasetCapabilityReadModelRepository, private val objectMapper: ObjectMapper) : DatasetCapabilityReadModelRepository {
     override fun findAll(pageable: Pageable): Page<DatasetCapabilityReadModel> =
         jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
 
@@ -32,6 +36,8 @@ class JpaDatasetCapabilityReadModelRepository(private val jpaRepository: SpringD
             it.organizationId = this@toProjection.organizationId
             it.runtimeId = this@toProjection.runtimeId
             it.featureSchemaId = this@toProjection.featureSchemaId
+            it.features = this@toProjection.features?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<FeatureDefinition>>() {}) } ?: emptyList()
+            it.labels = this@toProjection.labels?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<LabelDefinition>>() {}) } ?: emptyList()
             it.organizationName = this@toProjection.organizationName
             it.featureDomain = this@toProjection.featureDomain
             it.featureSchemaVersion = this@toProjection.featureSchemaVersion
@@ -45,6 +51,7 @@ class JpaDatasetCapabilityReadModelRepository(private val jpaRepository: SpringD
             it.nonIidScore = this@toProjection.nonIidScore
             it.metadataReportId = this@toProjection.metadataReportId
             it.metadataStatus = this@toProjection.metadataStatus
+            it.contractStatus = this@toProjection.contractStatus
             it.approvalStatus = this@toProjection.approvalStatus
             it.approved = this@toProjection.approved
             it.lastProfiledAt = this@toProjection.lastProfiledAt
@@ -62,6 +69,8 @@ class JpaDatasetCapabilityReadModelRepository(private val jpaRepository: SpringD
             it.organizationId = this@toEntity.organizationId
             it.runtimeId = this@toEntity.runtimeId
             it.featureSchemaId = this@toEntity.featureSchemaId
+            it.features = objectMapper.writeValueAsString(this@toEntity.features)
+            it.labels = objectMapper.writeValueAsString(this@toEntity.labels)
             it.organizationName = this@toEntity.organizationName
             it.featureDomain = this@toEntity.featureDomain
             it.featureSchemaVersion = this@toEntity.featureSchemaVersion
@@ -75,6 +84,7 @@ class JpaDatasetCapabilityReadModelRepository(private val jpaRepository: SpringD
             it.nonIidScore = this@toEntity.nonIidScore
             it.metadataReportId = this@toEntity.metadataReportId
             it.metadataStatus = this@toEntity.metadataStatus
+            it.contractStatus = this@toEntity.contractStatus
             it.approvalStatus = this@toEntity.approvalStatus
             it.approved = this@toEntity.approved
             it.lastProfiledAt = this@toEntity.lastProfiledAt

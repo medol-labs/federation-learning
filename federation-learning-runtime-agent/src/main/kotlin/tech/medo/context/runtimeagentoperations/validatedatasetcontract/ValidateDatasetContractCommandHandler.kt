@@ -25,6 +25,7 @@ class ValidateDatasetContractCommandHandler(
         val input = ValidateDatasetContractInput(datasetId = command.datasetId, metadataReportId = command.metadataReportId, featureSchemaId = command.featureSchemaId)
         val portResult = validateDatasetContractService.execute(input)
         val now = java.time.LocalDateTime.now()
+
         eventAppender.append(decision.decide(command, state, portResult, now))
     }
 }

@@ -49,6 +49,7 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.planStatus = "Planned"
             entity.plannedAt = eventTime(message)
             entity.agentDeploymentFailedAt = null
             entity.agentDeploymentFailureReason = null

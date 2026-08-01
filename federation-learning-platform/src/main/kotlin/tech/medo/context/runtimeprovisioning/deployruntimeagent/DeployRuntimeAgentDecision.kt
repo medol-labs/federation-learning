@@ -1,6 +1,5 @@
 package tech.medo.runtimeprovisioning.deployruntimeagent
 
-import org.springframework.stereotype.Component
 import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentCommand
 import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentResult
 import tech.medo.runtimeprovisioning.events.RuntimeAgentInstallationSucceededEvent
@@ -11,8 +10,7 @@ import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructure
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
 
-@Component
-class DeployRuntimeAgentDecision {
+interface DeployRuntimeAgentDecision {
     fun decide(command: DeployRuntimeAgentCommand, state: RuntimeInfrastructureState, portResult: DeployRuntimeAgentResult, now: java.time.LocalDateTime): List<Any> {
         require(state.currentState == RuntimeInfrastructureStateEnum.VERIFIED) {
             "DeployRuntimeAgent requires RuntimeInfrastructure to be Verified."

@@ -1,6 +1,5 @@
 package tech.medo.trainingorchestration.completetraininground
 
-import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.completetraininground.CompleteTrainingRoundCommand
 
 import tech.medo.trainingorchestration.events.TrainingRoundCompletedEvent
@@ -10,8 +9,7 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
-@Component
-class CompleteTrainingRoundDecision {
+interface CompleteTrainingRoundDecision {
     fun decide(command: CompleteTrainingRoundCommand, state: TrainingRoundState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(

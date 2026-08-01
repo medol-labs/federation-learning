@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.validatedatasetcontract
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractDecision
+
+@Component
+class ValidateDatasetContractDecisionComponent : ValidateDatasetContractDecision

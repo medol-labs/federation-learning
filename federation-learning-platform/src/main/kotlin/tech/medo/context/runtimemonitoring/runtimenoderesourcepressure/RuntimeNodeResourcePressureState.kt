@@ -17,12 +17,12 @@ import java.math.BigDecimal;
 class RuntimeNodeResourcePressureState @EntityCreator constructor() {
 
     var currentState: RuntimeNodeResourcePressureStateEnum? = null
-    private var nodeId: UUID? = null
-    private var runtimeAgentId: UUID? = null
-    private var trainingJobId: UUID? = null
-    private var pressureType: String? = null
-    private var observedValue: BigDecimal? = null
-    private var thresholdValue: BigDecimal? = null
+    var nodeId: UUID? = null
+    var runtimeAgentId: UUID? = null
+    var trainingJobId: UUID? = null
+    var pressureType: String? = null
+    var observedValue: BigDecimal? = null
+    var thresholdValue: BigDecimal? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeNodeResourcePressureDetectedEvent): RuntimeNodeResourcePressureState = apply {

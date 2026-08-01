@@ -14,7 +14,7 @@ import java.util.UUID;
 class ReceiveParticipantExecutionPlanDecisionTest {
     @Test
     fun ReceiveParticipantExecutionPlanEmitsExecutionPlanReceivedEvent() {
-        val events = ReceiveParticipantExecutionPlanDecision().decide(
+        val events = (object : ReceiveParticipantExecutionPlanDecision {}).decide(
             ReceiveParticipantExecutionPlanCommand(
             executionPlanId = java.util.UUID.randomUUID(),
             executionSessionId = java.util.UUID.randomUUID(),

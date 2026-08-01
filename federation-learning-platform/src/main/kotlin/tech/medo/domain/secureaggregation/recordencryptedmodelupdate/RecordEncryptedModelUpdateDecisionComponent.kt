@@ -1,0 +1,7 @@
+package tech.medo.domain.secureaggregation.recordencryptedmodelupdate
+
+import org.springframework.stereotype.Component
+import tech.medo.secureaggregation.recordencryptedmodelupdate.RecordEncryptedModelUpdateDecision
+
+@Component
+class RecordEncryptedModelUpdateDecisionComponent : RecordEncryptedModelUpdateDecision
