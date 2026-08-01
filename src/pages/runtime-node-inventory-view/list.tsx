@@ -256,19 +256,6 @@ export const RuntimeNodeInventoryViewList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="registerRuntimeInfrastructure"
-                    recordItemId={row.original.nodeId}
-                    size="sm"
-                    query={{
-                      runtimeInfrastructureId: row.original.runtimeInfrastructureId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.nodeId} size="sm" />
                 </DropdownMenuItem>

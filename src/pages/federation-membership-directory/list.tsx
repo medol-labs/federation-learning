@@ -210,16 +210,13 @@ export const FederationMembershipDirectoryList = () => {
                   />
                 </DropdownMenuItem>
                 )}
-                {isCommandVisible(row.original, "", "", []) && (
+                {isCommandVisible(row.original, "", "membershipStatus", ["Draft"]) && (
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
-                    command="createRuntimeInstallationPlan"
+                    command="activateFederation"
                     recordItemId={row.original.federationId}
                     size="sm"
-                    query={{
-                      organizationId: row.original.organizationId,
-                    }}
                   />
                 </DropdownMenuItem>
                 )}

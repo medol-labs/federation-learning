@@ -149,6 +149,14 @@ export const FederationOverviewList = () => {
         header: t("table.actions", "Actions"),
         cell: ({ row }) => (
           <div className="flex gap-2">
+            {isCommandVisible(row.original, "", "state", ["Suspended"]) && (
+            <CommandButton
+              variant="outline"
+              command="removeParticipant"
+              recordItemId={row.original.federationId}
+              size="sm"
+            />
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -156,6 +164,86 @@ export const FederationOverviewList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "state", ["Draft"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="activateFederation"
+                    recordItemId={row.original.federationId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "state", ["Active"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="suspendFederation"
+                    recordItemId={row.original.federationId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "state", ["Suspended"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="reactivateFederation"
+                    recordItemId={row.original.federationId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="inviteParticipant"
+                    recordItemId={row.original.federationId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "state", ["Invited"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="approveParticipant"
+                    recordItemId={row.original.federationId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "state", ["Invited"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="rejectParticipant"
+                    recordItemId={row.original.federationId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "state", ["Invited"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="revokeParticipantInvitation"
+                    recordItemId={row.original.federationId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "state", ["Active"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="suspendParticipant"
+                    recordItemId={row.original.federationId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.federationId} size="sm" />
                 </DropdownMenuItem>
@@ -196,7 +284,7 @@ export const FederationOverviewList = () => {
         <CommandButton variant="default" command="createFederation" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
-        null
+        <CommandButton variant="destructive" command="removeParticipant" size="sm" />
       }>
         <ListToolbar
           table={table.reactTable}

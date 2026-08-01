@@ -52,6 +52,7 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
     objectPrefix: searchParams.get("objectPrefix") ?? undefined,
     dataFormat: searchParams.get("dataFormat") ?? undefined,
     credentialSecretName: searchParams.get("credentialSecretName") ?? undefined,
+    featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
   } as Partial<ConfigureRuntimeDatasetBindingCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ConfigureRuntimeDatasetBindingCommandInput, ConfigureRuntimeDatasetBindingCommandInput>({
@@ -143,6 +144,33 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
                     label: t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.organizationId.label", "Organization Directory"),
                     aggregateRoute: "organization",
                     queryRoute: "organizationdirectory",
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="featureSchemaId"
+            rules={{ required: "Feature Schema Id is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.featureSchemaId.label", "Feature Schema Id")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="feature_schema_catalog"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="featureDomain"
+                  optionValue="featureSchemaId"
+                  value={field.value || ""}
+                  onValueChange={field.onChange}
+                  placeholder={t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
+                  meta={{
+                    idField: "featureSchemaId",
+                    label: t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.featureSchemaId.label", "Feature Schema Catalog"),
+                    aggregateRoute: "featureschema",
+                    queryRoute: "featureschemacatalog",
                   }}
                 />
                 <FormMessage />

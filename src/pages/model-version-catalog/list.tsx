@@ -365,6 +365,30 @@ export const ModelVersionCatalogList = () => {
                   />
                 </DropdownMenuItem>
                 )}
+                {isCommandVisible(row.original, "canApprove", "state", ["EvaluationPackaged"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="approveModel"
+                    recordItemId={row.original.modelVersionId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "state", ["Approved"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="promoteModelToProduction"
+                    recordItemId={row.original.modelVersionId}
+                    size="sm"
+                    query={{
+                      releaseChannel: row.original.releaseChannel,
+                      productionStage: row.original.productionStage,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
                 {isCommandVisible(row.original, "canRollback", "state", ["Production"]) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -375,6 +399,16 @@ export const ModelVersionCatalogList = () => {
                     query={{
                       previousModelVersionId: row.original.previousModelVersionId,
                     }}
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "canRetire", "state", ["Production"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retireModelVersion"
+                    recordItemId={row.original.modelVersionId}
+                    size="sm"
                   />
                 </DropdownMenuItem>
                 )}

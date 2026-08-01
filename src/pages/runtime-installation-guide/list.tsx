@@ -236,19 +236,6 @@ export const RuntimeInstallationGuideList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="registerRuntimeInfrastructure"
-                    recordItemId={row.original.runtimeInstallationPlanId}
-                    size="sm"
-                    query={{
-                      runtimeInfrastructureId: row.original.runtimeInfrastructureId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.runtimeInstallationPlanId} size="sm" />
                 </DropdownMenuItem>

@@ -60,6 +60,16 @@ export const DatasetCapabilityShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.dataset_capability.fields.features.label", "Features")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.features, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.dataset_capability.fields.labels.label", "Labels")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.labels, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.dataset_capability.fields.organizationName.label", "Organization Name")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.organizationName, t)}</p>
             </div>

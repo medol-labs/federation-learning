@@ -326,6 +326,19 @@ export const SecureAggregationSessionCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "state", ["Planned"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="failSecureAggregationSession"
+                    recordItemId={row.original.secureAggregationSessionId}
+                    size="sm"
+                    query={{
+                      failureReason: row.original.failureReason,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
                 {isCommandVisible(row.original, "", "", []) && (
                 <DropdownMenuItem>
                   <CommandButton

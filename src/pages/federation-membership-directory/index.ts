@@ -7,4 +7,4 @@ export * from "./approve-participant";
 export * from "./reject-participant";
 export * from "./revoke-participant-invitation";
 export * from "./suspend-participant";
-export * from "./create-runtime-installation-plan";
+export * from "./activate-federation";

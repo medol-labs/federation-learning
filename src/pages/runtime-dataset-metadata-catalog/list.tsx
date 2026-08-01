@@ -286,21 +286,6 @@ export const RuntimeDatasetMetadataCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="configureRuntimeDatasetBinding"
-                    recordItemId={row.original.metadataReportId}
-                    size="sm"
-                    query={{
-                      datasetId: row.original.datasetId,
-                      organizationId: row.original.organizationId,
-                      runtimeId: row.original.runtimeId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.metadataReportId} size="sm" />
                 </DropdownMenuItem>

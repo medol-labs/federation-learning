@@ -166,6 +166,16 @@ export const RuntimeIdentityCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "identityStatus", ["Active"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="revokeRuntimeIdentity"
+                    recordItemId={row.original.runtimeId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.runtimeId} size="sm" />
                 </DropdownMenuItem>

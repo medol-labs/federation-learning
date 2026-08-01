@@ -55,6 +55,16 @@ export const AgentDatasetAccessValidationCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.organizationId.label", "Organization Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.organizationId, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.featureSchemaId.label", "Feature Schema Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.featureSchemaId, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.runtimeId.label", "Runtime Id")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeId, t)}</p>
             </div>

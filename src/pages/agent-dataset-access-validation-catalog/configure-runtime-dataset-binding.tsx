@@ -38,8 +38,9 @@ export const AgentDatasetAccessValidationCatalogConfigureRuntimeDatasetBinding =
   const { id } = useParsed();
   const defaultValues = {
     datasetId: searchParams.get("datasetId") ?? undefined,
-    runtimeId: searchParams.get("runtimeId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
+    featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
+    runtimeId: searchParams.get("runtimeId") ?? undefined,
   } as Partial<ConfigureRuntimeDatasetBindingCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ConfigureRuntimeDatasetBindingCommandInput, ConfigureRuntimeDatasetBindingCommandInput>({
@@ -131,6 +132,33 @@ export const AgentDatasetAccessValidationCatalogConfigureRuntimeDatasetBinding =
                     label: t("resources.agent_dataset_access_validation_catalog.commands.configureRuntimeDatasetBinding.fields.organizationId.label", "Organization Directory"),
                     aggregateRoute: "organization",
                     queryRoute: "organizationdirectory",
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="featureSchemaId"
+            rules={{ required: "Feature Schema Id is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.agent_dataset_access_validation_catalog.commands.configureRuntimeDatasetBinding.fields.featureSchemaId.label", "Feature Schema Id")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="feature_schema_catalog"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="featureDomain"
+                  optionValue="featureSchemaId"
+                  value={field.value || ""}
+                  onValueChange={field.onChange}
+                  placeholder={t("resources.agent_dataset_access_validation_catalog.commands.configureRuntimeDatasetBinding.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
+                  meta={{
+                    idField: "featureSchemaId",
+                    label: t("resources.agent_dataset_access_validation_catalog.commands.configureRuntimeDatasetBinding.fields.featureSchemaId.label", "Feature Schema Catalog"),
+                    aggregateRoute: "featureschema",
+                    queryRoute: "featureschemacatalog",
                   }}
                 />
                 <FormMessage />

@@ -1294,7 +1294,20 @@
         "agentRuntimeJobFailureRate",
         "agentRuntimeJobStartupLatency"
       ],
-      "valueTypes": [],
+      "valueTypes": [
+        {
+          "id": "type-170acd89",
+          "name": "FeatureDefinition",
+          "title": "Feature Definition",
+          "kind": "object"
+        },
+        {
+          "id": "type-2c780c45",
+          "name": "LabelDefinition",
+          "title": "Label Definition",
+          "kind": "object"
+        }
+      ],
       "aggregates": [],
       "concepts": [
         {
@@ -1437,6 +1450,11 @@
           "id": "slice-2529cf36",
           "name": "ValidateDatasetContract",
           "title": "Validate Dataset Contract"
+        },
+        {
+          "id": "slice-2e18bcb1",
+          "name": "RetryDatasetContractValidation",
+          "title": "Retry Dataset Contract Validation"
         },
         {
           "id": "slice-d28aff88",
@@ -1921,6 +1939,242 @@
           "type": "UUID",
           "cardinality": "Single",
           "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        }
+      ]
+    },
+    {
+      "id": "type-170acd89",
+      "name": "FeatureDefinition",
+      "title": "Feature Definition",
+      "context": "RuntimeAgentOperations",
+      "baseType": "FeatureDefinition",
+      "kind": "object",
+      "constraints": [],
+      "values": [],
+      "fields": [
+        {
+          "name": "featureName",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "dataType",
+          "type": "String",
+          "dictionary": "FEATURE_DATA_TYPE",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "required",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "nullable",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "validationRules",
+          "type": "String",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "isIdentifier",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "isSensitive",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "encodingStrategy",
+          "type": "String",
+          "dictionary": "FEATURE_ENCODING_STRATEGY",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "featureTags",
+          "type": "String",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        }
+      ]
+    },
+    {
+      "id": "type-2c780c45",
+      "name": "LabelDefinition",
+      "title": "Label Definition",
+      "context": "RuntimeAgentOperations",
+      "baseType": "LabelDefinition",
+      "kind": "object",
+      "constraints": [],
+      "values": [],
+      "fields": [
+        {
+          "name": "labelName",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "dataType",
+          "type": "String",
+          "dictionary": "FEATURE_DATA_TYPE",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "cardinality",
+          "type": "Int",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "classLabels",
+          "type": "String",
+          "cardinality": "Multiple",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "isMultilabel",
+          "type": "Boolean",
+          "cardinality": "Single",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "validationRules",
+          "type": "String",
+          "cardinality": "Multiple",
+          "optional": false,
+          "idAttribute": false,
+          "generated": false,
+          "technicalAttribute": false,
+          "query": false,
+          "display": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "String",
+          "cardinality": "Single",
+          "optional": true,
           "idAttribute": false,
           "generated": false,
           "technicalAttribute": false,
@@ -2845,6 +3099,11 @@
           "id": "slice-2529cf36",
           "name": "ValidateDatasetContract",
           "title": "Validate Dataset Contract"
+        },
+        {
+          "id": "slice-2e18bcb1",
+          "name": "RetryDatasetContractValidation",
+          "title": "Retry Dataset Contract Validation"
         },
         {
           "id": "slice-d28aff88",
@@ -5727,6 +5986,39 @@
       "startsLifecycle": false
     },
     {
+      "id": "transition-17666234",
+      "context": "RuntimeAgentOperations",
+      "owner": {
+        "id": "concept-b8098464",
+        "type": "concept",
+        "name": "Dataset",
+        "title": "Dataset"
+      },
+      "slice": {
+        "id": "slice-2e18bcb1",
+        "name": "RetryDatasetContractValidation",
+        "title": "Retry Dataset Contract Validation"
+      },
+      "command": {
+        "id": "command-478724df",
+        "name": "RetryDatasetContractValidation",
+        "title": "Retry Dataset Contract Validation"
+      },
+      "event": {
+        "id": "event-2befe224",
+        "name": "DatasetContractRevalidated",
+        "title": "Dataset Contract Revalidated"
+      },
+      "trigger": {
+        "id": "event-cb50e94e",
+        "name": "DatasetContractValidationFailed",
+        "title": "Dataset Contract Validation Failed"
+      },
+      "from": "ContractValidationCompleted",
+      "to": "ContractValidationCompleted",
+      "startsLifecycle": false
+    },
+    {
       "id": "transition-5ffe34bd",
       "context": "RuntimeAgentOperations",
       "owner": {
@@ -6878,7 +7170,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-37301ff2",
-            "description": "Organization Already Exists"
+            "description": "Organization Already Exists",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -7783,7 +8076,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-b1489c1d",
-            "description": "Federation Already Exists"
+            "description": "Federation Already Exists",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -9174,7 +9468,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-f2e6ed15",
-            "description": "Participant Invitation Required"
+            "description": "Participant Invitation Required",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -10204,7 +10499,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-94e1bc20",
-            "description": "Dictionary Already Exists"
+            "description": "Dictionary Already Exists",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -14597,7 +14893,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-c6c681f0",
-            "description": "Runtime Agent Deployment Retry Not Allowed"
+            "description": "Runtime Agent Deployment Retry Not Allowed",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -15680,7 +15977,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-57e3a145",
-            "description": "Feature Schema Version Already Exists"
+            "description": "Feature Schema Version Already Exists",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -20078,7 +20376,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-d0e5cbc1",
-            "description": "Positive Round Budget Required"
+            "description": "Positive Round Budget Required",
+            "outcome": "REJECT"
           }
         },
         {
@@ -20191,7 +20490,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-3affdf5e",
-            "description": "Differential Privacy Parameters Required"
+            "description": "Differential Privacy Parameters Required",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -21376,7 +21676,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-20d1dcee",
-            "description": "Training Run Configuration Locked"
+            "description": "Training Run Configuration Locked",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -22454,7 +22755,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-9c64df62",
-            "description": "Runnable Training Configuration Required"
+            "description": "Runnable Training Configuration Required",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -22709,7 +23011,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-6d805910",
-            "description": "Training Job Required"
+            "description": "Training Job Required",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -24866,7 +25169,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-adf9ba5b",
-            "description": "Round Participant Quorum Required"
+            "description": "Round Participant Quorum Required",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -28996,7 +29300,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-1c9620d7",
-            "description": "Global Model Evaluation Required"
+            "description": "Global Model Evaluation Required",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -31228,7 +31533,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-d44029d1",
-            "description": "Model Evaluation Package Required"
+            "description": "Model Evaluation Package Required",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -31560,7 +31866,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-cb709e1f",
-            "description": "Model Approval Required"
+            "description": "Model Approval Required",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -38633,6 +38940,7 @@
           "name": "datasetName"
         }
       ],
+      "port": true,
       "concepts": [
         "Dataset"
       ],
@@ -38732,7 +39040,8 @@
               "elementType": "EVENT"
             }
           ],
-          "startsLifecycle": true
+          "startsLifecycle": true,
+          "port": true
         }
       ],
       "events": [
@@ -38804,6 +39113,28 @@
               "type": "String",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "features",
+              "type": "FeatureDefinition",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "labels",
+              "type": "LabelDefinition",
+              "cardinality": "Multiple",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -38884,7 +39215,141 @@
         }
       ],
       "processors": [],
-      "specifications": [],
+      "specifications": [
+        {
+          "id": "gwt-1156f003",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Declare Dataset",
+          "title": "Declare Dataset With Feature Schema Snapshot",
+          "specification": "Feature Schema Snapshot Required For Dataset Declaration",
+          "rule": "Declaring a dataset synchronously loads the referenced feature schema through the DeclareDataset port adapter before the decision emits DatasetDeclared. The adapter must enrich the declaration result with the feature and label snapshot so the runtime agent can validate and profile local data without querying the platform later. If the feature schema cannot be loaded, the adapter throws an exception and the declaration does not emit DatasetDeclared.",
+          "expressions": [],
+          "validates": [],
+          "given": [],
+          "when": [
+            {
+              "title": "Declare Dataset",
+              "id": "command-aa7dfd8d",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "33333333-3333-4333-8333-333333333333"
+                },
+                {
+                  "name": "datasetName",
+                  "example": "credit-risk"
+                },
+                {
+                  "name": "datasetType",
+                  "example": "TABULAR"
+                },
+                {
+                  "name": "datasetUsage",
+                  "example": "TRAINING"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Dataset Declared",
+              "id": "event-b85fc68a",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "33333333-3333-4333-8333-333333333333"
+                },
+                {
+                  "name": "datasetName",
+                  "example": "credit-risk"
+                },
+                {
+                  "name": "datasetType",
+                  "example": "TABULAR"
+                },
+                {
+                  "name": "datasetUsage",
+                  "example": "TRAINING"
+                },
+                {
+                  "name": "features"
+                },
+                {
+                  "name": "labels"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-e22da056",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Declare Dataset",
+          "title": "Feature Schema Load Failed",
+          "specification": "Feature Schema Snapshot Required For Dataset Declaration",
+          "rule": "Declaring a dataset synchronously loads the referenced feature schema through the DeclareDataset port adapter before the decision emits DatasetDeclared. The adapter must enrich the declaration result with the feature and label snapshot so the runtime agent can validate and profile local data without querying the platform later. If the feature schema cannot be loaded, the adapter throws an exception and the declaration does not emit DatasetDeclared.",
+          "expressions": [],
+          "validates": [],
+          "given": [],
+          "when": [
+            {
+              "title": "Declare Dataset",
+              "id": "command-aa7dfd8d",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "44444444-4444-4444-8444-444444444444"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "66666666-6666-4666-8666-666666666666"
+                },
+                {
+                  "name": "datasetName",
+                  "example": "credit-risk"
+                },
+                {
+                  "name": "datasetType",
+                  "example": "TABULAR"
+                },
+                {
+                  "name": "datasetUsage",
+                  "example": "TRAINING"
+                }
+              ]
+            }
+          ],
+          "then": {
+            "title": "Error",
+            "id": "spec-error-e22da056",
+            "description": "Feature Schema Load Failed",
+            "outcome": "ERROR"
+          }
+        }
+      ],
       "actors": [
         {
           "id": "actor-d7472c10",
@@ -38906,7 +39371,14 @@
       "title": "Configure Runtime Dataset Binding",
       "chapter": "RuntimeAgentOperations",
       "context": "RuntimeAgentOperations",
-      "tags": [],
+      "tags": [
+        {
+          "name": "datasetId"
+        },
+        {
+          "name": "runtimeId"
+        }
+      ],
       "concepts": [
         "RuntimeDatasetBinding"
       ],
@@ -38961,6 +39433,23 @@
                 "kind": "direct",
                 "from": [
                   "DatasetDeclared.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetDeclared.featureSchemaId"
                 ]
               }
             },
@@ -39176,6 +39665,17 @@
               "display": false
             },
             {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -39364,7 +39864,152 @@
         }
       ],
       "processors": [],
-      "specifications": [],
+      "specifications": [
+        {
+          "id": "gwt-581386ce",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Configure Runtime Dataset Binding",
+          "title": "Reject Duplicate Runtime Dataset Binding",
+          "specification": "Runtime Dataset Binding Unique Per Runtime Dataset",
+          "rule": "A runtime dataset binding represents the current local data source configuration for one dataset on one runtime. The same dataset may be bound on different runtimes, and the same runtime may bind different datasets, but one runtime cannot configure multiple current bindings for the same dataset. Reconfiguration should use an explicit reconfigure/update flow instead of creating another binding for the same runtimeId and datasetId.",
+          "expressions": [
+            "unique (RuntimeDatasetBinding.runtimeId, RuntimeDatasetBinding.datasetId)"
+          ],
+          "validates": [
+            "unique (RuntimeDatasetBinding.runtimeId, RuntimeDatasetBinding.datasetId)"
+          ],
+          "given": [
+            {
+              "title": "Runtime Dataset Binding Configured",
+              "id": "event-03df6f7e",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "runtimeDatasetBindingId"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "dataset-1"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "runtime-1"
+                },
+                {
+                  "name": "dataSourceType"
+                },
+                {
+                  "name": "host"
+                },
+                {
+                  "name": "port"
+                },
+                {
+                  "name": "url"
+                },
+                {
+                  "name": "databaseName"
+                },
+                {
+                  "name": "schemaName"
+                },
+                {
+                  "name": "tableName"
+                },
+                {
+                  "name": "filePath"
+                },
+                {
+                  "name": "objectBucket"
+                },
+                {
+                  "name": "objectPrefix"
+                },
+                {
+                  "name": "dataFormat"
+                },
+                {
+                  "name": "credentialSecretName"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Configure Runtime Dataset Binding",
+              "id": "command-ac6c6e57",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "runtimeDatasetBindingId"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "dataset-1"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "runtime-1"
+                },
+                {
+                  "name": "dataSourceType"
+                },
+                {
+                  "name": "host"
+                },
+                {
+                  "name": "port"
+                },
+                {
+                  "name": "url"
+                },
+                {
+                  "name": "databaseName"
+                },
+                {
+                  "name": "schemaName"
+                },
+                {
+                  "name": "tableName"
+                },
+                {
+                  "name": "filePath"
+                },
+                {
+                  "name": "objectBucket"
+                },
+                {
+                  "name": "objectPrefix"
+                },
+                {
+                  "name": "dataFormat"
+                },
+                {
+                  "name": "credentialSecretName"
+                }
+              ]
+            }
+          ],
+          "then": {
+            "title": "Rejected",
+            "id": "spec-reject-581386ce",
+            "description": "Runtime Dataset Binding Already Exists",
+            "outcome": "REJECT"
+          }
+        }
+      ],
       "actors": [
         {
           "id": "actor-4721a6f9",
@@ -39699,6 +40344,40 @@
               }
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.featureSchemaId"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -39993,6 +40672,40 @@
               }
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.featureSchemaId"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -40124,6 +40837,40 @@
               }
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.featureSchemaId"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -40242,6 +40989,14 @@
                   "example": "33333333-3333-4333-8333-333333333333"
                 },
                 {
+                  "name": "organizationId",
+                  "example": "77777777-7777-4777-8777-777777777777"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "88888888-8888-4888-8888-888888888888"
+                },
+                {
                   "name": "runtimeId",
                   "example": "44444444-4444-4444-8444-444444444444"
                 },
@@ -40306,6 +41061,14 @@
                   "example": "33333333-3333-4333-8333-333333333333"
                 },
                 {
+                  "name": "organizationId",
+                  "example": "77777777-7777-4777-8777-777777777777"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "88888888-8888-4888-8888-888888888888"
+                },
+                {
                   "name": "runtimeId",
                   "example": "44444444-4444-4444-8444-444444444444"
                 },
@@ -40349,6 +41112,14 @@
                 {
                   "name": "datasetId",
                   "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "77777777-7777-4777-8777-777777777777"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "88888888-8888-4888-8888-888888888888"
                 },
                 {
                   "name": "runtimeId",
@@ -40413,6 +41184,14 @@
                 {
                   "name": "datasetId",
                   "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "77777777-7777-4777-8777-777777777777"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "88888888-8888-4888-8888-888888888888"
                 },
                 {
                   "name": "runtimeId",
@@ -40568,6 +41347,40 @@
               }
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidationFailed.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidationFailed.featureSchemaId"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -40693,6 +41506,40 @@
               }
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidationFailed.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidationFailed.featureSchemaId"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -40810,6 +41657,12 @@
                   "name": "datasetId"
                 },
                 {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
                   "name": "runtimeId"
                 },
                 {
@@ -40868,6 +41721,12 @@
                 },
                 {
                   "name": "datasetId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
                 },
                 {
                   "name": "runtimeId"
@@ -40940,6 +41799,28 @@
             },
             {
               "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "featureSchemaId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -41093,7 +41974,11 @@
       "title": "Profile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
       "context": "RuntimeAgentOperations",
-      "tags": [],
+      "tags": [
+        {
+          "name": "runtimeDatasetBindingId"
+        }
+      ],
       "port": true,
       "concepts": [
         "AgentDatasetProfile"
@@ -41134,6 +42019,74 @@
                   "AgentDatasetAccessValidated.runtimeDatasetBindingId"
                 ]
               }
+            },
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidated.datasetId"
+                ]
+              }
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidated.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidated.featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidated.runtimeId"
+                ]
+              }
             }
           ],
           "dependencies": [
@@ -41153,6 +42106,12 @@
               "id": "event-cbbad845",
               "direction": "OUTBOUND",
               "title": "Agent Dataset Metadata Reported",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-084c9ad2",
+              "direction": "OUTBOUND",
+              "title": "Agent Dataset Profiling Failed",
               "elementType": "EVENT"
             }
           ],
@@ -41219,17 +42178,10 @@
               "query": false,
               "display": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "RuntimeDatasetBindingConfigured.organizationId"
-                ],
-                "lookup": {
-                  "key": "runtimeDatasetBindingId",
-                  "cacheProjection": "RuntimeDatasetBindingConfigured",
-                  "sourceField": "organizationId",
-                  "targetField": "organizationId",
-                  "missingValuePolicy": "keep"
-                }
+                  "AgentDatasetAccessValidated.organizationId"
+                ]
               }
             },
             {
@@ -41260,17 +42212,10 @@
               "query": false,
               "display": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "DatasetDeclared.featureSchemaId"
-                ],
-                "lookup": {
-                  "key": "datasetId",
-                  "cacheProjection": "DatasetDeclared",
-                  "sourceField": "featureSchemaId",
-                  "targetField": "featureSchemaId",
-                  "missingValuePolicy": "keep"
-                }
+                  "AgentDatasetAccessValidated.featureSchemaId"
+                ]
               }
             },
             {
@@ -41448,6 +42393,40 @@
               }
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidated.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidated.featureSchemaId"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -41487,6 +42466,12 @@
               "id": "command-0e2c68c7",
               "direction": "OUTBOUND",
               "title": "Reprofile Agent Dataset",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "command-9e8a213b",
+              "direction": "INBOUND",
+              "title": "Profile Agent Dataset",
               "elementType": "COMMAND"
             }
           ]
@@ -41552,7 +42537,192 @@
           }
         }
       ],
-      "specifications": [],
+      "specifications": [
+        {
+          "id": "gwt-89807603",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Profile Agent Dataset",
+          "title": "Agent Dataset Metadata Reported",
+          "specification": "Agent Dataset Profiling Outcome",
+          "rule": "After dataset access is validated, the runtime agent profiles the local dataset and reports complete metadata needed by platform-side dataset contract validation.",
+          "expressions": [],
+          "validates": [],
+          "given": [],
+          "when": [
+            {
+              "title": "Profile Agent Dataset",
+              "id": "command-9e8a213b",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "metadataReportId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "33333333-3333-4333-8333-333333333333"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "44444444-4444-4444-8444-444444444444"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "66666666-6666-4666-8666-666666666666"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Agent Dataset Metadata Reported",
+              "id": "event-cbbad845",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "metadataReportId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "33333333-3333-4333-8333-333333333333"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "44444444-4444-4444-8444-444444444444"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "66666666-6666-4666-8666-666666666666"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "sampleCount"
+                },
+                {
+                  "name": "featureCount"
+                },
+                {
+                  "name": "schemaCompatible"
+                },
+                {
+                  "name": "labelCompatible"
+                },
+                {
+                  "name": "missingValueRate"
+                },
+                {
+                  "name": "duplicateRate"
+                },
+                {
+                  "name": "qualityScore"
+                },
+                {
+                  "name": "nonIidScore"
+                },
+                {
+                  "name": "classBalanceScore"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-9da2756e",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Profile Agent Dataset",
+          "title": "Agent Dataset Profiling Failed",
+          "specification": "Agent Dataset Profiling Outcome",
+          "rule": "After dataset access is validated, the runtime agent profiles the local dataset and reports complete metadata needed by platform-side dataset contract validation.",
+          "expressions": [],
+          "validates": [],
+          "given": [],
+          "when": [
+            {
+              "title": "Profile Agent Dataset",
+              "id": "command-9e8a213b",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "metadataReportId",
+                  "example": "77777777-7777-4777-8777-777777777777"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "88888888-8888-4888-8888-888888888888"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "99999999-9999-4999-8999-999999999999"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "cccccccc-cccc-4ccc-8ccc-cccccccccccc"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Agent Dataset Profiling Failed",
+              "id": "event-084c9ad2",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "metadataReportId",
+                  "example": "77777777-7777-4777-8777-777777777777"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "88888888-8888-4888-8888-888888888888"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "99999999-9999-4999-8999-999999999999"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "cccccccc-cccc-4ccc-8ccc-cccccccccccc"
+                },
+                {
+                  "name": "failureReason"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "actors": [
         {
           "id": "actor-a0cd7014",
@@ -41635,6 +42805,12 @@
               "direction": "OUTBOUND",
               "title": "Agent Dataset Reprofiled",
               "elementType": "EVENT"
+            },
+            {
+              "id": "event-9fcefe3a",
+              "direction": "OUTBOUND",
+              "title": "Agent Dataset Reprofiling Failed",
+              "elementType": "EVENT"
             }
           ],
           "port": true
@@ -41699,17 +42875,10 @@
               "query": false,
               "display": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "RuntimeDatasetBindingConfigured.organizationId"
-                ],
-                "lookup": {
-                  "key": "runtimeDatasetBindingId",
-                  "cacheProjection": "RuntimeDatasetBindingConfigured",
-                  "sourceField": "organizationId",
-                  "targetField": "organizationId",
-                  "missingValuePolicy": "keep"
-                }
+                  "AgentDatasetProfilingFailed.organizationId"
+                ]
               }
             },
             {
@@ -41740,17 +42909,10 @@
               "query": false,
               "display": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "DatasetDeclared.featureSchemaId"
-                ],
-                "lookup": {
-                  "key": "datasetId",
-                  "cacheProjection": "DatasetDeclared",
-                  "sourceField": "featureSchemaId",
-                  "targetField": "featureSchemaId",
-                  "missingValuePolicy": "keep"
-                }
+                  "AgentDatasetProfilingFailed.featureSchemaId"
+                ]
               }
             },
             {
@@ -41922,6 +43084,40 @@
               }
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetProfilingFailed.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetProfilingFailed.featureSchemaId"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -41956,6 +43152,12 @@
               "direction": "OUTBOUND",
               "title": "Runtime Dataset Metadata Catalog",
               "elementType": "READMODEL"
+            },
+            {
+              "id": "command-0e2c68c7",
+              "direction": "INBOUND",
+              "title": "Reprofile Agent Dataset",
+              "elementType": "COMMAND"
             }
           ]
         }
@@ -41981,7 +43183,224 @@
         }
       ],
       "processors": [],
-      "specifications": [],
+      "specifications": [
+        {
+          "id": "gwt-e0242c2b",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Reprofile Agent Dataset",
+          "title": "Agent Dataset Reprofiled",
+          "specification": "Agent Dataset Reprofiling Outcome",
+          "rule": "Node operators can retry profiling after a profiling failure without resubmitting dataset identity fields; the current profile state supplies those identifiers.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Agent Dataset Profiling Failed",
+              "id": "event-084c9ad2",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "metadataReportId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "33333333-3333-4333-8333-333333333333"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "44444444-4444-4444-8444-444444444444"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "66666666-6666-4666-8666-666666666666"
+                },
+                {
+                  "name": "failureReason",
+                  "example": "CSV header could not be read"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Reprofile Agent Dataset",
+              "id": "command-0e2c68c7",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "metadataReportId",
+                  "example": "77777777-7777-4777-8777-777777777777"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Agent Dataset Reprofiled",
+              "id": "event-ac7edd88",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "metadataReportId",
+                  "example": "77777777-7777-4777-8777-777777777777"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "datasetId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "sampleCount"
+                },
+                {
+                  "name": "featureCount"
+                },
+                {
+                  "name": "schemaCompatible"
+                },
+                {
+                  "name": "labelCompatible"
+                },
+                {
+                  "name": "missingValueRate"
+                },
+                {
+                  "name": "duplicateRate"
+                },
+                {
+                  "name": "qualityScore"
+                },
+                {
+                  "name": "nonIidScore"
+                },
+                {
+                  "name": "classBalanceScore"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-ceb4ad83",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Reprofile Agent Dataset",
+          "title": "Agent Dataset Reprofiling Failed",
+          "specification": "Agent Dataset Reprofiling Outcome",
+          "rule": "Node operators can retry profiling after a profiling failure without resubmitting dataset identity fields; the current profile state supplies those identifiers.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Agent Dataset Profiling Failed",
+              "id": "event-084c9ad2",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "metadataReportId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "datasetId",
+                  "example": "33333333-3333-4333-8333-333333333333"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "44444444-4444-4444-8444-444444444444"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "runtimeId",
+                  "example": "66666666-6666-4666-8666-666666666666"
+                },
+                {
+                  "name": "failureReason",
+                  "example": "CSV header could not be read"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Reprofile Agent Dataset",
+              "id": "command-0e2c68c7",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "metadataReportId",
+                  "example": "88888888-8888-4888-8888-888888888888"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Agent Dataset Reprofiling Failed",
+              "id": "event-9fcefe3a",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "metadataReportId",
+                  "example": "88888888-8888-4888-8888-888888888888"
+                },
+                {
+                  "name": "runtimeDatasetBindingId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "datasetId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "failureReason"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "actors": [
         {
           "id": "actor-4721a6f9",
@@ -42365,6 +43784,12 @@
           ],
           "dependencies": [
             {
+              "id": "command-478724df",
+              "direction": "OUTBOUND",
+              "title": "Retry Dataset Contract Validation",
+              "elementType": "COMMAND"
+            },
+            {
               "id": "readmodel-b0bcb7c7",
               "direction": "OUTBOUND",
               "title": "Dataset Capability",
@@ -42561,8 +43986,575 @@
       }
     },
     {
-      "id": "slice-d28aff88",
+      "id": "slice-2e18bcb1",
       "index": 117,
+      "name": "RetryDatasetContractValidation",
+      "title": "Retry Dataset Contract Validation",
+      "chapter": "RuntimeAgentOperations",
+      "context": "RuntimeAgentOperations",
+      "tags": [],
+      "port": true,
+      "concepts": [
+        "Dataset"
+      ],
+      "commands": [
+        {
+          "id": "command-478724df",
+          "name": "RetryDatasetContractValidation",
+          "title": "Retry Dataset Contract Validation",
+          "type": "COMMAND",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Retry Dataset Contract Validation",
+          "fields": [
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-cb50e94e",
+              "direction": "INBOUND",
+              "title": "Dataset Contract Validation Failed",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "screen-990b41e0",
+              "direction": "INBOUND",
+              "title": "Dataset Registration Screen",
+              "elementType": "SCREEN"
+            },
+            {
+              "id": "event-2befe224",
+              "direction": "OUTBOUND",
+              "title": "Dataset Contract Revalidated",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-f71ef834",
+              "direction": "OUTBOUND",
+              "title": "Dataset Contract Revalidation Failed",
+              "elementType": "EVENT"
+            }
+          ],
+          "port": true
+        }
+      ],
+      "events": [
+        {
+          "id": "event-2befe224",
+          "name": "DatasetContractRevalidated",
+          "title": "Dataset Contract Revalidated",
+          "type": "EVENT",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Retry Dataset Contract Validation",
+          "fields": [
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "metadataReportId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.metadataReportId"
+                ]
+              }
+            },
+            {
+              "name": "schemaCompatible",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.schemaCompatible"
+                ]
+              }
+            },
+            {
+              "name": "labelCompatible",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.labelCompatible"
+                ]
+              }
+            },
+            {
+              "name": "qualityScore",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.qualityScore"
+                ]
+              }
+            },
+            {
+              "name": "nonIidScore",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.nonIidScore"
+                ]
+              }
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-478724df",
+              "direction": "INBOUND",
+              "title": "Retry Dataset Contract Validation",
+              "elementType": "COMMAND"
+            }
+          ]
+        },
+        {
+          "id": "event-f71ef834",
+          "name": "DatasetContractRevalidationFailed",
+          "title": "Dataset Contract Revalidation Failed",
+          "type": "EVENT",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Retry Dataset Contract Validation",
+          "fields": [
+            {
+              "name": "datasetId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "metadataReportId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.metadataReportId"
+                ]
+              }
+            },
+            {
+              "name": "schemaCompatible",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.schemaCompatible"
+                ]
+              }
+            },
+            {
+              "name": "labelCompatible",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.labelCompatible"
+                ]
+              }
+            },
+            {
+              "name": "qualityScore",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.qualityScore"
+                ]
+              }
+            },
+            {
+              "name": "nonIidScore",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetContractValidationFailed.nonIidScore"
+                ]
+              }
+            },
+            {
+              "name": "failureReason",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": true,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-478724df",
+              "direction": "INBOUND",
+              "title": "Retry Dataset Contract Validation",
+              "elementType": "COMMAND"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [
+        {
+          "id": "screen-990b41e0",
+          "name": "DatasetRegistrationScreen",
+          "title": "Dataset Registration Screen",
+          "type": "SCREEN",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Retry Dataset Contract Validation",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "command-478724df",
+              "direction": "OUTBOUND",
+              "title": "Retry Dataset Contract Validation",
+              "elementType": "COMMAND"
+            }
+          ]
+        }
+      ],
+      "processors": [],
+      "specifications": [
+        {
+          "id": "gwt-e75ca01a",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Retry Dataset Contract Validation",
+          "title": "Dataset Contract Revalidated",
+          "specification": "Dataset Contract Validation Retry Outcome",
+          "rule": "A user can retry dataset contract validation after fixing local data, bindings, or feature schema synchronization issues. The retry uses the latest failed validation context from Dataset state and records a new validation outcome without requiring the user to resubmit metadata identifiers manually.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Dataset Contract Validation Failed",
+              "id": "event-cb50e94e",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "dataset-1"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "feature-schema-1"
+                },
+                {
+                  "name": "metadataReportId",
+                  "example": "metadata-report-1"
+                },
+                {
+                  "name": "schemaCompatible",
+                  "example": "false"
+                },
+                {
+                  "name": "labelCompatible",
+                  "example": "false"
+                },
+                {
+                  "name": "qualityScore",
+                  "example": "0.4"
+                },
+                {
+                  "name": "nonIidScore",
+                  "example": "0.2"
+                },
+                {
+                  "name": "failureReason",
+                  "example": "CSV schema mismatch"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Retry Dataset Contract Validation",
+              "id": "command-478724df",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "dataset-1"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Dataset Contract Revalidated",
+              "id": "event-2befe224",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "dataset-1"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "metadataReportId"
+                },
+                {
+                  "name": "schemaCompatible"
+                },
+                {
+                  "name": "labelCompatible"
+                },
+                {
+                  "name": "qualityScore"
+                },
+                {
+                  "name": "nonIidScore"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-63021e8c",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Retry Dataset Contract Validation",
+          "title": "Dataset Contract Revalidation Failed",
+          "specification": "Dataset Contract Validation Retry Outcome",
+          "rule": "A user can retry dataset contract validation after fixing local data, bindings, or feature schema synchronization issues. The retry uses the latest failed validation context from Dataset state and records a new validation outcome without requiring the user to resubmit metadata identifiers manually.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Dataset Contract Validation Failed",
+              "id": "event-cb50e94e",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "dataset-2"
+                },
+                {
+                  "name": "featureSchemaId",
+                  "example": "feature-schema-1"
+                },
+                {
+                  "name": "metadataReportId",
+                  "example": "metadata-report-2"
+                },
+                {
+                  "name": "schemaCompatible",
+                  "example": "false"
+                },
+                {
+                  "name": "labelCompatible",
+                  "example": "false"
+                },
+                {
+                  "name": "qualityScore",
+                  "example": "0.1"
+                },
+                {
+                  "name": "nonIidScore",
+                  "example": "0.3"
+                },
+                {
+                  "name": "failureReason",
+                  "example": "CSV label missing"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Retry Dataset Contract Validation",
+              "id": "command-478724df",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "dataset-2"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Dataset Contract Revalidation Failed",
+              "id": "event-f71ef834",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "datasetId",
+                  "example": "dataset-2"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "metadataReportId"
+                },
+                {
+                  "name": "schemaCompatible"
+                },
+                {
+                  "name": "labelCompatible"
+                },
+                {
+                  "name": "qualityScore"
+                },
+                {
+                  "name": "nonIidScore"
+                },
+                {
+                  "name": "failureReason"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "actors": [
+        {
+          "id": "actor-d7472c10",
+          "name": "DataOwner",
+          "title": "Data Owner"
+        }
+      ],
+      "hotspots": [],
+      "stateChange": {
+        "event": "DatasetContractRevalidated",
+        "eventId": "event-2befe224",
+        "to": "ContractValidationCompleted"
+      }
+    },
+    {
+      "id": "slice-d28aff88",
+      "index": 118,
       "name": "RejectDatasetForTraining",
       "title": "Reject Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -42717,7 +44709,7 @@
     },
     {
       "id": "slice-284a72da",
-      "index": 118,
+      "index": 119,
       "name": "ApproveDatasetForTraining",
       "title": "Approve Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -42975,7 +44967,8 @@
           "then": {
             "title": "Rejected",
             "id": "spec-reject-2dd7734c",
-            "description": "Dataset Contract Validation Required"
+            "description": "Dataset Contract Validation Required",
+            "outcome": "REJECT"
           }
         }
       ],
@@ -42995,7 +44988,7 @@
     },
     {
       "id": "slice-847c2855",
-      "index": 119,
+      "index": 120,
       "name": "RevokeDatasetTrainingApproval",
       "title": "Revoke Dataset Training Approval",
       "chapter": "RuntimeAgentOperations",
@@ -43162,7 +45155,7 @@
     },
     {
       "id": "slice-30869f70",
-      "index": 120,
+      "index": 121,
       "name": "DatasetCapability",
       "title": "Dataset Capability",
       "chapter": "RuntimeAgentOperations",
@@ -43220,6 +45213,28 @@
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "features",
+              "type": "FeatureDefinition",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "labels",
+              "type": "LabelDefinition",
+              "cardinality": "Multiple",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -43497,7 +45512,7 @@
     },
     {
       "id": "slice-ff9e2f26",
-      "index": 121,
+      "index": 122,
       "name": "DatasetReadiness",
       "title": "Dataset Readiness",
       "chapter": "RuntimeAgentOperations",
@@ -44061,7 +46076,7 @@
     },
     {
       "id": "slice-5bf739cd",
-      "index": 122,
+      "index": 123,
       "name": "ReceiveParticipantExecutionPlan",
       "title": "Receive Participant Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -44458,7 +46473,7 @@
     },
     {
       "id": "slice-64faaa9b",
-      "index": 123,
+      "index": 124,
       "name": "AcceptExecutionPlan",
       "title": "Accept Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -44859,7 +46874,7 @@
     },
     {
       "id": "slice-df2e65a6",
-      "index": 124,
+      "index": 125,
       "name": "RejectExecutionPlan",
       "title": "Reject Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -45276,7 +47291,7 @@
     },
     {
       "id": "slice-4d4016d0",
-      "index": 125,
+      "index": 126,
       "name": "StartRoundExecution",
       "title": "Start Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -45951,7 +47966,7 @@
     },
     {
       "id": "slice-b1a48287",
-      "index": 126,
+      "index": 127,
       "name": "CompleteRoundExecution",
       "title": "Complete Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -46220,7 +48235,7 @@
     },
     {
       "id": "slice-45c663e8",
-      "index": 127,
+      "index": 128,
       "name": "FailRoundExecution",
       "title": "Fail Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -46517,7 +48532,7 @@
     },
     {
       "id": "slice-ff352882",
-      "index": 128,
+      "index": 129,
       "name": "RetryRoundExecutionAfterStartFailure",
       "title": "Retry Round Execution After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -47166,7 +49181,7 @@
     },
     {
       "id": "slice-2cb34062",
-      "index": 129,
+      "index": 130,
       "name": "RetryRoundExecutionAfterRuntimeFailure",
       "title": "Retry Round Execution After Runtime Failure",
       "chapter": "RuntimeAgentOperations",
@@ -47843,7 +49858,7 @@
     },
     {
       "id": "slice-d54dcc12",
-      "index": 130,
+      "index": 131,
       "name": "SubmitAgentLocalModelUpdate",
       "title": "Submit Agent Local Model Update",
       "chapter": "RuntimeAgentOperations",
@@ -48318,7 +50333,7 @@
     },
     {
       "id": "slice-6485fdce",
-      "index": 131,
+      "index": 132,
       "name": "ReleaseRuntimeEngineJobAfterCompletion",
       "title": "Release Runtime Engine Job After Completion",
       "chapter": "RuntimeAgentOperations",
@@ -48480,7 +50495,7 @@
     },
     {
       "id": "slice-ef8420f2",
-      "index": 132,
+      "index": 133,
       "name": "ReleaseRuntimeEngineJobAfterFailure",
       "title": "Release Runtime Engine Job After Failure",
       "chapter": "RuntimeAgentOperations",
@@ -48653,7 +50668,7 @@
     },
     {
       "id": "slice-30156076",
-      "index": 133,
+      "index": 134,
       "name": "ReleaseRuntimeEngineJobAfterStartFailure",
       "title": "Release Runtime Engine Job After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -48826,7 +50841,7 @@
     },
     {
       "id": "slice-5d7a0380",
-      "index": 134,
+      "index": 135,
       "name": "ReleaseRuntimeEngineJobAfterRetryFailure",
       "title": "Release Runtime Engine Job After Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -48999,7 +51014,7 @@
     },
     {
       "id": "slice-bc1eac14",
-      "index": 135,
+      "index": 136,
       "name": "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure",
       "title": "Release Runtime Engine Job After Runtime Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -49172,7 +51187,7 @@
     },
     {
       "id": "slice-eb00f5f7",
-      "index": 136,
+      "index": 137,
       "name": "RoundExecutionCatalog",
       "title": "Round Execution Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -49721,7 +51736,7 @@
     },
     {
       "id": "slice-d248addb",
-      "index": 137,
+      "index": 138,
       "name": "LoadRuntimeAgentBootstrapConfiguration",
       "title": "Load Runtime Agent Bootstrap Configuration",
       "chapter": "RuntimeAgentOperations",
@@ -49995,7 +52010,7 @@
     },
     {
       "id": "slice-c7d2df46",
-      "index": 138,
+      "index": 139,
       "name": "ReportRuntimeAgentStarted",
       "title": "Report Runtime Agent Started",
       "chapter": "RuntimeAgentOperations",
@@ -50195,7 +52210,7 @@
     },
     {
       "id": "slice-75635ed7",
-      "index": 139,
+      "index": 140,
       "name": "ReportRuntimeInstanceSelfCheckPassed",
       "title": "Report Runtime Instance Self Check Passed",
       "chapter": "RuntimeAgentOperations",
@@ -50550,7 +52565,7 @@
     },
     {
       "id": "slice-574f1d44",
-      "index": 140,
+      "index": 141,
       "name": "RuntimeAgentLifecycleCatalog",
       "title": "Runtime Agent Lifecycle Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -50795,7 +52810,7 @@
     },
     {
       "id": "slice-e5b0caa2",
-      "index": 141,
+      "index": 142,
       "name": "ReportRuntimeInstanceConnected",
       "title": "Report Runtime Instance Connected",
       "chapter": "RuntimeAgentOperations",
@@ -51460,7 +53475,7 @@
     },
     {
       "id": "slice-8d5d066d",
-      "index": 142,
+      "index": 143,
       "name": "AgentRuntimeInfrastructureConnectionCatalog",
       "title": "Agent Runtime Infrastructure Connection Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -51627,7 +53642,7 @@
     },
     {
       "id": "slice-ff0c55e7",
-      "index": 143,
+      "index": 144,
       "name": "AgentRuntimeTelemetryLatest",
       "title": "Agent Runtime Telemetry Latest",
       "chapter": "RuntimeAgentOperations",
@@ -51770,7 +53785,7 @@
     },
     {
       "id": "slice-d8eaacb9",
-      "index": 144,
+      "index": 145,
       "name": "ReportAgentRuntimeNodeInventory",
       "title": "Report Agent Runtime Node Inventory",
       "chapter": "RuntimeAgentOperations",
@@ -52160,7 +54175,7 @@
     },
     {
       "id": "slice-6a815e36",
-      "index": 145,
+      "index": 146,
       "name": "AgentRuntimeNodeInventoryCatalog",
       "title": "Agent Runtime Node Inventory Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -52378,7 +54393,7 @@
     },
     {
       "id": "slice-a56419ba",
-      "index": 146,
+      "index": 147,
       "name": "AgentRuntimeNodeResourceLatest",
       "title": "Agent Runtime Node Resource Latest",
       "chapter": "RuntimeAgentOperations",

@@ -160,6 +160,17 @@ export const DictionaryCatalogList = () => {
         header: t("table.actions", "Actions"),
         cell: ({ row }) => (
           <div className="flex gap-2">
+            {isCommandVisible(row.original, "", "state", ["Registered"]) && (
+            <CommandButton
+              variant="outline"
+              command="archiveDictionary"
+              recordItemId={row.original.dictionaryId}
+              size="sm"
+              query={{
+                archiveReason: row.original.archiveReason,
+              }}
+            />
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -167,6 +178,11 @@ export const DictionaryCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <EditButton variant="ghost" recordItemId={row.original.dictionaryId} size="sm" />
+                </DropdownMenuItem>
+                )}
                 {isCommandVisible(row.original, "", "", []) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -222,7 +238,7 @@ export const DictionaryCatalogList = () => {
         <CommandButton variant="default" command="registerDictionary" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
-        null
+        <CommandButton variant="destructive" command="archiveDictionary" size="sm" />
       }>
         <ListToolbar
           table={table.reactTable}

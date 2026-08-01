@@ -206,21 +206,6 @@ export const ModelArtifactCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="submitGlobalModelEvaluation"
-                    recordItemId={row.original.modelVersionId}
-                    size="sm"
-                    query={{
-                      roundId: row.original.roundId,
-                      modelFormat: row.original.modelFormat,
-                      modelHash: row.original.modelHash,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.modelVersionId} size="sm" />
                 </DropdownMenuItem>

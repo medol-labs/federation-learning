@@ -18,12 +18,15 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
+import type { FeatureDefinition, LabelDefinition } from "@/domain/value-types";
 
 type DatasetCapabilityRecord = {
   datasetId: string;
   organizationId: string;
   runtimeId?: string;
   featureSchemaId: string;
+  features: FeatureDefinition[];
+  labels?: LabelDefinition[];
   organizationName?: string;
   featureDomain?: string;
   featureSchemaVersion?: string;
@@ -115,6 +118,24 @@ export const DatasetCapabilityList = () => {
         id: "featureSchemaId",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.featureSchemaId.label", "Feature Schema Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("features", {
+        id: "features",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.features.label", "Features")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("labels", {
+        id: "labels",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.labels.label", "Labels")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
@@ -276,6 +297,36 @@ export const DatasetCapabilityList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "metadataStatus", ["ContractValidationCompleted"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="rejectDatasetForTraining"
+                    recordItemId={row.original.datasetId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "approvalStatus", ["ContractValidationCompleted"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="approveDatasetForTraining"
+                    recordItemId={row.original.datasetId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "approvalStatus", ["Approved"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="revokeDatasetTrainingApproval"
+                    recordItemId={row.original.datasetId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
                 {isCommandVisible(row.original, "", "", []) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -286,8 +337,19 @@ export const DatasetCapabilityList = () => {
                     query={{
                       datasetId: row.original.datasetId,
                       organizationId: row.original.organizationId,
+                      featureSchemaId: row.original.featureSchemaId,
                       runtimeId: row.original.runtimeId,
                     }}
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "metadataStatus", ["ContractValidationCompleted"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retryDatasetContractValidation"
+                    recordItemId={row.original.datasetId}
+                    size="sm"
                   />
                 </DropdownMenuItem>
                 )}

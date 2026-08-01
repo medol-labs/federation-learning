@@ -446,6 +446,36 @@ export const DatasetReadinessList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="rejectDatasetForTraining"
+                    recordItemId={row.original.datasetId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="approveDatasetForTraining"
+                    recordItemId={row.original.datasetId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "approvalStatus", ["Approved"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="revokeDatasetTrainingApproval"
+                    recordItemId={row.original.datasetId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
                 {isCommandVisible(row.original, "", "", []) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -456,8 +486,19 @@ export const DatasetReadinessList = () => {
                     query={{
                       datasetId: row.original.datasetId,
                       organizationId: row.original.organizationId,
+                      featureSchemaId: row.original.featureSchemaId,
                       runtimeId: row.original.runtimeId,
                     }}
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retryDatasetContractValidation"
+                    recordItemId={row.original.datasetId}
+                    size="sm"
                   />
                 </DropdownMenuItem>
                 )}

@@ -23,6 +23,8 @@ type AgentDatasetAccessValidationCatalogRecord = {
   datasetAccessValidationId: string;
   runtimeDatasetBindingId: string;
   datasetId: string;
+  organizationId: string;
+  featureSchemaId: string;
   runtimeId: string;
   datasetName?: string;
   readable: boolean;
@@ -97,6 +99,24 @@ export const AgentDatasetAccessValidationCatalogList = () => {
         id: "datasetId",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} label={t("resources.agent_dataset_access_validation_catalog.fields.datasetId.label", "Dataset Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("organizationId", {
+        id: "organizationId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.agent_dataset_access_validation_catalog.fields.organizationId.label", "Organization Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("featureSchemaId", {
+        id: "featureSchemaId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.agent_dataset_access_validation_catalog.fields.featureSchemaId.label", "Feature Schema Id")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
@@ -186,33 +206,6 @@ export const AgentDatasetAccessValidationCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "validationStatus", ["Checked"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="revalidateAgentDatasetAccess"
-                    recordItemId={row.original.datasetAccessValidationId}
-                    size="sm"
-                    query={{
-                      runtimeDatasetBindingId: row.original.runtimeDatasetBindingId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="configureRuntimeDatasetBinding"
-                    recordItemId={row.original.datasetAccessValidationId}
-                    size="sm"
-                    query={{
-                      datasetId: row.original.datasetId,
-                      runtimeId: row.original.runtimeId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.datasetAccessValidationId} size="sm" />
                 </DropdownMenuItem>

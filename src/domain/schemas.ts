@@ -490,6 +490,7 @@ export type DeclareDatasetCommandInput = z.infer<typeof DeclareDatasetCommandSch
 export const ConfigureRuntimeDatasetBindingCommandSchema = z.object({
   datasetId: z.string().uuid(),
   organizationId: z.string().uuid(),
+  featureSchemaId: z.string().uuid(),
   runtimeId: z.string().uuid(),
   dataSourceType: z.string(),
   host: z.string().optional().nullable(),
@@ -515,6 +516,11 @@ export const ReprofileAgentDatasetCommandSchema = z.object({
   runtimeDatasetBindingId: z.string().uuid(),
 });
 export type ReprofileAgentDatasetCommandInput = z.infer<typeof ReprofileAgentDatasetCommandSchema>;
+
+export const RetryDatasetContractValidationCommandSchema = z.object({
+  datasetId: z.string().uuid(),
+});
+export type RetryDatasetContractValidationCommandInput = z.infer<typeof RetryDatasetContractValidationCommandSchema>;
 
 export const RejectDatasetForTrainingCommandSchema = z.object({
   datasetId: z.string().uuid(),

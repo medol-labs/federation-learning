@@ -436,57 +436,13 @@ export const TrainingParticipantEligibilityList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "participantStatus", ["Active"]) && (
+                {isCommandVisible(row.original, "", "participantStatus", ["Draft"]) && (
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
-                    command="suspendParticipant"
+                    command="submitTrainingJob"
                     recordItemId={row.original.trainingJobId}
                     size="sm"
-                    query={{
-                      organizationId: row.original.organizationId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "participantStatus", ["Suspended"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="removeParticipant"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                    query={{
-                      organizationId: row.original.organizationId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="inviteParticipant"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                    query={{
-                      organizationId: row.original.organizationId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="configureRuntimeDatasetBinding"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                    query={{
-                      datasetId: row.original.datasetId,
-                      organizationId: row.original.organizationId,
-                      runtimeId: row.original.runtimeId,
-                    }}
                   />
                 </DropdownMenuItem>
                 )}

@@ -570,6 +570,14 @@ export const TrainingRoundProgressList = () => {
         header: t("table.actions", "Actions"),
         cell: ({ row }) => (
           <div className="flex gap-2">
+            {isCommandVisible(row.original, "", "", []) && (
+            <CommandButton
+              variant="outline"
+              command="cancelTrainingJob"
+              recordItemId={row.original.trainingJobId}
+              size="sm"
+            />
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -662,6 +670,26 @@ export const TrainingRoundProgressList = () => {
                   />
                 </DropdownMenuItem>
                 )}
+                {isCommandVisible(row.original, "", "state", ["Draft"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="submitTrainingJob"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="pauseTrainingJob"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.trainingJobId} size="sm" />
                 </DropdownMenuItem>
@@ -701,7 +729,7 @@ export const TrainingRoundProgressList = () => {
       <ListViewHeader canCreate={false}>
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
-        null
+        <CommandButton variant="destructive" command="cancelTrainingJob" size="sm" />
       }>
         <ListToolbar
           table={table.reactTable}

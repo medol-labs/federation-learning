@@ -177,6 +177,36 @@ export const FeatureSchemaCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "schemaStatus", ["Draft"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="publishFeatureSchema"
+                    recordItemId={row.original.featureSchemaId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "schemaStatus", ["Published"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="deprecateFeatureSchema"
+                    recordItemId={row.original.featureSchemaId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "schemaStatus", ["Deprecated"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retireFeatureSchema"
+                    recordItemId={row.original.featureSchemaId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
                 {isCommandVisible(row.original, "", "", []) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -187,6 +217,16 @@ export const FeatureSchemaCatalogList = () => {
                     query={{
                       supersededByFeatureSchemaId: row.original.supersededByFeatureSchemaId,
                     }}
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="markCurrentRecommendedFeatureSchemaVersion"
+                    recordItemId={row.original.featureSchemaId}
+                    size="sm"
                   />
                 </DropdownMenuItem>
                 )}

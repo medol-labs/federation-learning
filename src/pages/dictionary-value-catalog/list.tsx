@@ -217,6 +217,29 @@ export const DictionaryValueCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "state", ["Active"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="disableDictionaryValue"
+                    recordItemId={row.original.dictionaryValueId}
+                    size="sm"
+                    query={{
+                      disabledReason: row.original.disabledReason,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "state", ["Disabled"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="enableDictionaryValue"
+                    recordItemId={row.original.dictionaryValueId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.dictionaryValueId} size="sm" />
                 </DropdownMenuItem>

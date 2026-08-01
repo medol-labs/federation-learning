@@ -379,6 +379,14 @@ export const TrainingJobDashboardList = () => {
         header: t("table.actions", "Actions"),
         cell: ({ row }) => (
           <div className="flex gap-2">
+            {isCommandVisible(row.original, "canCancel", "", []) && (
+            <CommandButton
+              variant="outline"
+              command="cancelTrainingJob"
+              recordItemId={row.original.trainingJobId}
+              size="sm"
+            />
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -386,6 +394,36 @@ export const TrainingJobDashboardList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "canSubmit", "state", ["Draft"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="submitTrainingJob"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "canPause", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="pauseTrainingJob"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "canResume", "state", ["Paused"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="resumeTrainingJob"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.trainingJobId} size="sm" />
                 </DropdownMenuItem>
@@ -426,7 +464,7 @@ export const TrainingJobDashboardList = () => {
         <CommandButton variant="default" command="createTrainingJob" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
-        null
+        <CommandButton variant="destructive" command="cancelTrainingJob" size="sm" />
       }>
         <ListToolbar
           table={table.reactTable}

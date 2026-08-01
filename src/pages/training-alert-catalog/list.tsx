@@ -206,6 +206,29 @@ export const TrainingAlertCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "canAcknowledge", "state", ["Raised"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="acknowledgeTrainingAlert"
+                    recordItemId={row.original.alertId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "canResolve", "state", ["Acknowledged"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="resolveTrainingAlert"
+                    recordItemId={row.original.alertId}
+                    size="sm"
+                    query={{
+                      resolutionSummary: row.original.resolutionSummary,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.alertId} size="sm" />
                 </DropdownMenuItem>
