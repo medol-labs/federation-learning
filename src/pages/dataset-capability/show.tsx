@@ -135,6 +135,11 @@ export const DatasetCapabilityShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.dataset_capability.fields.contractStatus.label", "Contract Status")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.contractStatus, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.dataset_capability.fields.approvalStatus.label", "Approval Status")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.approvalStatus, t)}</p>
             </div>

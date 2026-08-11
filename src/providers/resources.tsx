@@ -308,11 +308,11 @@ export const resources: IResourceItem[] = [
       commandRoute: "/dataset-capability/:id/command/:command",
       commands: {
         declareDataset: { label: "Declare Dataset", i18nKey: "resources.dataset_capability.commands.declareDataset.label", route: "/dataset-capability/command/declare-dataset", dataProviderName: "federation-learning-runtime-agent" },
-        rejectDatasetForTraining: { label: "Reject Dataset For Training", i18nKey: "resources.dataset_capability.commands.rejectDatasetForTraining.label", route: "/dataset-capability/:id/command/reject-dataset-for-training", dataProviderName: "federation-learning-runtime-agent", stateField: "metadataStatus", allowedStates: ["ContractValidationCompleted"] },
-        approveDatasetForTraining: { label: "Approve Dataset For Training", i18nKey: "resources.dataset_capability.commands.approveDatasetForTraining.label", route: "/dataset-capability/:id/command/approve-dataset-for-training", dataProviderName: "federation-learning-runtime-agent", stateField: "approvalStatus", allowedStates: ["ContractValidationCompleted"] },
+        retryDatasetContractValidation: { label: "Retry Dataset Contract Validation", i18nKey: "resources.dataset_capability.commands.retryDatasetContractValidation.label", route: "/dataset-capability/:id/command/retry-dataset-contract-validation", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
+        rejectDatasetForTraining: { label: "Reject Dataset For Training", i18nKey: "resources.dataset_capability.commands.rejectDatasetForTraining.label", route: "/dataset-capability/:id/command/reject-dataset-for-training", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
+        approveDatasetForTraining: { label: "Approve Dataset For Training", i18nKey: "resources.dataset_capability.commands.approveDatasetForTraining.label", route: "/dataset-capability/:id/command/approve-dataset-for-training", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
         revokeDatasetTrainingApproval: { label: "Revoke Dataset Training Approval", i18nKey: "resources.dataset_capability.commands.revokeDatasetTrainingApproval.label", route: "/dataset-capability/:id/command/revoke-dataset-training-approval", dataProviderName: "federation-learning-runtime-agent", stateField: "approvalStatus", allowedStates: ["Approved"] },
         configureRuntimeDatasetBinding: { label: "Configure Runtime Dataset Binding", i18nKey: "resources.dataset_capability.commands.configureRuntimeDatasetBinding.label", route: "/dataset-capability/:id/command/configure-runtime-dataset-binding", dataProviderName: "federation-learning-runtime-agent" },
-        retryDatasetContractValidation: { label: "Retry Dataset Contract Validation", i18nKey: "resources.dataset_capability.commands.retryDatasetContractValidation.label", route: "/dataset-capability/:id/command/retry-dataset-contract-validation", dataProviderName: "federation-learning-runtime-agent", stateField: "metadataStatus", allowedStates: ["ContractValidationCompleted"] },
       },
       canDelete: false,
     },
@@ -339,11 +339,11 @@ export const resources: IResourceItem[] = [
       commandRoute: "/dataset-readiness/:id/command/:command",
       commands: {
         declareDataset: { label: "Declare Dataset", i18nKey: "resources.dataset_readiness.commands.declareDataset.label", route: "/dataset-readiness/command/declare-dataset", dataProviderName: "federation-learning-runtime-agent" },
+        retryDatasetContractValidation: { label: "Retry Dataset Contract Validation", i18nKey: "resources.dataset_readiness.commands.retryDatasetContractValidation.label", route: "/dataset-readiness/:id/command/retry-dataset-contract-validation", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
         rejectDatasetForTraining: { label: "Reject Dataset For Training", i18nKey: "resources.dataset_readiness.commands.rejectDatasetForTraining.label", route: "/dataset-readiness/:id/command/reject-dataset-for-training", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
         approveDatasetForTraining: { label: "Approve Dataset For Training", i18nKey: "resources.dataset_readiness.commands.approveDatasetForTraining.label", route: "/dataset-readiness/:id/command/approve-dataset-for-training", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
         revokeDatasetTrainingApproval: { label: "Revoke Dataset Training Approval", i18nKey: "resources.dataset_readiness.commands.revokeDatasetTrainingApproval.label", route: "/dataset-readiness/:id/command/revoke-dataset-training-approval", dataProviderName: "federation-learning-runtime-agent", stateField: "approvalStatus", allowedStates: ["Approved"] },
         configureRuntimeDatasetBinding: { label: "Configure Runtime Dataset Binding", i18nKey: "resources.dataset_readiness.commands.configureRuntimeDatasetBinding.label", route: "/dataset-readiness/:id/command/configure-runtime-dataset-binding", dataProviderName: "federation-learning-runtime-agent" },
-        retryDatasetContractValidation: { label: "Retry Dataset Contract Validation", i18nKey: "resources.dataset_readiness.commands.retryDatasetContractValidation.label", route: "/dataset-readiness/:id/command/retry-dataset-contract-validation", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
       },
       canDelete: false,
     },
@@ -761,7 +761,6 @@ export const resources: IResourceItem[] = [
   {
     name: "runtime_infrastructure_access_view",
     list: "/runtime-infrastructure-access-view",
-    create: "/runtime-infrastructure-access-view/command/register-runtime-infrastructure",
     show: "/runtime-infrastructure-access-view/show/:id",
     meta: {
       parent: "runtimeprovisioning",
@@ -779,7 +778,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/runtime-infrastructure-access-view/:id/command/:command",
       commands: {
-        registerRuntimeInfrastructure: { label: "Register Runtime Infrastructure", i18nKey: "resources.runtime_infrastructure_access_view.commands.registerRuntimeInfrastructure.label", route: "/runtime-infrastructure-access-view/command/register-runtime-infrastructure", dataProviderName: "federation-learning-platform" },
+        registerRuntimeInfrastructure: { label: "Register Runtime Infrastructure", i18nKey: "resources.runtime_infrastructure_access_view.commands.registerRuntimeInfrastructure.label", route: "/runtime-infrastructure-access-view/:id/command/register-runtime-infrastructure", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["Planned"] },
       },
       canDelete: false,
     },

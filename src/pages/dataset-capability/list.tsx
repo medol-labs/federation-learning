@@ -40,6 +40,7 @@ type DatasetCapabilityRecord = {
   nonIidScore?: string;
   metadataReportId?: string;
   metadataStatus: string;
+  contractStatus: string;
   approvalStatus: string;
   approved: boolean;
   lastProfiledAt?: string;
@@ -258,6 +259,15 @@ export const DatasetCapabilityList = () => {
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("contractStatus", {
+        id: "contractStatus",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.contractStatus.label", "Contract Status")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("approvalStatus", {
         id: "approvalStatus",
         header: ({ column }) => (
@@ -297,7 +307,17 @@ export const DatasetCapabilityList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "metadataStatus", ["ContractValidationCompleted"]) && (
+                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retryDatasetContractValidation"
+                    recordItemId={row.original.datasetId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
@@ -307,7 +327,7 @@ export const DatasetCapabilityList = () => {
                   />
                 </DropdownMenuItem>
                 )}
-                {isCommandVisible(row.original, "", "approvalStatus", ["ContractValidationCompleted"]) && (
+                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
@@ -340,16 +360,6 @@ export const DatasetCapabilityList = () => {
                       featureSchemaId: row.original.featureSchemaId,
                       runtimeId: row.original.runtimeId,
                     }}
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "metadataStatus", ["ContractValidationCompleted"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="retryDatasetContractValidation"
-                    recordItemId={row.original.datasetId}
-                    size="sm"
                   />
                 </DropdownMenuItem>
                 )}

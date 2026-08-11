@@ -316,6 +316,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "state", ["Planned"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="registerRuntimeInfrastructure"
+                    recordItemId={row.original.runtimeInfrastructureId}
+                    size="sm"
+                    query={{
+                      runtimeInfrastructureId: row.original.runtimeInfrastructureId,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.runtimeInfrastructureId} size="sm" />
                 </DropdownMenuItem>
@@ -353,7 +366,6 @@ export const RuntimeInfrastructureAccessViewList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="registerRuntimeInfrastructure" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

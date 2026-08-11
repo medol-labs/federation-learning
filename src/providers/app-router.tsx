@@ -46,21 +46,21 @@ import {
   DatasetCapabilityList,
   DatasetCapabilityShow,
   DatasetCapabilityDeclareDataset,
+  DatasetCapabilityRetryDatasetContractValidation,
   DatasetCapabilityRejectDatasetForTraining,
   DatasetCapabilityApproveDatasetForTraining,
   DatasetCapabilityRevokeDatasetTrainingApproval,
   DatasetCapabilityConfigureRuntimeDatasetBinding,
-  DatasetCapabilityRetryDatasetContractValidation,
 } from "../pages/dataset-capability";
 import {
   DatasetReadinessList,
   DatasetReadinessShow,
   DatasetReadinessDeclareDataset,
+  DatasetReadinessRetryDatasetContractValidation,
   DatasetReadinessRejectDatasetForTraining,
   DatasetReadinessApproveDatasetForTraining,
   DatasetReadinessRevokeDatasetTrainingApproval,
   DatasetReadinessConfigureRuntimeDatasetBinding,
-  DatasetReadinessRetryDatasetContractValidation,
 } from "../pages/dataset-readiness";
 import {
   DictionaryCatalogList,
@@ -303,21 +303,21 @@ export const AppRouter = () => {
           <Route index element={<DatasetCapabilityList />} />
           <Route path="command/declare-dataset" element={<DatasetCapabilityDeclareDataset />} />
           <Route path="show/:id" element={<DatasetCapabilityShow />} />
+          <Route path=":id/command/retry-dataset-contract-validation" element={<DatasetCapabilityRetryDatasetContractValidation />} />
           <Route path=":id/command/reject-dataset-for-training" element={<DatasetCapabilityRejectDatasetForTraining />} />
           <Route path=":id/command/approve-dataset-for-training" element={<DatasetCapabilityApproveDatasetForTraining />} />
           <Route path=":id/command/revoke-dataset-training-approval" element={<DatasetCapabilityRevokeDatasetTrainingApproval />} />
           <Route path=":id/command/configure-runtime-dataset-binding" element={<DatasetCapabilityConfigureRuntimeDatasetBinding />} />
-          <Route path=":id/command/retry-dataset-contract-validation" element={<DatasetCapabilityRetryDatasetContractValidation />} />
         </Route>
         <Route path="/dataset-readiness">
           <Route index element={<DatasetReadinessList />} />
           <Route path="command/declare-dataset" element={<DatasetReadinessDeclareDataset />} />
           <Route path="show/:id" element={<DatasetReadinessShow />} />
+          <Route path=":id/command/retry-dataset-contract-validation" element={<DatasetReadinessRetryDatasetContractValidation />} />
           <Route path=":id/command/reject-dataset-for-training" element={<DatasetReadinessRejectDatasetForTraining />} />
           <Route path=":id/command/approve-dataset-for-training" element={<DatasetReadinessApproveDatasetForTraining />} />
           <Route path=":id/command/revoke-dataset-training-approval" element={<DatasetReadinessRevokeDatasetTrainingApproval />} />
           <Route path=":id/command/configure-runtime-dataset-binding" element={<DatasetReadinessConfigureRuntimeDatasetBinding />} />
-          <Route path=":id/command/retry-dataset-contract-validation" element={<DatasetReadinessRetryDatasetContractValidation />} />
         </Route>
         <Route path="/dictionary-catalog">
           <Route index element={<DictionaryCatalogList />} />
@@ -431,8 +431,8 @@ export const AppRouter = () => {
         </Route>
         <Route path="/runtime-infrastructure-access-view">
           <Route index element={<RuntimeInfrastructureAccessViewList />} />
-          <Route path="command/register-runtime-infrastructure" element={<RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure />} />
           <Route path="show/:id" element={<RuntimeInfrastructureAccessViewShow />} />
+          <Route path=":id/command/register-runtime-infrastructure" element={<RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure />} />
         </Route>
         <Route path="/runtime-infrastructure-package-catalog">
           <Route index element={<RuntimeInfrastructurePackageCatalogList />} />

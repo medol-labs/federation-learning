@@ -450,6 +450,16 @@ export const DatasetReadinessList = () => {
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
+                    command="retryDatasetContractValidation"
+                    recordItemId={row.original.datasetId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
                     command="rejectDatasetForTraining"
                     recordItemId={row.original.datasetId}
                     size="sm"
@@ -489,16 +499,6 @@ export const DatasetReadinessList = () => {
                       featureSchemaId: row.original.featureSchemaId,
                       runtimeId: row.original.runtimeId,
                     }}
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="retryDatasetContractValidation"
-                    recordItemId={row.original.datasetId}
-                    size="sm"
                   />
                 </DropdownMenuItem>
                 )}

@@ -202,6 +202,7 @@ export const messages = {
     "resources.dataset_capability.commands.revokeDatasetTrainingApproval.label": "Revoke Dataset Training Approval",
     "resources.dataset_capability.fields.approvalStatus.label": "Approval Status",
     "resources.dataset_capability.fields.approved.label": "Approved",
+    "resources.dataset_capability.fields.contractStatus.label": "Contract Status",
     "resources.dataset_capability.fields.datasetId.label": "Dataset Id",
     "resources.dataset_capability.fields.datasetName.label": "Dataset Name",
     "resources.dataset_capability.fields.datasetUsage.label": "Dataset Usage",
