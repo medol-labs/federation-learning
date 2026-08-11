@@ -8,6 +8,7 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInstallationPlanCreatedEvent
+import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePlannedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerifiedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationFailedEvent
@@ -51,6 +52,24 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
             entity.expectedNodeCount = event.expectedNodeCount
             entity.agentDeploymentFailedAt = null
             entity.agentDeploymentFailureReason = null
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructurePlannedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeInfrastructureId) ?: RuntimeInfrastructureAccessViewReadModelProjection().apply {
+                this.runtimeInfrastructureId = event.runtimeInfrastructureId
+        }
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.state = RuntimeInfrastructureStateEnum.PLANNED
+            entity.infrastructureVerificationFailedAt = null
+            entity.infrastructureVerificationFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

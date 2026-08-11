@@ -65,6 +65,10 @@ integration:
   federation-learning-runtime-agent:
     endpoint: ${FEDERATION_LEARNING_RUNTIME_AGENT_URL:}
 
+training-orchestration:
+  runtime-agent:
+    endpoint: ${FEDERATION_LEARNING_RUNTIME_AGENT_URL:${RUNTIME_AGENT_URL:http://localhost:8082}}
+
 management:
   endpoints:
     web:

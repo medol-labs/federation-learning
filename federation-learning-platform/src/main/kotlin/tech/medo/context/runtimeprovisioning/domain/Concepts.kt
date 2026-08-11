@@ -15,7 +15,7 @@ object Concepts {
 
     data object RuntimeInfrastructure {
         const val NAME = "RuntimeInfrastructure"
-        val slices = listOf("RegisterRuntimeInfrastructure", "VerifyRuntimeInfrastructure", "DeployRuntimeAgent", "RetryRuntimeAgentDeployment", "RecordRuntimeConnectionEstablished", "RuntimeInfrastructureAccessView")
-        val states = listOf("Registered", "Verified", "VerificationFailed", "AgentReady", "RuntimeAgentFailed", "Offline", "Connected")
+        val slices = listOf("PlanRuntimeInfrastructure", "RegisterRuntimeInfrastructure", "VerifyRuntimeInfrastructure", "DeployRuntimeAgent", "RetryRuntimeAgentDeployment", "RecordRuntimeConnectionEstablished", "RuntimeInfrastructureAccessView")
+        val states = listOf("Planned", "Registered", "Verified", "VerificationFailed", "AgentReady", "RuntimeAgentFailed", "Offline", "Connected")
     }
 }

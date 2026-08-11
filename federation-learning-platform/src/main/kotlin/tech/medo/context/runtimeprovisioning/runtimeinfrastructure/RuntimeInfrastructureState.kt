@@ -6,6 +6,7 @@ import org.axonframework.eventsourcing.annotation.reflection.EntityCreator
 import org.axonframework.extension.spring.stereotype.EventSourced
 import org.axonframework.messaging.eventstreaming.EventCriteria
 import org.axonframework.messaging.eventstreaming.Tag
+import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePlannedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerifiedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationFailedEvent
@@ -24,6 +25,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     var currentState: RuntimeInfrastructureStateEnum? = null
     var runtimeInfrastructureId: UUID? = null
+    var runtimeInstallationPlanId: UUID? = null
     var runtimeAgentId: UUID? = null
     var agentInstallMode: String? = null
     var observedNodeCount: Int? = null
@@ -31,6 +33,13 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
     var agentVersion: String? = null
     var organizationId: UUID? = null
     var runtimeName: String? = null
+
+    @EventSourcingHandler
+    fun evolve(event: RuntimeInfrastructurePlannedEvent): RuntimeInfrastructureState = apply {
+        currentState = RuntimeInfrastructureStateEnum.PLANNED
+        runtimeInfrastructureId = event.runtimeInfrastructureId
+        runtimeInstallationPlanId = event.runtimeInstallationPlanId
+    }
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructureRegisteredEvent): RuntimeInfrastructureState = apply {

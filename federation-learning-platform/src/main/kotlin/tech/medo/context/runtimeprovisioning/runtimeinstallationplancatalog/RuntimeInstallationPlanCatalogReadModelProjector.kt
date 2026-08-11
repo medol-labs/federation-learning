@@ -8,6 +8,7 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInstallationPlanCreatedEvent
+import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePlannedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerifiedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationFailedEvent
@@ -53,6 +54,22 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
             entity.plannedAt = eventTime(message)
             entity.agentDeploymentFailedAt = null
             entity.agentDeploymentFailureReason = null
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructurePlannedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeInstallationPlanId) ?: RuntimeInstallationPlanCatalogReadModelProjection().apply {
+                this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        }
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.plannedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
