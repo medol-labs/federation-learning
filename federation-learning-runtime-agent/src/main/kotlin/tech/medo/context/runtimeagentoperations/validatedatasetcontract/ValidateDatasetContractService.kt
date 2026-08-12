@@ -1,6 +1,7 @@
 package tech.medo.runtimeagentoperations.validatedatasetcontract
 
 import java.util.UUID;
+import java.math.BigDecimal
 
 interface ValidateDatasetContractService {
     fun supports(input: ValidateDatasetContractInput): Boolean = true
@@ -14,10 +15,19 @@ data class ValidateDatasetContractInput(
 )
 
 sealed interface ValidateDatasetContractResult {
-    class Succeeded : ValidateDatasetContractResult
+    data class Succeeded(
+        val schemaCompatible: Boolean? = null,
+        val labelCompatible: Boolean? = null,
+        val qualityScore: BigDecimal? = null,
+        val nonIidScore: BigDecimal? = null
+    ) : ValidateDatasetContractResult
 
     data class Rejected(
-        val failureReason: String
+        val failureReason: String,
+        val schemaCompatible: Boolean? = null,
+        val labelCompatible: Boolean? = null,
+        val qualityScore: BigDecimal? = null,
+        val nonIidScore: BigDecimal? = null
     ) : ValidateDatasetContractResult
 
     data class Unavailable(

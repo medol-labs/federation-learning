@@ -90,7 +90,7 @@ class AxonFlowLoggingConfiguration {
                         Duration.between(startedAt, Instant.now()).toMillis(),
                         describe(message),
                         error.message,
-                        error
+                        // error
                     )
                     MessageStream.failed(error)
                 }
@@ -102,7 +102,7 @@ class AxonFlowLoggingConfiguration {
                 Duration.between(startedAt, Instant.now()).toMillis(),
                 describe(message),
                 error.message,
-                error
+                // error
             )
             throw error
         }

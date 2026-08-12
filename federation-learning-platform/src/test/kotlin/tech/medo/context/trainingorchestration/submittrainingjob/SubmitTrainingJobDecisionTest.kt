@@ -22,6 +22,7 @@ class SubmitTrainingJobDecisionTest {
             federationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("config-1".toByteArray()),
+            minimumNodesPerRound = 1,
             objective = ""
             )
         )

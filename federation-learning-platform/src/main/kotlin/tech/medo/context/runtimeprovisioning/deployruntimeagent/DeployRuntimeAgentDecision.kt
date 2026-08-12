@@ -12,6 +12,15 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 
 interface DeployRuntimeAgentDecision {
     fun decide(command: DeployRuntimeAgentCommand, state: RuntimeInfrastructureState, portResult: DeployRuntimeAgentResult, now: java.time.LocalDateTime): List<Any> {
+        if (state.currentState in setOf(
+                RuntimeInfrastructureStateEnum.AGENT_READY,
+                RuntimeInfrastructureStateEnum.CONNECTED,
+                RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
+            )
+        ) {
+            return emptyList()
+        }
+
         require(state.currentState == RuntimeInfrastructureStateEnum.VERIFIED) {
             "DeployRuntimeAgent requires RuntimeInfrastructure to be Verified."
         }

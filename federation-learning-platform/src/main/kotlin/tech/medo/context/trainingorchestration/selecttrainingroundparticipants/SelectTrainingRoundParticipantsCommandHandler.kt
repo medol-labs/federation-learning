@@ -10,13 +10,17 @@ import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTra
 
 @Component
 class SelectTrainingRoundParticipantsCommandHandler(
-    private val decision: SelectTrainingRoundParticipantsDecision
+    private val decision: SelectTrainingRoundParticipantsDecision,
+    private val selectTrainingRoundParticipantsService: SelectTrainingRoundParticipantsService
 ) {
     @CommandHandler
     fun handle(
         command: SelectTrainingRoundParticipantsCommand,
         eventAppender: EventAppender
     ) {
-        eventAppender.append(decision.decide(command))
+        val input = SelectTrainingRoundParticipantsInput(trainingJobId = command.trainingJobId)
+        val portResult = selectTrainingRoundParticipantsService.execute(input)
+
+        eventAppender.append(decision.decide(command, portResult))
     }
 }

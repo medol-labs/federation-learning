@@ -25013,11 +25013,13 @@
       "concepts": [
         "TrainingRound"
       ],
+      "port": true,
       "commands": [
         {
           "id": "command-5362dd01",
           "name": "SelectTrainingRoundParticipants",
           "title": "Select Training Round Participants",
+          "port": true,
           "type": "COMMAND",
           "modelContext": "TrainingOrchestration",
           "slice": "Select Training Round Participants",

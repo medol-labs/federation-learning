@@ -43,6 +43,7 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
             entity.federationId = event.federationId
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
+            entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.objective = event.objective
             entity.state = TrainingJobStateEnum.DRAFT
             ProjectionMetadata.assign(entity, message)
