@@ -39,7 +39,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
   const defaultValues = {
     federationId: searchParams.get("federationId") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-    initialModelVersionId: searchParams.get("initialModelVersionId") ?? undefined,
+    initialModelId: searchParams.get("initialModelId") ?? undefined,
     strategyName: searchParams.get("strategyName") ?? undefined,
     aggregationAlgorithm: searchParams.get("aggregationAlgorithm") ?? undefined,
     maxRounds: (() => { const value = searchParams.get("maxRounds"); return value === null ? undefined : Number(value); })(),
@@ -163,16 +163,16 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
           />
           <FormField
             control={form.control}
-            name="initialModelVersionId"
-            rules={{ required: "Initial Model Version Id is required" }}
+            name="initialModelId"
+            rules={{ required: "Initial Model Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.initialModelVersionId.label", "Initial Model Version Id")}</FormLabel>
+                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.initialModelId.label", "Initial Model Id")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Initial Model Version Id"}
+                    placeholder={"Enter Initial Model Id"}
                   />
                 </FormControl>
                 <FormMessage />

@@ -31,7 +31,7 @@ type RoundExecutionCatalogRecord = {
   runtimeId: string;
   state: string;
   featureSchemaId?: string;
-  baseModelVersionId?: string;
+  baseModelId?: string;
   runtimeEngineJobId?: string;
   localExecutionRequirementsSatisfied?: boolean;
   runtimeIdentityMatched?: boolean;
@@ -200,10 +200,10 @@ export const RoundExecutionCatalogList = () => {
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("baseModelVersionId", {
-        id: "baseModelVersionId",
+      columnHelper.accessor("baseModelId", {
+        id: "baseModelId",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.baseModelVersionId.label", "Base Model Version Id")} />
+          <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.baseModelId.label", "Base Model Id")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
@@ -463,7 +463,7 @@ export const RoundExecutionCatalogList = () => {
                       runtimeId: row.original.runtimeId,
                       organizationId: row.original.organizationId,
                       featureSchemaId: row.original.featureSchemaId,
-                      baseModelVersionId: row.original.baseModelVersionId,
+                      baseModelId: row.original.baseModelId,
                       runtimeEngineJobId: row.original.runtimeEngineJobId,
                       retryReason: row.original.retryReason,
                     }}
@@ -526,7 +526,7 @@ export const RoundExecutionCatalogList = () => {
                       runtimeId: row.original.runtimeId,
                       organizationId: row.original.organizationId,
                       featureSchemaId: row.original.featureSchemaId,
-                      baseModelVersionId: row.original.baseModelVersionId,
+                      baseModelId: row.original.baseModelId,
                       runtimeEngineJobId: row.original.runtimeEngineJobId,
                       retryReason: row.original.retryReason,
                     }}

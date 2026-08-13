@@ -34,9 +34,9 @@ type SecureAggregationSessionCatalogRecord = {
   encryptionScheme?: string;
   publicKeyVersion?: string;
   encryptedParameterScale?: number;
-  aggregatedModelVersionId?: string;
+  aggregatedModelId?: string;
   modelFormat?: string;
-  modelHash?: string;
+  modelArtifactDigest?: string;
   state: string;
   failureReason?: string;
   createdAt: string;
@@ -215,10 +215,10 @@ export const SecureAggregationSessionCatalogList = () => {
         enableColumnFilter: false,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("aggregatedModelVersionId", {
-        id: "aggregatedModelVersionId",
+      columnHelper.accessor("aggregatedModelId", {
+        id: "aggregatedModelId",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.aggregatedModelVersionId.label", "Aggregated Model Version Id")} />
+          <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.aggregatedModelId.label", "Aggregated Model Id")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
@@ -233,10 +233,10 @@ export const SecureAggregationSessionCatalogList = () => {
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("modelHash", {
-        id: "modelHash",
+      columnHelper.accessor("modelArtifactDigest", {
+        id: "modelArtifactDigest",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.modelHash.label", "Model Hash")} />
+          <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.modelArtifactDigest.label", "Model Artifact Digest")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
@@ -351,9 +351,9 @@ export const SecureAggregationSessionCatalogList = () => {
                       featureSchemaId: row.original.featureSchemaId,
                       roundId: row.original.roundId,
                       secureAggregationSessionId: row.original.secureAggregationSessionId,
-                      aggregatedModelVersionId: row.original.aggregatedModelVersionId,
+                      aggregatedModelId: row.original.aggregatedModelId,
                       modelFormat: row.original.modelFormat,
-                      modelHash: row.original.modelHash,
+                      modelArtifactDigest: row.original.modelArtifactDigest,
                       trainingJobId: row.original.trainingJobId,
                     }}
                   />

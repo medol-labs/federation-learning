@@ -49,7 +49,7 @@ type TrainingJobDashboardRecord = {
   maxRounds: number;
   roundProgressPercent: number;
   globalAccuracy?: string;
-  finalModelVersionId?: string;
+  finalModelId?: string;
   stopReason?: string;
 };
 
@@ -356,10 +356,10 @@ export const TrainingJobDashboardList = () => {
         enableColumnFilter: false,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("finalModelVersionId", {
-        id: "finalModelVersionId",
+      columnHelper.accessor("finalModelId", {
+        id: "finalModelId",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.finalModelVersionId.label", "Final Model Version Id")} />
+          <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.finalModelId.label", "Final Model Id")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,

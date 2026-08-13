@@ -22,7 +22,7 @@ export const ModelArtifactCatalogShow = () => {
     dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "model_artifact_catalog_read_model_entity",
-      idField: "modelVersionId",
+      idField: "modelId",
       label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
       aggregateRoute: "modelartifact",
       queryRoute: "modelartifactcatalog",
@@ -36,22 +36,37 @@ export const ModelArtifactCatalogShow = () => {
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>{record?.modelVersionId ?? t("resources.model_artifact_catalog.label", "Model Artifact Catalog")}</CardTitle>
+            <CardTitle>{record?.modelId ?? t("resources.model_artifact_catalog.label", "Model Artifact Catalog")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelVersionId.label", "Model Version Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.modelVersionId, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelId.label", "Model Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.modelId, t)}</p>
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelArtifactRef.label", "Model Artifact Ref")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.modelArtifactRef, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelName.label", "Model Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.modelName, t)}</p>
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelRepositoryRef.label", "Model Repository Ref")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.modelRepositoryRef, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelVersion.label", "Model Version")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.modelVersion, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.sourceType.label", "Source Type")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.sourceType, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelArtifactUri.label", "Model Artifact Uri")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.modelArtifactUri, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelRegistryRef.label", "Model Registry Ref")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.modelRegistryRef, t)}</p>
             </div>
             <Separator />
             <div>
@@ -60,23 +75,18 @@ export const ModelArtifactCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelHash.label", "Model Hash")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.modelHash, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelArtifactDigest.label", "Model Artifact Digest")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.modelArtifactDigest, t)}</p>
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelSignatureRef.label", "Model Signature Ref")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.modelSignatureRef, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelSignatureUri.label", "Model Signature Uri")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.modelSignatureUri, t)}</p>
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelSizeBytes.label", "Model Size Bytes")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.modelSizeBytes, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.sourceType.label", "Source Type")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.sourceType, t)}</p>
             </div>
             <Separator />
             <div>

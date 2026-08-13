@@ -42,7 +42,7 @@ export const TrainingRoundProgressRetryRoundExecutionAfterStartFailure = () => {
     roundId: searchParams.get("roundId") ?? undefined,
     roundNumber: (() => { const value = searchParams.get("roundNumber"); return value === null ? undefined : Number(value); })(),
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-    baseModelVersionId: searchParams.get("baseModelVersionId") ?? undefined,
+    baseModelId: searchParams.get("baseModelId") ?? undefined,
     roundExecutionId: searchParams.get("roundExecutionId") ?? undefined,
     executionSessionId: searchParams.get("executionSessionId") ?? undefined,
     executionPlanId: searchParams.get("executionPlanId") ?? undefined,
@@ -169,7 +169,7 @@ export const TrainingRoundProgressRetryRoundExecutionAfterStartFailure = () => {
                   withFormControl
                   resource="training_run_configuration_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="federationName"
+                  optionLabel="initialModelName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
@@ -305,16 +305,16 @@ export const TrainingRoundProgressRetryRoundExecutionAfterStartFailure = () => {
           />
           <FormField
             control={form.control}
-            name="baseModelVersionId"
-            rules={{ required: "Base Model Version Id is required" }}
+            name="baseModelId"
+            rules={{ required: "Base Model Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.training_round_progress.commands.retryRoundExecutionAfterStartFailure.fields.baseModelVersionId.label", "Base Model Version Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.retryRoundExecutionAfterStartFailure.fields.baseModelId.label", "Base Model Id")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Base Model Version Id"}
+                    placeholder={"Enter Base Model Id"}
                   />
                 </FormControl>
                 <FormMessage />

@@ -40,12 +40,15 @@ export const TrainingRoundProgressSubmitGlobalModelEvaluation = () => {
     trainingRunConfigurationId: searchParams.get("trainingRunConfigurationId") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
     roundId: searchParams.get("roundId") ?? undefined,
-    aggregatedModelVersionId: searchParams.get("aggregatedModelVersionId") ?? undefined,
+    aggregatedModelId: searchParams.get("aggregatedModelId") ?? undefined,
     globalAccuracy: (() => { const value = searchParams.get("globalAccuracy"); return value === null ? undefined : Number(value); })(),
     globalFairnessScore: (() => { const value = searchParams.get("globalFairnessScore"); return value === null ? undefined : Number(value); })(),
     trainingJobId: searchParams.get("trainingJobId") ?? undefined,
+    aggregatedModelArtifactUri: searchParams.get("aggregatedModelArtifactUri") ?? undefined,
+    aggregatedModelRegistryRef: searchParams.get("aggregatedModelRegistryRef") ?? undefined,
     modelFormat: searchParams.get("modelFormat") ?? undefined,
-    modelHash: searchParams.get("modelHash") ?? undefined,
+    modelArtifactDigest: searchParams.get("modelArtifactDigest") ?? undefined,
+    aggregatedModelSignatureUri: searchParams.get("aggregatedModelSignatureUri") ?? undefined,
   } as Partial<SubmitGlobalModelEvaluationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<SubmitGlobalModelEvaluationCommandInput, SubmitGlobalModelEvaluationCommandInput>({
@@ -103,7 +106,7 @@ export const TrainingRoundProgressSubmitGlobalModelEvaluation = () => {
                   withFormControl
                   resource="training_run_configuration_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="federationName"
+                  optionLabel="initialModelName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
@@ -166,16 +169,52 @@ export const TrainingRoundProgressSubmitGlobalModelEvaluation = () => {
           />
           <FormField
             control={form.control}
-            name="aggregatedModelVersionId"
-            rules={{ required: "Aggregated Model Version Id is required" }}
+            name="aggregatedModelId"
+            rules={{ required: "Aggregated Model Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.training_round_progress.commands.submitGlobalModelEvaluation.fields.aggregatedModelVersionId.label", "Aggregated Model Version Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitGlobalModelEvaluation.fields.aggregatedModelId.label", "Aggregated Model Id")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Aggregated Model Version Id"}
+                    placeholder={"Enter Aggregated Model Id"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="aggregatedModelArtifactUri"
+            rules={{ required: "Aggregated Model Artifact Uri is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitGlobalModelEvaluation.fields.aggregatedModelArtifactUri.label", "Aggregated Model Artifact Uri")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Aggregated Model Artifact Uri"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="aggregatedModelRegistryRef"
+            rules={{ required: "Aggregated Model Registry Ref is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitGlobalModelEvaluation.fields.aggregatedModelRegistryRef.label", "Aggregated Model Registry Ref")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Aggregated Model Registry Ref"}
                   />
                 </FormControl>
                 <FormMessage />
@@ -202,16 +241,34 @@ export const TrainingRoundProgressSubmitGlobalModelEvaluation = () => {
           />
           <FormField
             control={form.control}
-            name="modelHash"
-            rules={{ required: "Model Hash is required" }}
+            name="modelArtifactDigest"
+            rules={{ required: "Model Artifact Digest is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.training_round_progress.commands.submitGlobalModelEvaluation.fields.modelHash.label", "Model Hash")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitGlobalModelEvaluation.fields.modelArtifactDigest.label", "Model Artifact Digest")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Model Hash"}
+                    placeholder={"Enter Model Artifact Digest"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="aggregatedModelSignatureUri"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitGlobalModelEvaluation.fields.aggregatedModelSignatureUri.label", "Aggregated Model Signature Uri")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Aggregated Model Signature Uri"}
                   />
                 </FormControl>
                 <FormMessage />

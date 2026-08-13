@@ -255,8 +255,8 @@ export const TrainingRoundProgressShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_round_progress.fields.baseModelVersionId.label", "Base Model Version Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.baseModelVersionId, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_round_progress.fields.baseModelId.label", "Base Model Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.baseModelId, t)}</p>
             </div>
             <Separator />
             <div>
@@ -270,8 +270,8 @@ export const TrainingRoundProgressShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_round_progress.fields.aggregatedModelVersionId.label", "Aggregated Model Version Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.aggregatedModelVersionId, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_round_progress.fields.aggregatedModelId.label", "Aggregated Model Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.aggregatedModelId, t)}</p>
             </div>
             <Separator />
             <div>

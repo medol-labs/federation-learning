@@ -55,8 +55,18 @@ export const TrainingRunConfigurationCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.initialModelVersionId.label", "Initial Model Version Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.initialModelVersionId, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.initialModelId.label", "Initial Model Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.initialModelId, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.initialModelName.label", "Initial Model Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.initialModelName, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.initialModelVersion.label", "Initial Model Version")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.initialModelVersion, t)}</p>
             </div>
             <Separator />
             <div>
@@ -80,8 +90,8 @@ export const TrainingRunConfigurationCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.initialModelRepositoryName.label", "Initial Model Repository Name")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.initialModelRepositoryName, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.initialModelRegistryRef.label", "Initial Model Registry Ref")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.initialModelRegistryRef, t)}</p>
             </div>
             <Separator />
             <div>
@@ -90,8 +100,8 @@ export const TrainingRunConfigurationCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.initialModelHash.label", "Initial Model Hash")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.initialModelHash, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.initialModelArtifactDigest.label", "Initial Model Artifact Digest")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.initialModelArtifactDigest, t)}</p>
             </div>
             <Separator />
             <div>

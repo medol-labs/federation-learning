@@ -95,8 +95,8 @@ export const RoundExecutionCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.baseModelVersionId.label", "Base Model Version Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.baseModelVersionId, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.baseModelId.label", "Base Model Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.baseModelId, t)}</p>
             </div>
             <Separator />
             <div>

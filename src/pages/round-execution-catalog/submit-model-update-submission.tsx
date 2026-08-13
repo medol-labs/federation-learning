@@ -49,7 +49,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
     artifactRef: searchParams.get("artifactRef") ?? undefined,
     artifactDigest: searchParams.get("artifactDigest") ?? undefined,
     trainingLoss: (() => { const value = searchParams.get("trainingLoss"); return value === null ? undefined : Number(value); })(),
-    localModelVersionId: searchParams.get("localModelVersionId") ?? undefined,
+    localModelId: searchParams.get("localModelId") ?? undefined,
   } as Partial<SubmitModelUpdateSubmissionCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<SubmitModelUpdateSubmissionCommandInput, SubmitModelUpdateSubmissionCommandInput>({
@@ -167,7 +167,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   withFormControl
                   resource="training_run_configuration_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="federationName"
+                  optionLabel="initialModelName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
@@ -284,16 +284,16 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
           />
           <FormField
             control={form.control}
-            name="localModelVersionId"
-            rules={{ required: "Local Model Version Id is required" }}
+            name="localModelId"
+            rules={{ required: "Local Model Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.localModelVersionId.label", "Local Model Version Id")}</FormLabel>
+                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.localModelId.label", "Local Model Id")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Local Model Version Id"}
+                    placeholder={"Enter Local Model Id"}
                   />
                 </FormControl>
                 <FormMessage />

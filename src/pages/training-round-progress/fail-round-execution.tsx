@@ -166,7 +166,7 @@ export const TrainingRoundProgressFailRoundExecution = () => {
                   withFormControl
                   resource="training_run_configuration_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="federationName"
+                  optionLabel="initialModelName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}

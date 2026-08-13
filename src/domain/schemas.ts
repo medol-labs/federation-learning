@@ -272,20 +272,18 @@ export const MarkCurrentRecommendedFeatureSchemaVersionCommandSchema = z.object(
 export type MarkCurrentRecommendedFeatureSchemaVersionCommandInput = z.infer<typeof MarkCurrentRecommendedFeatureSchemaVersionCommandSchema>;
 
 export const RegisterModelArtifactCommandSchema = z.object({
-  modelArtifactRef: z.string(),
-  modelRepositoryRef: z.string(),
-  modelFormat: z.string(),
-  modelHash: z.string(),
-  modelSignatureRef: z.string().optional().nullable(),
-  modelSizeBytes: z.coerce.number().int().optional().nullable(),
+  modelName: z.string(),
+  modelVersion: z.string(),
   sourceType: z.string(),
+  sourceLocation: z.string().optional().nullable(),
+  modelFormat: z.string().optional().nullable(),
 });
 export type RegisterModelArtifactCommandInput = z.infer<typeof RegisterModelArtifactCommandSchema>;
 
 export const DefineTrainingRunConfigurationCommandSchema = z.object({
   federationId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
-  initialModelVersionId: z.string().uuid(),
+  initialModelId: z.string().uuid(),
   strategyName: z.string(),
   aggregationAlgorithm: z.string(),
   maxRounds: z.coerce.number().int(),
@@ -312,7 +310,7 @@ export const UpdateTrainingRunConfigurationCommandSchema = z.object({
   trainingRunConfigurationId: z.string().uuid(),
   federationId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
-  initialModelVersionId: z.string().uuid(),
+  initialModelId: z.string().uuid(),
   strategyName: z.string(),
   aggregationAlgorithm: z.string(),
   maxRounds: z.coerce.number().int(),
@@ -375,7 +373,7 @@ export const SubmitModelUpdateSubmissionCommandSchema = z.object({
   roundExecutionId: z.string().uuid(),
   runtimeId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
-  localModelVersionId: z.string().uuid(),
+  localModelId: z.string().uuid(),
   updateArtifactId: z.string().uuid(),
   artifactRef: z.string(),
   artifactDigest: z.string(),
@@ -389,9 +387,12 @@ export const CompleteSecureAggregationCommandSchema = z.object({
   featureSchemaId: z.string().uuid(),
   roundId: z.string().uuid(),
   secureAggregationSessionId: z.string().uuid(),
-  aggregatedModelVersionId: z.string().uuid(),
+  aggregatedModelId: z.string().uuid(),
+  aggregatedModelArtifactUri: z.string(),
+  aggregatedModelRegistryRef: z.string(),
   modelFormat: z.string(),
-  modelHash: z.string(),
+  modelArtifactDigest: z.string(),
+  aggregatedModelSignatureUri: z.string().optional().nullable(),
 });
 export type CompleteSecureAggregationCommandInput = z.infer<typeof CompleteSecureAggregationCommandSchema>;
 
@@ -400,51 +401,54 @@ export const SubmitGlobalModelEvaluationCommandSchema = z.object({
   trainingRunConfigurationId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
   roundId: z.string().uuid(),
-  aggregatedModelVersionId: z.string().uuid(),
+  aggregatedModelId: z.string().uuid(),
+  aggregatedModelArtifactUri: z.string(),
+  aggregatedModelRegistryRef: z.string(),
   modelFormat: z.string(),
-  modelHash: z.string(),
+  modelArtifactDigest: z.string(),
+  aggregatedModelSignatureUri: z.string().optional().nullable(),
   globalAccuracy: z.coerce.number(),
   globalFairnessScore: z.coerce.number(),
 });
 export type SubmitGlobalModelEvaluationCommandInput = z.infer<typeof SubmitGlobalModelEvaluationCommandSchema>;
 
 export const RecordModelEvaluationPackageCommandSchema = z.object({
-  modelVersionId: z.string().uuid(),
+  modelId: z.string().uuid(),
   trainingJobId: z.string().uuid(),
   evaluationReportId: z.string().uuid(),
   experimentId: z.string().uuid(),
   hyperparameterSnapshotId: z.string().uuid(),
   reproducibilityManifestId: z.string().uuid(),
   modelCardId: z.string().uuid(),
-  baselineModelVersionId: z.string().uuid().optional().nullable(),
+  baselineModelId: z.string().uuid().optional().nullable(),
 });
 export type RecordModelEvaluationPackageCommandInput = z.infer<typeof RecordModelEvaluationPackageCommandSchema>;
 
 export const ApproveModelCommandSchema = z.object({
-  modelVersionId: z.string().uuid(),
+  modelId: z.string().uuid(),
   approvalNote: z.string().optional().nullable(),
 });
 export type ApproveModelCommandInput = z.infer<typeof ApproveModelCommandSchema>;
 
 export const PromoteModelToProductionCommandSchema = z.object({
-  modelVersionId: z.string().uuid(),
+  modelId: z.string().uuid(),
   releaseChannel: z.string(),
   productionStage: z.string(),
 });
 export type PromoteModelToProductionCommandInput = z.infer<typeof PromoteModelToProductionCommandSchema>;
 
-export const RollbackModelVersionCommandSchema = z.object({
-  modelVersionId: z.string().uuid(),
-  previousModelVersionId: z.string().uuid(),
+export const RollbackModelCommandSchema = z.object({
+  modelId: z.string().uuid(),
+  previousModelId: z.string().uuid(),
   rollbackReason: z.string(),
 });
-export type RollbackModelVersionCommandInput = z.infer<typeof RollbackModelVersionCommandSchema>;
+export type RollbackModelCommandInput = z.infer<typeof RollbackModelCommandSchema>;
 
-export const RetireModelVersionCommandSchema = z.object({
-  modelVersionId: z.string().uuid(),
+export const RetireModelCommandSchema = z.object({
+  modelId: z.string().uuid(),
   retirementReason: z.string(),
 });
-export type RetireModelVersionCommandInput = z.infer<typeof RetireModelVersionCommandSchema>;
+export type RetireModelCommandInput = z.infer<typeof RetireModelCommandSchema>;
 
 export const AcknowledgeTrainingAlertCommandSchema = z.object({
   alertId: z.string().uuid(),
@@ -575,7 +579,7 @@ export const RetryRoundExecutionAfterStartFailureCommandSchema = z.object({
   runtimeId: z.string().uuid(),
   organizationId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
-  baseModelVersionId: z.string().uuid(),
+  baseModelId: z.string().uuid(),
   runtimeEngineJobId: z.string(),
   retryReason: z.string(),
 });
@@ -592,7 +596,7 @@ export const RetryRoundExecutionAfterRuntimeFailureCommandSchema = z.object({
   runtimeId: z.string().uuid(),
   organizationId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
-  baseModelVersionId: z.string().uuid(),
+  baseModelId: z.string().uuid(),
   runtimeEngineJobId: z.string(),
   retryReason: z.string(),
 });

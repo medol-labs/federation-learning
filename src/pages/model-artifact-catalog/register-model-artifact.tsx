@@ -36,13 +36,10 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
-    modelArtifactRef: searchParams.get("modelArtifactRef") ?? undefined,
-    modelRepositoryRef: searchParams.get("modelRepositoryRef") ?? undefined,
-    modelFormat: searchParams.get("modelFormat") ?? undefined,
-    modelHash: searchParams.get("modelHash") ?? undefined,
-    modelSignatureRef: searchParams.get("modelSignatureRef") ?? undefined,
-    modelSizeBytes: (() => { const value = searchParams.get("modelSizeBytes"); return value === null ? undefined : Number(value); })(),
+    modelName: searchParams.get("modelName") ?? undefined,
+    modelVersion: searchParams.get("modelVersion") ?? undefined,
     sourceType: searchParams.get("sourceType") ?? undefined,
+    modelFormat: searchParams.get("modelFormat") ?? undefined,
   } as Partial<RegisterModelArtifactCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterModelArtifactCommandInput, RegisterModelArtifactCommandInput>({
@@ -54,7 +51,7 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
     queryDataProviderName: "federation-learning-platform",
     meta: {
       tableName: "model_artifact_catalog_read_model_entity",
-      idField: "modelVersionId",
+      idField: "modelId",
       label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
       aggregateRoute: "modelartifact",
       queryRoute: "modelartifactcatalog",
@@ -62,7 +59,7 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
     },
     queryMeta: {
       tableName: "model_artifact_catalog_read_model_entity",
-      idField: "modelVersionId",
+      idField: "modelId",
       label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
       aggregateRoute: "modelartifact",
       queryRoute: "modelartifactcatalog",
@@ -88,16 +85,16 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RegisterModelArtifact validation failed", errors))} className="space-y-8">
           <FormField
             control={form.control}
-            name="modelArtifactRef"
-            rules={{ required: "Model Artifact Ref is required" }}
+            name="modelName"
+            rules={{ required: "Model Name is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelArtifactRef.label", "Model Artifact Ref")}</FormLabel>
+                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelName.label", "Model Name")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Model Artifact Ref"}
+                    placeholder={"Enter Model Name"}
                   />
                 </FormControl>
                 <FormMessage />
@@ -106,89 +103,16 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
           />
           <FormField
             control={form.control}
-            name="modelRepositoryRef"
-            rules={{ required: "Model Repository Ref is required" }}
+            name="modelVersion"
+            rules={{ required: "Model Version is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelRepositoryRef.label", "Model Repository Ref")}</FormLabel>
+                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelVersion.label", "Model Version")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Model Repository Ref"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="modelFormat"
-            rules={{ required: "Model Format is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelFormat.label", "Model Format")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Model Format"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="modelHash"
-            rules={{ required: "Model Hash is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelHash.label", "Model Hash")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Model Hash"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="modelSignatureRef"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelSignatureRef.label", "Model Signature Ref")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Model Signature Ref"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="modelSizeBytes"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelSizeBytes.label", "Model Size Bytes")}</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Model Size Bytes"}
+                    placeholder={"Enter Model Version"}
                   />
                 </FormControl>
                 <FormMessage />
@@ -207,6 +131,44 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
                     {...field}
                     value={field.value || ""}
                     placeholder={"Enter Source Type"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="sourceLocation"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.sourceLocation.label", "Source Location")}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    onChange={(event) => {
+                      const file = event.target.files?.[0];
+                      field.onChange(file ? `file://${file.name}` : "");
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="modelFormat"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelFormat.label", "Model Format")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Model Format"}
                   />
                 </FormControl>
                 <FormMessage />

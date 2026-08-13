@@ -23,14 +23,16 @@ type TrainingRunConfigurationCatalogRecord = {
   trainingRunConfigurationId: string;
   federationId: string;
   featureSchemaId: string;
-  initialModelVersionId: string;
+  initialModelId: string;
+  initialModelName: string;
+  initialModelVersion: string;
   federationName?: string;
   featureDomain?: string;
   featureSchemaVersion?: string;
   initialModelArtifactUri: string;
-  initialModelRepositoryName: string;
+  initialModelRegistryRef: string;
   initialModelFormat: string;
-  initialModelHash: string;
+  initialModelArtifactDigest: string;
   initialModelSignatureUri?: string;
   strategyName: string;
   aggregationAlgorithm: string;
@@ -125,10 +127,28 @@ export const TrainingRunConfigurationCatalogList = () => {
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("initialModelVersionId", {
-        id: "initialModelVersionId",
+      columnHelper.accessor("initialModelId", {
+        id: "initialModelId",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.initialModelVersionId.label", "Initial Model Version Id")} />
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.initialModelId.label", "Initial Model Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("initialModelName", {
+        id: "initialModelName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.initialModelName.label", "Initial Model Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("initialModelVersion", {
+        id: "initialModelVersion",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.initialModelVersion.label", "Initial Model Version")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
@@ -170,10 +190,10 @@ export const TrainingRunConfigurationCatalogList = () => {
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("initialModelRepositoryName", {
-        id: "initialModelRepositoryName",
+      columnHelper.accessor("initialModelRegistryRef", {
+        id: "initialModelRegistryRef",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.initialModelRepositoryName.label", "Initial Model Repository Name")} />
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.initialModelRegistryRef.label", "Initial Model Registry Ref")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
@@ -188,10 +208,10 @@ export const TrainingRunConfigurationCatalogList = () => {
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("initialModelHash", {
-        id: "initialModelHash",
+      columnHelper.accessor("initialModelArtifactDigest", {
+        id: "initialModelArtifactDigest",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.initialModelHash.label", "Initial Model Hash")} />
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.initialModelArtifactDigest.label", "Initial Model Artifact Digest")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,

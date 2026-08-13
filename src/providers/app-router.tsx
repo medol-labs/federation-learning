@@ -119,14 +119,14 @@ import {
   ModelArtifactCatalogRegisterModelArtifact,
 } from "../pages/model-artifact-catalog";
 import {
-  ModelVersionCatalogList,
-  ModelVersionCatalogShow,
-  ModelVersionCatalogRecordModelEvaluationPackage,
-  ModelVersionCatalogApproveModel,
-  ModelVersionCatalogPromoteModelToProduction,
-  ModelVersionCatalogRollbackModelVersion,
-  ModelVersionCatalogRetireModelVersion,
-} from "../pages/model-version-catalog";
+  ModelCatalogList,
+  ModelCatalogShow,
+  ModelCatalogRecordModelEvaluationPackage,
+  ModelCatalogApproveModel,
+  ModelCatalogPromoteModelToProduction,
+  ModelCatalogRollbackModel,
+  ModelCatalogRetireModel,
+} from "../pages/model-catalog";
 import {
   OrganizationDirectoryList,
   OrganizationDirectoryShow,
@@ -375,14 +375,14 @@ export const AppRouter = () => {
           <Route path="command/register-model-artifact" element={<ModelArtifactCatalogRegisterModelArtifact />} />
           <Route path="show/:id" element={<ModelArtifactCatalogShow />} />
         </Route>
-        <Route path="/model-version-catalog">
-          <Route index element={<ModelVersionCatalogList />} />
-          <Route path="show/:id" element={<ModelVersionCatalogShow />} />
-          <Route path=":id/command/record-model-evaluation-package" element={<ModelVersionCatalogRecordModelEvaluationPackage />} />
-          <Route path=":id/command/approve-model" element={<ModelVersionCatalogApproveModel />} />
-          <Route path=":id/command/promote-model-to-production" element={<ModelVersionCatalogPromoteModelToProduction />} />
-          <Route path=":id/command/rollback-model-version" element={<ModelVersionCatalogRollbackModelVersion />} />
-          <Route path=":id/command/retire-model-version" element={<ModelVersionCatalogRetireModelVersion />} />
+        <Route path="/model-catalog">
+          <Route index element={<ModelCatalogList />} />
+          <Route path="show/:id" element={<ModelCatalogShow />} />
+          <Route path=":id/command/record-model-evaluation-package" element={<ModelCatalogRecordModelEvaluationPackage />} />
+          <Route path=":id/command/approve-model" element={<ModelCatalogApproveModel />} />
+          <Route path=":id/command/promote-model-to-production" element={<ModelCatalogPromoteModelToProduction />} />
+          <Route path=":id/command/rollback-model" element={<ModelCatalogRollbackModel />} />
+          <Route path=":id/command/retire-model" element={<ModelCatalogRetireModel />} />
         </Route>
         <Route path="/organization-directory">
           <Route index element={<OrganizationDirectoryList />} />

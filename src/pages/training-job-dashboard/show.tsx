@@ -185,8 +185,8 @@ export const TrainingJobDashboardShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_job_dashboard.fields.finalModelVersionId.label", "Final Model Version Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.finalModelVersionId, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_job_dashboard.fields.finalModelId.label", "Final Model Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.finalModelId, t)}</p>
             </div>
             <Separator />
             <div>

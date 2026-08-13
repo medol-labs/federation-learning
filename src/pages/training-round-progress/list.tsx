@@ -64,10 +64,10 @@ type TrainingRoundProgressRecord = {
   evaluationSubmittedAt?: string;
   completedAt?: string;
   failedAt?: string;
-  baseModelVersionId?: string;
+  baseModelId?: string;
   artifactRefs: string[];
   rejectedUpdateReasons: string[];
-  aggregatedModelVersionId?: string;
+  aggregatedModelId?: string;
   globalAccuracy?: string;
   globalFairnessScore?: string;
   failureReason?: string;
@@ -502,10 +502,10 @@ export const TrainingRoundProgressList = () => {
         enableColumnFilter: false,
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
-      columnHelper.accessor("baseModelVersionId", {
-        id: "baseModelVersionId",
+      columnHelper.accessor("baseModelId", {
+        id: "baseModelId",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_round_progress.fields.baseModelVersionId.label", "Base Model Version Id")} />
+          <DataTableColumnHeader column={column} label={t("resources.training_round_progress.fields.baseModelId.label", "Base Model Id")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
@@ -529,10 +529,10 @@ export const TrainingRoundProgressList = () => {
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("aggregatedModelVersionId", {
-        id: "aggregatedModelVersionId",
+      columnHelper.accessor("aggregatedModelId", {
+        id: "aggregatedModelId",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_round_progress.fields.aggregatedModelVersionId.label", "Aggregated Model Version Id")} />
+          <DataTableColumnHeader column={column} label={t("resources.training_round_progress.fields.aggregatedModelId.label", "Aggregated Model Id")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
@@ -598,7 +598,7 @@ export const TrainingRoundProgressList = () => {
                       roundId: row.original.roundId,
                       roundNumber: row.original.roundNumber,
                       featureSchemaId: row.original.featureSchemaId,
-                      baseModelVersionId: row.original.baseModelVersionId,
+                      baseModelId: row.original.baseModelId,
                     }}
                   />
                 </DropdownMenuItem>
@@ -647,7 +647,7 @@ export const TrainingRoundProgressList = () => {
                       roundId: row.original.roundId,
                       roundNumber: row.original.roundNumber,
                       featureSchemaId: row.original.featureSchemaId,
-                      baseModelVersionId: row.original.baseModelVersionId,
+                      baseModelId: row.original.baseModelId,
                     }}
                   />
                 </DropdownMenuItem>
@@ -663,7 +663,7 @@ export const TrainingRoundProgressList = () => {
                       trainingRunConfigurationId: row.original.trainingRunConfigurationId,
                       featureSchemaId: row.original.featureSchemaId,
                       roundId: row.original.roundId,
-                      aggregatedModelVersionId: row.original.aggregatedModelVersionId,
+                      aggregatedModelId: row.original.aggregatedModelId,
                       globalAccuracy: row.original.globalAccuracy,
                       globalFairnessScore: row.original.globalFairnessScore,
                     }}

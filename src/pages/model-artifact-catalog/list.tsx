@@ -20,14 +20,16 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { MoreHorizontal } from "lucide-react";
 
 type ModelArtifactCatalogRecord = {
-  modelVersionId: string;
-  modelArtifactRef: string;
-  modelRepositoryRef: string;
-  modelFormat: string;
-  modelHash: string;
-  modelSignatureRef?: string;
-  modelSizeBytes?: number;
+  modelId: string;
+  modelName: string;
+  modelVersion: string;
   sourceType?: string;
+  modelArtifactUri: string;
+  modelRegistryRef: string;
+  modelFormat: string;
+  modelArtifactDigest: string;
+  modelSignatureUri?: string;
+  modelSizeBytes?: number;
   trainingJobId?: string;
   roundId?: string;
   trainingJobObjective?: string;
@@ -77,28 +79,55 @@ export const ModelArtifactCatalogList = () => {
         enableSorting: false,
         enableHiding: false,
       }),
-      columnHelper.accessor("modelVersionId", {
-        id: "modelVersionId",
+      columnHelper.accessor("modelId", {
+        id: "modelId",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelVersionId.label", "Model Version Id")} />
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelId.label", "Model Id")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("modelArtifactRef", {
-        id: "modelArtifactRef",
+      columnHelper.accessor("modelName", {
+        id: "modelName",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelArtifactRef.label", "Model Artifact Ref")} />
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelName.label", "Model Name")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("modelRepositoryRef", {
-        id: "modelRepositoryRef",
+      columnHelper.accessor("modelVersion", {
+        id: "modelVersion",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelRepositoryRef.label", "Model Repository Ref")} />
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelVersion.label", "Model Version")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("sourceType", {
+        id: "sourceType",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.sourceType.label", "Source Type")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("modelArtifactUri", {
+        id: "modelArtifactUri",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelArtifactUri.label", "Model Artifact Uri")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("modelRegistryRef", {
+        id: "modelRegistryRef",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelRegistryRef.label", "Model Registry Ref")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
@@ -113,19 +142,19 @@ export const ModelArtifactCatalogList = () => {
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("modelHash", {
-        id: "modelHash",
+      columnHelper.accessor("modelArtifactDigest", {
+        id: "modelArtifactDigest",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelHash.label", "Model Hash")} />
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelArtifactDigest.label", "Model Artifact Digest")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("modelSignatureRef", {
-        id: "modelSignatureRef",
+      columnHelper.accessor("modelSignatureUri", {
+        id: "modelSignatureUri",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelSignatureRef.label", "Model Signature Ref")} />
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelSignatureUri.label", "Model Signature Uri")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
@@ -138,15 +167,6 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: false,
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("sourceType", {
-        id: "sourceType",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.sourceType.label", "Source Type")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
@@ -207,7 +227,7 @@ export const ModelArtifactCatalogList = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>
-                  <ShowButton variant="ghost" recordItemId={row.original.modelVersionId} size="sm" />
+                  <ShowButton variant="ghost" recordItemId={row.original.modelId} size="sm" />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -224,14 +244,14 @@ export const ModelArtifactCatalogList = () => {
     initialState: {
       columnPinning: { right: ["actions"], left: ["select"] },
     },
-    getRowId: (row) => String(row.modelVersionId),
+    getRowId: (row) => String(row.modelId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
       syncWithLocation: true,
       meta: {
         tableName: "model_artifact_catalog_read_model_entity",
-        idField: "modelVersionId",
-        idFields: ["modelVersionId"],
+        idField: "modelId",
+        idFields: ["modelId"],
         label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
         aggregateRoute: "modelartifact",
         queryRoute: "modelartifactcatalog",

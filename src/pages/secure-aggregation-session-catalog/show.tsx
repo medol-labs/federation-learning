@@ -110,8 +110,8 @@ export const SecureAggregationSessionCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.aggregatedModelVersionId.label", "Aggregated Model Version Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.aggregatedModelVersionId, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.aggregatedModelId.label", "Aggregated Model Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.aggregatedModelId, t)}</p>
             </div>
             <Separator />
             <div>
@@ -120,8 +120,8 @@ export const SecureAggregationSessionCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.modelHash.label", "Model Hash")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.modelHash, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.modelArtifactDigest.label", "Model Artifact Digest")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.modelArtifactDigest, t)}</p>
             </div>
             <Separator />
             <div>
