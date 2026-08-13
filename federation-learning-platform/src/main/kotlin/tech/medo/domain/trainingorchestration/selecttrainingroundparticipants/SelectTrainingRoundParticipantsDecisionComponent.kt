@@ -1,5 +1,6 @@
 package tech.medo.domain.trainingorchestration.selecttrainingroundparticipants
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
@@ -14,6 +15,7 @@ import java.util.UUID
 @Component
 class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundParticipantsDecision {
     private val log = LoggerFactory.getLogger(SelectTrainingRoundParticipantsDecisionComponent::class.java)
+    private val objectMapper = ObjectMapper()
 
     override fun decide(
         command: SelectTrainingRoundParticipantsCommand,
@@ -56,9 +58,30 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
 
         val matchingDatasetMetadata = snapshot.datasetMetadata
             .filter { it.featureSchemaId == snapshot.featureSchemaId }
-            .filter { it.schemaCompatible == true && it.labelCompatible == true }
+            // TODO
+            // .filter { it.schemaCompatible == true && it.labelCompatible == true }
             .filter { it.organizationId in joinedOrganizationIds }
             .filter { it.datasetId != null }
+
+        log.info(
+            "Matched runtime dataset metadata for participant selection. trainingJobId={}, federationId={}, featureSchemaId={}, matchingDatasetMetadataCount={}, matchingDatasetMetadata={}",
+            command.trainingJobId,
+            snapshot.federationId,
+            snapshot.featureSchemaId,
+            matchingDatasetMetadata.size,
+            objectMapper.writeValueAsString(
+                matchingDatasetMetadata.map {
+                    mapOf(
+                        "datasetId" to it.datasetId,
+                        "organizationId" to it.organizationId,
+                        "runtimeId" to it.runtimeId,
+                        "featureSchemaId" to it.featureSchemaId,
+                        "schemaCompatible" to it.schemaCompatible,
+                        "labelCompatible" to it.labelCompatible
+                    )
+                }
+            )
+        )
 
         val selectedParticipants = matchingDatasetMetadata
             .mapNotNull { metadata ->

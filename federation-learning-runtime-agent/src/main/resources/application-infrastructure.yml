@@ -15,3 +15,6 @@ runtime-agent:
   feature-schema-lookup:
     enabled: ${RUNTIME_AGENT_FEATURE_SCHEMA_LOOKUP_ENABLED:true}
     platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
+  dataset-metadata-reporting:
+    enabled: ${RUNTIME_AGENT_DATASET_METADATA_REPORTING_ENABLED:true}
+    platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
