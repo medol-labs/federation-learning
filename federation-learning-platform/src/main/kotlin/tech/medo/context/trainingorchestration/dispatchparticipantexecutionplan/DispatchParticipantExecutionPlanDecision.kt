@@ -11,10 +11,6 @@ import tech.medo.trainingorchestration.domain.states.ParticipantExecutionPlanSta
 
 interface DispatchParticipantExecutionPlanDecision {
     fun decide(command: DispatchParticipantExecutionPlanCommand, state: ParticipantExecutionPlanState, portResult: DispatchParticipantExecutionPlanResult): List<Any> {
-        if (state.currentState == ParticipantExecutionPlanStateEnum.PLAN_DISPATCHED) {
-            return emptyList()
-        }
-
         require(state.currentState == ParticipantExecutionPlanStateEnum.PLAN_GENERATED) {
             "DispatchParticipantExecutionPlan requires ParticipantExecutionPlan to be PlanGenerated."
         }

@@ -22,9 +22,10 @@ class AcceptExecutionPlanCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        val input = AcceptExecutionPlanInput(executionPlanId = command.executionPlanId, executionSessionId = command.executionSessionId, trainingJobId = command.trainingJobId, runtimeId = command.runtimeId, localExecutionRequirementsSatisfied = command.localExecutionRequirementsSatisfied, runtimeIdentityMatched = command.runtimeIdentityMatched, runtimeDatasetBindingAvailable = command.runtimeDatasetBindingAvailable, datasetAccessValidated = command.datasetAccessValidated, baseModelAvailable = command.baseModelAvailable, trainingConfigurationSupported = command.trainingConfigurationSupported, runtimeResourceAvailable = command.runtimeResourceAvailable, runtimeAgentIdle = command.runtimeAgentIdle)
+        val input = AcceptExecutionPlanInput(executionPlanId = command.executionPlanId, executionSessionId = command.executionSessionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, featureSchemaId = command.featureSchemaId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, baseModelVersionId = command.baseModelVersionId)
         val portResult = acceptExecutionPlanService.execute(input)
+        val now = java.time.LocalDateTime.now()
 
-        eventAppender.append(decision.decide(command, state, portResult))
+        eventAppender.append(decision.decide(command, state, portResult, now))
     }
 }

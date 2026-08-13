@@ -2,7 +2,6 @@ package tech.medo.trainingorchestration.trainingrunconfigurationcatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
@@ -16,8 +15,6 @@ import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationSta
 
 @Component
 class TrainingRunConfigurationCatalogReadModelProjector(private val repository: TrainingRunConfigurationCatalogReadModelRepository) {
-    private val log = LoggerFactory.getLogger(TrainingRunConfigurationCatalogReadModelProjector::class.java)
-
     @EventHandler
     fun on(event: FederationCreatedEvent) {
         // Skipped: FederationCreatedEvent does not provide enough key fields to locate TrainingRunConfigurationCatalogReadModelProjection.
@@ -119,14 +116,8 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
         message: EventMessage
     ) {
 
-        val entity = repository.findProjectionById(event.trainingRunConfigurationId)
-        if (entity == null) {
-            log.warn(
-                "Skip projecting training run configuration lock because configuration projection is missing. trainingRunConfigurationId={}, trainingJobId={}",
-                event.trainingRunConfigurationId,
-                event.trainingJobId
-            )
-            return
+        val entity = repository.findProjectionById(event.trainingRunConfigurationId) ?: TrainingRunConfigurationCatalogReadModelProjection().apply {
+                this.trainingRunConfigurationId = event.trainingRunConfigurationId
         }
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.state = TrainingRunConfigurationStateEnum.LOCKED

@@ -21,10 +21,16 @@ class StartRoundExecutionServiceRouter(private val adapters: ObjectProvider<Star
             1 -> try {
                 candidates.first().execute(input)
             } catch (ex: Exception) {
-                throw ex
+                StartRoundExecutionResult.Unavailable(
+                    failureReason = ex.message ?: "StartRoundExecutionService is unavailable."
+                )
             }
-            0 -> error("No StartRoundExecutionService adapter supports the requested input.")
-            else -> error("Multiple StartRoundExecutionService adapters support the requested input.")
+            0 -> StartRoundExecutionResult.Unavailable(
+                failureReason = "No StartRoundExecutionService adapter supports the requested input."
+            )
+            else -> StartRoundExecutionResult.Unavailable(
+                failureReason = "Multiple StartRoundExecutionService adapters support the requested input."
+            )
         }
     }
 }

@@ -12,17 +12,6 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 
 interface VerifyRuntimeInfrastructureDecision {
     fun decide(command: VerifyRuntimeInfrastructureCommand, state: RuntimeInfrastructureState, portResult: RuntimeInfrastructureVerification, now: java.time.LocalDateTime): List<Any> {
-        if (state.currentState in setOf(
-                RuntimeInfrastructureStateEnum.VERIFIED,
-                RuntimeInfrastructureStateEnum.AGENT_READY,
-                RuntimeInfrastructureStateEnum.CONNECTED,
-                RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED,
-                RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
-            )
-        ) {
-            return emptyList()
-        }
-
         require(state.currentState == RuntimeInfrastructureStateEnum.REGISTERED) {
             "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Registered."
         }

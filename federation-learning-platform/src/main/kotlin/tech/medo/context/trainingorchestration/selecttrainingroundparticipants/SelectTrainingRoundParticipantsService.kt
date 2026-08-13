@@ -1,6 +1,7 @@
 package tech.medo.trainingorchestration.selecttrainingroundparticipants
 
-import java.util.UUID
+import java.util.UUID;
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
 
 interface SelectTrainingRoundParticipantsService {
     fun supports(input: SelectTrainingRoundParticipantsInput): Boolean = true
@@ -14,40 +15,16 @@ data class SelectTrainingRoundParticipantsInput(
 sealed interface SelectTrainingRoundParticipantsResult {
     data class Succeeded(
         val trainingRunConfigurationId: UUID,
-        val federationId: UUID,
         val featureSchemaId: UUID,
-        val currentRoundNumber: Int?,
+        val roundId: UUID,
+        val roundNumber: Int,
         val minimumNodesPerRound: Int,
-        val memberships: List<FederationMembershipSnapshot>,
-        val runtimeIdentities: List<RuntimeIdentitySnapshot>,
-        val runtimeInfrastructureAccesses: List<RuntimeInfrastructureAccessSnapshot>,
-        val datasetMetadata: List<RuntimeDatasetMetadataSnapshot>
+        val selectedOrganizationIds: List<UUID>,
+        val selectedRuntimeIds: List<UUID>,
+        val selectedParticipants: List<TrainingRoundParticipant>,
+        val selectedOrganizationCount: Int,
+        val selectedRuntimeCount: Int
     ) : SelectTrainingRoundParticipantsResult
+
+
 }
-
-data class FederationMembershipSnapshot(
-    val federationId: UUID?,
-    val organizationId: UUID?,
-    val membershipStatus: String?
-)
-
-data class RuntimeIdentitySnapshot(
-    val runtimeId: UUID?,
-    val runtimeAgentId: UUID?,
-    val organizationId: UUID?,
-    val identityStatus: String?
-)
-
-data class RuntimeInfrastructureAccessSnapshot(
-    val runtimeAgentId: UUID?,
-    val state: String?
-)
-
-data class RuntimeDatasetMetadataSnapshot(
-    val datasetId: UUID?,
-    val organizationId: UUID?,
-    val runtimeId: UUID?,
-    val featureSchemaId: UUID?,
-    val schemaCompatible: Boolean?,
-    val labelCompatible: Boolean?
-)

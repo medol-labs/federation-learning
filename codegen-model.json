@@ -1498,11 +1498,6 @@
           "title": "Accept Execution Plan"
         },
         {
-          "id": "slice-df2e65a6",
-          "name": "RejectExecutionPlan",
-          "title": "Reject Execution Plan"
-        },
-        {
           "id": "slice-4d4016d0",
           "name": "StartRoundExecution",
           "title": "Start Round Execution"
@@ -3219,11 +3214,6 @@
           "id": "slice-64faaa9b",
           "name": "AcceptExecutionPlan",
           "title": "Accept Execution Plan"
-        },
-        {
-          "id": "slice-df2e65a6",
-          "name": "RejectExecutionPlan",
-          "title": "Reject Execution Plan"
         },
         {
           "id": "slice-4d4016d0",
@@ -6225,39 +6215,6 @@
       },
       "from": "PlanReceived",
       "to": "PlanAccepted",
-      "startsLifecycle": false
-    },
-    {
-      "id": "transition-a2381817",
-      "context": "RuntimeAgentOperations",
-      "owner": {
-        "id": "concept-14e04b52",
-        "type": "concept",
-        "name": "RoundExecution",
-        "title": "Round Execution"
-      },
-      "slice": {
-        "id": "slice-df2e65a6",
-        "name": "RejectExecutionPlan",
-        "title": "Reject Execution Plan"
-      },
-      "command": {
-        "id": "command-64f8303f",
-        "name": "RejectExecutionPlan",
-        "title": "Reject Execution Plan"
-      },
-      "event": {
-        "id": "event-9e9504e9",
-        "name": "ExecutionPlanRejected",
-        "title": "Execution Plan Rejected"
-      },
-      "trigger": {
-        "id": "event-13d1ccf3",
-        "name": "ExecutionPlanReceived",
-        "title": "Execution Plan Received"
-      },
-      "from": "PlanReceived",
-      "to": "PlanRejected",
       "startsLifecycle": false
     },
     {
@@ -25010,16 +24967,15 @@
       "chapter": "TrainingOrchestration",
       "context": "TrainingOrchestration",
       "tags": [],
+      "port": true,
       "concepts": [
         "TrainingRound"
       ],
-      "port": true,
       "commands": [
         {
           "id": "command-5362dd01",
           "name": "SelectTrainingRoundParticipants",
           "title": "Select Training Round Participants",
-          "port": true,
           "type": "COMMAND",
           "modelContext": "TrainingOrchestration",
           "slice": "Select Training Round Participants",
@@ -25062,7 +25018,8 @@
               "elementType": "EVENT"
             }
           ],
-          "startsLifecycle": true
+          "startsLifecycle": true,
+          "port": true
         }
       ],
       "events": [
@@ -46740,15 +46697,9 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "automation-9ab0a974",
+              "id": "automation-8a7d7d31",
               "direction": "OUTBOUND",
-              "title": "Accept Execution Plan When Local Requirements Satisfied",
-              "elementType": "PROCESSOR"
-            },
-            {
-              "id": "automation-3593a897",
-              "direction": "OUTBOUND",
-              "title": "Reject Execution Plan When Local Requirements Failed",
+              "title": "Accept Execution Plan When Execution Plan Received",
               "elementType": "PROCESSOR"
             },
             {
@@ -46874,6 +46825,74 @@
               }
             },
             {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.trainingRunConfigurationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.roundId"
+                ]
+              }
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.roundNumber"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -46891,105 +46910,57 @@
               }
             },
             {
-              "name": "localExecutionRequirementsSatisfied",
-              "type": "Boolean",
+              "name": "organizationId",
+              "type": "UUID",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
               "query": false,
-              "display": false
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.organizationId"
+                ]
+              }
             },
             {
-              "name": "runtimeIdentityMatched",
-              "type": "Boolean",
+              "name": "baseModelVersionId",
+              "type": "UUID",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
               "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeDatasetBindingAvailable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "datasetAccessValidated",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "baseModelAvailable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "trainingConfigurationSupported",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeResourceAvailable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeAgentIdle",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.baseModelVersionId"
+                ]
+              }
             }
           ],
           "dependencies": [
             {
-              "id": "automation-9ab0a974",
+              "id": "automation-8a7d7d31",
               "direction": "INBOUND",
-              "title": "Accept Execution Plan When Local Requirements Satisfied",
+              "title": "Accept Execution Plan When Execution Plan Received",
               "elementType": "PROCESSOR"
             },
             {
               "id": "event-69137ae7",
               "direction": "OUTBOUND",
               "title": "Execution Plan Accepted",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-13e95eac",
+              "direction": "OUTBOUND",
+              "title": "Execution Plan Rejected",
               "elementType": "EVENT"
             }
           ],
@@ -47039,7 +47010,73 @@
               "display": false
             },
             {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
               "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelVersionId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -47158,15 +47195,248 @@
               "elementType": "READMODEL"
             }
           ]
+        },
+        {
+          "id": "event-13e95eac",
+          "name": "ExecutionPlanRejected",
+          "title": "Execution Plan Rejected",
+          "type": "EVENT",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Accept Execution Plan",
+          "fields": [
+            {
+              "name": "executionPlanId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "executionSessionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelVersionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "localExecutionRequirementsSatisfied",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "runtimeIdentityMatched",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "runtimeDatasetBindingAvailable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "datasetAccessValidated",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelAvailable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "trainingConfigurationSupported",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "runtimeResourceAvailable",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "runtimeAgentIdle",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "rejectionReasons",
+              "type": "String",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "readmodel-5686facf",
+              "direction": "OUTBOUND",
+              "title": "Round Execution Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "command-558a3b47",
+              "direction": "INBOUND",
+              "title": "Accept Execution Plan",
+              "elementType": "COMMAND"
+            }
+          ]
         }
       ],
       "readmodels": [],
       "screens": [],
       "processors": [
         {
-          "id": "automation-9ab0a974",
-          "name": "AcceptExecutionPlanWhenLocalRequirementsSatisfied",
-          "title": "Accept Execution Plan When Local Requirements Satisfied",
+          "id": "automation-8a7d7d31",
+          "name": "AcceptExecutionPlanWhenExecutionPlanReceived",
+          "title": "Accept Execution Plan When Execution Plan Received",
           "type": "PROCESSOR",
           "modelContext": "RuntimeAgentOperations",
           "slice": "Accept Execution Plan",
@@ -47188,12 +47458,323 @@
           "metadata": {
             "on": "ExecutionPlanReceived",
             "onKind": "event",
-            "condition": "localExecutionRequirementsSatisfied == true",
             "emits": "AcceptExecutionPlan"
           }
         }
       ],
-      "specifications": [],
+      "specifications": [
+        {
+          "id": "gwt-d592c359",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Accept Execution Plan",
+          "title": "Execution Plan Accepted",
+          "specification": "Execution Plan Local Acceptance Outcome",
+          "rule": "When a participant execution plan is received, the runtime agent performs a local readiness check before starting any training work. The check verifies that the plan targets this runtime, the required dataset binding exists, dataset access has already been validated, the base model is available, the requested training configuration is supported, sufficient local resources are available, and the runtime agent is idle. The port records exactly one outcome: ExecutionPlanAccepted when all local requirements are satisfied, or ExecutionPlanRejected with rejection reasons when any requirement fails.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Execution Plan Received",
+              "id": "event-13d1ccf3",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-1"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Accept Execution Plan",
+              "id": "command-558a3b47",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-1"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Execution Plan Accepted",
+              "id": "event-69137ae7",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-1"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                },
+                {
+                  "name": "localExecutionRequirementsSatisfied"
+                },
+                {
+                  "name": "runtimeIdentityMatched"
+                },
+                {
+                  "name": "runtimeDatasetBindingAvailable"
+                },
+                {
+                  "name": "datasetAccessValidated"
+                },
+                {
+                  "name": "baseModelAvailable"
+                },
+                {
+                  "name": "trainingConfigurationSupported"
+                },
+                {
+                  "name": "runtimeResourceAvailable"
+                },
+                {
+                  "name": "runtimeAgentIdle"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-3b8ecf32",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Accept Execution Plan",
+          "title": "Execution Plan Rejected",
+          "specification": "Execution Plan Local Acceptance Outcome",
+          "rule": "When a participant execution plan is received, the runtime agent performs a local readiness check before starting any training work. The check verifies that the plan targets this runtime, the required dataset binding exists, dataset access has already been validated, the base model is available, the requested training configuration is supported, sufficient local resources are available, and the runtime agent is idle. The port records exactly one outcome: ExecutionPlanAccepted when all local requirements are satisfied, or ExecutionPlanRejected with rejection reasons when any requirement fails.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Execution Plan Received",
+              "id": "event-13d1ccf3",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-2"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Accept Execution Plan",
+              "id": "command-558a3b47",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-2"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Execution Plan Rejected",
+              "id": "event-13e95eac",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-2"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                },
+                {
+                  "name": "localExecutionRequirementsSatisfied"
+                },
+                {
+                  "name": "runtimeIdentityMatched"
+                },
+                {
+                  "name": "runtimeDatasetBindingAvailable"
+                },
+                {
+                  "name": "datasetAccessValidated"
+                },
+                {
+                  "name": "baseModelAvailable"
+                },
+                {
+                  "name": "trainingConfigurationSupported"
+                },
+                {
+                  "name": "runtimeResourceAvailable"
+                },
+                {
+                  "name": "runtimeAgentIdle"
+                },
+                {
+                  "name": "rejectionReasons"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "actors": [],
       "hotspots": [],
       "stateChange": {
@@ -47203,425 +47784,8 @@
       }
     },
     {
-      "id": "slice-df2e65a6",
-      "index": 126,
-      "name": "RejectExecutionPlan",
-      "title": "Reject Execution Plan",
-      "chapter": "RuntimeAgentOperations",
-      "context": "RuntimeAgentOperations",
-      "tags": [],
-      "port": true,
-      "concepts": [
-        "RoundExecution"
-      ],
-      "commands": [
-        {
-          "id": "command-64f8303f",
-          "name": "RejectExecutionPlan",
-          "title": "Reject Execution Plan",
-          "type": "COMMAND",
-          "modelContext": "RuntimeAgentOperations",
-          "slice": "Reject Execution Plan",
-          "fields": [
-            {
-              "name": "executionPlanId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": true,
-              "generated": false,
-              "technicalAttribute": true,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "executionSessionId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "ExecutionPlanReceived.executionSessionId"
-                ]
-              }
-            },
-            {
-              "name": "trainingJobId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "ExecutionPlanReceived.trainingJobId"
-                ]
-              }
-            },
-            {
-              "name": "runtimeId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "ExecutionPlanReceived.runtimeId"
-                ]
-              }
-            },
-            {
-              "name": "localExecutionRequirementsSatisfied",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeIdentityMatched",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeDatasetBindingAvailable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "datasetAccessValidated",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "baseModelAvailable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "trainingConfigurationSupported",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeResourceAvailable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeAgentIdle",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "rejectionReasons",
-              "type": "String",
-              "cardinality": "Multiple",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            }
-          ],
-          "dependencies": [
-            {
-              "id": "automation-3593a897",
-              "direction": "INBOUND",
-              "title": "Reject Execution Plan When Local Requirements Failed",
-              "elementType": "PROCESSOR"
-            },
-            {
-              "id": "event-9e9504e9",
-              "direction": "OUTBOUND",
-              "title": "Execution Plan Rejected",
-              "elementType": "EVENT"
-            }
-          ],
-          "port": true
-        }
-      ],
-      "events": [
-        {
-          "id": "event-9e9504e9",
-          "name": "ExecutionPlanRejected",
-          "title": "Execution Plan Rejected",
-          "type": "EVENT",
-          "modelContext": "RuntimeAgentOperations",
-          "slice": "Reject Execution Plan",
-          "fields": [
-            {
-              "name": "executionPlanId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": true,
-              "generated": false,
-              "technicalAttribute": true,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "executionSessionId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "trainingJobId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "localExecutionRequirementsSatisfied",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeIdentityMatched",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeDatasetBindingAvailable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "datasetAccessValidated",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "baseModelAvailable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "trainingConfigurationSupported",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeResourceAvailable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "runtimeAgentIdle",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "rejectionReasons",
-              "type": "String",
-              "cardinality": "Multiple",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            }
-          ],
-          "dependencies": [
-            {
-              "id": "command-64f8303f",
-              "direction": "INBOUND",
-              "title": "Reject Execution Plan",
-              "elementType": "COMMAND"
-            },
-            {
-              "id": "readmodel-5686facf",
-              "direction": "OUTBOUND",
-              "title": "Round Execution Catalog",
-              "elementType": "READMODEL"
-            }
-          ]
-        }
-      ],
-      "readmodels": [],
-      "screens": [],
-      "processors": [
-        {
-          "id": "automation-3593a897",
-          "name": "RejectExecutionPlanWhenLocalRequirementsFailed",
-          "title": "Reject Execution Plan When Local Requirements Failed",
-          "type": "PROCESSOR",
-          "modelContext": "RuntimeAgentOperations",
-          "slice": "Reject Execution Plan",
-          "fields": [],
-          "dependencies": [
-            {
-              "id": "event-13d1ccf3",
-              "direction": "INBOUND",
-              "title": "Execution Plan Received",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "command-64f8303f",
-              "direction": "OUTBOUND",
-              "title": "Reject Execution Plan",
-              "elementType": "COMMAND"
-            }
-          ],
-          "metadata": {
-            "on": "ExecutionPlanReceived",
-            "onKind": "event",
-            "condition": "localExecutionRequirementsSatisfied == false",
-            "emits": "RejectExecutionPlan"
-          }
-        }
-      ],
-      "specifications": [],
-      "actors": [
-        {
-          "id": "actor-a0cd7014",
-          "name": "RuntimeAgent",
-          "title": "Runtime Agent"
-        }
-      ],
-      "hotspots": [],
-      "stateChange": {
-        "event": "ExecutionPlanRejected",
-        "eventId": "event-9e9504e9",
-        "to": "PlanRejected"
-      }
-    },
-    {
       "id": "slice-4d4016d0",
-      "index": 127,
+      "index": 126,
       "name": "StartRoundExecution",
       "title": "Start Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -47713,17 +47877,10 @@
               "query": false,
               "display": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "ExecutionPlanReceived.trainingRunConfigurationId"
-                ],
-                "lookup": {
-                  "key": "executionPlanId",
-                  "cacheProjection": "ExecutionPlanReceived",
-                  "sourceField": "trainingRunConfigurationId",
-                  "targetField": "trainingRunConfigurationId",
-                  "missingValuePolicy": "keep"
-                }
+                  "ExecutionPlanAccepted.trainingRunConfigurationId"
+                ]
               }
             },
             {
@@ -47737,17 +47894,10 @@
               "query": false,
               "display": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "ExecutionPlanReceived.roundId"
-                ],
-                "lookup": {
-                  "key": "executionPlanId",
-                  "cacheProjection": "ExecutionPlanReceived",
-                  "sourceField": "roundId",
-                  "targetField": "roundId",
-                  "missingValuePolicy": "keep"
-                }
+                  "ExecutionPlanAccepted.roundId"
+                ]
               }
             },
             {
@@ -47761,17 +47911,10 @@
               "query": false,
               "display": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "ExecutionPlanReceived.roundNumber"
-                ],
-                "lookup": {
-                  "key": "executionPlanId",
-                  "cacheProjection": "ExecutionPlanReceived",
-                  "sourceField": "roundNumber",
-                  "targetField": "roundNumber",
-                  "missingValuePolicy": "keep"
-                }
+                  "ExecutionPlanAccepted.roundNumber"
+                ]
               }
             },
             {
@@ -47802,17 +47945,10 @@
               "query": false,
               "display": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "ExecutionPlanReceived.organizationId"
-                ],
-                "lookup": {
-                  "key": "executionPlanId",
-                  "cacheProjection": "ExecutionPlanReceived",
-                  "sourceField": "organizationId",
-                  "targetField": "organizationId",
-                  "missingValuePolicy": "keep"
-                }
+                  "ExecutionPlanAccepted.organizationId"
+                ]
               }
             },
             {
@@ -47826,17 +47962,10 @@
               "query": false,
               "display": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "ExecutionPlanReceived.featureSchemaId"
-                ],
-                "lookup": {
-                  "key": "executionPlanId",
-                  "cacheProjection": "ExecutionPlanReceived",
-                  "sourceField": "featureSchemaId",
-                  "targetField": "featureSchemaId",
-                  "missingValuePolicy": "keep"
-                }
+                  "ExecutionPlanAccepted.featureSchemaId"
+                ]
               }
             },
             {
@@ -47850,17 +47979,10 @@
               "query": false,
               "display": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "ExecutionPlanReceived.baseModelVersionId"
-                ],
-                "lookup": {
-                  "key": "executionPlanId",
-                  "cacheProjection": "ExecutionPlanReceived",
-                  "sourceField": "baseModelVersionId",
-                  "targetField": "baseModelVersionId",
-                  "missingValuePolicy": "keep"
-                }
+                  "ExecutionPlanAccepted.baseModelVersionId"
+                ]
               }
             },
             {
@@ -47886,6 +48008,12 @@
               "id": "event-82cf8a97",
               "direction": "OUTBOUND",
               "title": "Round Execution Started",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-341590f7",
+              "direction": "OUTBOUND",
+              "title": "Round Execution Start Failed",
               "elementType": "EVENT"
             }
           ],
@@ -48249,6 +48377,12 @@
               "direction": "OUTBOUND",
               "title": "Round Execution Catalog",
               "elementType": "READMODEL"
+            },
+            {
+              "id": "command-abce9c5b",
+              "direction": "INBOUND",
+              "title": "Start Round Execution",
+              "elementType": "COMMAND"
             }
           ]
         }
@@ -48285,7 +48419,343 @@
           }
         }
       ],
-      "specifications": [],
+      "specifications": [
+        {
+          "id": "gwt-0cd97ebe",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Start Round Execution",
+          "title": "Round Execution Started",
+          "specification": "Round Execution Runtime Engine Start Outcome",
+          "rule": "Starting a round execution is responsible for launching the local runtime engine on demand for this participant round, not for calling a pre-existing always-on engine. The adapter prepares the local training workspace and configuration, starts the matching runtime engine service, process, or container, submits the local model training job to that engine, and records the created runtimeEngineJobId. The port records exactly one outcome: RoundExecutionStarted when the runtime engine is running and the training job has been accepted, or RoundExecutionStartFailed when environment preparation, engine startup, model loading, resource allocation, or training job submission fails.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Execution Plan Accepted",
+              "id": "event-69137ae7",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-1"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                },
+                {
+                  "name": "localExecutionRequirementsSatisfied"
+                },
+                {
+                  "name": "runtimeIdentityMatched"
+                },
+                {
+                  "name": "runtimeDatasetBindingAvailable"
+                },
+                {
+                  "name": "datasetAccessValidated"
+                },
+                {
+                  "name": "baseModelAvailable"
+                },
+                {
+                  "name": "trainingConfigurationSupported"
+                },
+                {
+                  "name": "runtimeResourceAvailable"
+                },
+                {
+                  "name": "runtimeAgentIdle"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Start Round Execution",
+              "id": "command-abce9c5b",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "roundExecutionId"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-1"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Round Execution Started",
+              "id": "event-82cf8a97",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "roundExecutionId"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-1"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-9188b83c",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Start Round Execution",
+          "title": "Round Execution Start Failed",
+          "specification": "Round Execution Runtime Engine Start Outcome",
+          "rule": "Starting a round execution is responsible for launching the local runtime engine on demand for this participant round, not for calling a pre-existing always-on engine. The adapter prepares the local training workspace and configuration, starts the matching runtime engine service, process, or container, submits the local model training job to that engine, and records the created runtimeEngineJobId. The port records exactly one outcome: RoundExecutionStarted when the runtime engine is running and the training job has been accepted, or RoundExecutionStartFailed when environment preparation, engine startup, model loading, resource allocation, or training job submission fails.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Execution Plan Accepted",
+              "id": "event-69137ae7",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-2"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                },
+                {
+                  "name": "localExecutionRequirementsSatisfied"
+                },
+                {
+                  "name": "runtimeIdentityMatched"
+                },
+                {
+                  "name": "runtimeDatasetBindingAvailable"
+                },
+                {
+                  "name": "datasetAccessValidated"
+                },
+                {
+                  "name": "baseModelAvailable"
+                },
+                {
+                  "name": "trainingConfigurationSupported"
+                },
+                {
+                  "name": "runtimeResourceAvailable"
+                },
+                {
+                  "name": "runtimeAgentIdle"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Start Round Execution",
+              "id": "command-abce9c5b",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "roundExecutionId"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-2"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Round Execution Start Failed",
+              "id": "event-341590f7",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "roundExecutionId"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId",
+                  "example": "execution-plan-2"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "baseModelVersionId"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                },
+                {
+                  "name": "failureReason"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "actors": [],
       "hotspots": [],
       "stateChange": {
@@ -48296,7 +48766,7 @@
     },
     {
       "id": "slice-b1a48287",
-      "index": 128,
+      "index": 127,
       "name": "CompleteRoundExecution",
       "title": "Complete Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -48565,7 +49035,7 @@
     },
     {
       "id": "slice-45c663e8",
-      "index": 129,
+      "index": 128,
       "name": "FailRoundExecution",
       "title": "Fail Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -48862,7 +49332,7 @@
     },
     {
       "id": "slice-ff352882",
-      "index": 130,
+      "index": 129,
       "name": "RetryRoundExecutionAfterStartFailure",
       "title": "Retry Round Execution After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -49511,7 +49981,7 @@
     },
     {
       "id": "slice-2cb34062",
-      "index": 131,
+      "index": 130,
       "name": "RetryRoundExecutionAfterRuntimeFailure",
       "title": "Retry Round Execution After Runtime Failure",
       "chapter": "RuntimeAgentOperations",
@@ -50188,7 +50658,7 @@
     },
     {
       "id": "slice-d54dcc12",
-      "index": 132,
+      "index": 131,
       "name": "SubmitAgentLocalModelUpdate",
       "title": "Submit Agent Local Model Update",
       "chapter": "RuntimeAgentOperations",
@@ -50663,7 +51133,7 @@
     },
     {
       "id": "slice-6485fdce",
-      "index": 133,
+      "index": 132,
       "name": "ReleaseRuntimeEngineJobAfterCompletion",
       "title": "Release Runtime Engine Job After Completion",
       "chapter": "RuntimeAgentOperations",
@@ -50825,7 +51295,7 @@
     },
     {
       "id": "slice-ef8420f2",
-      "index": 134,
+      "index": 133,
       "name": "ReleaseRuntimeEngineJobAfterFailure",
       "title": "Release Runtime Engine Job After Failure",
       "chapter": "RuntimeAgentOperations",
@@ -50998,7 +51468,7 @@
     },
     {
       "id": "slice-30156076",
-      "index": 135,
+      "index": 134,
       "name": "ReleaseRuntimeEngineJobAfterStartFailure",
       "title": "Release Runtime Engine Job After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -51171,7 +51641,7 @@
     },
     {
       "id": "slice-5d7a0380",
-      "index": 136,
+      "index": 135,
       "name": "ReleaseRuntimeEngineJobAfterRetryFailure",
       "title": "Release Runtime Engine Job After Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -51344,7 +51814,7 @@
     },
     {
       "id": "slice-bc1eac14",
-      "index": 137,
+      "index": 136,
       "name": "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure",
       "title": "Release Runtime Engine Job After Runtime Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -51517,7 +51987,7 @@
     },
     {
       "id": "slice-eb00f5f7",
-      "index": 138,
+      "index": 137,
       "name": "RoundExecutionCatalog",
       "title": "Round Execution Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -51965,7 +52435,7 @@
               "elementType": "EVENT"
             },
             {
-              "id": "event-9e9504e9",
+              "id": "event-13e95eac",
               "direction": "INBOUND",
               "title": "Execution Plan Rejected",
               "elementType": "EVENT"
@@ -52066,7 +52536,7 @@
     },
     {
       "id": "slice-d248addb",
-      "index": 139,
+      "index": 138,
       "name": "LoadRuntimeAgentBootstrapConfiguration",
       "title": "Load Runtime Agent Bootstrap Configuration",
       "chapter": "RuntimeAgentOperations",
@@ -52340,7 +52810,7 @@
     },
     {
       "id": "slice-c7d2df46",
-      "index": 140,
+      "index": 139,
       "name": "ReportRuntimeAgentStarted",
       "title": "Report Runtime Agent Started",
       "chapter": "RuntimeAgentOperations",
@@ -52540,7 +53010,7 @@
     },
     {
       "id": "slice-75635ed7",
-      "index": 141,
+      "index": 140,
       "name": "ReportRuntimeInstanceSelfCheckPassed",
       "title": "Report Runtime Instance Self Check Passed",
       "chapter": "RuntimeAgentOperations",
@@ -52895,7 +53365,7 @@
     },
     {
       "id": "slice-574f1d44",
-      "index": 142,
+      "index": 141,
       "name": "RuntimeAgentLifecycleCatalog",
       "title": "Runtime Agent Lifecycle Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -53140,7 +53610,7 @@
     },
     {
       "id": "slice-e5b0caa2",
-      "index": 143,
+      "index": 142,
       "name": "ReportRuntimeInstanceConnected",
       "title": "Report Runtime Instance Connected",
       "chapter": "RuntimeAgentOperations",
@@ -53805,7 +54275,7 @@
     },
     {
       "id": "slice-8d5d066d",
-      "index": 144,
+      "index": 143,
       "name": "AgentRuntimeInfrastructureConnectionCatalog",
       "title": "Agent Runtime Infrastructure Connection Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -53972,7 +54442,7 @@
     },
     {
       "id": "slice-ff0c55e7",
-      "index": 145,
+      "index": 144,
       "name": "AgentRuntimeTelemetryLatest",
       "title": "Agent Runtime Telemetry Latest",
       "chapter": "RuntimeAgentOperations",
@@ -54115,7 +54585,7 @@
     },
     {
       "id": "slice-d8eaacb9",
-      "index": 146,
+      "index": 145,
       "name": "ReportAgentRuntimeNodeInventory",
       "title": "Report Agent Runtime Node Inventory",
       "chapter": "RuntimeAgentOperations",
@@ -54505,7 +54975,7 @@
     },
     {
       "id": "slice-6a815e36",
-      "index": 147,
+      "index": 146,
       "name": "AgentRuntimeNodeInventoryCatalog",
       "title": "Agent Runtime Node Inventory Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -54723,7 +55193,7 @@
     },
     {
       "id": "slice-a56419ba",
-      "index": 148,
+      "index": 147,
       "name": "AgentRuntimeNodeResourceLatest",
       "title": "Agent Runtime Node Resource Latest",
       "chapter": "RuntimeAgentOperations",

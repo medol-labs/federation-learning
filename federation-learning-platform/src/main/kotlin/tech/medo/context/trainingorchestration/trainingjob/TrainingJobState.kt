@@ -25,7 +25,6 @@ class TrainingJobState @EntityCreator constructor() {
     var federationId: UUID? = null
     var featureSchemaId: UUID? = null
     var trainingRunConfigurationId: UUID? = null
-    var minimumNodesPerRound: Int? = null
     var objective: String? = null
     var pauseReason: String? = null
     var resumeReason: String? = null
@@ -41,7 +40,6 @@ class TrainingJobState @EntityCreator constructor() {
         federationId = event.federationId
         featureSchemaId = event.featureSchemaId
         trainingRunConfigurationId = event.trainingRunConfigurationId
-        minimumNodesPerRound = event.minimumNodesPerRound
         objective = event.objective
     }
 

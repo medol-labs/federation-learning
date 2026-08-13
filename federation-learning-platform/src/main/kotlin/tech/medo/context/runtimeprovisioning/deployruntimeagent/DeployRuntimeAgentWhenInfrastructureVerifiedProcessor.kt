@@ -5,12 +5,10 @@ import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentComman
 import java.util.UUID;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.eventhandling.replay.annotation.DisallowReplay
 import org.springframework.stereotype.Component
 
 @Component
 class DeployRuntimeAgentWhenInfrastructureVerifiedProcessor(private val commandGateway: CommandGateway) {
-    @DisallowReplay
     @EventHandler
     fun on(event: RuntimeInfrastructureVerifiedEvent): java.util.concurrent.CompletableFuture<*> =
         if (event.agentInstallMode == "PLATFORM_MANAGED") {

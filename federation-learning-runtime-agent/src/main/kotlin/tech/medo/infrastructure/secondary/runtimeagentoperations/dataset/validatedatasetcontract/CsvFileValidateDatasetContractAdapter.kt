@@ -63,19 +63,10 @@ class CsvFileValidateDatasetContractAdapter(
 
         val schemaResult = profile.validateSchema(datasetCapability)
         return if (schemaResult.schemaCompatible && schemaResult.labelCompatible) {
-            ValidateDatasetContractResult.Succeeded(
-                schemaCompatible = schemaResult.schemaCompatible,
-                labelCompatible = schemaResult.labelCompatible,
-                qualityScore = profile.qualityScore(),
-                nonIidScore = profile.nonIidScore()
-            )
+            ValidateDatasetContractResult.Succeeded()
         } else {
             ValidateDatasetContractResult.Rejected(
-                failureReason = schemaResult.failureReason,
-                schemaCompatible = schemaResult.schemaCompatible,
-                labelCompatible = schemaResult.labelCompatible,
-                qualityScore = profile.qualityScore(),
-                nonIidScore = profile.nonIidScore()
+                failureReason = schemaResult.failureReason
             )
         }
     }

@@ -24,7 +24,8 @@ class StartRoundExecutionCommandHandler(
     ) {
         val input = StartRoundExecutionInput(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, baseModelVersionId = command.baseModelVersionId, runtimeEngineJobId = command.runtimeEngineJobId)
         val portResult = startRoundExecutionService.execute(input)
+        val now = java.time.LocalDateTime.now()
 
-        eventAppender.append(decision.decide(command, state, portResult))
+        eventAppender.append(decision.decide(command, state, portResult, now))
     }
 }

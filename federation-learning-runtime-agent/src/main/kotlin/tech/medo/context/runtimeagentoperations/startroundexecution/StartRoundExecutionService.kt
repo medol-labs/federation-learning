@@ -25,5 +25,11 @@ data class StartRoundExecutionInput(
 sealed interface StartRoundExecutionResult {
     class Succeeded : StartRoundExecutionResult
 
+    data class Rejected(
+        val failureReason: String
+    ) : StartRoundExecutionResult
 
+    data class Unavailable(
+        val failureReason: String
+    ) : StartRoundExecutionResult
 }

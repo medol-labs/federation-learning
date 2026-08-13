@@ -84,7 +84,13 @@ class RoundExecutionState @EntityCreator constructor() {
         executionPlanId = event.executionPlanId
         executionSessionId = event.executionSessionId
         trainingJobId = event.trainingJobId
+        trainingRunConfigurationId = event.trainingRunConfigurationId
+        featureSchemaId = event.featureSchemaId
+        roundId = event.roundId
+        roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        organizationId = event.organizationId
+        baseModelVersionId = event.baseModelVersionId
         localExecutionRequirementsSatisfied = event.localExecutionRequirementsSatisfied
         runtimeIdentityMatched = event.runtimeIdentityMatched
         runtimeDatasetBindingAvailable = event.runtimeDatasetBindingAvailable
@@ -101,7 +107,13 @@ class RoundExecutionState @EntityCreator constructor() {
         executionPlanId = event.executionPlanId
         executionSessionId = event.executionSessionId
         trainingJobId = event.trainingJobId
+        trainingRunConfigurationId = event.trainingRunConfigurationId
+        featureSchemaId = event.featureSchemaId
+        roundId = event.roundId
+        roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        organizationId = event.organizationId
+        baseModelVersionId = event.baseModelVersionId
         localExecutionRequirementsSatisfied = event.localExecutionRequirementsSatisfied
         runtimeIdentityMatched = event.runtimeIdentityMatched
         runtimeDatasetBindingAvailable = event.runtimeDatasetBindingAvailable

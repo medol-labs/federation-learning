@@ -21,10 +21,16 @@ class AcceptExecutionPlanServiceRouter(private val adapters: ObjectProvider<Acce
             1 -> try {
                 candidates.first().execute(input)
             } catch (ex: Exception) {
-                throw ex
+                AcceptExecutionPlanResult.Unavailable(
+                    failureReason = ex.message ?: "AcceptExecutionPlanService is unavailable."
+                )
             }
-            0 -> error("No AcceptExecutionPlanService adapter supports the requested input.")
-            else -> error("Multiple AcceptExecutionPlanService adapters support the requested input.")
+            0 -> AcceptExecutionPlanResult.Unavailable(
+                failureReason = "No AcceptExecutionPlanService adapter supports the requested input."
+            )
+            else -> AcceptExecutionPlanResult.Unavailable(
+                failureReason = "Multiple AcceptExecutionPlanService adapters support the requested input."
+            )
         }
     }
 }

@@ -73,7 +73,6 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
             entity.invitationNote = event.invitationNote
-            entity.membershipStatus = "Invited"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -91,7 +90,6 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
             entity.approvalNote = event.approvalNote
-            entity.membershipStatus = "Joined"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -108,7 +106,6 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
-            entity.membershipStatus = "Rejected"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -125,7 +122,6 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
-            entity.membershipStatus = "InvitationRevoked"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -142,7 +138,6 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
-            entity.membershipStatus = "Suspended"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -159,7 +154,6 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
-            entity.membershipStatus = "Removed"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

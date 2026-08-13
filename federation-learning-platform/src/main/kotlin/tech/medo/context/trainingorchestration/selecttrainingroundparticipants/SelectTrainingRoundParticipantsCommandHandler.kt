@@ -4,7 +4,8 @@ import org.axonframework.messaging.commandhandling.annotation.CommandHandler
 import org.axonframework.messaging.eventhandling.gateway.EventAppender
 import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsCommand
-
+import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsInput
+import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsService
 
 
 

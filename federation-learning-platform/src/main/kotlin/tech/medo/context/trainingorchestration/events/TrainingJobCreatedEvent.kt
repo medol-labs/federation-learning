@@ -13,6 +13,5 @@ data class TrainingJobCreatedEvent(
     val federationId: UUID,
     val featureSchemaId: UUID,
     val trainingRunConfigurationId: UUID,
-    val objective: String,
-    val minimumNodesPerRound: Int? = null
+    val objective: String
 )

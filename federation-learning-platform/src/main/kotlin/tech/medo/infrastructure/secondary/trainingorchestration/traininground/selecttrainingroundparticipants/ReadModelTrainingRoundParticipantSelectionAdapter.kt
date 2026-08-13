@@ -7,15 +7,13 @@ import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.RuntimeDatasetM
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelRepository
 import tech.medo.runtimegovernance.runtimeidentitycatalog.RuntimeIdentityCatalogReadModelRepository
 import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModelRepository
-import tech.medo.trainingorchestration.selecttrainingroundparticipants.FederationMembershipSnapshot
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsInput
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsResult
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsService
-import tech.medo.trainingorchestration.selecttrainingroundparticipants.RuntimeDatasetMetadataSnapshot
-import tech.medo.trainingorchestration.selecttrainingroundparticipants.RuntimeIdentitySnapshot
-import tech.medo.trainingorchestration.selecttrainingroundparticipants.RuntimeInfrastructureAccessSnapshot
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelRepository
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelRepository
+import java.util.UUID
 
 @Component
 class ReadModelTrainingRoundParticipantSelectionAdapter(
@@ -49,63 +47,90 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             error("Training job context is incomplete for participant selection.")
         }
 
-        val memberships = membershipDirectory.findProjectionsByFederationId(federationId)
-            .map {
-                FederationMembershipSnapshot(
-                    federationId = it.federationId,
-                    organizationId = it.organizationId,
-                    membershipStatus = it.membershipStatus
-                )
+        val joinedOrganizationIds = membershipDirectory.findProjectionsByFederationId(federationId)
+            .filter { it.organizationId != null }
+            .filter { it.membershipStatus.isJoinedLike() }
+            .mapNotNull { it.organizationId }
+            .toSet()
+
+        val connectedRuntimeAgentIds = runtimeInfrastructureAccessView.findAll(Pageable.unpaged()).content
+            .filter { it.state?.name.isRuntimeSelectable() }
+            .mapNotNull { it.runtimeAgentId }
+            .toSet()
+
+        val activeRuntimes = runtimeIdentityCatalog.findAll(Pageable.unpaged()).content
+            .filter { it.runtimeId != null && it.organizationId != null }
+            .filter { it.organizationId in joinedOrganizationIds }
+            .filter { it.identityStatus.isActiveLike() }
+            .filter { connectedRuntimeAgentIds.isEmpty() || it.runtimeAgentId in connectedRuntimeAgentIds }
+            .associateBy { it.runtimeId!! }
+
+        val activeRuntimeByOrganization = activeRuntimes.values
+            .groupBy { it.organizationId!! }
+            .mapValues { (_, runtimes) -> runtimes.first() }
+
+        val matchingDatasetMetadata = runtimeDatasetMetadataCatalog.findAll(Pageable.unpaged()).content
+            .filter { it.featureSchemaId == featureSchemaId }
+            // TODO Restore compatibility filtering when dataset contract status is reliably projected.
+            // .filter { it.schemaCompatible == true && it.labelCompatible == true }
+            .filter { it.organizationId in joinedOrganizationIds }
+            .filter { it.datasetId != null }
+
+        val selectedParticipants = matchingDatasetMetadata
+            .mapNotNull { metadata ->
+                val runtime = activeRuntimes[metadata.runtimeId]
+                    ?: metadata.organizationId?.let { activeRuntimeByOrganization[it] }
+                val organizationId = runtime?.organizationId
+                val runtimeId = runtime?.runtimeId
+                val datasetId = metadata.datasetId
+                if (organizationId == null || runtimeId == null || datasetId == null) {
+                    null
+                } else {
+                    TrainingRoundParticipant(
+                        organizationId = organizationId,
+                        runtimeId = runtimeId,
+                        datasetId = datasetId
+                    )
+                }
             }
-        val runtimeIdentities = runtimeIdentityCatalog.findAll(Pageable.unpaged()).content
-            .map {
-                RuntimeIdentitySnapshot(
-                    runtimeId = it.runtimeId,
-                    runtimeAgentId = it.runtimeAgentId,
-                    organizationId = it.organizationId,
-                    identityStatus = it.identityStatus
-                )
-            }
-        val runtimeInfrastructureAccesses = runtimeInfrastructureAccessView.findAll(Pageable.unpaged()).content
-            .map {
-                RuntimeInfrastructureAccessSnapshot(
-                    runtimeAgentId = it.runtimeAgentId,
-                    state = it.state?.name
-                )
-            }
-        val datasetMetadata = runtimeDatasetMetadataCatalog.findAll(Pageable.unpaged()).content
-            .map {
-                RuntimeDatasetMetadataSnapshot(
-                    datasetId = it.datasetId,
-                    organizationId = it.organizationId,
-                    runtimeId = it.runtimeId,
-                    featureSchemaId = it.featureSchemaId,
-                    schemaCompatible = it.schemaCompatible,
-                    labelCompatible = it.labelCompatible
-                )
-            }
+            .distinctBy { it.runtimeId }
+
+        val selectedOrganizationIds = selectedParticipants.map { it.organizationId }.distinct()
+        val selectedRuntimeIds = selectedParticipants.map { it.runtimeId }.distinct()
 
         log.info(
-            "Loaded participant selection snapshot. trainingJobId={}, federationId={}, featureSchemaId={}, membershipCount={}, runtimeIdentityCount={}, runtimeInfrastructureAccessCount={}, datasetMetadataCount={}",
+            "Selected participant candidates from read models. trainingJobId={}, federationId={}, featureSchemaId={}, joinedOrganizationCount={}, connectedRuntimeAgentCount={}, activeRuntimeCount={}, matchingDatasetMetadataCount={}, selectedRuntimeCount={}, minimumNodesPerRound={}",
             input.trainingJobId,
             federationId,
             featureSchemaId,
-            memberships.size,
-            runtimeIdentities.size,
-            runtimeInfrastructureAccesses.size,
-            datasetMetadata.size
+            joinedOrganizationIds.size,
+            connectedRuntimeAgentIds.size,
+            activeRuntimes.size,
+            matchingDatasetMetadata.size,
+            selectedRuntimeIds.size,
+            minimumNodesPerRound
         )
 
         return SelectTrainingRoundParticipantsResult.Succeeded(
             trainingRunConfigurationId = trainingRunConfigurationId,
-            federationId = federationId,
             featureSchemaId = featureSchemaId,
-            currentRoundNumber = trainingJob?.currentRoundNumber,
+            roundId = UUID.randomUUID(),
+            roundNumber = (trainingJob?.currentRoundNumber ?: 0) + 1,
             minimumNodesPerRound = minimumNodesPerRound,
-            memberships = memberships,
-            runtimeIdentities = runtimeIdentities,
-            runtimeInfrastructureAccesses = runtimeInfrastructureAccesses,
-            datasetMetadata = datasetMetadata
+            selectedOrganizationIds = selectedOrganizationIds,
+            selectedRuntimeIds = selectedRuntimeIds,
+            selectedParticipants = selectedParticipants,
+            selectedOrganizationCount = selectedOrganizationIds.size,
+            selectedRuntimeCount = selectedRuntimeIds.size
         )
     }
+
+    private fun String?.isJoinedLike(): Boolean =
+        this == null || equals("Joined", ignoreCase = true) || equals("Approved", ignoreCase = true) || equals("Active", ignoreCase = true)
+
+    private fun String?.isActiveLike(): Boolean =
+        this == null || equals("Active", ignoreCase = true)
+
+    private fun String?.isRuntimeSelectable(): Boolean =
+        equals("CONNECTED", ignoreCase = true)
 }

@@ -11,15 +11,13 @@ data class AcceptExecutionPlanCommand(
     val executionPlanId: UUID,
     val executionSessionId: UUID,
     val trainingJobId: UUID,
+    val trainingRunConfigurationId: UUID,
+    val featureSchemaId: UUID,
+    val roundId: UUID,
+    val roundNumber: Int,
     val runtimeId: UUID,
-    val localExecutionRequirementsSatisfied: Boolean,
-    val runtimeIdentityMatched: Boolean,
-    val runtimeDatasetBindingAvailable: Boolean,
-    val datasetAccessValidated: Boolean,
-    val baseModelAvailable: Boolean,
-    val trainingConfigurationSupported: Boolean,
-    val runtimeResourceAvailable: Boolean,
-    val runtimeAgentIdle: Boolean
+    val organizationId: UUID,
+    val baseModelVersionId: UUID
 ) {
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
