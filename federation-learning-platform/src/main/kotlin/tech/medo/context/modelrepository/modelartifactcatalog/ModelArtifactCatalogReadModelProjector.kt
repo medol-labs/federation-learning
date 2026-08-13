@@ -21,17 +21,19 @@ class ModelArtifactCatalogReadModelProjector(private val repository: ModelArtifa
         message: EventMessage
     ) {
 
-        val entity = repository.findProjectionById(event.modelVersionId) ?: ModelArtifactCatalogReadModelProjection().apply {
-                this.modelVersionId = event.modelVersionId
+        val entity = repository.findProjectionById(event.modelId) ?: ModelArtifactCatalogReadModelProjection().apply {
+                this.modelId = event.modelId
         }
-            entity.modelVersionId = event.modelVersionId
-            entity.modelArtifactRef = event.modelArtifactRef
-            entity.modelRepositoryRef = event.modelRepositoryRef
-            entity.modelFormat = event.modelFormat
-            entity.modelHash = event.modelHash
-            entity.modelSignatureRef = event.modelSignatureRef
-            entity.modelSizeBytes = event.modelSizeBytes
+            entity.modelId = event.modelId
+            entity.modelName = event.modelName
+            entity.modelVersion = event.modelVersion
             entity.sourceType = event.sourceType
+            entity.modelArtifactUri = event.modelArtifactUri
+            entity.modelRegistryRef = event.modelRegistryRef
+            entity.modelFormat = event.modelFormat
+            entity.modelArtifactDigest = event.modelArtifactDigest
+            entity.modelSignatureUri = event.modelSignatureUri
+            entity.modelSizeBytes = event.modelSizeBytes
             entity.state = ModelArtifactStateEnum.REGISTERED
             entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)

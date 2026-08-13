@@ -12,7 +12,7 @@ data class UpdateTrainingRunConfigurationCommand(
     val trainingRunConfigurationId: UUID,
     val federationId: UUID,
     val featureSchemaId: UUID,
-    val initialModelVersionId: UUID,
+    val initialModelId: UUID,
     val strategyName: String,
     val aggregationAlgorithm: String,
     val maxRounds: Int,

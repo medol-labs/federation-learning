@@ -6,7 +6,7 @@ import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.modellifecycle.approvemodel.ApproveModelCommand
 
-import tech.medo.modellifecycle.modelversion.ModelVersionState
+import tech.medo.modellifecycle.model.ModelState
 
 
 
@@ -17,7 +17,7 @@ class ApproveModelCommandHandler(
     @CommandHandler
     fun handle(
         command: ApproveModelCommand,
-        @InjectEntity(idProperty = "modelVersionId") state: ModelVersionState,
+        @InjectEntity(idProperty = "modelId") state: ModelState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))

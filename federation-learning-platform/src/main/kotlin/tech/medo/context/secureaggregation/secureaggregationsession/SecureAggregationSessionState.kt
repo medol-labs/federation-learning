@@ -36,9 +36,12 @@ class SecureAggregationSessionState @EntityCreator constructor() {
     var submissionId: UUID? = null
     var runtimeId: UUID? = null
     var encryptedUpdateDigest: String? = null
-    var aggregatedModelVersionId: UUID? = null
+    var aggregatedModelId: UUID? = null
+    var aggregatedModelArtifactUri: String? = null
+    var aggregatedModelRegistryRef: String? = null
     var modelFormat: String? = null
-    var modelHash: String? = null
+    var modelArtifactDigest: String? = null
+    var aggregatedModelSignatureUri: String? = null
     var failureReason: String? = null
 
     @EventSourcingHandler
@@ -88,9 +91,12 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
-        aggregatedModelVersionId = event.aggregatedModelVersionId
+        aggregatedModelId = event.aggregatedModelId
+        aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
+        aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
         modelFormat = event.modelFormat
-        modelHash = event.modelHash
+        modelArtifactDigest = event.modelArtifactDigest
+        aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
     }
 
     @EventSourcingHandler

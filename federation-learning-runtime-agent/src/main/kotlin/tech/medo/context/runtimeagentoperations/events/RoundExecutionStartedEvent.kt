@@ -19,6 +19,11 @@ data class RoundExecutionStartedEvent(
     val runtimeId: UUID,
     val organizationId: UUID,
     val featureSchemaId: UUID,
-    val baseModelVersionId: UUID,
+    val baseModelId: UUID,
+    val baseModelArtifactUri: String,
+    val baseModelRegistryRef: String,
+    val baseModelFormat: String,
+    val baseModelArtifactDigest: String,
+    val baseModelSignatureUri: String?,
     val runtimeEngineJobId: String
 )

@@ -41,7 +41,7 @@ class JpaRoundExecutionCatalogReadModelRepository(private val jpaRepository: Spr
             it.runtimeId = this@toProjection.runtimeId
             it.state = this@toProjection.state
             it.featureSchemaId = this@toProjection.featureSchemaId
-            it.baseModelVersionId = this@toProjection.baseModelVersionId
+            it.baseModelId = this@toProjection.baseModelId
             it.runtimeEngineJobId = this@toProjection.runtimeEngineJobId
             it.localExecutionRequirementsSatisfied = this@toProjection.localExecutionRequirementsSatisfied
             it.runtimeIdentityMatched = this@toProjection.runtimeIdentityMatched
@@ -88,7 +88,7 @@ class JpaRoundExecutionCatalogReadModelRepository(private val jpaRepository: Spr
             it.runtimeId = this@toEntity.runtimeId
             it.state = this@toEntity.state
             it.featureSchemaId = this@toEntity.featureSchemaId
-            it.baseModelVersionId = this@toEntity.baseModelVersionId
+            it.baseModelId = this@toEntity.baseModelId
             it.runtimeEngineJobId = this@toEntity.runtimeEngineJobId
             it.localExecutionRequirementsSatisfied = this@toEntity.localExecutionRequirementsSatisfied
             it.runtimeIdentityMatched = this@toEntity.runtimeIdentityMatched

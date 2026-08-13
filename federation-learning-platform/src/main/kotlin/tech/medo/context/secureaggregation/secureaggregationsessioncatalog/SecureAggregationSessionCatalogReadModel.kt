@@ -27,9 +27,9 @@ class SecureAggregationSessionCatalogReadModelProjection : MetadataProjection {
     var encryptionScheme: String? = null
     var publicKeyVersion: String? = null
     var encryptedParameterScale: Int? = null
-    var aggregatedModelVersionId: UUID? = null
+    var aggregatedModelId: UUID? = null
     var modelFormat: String? = null
-    var modelHash: String? = null
+    var modelArtifactDigest: String? = null
     var state: SecureAggregationSessionStateEnum? = null
     var failureReason: String? = null
     var createdAt: LocalDateTime? = null
@@ -62,9 +62,9 @@ fun SecureAggregationSessionCatalogReadModelProjection.toReadModel(): SecureAggr
     encryptionScheme = encryptionScheme,
     publicKeyVersion = publicKeyVersion,
     encryptedParameterScale = encryptedParameterScale,
-    aggregatedModelVersionId = aggregatedModelVersionId,
+    aggregatedModelId = aggregatedModelId,
     modelFormat = modelFormat,
-    modelHash = modelHash,
+    modelArtifactDigest = modelArtifactDigest,
     state = state,
     failureReason = failureReason,
     createdAt = createdAt,
@@ -103,9 +103,9 @@ data class SecureAggregationSessionCatalogReadModel(
     val encryptionScheme: String?,
     val publicKeyVersion: String?,
     val encryptedParameterScale: Int?,
-    val aggregatedModelVersionId: UUID?,
+    val aggregatedModelId: UUID?,
     val modelFormat: String?,
-    val modelHash: String?,
+    val modelArtifactDigest: String?,
     val state: SecureAggregationSessionStateEnum?,
     val failureReason: String?,
     val createdAt: LocalDateTime?,

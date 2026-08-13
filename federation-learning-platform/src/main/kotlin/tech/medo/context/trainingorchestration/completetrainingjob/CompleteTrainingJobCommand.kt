@@ -10,7 +10,7 @@ import java.util.UUID;
 data class CompleteTrainingJobCommand(
     val trainingJobId: UUID,
     val finalRoundId: UUID,
-    val finalModelVersionId: UUID,
+    val finalModelId: UUID,
     val stopReason: String
 ) {
     @TargetEntityId

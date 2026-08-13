@@ -7,7 +7,7 @@ import tech.medo.modellifecycle.promotemodeltoproduction.PromoteModelToProductio
 import tech.medo.modellifecycle.events.ModelApprovedEvent
 import tech.medo.modellifecycle.events.ModelPromotedToProductionEvent
 
-import tech.medo.modellifecycle.modelversion.ModelVersionState
+import tech.medo.modellifecycle.model.ModelState
 
 import java.util.UUID;
 
@@ -15,16 +15,16 @@ import java.util.UUID;
 class PromoteModelToProductionDecisionTest {
     @Test
     fun PromoteApprovedModel() {
-        val state = ModelVersionState()
+        val state = ModelState()
         state.evolve(
             ModelApprovedEvent(
-            modelVersionId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
+            modelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             approvalNote = null
             )
         )
 
         val command = PromoteModelToProductionCommand(
-            modelVersionId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
+            modelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             releaseChannel = "stable",
             productionStage = "production"
         )
@@ -35,7 +35,7 @@ class PromoteModelToProductionDecisionTest {
         )
 
         val event = events.filterIsInstance<ModelPromotedToProductionEvent>().single()
-        assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.modelVersionId)
+        assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.modelId)
         assertEquals("stable", event.releaseChannel)
         assertEquals("production", event.productionStage)
     }

@@ -9,12 +9,12 @@ import java.math.BigDecimal;
 
 @Event
 data class ModelCandidateRegisteredEvent(
-    @EventTag(key = "modelVersionId")
-    val modelVersionId: UUID,
+    @EventTag(key = "modelId")
+    val modelId: UUID,
     val trainingJobId: UUID,
     val finalRoundId: UUID,
     val modelArtifactId: UUID,
-    val modelHash: String,
+    val modelArtifactDigest: String,
     val evaluationReportId: UUID,
     val finalGlobalAccuracy: BigDecimal
 )

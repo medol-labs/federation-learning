@@ -59,7 +59,7 @@ class JpaTrainingJobDashboardReadModelRepository(private val jpaRepository: Spri
             it.maxRounds = this@toProjection.maxRounds
             it.roundProgressPercent = this@toProjection.roundProgressPercent
             it.globalAccuracy = this@toProjection.globalAccuracy
-            it.finalModelVersionId = this@toProjection.finalModelVersionId
+            it.finalModelId = this@toProjection.finalModelId
             it.stopReason = this@toProjection.stopReason
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
@@ -100,7 +100,7 @@ class JpaTrainingJobDashboardReadModelRepository(private val jpaRepository: Spri
             it.maxRounds = this@toEntity.maxRounds
             it.roundProgressPercent = this@toEntity.roundProgressPercent
             it.globalAccuracy = this@toEntity.globalAccuracy
-            it.finalModelVersionId = this@toEntity.finalModelVersionId
+            it.finalModelId = this@toEntity.finalModelId
             it.stopReason = this@toEntity.stopReason
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId

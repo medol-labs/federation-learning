@@ -28,7 +28,12 @@ class StartRoundExecutionDecisionTest {
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
-            baseModelVersionId = java.util.UUID.randomUUID(),
+            baseModelId = java.util.UUID.randomUUID(),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null,
             localExecutionRequirementsSatisfied = false,
             runtimeIdentityMatched = false,
             runtimeDatasetBindingAvailable = false,
@@ -51,7 +56,12 @@ class StartRoundExecutionDecisionTest {
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
-            baseModelVersionId = java.util.UUID.randomUUID(),
+            baseModelId = java.util.UUID.randomUUID(),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null,
             runtimeEngineJobId = ""
         )
 
@@ -75,7 +85,12 @@ class StartRoundExecutionDecisionTest {
         assertEquals(command.runtimeId, event.runtimeId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
-        assertEquals(command.baseModelVersionId, event.baseModelVersionId)
+        assertEquals(command.baseModelId, event.baseModelId)
+        assertEquals(command.baseModelArtifactUri, event.baseModelArtifactUri)
+        assertEquals(command.baseModelRegistryRef, event.baseModelRegistryRef)
+        assertEquals(command.baseModelFormat, event.baseModelFormat)
+        assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
+        assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
         assertEquals(command.runtimeEngineJobId, event.runtimeEngineJobId)
     }
 
@@ -93,7 +108,12 @@ class StartRoundExecutionDecisionTest {
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
-            baseModelVersionId = java.util.UUID.randomUUID(),
+            baseModelId = java.util.UUID.randomUUID(),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null,
             localExecutionRequirementsSatisfied = false,
             runtimeIdentityMatched = false,
             runtimeDatasetBindingAvailable = false,
@@ -116,7 +136,12 @@ class StartRoundExecutionDecisionTest {
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
-            baseModelVersionId = java.util.UUID.randomUUID(),
+            baseModelId = java.util.UUID.randomUUID(),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null,
             runtimeEngineJobId = ""
         )
 
@@ -140,7 +165,12 @@ class StartRoundExecutionDecisionTest {
         assertEquals(command.runtimeId, event.runtimeId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
-        assertEquals(command.baseModelVersionId, event.baseModelVersionId)
+        assertEquals(command.baseModelId, event.baseModelId)
+        assertEquals(command.baseModelArtifactUri, event.baseModelArtifactUri)
+        assertEquals(command.baseModelRegistryRef, event.baseModelRegistryRef)
+        assertEquals(command.baseModelFormat, event.baseModelFormat)
+        assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
+        assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
         assertEquals(command.runtimeEngineJobId, event.runtimeEngineJobId)
     }
 }

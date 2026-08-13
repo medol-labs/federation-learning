@@ -13,14 +13,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 class ModelArtifactCatalogReadModelQuery
 
 class ModelArtifactCatalogReadModelProjection : MetadataProjection {
-    var modelVersionId: UUID? = null
-    var modelArtifactRef: String? = null
-    var modelRepositoryRef: String? = null
-    var modelFormat: String? = null
-    var modelHash: String? = null
-    var modelSignatureRef: String? = null
-    var modelSizeBytes: Int? = null
+    var modelId: UUID? = null
+    var modelName: String? = null
+    var modelVersion: String? = null
     var sourceType: String? = null
+    var modelArtifactUri: String? = null
+    var modelRegistryRef: String? = null
+    var modelFormat: String? = null
+    var modelArtifactDigest: String? = null
+    var modelSignatureUri: String? = null
+    var modelSizeBytes: Int? = null
     var trainingJobId: UUID? = null
     var roundId: UUID? = null
     var trainingJobObjective: String? = null
@@ -36,14 +38,16 @@ class ModelArtifactCatalogReadModelProjection : MetadataProjection {
 
 fun ModelArtifactCatalogReadModelProjection.toReadModel(): ModelArtifactCatalogReadModel =
     ModelArtifactCatalogReadModel(
-    modelVersionId = modelVersionId,
-    modelArtifactRef = modelArtifactRef,
-    modelRepositoryRef = modelRepositoryRef,
-    modelFormat = modelFormat,
-    modelHash = modelHash,
-    modelSignatureRef = modelSignatureRef,
-    modelSizeBytes = modelSizeBytes,
+    modelId = modelId,
+    modelName = modelName,
+    modelVersion = modelVersion,
     sourceType = sourceType,
+    modelArtifactUri = modelArtifactUri,
+    modelRegistryRef = modelRegistryRef,
+    modelFormat = modelFormat,
+    modelArtifactDigest = modelArtifactDigest,
+    modelSignatureUri = modelSignatureUri,
+    modelSizeBytes = modelSizeBytes,
     trainingJobId = trainingJobId,
     roundId = roundId,
     trainingJobObjective = trainingJobObjective,
@@ -65,14 +69,16 @@ interface ModelArtifactCatalogReadModelRepository {
 }
 
 data class ModelArtifactCatalogReadModel(
-    val modelVersionId: UUID?,
-    val modelArtifactRef: String?,
-    val modelRepositoryRef: String?,
-    val modelFormat: String?,
-    val modelHash: String?,
-    val modelSignatureRef: String?,
-    val modelSizeBytes: Int?,
+    val modelId: UUID?,
+    val modelName: String?,
+    val modelVersion: String?,
     val sourceType: String?,
+    val modelArtifactUri: String?,
+    val modelRegistryRef: String?,
+    val modelFormat: String?,
+    val modelArtifactDigest: String?,
+    val modelSignatureUri: String?,
+    val modelSizeBytes: Int?,
     val trainingJobId: UUID?,
     val roundId: UUID?,
     val trainingJobObjective: String?,

@@ -26,7 +26,12 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapterTest {
         assertEquals(input.roundNumber, client.request?.roundNumber)
         assertEquals(input.runtimeId, client.request?.runtimeId)
         assertEquals(input.organizationId, client.request?.organizationId)
-        assertEquals(input.baseModelVersionId, client.request?.baseModelVersionId)
+        assertEquals(input.baseModelId, client.request?.baseModelId)
+        assertEquals(input.baseModelArtifactUri, client.request?.baseModelArtifactUri)
+        assertEquals(input.baseModelRegistryRef, client.request?.baseModelRegistryRef)
+        assertEquals(input.baseModelFormat, client.request?.baseModelFormat)
+        assertEquals(input.baseModelArtifactDigest, client.request?.baseModelArtifactDigest)
+        assertEquals(input.baseModelSignatureUri, client.request?.baseModelSignatureUri)
     }
 
     private class RecordingRuntimeAgentExecutionPlanClient : RuntimeAgentExecutionPlanClient {
@@ -51,7 +56,12 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapterTest {
             roundNumber = 1,
             runtimeId = uuid("77777777-7777-4777-8777-777777777777"),
             organizationId = uuid("88888888-8888-4888-8888-888888888888"),
-            baseModelVersionId = uuid("99999999-9999-4999-8999-999999999999")
+            baseModelId = uuid("99999999-9999-4999-8999-999999999999"),
+            baseModelArtifactUri = "oci://registry.example.com/fl/model@sha256:abc",
+            baseModelRegistryRef = "oci://registry.example.com/fl",
+            baseModelFormat = "ONNX",
+            baseModelArtifactDigest = "sha256:abc",
+            baseModelSignatureUri = "oci://registry.example.com/fl/model.sig"
         )
 
     private fun uuid(value: String): UUID = UUID.fromString(value)

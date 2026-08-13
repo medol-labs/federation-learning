@@ -17,14 +17,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 class ModelArtifactCatalogReadModelEntity : MetadataProjection {
     @Id
-    var modelVersionId: UUID? = null
-    var modelArtifactRef: String? = null
-    var modelRepositoryRef: String? = null
-    var modelFormat: String? = null
-    var modelHash: String? = null
-    var modelSignatureRef: String? = null
-    var modelSizeBytes: Int? = null
+    var modelId: UUID? = null
+    var modelName: String? = null
+    var modelVersion: String? = null
     var sourceType: String? = null
+    var modelArtifactUri: String? = null
+    var modelRegistryRef: String? = null
+    var modelFormat: String? = null
+    var modelArtifactDigest: String? = null
+    var modelSignatureUri: String? = null
+    var modelSizeBytes: Int? = null
     var trainingJobId: UUID? = null
     var roundId: UUID? = null
     var trainingJobObjective: String? = null

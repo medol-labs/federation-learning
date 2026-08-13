@@ -81,10 +81,10 @@ class JpaTrainingRoundProgressReadModelRepository(private val jpaRepository: Spr
             it.evaluationSubmittedAt = this@toProjection.evaluationSubmittedAt
             it.completedAt = this@toProjection.completedAt
             it.failedAt = this@toProjection.failedAt
-            it.baseModelVersionId = this@toProjection.baseModelVersionId
+            it.baseModelId = this@toProjection.baseModelId
             it.artifactRefs = this@toProjection.artifactRefs?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.rejectedUpdateReasons = this@toProjection.rejectedUpdateReasons?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
-            it.aggregatedModelVersionId = this@toProjection.aggregatedModelVersionId
+            it.aggregatedModelId = this@toProjection.aggregatedModelId
             it.globalAccuracy = this@toProjection.globalAccuracy
             it.globalFairnessScore = this@toProjection.globalFairnessScore
             it.failureReason = this@toProjection.failureReason
@@ -141,10 +141,10 @@ class JpaTrainingRoundProgressReadModelRepository(private val jpaRepository: Spr
             it.evaluationSubmittedAt = this@toEntity.evaluationSubmittedAt
             it.completedAt = this@toEntity.completedAt
             it.failedAt = this@toEntity.failedAt
-            it.baseModelVersionId = this@toEntity.baseModelVersionId
+            it.baseModelId = this@toEntity.baseModelId
             it.artifactRefs = objectMapper.writeValueAsString(this@toEntity.artifactRefs)
             it.rejectedUpdateReasons = objectMapper.writeValueAsString(this@toEntity.rejectedUpdateReasons)
-            it.aggregatedModelVersionId = this@toEntity.aggregatedModelVersionId
+            it.aggregatedModelId = this@toEntity.aggregatedModelId
             it.globalAccuracy = this@toEntity.globalAccuracy
             it.globalFairnessScore = this@toEntity.globalFairnessScore
             it.failureReason = this@toEntity.failureReason

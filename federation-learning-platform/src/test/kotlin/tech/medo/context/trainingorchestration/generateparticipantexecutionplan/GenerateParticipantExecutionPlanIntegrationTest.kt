@@ -23,18 +23,46 @@ class GenerateParticipantExecutionPlanIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
     @Test
-    fun GenerateParticipantExecutionPlanintegration() {
+    fun GenerateInitialRoundPlanWithInitialModelSnapshot() {
         val command = GenerateParticipantExecutionPlanCommand(
             executionPlanId = java.util.UUID.randomUUID(),
             executionSessionId = java.util.UUID.randomUUID(),
-            trainingJobId = java.util.UUID.randomUUID(),
+            trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
-            roundId = java.util.UUID.randomUUID(),
-            roundNumber = 0,
+            roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
+            roundNumber = 1,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
-            baseModelVersionId = java.util.UUID.randomUUID()
+            baseModelId = java.util.UUID.randomUUID(),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null
+        )
+
+        commandGateway.send(command).getResultMessage().join()
+    }
+
+    @Test
+    fun GenerateLaterRoundPlanWithAggregatedModelSnapshot() {
+        val command = GenerateParticipantExecutionPlanCommand(
+            executionPlanId = java.util.UUID.randomUUID(),
+            executionSessionId = java.util.UUID.randomUUID(),
+            trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            trainingRunConfigurationId = java.util.UUID.randomUUID(),
+            featureSchemaId = java.util.UUID.randomUUID(),
+            roundId = UUID.nameUUIDFromBytes("round-2".toByteArray()),
+            roundNumber = 2,
+            runtimeId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            baseModelId = java.util.UUID.randomUUID(),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null
         )
 
         commandGateway.send(command).getResultMessage().join()

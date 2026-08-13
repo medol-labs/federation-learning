@@ -8,13 +8,16 @@ import java.util.UUID;
 
 @Event
 data class ModelArtifactRegisteredEvent(
-    @EventTag(key = "modelVersionId")
-    val modelVersionId: UUID,
-    val modelArtifactRef: String,
-    val modelRepositoryRef: String,
+    val modelId: UUID,
+    @EventTag(key = "modelName")
+    val modelName: String,
+    @EventTag(key = "modelVersion")
+    val modelVersion: String,
+    val sourceType: String,
+    val modelArtifactUri: String,
+    val modelRegistryRef: String,
     val modelFormat: String,
-    val modelHash: String,
-    val modelSignatureRef: String?,
-    val modelSizeBytes: Int?,
-    val sourceType: String
+    val modelArtifactDigest: String,
+    val modelSignatureUri: String?,
+    val modelSizeBytes: Int?
 )

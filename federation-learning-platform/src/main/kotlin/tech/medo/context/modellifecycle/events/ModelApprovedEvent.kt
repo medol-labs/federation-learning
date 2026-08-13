@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Event
 data class ModelApprovedEvent(
-    @EventTag(key = "modelVersionId")
-    val modelVersionId: UUID,
+    @EventTag(key = "modelId")
+    val modelId: UUID,
     val approvalNote: String?
 )

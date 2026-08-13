@@ -674,10 +674,10 @@
       "title": "Model Repository",
       "domain": "FederationLearningPlatform",
       "notes": [
-        "Model repository owns pullable model artifact references used by training orchestration and runtime agents."
+        "Model repository owns model identity and immutable, pullable model artifact locations used by training orchestration and runtime agents."
       ],
       "risks": [
-        "Runtime agents can pull stale or tampered models if artifact hashes and repository references are not snapshotted with the training run.",
+        "Runtime agents can pull stale or tampered models if artifact URI, digest, registry, format, and signature are not snapshotted with the training run.",
         "Aggregated round models can lose lineage if their producing training job and round are not recorded."
       ],
       "decisions": [],
@@ -935,9 +935,9 @@
       "aggregates": [],
       "concepts": [
         {
-          "id": "concept-742d518f",
-          "name": "ModelVersion",
-          "title": "Model Version",
+          "id": "concept-03f42d7d",
+          "name": "Model",
+          "title": "Model",
           "states": [
             "Candidate",
             "EvaluationPackaged",
@@ -971,19 +971,19 @@
           "title": "Promote Model To Production"
         },
         {
-          "id": "slice-fcb8d06d",
-          "name": "RollbackModelVersion",
-          "title": "Rollback Model Version"
+          "id": "slice-33930733",
+          "name": "RollbackModel",
+          "title": "Rollback Model"
         },
         {
-          "id": "slice-8685873e",
-          "name": "RetireModelVersion",
-          "title": "Retire Model Version"
+          "id": "slice-9e8c0ad2",
+          "name": "RetireModel",
+          "title": "Retire Model"
         },
         {
-          "id": "slice-22c1efd0",
-          "name": "ModelVersionCatalog",
-          "title": "Model Version Catalog"
+          "id": "slice-daa3e2fe",
+          "name": "ModelCatalog",
+          "title": "Model Catalog"
         }
       ]
     },
@@ -2762,9 +2762,9 @@
       ]
     },
     {
-      "id": "concept-742d518f",
-      "name": "ModelVersion",
-      "title": "Model Version",
+      "id": "concept-03f42d7d",
+      "name": "Model",
+      "title": "Model",
       "context": "ModelLifecycle",
       "states": [
         "Candidate",
@@ -2796,19 +2796,19 @@
           "title": "Promote Model To Production"
         },
         {
-          "id": "slice-fcb8d06d",
-          "name": "RollbackModelVersion",
-          "title": "Rollback Model Version"
+          "id": "slice-33930733",
+          "name": "RollbackModel",
+          "title": "Rollback Model"
         },
         {
-          "id": "slice-8685873e",
-          "name": "RetireModelVersion",
-          "title": "Retire Model Version"
+          "id": "slice-9e8c0ad2",
+          "name": "RetireModel",
+          "title": "Retire Model"
         },
         {
-          "id": "slice-22c1efd0",
-          "name": "ModelVersionCatalog",
-          "title": "Model Version Catalog"
+          "id": "slice-daa3e2fe",
+          "name": "ModelCatalog",
+          "title": "Model Catalog"
         }
       ]
     },
@@ -5062,13 +5062,13 @@
       "startsLifecycle": false
     },
     {
-      "id": "transition-a4ce13b2",
+      "id": "transition-9fce72fd",
       "context": "ModelLifecycle",
       "owner": {
-        "id": "concept-742d518f",
+        "id": "concept-03f42d7d",
         "type": "concept",
-        "name": "ModelVersion",
-        "title": "Model Version"
+        "name": "Model",
+        "title": "Model"
       },
       "slice": {
         "id": "slice-7806d9ed",
@@ -5094,13 +5094,13 @@
       "startsLifecycle": true
     },
     {
-      "id": "transition-db464f59",
+      "id": "transition-ff5db24a",
       "context": "ModelLifecycle",
       "owner": {
-        "id": "concept-742d518f",
+        "id": "concept-03f42d7d",
         "type": "concept",
-        "name": "ModelVersion",
-        "title": "Model Version"
+        "name": "Model",
+        "title": "Model"
       },
       "slice": {
         "id": "slice-c947b39a",
@@ -5127,13 +5127,13 @@
       "startsLifecycle": false
     },
     {
-      "id": "transition-347bdb87",
+      "id": "transition-e9ffce3c",
       "context": "ModelLifecycle",
       "owner": {
-        "id": "concept-742d518f",
+        "id": "concept-03f42d7d",
         "type": "concept",
-        "name": "ModelVersion",
-        "title": "Model Version"
+        "name": "Model",
+        "title": "Model"
       },
       "slice": {
         "id": "slice-a4c2bdcc",
@@ -5160,13 +5160,13 @@
       "startsLifecycle": false
     },
     {
-      "id": "transition-7c610136",
+      "id": "transition-2ce911a1",
       "context": "ModelLifecycle",
       "owner": {
-        "id": "concept-742d518f",
+        "id": "concept-03f42d7d",
         "type": "concept",
-        "name": "ModelVersion",
-        "title": "Model Version"
+        "name": "Model",
+        "title": "Model"
       },
       "slice": {
         "id": "slice-e0aca431",
@@ -5193,28 +5193,28 @@
       "startsLifecycle": false
     },
     {
-      "id": "transition-35f3b38e",
+      "id": "transition-b348da23",
       "context": "ModelLifecycle",
       "owner": {
-        "id": "concept-742d518f",
+        "id": "concept-03f42d7d",
         "type": "concept",
-        "name": "ModelVersion",
-        "title": "Model Version"
+        "name": "Model",
+        "title": "Model"
       },
       "slice": {
-        "id": "slice-fcb8d06d",
-        "name": "RollbackModelVersion",
-        "title": "Rollback Model Version"
+        "id": "slice-33930733",
+        "name": "RollbackModel",
+        "title": "Rollback Model"
       },
       "command": {
-        "id": "command-3b949ec3",
-        "name": "RollbackModelVersion",
-        "title": "Rollback Model Version"
+        "id": "command-3d9863c3",
+        "name": "RollbackModel",
+        "title": "Rollback Model"
       },
       "event": {
-        "id": "event-a741e9a1",
-        "name": "ModelVersionRolledBack",
-        "title": "Model Version Rolled Back"
+        "id": "event-a0f96d03",
+        "name": "ModelRolledBack",
+        "title": "Model Rolled Back"
       },
       "trigger": {
         "id": "event-ad3dceb6",
@@ -5226,28 +5226,28 @@
       "startsLifecycle": false
     },
     {
-      "id": "transition-a31c3cad",
+      "id": "transition-aca4eec2",
       "context": "ModelLifecycle",
       "owner": {
-        "id": "concept-742d518f",
+        "id": "concept-03f42d7d",
         "type": "concept",
-        "name": "ModelVersion",
-        "title": "Model Version"
+        "name": "Model",
+        "title": "Model"
       },
       "slice": {
-        "id": "slice-8685873e",
-        "name": "RetireModelVersion",
-        "title": "Retire Model Version"
+        "id": "slice-9e8c0ad2",
+        "name": "RetireModel",
+        "title": "Retire Model"
       },
       "command": {
-        "id": "command-954301f5",
-        "name": "RetireModelVersion",
-        "title": "Retire Model Version"
+        "id": "command-2c2bd227",
+        "name": "RetireModel",
+        "title": "Retire Model"
       },
       "event": {
-        "id": "event-88eb35e2",
-        "name": "ModelVersionRetired",
-        "title": "Model Version Retired"
+        "id": "event-fbc3a4c8",
+        "name": "ModelRetired",
+        "title": "Model Retired"
       },
       "trigger": {
         "id": "event-ad3dceb6",
@@ -18951,7 +18951,15 @@
       "title": "Register Model Artifact",
       "chapter": "ModelRepository",
       "context": "ModelRepository",
-      "tags": [],
+      "tags": [
+        {
+          "name": "modelName"
+        },
+        {
+          "name": "modelVersion"
+        }
+      ],
+      "port": true,
       "concepts": [
         "ModelArtifact"
       ],
@@ -18965,7 +18973,7 @@
           "slice": "Register Model Artifact",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -18976,7 +18984,7 @@
               "display": false
             },
             {
-              "name": "modelArtifactRef",
+              "name": "modelName",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -18984,57 +18992,13 @@
               "generated": false,
               "technicalAttribute": false,
               "query": false,
-              "display": false
+              "display": true
             },
             {
-              "name": "modelRepositoryRef",
+              "name": "modelVersion",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "modelFormat",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "modelHash",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "modelSignatureRef",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "modelSizeBytes",
-              "type": "Int",
-              "cardinality": "Single",
-              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -19046,6 +19010,28 @@
               "type": "String",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "sourceLocation",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "modelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -19067,7 +19053,8 @@
               "elementType": "EVENT"
             }
           ],
-          "startsLifecycle": true
+          "startsLifecycle": true,
+          "port": true
         }
       ],
       "events": [
@@ -19080,7 +19067,7 @@
           "slice": "Register Model Artifact",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -19091,7 +19078,18 @@
               "display": false
             },
             {
-              "name": "modelArtifactRef",
+              "name": "modelName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true
+            },
+            {
+              "name": "modelVersion",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -19102,7 +19100,29 @@
               "display": false
             },
             {
-              "name": "modelRepositoryRef",
+              "name": "sourceType",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "modelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "modelRegistryRef",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -19124,7 +19144,7 @@
               "display": false
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -19135,7 +19155,7 @@
               "display": false
             },
             {
-              "name": "modelSignatureRef",
+              "name": "modelSignatureUri",
               "type": "String",
               "cardinality": "Single",
               "optional": true,
@@ -19150,17 +19170,6 @@
               "type": "Int",
               "cardinality": "Single",
               "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "sourceType",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -19212,7 +19221,7 @@
           "sliceName": "Register Model Artifact",
           "title": "Register Pullable Model Artifact",
           "specification": "Model Artifact Must Be Pullable And Verifiable",
-          "rule": "A model artifact registered for training must include a repository reference, an artifact reference, a model format, and a content hash so runtime agents can pull and verify it.",
+          "rule": "Registering a model artifact is a port-backed import operation. modelName identifies the logical model and modelVersion identifies the business version under that model; the pair must be unique. modelId remains the system identity for one immutable imported or trained artifact version. The adapter uploads or imports the source model into the managed model registry, detects or validates the model format, computes the artifact digest and size, optionally records a signature URI, and emits a pullable immutable artifact snapshot. modelArtifactUri identifies the concrete pullable artifact for that version.\n\nunique (ModelArtifact.modelName, ModelArtifact.modelVersion)",
           "expressions": [],
           "validates": [],
           "given": [],
@@ -19223,34 +19232,28 @@
               "type": "COMMAND",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
-                  "name": "modelArtifactRef",
-                  "example": "models/model-1"
+                  "name": "modelName",
+                  "example": "credit-risk"
                 },
                 {
-                  "name": "modelRepositoryRef",
-                  "example": "model-repo"
+                  "name": "modelVersion",
+                  "example": "v1"
+                },
+                {
+                  "name": "sourceType",
+                  "example": "UPLOAD"
+                },
+                {
+                  "name": "sourceLocation",
+                  "example": "upload://credit-risk-initial.onnx"
                 },
                 {
                   "name": "modelFormat",
                   "example": "ONNX"
-                },
-                {
-                  "name": "modelHash",
-                  "example": "sha256:abc"
-                },
-                {
-                  "name": "modelSignatureRef"
-                },
-                {
-                  "name": "modelSizeBytes"
-                },
-                {
-                  "name": "sourceType",
-                  "example": "INITIAL"
                 }
               ]
             }
@@ -19262,34 +19265,39 @@
               "type": "EVENT",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
-                  "name": "modelArtifactRef",
-                  "example": "models/model-1"
+                  "name": "modelName",
+                  "example": "credit-risk"
                 },
                 {
-                  "name": "modelRepositoryRef",
-                  "example": "model-repo"
+                  "name": "modelVersion",
+                  "example": "v1"
+                },
+                {
+                  "name": "sourceType",
+                  "example": "UPLOAD"
+                },
+                {
+                  "name": "modelArtifactUri"
+                },
+                {
+                  "name": "modelRegistryRef"
                 },
                 {
                   "name": "modelFormat",
                   "example": "ONNX"
                 },
                 {
-                  "name": "modelHash",
-                  "example": "sha256:abc"
+                  "name": "modelArtifactDigest"
                 },
                 {
-                  "name": "modelSignatureRef"
+                  "name": "modelSignatureUri"
                 },
                 {
                   "name": "modelSizeBytes"
-                },
-                {
-                  "name": "sourceType",
-                  "example": "INITIAL"
                 }
               ]
             }
@@ -19333,7 +19341,7 @@
           "slice": "Model Artifact Catalog",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -19344,7 +19352,18 @@
               "display": false
             },
             {
-              "name": "modelArtifactRef",
+              "name": "modelName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true
+            },
+            {
+              "name": "modelVersion",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -19355,7 +19374,29 @@
               "display": false
             },
             {
-              "name": "modelRepositoryRef",
+              "name": "sourceType",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "modelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "modelRegistryRef",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -19377,7 +19418,7 @@
               "display": false
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -19388,7 +19429,7 @@
               "display": false
             },
             {
-              "name": "modelSignatureRef",
+              "name": "modelSignatureUri",
               "type": "String",
               "cardinality": "Single",
               "optional": true,
@@ -19401,17 +19442,6 @@
             {
               "name": "modelSizeBytes",
               "type": "Int",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false
-            },
-            {
-              "name": "sourceType",
-              "type": "String",
               "cardinality": "Single",
               "optional": true,
               "idAttribute": false,
@@ -19566,7 +19596,7 @@
               "display": false
             },
             {
-              "name": "initialModelVersionId",
+              "name": "initialModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -19850,7 +19880,7 @@
               "display": false
             },
             {
-              "name": "initialModelVersionId",
+              "name": "initialModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -19859,6 +19889,42 @@
               "technicalAttribute": false,
               "query": false,
               "display": false
+            },
+            {
+              "name": "initialModelName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "ModelArtifact.modelName"
+                ],
+                "rule": "Snapshot the logical model display name selected by the initial model."
+              }
+            },
+            {
+              "name": "initialModelVersion",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "ModelArtifact.modelVersion"
+                ],
+                "rule": "Snapshot the business version label selected by the initial model."
+              }
             },
             {
               "name": "initialModelArtifactUri",
@@ -19873,13 +19939,13 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "ModelArtifact.modelArtifactRef"
+                  "ModelArtifact.modelArtifactUri"
                 ],
                 "rule": "Snapshot the initial model artifact URI selected from the model repository."
               }
             },
             {
-              "name": "initialModelRepositoryName",
+              "name": "initialModelRegistryRef",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -19891,9 +19957,9 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "ModelArtifact.modelRepositoryRef"
+                  "ModelArtifact.modelRegistryRef"
                 ],
-                "rule": "Snapshot the model repository name so runtime agents can identify where the initial global model is managed."
+                "rule": "Snapshot the model registry reference so runtime agents can identify where the initial global model is managed."
               }
             },
             {
@@ -19915,7 +19981,7 @@
               }
             },
             {
-              "name": "initialModelHash",
+              "name": "initialModelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -19927,9 +19993,9 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "ModelArtifact.modelHash"
+                  "ModelArtifact.modelArtifactDigest"
                 ],
-                "rule": "Snapshot the content hash used by runtime agents to verify the pulled model."
+                "rule": "Snapshot the artifact digest used by runtime agents to verify the pulled model."
               }
             },
             {
@@ -19945,7 +20011,7 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "ModelArtifact.modelSignatureRef"
+                  "ModelArtifact.modelSignatureUri"
                 ],
                 "rule": "Snapshot the optional signature URI used to verify model provenance."
               }
@@ -20220,7 +20286,7 @@
           "sliceName": "Define Training Run Configuration",
           "title": "Define Runnable Configuration",
           "specification": "Training Configuration Must Be Runnable",
-          "rule": "A training run configuration is accepted only when the selected federation, feature schema, and initial model version exist; the round budget, quorum, timeouts, and local training parameters are positive; and differential privacy parameters are complete when differential privacy is enabled.",
+          "rule": "A training run configuration is accepted only when the selected federation, feature schema, and initial model exist; the round budget, quorum, timeouts, and local training parameters are positive; and differential privacy parameters are complete when differential privacy is enabled.",
           "expressions": [],
           "validates": [],
           "given": [],
@@ -20243,7 +20309,7 @@
                   "example": "schema-1"
                 },
                 {
-                  "name": "initialModelVersionId",
+                  "name": "initialModelId",
                   "example": "model-1"
                 },
                 {
@@ -20340,20 +20406,26 @@
                   "example": "schema-1"
                 },
                 {
-                  "name": "initialModelVersionId",
+                  "name": "initialModelId",
                   "example": "model-1"
+                },
+                {
+                  "name": "initialModelName"
+                },
+                {
+                  "name": "initialModelVersion"
                 },
                 {
                   "name": "initialModelArtifactUri"
                 },
                 {
-                  "name": "initialModelRepositoryName"
+                  "name": "initialModelRegistryRef"
                 },
                 {
                   "name": "initialModelFormat"
                 },
                 {
-                  "name": "initialModelHash"
+                  "name": "initialModelArtifactDigest"
                 },
                 {
                   "name": "initialModelSignatureUri"
@@ -20440,7 +20512,7 @@
           "sliceName": "Define Training Run Configuration",
           "title": "Reject Empty Round Budget",
           "specification": "Training Configuration Must Be Runnable",
-          "rule": "A training run configuration is accepted only when the selected federation, feature schema, and initial model version exist; the round budget, quorum, timeouts, and local training parameters are positive; and differential privacy parameters are complete when differential privacy is enabled.",
+          "rule": "A training run configuration is accepted only when the selected federation, feature schema, and initial model exist; the round budget, quorum, timeouts, and local training parameters are positive; and differential privacy parameters are complete when differential privacy is enabled.",
           "expressions": [],
           "validates": [],
           "given": [],
@@ -20463,7 +20535,7 @@
                   "example": "schema-1"
                 },
                 {
-                  "name": "initialModelVersionId",
+                  "name": "initialModelId",
                   "example": "model-1"
                 },
                 {
@@ -20554,7 +20626,7 @@
           "sliceName": "Define Training Run Configuration",
           "title": "Reject Differential Privacy Without Parameters",
           "specification": "Training Configuration Must Be Runnable",
-          "rule": "A training run configuration is accepted only when the selected federation, feature schema, and initial model version exist; the round budget, quorum, timeouts, and local training parameters are positive; and differential privacy parameters are complete when differential privacy is enabled.",
+          "rule": "A training run configuration is accepted only when the selected federation, feature schema, and initial model exist; the round budget, quorum, timeouts, and local training parameters are positive; and differential privacy parameters are complete when differential privacy is enabled.",
           "expressions": [],
           "validates": [],
           "given": [],
@@ -20577,7 +20649,7 @@
                   "example": "schema-1"
                 },
                 {
-                  "name": "initialModelVersionId",
+                  "name": "initialModelId",
                   "example": "model-1"
                 },
                 {
@@ -20731,7 +20803,7 @@
               "display": false
             },
             {
-              "name": "initialModelVersionId",
+              "name": "initialModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -21031,7 +21103,7 @@
               "display": false
             },
             {
-              "name": "initialModelVersionId",
+              "name": "initialModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -21040,6 +21112,42 @@
               "technicalAttribute": false,
               "query": false,
               "display": false
+            },
+            {
+              "name": "initialModelName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "ModelArtifact.modelName"
+                ],
+                "rule": "Snapshot the updated logical model display name selected by the initial model."
+              }
+            },
+            {
+              "name": "initialModelVersion",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "ModelArtifact.modelVersion"
+                ],
+                "rule": "Snapshot the updated business version label selected by the initial model."
+              }
             },
             {
               "name": "initialModelArtifactUri",
@@ -21054,13 +21162,13 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "ModelArtifact.modelArtifactRef"
+                  "ModelArtifact.modelArtifactUri"
                 ],
                 "rule": "Snapshot the updated initial model artifact URI selected from the model repository."
               }
             },
             {
-              "name": "initialModelRepositoryName",
+              "name": "initialModelRegistryRef",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -21072,9 +21180,9 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "ModelArtifact.modelRepositoryRef"
+                  "ModelArtifact.modelRegistryRef"
                 ],
-                "rule": "Snapshot the updated model repository name so runtime agents can identify where the initial global model is managed."
+                "rule": "Snapshot the updated model registry reference so runtime agents can identify where the initial global model is managed."
               }
             },
             {
@@ -21096,7 +21204,7 @@
               }
             },
             {
-              "name": "initialModelHash",
+              "name": "initialModelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -21108,9 +21216,9 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "ModelArtifact.modelHash"
+                  "ModelArtifact.modelArtifactDigest"
                 ],
-                "rule": "Snapshot the updated content hash used by runtime agents to verify the pulled model."
+                "rule": "Snapshot the updated artifact digest used by runtime agents to verify the pulled model."
               }
             },
             {
@@ -21126,7 +21234,7 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "ModelArtifact.modelSignatureRef"
+                  "ModelArtifact.modelSignatureUri"
                 ],
                 "rule": "Snapshot the updated optional signature URI used to verify model provenance."
               }
@@ -21420,19 +21528,25 @@
                   "name": "featureSchemaId"
                 },
                 {
-                  "name": "initialModelVersionId"
+                  "name": "initialModelId"
+                },
+                {
+                  "name": "initialModelName"
+                },
+                {
+                  "name": "initialModelVersion"
                 },
                 {
                   "name": "initialModelArtifactUri"
                 },
                 {
-                  "name": "initialModelRepositoryName"
+                  "name": "initialModelRegistryRef"
                 },
                 {
                   "name": "initialModelFormat"
                 },
                 {
-                  "name": "initialModelHash"
+                  "name": "initialModelArtifactDigest"
                 },
                 {
                   "name": "initialModelSignatureUri"
@@ -21516,7 +21630,7 @@
                   "example": "schema-1"
                 },
                 {
-                  "name": "initialModelVersionId",
+                  "name": "initialModelId",
                   "example": "model-2"
                 },
                 {
@@ -21617,20 +21731,26 @@
                   "example": "schema-1"
                 },
                 {
-                  "name": "initialModelVersionId",
+                  "name": "initialModelId",
                   "example": "model-2"
+                },
+                {
+                  "name": "initialModelName"
+                },
+                {
+                  "name": "initialModelVersion"
                 },
                 {
                   "name": "initialModelArtifactUri"
                 },
                 {
-                  "name": "initialModelRepositoryName"
+                  "name": "initialModelRegistryRef"
                 },
                 {
                   "name": "initialModelFormat"
                 },
                 {
-                  "name": "initialModelHash"
+                  "name": "initialModelArtifactDigest"
                 },
                 {
                   "name": "initialModelSignatureUri"
@@ -21759,7 +21879,7 @@
                   "example": "schema-1"
                 },
                 {
-                  "name": "initialModelVersionId",
+                  "name": "initialModelId",
                   "example": "model-2"
                 },
                 {
@@ -22080,8 +22200,30 @@
               "display": false
             },
             {
-              "name": "initialModelVersionId",
+              "name": "initialModelId",
               "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "initialModelName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true
+            },
+            {
+              "name": "initialModelVersion",
+              "type": "String",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -22156,7 +22298,7 @@
               "display": false
             },
             {
-              "name": "initialModelRepositoryName",
+              "name": "initialModelRegistryRef",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -22178,7 +22320,7 @@
               "display": false
             },
             {
-              "name": "initialModelHash",
+              "name": "initialModelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -22614,6 +22756,24 @@
               "display": false
             },
             {
+              "name": "initialModelId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingRunConfiguration.initialModelId"
+                ],
+                "rule": "Carry the initial model selected by the training run configuration."
+              }
+            },
+            {
               "name": "featureSchemaId",
               "type": "UUID",
               "cardinality": "Single",
@@ -22692,9 +22852,9 @@
               "elementType": "READMODEL"
             },
             {
-              "id": "readmodel-391ce9b7",
+              "id": "readmodel-82c9781d",
               "direction": "OUTBOUND",
-              "title": "Model Version Catalog",
+              "title": "Model Catalog",
               "elementType": "READMODEL"
             },
             {
@@ -22760,19 +22920,25 @@
                   "name": "featureSchemaId"
                 },
                 {
-                  "name": "initialModelVersionId"
+                  "name": "initialModelId"
+                },
+                {
+                  "name": "initialModelName"
+                },
+                {
+                  "name": "initialModelVersion"
                 },
                 {
                   "name": "initialModelArtifactUri"
                 },
                 {
-                  "name": "initialModelRepositoryName"
+                  "name": "initialModelRegistryRef"
                 },
                 {
                   "name": "initialModelFormat"
                 },
                 {
-                  "name": "initialModelHash"
+                  "name": "initialModelArtifactDigest"
                 },
                 {
                   "name": "initialModelSignatureUri"
@@ -22872,6 +23038,9 @@
                 },
                 {
                   "name": "federationId"
+                },
+                {
+                  "name": "initialModelId"
                 },
                 {
                   "name": "featureSchemaId"
@@ -23112,6 +23281,9 @@
                 },
                 {
                   "name": "federationId"
+                },
+                {
+                  "name": "initialModelId"
                 },
                 {
                   "name": "featureSchemaId"
@@ -24320,7 +24492,7 @@
               "display": false
             },
             {
-              "name": "finalModelVersionId",
+              "name": "finalModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -24396,7 +24568,7 @@
               "display": false
             },
             {
-              "name": "finalModelVersionId",
+              "name": "finalModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -24866,7 +25038,7 @@
               "display": false
             },
             {
-              "name": "finalModelVersionId",
+              "name": "finalModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": true,
@@ -26411,7 +26583,7 @@
               }
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -26423,10 +26595,105 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "TrainingRunConfiguration.initialModelVersionId",
-                  "TrainingRoundCompleted.aggregatedModelVersionId"
+                  "TrainingRunConfiguration.initialModelId",
+                  "TrainingRoundCompleted.aggregatedModelId"
                 ],
                 "rule": "Round one uses the initial model selected by the training configuration; later rounds use the aggregated model from the previous completed round."
+              }
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingRunConfiguration.initialModelArtifactUri",
+                  "TrainingRoundCompleted.aggregatedModelArtifactUri"
+                ],
+                "rule": "Snapshot the pullable artifact URI for the base model used by this participant execution plan."
+              }
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingRunConfiguration.initialModelRegistryRef",
+                  "TrainingRoundCompleted.aggregatedModelRegistryRef"
+                ],
+                "rule": "Snapshot the model registry reference that owns the base model artifact."
+              }
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingRunConfiguration.initialModelFormat",
+                  "TrainingRoundCompleted.modelFormat"
+                ],
+                "rule": "Snapshot the model format required by the runtime engine."
+              }
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingRunConfiguration.initialModelArtifactDigest",
+                  "TrainingRoundCompleted.modelArtifactDigest"
+                ],
+                "rule": "Snapshot the artifact digest used by runtime agents to verify the base model."
+              }
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingRunConfiguration.initialModelSignatureUri",
+                  "TrainingRoundCompleted.aggregatedModelSignatureUri"
+                ],
+                "rule": "Snapshot the optional signature URI for the base model used by this participant execution plan."
               }
             }
           ],
@@ -26556,10 +26823,65 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -26622,7 +26944,349 @@
           }
         }
       ],
-      "specifications": [],
+      "specifications": [
+        {
+          "id": "gwt-8b4a0f40",
+          "chapter": "TrainingOrchestration",
+          "sliceName": "Generate Participant Execution Plan",
+          "title": "Generate Initial Round Plan With Initial Model Snapshot",
+          "specification": "Participant Execution Plan Carries Base Model Artifact Snapshot",
+          "rule": "A participant execution plan must carry the immutable base model artifact snapshot needed by the runtime agent: model identity, pullable artifact URI, registry reference, model format, artifact digest, and optional signature URI. Runtime agents must not infer or query these values later from a mutable model repository view. Round one uses the initial model snapshot from the training run configuration; later rounds use the aggregated model snapshot recorded when the previous training round completed.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Training Round Started",
+              "id": "event-229f5549",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId",
+                  "example": "round-1"
+                },
+                {
+                  "name": "roundNumber",
+                  "example": "1"
+                },
+                {
+                  "name": "selectedOrganizationIds"
+                },
+                {
+                  "name": "selectedRuntimeIds"
+                },
+                {
+                  "name": "selectedParticipants"
+                },
+                {
+                  "name": "selectedOrganizationCount"
+                },
+                {
+                  "name": "selectedRuntimeCount"
+                },
+                {
+                  "name": "minimumNodesPerRound"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Generate Participant Execution Plan",
+              "id": "command-12ae6eed",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId",
+                  "example": "round-1"
+                },
+                {
+                  "name": "roundNumber",
+                  "example": "1"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Participant Execution Plan Generated",
+              "id": "event-e92951ca",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId",
+                  "example": "round-1"
+                },
+                {
+                  "name": "roundNumber",
+                  "example": "1"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-8c3fbbfb",
+          "chapter": "TrainingOrchestration",
+          "sliceName": "Generate Participant Execution Plan",
+          "title": "Generate Later Round Plan With Aggregated Model Snapshot",
+          "specification": "Participant Execution Plan Carries Base Model Artifact Snapshot",
+          "rule": "A participant execution plan must carry the immutable base model artifact snapshot needed by the runtime agent: model identity, pullable artifact URI, registry reference, model format, artifact digest, and optional signature URI. Runtime agents must not infer or query these values later from a mutable model repository view. Round one uses the initial model snapshot from the training run configuration; later rounds use the aggregated model snapshot recorded when the previous training round completed.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Training Round Completed",
+              "id": "event-81791a42",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId",
+                  "example": "round-1"
+                },
+                {
+                  "name": "aggregatedModelId",
+                  "example": "model-round-1"
+                },
+                {
+                  "name": "aggregatedModelArtifactUri",
+                  "example": "oci://registry.example.com/fl/model-round-1@sha256:def"
+                },
+                {
+                  "name": "aggregatedModelRegistryRef",
+                  "example": "oci://registry.example.com/fl"
+                },
+                {
+                  "name": "modelFormat"
+                },
+                {
+                  "name": "modelArtifactDigest",
+                  "example": "sha256:def"
+                },
+                {
+                  "name": "aggregatedModelSignatureUri"
+                },
+                {
+                  "name": "globalAccuracy"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Generate Participant Execution Plan",
+              "id": "command-12ae6eed",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId",
+                  "example": "round-2"
+                },
+                {
+                  "name": "roundNumber",
+                  "example": "2"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Participant Execution Plan Generated",
+              "id": "event-e92951ca",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId",
+                  "example": "round-2"
+                },
+                {
+                  "name": "roundNumber",
+                  "example": "2"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "actors": [],
       "hotspots": [],
       "stateChange": {
@@ -26806,7 +27470,7 @@
               }
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -26818,7 +27482,92 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "ParticipantExecutionPlanGenerated.baseModelVersionId"
+                  "ParticipantExecutionPlanGenerated.baseModelId"
+                ]
+              }
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanGenerated.baseModelArtifactUri"
+                ]
+              }
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanGenerated.baseModelRegistryRef"
+                ]
+              }
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanGenerated.baseModelFormat"
+                ]
+              }
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanGenerated.baseModelArtifactDigest"
+                ]
+              }
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanGenerated.baseModelSignatureUri"
                 ]
               }
             }
@@ -26949,10 +27698,65 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -27179,7 +27983,7 @@
               "display": false
             },
             {
-              "name": "localModelVersionId",
+              "name": "localModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -27359,7 +28163,7 @@
               "display": false
             },
             {
-              "name": "localModelVersionId",
+              "name": "localModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -27956,7 +28760,7 @@
                   "name": "featureSchemaId"
                 },
                 {
-                  "name": "localModelVersionId"
+                  "name": "localModelId"
                 },
                 {
                   "name": "updateArtifactId",
@@ -28450,7 +29254,7 @@
               }
             },
             {
-              "name": "aggregatedModelVersionId",
+              "name": "aggregatedModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -28462,7 +29266,41 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "SecureAggregationCompleted.aggregatedModelVersionId"
+                  "SecureAggregationCompleted.aggregatedModelId"
+                ]
+              }
+            },
+            {
+              "name": "aggregatedModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationCompleted.aggregatedModelArtifactUri"
+                ]
+              }
+            },
+            {
+              "name": "aggregatedModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationCompleted.aggregatedModelRegistryRef"
                 ]
               }
             },
@@ -28484,7 +29322,7 @@
               }
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -28496,7 +29334,24 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "SecureAggregationCompleted.modelHash"
+                  "SecureAggregationCompleted.modelArtifactDigest"
+                ]
+              }
+            },
+            {
+              "name": "aggregatedModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationCompleted.aggregatedModelSignatureUri"
                 ]
               }
             }
@@ -28582,8 +29437,30 @@
               "display": false
             },
             {
-              "name": "aggregatedModelVersionId",
+              "name": "aggregatedModelId",
               "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelRegistryRef",
+              "type": "String",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -28604,10 +29481,21 @@
               "display": false
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -28720,7 +29608,7 @@
               "display": false
             },
             {
-              "name": "aggregatedModelVersionId",
+              "name": "aggregatedModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -28729,6 +29617,40 @@
               "technicalAttribute": false,
               "query": false,
               "display": false
+            },
+            {
+              "name": "aggregatedModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "GlobalModelUpdated.aggregatedModelArtifactUri"
+                ]
+              }
+            },
+            {
+              "name": "aggregatedModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "GlobalModelUpdated.aggregatedModelRegistryRef"
+                ]
+              }
             },
             {
               "name": "modelFormat",
@@ -28748,7 +29670,7 @@
               }
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -28760,7 +29682,24 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "GlobalModelUpdated.modelHash"
+                  "GlobalModelUpdated.modelArtifactDigest"
+                ]
+              }
+            },
+            {
+              "name": "aggregatedModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "GlobalModelUpdated.aggregatedModelSignatureUri"
                 ]
               }
             },
@@ -28857,8 +29796,30 @@
               "display": false
             },
             {
-              "name": "aggregatedModelVersionId",
+              "name": "aggregatedModelId",
               "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelRegistryRef",
+              "type": "String",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -28879,10 +29840,21 @@
               "display": false
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -29006,7 +29978,7 @@
               "display": false
             },
             {
-              "name": "aggregatedModelVersionId",
+              "name": "aggregatedModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -29015,6 +29987,40 @@
               "technicalAttribute": false,
               "query": false,
               "display": false
+            },
+            {
+              "name": "aggregatedModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "GlobalModelEvaluationSubmitted.aggregatedModelArtifactUri"
+                ]
+              }
+            },
+            {
+              "name": "aggregatedModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "GlobalModelEvaluationSubmitted.aggregatedModelRegistryRef"
+                ]
+              }
             },
             {
               "name": "modelFormat",
@@ -29034,7 +30040,7 @@
               }
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -29046,7 +30052,24 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "GlobalModelEvaluationSubmitted.modelHash"
+                  "GlobalModelEvaluationSubmitted.modelArtifactDigest"
+                ]
+              }
+            },
+            {
+              "name": "aggregatedModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "GlobalModelEvaluationSubmitted.aggregatedModelSignatureUri"
                 ]
               }
             },
@@ -29132,8 +30155,30 @@
               "display": false
             },
             {
-              "name": "aggregatedModelVersionId",
+              "name": "aggregatedModelId",
               "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelRegistryRef",
+              "type": "String",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -29154,10 +30199,21 @@
               "display": false
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -29274,14 +30330,23 @@
                   "example": "round-1"
                 },
                 {
-                  "name": "aggregatedModelVersionId",
+                  "name": "aggregatedModelId",
                   "example": "model-1"
+                },
+                {
+                  "name": "aggregatedModelArtifactUri"
+                },
+                {
+                  "name": "aggregatedModelRegistryRef"
                 },
                 {
                   "name": "modelFormat"
                 },
                 {
-                  "name": "modelHash"
+                  "name": "modelArtifactDigest"
+                },
+                {
+                  "name": "aggregatedModelSignatureUri"
                 },
                 {
                   "name": "globalAccuracy",
@@ -29315,14 +30380,23 @@
                   "example": "round-1"
                 },
                 {
-                  "name": "aggregatedModelVersionId",
+                  "name": "aggregatedModelId",
                   "example": "model-1"
+                },
+                {
+                  "name": "aggregatedModelArtifactUri"
+                },
+                {
+                  "name": "aggregatedModelRegistryRef"
                 },
                 {
                   "name": "modelFormat"
                 },
                 {
-                  "name": "modelHash"
+                  "name": "modelArtifactDigest"
+                },
+                {
+                  "name": "aggregatedModelSignatureUri"
                 },
                 {
                   "name": "globalAccuracy",
@@ -29353,14 +30427,23 @@
                   "example": "round-1"
                 },
                 {
-                  "name": "aggregatedModelVersionId",
+                  "name": "aggregatedModelId",
                   "example": "model-1"
+                },
+                {
+                  "name": "aggregatedModelArtifactUri"
+                },
+                {
+                  "name": "aggregatedModelRegistryRef"
                 },
                 {
                   "name": "modelFormat"
                 },
                 {
-                  "name": "modelHash"
+                  "name": "modelArtifactDigest"
+                },
+                {
+                  "name": "aggregatedModelSignatureUri"
                 },
                 {
                   "name": "globalAccuracy",
@@ -29404,14 +30487,23 @@
                   "name": "secureAggregationSessionId"
                 },
                 {
-                  "name": "aggregatedModelVersionId",
+                  "name": "aggregatedModelId",
                   "example": "model-1"
+                },
+                {
+                  "name": "aggregatedModelArtifactUri"
+                },
+                {
+                  "name": "aggregatedModelRegistryRef"
                 },
                 {
                   "name": "modelFormat"
                 },
                 {
-                  "name": "modelHash"
+                  "name": "modelArtifactDigest"
+                },
+                {
+                  "name": "aggregatedModelSignatureUri"
                 }
               ]
             }
@@ -29438,14 +30530,23 @@
                   "example": "round-1"
                 },
                 {
-                  "name": "aggregatedModelVersionId",
+                  "name": "aggregatedModelId",
                   "example": "model-1"
+                },
+                {
+                  "name": "aggregatedModelArtifactUri"
+                },
+                {
+                  "name": "aggregatedModelRegistryRef"
                 },
                 {
                   "name": "modelFormat"
                 },
                 {
-                  "name": "modelHash"
+                  "name": "modelArtifactDigest"
+                },
+                {
+                  "name": "aggregatedModelSignatureUri"
                 },
                 {
                   "name": "globalAccuracy"
@@ -30468,7 +31569,7 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": true,
@@ -30501,7 +31602,7 @@
               "display": false
             },
             {
-              "name": "aggregatedModelVersionId",
+              "name": "aggregatedModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": true,
@@ -30703,7 +31804,7 @@
       "context": "ModelLifecycle",
       "tags": [],
       "concepts": [
-        "ModelVersion"
+        "Model"
       ],
       "commands": [
         {
@@ -30715,7 +31816,7 @@
           "slice": "Register Candidate Model",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -30759,7 +31860,7 @@
               "display": false
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -30819,7 +31920,7 @@
           "slice": "Register Candidate Model",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -30863,7 +31964,7 @@
               "display": false
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -30910,9 +32011,9 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-391ce9b7",
+              "id": "readmodel-82c9781d",
               "direction": "OUTBOUND",
-              "title": "Model Version Catalog",
+              "title": "Model Catalog",
               "elementType": "READMODEL"
             }
           ]
@@ -30968,7 +32069,7 @@
       "context": "ModelLifecycle",
       "tags": [],
       "concepts": [
-        "ModelVersion"
+        "Model"
       ],
       "commands": [
         {
@@ -30980,7 +32081,7 @@
           "slice": "Record Model Evaluation Package",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -31057,7 +32158,7 @@
               "display": false
             },
             {
-              "name": "baselineModelVersionId",
+              "name": "baselineModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": true,
@@ -31100,7 +32201,7 @@
           "slice": "Record Model Evaluation Package",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -31112,7 +32213,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "RecordModelEvaluationPackage.modelVersionId"
+                  "RecordModelEvaluationPackage.modelId"
                 ]
               }
             },
@@ -31219,7 +32320,7 @@
               }
             },
             {
-              "name": "baselineModelVersionId",
+              "name": "baselineModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": true,
@@ -31231,7 +32332,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "RecordModelEvaluationPackage.baselineModelVersionId"
+                  "RecordModelEvaluationPackage.baselineModelId"
                 ]
               }
             }
@@ -31250,9 +32351,9 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-391ce9b7",
+              "id": "readmodel-82c9781d",
               "direction": "OUTBOUND",
-              "title": "Model Version Catalog",
+              "title": "Model Catalog",
               "elementType": "READMODEL"
             }
           ]
@@ -31296,7 +32397,7 @@
               "type": "EVENT",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31309,7 +32410,7 @@
                   "name": "modelArtifactId"
                 },
                 {
-                  "name": "modelHash"
+                  "name": "modelArtifactDigest"
                 },
                 {
                   "name": "evaluationReportId",
@@ -31328,7 +32429,7 @@
               "type": "COMMAND",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31352,7 +32453,7 @@
                   "example": "card-1"
                 },
                 {
-                  "name": "baselineModelVersionId"
+                  "name": "baselineModelId"
                 }
               ]
             }
@@ -31364,7 +32465,7 @@
               "type": "EVENT",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31388,7 +32489,7 @@
                   "example": "card-1"
                 },
                 {
-                  "name": "baselineModelVersionId"
+                  "name": "baselineModelId"
                 }
               ]
             }
@@ -31418,7 +32519,7 @@
       "context": "ModelLifecycle",
       "tags": [],
       "concepts": [
-        "ModelVersion"
+        "Model"
       ],
       "commands": [
         {
@@ -31430,7 +32531,7 @@
           "slice": "Approve Model",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -31484,7 +32585,7 @@
           "slice": "Approve Model",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -31520,9 +32621,9 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-391ce9b7",
+              "id": "readmodel-82c9781d",
               "direction": "OUTBOUND",
-              "title": "Model Version Catalog",
+              "title": "Model Catalog",
               "elementType": "READMODEL"
             }
           ]
@@ -31566,7 +32667,7 @@
               "type": "EVENT",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31591,7 +32692,7 @@
                   "example": "card-1"
                 },
                 {
-                  "name": "baselineModelVersionId"
+                  "name": "baselineModelId"
                 }
               ]
             }
@@ -31603,7 +32704,7 @@
               "type": "COMMAND",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31619,7 +32720,7 @@
               "type": "EVENT",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31645,7 +32746,7 @@
               "type": "EVENT",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31658,7 +32759,7 @@
                   "name": "modelArtifactId"
                 },
                 {
-                  "name": "modelHash"
+                  "name": "modelArtifactDigest"
                 },
                 {
                   "name": "evaluationReportId",
@@ -31677,7 +32778,7 @@
               "type": "COMMAND",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31717,7 +32818,7 @@
       "context": "ModelLifecycle",
       "tags": [],
       "concepts": [
-        "ModelVersion"
+        "Model"
       ],
       "commands": [
         {
@@ -31729,7 +32830,7 @@
           "slice": "Promote Model To Production",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -31796,7 +32897,7 @@
           "slice": "Promote Model To Production",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -31839,21 +32940,21 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "command-3b949ec3",
+              "id": "command-3d9863c3",
               "direction": "OUTBOUND",
-              "title": "Rollback Model Version",
+              "title": "Rollback Model",
               "elementType": "COMMAND"
             },
             {
-              "id": "command-954301f5",
+              "id": "command-2c2bd227",
               "direction": "OUTBOUND",
-              "title": "Retire Model Version",
+              "title": "Retire Model",
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-391ce9b7",
+              "id": "readmodel-82c9781d",
               "direction": "OUTBOUND",
-              "title": "Model Version Catalog",
+              "title": "Model Catalog",
               "elementType": "READMODEL"
             },
             {
@@ -31893,7 +32994,7 @@
           "sliceName": "Promote Model To Production",
           "title": "Promote Approved Model",
           "specification": "Only Approved Models Can Be Promoted To Production",
-          "rule": "A model version can be promoted to production only after governance approval.",
+          "rule": "A model can be promoted to production only after governance approval.",
           "expressions": [],
           "validates": [],
           "given": [
@@ -31903,7 +33004,7 @@
               "type": "EVENT",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31919,7 +33020,7 @@
               "type": "COMMAND",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31940,7 +33041,7 @@
               "type": "EVENT",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31961,7 +33062,7 @@
           "sliceName": "Promote Model To Production",
           "title": "Reject Unapproved Model Promotion",
           "specification": "Only Approved Models Can Be Promoted To Production",
-          "rule": "A model version can be promoted to production only after governance approval.",
+          "rule": "A model can be promoted to production only after governance approval.",
           "expressions": [],
           "validates": [],
           "given": [
@@ -31971,7 +33072,7 @@
               "type": "EVENT",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -31993,7 +33094,7 @@
                   "name": "modelCardId"
                 },
                 {
-                  "name": "baselineModelVersionId"
+                  "name": "baselineModelId"
                 }
               ]
             }
@@ -32005,7 +33106,7 @@
               "type": "COMMAND",
               "fields": [
                 {
-                  "name": "modelVersionId",
+                  "name": "modelId",
                   "example": "model-1"
                 },
                 {
@@ -32042,27 +33143,27 @@
       }
     },
     {
-      "id": "slice-fcb8d06d",
+      "id": "slice-33930733",
       "index": 79,
-      "name": "RollbackModelVersion",
-      "title": "Rollback Model Version",
+      "name": "RollbackModel",
+      "title": "Rollback Model",
       "chapter": "ModelLifecycle",
       "context": "ModelLifecycle",
       "tags": [],
       "concepts": [
-        "ModelVersion"
+        "Model"
       ],
       "commands": [
         {
-          "id": "command-3b949ec3",
-          "name": "RollbackModelVersion",
-          "title": "Rollback Model Version",
+          "id": "command-3d9863c3",
+          "name": "RollbackModel",
+          "title": "Rollback Model",
           "type": "COMMAND",
           "modelContext": "ModelLifecycle",
-          "slice": "Rollback Model Version",
+          "slice": "Rollback Model",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -32073,7 +33174,7 @@
               "display": false
             },
             {
-              "name": "previousModelVersionId",
+              "name": "previousModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -32103,15 +33204,15 @@
               "elementType": "EVENT"
             },
             {
-              "id": "screen-399d2e45",
+              "id": "screen-be73e44f",
               "direction": "INBOUND",
               "title": "Model Release Screen",
               "elementType": "SCREEN"
             },
             {
-              "id": "event-a741e9a1",
+              "id": "event-a0f96d03",
               "direction": "OUTBOUND",
-              "title": "Model Version Rolled Back",
+              "title": "Model Rolled Back",
               "elementType": "EVENT"
             }
           ]
@@ -32119,15 +33220,15 @@
       ],
       "events": [
         {
-          "id": "event-a741e9a1",
-          "name": "ModelVersionRolledBack",
-          "title": "Model Version Rolled Back",
+          "id": "event-a0f96d03",
+          "name": "ModelRolledBack",
+          "title": "Model Rolled Back",
           "type": "EVENT",
           "modelContext": "ModelLifecycle",
-          "slice": "Rollback Model Version",
+          "slice": "Rollback Model",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -32138,7 +33239,7 @@
               "display": false
             },
             {
-              "name": "previousModelVersionId",
+              "name": "previousModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -32162,15 +33263,15 @@
           ],
           "dependencies": [
             {
-              "id": "command-3b949ec3",
+              "id": "command-3d9863c3",
               "direction": "INBOUND",
-              "title": "Rollback Model Version",
+              "title": "Rollback Model",
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-391ce9b7",
+              "id": "readmodel-82c9781d",
               "direction": "OUTBOUND",
-              "title": "Model Version Catalog",
+              "title": "Model Catalog",
               "elementType": "READMODEL"
             }
           ]
@@ -32179,18 +33280,18 @@
       "readmodels": [],
       "screens": [
         {
-          "id": "screen-399d2e45",
+          "id": "screen-be73e44f",
           "name": "ModelReleaseScreen",
           "title": "Model Release Screen",
           "type": "SCREEN",
           "modelContext": "ModelLifecycle",
-          "slice": "Rollback Model Version",
+          "slice": "Rollback Model",
           "fields": [],
           "dependencies": [
             {
-              "id": "command-3b949ec3",
+              "id": "command-3d9863c3",
               "direction": "OUTBOUND",
-              "title": "Rollback Model Version",
+              "title": "Rollback Model",
               "elementType": "COMMAND"
             }
           ]
@@ -32207,33 +33308,33 @@
       ],
       "hotspots": [],
       "stateChange": {
-        "event": "ModelVersionRolledBack",
-        "eventId": "event-a741e9a1",
+        "event": "ModelRolledBack",
+        "eventId": "event-a0f96d03",
         "to": "RolledBack"
       }
     },
     {
-      "id": "slice-8685873e",
+      "id": "slice-9e8c0ad2",
       "index": 80,
-      "name": "RetireModelVersion",
-      "title": "Retire Model Version",
+      "name": "RetireModel",
+      "title": "Retire Model",
       "chapter": "ModelLifecycle",
       "context": "ModelLifecycle",
       "tags": [],
       "concepts": [
-        "ModelVersion"
+        "Model"
       ],
       "commands": [
         {
-          "id": "command-954301f5",
-          "name": "RetireModelVersion",
-          "title": "Retire Model Version",
+          "id": "command-2c2bd227",
+          "name": "RetireModel",
+          "title": "Retire Model",
           "type": "COMMAND",
           "modelContext": "ModelLifecycle",
-          "slice": "Retire Model Version",
+          "slice": "Retire Model",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -32263,15 +33364,15 @@
               "elementType": "EVENT"
             },
             {
-              "id": "screen-dbbaf21a",
+              "id": "screen-d0d87926",
               "direction": "INBOUND",
               "title": "Model Release Screen",
               "elementType": "SCREEN"
             },
             {
-              "id": "event-88eb35e2",
+              "id": "event-fbc3a4c8",
               "direction": "OUTBOUND",
-              "title": "Model Version Retired",
+              "title": "Model Retired",
               "elementType": "EVENT"
             }
           ]
@@ -32279,15 +33380,15 @@
       ],
       "events": [
         {
-          "id": "event-88eb35e2",
-          "name": "ModelVersionRetired",
-          "title": "Model Version Retired",
+          "id": "event-fbc3a4c8",
+          "name": "ModelRetired",
+          "title": "Model Retired",
           "type": "EVENT",
           "modelContext": "ModelLifecycle",
-          "slice": "Retire Model Version",
+          "slice": "Retire Model",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -32311,15 +33412,15 @@
           ],
           "dependencies": [
             {
-              "id": "command-954301f5",
+              "id": "command-2c2bd227",
               "direction": "INBOUND",
-              "title": "Retire Model Version",
+              "title": "Retire Model",
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-391ce9b7",
+              "id": "readmodel-82c9781d",
               "direction": "OUTBOUND",
-              "title": "Model Version Catalog",
+              "title": "Model Catalog",
               "elementType": "READMODEL"
             }
           ]
@@ -32328,18 +33429,18 @@
       "readmodels": [],
       "screens": [
         {
-          "id": "screen-dbbaf21a",
+          "id": "screen-d0d87926",
           "name": "ModelReleaseScreen",
           "title": "Model Release Screen",
           "type": "SCREEN",
           "modelContext": "ModelLifecycle",
-          "slice": "Retire Model Version",
+          "slice": "Retire Model",
           "fields": [],
           "dependencies": [
             {
-              "id": "command-954301f5",
+              "id": "command-2c2bd227",
               "direction": "OUTBOUND",
-              "title": "Retire Model Version",
+              "title": "Retire Model",
               "elementType": "COMMAND"
             }
           ]
@@ -32356,35 +33457,35 @@
       ],
       "hotspots": [],
       "stateChange": {
-        "event": "ModelVersionRetired",
-        "eventId": "event-88eb35e2",
+        "event": "ModelRetired",
+        "eventId": "event-fbc3a4c8",
         "to": "Retired"
       }
     },
     {
-      "id": "slice-22c1efd0",
+      "id": "slice-daa3e2fe",
       "index": 81,
-      "name": "ModelVersionCatalog",
-      "title": "Model Version Catalog",
+      "name": "ModelCatalog",
+      "title": "Model Catalog",
       "chapter": "ModelLifecycle",
       "context": "ModelLifecycle",
       "tags": [],
       "concepts": [
-        "ModelVersion"
+        "Model"
       ],
       "commands": [],
       "events": [],
       "readmodels": [
         {
-          "id": "readmodel-391ce9b7",
-          "name": "ModelVersionCatalog",
-          "title": "Model Version Catalog",
+          "id": "readmodel-82c9781d",
+          "name": "ModelCatalog",
+          "title": "Model Catalog",
           "type": "READMODEL",
           "modelContext": "ModelLifecycle",
-          "slice": "Model Version Catalog",
+          "slice": "Model Catalog",
           "fields": [
             {
-              "name": "modelVersionId",
+              "name": "modelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -32442,11 +33543,11 @@
                 "from": [
                   "TrainingJobCreated.objective"
                 ],
-                "rule": "Lookup by trainingJobId and denormalize the training job objective into the model version catalog."
+                "rule": "Lookup by trainingJobId and denormalize the training job objective into the model catalog."
               }
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -32480,7 +33581,7 @@
             },
             {
               "name": "state",
-              "type": "ModelVersion.State",
+              "type": "Model.State",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -32514,7 +33615,7 @@
               "display": false
             },
             {
-              "name": "previousModelVersionId",
+              "name": "previousModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": true,
@@ -32569,7 +33670,7 @@
               "display": false
             },
             {
-              "name": "baselineModelVersionId",
+              "name": "baselineModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": true,
@@ -32722,15 +33823,15 @@
               "elementType": "EVENT"
             },
             {
-              "id": "event-a741e9a1",
+              "id": "event-a0f96d03",
               "direction": "INBOUND",
-              "title": "Model Version Rolled Back",
+              "title": "Model Rolled Back",
               "elementType": "EVENT"
             },
             {
-              "id": "event-88eb35e2",
+              "id": "event-fbc3a4c8",
               "direction": "INBOUND",
-              "title": "Model Version Retired",
+              "title": "Model Retired",
               "elementType": "EVENT"
             }
           ],
@@ -38389,13 +39490,35 @@
               }
             },
             {
-              "name": "aggregatedModelVersionId",
+              "name": "aggregatedModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
               "generated": true,
               "technicalAttribute": true,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
               "query": false,
               "display": false
             },
@@ -38411,10 +39534,21 @@
               "display": false
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -38504,8 +39638,30 @@
               "display": false
             },
             {
-              "name": "aggregatedModelVersionId",
+              "name": "aggregatedModelId",
               "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelRegistryRef",
+              "type": "String",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -38526,10 +39682,21 @@
               "display": false
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "aggregatedModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -38910,7 +40077,7 @@
               "display": false
             },
             {
-              "name": "aggregatedModelVersionId",
+              "name": "aggregatedModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": true,
@@ -38932,7 +40099,7 @@
               "display": false
             },
             {
-              "name": "modelHash",
+              "name": "modelArtifactDigest",
               "type": "String",
               "cardinality": "Single",
               "optional": true,
@@ -46535,7 +47702,7 @@
               }
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -46547,7 +47714,92 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "ParticipantExecutionPlanDispatched.baseModelVersionId"
+                  "ParticipantExecutionPlanDispatched.baseModelId"
+                ]
+              }
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanDispatched.baseModelArtifactUri"
+                ]
+              }
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanDispatched.baseModelRegistryRef"
+                ]
+              }
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanDispatched.baseModelFormat"
+                ]
+              }
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanDispatched.baseModelArtifactDigest"
+                ]
+              }
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanDispatched.baseModelSignatureUri"
                 ]
               }
             }
@@ -46678,10 +47930,65 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -46927,7 +48234,7 @@
               }
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -46939,7 +48246,92 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "ExecutionPlanReceived.baseModelVersionId"
+                  "ExecutionPlanReceived.baseModelId"
+                ]
+              }
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.baseModelArtifactUri"
+                ]
+              }
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.baseModelRegistryRef"
+                ]
+              }
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.baseModelFormat"
+                ]
+              }
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.baseModelArtifactDigest"
+                ]
+              }
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.baseModelSignatureUri"
                 ]
               }
             }
@@ -47076,10 +48468,65 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -47304,10 +48751,65 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -47507,7 +49009,22 @@
                   "name": "organizationId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 }
               ]
             }
@@ -47547,7 +49064,22 @@
                   "name": "organizationId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 }
               ]
             }
@@ -47587,7 +49119,22 @@
                   "name": "organizationId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 },
                 {
                   "name": "localExecutionRequirementsSatisfied"
@@ -47661,7 +49208,22 @@
                   "name": "organizationId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 }
               ]
             }
@@ -47701,7 +49263,22 @@
                   "name": "organizationId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 }
               ]
             }
@@ -47741,7 +49318,22 @@
                   "name": "organizationId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 },
                 {
                   "name": "localExecutionRequirementsSatisfied"
@@ -47969,7 +49561,7 @@
               }
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -47981,7 +49573,92 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "ExecutionPlanAccepted.baseModelVersionId"
+                  "ExecutionPlanAccepted.baseModelId"
+                ]
+              }
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanAccepted.baseModelArtifactUri"
+                ]
+              }
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanAccepted.baseModelRegistryRef"
+                ]
+              }
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanAccepted.baseModelFormat"
+                ]
+              }
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanAccepted.baseModelArtifactDigest"
+                ]
+              }
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanAccepted.baseModelSignatureUri"
                 ]
               }
             },
@@ -48140,10 +49817,65 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -48314,10 +50046,65 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false
+            },
+            {
+              "name": "baseModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -48464,7 +50251,22 @@
                   "name": "organizationId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 },
                 {
                   "name": "localExecutionRequirementsSatisfied"
@@ -48531,7 +50333,22 @@
                   "name": "featureSchemaId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 },
                 {
                   "name": "runtimeEngineJobId"
@@ -48577,7 +50394,22 @@
                   "name": "featureSchemaId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 },
                 {
                   "name": "runtimeEngineJobId"
@@ -48630,7 +50462,22 @@
                   "name": "organizationId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 },
                 {
                   "name": "localExecutionRequirementsSatisfied"
@@ -48697,7 +50544,22 @@
                   "name": "featureSchemaId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 },
                 {
                   "name": "runtimeEngineJobId"
@@ -48743,7 +50605,22 @@
                   "name": "featureSchemaId"
                 },
                 {
-                  "name": "baseModelVersionId"
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
                 },
                 {
                   "name": "runtimeEngineJobId"
@@ -49516,7 +51393,7 @@
               }
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -49528,7 +51405,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "RoundExecutionStartFailed.baseModelVersionId"
+                  "RoundExecutionStartFailed.baseModelId"
                 ]
               }
             },
@@ -49698,7 +51575,7 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -49871,7 +51748,7 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -50186,7 +52063,7 @@
               }
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -50198,13 +52075,13 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "RoundExecutionStarted.baseModelVersionId"
+                  "RoundExecutionStarted.baseModelId"
                 ],
                 "lookup": {
                   "key": "roundExecutionId",
                   "cacheProjection": "RoundExecutionStarted",
-                  "sourceField": "baseModelVersionId",
-                  "targetField": "baseModelVersionId",
+                  "sourceField": "baseModelId",
+                  "targetField": "baseModelId",
                   "missingValuePolicy": "keep"
                 }
               }
@@ -50375,7 +52252,7 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -50548,7 +52425,7 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -50832,7 +52709,7 @@
               }
             },
             {
-              "name": "localModelVersionId",
+              "name": "localModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -51013,7 +52890,7 @@
               "display": false
             },
             {
-              "name": "localModelVersionId",
+              "name": "localModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -52129,7 +54006,7 @@
               "display": false
             },
             {
-              "name": "baseModelVersionId",
+              "name": "baseModelId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": true,

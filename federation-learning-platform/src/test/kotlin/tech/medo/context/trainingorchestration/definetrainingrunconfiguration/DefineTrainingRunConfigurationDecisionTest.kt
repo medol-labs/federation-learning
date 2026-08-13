@@ -21,7 +21,7 @@ class DefineTrainingRunConfigurationDecisionTest {
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("cfg-1".toByteArray()),
             federationId = UUID.nameUUIDFromBytes("fed-1".toByteArray()),
             featureSchemaId = UUID.nameUUIDFromBytes("schema-1".toByteArray()),
-            initialModelVersionId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
+            initialModelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             strategyName = "FED_AVG",
             aggregationAlgorithm = "FEDERATED_AVERAGING",
             maxRounds = 10,
@@ -51,7 +51,7 @@ class DefineTrainingRunConfigurationDecisionTest {
         assertEquals(UUID.nameUUIDFromBytes("cfg-1".toByteArray()), event.trainingRunConfigurationId)
         assertEquals(UUID.nameUUIDFromBytes("fed-1".toByteArray()), event.federationId)
         assertEquals(UUID.nameUUIDFromBytes("schema-1".toByteArray()), event.featureSchemaId)
-        assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.initialModelVersionId)
+        assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.initialModelId)
         assertEquals("FED_AVG", event.strategyName)
         assertEquals("FEDERATED_AVERAGING", event.aggregationAlgorithm)
         assertEquals(10, event.maxRounds)

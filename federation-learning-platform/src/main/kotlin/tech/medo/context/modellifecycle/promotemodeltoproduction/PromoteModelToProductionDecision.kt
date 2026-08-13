@@ -3,19 +3,19 @@ package tech.medo.modellifecycle.promotemodeltoproduction
 import tech.medo.modellifecycle.promotemodeltoproduction.PromoteModelToProductionCommand
 
 import tech.medo.modellifecycle.events.ModelPromotedToProductionEvent
-import tech.medo.modellifecycle.modelversion.ModelVersionState
+import tech.medo.modellifecycle.model.ModelState
 
 
-import tech.medo.modellifecycle.domain.states.ModelVersionStateEnum
+import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 
 interface PromoteModelToProductionDecision {
-    fun decide(command: PromoteModelToProductionCommand, state: ModelVersionState): List<Any> {
-        require(state.currentState == ModelVersionStateEnum.APPROVED) {
-            "PromoteModelToProduction requires ModelVersion to be Approved."
+    fun decide(command: PromoteModelToProductionCommand, state: ModelState): List<Any> {
+        require(state.currentState == ModelStateEnum.APPROVED) {
+            "PromoteModelToProduction requires Model to be Approved."
         }
         return listOf(
-            ModelPromotedToProductionEvent(modelVersionId = command.modelVersionId, releaseChannel = command.releaseChannel, productionStage = command.productionStage)
+            ModelPromotedToProductionEvent(modelId = command.modelId, releaseChannel = command.releaseChannel, productionStage = command.productionStage)
         )
     }
 }

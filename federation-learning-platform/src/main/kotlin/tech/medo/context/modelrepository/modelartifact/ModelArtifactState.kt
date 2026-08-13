@@ -12,29 +12,42 @@ import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum
 import java.util.UUID;
 
 
-@EventSourced(idType = UUID::class, tagKey = ModelArtifactTags.MODEL_VERSION_ID)
+@EventSourced(idType = ModelArtifactSelection::class)
 class ModelArtifactState @EntityCreator constructor() {
+    companion object {
+        @JvmStatic
+        @EventCriteriaBuilder
+        fun resolveCriteria(selection: ModelArtifactSelection): EventCriteria = EventCriteria.either(
+                EventCriteria.havingTags(Tag.of(ModelArtifactTags.MODEL_NAME, selection.modelName.toString())),
+                EventCriteria.havingTags(Tag.of(ModelArtifactTags.MODEL_VERSION, selection.modelVersion.toString()))
+        )
+    }
+
 
     var currentState: ModelArtifactStateEnum? = null
-    var modelVersionId: UUID? = null
-    var modelArtifactRef: String? = null
-    var modelRepositoryRef: String? = null
-    var modelFormat: String? = null
-    var modelHash: String? = null
-    var modelSignatureRef: String? = null
-    var modelSizeBytes: Int? = null
+    var modelId: UUID? = null
+    var modelName: String? = null
+    var modelVersion: String? = null
     var sourceType: String? = null
+    var modelArtifactUri: String? = null
+    var modelRegistryRef: String? = null
+    var modelFormat: String? = null
+    var modelArtifactDigest: String? = null
+    var modelSignatureUri: String? = null
+    var modelSizeBytes: Int? = null
 
     @EventSourcingHandler
     fun evolve(event: ModelArtifactRegisteredEvent): ModelArtifactState = apply {
         currentState = ModelArtifactStateEnum.REGISTERED
-        modelVersionId = event.modelVersionId
-        modelArtifactRef = event.modelArtifactRef
-        modelRepositoryRef = event.modelRepositoryRef
-        modelFormat = event.modelFormat
-        modelHash = event.modelHash
-        modelSignatureRef = event.modelSignatureRef
-        modelSizeBytes = event.modelSizeBytes
+        modelId = event.modelId
+        modelName = event.modelName
+        modelVersion = event.modelVersion
         sourceType = event.sourceType
+        modelArtifactUri = event.modelArtifactUri
+        modelRegistryRef = event.modelRegistryRef
+        modelFormat = event.modelFormat
+        modelArtifactDigest = event.modelArtifactDigest
+        modelSignatureUri = event.modelSignatureUri
+        modelSizeBytes = event.modelSizeBytes
     }
 }

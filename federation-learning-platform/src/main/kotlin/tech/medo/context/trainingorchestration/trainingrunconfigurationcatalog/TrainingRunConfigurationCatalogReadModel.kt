@@ -14,14 +14,16 @@ class TrainingRunConfigurationCatalogReadModelProjection : MetadataProjection {
     var trainingRunConfigurationId: UUID? = null
     var federationId: UUID? = null
     var featureSchemaId: UUID? = null
-    var initialModelVersionId: UUID? = null
+    var initialModelId: UUID? = null
+    var initialModelName: String? = null
+    var initialModelVersion: String? = null
     var federationName: String? = null
     var featureDomain: String? = null
     var featureSchemaVersion: String? = null
     var initialModelArtifactUri: String? = null
-    var initialModelRepositoryName: String? = null
+    var initialModelRegistryRef: String? = null
     var initialModelFormat: String? = null
-    var initialModelHash: String? = null
+    var initialModelArtifactDigest: String? = null
     var initialModelSignatureUri: String? = null
     var strategyName: String? = null
     var aggregationAlgorithm: String? = null
@@ -58,14 +60,16 @@ fun TrainingRunConfigurationCatalogReadModelProjection.toReadModel(): TrainingRu
     trainingRunConfigurationId = trainingRunConfigurationId,
     federationId = federationId,
     featureSchemaId = featureSchemaId,
-    initialModelVersionId = initialModelVersionId,
+    initialModelId = initialModelId,
+    initialModelName = initialModelName,
+    initialModelVersion = initialModelVersion,
     federationName = federationName,
     featureDomain = featureDomain,
     featureSchemaVersion = featureSchemaVersion,
     initialModelArtifactUri = initialModelArtifactUri,
-    initialModelRepositoryName = initialModelRepositoryName,
+    initialModelRegistryRef = initialModelRegistryRef,
     initialModelFormat = initialModelFormat,
-    initialModelHash = initialModelHash,
+    initialModelArtifactDigest = initialModelArtifactDigest,
     initialModelSignatureUri = initialModelSignatureUri,
     strategyName = strategyName,
     aggregationAlgorithm = aggregationAlgorithm,
@@ -108,14 +112,16 @@ data class TrainingRunConfigurationCatalogReadModel(
     val trainingRunConfigurationId: UUID?,
     val federationId: UUID?,
     val featureSchemaId: UUID?,
-    val initialModelVersionId: UUID?,
+    val initialModelId: UUID?,
+    val initialModelName: String?,
+    val initialModelVersion: String?,
     val federationName: String?,
     val featureDomain: String?,
     val featureSchemaVersion: String?,
     val initialModelArtifactUri: String?,
-    val initialModelRepositoryName: String?,
+    val initialModelRegistryRef: String?,
     val initialModelFormat: String?,
-    val initialModelHash: String?,
+    val initialModelArtifactDigest: String?,
     val initialModelSignatureUri: String?,
     val strategyName: String?,
     val aggregationAlgorithm: String?,

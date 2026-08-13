@@ -33,9 +33,9 @@ class SecureAggregationSessionCatalogReadModelEntity : MetadataProjection {
     var encryptionScheme: String? = null
     var publicKeyVersion: String? = null
     var encryptedParameterScale: Int? = null
-    var aggregatedModelVersionId: UUID? = null
+    var aggregatedModelId: UUID? = null
     var modelFormat: String? = null
-    var modelHash: String? = null
+    var modelArtifactDigest: String? = null
     @Enumerated(EnumType.STRING)
     var state: SecureAggregationSessionStateEnum? = null
     @Column(columnDefinition = "text")

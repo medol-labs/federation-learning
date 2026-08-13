@@ -119,7 +119,7 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
                 this.trainingJobId = event.trainingJobId
         }
             entity.trainingJobId = event.trainingJobId
-            entity.finalModelVersionId = event.finalModelVersionId
+            entity.finalModelId = event.finalModelId
             entity.stopReason = event.stopReason
             entity.state = TrainingJobStateEnum.COMPLETED
             ProjectionMetadata.assign(entity, message)

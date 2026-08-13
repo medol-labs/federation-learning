@@ -105,9 +105,9 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
-            entity.aggregatedModelVersionId = event.aggregatedModelVersionId
+            entity.aggregatedModelId = event.aggregatedModelId
             entity.modelFormat = event.modelFormat
-            entity.modelHash = event.modelHash
+            entity.modelArtifactDigest = event.modelArtifactDigest
             entity.state = SecureAggregationSessionStateEnum.COMPLETED
             entity.completedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)

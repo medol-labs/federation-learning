@@ -45,7 +45,12 @@ data class ReceiveParticipantExecutionPlanRequest(
     val roundNumber: Int,
     val runtimeId: UUID,
     val organizationId: UUID,
-    val baseModelVersionId: UUID
+    val baseModelId: UUID,
+    val baseModelArtifactUri: String,
+    val baseModelRegistryRef: String,
+    val baseModelFormat: String,
+    val baseModelArtifactDigest: String,
+    val baseModelSignatureUri: String?
 )
 
 data class ReceiveParticipantExecutionPlanResponse(
@@ -58,5 +63,10 @@ data class ReceiveParticipantExecutionPlanResponse(
     val roundNumber: Int? = null,
     val runtimeId: UUID? = null,
     val organizationId: UUID? = null,
-    val baseModelVersionId: UUID? = null
+    val baseModelId: UUID? = null,
+    val baseModelArtifactUri: String? = null,
+    val baseModelRegistryRef: String? = null,
+    val baseModelFormat: String? = null,
+    val baseModelArtifactDigest: String? = null,
+    val baseModelSignatureUri: String? = null
 )

@@ -22,11 +22,13 @@ class UpdateTrainingRunConfigurationDecisionTest {
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("cfg-1".toByteArray()),
             federationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
-            initialModelVersionId = java.util.UUID.randomUUID(),
+            initialModelId = java.util.UUID.randomUUID(),
+            initialModelName = "",
+            initialModelVersion = "",
             initialModelArtifactUri = "",
-            initialModelRepositoryName = "",
+            initialModelRegistryRef = "",
             initialModelFormat = "",
-            initialModelHash = "",
+            initialModelArtifactDigest = "",
             initialModelSignatureUri = null,
             strategyName = "",
             aggregationAlgorithm = "",
@@ -54,7 +56,7 @@ class UpdateTrainingRunConfigurationDecisionTest {
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("cfg-1".toByteArray()),
             federationId = UUID.nameUUIDFromBytes("fed-1".toByteArray()),
             featureSchemaId = UUID.nameUUIDFromBytes("schema-1".toByteArray()),
-            initialModelVersionId = UUID.nameUUIDFromBytes("model-2".toByteArray()),
+            initialModelId = UUID.nameUUIDFromBytes("model-2".toByteArray()),
             strategyName = "FED_AVG",
             aggregationAlgorithm = "FEDERATED_AVERAGING",
             maxRounds = 20,
@@ -86,7 +88,7 @@ class UpdateTrainingRunConfigurationDecisionTest {
         assertEquals(UUID.nameUUIDFromBytes("cfg-1".toByteArray()), event.trainingRunConfigurationId)
         assertEquals(UUID.nameUUIDFromBytes("fed-1".toByteArray()), event.federationId)
         assertEquals(UUID.nameUUIDFromBytes("schema-1".toByteArray()), event.featureSchemaId)
-        assertEquals(UUID.nameUUIDFromBytes("model-2".toByteArray()), event.initialModelVersionId)
+        assertEquals(UUID.nameUUIDFromBytes("model-2".toByteArray()), event.initialModelId)
         assertEquals("FED_AVG", event.strategyName)
         assertEquals("FEDERATED_AVERAGING", event.aggregationAlgorithm)
         assertEquals(20, event.maxRounds)

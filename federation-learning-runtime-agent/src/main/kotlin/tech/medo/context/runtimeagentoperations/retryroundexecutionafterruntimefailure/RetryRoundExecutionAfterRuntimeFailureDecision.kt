@@ -16,7 +16,7 @@ interface RetryRoundExecutionAfterRuntimeFailureDecision {
             "RetryRoundExecutionAfterRuntimeFailure requires RoundExecution to be Failed."
         }
         return when (portResult) {
-                    is RetryRoundExecutionAfterRuntimeFailureResult.Succeeded -> listOf(RoundExecutionRuntimeRetryStartedEvent(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, baseModelVersionId = command.baseModelVersionId, runtimeEngineJobId = command.runtimeEngineJobId, retryReason = command.retryReason))
+                    is RetryRoundExecutionAfterRuntimeFailureResult.Succeeded -> listOf(RoundExecutionRuntimeRetryStartedEvent(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, baseModelId = command.baseModelId, runtimeEngineJobId = command.runtimeEngineJobId, retryReason = command.retryReason))
                 }
     }
 }

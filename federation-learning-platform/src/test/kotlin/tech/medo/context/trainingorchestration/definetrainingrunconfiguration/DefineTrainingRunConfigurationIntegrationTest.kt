@@ -29,7 +29,7 @@ class DefineTrainingRunConfigurationIntegrationTest(
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("cfg-1".toByteArray()),
             federationId = UUID.nameUUIDFromBytes("fed-1".toByteArray()),
             featureSchemaId = UUID.nameUUIDFromBytes("schema-1".toByteArray()),
-            initialModelVersionId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
+            initialModelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             strategyName = "FED_AVG",
             aggregationAlgorithm = "FEDERATED_AVERAGING",
             maxRounds = 10,

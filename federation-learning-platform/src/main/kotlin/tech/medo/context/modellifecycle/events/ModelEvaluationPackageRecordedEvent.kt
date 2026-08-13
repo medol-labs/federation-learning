@@ -8,13 +8,13 @@ import java.util.UUID;
 
 @Event
 data class ModelEvaluationPackageRecordedEvent(
-    @EventTag(key = "modelVersionId")
-    val modelVersionId: UUID,
+    @EventTag(key = "modelId")
+    val modelId: UUID,
     val trainingJobId: UUID,
     val evaluationReportId: UUID,
     val experimentId: UUID,
     val hyperparameterSnapshotId: UUID,
     val reproducibilityManifestId: UUID,
     val modelCardId: UUID,
-    val baselineModelVersionId: UUID?
+    val baselineModelId: UUID?
 )

@@ -12,7 +12,7 @@ data class DefineTrainingRunConfigurationCommand(
     val trainingRunConfigurationId: UUID = java.util.UUID.randomUUID(),
     val federationId: UUID,
     val featureSchemaId: UUID,
-    val initialModelVersionId: UUID,
+    val initialModelId: UUID,
     val strategyName: String,
     val aggregationAlgorithm: String,
     val maxRounds: Int,

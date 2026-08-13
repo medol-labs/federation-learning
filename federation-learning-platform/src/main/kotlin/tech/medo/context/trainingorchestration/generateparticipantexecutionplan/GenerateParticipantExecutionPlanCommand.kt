@@ -17,7 +17,12 @@ data class GenerateParticipantExecutionPlanCommand(
     val roundNumber: Int,
     val runtimeId: UUID,
     val organizationId: UUID,
-    val baseModelVersionId: UUID
+    val baseModelId: UUID,
+    val baseModelArtifactUri: String,
+    val baseModelRegistryRef: String,
+    val baseModelFormat: String,
+    val baseModelArtifactDigest: String,
+    val baseModelSignatureUri: String?
 ) {
     @TargetEntityId
     val selection: ParticipantExecutionPlanSelection = ParticipantExecutionPlanSelection(executionPlanId = executionPlanId)

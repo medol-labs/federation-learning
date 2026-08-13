@@ -34,7 +34,12 @@ class ReceiveParticipantExecutionPlanIntegrationTest(
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
-            baseModelVersionId = java.util.UUID.randomUUID()
+            baseModelId = java.util.UUID.randomUUID(),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null
         )
 
         commandGateway.send(command).getResultMessage().join()

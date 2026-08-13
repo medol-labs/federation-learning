@@ -14,7 +14,10 @@ data class GlobalModelUpdatedEvent(
     val featureSchemaId: UUID,
     val roundId: UUID,
     val secureAggregationSessionId: UUID,
-    val aggregatedModelVersionId: UUID,
+    val aggregatedModelId: UUID,
+    val aggregatedModelArtifactUri: String,
+    val aggregatedModelRegistryRef: String,
     val modelFormat: String,
-    val modelHash: String
+    val modelArtifactDigest: String,
+    val aggregatedModelSignatureUri: String?
 )

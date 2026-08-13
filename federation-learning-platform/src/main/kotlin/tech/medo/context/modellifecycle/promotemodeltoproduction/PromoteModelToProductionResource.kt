@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture
 
 @CrossOrigin
 @RestController
-@RequestMapping("/modelversion")
+@RequestMapping("/model")
 class PromoteModelToProductionResource(private val commandGateway: CommandGateway) {
     @PostMapping("/promotemodeltoproduction")
     fun PromoteModelToProduction(

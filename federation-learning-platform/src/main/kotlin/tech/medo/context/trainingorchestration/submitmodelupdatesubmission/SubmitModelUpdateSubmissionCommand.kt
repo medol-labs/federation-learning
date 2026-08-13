@@ -18,7 +18,7 @@ data class SubmitModelUpdateSubmissionCommand(
     val roundExecutionId: UUID,
     val runtimeId: UUID,
     val featureSchemaId: UUID,
-    val localModelVersionId: UUID,
+    val localModelId: UUID,
     val updateArtifactId: UUID,
     val artifactRef: String,
     val artifactDigest: String,

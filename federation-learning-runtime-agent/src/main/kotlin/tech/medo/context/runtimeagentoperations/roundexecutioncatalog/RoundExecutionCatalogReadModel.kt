@@ -25,7 +25,7 @@ class RoundExecutionCatalogReadModelProjection : MetadataProjection {
     var runtimeId: UUID? = null
     var state: RoundExecutionStateEnum? = null
     var featureSchemaId: UUID? = null
-    var baseModelVersionId: UUID? = null
+    var baseModelId: UUID? = null
     var runtimeEngineJobId: String? = null
     var localExecutionRequirementsSatisfied: Boolean? = null
     var runtimeIdentityMatched: Boolean? = null
@@ -72,7 +72,7 @@ fun RoundExecutionCatalogReadModelProjection.toReadModel(): RoundExecutionCatalo
     runtimeId = runtimeId,
     state = state,
     featureSchemaId = featureSchemaId,
-    baseModelVersionId = baseModelVersionId,
+    baseModelId = baseModelId,
     runtimeEngineJobId = runtimeEngineJobId,
     localExecutionRequirementsSatisfied = localExecutionRequirementsSatisfied,
     runtimeIdentityMatched = runtimeIdentityMatched,
@@ -125,7 +125,7 @@ data class RoundExecutionCatalogReadModel(
     val runtimeId: UUID?,
     val state: RoundExecutionStateEnum?,
     val featureSchemaId: UUID?,
-    val baseModelVersionId: UUID?,
+    val baseModelId: UUID?,
     val runtimeEngineJobId: String?,
     val localExecutionRequirementsSatisfied: Boolean?,
     val runtimeIdentityMatched: Boolean?,

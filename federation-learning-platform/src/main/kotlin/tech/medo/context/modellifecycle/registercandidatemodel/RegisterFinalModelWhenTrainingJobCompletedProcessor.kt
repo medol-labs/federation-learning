@@ -12,5 +12,5 @@ import org.springframework.stereotype.Component
 class RegisterFinalModelWhenTrainingJobCompletedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: TrainingJobCompletedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(RegisterCandidateModelCommand(modelVersionId = java.util.UUID.randomUUID() /* TODO: provide modelVersionId */, trainingJobId = event.trainingJobId, finalRoundId = event.finalRoundId, modelArtifactId = java.util.UUID.randomUUID() /* TODO: provide modelArtifactId */, modelHash = "" /* TODO: provide modelHash */, evaluationReportId = java.util.UUID.randomUUID() /* TODO: provide evaluationReportId */, finalGlobalAccuracy = java.math.BigDecimal.ZERO /* TODO: provide finalGlobalAccuracy */)).resultMessage
+        commandGateway.send(RegisterCandidateModelCommand(modelId = java.util.UUID.randomUUID() /* TODO: provide modelId */, trainingJobId = event.trainingJobId, finalRoundId = event.finalRoundId, modelArtifactId = java.util.UUID.randomUUID() /* TODO: provide modelArtifactId */, modelArtifactDigest = "" /* TODO: provide modelArtifactDigest */, evaluationReportId = java.util.UUID.randomUUID() /* TODO: provide evaluationReportId */, finalGlobalAccuracy = java.math.BigDecimal.ZERO /* TODO: provide finalGlobalAccuracy */)).resultMessage
 }

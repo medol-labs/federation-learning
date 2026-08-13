@@ -31,7 +31,7 @@ class LocalAcceptExecutionPlanAdapter(
 
         val runtimeDatasetBindingAvailable = binding != null
         val datasetAccessValidated = runtimeDatasetBindingAvailable && binding?.datasetId != null
-        val baseModelAvailable = input.baseModelVersionId.toString().isNotBlank()
+        val baseModelAvailable = input.baseModelId.toString().isNotBlank()
         val trainingConfigurationSupported = true
         val runtimeResourceAvailable = true
         val runtimeAgentIdle = roundExecutionRepository.findAll(Pageable.unpaged()).content
@@ -48,7 +48,7 @@ class LocalAcceptExecutionPlanAdapter(
                 add("Runtime dataset access has not been validated for runtime ${input.runtimeId}.")
             }
             if (!baseModelAvailable) {
-                add("Base model ${input.baseModelVersionId} is not available.")
+                add("Base model ${input.baseModelId} is not available.")
             }
             if (!trainingConfigurationSupported) {
                 add("Training configuration ${input.trainingRunConfigurationId} is not supported.")

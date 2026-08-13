@@ -23,6 +23,7 @@ class TrainingJobState @EntityCreator constructor() {
     var currentState: TrainingJobStateEnum? = null
     var trainingJobId: UUID? = null
     var federationId: UUID? = null
+    var initialModelId: UUID? = null
     var featureSchemaId: UUID? = null
     var trainingRunConfigurationId: UUID? = null
     var objective: String? = null
@@ -30,7 +31,7 @@ class TrainingJobState @EntityCreator constructor() {
     var resumeReason: String? = null
     var cancelReason: String? = null
     var finalRoundId: UUID? = null
-    var finalModelVersionId: UUID? = null
+    var finalModelId: UUID? = null
     var stopReason: String? = null
 
     @EventSourcingHandler
@@ -38,6 +39,7 @@ class TrainingJobState @EntityCreator constructor() {
         currentState = TrainingJobStateEnum.DRAFT
         trainingJobId = event.trainingJobId
         federationId = event.federationId
+        initialModelId = event.initialModelId
         featureSchemaId = event.featureSchemaId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         objective = event.objective
@@ -75,7 +77,7 @@ class TrainingJobState @EntityCreator constructor() {
         currentState = TrainingJobStateEnum.COMPLETED
         trainingJobId = event.trainingJobId
         finalRoundId = event.finalRoundId
-        finalModelVersionId = event.finalModelVersionId
+        finalModelId = event.finalModelId
         stopReason = event.stopReason
     }
 }

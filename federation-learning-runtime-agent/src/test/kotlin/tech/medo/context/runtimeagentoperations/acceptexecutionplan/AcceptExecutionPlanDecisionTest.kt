@@ -28,7 +28,12 @@ class AcceptExecutionPlanDecisionTest {
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
-            baseModelVersionId = java.util.UUID.randomUUID()
+            baseModelId = java.util.UUID.randomUUID(),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null
             )
         )
 
@@ -42,7 +47,12 @@ class AcceptExecutionPlanDecisionTest {
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
-            baseModelVersionId = java.util.UUID.randomUUID()
+            baseModelId = java.util.UUID.randomUUID(),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null
         )
 
         val events = (object : AcceptExecutionPlanDecision {}).decide(
@@ -71,7 +81,12 @@ class AcceptExecutionPlanDecisionTest {
         assertEquals(command.roundNumber, event.roundNumber)
         assertEquals(command.runtimeId, event.runtimeId)
         assertEquals(command.organizationId, event.organizationId)
-        assertEquals(command.baseModelVersionId, event.baseModelVersionId)
+        assertEquals(command.baseModelId, event.baseModelId)
+        assertEquals(command.baseModelArtifactUri, event.baseModelArtifactUri)
+        assertEquals(command.baseModelRegistryRef, event.baseModelRegistryRef)
+        assertEquals(command.baseModelFormat, event.baseModelFormat)
+        assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
+        assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
     }
 
     @Test
@@ -88,7 +103,12 @@ class AcceptExecutionPlanDecisionTest {
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
-            baseModelVersionId = java.util.UUID.randomUUID()
+            baseModelId = java.util.UUID.randomUUID(),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null
             )
         )
 
@@ -102,7 +122,12 @@ class AcceptExecutionPlanDecisionTest {
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
-            baseModelVersionId = java.util.UUID.randomUUID()
+            baseModelId = java.util.UUID.randomUUID(),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null
         )
 
         val events = (object : AcceptExecutionPlanDecision {}).decide(
@@ -132,6 +157,11 @@ class AcceptExecutionPlanDecisionTest {
         assertEquals(command.roundNumber, event.roundNumber)
         assertEquals(command.runtimeId, event.runtimeId)
         assertEquals(command.organizationId, event.organizationId)
-        assertEquals(command.baseModelVersionId, event.baseModelVersionId)
+        assertEquals(command.baseModelId, event.baseModelId)
+        assertEquals(command.baseModelArtifactUri, event.baseModelArtifactUri)
+        assertEquals(command.baseModelRegistryRef, event.baseModelRegistryRef)
+        assertEquals(command.baseModelFormat, event.baseModelFormat)
+        assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
+        assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
     }
 }

@@ -17,7 +17,12 @@ data class DispatchParticipantExecutionPlanInput(
     val roundNumber: Int,
     val runtimeId: UUID,
     val organizationId: UUID,
-    val baseModelVersionId: UUID
+    val baseModelId: UUID,
+    val baseModelArtifactUri: String,
+    val baseModelRegistryRef: String,
+    val baseModelFormat: String,
+    val baseModelArtifactDigest: String,
+    val baseModelSignatureUri: String?
 )
 
 sealed interface DispatchParticipantExecutionPlanResult {

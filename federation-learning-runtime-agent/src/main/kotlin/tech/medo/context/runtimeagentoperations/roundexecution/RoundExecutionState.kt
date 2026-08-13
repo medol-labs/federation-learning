@@ -42,7 +42,12 @@ class RoundExecutionState @EntityCreator constructor() {
     var roundNumber: Int? = null
     var runtimeId: UUID? = null
     var organizationId: UUID? = null
-    var baseModelVersionId: UUID? = null
+    var baseModelId: UUID? = null
+    var baseModelArtifactUri: String? = null
+    var baseModelRegistryRef: String? = null
+    var baseModelFormat: String? = null
+    var baseModelArtifactDigest: String? = null
+    var baseModelSignatureUri: String? = null
     var localExecutionRequirementsSatisfied: Boolean? = null
     var runtimeIdentityMatched: Boolean? = null
     var runtimeDatasetBindingAvailable: Boolean? = null
@@ -57,7 +62,7 @@ class RoundExecutionState @EntityCreator constructor() {
     var failureReason: String? = null
     var retryReason: String? = null
     var modelUpdateSubmissionId: UUID? = null
-    var localModelVersionId: UUID? = null
+    var localModelId: UUID? = null
     var updateArtifactId: UUID? = null
     var artifactRef: String? = null
     var artifactDigest: String? = null
@@ -75,7 +80,12 @@ class RoundExecutionState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         organizationId = event.organizationId
-        baseModelVersionId = event.baseModelVersionId
+        baseModelId = event.baseModelId
+        baseModelArtifactUri = event.baseModelArtifactUri
+        baseModelRegistryRef = event.baseModelRegistryRef
+        baseModelFormat = event.baseModelFormat
+        baseModelArtifactDigest = event.baseModelArtifactDigest
+        baseModelSignatureUri = event.baseModelSignatureUri
     }
 
     @EventSourcingHandler
@@ -90,7 +100,12 @@ class RoundExecutionState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         organizationId = event.organizationId
-        baseModelVersionId = event.baseModelVersionId
+        baseModelId = event.baseModelId
+        baseModelArtifactUri = event.baseModelArtifactUri
+        baseModelRegistryRef = event.baseModelRegistryRef
+        baseModelFormat = event.baseModelFormat
+        baseModelArtifactDigest = event.baseModelArtifactDigest
+        baseModelSignatureUri = event.baseModelSignatureUri
         localExecutionRequirementsSatisfied = event.localExecutionRequirementsSatisfied
         runtimeIdentityMatched = event.runtimeIdentityMatched
         runtimeDatasetBindingAvailable = event.runtimeDatasetBindingAvailable
@@ -113,7 +128,12 @@ class RoundExecutionState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         organizationId = event.organizationId
-        baseModelVersionId = event.baseModelVersionId
+        baseModelId = event.baseModelId
+        baseModelArtifactUri = event.baseModelArtifactUri
+        baseModelRegistryRef = event.baseModelRegistryRef
+        baseModelFormat = event.baseModelFormat
+        baseModelArtifactDigest = event.baseModelArtifactDigest
+        baseModelSignatureUri = event.baseModelSignatureUri
         localExecutionRequirementsSatisfied = event.localExecutionRequirementsSatisfied
         runtimeIdentityMatched = event.runtimeIdentityMatched
         runtimeDatasetBindingAvailable = event.runtimeDatasetBindingAvailable
@@ -138,7 +158,12 @@ class RoundExecutionState @EntityCreator constructor() {
         runtimeId = event.runtimeId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
-        baseModelVersionId = event.baseModelVersionId
+        baseModelId = event.baseModelId
+        baseModelArtifactUri = event.baseModelArtifactUri
+        baseModelRegistryRef = event.baseModelRegistryRef
+        baseModelFormat = event.baseModelFormat
+        baseModelArtifactDigest = event.baseModelArtifactDigest
+        baseModelSignatureUri = event.baseModelSignatureUri
         runtimeEngineJobId = event.runtimeEngineJobId
     }
 
@@ -155,7 +180,12 @@ class RoundExecutionState @EntityCreator constructor() {
         runtimeId = event.runtimeId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
-        baseModelVersionId = event.baseModelVersionId
+        baseModelId = event.baseModelId
+        baseModelArtifactUri = event.baseModelArtifactUri
+        baseModelRegistryRef = event.baseModelRegistryRef
+        baseModelFormat = event.baseModelFormat
+        baseModelArtifactDigest = event.baseModelArtifactDigest
+        baseModelSignatureUri = event.baseModelSignatureUri
         runtimeEngineJobId = event.runtimeEngineJobId
         failureReason = event.failureReason
     }
@@ -200,7 +230,7 @@ class RoundExecutionState @EntityCreator constructor() {
         runtimeId = event.runtimeId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
-        baseModelVersionId = event.baseModelVersionId
+        baseModelId = event.baseModelId
         runtimeEngineJobId = event.runtimeEngineJobId
         retryReason = event.retryReason
     }
@@ -218,7 +248,7 @@ class RoundExecutionState @EntityCreator constructor() {
         runtimeId = event.runtimeId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
-        baseModelVersionId = event.baseModelVersionId
+        baseModelId = event.baseModelId
         runtimeEngineJobId = event.runtimeEngineJobId
         retryReason = event.retryReason
         failureReason = event.failureReason
@@ -237,7 +267,7 @@ class RoundExecutionState @EntityCreator constructor() {
         runtimeId = event.runtimeId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
-        baseModelVersionId = event.baseModelVersionId
+        baseModelId = event.baseModelId
         runtimeEngineJobId = event.runtimeEngineJobId
         retryReason = event.retryReason
     }
@@ -255,7 +285,7 @@ class RoundExecutionState @EntityCreator constructor() {
         runtimeId = event.runtimeId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
-        baseModelVersionId = event.baseModelVersionId
+        baseModelId = event.baseModelId
         runtimeEngineJobId = event.runtimeEngineJobId
         retryReason = event.retryReason
         failureReason = event.failureReason
@@ -273,7 +303,7 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
-        localModelVersionId = event.localModelVersionId
+        localModelId = event.localModelId
         updateArtifactId = event.updateArtifactId
         artifactRef = event.artifactRef
         artifactDigest = event.artifactDigest

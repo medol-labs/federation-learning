@@ -28,14 +28,16 @@ class JpaModelArtifactCatalogReadModelRepository(private val jpaRepository: Spri
 
     private fun ModelArtifactCatalogReadModelEntity.toProjection(): ModelArtifactCatalogReadModelProjection =
         ModelArtifactCatalogReadModelProjection().also {
-            it.modelVersionId = this@toProjection.modelVersionId
-            it.modelArtifactRef = this@toProjection.modelArtifactRef
-            it.modelRepositoryRef = this@toProjection.modelRepositoryRef
-            it.modelFormat = this@toProjection.modelFormat
-            it.modelHash = this@toProjection.modelHash
-            it.modelSignatureRef = this@toProjection.modelSignatureRef
-            it.modelSizeBytes = this@toProjection.modelSizeBytes
+            it.modelId = this@toProjection.modelId
+            it.modelName = this@toProjection.modelName
+            it.modelVersion = this@toProjection.modelVersion
             it.sourceType = this@toProjection.sourceType
+            it.modelArtifactUri = this@toProjection.modelArtifactUri
+            it.modelRegistryRef = this@toProjection.modelRegistryRef
+            it.modelFormat = this@toProjection.modelFormat
+            it.modelArtifactDigest = this@toProjection.modelArtifactDigest
+            it.modelSignatureUri = this@toProjection.modelSignatureUri
+            it.modelSizeBytes = this@toProjection.modelSizeBytes
             it.trainingJobId = this@toProjection.trainingJobId
             it.roundId = this@toProjection.roundId
             it.trainingJobObjective = this@toProjection.trainingJobObjective
@@ -51,14 +53,16 @@ class JpaModelArtifactCatalogReadModelRepository(private val jpaRepository: Spri
 
     private fun ModelArtifactCatalogReadModelProjection.toEntity(): ModelArtifactCatalogReadModelEntity =
         ModelArtifactCatalogReadModelEntity().also {
-            it.modelVersionId = this@toEntity.modelVersionId
-            it.modelArtifactRef = this@toEntity.modelArtifactRef
-            it.modelRepositoryRef = this@toEntity.modelRepositoryRef
-            it.modelFormat = this@toEntity.modelFormat
-            it.modelHash = this@toEntity.modelHash
-            it.modelSignatureRef = this@toEntity.modelSignatureRef
-            it.modelSizeBytes = this@toEntity.modelSizeBytes
+            it.modelId = this@toEntity.modelId
+            it.modelName = this@toEntity.modelName
+            it.modelVersion = this@toEntity.modelVersion
             it.sourceType = this@toEntity.sourceType
+            it.modelArtifactUri = this@toEntity.modelArtifactUri
+            it.modelRegistryRef = this@toEntity.modelRegistryRef
+            it.modelFormat = this@toEntity.modelFormat
+            it.modelArtifactDigest = this@toEntity.modelArtifactDigest
+            it.modelSignatureUri = this@toEntity.modelSignatureUri
+            it.modelSizeBytes = this@toEntity.modelSizeBytes
             it.trainingJobId = this@toEntity.trainingJobId
             it.roundId = this@toEntity.roundId
             it.trainingJobObjective = this@toEntity.trainingJobObjective

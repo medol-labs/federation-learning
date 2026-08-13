@@ -13,9 +13,12 @@ data class CompleteHomomorphicAggregationSessionCommand(
     val trainingRunConfigurationId: UUID,
     val featureSchemaId: UUID,
     val roundId: UUID,
-    val aggregatedModelVersionId: UUID = java.util.UUID.randomUUID(),
+    val aggregatedModelId: UUID = java.util.UUID.randomUUID(),
+    val aggregatedModelArtifactUri: String,
+    val aggregatedModelRegistryRef: String,
     val modelFormat: String,
-    val modelHash: String
+    val modelArtifactDigest: String,
+    val aggregatedModelSignatureUri: String?
 ) {
     @TargetEntityId
     val selection: SecureAggregationSessionSelection = SecureAggregationSessionSelection(secureAggregationSessionId = secureAggregationSessionId)

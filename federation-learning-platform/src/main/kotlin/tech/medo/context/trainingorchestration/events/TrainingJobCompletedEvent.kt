@@ -11,6 +11,6 @@ data class TrainingJobCompletedEvent(
     @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val finalRoundId: UUID,
-    val finalModelVersionId: UUID,
+    val finalModelId: UUID,
     val stopReason: String
 )

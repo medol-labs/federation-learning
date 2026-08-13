@@ -8,16 +8,14 @@ import java.util.UUID;
 
 @Command
 data class RegisterModelArtifactCommand(
-    val modelVersionId: UUID = java.util.UUID.randomUUID(),
-    val modelArtifactRef: String,
-    val modelRepositoryRef: String,
-    val modelFormat: String,
-    val modelHash: String,
-    val modelSignatureRef: String?,
-    val modelSizeBytes: Int?,
-    val sourceType: String
+    val modelId: UUID = java.util.UUID.randomUUID(),
+    val modelName: String,
+    val modelVersion: String,
+    val sourceType: String,
+    val sourceLocation: String?,
+    val modelFormat: String?
 ) {
     @TargetEntityId
-    val selection: ModelArtifactSelection = ModelArtifactSelection(modelVersionId = modelVersionId)
+    val selection: ModelArtifactSelection = ModelArtifactSelection(modelName = modelName, modelVersion = modelVersion)
 
 }

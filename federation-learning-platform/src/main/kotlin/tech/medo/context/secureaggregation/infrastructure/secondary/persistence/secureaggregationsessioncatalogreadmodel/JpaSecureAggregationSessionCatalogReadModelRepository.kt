@@ -44,9 +44,9 @@ class JpaSecureAggregationSessionCatalogReadModelRepository(private val jpaRepos
             it.encryptionScheme = this@toProjection.encryptionScheme
             it.publicKeyVersion = this@toProjection.publicKeyVersion
             it.encryptedParameterScale = this@toProjection.encryptedParameterScale
-            it.aggregatedModelVersionId = this@toProjection.aggregatedModelVersionId
+            it.aggregatedModelId = this@toProjection.aggregatedModelId
             it.modelFormat = this@toProjection.modelFormat
-            it.modelHash = this@toProjection.modelHash
+            it.modelArtifactDigest = this@toProjection.modelArtifactDigest
             it.state = this@toProjection.state
             it.failureReason = this@toProjection.failureReason
             it.createdAt = this@toProjection.createdAt
@@ -79,9 +79,9 @@ class JpaSecureAggregationSessionCatalogReadModelRepository(private val jpaRepos
             it.encryptionScheme = this@toEntity.encryptionScheme
             it.publicKeyVersion = this@toEntity.publicKeyVersion
             it.encryptedParameterScale = this@toEntity.encryptedParameterScale
-            it.aggregatedModelVersionId = this@toEntity.aggregatedModelVersionId
+            it.aggregatedModelId = this@toEntity.aggregatedModelId
             it.modelFormat = this@toEntity.modelFormat
-            it.modelHash = this@toEntity.modelHash
+            it.modelArtifactDigest = this@toEntity.modelArtifactDigest
             it.state = this@toEntity.state
             it.failureReason = this@toEntity.failureReason
             it.createdAt = this@toEntity.createdAt

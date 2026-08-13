@@ -26,7 +26,12 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapter(
             roundNumber = input.roundNumber,
             runtimeId = input.runtimeId,
             organizationId = input.organizationId,
-            baseModelVersionId = input.baseModelVersionId
+            baseModelId = input.baseModelId,
+            baseModelArtifactUri = input.baseModelArtifactUri,
+            baseModelRegistryRef = input.baseModelRegistryRef,
+            baseModelFormat = input.baseModelFormat,
+            baseModelArtifactDigest = input.baseModelArtifactDigest,
+            baseModelSignatureUri = input.baseModelSignatureUri
         )
 
         return try {

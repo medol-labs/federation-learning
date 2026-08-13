@@ -17,11 +17,11 @@ class RegisterCandidateModelDecisionTest {
     fun RegisterCandidateModelEmitsModelCandidateRegisteredEvent() {
         val events = (object : RegisterCandidateModelDecision {}).decide(
             RegisterCandidateModelCommand(
-            modelVersionId = java.util.UUID.randomUUID(),
+            modelId = java.util.UUID.randomUUID(),
             trainingJobId = java.util.UUID.randomUUID(),
             finalRoundId = java.util.UUID.randomUUID(),
             modelArtifactId = java.util.UUID.randomUUID(),
-            modelHash = "",
+            modelArtifactDigest = "",
             evaluationReportId = java.util.UUID.randomUUID(),
             finalGlobalAccuracy = java.math.BigDecimal.ZERO
             )

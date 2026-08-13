@@ -69,12 +69,12 @@ class TrainingRoundProgressReadModelEntity : MetadataProjection {
     var evaluationSubmittedAt: LocalDateTime? = null
     var completedAt: LocalDateTime? = null
     var failedAt: LocalDateTime? = null
-    var baseModelVersionId: UUID? = null
+    var baseModelId: UUID? = null
     @Column(columnDefinition = "text")
     var artifactRefs: String? = null
     @Column(columnDefinition = "text")
     var rejectedUpdateReasons: String? = null
-    var aggregatedModelVersionId: UUID? = null
+    var aggregatedModelId: UUID? = null
     var globalAccuracy: BigDecimal? = null
     var globalFairnessScore: BigDecimal? = null
     @Column(columnDefinition = "text")

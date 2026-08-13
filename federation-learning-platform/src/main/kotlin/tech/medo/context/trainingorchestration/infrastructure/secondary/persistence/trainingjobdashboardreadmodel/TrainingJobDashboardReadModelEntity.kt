@@ -47,7 +47,7 @@ class TrainingJobDashboardReadModelEntity : MetadataProjection {
     var maxRounds: Int? = null
     var roundProgressPercent: Int? = null
     var globalAccuracy: BigDecimal? = null
-    var finalModelVersionId: UUID? = null
+    var finalModelId: UUID? = null
     @Column(columnDefinition = "text")
     var stopReason: String? = null
     override var userId: String? = null

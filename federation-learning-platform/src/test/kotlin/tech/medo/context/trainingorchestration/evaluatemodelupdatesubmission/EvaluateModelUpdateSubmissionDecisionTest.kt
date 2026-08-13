@@ -28,7 +28,7 @@ class EvaluateModelUpdateSubmissionDecisionTest {
             roundExecutionId = java.util.UUID.randomUUID(),
             runtimeId = UUID.nameUUIDFromBytes("runtime-1".toByteArray()),
             featureSchemaId = java.util.UUID.randomUUID(),
-            localModelVersionId = java.util.UUID.randomUUID(),
+            localModelId = java.util.UUID.randomUUID(),
             updateArtifactId = UUID.nameUUIDFromBytes("artifact-1".toByteArray()),
             artifactRef = "",
             artifactDigest = "",

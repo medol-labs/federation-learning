@@ -45,7 +45,7 @@ class TrainingRoundState @EntityCreator constructor() {
     var executionPlanId: UUID? = null
     var roundExecutionId: UUID? = null
     var runtimeId: UUID? = null
-    var localModelVersionId: UUID? = null
+    var localModelId: UUID? = null
     var updateArtifactId: UUID? = null
     var artifactRef: String? = null
     var artifactDigest: String? = null
@@ -55,9 +55,12 @@ class TrainingRoundState @EntityCreator constructor() {
     var acceptedModelUpdateCount: Int? = null
     var acceptedRuntimeIds: List<UUID> = emptyList()
     var secureAggregationSessionId: UUID? = null
-    var aggregatedModelVersionId: UUID? = null
+    var aggregatedModelId: UUID? = null
+    var aggregatedModelArtifactUri: String? = null
+    var aggregatedModelRegistryRef: String? = null
     var modelFormat: String? = null
-    var modelHash: String? = null
+    var modelArtifactDigest: String? = null
+    var aggregatedModelSignatureUri: String? = null
     var globalAccuracy: BigDecimal? = null
     var globalFairnessScore: BigDecimal? = null
 
@@ -121,7 +124,7 @@ class TrainingRoundState @EntityCreator constructor() {
         roundExecutionId = event.roundExecutionId
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
-        localModelVersionId = event.localModelVersionId
+        localModelId = event.localModelId
         updateArtifactId = event.updateArtifactId
         artifactRef = event.artifactRef
         artifactDigest = event.artifactDigest
@@ -173,9 +176,12 @@ class TrainingRoundState @EntityCreator constructor() {
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         secureAggregationSessionId = event.secureAggregationSessionId
-        aggregatedModelVersionId = event.aggregatedModelVersionId
+        aggregatedModelId = event.aggregatedModelId
+        aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
+        aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
         modelFormat = event.modelFormat
-        modelHash = event.modelHash
+        modelArtifactDigest = event.modelArtifactDigest
+        aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
     }
 
     @EventSourcingHandler
@@ -185,9 +191,12 @@ class TrainingRoundState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
-        aggregatedModelVersionId = event.aggregatedModelVersionId
+        aggregatedModelId = event.aggregatedModelId
+        aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
+        aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
         modelFormat = event.modelFormat
-        modelHash = event.modelHash
+        modelArtifactDigest = event.modelArtifactDigest
+        aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
         globalAccuracy = event.globalAccuracy
         globalFairnessScore = event.globalFairnessScore
     }
@@ -199,9 +208,12 @@ class TrainingRoundState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
-        aggregatedModelVersionId = event.aggregatedModelVersionId
+        aggregatedModelId = event.aggregatedModelId
+        aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
+        aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
         modelFormat = event.modelFormat
-        modelHash = event.modelHash
+        modelArtifactDigest = event.modelArtifactDigest
+        aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
         globalAccuracy = event.globalAccuracy
     }
 

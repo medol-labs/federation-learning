@@ -1,7 +1,0 @@
-package tech.medo.domain.modellifecycle.retiremodelversion
-
-import org.springframework.stereotype.Component
-import tech.medo.modellifecycle.retiremodelversion.RetireModelVersionDecision
-
-@Component
-class RetireModelVersionDecisionComponent : RetireModelVersionDecision

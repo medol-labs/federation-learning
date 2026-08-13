@@ -3,19 +3,19 @@ package tech.medo.modellifecycle.recordmodelevaluationpackage
 import tech.medo.modellifecycle.recordmodelevaluationpackage.RecordModelEvaluationPackageCommand
 
 import tech.medo.modellifecycle.events.ModelEvaluationPackageRecordedEvent
-import tech.medo.modellifecycle.modelversion.ModelVersionState
+import tech.medo.modellifecycle.model.ModelState
 
 
-import tech.medo.modellifecycle.domain.states.ModelVersionStateEnum
+import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 
 interface RecordModelEvaluationPackageDecision {
-    fun decide(command: RecordModelEvaluationPackageCommand, state: ModelVersionState): List<Any> {
-        require(state.currentState == ModelVersionStateEnum.CANDIDATE) {
-            "RecordModelEvaluationPackage requires ModelVersion to be Candidate."
+    fun decide(command: RecordModelEvaluationPackageCommand, state: ModelState): List<Any> {
+        require(state.currentState == ModelStateEnum.CANDIDATE) {
+            "RecordModelEvaluationPackage requires Model to be Candidate."
         }
         return listOf(
-            ModelEvaluationPackageRecordedEvent(modelVersionId = command.modelVersionId, trainingJobId = command.trainingJobId, evaluationReportId = command.evaluationReportId, experimentId = command.experimentId, hyperparameterSnapshotId = command.hyperparameterSnapshotId, reproducibilityManifestId = command.reproducibilityManifestId, modelCardId = command.modelCardId, baselineModelVersionId = command.baselineModelVersionId)
+            ModelEvaluationPackageRecordedEvent(modelId = command.modelId, trainingJobId = command.trainingJobId, evaluationReportId = command.evaluationReportId, experimentId = command.experimentId, hyperparameterSnapshotId = command.hyperparameterSnapshotId, reproducibilityManifestId = command.reproducibilityManifestId, modelCardId = command.modelCardId, baselineModelId = command.baselineModelId)
         )
     }
 }

@@ -7,7 +7,7 @@ import tech.medo.modellifecycle.approvemodel.ApproveModelCommand
 import tech.medo.modellifecycle.events.ModelEvaluationPackageRecordedEvent
 import tech.medo.modellifecycle.events.ModelApprovedEvent
 
-import tech.medo.modellifecycle.modelversion.ModelVersionState
+import tech.medo.modellifecycle.model.ModelState
 
 import java.util.UUID;
 
@@ -15,22 +15,22 @@ import java.util.UUID;
 class ApproveModelDecisionTest {
     @Test
     fun ApproveEvaluationPackagedModel() {
-        val state = ModelVersionState()
+        val state = ModelState()
         state.evolve(
             ModelEvaluationPackageRecordedEvent(
-            modelVersionId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
+            modelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             trainingJobId = java.util.UUID.randomUUID(),
             evaluationReportId = UUID.nameUUIDFromBytes("report-1".toByteArray()),
             experimentId = java.util.UUID.randomUUID(),
             hyperparameterSnapshotId = java.util.UUID.randomUUID(),
             reproducibilityManifestId = UUID.nameUUIDFromBytes("manifest-1".toByteArray()),
             modelCardId = UUID.nameUUIDFromBytes("card-1".toByteArray()),
-            baselineModelVersionId = null
+            baselineModelId = null
             )
         )
 
         val command = ApproveModelCommand(
-            modelVersionId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
+            modelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             approvalNote = null
         )
 
@@ -40,7 +40,7 @@ class ApproveModelDecisionTest {
         )
 
         val event = events.filterIsInstance<ModelApprovedEvent>().single()
-        assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.modelVersionId)
+        assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.modelId)
         assertEquals(command.approvalNote, event.approvalNote)
     }
 }

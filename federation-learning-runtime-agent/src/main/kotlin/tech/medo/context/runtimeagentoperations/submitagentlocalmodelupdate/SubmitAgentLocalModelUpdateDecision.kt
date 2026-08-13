@@ -15,7 +15,7 @@ interface SubmitAgentLocalModelUpdateDecision {
             "SubmitAgentLocalModelUpdate requires RoundExecution to be Completed."
         }
         return when (portResult) {
-                    is SubmitAgentLocalModelUpdateResult.Succeeded -> listOf(AgentLocalModelUpdateSubmittedEvent(modelUpdateSubmissionId = command.modelUpdateSubmissionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, roundExecutionId = command.roundExecutionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, runtimeId = command.runtimeId, featureSchemaId = command.featureSchemaId, localModelVersionId = command.localModelVersionId, updateArtifactId = command.updateArtifactId, artifactRef = command.artifactRef, artifactDigest = command.artifactDigest, trainingLoss = command.trainingLoss))
+                    is SubmitAgentLocalModelUpdateResult.Succeeded -> listOf(AgentLocalModelUpdateSubmittedEvent(modelUpdateSubmissionId = command.modelUpdateSubmissionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, roundExecutionId = command.roundExecutionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, runtimeId = command.runtimeId, featureSchemaId = command.featureSchemaId, localModelId = command.localModelId, updateArtifactId = command.updateArtifactId, artifactRef = command.artifactRef, artifactDigest = command.artifactDigest, trainingLoss = command.trainingLoss))
                 }
     }
 }

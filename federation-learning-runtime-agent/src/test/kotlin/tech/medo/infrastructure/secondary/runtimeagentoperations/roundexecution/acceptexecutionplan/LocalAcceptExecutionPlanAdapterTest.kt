@@ -71,7 +71,12 @@ class LocalAcceptExecutionPlanAdapterTest {
             roundNumber = 1,
             runtimeId = runtimeId,
             organizationId = organizationId,
-            baseModelVersionId = UUID.fromString("99999999-9999-4999-8999-999999999999")
+            baseModelId = UUID.fromString("99999999-9999-4999-8999-999999999999"),
+            baseModelArtifactUri = "oci://registry.example.com/fl/model@sha256:abc",
+            baseModelRegistryRef = "oci://registry.example.com/fl",
+            baseModelFormat = "ONNX",
+            baseModelArtifactDigest = "sha256:abc",
+            baseModelSignatureUri = "oci://registry.example.com/fl/model.sig"
         )
 
     private fun binding(

@@ -30,7 +30,7 @@ class RoundExecutionCatalogReadModelEntity : MetadataProjection {
     @Enumerated(EnumType.STRING)
     var state: RoundExecutionStateEnum? = null
     var featureSchemaId: UUID? = null
-    var baseModelVersionId: UUID? = null
+    var baseModelId: UUID? = null
     var runtimeEngineJobId: String? = null
     var localExecutionRequirementsSatisfied: Boolean? = null
     var runtimeIdentityMatched: Boolean? = null

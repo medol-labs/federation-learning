@@ -1,14 +1,15 @@
 package tech.medo.modelrepository.modelartifact
 
-import java.util.UUID;
 
 
 data class ModelArtifactSelection(
-    val modelVersionId: UUID
+    val modelName: String,
+    val modelVersion: String
 )
 
 object ModelArtifactTags {
-    const val MODEL_VERSION_ID = "modelVersionId"
+    const val MODEL_NAME = "modelName"
+    const val MODEL_VERSION = "modelVersion"
 }
 
 object ModelArtifactMetadata {

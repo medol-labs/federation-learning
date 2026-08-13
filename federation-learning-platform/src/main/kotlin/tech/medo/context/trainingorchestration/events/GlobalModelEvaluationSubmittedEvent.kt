@@ -14,9 +14,12 @@ data class GlobalModelEvaluationSubmittedEvent(
     val trainingRunConfigurationId: UUID,
     val featureSchemaId: UUID,
     val roundId: UUID,
-    val aggregatedModelVersionId: UUID,
+    val aggregatedModelId: UUID,
+    val aggregatedModelArtifactUri: String,
+    val aggregatedModelRegistryRef: String,
     val modelFormat: String,
-    val modelHash: String,
+    val modelArtifactDigest: String,
+    val aggregatedModelSignatureUri: String?,
     val globalAccuracy: BigDecimal,
     val globalFairnessScore: BigDecimal
 )

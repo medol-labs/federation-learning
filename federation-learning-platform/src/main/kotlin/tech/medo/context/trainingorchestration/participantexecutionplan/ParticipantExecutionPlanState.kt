@@ -26,7 +26,12 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
     var roundNumber: Int? = null
     var runtimeId: UUID? = null
     var organizationId: UUID? = null
-    var baseModelVersionId: UUID? = null
+    var baseModelId: UUID? = null
+    var baseModelArtifactUri: String? = null
+    var baseModelRegistryRef: String? = null
+    var baseModelFormat: String? = null
+    var baseModelArtifactDigest: String? = null
+    var baseModelSignatureUri: String? = null
 
     @EventSourcingHandler
     fun evolve(event: ParticipantExecutionPlanGeneratedEvent): ParticipantExecutionPlanState = apply {
@@ -40,7 +45,12 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         organizationId = event.organizationId
-        baseModelVersionId = event.baseModelVersionId
+        baseModelId = event.baseModelId
+        baseModelArtifactUri = event.baseModelArtifactUri
+        baseModelRegistryRef = event.baseModelRegistryRef
+        baseModelFormat = event.baseModelFormat
+        baseModelArtifactDigest = event.baseModelArtifactDigest
+        baseModelSignatureUri = event.baseModelSignatureUri
     }
 
     @EventSourcingHandler
@@ -55,6 +65,11 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         organizationId = event.organizationId
-        baseModelVersionId = event.baseModelVersionId
+        baseModelId = event.baseModelId
+        baseModelArtifactUri = event.baseModelArtifactUri
+        baseModelRegistryRef = event.baseModelRegistryRef
+        baseModelFormat = event.baseModelFormat
+        baseModelArtifactDigest = event.baseModelArtifactDigest
+        baseModelSignatureUri = event.baseModelSignatureUri
     }
 }

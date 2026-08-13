@@ -63,7 +63,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
-            entity.baseModelVersionId = event.baseModelVersionId
+            entity.baseModelId = event.baseModelId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.state = RoundExecutionStateEnum.RUNNING
             ProjectionMetadata.assign(entity, message)
@@ -89,7 +89,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
-            entity.baseModelVersionId = event.baseModelVersionId
+            entity.baseModelId = event.baseModelId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.runtimeEngineReleaseFailureReason = event.failureReason
@@ -165,7 +165,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
-            entity.baseModelVersionId = event.baseModelVersionId
+            entity.baseModelId = event.baseModelId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.retryReason = event.retryReason
             entity.state = RoundExecutionStateEnum.RETRIED
@@ -192,7 +192,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
-            entity.baseModelVersionId = event.baseModelVersionId
+            entity.baseModelId = event.baseModelId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.retryReason = event.retryReason
@@ -221,7 +221,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
-            entity.baseModelVersionId = event.baseModelVersionId
+            entity.baseModelId = event.baseModelId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.retryReason = event.retryReason
             entity.state = RoundExecutionStateEnum.RETRIED
@@ -248,7 +248,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
-            entity.baseModelVersionId = event.baseModelVersionId
+            entity.baseModelId = event.baseModelId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.retryReason = event.retryReason

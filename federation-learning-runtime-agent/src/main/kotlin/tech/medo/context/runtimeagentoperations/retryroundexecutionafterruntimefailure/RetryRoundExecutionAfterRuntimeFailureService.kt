@@ -18,7 +18,7 @@ data class RetryRoundExecutionAfterRuntimeFailureInput(
     val runtimeId: UUID,
     val organizationId: UUID,
     val featureSchemaId: UUID,
-    val baseModelVersionId: UUID,
+    val baseModelId: UUID,
     val runtimeEngineJobId: String,
     val retryReason: String
 )

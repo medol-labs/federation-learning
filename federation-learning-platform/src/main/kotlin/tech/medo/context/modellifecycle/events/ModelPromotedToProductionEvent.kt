@@ -8,8 +8,8 @@ import java.util.UUID;
 
 @Event
 data class ModelPromotedToProductionEvent(
-    @EventTag(key = "modelVersionId")
-    val modelVersionId: UUID,
+    @EventTag(key = "modelId")
+    val modelId: UUID,
     val releaseChannel: String,
     val productionStage: String
 )

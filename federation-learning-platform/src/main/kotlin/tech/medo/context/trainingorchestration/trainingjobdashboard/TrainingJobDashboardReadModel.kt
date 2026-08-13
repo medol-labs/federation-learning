@@ -40,7 +40,7 @@ class TrainingJobDashboardReadModelProjection : MetadataProjection {
     var maxRounds: Int? = null
     var roundProgressPercent: Int? = null
     var globalAccuracy: BigDecimal? = null
-    var finalModelVersionId: UUID? = null
+    var finalModelId: UUID? = null
     var stopReason: String? = null
     override var userId: String? = null
     override var sessionId: String? = null
@@ -81,7 +81,7 @@ fun TrainingJobDashboardReadModelProjection.toReadModel(): TrainingJobDashboardR
     maxRounds = maxRounds,
     roundProgressPercent = roundProgressPercent,
     globalAccuracy = globalAccuracy,
-    finalModelVersionId = finalModelVersionId,
+    finalModelId = finalModelId,
     stopReason = stopReason,
     userId = userId,
     sessionId = sessionId,
@@ -128,7 +128,7 @@ data class TrainingJobDashboardReadModel(
     val maxRounds: Int?,
     val roundProgressPercent: Int?,
     val globalAccuracy: BigDecimal?,
-    val finalModelVersionId: UUID?,
+    val finalModelId: UUID?,
     val stopReason: String?,
     val userId: String?,
     val sessionId: String?,

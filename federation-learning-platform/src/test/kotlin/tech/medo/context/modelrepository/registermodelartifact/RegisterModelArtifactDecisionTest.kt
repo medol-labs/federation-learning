@@ -7,7 +7,7 @@ import tech.medo.modelrepository.registermodelartifact.RegisterModelArtifactComm
 import tech.medo.modelrepository.events.ModelArtifactRegisteredEvent
 
 
-
+import tech.medo.modelrepository.registermodelartifact.RegisterModelArtifactResult
 import java.util.UUID;
 
 
@@ -17,28 +17,30 @@ class RegisterModelArtifactDecisionTest {
 
 
         val command = RegisterModelArtifactCommand(
-            modelVersionId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
-            modelArtifactRef = "models/model-1",
-            modelRepositoryRef = "model-repo",
-            modelFormat = "ONNX",
-            modelHash = "sha256:abc",
-            modelSignatureRef = null,
-            modelSizeBytes = null,
-            sourceType = "INITIAL"
+            modelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
+            modelName = "credit-risk",
+            modelVersion = "v1",
+            sourceType = "UPLOAD",
+            sourceLocation = "upload://credit-risk-initial.onnx",
+            modelFormat = "ONNX"
         )
 
         val events = (object : RegisterModelArtifactDecision {}).decide(
-            command
+            command,
+            portResult = RegisterModelArtifactResult.Succeeded(
+                modelArtifactUri = "",
+                modelRegistryRef = "",
+                modelArtifactDigest = "",
+                modelSignatureUri = null,
+                modelSizeBytes = null
+            )
         )
 
         val event = events.filterIsInstance<ModelArtifactRegisteredEvent>().single()
-        assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.modelVersionId)
-        assertEquals("models/model-1", event.modelArtifactRef)
-        assertEquals("model-repo", event.modelRepositoryRef)
+        assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.modelId)
+        assertEquals("credit-risk", event.modelName)
+        assertEquals("v1", event.modelVersion)
+        assertEquals("UPLOAD", event.sourceType)
         assertEquals("ONNX", event.modelFormat)
-        assertEquals("sha256:abc", event.modelHash)
-        assertEquals(command.modelSignatureRef, event.modelSignatureRef)
-        assertEquals(command.modelSizeBytes, event.modelSizeBytes)
-        assertEquals("INITIAL", event.sourceType)
     }
 }
