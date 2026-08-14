@@ -1,4 +1,4 @@
 file-upload:
   local:
-    root-directory: ${FILE_UPLOAD_LOCAL_ROOT_DIRECTORY:./var/file-upload}
+    root-directory: ${FILE_UPLOAD_LOCAL_ROOT_DIRECTORY:${java.io.tmpdir}/medo/file-upload}
     expiration-minutes: ${FILE_UPLOAD_LOCAL_EXPIRATION_MINUTES:60}

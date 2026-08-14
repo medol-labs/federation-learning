@@ -21793,7 +21793,6 @@
           "name": "modelVersion"
         }
       ],
-      "port": true,
       "concepts": [
         "ModelArtifact"
       ],
@@ -21899,8 +21898,7 @@
               "elementType": "EVENT"
             }
           ],
-          "startsLifecycle": true,
-          "port": true
+          "startsLifecycle": true
         }
       ],
       "events": [

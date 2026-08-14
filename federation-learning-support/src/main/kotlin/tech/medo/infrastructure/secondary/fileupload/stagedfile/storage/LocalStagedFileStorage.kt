@@ -14,7 +14,7 @@ import kotlin.io.path.name
 
 @Component
 class LocalStagedFileStorage(
-    @Value("\${file-upload.local.root-directory:./var/file-upload}")
+    @Value("\${file-upload.local.root-directory:\${java.io.tmpdir}/medo/file-upload}")
     rootDirectory: String
 ) : StagedFileStorage {
     private val log = LoggerFactory.getLogger(LocalStagedFileStorage::class.java)

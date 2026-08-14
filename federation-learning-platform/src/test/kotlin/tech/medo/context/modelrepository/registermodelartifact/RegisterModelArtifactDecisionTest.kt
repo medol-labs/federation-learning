@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.modelrepository.registermodelartifact.RegisterModelArtifactCommand
 import tech.medo.modelrepository.events.ModelArtifactRegisteredEvent
-import tech.medo.modelrepository.registermodelartifact.RegisterModelArtifactResult
 import java.util.UUID
 
 class RegisterModelArtifactDecisionTest {
@@ -23,14 +22,7 @@ class RegisterModelArtifactDecisionTest {
         )
 
         val events = (object : RegisterModelArtifactDecision {}).decide(
-            command,
-            portResult = RegisterModelArtifactResult.Succeeded(
-                modelArtifactUri = "",
-                modelRegistryRef = "",
-                modelArtifactDigest = "",
-                modelSignatureUri = null,
-                modelSizeBytes = null
-            )
+            command
         )
 
         val event = events.filterIsInstance<ModelArtifactRegisteredEvent>().single()
