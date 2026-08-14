@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReactivateFederationCommandSchema, type ReactivateFederationCommandInput } from "@/domain/schemas";
 
-
 export const FederationOverviewReactivateFederation = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const FederationOverviewReactivateFederation = () => {
     },
   });
 
-  function onSubmit(values: ReactivateFederationCommandInput) {
+  async function onSubmit(values: ReactivateFederationCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

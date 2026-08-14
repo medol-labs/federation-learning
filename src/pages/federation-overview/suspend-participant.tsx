@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SuspendParticipantCommandSchema, type SuspendParticipantCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const FederationOverviewSuspendParticipant = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -70,7 +69,7 @@ export const FederationOverviewSuspendParticipant = () => {
     },
   });
 
-  function onSubmit(values: SuspendParticipantCommandInput) {
+  async function onSubmit(values: SuspendParticipantCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitModelUpdateSubmissionCommandSchema, type SubmitModelUpdateSubmissionCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -81,7 +80,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
     },
   });
 
-  function onSubmit(values: SubmitModelUpdateSubmissionCommandInput) {
+  async function onSubmit(values: SubmitModelUpdateSubmissionCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

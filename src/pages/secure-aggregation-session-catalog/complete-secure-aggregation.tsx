@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CompleteSecureAggregationCommandSchema, type CompleteSecureAggregationCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -79,7 +78,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
     },
   });
 
-  function onSubmit(values: CompleteSecureAggregationCommandInput) {
+  async function onSubmit(values: CompleteSecureAggregationCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

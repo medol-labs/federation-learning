@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CompleteRoundExecutionCommandSchema, type CompleteRoundExecutionCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const RoundExecutionCatalogCompleteRoundExecution = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -76,7 +75,7 @@ export const RoundExecutionCatalogCompleteRoundExecution = () => {
     },
   });
 
-  function onSubmit(values: CompleteRoundExecutionCommandInput) {
+  async function onSubmit(values: CompleteRoundExecutionCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

@@ -4,12 +4,12 @@ import { FlaskConical, LayoutDashboard, Package } from "lucide-react";
 
 export const backendModules = [
   {
-    name: "federation-learning-dictionary",
-    label: "Federation Learning Dictionary",
-    dataProviderName: "federation-learning-dictionary",
-    apiUrl: import.meta.env.VITE_FEDERATION_LEARNING_DICTIONARY_API_URL ?? "http://localhost:8080",
+    name: "federation-learning-support",
+    label: "Federation Learning Support",
+    dataProviderName: "federation-learning-support",
+    apiUrl: import.meta.env.VITE_FEDERATION_LEARNING_SUPPORT_API_URL ?? "http://localhost:8080",
     homeRoute: "/dictionary-catalog",
-    resources: ["dictionary-catalog","dictionary-value-catalog"],
+    resources: ["dictionary-catalog","dictionary-value-catalog","staged-file-catalog"],
   },
   {
     name: "federation-learning-platform",
@@ -28,6 +28,19 @@ export const backendModules = [
     resources: ["agent-dataset-access-validation-catalog","agent-runtime-infrastructure-connection-catalog","agent-runtime-node-inventory-catalog","agent-runtime-node-resource-latest","agent-runtime-telemetry-latest","dataset-capability","dataset-readiness","round-execution-catalog","runtime-agent-lifecycle-catalog","runtime-dataset-binding-catalog"],
   },
 ];
+
+export const fileUploadCapability = {
+  "dataProviderName": "federation-learning-support",
+  "path": "/stagedfile/stagefileupload/file",
+  "fileField": "uploadedFile",
+  "idField": "stagedFileId",
+  "additionalFields": [
+    {
+      "name": "purpose",
+      "type": "String"
+    }
+  ]
+} as const;
 
 export const resources: IResourceItem[] = [
   {
@@ -60,6 +73,14 @@ export const resources: IResourceItem[] = [
     meta: {
       label: "Federation Management",
       i18nKey: "chapters.federationmanagement.label",
+      icon: <FlaskConical />,
+    },
+  },
+  {
+    name: "fileupload",
+    meta: {
+      label: "File Upload",
+      i18nKey: "chapters.fileupload.label",
       icon: <FlaskConical />,
     },
   },
@@ -365,14 +386,14 @@ export const resources: IResourceItem[] = [
       actionControls: {"enabledFields":[]},
       aggregateRoute: "dictionary",
       queryRoute: "dictionarycatalog",
-      dataProviderName: "federation-learning-dictionary",
-      moduleName: "federation-learning-dictionary",
-      moduleLabel: "Federation Learning Dictionary",
+      dataProviderName: "federation-learning-support",
+      moduleName: "federation-learning-support",
+      moduleLabel: "Federation Learning Support",
       commandRoute: "/dictionary-catalog/:id/command/:command",
       commands: {
-        registerDictionary: { label: "Register Dictionary", i18nKey: "resources.dictionary_catalog.commands.registerDictionary.label", route: "/dictionary-catalog/command/register-dictionary", dataProviderName: "federation-learning-dictionary" },
-        archiveDictionary: { label: "Archive Dictionary", i18nKey: "resources.dictionary_catalog.commands.archiveDictionary.label", route: "/dictionary-catalog/:id/command/archive-dictionary", dataProviderName: "federation-learning-dictionary", stateField: "state", allowedStates: ["Registered"] },
-        addDictionaryValue: { label: "Add Dictionary Value", i18nKey: "resources.dictionary_catalog.commands.addDictionaryValue.label", route: "/dictionary-catalog/:id/command/add-dictionary-value", dataProviderName: "federation-learning-dictionary" },
+        registerDictionary: { label: "Register Dictionary", i18nKey: "resources.dictionary_catalog.commands.registerDictionary.label", route: "/dictionary-catalog/command/register-dictionary", dataProviderName: "federation-learning-support" },
+        archiveDictionary: { label: "Archive Dictionary", i18nKey: "resources.dictionary_catalog.commands.archiveDictionary.label", route: "/dictionary-catalog/:id/command/archive-dictionary", dataProviderName: "federation-learning-support", stateField: "state", allowedStates: ["Registered"] },
+        addDictionaryValue: { label: "Add Dictionary Value", i18nKey: "resources.dictionary_catalog.commands.addDictionaryValue.label", route: "/dictionary-catalog/:id/command/add-dictionary-value", dataProviderName: "federation-learning-support" },
       },
       canDelete: true,
     },
@@ -393,14 +414,14 @@ export const resources: IResourceItem[] = [
       actionControls: {"enabledFields":[]},
       aggregateRoute: "dictionaryvalue",
       queryRoute: "dictionaryvaluecatalog",
-      dataProviderName: "federation-learning-dictionary",
-      moduleName: "federation-learning-dictionary",
-      moduleLabel: "Federation Learning Dictionary",
+      dataProviderName: "federation-learning-support",
+      moduleName: "federation-learning-support",
+      moduleLabel: "Federation Learning Support",
       commandRoute: "/dictionary-value-catalog/:id/command/:command",
       commands: {
-        addDictionaryValue: { label: "Add Dictionary Value", i18nKey: "resources.dictionary_value_catalog.commands.addDictionaryValue.label", route: "/dictionary-value-catalog/command/add-dictionary-value", dataProviderName: "federation-learning-dictionary" },
-        disableDictionaryValue: { label: "Disable Dictionary Value", i18nKey: "resources.dictionary_value_catalog.commands.disableDictionaryValue.label", route: "/dictionary-value-catalog/:id/command/disable-dictionary-value", dataProviderName: "federation-learning-dictionary", stateField: "state", allowedStates: ["Active"] },
-        enableDictionaryValue: { label: "Enable Dictionary Value", i18nKey: "resources.dictionary_value_catalog.commands.enableDictionaryValue.label", route: "/dictionary-value-catalog/:id/command/enable-dictionary-value", dataProviderName: "federation-learning-dictionary", stateField: "state", allowedStates: ["Disabled"] },
+        addDictionaryValue: { label: "Add Dictionary Value", i18nKey: "resources.dictionary_value_catalog.commands.addDictionaryValue.label", route: "/dictionary-value-catalog/command/add-dictionary-value", dataProviderName: "federation-learning-support" },
+        disableDictionaryValue: { label: "Disable Dictionary Value", i18nKey: "resources.dictionary_value_catalog.commands.disableDictionaryValue.label", route: "/dictionary-value-catalog/:id/command/disable-dictionary-value", dataProviderName: "federation-learning-support", stateField: "state", allowedStates: ["Active"] },
+        enableDictionaryValue: { label: "Enable Dictionary Value", i18nKey: "resources.dictionary_value_catalog.commands.enableDictionaryValue.label", route: "/dictionary-value-catalog/:id/command/enable-dictionary-value", dataProviderName: "federation-learning-support", stateField: "state", allowedStates: ["Disabled"] },
       },
       canDelete: false,
     },
@@ -946,6 +967,34 @@ export const resources: IResourceItem[] = [
       commands: {
         failSecureAggregationSession: { label: "Fail Secure Aggregation Session", i18nKey: "resources.secure_aggregation_session_catalog.commands.failSecureAggregationSession.label", route: "/secure-aggregation-session-catalog/:id/command/fail-secure-aggregation-session", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["Planned"] },
         completeSecureAggregation: { label: "Complete Secure Aggregation", i18nKey: "resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.label", route: "/secure-aggregation-session-catalog/:id/command/complete-secure-aggregation", dataProviderName: "federation-learning-platform" },
+      },
+      canDelete: false,
+    },
+  },
+  {
+    name: "staged_file_catalog",
+    list: "/staged-file-catalog",
+    create: "/staged-file-catalog/command/stage-file-upload",
+    show: "/staged-file-catalog/show/:id",
+    meta: {
+      parent: "fileupload",
+      label: "Staged File Catalog",
+      i18nKey: "resources.staged_file_catalog.label",
+      icon: <Package />,
+      tableName: "staged_file_catalog_read_model_entity",
+      idField: "stagedFileId",
+      idFields: ["stagedFileId"],
+      actionControls: {"enabledFields":[]},
+      aggregateRoute: "stagedfile",
+      queryRoute: "stagedfilecatalog",
+      dataProviderName: "federation-learning-support",
+      moduleName: "federation-learning-support",
+      moduleLabel: "Federation Learning Support",
+      commandRoute: "/staged-file-catalog/:id/command/:command",
+      commands: {
+        stageFileUpload: { label: "Stage File Upload", i18nKey: "resources.staged_file_catalog.commands.stageFileUpload.label", route: "/staged-file-catalog/command/stage-file-upload", dataProviderName: "federation-learning-support" },
+        markStagedFileConsumed: { label: "Mark Staged File Consumed", i18nKey: "resources.staged_file_catalog.commands.markStagedFileConsumed.label", route: "/staged-file-catalog/:id/command/mark-staged-file-consumed", dataProviderName: "federation-learning-support", stateField: "state", allowedStates: ["Staged"] },
+        discardStagedFile: { label: "Discard Staged File", i18nKey: "resources.staged_file_catalog.commands.discardStagedFile.label", route: "/staged-file-catalog/:id/command/discard-staged-file", dataProviderName: "federation-learning-support", stateField: "state", allowedStates: ["Staged"] },
       },
       canDelete: false,
     },

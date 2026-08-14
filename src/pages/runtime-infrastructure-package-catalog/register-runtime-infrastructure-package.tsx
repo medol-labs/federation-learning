@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterRuntimeInfrastructurePackageCommandSchema, type RegisterRuntimeInfrastructurePackageCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePackage = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -75,7 +74,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
     },
   });
 
-  function onSubmit(values: RegisterRuntimeInfrastructurePackageCommandInput) {
+  async function onSubmit(values: RegisterRuntimeInfrastructurePackageCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,
@@ -133,7 +132,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -164,7 +163,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -195,7 +194,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}

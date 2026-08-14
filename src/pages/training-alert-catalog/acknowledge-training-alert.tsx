@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AcknowledgeTrainingAlertCommandSchema, type AcknowledgeTrainingAlertCommandInput } from "@/domain/schemas";
 
-
 export const TrainingAlertCatalogAcknowledgeTrainingAlert = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const TrainingAlertCatalogAcknowledgeTrainingAlert = () => {
     },
   });
 
-  function onSubmit(values: AcknowledgeTrainingAlertCommandInput) {
+  async function onSubmit(values: AcknowledgeTrainingAlertCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

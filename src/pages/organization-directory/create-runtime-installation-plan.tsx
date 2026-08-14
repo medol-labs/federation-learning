@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateRuntimeInstallationPlanCommandSchema, type CreateRuntimeInstallationPlanCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -69,7 +68,7 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
     },
   });
 
-  function onSubmit(values: CreateRuntimeInstallationPlanCommandInput) {
+  async function onSubmit(values: CreateRuntimeInstallationPlanCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,
@@ -163,7 +162,7 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}

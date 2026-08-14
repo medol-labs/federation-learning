@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RetryRoundExecutionAfterRuntimeFailureCommandSchema, type RetryRoundExecutionAfterRuntimeFailureCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -81,7 +80,7 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure = () =>
     },
   });
 
-  function onSubmit(values: RetryRoundExecutionAfterRuntimeFailureCommandInput) {
+  async function onSubmit(values: RetryRoundExecutionAfterRuntimeFailureCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

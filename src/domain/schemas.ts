@@ -174,6 +174,32 @@ export const EnableDictionaryValueCommandSchema = z.object({
 });
 export type EnableDictionaryValueCommandInput = z.infer<typeof EnableDictionaryValueCommandSchema>;
 
+export const StageFileUploadCommandSchema = z.object({
+  uploadedFile: z.string(),
+  originalFileName: z.string(),
+  contentType: z.string().optional().nullable(),
+  sizeBytes: z.coerce.number().optional().nullable(),
+  stagedFileLocation: z.string(),
+  checksum: z.string().optional().nullable(),
+  expiresAt: dateTimeLocalSchema,
+  purpose: z.string(),
+});
+export type StageFileUploadCommandInput = z.infer<typeof StageFileUploadCommandSchema>;
+
+export const MarkStagedFileConsumedCommandSchema = z.object({
+  stagedFileId: z.string().uuid(),
+  consumedByContext: z.string(),
+  consumedByCommand: z.string(),
+  consumedByCommandId: z.string().uuid().optional().nullable(),
+});
+export type MarkStagedFileConsumedCommandInput = z.infer<typeof MarkStagedFileConsumedCommandSchema>;
+
+export const DiscardStagedFileCommandSchema = z.object({
+  stagedFileId: z.string().uuid(),
+  discardReason: z.string().optional().nullable(),
+});
+export type DiscardStagedFileCommandInput = z.infer<typeof DiscardStagedFileCommandSchema>;
+
 export const RegisterRuntimeInfrastructurePackageCommandSchema = z.object({
   packageName: z.string(),
   packageVersion: z.string(),
@@ -275,7 +301,7 @@ export const RegisterModelArtifactCommandSchema = z.object({
   modelName: z.string(),
   modelVersion: z.string(),
   sourceType: z.string(),
-  sourceLocation: z.string().optional().nullable(),
+  stagedFileId: z.string().uuid().optional().nullable(),
   modelFormat: z.string().optional().nullable(),
 });
 export type RegisterModelArtifactCommandInput = z.infer<typeof RegisterModelArtifactCommandSchema>;

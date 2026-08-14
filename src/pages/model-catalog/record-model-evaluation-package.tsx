@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RecordModelEvaluationPackageCommandSchema, type RecordModelEvaluationPackageCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const ModelCatalogRecordModelEvaluationPackage = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -76,7 +75,7 @@ export const ModelCatalogRecordModelEvaluationPackage = () => {
     },
   });
 
-  function onSubmit(values: RecordModelEvaluationPackageCommandInput) {
+  async function onSubmit(values: RecordModelEvaluationPackageCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

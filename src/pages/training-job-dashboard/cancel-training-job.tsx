@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CancelTrainingJobCommandSchema, type CancelTrainingJobCommandInput } from "@/domain/schemas";
 
-
 export const TrainingJobDashboardCancelTrainingJob = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const TrainingJobDashboardCancelTrainingJob = () => {
     },
   });
 
-  function onSubmit(values: CancelTrainingJobCommandInput) {
+  async function onSubmit(values: CancelTrainingJobCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

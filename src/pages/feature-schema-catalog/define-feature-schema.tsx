@@ -32,7 +32,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DefineFeatureSchemaCommandSchema, type DefineFeatureSchemaCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
-
 type ScalarArrayFieldProps = {
   control: Control<any>;
   name: string;
@@ -176,7 +175,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
     name: "labels" as never,
   });
 
-  function onSubmit(values: DefineFeatureSchemaCommandInput) {
+  async function onSubmit(values: DefineFeatureSchemaCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,
@@ -216,7 +215,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}

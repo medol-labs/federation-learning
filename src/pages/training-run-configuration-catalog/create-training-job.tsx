@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTrainingJobCommandSchema, type CreateTrainingJobCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const TrainingRunConfigurationCatalogCreateTrainingJob = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -70,7 +69,7 @@ export const TrainingRunConfigurationCatalogCreateTrainingJob = () => {
     },
   });
 
-  function onSubmit(values: CreateTrainingJobCommandInput) {
+  async function onSubmit(values: CreateTrainingJobCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

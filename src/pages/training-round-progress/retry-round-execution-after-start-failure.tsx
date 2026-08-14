@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RetryRoundExecutionAfterStartFailureCommandSchema, type RetryRoundExecutionAfterStartFailureCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const TrainingRoundProgressRetryRoundExecutionAfterStartFailure = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -80,7 +79,7 @@ export const TrainingRoundProgressRetryRoundExecutionAfterStartFailure = () => {
     },
   });
 
-  function onSubmit(values: RetryRoundExecutionAfterStartFailureCommandInput) {
+  async function onSubmit(values: RetryRoundExecutionAfterStartFailureCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

@@ -27,49 +27,50 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterDictionaryCommandSchema, type RegisterDictionaryCommandInput } from "@/domain/schemas";
+import { MarkStagedFileConsumedCommandSchema, type MarkStagedFileConsumedCommandInput } from "@/domain/schemas";
 
-export const DictionaryCatalogRegisterDictionary = () => {
+export const StagedFileCatalogMarkStagedFileConsumed = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
-    dictionaryCode: searchParams.get("dictionaryCode") ?? undefined,
-    dictionaryName: searchParams.get("dictionaryName") ?? undefined,
-    description: searchParams.get("description") ?? undefined,
-  } as Partial<RegisterDictionaryCommandInput>;
+    consumedByContext: searchParams.get("consumedByContext") ?? undefined,
+    consumedByCommand: searchParams.get("consumedByCommand") ?? undefined,
+    consumedByCommandId: searchParams.get("consumedByCommandId") ?? undefined,
+    stagedFileId: searchParams.get("stagedFileId") ?? undefined,
+  } as Partial<MarkStagedFileConsumedCommandInput>;
 
-  const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterDictionaryCommandInput, RegisterDictionaryCommandInput>({
-    resource: "dictionary_catalog",
-    command: "registerDictionary",
+  const { refineCore: { onFinish }, ...form } = useCommandForm<MarkStagedFileConsumedCommandInput, MarkStagedFileConsumedCommandInput>({
+    resource: "staged_file_catalog",
+    command: "markStagedFileConsumed",
     aggregateId: id?.toString(),
     redirect: "list",
     dataProviderName: "federation-learning-support",
     queryDataProviderName: "federation-learning-support",
     meta: {
-      tableName: "dictionary_catalog_read_model_entity",
-      idField: "dictionaryId",
-      label: t("resources.dictionary_catalog.label", "Dictionary Catalog"),
-      aggregateRoute: "dictionary",
-      queryRoute: "dictionarycatalog",
+      tableName: "staged_file_catalog_read_model_entity",
+      idField: "stagedFileId",
+      label: t("resources.staged_file_catalog.label", "Staged File Catalog"),
+      aggregateRoute: "stagedfile",
+      queryRoute: "stagedfilecatalog",
       dataProviderName: "federation-learning-support",
     },
     queryMeta: {
-      tableName: "dictionary_catalog_read_model_entity",
-      idField: "dictionaryId",
-      label: t("resources.dictionary_catalog.label", "Dictionary Catalog"),
-      aggregateRoute: "dictionary",
-      queryRoute: "dictionarycatalog",
+      tableName: "staged_file_catalog_read_model_entity",
+      idField: "stagedFileId",
+      label: t("resources.staged_file_catalog.label", "Staged File Catalog"),
+      aggregateRoute: "stagedfile",
+      queryRoute: "stagedfilecatalog",
       dataProviderName: "federation-learning-support",
     },
     formProps: {
       defaultValues,
-      resolver: zodResolver(RegisterDictionaryCommandSchema) as never,
+      resolver: zodResolver(MarkStagedFileConsumedCommandSchema) as never,
     },
   });
 
-  async function onSubmit(values: RegisterDictionaryCommandInput) {
+  async function onSubmit(values: MarkStagedFileConsumedCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,
@@ -78,21 +79,24 @@ export const DictionaryCatalogRegisterDictionary = () => {
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.dictionary_catalog.commands.registerDictionary.label", "Register Dictionary")} />
+      <CreateViewHeader title={t("resources.staged_file_catalog.commands.markStagedFileConsumed.label", "Mark Staged File Consumed")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RegisterDictionary validation failed", errors))} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("MarkStagedFileConsumed validation failed", errors))} className="space-y-8">
+          {defaultValues.stagedFileId !== undefined && defaultValues.stagedFileId !== null ? (
+            <input type="hidden" {...form.register("stagedFileId" as never)} />
+          ) : null}
           <FormField
             control={form.control}
-            name="dictionaryCode"
-            rules={{ required: "Dictionary Code is required" }}
+            name="consumedByContext"
+            rules={{ required: "Consumed By Context is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.dictionary_catalog.commands.registerDictionary.fields.dictionaryCode.label", "Dictionary Code")}</FormLabel>
+                <FormLabel>{t("resources.staged_file_catalog.commands.markStagedFileConsumed.fields.consumedByContext.label", "Consumed By Context")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Dictionary Code"}
+                    placeholder={"Enter Consumed By Context"}
                   />
                 </FormControl>
                 <FormMessage />
@@ -101,16 +105,16 @@ export const DictionaryCatalogRegisterDictionary = () => {
           />
           <FormField
             control={form.control}
-            name="dictionaryName"
-            rules={{ required: "Dictionary Name is required" }}
+            name="consumedByCommand"
+            rules={{ required: "Consumed By Command is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.dictionary_catalog.commands.registerDictionary.fields.dictionaryName.label", "Dictionary Name")}</FormLabel>
+                <FormLabel>{t("resources.staged_file_catalog.commands.markStagedFileConsumed.fields.consumedByCommand.label", "Consumed By Command")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Dictionary Name"}
+                    placeholder={"Enter Consumed By Command"}
                   />
                 </FormControl>
                 <FormMessage />
@@ -119,17 +123,16 @@ export const DictionaryCatalogRegisterDictionary = () => {
           />
           <FormField
             control={form.control}
-            name="description"
+            name="consumedByCommandId"
             rules={{}}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.dictionary_catalog.commands.registerDictionary.fields.description.label", "Description")}</FormLabel>
+                <FormLabel>{t("resources.staged_file_catalog.commands.markStagedFileConsumed.fields.consumedByCommandId.label", "Consumed By Command Id")}</FormLabel>
                 <FormControl>
-                  <Textarea
+                  <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Description"}
-                    rows={8}
+                    placeholder={"Enter Consumed By Command Id"}
                   />
                 </FormControl>
                 <FormMessage />

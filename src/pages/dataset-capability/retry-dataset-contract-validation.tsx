@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RetryDatasetContractValidationCommandSchema, type RetryDatasetContractValidationCommandInput } from "@/domain/schemas";
 
-
 export const DatasetCapabilityRetryDatasetContractValidation = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const DatasetCapabilityRetryDatasetContractValidation = () => {
     },
   });
 
-  function onSubmit(values: RetryDatasetContractValidationCommandInput) {
+  async function onSubmit(values: RetryDatasetContractValidationCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

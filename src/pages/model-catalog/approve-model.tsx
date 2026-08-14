@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApproveModelCommandSchema, type ApproveModelCommandInput } from "@/domain/schemas";
 
-
 export const ModelCatalogApproveModel = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const ModelCatalogApproveModel = () => {
     },
   });
 
-  function onSubmit(values: ApproveModelCommandInput) {
+  async function onSubmit(values: ApproveModelCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

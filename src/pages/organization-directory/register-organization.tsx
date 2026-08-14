@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterOrganizationCommandSchema, type RegisterOrganizationCommandInput } from "@/domain/schemas";
 
-
 export const OrganizationDirectoryRegisterOrganization = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -69,7 +68,7 @@ export const OrganizationDirectoryRegisterOrganization = () => {
     },
   });
 
-  function onSubmit(values: RegisterOrganizationCommandInput) {
+  async function onSubmit(values: RegisterOrganizationCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

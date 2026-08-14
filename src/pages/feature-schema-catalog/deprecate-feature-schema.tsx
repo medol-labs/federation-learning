@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DeprecateFeatureSchemaCommandSchema, type DeprecateFeatureSchemaCommandInput } from "@/domain/schemas";
 
-
 export const FeatureSchemaCatalogDeprecateFeatureSchema = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const FeatureSchemaCatalogDeprecateFeatureSchema = () => {
     },
   });
 
-  function onSubmit(values: DeprecateFeatureSchemaCommandInput) {
+  async function onSubmit(values: DeprecateFeatureSchemaCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

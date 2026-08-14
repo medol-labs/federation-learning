@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { InviteParticipantCommandSchema, type InviteParticipantCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const FederationMembershipDirectoryInviteParticipant = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -71,7 +70,7 @@ export const FederationMembershipDirectoryInviteParticipant = () => {
     },
   });
 
-  function onSubmit(values: InviteParticipantCommandInput) {
+  async function onSubmit(values: InviteParticipantCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

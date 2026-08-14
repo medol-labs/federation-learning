@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FailSecureAggregationSessionCommandSchema, type FailSecureAggregationSessionCommandInput } from "@/domain/schemas";
 
-
 export const SecureAggregationSessionCatalogFailSecureAggregationSession = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -69,7 +68,7 @@ export const SecureAggregationSessionCatalogFailSecureAggregationSession = () =>
     },
   });
 
-  function onSubmit(values: FailSecureAggregationSessionCommandInput) {
+  async function onSubmit(values: FailSecureAggregationSessionCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

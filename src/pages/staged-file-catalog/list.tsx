@@ -18,30 +18,33 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import type { DictionaryCode, DictionaryValueCode, DisplayOrder } from "@/domain/value-types";
 
-type DictionaryValueCatalogRecord = {
-  dictionaryValueId: string;
-  dictionaryId: string;
-  dictionaryCode: DictionaryCode;
-  valueCode: DictionaryValueCode;
-  displayName: string;
-  displayOrder?: DisplayOrder;
-  description?: string;
-  active: boolean;
+type StagedFileCatalogRecord = {
+  stagedFileId: string;
+  originalFileName: string;
+  contentType?: string;
+  sizeBytes?: number;
+  purpose: string;
+  stagedFileLocation: string;
+  checksum?: string;
   state: string;
-  addedAt: string;
-  updatedAt?: string;
-  disabledAt?: string;
-  disabledReason?: string;
-  enabledAt?: string;
+  stagedAt?: string;
+  consumedAt?: string;
+  consumedByContext?: string;
+  consumedByCommand?: string;
+  consumedByCommandId?: string;
+  discardedAt?: string;
+  discardReason?: string;
+  expiresAt?: string;
+  expiredAt?: string;
+  expirationReason?: string;
 };
 
 const normalizeWorkflowState = (value: unknown) =>
   String(value ?? "").replace(/[^A-Za-z0-9]/g, "").toLowerCase();
 
 const isCommandVisible = (
-  record: DictionaryValueCatalogRecord,
+  record: StagedFileCatalogRecord,
   enabledField?: string,
   stateField?: string,
   allowedStates: string[] = [],
@@ -54,10 +57,10 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
-export const DictionaryValueCatalogList = () => {
+export const StagedFileCatalogList = () => {
   const t = useTranslate();
   const columns = React.useMemo(() => {
-    const columnHelper = createColumnHelper<DictionaryValueCatalogRecord>();
+    const columnHelper = createColumnHelper<StagedFileCatalogRecord>();
     return [
       columnHelper.display({
         id: "select",
@@ -79,131 +82,167 @@ export const DictionaryValueCatalogList = () => {
         enableSorting: false,
         enableHiding: false,
       }),
-      columnHelper.accessor("dictionaryValueId", {
-        id: "dictionaryValueId",
+      columnHelper.accessor("stagedFileId", {
+        id: "stagedFileId",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.dictionaryValueId.label", "Dictionary Value Id")} />
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.stagedFileId.label", "Staged File Id")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("dictionaryId", {
-        id: "dictionaryId",
+      columnHelper.accessor("originalFileName", {
+        id: "originalFileName",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.dictionaryId.label", "Dictionary Id")} />
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.originalFileName.label", "Original File Name")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("dictionaryCode", {
-        id: "dictionaryCode",
+      columnHelper.accessor("contentType", {
+        id: "contentType",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.dictionaryCode.label", "Dictionary Code")} />
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.contentType.label", "Content Type")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("valueCode", {
-        id: "valueCode",
+      columnHelper.accessor("sizeBytes", {
+        id: "sizeBytes",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.valueCode.label", "Value Code")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("displayName", {
-        id: "displayName",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.displayName.label", "Display Name")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("displayOrder", {
-        id: "displayOrder",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.displayOrder.label", "Display Order")} />
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.sizeBytes.label", "Size Bytes")} />
         ),
         enableSorting: true,
         enableColumnFilter: false,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("description", {
-        id: "description",
+      columnHelper.accessor("purpose", {
+        id: "purpose",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.description.label", "Description")} />
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.purpose.label", "Purpose")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("active", {
-        id: "active",
+      columnHelper.accessor("stagedFileLocation", {
+        id: "stagedFileLocation",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.active.label", "Active")} />
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.stagedFileLocation.label", "Staged File Location")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("checksum", {
+        id: "checksum",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.checksum.label", "Checksum")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.state.label", "State")} />
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
         enableColumnFilter: false,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("addedAt", {
-        id: "addedAt",
+      columnHelper.accessor("stagedAt", {
+        id: "stagedAt",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.addedAt.label", "Added At")} />
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.stagedAt.label", "Staged At")} />
         ),
         enableSorting: true,
         enableColumnFilter: false,
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
-      columnHelper.accessor("updatedAt", {
-        id: "updatedAt",
+      columnHelper.accessor("consumedAt", {
+        id: "consumedAt",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.updatedAt.label", "Updated At")} />
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.consumedAt.label", "Consumed At")} />
         ),
         enableSorting: true,
         enableColumnFilter: false,
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
-      columnHelper.accessor("disabledAt", {
-        id: "disabledAt",
+      columnHelper.accessor("consumedByContext", {
+        id: "consumedByContext",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.disabledAt.label", "Disabled At")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: false,
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
-      }),
-      columnHelper.accessor("disabledReason", {
-        id: "disabledReason",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.disabledReason.label", "Disabled Reason")} />
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.consumedByContext.label", "Consumed By Context")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("enabledAt", {
-        id: "enabledAt",
+      columnHelper.accessor("consumedByCommand", {
+        id: "consumedByCommand",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.enabledAt.label", "Enabled At")} />
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.consumedByCommand.label", "Consumed By Command")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("consumedByCommandId", {
+        id: "consumedByCommandId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.consumedByCommandId.label", "Consumed By Command Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("discardedAt", {
+        id: "discardedAt",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.discardedAt.label", "Discarded At")} />
         ),
         enableSorting: true,
         enableColumnFilter: false,
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("discardReason", {
+        id: "discardReason",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.discardReason.label", "Discard Reason")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("expiresAt", {
+        id: "expiresAt",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.expiresAt.label", "Expires At")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: false,
+        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("expiredAt", {
+        id: "expiredAt",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.expiredAt.label", "Expired At")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: false,
+        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("expirationReason", {
+        id: "expirationReason",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.expirationReason.label", "Expiration Reason")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -217,31 +256,36 @@ export const DictionaryValueCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "state", ["Active"]) && (
+                {isCommandVisible(row.original, "", "state", ["Staged"]) && (
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
-                    command="disableDictionaryValue"
-                    recordItemId={row.original.dictionaryValueId}
+                    command="markStagedFileConsumed"
+                    recordItemId={row.original.stagedFileId}
                     size="sm"
                     query={{
-                      disabledReason: row.original.disabledReason,
+                      consumedByContext: row.original.consumedByContext,
+                      consumedByCommand: row.original.consumedByCommand,
+                      consumedByCommandId: row.original.consumedByCommandId,
                     }}
                   />
                 </DropdownMenuItem>
                 )}
-                {isCommandVisible(row.original, "", "state", ["Disabled"]) && (
+                {isCommandVisible(row.original, "", "state", ["Staged"]) && (
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
-                    command="enableDictionaryValue"
-                    recordItemId={row.original.dictionaryValueId}
+                    command="discardStagedFile"
+                    recordItemId={row.original.stagedFileId}
                     size="sm"
+                    query={{
+                      discardReason: row.original.discardReason,
+                    }}
                   />
                 </DropdownMenuItem>
                 )}
                 <DropdownMenuItem>
-                  <ShowButton variant="ghost" recordItemId={row.original.dictionaryValueId} size="sm" />
+                  <ShowButton variant="ghost" recordItemId={row.original.stagedFileId} size="sm" />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -258,17 +302,17 @@ export const DictionaryValueCatalogList = () => {
     initialState: {
       columnPinning: { right: ["actions"], left: ["select"] },
     },
-    getRowId: (row) => String(row.dictionaryValueId),
+    getRowId: (row) => String(row.stagedFileId),
     refineCoreProps: {
       dataProviderName: "federation-learning-support",
       syncWithLocation: true,
       meta: {
-        tableName: "dictionary_value_catalog_read_model_entity",
-        idField: "dictionaryValueId",
-        idFields: ["dictionaryValueId"],
-        label: t("resources.dictionary_value_catalog.label", "Dictionary Value Catalog"),
-        aggregateRoute: "dictionaryvalue",
-        queryRoute: "dictionaryvaluecatalog",
+        tableName: "staged_file_catalog_read_model_entity",
+        idField: "stagedFileId",
+        idFields: ["stagedFileId"],
+        label: t("resources.staged_file_catalog.label", "Staged File Catalog"),
+        aggregateRoute: "stagedfile",
+        queryRoute: "stagedfilecatalog",
         dataProviderName: "federation-learning-support",
       },
     },
@@ -277,7 +321,7 @@ export const DictionaryValueCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="addDictionaryValue" />
+        <CommandButton variant="default" command="stageFileUpload" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

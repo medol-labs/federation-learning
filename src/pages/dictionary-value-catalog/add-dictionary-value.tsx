@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AddDictionaryValueCommandSchema, type AddDictionaryValueCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const DictionaryValueCatalogAddDictionaryValue = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -51,15 +50,15 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
     command: "addDictionaryValue",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-dictionary",
-    queryDataProviderName: "federation-learning-dictionary",
+    dataProviderName: "federation-learning-support",
+    queryDataProviderName: "federation-learning-support",
     meta: {
       tableName: "dictionary_value_catalog_read_model_entity",
       idField: "dictionaryValueId",
       label: t("resources.dictionary_value_catalog.label", "Dictionary Value Catalog"),
       aggregateRoute: "dictionaryvalue",
       queryRoute: "dictionaryvaluecatalog",
-      dataProviderName: "federation-learning-dictionary",
+      dataProviderName: "federation-learning-support",
     },
     queryMeta: {
       tableName: "dictionary_value_catalog_read_model_entity",
@@ -67,7 +66,7 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
       label: t("resources.dictionary_value_catalog.label", "Dictionary Value Catalog"),
       aggregateRoute: "dictionaryvalue",
       queryRoute: "dictionaryvaluecatalog",
-      dataProviderName: "federation-learning-dictionary",
+      dataProviderName: "federation-learning-support",
     },
     formProps: {
       defaultValues,
@@ -75,7 +74,7 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
     },
   });
 
-  function onSubmit(values: AddDictionaryValueCommandInput) {
+  async function onSubmit(values: AddDictionaryValueCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,
@@ -97,7 +96,7 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="dictionaryName"
                   optionValue="dictionaryId"
                   value={field.value || ""}

@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DeclareDatasetCommandSchema, type DeclareDatasetCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const FeatureSchemaCatalogDeclareDataset = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -69,7 +68,7 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
     },
   });
 
-  function onSubmit(values: DeclareDatasetCommandInput) {
+  async function onSubmit(values: DeclareDatasetCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

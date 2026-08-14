@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitGlobalModelEvaluationCommandSchema, type SubmitGlobalModelEvaluationCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const TrainingRoundProgressSubmitGlobalModelEvaluation = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -80,7 +79,7 @@ export const TrainingRoundProgressSubmitGlobalModelEvaluation = () => {
     },
   });
 
-  function onSubmit(values: SubmitGlobalModelEvaluationCommandInput) {
+  async function onSubmit(values: SubmitGlobalModelEvaluationCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

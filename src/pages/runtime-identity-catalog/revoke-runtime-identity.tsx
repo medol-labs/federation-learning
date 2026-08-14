@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RevokeRuntimeIdentityCommandSchema, type RevokeRuntimeIdentityCommandInput } from "@/domain/schemas";
 
-
 export const RuntimeIdentityCatalogRevokeRuntimeIdentity = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const RuntimeIdentityCatalogRevokeRuntimeIdentity = () => {
     },
   });
 
-  function onSubmit(values: RevokeRuntimeIdentityCommandInput) {
+  async function onSubmit(values: RevokeRuntimeIdentityCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

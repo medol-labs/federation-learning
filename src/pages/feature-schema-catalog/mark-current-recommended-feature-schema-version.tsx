@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MarkCurrentRecommendedFeatureSchemaVersionCommandSchema, type MarkCurrentRecommendedFeatureSchemaVersionCommandInput } from "@/domain/schemas";
 
-
 export const FeatureSchemaCatalogMarkCurrentRecommendedFeatureSchemaVersion = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const FeatureSchemaCatalogMarkCurrentRecommendedFeatureSchemaVersion = ()
     },
   });
 
-  function onSubmit(values: MarkCurrentRecommendedFeatureSchemaVersionCommandInput) {
+  async function onSubmit(values: MarkCurrentRecommendedFeatureSchemaVersionCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RetireModelCommandSchema, type RetireModelCommandInput } from "@/domain/schemas";
 
-
 export const ModelCatalogRetireModel = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const ModelCatalogRetireModel = () => {
     },
   });
 
-  function onSubmit(values: RetireModelCommandInput) {
+  async function onSubmit(values: RetireModelCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

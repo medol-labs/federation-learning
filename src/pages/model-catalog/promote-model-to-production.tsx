@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PromoteModelToProductionCommandSchema, type PromoteModelToProductionCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const ModelCatalogPromoteModelToProduction = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -71,7 +70,7 @@ export const ModelCatalogPromoteModelToProduction = () => {
     },
   });
 
-  function onSubmit(values: PromoteModelToProductionCommandInput) {
+  async function onSubmit(values: PromoteModelToProductionCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,
@@ -96,7 +95,7 @@ export const ModelCatalogPromoteModelToProduction = () => {
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -127,7 +126,7 @@ export const ModelCatalogPromoteModelToProduction = () => {
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}

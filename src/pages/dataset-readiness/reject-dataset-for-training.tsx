@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RejectDatasetForTrainingCommandSchema, type RejectDatasetForTrainingCommandInput } from "@/domain/schemas";
 
-
 export const DatasetReadinessRejectDatasetForTraining = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const DatasetReadinessRejectDatasetForTraining = () => {
     },
   });
 
-  function onSubmit(values: RejectDatasetForTrainingCommandInput) {
+  async function onSubmit(values: RejectDatasetForTrainingCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

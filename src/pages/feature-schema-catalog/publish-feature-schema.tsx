@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PublishFeatureSchemaCommandSchema, type PublishFeatureSchemaCommandInput } from "@/domain/schemas";
 
-
 export const FeatureSchemaCatalogPublishFeatureSchema = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const FeatureSchemaCatalogPublishFeatureSchema = () => {
     },
   });
 
-  function onSubmit(values: PublishFeatureSchemaCommandInput) {
+  async function onSubmit(values: PublishFeatureSchemaCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

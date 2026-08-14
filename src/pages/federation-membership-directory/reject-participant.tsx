@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RejectParticipantCommandSchema, type RejectParticipantCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const FederationMembershipDirectoryRejectParticipant = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -70,7 +69,7 @@ export const FederationMembershipDirectoryRejectParticipant = () => {
     },
   });
 
-  function onSubmit(values: RejectParticipantCommandInput) {
+  async function onSubmit(values: RejectParticipantCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

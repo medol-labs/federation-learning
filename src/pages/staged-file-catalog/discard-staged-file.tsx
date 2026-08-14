@@ -27,47 +27,48 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CancelTrainingJobCommandSchema, type CancelTrainingJobCommandInput } from "@/domain/schemas";
+import { DiscardStagedFileCommandSchema, type DiscardStagedFileCommandInput } from "@/domain/schemas";
 
-export const TrainingRoundProgressCancelTrainingJob = () => {
+export const StagedFileCatalogDiscardStagedFile = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
-    trainingJobId: searchParams.get("trainingJobId") ?? undefined,
-  } as Partial<CancelTrainingJobCommandInput>;
+    discardReason: searchParams.get("discardReason") ?? undefined,
+    stagedFileId: searchParams.get("stagedFileId") ?? undefined,
+  } as Partial<DiscardStagedFileCommandInput>;
 
-  const { refineCore: { onFinish }, ...form } = useCommandForm<CancelTrainingJobCommandInput, CancelTrainingJobCommandInput>({
-    resource: "training_round_progress",
-    command: "cancelTrainingJob",
+  const { refineCore: { onFinish }, ...form } = useCommandForm<DiscardStagedFileCommandInput, DiscardStagedFileCommandInput>({
+    resource: "staged_file_catalog",
+    command: "discardStagedFile",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-platform",
-    queryDataProviderName: "federation-learning-platform",
+    dataProviderName: "federation-learning-support",
+    queryDataProviderName: "federation-learning-support",
     meta: {
-      tableName: "training_round_progress_read_model_entity",
-      idField: "trainingJobId",
-      label: t("resources.training_round_progress.label", "Training Round Progress"),
-      aggregateRoute: "trainingjob",
-      queryRoute: "trainingroundprogress",
-      dataProviderName: "federation-learning-platform",
+      tableName: "staged_file_catalog_read_model_entity",
+      idField: "stagedFileId",
+      label: t("resources.staged_file_catalog.label", "Staged File Catalog"),
+      aggregateRoute: "stagedfile",
+      queryRoute: "stagedfilecatalog",
+      dataProviderName: "federation-learning-support",
     },
     queryMeta: {
-      tableName: "training_round_progress_read_model_entity",
-      idField: "trainingJobId",
-      label: t("resources.training_round_progress.label", "Training Round Progress"),
-      aggregateRoute: "traininground",
-      queryRoute: "trainingroundprogress",
-      dataProviderName: "federation-learning-platform",
+      tableName: "staged_file_catalog_read_model_entity",
+      idField: "stagedFileId",
+      label: t("resources.staged_file_catalog.label", "Staged File Catalog"),
+      aggregateRoute: "stagedfile",
+      queryRoute: "stagedfilecatalog",
+      dataProviderName: "federation-learning-support",
     },
     formProps: {
       defaultValues,
-      resolver: zodResolver(CancelTrainingJobCommandSchema) as never,
+      resolver: zodResolver(DiscardStagedFileCommandSchema) as never,
     },
   });
 
-  async function onSubmit(values: CancelTrainingJobCommandInput) {
+  async function onSubmit(values: DiscardStagedFileCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,
@@ -76,24 +77,24 @@ export const TrainingRoundProgressCancelTrainingJob = () => {
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.training_round_progress.commands.cancelTrainingJob.label", "Cancel Training Job")} />
+      <CreateViewHeader title={t("resources.staged_file_catalog.commands.discardStagedFile.label", "Discard Staged File")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("CancelTrainingJob validation failed", errors))} className="space-y-8">
-          {defaultValues.trainingJobId !== undefined && defaultValues.trainingJobId !== null ? (
-            <input type="hidden" {...form.register("trainingJobId" as never)} />
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DiscardStagedFile validation failed", errors))} className="space-y-8">
+          {defaultValues.stagedFileId !== undefined && defaultValues.stagedFileId !== null ? (
+            <input type="hidden" {...form.register("stagedFileId" as never)} />
           ) : null}
           <FormField
             control={form.control}
-            name="cancelReason"
+            name="discardReason"
             rules={{}}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.training_round_progress.commands.cancelTrainingJob.fields.cancelReason.label", "Cancel Reason")}</FormLabel>
+                <FormLabel>{t("resources.staged_file_catalog.commands.discardStagedFile.fields.discardReason.label", "Discard Reason")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Cancel Reason"}
+                    placeholder={"Enter Discard Reason"}
                   />
                 </FormControl>
                 <FormMessage />

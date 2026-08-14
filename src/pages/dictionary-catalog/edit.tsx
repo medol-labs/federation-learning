@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UpdateDictionaryCommandSchema, type UpdateDictionaryCommandInput } from "@/domain/schemas";
 
-
 export const DictionaryCatalogUpdateDictionary = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -46,15 +45,15 @@ export const DictionaryCatalogUpdateDictionary = () => {
     command: "updateDictionary",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-dictionary",
-    queryDataProviderName: "federation-learning-dictionary",
+    dataProviderName: "federation-learning-support",
+    queryDataProviderName: "federation-learning-support",
     meta: {
       tableName: "dictionary_catalog_read_model_entity",
       idField: "dictionaryId",
       label: t("resources.dictionary_catalog.label", "Dictionary Catalog"),
       aggregateRoute: "dictionary",
       queryRoute: "dictionarycatalog",
-      dataProviderName: "federation-learning-dictionary",
+      dataProviderName: "federation-learning-support",
     },
     queryMeta: {
       tableName: "dictionary_catalog_read_model_entity",
@@ -62,7 +61,7 @@ export const DictionaryCatalogUpdateDictionary = () => {
       label: t("resources.dictionary_catalog.label", "Dictionary Catalog"),
       aggregateRoute: "dictionary",
       queryRoute: "dictionarycatalog",
-      dataProviderName: "federation-learning-dictionary",
+      dataProviderName: "federation-learning-support",
     },
     formProps: {
       defaultValues,
@@ -70,7 +69,7 @@ export const DictionaryCatalogUpdateDictionary = () => {
     },
   });
 
-  function onSubmit(values: UpdateDictionaryCommandInput) {
+  async function onSubmit(values: UpdateDictionaryCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

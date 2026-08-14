@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SupersedeFeatureSchemaVersionCommandSchema, type SupersedeFeatureSchemaVersionCommandInput } from "@/domain/schemas";
 
-
 export const FeatureSchemaCatalogSupersedeFeatureSchemaVersion = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -69,7 +68,7 @@ export const FeatureSchemaCatalogSupersedeFeatureSchemaVersion = () => {
     },
   });
 
-  function onSubmit(values: SupersedeFeatureSchemaVersionCommandInput) {
+  async function onSubmit(values: SupersedeFeatureSchemaVersionCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

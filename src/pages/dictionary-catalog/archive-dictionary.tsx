@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArchiveDictionaryCommandSchema, type ArchiveDictionaryCommandInput } from "@/domain/schemas";
 
-
 export const DictionaryCatalogArchiveDictionary = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -45,15 +44,15 @@ export const DictionaryCatalogArchiveDictionary = () => {
     command: "archiveDictionary",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-dictionary",
-    queryDataProviderName: "federation-learning-dictionary",
+    dataProviderName: "federation-learning-support",
+    queryDataProviderName: "federation-learning-support",
     meta: {
       tableName: "dictionary_catalog_read_model_entity",
       idField: "dictionaryId",
       label: t("resources.dictionary_catalog.label", "Dictionary Catalog"),
       aggregateRoute: "dictionary",
       queryRoute: "dictionarycatalog",
-      dataProviderName: "federation-learning-dictionary",
+      dataProviderName: "federation-learning-support",
     },
     queryMeta: {
       tableName: "dictionary_catalog_read_model_entity",
@@ -61,7 +60,7 @@ export const DictionaryCatalogArchiveDictionary = () => {
       label: t("resources.dictionary_catalog.label", "Dictionary Catalog"),
       aggregateRoute: "dictionary",
       queryRoute: "dictionarycatalog",
-      dataProviderName: "federation-learning-dictionary",
+      dataProviderName: "federation-learning-support",
     },
     formProps: {
       defaultValues,
@@ -69,7 +68,7 @@ export const DictionaryCatalogArchiveDictionary = () => {
     },
   });
 
-  function onSubmit(values: ArchiveDictionaryCommandInput) {
+  async function onSubmit(values: ArchiveDictionaryCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

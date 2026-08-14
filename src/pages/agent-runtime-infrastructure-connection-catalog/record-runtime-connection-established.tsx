@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RecordRuntimeConnectionEstablishedCommandSchema, type RecordRuntimeConnectionEstablishedCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionEstablished = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -70,7 +69,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
     },
   });
 
-  function onSubmit(values: RecordRuntimeConnectionEstablishedCommandInput) {
+  async function onSubmit(values: RecordRuntimeConnectionEstablishedCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,
@@ -122,7 +121,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}

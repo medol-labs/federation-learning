@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UpdateTrainingRunConfigurationCommandSchema, type UpdateTrainingRunConfigurationCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -92,7 +91,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
     },
   });
 
-  function onSubmit(values: UpdateTrainingRunConfigurationCommandInput) {
+  async function onSubmit(values: UpdateTrainingRunConfigurationCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,
@@ -189,7 +188,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -220,7 +219,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -383,7 +382,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -414,7 +413,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}

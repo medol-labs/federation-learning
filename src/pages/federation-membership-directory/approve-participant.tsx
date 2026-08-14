@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ApproveParticipantCommandSchema, type ApproveParticipantCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const FederationMembershipDirectoryApproveParticipant = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -71,7 +70,7 @@ export const FederationMembershipDirectoryApproveParticipant = () => {
     },
   });
 
-  function onSubmit(values: ApproveParticipantCommandInput) {
+  async function onSubmit(values: ApproveParticipantCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

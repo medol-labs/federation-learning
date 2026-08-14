@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SuspendFederationCommandSchema, type SuspendFederationCommandInput } from "@/domain/schemas";
 
-
 export const FederationOverviewSuspendFederation = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const FederationOverviewSuspendFederation = () => {
     },
   });
 
-  function onSubmit(values: SuspendFederationCommandInput) {
+  async function onSubmit(values: SuspendFederationCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

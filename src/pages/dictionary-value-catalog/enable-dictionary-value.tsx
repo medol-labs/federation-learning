@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EnableDictionaryValueCommandSchema, type EnableDictionaryValueCommandInput } from "@/domain/schemas";
 
-
 export const DictionaryValueCatalogEnableDictionaryValue = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -44,15 +43,15 @@ export const DictionaryValueCatalogEnableDictionaryValue = () => {
     command: "enableDictionaryValue",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-dictionary",
-    queryDataProviderName: "federation-learning-dictionary",
+    dataProviderName: "federation-learning-support",
+    queryDataProviderName: "federation-learning-support",
     meta: {
       tableName: "dictionary_value_catalog_read_model_entity",
       idField: "dictionaryValueId",
       label: t("resources.dictionary_value_catalog.label", "Dictionary Value Catalog"),
       aggregateRoute: "dictionaryvalue",
       queryRoute: "dictionaryvaluecatalog",
-      dataProviderName: "federation-learning-dictionary",
+      dataProviderName: "federation-learning-support",
     },
     queryMeta: {
       tableName: "dictionary_value_catalog_read_model_entity",
@@ -60,7 +59,7 @@ export const DictionaryValueCatalogEnableDictionaryValue = () => {
       label: t("resources.dictionary_value_catalog.label", "Dictionary Value Catalog"),
       aggregateRoute: "dictionaryvalue",
       queryRoute: "dictionaryvaluecatalog",
-      dataProviderName: "federation-learning-dictionary",
+      dataProviderName: "federation-learning-support",
     },
     formProps: {
       defaultValues,
@@ -68,7 +67,7 @@ export const DictionaryValueCatalogEnableDictionaryValue = () => {
     },
   });
 
-  function onSubmit(values: EnableDictionaryValueCommandInput) {
+  async function onSubmit(values: EnableDictionaryValueCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

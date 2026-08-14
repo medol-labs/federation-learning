@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RevokeParticipantInvitationCommandSchema, type RevokeParticipantInvitationCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const FederationOverviewRevokeParticipantInvitation = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -70,7 +69,7 @@ export const FederationOverviewRevokeParticipantInvitation = () => {
     },
   });
 
-  function onSubmit(values: RevokeParticipantInvitationCommandInput) {
+  async function onSubmit(values: RevokeParticipantInvitationCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

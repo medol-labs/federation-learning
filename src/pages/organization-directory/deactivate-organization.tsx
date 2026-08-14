@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DeactivateOrganizationCommandSchema, type DeactivateOrganizationCommandInput } from "@/domain/schemas";
 
-
 export const OrganizationDirectoryDeactivateOrganization = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const OrganizationDirectoryDeactivateOrganization = () => {
     },
   });
 
-  function onSubmit(values: DeactivateOrganizationCommandInput) {
+  async function onSubmit(values: DeactivateOrganizationCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

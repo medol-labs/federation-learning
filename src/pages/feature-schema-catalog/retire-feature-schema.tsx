@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RetireFeatureSchemaCommandSchema, type RetireFeatureSchemaCommandInput } from "@/domain/schemas";
 
-
 export const FeatureSchemaCatalogRetireFeatureSchema = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const FeatureSchemaCatalogRetireFeatureSchema = () => {
     },
   });
 
-  function onSubmit(values: RetireFeatureSchemaCommandInput) {
+  async function onSubmit(values: RetireFeatureSchemaCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

@@ -211,6 +211,13 @@ import {
   SecureAggregationSessionCatalogCompleteSecureAggregation,
 } from "../pages/secure-aggregation-session-catalog";
 import {
+  StagedFileCatalogList,
+  StagedFileCatalogShow,
+  StagedFileCatalogStageFileUpload,
+  StagedFileCatalogMarkStagedFileConsumed,
+  StagedFileCatalogDiscardStagedFile,
+} from "../pages/staged-file-catalog";
+import {
   TrainingAlertCatalogList,
   TrainingAlertCatalogShow,
   TrainingAlertCatalogAcknowledgeTrainingAlert,
@@ -466,6 +473,13 @@ export const AppRouter = () => {
           <Route path="show/:id" element={<SecureAggregationSessionCatalogShow />} />
           <Route path=":id/command/fail-secure-aggregation-session" element={<SecureAggregationSessionCatalogFailSecureAggregationSession />} />
           <Route path=":id/command/complete-secure-aggregation" element={<SecureAggregationSessionCatalogCompleteSecureAggregation />} />
+        </Route>
+        <Route path="/staged-file-catalog">
+          <Route index element={<StagedFileCatalogList />} />
+          <Route path="command/stage-file-upload" element={<StagedFileCatalogStageFileUpload />} />
+          <Route path="show/:id" element={<StagedFileCatalogShow />} />
+          <Route path=":id/command/mark-staged-file-consumed" element={<StagedFileCatalogMarkStagedFileConsumed />} />
+          <Route path=":id/command/discard-staged-file" element={<StagedFileCatalogDiscardStagedFile />} />
         </Route>
         <Route path="/training-alert-catalog">
           <Route index element={<TrainingAlertCatalogList />} />

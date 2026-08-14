@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadRuntimeAgentBootstrapConfigurationCommandSchema, type LoadRuntimeAgentBootstrapConfigurationCommandInput } from "@/domain/schemas";
 
-
 export const RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -67,7 +66,7 @@ export const RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration 
     },
   });
 
-  function onSubmit(values: LoadRuntimeAgentBootstrapConfigurationCommandInput) {
+  async function onSubmit(values: LoadRuntimeAgentBootstrapConfigurationCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

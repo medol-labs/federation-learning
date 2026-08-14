@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RollbackModelCommandSchema, type RollbackModelCommandInput } from "@/domain/schemas";
 
-
 export const ModelCatalogRollbackModel = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -69,7 +68,7 @@ export const ModelCatalogRollbackModel = () => {
     },
   });
 
-  function onSubmit(values: RollbackModelCommandInput) {
+  async function onSubmit(values: RollbackModelCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

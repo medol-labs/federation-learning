@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ResolveTrainingAlertCommandSchema, type ResolveTrainingAlertCommandInput } from "@/domain/schemas";
 
-
 export const TrainingAlertCatalogResolveTrainingAlert = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -69,7 +68,7 @@ export const TrainingAlertCatalogResolveTrainingAlert = () => {
     },
   });
 
-  function onSubmit(values: ResolveTrainingAlertCommandInput) {
+  async function onSubmit(values: ResolveTrainingAlertCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

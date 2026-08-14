@@ -30,7 +30,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ConfigureRuntimeDatasetBindingCommandSchema, type ConfigureRuntimeDatasetBindingCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-
 export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -84,7 +83,7 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
     },
   });
 
-  function onSubmit(values: ConfigureRuntimeDatasetBindingCommandInput) {
+  async function onSubmit(values: ConfigureRuntimeDatasetBindingCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,
@@ -214,7 +213,7 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
@@ -408,7 +407,7 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-dictionary"
+                  dataProviderName="federation-learning-support"
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}

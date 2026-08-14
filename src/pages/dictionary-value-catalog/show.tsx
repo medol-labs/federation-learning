@@ -19,14 +19,14 @@ const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
 export const DictionaryValueCatalogShow = () => {
   const t = useTranslate();
   const { result: record } = useShow({
-    dataProviderName: "federation-learning-dictionary",
+    dataProviderName: "federation-learning-support",
     meta: {
       tableName: "dictionary_value_catalog_read_model_entity",
       idField: "dictionaryValueId",
       label: t("resources.dictionary_value_catalog.label", "Dictionary Value Catalog"),
       aggregateRoute: "dictionaryvalue",
       queryRoute: "dictionaryvaluecatalog",
-      dataProviderName: "federation-learning-dictionary",
+      dataProviderName: "federation-learning-support",
     },
   });
 

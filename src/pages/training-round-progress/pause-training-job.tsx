@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PauseTrainingJobCommandSchema, type PauseTrainingJobCommandInput } from "@/domain/schemas";
 
-
 export const TrainingRoundProgressPauseTrainingJob = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const TrainingRoundProgressPauseTrainingJob = () => {
     },
   });
 
-  function onSubmit(values: PauseTrainingJobCommandInput) {
+  async function onSubmit(values: PauseTrainingJobCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,

@@ -29,7 +29,6 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterRuntimeInfrastructureCommandSchema, type RegisterRuntimeInfrastructureCommandInput } from "@/domain/schemas";
 
-
 export const RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure = () => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export const RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure = () =
     },
   });
 
-  function onSubmit(values: RegisterRuntimeInfrastructureCommandInput) {
+  async function onSubmit(values: RegisterRuntimeInfrastructureCommandInput) {
     return onFinish({
       ...defaultValues,
       ...values,
