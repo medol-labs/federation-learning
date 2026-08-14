@@ -5,12 +5,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.datasetgovernance.recordruntimedatasetmetadata.RecordRuntimeDatasetMetadataCommand
 import tech.medo.datasetgovernance.events.DatasetMetadataReportedEvent
-
-
-
-import java.util.UUID;
-import java.math.BigDecimal;
-
+import java.util.UUID
+import java.math.BigDecimal
 
 class RecordRuntimeDatasetMetadataDecisionTest {
     @Test

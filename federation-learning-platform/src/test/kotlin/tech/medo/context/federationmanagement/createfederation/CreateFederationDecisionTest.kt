@@ -5,13 +5,9 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 import tech.medo.federationmanagement.createfederation.CreateFederationCommand
-
 import tech.medo.federationmanagement.federation.FederationNameReservationState
 import tech.medo.federationmanagement.events.FederationNameReservedEvent
-
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class CreateFederationDecisionTest {
     @Test

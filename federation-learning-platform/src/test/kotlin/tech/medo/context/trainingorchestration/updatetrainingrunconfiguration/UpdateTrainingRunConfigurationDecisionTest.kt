@@ -6,12 +6,9 @@ import org.junit.jupiter.api.Test
 import tech.medo.trainingorchestration.updatetrainingrunconfiguration.UpdateTrainingRunConfigurationCommand
 import tech.medo.trainingorchestration.events.TrainingRunConfigurationDefinedEvent
 import tech.medo.trainingorchestration.events.TrainingRunConfigurationUpdatedEvent
-
 import tech.medo.trainingorchestration.trainingrunconfiguration.TrainingRunConfigurationState
-
-import java.util.UUID;
-import java.math.BigDecimal;
-
+import java.util.UUID
+import java.math.BigDecimal
 
 class UpdateTrainingRunConfigurationDecisionTest {
     @Test

@@ -6,12 +6,9 @@ import org.junit.jupiter.api.Test
 import tech.medo.runtimeagentoperations.approvedatasetfortraining.ApproveDatasetForTrainingCommand
 import tech.medo.runtimeagentoperations.events.DatasetContractValidatedEvent
 import tech.medo.runtimeagentoperations.events.DatasetApprovedForTrainingEvent
-
 import tech.medo.runtimeagentoperations.dataset.DatasetState
-
-import java.util.UUID;
-import java.math.BigDecimal;
-
+import java.util.UUID
+import java.math.BigDecimal
 
 class ApproveDatasetForTrainingDecisionTest {
     @Test

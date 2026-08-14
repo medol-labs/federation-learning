@@ -7,10 +7,9 @@ import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.VerifyRuntimeIn
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerifiedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationFailedEvent
-
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureState
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.RuntimeInfrastructureVerification
-import java.util.UUID;
+import java.util.UUID
 import java.time.LocalDateTime
 
 class VerifyRuntimeInfrastructureDecisionTest {

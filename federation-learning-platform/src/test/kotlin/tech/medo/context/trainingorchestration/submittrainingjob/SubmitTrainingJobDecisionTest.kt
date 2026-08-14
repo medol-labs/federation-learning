@@ -6,11 +6,8 @@ import org.junit.jupiter.api.Test
 import tech.medo.trainingorchestration.submittrainingjob.SubmitTrainingJobCommand
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
 import tech.medo.trainingorchestration.events.TrainingJobSubmittedEvent
-
 import tech.medo.trainingorchestration.trainingjob.TrainingJobState
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class SubmitTrainingJobDecisionTest {
     @Test

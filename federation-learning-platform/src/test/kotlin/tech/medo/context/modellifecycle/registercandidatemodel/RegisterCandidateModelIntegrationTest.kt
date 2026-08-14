@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import tech.medo.modellifecycle.registercandidatemodel.RegisterCandidateModelCommand
-import java.util.UUID;
-import java.math.BigDecimal;
+import java.util.UUID
+import java.math.BigDecimal
 
 @SpringBootTest(properties = [
     "spring.docker.compose.enabled=false",

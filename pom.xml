@@ -9,7 +9,7 @@
     <modules>
         <module>shared-kernel</module>
         <module>axon-event-storage-umadb</module>
-        <module>federation-learning-dictionary</module>
+        <module>federation-learning-support</module>
         <module>federation-learning-platform</module>
         <module>federation-learning-runtime-agent</module>
     </modules>

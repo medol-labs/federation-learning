@@ -5,15 +5,11 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 import tech.medo.datasetgovernance.definefeatureschema.DefineFeatureSchemaCommand
-
 import tech.medo.datasetgovernance.featureschema.FeatureSchemaFeatureDomainVersionReservationState
 import tech.medo.datasetgovernance.events.FeatureSchemaFeatureDomainVersionReservedEvent
-
-
-import java.util.UUID;
-import tech.medo.datasetgovernance.domain.types.FeatureDefinition;
-import tech.medo.datasetgovernance.domain.types.LabelDefinition;
-
+import java.util.UUID
+import tech.medo.datasetgovernance.domain.types.FeatureDefinition
+import tech.medo.datasetgovernance.domain.types.LabelDefinition
 
 class DefineFeatureSchemaDecisionTest {
     @Test

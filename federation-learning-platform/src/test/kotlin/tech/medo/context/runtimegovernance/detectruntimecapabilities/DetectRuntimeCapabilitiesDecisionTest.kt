@@ -5,11 +5,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimegovernance.detectruntimecapabilities.DetectRuntimeCapabilitiesCommand
 import tech.medo.runtimegovernance.events.RuntimeCapabilitiesDetectedEvent
-
-
 import tech.medo.runtimegovernance.detectruntimecapabilities.DetectRuntimeCapabilitiesResult
-import java.util.UUID;
-
+import java.util.UUID
 
 class DetectRuntimeCapabilitiesDecisionTest {
     @Test

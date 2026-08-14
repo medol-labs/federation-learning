@@ -6,13 +6,10 @@ import org.junit.jupiter.api.Test
 import tech.medo.datasetgovernance.markcurrentrecommendedfeatureschemaversion.MarkCurrentRecommendedFeatureSchemaVersionCommand
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.datasetgovernance.events.CurrentRecommendedFeatureSchemaVersionMarkedEvent
-
 import tech.medo.datasetgovernance.featureschema.FeatureSchemaState
-
-import java.util.UUID;
-import tech.medo.datasetgovernance.domain.types.FeatureDefinition;
-import tech.medo.datasetgovernance.domain.types.LabelDefinition;
-
+import java.util.UUID
+import tech.medo.datasetgovernance.domain.types.FeatureDefinition
+import tech.medo.datasetgovernance.domain.types.LabelDefinition
 
 class MarkCurrentRecommendedFeatureSchemaVersionDecisionTest {
     @Test

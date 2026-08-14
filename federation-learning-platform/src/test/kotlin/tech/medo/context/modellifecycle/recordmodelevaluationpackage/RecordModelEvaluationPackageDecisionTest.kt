@@ -6,12 +6,9 @@ import org.junit.jupiter.api.Test
 import tech.medo.modellifecycle.recordmodelevaluationpackage.RecordModelEvaluationPackageCommand
 import tech.medo.modellifecycle.events.ModelCandidateRegisteredEvent
 import tech.medo.modellifecycle.events.ModelEvaluationPackageRecordedEvent
-
 import tech.medo.modellifecycle.model.ModelState
-
-import java.util.UUID;
-import java.math.BigDecimal;
-
+import java.util.UUID
+import java.math.BigDecimal
 
 class RecordModelEvaluationPackageDecisionTest {
     @Test

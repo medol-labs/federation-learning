@@ -7,10 +7,8 @@ import tech.medo.runtimeagentoperations.reportruntimeinstanceconnected.ReportRun
 import tech.medo.runtimeagentoperations.events.RuntimeInstanceSelfCheckPassedEvent
 import tech.medo.runtimeagentoperations.events.AgentRuntimeConnectionEstablishedEvent
 import tech.medo.runtimeagentoperations.events.AgentRuntimeConnectionReportFailedEvent
-
-
 import tech.medo.runtimeagentoperations.reportruntimeinstanceconnected.ReportRuntimeInstanceConnectedResult
-import java.util.UUID;
+import java.util.UUID
 import java.time.LocalDateTime
 
 class ReportRuntimeInstanceConnectedDecisionTest {

@@ -6,11 +6,9 @@ import org.junit.jupiter.api.Test
 import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetCommand
 import tech.medo.runtimeagentoperations.events.AgentDatasetMetadataReportedEvent
 import tech.medo.runtimeagentoperations.events.AgentDatasetProfilingFailedEvent
-
-
 import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetResult
-import java.util.UUID;
-import java.math.BigDecimal;
+import java.util.UUID
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class ProfileAgentDatasetDecisionTest {

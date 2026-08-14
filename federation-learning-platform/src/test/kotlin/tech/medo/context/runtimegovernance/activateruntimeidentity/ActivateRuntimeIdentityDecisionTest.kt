@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimegovernance.activateruntimeidentity.ActivateRuntimeIdentityCommand
 import tech.medo.runtimegovernance.events.RuntimeIdentityActivatedEvent
-
-
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class ActivateRuntimeIdentityDecisionTest {
     @Test

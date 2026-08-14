@@ -6,13 +6,10 @@ import org.junit.jupiter.api.Test
 import tech.medo.datasetgovernance.supersedefeatureschemaversion.SupersedeFeatureSchemaVersionCommand
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.datasetgovernance.events.FeatureSchemaVersionSupersededEvent
-
 import tech.medo.datasetgovernance.featureschema.FeatureSchemaState
-
-import java.util.UUID;
-import tech.medo.datasetgovernance.domain.types.FeatureDefinition;
-import tech.medo.datasetgovernance.domain.types.LabelDefinition;
-
+import java.util.UUID
+import tech.medo.datasetgovernance.domain.types.FeatureDefinition
+import tech.medo.datasetgovernance.domain.types.LabelDefinition
 
 class SupersedeFeatureSchemaVersionDecisionTest {
     @Test

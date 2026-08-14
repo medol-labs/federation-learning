@@ -7,10 +7,9 @@ import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanC
 import tech.medo.runtimeagentoperations.events.ExecutionPlanReceivedEvent
 import tech.medo.runtimeagentoperations.events.ExecutionPlanAcceptedEvent
 import tech.medo.runtimeagentoperations.events.ExecutionPlanRejectedEvent
-
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanResult
-import java.util.UUID;
+import java.util.UUID
 import java.time.LocalDateTime
 
 class AcceptExecutionPlanDecisionTest {

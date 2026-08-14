@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import tech.medo.shared.application.metadata.MetadataFactory
+
 import java.util.concurrent.CompletableFuture
 
 @CrossOrigin
 @RestController
 @RequestMapping("/trainingrunconfiguration")
-class DefineTrainingRunConfigurationResource(private val commandGateway: CommandGateway) {
+class DefineTrainingRunConfigurationResource(
+    private val commandGateway: CommandGateway
+) {
     @PostMapping("/definetrainingrunconfiguration")
     fun DefineTrainingRunConfiguration(
         @Valid @RequestBody command: DefineTrainingRunConfigurationCommand,

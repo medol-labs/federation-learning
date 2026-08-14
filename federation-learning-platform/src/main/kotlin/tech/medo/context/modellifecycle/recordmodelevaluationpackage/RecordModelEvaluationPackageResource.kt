@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import tech.medo.shared.application.metadata.MetadataFactory
+
 import java.util.concurrent.CompletableFuture
 
 @CrossOrigin
 @RestController
 @RequestMapping("/model")
-class RecordModelEvaluationPackageResource(private val commandGateway: CommandGateway) {
+class RecordModelEvaluationPackageResource(
+    private val commandGateway: CommandGateway
+) {
     @PostMapping("/recordmodelevaluationpackage")
     fun RecordModelEvaluationPackage(
         @Valid @RequestBody command: RecordModelEvaluationPackageCommand,

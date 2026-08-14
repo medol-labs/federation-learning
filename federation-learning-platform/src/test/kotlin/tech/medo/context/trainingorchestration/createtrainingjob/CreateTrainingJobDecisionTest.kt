@@ -6,12 +6,8 @@ import org.junit.jupiter.api.Test
 import tech.medo.trainingorchestration.createtrainingjob.CreateTrainingJobCommand
 import tech.medo.trainingorchestration.events.TrainingRunConfigurationDefinedEvent
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
-
-
-
-import java.util.UUID;
-import java.math.BigDecimal;
-
+import java.util.UUID
+import java.math.BigDecimal
 
 class CreateTrainingJobDecisionTest {
     @Test

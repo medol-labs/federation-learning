@@ -7,11 +7,10 @@ import tech.medo.runtimeagentoperations.retrydatasetcontractvalidation.RetryData
 import tech.medo.runtimeagentoperations.events.DatasetContractValidationFailedEvent
 import tech.medo.runtimeagentoperations.events.DatasetContractRevalidatedEvent
 import tech.medo.runtimeagentoperations.events.DatasetContractRevalidationFailedEvent
-
 import tech.medo.runtimeagentoperations.dataset.DatasetState
 import tech.medo.runtimeagentoperations.retrydatasetcontractvalidation.RetryDatasetContractValidationResult
-import java.util.UUID;
-import java.math.BigDecimal;
+import java.util.UUID
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class RetryDatasetContractValidationDecisionTest {

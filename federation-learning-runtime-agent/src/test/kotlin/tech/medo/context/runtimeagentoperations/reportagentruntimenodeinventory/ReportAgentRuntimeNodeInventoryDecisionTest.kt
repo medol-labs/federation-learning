@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimeagentoperations.reportagentruntimenodeinventory.ReportAgentRuntimeNodeInventoryCommand
 import tech.medo.runtimeagentoperations.events.AgentRuntimeNodeInventoryReportedEvent
-
-
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class ReportAgentRuntimeNodeInventoryDecisionTest {
     @Test

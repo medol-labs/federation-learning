@@ -19,7 +19,7 @@ class RegisterModelArtifactCommandHandler(
         command: RegisterModelArtifactCommand,
         eventAppender: EventAppender
     ) {
-        val input = RegisterModelArtifactInput(modelId = command.modelId, modelName = command.modelName, modelVersion = command.modelVersion, sourceType = command.sourceType, sourceLocation = command.sourceLocation, modelFormat = command.modelFormat)
+        val input = RegisterModelArtifactInput(modelId = command.modelId, modelName = command.modelName, modelVersion = command.modelVersion, sourceType = command.sourceType, stagedFileId = command.stagedFileId, modelFormat = command.modelFormat)
         val portResult = registerModelArtifactService.execute(input)
 
         eventAppender.append(decision.decide(command, portResult))

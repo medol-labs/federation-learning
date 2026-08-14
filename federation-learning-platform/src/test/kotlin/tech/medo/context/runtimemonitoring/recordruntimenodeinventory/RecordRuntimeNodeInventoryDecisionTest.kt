@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimemonitoring.recordruntimenodeinventory.RecordRuntimeNodeInventoryCommand
 import tech.medo.runtimemonitoring.events.RuntimeNodeInventoryReportedEvent
-
-
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class RecordRuntimeNodeInventoryDecisionTest {
     @Test

@@ -7,11 +7,10 @@ import tech.medo.runtimeprovisioning.retryruntimeagentdeployment.RetryRuntimeAge
 import tech.medo.runtimeprovisioning.events.RuntimeAgentInstallationFailedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentDeploymentRetrySucceededEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentDeploymentRetryFailedEvent
-
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureState
 import tech.medo.runtimeprovisioning.retryruntimeagentdeployment.RetryRuntimeAgentDeploymentResult
-import java.util.UUID;
-import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
+import java.util.UUID
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 import java.time.LocalDateTime
 
 class RetryRuntimeAgentDeploymentDecisionTest {

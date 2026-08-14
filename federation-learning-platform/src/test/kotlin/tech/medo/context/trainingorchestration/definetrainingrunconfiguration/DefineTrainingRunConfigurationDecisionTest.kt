@@ -5,12 +5,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.trainingorchestration.definetrainingrunconfiguration.DefineTrainingRunConfigurationCommand
 import tech.medo.trainingorchestration.events.TrainingRunConfigurationDefinedEvent
-
-
-
-import java.util.UUID;
-import java.math.BigDecimal;
-
+import java.util.UUID
+import java.math.BigDecimal
 
 class DefineTrainingRunConfigurationDecisionTest {
     @Test

@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.secureaggregation.createsecureaggregationsession.CreateSecureAggregationSessionCommand
 import tech.medo.secureaggregation.events.SecureAggregationSessionCreatedEvent
-
-
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class CreateSecureAggregationSessionDecisionTest {
     @Test

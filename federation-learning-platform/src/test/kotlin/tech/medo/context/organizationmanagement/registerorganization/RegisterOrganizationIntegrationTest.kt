@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import tech.medo.organizationmanagement.registerorganization.RegisterOrganizationCommand
-import java.util.UUID;
-import tech.medo.organizationmanagement.domain.types.OrganizationType;
+import java.util.UUID
+import tech.medo.organizationmanagement.domain.types.OrganizationType
 
 @SpringBootTest(properties = [
     "spring.docker.compose.enabled=false",

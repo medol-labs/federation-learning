@@ -6,13 +6,10 @@ import org.junit.jupiter.api.Test
 import tech.medo.datasetgovernance.publishfeatureschema.PublishFeatureSchemaCommand
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.datasetgovernance.events.FeatureSchemaPublishedEvent
-
 import tech.medo.datasetgovernance.featureschema.FeatureSchemaState
-
-import java.util.UUID;
-import tech.medo.datasetgovernance.domain.types.FeatureDefinition;
-import tech.medo.datasetgovernance.domain.types.LabelDefinition;
-
+import java.util.UUID
+import tech.medo.datasetgovernance.domain.types.FeatureDefinition
+import tech.medo.datasetgovernance.domain.types.LabelDefinition
 
 class PublishFeatureSchemaDecisionTest {
     @Test

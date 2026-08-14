@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import tech.medo.runtimemonitoring.recordruntimenodeinventory.RecordRuntimeNodeInventoryCommand
-import java.util.UUID;
+import java.util.UUID
 
 @SpringBootTest(properties = [
     "spring.docker.compose.enabled=false",

@@ -5,14 +5,10 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 import tech.medo.organizationmanagement.registerorganization.RegisterOrganizationCommand
-
 import tech.medo.organizationmanagement.organization.OrganizationNameReservationState
 import tech.medo.organizationmanagement.events.OrganizationNameReservedEvent
-
-
-import java.util.UUID;
-import tech.medo.organizationmanagement.domain.types.OrganizationType;
-
+import java.util.UUID
+import tech.medo.organizationmanagement.domain.types.OrganizationType
 
 class RegisterOrganizationDecisionTest {
     @Test

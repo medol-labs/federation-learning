@@ -6,11 +6,8 @@ import org.junit.jupiter.api.Test
 import tech.medo.federationmanagement.approveparticipant.ApproveParticipantCommand
 import tech.medo.federationmanagement.events.ParticipantInvitedEvent
 import tech.medo.federationmanagement.events.ParticipantJoinedEvent
-
 import tech.medo.federationmanagement.federationmembership.FederationMembershipState
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class ApproveParticipantDecisionTest {
     @Test

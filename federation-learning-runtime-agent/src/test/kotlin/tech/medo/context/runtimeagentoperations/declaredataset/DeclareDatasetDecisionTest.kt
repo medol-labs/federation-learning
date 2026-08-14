@@ -5,13 +5,10 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimeagentoperations.declaredataset.DeclareDatasetCommand
 import tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent
-
-
 import tech.medo.runtimeagentoperations.declaredataset.DeclareDatasetResult
-import java.util.UUID;
-import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition;
-import tech.medo.runtimeagentoperations.domain.types.LabelDefinition;
-
+import java.util.UUID
+import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition
+import tech.medo.runtimeagentoperations.domain.types.LabelDefinition
 
 class DeclareDatasetDecisionTest {
     @Test

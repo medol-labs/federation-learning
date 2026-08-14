@@ -6,10 +6,8 @@ import org.junit.jupiter.api.Test
 import tech.medo.runtimeagentoperations.validateagentdatasetaccess.ValidateAgentDatasetAccessCommand
 import tech.medo.runtimeagentoperations.events.AgentDatasetAccessValidatedEvent
 import tech.medo.runtimeagentoperations.events.AgentDatasetAccessValidationFailedEvent
-
-
 import tech.medo.runtimeagentoperations.validateagentdatasetaccess.ValidateAgentDatasetAccessResult
-import java.util.UUID;
+import java.util.UUID
 import java.time.LocalDateTime
 
 class ValidateAgentDatasetAccessDecisionTest {

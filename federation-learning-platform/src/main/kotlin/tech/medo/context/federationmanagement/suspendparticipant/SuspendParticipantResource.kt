@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import tech.medo.shared.application.metadata.MetadataFactory
+
 import java.util.concurrent.CompletableFuture
 
 @CrossOrigin
 @RestController
 @RequestMapping("/federationmembership")
-class SuspendParticipantResource(private val commandGateway: CommandGateway) {
+class SuspendParticipantResource(
+    private val commandGateway: CommandGateway
+) {
     @PostMapping("/suspendparticipant")
     fun SuspendParticipant(
         @Valid @RequestBody command: SuspendParticipantCommand,

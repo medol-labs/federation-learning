@@ -6,10 +6,8 @@ import org.junit.jupiter.api.Test
 import tech.medo.runtimeagentoperations.loadruntimeagentbootstrapconfiguration.LoadRuntimeAgentBootstrapConfigurationCommand
 import tech.medo.runtimeagentoperations.events.RuntimeAgentBootstrapConfigurationLoadedEvent
 import tech.medo.runtimeagentoperations.events.RuntimeAgentBootstrapConfigurationLoadFailedEvent
-
-
 import tech.medo.runtimeagentoperations.loadruntimeagentbootstrapconfiguration.LoadRuntimeAgentBootstrapConfigurationResult
-import java.util.UUID;
+import java.util.UUID
 import java.time.LocalDateTime
 
 class LoadRuntimeAgentBootstrapConfigurationDecisionTest {

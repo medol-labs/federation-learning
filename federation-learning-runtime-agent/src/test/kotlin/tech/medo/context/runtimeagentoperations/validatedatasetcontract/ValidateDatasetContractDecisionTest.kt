@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Test
 import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractCommand
 import tech.medo.runtimeagentoperations.events.DatasetContractValidatedEvent
 import tech.medo.runtimeagentoperations.events.DatasetContractValidationFailedEvent
-
 import tech.medo.runtimeagentoperations.dataset.DatasetState
 import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractResult
-import java.util.UUID;
-import java.math.BigDecimal;
+import java.util.UUID
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class ValidateDatasetContractDecisionTest {

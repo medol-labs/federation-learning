@@ -6,12 +6,9 @@ import org.junit.jupiter.api.Test
 import tech.medo.trainingorchestration.evaluatemodelupdatesubmission.EvaluateModelUpdateSubmissionCommand
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionReceivedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionRejectedEvent
-
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
-
-import java.util.UUID;
-import java.math.BigDecimal;
-
+import java.util.UUID
+import java.math.BigDecimal
 
 class EvaluateModelUpdateSubmissionDecisionTest {
     @Test

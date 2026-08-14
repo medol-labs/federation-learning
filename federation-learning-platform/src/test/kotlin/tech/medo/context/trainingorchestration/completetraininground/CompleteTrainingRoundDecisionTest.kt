@@ -6,12 +6,9 @@ import org.junit.jupiter.api.Test
 import tech.medo.trainingorchestration.completetraininground.CompleteTrainingRoundCommand
 import tech.medo.trainingorchestration.events.GlobalModelEvaluationSubmittedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundCompletedEvent
-
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
-
-import java.util.UUID;
-import java.math.BigDecimal;
-
+import java.util.UUID
+import java.math.BigDecimal
 
 class CompleteTrainingRoundDecisionTest {
     @Test

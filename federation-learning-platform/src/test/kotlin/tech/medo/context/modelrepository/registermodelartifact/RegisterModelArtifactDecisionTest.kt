@@ -5,11 +5,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.modelrepository.registermodelartifact.RegisterModelArtifactCommand
 import tech.medo.modelrepository.events.ModelArtifactRegisteredEvent
-
-
 import tech.medo.modelrepository.registermodelartifact.RegisterModelArtifactResult
-import java.util.UUID;
-
+import java.util.UUID
 
 class RegisterModelArtifactDecisionTest {
     @Test
@@ -21,7 +18,7 @@ class RegisterModelArtifactDecisionTest {
             modelName = "credit-risk",
             modelVersion = "v1",
             sourceType = "UPLOAD",
-            sourceLocation = "upload://credit-risk-initial.onnx",
+            stagedFileId = UUID.nameUUIDFromBytes("staged-file-1".toByteArray()),
             modelFormat = "ONNX"
         )
 

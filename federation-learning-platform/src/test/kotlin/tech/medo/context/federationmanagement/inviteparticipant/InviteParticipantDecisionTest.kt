@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.federationmanagement.inviteparticipant.InviteParticipantCommand
 import tech.medo.federationmanagement.events.ParticipantInvitedEvent
-
-
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class InviteParticipantDecisionTest {
     @Test

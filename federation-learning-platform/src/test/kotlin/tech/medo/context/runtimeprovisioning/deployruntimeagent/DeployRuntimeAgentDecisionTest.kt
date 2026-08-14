@@ -7,10 +7,9 @@ import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentComman
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerifiedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentInstallationSucceededEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentInstallationFailedEvent
-
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureState
 import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentResult
-import java.util.UUID;
+import java.util.UUID
 import java.time.LocalDateTime
 
 class DeployRuntimeAgentDecisionTest {

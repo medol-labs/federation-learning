@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimeagentoperations.receiveparticipantexecutionplan.ReceiveParticipantExecutionPlanCommand
 import tech.medo.runtimeagentoperations.events.ExecutionPlanReceivedEvent
-
-
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class ReceiveParticipantExecutionPlanDecisionTest {
     @Test

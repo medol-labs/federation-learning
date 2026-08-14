@@ -7,11 +7,10 @@ import tech.medo.runtimeagentoperations.reprofileagentdataset.ReprofileAgentData
 import tech.medo.runtimeagentoperations.events.AgentDatasetProfilingFailedEvent
 import tech.medo.runtimeagentoperations.events.AgentDatasetReprofiledEvent
 import tech.medo.runtimeagentoperations.events.AgentDatasetReprofilingFailedEvent
-
 import tech.medo.runtimeagentoperations.agentdatasetprofile.AgentDatasetProfileState
 import tech.medo.runtimeagentoperations.reprofileagentdataset.ReprofileAgentDatasetResult
-import java.util.UUID;
-import java.math.BigDecimal;
+import java.util.UUID
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class ReprofileAgentDatasetDecisionTest {

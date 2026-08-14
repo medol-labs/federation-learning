@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimeprovisioning.planruntimeinfrastructure.PlanRuntimeInfrastructureCommand
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePlannedEvent
-
-
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class PlanRuntimeInfrastructureDecisionTest {
     @Test

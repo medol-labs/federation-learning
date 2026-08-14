@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import tech.medo.shared.application.metadata.MetadataFactory
+
 import java.util.concurrent.CompletableFuture
 
 @CrossOrigin
 @RestController
 @RequestMapping("/secureaggregationsession")
-class RecordEncryptedModelUpdateResource(private val commandGateway: CommandGateway) {
+class RecordEncryptedModelUpdateResource(
+    private val commandGateway: CommandGateway
+) {
     @PostMapping("/recordencryptedmodelupdate")
     fun RecordEncryptedModelUpdate(
         @Valid @RequestBody command: RecordEncryptedModelUpdateCommand,

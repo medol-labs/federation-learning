@@ -5,12 +5,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.modellifecycle.registercandidatemodel.RegisterCandidateModelCommand
 import tech.medo.modellifecycle.events.ModelCandidateRegisteredEvent
-
-
-
-import java.util.UUID;
-import java.math.BigDecimal;
-
+import java.util.UUID
+import java.math.BigDecimal
 
 class RegisterCandidateModelDecisionTest {
     @Test

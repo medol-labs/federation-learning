@@ -5,12 +5,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimemonitoring.detectruntimenoderesourcepressure.DetectRuntimeNodeResourcePressureCommand
 import tech.medo.runtimemonitoring.events.RuntimeNodeResourcePressureDetectedEvent
-
-
-
-import java.util.UUID;
-import java.math.BigDecimal;
-
+import java.util.UUID
+import java.math.BigDecimal
 
 class DetectRuntimeNodeResourcePressureDecisionTest {
     @Test

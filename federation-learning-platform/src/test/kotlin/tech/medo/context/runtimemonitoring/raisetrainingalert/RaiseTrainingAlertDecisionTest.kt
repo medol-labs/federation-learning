@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimemonitoring.raisetrainingalert.RaiseTrainingAlertCommand
 import tech.medo.runtimemonitoring.events.TrainingAlertRaisedEvent
-
-
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class RaiseTrainingAlertDecisionTest {
     @Test

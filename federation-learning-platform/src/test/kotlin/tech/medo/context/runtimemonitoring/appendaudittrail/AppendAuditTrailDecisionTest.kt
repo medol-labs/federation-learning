@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimemonitoring.appendaudittrail.AppendAuditTrailCommand
 import tech.medo.runtimemonitoring.events.AuditTrailAppendedEvent
-
-
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class AppendAuditTrailDecisionTest {
     @Test

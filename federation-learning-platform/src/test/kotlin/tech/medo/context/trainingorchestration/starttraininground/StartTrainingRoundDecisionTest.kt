@@ -7,11 +7,10 @@ import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundComm
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundStartedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundStartFailedEvent
-
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundResult
-import java.util.UUID;
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
+import java.util.UUID
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 import java.time.LocalDateTime
 
 class StartTrainingRoundDecisionTest {

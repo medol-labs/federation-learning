@@ -6,12 +6,9 @@ import org.junit.jupiter.api.Test
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsCommand
 import tech.medo.trainingorchestration.events.TrainingJobSubmittedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
-
-
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsResult
-import java.util.UUID;
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
-
+import java.util.UUID
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 
 class SelectTrainingRoundParticipantsDecisionTest {
     @Test

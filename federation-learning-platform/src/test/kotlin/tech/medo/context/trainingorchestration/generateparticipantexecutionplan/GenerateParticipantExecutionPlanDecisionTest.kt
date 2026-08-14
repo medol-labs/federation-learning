@@ -7,13 +7,9 @@ import tech.medo.trainingorchestration.generateparticipantexecutionplan.Generate
 import tech.medo.trainingorchestration.events.TrainingRoundStartedEvent
 import tech.medo.trainingorchestration.events.ParticipantExecutionPlanGeneratedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundCompletedEvent
-
-
-
-import java.util.UUID;
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
-import java.math.BigDecimal;
-
+import java.util.UUID
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
+import java.math.BigDecimal
 
 class GenerateParticipantExecutionPlanDecisionTest {
     @Test

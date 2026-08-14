@@ -6,11 +6,8 @@ import org.junit.jupiter.api.Test
 import tech.medo.modellifecycle.approvemodel.ApproveModelCommand
 import tech.medo.modellifecycle.events.ModelEvaluationPackageRecordedEvent
 import tech.medo.modellifecycle.events.ModelApprovedEvent
-
 import tech.medo.modellifecycle.model.ModelState
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class ApproveModelDecisionTest {
     @Test

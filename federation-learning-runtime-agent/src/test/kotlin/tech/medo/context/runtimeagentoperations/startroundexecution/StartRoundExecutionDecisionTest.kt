@@ -7,10 +7,9 @@ import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionC
 import tech.medo.runtimeagentoperations.events.ExecutionPlanAcceptedEvent
 import tech.medo.runtimeagentoperations.events.RoundExecutionStartedEvent
 import tech.medo.runtimeagentoperations.events.RoundExecutionStartFailedEvent
-
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionResult
-import java.util.UUID;
+import java.util.UUID
 import java.time.LocalDateTime
 
 class StartRoundExecutionDecisionTest {

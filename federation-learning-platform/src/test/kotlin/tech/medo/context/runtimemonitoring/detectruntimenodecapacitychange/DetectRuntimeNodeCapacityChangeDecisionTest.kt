@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimemonitoring.detectruntimenodecapacitychange.DetectRuntimeNodeCapacityChangeCommand
 import tech.medo.runtimemonitoring.events.RuntimeNodeCapacityChangedEvent
-
-
-
-import java.util.UUID;
-
+import java.util.UUID
 
 class DetectRuntimeNodeCapacityChangeDecisionTest {
     @Test
