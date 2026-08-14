@@ -18,3 +18,19 @@ runtime-agent:
   dataset-metadata-reporting:
     enabled: ${RUNTIME_AGENT_DATASET_METADATA_REPORTING_ENABLED:true}
     platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
+  local-runtime-engine:
+    enabled: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENABLED:true}
+    compose-file: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMPOSE_FILE:../GemiFL/docker-compose.yml}
+    project-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_PROJECT_NAME:gemifl-runtime}
+    service-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_SERVICE_NAME:alice-runtime}
+    endpoint: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENDPOINT:http://localhost:8081}
+    node-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_NODE_NAME:Alice}
+    runtime-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT:/workspace/tmp/gemifl}
+    dataset-host-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_HOST_ROOT:../volumes/datasets}
+    dataset-container-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_CONTAINER_ROOT:/workspace/datasets}
+    model: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODEL:linear.LogisticRegression}
+    epoch: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_EPOCH:1}
+    learning-rate: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_LEARNING_RATE:0.1}
+    command-timeout: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMMAND_TIMEOUT:PT2M}
+    health-timeout: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_HEALTH_TIMEOUT:PT30S}
+    health-poll-interval: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_HEALTH_POLL_INTERVAL:PT1S}
