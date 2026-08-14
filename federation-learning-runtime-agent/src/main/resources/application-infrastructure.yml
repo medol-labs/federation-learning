@@ -20,13 +20,13 @@ runtime-agent:
     platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
   local-runtime-engine:
     enabled: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENABLED:true}
-    compose-file: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMPOSE_FILE:../GemiFL/docker-compose.yml}
+    compose-file: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMPOSE_FILE:../../GemiFL/docker-compose.yml}
     project-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_PROJECT_NAME:gemifl-runtime}
-    service-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_SERVICE_NAME:alice-runtime}
-    endpoint: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENDPOINT:http://localhost:8081}
-    node-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_NODE_NAME:Alice}
+    service-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_SERVICE_NAME:runtime-engine}
+    endpoint: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENDPOINT:http://localhost:18080}
+    node-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_NODE_NAME:local-runtime}
     runtime-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT:/workspace/tmp/gemifl}
-    dataset-host-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_HOST_ROOT:../volumes/datasets}
+    dataset-host-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_HOST_ROOT:../../volumes/datasets}
     dataset-container-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_CONTAINER_ROOT:/workspace/datasets}
     model: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODEL:linear.LogisticRegression}
     epoch: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_EPOCH:1}

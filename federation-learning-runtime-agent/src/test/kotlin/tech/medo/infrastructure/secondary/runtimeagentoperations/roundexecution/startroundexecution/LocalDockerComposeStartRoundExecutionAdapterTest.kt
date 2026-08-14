@@ -31,14 +31,14 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
         val result = adapter.execute(input(runtimeEngineJobId = "job-1"))
 
         assertTrue(result is StartRoundExecutionResult.Succeeded)
-        assertEquals(listOf(listOf("up", "-d", "alice-runtime")), runner.commands)
-        assertEquals("http://localhost:8081", client.healthEndpoints.single())
+        assertEquals(listOf(listOf("up", "-d", "runtime-engine")), runner.commands)
+        assertEquals("http://localhost:18080", client.healthEndpoints.single())
         val request = client.jobs.single()
         assertEquals("job-1", request.jobId)
         assertEquals("train", request.operation)
-        assertEquals("Alice", request.myName)
+        assertEquals("local-runtime", request.myName)
         assertEquals("/workspace/datasets/alice.csv", (request.input["dataset"] as Map<*, *>)["path"])
-        assertEquals("/workspace/tmp/gemifl/job-1/Alice/local_update.json", request.output["local_update"])
+        assertEquals("/workspace/tmp/gemifl/job-1/local-runtime/local_update.json", request.output["local_update"])
     }
 
     @Test
@@ -75,9 +75,9 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
             properties = LocalRuntimeEngineProperties(
                 composeFile = "../GemiFL/docker-compose.yml",
                 projectName = "gemifl-runtime",
-                serviceName = "alice-runtime",
-                endpoint = "http://localhost:8081",
-                nodeName = "Alice",
+                serviceName = "runtime-engine",
+                endpoint = "http://localhost:18080",
+                nodeName = "local-runtime",
                 datasetHostRoot = "../volumes/datasets",
                 datasetContainerRoot = "/workspace/datasets"
             ),
