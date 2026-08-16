@@ -16,7 +16,7 @@ import java.time.Instant
 class LocalDockerComposeStartRoundExecutionAdapter(
     private val properties: LocalRuntimeEngineProperties,
     private val commandRunner: LocalRuntimeEngineCommandRunner,
-    private val runtimeEngineClient: GemiFlRuntimeEngineClient,
+    private val runtimeEngineClient: RuntimeEngineClient,
     private val bindingRepository: RuntimeDatasetBindingCatalogReadModelRepository
 ) : StartRoundExecutionService {
     private val log = LoggerFactory.getLogger(javaClass)
@@ -37,22 +37,39 @@ class LocalDockerComposeStartRoundExecutionAdapter(
         if (!compose.succeeded) {
             return StartRoundExecutionResult.Unavailable(
                 failureReason = if (compose.timedOut) {
-                    "GemiFL docker compose up timed out after ${properties.commandTimeout}."
+                    "Runtime engine docker compose up timed out after ${properties.commandTimeout}."
                 } else {
-                    "GemiFL docker compose up failed with exitCode=${compose.exitCode}: ${compose.output}"
+                    "Runtime engine docker compose up failed with exitCode=${compose.exitCode}: ${compose.output}"
                 }
             )
         }
 
         val endpoint = properties.endpoint.trim().removeSuffix("/")
-        waitUntilHealthy(endpoint)
+        try {
+            waitUntilHealthy(endpoint)
+        } catch (ex: Exception) {
+            return StartRoundExecutionResult.Unavailable(
+                failureReason = "Runtime engine health check failed: ${ex.message ?: ex.javaClass.name}"
+            )
+        }
 
         val runtimeEngineJobId = input.runtimeEngineJobId.ifBlank { defaultRuntimeEngineJobId(input) }
         val request = buildJobRequest(input, runtimeEngineJobId, datasetPath)
-        val response = runtimeEngineClient.startJob(endpoint, request)
+        val response = try {
+            runtimeEngineClient.startJob(endpoint, request)
+        } catch (ex: Exception) {
+            return StartRoundExecutionResult.Unavailable(
+                failureReason = "Runtime engine job submission failed: ${ex.message ?: ex.javaClass.name}"
+            )
+        }
+        if (response.status.equals("failed", ignoreCase = true)) {
+            return StartRoundExecutionResult.Rejected(
+                failureReason = "Runtime engine rejected job $runtimeEngineJobId: ${response.output}"
+            )
+        }
 
         log.info(
-            "Started local GemiFL round execution. roundExecutionId={}, executionPlanId={}, runtimeEngineJobId={}, endpoint={}, status={}, output={}",
+            "Started local runtime engine round execution. roundExecutionId={}, executionPlanId={}, runtimeEngineJobId={}, endpoint={}, status={}, output={}",
             input.roundExecutionId,
             input.executionPlanId,
             runtimeEngineJobId,
@@ -85,7 +102,7 @@ class LocalDockerComposeStartRoundExecutionAdapter(
             Thread.sleep(properties.healthPollInterval.coerceAtLeast(Duration.ofMillis(100)).toMillis())
         }
         throw IllegalStateException(
-            "GemiFL runtime engine at $endpoint did not become healthy within ${properties.healthTimeout}." +
+            "Runtime engine at $endpoint did not become healthy within ${properties.healthTimeout}." +
                 (lastFailure?.message?.let { " Last error: $it" } ?: "")
         )
     }
@@ -94,7 +111,7 @@ class LocalDockerComposeStartRoundExecutionAdapter(
         input: StartRoundExecutionInput,
         runtimeEngineJobId: String,
         datasetPath: String
-    ): GemiFlJobRequest {
+    ): RuntimeEngineJobRequest {
         val localUpdatePath = "${properties.runtimeRoot}/$runtimeEngineJobId/${properties.nodeName}/local_update.json"
         val metricsPath = "${properties.runtimeRoot}/$runtimeEngineJobId/${properties.nodeName}/metrics.json"
         val globalModelPath = input.baseModelArtifactUri
@@ -112,7 +129,7 @@ class LocalDockerComposeStartRoundExecutionAdapter(
             runtimeInput["global_model"] = globalModelPath
         }
 
-        return GemiFlJobRequest(
+        return RuntimeEngineJobRequest(
             jobId = runtimeEngineJobId,
             taskId = runtimeEngineJobId,
             roundId = input.roundNumber,

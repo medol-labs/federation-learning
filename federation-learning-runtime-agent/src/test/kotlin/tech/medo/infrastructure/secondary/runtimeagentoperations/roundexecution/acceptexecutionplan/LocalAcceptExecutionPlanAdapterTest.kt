@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
-import tech.medo.infrastructure.secondary.runtimeagentoperations.runtimeagentlifecycle.loadruntimeagentbootstrapconfiguration.RuntimeAgentBootstrapConfigurationProperties
 import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanInput
 import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanResult
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
@@ -28,8 +27,7 @@ class LocalAcceptExecutionPlanAdapterTest {
             bindingRepository = bindingRepository(
                 binding(runtimeId = runtimeId, organizationId = organizationId)
             ),
-            roundExecutionRepository = roundExecutionRepository(),
-            bootstrapProperties = RuntimeAgentBootstrapConfigurationProperties(runtimeAgentId = runtimeId.toString())
+            roundExecutionRepository = roundExecutionRepository()
         )
 
         val result = adapter.execute(input())
@@ -47,8 +45,7 @@ class LocalAcceptExecutionPlanAdapterTest {
     fun rejectsWhenRuntimeDatasetBindingIsMissing() {
         val adapter = LocalAcceptExecutionPlanAdapter(
             bindingRepository = bindingRepository(),
-            roundExecutionRepository = roundExecutionRepository(),
-            bootstrapProperties = RuntimeAgentBootstrapConfigurationProperties(runtimeAgentId = runtimeId.toString())
+            roundExecutionRepository = roundExecutionRepository()
         )
 
         val result = adapter.execute(input())

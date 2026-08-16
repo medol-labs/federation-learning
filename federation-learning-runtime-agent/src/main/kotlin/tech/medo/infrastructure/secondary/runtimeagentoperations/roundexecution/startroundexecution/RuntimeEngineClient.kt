@@ -4,60 +4,60 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
 
-interface GemiFlRuntimeEngineClient {
-    fun health(endpoint: String): GemiFlHealthResponse
-    fun startJob(endpoint: String, request: GemiFlJobRequest): GemiFlJobResponse
+interface RuntimeEngineClient {
+    fun health(endpoint: String): RuntimeEngineHealthResponse
+    fun startJob(endpoint: String, request: RuntimeEngineJobRequest): RuntimeEngineJobResponse
 }
 
 @Component
-class RestClientGemiFlRuntimeEngineClient(
+class RestClientRuntimeEngineClient(
     restClientBuilder: RestClient.Builder
-) : GemiFlRuntimeEngineClient {
+) : RuntimeEngineClient {
     private val restClient = restClientBuilder.build()
 
-    override fun health(endpoint: String): GemiFlHealthResponse =
+    override fun health(endpoint: String): RuntimeEngineHealthResponse =
         restClient.get()
             .uri("${endpoint.trim().removeSuffix("/")}/healthz")
             .retrieve()
-            .body(GemiFlHealthResponse::class.java)
-            ?: GemiFlHealthResponse()
+            .body(RuntimeEngineHealthResponse::class.java)
+            ?: RuntimeEngineHealthResponse()
 
-    override fun startJob(endpoint: String, request: GemiFlJobRequest): GemiFlJobResponse =
+    override fun startJob(endpoint: String, request: RuntimeEngineJobRequest): RuntimeEngineJobResponse =
         restClient.post()
             .uri("${endpoint.trim().removeSuffix("/")}/jobs")
             .body(request)
             .retrieve()
-            .body(GemiFlJobResponse::class.java)
-            ?: GemiFlJobResponse(jobId = request.jobId)
+            .body(RuntimeEngineJobResponse::class.java)
+            ?: RuntimeEngineJobResponse(jobId = request.jobId)
 }
 
-data class GemiFlHealthResponse(
+data class RuntimeEngineHealthResponse(
     val status: String? = null,
     val nodeName: String? = null
 )
 
-data class GemiFlJobRequest(
-    @JsonProperty("job_id")
+data class RuntimeEngineJobRequest(
+    @param:JsonProperty("job_id")
     val jobId: String,
-    @JsonProperty("task_id")
+    @param:JsonProperty("task_id")
     val taskId: String,
-    @JsonProperty("round_id")
+    @param:JsonProperty("round_id")
     val roundId: Int,
-    @JsonProperty("my_name")
+    @param:JsonProperty("my_name")
     val myName: String,
     val role: String,
     val operation: String,
     val input: Map<String, Any?>,
     val output: Map<String, String>,
-    @JsonProperty("model_parameter")
+    @param:JsonProperty("model_parameter")
     val modelParameter: Map<String, Any?>,
-    @JsonProperty("job_parameter")
+    @param:JsonProperty("job_parameter")
     val jobParameter: Map<String, Any?>,
-    @JsonProperty("runtime_root")
+    @param:JsonProperty("runtime_root")
     val runtimeRoot: String
 )
 
-data class GemiFlJobResponse(
+data class RuntimeEngineJobResponse(
     val jobId: String? = null,
     val nodeName: String? = null,
     val status: String? = null,

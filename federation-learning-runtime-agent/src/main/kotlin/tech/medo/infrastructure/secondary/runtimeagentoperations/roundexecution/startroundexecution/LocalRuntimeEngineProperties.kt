@@ -6,12 +6,12 @@ import java.time.Duration
 @ConfigurationProperties("runtime-agent.local-runtime-engine")
 data class LocalRuntimeEngineProperties(
     val enabled: Boolean = true,
-    val composeFile: String = "../../GemiFL/docker-compose.yml",
-    val projectName: String = "gemifl-runtime",
+    val composeFile: String = "../../runtime-engine/docker-compose.yml",
+    val projectName: String = "runtime-engine",
     val serviceName: String = "runtime-engine",
     val endpoint: String = "http://localhost:18080",
     val nodeName: String = "local-runtime",
-    val runtimeRoot: String = "/workspace/tmp/gemifl",
+    val runtimeRoot: String = "/workspace/tmp/runtime-engine",
     val datasetHostRoot: String = "../../volumes/datasets",
     val datasetContainerRoot: String = "/workspace/datasets",
     val model: String = "linear.LogisticRegression",

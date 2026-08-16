@@ -11,6 +11,7 @@ import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeData
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionInput
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionResult
+import java.time.Duration
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -19,7 +20,7 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
     private val organizationId = UUID.fromString("22222222-2222-4222-8222-222222222222")
 
     @Test
-    fun startsGemiFlRuntimeEngineAndSubmitsTrainingJob() {
+    fun startsRuntimeEngineAndSubmitsTrainingJob() {
         val runner = RecordingRunner(LocalRuntimeEngineCommandResult(exitCode = 0, output = "started", timedOut = false))
         val client = RecordingClient()
         val adapter = adapter(
@@ -38,7 +39,7 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
         assertEquals("train", request.operation)
         assertEquals("local-runtime", request.myName)
         assertEquals("/workspace/datasets/alice.csv", (request.input["dataset"] as Map<*, *>)["path"])
-        assertEquals("/workspace/tmp/gemifl/job-1/local-runtime/local_update.json", request.output["local_update"])
+        assertEquals("/workspace/tmp/runtime-engine/job-1/local-runtime/local_update.json", request.output["local_update"])
     }
 
     @Test
@@ -66,6 +67,34 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
         assertTrue(result.failureReason.contains("docker compose up failed"))
     }
 
+    @Test
+    fun reportsUnavailableWhenRuntimeEngineHealthCheckFails() {
+        val adapter = adapter(
+            client = RecordingClient(healthException = IllegalStateException("connection refused")),
+            bindings = listOf(binding(filePath = "../volumes/datasets/alice.csv"))
+        )
+
+        val result = adapter.execute(input())
+
+        assertTrue(result is StartRoundExecutionResult.Unavailable)
+        result as StartRoundExecutionResult.Unavailable
+        assertTrue(result.failureReason.contains("health check failed"))
+    }
+
+    @Test
+    fun reportsUnavailableWhenRuntimeEngineJobSubmissionFails() {
+        val adapter = adapter(
+            client = RecordingClient(startException = IllegalStateException("boom")),
+            bindings = listOf(binding(filePath = "../volumes/datasets/alice.csv"))
+        )
+
+        val result = adapter.execute(input())
+
+        assertTrue(result is StartRoundExecutionResult.Unavailable)
+        result as StartRoundExecutionResult.Unavailable
+        assertTrue(result.failureReason.contains("job submission failed"))
+    }
+
     private fun adapter(
         runner: RecordingRunner = RecordingRunner(LocalRuntimeEngineCommandResult(exitCode = 0, output = "started", timedOut = false)),
         client: RecordingClient = RecordingClient(),
@@ -73,13 +102,15 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
     ): LocalDockerComposeStartRoundExecutionAdapter =
         LocalDockerComposeStartRoundExecutionAdapter(
             properties = LocalRuntimeEngineProperties(
-                composeFile = "../GemiFL/docker-compose.yml",
-                projectName = "gemifl-runtime",
+                composeFile = "../runtime-engine/docker-compose.yml",
+                projectName = "runtime-engine",
                 serviceName = "runtime-engine",
                 endpoint = "http://localhost:18080",
                 nodeName = "local-runtime",
                 datasetHostRoot = "../volumes/datasets",
-                datasetContainerRoot = "/workspace/datasets"
+                datasetContainerRoot = "/workspace/datasets",
+                healthTimeout = Duration.ofMillis(250),
+                healthPollInterval = Duration.ofMillis(10)
             ),
             commandRunner = runner,
             runtimeEngineClient = client,
@@ -158,18 +189,23 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
         }
     }
 
-    private class RecordingClient : GemiFlRuntimeEngineClient {
+    private class RecordingClient(
+        private val healthException: RuntimeException? = null,
+        private val startException: RuntimeException? = null
+    ) : RuntimeEngineClient {
         val healthEndpoints = mutableListOf<String>()
-        val jobs = mutableListOf<GemiFlJobRequest>()
+        val jobs = mutableListOf<RuntimeEngineJobRequest>()
 
-        override fun health(endpoint: String): GemiFlHealthResponse {
+        override fun health(endpoint: String): RuntimeEngineHealthResponse {
+            healthException?.let { throw it }
             healthEndpoints += endpoint
-            return GemiFlHealthResponse(status = "ok", nodeName = "Alice")
+            return RuntimeEngineHealthResponse(status = "ok", nodeName = "Alice")
         }
 
-        override fun startJob(endpoint: String, request: GemiFlJobRequest): GemiFlJobResponse {
+        override fun startJob(endpoint: String, request: RuntimeEngineJobRequest): RuntimeEngineJobResponse {
+            startException?.let { throw it }
             jobs += request
-            return GemiFlJobResponse(jobId = request.jobId, nodeName = request.myName, status = "running")
+            return RuntimeEngineJobResponse(jobId = request.jobId, nodeName = request.myName, status = "running")
         }
     }
 }

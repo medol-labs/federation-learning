@@ -20,12 +20,12 @@ runtime-agent:
     platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
   local-runtime-engine:
     enabled: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENABLED:true}
-    compose-file: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMPOSE_FILE:../../GemiFL/docker-compose.yml}
-    project-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_PROJECT_NAME:gemifl-runtime}
+    compose-file: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMPOSE_FILE:../../runtime-engine/docker-compose.yml}
+    project-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_PROJECT_NAME:runtime-engine}
     service-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_SERVICE_NAME:runtime-engine}
     endpoint: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENDPOINT:http://localhost:18080}
     node-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_NODE_NAME:local-runtime}
-    runtime-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT:/workspace/tmp/gemifl}
+    runtime-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT:/workspace/tmp/runtime-engine}
     dataset-host-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_HOST_ROOT:../../volumes/datasets}
     dataset-container-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_CONTAINER_ROOT:/workspace/datasets}
     model: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODEL:linear.LogisticRegression}
