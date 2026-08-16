@@ -1,0 +1,29 @@
+services:
+  runtime-engine:
+    build:
+      context: .
+      dockerfile: ./docker/pytorch/Dockerfile
+    image: ${RUNTIME_ENGINE_IMAGE:-runtime-engine:local}
+    environment:
+      RUNTIME_ENGINE_HOST: 0.0.0.0
+      RUNTIME_ENGINE_PORT: 8080
+      RUNTIME_ENGINE_ROOT: /workspace/tmp/runtime-engine
+      RUNTIME_ENGINE_NODE_NAME: ${RUNTIME_ENGINE_NODE_NAME:-local-runtime}
+      RUNTIME_ENGINE_PAILLIER_KEY_DIR: /workspace/secrets/paillier
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import json, urllib.request; json.load(urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2))"
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    ports:
+      - "${RUNTIME_ENGINE_HOST_PORT:-18080}:8080"
+    volumes:
+      - ${RUNTIME_ENGINE_DATASETS_DIR:-../volumes/datasets}:/workspace/datasets
+      - ${RUNTIME_ENGINE_TMP_DIR:-../volumes/tmp}:/workspace/tmp
+      - ${RUNTIME_ENGINE_MODELS_DIR:-../volumes/models}/runtime-engine:/workspace/models
+      - ${RUNTIME_ENGINE_PAILLIER_KEY_DIR:-../volumes/secrets/paillier}:/workspace/secrets/paillier:ro

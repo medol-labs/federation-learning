@@ -1,0 +1,76 @@
+{
+    "job_id": "tabnet-horizontal-demo",
+    "node_config": {
+        "Alice": "127.0.0.1:1540",
+        "Bob": "127.0.0.1:1541",
+        "Charlie": "127.0.0.1:1542",
+        "Dave": "127.0.0.1:1543"
+    },
+    "roles": {
+        "Client": [
+            "Alice",
+            "Bob",
+            "Charlie"
+        ],
+        "Server":["Dave"]
+    },
+    "model_parameter": {
+        "model": "hfl_arbiter.Horizontal",
+        "algo":"HomoTabNetClassifer",
+        "net_config":{
+            "input_dim": 61,
+            "output_dim": 2
+        },
+        "process": "train",
+        "train_batch_size":32,
+        "valid_batch_size":32,
+        "epochs":5,
+        "lr":0.01,
+        "evaluate_pre_epoch":1,
+        "model_save":"tabnet_save_model",
+        "task_type":"binary",
+        "data_type": "CsvParser",
+        "csv_config": {
+            "header": "infer",
+            "encoding":"utf-8",
+            "label_col": "label"
+        }
+    },
+    "job_parameter": {
+        "key_eno":1,
+        "try_limit": 100000,
+        "try_time_sleep": 120,
+        "logger_level":"INFO",
+        "paillier_workers":12,
+        "encrypt_method": "raw"
+    },
+    "node_parameter": {
+        "Alice": {
+            "data_source": {
+                "train": "/data/kw/data/cornary_heart_disease/train/alice_train.csv",
+                "val": "/data/kw/data/cornary_heart_disease/test/alice_test.csv"
+            },
+            "role":"host",
+            "device": "cpu"
+        },
+        "Bob": {
+            "data_source": {
+                "train": "/data/kw/data/cornary_heart_disease/train/bob_train.csv",
+                "val": "/data/kw/data/cornary_heart_disease/test/bob_test.csv"
+            },
+            "role":"guest",
+            "device": "cpu"
+        },
+        "Charlie": {
+            "data_source": {
+                "train": "/data/kw/data/cornary_heart_disease/train/charlie_train.csv",
+                "val": "/data/kw/data/cornary_heart_disease/test/charlie_test.csv"
+            },
+            "role":"guest",
+            "device": "cpu"
+        },
+        "Dave": {
+            "role":"arbitor"
+        }
+    }
+}
