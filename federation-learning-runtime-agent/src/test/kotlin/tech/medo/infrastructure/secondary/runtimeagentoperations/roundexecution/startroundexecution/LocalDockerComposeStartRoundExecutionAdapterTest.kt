@@ -102,7 +102,7 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
     ): LocalDockerComposeStartRoundExecutionAdapter =
         LocalDockerComposeStartRoundExecutionAdapter(
             properties = LocalRuntimeEngineProperties(
-                composeFile = "../runtime-engine/docker-compose.yml",
+                composeFile = "../federation-learning-runtime-engine/docker-compose.yml",
                 projectName = "runtime-engine",
                 serviceName = "runtime-engine",
                 endpoint = "http://localhost:18080",

@@ -85,11 +85,6 @@ class JpaTrainingRoundProgressReadModelRepository(private val jpaRepository: Spr
             it.artifactRefs = this@toProjection.artifactRefs?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.rejectedUpdateReasons = this@toProjection.rejectedUpdateReasons?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.aggregatedModelId = this@toProjection.aggregatedModelId
-            it.aggregatedModelArtifactUri = this@toProjection.aggregatedModelArtifactUri
-            it.aggregatedModelRegistryRef = this@toProjection.aggregatedModelRegistryRef
-            it.modelFormat = this@toProjection.modelFormat
-            it.modelArtifactDigest = this@toProjection.modelArtifactDigest
-            it.aggregatedModelSignatureUri = this@toProjection.aggregatedModelSignatureUri
             it.globalAccuracy = this@toProjection.globalAccuracy
             it.globalFairnessScore = this@toProjection.globalFairnessScore
             it.failureReason = this@toProjection.failureReason
@@ -150,11 +145,6 @@ class JpaTrainingRoundProgressReadModelRepository(private val jpaRepository: Spr
             it.artifactRefs = objectMapper.writeValueAsString(this@toEntity.artifactRefs)
             it.rejectedUpdateReasons = objectMapper.writeValueAsString(this@toEntity.rejectedUpdateReasons)
             it.aggregatedModelId = this@toEntity.aggregatedModelId
-            it.aggregatedModelArtifactUri = this@toEntity.aggregatedModelArtifactUri
-            it.aggregatedModelRegistryRef = this@toEntity.aggregatedModelRegistryRef
-            it.modelFormat = this@toEntity.modelFormat
-            it.modelArtifactDigest = this@toEntity.modelArtifactDigest
-            it.aggregatedModelSignatureUri = this@toEntity.aggregatedModelSignatureUri
             it.globalAccuracy = this@toEntity.globalAccuracy
             it.globalFairnessScore = this@toEntity.globalFairnessScore
             it.failureReason = this@toEntity.failureReason

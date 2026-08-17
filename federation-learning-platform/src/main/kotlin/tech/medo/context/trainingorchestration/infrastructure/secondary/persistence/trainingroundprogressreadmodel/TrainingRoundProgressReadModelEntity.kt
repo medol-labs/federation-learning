@@ -75,14 +75,6 @@ class TrainingRoundProgressReadModelEntity : MetadataProjection {
     @Column(columnDefinition = "text")
     var rejectedUpdateReasons: String? = null
     var aggregatedModelId: UUID? = null
-    @Column(columnDefinition = "text")
-    var aggregatedModelArtifactUri: String? = null
-    @Column(columnDefinition = "text")
-    var aggregatedModelRegistryRef: String? = null
-    var modelFormat: String? = null
-    var modelArtifactDigest: String? = null
-    @Column(columnDefinition = "text")
-    var aggregatedModelSignatureUri: String? = null
     var globalAccuracy: BigDecimal? = null
     var globalFairnessScore: BigDecimal? = null
     @Column(columnDefinition = "text")

@@ -29,6 +29,7 @@ class RuntimeDatasetBindingState @EntityCreator constructor() {
     var datasetId: UUID? = null
     var organizationId: UUID? = null
     var featureSchemaId: UUID? = null
+    var datasetName: String? = null
     var runtimeId: UUID? = null
     var dataSourceType: String? = null
     var host: String? = null
@@ -50,6 +51,7 @@ class RuntimeDatasetBindingState @EntityCreator constructor() {
         datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
+        datasetName = event.datasetName
         runtimeId = event.runtimeId
         dataSourceType = event.dataSourceType
         host = event.host

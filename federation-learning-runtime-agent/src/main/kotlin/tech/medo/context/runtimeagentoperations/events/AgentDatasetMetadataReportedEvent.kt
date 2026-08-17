@@ -16,6 +16,7 @@ data class AgentDatasetMetadataReportedEvent(
     val organizationId: UUID,
     val runtimeId: UUID,
     val featureSchemaId: UUID,
+    val datasetName: String,
     val sampleCount: Int,
     val featureCount: Int,
     val schemaCompatible: Boolean?,

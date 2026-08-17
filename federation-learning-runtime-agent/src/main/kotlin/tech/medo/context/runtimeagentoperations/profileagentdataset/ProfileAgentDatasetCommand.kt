@@ -13,6 +13,7 @@ data class ProfileAgentDatasetCommand(
     val datasetId: UUID,
     val organizationId: UUID,
     val featureSchemaId: UUID,
+    val datasetName: String,
     val runtimeId: UUID
 ) {
     @TargetEntityId

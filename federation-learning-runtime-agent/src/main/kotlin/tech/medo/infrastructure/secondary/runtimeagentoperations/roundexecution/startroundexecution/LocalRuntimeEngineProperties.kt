@@ -6,7 +6,7 @@ import java.time.Duration
 @ConfigurationProperties("runtime-agent.local-runtime-engine")
 data class LocalRuntimeEngineProperties(
     val enabled: Boolean = true,
-    val composeFile: String = "../../runtime-engine/docker-compose.yml",
+    val composeFile: String = "../../federation-learning-runtime-engine/docker-compose.yml",
     val projectName: String = "runtime-engine",
     val serviceName: String = "runtime-engine",
     val endpoint: String = "http://localhost:18080",

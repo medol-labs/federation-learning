@@ -87,15 +87,9 @@ class ReadModelParticipantExecutionPlanCommandFactory(
     }
 
     private fun TrainingRoundProgressReadModelProjection.toBaseModelSnapshot(): BaseModelSnapshot? {
-        val modelId = aggregatedModelId ?: return null
-        return BaseModelSnapshot(
-            baseModelId = modelId,
-            baseModelArtifactUri = aggregatedModelArtifactUri.orEmpty(),
-            baseModelRegistryRef = aggregatedModelRegistryRef.orEmpty(),
-            baseModelFormat = modelFormat.orEmpty(),
-            baseModelArtifactDigest = modelArtifactDigest.orEmpty(),
-            baseModelSignatureUri = aggregatedModelSignatureUri
-        )
+        // TrainingRoundProgress currently carries only aggregatedModelId. It does not expose
+        // the immutable artifact snapshot required to safely dispatch a later-round base model.
+        return null
     }
 }
 

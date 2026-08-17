@@ -30,6 +30,7 @@ class ConfigureRuntimeDatasetBindingDecisionTest {
                         datasetId = UUID.nameUUIDFromBytes("dataset-1".toByteArray()),
                         organizationId = java.util.UUID.randomUUID(),
                         featureSchemaId = java.util.UUID.randomUUID(),
+                        datasetName = "",
                         runtimeId = UUID.nameUUIDFromBytes("runtime-1".toByteArray()),
                         dataSourceType = "",
                         host = null,

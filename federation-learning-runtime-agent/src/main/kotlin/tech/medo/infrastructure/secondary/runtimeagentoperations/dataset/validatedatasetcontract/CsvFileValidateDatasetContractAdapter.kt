@@ -62,10 +62,21 @@ class CsvFileValidateDatasetContractAdapter(
         }
 
         val schemaResult = profile.validateSchema(datasetCapability)
+        val qualityScore = profile.qualityScore()
+        val nonIidScore = profile.nonIidScore()
         return if (schemaResult.schemaCompatible && schemaResult.labelCompatible) {
-            ValidateDatasetContractResult.Succeeded()
+            ValidateDatasetContractResult.Succeeded(
+                schemaCompatible = schemaResult.schemaCompatible,
+                labelCompatible = schemaResult.labelCompatible,
+                qualityScore = qualityScore,
+                nonIidScore = nonIidScore
+            )
         } else {
             ValidateDatasetContractResult.Rejected(
+                schemaCompatible = schemaResult.schemaCompatible,
+                labelCompatible = schemaResult.labelCompatible,
+                qualityScore = qualityScore,
+                nonIidScore = nonIidScore,
                 failureReason = schemaResult.failureReason
             )
         }
@@ -73,6 +84,10 @@ class CsvFileValidateDatasetContractAdapter(
 
     private fun rejected(reason: String): ValidateDatasetContractResult.Rejected =
         ValidateDatasetContractResult.Rejected(
+            schemaCompatible = false,
+            labelCompatible = false,
+            qualityScore = BigDecimal.ZERO.setScale(SCORE_SCALE, RoundingMode.HALF_UP),
+            nonIidScore = BigDecimal.ZERO.setScale(SCORE_SCALE, RoundingMode.HALF_UP),
             failureReason = reason
         )
 

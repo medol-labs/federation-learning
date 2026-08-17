@@ -31,6 +31,7 @@ class RecordRuntimeDatasetMetadataIntegrationTest(
             organizationId = java.util.UUID.randomUUID(),
             runtimeId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
+            datasetName = "",
             sampleCount = 0,
             featureCount = 0,
             schemaCompatible = null,

@@ -59,6 +59,7 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
                 this.trainingJobId = event.trainingJobId
         }
             entity.trainingJobId = event.trainingJobId
+            entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.state = TrainingJobStateEnum.SUBMITTED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

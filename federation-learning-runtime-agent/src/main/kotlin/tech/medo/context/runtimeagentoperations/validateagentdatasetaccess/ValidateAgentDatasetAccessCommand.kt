@@ -13,6 +13,7 @@ data class ValidateAgentDatasetAccessCommand(
     val datasetId: UUID,
     val organizationId: UUID,
     val featureSchemaId: UUID,
+    val datasetName: String,
     val runtimeId: UUID,
     val dataSourceType: String,
     val host: String?,

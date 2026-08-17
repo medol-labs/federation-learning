@@ -15,7 +15,7 @@ interface SubmitTrainingJobDecision {
             "SubmitTrainingJob requires TrainingJob to be Draft."
         }
         return listOf(
-            TrainingJobSubmittedEvent(trainingJobId = command.trainingJobId)
+            TrainingJobSubmittedEvent(trainingJobId = command.trainingJobId, trainingRunConfigurationId = requireNotNull(state.trainingRunConfigurationId) { "trainingRunConfigurationId is required from state." })
         )
     }
 }

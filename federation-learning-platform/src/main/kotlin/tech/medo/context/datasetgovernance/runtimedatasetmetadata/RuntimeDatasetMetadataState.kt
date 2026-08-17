@@ -23,6 +23,7 @@ class RuntimeDatasetMetadataState @EntityCreator constructor() {
     var organizationId: UUID? = null
     var runtimeId: UUID? = null
     var featureSchemaId: UUID? = null
+    var datasetName: String? = null
     var sampleCount: Int? = null
     var featureCount: Int? = null
     var schemaCompatible: Boolean? = null
@@ -41,6 +42,7 @@ class RuntimeDatasetMetadataState @EntityCreator constructor() {
         organizationId = event.organizationId
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
+        datasetName = event.datasetName
         sampleCount = event.sampleCount
         featureCount = event.featureCount
         schemaCompatible = event.schemaCompatible
@@ -60,6 +62,7 @@ class RuntimeDatasetMetadataState @EntityCreator constructor() {
         organizationId = event.organizationId
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
+        datasetName = event.datasetName
         sampleCount = event.sampleCount
         featureCount = event.featureCount
         schemaCompatible = event.schemaCompatible

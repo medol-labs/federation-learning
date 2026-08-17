@@ -35,6 +35,7 @@ class AgentDatasetAccessValidationCatalogReadModelProjector(private val reposito
             entity.organizationId = event.organizationId
             entity.featureSchemaId = event.featureSchemaId
             entity.runtimeId = event.runtimeId
+            entity.datasetName = event.datasetName
             entity.readable = event.readable
             entity.schemaReadable = event.schemaReadable
             entity.sampleBatchReadable = event.sampleBatchReadable
@@ -58,6 +59,7 @@ class AgentDatasetAccessValidationCatalogReadModelProjector(private val reposito
             entity.organizationId = event.organizationId
             entity.featureSchemaId = event.featureSchemaId
             entity.runtimeId = event.runtimeId
+            entity.datasetName = event.datasetName
             entity.failureReason = event.failureReason
             entity.validationStatus = "Failed"
             ProjectionMetadata.assign(entity, message)
@@ -79,6 +81,7 @@ class AgentDatasetAccessValidationCatalogReadModelProjector(private val reposito
             entity.organizationId = event.organizationId
             entity.featureSchemaId = event.featureSchemaId
             entity.runtimeId = event.runtimeId
+            entity.datasetName = event.datasetName
             entity.readable = event.readable
             entity.schemaReadable = event.schemaReadable
             entity.sampleBatchReadable = event.sampleBatchReadable
@@ -102,6 +105,7 @@ class AgentDatasetAccessValidationCatalogReadModelProjector(private val reposito
             entity.organizationId = event.organizationId
             entity.featureSchemaId = event.featureSchemaId
             entity.runtimeId = event.runtimeId
+            entity.datasetName = event.datasetName
             entity.failureReason = event.failureReason
             entity.validationStatus = "Failed"
             ProjectionMetadata.assign(entity, message)

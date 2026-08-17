@@ -26,6 +26,7 @@ class AgentDatasetProfileState @EntityCreator constructor() {
     var organizationId: UUID? = null
     var runtimeId: UUID? = null
     var featureSchemaId: UUID? = null
+    var datasetName: String? = null
     var sampleCount: Int? = null
     var featureCount: Int? = null
     var schemaCompatible: Boolean? = null
@@ -46,6 +47,7 @@ class AgentDatasetProfileState @EntityCreator constructor() {
         organizationId = event.organizationId
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
+        datasetName = event.datasetName
         sampleCount = event.sampleCount
         featureCount = event.featureCount
         schemaCompatible = event.schemaCompatible
@@ -64,6 +66,7 @@ class AgentDatasetProfileState @EntityCreator constructor() {
         datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
+        datasetName = event.datasetName
         runtimeId = event.runtimeId
         failureReason = event.failureReason
     }
@@ -77,6 +80,7 @@ class AgentDatasetProfileState @EntityCreator constructor() {
         organizationId = event.organizationId
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
+        datasetName = event.datasetName
         sampleCount = event.sampleCount
         featureCount = event.featureCount
         schemaCompatible = event.schemaCompatible
@@ -95,6 +99,7 @@ class AgentDatasetProfileState @EntityCreator constructor() {
         datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
+        datasetName = event.datasetName
         runtimeId = event.runtimeId
         failureReason = event.failureReason
     }

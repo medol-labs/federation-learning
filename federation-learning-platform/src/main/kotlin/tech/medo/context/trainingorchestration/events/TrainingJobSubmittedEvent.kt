@@ -9,5 +9,6 @@ import java.util.UUID;
 @Event
 data class TrainingJobSubmittedEvent(
     @EventTag(key = "trainingJobId")
-    val trainingJobId: UUID
+    val trainingJobId: UUID,
+    val trainingRunConfigurationId: UUID
 )

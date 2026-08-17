@@ -24,6 +24,7 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
     var datasetId: UUID? = null
     var organizationId: UUID? = null
     var featureSchemaId: UUID? = null
+    var datasetName: String? = null
     var runtimeId: UUID? = null
     var readable: Boolean? = null
     var schemaReadable: Boolean? = null
@@ -38,6 +39,7 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
         datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
+        datasetName = event.datasetName
         runtimeId = event.runtimeId
         readable = event.readable
         schemaReadable = event.schemaReadable
@@ -51,6 +53,7 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
         datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
+        datasetName = event.datasetName
         runtimeId = event.runtimeId
         failureReason = event.failureReason
     }
@@ -63,6 +66,7 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
         datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
+        datasetName = event.datasetName
         runtimeId = event.runtimeId
         readable = event.readable
         schemaReadable = event.schemaReadable
@@ -76,6 +80,7 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
         datasetId = event.datasetId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
+        datasetName = event.datasetName
         runtimeId = event.runtimeId
         failureReason = event.failureReason
     }

@@ -253,11 +253,6 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
             entity.aggregatedModelId = event.aggregatedModelId
-            entity.aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
-            entity.aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
-            entity.modelFormat = event.modelFormat
-            entity.modelArtifactDigest = event.modelArtifactDigest
-            entity.aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
             entity.state = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -278,11 +273,6 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
             entity.aggregatedModelId = event.aggregatedModelId
-            entity.aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
-            entity.aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
-            entity.modelFormat = event.modelFormat
-            entity.modelArtifactDigest = event.modelArtifactDigest
-            entity.aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
             entity.globalAccuracy = event.globalAccuracy
             entity.globalFairnessScore = event.globalFairnessScore
             ProjectionMetadata.assign(entity, message)
@@ -304,11 +294,6 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
             entity.aggregatedModelId = event.aggregatedModelId
-            entity.aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
-            entity.aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
-            entity.modelFormat = event.modelFormat
-            entity.modelArtifactDigest = event.modelArtifactDigest
-            entity.aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
             entity.globalAccuracy = event.globalAccuracy
             entity.state = TrainingRoundStateEnum.COMPLETED
             entity.completedAt = eventTime(message)

@@ -21,6 +21,7 @@ class ValidateAgentDatasetAccessDecisionTest {
             datasetId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
             organizationId = UUID.fromString("77777777-7777-4777-8777-777777777777"),
             featureSchemaId = UUID.fromString("88888888-8888-4888-8888-888888888888"),
+            datasetName = "",
             runtimeId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
             dataSourceType = "FILE",
             host = null,
@@ -52,6 +53,7 @@ class ValidateAgentDatasetAccessDecisionTest {
         assertEquals(UUID.fromString("33333333-3333-4333-8333-333333333333"), event.datasetId)
         assertEquals(UUID.fromString("77777777-7777-4777-8777-777777777777"), event.organizationId)
         assertEquals(UUID.fromString("88888888-8888-4888-8888-888888888888"), event.featureSchemaId)
+        assertEquals(command.datasetName, event.datasetName)
         assertEquals(UUID.fromString("44444444-4444-4444-8444-444444444444"), event.runtimeId)
     }
 
@@ -65,6 +67,7 @@ class ValidateAgentDatasetAccessDecisionTest {
             datasetId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
             organizationId = UUID.fromString("77777777-7777-4777-8777-777777777777"),
             featureSchemaId = UUID.fromString("88888888-8888-4888-8888-888888888888"),
+            datasetName = "",
             runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666"),
             dataSourceType = "FILE",
             host = null,
@@ -94,6 +97,7 @@ class ValidateAgentDatasetAccessDecisionTest {
         assertEquals(UUID.fromString("55555555-5555-4555-8555-555555555555"), event.datasetId)
         assertEquals(UUID.fromString("77777777-7777-4777-8777-777777777777"), event.organizationId)
         assertEquals(UUID.fromString("88888888-8888-4888-8888-888888888888"), event.featureSchemaId)
+        assertEquals(command.datasetName, event.datasetName)
         assertEquals(UUID.fromString("66666666-6666-4666-8666-666666666666"), event.runtimeId)
     }
 }

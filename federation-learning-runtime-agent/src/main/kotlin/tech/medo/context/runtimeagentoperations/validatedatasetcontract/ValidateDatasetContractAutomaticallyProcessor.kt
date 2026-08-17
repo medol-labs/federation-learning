@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component
 class ValidateDatasetContractAutomaticallyProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: AgentDatasetMetadataReportedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(ValidateDatasetContractCommand(datasetId = event.datasetId, metadataReportId = event.metadataReportId, featureSchemaId = event.featureSchemaId, organizationId = event.organizationId, datasetName = "" /* TODO: provide datasetName */)).resultMessage
+        commandGateway.send(ValidateDatasetContractCommand(datasetId = event.datasetId, metadataReportId = event.metadataReportId, featureSchemaId = event.featureSchemaId, organizationId = event.organizationId, datasetName = event.datasetName)).resultMessage
 }

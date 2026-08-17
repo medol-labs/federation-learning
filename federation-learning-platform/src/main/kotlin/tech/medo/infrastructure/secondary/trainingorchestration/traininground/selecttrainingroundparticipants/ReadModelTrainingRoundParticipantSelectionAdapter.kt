@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component
 import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.RuntimeDatasetMetadataCatalogReadModelRepository
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelRepository
 import tech.medo.runtimegovernance.runtimeidentitycatalog.RuntimeIdentityCatalogReadModelRepository
-import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModelRepository
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsInput
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsResult
@@ -21,7 +20,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
     private val trainingRunConfigurationCatalog: TrainingRunConfigurationCatalogReadModelRepository,
     private val membershipDirectory: FederationMembershipDirectoryReadModelRepository,
     private val runtimeIdentityCatalog: RuntimeIdentityCatalogReadModelRepository,
-    private val runtimeInfrastructureAccessView: RuntimeInfrastructureAccessViewReadModelRepository,
     private val runtimeDatasetMetadataCatalog: RuntimeDatasetMetadataCatalogReadModelRepository
 ) : SelectTrainingRoundParticipantsService {
     private val log = LoggerFactory.getLogger(ReadModelTrainingRoundParticipantSelectionAdapter::class.java)
@@ -53,16 +51,10 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             .mapNotNull { it.organizationId }
             .toSet()
 
-        val connectedRuntimeAgentIds = runtimeInfrastructureAccessView.findAll(Pageable.unpaged()).content
-            .filter { it.state?.name.isRuntimeSelectable() }
-            .mapNotNull { it.runtimeAgentId }
-            .toSet()
-
         val activeRuntimes = runtimeIdentityCatalog.findAll(Pageable.unpaged()).content
             .filter { it.runtimeId != null && it.organizationId != null }
             .filter { it.organizationId in joinedOrganizationIds }
             .filter { it.identityStatus.isActiveLike() }
-            .filter { connectedRuntimeAgentIds.isEmpty() || it.runtimeAgentId in connectedRuntimeAgentIds }
             .associateBy { it.runtimeId!! }
 
         val activeRuntimeByOrganization = activeRuntimes.values
@@ -75,7 +67,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             // .filter { it.schemaCompatible == true && it.labelCompatible == true }
             .filter { it.organizationId in joinedOrganizationIds }
             .filter { it.datasetId != null }
-
+        log.info("xx {}", matchingDatasetMetadata)
         val selectedParticipants = matchingDatasetMetadata
             .mapNotNull { metadata ->
                 val runtime = activeRuntimes[metadata.runtimeId]
@@ -94,17 +86,16 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 }
             }
             .distinctBy { it.runtimeId }
-
+        log.info("yy {}", selectedParticipants)
         val selectedOrganizationIds = selectedParticipants.map { it.organizationId }.distinct()
         val selectedRuntimeIds = selectedParticipants.map { it.runtimeId }.distinct()
 
         log.info(
-            "Selected participant candidates from read models. trainingJobId={}, federationId={}, featureSchemaId={}, joinedOrganizationCount={}, connectedRuntimeAgentCount={}, activeRuntimeCount={}, matchingDatasetMetadataCount={}, selectedRuntimeCount={}, minimumNodesPerRound={}",
+            "Selected participant candidates from read models. trainingJobId={}, federationId={}, featureSchemaId={}, joinedOrganizationCount={}, activeRuntimeCount={}, matchingDatasetMetadataCount={}, selectedRuntimeCount={}, minimumNodesPerRound={}",
             input.trainingJobId,
             federationId,
             featureSchemaId,
             joinedOrganizationIds.size,
-            connectedRuntimeAgentIds.size,
             activeRuntimes.size,
             matchingDatasetMetadata.size,
             selectedRuntimeIds.size,
@@ -131,6 +122,4 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
     private fun String?.isActiveLike(): Boolean =
         this == null || equals("Active", ignoreCase = true)
 
-    private fun String?.isRuntimeSelectable(): Boolean =
-        equals("CONNECTED", ignoreCase = true)
 }

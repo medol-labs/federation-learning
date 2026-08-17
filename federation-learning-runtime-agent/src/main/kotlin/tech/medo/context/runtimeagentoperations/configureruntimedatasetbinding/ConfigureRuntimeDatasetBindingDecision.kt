@@ -17,7 +17,7 @@ interface ConfigureRuntimeDatasetBindingDecision {
         }
         return listOf(
             RuntimeDatasetBindingRuntimeIdDatasetIdReservedEvent(runtimeDatasetBindingId = command.runtimeDatasetBindingId, runtimeId = command.runtimeId, datasetId = command.datasetId, normalizedRuntimeId = command.runtimeId.toString().trim().lowercase(), normalizedDatasetId = command.datasetId.toString().trim().lowercase()),
-            RuntimeDatasetBindingConfiguredEvent(runtimeDatasetBindingId = command.runtimeDatasetBindingId, datasetId = command.datasetId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, runtimeId = command.runtimeId, dataSourceType = command.dataSourceType, host = command.host, port = command.port, url = command.url, databaseName = command.databaseName, schemaName = command.schemaName, tableName = command.tableName, filePath = command.filePath, objectBucket = command.objectBucket, objectPrefix = command.objectPrefix, dataFormat = command.dataFormat, credentialSecretName = command.credentialSecretName)
+            RuntimeDatasetBindingConfiguredEvent(runtimeDatasetBindingId = command.runtimeDatasetBindingId, datasetId = command.datasetId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName, runtimeId = command.runtimeId, dataSourceType = command.dataSourceType, host = command.host, port = command.port, url = command.url, databaseName = command.databaseName, schemaName = command.schemaName, tableName = command.tableName, filePath = command.filePath, objectBucket = command.objectBucket, objectPrefix = command.objectPrefix, dataFormat = command.dataFormat, credentialSecretName = command.credentialSecretName)
         )
     }
 }

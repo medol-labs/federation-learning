@@ -49,6 +49,7 @@ class TrainingJobState @EntityCreator constructor() {
     fun evolve(event: TrainingJobSubmittedEvent): TrainingJobState = apply {
         currentState = TrainingJobStateEnum.SUBMITTED
         trainingJobId = event.trainingJobId
+        trainingRunConfigurationId = event.trainingRunConfigurationId
     }
 
     @EventSourcingHandler

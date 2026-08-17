@@ -20,7 +20,7 @@ runtime-agent:
     platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
   local-runtime-engine:
     enabled: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENABLED:true}
-    compose-file: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMPOSE_FILE:../../runtime-engine/docker-compose.yml}
+    compose-file: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMPOSE_FILE:../../federation-learning-runtime-engine/docker-compose.yml}
     project-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_PROJECT_NAME:runtime-engine}
     service-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_SERVICE_NAME:runtime-engine}
     endpoint: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENDPOINT:http://localhost:18080}

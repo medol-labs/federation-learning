@@ -67,11 +67,6 @@ class TrainingRoundProgressReadModelProjection : MetadataProjection {
     var artifactRefs: List<String> = emptyList()
     var rejectedUpdateReasons: List<String> = emptyList()
     var aggregatedModelId: UUID? = null
-    var aggregatedModelArtifactUri: String? = null
-    var aggregatedModelRegistryRef: String? = null
-    var modelFormat: String? = null
-    var modelArtifactDigest: String? = null
-    var aggregatedModelSignatureUri: String? = null
     var globalAccuracy: BigDecimal? = null
     var globalFairnessScore: BigDecimal? = null
     var failureReason: String? = null
@@ -132,11 +127,6 @@ fun TrainingRoundProgressReadModelProjection.toReadModel(): TrainingRoundProgres
     artifactRefs = artifactRefs,
     rejectedUpdateReasons = rejectedUpdateReasons,
     aggregatedModelId = aggregatedModelId,
-    aggregatedModelArtifactUri = aggregatedModelArtifactUri,
-    aggregatedModelRegistryRef = aggregatedModelRegistryRef,
-    modelFormat = modelFormat,
-    modelArtifactDigest = modelArtifactDigest,
-    aggregatedModelSignatureUri = aggregatedModelSignatureUri,
     globalAccuracy = globalAccuracy,
     globalFairnessScore = globalFairnessScore,
     failureReason = failureReason,
@@ -205,11 +195,6 @@ data class TrainingRoundProgressReadModel(
     val artifactRefs: List<String>,
     val rejectedUpdateReasons: List<String>,
     val aggregatedModelId: UUID?,
-    val aggregatedModelArtifactUri: String?,
-    val aggregatedModelRegistryRef: String?,
-    val modelFormat: String?,
-    val modelArtifactDigest: String?,
-    val aggregatedModelSignatureUri: String?,
     val globalAccuracy: BigDecimal?,
     val globalFairnessScore: BigDecimal?,
     val failureReason: String?,

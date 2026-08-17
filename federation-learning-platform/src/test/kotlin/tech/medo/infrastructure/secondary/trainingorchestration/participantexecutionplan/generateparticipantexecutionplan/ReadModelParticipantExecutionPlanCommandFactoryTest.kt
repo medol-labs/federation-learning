@@ -71,17 +71,12 @@ class ReadModelParticipantExecutionPlanCommandFactoryTest {
     }
 
     @Test
-    fun usesPreviousAggregatedModelForLaterRounds() {
+    fun fallsBackToInitialModelWhenPreviousRoundDoesNotExposeArtifactSnapshot() {
         val previousRound = TrainingRoundProgressReadModelProjection().apply {
             trainingJobId = this@ReadModelParticipantExecutionPlanCommandFactoryTest.trainingJobId
             roundId = uuid("cccccccc-cccc-4ccc-8ccc-cccccccccccc")
             roundNumber = 1
             aggregatedModelId = uuid("dddddddd-dddd-4ddd-8ddd-dddddddddddd")
-            aggregatedModelArtifactUri = "file:///models/round-1.json"
-            aggregatedModelRegistryRef = "local"
-            modelFormat = "json"
-            modelArtifactDigest = "sha256:round-1"
-            aggregatedModelSignatureUri = null
         }
         val factory = ReadModelParticipantExecutionPlanCommandFactory(
             trainingRunConfigurationCatalog = configurationRepository(configuration()),
@@ -101,9 +96,9 @@ class ReadModelParticipantExecutionPlanCommandFactoryTest {
             )
         ).single()
 
-        assertEquals(uuid("dddddddd-dddd-4ddd-8ddd-dddddddddddd"), command.baseModelId)
-        assertEquals("file:///models/round-1.json", command.baseModelArtifactUri)
-        assertEquals("sha256:round-1", command.baseModelArtifactDigest)
+        assertEquals(initialModelId, command.baseModelId)
+        assertEquals("file:///models/initial.json", command.baseModelArtifactUri)
+        assertEquals("sha256:initial", command.baseModelArtifactDigest)
     }
 
     private fun event(

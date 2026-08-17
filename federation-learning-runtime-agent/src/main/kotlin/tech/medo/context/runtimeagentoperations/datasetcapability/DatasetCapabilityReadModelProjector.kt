@@ -55,6 +55,7 @@ class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabil
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
+            entity.datasetName = event.datasetName
             entity.sampleCount = event.sampleCount
             entity.featureCount = event.featureCount
             entity.schemaCompatible = event.schemaCompatible
@@ -80,6 +81,7 @@ class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabil
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
+            entity.datasetName = event.datasetName
             entity.metadataReportId = event.metadataReportId
             entity.metadataStatus = "Failed"
             ProjectionMetadata.assign(entity, message)
@@ -99,6 +101,7 @@ class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabil
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
+            entity.datasetName = event.datasetName
             entity.sampleCount = event.sampleCount
             entity.featureCount = event.featureCount
             entity.schemaCompatible = event.schemaCompatible
@@ -124,6 +127,7 @@ class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabil
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
+            entity.datasetName = event.datasetName
             entity.metadataReportId = event.metadataReportId
             entity.metadataStatus = "Failed"
             ProjectionMetadata.assign(entity, message)

@@ -9,7 +9,9 @@ import org.axonframework.messaging.eventstreaming.Tag
 import tech.medo.modellifecycle.events.ModelCandidateRegisteredEvent
 import tech.medo.modellifecycle.events.ModelEvaluationPackageRecordedEvent
 import tech.medo.modellifecycle.events.ModelApprovedEvent
+import tech.medo.modellifecycle.events.ModelPromotedToProductionEvent
 import tech.medo.modellifecycle.events.ModelRolledBackEvent
+import tech.medo.modellifecycle.events.ModelRetiredEvent
 import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 import java.util.UUID;
@@ -33,8 +35,11 @@ class ModelState @EntityCreator constructor() {
     var modelCardId: UUID? = null
     var baselineModelId: UUID? = null
     var approvalNote: String? = null
+    var releaseChannel: String? = null
+    var productionStage: String? = null
     var previousModelId: UUID? = null
     var rollbackReason: String? = null
+    var retirementReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: ModelCandidateRegisteredEvent): ModelState = apply {
@@ -69,10 +74,25 @@ class ModelState @EntityCreator constructor() {
     }
 
     @EventSourcingHandler
+    fun evolve(event: ModelPromotedToProductionEvent): ModelState = apply {
+        currentState = ModelStateEnum.PRODUCTION
+        modelId = event.modelId
+        releaseChannel = event.releaseChannel
+        productionStage = event.productionStage
+    }
+
+    @EventSourcingHandler
     fun evolve(event: ModelRolledBackEvent): ModelState = apply {
         currentState = ModelStateEnum.ROLLED_BACK
         modelId = event.modelId
         previousModelId = event.previousModelId
         rollbackReason = event.rollbackReason
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: ModelRetiredEvent): ModelState = apply {
+        currentState = ModelStateEnum.RETIRED
+        modelId = event.modelId
+        retirementReason = event.retirementReason
     }
 }
