@@ -30,6 +30,7 @@ class ProfileAgentDatasetIntegrationTest(
             datasetId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
+            datasetName = "credit-risk",
             runtimeId = java.util.UUID.randomUUID()
         )
 

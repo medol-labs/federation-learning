@@ -82,6 +82,7 @@ class CsvFileProfileAgentDatasetAdapterTest {
             datasetId = DATASET_ID,
             organizationId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
             featureSchemaId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
+            datasetName = "credit-risk",
             runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666")
         )
 

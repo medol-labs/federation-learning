@@ -29,6 +29,7 @@ class ReportAgentDatasetMetadataToPlatformProcessor(
             organizationId = event.organizationId,
             runtimeId = event.runtimeId,
             featureSchemaId = event.featureSchemaId,
+            datasetName = event.datasetName,
             sampleCount = event.sampleCount,
             featureCount = event.featureCount,
             schemaCompatible = event.schemaCompatible,

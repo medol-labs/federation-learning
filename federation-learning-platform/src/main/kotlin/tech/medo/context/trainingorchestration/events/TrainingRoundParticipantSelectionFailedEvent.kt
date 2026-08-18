@@ -1,0 +1,23 @@
+package tech.medo.trainingorchestration.events
+
+import org.axonframework.eventsourcing.annotation.EventTag
+import org.axonframework.messaging.eventhandling.annotation.Event
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
+import java.util.UUID
+
+@Event
+data class TrainingRoundParticipantSelectionFailedEvent(
+    @EventTag(key = "trainingJobId")
+    val trainingJobId: UUID,
+    val trainingRunConfigurationId: UUID,
+    val featureSchemaId: UUID,
+    val roundId: UUID,
+    val roundNumber: Int,
+    val minimumNodesPerRound: Int,
+    val selectedOrganizationIds: List<UUID>,
+    val selectedRuntimeIds: List<UUID>,
+    val selectedParticipants: List<TrainingRoundParticipant>,
+    val selectedOrganizationCount: Int,
+    val selectedRuntimeCount: Int,
+    val failureReason: String
+)

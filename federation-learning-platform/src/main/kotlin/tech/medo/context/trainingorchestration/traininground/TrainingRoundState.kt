@@ -7,6 +7,7 @@ import org.axonframework.extension.spring.stereotype.EventSourced
 import org.axonframework.messaging.eventstreaming.EventCriteria
 import org.axonframework.messaging.eventstreaming.Tag
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
+import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionFailedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundStartedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundStartFailedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionReceivedEvent
@@ -78,6 +79,23 @@ class TrainingRoundState @EntityCreator constructor() {
         selectedParticipants = event.selectedParticipants
         selectedOrganizationCount = event.selectedOrganizationCount
         selectedRuntimeCount = event.selectedRuntimeCount
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: TrainingRoundParticipantSelectionFailedEvent): TrainingRoundState = apply {
+        currentState = TrainingRoundStateEnum.FAILED
+        trainingJobId = event.trainingJobId
+        trainingRunConfigurationId = event.trainingRunConfigurationId
+        featureSchemaId = event.featureSchemaId
+        roundId = event.roundId
+        roundNumber = event.roundNumber
+        minimumNodesPerRound = event.minimumNodesPerRound
+        selectedOrganizationIds = event.selectedOrganizationIds
+        selectedRuntimeIds = event.selectedRuntimeIds
+        selectedParticipants = event.selectedParticipants
+        selectedOrganizationCount = event.selectedOrganizationCount
+        selectedRuntimeCount = event.selectedRuntimeCount
+        failureReason = event.failureReason
     }
 
     @EventSourcingHandler

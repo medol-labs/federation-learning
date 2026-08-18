@@ -7,6 +7,7 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
+import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionFailedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundStartedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundStartFailedEvent
@@ -69,6 +70,32 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.state = TrainingRoundStateEnum.PARTICIPANTS_SELECTED
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRoundParticipantSelectionFailedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(TrainingRoundProgressReadModelKey(trainingJobId = event.trainingJobId, roundId = event.roundId)) ?: TrainingRoundProgressReadModelProjection().apply {
+                this.trainingJobId = event.trainingJobId
+                this.roundId = event.roundId
+        }
+            entity.trainingJobId = event.trainingJobId
+            entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
+            entity.selectedOrganizationIds = event.selectedOrganizationIds
+            entity.selectedParticipants = event.selectedParticipants
+            entity.selectedOrganizationCount = event.selectedOrganizationCount
+            entity.selectedRuntimeCount = event.selectedRuntimeCount
+            entity.minimumNodesPerRound = event.minimumNodesPerRound
+            entity.failureReason = event.failureReason
+            entity.state = TrainingRoundStateEnum.FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

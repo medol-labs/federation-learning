@@ -31,6 +31,7 @@ class ReportAgentDatasetMetadataToPlatformProcessorTest {
         assertEquals(organizationId, request.organizationId)
         assertEquals(runtimeId, request.runtimeId)
         assertEquals(featureSchemaId, request.featureSchemaId)
+        assertEquals("credit-risk", request.datasetName)
         assertEquals(120, request.sampleCount)
         assertEquals(8, request.featureCount)
         assertEquals(true, request.schemaCompatible)
@@ -63,6 +64,7 @@ class ReportAgentDatasetMetadataToPlatformProcessorTest {
             organizationId = organizationId,
             runtimeId = runtimeId,
             featureSchemaId = featureSchemaId,
+            datasetName = "credit-risk",
             sampleCount = 120,
             featureCount = 8,
             schemaCompatible = true,

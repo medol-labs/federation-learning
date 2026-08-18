@@ -81,3 +81,5 @@ logging:
   level:
     tech.medo.shared.application.axon: ${MEDOL_AXON_FLOW_LOG_LEVEL:INFO}
     org.axonframework: ${AXON_LOG_LEVEL:INFO}
+    org.hibernate.SQL: ${HIBERNATE_SQL_LOG_LEVEL:DEBUG}
+    org.hibernate.orm.jdbc.bind: ${HIBERNATE_BIND_LOG_LEVEL:TRACE}

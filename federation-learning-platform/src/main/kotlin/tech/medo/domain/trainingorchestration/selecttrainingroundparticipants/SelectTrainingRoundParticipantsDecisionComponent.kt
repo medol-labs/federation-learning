@@ -2,6 +2,7 @@ package tech.medo.domain.trainingorchestration.selecttrainingroundparticipants
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionFailedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsCommand
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsDecision
@@ -17,6 +18,22 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
     ): List<Any> =
         when (portResult) {
             is SelectTrainingRoundParticipantsResult.Succeeded -> decideSucceeded(command, portResult)
+            is SelectTrainingRoundParticipantsResult.Rejected -> listOf(
+                TrainingRoundParticipantSelectionFailedEvent(
+                    trainingJobId = command.trainingJobId,
+                    trainingRunConfigurationId = portResult.trainingRunConfigurationId,
+                    featureSchemaId = portResult.featureSchemaId,
+                    roundId = portResult.roundId,
+                    roundNumber = portResult.roundNumber,
+                    minimumNodesPerRound = portResult.minimumNodesPerRound,
+                    selectedOrganizationIds = portResult.selectedOrganizationIds,
+                    selectedRuntimeIds = portResult.selectedRuntimeIds,
+                    selectedParticipants = portResult.selectedParticipants,
+                    selectedOrganizationCount = portResult.selectedOrganizationCount,
+                    selectedRuntimeCount = portResult.selectedRuntimeCount,
+                    failureReason = portResult.failureReason
+                )
+            )
         }
 
     private fun decideSucceeded(
@@ -27,14 +44,7 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
             "TrainingRunConfiguration.minimumNodesPerRound must be greater than zero."
         }
         if (result.selectedRuntimeCount < result.minimumNodesPerRound) {
-            log.warn(
-                "Skip training round participant selection because selected runtime count is below quorum. trainingJobId={}, featureSchemaId={}, selectedRuntimeCount={}, minimumNodesPerRound={}",
-                command.trainingJobId,
-                result.featureSchemaId,
-                result.selectedRuntimeCount,
-                result.minimumNodesPerRound
-            )
-            return emptyList()
+            error("SelectTrainingRoundParticipantsResult.Succeeded cannot be below quorum.")
         }
 
         log.info(
