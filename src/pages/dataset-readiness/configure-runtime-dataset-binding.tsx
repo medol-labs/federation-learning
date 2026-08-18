@@ -39,6 +39,7 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
     datasetId: searchParams.get("datasetId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
+    datasetName: searchParams.get("datasetName") ?? undefined,
     runtimeId: searchParams.get("runtimeId") ?? undefined,
   } as Partial<ConfigureRuntimeDatasetBindingCommandInput>;
 
@@ -160,6 +161,24 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
                     queryRoute: "featureschemacatalog",
                   }}
                 />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="datasetName"
+            rules={{ required: "Dataset Name is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.datasetName.label", "Dataset Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Dataset Name"}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

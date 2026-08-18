@@ -521,6 +521,7 @@ export const ConfigureRuntimeDatasetBindingCommandSchema = z.object({
   datasetId: z.string().uuid(),
   organizationId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
+  datasetName: z.string(),
   runtimeId: z.string().uuid(),
   dataSourceType: z.string(),
   host: z.string().optional().nullable(),

@@ -20418,6 +20418,25 @@
               }
             },
             {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetMetadataReported.datasetName"
+                ]
+              }
+            },
+            {
               "name": "sampleCount",
               "type": "Int",
               "cardinality": "Single",
@@ -20681,6 +20700,19 @@
               "file": false
             },
             {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
               "name": "sampleCount",
               "type": "Int",
               "cardinality": "Single",
@@ -20804,6 +20836,12 @@
               "direction": "INBOUND",
               "title": "Record Runtime Dataset Metadata",
               "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-8dff3f72",
+              "direction": "OUTBOUND",
+              "title": "Runtime Dataset Metadata Catalog",
+              "elementType": "READMODEL"
             },
             {
               "id": "readmodel-9aa4f7c7",
@@ -20967,6 +21005,25 @@
                 "kind": "direct",
                 "from": [
                   "AgentDatasetReprofiled.featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetReprofiled.datasetName"
                 ]
               }
             },
@@ -21233,6 +21290,19 @@
               "file": false
             },
             {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
               "name": "sampleCount",
               "type": "Int",
               "cardinality": "Single",
@@ -21356,6 +21426,12 @@
               "direction": "INBOUND",
               "title": "Record Runtime Dataset Reprofiled Metadata",
               "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-8dff3f72",
+              "direction": "OUTBOUND",
+              "title": "Runtime Dataset Metadata Catalog",
+              "elementType": "READMODEL"
             }
           ]
         }
@@ -21497,16 +21573,9 @@
               "generated": false,
               "technicalAttribute": false,
               "query": false,
-              "display": false,
+              "display": true,
               "uploadFile": false,
-              "file": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "DatasetDeclared.datasetName"
-                ],
-                "rule": "Lookup by datasetId and denormalize the dataset display name into the platform runtime dataset metadata catalog."
-              }
+              "file": false
             },
             {
               "name": "organizationName",
@@ -21727,12 +21796,6 @@
           ],
           "dependencies": [
             {
-              "id": "event-b85fc68a",
-              "direction": "INBOUND",
-              "title": "Dataset Declared",
-              "elementType": "EVENT"
-            },
-            {
               "id": "event-6a7fde18",
               "direction": "INBOUND",
               "title": "Organization Registered",
@@ -21745,15 +21808,15 @@
               "elementType": "EVENT"
             },
             {
-              "id": "event-cbbad845",
+              "id": "event-62d7fe8f",
               "direction": "INBOUND",
-              "title": "Agent Dataset Metadata Reported",
+              "title": "Dataset Metadata Reported",
               "elementType": "EVENT"
             },
             {
-              "id": "event-ac7edd88",
+              "id": "event-a519cbfc",
               "direction": "INBOUND",
-              "title": "Agent Dataset Reprofiled",
+              "title": "Dataset Metadata Reprofiled",
               "elementType": "EVENT"
             },
             {
@@ -21793,7 +21856,6 @@
           "name": "modelVersion"
         }
       ],
-      "port": true,
       "concepts": [
         "ModelArtifact"
       ],
@@ -21899,8 +21961,7 @@
               "elementType": "EVENT"
             }
           ],
-          "startsLifecycle": true,
-          "port": true
+          "startsLifecycle": true
         }
       ],
       "events": [
@@ -25130,9 +25191,9 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "TrainingJob.trainingRunConfigurationId"
+                  "TrainingJobSubmitted.trainingRunConfigurationId"
                 ],
-                "rule": "Lock the configuration selected by the submitted training job."
+                "rule": "Lock the configuration carried by the submitted training job event."
               }
             },
             {
@@ -26406,6 +26467,26 @@
                   "SubmitTrainingJob.trainingJobId"
                 ]
               }
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingJob.trainingRunConfigurationId"
+                ],
+                "rule": "Carry the submitted job's training run configuration so automation can lock the exact configuration instead of creating a new one."
+              }
             }
           ],
           "dependencies": [
@@ -26536,6 +26617,9 @@
                 {
                   "name": "trainingJobId",
                   "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
                 }
               ]
             }
@@ -28812,6 +28896,9 @@
                 {
                   "name": "trainingJobId",
                   "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
                 }
               ]
             }
@@ -28891,6 +28978,9 @@
                 {
                   "name": "trainingJobId",
                   "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
                 }
               ]
             }
@@ -45253,12 +45343,6 @@
           ],
           "dependencies": [
             {
-              "id": "readmodel-8dff3f72",
-              "direction": "OUTBOUND",
-              "title": "Runtime Dataset Metadata Catalog",
-              "elementType": "READMODEL"
-            },
-            {
               "id": "readmodel-9aa4f7c7",
               "direction": "OUTBOUND",
               "title": "Training Participant Eligibility",
@@ -45571,6 +45655,25 @@
               }
             },
             {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "DatasetDeclared.datasetName"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -45816,6 +45919,19 @@
             {
               "name": "featureSchemaId",
               "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "datasetName",
+              "type": "String",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -46075,6 +46191,9 @@
                   "name": "featureSchemaId"
                 },
                 {
+                  "name": "datasetName"
+                },
+                {
                   "name": "runtimeId",
                   "example": "runtime-1"
                 },
@@ -46135,6 +46254,9 @@
                 },
                 {
                   "name": "featureSchemaId"
+                },
+                {
+                  "name": "datasetName"
                 },
                 {
                   "name": "runtimeId",
@@ -46286,14 +46408,7 @@
               "query": false,
               "display": true,
               "uploadFile": false,
-              "file": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "DatasetDeclared.datasetName"
-                ],
-                "rule": "Lookup by datasetId and denormalize the dataset display name into the local runtime dataset binding catalog."
-              }
+              "file": false
             },
             {
               "name": "dataSourceType",
@@ -46597,6 +46712,25 @@
                 "kind": "direct",
                 "from": [
                   "RuntimeDatasetBindingConfigured.featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.datasetName"
                 ]
               }
             },
@@ -46965,6 +47099,25 @@
               }
             },
             {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.datasetName"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -47148,6 +47301,25 @@
               }
             },
             {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeDatasetBindingConfigured.datasetName"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -47278,6 +47450,9 @@
                   "example": "88888888-8888-4888-8888-888888888888"
                 },
                 {
+                  "name": "datasetName"
+                },
+                {
                   "name": "runtimeId",
                   "example": "44444444-4444-4444-8444-444444444444"
                 },
@@ -47350,6 +47525,9 @@
                   "example": "88888888-8888-4888-8888-888888888888"
                 },
                 {
+                  "name": "datasetName"
+                },
+                {
                   "name": "runtimeId",
                   "example": "44444444-4444-4444-8444-444444444444"
                 },
@@ -47401,6 +47579,9 @@
                 {
                   "name": "featureSchemaId",
                   "example": "88888888-8888-4888-8888-888888888888"
+                },
+                {
+                  "name": "datasetName"
                 },
                 {
                   "name": "runtimeId",
@@ -47473,6 +47654,9 @@
                 {
                   "name": "featureSchemaId",
                   "example": "88888888-8888-4888-8888-888888888888"
+                },
+                {
+                  "name": "datasetName"
                 },
                 {
                   "name": "runtimeId",
@@ -47676,6 +47860,25 @@
               }
             },
             {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidationFailed.datasetName"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -47853,6 +48056,25 @@
               }
             },
             {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidationFailed.datasetName"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -47980,6 +48202,9 @@
                   "name": "featureSchemaId"
                 },
                 {
+                  "name": "datasetName"
+                },
+                {
                   "name": "runtimeId"
                 },
                 {
@@ -48044,6 +48269,9 @@
                 },
                 {
                   "name": "featureSchemaId"
+                },
+                {
+                  "name": "datasetName"
                 },
                 {
                   "name": "runtimeId"
@@ -48181,14 +48409,7 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "DatasetDeclared.datasetName"
-                ],
-                "rule": "Lookup by datasetId and denormalize the dataset display name into the agent dataset access validation catalog."
-              }
+              "file": false
             },
             {
               "name": "readable",
@@ -48425,6 +48646,25 @@
               }
             },
             {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidated.datasetName"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -48586,6 +48826,25 @@
               }
             },
             {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidated.datasetName"
+                ]
+              }
+            },
+            {
               "name": "sampleCount",
               "type": "Int",
               "cardinality": "Single",
@@ -48711,12 +48970,6 @@
               "elementType": "PROCESSOR"
             },
             {
-              "id": "readmodel-8dff3f72",
-              "direction": "OUTBOUND",
-              "title": "Runtime Dataset Metadata Catalog",
-              "elementType": "READMODEL"
-            },
-            {
               "id": "command-9e8a213b",
               "direction": "INBOUND",
               "title": "Profile Agent Dataset",
@@ -48830,6 +49083,25 @@
                 "kind": "direct",
                 "from": [
                   "AgentDatasetAccessValidated.featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetAccessValidated.datasetName"
                 ]
               }
             },
@@ -48998,6 +49270,9 @@
                   "example": "55555555-5555-4555-8555-555555555555"
                 },
                 {
+                  "name": "datasetName"
+                },
+                {
                   "name": "runtimeId",
                   "example": "66666666-6666-4666-8666-666666666666"
                 }
@@ -49033,6 +49308,9 @@
                 {
                   "name": "featureSchemaId",
                   "example": "55555555-5555-4555-8555-555555555555"
+                },
+                {
+                  "name": "datasetName"
                 },
                 {
                   "name": "sampleCount"
@@ -49102,6 +49380,9 @@
                   "example": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
                 },
                 {
+                  "name": "datasetName"
+                },
+                {
                   "name": "runtimeId",
                   "example": "cccccccc-cccc-4ccc-8ccc-cccccccccccc"
                 }
@@ -49133,6 +49414,9 @@
                 {
                   "name": "featureSchemaId",
                   "example": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+                },
+                {
+                  "name": "datasetName"
                 },
                 {
                   "name": "runtimeId",
@@ -49355,6 +49639,25 @@
               }
             },
             {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetProfilingFailed.datasetName"
+                ]
+              }
+            },
+            {
               "name": "sampleCount",
               "type": "Int",
               "cardinality": "Single",
@@ -49480,12 +49783,6 @@
               "elementType": "PROCESSOR"
             },
             {
-              "id": "readmodel-8dff3f72",
-              "direction": "OUTBOUND",
-              "title": "Runtime Dataset Metadata Catalog",
-              "elementType": "READMODEL"
-            },
-            {
               "id": "command-0e2c68c7",
               "direction": "INBOUND",
               "title": "Reprofile Agent Dataset",
@@ -49593,6 +49890,25 @@
                 "kind": "direct",
                 "from": [
                   "AgentDatasetProfilingFailed.featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "datasetName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentDatasetProfilingFailed.datasetName"
                 ]
               }
             },
@@ -49715,6 +50031,9 @@
                   "example": "55555555-5555-4555-8555-555555555555"
                 },
                 {
+                  "name": "datasetName"
+                },
+                {
                   "name": "runtimeId",
                   "example": "66666666-6666-4666-8666-666666666666"
                 },
@@ -49767,6 +50086,9 @@
                 },
                 {
                   "name": "featureSchemaId"
+                },
+                {
+                  "name": "datasetName"
                 },
                 {
                   "name": "sampleCount"
@@ -49835,6 +50157,9 @@
                   "example": "55555555-5555-4555-8555-555555555555"
                 },
                 {
+                  "name": "datasetName"
+                },
+                {
                   "name": "runtimeId",
                   "example": "66666666-6666-4666-8666-666666666666"
                 },
@@ -49884,6 +50209,9 @@
                 },
                 {
                   "name": "featureSchemaId"
+                },
+                {
+                  "name": "datasetName"
                 },
                 {
                   "name": "runtimeId"
@@ -50071,13 +50399,7 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "AgentDatasetMetadataReported.schemaCompatible"
-                ]
-              }
+              "file": false
             },
             {
               "name": "labelCompatible",
@@ -50090,13 +50412,7 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "AgentDatasetMetadataReported.labelCompatible"
-                ]
-              }
+              "file": false
             },
             {
               "name": "qualityScore",
@@ -50109,13 +50425,7 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "AgentDatasetMetadataReported.qualityScore"
-                ]
-              }
+              "file": false
             },
             {
               "name": "nonIidScore",
@@ -50128,13 +50438,7 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "AgentDatasetMetadataReported.nonIidScore"
-                ]
-              }
+              "file": false
             }
           ],
           "dependencies": [
@@ -50234,13 +50538,7 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "AgentDatasetMetadataReported.schemaCompatible"
-                ]
-              }
+              "file": false
             },
             {
               "name": "labelCompatible",
@@ -50253,13 +50551,7 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "AgentDatasetMetadataReported.labelCompatible"
-                ]
-              }
+              "file": false
             },
             {
               "name": "qualityScore",
@@ -50272,13 +50564,7 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "AgentDatasetMetadataReported.qualityScore"
-                ]
-              }
+              "file": false
             },
             {
               "name": "nonIidScore",
@@ -50291,13 +50577,7 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false,
-              "source": {
-                "kind": "direct",
-                "from": [
-                  "AgentDatasetMetadataReported.nonIidScore"
-                ]
-              }
+              "file": false
             },
             {
               "name": "failureReason",

@@ -358,6 +358,7 @@ export const DatasetCapabilityList = () => {
                       datasetId: row.original.datasetId,
                       organizationId: row.original.organizationId,
                       featureSchemaId: row.original.featureSchemaId,
+                      datasetName: row.original.datasetName,
                       runtimeId: row.original.runtimeId,
                     }}
                   />

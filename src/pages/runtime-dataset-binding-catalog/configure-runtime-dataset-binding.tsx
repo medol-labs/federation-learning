@@ -38,6 +38,7 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
   const defaultValues = {
     datasetId: searchParams.get("datasetId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
+    datasetName: searchParams.get("datasetName") ?? undefined,
     runtimeId: searchParams.get("runtimeId") ?? undefined,
     dataSourceType: searchParams.get("dataSourceType") ?? undefined,
     host: searchParams.get("host") ?? undefined,
@@ -172,6 +173,24 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
                     queryRoute: "featureschemacatalog",
                   }}
                 />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="datasetName"
+            rules={{ required: "Dataset Name is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.datasetName.label", "Dataset Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Dataset Name"}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
