@@ -7,6 +7,8 @@ import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedE
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsCommand
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsDecision
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsResult
+import java.time.LocalDateTime
+import java.util.UUID
 
 @Component
 class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundParticipantsDecision {
@@ -14,7 +16,8 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
 
     override fun decide(
         command: SelectTrainingRoundParticipantsCommand,
-        portResult: SelectTrainingRoundParticipantsResult
+        portResult: SelectTrainingRoundParticipantsResult,
+        now: LocalDateTime
     ): List<Any> =
         when (portResult) {
             is SelectTrainingRoundParticipantsResult.Succeeded -> decideSucceeded(command, portResult)
@@ -31,6 +34,22 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
                     selectedParticipants = portResult.selectedParticipants,
                     selectedOrganizationCount = portResult.selectedOrganizationCount,
                     selectedRuntimeCount = portResult.selectedRuntimeCount,
+                    failureReason = portResult.failureReason
+                )
+            )
+            is SelectTrainingRoundParticipantsResult.Unavailable -> listOf(
+                TrainingRoundParticipantSelectionFailedEvent(
+                    trainingJobId = command.trainingJobId,
+                    trainingRunConfigurationId = UUID.randomUUID(),
+                    featureSchemaId = UUID.randomUUID(),
+                    roundId = UUID.randomUUID(),
+                    roundNumber = 0,
+                    minimumNodesPerRound = 0,
+                    selectedOrganizationIds = emptyList(),
+                    selectedRuntimeIds = emptyList(),
+                    selectedParticipants = emptyList(),
+                    selectedOrganizationCount = 0,
+                    selectedRuntimeCount = 0,
                     failureReason = portResult.failureReason
                 )
             )

@@ -26,6 +26,7 @@ runtime-agent:
     endpoint: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENDPOINT:http://localhost:18080}
     node-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_NODE_NAME:local-runtime}
     runtime-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT:/workspace/tmp/runtime-engine}
+    runtime-root-host-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT_HOST_ROOT:../../volumes/tmp/runtime-engine}
     dataset-host-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_HOST_ROOT:../../volumes/datasets}
     dataset-container-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_CONTAINER_ROOT:/workspace/datasets}
     model: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODEL:linear.LogisticRegression}
@@ -34,3 +35,5 @@ runtime-agent:
     command-timeout: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMMAND_TIMEOUT:PT2M}
     health-timeout: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_HEALTH_TIMEOUT:PT30S}
     health-poll-interval: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_HEALTH_POLL_INTERVAL:PT1S}
+    job-observation-timeout: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_JOB_OBSERVATION_TIMEOUT:PT5M}
+    job-observation-poll-interval: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_JOB_OBSERVATION_POLL_INTERVAL:PT2S}

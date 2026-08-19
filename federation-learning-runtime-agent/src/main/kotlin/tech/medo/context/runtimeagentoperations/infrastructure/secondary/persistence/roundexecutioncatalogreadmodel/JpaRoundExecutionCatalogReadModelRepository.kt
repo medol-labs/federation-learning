@@ -43,6 +43,10 @@ class JpaRoundExecutionCatalogReadModelRepository(private val jpaRepository: Spr
             it.featureSchemaId = this@toProjection.featureSchemaId
             it.baseModelId = this@toProjection.baseModelId
             it.runtimeEngineJobId = this@toProjection.runtimeEngineJobId
+            it.runtimeEngineObservedStatus = this@toProjection.runtimeEngineObservedStatus
+            it.runtimeEngineObservationAt = this@toProjection.runtimeEngineObservationAt
+            it.localUpdateArtifactRef = this@toProjection.localUpdateArtifactRef
+            it.metricsArtifactRef = this@toProjection.metricsArtifactRef
             it.localExecutionRequirementsSatisfied = this@toProjection.localExecutionRequirementsSatisfied
             it.runtimeIdentityMatched = this@toProjection.runtimeIdentityMatched
             it.runtimeDatasetBindingAvailable = this@toProjection.runtimeDatasetBindingAvailable
@@ -90,6 +94,10 @@ class JpaRoundExecutionCatalogReadModelRepository(private val jpaRepository: Spr
             it.featureSchemaId = this@toEntity.featureSchemaId
             it.baseModelId = this@toEntity.baseModelId
             it.runtimeEngineJobId = this@toEntity.runtimeEngineJobId
+            it.runtimeEngineObservedStatus = this@toEntity.runtimeEngineObservedStatus
+            it.runtimeEngineObservationAt = this@toEntity.runtimeEngineObservationAt
+            it.localUpdateArtifactRef = this@toEntity.localUpdateArtifactRef
+            it.metricsArtifactRef = this@toEntity.metricsArtifactRef
             it.localExecutionRequirementsSatisfied = this@toEntity.localExecutionRequirementsSatisfied
             it.runtimeIdentityMatched = this@toEntity.runtimeIdentityMatched
             it.runtimeDatasetBindingAvailable = this@toEntity.runtimeDatasetBindingAvailable

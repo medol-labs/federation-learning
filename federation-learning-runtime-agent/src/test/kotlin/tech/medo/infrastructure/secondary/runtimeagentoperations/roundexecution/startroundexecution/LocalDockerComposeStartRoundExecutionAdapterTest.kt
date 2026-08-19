@@ -29,17 +29,21 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
             bindings = listOf(binding(filePath = "../volumes/datasets/alice.csv"))
         )
 
-        val result = adapter.execute(input(runtimeEngineJobId = "job-1"))
+        val result = adapter.execute(input())
 
         assertTrue(result is StartRoundExecutionResult.Succeeded)
+        assertEquals("round-1-55555555-5555-4555-8555-555555555555", (result as StartRoundExecutionResult.Succeeded).runtimeEngineJobId)
         assertEquals(listOf(listOf("up", "-d", "runtime-engine")), runner.commands)
         assertEquals("http://localhost:18080", client.healthEndpoints.single())
         val request = client.jobs.single()
-        assertEquals("job-1", request.jobId)
+        assertEquals("round-1-55555555-5555-4555-8555-555555555555", request.jobId)
         assertEquals("train", request.operation)
-        assertEquals("local-runtime", request.myName)
+        assertEquals("local-runtime", request.nodeName)
         assertEquals("/workspace/datasets/alice.csv", (request.input["dataset"] as Map<*, *>)["path"])
-        assertEquals("/workspace/tmp/runtime-engine/job-1/local-runtime/local_update.json", request.output["local_update"])
+        assertEquals("y", (request.input["dataset"] as Map<*, *>)["labelColumn"])
+        assertEquals("/workspace/tmp/runtime-engine/round-1-55555555-5555-4555-8555-555555555555/local-runtime/local_update.json", request.output["localUpdate"])
+        assertEquals(0.1, request.modelParameter["learningRate"])
+        assertEquals("plain", request.jobParameter["encryptMethod"])
     }
 
     @Test
@@ -117,7 +121,7 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
             bindingRepository = bindingRepository(bindings)
         )
 
-    private fun input(runtimeEngineJobId: String = ""): StartRoundExecutionInput =
+    private fun input(): StartRoundExecutionInput =
         StartRoundExecutionInput(
             roundExecutionId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
             executionSessionId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
@@ -134,8 +138,7 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
             baseModelRegistryRef = "local",
             baseModelFormat = "json",
             baseModelArtifactDigest = "sha256:abc",
-            baseModelSignatureUri = null,
-            runtimeEngineJobId = runtimeEngineJobId
+            baseModelSignatureUri = null
         )
 
     private fun binding(filePath: String): RuntimeDatasetBindingCatalogReadModel =
@@ -205,7 +208,10 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
         override fun startJob(endpoint: String, request: RuntimeEngineJobRequest): RuntimeEngineJobResponse {
             startException?.let { throw it }
             jobs += request
-            return RuntimeEngineJobResponse(jobId = request.jobId, nodeName = request.myName, status = "running")
+            return RuntimeEngineJobResponse(jobId = request.jobId, nodeName = request.nodeName, status = "running")
         }
+
+        override fun getJob(endpoint: String, jobId: String): RuntimeEngineJobResponse =
+            RuntimeEngineJobResponse(jobId = jobId, nodeName = "local-runtime", status = "running")
     }
 }

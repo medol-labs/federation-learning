@@ -14,7 +14,7 @@ interface RuntimeAgentExecutionPlanClient {
 @Component
 class RestClientRuntimeAgentExecutionPlanClient(
     restClientBuilder: RestClient.Builder,
-    @Value("\${training-orchestration.runtime-agent.endpoint:}") private val endpoint: String
+    @Value("\${training-orchestration.runtime-agent.endpoint:http://localhost:8082}") private val endpoint: String
 ) : RuntimeAgentExecutionPlanClient {
     private val restClient = restClientBuilder.build()
 

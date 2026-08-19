@@ -60,15 +60,14 @@ class StartRoundExecutionDecisionTest {
             baseModelRegistryRef = "",
             baseModelFormat = "",
             baseModelArtifactDigest = "",
-            baseModelSignatureUri = null,
-            runtimeEngineJobId = ""
+            baseModelSignatureUri = null
         )
 
         val events = (object : StartRoundExecutionDecision {}).decide(
             command,
             state = state,
             portResult = StartRoundExecutionResult.Succeeded(
-
+                runtimeEngineJobId = "runtime-engine-job-1"
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
         )
@@ -90,7 +89,7 @@ class StartRoundExecutionDecisionTest {
         assertEquals(command.baseModelFormat, event.baseModelFormat)
         assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
         assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
-        assertEquals(command.runtimeEngineJobId, event.runtimeEngineJobId)
+        assertEquals("runtime-engine-job-1", event.runtimeEngineJobId)
     }
 
     @Test
@@ -140,14 +139,14 @@ class StartRoundExecutionDecisionTest {
             baseModelRegistryRef = "",
             baseModelFormat = "",
             baseModelArtifactDigest = "",
-            baseModelSignatureUri = null,
-            runtimeEngineJobId = ""
+            baseModelSignatureUri = null
         )
 
         val events = (object : StartRoundExecutionDecision {}).decide(
             command,
             state = state,
             portResult = StartRoundExecutionResult.Rejected(
+                runtimeEngineJobId = null,
                 failureReason = ""
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
@@ -170,6 +169,6 @@ class StartRoundExecutionDecisionTest {
         assertEquals(command.baseModelFormat, event.baseModelFormat)
         assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
         assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
-        assertEquals(command.runtimeEngineJobId, event.runtimeEngineJobId)
+        assertEquals(null, event.runtimeEngineJobId)
     }
 }

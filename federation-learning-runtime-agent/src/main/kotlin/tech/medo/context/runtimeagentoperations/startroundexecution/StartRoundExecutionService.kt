@@ -23,18 +23,21 @@ data class StartRoundExecutionInput(
     val baseModelRegistryRef: String,
     val baseModelFormat: String,
     val baseModelArtifactDigest: String,
-    val baseModelSignatureUri: String?,
-    val runtimeEngineJobId: String
+    val baseModelSignatureUri: String?
 )
 
 sealed interface StartRoundExecutionResult {
-    class Succeeded : StartRoundExecutionResult
+    data class Succeeded(
+        val runtimeEngineJobId: String
+    ) : StartRoundExecutionResult
 
     data class Rejected(
+        val runtimeEngineJobId: String?,
         val failureReason: String
     ) : StartRoundExecutionResult
 
     data class Unavailable(
+        val runtimeEngineJobId: String?,
         val failureReason: String
     ) : StartRoundExecutionResult
 }

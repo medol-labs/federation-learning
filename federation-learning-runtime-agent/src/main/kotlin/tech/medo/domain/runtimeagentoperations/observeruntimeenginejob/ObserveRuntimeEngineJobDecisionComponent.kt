@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.observeruntimeenginejob
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.observeruntimeenginejob.ObserveRuntimeEngineJobDecision
+
+@Component
+class ObserveRuntimeEngineJobDecisionComponent : ObserveRuntimeEngineJobDecision

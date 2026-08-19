@@ -23,8 +23,7 @@ data class StartRoundExecutionCommand(
     val baseModelRegistryRef: String,
     val baseModelFormat: String,
     val baseModelArtifactDigest: String,
-    val baseModelSignatureUri: String?,
-    val runtimeEngineJobId: String
+    val baseModelSignatureUri: String?
 ) {
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)

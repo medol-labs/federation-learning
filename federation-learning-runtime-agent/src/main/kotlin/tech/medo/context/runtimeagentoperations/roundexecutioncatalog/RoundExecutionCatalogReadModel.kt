@@ -5,10 +5,10 @@ import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.math.BigDecimal;
 
 
 class RoundExecutionCatalogReadModelQuery
@@ -27,6 +27,10 @@ class RoundExecutionCatalogReadModelProjection : MetadataProjection {
     var featureSchemaId: UUID? = null
     var baseModelId: UUID? = null
     var runtimeEngineJobId: String? = null
+    var runtimeEngineObservedStatus: String? = null
+    var runtimeEngineObservationAt: LocalDateTime? = null
+    var localUpdateArtifactRef: String? = null
+    var metricsArtifactRef: String? = null
     var localExecutionRequirementsSatisfied: Boolean? = null
     var runtimeIdentityMatched: Boolean? = null
     var runtimeDatasetBindingAvailable: Boolean? = null
@@ -74,6 +78,10 @@ fun RoundExecutionCatalogReadModelProjection.toReadModel(): RoundExecutionCatalo
     featureSchemaId = featureSchemaId,
     baseModelId = baseModelId,
     runtimeEngineJobId = runtimeEngineJobId,
+    runtimeEngineObservedStatus = runtimeEngineObservedStatus,
+    runtimeEngineObservationAt = runtimeEngineObservationAt,
+    localUpdateArtifactRef = localUpdateArtifactRef,
+    metricsArtifactRef = metricsArtifactRef,
     localExecutionRequirementsSatisfied = localExecutionRequirementsSatisfied,
     runtimeIdentityMatched = runtimeIdentityMatched,
     runtimeDatasetBindingAvailable = runtimeDatasetBindingAvailable,
@@ -127,6 +135,10 @@ data class RoundExecutionCatalogReadModel(
     val featureSchemaId: UUID?,
     val baseModelId: UUID?,
     val runtimeEngineJobId: String?,
+    val runtimeEngineObservedStatus: String?,
+    val runtimeEngineObservationAt: LocalDateTime?,
+    val localUpdateArtifactRef: String?,
+    val metricsArtifactRef: String?,
     val localExecutionRequirementsSatisfied: Boolean?,
     val runtimeIdentityMatched: Boolean?,
     val runtimeDatasetBindingAvailable: Boolean?,

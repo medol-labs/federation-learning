@@ -15,7 +15,7 @@ object Concepts {
 
     data object TrainingRound {
         const val NAME = "TrainingRound"
-        val slices = listOf("SelectTrainingRoundParticipants", "StartTrainingRound", "SubmitModelUpdateSubmission", "EvaluateModelUpdateSubmission", "RequestSecureAggregation", "CompleteSecureAggregation", "SubmitGlobalModelEvaluation", "CompleteTrainingRound", "FailTrainingRound", "TrainingRoundProgress")
+        val slices = listOf("SelectTrainingRoundParticipants", "RetryTrainingRoundParticipantSelection", "StartTrainingRound", "SubmitModelUpdateSubmission", "EvaluateModelUpdateSubmission", "RequestSecureAggregation", "CompleteSecureAggregation", "SubmitGlobalModelEvaluation", "CompleteTrainingRound", "FailTrainingRound", "TrainingRoundProgress")
         val states = listOf("ParticipantsSelected", "Running", "CollectingUpdates", "Aggregating", "EvaluatingGlobalModel", "Completed", "Failed")
     }
 

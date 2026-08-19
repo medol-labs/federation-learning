@@ -8,6 +8,7 @@ import org.axonframework.messaging.eventstreaming.EventCriteria
 import org.axonframework.messaging.eventstreaming.Tag
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionFailedEvent
+import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionRetryRequestedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundStartedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundStartFailedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionReceivedEvent
@@ -96,6 +97,11 @@ class TrainingRoundState @EntityCreator constructor() {
         selectedOrganizationCount = event.selectedOrganizationCount
         selectedRuntimeCount = event.selectedRuntimeCount
         failureReason = event.failureReason
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: TrainingRoundParticipantSelectionRetryRequestedEvent): TrainingRoundState = apply {
+        trainingJobId = event.trainingJobId
     }
 
     @EventSourcingHandler

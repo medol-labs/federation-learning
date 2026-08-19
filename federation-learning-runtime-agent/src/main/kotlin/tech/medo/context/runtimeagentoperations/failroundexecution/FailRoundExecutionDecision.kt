@@ -15,7 +15,7 @@ interface FailRoundExecutionDecision {
             "FailRoundExecution requires RoundExecution to be Running."
         }
         return listOf(
-            RoundExecutionFailedEvent(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, runtimeId = command.runtimeId, runtimeEngineJobId = command.runtimeEngineJobId, failureReason = command.failureReason)
+            RoundExecutionFailedEvent(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, runtimeEngineJobId = command.runtimeEngineJobId, failureReason = command.failureReason)
         )
     }
 }

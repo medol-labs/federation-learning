@@ -26,16 +26,20 @@ class LocalDockerComposeStartRoundExecutionAdapter(
     override fun execute(input: StartRoundExecutionInput): StartRoundExecutionResult {
         val binding = findBinding(input)
             ?: return StartRoundExecutionResult.Rejected(
+                runtimeEngineJobId = null,
                 failureReason = "No runtime dataset binding is available for runtime ${input.runtimeId}."
             )
         val datasetPath = binding.filePath?.takeIf { it.isNotBlank() }
             ?: return StartRoundExecutionResult.Rejected(
+                runtimeEngineJobId = null,
                 failureReason = "Runtime dataset binding ${binding.runtimeDatasetBindingId} does not provide a filePath."
             )
+        val runtimeEngineJobId = defaultRuntimeEngineJobId(input)
 
         val compose = commandRunner.run(properties, listOf("up", "-d", properties.serviceName))
         if (!compose.succeeded) {
             return StartRoundExecutionResult.Unavailable(
+                runtimeEngineJobId = runtimeEngineJobId,
                 failureReason = if (compose.timedOut) {
                     "Runtime engine docker compose up timed out after ${properties.commandTimeout}."
                 } else {
@@ -49,21 +53,24 @@ class LocalDockerComposeStartRoundExecutionAdapter(
             waitUntilHealthy(endpoint)
         } catch (ex: Exception) {
             return StartRoundExecutionResult.Unavailable(
+                runtimeEngineJobId = runtimeEngineJobId,
                 failureReason = "Runtime engine health check failed: ${ex.message ?: ex.javaClass.name}"
             )
         }
 
-        val runtimeEngineJobId = input.runtimeEngineJobId.ifBlank { defaultRuntimeEngineJobId(input) }
         val request = buildJobRequest(input, runtimeEngineJobId, datasetPath)
         val response = try {
+            log.info("Submitting runtime engine job. endpoint={}, request={}", endpoint, request)
             runtimeEngineClient.startJob(endpoint, request)
         } catch (ex: Exception) {
             return StartRoundExecutionResult.Unavailable(
+                runtimeEngineJobId = runtimeEngineJobId,
                 failureReason = "Runtime engine job submission failed: ${ex.message ?: ex.javaClass.name}"
             )
         }
         if (response.status.equals("failed", ignoreCase = true)) {
             return StartRoundExecutionResult.Rejected(
+                runtimeEngineJobId = runtimeEngineJobId,
                 failureReason = "Runtime engine rejected job $runtimeEngineJobId: ${response.output}"
             )
         }
@@ -77,15 +84,16 @@ class LocalDockerComposeStartRoundExecutionAdapter(
             response.status,
             response.output
         )
-        return StartRoundExecutionResult.Succeeded()
+        return StartRoundExecutionResult.Succeeded(runtimeEngineJobId = runtimeEngineJobId)
     }
 
     private fun findBinding(input: StartRoundExecutionInput): RuntimeDatasetBindingCatalogReadModel? =
         bindingRepository.findAll(Pageable.unpaged()).content
-            .filter { it.runtimeId == input.runtimeId }
-            .filter { it.organizationId == input.organizationId }
-            .filter { it.datasetId != null }
-            .maxByOrNull { it.configuredAt ?: java.time.LocalDateTime.MIN }
+                .firstOrNull()
+            // .filter { it.runtimeId == input.runtimeId }
+            // .filter { it.organizationId == input.organizationId }
+            // .filter { it.datasetId != null }
+            // .maxByOrNull { it.configuredAt ?: java.time.LocalDateTime.MIN }
 
     private fun waitUntilHealthy(endpoint: String) {
         val deadline = Instant.now().plus(properties.healthTimeout.coerceAtLeast(Duration.ofSeconds(1)))
@@ -121,24 +129,23 @@ class LocalDockerComposeStartRoundExecutionAdapter(
         val runtimeInput = mutableMapOf<String, Any?>(
             "dataset" to mapOf(
                 "path" to toContainerDatasetPath(datasetPath),
-                "label_column" to "y",
+                "labelColumn" to "y",
                 "id" to "id"
             )
         )
         if (!globalModelPath.isNullOrBlank()) {
-            runtimeInput["global_model"] = globalModelPath
+            runtimeInput["globalModel"] = globalModelPath
         }
 
         return RuntimeEngineJobRequest(
             jobId = runtimeEngineJobId,
-            taskId = runtimeEngineJobId,
             roundId = input.roundNumber,
-            myName = properties.nodeName,
+            nodeName = properties.nodeName,
             role = "trainer",
             operation = "train",
             input = runtimeInput,
             output = mapOf(
-                "local_update" to localUpdatePath,
+                "localUpdate" to localUpdatePath,
                 "metrics" to metricsPath
             ),
             modelParameter = mapOf(
@@ -146,11 +153,11 @@ class LocalDockerComposeStartRoundExecutionAdapter(
                 "engine" to "python",
                 "process" to "train",
                 "epoch" to properties.epoch,
-                "learning_rate" to properties.learningRate
+                "learningRate" to properties.learningRate
             ),
             jobParameter = mapOf(
-                "encrypt_method" to "plain",
-                "logger_level" to "INFO"
+                "encryptMethod" to "plain",
+                "loggerLevel" to "INFO"
             ),
             runtimeRoot = properties.runtimeRoot
         )

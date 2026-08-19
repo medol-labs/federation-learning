@@ -21,7 +21,8 @@ class SelectTrainingRoundParticipantsCommandHandler(
     ) {
         val input = SelectTrainingRoundParticipantsInput(trainingJobId = command.trainingJobId)
         val portResult = selectTrainingRoundParticipantsService.execute(input)
+        val now = java.time.LocalDateTime.now()
 
-        eventAppender.append(decision.decide(command, portResult))
+        eventAppender.append(decision.decide(command, portResult, now))
     }
 }

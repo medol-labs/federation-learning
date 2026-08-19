@@ -21,10 +21,16 @@ class SelectTrainingRoundParticipantsServiceRouter(private val adapters: ObjectP
             1 -> try {
                 candidates.first().execute(input)
             } catch (ex: Exception) {
-                throw ex
+                SelectTrainingRoundParticipantsResult.Unavailable(
+                    failureReason = ex.message ?: "SelectTrainingRoundParticipantsService is unavailable."
+                )
             }
-            0 -> error("No SelectTrainingRoundParticipantsService adapter supports the requested input.")
-            else -> error("Multiple SelectTrainingRoundParticipantsService adapters support the requested input.")
+            0 -> SelectTrainingRoundParticipantsResult.Unavailable(
+                failureReason = "No SelectTrainingRoundParticipantsService adapter supports the requested input."
+            )
+            else -> SelectTrainingRoundParticipantsResult.Unavailable(
+                failureReason = "Multiple SelectTrainingRoundParticipantsService adapters support the requested input."
+            )
         }
     }
 }

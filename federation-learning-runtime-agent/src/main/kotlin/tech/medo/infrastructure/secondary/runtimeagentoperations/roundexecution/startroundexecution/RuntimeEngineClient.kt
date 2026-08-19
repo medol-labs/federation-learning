@@ -1,18 +1,23 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.LoggerFactory
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
 
 interface RuntimeEngineClient {
     fun health(endpoint: String): RuntimeEngineHealthResponse
     fun startJob(endpoint: String, request: RuntimeEngineJobRequest): RuntimeEngineJobResponse
+    fun getJob(endpoint: String, jobId: String): RuntimeEngineJobResponse
 }
 
 @Component
 class RestClientRuntimeEngineClient(
-    restClientBuilder: RestClient.Builder
+    restClientBuilder: RestClient.Builder,
+    private val objectMapper: ObjectMapper
 ) : RuntimeEngineClient {
+    private val log = LoggerFactory.getLogger(javaClass)
     private val restClient = restClientBuilder.build()
 
     override fun health(endpoint: String): RuntimeEngineHealthResponse =
@@ -22,13 +27,24 @@ class RestClientRuntimeEngineClient(
             .body(RuntimeEngineHealthResponse::class.java)
             ?: RuntimeEngineHealthResponse()
 
-    override fun startJob(endpoint: String, request: RuntimeEngineJobRequest): RuntimeEngineJobResponse =
-        restClient.post()
+    override fun startJob(endpoint: String, request: RuntimeEngineJobRequest): RuntimeEngineJobResponse {
+        val body = objectMapper.writeValueAsString(request)
+        log.info("Submitting runtime engine job. endpoint={}, body={}", endpoint, body)
+        return restClient.post()
             .uri("${endpoint.trim().removeSuffix("/")}/jobs")
-            .body(request)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(body)
             .retrieve()
             .body(RuntimeEngineJobResponse::class.java)
             ?: RuntimeEngineJobResponse(jobId = request.jobId)
+    }
+
+    override fun getJob(endpoint: String, jobId: String): RuntimeEngineJobResponse =
+        restClient.get()
+            .uri("${endpoint.trim().removeSuffix("/")}/jobs/$jobId")
+            .retrieve()
+            .body(RuntimeEngineJobResponse::class.java)
+            ?: RuntimeEngineJobResponse(jobId = jobId)
 }
 
 data class RuntimeEngineHealthResponse(
@@ -37,23 +53,15 @@ data class RuntimeEngineHealthResponse(
 )
 
 data class RuntimeEngineJobRequest(
-    @param:JsonProperty("job_id")
     val jobId: String,
-    @param:JsonProperty("task_id")
-    val taskId: String,
-    @param:JsonProperty("round_id")
     val roundId: Int,
-    @param:JsonProperty("my_name")
-    val myName: String,
+    val nodeName: String,
     val role: String,
     val operation: String,
     val input: Map<String, Any?>,
     val output: Map<String, String>,
-    @param:JsonProperty("model_parameter")
     val modelParameter: Map<String, Any?>,
-    @param:JsonProperty("job_parameter")
     val jobParameter: Map<String, Any?>,
-    @param:JsonProperty("runtime_root")
     val runtimeRoot: String
 )
 

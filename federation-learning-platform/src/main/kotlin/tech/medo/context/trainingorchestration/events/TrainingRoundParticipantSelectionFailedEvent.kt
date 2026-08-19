@@ -2,8 +2,10 @@ package tech.medo.trainingorchestration.events
 
 import org.axonframework.eventsourcing.annotation.EventTag
 import org.axonframework.messaging.eventhandling.annotation.Event
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
-import java.util.UUID
+import java.util.UUID;
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
+
+
 
 @Event
 data class TrainingRoundParticipantSelectionFailedEvent(

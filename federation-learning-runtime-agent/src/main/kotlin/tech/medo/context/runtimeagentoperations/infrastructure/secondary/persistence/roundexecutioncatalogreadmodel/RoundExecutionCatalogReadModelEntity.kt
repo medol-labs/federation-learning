@@ -9,10 +9,10 @@ import jakarta.persistence.IdClass
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.math.BigDecimal;
 
 
 @Entity
@@ -32,6 +32,10 @@ class RoundExecutionCatalogReadModelEntity : MetadataProjection {
     var featureSchemaId: UUID? = null
     var baseModelId: UUID? = null
     var runtimeEngineJobId: String? = null
+    var runtimeEngineObservedStatus: String? = null
+    var runtimeEngineObservationAt: LocalDateTime? = null
+    var localUpdateArtifactRef: String? = null
+    var metricsArtifactRef: String? = null
     var localExecutionRequirementsSatisfied: Boolean? = null
     var runtimeIdentityMatched: Boolean? = null
     var runtimeDatasetBindingAvailable: Boolean? = null

@@ -40,4 +40,7 @@ sealed interface SelectTrainingRoundParticipantsResult {
         val failureReason: String
     ) : SelectTrainingRoundParticipantsResult
 
+    data class Unavailable(
+        val failureReason: String
+    ) : SelectTrainingRoundParticipantsResult
 }

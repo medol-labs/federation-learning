@@ -11,6 +11,7 @@ import tech.medo.runtimeagentoperations.events.ExecutionPlanAcceptedEvent
 import tech.medo.runtimeagentoperations.events.ExecutionPlanRejectedEvent
 import tech.medo.runtimeagentoperations.events.RoundExecutionStartedEvent
 import tech.medo.runtimeagentoperations.events.RoundExecutionStartFailedEvent
+import tech.medo.runtimeagentoperations.events.RuntimeEngineJobObservedEvent
 import tech.medo.runtimeagentoperations.events.RoundExecutionCompletedEvent
 import tech.medo.runtimeagentoperations.events.RoundExecutionFailedEvent
 import tech.medo.runtimeagentoperations.events.RoundExecutionStartRetryStartedEvent
@@ -60,13 +61,16 @@ class RoundExecutionState @EntityCreator constructor() {
     var roundExecutionId: UUID? = null
     var runtimeEngineJobId: String? = null
     var failureReason: String? = null
+    var observedStatus: String? = null
+    var localUpdateArtifactRef: String? = null
+    var metricsArtifactRef: String? = null
+    var trainingLoss: BigDecimal? = null
     var retryReason: String? = null
     var modelUpdateSubmissionId: UUID? = null
     var localModelId: UUID? = null
     var updateArtifactId: UUID? = null
     var artifactRef: String? = null
     var artifactDigest: String? = null
-    var trainingLoss: BigDecimal? = null
 
     @EventSourcingHandler
     fun evolve(event: ExecutionPlanReceivedEvent): RoundExecutionState = apply {
@@ -191,6 +195,27 @@ class RoundExecutionState @EntityCreator constructor() {
     }
 
     @EventSourcingHandler
+    fun evolve(event: RuntimeEngineJobObservedEvent): RoundExecutionState = apply {
+        currentState = RoundExecutionStateEnum.RUNNING
+        roundExecutionId = event.roundExecutionId
+        executionSessionId = event.executionSessionId
+        executionPlanId = event.executionPlanId
+        trainingJobId = event.trainingJobId
+        trainingRunConfigurationId = event.trainingRunConfigurationId
+        roundId = event.roundId
+        roundNumber = event.roundNumber
+        runtimeId = event.runtimeId
+        organizationId = event.organizationId
+        featureSchemaId = event.featureSchemaId
+        runtimeEngineJobId = event.runtimeEngineJobId
+        observedStatus = event.observedStatus
+        failureReason = event.failureReason
+        localUpdateArtifactRef = event.localUpdateArtifactRef
+        metricsArtifactRef = event.metricsArtifactRef
+        trainingLoss = event.trainingLoss
+    }
+
+    @EventSourcingHandler
     fun evolve(event: RoundExecutionCompletedEvent): RoundExecutionState = apply {
         currentState = RoundExecutionStateEnum.COMPLETED
         roundExecutionId = event.roundExecutionId
@@ -199,8 +224,14 @@ class RoundExecutionState @EntityCreator constructor() {
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         roundId = event.roundId
+        roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        organizationId = event.organizationId
+        featureSchemaId = event.featureSchemaId
         runtimeEngineJobId = event.runtimeEngineJobId
+        localUpdateArtifactRef = event.localUpdateArtifactRef
+        metricsArtifactRef = event.metricsArtifactRef
+        trainingLoss = event.trainingLoss
     }
 
     @EventSourcingHandler
@@ -212,7 +243,10 @@ class RoundExecutionState @EntityCreator constructor() {
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         roundId = event.roundId
+        roundNumber = event.roundNumber
         runtimeId = event.runtimeId
+        organizationId = event.organizationId
+        featureSchemaId = event.featureSchemaId
         runtimeEngineJobId = event.runtimeEngineJobId
         failureReason = event.failureReason
     }

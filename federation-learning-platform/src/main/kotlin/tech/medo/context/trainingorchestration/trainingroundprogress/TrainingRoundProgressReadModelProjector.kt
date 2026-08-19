@@ -7,8 +7,8 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
-import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionFailedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
+import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionFailedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundStartedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundStartFailedEvent
 import tech.medo.trainingorchestration.events.ParticipantExecutionPlanGeneratedEvent

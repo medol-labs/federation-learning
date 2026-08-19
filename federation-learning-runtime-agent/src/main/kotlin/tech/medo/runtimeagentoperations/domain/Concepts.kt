@@ -27,7 +27,7 @@ object Concepts {
 
     data object RoundExecution {
         const val NAME = "RoundExecution"
-        val slices = listOf("ReceiveParticipantExecutionPlan", "AcceptExecutionPlan", "StartRoundExecution", "CompleteRoundExecution", "FailRoundExecution", "RetryRoundExecutionAfterStartFailure", "RetryRoundExecutionAfterRuntimeFailure", "SubmitAgentLocalModelUpdate", "ReleaseRuntimeEngineJobAfterCompletion", "ReleaseRuntimeEngineJobAfterFailure", "ReleaseRuntimeEngineJobAfterStartFailure", "ReleaseRuntimeEngineJobAfterRetryFailure", "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure", "RoundExecutionCatalog")
+        val slices = listOf("ReceiveParticipantExecutionPlan", "AcceptExecutionPlan", "StartRoundExecution", "ObserveRuntimeEngineJob", "CompleteRoundExecution", "FailRoundExecution", "RetryRoundExecutionAfterStartFailure", "RetryRoundExecutionAfterRuntimeFailure", "SubmitAgentLocalModelUpdate", "ReleaseRuntimeEngineJobAfterCompletion", "ReleaseRuntimeEngineJobAfterFailure", "ReleaseRuntimeEngineJobAfterStartFailure", "ReleaseRuntimeEngineJobAfterRetryFailure", "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure", "RoundExecutionCatalog")
         val states = listOf("PlanReceived", "PlanAccepted", "PlanRejected", "Running", "StartFailed", "Retried", "Completed", "Failed", "UpdateSubmitted", "RuntimeEngineReleased", "RuntimeEngineReleaseHandled")
     }
 

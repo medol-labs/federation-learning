@@ -929,6 +929,11 @@
           "title": "Select Training Round Participants"
         },
         {
+          "id": "slice-3afb3435",
+          "name": "RetryTrainingRoundParticipantSelection",
+          "title": "Retry Training Round Participant Selection"
+        },
+        {
           "id": "slice-6a16fc72",
           "name": "StartTrainingRound",
           "title": "Start Training Round"
@@ -1572,6 +1577,11 @@
           "id": "slice-4d4016d0",
           "name": "StartRoundExecution",
           "title": "Start Round Execution"
+        },
+        {
+          "id": "slice-0cecfd3f",
+          "name": "ObserveRuntimeEngineJob",
+          "title": "Observe Runtime Engine Job"
         },
         {
           "id": "slice-b1a48287",
@@ -2885,6 +2895,11 @@
           "title": "Select Training Round Participants"
         },
         {
+          "id": "slice-3afb3435",
+          "name": "RetryTrainingRoundParticipantSelection",
+          "title": "Retry Training Round Participant Selection"
+        },
+        {
           "id": "slice-6a16fc72",
           "name": "StartTrainingRound",
           "title": "Start Training Round"
@@ -3411,6 +3426,11 @@
           "id": "slice-4d4016d0",
           "name": "StartRoundExecution",
           "title": "Start Round Execution"
+        },
+        {
+          "id": "slice-0cecfd3f",
+          "name": "ObserveRuntimeEngineJob",
+          "title": "Observe Runtime Engine Job"
         },
         {
           "id": "slice-b1a48287",
@@ -6569,6 +6589,39 @@
       "startsLifecycle": false
     },
     {
+      "id": "transition-709c45ae",
+      "context": "RuntimeAgentOperations",
+      "owner": {
+        "id": "concept-14e04b52",
+        "type": "concept",
+        "name": "RoundExecution",
+        "title": "Round Execution"
+      },
+      "slice": {
+        "id": "slice-0cecfd3f",
+        "name": "ObserveRuntimeEngineJob",
+        "title": "Observe Runtime Engine Job"
+      },
+      "command": {
+        "id": "command-4cdf6d17",
+        "name": "ObserveRuntimeEngineJob",
+        "title": "Observe Runtime Engine Job"
+      },
+      "event": {
+        "id": "event-bf91246c",
+        "name": "RuntimeEngineJobObserved",
+        "title": "Runtime Engine Job Observed"
+      },
+      "trigger": {
+        "id": "event-82cf8a97",
+        "name": "RoundExecutionStarted",
+        "title": "Round Execution Started"
+      },
+      "from": "Running",
+      "to": "Running",
+      "startsLifecycle": false
+    },
+    {
       "id": "transition-9d998b08",
       "context": "RuntimeAgentOperations",
       "owner": {
@@ -6593,9 +6646,9 @@
         "title": "Round Execution Completed"
       },
       "trigger": {
-        "id": "event-82cf8a97",
-        "name": "RoundExecutionStarted",
-        "title": "Round Execution Started"
+        "id": "event-bf91246c",
+        "name": "RuntimeEngineJobObserved",
+        "title": "Runtime Engine Job Observed"
       },
       "from": "Running",
       "to": "Completed",
@@ -6626,9 +6679,9 @@
         "title": "Round Execution Failed"
       },
       "trigger": {
-        "id": "event-82cf8a97",
-        "name": "RoundExecutionStarted",
-        "title": "Round Execution Started"
+        "id": "event-bf91246c",
+        "name": "RuntimeEngineJobObserved",
+        "title": "Runtime Engine Job Observed"
       },
       "from": "Running",
       "to": "Failed",
@@ -7121,6 +7174,11 @@
       "id": "actor-778f24cc",
       "name": "ResearchLead",
       "title": "Research Lead"
+    },
+    {
+      "id": "actor-fbb712c9",
+      "name": "TrainingOperator",
+      "title": "Training Operator"
     },
     {
       "id": "actor-e0b3b07a",
@@ -28664,6 +28722,18 @@
               "direction": "OUTBOUND",
               "title": "Training Round Participants Selected",
               "elementType": "EVENT"
+            },
+            {
+              "id": "automation-28951fe8",
+              "direction": "INBOUND",
+              "title": "Select Training Round Participants When Retry Requested",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "event-4ace584a",
+              "direction": "OUTBOUND",
+              "title": "Training Round Participant Selection Failed",
+              "elementType": "EVENT"
             }
           ],
           "startsLifecycle": true,
@@ -28843,6 +28913,192 @@
               "elementType": "READMODEL"
             }
           ]
+        },
+        {
+          "id": "event-4ace584a",
+          "name": "TrainingRoundParticipantSelectionFailed",
+          "title": "Training Round Participant Selection Failed",
+          "type": "EVENT",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Select Training Round Participants",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "minimumNodesPerRound",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "selectedOrganizationIds",
+              "type": "UUID",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "selectedRuntimeIds",
+              "type": "UUID",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "selectedParticipants",
+              "type": "TrainingRoundParticipant",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "selectedOrganizationCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "selectedRuntimeCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "failureReason",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-cd31996d",
+              "direction": "OUTBOUND",
+              "title": "Retry Training Round Participant Selection",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-b866abe9",
+              "direction": "OUTBOUND",
+              "title": "Training Round Progress",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "command-5362dd01",
+              "direction": "INBOUND",
+              "title": "Select Training Round Participants",
+              "elementType": "COMMAND"
+            }
+          ]
         }
       ],
       "readmodels": [],
@@ -28884,7 +29140,7 @@
           "sliceName": "Select Training Round Participants",
           "title": "Select Participants When Runtime Pool Reaches Quorum",
           "specification": "Training Round Participants Are Snapshotted Per Round",
-          "rule": "Each training round starts from a runtime snapshot selected by domain policy. The policy evaluates domain facts, not readmodel state: submitted job, locked training configuration, active federation membership, active runtime identity, detected runtime capabilities, connected runtime status, and approved dataset evidence matching the feature schema. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots.",
+          "rule": "Each training round starts from a runtime snapshot selected by domain policy. The policy evaluates submitted job, locked training configuration, active federation membership, active runtime identity, detected runtime capabilities, connected runtime status, and approved dataset evidence matching the feature schema. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If the selected runtime count is below quorum, the system records a failed participant selection event so the operator can fix runtime or dataset readiness and retry selection.",
           "expressions": [],
           "validates": [],
           "given": [
@@ -28966,7 +29222,7 @@
           "sliceName": "Select Training Round Participants",
           "title": "Reject Participant Snapshot Below Quorum",
           "specification": "Training Round Participants Are Snapshotted Per Round",
-          "rule": "Each training round starts from a runtime snapshot selected by domain policy. The policy evaluates domain facts, not readmodel state: submitted job, locked training configuration, active federation membership, active runtime identity, detected runtime capabilities, connected runtime status, and approved dataset evidence matching the feature schema. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots.",
+          "rule": "Each training round starts from a runtime snapshot selected by domain policy. The policy evaluates submitted job, locked training configuration, active federation membership, active runtime identity, detected runtime capabilities, connected runtime status, and approved dataset evidence matching the feature schema. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If the selected runtime count is below quorum, the system records a failed participant selection event so the operator can fix runtime or dataset readiness and retry selection.",
           "expressions": [],
           "validates": [],
           "given": [
@@ -28998,12 +29254,52 @@
               ]
             }
           ],
-          "then": {
-            "title": "Rejected",
-            "id": "spec-reject-adf9ba5b",
-            "description": "Round Participant Quorum Required",
-            "outcome": "REJECT"
-          }
+          "then": [
+            {
+              "title": "Training Round Participant Selection Failed",
+              "id": "event-4ace584a",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "minimumNodesPerRound"
+                },
+                {
+                  "name": "selectedOrganizationIds"
+                },
+                {
+                  "name": "selectedRuntimeIds"
+                },
+                {
+                  "name": "selectedParticipants"
+                },
+                {
+                  "name": "selectedOrganizationCount"
+                },
+                {
+                  "name": "selectedRuntimeCount"
+                },
+                {
+                  "name": "failureReason"
+                }
+              ]
+            }
+          ]
         }
       ],
       "actors": [],
@@ -29015,8 +29311,252 @@
       }
     },
     {
-      "id": "slice-6a16fc72",
+      "id": "slice-3afb3435",
       "index": 69,
+      "name": "RetryTrainingRoundParticipantSelection",
+      "title": "Retry Training Round Participant Selection",
+      "chapter": "TrainingOrchestration",
+      "context": "TrainingOrchestration",
+      "tags": [],
+      "concepts": [
+        "TrainingRound"
+      ],
+      "commands": [
+        {
+          "id": "command-cd31996d",
+          "name": "RetryTrainingRoundParticipantSelection",
+          "title": "Retry Training Round Participant Selection",
+          "type": "COMMAND",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Retry Training Round Participant Selection",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-4ace584a",
+              "direction": "INBOUND",
+              "title": "Training Round Participant Selection Failed",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "screen-8d40d9f4",
+              "direction": "INBOUND",
+              "title": "Training Job Dashboard",
+              "elementType": "SCREEN"
+            },
+            {
+              "id": "event-75e88374",
+              "direction": "OUTBOUND",
+              "title": "Training Round Participant Selection Retry Requested",
+              "elementType": "EVENT"
+            }
+          ],
+          "ui": {
+            "type": "confirm"
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "event-75e88374",
+          "name": "TrainingRoundParticipantSelectionRetryRequested",
+          "title": "Training Round Participant Selection Retry Requested",
+          "type": "EVENT",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Retry Training Round Participant Selection",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "automation-28951fe8",
+              "direction": "OUTBOUND",
+              "title": "Select Training Round Participants When Retry Requested",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "command-cd31996d",
+              "direction": "INBOUND",
+              "title": "Retry Training Round Participant Selection",
+              "elementType": "COMMAND"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [
+        {
+          "id": "screen-8d40d9f4",
+          "name": "TrainingJobDashboard",
+          "title": "Training Job Dashboard",
+          "type": "SCREEN",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Retry Training Round Participant Selection",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "command-cd31996d",
+              "direction": "OUTBOUND",
+              "title": "Retry Training Round Participant Selection",
+              "elementType": "COMMAND"
+            }
+          ],
+          "ui": {
+            "type": "confirm"
+          }
+        }
+      ],
+      "processors": [
+        {
+          "id": "automation-28951fe8",
+          "name": "SelectTrainingRoundParticipantsWhenRetryRequested",
+          "title": "Select Training Round Participants When Retry Requested",
+          "type": "PROCESSOR",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Retry Training Round Participant Selection",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "event-75e88374",
+              "direction": "INBOUND",
+              "title": "Training Round Participant Selection Retry Requested",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "command-5362dd01",
+              "direction": "OUTBOUND",
+              "title": "Select Training Round Participants",
+              "elementType": "COMMAND"
+            }
+          ],
+          "metadata": {
+            "on": "TrainingRoundParticipantSelectionRetryRequested",
+            "onKind": "event",
+            "emits": "SelectTrainingRoundParticipants"
+          }
+        }
+      ],
+      "specifications": [
+        {
+          "id": "gwt-82a89737",
+          "chapter": "TrainingOrchestration",
+          "sliceName": "Retry Training Round Participant Selection",
+          "title": "Retry Participant Selection",
+          "specification": "Retry Participant Selection After Readiness Changes",
+          "rule": "Operators can retry participant selection after federation members, runtime identities, runtime connectivity, or dataset metadata readiness change. Retry records an explicit request and reuses the normal SelectTrainingRoundParticipants policy instead of duplicating participant selection rules.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Training Round Participant Selection Failed",
+              "id": "event-4ace584a",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "minimumNodesPerRound"
+                },
+                {
+                  "name": "selectedOrganizationIds"
+                },
+                {
+                  "name": "selectedRuntimeIds"
+                },
+                {
+                  "name": "selectedParticipants"
+                },
+                {
+                  "name": "selectedOrganizationCount"
+                },
+                {
+                  "name": "selectedRuntimeCount"
+                },
+                {
+                  "name": "failureReason"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Retry Training Round Participant Selection",
+              "id": "command-cd31996d",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Training Round Participant Selection Retry Requested",
+              "id": "event-75e88374",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "actors": [
+        {
+          "id": "actor-fbb712c9",
+          "name": "TrainingOperator",
+          "title": "Training Operator"
+        }
+      ],
+      "hotspots": []
+    },
+    {
+      "id": "slice-6a16fc72",
+      "index": 70,
       "name": "StartTrainingRound",
       "title": "Start Training Round",
       "chapter": "TrainingOrchestration",
@@ -29993,7 +30533,7 @@
     },
     {
       "id": "slice-fabbea45",
-      "index": 70,
+      "index": 71,
       "name": "GenerateParticipantExecutionPlan",
       "title": "Generate Participant Execution Plan",
       "chapter": "TrainingOrchestration",
@@ -30145,11 +30685,10 @@
               "uploadFile": false,
               "file": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "TrainingRoundStarted.selectedParticipants.runtimeId"
-                ],
-                "rule": "Fan out one immutable execution plan per selected runtime in the selected participant snapshot."
+                  "participant.runtimeId"
+                ]
               }
             },
             {
@@ -30165,11 +30704,10 @@
               "uploadFile": false,
               "file": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "TrainingRoundStarted.selectedParticipants.organizationId"
-                ],
-                "rule": "Carry the organization paired with the selected runtime in the participant snapshot."
+                  "participant.organizationId"
+                ]
               }
             },
             {
@@ -30572,6 +31110,8 @@
             "on": "TrainingRoundStarted",
             "onKind": "event",
             "condition": "selectedRuntimeCount > 0",
+            "fanOutSource": "TrainingRoundStarted.selectedParticipants",
+            "fanOutAlias": "participant",
             "emits": "GenerateParticipantExecutionPlan"
           }
         }
@@ -30929,7 +31469,7 @@
     },
     {
       "id": "slice-04a9daf0",
-      "index": 71,
+      "index": 72,
       "name": "DispatchParticipantExecutionPlan",
       "title": "Dispatch Participant Execution Plan",
       "chapter": "TrainingOrchestration",
@@ -31527,7 +32067,7 @@
     },
     {
       "id": "slice-ff26cad0",
-      "index": 72,
+      "index": 73,
       "name": "SubmitModelUpdateSubmission",
       "title": "Submit Model Update Submission",
       "chapter": "TrainingOrchestration",
@@ -32008,7 +32548,7 @@
     },
     {
       "id": "slice-fc1ff76d",
-      "index": 73,
+      "index": 74,
       "name": "EvaluateModelUpdateSubmission",
       "title": "Evaluate Model Update Submission",
       "chapter": "TrainingOrchestration",
@@ -32657,7 +33197,7 @@
     },
     {
       "id": "slice-a46e905e",
-      "index": 74,
+      "index": 75,
       "name": "RequestSecureAggregation",
       "title": "Request Secure Aggregation",
       "chapter": "TrainingOrchestration",
@@ -32974,7 +33514,7 @@
     },
     {
       "id": "slice-c044ec34",
-      "index": 75,
+      "index": 76,
       "name": "CompleteSecureAggregation",
       "title": "Complete Secure Aggregation",
       "chapter": "TrainingOrchestration",
@@ -33413,7 +33953,7 @@
     },
     {
       "id": "slice-129ead8e",
-      "index": 76,
+      "index": 77,
       "name": "SubmitGlobalModelEvaluation",
       "title": "Submit Global Model Evaluation",
       "chapter": "TrainingOrchestration",
@@ -33831,7 +34371,7 @@
     },
     {
       "id": "slice-4a16b8df",
-      "index": 77,
+      "index": 78,
       "name": "CompleteTrainingRound",
       "title": "Complete Training Round",
       "chapter": "TrainingOrchestration",
@@ -34532,7 +35072,7 @@
     },
     {
       "id": "slice-8107a71a",
-      "index": 78,
+      "index": 79,
       "name": "FailTrainingRound",
       "title": "Fail Training Round",
       "chapter": "TrainingOrchestration",
@@ -35042,7 +35582,7 @@
     },
     {
       "id": "slice-158bd8b1",
-      "index": 79,
+      "index": 80,
       "name": "TrainingRoundProgress",
       "title": "Training Round Progress",
       "chapter": "TrainingOrchestration",
@@ -35754,6 +36294,12 @@
               "elementType": "EVENT"
             },
             {
+              "id": "event-4ace584a",
+              "direction": "INBOUND",
+              "title": "Training Round Participant Selection Failed",
+              "elementType": "EVENT"
+            },
+            {
               "id": "event-229f5549",
               "direction": "INBOUND",
               "title": "Training Round Started",
@@ -35885,7 +36431,7 @@
     },
     {
       "id": "slice-7806d9ed",
-      "index": 80,
+      "index": 81,
       "name": "RegisterCandidateModel",
       "title": "Register Candidate Model",
       "chapter": "ModelLifecycle",
@@ -36178,7 +36724,7 @@
     },
     {
       "id": "slice-c947b39a",
-      "index": 81,
+      "index": 82,
       "name": "RecordModelEvaluationPackage",
       "title": "Record Model Evaluation Package",
       "chapter": "ModelLifecycle",
@@ -36660,7 +37206,7 @@
     },
     {
       "id": "slice-a4c2bdcc",
-      "index": 82,
+      "index": 83,
       "name": "ApproveModel",
       "title": "Approve Model",
       "chapter": "ModelLifecycle",
@@ -36967,7 +37513,7 @@
     },
     {
       "id": "slice-e0aca431",
-      "index": 83,
+      "index": 84,
       "name": "PromoteModelToProduction",
       "title": "Promote Model To Production",
       "chapter": "ModelLifecycle",
@@ -37312,7 +37858,7 @@
     },
     {
       "id": "slice-33930733",
-      "index": 84,
+      "index": 85,
       "name": "RollbackModel",
       "title": "Rollback Model",
       "chapter": "ModelLifecycle",
@@ -37495,7 +38041,7 @@
     },
     {
       "id": "slice-9e8c0ad2",
-      "index": 85,
+      "index": 86,
       "name": "RetireModel",
       "title": "Retire Model",
       "chapter": "ModelLifecycle",
@@ -37652,7 +38198,7 @@
     },
     {
       "id": "slice-daa3e2fe",
-      "index": 86,
+      "index": 87,
       "name": "ModelCatalog",
       "title": "Model Catalog",
       "chapter": "ModelLifecycle",
@@ -38088,7 +38634,7 @@
     },
     {
       "id": "slice-97531d57",
-      "index": 87,
+      "index": 88,
       "name": "RuntimeTelemetryLatest",
       "title": "Runtime Telemetry Latest",
       "chapter": "RuntimeMonitoring",
@@ -38310,7 +38856,7 @@
     },
     {
       "id": "slice-d498ecb8",
-      "index": 88,
+      "index": 89,
       "name": "DetectRuntimeAgentOffline",
       "title": "Detect Runtime Agent Offline",
       "chapter": "RuntimeMonitoring",
@@ -38512,7 +39058,7 @@
     },
     {
       "id": "slice-fd282504",
-      "index": 89,
+      "index": 90,
       "name": "MarkRuntimeAgentRecovered",
       "title": "Mark Runtime Agent Recovered",
       "chapter": "RuntimeMonitoring",
@@ -38713,7 +39259,7 @@
     },
     {
       "id": "slice-7aeba98f",
-      "index": 90,
+      "index": 91,
       "name": "DetectRuntimeNodeResourcePressure",
       "title": "Detect Runtime Node Resource Pressure",
       "chapter": "RuntimeMonitoring",
@@ -38981,7 +39527,7 @@
     },
     {
       "id": "slice-3f7c280e",
-      "index": 91,
+      "index": 92,
       "name": "RecordRuntimeNodeInventory",
       "title": "Record Runtime Node Inventory",
       "chapter": "RuntimeMonitoring",
@@ -39462,7 +40008,7 @@
     },
     {
       "id": "slice-79929d9e",
-      "index": 92,
+      "index": 93,
       "name": "RuntimeNodeInventoryView",
       "title": "Runtime Node Inventory View",
       "chapter": "RuntimeMonitoring",
@@ -39768,7 +40314,7 @@
     },
     {
       "id": "slice-c5ab698a",
-      "index": 93,
+      "index": 94,
       "name": "RuntimeNodeResourceLatest",
       "title": "Runtime Node Resource Latest",
       "chapter": "RuntimeMonitoring",
@@ -40056,7 +40602,7 @@
     },
     {
       "id": "slice-17654acc",
-      "index": 94,
+      "index": 95,
       "name": "DetectRuntimeNodeCapacityChange",
       "title": "Detect Runtime Node Capacity Change",
       "chapter": "RuntimeMonitoring",
@@ -40344,7 +40890,7 @@
     },
     {
       "id": "slice-dc4e224d",
-      "index": 95,
+      "index": 96,
       "name": "RuntimeHealthDashboard",
       "title": "Runtime Health Dashboard",
       "chapter": "RuntimeMonitoring",
@@ -40687,7 +41233,7 @@
     },
     {
       "id": "slice-f43e8d0f",
-      "index": 96,
+      "index": 97,
       "name": "RaiseTrainingAlert",
       "title": "Raise Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -40952,7 +41498,7 @@
     },
     {
       "id": "slice-102e6798",
-      "index": 97,
+      "index": 98,
       "name": "TrainingAlertCatalog",
       "title": "Training Alert Catalog",
       "chapter": "RuntimeMonitoring",
@@ -41199,7 +41745,7 @@
     },
     {
       "id": "slice-63ac1487",
-      "index": 98,
+      "index": 99,
       "name": "AcknowledgeTrainingAlert",
       "title": "Acknowledge Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -41362,7 +41908,7 @@
     },
     {
       "id": "slice-c3edeeef",
-      "index": 99,
+      "index": 100,
       "name": "ResolveTrainingAlert",
       "title": "Resolve Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -41519,7 +42065,7 @@
     },
     {
       "id": "slice-bf4467da",
-      "index": 100,
+      "index": 101,
       "name": "AppendAuditTrail",
       "title": "Append Audit Trail",
       "chapter": "RuntimeMonitoring",
@@ -42060,7 +42606,7 @@
     },
     {
       "id": "slice-5556fb33",
-      "index": 101,
+      "index": 102,
       "name": "AuditRecordLog",
       "title": "Audit Record Log",
       "chapter": "RuntimeMonitoring",
@@ -42165,7 +42711,7 @@
     },
     {
       "id": "slice-6883883e",
-      "index": 102,
+      "index": 103,
       "name": "ActivateRuntimeIdentity",
       "title": "Activate Runtime Identity",
       "chapter": "RuntimeGovernance",
@@ -42515,7 +43061,7 @@
     },
     {
       "id": "slice-6949bdab",
-      "index": 103,
+      "index": 104,
       "name": "RevokeRuntimeIdentity",
       "title": "Revoke Runtime Identity",
       "chapter": "RuntimeGovernance",
@@ -42690,7 +43236,7 @@
     },
     {
       "id": "slice-267be0b4",
-      "index": 104,
+      "index": 105,
       "name": "DetectRuntimeCapabilities",
       "title": "Detect Runtime Capabilities",
       "chapter": "RuntimeGovernance",
@@ -42869,7 +43415,7 @@
     },
     {
       "id": "slice-53705008",
-      "index": 105,
+      "index": 106,
       "name": "RuntimeIdentityCatalog",
       "title": "Runtime Identity Catalog",
       "chapter": "RuntimeGovernance",
@@ -43051,7 +43597,7 @@
     },
     {
       "id": "slice-a09f6b28",
-      "index": 106,
+      "index": 107,
       "name": "RuntimeCapabilityCatalog",
       "title": "Runtime Capability Catalog",
       "chapter": "RuntimeGovernance",
@@ -43144,7 +43690,7 @@
     },
     {
       "id": "slice-0df6c6b1",
-      "index": 107,
+      "index": 108,
       "name": "CreateSecureAggregationSession",
       "title": "Create Secure Aggregation Session",
       "chapter": "SecureAggregation",
@@ -43479,7 +44025,7 @@
     },
     {
       "id": "slice-af59eab5",
-      "index": 108,
+      "index": 109,
       "name": "SelectSecureAggregationParticipants",
       "title": "Select Secure Aggregation Participants",
       "chapter": "SecureAggregation",
@@ -43733,7 +44279,7 @@
     },
     {
       "id": "slice-a903d2aa",
-      "index": 109,
+      "index": 110,
       "name": "PrepareHomomorphicEncryptionContext",
       "title": "Prepare Homomorphic Encryption Context",
       "chapter": "SecureAggregation",
@@ -43951,7 +44497,7 @@
     },
     {
       "id": "slice-5d843deb",
-      "index": 110,
+      "index": 111,
       "name": "RecordEncryptedModelUpdate",
       "title": "Record Encrypted Model Update",
       "chapter": "SecureAggregation",
@@ -44137,7 +44683,7 @@
     },
     {
       "id": "slice-74fb7a88",
-      "index": 111,
+      "index": 112,
       "name": "CompleteHomomorphicAggregationSession",
       "title": "Complete Homomorphic Aggregation Session",
       "chapter": "SecureAggregation",
@@ -44566,7 +45112,7 @@
     },
     {
       "id": "slice-5c7bd7e5",
-      "index": 112,
+      "index": 113,
       "name": "FailSecureAggregationSession",
       "title": "Fail Secure Aggregation Session",
       "chapter": "SecureAggregation",
@@ -44699,7 +45245,7 @@
     },
     {
       "id": "slice-ae5b24d8",
-      "index": 113,
+      "index": 114,
       "name": "SecureAggregationSessionCatalog",
       "title": "Secure Aggregation Session Catalog",
       "chapter": "SecureAggregation",
@@ -45095,7 +45641,7 @@
     },
     {
       "id": "slice-725195cc",
-      "index": 114,
+      "index": 115,
       "name": "DeclareDataset",
       "title": "Declare Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -45559,7 +46105,7 @@
     },
     {
       "id": "slice-5a2194a7",
-      "index": 115,
+      "index": 116,
       "name": "ConfigureRuntimeDatasetBinding",
       "title": "Configure Runtime Dataset Binding",
       "chapter": "RuntimeAgentOperations",
@@ -46325,7 +46871,7 @@
     },
     {
       "id": "slice-358d4122",
-      "index": 116,
+      "index": 117,
       "name": "RuntimeDatasetBindingCatalog",
       "title": "Runtime Dataset Binding Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -46607,7 +47153,7 @@
     },
     {
       "id": "slice-c31ba9a1",
-      "index": 117,
+      "index": 118,
       "name": "ValidateAgentDatasetAccess",
       "title": "Validate Agent Dataset Access",
       "chapter": "RuntimeAgentOperations",
@@ -47686,7 +48232,7 @@
     },
     {
       "id": "slice-aa47e014",
-      "index": 118,
+      "index": 119,
       "name": "RevalidateAgentDatasetAccess",
       "title": "Revalidate Agent Dataset Access",
       "chapter": "RuntimeAgentOperations",
@@ -48300,7 +48846,7 @@
     },
     {
       "id": "slice-ba3dc29b",
-      "index": 119,
+      "index": 120,
       "name": "AgentDatasetAccessValidationCatalog",
       "title": "Agent Dataset Access Validation Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -48533,7 +49079,7 @@
     },
     {
       "id": "slice-f44b66bc",
-      "index": 120,
+      "index": 121,
       "name": "ProfileAgentDataset",
       "title": "Profile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -49446,7 +49992,7 @@
     },
     {
       "id": "slice-d6f2a3cf",
-      "index": 121,
+      "index": 122,
       "name": "ReprofileAgentDataset",
       "title": "Reprofile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -50240,7 +50786,7 @@
     },
     {
       "id": "slice-2529cf36",
-      "index": 122,
+      "index": 123,
       "name": "ValidateDatasetContract",
       "title": "Validate Dataset Contract",
       "chapter": "RuntimeAgentOperations",
@@ -50798,7 +51344,7 @@
     },
     {
       "id": "slice-2e18bcb1",
-      "index": 123,
+      "index": 124,
       "name": "RetryDatasetContractValidation",
       "title": "Retry Dataset Contract Validation",
       "chapter": "RuntimeAgentOperations",
@@ -51421,7 +51967,7 @@
     },
     {
       "id": "slice-d28aff88",
-      "index": 124,
+      "index": 125,
       "name": "RejectDatasetForTraining",
       "title": "Reject Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -51584,7 +52130,7 @@
     },
     {
       "id": "slice-284a72da",
-      "index": 125,
+      "index": 126,
       "name": "ApproveDatasetForTraining",
       "title": "Approve Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -51869,7 +52415,7 @@
     },
     {
       "id": "slice-847c2855",
-      "index": 126,
+      "index": 127,
       "name": "RevokeDatasetTrainingApproval",
       "title": "Revoke Dataset Training Approval",
       "chapter": "RuntimeAgentOperations",
@@ -52044,7 +52590,7 @@
     },
     {
       "id": "slice-30869f70",
-      "index": 127,
+      "index": 128,
       "name": "DatasetCapability",
       "title": "Dataset Capability",
       "chapter": "RuntimeAgentOperations",
@@ -52482,7 +53028,7 @@
     },
     {
       "id": "slice-ff9e2f26",
-      "index": 128,
+      "index": 129,
       "name": "DatasetReadiness",
       "title": "Dataset Readiness",
       "chapter": "RuntimeAgentOperations",
@@ -53144,7 +53690,7 @@
     },
     {
       "id": "slice-5bf739cd",
-      "index": 129,
+      "index": 130,
       "name": "ReceiveParticipantExecutionPlan",
       "title": "Receive Participant Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -53735,7 +54281,7 @@
     },
     {
       "id": "slice-64faaa9b",
-      "index": 130,
+      "index": 131,
       "name": "AcceptExecutionPlan",
       "title": "Accept Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -55175,7 +55721,7 @@
     },
     {
       "id": "slice-4d4016d0",
-      "index": 131,
+      "index": 132,
       "name": "StartRoundExecution",
       "title": "Start Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -55774,16 +56320,10 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "command-3ca73937",
+              "id": "automation-76c2428c",
               "direction": "OUTBOUND",
-              "title": "Complete Round Execution",
-              "elementType": "COMMAND"
-            },
-            {
-              "id": "command-28851651",
-              "direction": "OUTBOUND",
-              "title": "Fail Round Execution",
-              "elementType": "COMMAND"
+              "title": "Observe Runtime Engine Job When Round Execution Started",
+              "elementType": "PROCESSOR"
             },
             {
               "id": "readmodel-5686facf",
@@ -56544,24 +57084,261 @@
       }
     },
     {
-      "id": "slice-b1a48287",
-      "index": 132,
-      "name": "CompleteRoundExecution",
-      "title": "Complete Round Execution",
+      "id": "slice-0cecfd3f",
+      "index": 133,
+      "name": "ObserveRuntimeEngineJob",
+      "title": "Observe Runtime Engine Job",
       "chapter": "RuntimeAgentOperations",
       "context": "RuntimeAgentOperations",
       "tags": [],
+      "port": true,
       "concepts": [
         "RoundExecution"
       ],
       "commands": [
         {
-          "id": "command-3ca73937",
-          "name": "CompleteRoundExecution",
-          "title": "Complete Round Execution",
+          "id": "command-4cdf6d17",
+          "name": "ObserveRuntimeEngineJob",
+          "title": "Observe Runtime Engine Job",
           "type": "COMMAND",
           "modelContext": "RuntimeAgentOperations",
-          "slice": "Complete Round Execution",
+          "slice": "Observe Runtime Engine Job",
+          "fields": [
+            {
+              "name": "roundExecutionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStarted.roundExecutionId"
+                ]
+              }
+            },
+            {
+              "name": "executionSessionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStarted.executionSessionId"
+                ]
+              }
+            },
+            {
+              "name": "executionPlanId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStarted.executionPlanId"
+                ]
+              }
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStarted.trainingJobId"
+                ]
+              }
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStarted.trainingRunConfigurationId"
+                ]
+              }
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStarted.roundId"
+                ]
+              }
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStarted.roundNumber"
+                ]
+              }
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStarted.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStarted.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStarted.featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "runtimeEngineJobId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionStarted.runtimeEngineJobId"
+                ]
+              }
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "automation-76c2428c",
+              "direction": "INBOUND",
+              "title": "Observe Runtime Engine Job When Round Execution Started",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "event-bf91246c",
+              "direction": "OUTBOUND",
+              "title": "Runtime Engine Job Observed",
+              "elementType": "EVENT"
+            }
+          ],
+          "port": true
+        }
+      ],
+      "events": [
+        {
+          "id": "event-bf91246c",
+          "name": "RuntimeEngineJobObserved",
+          "title": "Runtime Engine Job Observed",
+          "type": "EVENT",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Observe Runtime Engine Job",
           "fields": [
             {
               "name": "roundExecutionId",
@@ -56642,7 +57419,46 @@
               "file": false
             },
             {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
               "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "featureSchemaId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -56666,14 +57482,952 @@
               "display": false,
               "uploadFile": false,
               "file": false
+            },
+            {
+              "name": "observedStatus",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "failureReason",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "localUpdateArtifactRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "metricsArtifactRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "trainingLoss",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
             }
           ],
+          "dependencies": [
+            {
+              "id": "command-4cdf6d17",
+              "direction": "INBOUND",
+              "title": "Observe Runtime Engine Job",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "automation-bd13c359",
+              "direction": "OUTBOUND",
+              "title": "Complete Round Execution When Runtime Engine Job Completed",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "automation-17780501",
+              "direction": "OUTBOUND",
+              "title": "Fail Round Execution When Runtime Engine Job Failed",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "readmodel-5686facf",
+              "direction": "OUTBOUND",
+              "title": "Round Execution Catalog",
+              "elementType": "READMODEL"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "processors": [
+        {
+          "id": "automation-76c2428c",
+          "name": "ObserveRuntimeEngineJobWhenRoundExecutionStarted",
+          "title": "Observe Runtime Engine Job When Round Execution Started",
+          "type": "PROCESSOR",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Observe Runtime Engine Job",
+          "fields": [],
           "dependencies": [
             {
               "id": "event-82cf8a97",
               "direction": "INBOUND",
               "title": "Round Execution Started",
               "elementType": "EVENT"
+            },
+            {
+              "id": "command-4cdf6d17",
+              "direction": "OUTBOUND",
+              "title": "Observe Runtime Engine Job",
+              "elementType": "COMMAND"
+            }
+          ],
+          "metadata": {
+            "on": "RoundExecutionStarted",
+            "onKind": "event",
+            "emits": "ObserveRuntimeEngineJob"
+          }
+        }
+      ],
+      "specifications": [
+        {
+          "id": "gwt-cfe3751f",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Observe Runtime Engine Job",
+          "title": "Runtime Engine Job Observed Running",
+          "specification": "Runtime Engine Job Observation Outcome",
+          "rule": "Observing a runtime engine job is an external status check. The adapter queries the runtime engine by runtimeEngineJobId and records RuntimeEngineJobObserved with observedStatus RUNNING, COMPLETED, or FAILED. Completion and failure domain state changes are triggered by follow-up automations instead of embedding runtime engine polling inside CompleteRoundExecution or FailRoundExecution.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Round Execution Started",
+              "id": "event-82cf8a97",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "roundExecutionId",
+                  "example": "round-execution-1"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Observe Runtime Engine Job",
+              "id": "command-4cdf6d17",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "roundExecutionId",
+                  "example": "round-execution-1"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Runtime Engine Job Observed",
+              "id": "event-bf91246c",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "roundExecutionId",
+                  "example": "round-execution-1"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                },
+                {
+                  "name": "observedStatus"
+                },
+                {
+                  "name": "failureReason"
+                },
+                {
+                  "name": "localUpdateArtifactRef"
+                },
+                {
+                  "name": "metricsArtifactRef"
+                },
+                {
+                  "name": "trainingLoss"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-8640e7c9",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Observe Runtime Engine Job",
+          "title": "Runtime Engine Job Observed Completed",
+          "specification": "Runtime Engine Job Observation Outcome",
+          "rule": "Observing a runtime engine job is an external status check. The adapter queries the runtime engine by runtimeEngineJobId and records RuntimeEngineJobObserved with observedStatus RUNNING, COMPLETED, or FAILED. Completion and failure domain state changes are triggered by follow-up automations instead of embedding runtime engine polling inside CompleteRoundExecution or FailRoundExecution.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Round Execution Started",
+              "id": "event-82cf8a97",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "roundExecutionId",
+                  "example": "round-execution-2"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Observe Runtime Engine Job",
+              "id": "command-4cdf6d17",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "roundExecutionId",
+                  "example": "round-execution-2"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Runtime Engine Job Observed",
+              "id": "event-bf91246c",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "roundExecutionId",
+                  "example": "round-execution-2"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                },
+                {
+                  "name": "observedStatus"
+                },
+                {
+                  "name": "failureReason"
+                },
+                {
+                  "name": "localUpdateArtifactRef"
+                },
+                {
+                  "name": "metricsArtifactRef"
+                },
+                {
+                  "name": "trainingLoss"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-c4229ed5",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Observe Runtime Engine Job",
+          "title": "Runtime Engine Job Observed Failed",
+          "specification": "Runtime Engine Job Observation Outcome",
+          "rule": "Observing a runtime engine job is an external status check. The adapter queries the runtime engine by runtimeEngineJobId and records RuntimeEngineJobObserved with observedStatus RUNNING, COMPLETED, or FAILED. Completion and failure domain state changes are triggered by follow-up automations instead of embedding runtime engine polling inside CompleteRoundExecution or FailRoundExecution.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Round Execution Started",
+              "id": "event-82cf8a97",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "roundExecutionId",
+                  "example": "round-execution-3"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "baseModelId"
+                },
+                {
+                  "name": "baseModelArtifactUri"
+                },
+                {
+                  "name": "baseModelRegistryRef"
+                },
+                {
+                  "name": "baseModelFormat"
+                },
+                {
+                  "name": "baseModelArtifactDigest"
+                },
+                {
+                  "name": "baseModelSignatureUri"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Observe Runtime Engine Job",
+              "id": "command-4cdf6d17",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "roundExecutionId",
+                  "example": "round-execution-3"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Runtime Engine Job Observed",
+              "id": "event-bf91246c",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "roundExecutionId",
+                  "example": "round-execution-3"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "trainingJobId"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "organizationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "runtimeEngineJobId"
+                },
+                {
+                  "name": "observedStatus"
+                },
+                {
+                  "name": "failureReason"
+                },
+                {
+                  "name": "localUpdateArtifactRef"
+                },
+                {
+                  "name": "metricsArtifactRef"
+                },
+                {
+                  "name": "trainingLoss"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "actors": [],
+      "hotspots": [],
+      "stateChange": {
+        "event": "RuntimeEngineJobObserved",
+        "eventId": "event-bf91246c",
+        "to": "Running"
+      }
+    },
+    {
+      "id": "slice-b1a48287",
+      "index": 134,
+      "name": "CompleteRoundExecution",
+      "title": "Complete Round Execution",
+      "chapter": "RuntimeAgentOperations",
+      "context": "RuntimeAgentOperations",
+      "tags": [],
+      "concepts": [
+        "RoundExecution"
+      ],
+      "commands": [
+        {
+          "id": "command-3ca73937",
+          "name": "CompleteRoundExecution",
+          "title": "Complete Round Execution",
+          "type": "COMMAND",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Complete Round Execution",
+          "fields": [
+            {
+              "name": "roundExecutionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.roundExecutionId"
+                ]
+              }
+            },
+            {
+              "name": "executionSessionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.executionSessionId"
+                ]
+              }
+            },
+            {
+              "name": "executionPlanId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.executionPlanId"
+                ]
+              }
+            },
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.trainingJobId"
+                ]
+              }
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.trainingRunConfigurationId"
+                ]
+              }
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.roundId"
+                ]
+              }
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.roundNumber"
+                ]
+              }
+            },
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "runtimeEngineJobId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.runtimeEngineJobId"
+                ]
+              }
+            },
+            {
+              "name": "localUpdateArtifactRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.localUpdateArtifactRef"
+                ]
+              }
+            },
+            {
+              "name": "metricsArtifactRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.metricsArtifactRef"
+                ]
+              }
+            },
+            {
+              "name": "trainingLoss",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.trainingLoss"
+                ]
+              }
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "automation-bd13c359",
+              "direction": "INBOUND",
+              "title": "Complete Round Execution When Runtime Engine Job Completed",
+              "elementType": "PROCESSOR"
             },
             {
               "id": "event-9616ce0c",
@@ -56772,7 +58526,46 @@
               "file": false
             },
             {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
               "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "featureSchemaId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -56789,6 +58582,45 @@
               "type": "String",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "localUpdateArtifactRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "metricsArtifactRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "trainingLoss",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -56834,7 +58666,37 @@
       ],
       "readmodels": [],
       "screens": [],
-      "processors": [],
+      "processors": [
+        {
+          "id": "automation-bd13c359",
+          "name": "CompleteRoundExecutionWhenRuntimeEngineJobCompleted",
+          "title": "Complete Round Execution When Runtime Engine Job Completed",
+          "type": "PROCESSOR",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Complete Round Execution",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "event-bf91246c",
+              "direction": "INBOUND",
+              "title": "Runtime Engine Job Observed",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "command-3ca73937",
+              "direction": "OUTBOUND",
+              "title": "Complete Round Execution",
+              "elementType": "COMMAND"
+            }
+          ],
+          "metadata": {
+            "on": "RuntimeEngineJobObserved",
+            "onKind": "event",
+            "condition": "observedStatus == COMPLETED",
+            "emits": "CompleteRoundExecution"
+          }
+        }
+      ],
       "specifications": [],
       "actors": [],
       "hotspots": [],
@@ -56846,7 +58708,7 @@
     },
     {
       "id": "slice-45c663e8",
-      "index": 133,
+      "index": 135,
       "name": "FailRoundExecution",
       "title": "Fail Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -56875,7 +58737,13 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.roundExecutionId"
+                ]
+              }
             },
             {
               "name": "executionSessionId",
@@ -56888,7 +58756,13 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.executionSessionId"
+                ]
+              }
             },
             {
               "name": "executionPlanId",
@@ -56901,7 +58775,13 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.executionPlanId"
+                ]
+              }
             },
             {
               "name": "trainingJobId",
@@ -56914,7 +58794,13 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.trainingJobId"
+                ]
+              }
             },
             {
               "name": "trainingRunConfigurationId",
@@ -56927,7 +58813,13 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.trainingRunConfigurationId"
+                ]
+              }
             },
             {
               "name": "roundId",
@@ -56940,7 +58832,32 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.roundId"
+                ]
+              }
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.roundNumber"
+                ]
+              }
             },
             {
               "name": "runtimeId",
@@ -56953,7 +58870,51 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.runtimeId"
+                ]
+              }
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.featureSchemaId"
+                ]
+              }
             },
             {
               "name": "runtimeEngineJobId",
@@ -56966,28 +58927,40 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.runtimeEngineJobId"
+                ]
+              }
             },
             {
               "name": "failureReason",
               "type": "String",
               "cardinality": "Single",
-              "optional": false,
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.failureReason"
+                ]
+              }
             }
           ],
           "dependencies": [
             {
-              "id": "event-82cf8a97",
+              "id": "automation-17780501",
               "direction": "INBOUND",
-              "title": "Round Execution Started",
-              "elementType": "EVENT"
+              "title": "Fail Round Execution When Runtime Engine Job Failed",
+              "elementType": "PROCESSOR"
             },
             {
               "id": "event-2475ddcf",
@@ -57086,7 +59059,46 @@
               "file": false
             },
             {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
               "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "featureSchemaId",
               "type": "UUID",
               "cardinality": "Single",
               "optional": false,
@@ -57115,7 +59127,7 @@
               "name": "failureReason",
               "type": "String",
               "cardinality": "Single",
-              "optional": false,
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -57167,7 +59179,37 @@
       ],
       "readmodels": [],
       "screens": [],
-      "processors": [],
+      "processors": [
+        {
+          "id": "automation-17780501",
+          "name": "FailRoundExecutionWhenRuntimeEngineJobFailed",
+          "title": "Fail Round Execution When Runtime Engine Job Failed",
+          "type": "PROCESSOR",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Fail Round Execution",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "event-bf91246c",
+              "direction": "INBOUND",
+              "title": "Runtime Engine Job Observed",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "command-28851651",
+              "direction": "OUTBOUND",
+              "title": "Fail Round Execution",
+              "elementType": "COMMAND"
+            }
+          ],
+          "metadata": {
+            "on": "RuntimeEngineJobObserved",
+            "onKind": "event",
+            "condition": "observedStatus == FAILED",
+            "emits": "FailRoundExecution"
+          }
+        }
+      ],
       "specifications": [],
       "actors": [],
       "hotspots": [],
@@ -57179,7 +59221,7 @@
     },
     {
       "id": "slice-ff352882",
-      "index": 134,
+      "index": 136,
       "name": "RetryRoundExecutionAfterStartFailure",
       "title": "Retry Round Execution After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -57908,7 +59950,7 @@
     },
     {
       "id": "slice-2cb34062",
-      "index": 135,
+      "index": 137,
       "name": "RetryRoundExecutionAfterRuntimeFailure",
       "title": "Retry Round Execution After Runtime Failure",
       "chapter": "RuntimeAgentOperations",
@@ -58665,7 +60707,7 @@
     },
     {
       "id": "slice-d54dcc12",
-      "index": 136,
+      "index": 138,
       "name": "SubmitAgentLocalModelUpdate",
       "title": "Submit Agent Local Model Update",
       "chapter": "RuntimeAgentOperations",
@@ -58843,17 +60885,10 @@
               "uploadFile": false,
               "file": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "RoundExecutionStarted.featureSchemaId"
-                ],
-                "lookup": {
-                  "key": "roundExecutionId",
-                  "cacheProjection": "RoundExecutionStarted",
-                  "sourceField": "featureSchemaId",
-                  "targetField": "featureSchemaId",
-                  "missingValuePolicy": "keep"
-                }
+                  "RoundExecutionCompleted.featureSchemaId"
+                ]
               }
             },
             {
@@ -58893,7 +60928,13 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionCompleted.localUpdateArtifactRef"
+                ]
+              }
             },
             {
               "name": "artifactDigest",
@@ -58919,7 +60960,13 @@
               "query": false,
               "display": false,
               "uploadFile": false,
-              "file": false
+              "file": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionCompleted.trainingLoss"
+                ]
+              }
             }
           ],
           "dependencies": [
@@ -59196,7 +61243,7 @@
     },
     {
       "id": "slice-6485fdce",
-      "index": 137,
+      "index": 139,
       "name": "ReleaseRuntimeEngineJobAfterCompletion",
       "title": "Release Runtime Engine Job After Completion",
       "chapter": "RuntimeAgentOperations",
@@ -59366,7 +61413,7 @@
     },
     {
       "id": "slice-ef8420f2",
-      "index": 138,
+      "index": 140,
       "name": "ReleaseRuntimeEngineJobAfterFailure",
       "title": "Release Runtime Engine Job After Failure",
       "chapter": "RuntimeAgentOperations",
@@ -59549,7 +61596,7 @@
     },
     {
       "id": "slice-30156076",
-      "index": 139,
+      "index": 141,
       "name": "ReleaseRuntimeEngineJobAfterStartFailure",
       "title": "Release Runtime Engine Job After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -59732,7 +61779,7 @@
     },
     {
       "id": "slice-5d7a0380",
-      "index": 140,
+      "index": 142,
       "name": "ReleaseRuntimeEngineJobAfterRetryFailure",
       "title": "Release Runtime Engine Job After Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -59915,7 +61962,7 @@
     },
     {
       "id": "slice-bc1eac14",
-      "index": 141,
+      "index": 143,
       "name": "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure",
       "title": "Release Runtime Engine Job After Runtime Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -60098,7 +62145,7 @@
     },
     {
       "id": "slice-eb00f5f7",
-      "index": 142,
+      "index": 144,
       "name": "RoundExecutionCatalog",
       "title": "Round Execution Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -60276,6 +62323,58 @@
             },
             {
               "name": "runtimeEngineJobId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "runtimeEngineObservedStatus",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "runtimeEngineObservationAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "localUpdateArtifactRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false
+            },
+            {
+              "name": "metricsArtifactRef",
               "type": "String",
               "cardinality": "Single",
               "optional": true,
@@ -60638,6 +62737,12 @@
               "elementType": "EVENT"
             },
             {
+              "id": "event-bf91246c",
+              "direction": "INBOUND",
+              "title": "Runtime Engine Job Observed",
+              "elementType": "EVENT"
+            },
+            {
               "id": "event-806e765b",
               "direction": "INBOUND",
               "title": "Round Execution Start Retry Started",
@@ -60721,7 +62826,7 @@
     },
     {
       "id": "slice-d248addb",
-      "index": 143,
+      "index": 145,
       "name": "LoadRuntimeAgentBootstrapConfiguration",
       "title": "Load Runtime Agent Bootstrap Configuration",
       "chapter": "RuntimeAgentOperations",
@@ -61009,7 +63114,7 @@
     },
     {
       "id": "slice-c7d2df46",
-      "index": 144,
+      "index": 146,
       "name": "ReportRuntimeAgentStarted",
       "title": "Report Runtime Agent Started",
       "chapter": "RuntimeAgentOperations",
@@ -61221,7 +63326,7 @@
     },
     {
       "id": "slice-75635ed7",
-      "index": 145,
+      "index": 147,
       "name": "ReportRuntimeInstanceSelfCheckPassed",
       "title": "Report Runtime Instance Self Check Passed",
       "chapter": "RuntimeAgentOperations",
@@ -61616,7 +63721,7 @@
     },
     {
       "id": "slice-574f1d44",
-      "index": 146,
+      "index": 148,
       "name": "RuntimeAgentLifecycleCatalog",
       "title": "Runtime Agent Lifecycle Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -61895,7 +64000,7 @@
     },
     {
       "id": "slice-e5b0caa2",
-      "index": 147,
+      "index": 149,
       "name": "ReportRuntimeInstanceConnected",
       "title": "Report Runtime Instance Connected",
       "chapter": "RuntimeAgentOperations",
@@ -62606,7 +64711,7 @@
     },
     {
       "id": "slice-8d5d066d",
-      "index": 148,
+      "index": 150,
       "name": "AgentRuntimeInfrastructureConnectionCatalog",
       "title": "Agent Runtime Infrastructure Connection Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -62795,7 +64900,7 @@
     },
     {
       "id": "slice-ff0c55e7",
-      "index": 149,
+      "index": 151,
       "name": "AgentRuntimeTelemetryLatest",
       "title": "Agent Runtime Telemetry Latest",
       "chapter": "RuntimeAgentOperations",
@@ -62958,7 +65063,7 @@
     },
     {
       "id": "slice-d8eaacb9",
-      "index": 150,
+      "index": 152,
       "name": "ReportAgentRuntimeNodeInventory",
       "title": "Report Agent Runtime Node Inventory",
       "chapter": "RuntimeAgentOperations",
@@ -63400,7 +65505,7 @@
     },
     {
       "id": "slice-6a815e36",
-      "index": 151,
+      "index": 153,
       "name": "AgentRuntimeNodeInventoryCatalog",
       "title": "Agent Runtime Node Inventory Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -63648,7 +65753,7 @@
     },
     {
       "id": "slice-a56419ba",
-      "index": 152,
+      "index": 154,
       "name": "AgentRuntimeNodeResourceLatest",
       "title": "Agent Runtime Node Resource Latest",
       "chapter": "RuntimeAgentOperations",

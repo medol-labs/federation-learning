@@ -12,7 +12,9 @@ class GeneratePlanForSelectedRuntimeProcessor(private val commandGateway: Comman
     @EventHandler
     fun on(event: TrainingRoundStartedEvent): java.util.concurrent.CompletableFuture<*> =
         if (event.selectedRuntimeCount > 0) {
-            commandGateway.send(GenerateParticipantExecutionPlanCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber, runtimeId = java.util.UUID.randomUUID() /* TODO: provide runtimeId */, organizationId = java.util.UUID.randomUUID() /* TODO: provide organizationId */, baseModelId = java.util.UUID.randomUUID() /* TODO: provide baseModelId */, baseModelArtifactUri = "" /* TODO: provide baseModelArtifactUri */, baseModelRegistryRef = "" /* TODO: provide baseModelRegistryRef */, baseModelFormat = "" /* TODO: provide baseModelFormat */, baseModelArtifactDigest = "" /* TODO: provide baseModelArtifactDigest */, baseModelSignatureUri = null /* TODO: provide baseModelSignatureUri */)).resultMessage
+            java.util.concurrent.CompletableFuture.allOf(*event.selectedParticipants.map { participant ->
+                commandGateway.send(GenerateParticipantExecutionPlanCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber, runtimeId = participant.runtimeId, organizationId = participant.organizationId, baseModelId = java.util.UUID.randomUUID() /* TODO: provide baseModelId */, baseModelArtifactUri = "" /* TODO: provide baseModelArtifactUri */, baseModelRegistryRef = "" /* TODO: provide baseModelRegistryRef */, baseModelFormat = "" /* TODO: provide baseModelFormat */, baseModelArtifactDigest = "" /* TODO: provide baseModelArtifactDigest */, baseModelSignatureUri = null /* TODO: provide baseModelSignatureUri */)).resultMessage
+            }.toTypedArray())
         } else {
             java.util.concurrent.CompletableFuture.completedFuture(null)
         }

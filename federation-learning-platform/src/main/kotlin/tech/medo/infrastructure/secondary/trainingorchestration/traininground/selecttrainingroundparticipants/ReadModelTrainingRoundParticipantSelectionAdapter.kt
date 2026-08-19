@@ -1,13 +1,11 @@
 package tech.medo.infrastructure.secondary.trainingorchestration.traininground.selecttrainingroundparticipants
 
+import jakarta.persistence.EntityManager
 import org.slf4j.LoggerFactory
-import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Component
 import tech.medo.datasetgovernance.infrastructure.secondary.persistence.runtimedatasetmetadatacatalogreadmodel.RuntimeDatasetMetadataCatalogReadModelEntity
-import tech.medo.datasetgovernance.infrastructure.secondary.persistence.runtimedatasetmetadatacatalogreadmodel.SpringDataRuntimeDatasetMetadataCatalogReadModelRepository
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelRepository
 import tech.medo.runtimegovernance.infrastructure.secondary.persistence.runtimeidentitycatalogreadmodel.RuntimeIdentityCatalogReadModelEntity
-import tech.medo.runtimegovernance.infrastructure.secondary.persistence.runtimeidentitycatalogreadmodel.SpringDataRuntimeIdentityCatalogReadModelRepository
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsInput
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsResult
@@ -21,8 +19,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
     private val trainingJobDashboard: TrainingJobDashboardReadModelRepository,
     private val trainingRunConfigurationCatalog: TrainingRunConfigurationCatalogReadModelRepository,
     private val membershipDirectory: FederationMembershipDirectoryReadModelRepository,
-    private val runtimeIdentityCatalog: SpringDataRuntimeIdentityCatalogReadModelRepository,
-    private val runtimeDatasetMetadataCatalog: SpringDataRuntimeDatasetMetadataCatalogReadModelRepository
+    private val entityManager: EntityManager
 ) : SelectTrainingRoundParticipantsService {
     private val log = LoggerFactory.getLogger(ReadModelTrainingRoundParticipantSelectionAdapter::class.java)
 
@@ -173,32 +170,38 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         this == null || equals("Joined", ignoreCase = true) || equals("Approved", ignoreCase = true) || equals("Active", ignoreCase = true)
 
     private fun findActiveRuntimeIdentities(organizationIds: Set<UUID>): List<RuntimeIdentityCatalogReadModelEntity> =
-        runtimeIdentityCatalog.findAll(
-            Specification<RuntimeIdentityCatalogReadModelEntity> { root, _, criteriaBuilder ->
-                criteriaBuilder.and(
-                    root.get<UUID>("runtimeId").isNotNull,
-                    root.get<UUID>("organizationId").isNotNull,
+        entityManager.criteriaBuilder.let { cb ->
+            val query = cb.createQuery(RuntimeIdentityCatalogReadModelEntity::class.java)
+            val root = query.from(RuntimeIdentityCatalogReadModelEntity::class.java)
+            query.select(root).where(
+                cb.and(
+                    cb.isNotNull(root.get<UUID>("runtimeId")),
+                    cb.isNotNull(root.get<UUID>("organizationId")),
                     root.get<UUID>("organizationId").`in`(organizationIds),
-                    criteriaBuilder.or(
-                        root.get<String>("identityStatus").isNull,
-                        criteriaBuilder.equal(criteriaBuilder.lower(root.get("identityStatus")), "active")
+                    cb.or(
+                        cb.isNull(root.get<String>("identityStatus")),
+                        cb.equal(cb.lower(root.get("identityStatus")), "active")
                     )
                 )
-            }
-        )
+            )
+            entityManager.createQuery(query).resultList
+        }
 
     private fun findMatchingDatasetMetadata(
         featureSchemaId: UUID,
         organizationIds: Set<UUID>
     ): List<RuntimeDatasetMetadataCatalogReadModelEntity> =
-        runtimeDatasetMetadataCatalog.findAll(
-            Specification<RuntimeDatasetMetadataCatalogReadModelEntity> { root, _, criteriaBuilder ->
-                criteriaBuilder.and(
-                    criteriaBuilder.equal(root.get<UUID>("featureSchemaId"), featureSchemaId),
+        entityManager.criteriaBuilder.let { cb ->
+            val query = cb.createQuery(RuntimeDatasetMetadataCatalogReadModelEntity::class.java)
+            val root = query.from(RuntimeDatasetMetadataCatalogReadModelEntity::class.java)
+            query.select(root).where(
+                cb.and(
+                    // cb.equal(root.get<UUID>("featureSchemaId"), featureSchemaId), // TODO 解决 feature schema id 来源问题
                     root.get<UUID>("organizationId").`in`(organizationIds),
-                    root.get<UUID>("datasetId").isNotNull
+                    cb.isNotNull(root.get<UUID>("datasetId"))
                 )
-            }
-        )
+            )
+            entityManager.createQuery(query).resultList
+        }
 
 }

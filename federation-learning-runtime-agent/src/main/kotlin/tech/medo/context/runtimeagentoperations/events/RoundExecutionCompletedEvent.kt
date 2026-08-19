@@ -3,6 +3,7 @@ package tech.medo.runtimeagentoperations.events
 import org.axonframework.eventsourcing.annotation.EventTag
 import org.axonframework.messaging.eventhandling.annotation.Event
 import java.util.UUID;
+import java.math.BigDecimal;
 
 
 
@@ -15,6 +16,12 @@ data class RoundExecutionCompletedEvent(
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
     val roundId: UUID,
+    val roundNumber: Int,
     val runtimeId: UUID,
-    val runtimeEngineJobId: String
+    val organizationId: UUID,
+    val featureSchemaId: UUID,
+    val runtimeEngineJobId: String,
+    val localUpdateArtifactRef: String?,
+    val metricsArtifactRef: String?,
+    val trainingLoss: BigDecimal?
 )
