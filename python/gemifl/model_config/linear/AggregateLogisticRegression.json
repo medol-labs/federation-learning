@@ -1,7 +1,7 @@
 {
-    "job_id": "horizontal-logistic-regression-demo-round-1-aggregate",
-    "round_id": 1,
-    "my_name": "Aggregator",
+    "jobId": "horizontal-logistic-regression-demo-round-1-aggregate",
+    "roundId": 1,
+    "nodeName": "Aggregator",
     "role": "aggregator",
     "operation": "aggregate",
     "input": {
@@ -10,9 +10,9 @@
         ]
     },
     "output": {
-        "global_model": "tmp/runtime-engine/horizontal-logistic-regression-demo/global_model_round_1.json"
+        "globalModel": "tmp/runtime-engine/horizontal-logistic-regression-demo/global_model_round_1.json"
     },
-    "model_parameter": {
+    "modelParameter": {
         "model": "linear.LogisticRegression",
         "engine": "python"
     }

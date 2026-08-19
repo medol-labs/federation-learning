@@ -1,5 +1,6 @@
 import argparse
 import json
+import logging
 import os
 import signal
 import subprocess
@@ -10,6 +11,9 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 
+log = logging.getLogger("gemifl.runtime.node")
+
+
 class RuntimeState:
     def __init__(self, node_name: str, runtime_root: str):
         self.node_name = node_name
@@ -17,21 +21,30 @@ class RuntimeState:
         self.jobs: dict[str, dict] = {}
 
     def start_job(self, payload: dict) -> dict:
-        job_id = str(payload.get("task_id") or payload.get("job_id") or payload.get("jobId") or "")
+        job_id = str(payload.get("jobId") or "")
         if not job_id:
-            raise ValueError("Job payload must include task_id, job_id, or jobId")
+            raise ValueError(f"Job payload must include jobId. Received keys: {sorted(payload.keys())}")
         if job_id in self.jobs and self.jobs[job_id]["process"].poll() is None:
             raise ValueError(f"Job {job_id} is already running on {self.node_name}")
 
-        payload["task_id"] = job_id
-        payload["my_name"] = payload.get("my_name") or self.node_name
-        payload.setdefault("runtime_root", str(self.runtime_root))
+        payload["nodeName"] = payload.get("nodeName") or self.node_name
+        payload.setdefault("runtimeRoot", str(self.runtime_root))
 
-        job_dir = self.runtime_root / job_id / payload["my_name"]
+        job_dir = self.runtime_root / job_id / payload["nodeName"]
         job_dir.mkdir(parents=True, exist_ok=True)
         config_path = job_dir / "config.json"
+        log.info(
+            "Starting runtime job jobId=%s nodeName=%s operation=%s role=%s runtimeRoot=%s jobDir=%s",
+            job_id,
+            payload["nodeName"],
+            payload.get("operation"),
+            payload.get("role"),
+            payload.get("runtimeRoot"),
+            job_dir,
+        )
         with config_path.open("w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2)
+        log.info("Runtime job config written jobId=%s configPath=%s", job_id, config_path)
 
         command = [
             sys.executable,
@@ -40,12 +53,13 @@ class RuntimeState:
             "--config",
             str(config_path),
             "--node-name",
-            payload["my_name"],
+            payload["nodeName"],
         ]
         process = subprocess.Popen(command, start_new_session=True)
+        log.info("Runtime job process started jobId=%s pid=%s command=%s", job_id, process.pid, command)
         self.jobs[job_id] = {
             "process": process,
-            "nodeName": payload["my_name"],
+            "nodeName": payload["nodeName"],
             "configPath": str(config_path),
             "output": payload.get("output", {}),
             "startedAt": time.time(),
@@ -73,7 +87,7 @@ class RuntimeState:
                 progress = {"raw": status_path.read_text(encoding="utf-8")}
 
         metrics = sorted(path.name for path in metrics_dir.glob("*")) if metrics_dir.exists() else []
-        return {
+        description = {
             "jobId": job_id,
             "nodeName": node_name,
             "status": status,
@@ -83,6 +97,16 @@ class RuntimeState:
             "progress": progress,
             "metrics": metrics,
         }
+        log.info(
+            "Runtime job status jobId=%s nodeName=%s status=%s exitCode=%s output=%s metrics=%s",
+            job_id,
+            node_name,
+            status,
+            exit_code,
+            job.get("output", {}),
+            metrics,
+        )
+        return description
 
     def cancel_job(self, job_id: str) -> dict:
         job = self.jobs.get(job_id)
@@ -90,6 +114,7 @@ class RuntimeState:
             raise KeyError(job_id)
         process = job["process"]
         if process.poll() is None:
+            log.info("Cancelling runtime job jobId=%s pid=%s", job_id, process.pid)
             os.killpg(os.getpgid(process.pid), signal.SIGTERM)
         return self.describe_job(job_id)
 
@@ -116,25 +141,48 @@ class RuntimeHandler(BaseHTTPRequestHandler):
         if parsed.path == "/jobs":
             try:
                 payload = self.read_json()
+                log.info("POST /jobs keys=%s jobId=%s", sorted(payload.keys()), payload.get("jobId"))
                 self.respond(202, self.state.start_job(payload))
             except Exception as error:
+                log.exception("POST /jobs failed")
                 self.respond(400, {"error": str(error)})
             return
         if parsed.path.startswith("/jobs/") and parsed.path.endswith("/cancel"):
             job_id = parsed.path.split("/")[2]
             try:
+                log.info("POST %s", parsed.path)
                 self.respond(202, self.state.cancel_job(job_id))
             except KeyError:
                 self.respond(404, {"error": f"Job {job_id} was not found"})
             except Exception as error:
+                log.exception("POST %s failed", parsed.path)
                 self.respond(400, {"error": str(error)})
             return
         self.respond(404, {"error": "Not found"})
 
     def read_json(self) -> dict:
         length = int(self.headers.get("content-length", "0"))
-        raw = self.rfile.read(length)
+        if length > 0:
+            raw = self.rfile.read(length)
+        elif self.headers.get("transfer-encoding", "").lower() == "chunked":
+            raw = self.read_chunked_body()
+        else:
+            raw = b""
         return json.loads(raw.decode("utf-8")) if raw else {}
+
+    def read_chunked_body(self) -> bytes:
+        chunks = []
+        while True:
+            size_line = self.rfile.readline().strip()
+            if not size_line:
+                break
+            size = int(size_line.split(b";", 1)[0], 16)
+            if size == 0:
+                self.rfile.readline()
+                break
+            chunks.append(self.rfile.read(size))
+            self.rfile.readline()
+        return b"".join(chunks)
 
     def respond(self, status: int, payload: dict) -> None:
         body = json.dumps(payload, indent=2).encode("utf-8")
@@ -153,6 +201,10 @@ def env_value(primary: str, legacy: str, default: str) -> str:
 
 
 def main() -> None:
+    logging.basicConfig(
+        level=os.getenv("RUNTIME_ENGINE_LOG_LEVEL", "INFO").upper(),
+        format="%(asctime)s %(levelname)s %(name)s - %(message)s",
+    )
     parser = argparse.ArgumentParser(description="Start a runtime engine node controlled by the FL platform.")
     parser.add_argument("--host", default=env_value("RUNTIME_ENGINE_HOST", "GEMIFL_RUNTIME_HOST", "0.0.0.0"))
     parser.add_argument("--port", type=int, default=int(env_value("RUNTIME_ENGINE_PORT", "GEMIFL_RUNTIME_PORT", "8080")))
@@ -162,7 +214,13 @@ def main() -> None:
 
     RuntimeHandler.state = RuntimeState(args.node_name, args.runtime_root)
     server = ThreadingHTTPServer((args.host, args.port), RuntimeHandler)
-    print(f"Runtime engine node {args.node_name} listening on {args.host}:{args.port}")
+    log.info(
+        "Runtime engine node listening nodeName=%s host=%s port=%s runtimeRoot=%s",
+        args.node_name,
+        args.host,
+        args.port,
+        args.runtime_root,
+    )
     server.serve_forever()
 
 

@@ -1,5 +1,6 @@
 import argparse
 import json
+import logging
 import os
 import traceback
 from importlib import import_module
@@ -8,46 +9,50 @@ from pathlib import Path
 from gemifl.runtime.steps import run_platform_step
 
 
+log = logging.getLogger("gemifl.runtime.executor")
+
+
 def resolve_runtime_config(config_path: str, node_name: str | None = None) -> dict:
     with open(config_path, "r", encoding="utf-8") as f:
         config = json.load(f)
 
     resolved_node = (
         node_name
-        or config.get("my_name")
+        or config.get("nodeName")
         or os.getenv("RUNTIME_ENGINE_NODE_NAME")
         or os.getenv("GEMIFL_NODE_NAME")
     )
     if not resolved_node:
-        raise ValueError("Runtime node name is required via --node-name, my_name, or RUNTIME_ENGINE_NODE_NAME")
+        raise ValueError("Runtime node name is required via --node-name, myName, or RUNTIME_ENGINE_NODE_NAME")
 
-    config["my_name"] = resolved_node
-    config["task_id"] = str(config.get("task_id") or config.get("job_id") or config.get("jobId"))
-    if not config["task_id"]:
-        raise ValueError("Runtime job config must include task_id, job_id, or jobId")
+    config["nodeName"] = resolved_node
+    job_id = config.get("jobId")
+    if not job_id:
+        raise ValueError(f"Runtime job config must include jobId. Received keys: {sorted(config.keys())}")
+    config["jobId"] = str(job_id)
 
-    config.setdefault("job_parameter", {})
-    config.setdefault("node_parameter", {})
-    config.setdefault("model_parameter", {})
+    config.setdefault("jobParameter", {})
+    config.setdefault("nodeParameter", {})
+    config.setdefault("modelParameter", {})
     return config
 
 
 def resolve_role(config: dict) -> str:
-    node_name = config["my_name"]
+    node_name = config["nodeName"]
     for role, nodes in config["roles"].items():
         if node_name in nodes:
             return role
-    node_params = config.get("node_parameter", {}).get(node_name, {})
+    node_params = config.get("nodeParameter", {}).get(node_name, {})
     if node_params.get("role"):
         return node_params["role"]
-    raise ValueError(f"Node {node_name} was not found in roles or node_parameter role")
+    raise ValueError(f"Node {node_name} was not found in roles or nodeParameter role")
 
 
 def load_model_class(config: dict, role: str):
-    engine = config["model_parameter"].get("engine", "python")
-    base_model = config["model_parameter"].get("model")
+    engine = config["modelParameter"].get("engine", "python")
+    base_model = config["modelParameter"].get("model")
     if not base_model:
-        raise ValueError("model_parameter.model is required")
+        raise ValueError("modelParameter.model is required")
 
     role_suffix = role[:1].upper() + role[1:]
     model_path = f"{base_model}{role_suffix}"
@@ -57,38 +62,53 @@ def load_model_class(config: dict, role: str):
 
 
 def write_runtime_config(config: dict, runtime_root: str = "./tmp/runtime-engine") -> Path:
-    task_id = config["task_id"]
-    node_name = config["my_name"]
-    config_dir = Path(runtime_root) / task_id / node_name
+    job_id = config["jobId"]
+    node_name = config["nodeName"]
+    config_dir = Path(runtime_root) / job_id / node_name
     config_dir.mkdir(parents=True, exist_ok=True)
     config_path = config_dir / "config.json"
     with config_path.open("w", encoding="utf-8") as f:
         json.dump(config, f, indent=2)
+    log.info("Resolved runtime config written jobId=%s nodeName=%s configPath=%s", job_id, node_name, config_path)
     return config_path
 
 
 def run_config(config_path: str, node_name: str | None = None) -> None:
     config = resolve_runtime_config(config_path, node_name)
-    write_runtime_config(config, config.get("runtime_root", "./tmp/runtime-engine"))
+    log.info(
+        "Runtime executor started jobId=%s nodeName=%s operation=%s model=%s runtimeRoot=%s",
+        config.get("jobId"),
+        config.get("nodeName"),
+        config.get("operation"),
+        config.get("modelParameter", {}).get("model"),
+        config.get("runtimeRoot"),
+    )
+    write_runtime_config(config, config.get("runtimeRoot", "./tmp/runtime-engine"))
     if config.get("operation"):
         run_platform_step(config)
+        log.info("Runtime executor completed jobId=%s operation=%s", config.get("jobId"), config.get("operation"))
         return
     role = resolve_role(config)
     model_class = load_model_class(config, role)
     app = model_class(config)
     app.run()
+    log.info("Runtime executor completed jobId=%s role=%s", config.get("jobId"), role)
 
 
 def main() -> None:
+    logging.basicConfig(
+        level=os.getenv("RUNTIME_ENGINE_LOG_LEVEL", "INFO").upper(),
+        format="%(asctime)s %(levelname)s %(name)s - %(message)s",
+    )
     parser = argparse.ArgumentParser(description="Run one runtime engine training job on this node.")
     parser.add_argument("--config", required=True, help="Path to the runtime job JSON config.")
-    parser.add_argument("--node-name", default=None, help="Current node name. Overrides config my_name.")
+    parser.add_argument("--node-name", default=None, help="Current node name. Overrides config nodeName.")
     args = parser.parse_args()
 
     try:
         run_config(args.config, args.node_name)
     except Exception as error:
-        print(f"Error in runtime executor: {error}")
+        log.error("Runtime executor failed: %s", error)
         traceback.print_exc()
         raise
 
