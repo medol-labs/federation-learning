@@ -12,7 +12,9 @@ data class RecordRuntimeConnectionEstablishedCommand(
     val runtimeAgentId: UUID,
     val agentInstallMode: String,
     val organizationId: UUID,
-    val runtimeName: String
+    val runtimeName: String,
+    val runtimeAgentEndpoint: String,
+    val endpointScope: String
 ) {
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)

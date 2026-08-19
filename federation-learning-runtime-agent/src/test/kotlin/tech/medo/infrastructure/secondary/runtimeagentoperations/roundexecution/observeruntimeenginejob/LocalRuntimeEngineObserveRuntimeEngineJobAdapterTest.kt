@@ -116,5 +116,8 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapterTest {
 
         override fun getJob(endpoint: String, jobId: String): RuntimeEngineJobResponse =
             response
+
+        override fun cancelJob(endpoint: String, jobId: String): RuntimeEngineJobResponse =
+            RuntimeEngineJobResponse(jobId = jobId, nodeName = "local-runtime", status = "cancelled")
     }
 }

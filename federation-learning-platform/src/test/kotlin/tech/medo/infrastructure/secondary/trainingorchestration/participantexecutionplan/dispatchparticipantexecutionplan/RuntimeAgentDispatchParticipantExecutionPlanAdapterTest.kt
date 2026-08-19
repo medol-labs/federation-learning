@@ -3,6 +3,7 @@ package tech.medo.infrastructure.secondary.trainingorchestration.participantexec
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import tech.medo.infrastructure.secondary.runtimeprovisioning.runtimeagentendpointcatalog.RuntimeAgentEndpointResolver
 import tech.medo.trainingorchestration.dispatchparticipantexecutionplan.DispatchParticipantExecutionPlanInput
 import tech.medo.trainingorchestration.dispatchparticipantexecutionplan.DispatchParticipantExecutionPlanResult
 import java.util.UUID
@@ -11,12 +12,16 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapterTest {
     @Test
     fun dispatchesParticipantExecutionPlanToRuntimeAgent() {
         val client = RecordingRuntimeAgentExecutionPlanClient()
-        val adapter = RuntimeAgentDispatchParticipantExecutionPlanAdapter(client)
+        val adapter = RuntimeAgentDispatchParticipantExecutionPlanAdapter(
+            client,
+            StaticRuntimeAgentEndpointResolver("http://runtime-agent-1:8082")
+        )
         val input = input()
 
         val result = adapter.execute(input)
 
         assertTrue(result is DispatchParticipantExecutionPlanResult.Succeeded)
+        assertEquals("http://runtime-agent-1:8082", client.endpoint)
         assertEquals(input.executionPlanId, client.request?.executionPlanId)
         assertEquals(input.executionSessionId, client.request?.executionSessionId)
         assertEquals(input.trainingJobId, client.request?.trainingJobId)
@@ -35,14 +40,23 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapterTest {
     }
 
     private class RecordingRuntimeAgentExecutionPlanClient : RuntimeAgentExecutionPlanClient {
+        var endpoint: String? = null
         var request: ReceiveParticipantExecutionPlanRequest? = null
 
         override fun receiveParticipantExecutionPlan(
+            endpoint: String,
             request: ReceiveParticipantExecutionPlanRequest
         ): ReceiveParticipantExecutionPlanResponse {
+            this.endpoint = endpoint
             this.request = request
             return ReceiveParticipantExecutionPlanResponse(executionPlanId = request.executionPlanId)
         }
+    }
+
+    private class StaticRuntimeAgentEndpointResolver(
+        private val endpoint: String?
+    ) : RuntimeAgentEndpointResolver {
+        override fun resolveConnectedEndpoint(runtimeId: UUID): String? = endpoint
     }
 
     private fun input(): DispatchParticipantExecutionPlanInput =

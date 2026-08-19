@@ -10,6 +10,7 @@ interface RuntimeEngineClient {
     fun health(endpoint: String): RuntimeEngineHealthResponse
     fun startJob(endpoint: String, request: RuntimeEngineJobRequest): RuntimeEngineJobResponse
     fun getJob(endpoint: String, jobId: String): RuntimeEngineJobResponse
+    fun cancelJob(endpoint: String, jobId: String): RuntimeEngineJobResponse
 }
 
 @Component
@@ -42,6 +43,13 @@ class RestClientRuntimeEngineClient(
     override fun getJob(endpoint: String, jobId: String): RuntimeEngineJobResponse =
         restClient.get()
             .uri("${endpoint.trim().removeSuffix("/")}/jobs/$jobId")
+            .retrieve()
+            .body(RuntimeEngineJobResponse::class.java)
+            ?: RuntimeEngineJobResponse(jobId = jobId)
+
+    override fun cancelJob(endpoint: String, jobId: String): RuntimeEngineJobResponse =
+        restClient.post()
+            .uri("${endpoint.trim().removeSuffix("/")}/jobs/$jobId/cancel")
             .retrieve()
             .body(RuntimeEngineJobResponse::class.java)
             ?: RuntimeEngineJobResponse(jobId = jobId)

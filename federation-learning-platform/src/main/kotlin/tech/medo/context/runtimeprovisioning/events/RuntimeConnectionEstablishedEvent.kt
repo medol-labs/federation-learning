@@ -13,5 +13,7 @@ data class RuntimeConnectionEstablishedEvent(
     val runtimeAgentId: UUID,
     val agentInstallMode: String,
     val organizationId: UUID,
-    val runtimeName: String
+    val runtimeName: String,
+    val runtimeAgentEndpoint: String,
+    val endpointScope: String
 )

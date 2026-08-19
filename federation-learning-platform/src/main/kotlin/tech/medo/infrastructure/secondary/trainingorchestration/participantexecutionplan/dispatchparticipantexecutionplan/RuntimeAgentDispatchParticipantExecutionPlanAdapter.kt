@@ -3,13 +3,15 @@ package tech.medo.infrastructure.secondary.trainingorchestration.participantexec
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClientResponseException
+import tech.medo.infrastructure.secondary.runtimeprovisioning.runtimeagentendpointcatalog.RuntimeAgentEndpointResolver
 import tech.medo.trainingorchestration.dispatchparticipantexecutionplan.DispatchParticipantExecutionPlanInput
 import tech.medo.trainingorchestration.dispatchparticipantexecutionplan.DispatchParticipantExecutionPlanResult
 import tech.medo.trainingorchestration.dispatchparticipantexecutionplan.DispatchParticipantExecutionPlanService
 
 @Component
 class RuntimeAgentDispatchParticipantExecutionPlanAdapter(
-    private val client: RuntimeAgentExecutionPlanClient
+    private val client: RuntimeAgentExecutionPlanClient,
+    private val endpointResolver: RuntimeAgentEndpointResolver
 ) : DispatchParticipantExecutionPlanService {
     private val log = LoggerFactory.getLogger(RuntimeAgentDispatchParticipantExecutionPlanAdapter::class.java)
 
@@ -35,14 +37,17 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapter(
         )
 
         return try {
+            val endpoint = endpointResolver.resolveConnectedEndpoint(input.runtimeId)
+                ?: error("Runtime agent endpoint is not available for runtimeId=${input.runtimeId}.")
             log.info(
-                "Dispatching participant execution plan to runtime agent. executionPlanId={}, trainingJobId={}, roundId={}, runtimeId={}",
+                "Dispatching participant execution plan to runtime agent. executionPlanId={}, trainingJobId={}, roundId={}, runtimeId={}, endpoint={}",
                 input.executionPlanId,
                 input.trainingJobId,
                 input.roundId,
-                input.runtimeId
+                input.runtimeId,
+                endpoint
             )
-            client.receiveParticipantExecutionPlan(request)
+            client.receiveParticipantExecutionPlan(endpoint, request)
             DispatchParticipantExecutionPlanResult.Succeeded()
         } catch (ex: RestClientResponseException) {
             throw IllegalStateException(

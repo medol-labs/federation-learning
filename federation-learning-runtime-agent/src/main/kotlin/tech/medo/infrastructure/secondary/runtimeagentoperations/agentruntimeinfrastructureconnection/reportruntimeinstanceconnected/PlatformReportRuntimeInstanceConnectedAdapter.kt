@@ -20,10 +20,14 @@ class PlatformReportRuntimeInstanceConnectedAdapter(
     override fun execute(input: ReportRuntimeInstanceConnectedInput): ReportRuntimeInstanceConnectedResult {
         val organizationId = configuredUuid(properties.organizationId)
         val runtimeName = properties.runtimeName?.trim().orEmpty()
+        val runtimeAgentEndpoint = properties.runtimeAgentEndpoint?.trim().orEmpty()
+        val endpointScope = properties.endpointScope.trim()
         val missing = buildList {
             if (properties.agentInstallMode.isBlank()) add("runtime-agent.platform-connection-reporting.agent-install-mode")
             if (organizationId == null) add("runtime-agent.platform-connection-reporting.organization-id")
             if (runtimeName.isBlank()) add("runtime-agent.platform-connection-reporting.runtime-name")
+            if (runtimeAgentEndpoint.isBlank()) add("runtime-agent.platform-connection-reporting.runtime-agent-endpoint")
+            if (endpointScope.isBlank()) add("runtime-agent.platform-connection-reporting.endpoint-scope")
         }
         if (missing.isNotEmpty()) {
             return rejected(
@@ -37,7 +41,9 @@ class PlatformReportRuntimeInstanceConnectedAdapter(
             runtimeAgentId = input.runtimeAgentId,
             agentInstallMode = properties.agentInstallMode.trim(),
             organizationId = organizationId!!,
-            runtimeName = runtimeName
+            runtimeName = runtimeName,
+            runtimeAgentEndpoint = runtimeAgentEndpoint,
+            endpointScope = endpointScope
         )
 
         return try {

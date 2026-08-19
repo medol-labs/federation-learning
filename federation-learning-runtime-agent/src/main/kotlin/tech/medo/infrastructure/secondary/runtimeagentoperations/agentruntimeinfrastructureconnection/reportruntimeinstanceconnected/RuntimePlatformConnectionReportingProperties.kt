@@ -8,5 +8,7 @@ data class RuntimePlatformConnectionReportingProperties(
     val platformUrl: String = "http://localhost:8080",
     val agentInstallMode: String = "MANUAL_GUIDED",
     val organizationId: String? = null,
-    val runtimeName: String? = null
+    val runtimeName: String? = null,
+    val runtimeAgentEndpoint: String? = null,
+    val endpointScope: String = "LOCAL"
 )

@@ -10,6 +10,8 @@ runtime-agent:
     agent-install-mode: ${RUNTIME_AGENT_INSTALL_MODE:MANUAL_GUIDED}
     organization-id: ${RUNTIME_AGENT_ORGANIZATION_ID:}
     runtime-name: ${RUNTIME_AGENT_RUNTIME_NAME:}
+    runtime-agent-endpoint: ${RUNTIME_AGENT_ENDPOINT:http://localhost:8082}
+    endpoint-scope: ${RUNTIME_AGENT_ENDPOINT_SCOPE:LOCAL}
   csv-dataset:
     label-columns: ${RUNTIME_AGENT_CSV_DATASET_LABEL_COLUMNS:}
   feature-schema-lookup:
@@ -17,6 +19,9 @@ runtime-agent:
     platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
   dataset-metadata-reporting:
     enabled: ${RUNTIME_AGENT_DATASET_METADATA_REPORTING_ENABLED:true}
+    platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
+  local-model-update-submission:
+    enabled: ${RUNTIME_AGENT_LOCAL_MODEL_UPDATE_SUBMISSION_ENABLED:true}
     platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
   local-runtime-engine:
     enabled: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENABLED:true}

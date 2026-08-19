@@ -22,7 +22,9 @@ class PlatformReportRuntimeInstanceConnectedAdapterTest {
                 enabled = true,
                 agentInstallMode = "MANUAL_GUIDED",
                 organizationId = organizationId.toString(),
-                runtimeName = "local-runtime"
+                runtimeName = "local-runtime",
+                runtimeAgentEndpoint = "http://localhost:8082",
+                endpointScope = "LOCAL"
             )
         )
 
@@ -36,6 +38,8 @@ class PlatformReportRuntimeInstanceConnectedAdapterTest {
         assertEquals("MANUAL_GUIDED", request.agentInstallMode)
         assertEquals(organizationId, request.organizationId)
         assertEquals("local-runtime", request.runtimeName)
+        assertEquals("http://localhost:8082", request.runtimeAgentEndpoint)
+        assertEquals("LOCAL", request.endpointScope)
     }
 
     @Test
@@ -47,7 +51,9 @@ class PlatformReportRuntimeInstanceConnectedAdapterTest {
                 enabled = true,
                 agentInstallMode = "MANUAL_GUIDED",
                 organizationId = null,
-                runtimeName = "local-runtime"
+                runtimeName = "local-runtime",
+                runtimeAgentEndpoint = "http://localhost:8082",
+                endpointScope = "LOCAL"
             )
         )
 
@@ -83,7 +89,9 @@ class PlatformReportRuntimeInstanceConnectedAdapterTest {
                 runtimeAgentId = request.runtimeAgentId,
                 agentInstallMode = request.agentInstallMode,
                 organizationId = request.organizationId,
-                runtimeName = request.runtimeName
+                runtimeName = request.runtimeName,
+                runtimeAgentEndpoint = request.runtimeAgentEndpoint,
+                endpointScope = request.endpointScope
             )
         }
     }

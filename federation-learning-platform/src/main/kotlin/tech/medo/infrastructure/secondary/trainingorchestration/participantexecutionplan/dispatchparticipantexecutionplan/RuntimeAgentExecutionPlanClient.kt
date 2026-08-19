@@ -1,29 +1,29 @@
 package tech.medo.infrastructure.secondary.trainingorchestration.participantexecutionplan.dispatchparticipantexecutionplan
 
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
 import java.util.UUID
 
 interface RuntimeAgentExecutionPlanClient {
     fun receiveParticipantExecutionPlan(
+        endpoint: String,
         request: ReceiveParticipantExecutionPlanRequest
     ): ReceiveParticipantExecutionPlanResponse
 }
 
 @Component
 class RestClientRuntimeAgentExecutionPlanClient(
-    restClientBuilder: RestClient.Builder,
-    @Value("\${training-orchestration.runtime-agent.endpoint:http://localhost:8082}") private val endpoint: String
+    restClientBuilder: RestClient.Builder
 ) : RuntimeAgentExecutionPlanClient {
     private val restClient = restClientBuilder.build()
 
     override fun receiveParticipantExecutionPlan(
+        endpoint: String,
         request: ReceiveParticipantExecutionPlanRequest
     ): ReceiveParticipantExecutionPlanResponse {
         val baseUrl = endpoint.trim().removeSuffix("/")
         require(baseUrl.isNotBlank()) {
-            "training-orchestration.runtime-agent.endpoint is required to dispatch participant execution plans."
+            "runtime agent endpoint is required to dispatch participant execution plans."
         }
 
         return restClient.post()
