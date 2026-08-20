@@ -25,7 +25,7 @@ type DictionaryCatalogRecord = {
   dictionaryCode: DictionaryCode;
   dictionaryName: string;
   description?: string;
-  state: string;
+  state: "REGISTERED" | "ARCHIVED";
   registeredAt: string;
   updatedAt?: string;
   archivedAt?: string;
@@ -139,9 +139,13 @@ export const DictionaryCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.dictionary_catalog.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Registered", value: "REGISTERED" },
+            { label: "Archived", value: "ARCHIVED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

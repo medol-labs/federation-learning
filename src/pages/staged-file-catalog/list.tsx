@@ -27,7 +27,7 @@ type StagedFileCatalogRecord = {
   purpose: string;
   stagedFileLocation: string;
   checksum?: string;
-  state: string;
+  state: "STAGED" | "CONSUMED" | "DISCARDED" | "EXPIRED";
   stagedAt?: string;
   consumedAt?: string;
   consumedByContext?: string;
@@ -190,9 +190,15 @@ export const StagedFileCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.staged_file_catalog.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Staged", value: "STAGED" },
+            { label: "Consumed", value: "CONSUMED" },
+            { label: "Discarded", value: "DISCARDED" },
+            { label: "Expired", value: "EXPIRED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

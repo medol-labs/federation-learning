@@ -43,7 +43,7 @@ type RuntimeInfrastructureAccessViewRecord = {
   agentDeploymentRetryFailedAt?: string;
   agentDeploymentRetryFailureReason?: string;
   connectedAt?: string;
-  state: string;
+  state: "PLANNED" | "REGISTERED" | "VERIFIED" | "VERIFICATION_FAILED" | "AGENT_READY" | "RUNTIME_AGENT_FAILED" | "OFFLINE" | "CONNECTED";
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -426,9 +426,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_infrastructure_access_view.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Planned", value: "PLANNED" },
+            { label: "Registered", value: "REGISTERED" },
+            { label: "Verified", value: "VERIFIED" },
+            { label: "Verification Failed", value: "VERIFICATION_FAILED" },
+            { label: "Agent Ready", value: "AGENT_READY" },
+            { label: "Runtime Agent Failed", value: "RUNTIME_AGENT_FAILED" },
+            { label: "Offline", value: "OFFLINE" },
+            { label: "Connected", value: "CONNECTED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

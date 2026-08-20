@@ -31,7 +31,7 @@ type TrainingJobDashboardRecord = {
   strategyName?: string;
   aggregationAlgorithm?: string;
   secureAggregationRequired?: boolean;
-  state: string;
+  state: "DRAFT" | "SUBMITTED" | "RUNNING" | "PAUSED" | "CANCELED" | "COMPLETED";
   workflowStage: string;
   workflowStep: number;
   nextAction?: string;
@@ -259,9 +259,17 @@ export const TrainingJobDashboardList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_job_dashboard.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Draft", value: "DRAFT" },
+            { label: "Submitted", value: "SUBMITTED" },
+            { label: "Running", value: "RUNNING" },
+            { label: "Paused", value: "PAUSED" },
+            { label: "Canceled", value: "CANCELED" },
+            { label: "Completed", value: "COMPLETED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

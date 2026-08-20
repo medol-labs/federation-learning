@@ -29,7 +29,7 @@ type RoundExecutionCatalogRecord = {
   roundNumber?: number;
   organizationId?: string;
   runtimeId: string;
-  state: string;
+  state: "PLAN_RECEIVED" | "PLAN_ACCEPTED" | "PLAN_REJECTED" | "RUNNING" | "START_FAILED" | "RETRIED" | "COMPLETED" | "FAILED" | "UPDATE_SUBMITTED" | "RUNTIME_ENGINE_RELEASED" | "RUNTIME_ENGINE_RELEASE_HANDLED";
   featureSchemaId?: string;
   baseModelId?: string;
   runtimeEngineJobId?: string;
@@ -237,9 +237,22 @@ export const RoundExecutionCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.round_execution_catalog.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Plan Received", value: "PLAN_RECEIVED" },
+            { label: "Plan Accepted", value: "PLAN_ACCEPTED" },
+            { label: "Plan Rejected", value: "PLAN_REJECTED" },
+            { label: "Running", value: "RUNNING" },
+            { label: "Start Failed", value: "START_FAILED" },
+            { label: "Retried", value: "RETRIED" },
+            { label: "Completed", value: "COMPLETED" },
+            { label: "Failed", value: "FAILED" },
+            { label: "Update Submitted", value: "UPDATE_SUBMITTED" },
+            { label: "Runtime Engine Released", value: "RUNTIME_ENGINE_RELEASED" },
+            { label: "Runtime Engine Release Handled", value: "RUNTIME_ENGINE_RELEASE_HANDLED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

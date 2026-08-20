@@ -27,7 +27,7 @@ type TrainingAlertCatalogRecord = {
   trainingJobObjective?: string;
   severity: string;
   message: string;
-  state: string;
+  state: "RAISED" | "ACKNOWLEDGED" | "RESOLVED";
   acknowledgedAt?: string;
   resolvedAt?: string;
   resolutionSummary?: string;
@@ -184,9 +184,14 @@ export const TrainingAlertCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_alert_catalog.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Raised", value: "RAISED" },
+            { label: "Acknowledged", value: "ACKNOWLEDGED" },
+            { label: "Resolved", value: "RESOLVED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

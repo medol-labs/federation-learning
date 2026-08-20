@@ -33,7 +33,7 @@ type ModelArtifactCatalogRecord = {
   trainingJobId?: string;
   roundId?: string;
   trainingJobObjective?: string;
-  state: string;
+  state: "REGISTERED";
   registeredAt?: string;
 };
 
@@ -271,9 +271,12 @@ export const ModelArtifactCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.model_artifact_catalog.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Registered", value: "REGISTERED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

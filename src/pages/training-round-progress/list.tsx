@@ -29,7 +29,7 @@ type TrainingRoundProgressRecord = {
   featureDomain?: string;
   featureSchemaVersion?: string;
   roundNumber: number;
-  state: string;
+  state: "PARTICIPANTS_SELECTED" | "RUNNING" | "COLLECTING_UPDATES" | "AGGREGATING" | "EVALUATING_GLOBAL_MODEL" | "COMPLETED" | "FAILED";
   selectedOrganizationIds: string[];
   selectedParticipants: TrainingRoundParticipant[];
   selectedOrganizationCount: number;
@@ -237,9 +237,18 @@ export const TrainingRoundProgressList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_round_progress.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Participants Selected", value: "PARTICIPANTS_SELECTED" },
+            { label: "Running", value: "RUNNING" },
+            { label: "Collecting Updates", value: "COLLECTING_UPDATES" },
+            { label: "Aggregating", value: "AGGREGATING" },
+            { label: "Evaluating Global Model", value: "EVALUATING_GLOBAL_MODEL" },
+            { label: "Completed", value: "COMPLETED" },
+            { label: "Failed", value: "FAILED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

@@ -29,7 +29,7 @@ type DictionaryValueCatalogRecord = {
   displayOrder?: DisplayOrder;
   description?: string;
   active: boolean;
-  state: string;
+  state: "ACTIVE" | "DISABLED";
   addedAt: string;
   updatedAt?: string;
   disabledAt?: string;
@@ -202,9 +202,13 @@ export const DictionaryValueCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.dictionary_value_catalog.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Active", value: "ACTIVE" },
+            { label: "Disabled", value: "DISABLED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

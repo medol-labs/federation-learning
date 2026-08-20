@@ -28,7 +28,7 @@ type RuntimeInfrastructurePackageCatalogRecord = {
   installProfile: string;
   architecture: string;
   installGuide: string;
-  state: string;
+  state: "REGISTERED";
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -194,9 +194,12 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_infrastructure_package_catalog.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Registered", value: "REGISTERED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

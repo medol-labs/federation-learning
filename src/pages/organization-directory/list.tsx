@@ -24,7 +24,7 @@ type OrganizationDirectoryRecord = {
   organizationId: string;
   organizationName: string;
   organizationType: OrganizationType;
-  state: string;
+  state: "REGISTERED" | "ACTIVE" | "DEACTIVATED";
   approvedDatasetCount: number;
 };
 
@@ -129,9 +129,14 @@ export const OrganizationDirectoryList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.organization_directory.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Registered", value: "REGISTERED" },
+            { label: "Active", value: "ACTIVE" },
+            { label: "Deactivated", value: "DEACTIVATED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

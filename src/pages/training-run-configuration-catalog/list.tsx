@@ -55,7 +55,7 @@ type TrainingRunConfigurationCatalogRecord = {
   failureToleranceRatio: string;
   updateReason?: string;
   lockedByTrainingJobId?: string;
-  state: string;
+  state: "DRAFT" | "LOCKED";
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -614,9 +614,13 @@ export const TrainingRunConfigurationCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_run_configuration_catalog.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Draft", value: "DRAFT" },
+            { label: "Locked", value: "LOCKED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

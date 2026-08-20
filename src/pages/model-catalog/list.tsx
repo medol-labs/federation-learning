@@ -28,7 +28,7 @@ type ModelCatalogRecord = {
   modelArtifactDigest: string;
   evaluationReportId: string;
   finalGlobalAccuracy: string;
-  state: string;
+  state: "CANDIDATE" | "EVALUATION_PACKAGED" | "APPROVED" | "PRODUCTION" | "ROLLED_BACK" | "RETIRED";
   releaseChannel?: string;
   productionStage?: string;
   previousModelId?: string;
@@ -213,9 +213,17 @@ export const ModelCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.model_catalog.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Candidate", value: "CANDIDATE" },
+            { label: "Evaluation Packaged", value: "EVALUATION_PACKAGED" },
+            { label: "Approved", value: "APPROVED" },
+            { label: "Production", value: "PRODUCTION" },
+            { label: "Rolled Back", value: "ROLLED_BACK" },
+            { label: "Retired", value: "RETIRED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),

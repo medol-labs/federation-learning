@@ -22,7 +22,7 @@ import { MoreHorizontal } from "lucide-react";
 type FederationOverviewRecord = {
   federationId: string;
   federationName: string;
-  state: string;
+  state: "DRAFT" | "ACTIVE" | "SUSPENDED";
   minimumParticipantCount: number;
   activeMemberCount: number;
   pendingInvitationCount: number;
@@ -109,9 +109,14 @@ export const FederationOverviewList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.federation_overview.fields.state.label", "State"),
-          placeholder: "Enter State",
-          variant: "text",
-          filterOperator: "eq",
+          placeholder: "Select State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Draft", value: "DRAFT" },
+            { label: "Active", value: "ACTIVE" },
+            { label: "Suspended", value: "SUSPENDED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
