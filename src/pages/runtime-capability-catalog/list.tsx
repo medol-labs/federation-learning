@@ -75,6 +75,11 @@ export const RuntimeCapabilityCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_capability_catalog.fields.runtimeId.label", "Runtime Id"),
+          placeholder: "Enter Runtime Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("capabilityTypes", {
@@ -83,7 +88,12 @@ export const RuntimeCapabilityCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_capability_catalog.fields.capabilityTypes.label", "Capability Types")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.runtime_capability_catalog.fields.capabilityTypes.label", "Capability Types"),
+          placeholder: "Enter Capability Types",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("capabilityStatus", {
@@ -93,6 +103,11 @@ export const RuntimeCapabilityCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_capability_catalog.fields.capabilityStatus.label", "Capability Status"),
+          placeholder: "Enter Capability Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("detectedAt", {
@@ -101,7 +116,13 @@ export const RuntimeCapabilityCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_capability_catalog.fields.detectedAt.label", "Detected At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_capability_catalog.fields.detectedAt.label", "Detected At"),
+          placeholder: "Enter Detected At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -137,11 +158,12 @@ export const RuntimeCapabilityCatalogList = () => {
     getRowId: (row) => String(row.runtimeId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_capability_catalog_read_model_entity",
         idField: "runtimeId",
         idFields: ["runtimeId"],
+        queryFields: ["runtimeId","capabilityStatus","detectedAt"],
         label: t("resources.runtime_capability_catalog.label", "Runtime Capability Catalog"),
         aggregateRoute: "runtimecapability",
         queryRoute: "runtimecapabilitycatalog",

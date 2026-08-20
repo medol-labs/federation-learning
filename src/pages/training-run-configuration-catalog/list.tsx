@@ -107,6 +107,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.trainingRunConfigurationId.label", "Training Run Configuration Id"),
+          placeholder: "Enter Training Run Configuration Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationId", {
@@ -116,6 +121,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.federationId.label", "Federation Id"),
+          placeholder: "Enter Federation Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
@@ -125,6 +135,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.featureSchemaId.label", "Feature Schema Id"),
+          placeholder: "Enter Feature Schema Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelId", {
@@ -134,6 +149,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.initialModelId.label", "Initial Model Id"),
+          placeholder: "Enter Initial Model Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelName", {
@@ -143,6 +163,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.initialModelName.label", "Initial Model Name"),
+          placeholder: "Enter Initial Model Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelVersion", {
@@ -152,6 +177,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.initialModelVersion.label", "Initial Model Version"),
+          placeholder: "Enter Initial Model Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
@@ -161,6 +191,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.federationName.label", "Federation Name"),
+          placeholder: "Enter Federation Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
@@ -170,6 +205,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.featureDomain.label", "Feature Domain"),
+          placeholder: "Enter Feature Domain",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
@@ -179,6 +219,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.featureSchemaVersion.label", "Feature Schema Version"),
+          placeholder: "Enter Feature Schema Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelArtifactUri", {
@@ -188,6 +233,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.initialModelArtifactUri.label", "Initial Model Artifact Uri"),
+          placeholder: "Enter Initial Model Artifact Uri",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelRegistryRef", {
@@ -197,6 +247,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.initialModelRegistryRef.label", "Initial Model Registry Ref"),
+          placeholder: "Enter Initial Model Registry Ref",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelFormat", {
@@ -206,6 +261,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.initialModelFormat.label", "Initial Model Format"),
+          placeholder: "Enter Initial Model Format",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelArtifactDigest", {
@@ -215,6 +275,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.initialModelArtifactDigest.label", "Initial Model Artifact Digest"),
+          placeholder: "Enter Initial Model Artifact Digest",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelSignatureUri", {
@@ -224,6 +289,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.initialModelSignatureUri.label", "Initial Model Signature Uri"),
+          placeholder: "Enter Initial Model Signature Uri",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("strategyName", {
@@ -233,6 +303,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.strategyName.label", "Strategy Name"),
+          placeholder: "Enter Strategy Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("aggregationAlgorithm", {
@@ -242,6 +317,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.aggregationAlgorithm.label", "Aggregation Algorithm"),
+          placeholder: "Enter Aggregation Algorithm",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("maxRounds", {
@@ -250,7 +330,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.maxRounds.label", "Max Rounds")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.maxRounds.label", "Max Rounds"),
+          placeholder: "Enter Max Rounds",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumNodesPerRound", {
@@ -259,7 +345,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.minimumNodesPerRound.label", "Minimum Nodes Per Round")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.minimumNodesPerRound.label", "Minimum Nodes Per Round"),
+          placeholder: "Enter Minimum Nodes Per Round",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundTimeoutSeconds", {
@@ -268,7 +360,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.roundTimeoutSeconds.label", "Round Timeout Seconds")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.roundTimeoutSeconds.label", "Round Timeout Seconds"),
+          placeholder: "Enter Round Timeout Seconds",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nodeResponseTimeoutSeconds", {
@@ -277,7 +375,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.nodeResponseTimeoutSeconds.label", "Node Response Timeout Seconds")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.nodeResponseTimeoutSeconds.label", "Node Response Timeout Seconds"),
+          placeholder: "Enter Node Response Timeout Seconds",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("localEpochs", {
@@ -286,7 +390,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.localEpochs.label", "Local Epochs")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.localEpochs.label", "Local Epochs"),
+          placeholder: "Enter Local Epochs",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("batchSize", {
@@ -295,7 +405,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.batchSize.label", "Batch Size")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.batchSize.label", "Batch Size"),
+          placeholder: "Enter Batch Size",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("learningRate", {
@@ -304,7 +420,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.learningRate.label", "Learning Rate")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.learningRate.label", "Learning Rate"),
+          placeholder: "Enter Learning Rate",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("optimizer", {
@@ -314,6 +436,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.optimizer.label", "Optimizer"),
+          placeholder: "Enter Optimizer",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lossFunction", {
@@ -323,6 +450,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.lossFunction.label", "Loss Function"),
+          placeholder: "Enter Loss Function",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("gradientClippingNorm", {
@@ -331,7 +463,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.gradientClippingNorm.label", "Gradient Clipping Norm")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.gradientClippingNorm.label", "Gradient Clipping Norm"),
+          placeholder: "Enter Gradient Clipping Norm",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("secureAggregationRequired", {
@@ -340,7 +478,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.secureAggregationRequired.label", "Secure Aggregation Required")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.secureAggregationRequired.label", "Secure Aggregation Required"),
+          placeholder: "Enter Secure Aggregation Required",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("differentialPrivacyEnabled", {
@@ -349,7 +493,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.differentialPrivacyEnabled.label", "Differential Privacy Enabled")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.differentialPrivacyEnabled.label", "Differential Privacy Enabled"),
+          placeholder: "Enter Differential Privacy Enabled",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("dpNoiseMultiplier", {
@@ -358,7 +508,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.dpNoiseMultiplier.label", "Dp Noise Multiplier")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.dpNoiseMultiplier.label", "Dp Noise Multiplier"),
+          placeholder: "Enter Dp Noise Multiplier",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("dpClipNorm", {
@@ -367,7 +523,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.dpClipNorm.label", "Dp Clip Norm")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.dpClipNorm.label", "Dp Clip Norm"),
+          placeholder: "Enter Dp Clip Norm",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumAccuracy", {
@@ -376,7 +538,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.minimumAccuracy.label", "Minimum Accuracy")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.minimumAccuracy.label", "Minimum Accuracy"),
+          placeholder: "Enter Minimum Accuracy",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumFairnessScore", {
@@ -385,7 +553,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.minimumFairnessScore.label", "Minimum Fairness Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.minimumFairnessScore.label", "Minimum Fairness Score"),
+          placeholder: "Enter Minimum Fairness Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("failureToleranceRatio", {
@@ -394,7 +568,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.failureToleranceRatio.label", "Failure Tolerance Ratio")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.failureToleranceRatio.label", "Failure Tolerance Ratio"),
+          placeholder: "Enter Failure Tolerance Ratio",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("updateReason", {
@@ -404,6 +584,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.updateReason.label", "Update Reason"),
+          placeholder: "Enter Update Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lockedByTrainingJobId", {
@@ -413,6 +598,11 @@ export const TrainingRunConfigurationCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.lockedByTrainingJobId.label", "Locked By Training Job Id"),
+          placeholder: "Enter Locked By Training Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -421,7 +611,13 @@ export const TrainingRunConfigurationCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -476,11 +672,12 @@ export const TrainingRunConfigurationCatalogList = () => {
     getRowId: (row) => String(row.trainingRunConfigurationId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "training_run_configuration_catalog_read_model_entity",
         idField: "trainingRunConfigurationId",
         idFields: ["trainingRunConfigurationId"],
+        queryFields: ["trainingRunConfigurationId","federationId","featureSchemaId","initialModelId","initialModelName","initialModelVersion","federationName","featureDomain","featureSchemaVersion","initialModelArtifactUri","initialModelRegistryRef","initialModelFormat","initialModelArtifactDigest","initialModelSignatureUri","strategyName","aggregationAlgorithm","maxRounds","minimumNodesPerRound","roundTimeoutSeconds","nodeResponseTimeoutSeconds","localEpochs","batchSize","learningRate","optimizer","lossFunction","gradientClippingNorm","secureAggregationRequired","differentialPrivacyEnabled","dpNoiseMultiplier","dpClipNorm","minimumAccuracy","minimumFairnessScore","failureToleranceRatio","updateReason","lockedByTrainingJobId","state"],
         label: t("resources.training_run_configuration_catalog.label", "Training Run Configuration Catalog"),
         aggregateRoute: "trainingrunconfiguration",
         queryRoute: "trainingrunconfigurationcatalog",

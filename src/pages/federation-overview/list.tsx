@@ -79,6 +79,11 @@ export const FederationOverviewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_overview.fields.federationId.label", "Federation Id"),
+          placeholder: "Enter Federation Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
@@ -88,6 +93,11 @@ export const FederationOverviewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_overview.fields.federationName.label", "Federation Name"),
+          placeholder: "Enter Federation Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -96,7 +106,13 @@ export const FederationOverviewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.federation_overview.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_overview.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumParticipantCount", {
@@ -105,7 +121,13 @@ export const FederationOverviewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.federation_overview.fields.minimumParticipantCount.label", "Minimum Participant Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_overview.fields.minimumParticipantCount.label", "Minimum Participant Count"),
+          placeholder: "Enter Minimum Participant Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("activeMemberCount", {
@@ -114,7 +136,13 @@ export const FederationOverviewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.federation_overview.fields.activeMemberCount.label", "Active Member Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_overview.fields.activeMemberCount.label", "Active Member Count"),
+          placeholder: "Enter Active Member Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("pendingInvitationCount", {
@@ -123,7 +151,13 @@ export const FederationOverviewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.federation_overview.fields.pendingInvitationCount.label", "Pending Invitation Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_overview.fields.pendingInvitationCount.label", "Pending Invitation Count"),
+          placeholder: "Enter Pending Invitation Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("activeRuntimeCount", {
@@ -132,7 +166,13 @@ export const FederationOverviewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.federation_overview.fields.activeRuntimeCount.label", "Active Runtime Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_overview.fields.activeRuntimeCount.label", "Active Runtime Count"),
+          placeholder: "Enter Active Runtime Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("activeTrainingJobCount", {
@@ -141,7 +181,13 @@ export const FederationOverviewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.federation_overview.fields.activeTrainingJobCount.label", "Active Training Job Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_overview.fields.activeTrainingJobCount.label", "Active Training Job Count"),
+          placeholder: "Enter Active Training Job Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -265,11 +311,12 @@ export const FederationOverviewList = () => {
     getRowId: (row) => String(row.federationId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "federation_overview_read_model_entity",
         idField: "federationId",
         idFields: ["federationId"],
+        queryFields: ["federationId","federationName","state","minimumParticipantCount","activeMemberCount","pendingInvitationCount","activeRuntimeCount","activeTrainingJobCount"],
         label: t("resources.federation_overview.label", "Federation Overview"),
         aggregateRoute: "federation",
         queryRoute: "federationoverview",

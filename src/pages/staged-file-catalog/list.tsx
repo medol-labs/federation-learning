@@ -89,6 +89,11 @@ export const StagedFileCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.stagedFileId.label", "Staged File Id"),
+          placeholder: "Enter Staged File Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("originalFileName", {
@@ -98,6 +103,11 @@ export const StagedFileCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.originalFileName.label", "Original File Name"),
+          placeholder: "Enter Original File Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("contentType", {
@@ -107,6 +117,11 @@ export const StagedFileCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.contentType.label", "Content Type"),
+          placeholder: "Enter Content Type",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sizeBytes", {
@@ -115,7 +130,13 @@ export const StagedFileCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.sizeBytes.label", "Size Bytes")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.sizeBytes.label", "Size Bytes"),
+          placeholder: "Enter Size Bytes",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("purpose", {
@@ -125,6 +146,11 @@ export const StagedFileCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.purpose.label", "Purpose"),
+          placeholder: "Enter Purpose",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("stagedFileLocation", {
@@ -134,6 +160,11 @@ export const StagedFileCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.stagedFileLocation.label", "Staged File Location"),
+          placeholder: "Enter Staged File Location",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("checksum", {
@@ -143,6 +174,11 @@ export const StagedFileCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.checksum.label", "Checksum"),
+          placeholder: "Enter Checksum",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -151,7 +187,13 @@ export const StagedFileCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("stagedAt", {
@@ -160,7 +202,13 @@ export const StagedFileCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.stagedAt.label", "Staged At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.stagedAt.label", "Staged At"),
+          placeholder: "Enter Staged At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("consumedAt", {
@@ -169,7 +217,13 @@ export const StagedFileCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.consumedAt.label", "Consumed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.consumedAt.label", "Consumed At"),
+          placeholder: "Enter Consumed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("consumedByContext", {
@@ -179,6 +233,11 @@ export const StagedFileCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.consumedByContext.label", "Consumed By Context"),
+          placeholder: "Enter Consumed By Context",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("consumedByCommand", {
@@ -188,6 +247,11 @@ export const StagedFileCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.consumedByCommand.label", "Consumed By Command"),
+          placeholder: "Enter Consumed By Command",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("consumedByCommandId", {
@@ -197,6 +261,11 @@ export const StagedFileCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.consumedByCommandId.label", "Consumed By Command Id"),
+          placeholder: "Enter Consumed By Command Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("discardedAt", {
@@ -205,7 +274,13 @@ export const StagedFileCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.discardedAt.label", "Discarded At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.discardedAt.label", "Discarded At"),
+          placeholder: "Enter Discarded At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("discardReason", {
@@ -215,6 +290,11 @@ export const StagedFileCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.discardReason.label", "Discard Reason"),
+          placeholder: "Enter Discard Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("expiresAt", {
@@ -223,7 +303,13 @@ export const StagedFileCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.expiresAt.label", "Expires At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.expiresAt.label", "Expires At"),
+          placeholder: "Enter Expires At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("expiredAt", {
@@ -232,7 +318,13 @@ export const StagedFileCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.expiredAt.label", "Expired At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.expiredAt.label", "Expired At"),
+          placeholder: "Enter Expired At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("expirationReason", {
@@ -242,6 +334,11 @@ export const StagedFileCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.staged_file_catalog.fields.expirationReason.label", "Expiration Reason"),
+          placeholder: "Enter Expiration Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -305,11 +402,12 @@ export const StagedFileCatalogList = () => {
     getRowId: (row) => String(row.stagedFileId),
     refineCoreProps: {
       dataProviderName: "federation-learning-support",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "staged_file_catalog_read_model_entity",
         idField: "stagedFileId",
         idFields: ["stagedFileId"],
+        queryFields: ["stagedFileId","originalFileName","contentType","sizeBytes","purpose","stagedFileLocation","checksum","state","stagedAt","consumedAt","consumedByContext","consumedByCommand","consumedByCommandId","discardedAt","discardReason","expiresAt","expiredAt","expirationReason"],
         label: t("resources.staged_file_catalog.label", "Staged File Catalog"),
         aggregateRoute: "stagedfile",
         queryRoute: "stagedfilecatalog",

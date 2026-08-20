@@ -84,6 +84,11 @@ export const TrainingAlertCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.alertId.label", "Alert Id"),
+          placeholder: "Enter Alert Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nodeId", {
@@ -93,6 +98,11 @@ export const TrainingAlertCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.nodeId.label", "Node Id"),
+          placeholder: "Enter Node Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
@@ -102,6 +112,11 @@ export const TrainingAlertCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.trainingJobId.label", "Training Job Id"),
+          placeholder: "Enter Training Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeNodeName", {
@@ -111,6 +126,11 @@ export const TrainingAlertCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.runtimeNodeName.label", "Runtime Node Name"),
+          placeholder: "Enter Runtime Node Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobObjective", {
@@ -120,6 +140,11 @@ export const TrainingAlertCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.trainingJobObjective.label", "Training Job Objective"),
+          placeholder: "Enter Training Job Objective",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("severity", {
@@ -129,6 +154,11 @@ export const TrainingAlertCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.severity.label", "Severity"),
+          placeholder: "Enter Severity",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("message", {
@@ -138,6 +168,11 @@ export const TrainingAlertCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.message.label", "Message"),
+          placeholder: "Enter Message",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -146,7 +181,13 @@ export const TrainingAlertCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_alert_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("acknowledgedAt", {
@@ -155,7 +196,13 @@ export const TrainingAlertCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_alert_catalog.fields.acknowledgedAt.label", "Acknowledged At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.acknowledgedAt.label", "Acknowledged At"),
+          placeholder: "Enter Acknowledged At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("resolvedAt", {
@@ -164,7 +211,13 @@ export const TrainingAlertCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_alert_catalog.fields.resolvedAt.label", "Resolved At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.resolvedAt.label", "Resolved At"),
+          placeholder: "Enter Resolved At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("resolutionSummary", {
@@ -174,6 +227,11 @@ export const TrainingAlertCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.resolutionSummary.label", "Resolution Summary"),
+          placeholder: "Enter Resolution Summary",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("canAcknowledge", {
@@ -182,7 +240,13 @@ export const TrainingAlertCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_alert_catalog.fields.canAcknowledge.label", "Can Acknowledge")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.canAcknowledge.label", "Can Acknowledge"),
+          placeholder: "Enter Can Acknowledge",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canResolve", {
@@ -191,7 +255,13 @@ export const TrainingAlertCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_alert_catalog.fields.canResolve.label", "Can Resolve")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_alert_catalog.fields.canResolve.label", "Can Resolve"),
+          placeholder: "Enter Can Resolve",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.display({
@@ -250,11 +320,12 @@ export const TrainingAlertCatalogList = () => {
     getRowId: (row) => String(row.alertId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "training_alert_catalog_read_model_entity",
         idField: "alertId",
         idFields: ["alertId"],
+        queryFields: ["alertId","nodeId","trainingJobId","runtimeNodeName","trainingJobObjective","severity","message","state","acknowledgedAt","resolvedAt","resolutionSummary","canAcknowledge","canResolve"],
         label: t("resources.training_alert_catalog.label", "Training Alert Catalog"),
         aggregateRoute: "trainingalert",
         queryRoute: "trainingalertcatalog",

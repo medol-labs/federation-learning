@@ -108,6 +108,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.datasetId.label", "Dataset Id"),
+          placeholder: "Enter Dataset Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -117,6 +122,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
@@ -126,6 +136,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.runtimeId.label", "Runtime Id"),
+          placeholder: "Enter Runtime Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
@@ -135,6 +150,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.featureSchemaId.label", "Feature Schema Id"),
+          placeholder: "Enter Feature Schema Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetName", {
@@ -144,6 +164,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.datasetName.label", "Dataset Name"),
+          placeholder: "Enter Dataset Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
@@ -153,6 +178,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
@@ -162,6 +192,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.featureDomain.label", "Feature Domain"),
+          placeholder: "Enter Feature Domain",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
@@ -171,6 +206,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.featureSchemaVersion.label", "Feature Schema Version"),
+          placeholder: "Enter Feature Schema Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetUsage", {
@@ -180,6 +220,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.datasetUsage.label", "Dataset Usage"),
+          placeholder: "Enter Dataset Usage",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("metadataStatus", {
@@ -189,6 +234,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.metadataStatus.label", "Metadata Status"),
+          placeholder: "Enter Metadata Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("contractStatus", {
@@ -198,6 +248,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.contractStatus.label", "Contract Status"),
+          placeholder: "Enter Contract Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("approvalStatus", {
@@ -207,6 +262,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.approvalStatus.label", "Approval Status"),
+          placeholder: "Enter Approval Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("accessStatus", {
@@ -216,6 +276,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.accessStatus.label", "Access Status"),
+          placeholder: "Enter Access Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeStatus", {
@@ -225,6 +290,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.runtimeStatus.label", "Runtime Status"),
+          placeholder: "Enter Runtime Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("overallReadiness", {
@@ -234,6 +304,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.overallReadiness.label", "Overall Readiness"),
+          placeholder: "Enter Overall Readiness",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("readyForTraining", {
@@ -242,7 +317,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.readyForTraining.label", "Ready For Training")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.readyForTraining.label", "Ready For Training"),
+          placeholder: "Enter Ready For Training",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canBeSelectedForTraining", {
@@ -251,7 +332,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.canBeSelectedForTraining.label", "Can Be Selected For Training")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.canBeSelectedForTraining.label", "Can Be Selected For Training"),
+          placeholder: "Enter Can Be Selected For Training",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("readinessScore", {
@@ -260,7 +347,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.readinessScore.label", "Readiness Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.readinessScore.label", "Readiness Score"),
+          placeholder: "Enter Readiness Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("missingRequirements", {
@@ -269,7 +362,12 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.missingRequirements.label", "Missing Requirements")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.dataset_readiness.fields.missingRequirements.label", "Missing Requirements"),
+          placeholder: "Enter Missing Requirements",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("blockingReasons", {
@@ -278,7 +376,12 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.blockingReasons.label", "Blocking Reasons")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.dataset_readiness.fields.blockingReasons.label", "Blocking Reasons"),
+          placeholder: "Enter Blocking Reasons",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("warnings", {
@@ -287,7 +390,12 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.warnings.label", "Warnings")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.dataset_readiness.fields.warnings.label", "Warnings"),
+          placeholder: "Enter Warnings",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sampleCount", {
@@ -296,7 +404,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.sampleCount.label", "Sample Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.sampleCount.label", "Sample Count"),
+          placeholder: "Enter Sample Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureCount", {
@@ -305,7 +419,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.featureCount.label", "Feature Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.featureCount.label", "Feature Count"),
+          placeholder: "Enter Feature Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("schemaCompatible", {
@@ -314,7 +434,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.schemaCompatible.label", "Schema Compatible")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.schemaCompatible.label", "Schema Compatible"),
+          placeholder: "Enter Schema Compatible",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("labelCompatible", {
@@ -323,7 +449,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.labelCompatible.label", "Label Compatible")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.labelCompatible.label", "Label Compatible"),
+          placeholder: "Enter Label Compatible",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("qualityScore", {
@@ -332,7 +464,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.qualityScore.label", "Quality Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.qualityScore.label", "Quality Score"),
+          placeholder: "Enter Quality Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nonIidScore", {
@@ -341,7 +479,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.nonIidScore.label", "Non Iid Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.nonIidScore.label", "Non Iid Score"),
+          placeholder: "Enter Non Iid Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("classBalanceScore", {
@@ -350,7 +494,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.classBalanceScore.label", "Class Balance Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.classBalanceScore.label", "Class Balance Score"),
+          placeholder: "Enter Class Balance Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("metadataReportId", {
@@ -360,6 +510,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.metadataReportId.label", "Metadata Report Id"),
+          placeholder: "Enter Metadata Report Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetAccessValidationId", {
@@ -369,6 +524,11 @@ export const DatasetReadinessList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.datasetAccessValidationId.label", "Dataset Access Validation Id"),
+          placeholder: "Enter Dataset Access Validation Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("readable", {
@@ -377,7 +537,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.readable.label", "Readable")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.readable.label", "Readable"),
+          placeholder: "Enter Readable",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("schemaReadable", {
@@ -386,7 +552,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.schemaReadable.label", "Schema Readable")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.schemaReadable.label", "Schema Readable"),
+          placeholder: "Enter Schema Readable",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("sampleBatchReadable", {
@@ -395,7 +567,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.sampleBatchReadable.label", "Sample Batch Readable")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.sampleBatchReadable.label", "Sample Batch Readable"),
+          placeholder: "Enter Sample Batch Readable",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("lastProfiledAt", {
@@ -404,7 +582,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.lastProfiledAt.label", "Last Profiled At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.lastProfiledAt.label", "Last Profiled At"),
+          placeholder: "Enter Last Profiled At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("lastAccessValidatedAt", {
@@ -413,7 +597,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.lastAccessValidatedAt.label", "Last Access Validated At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.lastAccessValidatedAt.label", "Last Access Validated At"),
+          placeholder: "Enter Last Access Validated At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("lastRuntimeHeartbeatAt", {
@@ -422,7 +612,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.lastRuntimeHeartbeatAt.label", "Last Runtime Heartbeat At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.lastRuntimeHeartbeatAt.label", "Last Runtime Heartbeat At"),
+          placeholder: "Enter Last Runtime Heartbeat At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("lastUpdatedAt", {
@@ -431,7 +627,13 @@ export const DatasetReadinessList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_readiness.fields.lastUpdatedAt.label", "Last Updated At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_readiness.fields.lastUpdatedAt.label", "Last Updated At"),
+          placeholder: "Enter Last Updated At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -524,11 +726,12 @@ export const DatasetReadinessList = () => {
     getRowId: (row) => String(row.datasetId),
     refineCoreProps: {
       dataProviderName: "federation-learning-runtime-agent",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "dataset_readiness_read_model_entity",
         idField: "datasetId",
         idFields: ["datasetId"],
+        queryFields: ["datasetId","organizationId","runtimeId","featureSchemaId","datasetName","organizationName","featureDomain","featureSchemaVersion","datasetUsage","metadataStatus","contractStatus","approvalStatus","accessStatus","runtimeStatus","overallReadiness","readyForTraining","canBeSelectedForTraining","readinessScore","sampleCount","featureCount","schemaCompatible","labelCompatible","qualityScore","nonIidScore","classBalanceScore","metadataReportId","datasetAccessValidationId","readable","schemaReadable","sampleBatchReadable","lastProfiledAt","lastAccessValidatedAt","lastRuntimeHeartbeatAt","lastUpdatedAt"],
         label: t("resources.dataset_readiness.label", "Dataset Readiness"),
         aggregateRoute: "dataset",
         queryRoute: "datasetreadiness",

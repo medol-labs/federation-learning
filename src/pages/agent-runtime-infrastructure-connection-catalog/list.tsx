@@ -82,6 +82,11 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_infrastructure_connection_catalog.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id"),
+          placeholder: "Enter Runtime Infrastructure Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
@@ -91,6 +96,11 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_infrastructure_connection_catalog.fields.runtimeAgentId.label", "Runtime Agent Id"),
+          placeholder: "Enter Runtime Agent Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimePlatformConnectionReady", {
@@ -99,7 +109,13 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_infrastructure_connection_catalog.fields.runtimePlatformConnectionReady.label", "Runtime Platform Connection Ready")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_infrastructure_connection_catalog.fields.runtimePlatformConnectionReady.label", "Runtime Platform Connection Ready"),
+          placeholder: "Enter Runtime Platform Connection Ready",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("platformApiReachable", {
@@ -108,7 +124,13 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_infrastructure_connection_catalog.fields.platformApiReachable.label", "Platform Api Reachable")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_infrastructure_connection_catalog.fields.platformApiReachable.label", "Platform Api Reachable"),
+          placeholder: "Enter Platform Api Reachable",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("agentAuthenticationSucceeded", {
@@ -117,7 +139,13 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_infrastructure_connection_catalog.fields.agentAuthenticationSucceeded.label", "Agent Authentication Succeeded")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_infrastructure_connection_catalog.fields.agentAuthenticationSucceeded.label", "Agent Authentication Succeeded"),
+          placeholder: "Enter Agent Authentication Succeeded",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("controlChannelEstablished", {
@@ -126,7 +154,13 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_infrastructure_connection_catalog.fields.controlChannelEstablished.label", "Control Channel Established")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_infrastructure_connection_catalog.fields.controlChannelEstablished.label", "Control Channel Established"),
+          placeholder: "Enter Control Channel Established",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("heartbeatAccepted", {
@@ -135,7 +169,13 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_infrastructure_connection_catalog.fields.heartbeatAccepted.label", "Heartbeat Accepted")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_infrastructure_connection_catalog.fields.heartbeatAccepted.label", "Heartbeat Accepted"),
+          placeholder: "Enter Heartbeat Accepted",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("connectedAt", {
@@ -144,7 +184,13 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectedAt.label", "Connected At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectedAt.label", "Connected At"),
+          placeholder: "Enter Connected At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("connectionReportFailedAt", {
@@ -153,7 +199,13 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectionReportFailedAt.label", "Connection Report Failed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectionReportFailedAt.label", "Connection Report Failed At"),
+          placeholder: "Enter Connection Report Failed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("connectionReportFailureReason", {
@@ -163,6 +215,11 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectionReportFailureReason.label", "Connection Report Failure Reason"),
+          placeholder: "Enter Connection Report Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("connectionReportRetryable", {
@@ -171,7 +228,13 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectionReportRetryable.label", "Connection Report Retryable")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_infrastructure_connection_catalog.fields.connectionReportRetryable.label", "Connection Report Retryable"),
+          placeholder: "Enter Connection Report Retryable",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.display({
@@ -221,11 +284,12 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
     getRowId: (row) => String(row.runtimeInfrastructureId),
     refineCoreProps: {
       dataProviderName: "federation-learning-runtime-agent",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "agent_runtime_infrastructure_connection_catalog_read_model_entity",
         idField: "runtimeInfrastructureId",
         idFields: ["runtimeInfrastructureId"],
+        queryFields: ["runtimeInfrastructureId","runtimeAgentId","runtimePlatformConnectionReady","platformApiReachable","agentAuthenticationSucceeded","controlChannelEstablished","heartbeatAccepted","connectedAt","connectionReportFailedAt","connectionReportFailureReason","connectionReportRetryable"],
         label: t("resources.agent_runtime_infrastructure_connection_catalog.label", "Agent Runtime Infrastructure Connection Catalog"),
         aggregateRoute: "agentruntimeinfrastructureconnection",
         queryRoute: "agentruntimeinfrastructureconnectioncatalog",

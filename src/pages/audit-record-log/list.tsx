@@ -76,6 +76,11 @@ export const AuditRecordLogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.audit_record_log.fields.auditRecordId.label", "Audit Record Id"),
+          placeholder: "Enter Audit Record Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sourceEventName", {
@@ -85,6 +90,11 @@ export const AuditRecordLogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.audit_record_log.fields.sourceEventName.label", "Source Event Name"),
+          placeholder: "Enter Source Event Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sourceEntityId", {
@@ -94,6 +104,11 @@ export const AuditRecordLogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.audit_record_log.fields.sourceEntityId.label", "Source Entity Id"),
+          placeholder: "Enter Source Entity Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("severity", {
@@ -103,6 +118,11 @@ export const AuditRecordLogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.audit_record_log.fields.severity.label", "Severity"),
+          placeholder: "Enter Severity",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("payloadHash", {
@@ -112,6 +132,11 @@ export const AuditRecordLogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.audit_record_log.fields.payloadHash.label", "Payload Hash"),
+          placeholder: "Enter Payload Hash",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -147,11 +172,12 @@ export const AuditRecordLogList = () => {
     getRowId: (row) => String(row.auditRecordId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "audit_record_log_read_model_entity",
         idField: "auditRecordId",
         idFields: ["auditRecordId"],
+        queryFields: ["auditRecordId","sourceEventName","sourceEntityId","severity","payloadHash"],
         label: t("resources.audit_record_log.label", "Audit Record Log"),
         aggregateRoute: "auditrecord",
         queryRoute: "auditrecordlog",

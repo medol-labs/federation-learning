@@ -95,6 +95,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.datasetId.label", "Dataset Id"),
+          placeholder: "Enter Dataset Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -104,6 +109,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
@@ -113,6 +123,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.runtimeId.label", "Runtime Id"),
+          placeholder: "Enter Runtime Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
@@ -122,6 +137,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.featureSchemaId.label", "Feature Schema Id"),
+          placeholder: "Enter Feature Schema Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("features", {
@@ -130,7 +150,12 @@ export const DatasetCapabilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.features.label", "Features")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.dataset_capability.fields.features.label", "Features"),
+          placeholder: "[\n  {\n    \"featureName\": \"\",\n    \"dataType\": \"\",\n    \"required\": false,\n    \"nullable\": false,\n    \"description\": \"\",\n    \"validationRules\": [],\n    \"defaultValue\": \"\",\n    \"isIdentifier\": false,\n    \"isSensitive\": false,\n    \"encodingStrategy\": \"\",\n    \"featureTags\": []\n  }\n]",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("labels", {
@@ -139,7 +164,12 @@ export const DatasetCapabilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.labels.label", "Labels")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.dataset_capability.fields.labels.label", "Labels"),
+          placeholder: "[\n  {\n    \"labelName\": \"\",\n    \"dataType\": \"\",\n    \"cardinality\": 0,\n    \"classLabels\": [],\n    \"isMultilabel\": false,\n    \"description\": \"\",\n    \"validationRules\": [],\n    \"defaultValue\": \"\"\n  }\n]",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
@@ -149,6 +179,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
@@ -158,6 +193,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.featureDomain.label", "Feature Domain"),
+          placeholder: "Enter Feature Domain",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
@@ -167,6 +207,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.featureSchemaVersion.label", "Feature Schema Version"),
+          placeholder: "Enter Feature Schema Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetName", {
@@ -176,6 +221,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.datasetName.label", "Dataset Name"),
+          placeholder: "Enter Dataset Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetUsage", {
@@ -185,6 +235,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.datasetUsage.label", "Dataset Usage"),
+          placeholder: "Enter Dataset Usage",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sampleCount", {
@@ -193,7 +248,13 @@ export const DatasetCapabilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.sampleCount.label", "Sample Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.sampleCount.label", "Sample Count"),
+          placeholder: "Enter Sample Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureCount", {
@@ -202,7 +263,13 @@ export const DatasetCapabilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.featureCount.label", "Feature Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.featureCount.label", "Feature Count"),
+          placeholder: "Enter Feature Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("schemaCompatible", {
@@ -211,7 +278,13 @@ export const DatasetCapabilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.schemaCompatible.label", "Schema Compatible")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.schemaCompatible.label", "Schema Compatible"),
+          placeholder: "Enter Schema Compatible",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("labelCompatible", {
@@ -220,7 +293,13 @@ export const DatasetCapabilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.labelCompatible.label", "Label Compatible")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.labelCompatible.label", "Label Compatible"),
+          placeholder: "Enter Label Compatible",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("qualityScore", {
@@ -229,7 +308,13 @@ export const DatasetCapabilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.qualityScore.label", "Quality Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.qualityScore.label", "Quality Score"),
+          placeholder: "Enter Quality Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nonIidScore", {
@@ -238,7 +323,13 @@ export const DatasetCapabilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.nonIidScore.label", "Non Iid Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.nonIidScore.label", "Non Iid Score"),
+          placeholder: "Enter Non Iid Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("metadataReportId", {
@@ -248,6 +339,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.metadataReportId.label", "Metadata Report Id"),
+          placeholder: "Enter Metadata Report Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("metadataStatus", {
@@ -257,6 +353,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.metadataStatus.label", "Metadata Status"),
+          placeholder: "Enter Metadata Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("contractStatus", {
@@ -266,6 +367,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.contractStatus.label", "Contract Status"),
+          placeholder: "Enter Contract Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("approvalStatus", {
@@ -275,6 +381,11 @@ export const DatasetCapabilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.approvalStatus.label", "Approval Status"),
+          placeholder: "Enter Approval Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("approved", {
@@ -283,7 +394,13 @@ export const DatasetCapabilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.approved.label", "Approved")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.approved.label", "Approved"),
+          placeholder: "Enter Approved",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("lastProfiledAt", {
@@ -292,7 +409,13 @@ export const DatasetCapabilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dataset_capability.fields.lastProfiledAt.label", "Last Profiled At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dataset_capability.fields.lastProfiledAt.label", "Last Profiled At"),
+          placeholder: "Enter Last Profiled At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -385,11 +508,12 @@ export const DatasetCapabilityList = () => {
     getRowId: (row) => String(row.datasetId),
     refineCoreProps: {
       dataProviderName: "federation-learning-runtime-agent",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "dataset_capability_read_model_entity",
         idField: "datasetId",
         idFields: ["datasetId"],
+        queryFields: ["datasetId","organizationId","runtimeId","featureSchemaId","organizationName","featureDomain","featureSchemaVersion","datasetName","datasetUsage","sampleCount","featureCount","schemaCompatible","labelCompatible","qualityScore","nonIidScore","metadataReportId","metadataStatus","contractStatus","approvalStatus","approved","lastProfiledAt"],
         label: t("resources.dataset_capability.label", "Dataset Capability"),
         aggregateRoute: "dataset",
         queryRoute: "datasetcapability",

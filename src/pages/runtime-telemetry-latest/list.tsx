@@ -84,6 +84,11 @@ export const RuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.nodeId.label", "Node Id"),
+          placeholder: "Enter Node Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
@@ -93,6 +98,11 @@ export const RuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.runtimeAgentId.label", "Runtime Agent Id"),
+          placeholder: "Enter Runtime Agent Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationId", {
@@ -102,6 +112,11 @@ export const RuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.federationId.label", "Federation Id"),
+          placeholder: "Enter Federation Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
@@ -111,6 +126,11 @@ export const RuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.trainingJobId.label", "Training Job Id"),
+          placeholder: "Enter Training Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundExecutionId", {
@@ -120,6 +140,11 @@ export const RuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.roundExecutionId.label", "Round Execution Id"),
+          placeholder: "Enter Round Execution Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("cpuLoad", {
@@ -128,7 +153,13 @@ export const RuntimeTelemetryLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.cpuLoad.label", "Cpu Load")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.cpuLoad.label", "Cpu Load"),
+          placeholder: "Enter Cpu Load",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("gpuLoad", {
@@ -137,7 +168,13 @@ export const RuntimeTelemetryLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.gpuLoad.label", "Gpu Load")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.gpuLoad.label", "Gpu Load"),
+          placeholder: "Enter Gpu Load",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("memoryLoad", {
@@ -146,7 +183,13 @@ export const RuntimeTelemetryLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.memoryLoad.label", "Memory Load")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.memoryLoad.label", "Memory Load"),
+          placeholder: "Enter Memory Load",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lastHeartbeatAt", {
@@ -155,7 +198,13 @@ export const RuntimeTelemetryLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.lastHeartbeatAt.label", "Last Heartbeat At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.lastHeartbeatAt.label", "Last Heartbeat At"),
+          placeholder: "Enter Last Heartbeat At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("heartbeatMissingBeyondThreshold", {
@@ -164,7 +213,13 @@ export const RuntimeTelemetryLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.heartbeatMissingBeyondThreshold.label", "Heartbeat Missing Beyond Threshold")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.heartbeatMissingBeyondThreshold.label", "Heartbeat Missing Beyond Threshold"),
+          placeholder: "Enter Heartbeat Missing Beyond Threshold",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("heartbeatObservedAfterOffline", {
@@ -173,7 +228,13 @@ export const RuntimeTelemetryLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.heartbeatObservedAfterOffline.label", "Heartbeat Observed After Offline")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.heartbeatObservedAfterOffline.label", "Heartbeat Observed After Offline"),
+          placeholder: "Enter Heartbeat Observed After Offline",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("resourcePressureDetected", {
@@ -182,7 +243,13 @@ export const RuntimeTelemetryLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.resourcePressureDetected.label", "Resource Pressure Detected")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.resourcePressureDetected.label", "Resource Pressure Detected"),
+          placeholder: "Enter Resource Pressure Detected",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("telemetryRetentionPolicy", {
@@ -192,6 +259,11 @@ export const RuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.telemetryRetentionPolicy.label", "Telemetry Retention Policy"),
+          placeholder: "Enter Telemetry Retention Policy",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -227,11 +299,12 @@ export const RuntimeTelemetryLatestList = () => {
     getRowId: (row) => String(row.nodeId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_telemetry_latest_read_model_entity",
         idField: "nodeId",
         idFields: ["nodeId"],
+        queryFields: ["nodeId","runtimeAgentId","federationId","trainingJobId","roundExecutionId","cpuLoad","gpuLoad","memoryLoad","lastHeartbeatAt","heartbeatMissingBeyondThreshold","heartbeatObservedAfterOffline","resourcePressureDetected","telemetryRetentionPolicy"],
         label: t("resources.runtime_telemetry_latest.label", "Runtime Telemetry Latest"),
         aggregateRoute: "noderuntimehealth",
         queryRoute: "runtimetelemetrylatest",

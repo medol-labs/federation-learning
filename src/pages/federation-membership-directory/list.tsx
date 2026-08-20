@@ -78,6 +78,11 @@ export const FederationMembershipDirectoryList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_membership_directory.fields.federationId.label", "Federation Id"),
+          placeholder: "Enter Federation Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -87,6 +92,11 @@ export const FederationMembershipDirectoryList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_membership_directory.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
@@ -96,6 +106,11 @@ export const FederationMembershipDirectoryList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_membership_directory.fields.federationName.label", "Federation Name"),
+          placeholder: "Enter Federation Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
@@ -105,6 +120,11 @@ export const FederationMembershipDirectoryList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_membership_directory.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("membershipStatus", {
@@ -114,6 +134,11 @@ export const FederationMembershipDirectoryList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_membership_directory.fields.membershipStatus.label", "Membership Status"),
+          placeholder: "Enter Membership Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("invitationNote", {
@@ -123,6 +148,11 @@ export const FederationMembershipDirectoryList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_membership_directory.fields.invitationNote.label", "Invitation Note"),
+          placeholder: "Enter Invitation Note",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("approvalNote", {
@@ -132,6 +162,11 @@ export const FederationMembershipDirectoryList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.federation_membership_directory.fields.approvalNote.label", "Approval Note"),
+          placeholder: "Enter Approval Note",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -241,11 +276,12 @@ export const FederationMembershipDirectoryList = () => {
     getRowId: (row) => String(row.federationId) + ":" + String(row.organizationId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "federation_membership_directory_read_model_entity",
         idField: "federationId",
         idFields: ["federationId","organizationId"],
+        queryFields: ["federationId","organizationId","federationName","organizationName","membershipStatus","invitationNote","approvalNote"],
         label: t("resources.federation_membership_directory.label", "Federation Membership Directory"),
         aggregateRoute: "federationmembership",
         queryRoute: "federationmembershipdirectory",

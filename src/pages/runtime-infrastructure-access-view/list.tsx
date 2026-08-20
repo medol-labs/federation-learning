@@ -95,6 +95,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id"),
+          placeholder: "Enter Runtime Infrastructure Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -104,6 +109,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInstallationPlanId", {
@@ -113,6 +123,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.runtimeInstallationPlanId.label", "Runtime Installation Plan Id"),
+          placeholder: "Enter Runtime Installation Plan Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageId", {
@@ -122,6 +137,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.runtimeInfrastructurePackageId.label", "Runtime Infrastructure Package Id"),
+          placeholder: "Enter Runtime Infrastructure Package Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageName", {
@@ -131,6 +151,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.runtimeInfrastructurePackageName.label", "Runtime Infrastructure Package Name"),
+          placeholder: "Enter Runtime Infrastructure Package Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageVersion", {
@@ -140,6 +165,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.runtimeInfrastructurePackageVersion.label", "Runtime Infrastructure Package Version"),
+          placeholder: "Enter Runtime Infrastructure Package Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
@@ -149,6 +179,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
@@ -158,6 +193,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.runtimeName.label", "Runtime Name"),
+          placeholder: "Enter Runtime Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeDeploymentTargetType", {
@@ -167,6 +207,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type"),
+          placeholder: "Enter Runtime Deployment Target Type",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEnvironmentType", {
@@ -176,6 +221,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.runtimeEnvironmentType.label", "Runtime Environment Type"),
+          placeholder: "Enter Runtime Environment Type",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("agentInstallMode", {
@@ -185,6 +235,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.agentInstallMode.label", "Agent Install Mode"),
+          placeholder: "Enter Agent Install Mode",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("expectedNodeCount", {
@@ -193,7 +248,13 @@ export const RuntimeInfrastructureAccessViewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_access_view.fields.expectedNodeCount.label", "Expected Node Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.expectedNodeCount.label", "Expected Node Count"),
+          placeholder: "Enter Expected Node Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
@@ -203,6 +264,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.runtimeAgentId.label", "Runtime Agent Id"),
+          placeholder: "Enter Runtime Agent Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentVersion", {
@@ -212,6 +278,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.runtimeAgentVersion.label", "Runtime Agent Version"),
+          placeholder: "Enter Runtime Agent Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("infrastructureVerifiedAt", {
@@ -220,7 +291,13 @@ export const RuntimeInfrastructureAccessViewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_access_view.fields.infrastructureVerifiedAt.label", "Infrastructure Verified At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.infrastructureVerifiedAt.label", "Infrastructure Verified At"),
+          placeholder: "Enter Infrastructure Verified At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("infrastructureVerificationFailedAt", {
@@ -229,7 +306,13 @@ export const RuntimeInfrastructureAccessViewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_access_view.fields.infrastructureVerificationFailedAt.label", "Infrastructure Verification Failed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.infrastructureVerificationFailedAt.label", "Infrastructure Verification Failed At"),
+          placeholder: "Enter Infrastructure Verification Failed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("infrastructureVerificationFailureReason", {
@@ -239,6 +322,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.infrastructureVerificationFailureReason.label", "Infrastructure Verification Failure Reason"),
+          placeholder: "Enter Infrastructure Verification Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("agentReadyAt", {
@@ -247,7 +335,13 @@ export const RuntimeInfrastructureAccessViewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_access_view.fields.agentReadyAt.label", "Agent Ready At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.agentReadyAt.label", "Agent Ready At"),
+          placeholder: "Enter Agent Ready At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("agentDeploymentFailedAt", {
@@ -256,7 +350,13 @@ export const RuntimeInfrastructureAccessViewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_access_view.fields.agentDeploymentFailedAt.label", "Agent Deployment Failed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.agentDeploymentFailedAt.label", "Agent Deployment Failed At"),
+          placeholder: "Enter Agent Deployment Failed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("agentDeploymentFailureReason", {
@@ -266,6 +366,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.agentDeploymentFailureReason.label", "Agent Deployment Failure Reason"),
+          placeholder: "Enter Agent Deployment Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("agentDeploymentRetryFailedAt", {
@@ -274,7 +379,13 @@ export const RuntimeInfrastructureAccessViewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_access_view.fields.agentDeploymentRetryFailedAt.label", "Agent Deployment Retry Failed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.agentDeploymentRetryFailedAt.label", "Agent Deployment Retry Failed At"),
+          placeholder: "Enter Agent Deployment Retry Failed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("agentDeploymentRetryFailureReason", {
@@ -284,6 +395,11 @@ export const RuntimeInfrastructureAccessViewList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.agentDeploymentRetryFailureReason.label", "Agent Deployment Retry Failure Reason"),
+          placeholder: "Enter Agent Deployment Retry Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("connectedAt", {
@@ -292,7 +408,13 @@ export const RuntimeInfrastructureAccessViewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_access_view.fields.connectedAt.label", "Connected At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.connectedAt.label", "Connected At"),
+          placeholder: "Enter Connected At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("state", {
@@ -301,7 +423,13 @@ export const RuntimeInfrastructureAccessViewList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_access_view.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -350,11 +478,12 @@ export const RuntimeInfrastructureAccessViewList = () => {
     getRowId: (row) => String(row.runtimeInfrastructureId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_infrastructure_access_view_read_model_entity",
         idField: "runtimeInfrastructureId",
         idFields: ["runtimeInfrastructureId"],
+        queryFields: ["runtimeInfrastructureId","organizationId","runtimeInstallationPlanId","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","organizationName","runtimeName","runtimeDeploymentTargetType","runtimeEnvironmentType","agentInstallMode","expectedNodeCount","runtimeAgentId","runtimeAgentVersion","infrastructureVerifiedAt","infrastructureVerificationFailedAt","infrastructureVerificationFailureReason","agentReadyAt","agentDeploymentFailedAt","agentDeploymentFailureReason","agentDeploymentRetryFailedAt","agentDeploymentRetryFailureReason","connectedAt","state"],
         label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
         aggregateRoute: "runtimeinfrastructure",
         queryRoute: "runtimeinfrastructureaccessview",

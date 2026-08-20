@@ -86,6 +86,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.modelId.label", "Model Id"),
+          placeholder: "Enter Model Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelName", {
@@ -95,6 +100,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.modelName.label", "Model Name"),
+          placeholder: "Enter Model Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelVersion", {
@@ -104,6 +114,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.modelVersion.label", "Model Version"),
+          placeholder: "Enter Model Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sourceType", {
@@ -113,6 +128,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.sourceType.label", "Source Type"),
+          placeholder: "Enter Source Type",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelArtifactUri", {
@@ -122,6 +142,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.modelArtifactUri.label", "Model Artifact Uri"),
+          placeholder: "Enter Model Artifact Uri",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelRegistryRef", {
@@ -131,6 +156,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.modelRegistryRef.label", "Model Registry Ref"),
+          placeholder: "Enter Model Registry Ref",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelFormat", {
@@ -140,6 +170,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.modelFormat.label", "Model Format"),
+          placeholder: "Enter Model Format",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelArtifactDigest", {
@@ -149,6 +184,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.modelArtifactDigest.label", "Model Artifact Digest"),
+          placeholder: "Enter Model Artifact Digest",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelSignatureUri", {
@@ -158,6 +198,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.modelSignatureUri.label", "Model Signature Uri"),
+          placeholder: "Enter Model Signature Uri",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelSizeBytes", {
@@ -166,7 +211,13 @@ export const ModelArtifactCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelSizeBytes.label", "Model Size Bytes")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.modelSizeBytes.label", "Model Size Bytes"),
+          placeholder: "Enter Model Size Bytes",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
@@ -176,6 +227,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.trainingJobId.label", "Training Job Id"),
+          placeholder: "Enter Training Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundId", {
@@ -185,6 +241,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.roundId.label", "Round Id"),
+          placeholder: "Enter Round Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobObjective", {
@@ -194,6 +255,11 @@ export const ModelArtifactCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.trainingJobObjective.label", "Training Job Objective"),
+          placeholder: "Enter Training Job Objective",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -202,7 +268,13 @@ export const ModelArtifactCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("registeredAt", {
@@ -211,7 +283,13 @@ export const ModelArtifactCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.registeredAt.label", "Registered At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.registeredAt.label", "Registered At"),
+          placeholder: "Enter Registered At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -247,11 +325,12 @@ export const ModelArtifactCatalogList = () => {
     getRowId: (row) => String(row.modelId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "model_artifact_catalog_read_model_entity",
         idField: "modelId",
         idFields: ["modelId"],
+        queryFields: ["modelId","modelName","modelVersion","sourceType","modelArtifactUri","modelRegistryRef","modelFormat","modelArtifactDigest","modelSignatureUri","modelSizeBytes","trainingJobId","roundId","trainingJobObjective","state","registeredAt"],
         label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
         aggregateRoute: "modelartifact",
         queryRoute: "modelartifactcatalog",

@@ -90,6 +90,11 @@ export const RuntimeNodeResourceLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.nodeId.label", "Node Id"),
+          placeholder: "Enter Node Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
@@ -99,6 +104,11 @@ export const RuntimeNodeResourceLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.runtimeAgentId.label", "Runtime Agent Id"),
+          placeholder: "Enter Runtime Agent Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
@@ -108,6 +118,11 @@ export const RuntimeNodeResourceLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id"),
+          placeholder: "Enter Runtime Infrastructure Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeNodeName", {
@@ -117,6 +132,11 @@ export const RuntimeNodeResourceLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.runtimeNodeName.label", "Runtime Node Name"),
+          placeholder: "Enter Runtime Node Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nodeReady", {
@@ -125,7 +145,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.nodeReady.label", "Node Ready")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.nodeReady.label", "Node Ready"),
+          placeholder: "Enter Node Ready",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("allocatableCpuCores", {
@@ -134,7 +160,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.allocatableCpuCores.label", "Allocatable Cpu Cores")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.allocatableCpuCores.label", "Allocatable Cpu Cores"),
+          placeholder: "Enter Allocatable Cpu Cores",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("allocatableMemoryGb", {
@@ -143,7 +175,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.allocatableMemoryGb.label", "Allocatable Memory Gb")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.allocatableMemoryGb.label", "Allocatable Memory Gb"),
+          placeholder: "Enter Allocatable Memory Gb",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("allocatableGpuCount", {
@@ -152,7 +190,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.allocatableGpuCount.label", "Allocatable Gpu Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.allocatableGpuCount.label", "Allocatable Gpu Count"),
+          placeholder: "Enter Allocatable Gpu Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("allocatedCpuCores", {
@@ -161,7 +205,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.allocatedCpuCores.label", "Allocated Cpu Cores")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.allocatedCpuCores.label", "Allocated Cpu Cores"),
+          placeholder: "Enter Allocated Cpu Cores",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("allocatedMemoryGb", {
@@ -170,7 +220,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.allocatedMemoryGb.label", "Allocated Memory Gb")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.allocatedMemoryGb.label", "Allocated Memory Gb"),
+          placeholder: "Enter Allocated Memory Gb",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("allocatedGpuCount", {
@@ -179,7 +235,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.allocatedGpuCount.label", "Allocated Gpu Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.allocatedGpuCount.label", "Allocated Gpu Count"),
+          placeholder: "Enter Allocated Gpu Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableCpuCores", {
@@ -188,7 +250,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.availableCpuCores.label", "Available Cpu Cores")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.availableCpuCores.label", "Available Cpu Cores"),
+          placeholder: "Enter Available Cpu Cores",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableMemoryGb", {
@@ -197,7 +265,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.availableMemoryGb.label", "Available Memory Gb")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.availableMemoryGb.label", "Available Memory Gb"),
+          placeholder: "Enter Available Memory Gb",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableGpuCount", {
@@ -206,7 +280,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.availableGpuCount.label", "Available Gpu Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.availableGpuCount.label", "Available Gpu Count"),
+          placeholder: "Enter Available Gpu Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runningWorkloadCount", {
@@ -215,7 +295,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.runningWorkloadCount.label", "Running Workload Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.runningWorkloadCount.label", "Running Workload Count"),
+          placeholder: "Enter Running Workload Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("workloadCapacity", {
@@ -224,7 +310,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.workloadCapacity.label", "Workload Capacity")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.workloadCapacity.label", "Workload Capacity"),
+          placeholder: "Enter Workload Capacity",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("observedAt", {
@@ -233,7 +325,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.observedAt.label", "Observed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.observedAt.label", "Observed At"),
+          placeholder: "Enter Observed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("allocatableCapacityChanged", {
@@ -242,7 +340,13 @@ export const RuntimeNodeResourceLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.allocatableCapacityChanged.label", "Allocatable Capacity Changed")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.allocatableCapacityChanged.label", "Allocatable Capacity Changed"),
+          placeholder: "Enter Allocatable Capacity Changed",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("telemetryRetentionPolicy", {
@@ -252,6 +356,11 @@ export const RuntimeNodeResourceLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_node_resource_latest.fields.telemetryRetentionPolicy.label", "Telemetry Retention Policy"),
+          placeholder: "Enter Telemetry Retention Policy",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -287,11 +396,12 @@ export const RuntimeNodeResourceLatestList = () => {
     getRowId: (row) => String(row.nodeId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_node_resource_latest_read_model_entity",
         idField: "nodeId",
         idFields: ["nodeId"],
+        queryFields: ["nodeId","runtimeAgentId","runtimeInfrastructureId","runtimeNodeName","nodeReady","allocatableCpuCores","allocatableMemoryGb","allocatableGpuCount","allocatedCpuCores","allocatedMemoryGb","allocatedGpuCount","availableCpuCores","availableMemoryGb","availableGpuCount","runningWorkloadCount","workloadCapacity","observedAt","allocatableCapacityChanged","telemetryRetentionPolicy"],
         label: t("resources.runtime_node_resource_latest.label", "Runtime Node Resource Latest"),
         aggregateRoute: "runtimenoderesourcetelemetry",
         queryRoute: "runtimenoderesourcelatest",

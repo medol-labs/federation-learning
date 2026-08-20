@@ -80,6 +80,11 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_package_catalog.fields.runtimeInfrastructurePackageId.label", "Runtime Infrastructure Package Id"),
+          placeholder: "Enter Runtime Infrastructure Package Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("packageName", {
@@ -89,6 +94,11 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_package_catalog.fields.packageName.label", "Package Name"),
+          placeholder: "Enter Package Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("packageVersion", {
@@ -98,6 +108,11 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_package_catalog.fields.packageVersion.label", "Package Version"),
+          placeholder: "Enter Package Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEnvironmentType", {
@@ -107,6 +122,11 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_package_catalog.fields.runtimeEnvironmentType.label", "Runtime Environment Type"),
+          placeholder: "Enter Runtime Environment Type",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeDeploymentTargetType", {
@@ -116,6 +136,11 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_package_catalog.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type"),
+          placeholder: "Enter Runtime Deployment Target Type",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("installProfile", {
@@ -125,6 +150,11 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_package_catalog.fields.installProfile.label", "Install Profile"),
+          placeholder: "Enter Install Profile",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("architecture", {
@@ -134,6 +164,11 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_package_catalog.fields.architecture.label", "Architecture"),
+          placeholder: "Enter Architecture",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("installGuide", {
@@ -143,6 +178,11 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_package_catalog.fields.installGuide.label", "Install Guide"),
+          placeholder: "Enter Install Guide",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -151,7 +191,13 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_package_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_package_catalog.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -187,11 +233,12 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
     getRowId: (row) => String(row.runtimeInfrastructurePackageId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_infrastructure_package_catalog_read_model_entity",
         idField: "runtimeInfrastructurePackageId",
         idFields: ["runtimeInfrastructurePackageId"],
+        queryFields: ["runtimeInfrastructurePackageId","packageName","packageVersion","runtimeEnvironmentType","runtimeDeploymentTargetType","installProfile","architecture","installGuide","state"],
         label: t("resources.runtime_infrastructure_package_catalog.label", "Runtime Infrastructure Package Catalog"),
         aggregateRoute: "runtimeinfrastructurepackage",
         queryRoute: "runtimeinfrastructurepackagecatalog",

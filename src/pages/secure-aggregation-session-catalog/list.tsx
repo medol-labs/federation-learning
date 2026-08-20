@@ -96,6 +96,11 @@ export const SecureAggregationSessionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.secureAggregationSessionId.label", "Secure Aggregation Session Id"),
+          placeholder: "Enter Secure Aggregation Session Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
@@ -105,6 +110,11 @@ export const SecureAggregationSessionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.trainingJobId.label", "Training Job Id"),
+          placeholder: "Enter Training Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingRunConfigurationId", {
@@ -114,6 +124,11 @@ export const SecureAggregationSessionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.trainingRunConfigurationId.label", "Training Run Configuration Id"),
+          placeholder: "Enter Training Run Configuration Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
@@ -123,6 +138,11 @@ export const SecureAggregationSessionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.featureSchemaId.label", "Feature Schema Id"),
+          placeholder: "Enter Feature Schema Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundId", {
@@ -132,6 +152,11 @@ export const SecureAggregationSessionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.roundId.label", "Round Id"),
+          placeholder: "Enter Round Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("requiredParticipantCount", {
@@ -140,7 +165,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.requiredParticipantCount.label", "Required Participant Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.requiredParticipantCount.label", "Required Participant Count"),
+          placeholder: "Enter Required Participant Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("acceptedRuntimeIds", {
@@ -149,7 +180,12 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.acceptedRuntimeIds.label", "Accepted Runtime Ids")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.acceptedRuntimeIds.label", "Accepted Runtime Ids"),
+          placeholder: "Enter Accepted Runtime Ids",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectedRuntimeIds", {
@@ -158,7 +194,12 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.selectedRuntimeIds.label", "Selected Runtime Ids")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.selectedRuntimeIds.label", "Selected Runtime Ids"),
+          placeholder: "Enter Selected Runtime Ids",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectedParticipantCount", {
@@ -167,7 +208,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.selectedParticipantCount.label", "Selected Participant Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.selectedParticipantCount.label", "Selected Participant Count"),
+          placeholder: "Enter Selected Participant Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("encryptionContextPrepared", {
@@ -176,7 +223,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.encryptionContextPrepared.label", "Encryption Context Prepared")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.encryptionContextPrepared.label", "Encryption Context Prepared"),
+          placeholder: "Enter Encryption Context Prepared",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("receivedEncryptedUpdateCount", {
@@ -185,7 +238,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.receivedEncryptedUpdateCount.label", "Received Encrypted Update Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.receivedEncryptedUpdateCount.label", "Received Encrypted Update Count"),
+          placeholder: "Enter Received Encrypted Update Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("encryptionScheme", {
@@ -195,6 +254,11 @@ export const SecureAggregationSessionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.encryptionScheme.label", "Encryption Scheme"),
+          placeholder: "Enter Encryption Scheme",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("publicKeyVersion", {
@@ -204,6 +268,11 @@ export const SecureAggregationSessionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.publicKeyVersion.label", "Public Key Version"),
+          placeholder: "Enter Public Key Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("encryptedParameterScale", {
@@ -212,7 +281,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.encryptedParameterScale.label", "Encrypted Parameter Scale")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.encryptedParameterScale.label", "Encrypted Parameter Scale"),
+          placeholder: "Enter Encrypted Parameter Scale",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("aggregatedModelId", {
@@ -222,6 +297,11 @@ export const SecureAggregationSessionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.aggregatedModelId.label", "Aggregated Model Id"),
+          placeholder: "Enter Aggregated Model Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelFormat", {
@@ -231,6 +311,11 @@ export const SecureAggregationSessionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.modelFormat.label", "Model Format"),
+          placeholder: "Enter Model Format",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelArtifactDigest", {
@@ -240,6 +325,11 @@ export const SecureAggregationSessionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.modelArtifactDigest.label", "Model Artifact Digest"),
+          placeholder: "Enter Model Artifact Digest",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -248,7 +338,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("failureReason", {
@@ -258,6 +354,11 @@ export const SecureAggregationSessionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.failureReason.label", "Failure Reason"),
+          placeholder: "Enter Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("createdAt", {
@@ -266,7 +367,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.createdAt.label", "Created At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.createdAt.label", "Created At"),
+          placeholder: "Enter Created At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("selectedAt", {
@@ -275,7 +382,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.selectedAt.label", "Selected At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.selectedAt.label", "Selected At"),
+          placeholder: "Enter Selected At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("encryptionContextPreparedAt", {
@@ -284,7 +397,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.encryptionContextPreparedAt.label", "Encryption Context Prepared At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.encryptionContextPreparedAt.label", "Encryption Context Prepared At"),
+          placeholder: "Enter Encryption Context Prepared At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("decryptedAt", {
@@ -293,7 +412,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.decryptedAt.label", "Decrypted At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.decryptedAt.label", "Decrypted At"),
+          placeholder: "Enter Decrypted At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("completedAt", {
@@ -302,7 +427,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.completedAt.label", "Completed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.completedAt.label", "Completed At"),
+          placeholder: "Enter Completed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("failedAt", {
@@ -311,7 +442,13 @@ export const SecureAggregationSessionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.secure_aggregation_session_catalog.fields.failedAt.label", "Failed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.secure_aggregation_session_catalog.fields.failedAt.label", "Failed At"),
+          placeholder: "Enter Failed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -380,11 +517,12 @@ export const SecureAggregationSessionCatalogList = () => {
     getRowId: (row) => String(row.secureAggregationSessionId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "secure_aggregation_session_catalog_read_model_entity",
         idField: "secureAggregationSessionId",
         idFields: ["secureAggregationSessionId"],
+        queryFields: ["secureAggregationSessionId","trainingJobId","trainingRunConfigurationId","featureSchemaId","roundId","requiredParticipantCount","selectedParticipantCount","encryptionContextPrepared","receivedEncryptedUpdateCount","encryptionScheme","publicKeyVersion","encryptedParameterScale","aggregatedModelId","modelFormat","modelArtifactDigest","state","failureReason","createdAt","selectedAt","encryptionContextPreparedAt","decryptedAt","completedAt","failedAt"],
         label: t("resources.secure_aggregation_session_catalog.label", "Secure Aggregation Session Catalog"),
         aggregateRoute: "secureaggregationsession",
         queryRoute: "secureaggregationsessioncatalog",

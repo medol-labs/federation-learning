@@ -102,6 +102,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.trainingJobId.label", "Training Job Id"),
+          placeholder: "Enter Training Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationId", {
@@ -111,6 +116,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.federationId.label", "Federation Id"),
+          placeholder: "Enter Federation Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingRunConfigurationId", {
@@ -120,6 +130,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.trainingRunConfigurationId.label", "Training Run Configuration Id"),
+          placeholder: "Enter Training Run Configuration Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
@@ -129,6 +144,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.featureSchemaId.label", "Feature Schema Id"),
+          placeholder: "Enter Feature Schema Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
@@ -138,6 +158,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.federationName.label", "Federation Name"),
+          placeholder: "Enter Federation Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
@@ -147,6 +172,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.featureDomain.label", "Feature Domain"),
+          placeholder: "Enter Feature Domain",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
@@ -156,6 +186,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.featureSchemaVersion.label", "Feature Schema Version"),
+          placeholder: "Enter Feature Schema Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("objective", {
@@ -165,6 +200,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.objective.label", "Objective"),
+          placeholder: "Enter Objective",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("strategyName", {
@@ -174,6 +214,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.strategyName.label", "Strategy Name"),
+          placeholder: "Enter Strategy Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("aggregationAlgorithm", {
@@ -183,6 +228,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.aggregationAlgorithm.label", "Aggregation Algorithm"),
+          placeholder: "Enter Aggregation Algorithm",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("secureAggregationRequired", {
@@ -191,7 +241,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.secureAggregationRequired.label", "Secure Aggregation Required")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.secureAggregationRequired.label", "Secure Aggregation Required"),
+          placeholder: "Enter Secure Aggregation Required",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("state", {
@@ -200,7 +256,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("workflowStage", {
@@ -210,6 +272,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.workflowStage.label", "Workflow Stage"),
+          placeholder: "Enter Workflow Stage",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("workflowStep", {
@@ -218,7 +285,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.workflowStep.label", "Workflow Step")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.workflowStep.label", "Workflow Step"),
+          placeholder: "Enter Workflow Step",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nextAction", {
@@ -228,6 +301,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.nextAction.label", "Next Action"),
+          placeholder: "Enter Next Action",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableActions", {
@@ -236,7 +314,12 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.availableActions.label", "Available Actions")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.availableActions.label", "Available Actions"),
+          placeholder: "Enter Available Actions",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("blockedReason", {
@@ -246,6 +329,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.blockedReason.label", "Blocked Reason"),
+          placeholder: "Enter Blocked Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("canSubmit", {
@@ -254,7 +342,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.canSubmit.label", "Can Submit")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.canSubmit.label", "Can Submit"),
+          placeholder: "Enter Can Submit",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canStartRound", {
@@ -263,7 +357,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.canStartRound.label", "Can Start Round")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.canStartRound.label", "Can Start Round"),
+          placeholder: "Enter Can Start Round",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canPause", {
@@ -272,7 +372,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.canPause.label", "Can Pause")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.canPause.label", "Can Pause"),
+          placeholder: "Enter Can Pause",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canResume", {
@@ -281,7 +387,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.canResume.label", "Can Resume")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.canResume.label", "Can Resume"),
+          placeholder: "Enter Can Resume",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canCancel", {
@@ -290,7 +402,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.canCancel.label", "Can Cancel")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.canCancel.label", "Can Cancel"),
+          placeholder: "Enter Can Cancel",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canComplete", {
@@ -299,7 +417,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.canComplete.label", "Can Complete")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.canComplete.label", "Can Complete"),
+          placeholder: "Enter Can Complete",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("currentRoundNumber", {
@@ -308,7 +432,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.currentRoundNumber.label", "Current Round Number")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.currentRoundNumber.label", "Current Round Number"),
+          placeholder: "Enter Current Round Number",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("startedRuntimeCount", {
@@ -317,7 +447,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.startedRuntimeCount.label", "Started Runtime Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.startedRuntimeCount.label", "Started Runtime Count"),
+          placeholder: "Enter Started Runtime Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumNodesPerRound", {
@@ -326,7 +462,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.minimumNodesPerRound.label", "Minimum Nodes Per Round")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.minimumNodesPerRound.label", "Minimum Nodes Per Round"),
+          placeholder: "Enter Minimum Nodes Per Round",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("maxRounds", {
@@ -335,7 +477,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.maxRounds.label", "Max Rounds")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.maxRounds.label", "Max Rounds"),
+          placeholder: "Enter Max Rounds",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundProgressPercent", {
@@ -344,7 +492,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.roundProgressPercent.label", "Round Progress Percent")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.roundProgressPercent.label", "Round Progress Percent"),
+          placeholder: "Enter Round Progress Percent",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("globalAccuracy", {
@@ -353,7 +507,13 @@ export const TrainingJobDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.globalAccuracy.label", "Global Accuracy")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.globalAccuracy.label", "Global Accuracy"),
+          placeholder: "Enter Global Accuracy",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("finalModelId", {
@@ -363,6 +523,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.finalModelId.label", "Final Model Id"),
+          placeholder: "Enter Final Model Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("stopReason", {
@@ -372,6 +537,11 @@ export const TrainingJobDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.stopReason.label", "Stop Reason"),
+          placeholder: "Enter Stop Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -445,11 +615,12 @@ export const TrainingJobDashboardList = () => {
     getRowId: (row) => String(row.trainingJobId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "training_job_dashboard_read_model_entity",
         idField: "trainingJobId",
         idFields: ["trainingJobId"],
+        queryFields: ["trainingJobId","federationId","trainingRunConfigurationId","featureSchemaId","federationName","featureDomain","featureSchemaVersion","objective","strategyName","aggregationAlgorithm","secureAggregationRequired","state","workflowStage","workflowStep","nextAction","blockedReason","canSubmit","canStartRound","canPause","canResume","canCancel","canComplete","currentRoundNumber","startedRuntimeCount","minimumNodesPerRound","maxRounds","roundProgressPercent","globalAccuracy","finalModelId","stopReason"],
         label: t("resources.training_job_dashboard.label", "Training Job Dashboard"),
         aggregateRoute: "trainingjob",
         queryRoute: "trainingjobdashboard",

@@ -76,6 +76,11 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.current_recommended_feature_schema_catalog.fields.featureDomain.label", "Feature Domain"),
+          placeholder: "Enter Feature Domain",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("recommendedFeatureSchemaId", {
@@ -85,6 +90,11 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.current_recommended_feature_schema_catalog.fields.recommendedFeatureSchemaId.label", "Recommended Feature Schema Id"),
+          placeholder: "Enter Recommended Feature Schema Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("recommendedVersion", {
@@ -94,6 +104,11 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.current_recommended_feature_schema_catalog.fields.recommendedVersion.label", "Recommended Version"),
+          placeholder: "Enter Recommended Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("recommendedAt", {
@@ -102,7 +117,13 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.current_recommended_feature_schema_catalog.fields.recommendedAt.label", "Recommended At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.current_recommended_feature_schema_catalog.fields.recommendedAt.label", "Recommended At"),
+          placeholder: "Enter Recommended At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("recommendationNote", {
@@ -112,6 +133,11 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.current_recommended_feature_schema_catalog.fields.recommendationNote.label", "Recommendation Note"),
+          placeholder: "Enter Recommendation Note",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -147,11 +173,12 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
     getRowId: (row) => String(row.featureDomain),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "current_recommended_feature_schema_catalog_read_model_entity",
         idField: "featureDomain",
         idFields: ["featureDomain"],
+        queryFields: ["featureDomain","recommendedFeatureSchemaId","recommendedVersion","recommendedAt","recommendationNote"],
         label: t("resources.current_recommended_feature_schema_catalog.label", "Current Recommended Feature Schema Catalog"),
         aggregateRoute: "featureschema",
         queryRoute: "currentrecommendedfeatureschemacatalog",

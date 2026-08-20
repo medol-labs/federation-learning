@@ -80,6 +80,11 @@ export const RuntimeIdentityCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_identity_catalog.fields.runtimeId.label", "Runtime Id"),
+          placeholder: "Enter Runtime Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
@@ -89,6 +94,11 @@ export const RuntimeIdentityCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_identity_catalog.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id"),
+          placeholder: "Enter Runtime Infrastructure Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
@@ -98,6 +108,11 @@ export const RuntimeIdentityCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_identity_catalog.fields.runtimeAgentId.label", "Runtime Agent Id"),
+          placeholder: "Enter Runtime Agent Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -107,6 +122,11 @@ export const RuntimeIdentityCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_identity_catalog.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
@@ -116,6 +136,11 @@ export const RuntimeIdentityCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_identity_catalog.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
@@ -125,6 +150,11 @@ export const RuntimeIdentityCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_identity_catalog.fields.runtimeName.label", "Runtime Name"),
+          placeholder: "Enter Runtime Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("identityStatus", {
@@ -134,6 +164,11 @@ export const RuntimeIdentityCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_identity_catalog.fields.identityStatus.label", "Identity Status"),
+          placeholder: "Enter Identity Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("activatedAt", {
@@ -142,7 +177,13 @@ export const RuntimeIdentityCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_identity_catalog.fields.activatedAt.label", "Activated At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_identity_catalog.fields.activatedAt.label", "Activated At"),
+          placeholder: "Enter Activated At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("revokedAt", {
@@ -151,7 +192,13 @@ export const RuntimeIdentityCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_identity_catalog.fields.revokedAt.label", "Revoked At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_identity_catalog.fields.revokedAt.label", "Revoked At"),
+          placeholder: "Enter Revoked At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -197,11 +244,12 @@ export const RuntimeIdentityCatalogList = () => {
     getRowId: (row) => String(row.runtimeId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_identity_catalog_read_model_entity",
         idField: "runtimeId",
         idFields: ["runtimeId"],
+        queryFields: ["runtimeId","runtimeInfrastructureId","runtimeAgentId","organizationId","organizationName","runtimeName","identityStatus","activatedAt","revokedAt"],
         label: t("resources.runtime_identity_catalog.label", "Runtime Identity Catalog"),
         aggregateRoute: "runtimeidentity",
         queryRoute: "runtimeidentitycatalog",

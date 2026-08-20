@@ -86,6 +86,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.runtimeNodeInventoryReportId.label", "Runtime Node Inventory Report Id"),
+          placeholder: "Enter Runtime Node Inventory Report Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -95,6 +100,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
@@ -104,6 +114,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id"),
+          placeholder: "Enter Runtime Infrastructure Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
@@ -113,6 +128,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.runtimeAgentId.label", "Runtime Agent Id"),
+          placeholder: "Enter Runtime Agent Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
@@ -122,6 +142,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeNodeName", {
@@ -131,6 +156,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.runtimeNodeName.label", "Runtime Node Name"),
+          placeholder: "Enter Runtime Node Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("infrastructureNodeId", {
@@ -140,6 +170,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.infrastructureNodeId.label", "Infrastructure Node Id"),
+          placeholder: "Enter Infrastructure Node Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeNodeRole", {
@@ -149,6 +184,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.runtimeNodeRole.label", "Runtime Node Role"),
+          placeholder: "Enter Runtime Node Role",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nodeReady", {
@@ -157,7 +197,13 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_node_inventory_catalog.fields.nodeReady.label", "Node Ready")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.nodeReady.label", "Node Ready"),
+          placeholder: "Enter Node Ready",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeEngineVersion", {
@@ -167,6 +213,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.runtimeEngineVersion.label", "Runtime Engine Version"),
+          placeholder: "Enter Runtime Engine Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("containerEngineVersion", {
@@ -176,6 +227,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.containerEngineVersion.label", "Container Engine Version"),
+          placeholder: "Enter Container Engine Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("operatingSystem", {
@@ -185,6 +241,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.operatingSystem.label", "Operating System"),
+          placeholder: "Enter Operating System",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("architecture", {
@@ -194,6 +255,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.architecture.label", "Architecture"),
+          placeholder: "Enter Architecture",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("inventoryHash", {
@@ -203,6 +269,11 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.inventoryHash.label", "Inventory Hash"),
+          placeholder: "Enter Inventory Hash",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("discoveredAt", {
@@ -211,7 +282,13 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_node_inventory_catalog.fields.discoveredAt.label", "Discovered At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.discoveredAt.label", "Discovered At"),
+          placeholder: "Enter Discovered At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -247,11 +324,12 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
     getRowId: (row) => String(row.runtimeNodeInventoryReportId),
     refineCoreProps: {
       dataProviderName: "federation-learning-runtime-agent",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "agent_runtime_node_inventory_catalog_read_model_entity",
         idField: "runtimeNodeInventoryReportId",
         idFields: ["runtimeNodeInventoryReportId"],
+        queryFields: ["runtimeNodeInventoryReportId","organizationId","runtimeInfrastructureId","runtimeAgentId","organizationName","runtimeNodeName","infrastructureNodeId","runtimeNodeRole","nodeReady","runtimeEngineVersion","containerEngineVersion","operatingSystem","architecture","inventoryHash","discoveredAt"],
         label: t("resources.agent_runtime_node_inventory_catalog.label", "Agent Runtime Node Inventory Catalog"),
         aggregateRoute: "agentruntimenodeinventory",
         queryRoute: "agentruntimenodeinventorycatalog",

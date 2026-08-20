@@ -88,6 +88,11 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.runtimeAgentId.label", "Runtime Agent Id"),
+          placeholder: "Enter Runtime Agent Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
@@ -97,6 +102,11 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id"),
+          placeholder: "Enter Runtime Infrastructure Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("agentVersion", {
@@ -106,6 +116,11 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.agentVersion.label", "Agent Version"),
+          placeholder: "Enter Agent Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lifecycleStatus", {
@@ -115,6 +130,11 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.lifecycleStatus.label", "Lifecycle Status"),
+          placeholder: "Enter Lifecycle Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("bootstrapConfigurationLoaded", {
@@ -123,7 +143,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.bootstrapConfigurationLoaded.label", "Bootstrap Configuration Loaded")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.bootstrapConfigurationLoaded.label", "Bootstrap Configuration Loaded"),
+          placeholder: "Enter Bootstrap Configuration Loaded",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("bootstrapFailureReason", {
@@ -133,6 +159,11 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.bootstrapFailureReason.label", "Bootstrap Failure Reason"),
+          placeholder: "Enter Bootstrap Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentSelfCheckPassed", {
@@ -141,7 +172,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.runtimeAgentSelfCheckPassed.label", "Runtime Agent Self Check Passed")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.runtimeAgentSelfCheckPassed.label", "Runtime Agent Self Check Passed"),
+          placeholder: "Enter Runtime Agent Self Check Passed",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("configurationLoaded", {
@@ -150,7 +187,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.configurationLoaded.label", "Configuration Loaded")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.configurationLoaded.label", "Configuration Loaded"),
+          placeholder: "Enter Configuration Loaded",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("secretStoreAccessible", {
@@ -159,7 +202,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.secretStoreAccessible.label", "Secret Store Accessible")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.secretStoreAccessible.label", "Secret Store Accessible"),
+          placeholder: "Enter Secret Store Accessible",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeEngineAdapterReady", {
@@ -168,7 +217,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.runtimeEngineAdapterReady.label", "Runtime Engine Adapter Ready")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.runtimeEngineAdapterReady.label", "Runtime Engine Adapter Ready"),
+          placeholder: "Enter Runtime Engine Adapter Ready",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("modelRepositoryClientReady", {
@@ -177,7 +232,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.modelRepositoryClientReady.label", "Model Repository Client Ready")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.modelRepositoryClientReady.label", "Model Repository Client Ready"),
+          placeholder: "Enter Model Repository Client Ready",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("localDatasetBindingStoreReady", {
@@ -186,7 +247,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.localDatasetBindingStoreReady.label", "Local Dataset Binding Store Ready")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.localDatasetBindingStoreReady.label", "Local Dataset Binding Store Ready"),
+          placeholder: "Enter Local Dataset Binding Store Ready",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("workingDirectoryWritable", {
@@ -195,7 +262,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.workingDirectoryWritable.label", "Working Directory Writable")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.workingDirectoryWritable.label", "Working Directory Writable"),
+          placeholder: "Enter Working Directory Writable",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("bootstrappedAt", {
@@ -204,7 +277,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.bootstrappedAt.label", "Bootstrapped At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.bootstrappedAt.label", "Bootstrapped At"),
+          placeholder: "Enter Bootstrapped At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("bootstrapFailedAt", {
@@ -213,7 +292,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.bootstrapFailedAt.label", "Bootstrap Failed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.bootstrapFailedAt.label", "Bootstrap Failed At"),
+          placeholder: "Enter Bootstrap Failed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("startedAt", {
@@ -222,7 +307,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.startedAt.label", "Started At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.startedAt.label", "Started At"),
+          placeholder: "Enter Started At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("readyAt", {
@@ -231,7 +322,13 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.readyAt.label", "Ready At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.readyAt.label", "Ready At"),
+          placeholder: "Enter Ready At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -267,11 +364,12 @@ export const RuntimeAgentLifecycleCatalogList = () => {
     getRowId: (row) => String(row.runtimeAgentId),
     refineCoreProps: {
       dataProviderName: "federation-learning-runtime-agent",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_agent_lifecycle_catalog_read_model_entity",
         idField: "runtimeAgentId",
         idFields: ["runtimeAgentId"],
+        queryFields: ["runtimeAgentId","runtimeInfrastructureId","agentVersion","lifecycleStatus","bootstrapConfigurationLoaded","bootstrapFailureReason","runtimeAgentSelfCheckPassed","configurationLoaded","secretStoreAccessible","runtimeEngineAdapterReady","modelRepositoryClientReady","localDatasetBindingStoreReady","workingDirectoryWritable","bootstrappedAt","bootstrapFailedAt","startedAt","readyAt"],
         label: t("resources.runtime_agent_lifecycle_catalog.label", "Runtime Agent Lifecycle Catalog"),
         aggregateRoute: "runtimeagentlifecycle",
         queryRoute: "runtimeagentlifecyclecatalog",

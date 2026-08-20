@@ -90,6 +90,11 @@ export const RuntimeHealthDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.nodeId.label", "Node Id"),
+          placeholder: "Enter Node Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
@@ -99,6 +104,11 @@ export const RuntimeHealthDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.runtimeAgentId.label", "Runtime Agent Id"),
+          placeholder: "Enter Runtime Agent Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationId", {
@@ -108,6 +118,11 @@ export const RuntimeHealthDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.federationId.label", "Federation Id"),
+          placeholder: "Enter Federation Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
@@ -117,6 +132,11 @@ export const RuntimeHealthDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.trainingJobId.label", "Training Job Id"),
+          placeholder: "Enter Training Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundExecutionId", {
@@ -126,6 +146,11 @@ export const RuntimeHealthDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.roundExecutionId.label", "Round Execution Id"),
+          placeholder: "Enter Round Execution Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
@@ -135,6 +160,11 @@ export const RuntimeHealthDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.federationName.label", "Federation Name"),
+          placeholder: "Enter Federation Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobObjective", {
@@ -144,6 +174,11 @@ export const RuntimeHealthDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.trainingJobObjective.label", "Training Job Objective"),
+          placeholder: "Enter Training Job Objective",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("cpuLoad", {
@@ -152,7 +187,13 @@ export const RuntimeHealthDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_health_dashboard.fields.cpuLoad.label", "Cpu Load")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.cpuLoad.label", "Cpu Load"),
+          placeholder: "Enter Cpu Load",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("gpuLoad", {
@@ -161,7 +202,13 @@ export const RuntimeHealthDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_health_dashboard.fields.gpuLoad.label", "Gpu Load")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.gpuLoad.label", "Gpu Load"),
+          placeholder: "Enter Gpu Load",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("memoryLoad", {
@@ -170,7 +217,13 @@ export const RuntimeHealthDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_health_dashboard.fields.memoryLoad.label", "Memory Load")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.memoryLoad.label", "Memory Load"),
+          placeholder: "Enter Memory Load",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nodeReady", {
@@ -179,7 +232,13 @@ export const RuntimeHealthDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_health_dashboard.fields.nodeReady.label", "Node Ready")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.nodeReady.label", "Node Ready"),
+          placeholder: "Enter Node Ready",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("availableCpuCores", {
@@ -188,7 +247,13 @@ export const RuntimeHealthDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_health_dashboard.fields.availableCpuCores.label", "Available Cpu Cores")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.availableCpuCores.label", "Available Cpu Cores"),
+          placeholder: "Enter Available Cpu Cores",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableMemoryGb", {
@@ -197,7 +262,13 @@ export const RuntimeHealthDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_health_dashboard.fields.availableMemoryGb.label", "Available Memory Gb")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.availableMemoryGb.label", "Available Memory Gb"),
+          placeholder: "Enter Available Memory Gb",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableGpuCount", {
@@ -206,7 +277,13 @@ export const RuntimeHealthDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_health_dashboard.fields.availableGpuCount.label", "Available Gpu Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.availableGpuCount.label", "Available Gpu Count"),
+          placeholder: "Enter Available Gpu Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runningWorkloadCount", {
@@ -215,7 +292,13 @@ export const RuntimeHealthDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_health_dashboard.fields.runningWorkloadCount.label", "Running Workload Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.runningWorkloadCount.label", "Running Workload Count"),
+          placeholder: "Enter Running Workload Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("workloadCapacity", {
@@ -224,7 +307,13 @@ export const RuntimeHealthDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_health_dashboard.fields.workloadCapacity.label", "Workload Capacity")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.workloadCapacity.label", "Workload Capacity"),
+          placeholder: "Enter Workload Capacity",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("healthStatus", {
@@ -234,6 +323,11 @@ export const RuntimeHealthDashboardList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.healthStatus.label", "Health Status"),
+          placeholder: "Enter Health Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lastHeartbeatAt", {
@@ -242,7 +336,13 @@ export const RuntimeHealthDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_health_dashboard.fields.lastHeartbeatAt.label", "Last Heartbeat At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.lastHeartbeatAt.label", "Last Heartbeat At"),
+          placeholder: "Enter Last Heartbeat At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("lastResourceSnapshotAt", {
@@ -251,7 +351,13 @@ export const RuntimeHealthDashboardList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_health_dashboard.fields.lastResourceSnapshotAt.label", "Last Resource Snapshot At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_health_dashboard.fields.lastResourceSnapshotAt.label", "Last Resource Snapshot At"),
+          placeholder: "Enter Last Resource Snapshot At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -287,11 +393,12 @@ export const RuntimeHealthDashboardList = () => {
     getRowId: (row) => String(row.nodeId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_health_dashboard_read_model_entity",
         idField: "nodeId",
         idFields: ["nodeId"],
+        queryFields: ["nodeId","runtimeAgentId","federationId","trainingJobId","roundExecutionId","federationName","trainingJobObjective","cpuLoad","gpuLoad","memoryLoad","nodeReady","availableCpuCores","availableMemoryGb","availableGpuCount","runningWorkloadCount","workloadCapacity","healthStatus","lastHeartbeatAt","lastResourceSnapshotAt"],
         label: t("resources.runtime_health_dashboard.label", "Runtime Health Dashboard"),
         aggregateRoute: "noderuntimehealth",
         queryRoute: "runtimehealthdashboard",

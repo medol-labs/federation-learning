@@ -107,6 +107,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.trainingJobId.label", "Training Job Id"),
+          placeholder: "Enter Training Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationId", {
@@ -116,6 +121,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.federationId.label", "Federation Id"),
+          placeholder: "Enter Federation Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -125,6 +135,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
@@ -134,6 +149,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.runtimeId.label", "Runtime Id"),
+          placeholder: "Enter Runtime Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
@@ -143,6 +163,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.featureSchemaId.label", "Feature Schema Id"),
+          placeholder: "Enter Feature Schema Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
@@ -152,6 +177,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.federationName.label", "Federation Name"),
+          placeholder: "Enter Federation Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
@@ -161,6 +191,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
@@ -170,6 +205,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.featureDomain.label", "Feature Domain"),
+          placeholder: "Enter Feature Domain",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
@@ -179,6 +219,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.featureSchemaVersion.label", "Feature Schema Version"),
+          placeholder: "Enter Feature Schema Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("participantStatus", {
@@ -188,6 +233,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.participantStatus.label", "Participant Status"),
+          placeholder: "Enter Participant Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("readinessStatus", {
@@ -197,6 +247,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.readinessStatus.label", "Readiness Status"),
+          placeholder: "Enter Readiness Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("readinessStage", {
@@ -206,6 +261,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.readinessStage.label", "Readiness Stage"),
+          placeholder: "Enter Readiness Stage",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("eligibilityScore", {
@@ -214,7 +274,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.eligibilityScore.label", "Eligibility Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.eligibilityScore.label", "Eligibility Score"),
+          placeholder: "Enter Eligibility Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeIdentityActive", {
@@ -223,7 +289,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.runtimeIdentityActive.label", "Runtime Identity Active")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.runtimeIdentityActive.label", "Runtime Identity Active"),
+          placeholder: "Enter Runtime Identity Active",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeCapabilitySatisfied", {
@@ -232,7 +304,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.runtimeCapabilitySatisfied.label", "Runtime Capability Satisfied")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.runtimeCapabilitySatisfied.label", "Runtime Capability Satisfied"),
+          placeholder: "Enter Runtime Capability Satisfied",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeConnectionEstablished", {
@@ -241,7 +319,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.runtimeConnectionEstablished.label", "Runtime Connection Established")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.runtimeConnectionEstablished.label", "Runtime Connection Established"),
+          placeholder: "Enter Runtime Connection Established",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeHealthy", {
@@ -250,7 +334,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.runtimeHealthy.label", "Runtime Healthy")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.runtimeHealthy.label", "Runtime Healthy"),
+          placeholder: "Enter Runtime Healthy",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("datasetId", {
@@ -260,6 +350,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.datasetId.label", "Dataset Id"),
+          placeholder: "Enter Dataset Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetName", {
@@ -269,6 +364,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.datasetName.label", "Dataset Name"),
+          placeholder: "Enter Dataset Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetReady", {
@@ -277,7 +377,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.datasetReady.label", "Dataset Ready")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.datasetReady.label", "Dataset Ready"),
+          placeholder: "Enter Dataset Ready",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("datasetReadinessStatus", {
@@ -287,6 +393,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.datasetReadinessStatus.label", "Dataset Readiness Status"),
+          placeholder: "Enter Dataset Readiness Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("matchedDatasetMetadataReady", {
@@ -295,7 +406,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.matchedDatasetMetadataReady.label", "Matched Dataset Metadata Ready")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.matchedDatasetMetadataReady.label", "Matched Dataset Metadata Ready"),
+          placeholder: "Enter Matched Dataset Metadata Ready",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("datasetAccessValidated", {
@@ -304,7 +421,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.datasetAccessValidated.label", "Dataset Access Validated")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.datasetAccessValidated.label", "Dataset Access Validated"),
+          placeholder: "Enter Dataset Access Validated",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("datasetApprovedForTraining", {
@@ -313,7 +436,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.datasetApprovedForTraining.label", "Dataset Approved For Training")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.datasetApprovedForTraining.label", "Dataset Approved For Training"),
+          placeholder: "Enter Dataset Approved For Training",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("schemaCompatible", {
@@ -322,7 +451,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.schemaCompatible.label", "Schema Compatible")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.schemaCompatible.label", "Schema Compatible"),
+          placeholder: "Enter Schema Compatible",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("labelCompatible", {
@@ -331,7 +466,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.labelCompatible.label", "Label Compatible")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.labelCompatible.label", "Label Compatible"),
+          placeholder: "Enter Label Compatible",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("qualityScore", {
@@ -340,7 +481,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.qualityScore.label", "Quality Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.qualityScore.label", "Quality Score"),
+          placeholder: "Enter Quality Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("securityReady", {
@@ -349,7 +496,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.securityReady.label", "Security Ready")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.securityReady.label", "Security Ready"),
+          placeholder: "Enter Security Ready",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("eligible", {
@@ -358,7 +511,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.eligible.label", "Eligible")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.eligible.label", "Eligible"),
+          placeholder: "Enter Eligible",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("eligibleRuntimeCount", {
@@ -367,7 +526,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.eligibleRuntimeCount.label", "Eligible Runtime Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.eligibleRuntimeCount.label", "Eligible Runtime Count"),
+          placeholder: "Enter Eligible Runtime Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumNodesPerRound", {
@@ -376,7 +541,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.minimumNodesPerRound.label", "Minimum Nodes Per Round")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.minimumNodesPerRound.label", "Minimum Nodes Per Round"),
+          placeholder: "Enter Minimum Nodes Per Round",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectionReady", {
@@ -385,7 +556,13 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.selectionReady.label", "Selection Ready")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.selectionReady.label", "Selection Ready"),
+          placeholder: "Enter Selection Ready",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("eligibilityReason", {
@@ -395,6 +572,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.eligibilityReason.label", "Eligibility Reason"),
+          placeholder: "Enter Eligibility Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("ineligibleReasons", {
@@ -403,7 +585,12 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.ineligibleReasons.label", "Ineligible Reasons")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.ineligibleReasons.label", "Ineligible Reasons"),
+          placeholder: "Enter Ineligible Reasons",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("warningReasons", {
@@ -412,7 +599,12 @@ export const TrainingParticipantEligibilityList = () => {
           <DataTableColumnHeader column={column} label={t("resources.training_participant_eligibility.fields.warningReasons.label", "Warning Reasons")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.warningReasons.label", "Warning Reasons"),
+          placeholder: "Enter Warning Reasons",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nextRequiredAction", {
@@ -422,6 +614,11 @@ export const TrainingParticipantEligibilityList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_participant_eligibility.fields.nextRequiredAction.label", "Next Required Action"),
+          placeholder: "Enter Next Required Action",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -467,11 +664,12 @@ export const TrainingParticipantEligibilityList = () => {
     getRowId: (row) => String(row.trainingJobId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "training_participant_eligibility_read_model_entity",
         idField: "trainingJobId",
         idFields: ["trainingJobId"],
+        queryFields: ["trainingJobId","federationId","organizationId","runtimeId","featureSchemaId","federationName","organizationName","featureDomain","featureSchemaVersion","participantStatus","readinessStatus","readinessStage","eligibilityScore","runtimeIdentityActive","runtimeCapabilitySatisfied","runtimeConnectionEstablished","runtimeHealthy","datasetId","datasetName","datasetReady","datasetReadinessStatus","matchedDatasetMetadataReady","datasetAccessValidated","datasetApprovedForTraining","schemaCompatible","labelCompatible","qualityScore","securityReady","eligible","eligibleRuntimeCount","minimumNodesPerRound","selectionReady","eligibilityReason","nextRequiredAction"],
         label: t("resources.training_participant_eligibility.label", "Training Participant Eligibility"),
         aggregateRoute: "trainingjob",
         queryRoute: "trainingparticipanteligibility",

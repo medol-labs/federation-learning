@@ -95,6 +95,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.runtimeInstallationPlanId.label", "Runtime Installation Plan Id"),
+          placeholder: "Enter Runtime Installation Plan Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -104,6 +109,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
@@ -113,6 +123,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageId", {
@@ -122,6 +137,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.runtimeInfrastructurePackageId.label", "Runtime Infrastructure Package Id"),
+          placeholder: "Enter Runtime Infrastructure Package Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageName", {
@@ -131,6 +151,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.runtimeInfrastructurePackageName.label", "Runtime Infrastructure Package Name"),
+          placeholder: "Enter Runtime Infrastructure Package Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageVersion", {
@@ -140,6 +165,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.runtimeInfrastructurePackageVersion.label", "Runtime Infrastructure Package Version"),
+          placeholder: "Enter Runtime Infrastructure Package Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
@@ -149,6 +179,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.runtimeName.label", "Runtime Name"),
+          placeholder: "Enter Runtime Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("agentInstallMode", {
@@ -158,6 +193,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.agentInstallMode.label", "Agent Install Mode"),
+          placeholder: "Enter Agent Install Mode",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("expectedNodeCount", {
@@ -166,7 +206,13 @@ export const RuntimeInstallationPlanCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_installation_plan_catalog.fields.expectedNodeCount.label", "Expected Node Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.expectedNodeCount.label", "Expected Node Count"),
+          placeholder: "Enter Expected Node Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("planStatus", {
@@ -176,6 +222,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.planStatus.label", "Plan Status"),
+          placeholder: "Enter Plan Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
@@ -185,6 +236,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id"),
+          placeholder: "Enter Runtime Infrastructure Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("observedNodeCount", {
@@ -193,7 +249,13 @@ export const RuntimeInstallationPlanCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_installation_plan_catalog.fields.observedNodeCount.label", "Observed Node Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.observedNodeCount.label", "Observed Node Count"),
+          placeholder: "Enter Observed Node Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
@@ -203,6 +265,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.runtimeAgentId.label", "Runtime Agent Id"),
+          placeholder: "Enter Runtime Agent Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentVersion", {
@@ -212,6 +279,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.runtimeAgentVersion.label", "Runtime Agent Version"),
+          placeholder: "Enter Runtime Agent Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("plannedAt", {
@@ -220,7 +292,13 @@ export const RuntimeInstallationPlanCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_installation_plan_catalog.fields.plannedAt.label", "Planned At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.plannedAt.label", "Planned At"),
+          placeholder: "Enter Planned At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("verifiedAt", {
@@ -229,7 +307,13 @@ export const RuntimeInstallationPlanCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_installation_plan_catalog.fields.verifiedAt.label", "Verified At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.verifiedAt.label", "Verified At"),
+          placeholder: "Enter Verified At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("verificationFailedAt", {
@@ -238,7 +322,13 @@ export const RuntimeInstallationPlanCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_installation_plan_catalog.fields.verificationFailedAt.label", "Verification Failed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.verificationFailedAt.label", "Verification Failed At"),
+          placeholder: "Enter Verification Failed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("verificationFailureReason", {
@@ -248,6 +338,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.verificationFailureReason.label", "Verification Failure Reason"),
+          placeholder: "Enter Verification Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("agentReadyAt", {
@@ -256,7 +351,13 @@ export const RuntimeInstallationPlanCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_installation_plan_catalog.fields.agentReadyAt.label", "Agent Ready At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.agentReadyAt.label", "Agent Ready At"),
+          placeholder: "Enter Agent Ready At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("agentDeploymentFailedAt", {
@@ -265,7 +366,13 @@ export const RuntimeInstallationPlanCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_installation_plan_catalog.fields.agentDeploymentFailedAt.label", "Agent Deployment Failed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.agentDeploymentFailedAt.label", "Agent Deployment Failed At"),
+          placeholder: "Enter Agent Deployment Failed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("agentDeploymentFailureReason", {
@@ -275,6 +382,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.agentDeploymentFailureReason.label", "Agent Deployment Failure Reason"),
+          placeholder: "Enter Agent Deployment Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("agentDeploymentRetryFailedAt", {
@@ -283,7 +395,13 @@ export const RuntimeInstallationPlanCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_installation_plan_catalog.fields.agentDeploymentRetryFailedAt.label", "Agent Deployment Retry Failed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.agentDeploymentRetryFailedAt.label", "Agent Deployment Retry Failed At"),
+          placeholder: "Enter Agent Deployment Retry Failed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("agentDeploymentRetryFailureReason", {
@@ -293,6 +411,11 @@ export const RuntimeInstallationPlanCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.agentDeploymentRetryFailureReason.label", "Agent Deployment Retry Failure Reason"),
+          placeholder: "Enter Agent Deployment Retry Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lastConnectedAt", {
@@ -301,7 +424,13 @@ export const RuntimeInstallationPlanCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_installation_plan_catalog.fields.lastConnectedAt.label", "Last Connected At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.lastConnectedAt.label", "Last Connected At"),
+          placeholder: "Enter Last Connected At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -337,11 +466,12 @@ export const RuntimeInstallationPlanCatalogList = () => {
     getRowId: (row) => String(row.runtimeInstallationPlanId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_installation_plan_catalog_read_model_entity",
         idField: "runtimeInstallationPlanId",
         idFields: ["runtimeInstallationPlanId"],
+        queryFields: ["runtimeInstallationPlanId","organizationId","organizationName","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","runtimeName","agentInstallMode","expectedNodeCount","planStatus","runtimeInfrastructureId","observedNodeCount","runtimeAgentId","runtimeAgentVersion","plannedAt","verifiedAt","verificationFailedAt","verificationFailureReason","agentReadyAt","agentDeploymentFailedAt","agentDeploymentFailureReason","agentDeploymentRetryFailedAt","agentDeploymentRetryFailureReason","lastConnectedAt"],
         label: t("resources.runtime_installation_plan_catalog.label", "Runtime Installation Plan Catalog"),
         aggregateRoute: "runtimeinstallationplan",
         queryRoute: "runtimeinstallationplancatalog",

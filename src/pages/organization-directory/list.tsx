@@ -77,6 +77,11 @@ export const OrganizationDirectoryList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.organization_directory.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
@@ -86,6 +91,11 @@ export const OrganizationDirectoryList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.organization_directory.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationType", {
@@ -95,6 +105,19 @@ export const OrganizationDirectoryList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.organization_directory.fields.organizationType.label", "Organization Type"),
+          placeholder: "Select Organization Type",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Hospital", value: "HOSPITAL" },
+            { label: "Research Institute", value: "RESEARCH_INSTITUTE" },
+            { label: "Public Health Agency", value: "PUBLIC_HEALTH_AGENCY" },
+            { label: "Laboratory", value: "LABORATORY" },
+            { label: "Rehabilitation Center", value: "REHABILITATION_CENTER" },
+          ],
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -103,7 +126,13 @@ export const OrganizationDirectoryList = () => {
           <DataTableColumnHeader column={column} label={t("resources.organization_directory.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.organization_directory.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("approvedDatasetCount", {
@@ -112,7 +141,13 @@ export const OrganizationDirectoryList = () => {
           <DataTableColumnHeader column={column} label={t("resources.organization_directory.fields.approvedDatasetCount.label", "Approved Dataset Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.organization_directory.fields.approvedDatasetCount.label", "Approved Dataset Count"),
+          placeholder: "Enter Approved Dataset Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -191,11 +226,12 @@ export const OrganizationDirectoryList = () => {
     getRowId: (row) => String(row.organizationId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "organization_directory_read_model_entity",
         idField: "organizationId",
         idFields: ["organizationId"],
+        queryFields: ["organizationId","organizationName","organizationType","state","approvedDatasetCount"],
         label: t("resources.organization_directory.label", "Organization Directory"),
         aggregateRoute: "organization",
         queryRoute: "organizationdirectory",

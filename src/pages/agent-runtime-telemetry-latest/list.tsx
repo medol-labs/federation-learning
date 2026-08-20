@@ -81,6 +81,11 @@ export const AgentRuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_telemetry_latest.fields.nodeId.label", "Node Id"),
+          placeholder: "Enter Node Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
@@ -90,6 +95,11 @@ export const AgentRuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_telemetry_latest.fields.runtimeAgentId.label", "Runtime Agent Id"),
+          placeholder: "Enter Runtime Agent Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationId", {
@@ -99,6 +109,11 @@ export const AgentRuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_telemetry_latest.fields.federationId.label", "Federation Id"),
+          placeholder: "Enter Federation Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
@@ -108,6 +123,11 @@ export const AgentRuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_telemetry_latest.fields.trainingJobId.label", "Training Job Id"),
+          placeholder: "Enter Training Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundExecutionId", {
@@ -117,6 +137,11 @@ export const AgentRuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_telemetry_latest.fields.roundExecutionId.label", "Round Execution Id"),
+          placeholder: "Enter Round Execution Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("cpuLoad", {
@@ -125,7 +150,13 @@ export const AgentRuntimeTelemetryLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_telemetry_latest.fields.cpuLoad.label", "Cpu Load")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_telemetry_latest.fields.cpuLoad.label", "Cpu Load"),
+          placeholder: "Enter Cpu Load",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("gpuLoad", {
@@ -134,7 +165,13 @@ export const AgentRuntimeTelemetryLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_telemetry_latest.fields.gpuLoad.label", "Gpu Load")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_telemetry_latest.fields.gpuLoad.label", "Gpu Load"),
+          placeholder: "Enter Gpu Load",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("memoryLoad", {
@@ -143,7 +180,13 @@ export const AgentRuntimeTelemetryLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_telemetry_latest.fields.memoryLoad.label", "Memory Load")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_telemetry_latest.fields.memoryLoad.label", "Memory Load"),
+          placeholder: "Enter Memory Load",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lastHeartbeatAt", {
@@ -152,7 +195,13 @@ export const AgentRuntimeTelemetryLatestList = () => {
           <DataTableColumnHeader column={column} label={t("resources.agent_runtime_telemetry_latest.fields.lastHeartbeatAt.label", "Last Heartbeat At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_telemetry_latest.fields.lastHeartbeatAt.label", "Last Heartbeat At"),
+          placeholder: "Enter Last Heartbeat At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("telemetryRetentionPolicy", {
@@ -162,6 +211,11 @@ export const AgentRuntimeTelemetryLatestList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_telemetry_latest.fields.telemetryRetentionPolicy.label", "Telemetry Retention Policy"),
+          placeholder: "Enter Telemetry Retention Policy",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -197,11 +251,12 @@ export const AgentRuntimeTelemetryLatestList = () => {
     getRowId: (row) => String(row.nodeId),
     refineCoreProps: {
       dataProviderName: "federation-learning-runtime-agent",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "agent_runtime_telemetry_latest_read_model_entity",
         idField: "nodeId",
         idFields: ["nodeId"],
+        queryFields: ["nodeId","runtimeAgentId","federationId","trainingJobId","roundExecutionId","cpuLoad","gpuLoad","memoryLoad","lastHeartbeatAt","telemetryRetentionPolicy"],
         label: t("resources.agent_runtime_telemetry_latest.label", "Agent Runtime Telemetry Latest"),
         aggregateRoute: "agentruntimetelemetry",
         queryRoute: "agentruntimetelemetrylatest",

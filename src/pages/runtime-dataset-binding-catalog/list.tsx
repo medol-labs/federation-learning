@@ -89,6 +89,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.runtimeDatasetBindingId.label", "Runtime Dataset Binding Id"),
+          placeholder: "Enter Runtime Dataset Binding Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetId", {
@@ -98,6 +103,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.datasetId.label", "Dataset Id"),
+          placeholder: "Enter Dataset Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -107,6 +117,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
@@ -116,6 +131,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.runtimeId.label", "Runtime Id"),
+          placeholder: "Enter Runtime Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetName", {
@@ -125,6 +145,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.datasetName.label", "Dataset Name"),
+          placeholder: "Enter Dataset Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("dataSourceType", {
@@ -134,6 +159,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.dataSourceType.label", "Data Source Type"),
+          placeholder: "Enter Data Source Type",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("host", {
@@ -143,6 +173,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.host.label", "Host"),
+          placeholder: "Enter Host",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("port", {
@@ -151,7 +186,13 @@ export const RuntimeDatasetBindingCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.port.label", "Port")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.port.label", "Port"),
+          placeholder: "Enter Port",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("url", {
@@ -161,6 +202,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.url.label", "Url"),
+          placeholder: "Enter Url",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("databaseName", {
@@ -170,6 +216,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.databaseName.label", "Database Name"),
+          placeholder: "Enter Database Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("schemaName", {
@@ -179,6 +230,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.schemaName.label", "Schema Name"),
+          placeholder: "Enter Schema Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("tableName", {
@@ -188,6 +244,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.tableName.label", "Table Name"),
+          placeholder: "Enter Table Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("filePath", {
@@ -197,6 +258,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.filePath.label", "File Path"),
+          placeholder: "Enter File Path",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("objectBucket", {
@@ -206,6 +272,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.objectBucket.label", "Object Bucket"),
+          placeholder: "Enter Object Bucket",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("objectPrefix", {
@@ -215,6 +286,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.objectPrefix.label", "Object Prefix"),
+          placeholder: "Enter Object Prefix",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("dataFormat", {
@@ -224,6 +300,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.dataFormat.label", "Data Format"),
+          placeholder: "Enter Data Format",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("credentialSecretName", {
@@ -233,6 +314,11 @@ export const RuntimeDatasetBindingCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.credentialSecretName.label", "Credential Secret Name"),
+          placeholder: "Enter Credential Secret Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("configuredAt", {
@@ -241,7 +327,13 @@ export const RuntimeDatasetBindingCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.configuredAt.label", "Configured At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_binding_catalog.fields.configuredAt.label", "Configured At"),
+          placeholder: "Enter Configured At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -277,11 +369,12 @@ export const RuntimeDatasetBindingCatalogList = () => {
     getRowId: (row) => String(row.runtimeDatasetBindingId),
     refineCoreProps: {
       dataProviderName: "federation-learning-runtime-agent",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_dataset_binding_catalog_read_model_entity",
         idField: "runtimeDatasetBindingId",
         idFields: ["runtimeDatasetBindingId"],
+        queryFields: ["runtimeDatasetBindingId","datasetId","organizationId","runtimeId","datasetName","dataSourceType","host","port","url","databaseName","schemaName","tableName","filePath","objectBucket","objectPrefix","dataFormat","credentialSecretName","configuredAt"],
         label: t("resources.runtime_dataset_binding_catalog.label", "Runtime Dataset Binding Catalog"),
         aggregateRoute: "runtimedatasetbinding",
         queryRoute: "runtimedatasetbindingcatalog",

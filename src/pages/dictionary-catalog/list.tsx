@@ -81,6 +81,11 @@ export const DictionaryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dictionary_catalog.fields.dictionaryId.label", "Dictionary Id"),
+          placeholder: "Enter Dictionary Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("dictionaryCode", {
@@ -90,6 +95,11 @@ export const DictionaryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dictionary_catalog.fields.dictionaryCode.label", "Dictionary Code"),
+          placeholder: "Enter Dictionary Code",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("dictionaryName", {
@@ -99,6 +109,11 @@ export const DictionaryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dictionary_catalog.fields.dictionaryName.label", "Dictionary Name"),
+          placeholder: "Enter Dictionary Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("description", {
@@ -108,6 +123,11 @@ export const DictionaryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dictionary_catalog.fields.description.label", "Description"),
+          placeholder: "Enter Description",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -116,7 +136,13 @@ export const DictionaryCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dictionary_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dictionary_catalog.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("registeredAt", {
@@ -125,7 +151,13 @@ export const DictionaryCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dictionary_catalog.fields.registeredAt.label", "Registered At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dictionary_catalog.fields.registeredAt.label", "Registered At"),
+          placeholder: "Enter Registered At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("updatedAt", {
@@ -134,7 +166,13 @@ export const DictionaryCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dictionary_catalog.fields.updatedAt.label", "Updated At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dictionary_catalog.fields.updatedAt.label", "Updated At"),
+          placeholder: "Enter Updated At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("archivedAt", {
@@ -143,7 +181,13 @@ export const DictionaryCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.dictionary_catalog.fields.archivedAt.label", "Archived At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.dictionary_catalog.fields.archivedAt.label", "Archived At"),
+          placeholder: "Enter Archived At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("archiveReason", {
@@ -153,6 +197,11 @@ export const DictionaryCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.dictionary_catalog.fields.archiveReason.label", "Archive Reason"),
+          placeholder: "Enter Archive Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -219,11 +268,12 @@ export const DictionaryCatalogList = () => {
     getRowId: (row) => String(row.dictionaryId),
     refineCoreProps: {
       dataProviderName: "federation-learning-support",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "dictionary_catalog_read_model_entity",
         idField: "dictionaryId",
         idFields: ["dictionaryId"],
+        queryFields: ["dictionaryId","dictionaryCode","dictionaryName","description","state","registeredAt","updatedAt","archivedAt","archiveReason"],
         label: t("resources.dictionary_catalog.label", "Dictionary Catalog"),
         aggregateRoute: "dictionary",
         queryRoute: "dictionarycatalog",

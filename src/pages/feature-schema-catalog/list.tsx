@@ -82,6 +82,11 @@ export const FeatureSchemaCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.feature_schema_catalog.fields.featureSchemaId.label", "Feature Schema Id"),
+          placeholder: "Enter Feature Schema Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
@@ -91,6 +96,11 @@ export const FeatureSchemaCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.feature_schema_catalog.fields.featureDomain.label", "Feature Domain"),
+          placeholder: "Enter Feature Domain",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("version", {
@@ -100,6 +110,11 @@ export const FeatureSchemaCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.feature_schema_catalog.fields.version.label", "Version"),
+          placeholder: "Enter Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("dataModality", {
@@ -109,6 +124,11 @@ export const FeatureSchemaCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.feature_schema_catalog.fields.dataModality.label", "Data Modality"),
+          placeholder: "Enter Data Modality",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("features", {
@@ -117,7 +137,12 @@ export const FeatureSchemaCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.feature_schema_catalog.fields.features.label", "Features")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.feature_schema_catalog.fields.features.label", "Features"),
+          placeholder: "[\n  {\n    \"featureName\": \"\",\n    \"dataType\": \"\",\n    \"required\": false,\n    \"nullable\": false,\n    \"description\": \"\",\n    \"validationRules\": [],\n    \"defaultValue\": \"\",\n    \"isIdentifier\": false,\n    \"isSensitive\": false,\n    \"encodingStrategy\": \"\",\n    \"featureTags\": []\n  }\n]",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("labels", {
@@ -126,7 +151,12 @@ export const FeatureSchemaCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.feature_schema_catalog.fields.labels.label", "Labels")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.feature_schema_catalog.fields.labels.label", "Labels"),
+          placeholder: "[\n  {\n    \"labelName\": \"\",\n    \"dataType\": \"\",\n    \"cardinality\": 0,\n    \"classLabels\": [],\n    \"isMultilabel\": false,\n    \"description\": \"\",\n    \"validationRules\": [],\n    \"defaultValue\": \"\"\n  }\n]",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureCount", {
@@ -135,7 +165,13 @@ export const FeatureSchemaCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.feature_schema_catalog.fields.featureCount.label", "Feature Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.feature_schema_catalog.fields.featureCount.label", "Feature Count"),
+          placeholder: "Enter Feature Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("schemaStatus", {
@@ -145,6 +181,11 @@ export const FeatureSchemaCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.feature_schema_catalog.fields.schemaStatus.label", "Schema Status"),
+          placeholder: "Enter Schema Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("supersededByFeatureSchemaId", {
@@ -154,6 +195,11 @@ export const FeatureSchemaCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.feature_schema_catalog.fields.supersededByFeatureSchemaId.label", "Superseded By Feature Schema Id"),
+          placeholder: "Enter Superseded By Feature Schema Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("recommendedForDomain", {
@@ -162,7 +208,13 @@ export const FeatureSchemaCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.feature_schema_catalog.fields.recommendedForDomain.label", "Recommended For Domain")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.feature_schema_catalog.fields.recommendedForDomain.label", "Recommended For Domain"),
+          placeholder: "Enter Recommended For Domain",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.display({
@@ -264,11 +316,12 @@ export const FeatureSchemaCatalogList = () => {
     getRowId: (row) => String(row.featureSchemaId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "feature_schema_catalog_read_model_entity",
         idField: "featureSchemaId",
         idFields: ["featureSchemaId"],
+        queryFields: ["featureSchemaId","featureDomain","version","dataModality","featureCount","schemaStatus","supersededByFeatureSchemaId","recommendedForDomain"],
         label: t("resources.feature_schema_catalog.label", "Feature Schema Catalog"),
         aggregateRoute: "featureschema",
         queryRoute: "featureschemacatalog",

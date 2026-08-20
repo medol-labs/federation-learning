@@ -92,6 +92,11 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.metadataReportId.label", "Metadata Report Id"),
+          placeholder: "Enter Metadata Report Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetId", {
@@ -101,6 +106,11 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.datasetId.label", "Dataset Id"),
+          placeholder: "Enter Dataset Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -110,6 +120,11 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
@@ -119,6 +134,11 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.runtimeId.label", "Runtime Id"),
+          placeholder: "Enter Runtime Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
@@ -128,6 +148,11 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.featureSchemaId.label", "Feature Schema Id"),
+          placeholder: "Enter Feature Schema Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetName", {
@@ -137,6 +162,11 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.datasetName.label", "Dataset Name"),
+          placeholder: "Enter Dataset Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
@@ -146,6 +176,11 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
@@ -155,6 +190,11 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.featureDomain.label", "Feature Domain"),
+          placeholder: "Enter Feature Domain",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
@@ -164,6 +204,11 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.featureSchemaVersion.label", "Feature Schema Version"),
+          placeholder: "Enter Feature Schema Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sampleCount", {
@@ -172,7 +217,13 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.sampleCount.label", "Sample Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.sampleCount.label", "Sample Count"),
+          placeholder: "Enter Sample Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureCount", {
@@ -181,7 +232,13 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.featureCount.label", "Feature Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.featureCount.label", "Feature Count"),
+          placeholder: "Enter Feature Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("schemaCompatible", {
@@ -190,7 +247,13 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.schemaCompatible.label", "Schema Compatible")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.schemaCompatible.label", "Schema Compatible"),
+          placeholder: "Enter Schema Compatible",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("labelCompatible", {
@@ -199,7 +262,13 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.labelCompatible.label", "Label Compatible")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.labelCompatible.label", "Label Compatible"),
+          placeholder: "Enter Label Compatible",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("missingValueRate", {
@@ -208,7 +277,13 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.missingValueRate.label", "Missing Value Rate")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.missingValueRate.label", "Missing Value Rate"),
+          placeholder: "Enter Missing Value Rate",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("duplicateRate", {
@@ -217,7 +292,13 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.duplicateRate.label", "Duplicate Rate")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.duplicateRate.label", "Duplicate Rate"),
+          placeholder: "Enter Duplicate Rate",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("qualityScore", {
@@ -226,7 +307,13 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.qualityScore.label", "Quality Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.qualityScore.label", "Quality Score"),
+          placeholder: "Enter Quality Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nonIidScore", {
@@ -235,7 +322,13 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.nonIidScore.label", "Non Iid Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.nonIidScore.label", "Non Iid Score"),
+          placeholder: "Enter Non Iid Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("classBalanceScore", {
@@ -244,7 +337,13 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.classBalanceScore.label", "Class Balance Score")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.classBalanceScore.label", "Class Balance Score"),
+          placeholder: "Enter Class Balance Score",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("profilingStatus", {
@@ -254,6 +353,11 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.profilingStatus.label", "Profiling Status"),
+          placeholder: "Enter Profiling Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("failureReason", {
@@ -263,6 +367,11 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.failureReason.label", "Failure Reason"),
+          placeholder: "Enter Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("profiledAt", {
@@ -271,7 +380,13 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.profiledAt.label", "Profiled At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.profiledAt.label", "Profiled At"),
+          placeholder: "Enter Profiled At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
@@ -307,11 +422,12 @@ export const RuntimeDatasetMetadataCatalogList = () => {
     getRowId: (row) => String(row.metadataReportId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_dataset_metadata_catalog_read_model_entity",
         idField: "metadataReportId",
         idFields: ["metadataReportId"],
+        queryFields: ["metadataReportId","datasetId","organizationId","runtimeId","featureSchemaId","datasetName","organizationName","featureDomain","featureSchemaVersion","sampleCount","featureCount","schemaCompatible","labelCompatible","missingValueRate","duplicateRate","qualityScore","nonIidScore","classBalanceScore","profilingStatus","failureReason","profiledAt"],
         label: t("resources.runtime_dataset_metadata_catalog.label", "Runtime Dataset Metadata Catalog"),
         aggregateRoute: "runtimedatasetmetadata",
         queryRoute: "runtimedatasetmetadatacatalog",

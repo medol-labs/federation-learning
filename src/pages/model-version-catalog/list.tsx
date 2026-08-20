@@ -160,7 +160,7 @@ export const ModelVersionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_version_catalog.fields.finalGlobalAccuracy.label", "Final Global Accuracy")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -169,7 +169,7 @@ export const ModelVersionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_version_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("releaseChannel", {
@@ -250,7 +250,7 @@ export const ModelVersionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_version_catalog.fields.hasEvaluationPackage.label", "Has Evaluation Package")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("approvalStatus", {
@@ -277,7 +277,7 @@ export const ModelVersionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_version_catalog.fields.isProduction.label", "Is Production")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canRecordEvaluationPackage", {
@@ -286,7 +286,7 @@ export const ModelVersionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_version_catalog.fields.canRecordEvaluationPackage.label", "Can Record Evaluation Package")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canApprove", {
@@ -295,7 +295,7 @@ export const ModelVersionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_version_catalog.fields.canApprove.label", "Can Approve")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canPromoteToProduction", {
@@ -304,7 +304,7 @@ export const ModelVersionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_version_catalog.fields.canPromoteToProduction.label", "Can Promote To Production")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canRollback", {
@@ -313,7 +313,7 @@ export const ModelVersionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_version_catalog.fields.canRollback.label", "Can Rollback")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canRetire", {
@@ -322,7 +322,7 @@ export const ModelVersionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_version_catalog.fields.canRetire.label", "Can Retire")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("blockedReason", {
@@ -433,7 +433,7 @@ export const ModelVersionCatalogList = () => {
     getRowId: (row) => String(row.modelVersionId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "model_version_catalog_read_model_entity",
         idField: "modelVersionId",

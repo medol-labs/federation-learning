@@ -108,6 +108,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.roundExecutionId.label", "Round Execution Id"),
+          placeholder: "Enter Round Execution Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("executionSessionId", {
@@ -117,6 +122,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.executionSessionId.label", "Execution Session Id"),
+          placeholder: "Enter Execution Session Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("executionPlanId", {
@@ -126,6 +136,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.executionPlanId.label", "Execution Plan Id"),
+          placeholder: "Enter Execution Plan Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
@@ -135,6 +150,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.trainingJobId.label", "Training Job Id"),
+          placeholder: "Enter Training Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingRunConfigurationId", {
@@ -144,6 +164,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.trainingRunConfigurationId.label", "Training Run Configuration Id"),
+          placeholder: "Enter Training Run Configuration Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundId", {
@@ -153,6 +178,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.roundId.label", "Round Id"),
+          placeholder: "Enter Round Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundNumber", {
@@ -161,7 +191,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.roundNumber.label", "Round Number")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.roundNumber.label", "Round Number"),
+          placeholder: "Enter Round Number",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -171,6 +207,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
@@ -180,6 +221,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeId.label", "Runtime Id"),
+          placeholder: "Enter Runtime Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -188,7 +234,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
@@ -198,6 +250,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.featureSchemaId.label", "Feature Schema Id"),
+          placeholder: "Enter Feature Schema Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("baseModelId", {
@@ -207,6 +264,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.baseModelId.label", "Base Model Id"),
+          placeholder: "Enter Base Model Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineJobId", {
@@ -216,6 +278,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeEngineJobId.label", "Runtime Engine Job Id"),
+          placeholder: "Enter Runtime Engine Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("localExecutionRequirementsSatisfied", {
@@ -224,7 +291,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.localExecutionRequirementsSatisfied.label", "Local Execution Requirements Satisfied")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.localExecutionRequirementsSatisfied.label", "Local Execution Requirements Satisfied"),
+          placeholder: "Enter Local Execution Requirements Satisfied",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeIdentityMatched", {
@@ -233,7 +306,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeIdentityMatched.label", "Runtime Identity Matched")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeIdentityMatched.label", "Runtime Identity Matched"),
+          placeholder: "Enter Runtime Identity Matched",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeDatasetBindingAvailable", {
@@ -242,7 +321,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeDatasetBindingAvailable.label", "Runtime Dataset Binding Available")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeDatasetBindingAvailable.label", "Runtime Dataset Binding Available"),
+          placeholder: "Enter Runtime Dataset Binding Available",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("datasetAccessValidated", {
@@ -251,7 +336,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.datasetAccessValidated.label", "Dataset Access Validated")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.datasetAccessValidated.label", "Dataset Access Validated"),
+          placeholder: "Enter Dataset Access Validated",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("baseModelAvailable", {
@@ -260,7 +351,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.baseModelAvailable.label", "Base Model Available")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.baseModelAvailable.label", "Base Model Available"),
+          placeholder: "Enter Base Model Available",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("trainingConfigurationSupported", {
@@ -269,7 +366,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.trainingConfigurationSupported.label", "Training Configuration Supported")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.trainingConfigurationSupported.label", "Training Configuration Supported"),
+          placeholder: "Enter Training Configuration Supported",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeResourceAvailable", {
@@ -278,7 +381,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeResourceAvailable.label", "Runtime Resource Available")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeResourceAvailable.label", "Runtime Resource Available"),
+          placeholder: "Enter Runtime Resource Available",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeAgentIdle", {
@@ -287,7 +396,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeAgentIdle.label", "Runtime Agent Idle")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeAgentIdle.label", "Runtime Agent Idle"),
+          placeholder: "Enter Runtime Agent Idle",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("updateArtifactId", {
@@ -297,6 +412,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.updateArtifactId.label", "Update Artifact Id"),
+          placeholder: "Enter Update Artifact Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("artifactRef", {
@@ -306,6 +426,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.artifactRef.label", "Artifact Ref"),
+          placeholder: "Enter Artifact Ref",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("artifactDigest", {
@@ -315,6 +440,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.artifactDigest.label", "Artifact Digest"),
+          placeholder: "Enter Artifact Digest",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingLoss", {
@@ -323,7 +453,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.trainingLoss.label", "Training Loss")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.trainingLoss.label", "Training Loss"),
+          placeholder: "Enter Training Loss",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("receivedAt", {
@@ -332,7 +468,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.receivedAt.label", "Received At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.receivedAt.label", "Received At"),
+          placeholder: "Enter Received At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("acceptedAt", {
@@ -341,7 +483,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.acceptedAt.label", "Accepted At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.acceptedAt.label", "Accepted At"),
+          placeholder: "Enter Accepted At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("rejectedAt", {
@@ -350,7 +498,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.rejectedAt.label", "Rejected At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.rejectedAt.label", "Rejected At"),
+          placeholder: "Enter Rejected At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("startedAt", {
@@ -359,7 +513,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.startedAt.label", "Started At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.startedAt.label", "Started At"),
+          placeholder: "Enter Started At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("completedAt", {
@@ -368,7 +528,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.completedAt.label", "Completed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.completedAt.label", "Completed At"),
+          placeholder: "Enter Completed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("failedAt", {
@@ -377,7 +543,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.failedAt.label", "Failed At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.failedAt.label", "Failed At"),
+          placeholder: "Enter Failed At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("submittedAt", {
@@ -386,7 +558,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.submittedAt.label", "Submitted At")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.submittedAt.label", "Submitted At"),
+          placeholder: "Enter Submitted At",
+          variant: "date",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("failureReason", {
@@ -396,6 +574,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.failureReason.label", "Failure Reason"),
+          placeholder: "Enter Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("retryReason", {
@@ -405,6 +588,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.retryReason.label", "Retry Reason"),
+          placeholder: "Enter Retry Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineReleased", {
@@ -413,7 +601,13 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeEngineReleased.label", "Runtime Engine Released")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeEngineReleased.label", "Runtime Engine Released"),
+          placeholder: "Enter Runtime Engine Released",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeEngineReleaseFailureReason", {
@@ -423,6 +617,11 @@ export const RoundExecutionCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeEngineReleaseFailureReason.label", "Runtime Engine Release Failure Reason"),
+          placeholder: "Enter Runtime Engine Release Failure Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("rejectionReasons", {
@@ -431,7 +630,12 @@ export const RoundExecutionCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.rejectionReasons.label", "Rejection Reasons")} />
         ),
         enableSorting: true,
-        enableColumnFilter: true,
+        enableColumnFilter: false,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.rejectionReasons.label", "Rejection Reasons"),
+          placeholder: "Enter Rejection Reasons",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -578,11 +782,12 @@ export const RoundExecutionCatalogList = () => {
     getRowId: (row) => String(row.roundExecutionId),
     refineCoreProps: {
       dataProviderName: "federation-learning-runtime-agent",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "round_execution_catalog_read_model_entity",
         idField: "roundExecutionId",
         idFields: ["roundExecutionId"],
+        queryFields: ["roundExecutionId","executionSessionId","executionPlanId","trainingJobId","trainingRunConfigurationId","roundId","roundNumber","organizationId","runtimeId","state","featureSchemaId","baseModelId","runtimeEngineJobId","localExecutionRequirementsSatisfied","runtimeIdentityMatched","runtimeDatasetBindingAvailable","datasetAccessValidated","baseModelAvailable","trainingConfigurationSupported","runtimeResourceAvailable","runtimeAgentIdle","updateArtifactId","artifactRef","artifactDigest","trainingLoss","receivedAt","acceptedAt","rejectedAt","startedAt","completedAt","failedAt","submittedAt","failureReason","retryReason","runtimeEngineReleased","runtimeEngineReleaseFailureReason"],
         label: t("resources.round_execution_catalog.label", "Round Execution Catalog"),
         aggregateRoute: "roundexecution",
         queryRoute: "roundexecutioncatalog",

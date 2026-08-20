@@ -98,6 +98,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.modelId.label", "Model Id"),
+          placeholder: "Enter Model Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
@@ -107,6 +112,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.trainingJobId.label", "Training Job Id"),
+          placeholder: "Enter Training Job Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("finalRoundId", {
@@ -116,6 +126,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.finalRoundId.label", "Final Round Id"),
+          placeholder: "Enter Final Round Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelArtifactId", {
@@ -125,6 +140,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.modelArtifactId.label", "Model Artifact Id"),
+          placeholder: "Enter Model Artifact Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobObjective", {
@@ -134,6 +154,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.trainingJobObjective.label", "Training Job Objective"),
+          placeholder: "Enter Training Job Objective",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelArtifactDigest", {
@@ -143,6 +168,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.modelArtifactDigest.label", "Model Artifact Digest"),
+          placeholder: "Enter Model Artifact Digest",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("evaluationReportId", {
@@ -152,6 +182,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.evaluationReportId.label", "Evaluation Report Id"),
+          placeholder: "Enter Evaluation Report Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("finalGlobalAccuracy", {
@@ -160,7 +195,13 @@ export const ModelCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.finalGlobalAccuracy.label", "Final Global Accuracy")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.finalGlobalAccuracy.label", "Final Global Accuracy"),
+          placeholder: "Enter Final Global Accuracy",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
@@ -169,7 +210,13 @@ export const ModelCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.state.label", "State"),
+          placeholder: "Enter State",
+          variant: "text",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("releaseChannel", {
@@ -179,6 +226,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.releaseChannel.label", "Release Channel"),
+          placeholder: "Enter Release Channel",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("productionStage", {
@@ -188,6 +240,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.productionStage.label", "Production Stage"),
+          placeholder: "Enter Production Stage",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("previousModelId", {
@@ -197,6 +254,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.previousModelId.label", "Previous Model Id"),
+          placeholder: "Enter Previous Model Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("experimentId", {
@@ -206,6 +268,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.experimentId.label", "Experiment Id"),
+          placeholder: "Enter Experiment Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("hyperparameterSnapshotId", {
@@ -215,6 +282,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.hyperparameterSnapshotId.label", "Hyperparameter Snapshot Id"),
+          placeholder: "Enter Hyperparameter Snapshot Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("reproducibilityManifestId", {
@@ -224,6 +296,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.reproducibilityManifestId.label", "Reproducibility Manifest Id"),
+          placeholder: "Enter Reproducibility Manifest Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelCardId", {
@@ -233,6 +310,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.modelCardId.label", "Model Card Id"),
+          placeholder: "Enter Model Card Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("baselineModelId", {
@@ -242,6 +324,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.baselineModelId.label", "Baseline Model Id"),
+          placeholder: "Enter Baseline Model Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("hasEvaluationPackage", {
@@ -250,7 +337,13 @@ export const ModelCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.hasEvaluationPackage.label", "Has Evaluation Package")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.hasEvaluationPackage.label", "Has Evaluation Package"),
+          placeholder: "Enter Has Evaluation Package",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("approvalStatus", {
@@ -260,6 +353,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.approvalStatus.label", "Approval Status"),
+          placeholder: "Enter Approval Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("releaseStatus", {
@@ -269,6 +367,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.releaseStatus.label", "Release Status"),
+          placeholder: "Enter Release Status",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("isProduction", {
@@ -277,7 +380,13 @@ export const ModelCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.isProduction.label", "Is Production")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.isProduction.label", "Is Production"),
+          placeholder: "Enter Is Production",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canRecordEvaluationPackage", {
@@ -286,7 +395,13 @@ export const ModelCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.canRecordEvaluationPackage.label", "Can Record Evaluation Package")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.canRecordEvaluationPackage.label", "Can Record Evaluation Package"),
+          placeholder: "Enter Can Record Evaluation Package",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canApprove", {
@@ -295,7 +410,13 @@ export const ModelCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.canApprove.label", "Can Approve")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.canApprove.label", "Can Approve"),
+          placeholder: "Enter Can Approve",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canPromoteToProduction", {
@@ -304,7 +425,13 @@ export const ModelCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.canPromoteToProduction.label", "Can Promote To Production")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.canPromoteToProduction.label", "Can Promote To Production"),
+          placeholder: "Enter Can Promote To Production",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canRollback", {
@@ -313,7 +440,13 @@ export const ModelCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.canRollback.label", "Can Rollback")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.canRollback.label", "Can Rollback"),
+          placeholder: "Enter Can Rollback",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canRetire", {
@@ -322,7 +455,13 @@ export const ModelCatalogList = () => {
           <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.canRetire.label", "Can Retire")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.canRetire.label", "Can Retire"),
+          placeholder: "Enter Can Retire",
+          variant: "boolean",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("blockedReason", {
@@ -332,6 +471,11 @@ export const ModelCatalogList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_catalog.fields.blockedReason.label", "Blocked Reason"),
+          placeholder: "Enter Blocked Reason",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -433,11 +577,12 @@ export const ModelCatalogList = () => {
     getRowId: (row) => String(row.modelId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "model_catalog_read_model_entity",
         idField: "modelId",
         idFields: ["modelId"],
+        queryFields: ["modelId","trainingJobId","finalRoundId","modelArtifactId","trainingJobObjective","modelArtifactDigest","evaluationReportId","finalGlobalAccuracy","state","releaseChannel","productionStage","previousModelId","experimentId","hyperparameterSnapshotId","reproducibilityManifestId","modelCardId","baselineModelId","hasEvaluationPackage","approvalStatus","releaseStatus","isProduction","canRecordEvaluationPackage","canApprove","canPromoteToProduction","canRollback","canRetire","blockedReason"],
         label: t("resources.model_catalog.label", "Model Catalog"),
         aggregateRoute: "model",
         queryRoute: "modelcatalog",

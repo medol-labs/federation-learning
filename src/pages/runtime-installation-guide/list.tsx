@@ -87,6 +87,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeInstallationPlanId.label", "Runtime Installation Plan Id"),
+          placeholder: "Enter Runtime Installation Plan Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
@@ -96,6 +101,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.organizationId.label", "Organization Id"),
+          placeholder: "Enter Organization Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
@@ -105,6 +115,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id"),
+          placeholder: "Enter Runtime Infrastructure Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageId", {
@@ -114,6 +129,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeInfrastructurePackageId.label", "Runtime Infrastructure Package Id"),
+          placeholder: "Enter Runtime Infrastructure Package Id",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageName", {
@@ -123,6 +143,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeInfrastructurePackageName.label", "Runtime Infrastructure Package Name"),
+          placeholder: "Enter Runtime Infrastructure Package Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageVersion", {
@@ -132,6 +157,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeInfrastructurePackageVersion.label", "Runtime Infrastructure Package Version"),
+          placeholder: "Enter Runtime Infrastructure Package Version",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("infrastructureInstallGuide", {
@@ -141,6 +171,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.infrastructureInstallGuide.label", "Infrastructure Install Guide"),
+          placeholder: "Enter Infrastructure Install Guide",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
@@ -150,6 +185,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
@@ -159,6 +199,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeName.label", "Runtime Name"),
+          placeholder: "Enter Runtime Name",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("bootstrapCommand", {
@@ -168,6 +213,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.bootstrapCommand.label", "Bootstrap Command"),
+          placeholder: "Enter Bootstrap Command",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeDeploymentTargetType", {
@@ -177,6 +227,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type"),
+          placeholder: "Enter Runtime Deployment Target Type",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEnvironmentType", {
@@ -186,6 +241,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeEnvironmentType.label", "Runtime Environment Type"),
+          placeholder: "Enter Runtime Environment Type",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("agentInstallMode", {
@@ -195,6 +255,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.agentInstallMode.label", "Agent Install Mode"),
+          placeholder: "Enter Agent Install Mode",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("installProfile", {
@@ -204,6 +269,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.installProfile.label", "Install Profile"),
+          placeholder: "Enter Install Profile",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("architecture", {
@@ -213,6 +283,11 @@ export const RuntimeInstallationGuideList = () => {
         ),
         enableSorting: true,
         enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.architecture.label", "Architecture"),
+          placeholder: "Enter Architecture",
+          variant: "text",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("expectedNodeCount", {
@@ -221,7 +296,13 @@ export const RuntimeInstallationGuideList = () => {
           <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.expectedNodeCount.label", "Expected Node Count")} />
         ),
         enableSorting: true,
-        enableColumnFilter: false,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.expectedNodeCount.label", "Expected Node Count"),
+          placeholder: "Enter Expected Node Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.display({
@@ -257,11 +338,12 @@ export const RuntimeInstallationGuideList = () => {
     getRowId: (row) => String(row.runtimeInstallationPlanId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
-      syncWithLocation: true,
+      syncWithLocation: false,
       meta: {
         tableName: "runtime_installation_guide_read_model_entity",
         idField: "runtimeInstallationPlanId",
         idFields: ["runtimeInstallationPlanId"],
+        queryFields: ["runtimeInstallationPlanId","organizationId","runtimeInfrastructureId","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","infrastructureInstallGuide","organizationName","runtimeName","bootstrapCommand","runtimeDeploymentTargetType","runtimeEnvironmentType","agentInstallMode","installProfile","architecture","expectedNodeCount"],
         label: t("resources.runtime_installation_guide.label", "Runtime Installation Guide"),
         aggregateRoute: "runtimeinstallationplan",
         queryRoute: "runtimeinstallationguide",
