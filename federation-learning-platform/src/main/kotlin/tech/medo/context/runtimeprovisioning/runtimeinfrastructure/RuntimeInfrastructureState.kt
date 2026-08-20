@@ -33,6 +33,8 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
     var agentVersion: String? = null
     var organizationId: UUID? = null
     var runtimeName: String? = null
+    var runtimeAgentEndpoint: String? = null
+    var endpointScope: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructurePlannedEvent): RuntimeInfrastructureState = apply {
@@ -103,5 +105,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
         agentInstallMode = event.agentInstallMode
         organizationId = event.organizationId
         runtimeName = event.runtimeName
+        runtimeAgentEndpoint = event.runtimeAgentEndpoint
+        endpointScope = event.endpointScope
     }
 }

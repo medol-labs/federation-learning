@@ -11,14 +11,22 @@ import tech.medo.datasetgovernance.domain.types.FeatureDefinition;
 import tech.medo.datasetgovernance.domain.types.LabelDefinition;
 
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModel
+import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelCriteria
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelProjection
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelRepository
 import tech.medo.datasetgovernance.featureschemacatalog.toReadModel
 
 @Repository
-class JpaFeatureSchemaCatalogReadModelRepository(private val jpaRepository: SpringDataFeatureSchemaCatalogReadModelRepository, private val objectMapper: ObjectMapper) : FeatureSchemaCatalogReadModelRepository {
+class JpaFeatureSchemaCatalogReadModelRepository(
+    private val jpaRepository: SpringDataFeatureSchemaCatalogReadModelRepository,
+    private val queryService: FeatureSchemaCatalogReadModelQueryService,
+    private val objectMapper: ObjectMapper
+) : FeatureSchemaCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<FeatureSchemaCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: FeatureSchemaCatalogReadModelCriteria?, pageable: Pageable): Page<FeatureSchemaCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): FeatureSchemaCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -69,4 +77,4 @@ class JpaFeatureSchemaCatalogReadModelRepository(private val jpaRepository: Spri
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

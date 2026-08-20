@@ -18,9 +18,10 @@ import java.util.UUID;
 class RuntimeInstallationGuideReadModelResource(private val repository: RuntimeInstallationGuideReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: RuntimeInstallationGuideReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<RuntimeInstallationGuideReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

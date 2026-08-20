@@ -5,16 +5,26 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.AgentDatasetAccessValidationCatalogReadModel
+import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.AgentDatasetAccessValidationCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.AgentDatasetAccessValidationCatalogReadModelProjection
 import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.AgentDatasetAccessValidationCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.toReadModel
 
 @Repository
-class JpaAgentDatasetAccessValidationCatalogReadModelRepository(private val jpaRepository: SpringDataAgentDatasetAccessValidationCatalogReadModelRepository) : AgentDatasetAccessValidationCatalogReadModelRepository {
+class JpaAgentDatasetAccessValidationCatalogReadModelRepository(
+    private val jpaRepository: SpringDataAgentDatasetAccessValidationCatalogReadModelRepository,
+    private val queryService: AgentDatasetAccessValidationCatalogReadModelQueryService
+) : AgentDatasetAccessValidationCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<AgentDatasetAccessValidationCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: AgentDatasetAccessValidationCatalogReadModelCriteria?, pageable: Pageable): Page<AgentDatasetAccessValidationCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): AgentDatasetAccessValidationCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -71,4 +81,4 @@ class JpaAgentDatasetAccessValidationCatalogReadModelRepository(private val jpaR
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

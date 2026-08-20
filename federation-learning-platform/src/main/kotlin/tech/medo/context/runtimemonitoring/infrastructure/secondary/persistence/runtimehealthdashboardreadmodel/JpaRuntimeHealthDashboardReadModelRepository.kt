@@ -5,16 +5,27 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimemonitoring.runtimehealthdashboard.RuntimeHealthDashboardReadModel
+import tech.medo.runtimemonitoring.runtimehealthdashboard.RuntimeHealthDashboardReadModelCriteria
 import tech.medo.runtimemonitoring.runtimehealthdashboard.RuntimeHealthDashboardReadModelProjection
 import tech.medo.runtimemonitoring.runtimehealthdashboard.RuntimeHealthDashboardReadModelRepository
 import tech.medo.runtimemonitoring.runtimehealthdashboard.toReadModel
 
 @Repository
-class JpaRuntimeHealthDashboardReadModelRepository(private val jpaRepository: SpringDataRuntimeHealthDashboardReadModelRepository) : RuntimeHealthDashboardReadModelRepository {
+class JpaRuntimeHealthDashboardReadModelRepository(
+    private val jpaRepository: SpringDataRuntimeHealthDashboardReadModelRepository,
+    private val queryService: RuntimeHealthDashboardReadModelQueryService
+) : RuntimeHealthDashboardReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeHealthDashboardReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: RuntimeHealthDashboardReadModelCriteria?, pageable: Pageable): Page<RuntimeHealthDashboardReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): RuntimeHealthDashboardReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -83,4 +94,4 @@ class JpaRuntimeHealthDashboardReadModelRepository(private val jpaRepository: Sp
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

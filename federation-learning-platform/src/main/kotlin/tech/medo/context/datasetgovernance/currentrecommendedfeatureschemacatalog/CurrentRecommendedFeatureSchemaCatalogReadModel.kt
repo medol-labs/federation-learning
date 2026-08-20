@@ -8,8 +8,20 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class CurrentRecommendedFeatureSchemaCatalogReadModelQuery
+
+class CurrentRecommendedFeatureSchemaCatalogReadModelCriteria {
+    var featureDomain: StringFilter? = null
+    var recommendedFeatureSchemaId: StringFilter? = null
+    var recommendedVersion: StringFilter? = null
+    var recommendedAt: RangeFilter<LocalDateTime>? = null
+    var recommendationNote: StringFilter? = null
+}
+
 
 class CurrentRecommendedFeatureSchemaCatalogReadModelProjection : MetadataProjection {
     var featureDomain: String? = null
@@ -42,6 +54,7 @@ fun CurrentRecommendedFeatureSchemaCatalogReadModelProjection.toReadModel(): Cur
 
 interface CurrentRecommendedFeatureSchemaCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<CurrentRecommendedFeatureSchemaCatalogReadModel>
+    fun findAllByCriteria(criteria: CurrentRecommendedFeatureSchemaCatalogReadModelCriteria?, pageable: Pageable): Page<CurrentRecommendedFeatureSchemaCatalogReadModel>
     fun findById(id: String): CurrentRecommendedFeatureSchemaCatalogReadModel?
     fun findProjectionById(id: String): CurrentRecommendedFeatureSchemaCatalogReadModelProjection?
     fun save(projection: CurrentRecommendedFeatureSchemaCatalogReadModelProjection)

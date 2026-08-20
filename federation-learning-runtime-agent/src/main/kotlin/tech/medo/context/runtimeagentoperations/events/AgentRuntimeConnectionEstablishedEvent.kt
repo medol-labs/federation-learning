@@ -11,6 +11,8 @@ data class AgentRuntimeConnectionEstablishedEvent(
     @EventTag(key = "runtimeInfrastructureId")
     val runtimeInfrastructureId: UUID,
     val runtimeAgentId: UUID,
+    val runtimeAgentEndpoint: String,
+    val endpointScope: String,
     val runtimePlatformConnectionReady: Boolean,
     val platformApiReachable: Boolean,
     val agentAuthenticationSucceeded: Boolean,

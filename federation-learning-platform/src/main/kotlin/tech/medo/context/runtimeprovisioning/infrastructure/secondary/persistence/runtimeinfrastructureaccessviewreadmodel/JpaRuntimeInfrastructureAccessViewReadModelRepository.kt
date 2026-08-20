@@ -5,16 +5,27 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
 
 import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModel
+import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModelCriteria
 import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModelProjection
 import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModelRepository
 import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.toReadModel
 
 @Repository
-class JpaRuntimeInfrastructureAccessViewReadModelRepository(private val jpaRepository: SpringDataRuntimeInfrastructureAccessViewReadModelRepository) : RuntimeInfrastructureAccessViewReadModelRepository {
+class JpaRuntimeInfrastructureAccessViewReadModelRepository(
+    private val jpaRepository: SpringDataRuntimeInfrastructureAccessViewReadModelRepository,
+    private val queryService: RuntimeInfrastructureAccessViewReadModelQueryService
+) : RuntimeInfrastructureAccessViewReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeInfrastructureAccessViewReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: RuntimeInfrastructureAccessViewReadModelCriteria?, pageable: Pageable): Page<RuntimeInfrastructureAccessViewReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): RuntimeInfrastructureAccessViewReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -93,4 +104,4 @@ class JpaRuntimeInfrastructureAccessViewReadModelRepository(private val jpaRepos
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

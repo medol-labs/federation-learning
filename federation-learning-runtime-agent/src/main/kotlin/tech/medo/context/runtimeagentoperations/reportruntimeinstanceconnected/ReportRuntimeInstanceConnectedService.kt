@@ -10,6 +10,8 @@ interface ReportRuntimeInstanceConnectedService {
 data class ReportRuntimeInstanceConnectedInput(
     val runtimeInfrastructureId: UUID,
     val runtimeAgentId: UUID,
+    val runtimeAgentEndpoint: String,
+    val endpointScope: String,
     val runtimePlatformConnectionReady: Boolean,
     val platformApiReachable: Boolean,
     val agentAuthenticationSucceeded: Boolean,

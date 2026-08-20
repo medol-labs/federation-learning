@@ -7,8 +7,21 @@ import java.util.UUID;
 import tech.medo.organizationmanagement.domain.types.OrganizationType;
 import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum;
 
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class OrganizationDirectoryReadModelQuery
+
+class OrganizationDirectoryReadModelCriteria {
+    var organizationId: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var organizationType: Filter<OrganizationType>? = null
+    var state: Filter<OrganizationStateEnum>? = null
+    var approvedDatasetCount: IntegerFilter? = null
+}
+
 
 class OrganizationDirectoryReadModelProjection : MetadataProjection {
     var organizationId: UUID? = null
@@ -41,6 +54,7 @@ fun OrganizationDirectoryReadModelProjection.toReadModel(): OrganizationDirector
 
 interface OrganizationDirectoryReadModelRepository {
     fun findAll(pageable: Pageable): Page<OrganizationDirectoryReadModel>
+    fun findAllByCriteria(criteria: OrganizationDirectoryReadModelCriteria?, pageable: Pageable): Page<OrganizationDirectoryReadModel>
     fun findById(id: UUID): OrganizationDirectoryReadModel?
     fun findProjectionById(id: UUID): OrganizationDirectoryReadModelProjection?
     fun save(projection: OrganizationDirectoryReadModelProjection)

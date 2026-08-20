@@ -18,9 +18,10 @@ import java.util.UUID;
 class AuditRecordLogReadModelResource(private val repository: AuditRecordLogReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: AuditRecordLogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<AuditRecordLogReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

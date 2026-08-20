@@ -9,8 +9,32 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class DictionaryValueCatalogReadModelQuery
+
+class DictionaryValueCatalogReadModelCriteria {
+    var dictionaryValueId: StringFilter? = null
+    var dictionaryId: StringFilter? = null
+    var dictionaryCode: StringFilter? = null
+    var valueCode: StringFilter? = null
+    var displayName: StringFilter? = null
+    var displayOrder: IntegerFilter? = null
+    var description: StringFilter? = null
+    var active: BooleanFilter? = null
+    var state: Filter<DictionaryValueStateEnum>? = null
+    var addedAt: RangeFilter<LocalDateTime>? = null
+    var updatedAt: RangeFilter<LocalDateTime>? = null
+    var disabledAt: RangeFilter<LocalDateTime>? = null
+    var disabledReason: StringFilter? = null
+    var enabledAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class DictionaryValueCatalogReadModelProjection : MetadataProjection {
     var dictionaryValueId: UUID? = null
@@ -61,6 +85,7 @@ fun DictionaryValueCatalogReadModelProjection.toReadModel(): DictionaryValueCata
 
 interface DictionaryValueCatalogReadModelRepository {
     fun findAllByFilter(dictionaryCode: String?, active: Boolean?, state: DictionaryValueStateEnum?, pageable: Pageable): Page<DictionaryValueCatalogReadModel>
+    fun findAllByCriteria(criteria: DictionaryValueCatalogReadModelCriteria?, pageable: Pageable): Page<DictionaryValueCatalogReadModel>
     fun findById(id: UUID): DictionaryValueCatalogReadModel?
     fun findProjectionById(id: UUID): DictionaryValueCatalogReadModelProjection?
     fun save(projection: DictionaryValueCatalogReadModelProjection)

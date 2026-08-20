@@ -5,16 +5,26 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimeagentoperations.agentruntimeinfrastructureconnectioncatalog.AgentRuntimeInfrastructureConnectionCatalogReadModel
+import tech.medo.runtimeagentoperations.agentruntimeinfrastructureconnectioncatalog.AgentRuntimeInfrastructureConnectionCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.agentruntimeinfrastructureconnectioncatalog.AgentRuntimeInfrastructureConnectionCatalogReadModelProjection
 import tech.medo.runtimeagentoperations.agentruntimeinfrastructureconnectioncatalog.AgentRuntimeInfrastructureConnectionCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.agentruntimeinfrastructureconnectioncatalog.toReadModel
 
 @Repository
-class JpaAgentRuntimeInfrastructureConnectionCatalogReadModelRepository(private val jpaRepository: SpringDataAgentRuntimeInfrastructureConnectionCatalogReadModelRepository) : AgentRuntimeInfrastructureConnectionCatalogReadModelRepository {
+class JpaAgentRuntimeInfrastructureConnectionCatalogReadModelRepository(
+    private val jpaRepository: SpringDataAgentRuntimeInfrastructureConnectionCatalogReadModelRepository,
+    private val queryService: AgentRuntimeInfrastructureConnectionCatalogReadModelQueryService
+) : AgentRuntimeInfrastructureConnectionCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<AgentRuntimeInfrastructureConnectionCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: AgentRuntimeInfrastructureConnectionCatalogReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeInfrastructureConnectionCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): AgentRuntimeInfrastructureConnectionCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -67,4 +77,4 @@ class JpaAgentRuntimeInfrastructureConnectionCatalogReadModelRepository(private 
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

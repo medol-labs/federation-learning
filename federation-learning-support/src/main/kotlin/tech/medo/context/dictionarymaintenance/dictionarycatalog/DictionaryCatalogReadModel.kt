@@ -9,8 +9,25 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class DictionaryCatalogReadModelQuery
+
+class DictionaryCatalogReadModelCriteria {
+    var dictionaryId: StringFilter? = null
+    var dictionaryCode: StringFilter? = null
+    var dictionaryName: StringFilter? = null
+    var description: StringFilter? = null
+    var state: Filter<DictionaryStateEnum>? = null
+    var registeredAt: RangeFilter<LocalDateTime>? = null
+    var updatedAt: RangeFilter<LocalDateTime>? = null
+    var archivedAt: RangeFilter<LocalDateTime>? = null
+    var archiveReason: StringFilter? = null
+}
+
 
 class DictionaryCatalogReadModelProjection : MetadataProjection {
     var dictionaryId: UUID? = null
@@ -51,6 +68,7 @@ fun DictionaryCatalogReadModelProjection.toReadModel(): DictionaryCatalogReadMod
 
 interface DictionaryCatalogReadModelRepository {
     fun findAllByFilter(dictionaryCode: String?, pageable: Pageable): Page<DictionaryCatalogReadModel>
+    fun findAllByCriteria(criteria: DictionaryCatalogReadModelCriteria?, pageable: Pageable): Page<DictionaryCatalogReadModel>
     fun findById(id: UUID): DictionaryCatalogReadModel?
     fun findProjectionById(id: UUID): DictionaryCatalogReadModelProjection?
     fun save(projection: DictionaryCatalogReadModelProjection)

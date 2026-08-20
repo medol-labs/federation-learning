@@ -5,16 +5,26 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimegovernance.runtimeidentitycatalog.RuntimeIdentityCatalogReadModel
+import tech.medo.runtimegovernance.runtimeidentitycatalog.RuntimeIdentityCatalogReadModelCriteria
 import tech.medo.runtimegovernance.runtimeidentitycatalog.RuntimeIdentityCatalogReadModelProjection
 import tech.medo.runtimegovernance.runtimeidentitycatalog.RuntimeIdentityCatalogReadModelRepository
 import tech.medo.runtimegovernance.runtimeidentitycatalog.toReadModel
 
 @Repository
-class JpaRuntimeIdentityCatalogReadModelRepository(private val jpaRepository: SpringDataRuntimeIdentityCatalogReadModelRepository) : RuntimeIdentityCatalogReadModelRepository {
+class JpaRuntimeIdentityCatalogReadModelRepository(
+    private val jpaRepository: SpringDataRuntimeIdentityCatalogReadModelRepository,
+    private val queryService: RuntimeIdentityCatalogReadModelQueryService
+) : RuntimeIdentityCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeIdentityCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: RuntimeIdentityCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeIdentityCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): RuntimeIdentityCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -63,4 +73,4 @@ class JpaRuntimeIdentityCatalogReadModelRepository(private val jpaRepository: Sp
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

@@ -16,9 +16,11 @@ import tech.medo.infrastructure.secondary.runtimeprovisioning.runtimeinfrastruct
 import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentInput
 import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentResult
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModel
+import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModelCriteria
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModelProjection
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModelRepository
 import tech.medo.runtimeprovisioning.runtimeinstallationplancatalog.RuntimeInstallationPlanCatalogReadModel
+import tech.medo.runtimeprovisioning.runtimeinstallationplancatalog.RuntimeInstallationPlanCatalogReadModelCriteria
 import tech.medo.runtimeprovisioning.runtimeinstallationplancatalog.RuntimeInstallationPlanCatalogReadModelProjection
 import tech.medo.runtimeprovisioning.runtimeinstallationplancatalog.RuntimeInstallationPlanCatalogReadModelRepository
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.RuntimeInfrastructureVerification
@@ -238,6 +240,12 @@ private class FakeRuntimeInstallationPlanRepository(
     override fun findAll(pageable: Pageable): Page<RuntimeInstallationPlanCatalogReadModel> =
         PageImpl(plans.values.toList())
 
+    override fun findAllByCriteria(
+        criteria: RuntimeInstallationPlanCatalogReadModelCriteria?,
+        pageable: Pageable
+    ): Page<RuntimeInstallationPlanCatalogReadModel> =
+        findAll(pageable)
+
     override fun findById(id: UUID): RuntimeInstallationPlanCatalogReadModel? = plans[id]
 
     override fun findProjectionById(id: UUID): RuntimeInstallationPlanCatalogReadModelProjection? = null
@@ -252,6 +260,12 @@ private class FakeRuntimeInfrastructurePackageRepository(
 
     override fun findAll(pageable: Pageable): Page<RuntimeInfrastructurePackageCatalogReadModel> =
         PageImpl(packages.values.toList())
+
+    override fun findAllByCriteria(
+        criteria: RuntimeInfrastructurePackageCatalogReadModelCriteria?,
+        pageable: Pageable
+    ): Page<RuntimeInfrastructurePackageCatalogReadModel> =
+        findAll(pageable)
 
     override fun findById(id: UUID): RuntimeInfrastructurePackageCatalogReadModel? = packages[id]
 

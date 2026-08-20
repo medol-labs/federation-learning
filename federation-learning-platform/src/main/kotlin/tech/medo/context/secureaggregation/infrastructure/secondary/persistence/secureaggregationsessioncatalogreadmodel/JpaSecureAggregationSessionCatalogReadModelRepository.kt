@@ -7,16 +7,28 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
+import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModel
+import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModelCriteria
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModelProjection
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModelRepository
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.toReadModel
 
 @Repository
-class JpaSecureAggregationSessionCatalogReadModelRepository(private val jpaRepository: SpringDataSecureAggregationSessionCatalogReadModelRepository, private val objectMapper: ObjectMapper) : SecureAggregationSessionCatalogReadModelRepository {
+class JpaSecureAggregationSessionCatalogReadModelRepository(
+    private val jpaRepository: SpringDataSecureAggregationSessionCatalogReadModelRepository,
+    private val queryService: SecureAggregationSessionCatalogReadModelQueryService,
+    private val objectMapper: ObjectMapper
+) : SecureAggregationSessionCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<SecureAggregationSessionCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: SecureAggregationSessionCatalogReadModelCriteria?, pageable: Pageable): Page<SecureAggregationSessionCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): SecureAggregationSessionCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -97,4 +109,4 @@ class JpaSecureAggregationSessionCatalogReadModelRepository(private val jpaRepos
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

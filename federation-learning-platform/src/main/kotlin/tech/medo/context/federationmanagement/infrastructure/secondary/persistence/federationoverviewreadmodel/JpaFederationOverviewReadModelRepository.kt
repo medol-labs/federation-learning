@@ -5,16 +5,24 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import tech.medo.federationmanagement.domain.states.FederationStateEnum;
 
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModel
+import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModelCriteria
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModelProjection
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModelRepository
 import tech.medo.federationmanagement.federationoverview.toReadModel
 
 @Repository
-class JpaFederationOverviewReadModelRepository(private val jpaRepository: SpringDataFederationOverviewReadModelRepository) : FederationOverviewReadModelRepository {
+class JpaFederationOverviewReadModelRepository(
+    private val jpaRepository: SpringDataFederationOverviewReadModelRepository,
+    private val queryService: FederationOverviewReadModelQueryService
+) : FederationOverviewReadModelRepository {
     override fun findAll(pageable: Pageable): Page<FederationOverviewReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: FederationOverviewReadModelCriteria?, pageable: Pageable): Page<FederationOverviewReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): FederationOverviewReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -61,4 +69,4 @@ class JpaFederationOverviewReadModelRepository(private val jpaRepository: Spring
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

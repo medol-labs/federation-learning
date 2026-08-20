@@ -67,7 +67,7 @@ class StartRoundExecutionDecisionTest {
             command,
             state = state,
             portResult = StartRoundExecutionResult.Succeeded(
-                runtimeEngineJobId = "runtime-engine-job-1"
+                runtimeEngineJobId = ""
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
         )
@@ -89,7 +89,6 @@ class StartRoundExecutionDecisionTest {
         assertEquals(command.baseModelFormat, event.baseModelFormat)
         assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
         assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
-        assertEquals("runtime-engine-job-1", event.runtimeEngineJobId)
     }
 
     @Test
@@ -169,6 +168,5 @@ class StartRoundExecutionDecisionTest {
         assertEquals(command.baseModelFormat, event.baseModelFormat)
         assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
         assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
-        assertEquals(null, event.runtimeEngineJobId)
     }
 }

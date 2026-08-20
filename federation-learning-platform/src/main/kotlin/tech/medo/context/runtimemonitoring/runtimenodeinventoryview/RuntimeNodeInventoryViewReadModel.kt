@@ -8,8 +8,34 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class RuntimeNodeInventoryViewReadModelQuery
+
+class RuntimeNodeInventoryViewReadModelCriteria {
+    var nodeId: StringFilter? = null
+    var runtimeNodeInventoryReportId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var runtimeInfrastructureId: StringFilter? = null
+    var runtimeAgentId: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var runtimeName: StringFilter? = null
+    var runtimeNodeName: StringFilter? = null
+    var infrastructureNodeId: StringFilter? = null
+    var runtimeNodeRole: StringFilter? = null
+    var nodeReady: BooleanFilter? = null
+    var runtimeEngineVersion: StringFilter? = null
+    var containerEngineVersion: StringFilter? = null
+    var operatingSystem: StringFilter? = null
+    var architecture: StringFilter? = null
+    var inventoryHash: StringFilter? = null
+    var discoveredAt: RangeFilter<LocalDateTime>? = null
+    var recordedAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class RuntimeNodeInventoryViewReadModelProjection : MetadataProjection {
     var nodeId: UUID? = null
@@ -68,6 +94,7 @@ fun RuntimeNodeInventoryViewReadModelProjection.toReadModel(): RuntimeNodeInvent
 
 interface RuntimeNodeInventoryViewReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeNodeInventoryViewReadModel>
+    fun findAllByCriteria(criteria: RuntimeNodeInventoryViewReadModelCriteria?, pageable: Pageable): Page<RuntimeNodeInventoryViewReadModel>
     fun findById(id: UUID): RuntimeNodeInventoryViewReadModel?
     fun findProjectionById(id: UUID): RuntimeNodeInventoryViewReadModelProjection?
     fun save(projection: RuntimeNodeInventoryViewReadModelProjection)

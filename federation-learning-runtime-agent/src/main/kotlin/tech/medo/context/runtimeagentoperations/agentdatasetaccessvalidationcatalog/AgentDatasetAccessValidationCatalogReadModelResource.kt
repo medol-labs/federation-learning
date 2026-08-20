@@ -18,9 +18,10 @@ import java.util.UUID;
 class AgentDatasetAccessValidationCatalogReadModelResource(private val repository: AgentDatasetAccessValidationCatalogReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: AgentDatasetAccessValidationCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<AgentDatasetAccessValidationCatalogReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

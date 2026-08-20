@@ -5,16 +5,26 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog.AgentRuntimeNodeInventoryCatalogReadModel
+import tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog.AgentRuntimeNodeInventoryCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog.AgentRuntimeNodeInventoryCatalogReadModelProjection
 import tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog.AgentRuntimeNodeInventoryCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog.toReadModel
 
 @Repository
-class JpaAgentRuntimeNodeInventoryCatalogReadModelRepository(private val jpaRepository: SpringDataAgentRuntimeNodeInventoryCatalogReadModelRepository) : AgentRuntimeNodeInventoryCatalogReadModelRepository {
+class JpaAgentRuntimeNodeInventoryCatalogReadModelRepository(
+    private val jpaRepository: SpringDataAgentRuntimeNodeInventoryCatalogReadModelRepository,
+    private val queryService: AgentRuntimeNodeInventoryCatalogReadModelQueryService
+) : AgentRuntimeNodeInventoryCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<AgentRuntimeNodeInventoryCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: AgentRuntimeNodeInventoryCatalogReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeNodeInventoryCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): AgentRuntimeNodeInventoryCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -75,4 +85,4 @@ class JpaAgentRuntimeNodeInventoryCatalogReadModelRepository(private val jpaRepo
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

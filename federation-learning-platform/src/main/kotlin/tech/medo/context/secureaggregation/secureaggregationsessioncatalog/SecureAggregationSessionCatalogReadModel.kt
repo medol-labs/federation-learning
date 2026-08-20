@@ -9,8 +9,41 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class SecureAggregationSessionCatalogReadModelQuery
+
+class SecureAggregationSessionCatalogReadModelCriteria {
+    var secureAggregationSessionId: StringFilter? = null
+    var trainingJobId: StringFilter? = null
+    var trainingRunConfigurationId: StringFilter? = null
+    var featureSchemaId: StringFilter? = null
+    var roundId: StringFilter? = null
+    var requiredParticipantCount: IntegerFilter? = null
+    var selectedParticipantCount: IntegerFilter? = null
+    var encryptionContextPrepared: BooleanFilter? = null
+    var receivedEncryptedUpdateCount: IntegerFilter? = null
+    var encryptionScheme: StringFilter? = null
+    var publicKeyVersion: StringFilter? = null
+    var encryptedParameterScale: IntegerFilter? = null
+    var aggregatedModelId: StringFilter? = null
+    var modelFormat: StringFilter? = null
+    var modelArtifactDigest: StringFilter? = null
+    var state: Filter<SecureAggregationSessionStateEnum>? = null
+    var failureReason: StringFilter? = null
+    var createdAt: RangeFilter<LocalDateTime>? = null
+    var selectedAt: RangeFilter<LocalDateTime>? = null
+    var encryptionContextPreparedAt: RangeFilter<LocalDateTime>? = null
+    var decryptedAt: RangeFilter<LocalDateTime>? = null
+    var completedAt: RangeFilter<LocalDateTime>? = null
+    var failedAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class SecureAggregationSessionCatalogReadModelProjection : MetadataProjection {
     var secureAggregationSessionId: UUID? = null
@@ -83,6 +116,7 @@ fun SecureAggregationSessionCatalogReadModelProjection.toReadModel(): SecureAggr
 
 interface SecureAggregationSessionCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<SecureAggregationSessionCatalogReadModel>
+    fun findAllByCriteria(criteria: SecureAggregationSessionCatalogReadModelCriteria?, pageable: Pageable): Page<SecureAggregationSessionCatalogReadModel>
     fun findById(id: UUID): SecureAggregationSessionCatalogReadModel?
     fun findProjectionById(id: UUID): SecureAggregationSessionCatalogReadModelProjection?
     fun save(projection: SecureAggregationSessionCatalogReadModelProjection)

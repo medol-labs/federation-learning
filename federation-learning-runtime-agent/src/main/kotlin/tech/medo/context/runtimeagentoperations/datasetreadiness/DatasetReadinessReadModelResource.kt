@@ -18,9 +18,10 @@ import java.util.UUID;
 class DatasetReadinessReadModelResource(private val repository: DatasetReadinessReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: DatasetReadinessReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<DatasetReadinessReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

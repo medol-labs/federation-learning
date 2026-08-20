@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.RestController
 class CurrentRecommendedFeatureSchemaCatalogReadModelResource(private val repository: CurrentRecommendedFeatureSchemaCatalogReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: CurrentRecommendedFeatureSchemaCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<CurrentRecommendedFeatureSchemaCatalogReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

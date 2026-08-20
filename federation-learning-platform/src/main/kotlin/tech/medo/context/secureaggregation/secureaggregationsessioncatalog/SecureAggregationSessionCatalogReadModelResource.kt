@@ -18,9 +18,10 @@ import java.util.UUID;
 class SecureAggregationSessionCatalogReadModelResource(private val repository: SecureAggregationSessionCatalogReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: SecureAggregationSessionCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<SecureAggregationSessionCatalogReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

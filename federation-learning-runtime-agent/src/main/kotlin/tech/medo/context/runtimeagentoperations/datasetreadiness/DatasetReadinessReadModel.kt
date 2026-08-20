@@ -9,8 +9,52 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BigDecimalFilter
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class DatasetReadinessReadModelQuery
+
+class DatasetReadinessReadModelCriteria {
+    var datasetId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var runtimeId: StringFilter? = null
+    var featureSchemaId: StringFilter? = null
+    var datasetName: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var featureDomain: StringFilter? = null
+    var featureSchemaVersion: StringFilter? = null
+    var datasetUsage: StringFilter? = null
+    var metadataStatus: StringFilter? = null
+    var contractStatus: StringFilter? = null
+    var approvalStatus: StringFilter? = null
+    var accessStatus: StringFilter? = null
+    var runtimeStatus: StringFilter? = null
+    var overallReadiness: StringFilter? = null
+    var readyForTraining: BooleanFilter? = null
+    var canBeSelectedForTraining: BooleanFilter? = null
+    var readinessScore: IntegerFilter? = null
+    var sampleCount: IntegerFilter? = null
+    var featureCount: IntegerFilter? = null
+    var schemaCompatible: BooleanFilter? = null
+    var labelCompatible: BooleanFilter? = null
+    var qualityScore: BigDecimalFilter? = null
+    var nonIidScore: BigDecimalFilter? = null
+    var classBalanceScore: BigDecimalFilter? = null
+    var metadataReportId: StringFilter? = null
+    var datasetAccessValidationId: StringFilter? = null
+    var readable: BooleanFilter? = null
+    var schemaReadable: BooleanFilter? = null
+    var sampleBatchReadable: BooleanFilter? = null
+    var lastProfiledAt: RangeFilter<LocalDateTime>? = null
+    var lastAccessValidatedAt: RangeFilter<LocalDateTime>? = null
+    var lastRuntimeHeartbeatAt: RangeFilter<LocalDateTime>? = null
+    var lastUpdatedAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class DatasetReadinessReadModelProjection : MetadataProjection {
     var datasetId: UUID? = null
@@ -107,6 +151,7 @@ fun DatasetReadinessReadModelProjection.toReadModel(): DatasetReadinessReadModel
 
 interface DatasetReadinessReadModelRepository {
     fun findAll(pageable: Pageable): Page<DatasetReadinessReadModel>
+    fun findAllByCriteria(criteria: DatasetReadinessReadModelCriteria?, pageable: Pageable): Page<DatasetReadinessReadModel>
     fun findById(id: UUID): DatasetReadinessReadModel?
     fun findProjectionById(id: UUID): DatasetReadinessReadModelProjection?
     fun save(projection: DatasetReadinessReadModelProjection)

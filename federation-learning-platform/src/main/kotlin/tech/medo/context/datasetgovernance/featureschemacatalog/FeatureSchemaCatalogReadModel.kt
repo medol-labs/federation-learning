@@ -7,8 +7,24 @@ import java.util.UUID;
 import tech.medo.datasetgovernance.domain.types.FeatureDefinition;
 import tech.medo.datasetgovernance.domain.types.LabelDefinition;
 
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class FeatureSchemaCatalogReadModelQuery
+
+class FeatureSchemaCatalogReadModelCriteria {
+    var featureSchemaId: StringFilter? = null
+    var featureDomain: StringFilter? = null
+    var version: StringFilter? = null
+    var dataModality: StringFilter? = null
+    var featureCount: IntegerFilter? = null
+    var schemaStatus: StringFilter? = null
+    var supersededByFeatureSchemaId: StringFilter? = null
+    var recommendedForDomain: BooleanFilter? = null
+}
+
 
 class FeatureSchemaCatalogReadModelProjection : MetadataProjection {
     var featureSchemaId: UUID? = null
@@ -51,6 +67,7 @@ fun FeatureSchemaCatalogReadModelProjection.toReadModel(): FeatureSchemaCatalogR
 
 interface FeatureSchemaCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<FeatureSchemaCatalogReadModel>
+    fun findAllByCriteria(criteria: FeatureSchemaCatalogReadModelCriteria?, pageable: Pageable): Page<FeatureSchemaCatalogReadModel>
     fun findById(id: UUID): FeatureSchemaCatalogReadModel?
     fun findProjectionById(id: UUID): FeatureSchemaCatalogReadModelProjection?
     fun save(projection: FeatureSchemaCatalogReadModelProjection)

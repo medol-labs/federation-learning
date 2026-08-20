@@ -18,9 +18,10 @@ import java.util.UUID;
 class FederationMembershipDirectoryReadModelResource(private val repository: FederationMembershipDirectoryReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: FederationMembershipDirectoryReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<FederationMembershipDirectoryReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
 }

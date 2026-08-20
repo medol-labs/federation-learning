@@ -7,16 +7,28 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModel
+import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModelCriteria
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModelProjection
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModelRepository
 import tech.medo.runtimeagentoperations.datasetreadiness.toReadModel
 
 @Repository
-class JpaDatasetReadinessReadModelRepository(private val jpaRepository: SpringDataDatasetReadinessReadModelRepository, private val objectMapper: ObjectMapper) : DatasetReadinessReadModelRepository {
+class JpaDatasetReadinessReadModelRepository(
+    private val jpaRepository: SpringDataDatasetReadinessReadModelRepository,
+    private val queryService: DatasetReadinessReadModelQueryService,
+    private val objectMapper: ObjectMapper
+) : DatasetReadinessReadModelRepository {
     override fun findAll(pageable: Pageable): Page<DatasetReadinessReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: DatasetReadinessReadModelCriteria?, pageable: Pageable): Page<DatasetReadinessReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): DatasetReadinessReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -121,4 +133,4 @@ class JpaDatasetReadinessReadModelRepository(private val jpaRepository: SpringDa
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

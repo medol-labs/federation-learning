@@ -9,8 +9,35 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.LongFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class StagedFileCatalogReadModelQuery
+
+class StagedFileCatalogReadModelCriteria {
+    var stagedFileId: StringFilter? = null
+    var originalFileName: StringFilter? = null
+    var contentType: StringFilter? = null
+    var sizeBytes: LongFilter? = null
+    var purpose: StringFilter? = null
+    var stagedFileLocation: StringFilter? = null
+    var checksum: StringFilter? = null
+    var state: Filter<StagedFileStateEnum>? = null
+    var stagedAt: RangeFilter<LocalDateTime>? = null
+    var consumedAt: RangeFilter<LocalDateTime>? = null
+    var consumedByContext: StringFilter? = null
+    var consumedByCommand: StringFilter? = null
+    var consumedByCommandId: StringFilter? = null
+    var discardedAt: RangeFilter<LocalDateTime>? = null
+    var discardReason: StringFilter? = null
+    var expiresAt: RangeFilter<LocalDateTime>? = null
+    var expiredAt: RangeFilter<LocalDateTime>? = null
+    var expirationReason: StringFilter? = null
+}
+
 
 class StagedFileCatalogReadModelProjection : MetadataProjection {
     var stagedFileId: UUID? = null
@@ -69,6 +96,7 @@ fun StagedFileCatalogReadModelProjection.toReadModel(): StagedFileCatalogReadMod
 
 interface StagedFileCatalogReadModelRepository {
     fun findAllByFilter(purpose: String?, pageable: Pageable): Page<StagedFileCatalogReadModel>
+    fun findAllByCriteria(criteria: StagedFileCatalogReadModelCriteria?, pageable: Pageable): Page<StagedFileCatalogReadModel>
     fun findById(id: UUID): StagedFileCatalogReadModel?
     fun findProjectionById(id: UUID): StagedFileCatalogReadModelProjection?
     fun save(projection: StagedFileCatalogReadModelProjection)

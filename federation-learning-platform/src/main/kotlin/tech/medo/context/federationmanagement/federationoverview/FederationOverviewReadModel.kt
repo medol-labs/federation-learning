@@ -6,8 +6,24 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.federationmanagement.domain.states.FederationStateEnum;
 
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class FederationOverviewReadModelQuery
+
+class FederationOverviewReadModelCriteria {
+    var federationId: StringFilter? = null
+    var federationName: StringFilter? = null
+    var state: Filter<FederationStateEnum>? = null
+    var minimumParticipantCount: IntegerFilter? = null
+    var activeMemberCount: IntegerFilter? = null
+    var pendingInvitationCount: IntegerFilter? = null
+    var activeRuntimeCount: IntegerFilter? = null
+    var activeTrainingJobCount: IntegerFilter? = null
+}
+
 
 class FederationOverviewReadModelProjection : MetadataProjection {
     var federationId: UUID? = null
@@ -46,6 +62,7 @@ fun FederationOverviewReadModelProjection.toReadModel(): FederationOverviewReadM
 
 interface FederationOverviewReadModelRepository {
     fun findAll(pageable: Pageable): Page<FederationOverviewReadModel>
+    fun findAllByCriteria(criteria: FederationOverviewReadModelCriteria?, pageable: Pageable): Page<FederationOverviewReadModel>
     fun findById(id: UUID): FederationOverviewReadModel?
     fun findProjectionById(id: UUID): FederationOverviewReadModelProjection?
     fun save(projection: FederationOverviewReadModelProjection)

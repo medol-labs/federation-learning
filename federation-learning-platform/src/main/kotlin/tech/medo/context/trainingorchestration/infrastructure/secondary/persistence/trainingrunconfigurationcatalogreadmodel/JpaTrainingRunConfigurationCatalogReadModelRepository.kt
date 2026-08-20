@@ -5,16 +5,25 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.math.BigDecimal;
+import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum;
 
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModel
+import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelCriteria
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelProjection
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelRepository
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.toReadModel
 
 @Repository
-class JpaTrainingRunConfigurationCatalogReadModelRepository(private val jpaRepository: SpringDataTrainingRunConfigurationCatalogReadModelRepository) : TrainingRunConfigurationCatalogReadModelRepository {
+class JpaTrainingRunConfigurationCatalogReadModelRepository(
+    private val jpaRepository: SpringDataTrainingRunConfigurationCatalogReadModelRepository,
+    private val queryService: TrainingRunConfigurationCatalogReadModelQueryService
+) : TrainingRunConfigurationCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<TrainingRunConfigurationCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: TrainingRunConfigurationCatalogReadModelCriteria?, pageable: Pageable): Page<TrainingRunConfigurationCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): TrainingRunConfigurationCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -117,4 +126,4 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(private val jpaRepos
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

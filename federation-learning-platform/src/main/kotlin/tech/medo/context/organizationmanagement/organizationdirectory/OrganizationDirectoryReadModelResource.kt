@@ -18,9 +18,10 @@ import java.util.UUID;
 class OrganizationDirectoryReadModelResource(private val repository: OrganizationDirectoryReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: OrganizationDirectoryReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<OrganizationDirectoryReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

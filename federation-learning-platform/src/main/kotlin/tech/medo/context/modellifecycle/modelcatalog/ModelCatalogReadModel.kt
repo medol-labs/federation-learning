@@ -7,8 +7,44 @@ import java.util.UUID;
 import java.math.BigDecimal;
 import tech.medo.modellifecycle.domain.states.ModelStateEnum;
 
+import tech.jhipster.service.filter.BigDecimalFilter
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.StringFilter
+
 
 class ModelCatalogReadModelQuery
+
+class ModelCatalogReadModelCriteria {
+    var modelId: StringFilter? = null
+    var trainingJobId: StringFilter? = null
+    var finalRoundId: StringFilter? = null
+    var modelArtifactId: StringFilter? = null
+    var trainingJobObjective: StringFilter? = null
+    var modelArtifactDigest: StringFilter? = null
+    var evaluationReportId: StringFilter? = null
+    var finalGlobalAccuracy: BigDecimalFilter? = null
+    var state: Filter<ModelStateEnum>? = null
+    var releaseChannel: StringFilter? = null
+    var productionStage: StringFilter? = null
+    var previousModelId: StringFilter? = null
+    var experimentId: StringFilter? = null
+    var hyperparameterSnapshotId: StringFilter? = null
+    var reproducibilityManifestId: StringFilter? = null
+    var modelCardId: StringFilter? = null
+    var baselineModelId: StringFilter? = null
+    var hasEvaluationPackage: BooleanFilter? = null
+    var approvalStatus: StringFilter? = null
+    var releaseStatus: StringFilter? = null
+    var isProduction: BooleanFilter? = null
+    var canRecordEvaluationPackage: BooleanFilter? = null
+    var canApprove: BooleanFilter? = null
+    var canPromoteToProduction: BooleanFilter? = null
+    var canRollback: BooleanFilter? = null
+    var canRetire: BooleanFilter? = null
+    var blockedReason: StringFilter? = null
+}
+
 
 class ModelCatalogReadModelProjection : MetadataProjection {
     var modelId: UUID? = null
@@ -85,6 +121,7 @@ fun ModelCatalogReadModelProjection.toReadModel(): ModelCatalogReadModel =
 
 interface ModelCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<ModelCatalogReadModel>
+    fun findAllByCriteria(criteria: ModelCatalogReadModelCriteria?, pageable: Pageable): Page<ModelCatalogReadModel>
     fun findById(id: UUID): ModelCatalogReadModel?
     fun findProjectionById(id: UUID): ModelCatalogReadModelProjection?
     fun save(projection: ModelCatalogReadModelProjection)

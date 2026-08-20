@@ -7,15 +7,22 @@ import org.springframework.stereotype.Repository
 import java.util.UUID;
 
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModel
+import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelCriteria
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelKey
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelProjection
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelRepository
 import tech.medo.federationmanagement.federationmembershipdirectory.toReadModel
 
 @Repository
-class JpaFederationMembershipDirectoryReadModelRepository(private val jpaRepository: SpringDataFederationMembershipDirectoryReadModelRepository) : FederationMembershipDirectoryReadModelRepository {
+class JpaFederationMembershipDirectoryReadModelRepository(
+    private val jpaRepository: SpringDataFederationMembershipDirectoryReadModelRepository,
+    private val queryService: FederationMembershipDirectoryReadModelQueryService
+) : FederationMembershipDirectoryReadModelRepository {
     override fun findAll(pageable: Pageable): Page<FederationMembershipDirectoryReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: FederationMembershipDirectoryReadModelCriteria?, pageable: Pageable): Page<FederationMembershipDirectoryReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: FederationMembershipDirectoryReadModelKey): FederationMembershipDirectoryReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -66,4 +73,4 @@ class JpaFederationMembershipDirectoryReadModelRepository(private val jpaReposit
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

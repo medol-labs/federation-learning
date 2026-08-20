@@ -10,8 +10,59 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 
+import tech.jhipster.service.filter.BigDecimalFilter
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class RoundExecutionCatalogReadModelQuery
+
+class RoundExecutionCatalogReadModelCriteria {
+    var roundExecutionId: StringFilter? = null
+    var executionSessionId: StringFilter? = null
+    var executionPlanId: StringFilter? = null
+    var trainingJobId: StringFilter? = null
+    var trainingRunConfigurationId: StringFilter? = null
+    var roundId: StringFilter? = null
+    var roundNumber: IntegerFilter? = null
+    var organizationId: StringFilter? = null
+    var runtimeId: StringFilter? = null
+    var state: Filter<RoundExecutionStateEnum>? = null
+    var featureSchemaId: StringFilter? = null
+    var baseModelId: StringFilter? = null
+    var runtimeEngineJobId: StringFilter? = null
+    var runtimeEngineObservedStatus: StringFilter? = null
+    var runtimeEngineObservationAt: RangeFilter<LocalDateTime>? = null
+    var localUpdateArtifactRef: StringFilter? = null
+    var metricsArtifactRef: StringFilter? = null
+    var localExecutionRequirementsSatisfied: BooleanFilter? = null
+    var runtimeIdentityMatched: BooleanFilter? = null
+    var runtimeDatasetBindingAvailable: BooleanFilter? = null
+    var datasetAccessValidated: BooleanFilter? = null
+    var baseModelAvailable: BooleanFilter? = null
+    var trainingConfigurationSupported: BooleanFilter? = null
+    var runtimeResourceAvailable: BooleanFilter? = null
+    var runtimeAgentIdle: BooleanFilter? = null
+    var updateArtifactId: StringFilter? = null
+    var artifactRef: StringFilter? = null
+    var artifactDigest: StringFilter? = null
+    var trainingLoss: BigDecimalFilter? = null
+    var receivedAt: RangeFilter<LocalDateTime>? = null
+    var acceptedAt: RangeFilter<LocalDateTime>? = null
+    var rejectedAt: RangeFilter<LocalDateTime>? = null
+    var startedAt: RangeFilter<LocalDateTime>? = null
+    var completedAt: RangeFilter<LocalDateTime>? = null
+    var failedAt: RangeFilter<LocalDateTime>? = null
+    var submittedAt: RangeFilter<LocalDateTime>? = null
+    var failureReason: StringFilter? = null
+    var retryReason: StringFilter? = null
+    var runtimeEngineReleased: BooleanFilter? = null
+    var runtimeEngineReleaseFailureReason: StringFilter? = null
+}
+
 
 class RoundExecutionCatalogReadModelProjection : MetadataProjection {
     var roundExecutionId: UUID? = null
@@ -116,6 +167,7 @@ fun RoundExecutionCatalogReadModelProjection.toReadModel(): RoundExecutionCatalo
 
 interface RoundExecutionCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RoundExecutionCatalogReadModel>
+    fun findAllByCriteria(criteria: RoundExecutionCatalogReadModelCriteria?, pageable: Pageable): Page<RoundExecutionCatalogReadModel>
     fun findById(id: UUID): RoundExecutionCatalogReadModel?
     fun findProjectionById(id: UUID): RoundExecutionCatalogReadModelProjection?
     fun save(projection: RoundExecutionCatalogReadModelProjection)

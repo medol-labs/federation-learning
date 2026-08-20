@@ -19,6 +19,8 @@ class ReportRuntimeInstanceConnectedDecisionTest {
         val command = ReportRuntimeInstanceConnectedCommand(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()),
             runtimeAgentId = UUID.nameUUIDFromBytes("runtime-agent-1".toByteArray()),
+            runtimeAgentEndpoint = "http://localhost:8082",
+            endpointScope = "LOCAL",
             runtimePlatformConnectionReady = true,
             platformApiReachable = true,
             agentAuthenticationSucceeded = true,
@@ -37,6 +39,8 @@ class ReportRuntimeInstanceConnectedDecisionTest {
         val event = events.filterIsInstance<AgentRuntimeConnectionEstablishedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()), event.runtimeInfrastructureId)
         assertEquals(UUID.nameUUIDFromBytes("runtime-agent-1".toByteArray()), event.runtimeAgentId)
+        assertEquals("http://localhost:8082", event.runtimeAgentEndpoint)
+        assertEquals("LOCAL", event.endpointScope)
         assertEquals(true, event.runtimePlatformConnectionReady)
         assertEquals(true, event.platformApiReachable)
         assertEquals(true, event.agentAuthenticationSucceeded)
@@ -51,6 +55,8 @@ class ReportRuntimeInstanceConnectedDecisionTest {
         val command = ReportRuntimeInstanceConnectedCommand(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
             runtimeAgentId = UUID.nameUUIDFromBytes("runtime-agent-2".toByteArray()),
+            runtimeAgentEndpoint = "http://localhost:8083",
+            endpointScope = "LOCAL",
             runtimePlatformConnectionReady = false,
             platformApiReachable = false,
             agentAuthenticationSucceeded = false,

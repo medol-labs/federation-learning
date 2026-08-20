@@ -18,9 +18,10 @@ import java.util.UUID;
 class TrainingParticipantEligibilityReadModelResource(private val repository: TrainingParticipantEligibilityReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: TrainingParticipantEligibilityReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<TrainingParticipantEligibilityReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

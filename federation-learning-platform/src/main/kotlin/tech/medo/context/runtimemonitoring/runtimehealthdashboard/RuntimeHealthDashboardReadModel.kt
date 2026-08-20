@@ -9,8 +9,37 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BigDecimalFilter
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class RuntimeHealthDashboardReadModelQuery
+
+class RuntimeHealthDashboardReadModelCriteria {
+    var nodeId: StringFilter? = null
+    var runtimeAgentId: StringFilter? = null
+    var federationId: StringFilter? = null
+    var trainingJobId: StringFilter? = null
+    var roundExecutionId: StringFilter? = null
+    var federationName: StringFilter? = null
+    var trainingJobObjective: StringFilter? = null
+    var cpuLoad: BigDecimalFilter? = null
+    var gpuLoad: BigDecimalFilter? = null
+    var memoryLoad: BigDecimalFilter? = null
+    var nodeReady: BooleanFilter? = null
+    var availableCpuCores: IntegerFilter? = null
+    var availableMemoryGb: IntegerFilter? = null
+    var availableGpuCount: IntegerFilter? = null
+    var runningWorkloadCount: IntegerFilter? = null
+    var workloadCapacity: IntegerFilter? = null
+    var healthStatus: StringFilter? = null
+    var lastHeartbeatAt: RangeFilter<LocalDateTime>? = null
+    var lastResourceSnapshotAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class RuntimeHealthDashboardReadModelProjection : MetadataProjection {
     var nodeId: UUID? = null
@@ -71,6 +100,7 @@ fun RuntimeHealthDashboardReadModelProjection.toReadModel(): RuntimeHealthDashbo
 
 interface RuntimeHealthDashboardReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeHealthDashboardReadModel>
+    fun findAllByCriteria(criteria: RuntimeHealthDashboardReadModelCriteria?, pageable: Pageable): Page<RuntimeHealthDashboardReadModel>
     fun findById(id: UUID): RuntimeHealthDashboardReadModel?
     fun findProjectionById(id: UUID): RuntimeHealthDashboardReadModelProjection?
     fun save(projection: RuntimeHealthDashboardReadModelProjection)

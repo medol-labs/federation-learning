@@ -18,9 +18,10 @@ import java.util.UUID;
 class AgentRuntimeTelemetryLatestReadModelResource(private val repository: AgentRuntimeTelemetryLatestReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: AgentRuntimeTelemetryLatestReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<AgentRuntimeTelemetryLatestReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

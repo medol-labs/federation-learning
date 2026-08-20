@@ -8,8 +8,27 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class AgentRuntimeInfrastructureConnectionCatalogReadModelQuery
+
+class AgentRuntimeInfrastructureConnectionCatalogReadModelCriteria {
+    var runtimeInfrastructureId: StringFilter? = null
+    var runtimeAgentId: StringFilter? = null
+    var runtimePlatformConnectionReady: BooleanFilter? = null
+    var platformApiReachable: BooleanFilter? = null
+    var agentAuthenticationSucceeded: BooleanFilter? = null
+    var controlChannelEstablished: BooleanFilter? = null
+    var heartbeatAccepted: BooleanFilter? = null
+    var connectedAt: RangeFilter<LocalDateTime>? = null
+    var connectionReportFailedAt: RangeFilter<LocalDateTime>? = null
+    var connectionReportFailureReason: StringFilter? = null
+    var connectionReportRetryable: BooleanFilter? = null
+}
+
 
 class AgentRuntimeInfrastructureConnectionCatalogReadModelProjection : MetadataProjection {
     var runtimeInfrastructureId: UUID? = null
@@ -54,6 +73,7 @@ fun AgentRuntimeInfrastructureConnectionCatalogReadModelProjection.toReadModel()
 
 interface AgentRuntimeInfrastructureConnectionCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentRuntimeInfrastructureConnectionCatalogReadModel>
+    fun findAllByCriteria(criteria: AgentRuntimeInfrastructureConnectionCatalogReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeInfrastructureConnectionCatalogReadModel>
     fun findById(id: UUID): AgentRuntimeInfrastructureConnectionCatalogReadModel?
     fun findProjectionById(id: UUID): AgentRuntimeInfrastructureConnectionCatalogReadModelProjection?
     fun save(projection: AgentRuntimeInfrastructureConnectionCatalogReadModelProjection)

@@ -8,8 +8,40 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class RuntimeInstallationPlanCatalogReadModelQuery
+
+class RuntimeInstallationPlanCatalogReadModelCriteria {
+    var runtimeInstallationPlanId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var runtimeInfrastructurePackageId: StringFilter? = null
+    var runtimeInfrastructurePackageName: StringFilter? = null
+    var runtimeInfrastructurePackageVersion: StringFilter? = null
+    var runtimeName: StringFilter? = null
+    var agentInstallMode: StringFilter? = null
+    var expectedNodeCount: IntegerFilter? = null
+    var planStatus: StringFilter? = null
+    var runtimeInfrastructureId: StringFilter? = null
+    var observedNodeCount: IntegerFilter? = null
+    var runtimeAgentId: StringFilter? = null
+    var runtimeAgentVersion: StringFilter? = null
+    var plannedAt: RangeFilter<LocalDateTime>? = null
+    var verifiedAt: RangeFilter<LocalDateTime>? = null
+    var verificationFailedAt: RangeFilter<LocalDateTime>? = null
+    var verificationFailureReason: StringFilter? = null
+    var agentReadyAt: RangeFilter<LocalDateTime>? = null
+    var agentDeploymentFailedAt: RangeFilter<LocalDateTime>? = null
+    var agentDeploymentFailureReason: StringFilter? = null
+    var agentDeploymentRetryFailedAt: RangeFilter<LocalDateTime>? = null
+    var agentDeploymentRetryFailureReason: StringFilter? = null
+    var lastConnectedAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class RuntimeInstallationPlanCatalogReadModelProjection : MetadataProjection {
     var runtimeInstallationPlanId: UUID? = null
@@ -80,6 +112,7 @@ fun RuntimeInstallationPlanCatalogReadModelProjection.toReadModel(): RuntimeInst
 
 interface RuntimeInstallationPlanCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeInstallationPlanCatalogReadModel>
+    fun findAllByCriteria(criteria: RuntimeInstallationPlanCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeInstallationPlanCatalogReadModel>
     fun findById(id: UUID): RuntimeInstallationPlanCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeInstallationPlanCatalogReadModelProjection?
     fun save(projection: RuntimeInstallationPlanCatalogReadModelProjection)

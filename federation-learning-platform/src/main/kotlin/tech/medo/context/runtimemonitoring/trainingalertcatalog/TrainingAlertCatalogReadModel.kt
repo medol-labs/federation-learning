@@ -9,8 +9,30 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class TrainingAlertCatalogReadModelQuery
+
+class TrainingAlertCatalogReadModelCriteria {
+    var alertId: StringFilter? = null
+    var nodeId: StringFilter? = null
+    var trainingJobId: StringFilter? = null
+    var runtimeNodeName: StringFilter? = null
+    var trainingJobObjective: StringFilter? = null
+    var severity: StringFilter? = null
+    var message: StringFilter? = null
+    var state: Filter<TrainingAlertStateEnum>? = null
+    var acknowledgedAt: RangeFilter<LocalDateTime>? = null
+    var resolvedAt: RangeFilter<LocalDateTime>? = null
+    var resolutionSummary: StringFilter? = null
+    var canAcknowledge: BooleanFilter? = null
+    var canResolve: BooleanFilter? = null
+}
+
 
 class TrainingAlertCatalogReadModelProjection : MetadataProjection {
     var alertId: UUID? = null
@@ -59,6 +81,7 @@ fun TrainingAlertCatalogReadModelProjection.toReadModel(): TrainingAlertCatalogR
 
 interface TrainingAlertCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<TrainingAlertCatalogReadModel>
+    fun findAllByCriteria(criteria: TrainingAlertCatalogReadModelCriteria?, pageable: Pageable): Page<TrainingAlertCatalogReadModel>
     fun findById(id: UUID): TrainingAlertCatalogReadModel?
     fun findProjectionById(id: UUID): TrainingAlertCatalogReadModelProjection?
     fun save(projection: TrainingAlertCatalogReadModelProjection)

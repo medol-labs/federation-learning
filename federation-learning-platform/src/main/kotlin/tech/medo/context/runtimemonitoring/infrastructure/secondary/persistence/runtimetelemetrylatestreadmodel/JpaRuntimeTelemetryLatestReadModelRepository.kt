@@ -5,16 +5,27 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimemonitoring.runtimetelemetrylatest.RuntimeTelemetryLatestReadModel
+import tech.medo.runtimemonitoring.runtimetelemetrylatest.RuntimeTelemetryLatestReadModelCriteria
 import tech.medo.runtimemonitoring.runtimetelemetrylatest.RuntimeTelemetryLatestReadModelProjection
 import tech.medo.runtimemonitoring.runtimetelemetrylatest.RuntimeTelemetryLatestReadModelRepository
 import tech.medo.runtimemonitoring.runtimetelemetrylatest.toReadModel
 
 @Repository
-class JpaRuntimeTelemetryLatestReadModelRepository(private val jpaRepository: SpringDataRuntimeTelemetryLatestReadModelRepository) : RuntimeTelemetryLatestReadModelRepository {
+class JpaRuntimeTelemetryLatestReadModelRepository(
+    private val jpaRepository: SpringDataRuntimeTelemetryLatestReadModelRepository,
+    private val queryService: RuntimeTelemetryLatestReadModelQueryService
+) : RuntimeTelemetryLatestReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeTelemetryLatestReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: RuntimeTelemetryLatestReadModelCriteria?, pageable: Pageable): Page<RuntimeTelemetryLatestReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): RuntimeTelemetryLatestReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -71,4 +82,4 @@ class JpaRuntimeTelemetryLatestReadModelRepository(private val jpaRepository: Sp
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

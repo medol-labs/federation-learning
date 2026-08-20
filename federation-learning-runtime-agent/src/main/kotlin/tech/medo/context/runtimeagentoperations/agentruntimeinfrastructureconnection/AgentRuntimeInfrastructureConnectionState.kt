@@ -26,6 +26,8 @@ class AgentRuntimeInfrastructureConnectionState @EntityCreator constructor() {
     var heartbeatAccepted: Boolean? = null
     var failureReason: String? = null
     var retryable: Boolean? = null
+    var runtimeAgentEndpoint: String? = null
+    var endpointScope: String? = null
 
     @EventSourcingHandler
     fun evolve(event: AgentRuntimeConnectionReportFailedEvent): AgentRuntimeInfrastructureConnectionState = apply {
@@ -46,6 +48,8 @@ class AgentRuntimeInfrastructureConnectionState @EntityCreator constructor() {
         currentState = AgentRuntimeInfrastructureConnectionStateEnum.CONNECTED
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeAgentId = event.runtimeAgentId
+        runtimeAgentEndpoint = event.runtimeAgentEndpoint
+        endpointScope = event.endpointScope
         runtimePlatformConnectionReady = event.runtimePlatformConnectionReady
         platformApiReachable = event.platformApiReachable
         agentAuthenticationSucceeded = event.agentAuthenticationSucceeded

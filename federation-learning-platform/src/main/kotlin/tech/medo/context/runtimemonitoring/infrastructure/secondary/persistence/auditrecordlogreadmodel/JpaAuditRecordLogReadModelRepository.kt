@@ -7,14 +7,21 @@ import org.springframework.stereotype.Repository
 import java.util.UUID;
 
 import tech.medo.runtimemonitoring.auditrecordlog.AuditRecordLogReadModel
+import tech.medo.runtimemonitoring.auditrecordlog.AuditRecordLogReadModelCriteria
 import tech.medo.runtimemonitoring.auditrecordlog.AuditRecordLogReadModelProjection
 import tech.medo.runtimemonitoring.auditrecordlog.AuditRecordLogReadModelRepository
 import tech.medo.runtimemonitoring.auditrecordlog.toReadModel
 
 @Repository
-class JpaAuditRecordLogReadModelRepository(private val jpaRepository: SpringDataAuditRecordLogReadModelRepository) : AuditRecordLogReadModelRepository {
+class JpaAuditRecordLogReadModelRepository(
+    private val jpaRepository: SpringDataAuditRecordLogReadModelRepository,
+    private val queryService: AuditRecordLogReadModelQueryService
+) : AuditRecordLogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<AuditRecordLogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: AuditRecordLogReadModelCriteria?, pageable: Pageable): Page<AuditRecordLogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): AuditRecordLogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -55,4 +62,4 @@ class JpaAuditRecordLogReadModelRepository(private val jpaRepository: SpringData
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

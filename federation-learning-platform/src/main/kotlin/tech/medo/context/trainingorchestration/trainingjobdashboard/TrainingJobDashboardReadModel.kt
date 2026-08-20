@@ -7,8 +7,48 @@ import java.util.UUID;
 import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum;
 import java.math.BigDecimal;
 
+import tech.jhipster.service.filter.BigDecimalFilter
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class TrainingJobDashboardReadModelQuery
+
+class TrainingJobDashboardReadModelCriteria {
+    var trainingJobId: StringFilter? = null
+    var federationId: StringFilter? = null
+    var trainingRunConfigurationId: StringFilter? = null
+    var featureSchemaId: StringFilter? = null
+    var federationName: StringFilter? = null
+    var featureDomain: StringFilter? = null
+    var featureSchemaVersion: StringFilter? = null
+    var objective: StringFilter? = null
+    var strategyName: StringFilter? = null
+    var aggregationAlgorithm: StringFilter? = null
+    var secureAggregationRequired: BooleanFilter? = null
+    var state: Filter<TrainingJobStateEnum>? = null
+    var workflowStage: StringFilter? = null
+    var workflowStep: IntegerFilter? = null
+    var nextAction: StringFilter? = null
+    var blockedReason: StringFilter? = null
+    var canSubmit: BooleanFilter? = null
+    var canStartRound: BooleanFilter? = null
+    var canPause: BooleanFilter? = null
+    var canResume: BooleanFilter? = null
+    var canCancel: BooleanFilter? = null
+    var canComplete: BooleanFilter? = null
+    var currentRoundNumber: IntegerFilter? = null
+    var startedRuntimeCount: IntegerFilter? = null
+    var minimumNodesPerRound: IntegerFilter? = null
+    var maxRounds: IntegerFilter? = null
+    var roundProgressPercent: IntegerFilter? = null
+    var globalAccuracy: BigDecimalFilter? = null
+    var finalModelId: StringFilter? = null
+    var stopReason: StringFilter? = null
+}
+
 
 class TrainingJobDashboardReadModelProjection : MetadataProjection {
     var trainingJobId: UUID? = null
@@ -93,6 +133,7 @@ fun TrainingJobDashboardReadModelProjection.toReadModel(): TrainingJobDashboardR
 
 interface TrainingJobDashboardReadModelRepository {
     fun findAll(pageable: Pageable): Page<TrainingJobDashboardReadModel>
+    fun findAllByCriteria(criteria: TrainingJobDashboardReadModelCriteria?, pageable: Pageable): Page<TrainingJobDashboardReadModel>
     fun findById(id: UUID): TrainingJobDashboardReadModel?
     fun findProjectionById(id: UUID): TrainingJobDashboardReadModelProjection?
     fun save(projection: TrainingJobDashboardReadModelProjection)

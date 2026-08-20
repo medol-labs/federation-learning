@@ -22,16 +22,13 @@ class StartRoundExecutionServiceRouter(private val adapters: ObjectProvider<Star
                 candidates.first().execute(input)
             } catch (ex: Exception) {
                 StartRoundExecutionResult.Unavailable(
-                    runtimeEngineJobId = null,
                     failureReason = ex.message ?: "StartRoundExecutionService is unavailable."
                 )
             }
             0 -> StartRoundExecutionResult.Unavailable(
-                runtimeEngineJobId = null,
                 failureReason = "No StartRoundExecutionService adapter supports the requested input."
             )
             else -> StartRoundExecutionResult.Unavailable(
-                runtimeEngineJobId = null,
                 failureReason = "Multiple StartRoundExecutionService adapters support the requested input."
             )
         }

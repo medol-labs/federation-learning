@@ -8,8 +8,33 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class RuntimeAgentLifecycleCatalogReadModelQuery
+
+class RuntimeAgentLifecycleCatalogReadModelCriteria {
+    var runtimeAgentId: StringFilter? = null
+    var runtimeInfrastructureId: StringFilter? = null
+    var agentVersion: StringFilter? = null
+    var lifecycleStatus: StringFilter? = null
+    var bootstrapConfigurationLoaded: BooleanFilter? = null
+    var bootstrapFailureReason: StringFilter? = null
+    var runtimeAgentSelfCheckPassed: BooleanFilter? = null
+    var configurationLoaded: BooleanFilter? = null
+    var secretStoreAccessible: BooleanFilter? = null
+    var runtimeEngineAdapterReady: BooleanFilter? = null
+    var modelRepositoryClientReady: BooleanFilter? = null
+    var localDatasetBindingStoreReady: BooleanFilter? = null
+    var workingDirectoryWritable: BooleanFilter? = null
+    var bootstrappedAt: RangeFilter<LocalDateTime>? = null
+    var bootstrapFailedAt: RangeFilter<LocalDateTime>? = null
+    var startedAt: RangeFilter<LocalDateTime>? = null
+    var readyAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class RuntimeAgentLifecycleCatalogReadModelProjection : MetadataProjection {
     var runtimeAgentId: UUID? = null
@@ -66,6 +91,7 @@ fun RuntimeAgentLifecycleCatalogReadModelProjection.toReadModel(): RuntimeAgentL
 
 interface RuntimeAgentLifecycleCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeAgentLifecycleCatalogReadModel>
+    fun findAllByCriteria(criteria: RuntimeAgentLifecycleCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeAgentLifecycleCatalogReadModel>
     fun findById(id: UUID): RuntimeAgentLifecycleCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeAgentLifecycleCatalogReadModelProjection?
     fun save(projection: RuntimeAgentLifecycleCatalogReadModelProjection)

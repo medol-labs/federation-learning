@@ -5,8 +5,31 @@ import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class RuntimeInstallationGuideReadModelQuery
+
+class RuntimeInstallationGuideReadModelCriteria {
+    var runtimeInstallationPlanId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var runtimeInfrastructureId: StringFilter? = null
+    var runtimeInfrastructurePackageId: StringFilter? = null
+    var runtimeInfrastructurePackageName: StringFilter? = null
+    var runtimeInfrastructurePackageVersion: StringFilter? = null
+    var infrastructureInstallGuide: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var runtimeName: StringFilter? = null
+    var bootstrapCommand: StringFilter? = null
+    var runtimeDeploymentTargetType: StringFilter? = null
+    var runtimeEnvironmentType: StringFilter? = null
+    var agentInstallMode: StringFilter? = null
+    var installProfile: StringFilter? = null
+    var architecture: StringFilter? = null
+    var expectedNodeCount: IntegerFilter? = null
+}
+
 
 class RuntimeInstallationGuideReadModelProjection : MetadataProjection {
     var runtimeInstallationPlanId: UUID? = null
@@ -61,6 +84,7 @@ fun RuntimeInstallationGuideReadModelProjection.toReadModel(): RuntimeInstallati
 
 interface RuntimeInstallationGuideReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeInstallationGuideReadModel>
+    fun findAllByCriteria(criteria: RuntimeInstallationGuideReadModelCriteria?, pageable: Pageable): Page<RuntimeInstallationGuideReadModel>
     fun findById(id: UUID): RuntimeInstallationGuideReadModel?
     fun findProjectionById(id: UUID): RuntimeInstallationGuideReadModelProjection?
     fun save(projection: RuntimeInstallationGuideReadModelProjection)

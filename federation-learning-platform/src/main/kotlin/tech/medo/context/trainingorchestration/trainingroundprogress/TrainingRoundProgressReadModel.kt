@@ -11,6 +11,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 
+import tech.jhipster.service.filter.BigDecimalFilter
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 data class TrainingRoundProgressReadModelKey(
     var trainingJobId: UUID? = null,
@@ -18,6 +25,56 @@ data class TrainingRoundProgressReadModelKey(
 ) : java.io.Serializable
 
 class TrainingRoundProgressReadModelQuery
+
+class TrainingRoundProgressReadModelCriteria {
+    var trainingJobId: StringFilter? = null
+    var trainingRunConfigurationId: StringFilter? = null
+    var featureSchemaId: StringFilter? = null
+    var roundId: StringFilter? = null
+    var trainingJobObjective: StringFilter? = null
+    var featureDomain: StringFilter? = null
+    var featureSchemaVersion: StringFilter? = null
+    var roundNumber: IntegerFilter? = null
+    var state: Filter<TrainingRoundStateEnum>? = null
+    var selectedOrganizationCount: IntegerFilter? = null
+    var selectedRuntimeCount: IntegerFilter? = null
+    var targetRuntimeCount: IntegerFilter? = null
+    var executionPlanDispatchedCount: IntegerFilter? = null
+    var roundExecutionStartedCount: IntegerFilter? = null
+    var submittedModelUpdateCount: IntegerFilter? = null
+    var rejectedUpdateCount: IntegerFilter? = null
+    var acceptedModelUpdateCount: IntegerFilter? = null
+    var acceptedUpdateCount: IntegerFilter? = null
+    var pendingUpdateCount: IntegerFilter? = null
+    var failedRoundExecutionCount: IntegerFilter? = null
+    var completedRoundExecutionCount: IntegerFilter? = null
+    var retriedRoundExecutionCount: IntegerFilter? = null
+    var failedRoundExecutionRetryCount: IntegerFilter? = null
+    var quorumMet: BooleanFilter? = null
+    var quorumStatus: StringFilter? = null
+    var minimumNodesPerRound: IntegerFilter? = null
+    var aggregationReady: BooleanFilter? = null
+    var secureAggregationRequired: BooleanFilter? = null
+    var secureAggregationStatus: StringFilter? = null
+    var evaluationComplete: BooleanFilter? = null
+    var progressPercent: IntegerFilter? = null
+    var currentPhase: StringFilter? = null
+    var nextAction: StringFilter? = null
+    var blockedReason: StringFilter? = null
+    var delayedReason: StringFilter? = null
+    var roundStartedAt: RangeFilter<LocalDateTime>? = null
+    var contributionDeadlineAt: RangeFilter<LocalDateTime>? = null
+    var aggregationStartedAt: RangeFilter<LocalDateTime>? = null
+    var evaluationSubmittedAt: RangeFilter<LocalDateTime>? = null
+    var completedAt: RangeFilter<LocalDateTime>? = null
+    var failedAt: RangeFilter<LocalDateTime>? = null
+    var baseModelId: StringFilter? = null
+    var aggregatedModelId: StringFilter? = null
+    var globalAccuracy: BigDecimalFilter? = null
+    var globalFairnessScore: BigDecimalFilter? = null
+    var failureReason: StringFilter? = null
+}
+
 
 class TrainingRoundProgressReadModelProjection : MetadataProjection {
     var trainingJobId: UUID? = null
@@ -140,6 +197,7 @@ fun TrainingRoundProgressReadModelProjection.toReadModel(): TrainingRoundProgres
 
 interface TrainingRoundProgressReadModelRepository {
     fun findAll(pageable: Pageable): Page<TrainingRoundProgressReadModel>
+    fun findAllByCriteria(criteria: TrainingRoundProgressReadModelCriteria?, pageable: Pageable): Page<TrainingRoundProgressReadModel>
     fun findById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModel?
     fun findProjectionById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModelProjection?
     fun findProjectionsByTrainingJobId(trainingJobId: UUID): List<TrainingRoundProgressReadModelProjection>

@@ -7,14 +7,21 @@ import org.springframework.stereotype.Repository
 import java.util.UUID;
 
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModel
+import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModelCriteria
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModelProjection
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModelRepository
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.toReadModel
 
 @Repository
-class JpaRuntimeInstallationGuideReadModelRepository(private val jpaRepository: SpringDataRuntimeInstallationGuideReadModelRepository) : RuntimeInstallationGuideReadModelRepository {
+class JpaRuntimeInstallationGuideReadModelRepository(
+    private val jpaRepository: SpringDataRuntimeInstallationGuideReadModelRepository,
+    private val queryService: RuntimeInstallationGuideReadModelQueryService
+) : RuntimeInstallationGuideReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeInstallationGuideReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: RuntimeInstallationGuideReadModelCriteria?, pageable: Pageable): Page<RuntimeInstallationGuideReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): RuntimeInstallationGuideReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -77,4 +84,4 @@ class JpaRuntimeInstallationGuideReadModelRepository(private val jpaRepository: 
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

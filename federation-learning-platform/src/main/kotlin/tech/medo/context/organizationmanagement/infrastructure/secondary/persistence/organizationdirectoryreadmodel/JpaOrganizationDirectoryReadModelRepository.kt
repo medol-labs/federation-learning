@@ -5,16 +5,25 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import tech.medo.organizationmanagement.domain.types.OrganizationType;
+import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum;
 
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModel
+import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelCriteria
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelProjection
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelRepository
 import tech.medo.organizationmanagement.organizationdirectory.toReadModel
 
 @Repository
-class JpaOrganizationDirectoryReadModelRepository(private val jpaRepository: SpringDataOrganizationDirectoryReadModelRepository) : OrganizationDirectoryReadModelRepository {
+class JpaOrganizationDirectoryReadModelRepository(
+    private val jpaRepository: SpringDataOrganizationDirectoryReadModelRepository,
+    private val queryService: OrganizationDirectoryReadModelQueryService
+) : OrganizationDirectoryReadModelRepository {
     override fun findAll(pageable: Pageable): Page<OrganizationDirectoryReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: OrganizationDirectoryReadModelCriteria?, pageable: Pageable): Page<OrganizationDirectoryReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): OrganizationDirectoryReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -55,4 +64,4 @@ class JpaOrganizationDirectoryReadModelRepository(private val jpaRepository: Spr
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

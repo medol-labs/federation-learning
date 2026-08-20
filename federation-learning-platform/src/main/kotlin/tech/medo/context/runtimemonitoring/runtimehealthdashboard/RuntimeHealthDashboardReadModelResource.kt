@@ -18,9 +18,10 @@ import java.util.UUID;
 class RuntimeHealthDashboardReadModelResource(private val repository: RuntimeHealthDashboardReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: RuntimeHealthDashboardReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<RuntimeHealthDashboardReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

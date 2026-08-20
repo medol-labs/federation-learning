@@ -8,8 +8,34 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class RuntimeDatasetBindingCatalogReadModelQuery
+
+class RuntimeDatasetBindingCatalogReadModelCriteria {
+    var runtimeDatasetBindingId: StringFilter? = null
+    var datasetId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var runtimeId: StringFilter? = null
+    var datasetName: StringFilter? = null
+    var dataSourceType: StringFilter? = null
+    var host: StringFilter? = null
+    var port: IntegerFilter? = null
+    var url: StringFilter? = null
+    var databaseName: StringFilter? = null
+    var schemaName: StringFilter? = null
+    var tableName: StringFilter? = null
+    var filePath: StringFilter? = null
+    var objectBucket: StringFilter? = null
+    var objectPrefix: StringFilter? = null
+    var dataFormat: StringFilter? = null
+    var credentialSecretName: StringFilter? = null
+    var configuredAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class RuntimeDatasetBindingCatalogReadModelProjection : MetadataProjection {
     var runtimeDatasetBindingId: UUID? = null
@@ -68,6 +94,7 @@ fun RuntimeDatasetBindingCatalogReadModelProjection.toReadModel(): RuntimeDatase
 
 interface RuntimeDatasetBindingCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeDatasetBindingCatalogReadModel>
+    fun findAllByCriteria(criteria: RuntimeDatasetBindingCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeDatasetBindingCatalogReadModel>
     fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeDatasetBindingCatalogReadModelProjection?
     fun save(projection: RuntimeDatasetBindingCatalogReadModelProjection)

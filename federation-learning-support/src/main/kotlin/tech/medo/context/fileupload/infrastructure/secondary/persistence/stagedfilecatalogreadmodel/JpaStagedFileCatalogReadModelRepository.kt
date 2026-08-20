@@ -7,16 +7,27 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import tech.medo.fileupload.domain.states.StagedFileStateEnum;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.fileupload.stagedfilecatalog.StagedFileCatalogReadModel
+import tech.medo.fileupload.stagedfilecatalog.StagedFileCatalogReadModelCriteria
 import tech.medo.fileupload.stagedfilecatalog.StagedFileCatalogReadModelProjection
 import tech.medo.fileupload.stagedfilecatalog.StagedFileCatalogReadModelRepository
 import tech.medo.fileupload.stagedfilecatalog.toReadModel
 
 @Repository
-class JpaStagedFileCatalogReadModelRepository(private val jpaRepository: SpringDataStagedFileCatalogReadModelRepository) : StagedFileCatalogReadModelRepository {
+class JpaStagedFileCatalogReadModelRepository(
+    private val jpaRepository: SpringDataStagedFileCatalogReadModelRepository,
+    private val queryService: StagedFileCatalogReadModelQueryService
+) : StagedFileCatalogReadModelRepository {
     override fun findAllByFilter(purpose: String?, pageable: Pageable): Page<StagedFileCatalogReadModel> =
         jpaRepository.findAll(filters(purpose), pageable).map { it.toProjection().toReadModel() }
+
+    override fun findAllByCriteria(criteria: StagedFileCatalogReadModelCriteria?, pageable: Pageable): Page<StagedFileCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): StagedFileCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -91,4 +102,4 @@ class JpaStagedFileCatalogReadModelRepository(private val jpaRepository: SpringD
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

@@ -8,8 +8,31 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class AgentRuntimeNodeInventoryCatalogReadModelQuery
+
+class AgentRuntimeNodeInventoryCatalogReadModelCriteria {
+    var runtimeNodeInventoryReportId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var runtimeInfrastructureId: StringFilter? = null
+    var runtimeAgentId: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var runtimeNodeName: StringFilter? = null
+    var infrastructureNodeId: StringFilter? = null
+    var runtimeNodeRole: StringFilter? = null
+    var nodeReady: BooleanFilter? = null
+    var runtimeEngineVersion: StringFilter? = null
+    var containerEngineVersion: StringFilter? = null
+    var operatingSystem: StringFilter? = null
+    var architecture: StringFilter? = null
+    var inventoryHash: StringFilter? = null
+    var discoveredAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class AgentRuntimeNodeInventoryCatalogReadModelProjection : MetadataProjection {
     var runtimeNodeInventoryReportId: UUID? = null
@@ -62,6 +85,7 @@ fun AgentRuntimeNodeInventoryCatalogReadModelProjection.toReadModel(): AgentRunt
 
 interface AgentRuntimeNodeInventoryCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentRuntimeNodeInventoryCatalogReadModel>
+    fun findAllByCriteria(criteria: AgentRuntimeNodeInventoryCatalogReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeNodeInventoryCatalogReadModel>
     fun findById(id: UUID): AgentRuntimeNodeInventoryCatalogReadModel?
     fun findProjectionById(id: UUID): AgentRuntimeNodeInventoryCatalogReadModelProjection?
     fun save(projection: AgentRuntimeNodeInventoryCatalogReadModelProjection)

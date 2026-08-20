@@ -18,9 +18,10 @@ import java.util.UUID;
 class TrainingAlertCatalogReadModelResource(private val repository: TrainingAlertCatalogReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: TrainingAlertCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<TrainingAlertCatalogReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

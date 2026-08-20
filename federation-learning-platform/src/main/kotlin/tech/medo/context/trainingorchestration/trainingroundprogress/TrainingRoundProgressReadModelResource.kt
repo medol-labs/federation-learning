@@ -18,9 +18,10 @@ import java.util.UUID;
 class TrainingRoundProgressReadModelResource(private val repository: TrainingRoundProgressReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: TrainingRoundProgressReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<TrainingRoundProgressReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
 }

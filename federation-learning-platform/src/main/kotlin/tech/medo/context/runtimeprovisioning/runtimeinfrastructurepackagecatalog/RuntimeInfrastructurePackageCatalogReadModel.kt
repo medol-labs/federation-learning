@@ -6,8 +6,24 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum;
 
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.StringFilter
+
 
 class RuntimeInfrastructurePackageCatalogReadModelQuery
+
+class RuntimeInfrastructurePackageCatalogReadModelCriteria {
+    var runtimeInfrastructurePackageId: StringFilter? = null
+    var packageName: StringFilter? = null
+    var packageVersion: StringFilter? = null
+    var runtimeEnvironmentType: StringFilter? = null
+    var runtimeDeploymentTargetType: StringFilter? = null
+    var installProfile: StringFilter? = null
+    var architecture: StringFilter? = null
+    var installGuide: StringFilter? = null
+    var state: Filter<RuntimeInfrastructurePackageStateEnum>? = null
+}
+
 
 class RuntimeInfrastructurePackageCatalogReadModelProjection : MetadataProjection {
     var runtimeInfrastructurePackageId: UUID? = null
@@ -48,6 +64,7 @@ fun RuntimeInfrastructurePackageCatalogReadModelProjection.toReadModel(): Runtim
 
 interface RuntimeInfrastructurePackageCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeInfrastructurePackageCatalogReadModel>
+    fun findAllByCriteria(criteria: RuntimeInfrastructurePackageCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeInfrastructurePackageCatalogReadModel>
     fun findById(id: UUID): RuntimeInfrastructurePackageCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeInfrastructurePackageCatalogReadModelProjection?
     fun save(projection: RuntimeInfrastructurePackageCatalogReadModelProjection)

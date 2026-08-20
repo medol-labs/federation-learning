@@ -8,10 +8,12 @@ import org.springframework.data.domain.Pageable
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 import tech.medo.trainingorchestration.events.TrainingRoundStartedEvent
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModel
+import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelCriteria
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelKey
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelProjection
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelRepository
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModel
+import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelCriteria
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelProjection
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelRepository
 import java.util.UUID
@@ -138,6 +140,12 @@ class ReadModelParticipantExecutionPlanCommandFactoryTest {
             override fun findAll(pageable: Pageable): Page<TrainingRunConfigurationCatalogReadModel> =
                 PageImpl(emptyList())
 
+            override fun findAllByCriteria(
+                criteria: TrainingRunConfigurationCatalogReadModelCriteria?,
+                pageable: Pageable
+            ): Page<TrainingRunConfigurationCatalogReadModel> =
+                findAll(pageable)
+
             override fun findById(id: UUID): TrainingRunConfigurationCatalogReadModel? = null
 
             override fun findProjectionById(id: UUID): TrainingRunConfigurationCatalogReadModelProjection? =
@@ -152,6 +160,12 @@ class ReadModelParticipantExecutionPlanCommandFactoryTest {
         object : TrainingRoundProgressReadModelRepository {
             override fun findAll(pageable: Pageable): Page<TrainingRoundProgressReadModel> =
                 PageImpl(emptyList())
+
+            override fun findAllByCriteria(
+                criteria: TrainingRoundProgressReadModelCriteria?,
+                pageable: Pageable
+            ): Page<TrainingRoundProgressReadModel> =
+                findAll(pageable)
 
             override fun findById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModel? = null
             override fun findProjectionById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModelProjection? = null

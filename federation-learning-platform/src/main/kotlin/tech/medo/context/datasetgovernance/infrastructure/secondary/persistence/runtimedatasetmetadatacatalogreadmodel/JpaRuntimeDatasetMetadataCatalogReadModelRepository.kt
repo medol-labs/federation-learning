@@ -5,16 +5,27 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.RuntimeDatasetMetadataCatalogReadModel
+import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.RuntimeDatasetMetadataCatalogReadModelCriteria
 import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.RuntimeDatasetMetadataCatalogReadModelProjection
 import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.RuntimeDatasetMetadataCatalogReadModelRepository
 import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.toReadModel
 
 @Repository
-class JpaRuntimeDatasetMetadataCatalogReadModelRepository(private val jpaRepository: SpringDataRuntimeDatasetMetadataCatalogReadModelRepository) : RuntimeDatasetMetadataCatalogReadModelRepository {
+class JpaRuntimeDatasetMetadataCatalogReadModelRepository(
+    private val jpaRepository: SpringDataRuntimeDatasetMetadataCatalogReadModelRepository,
+    private val queryService: RuntimeDatasetMetadataCatalogReadModelQueryService
+) : RuntimeDatasetMetadataCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeDatasetMetadataCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: RuntimeDatasetMetadataCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeDatasetMetadataCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): RuntimeDatasetMetadataCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -87,4 +98,4 @@ class JpaRuntimeDatasetMetadataCatalogReadModelRepository(private val jpaReposit
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

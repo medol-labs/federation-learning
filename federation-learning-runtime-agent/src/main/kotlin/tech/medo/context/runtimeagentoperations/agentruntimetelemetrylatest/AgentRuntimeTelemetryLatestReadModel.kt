@@ -9,8 +9,26 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BigDecimalFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class AgentRuntimeTelemetryLatestReadModelQuery
+
+class AgentRuntimeTelemetryLatestReadModelCriteria {
+    var nodeId: StringFilter? = null
+    var runtimeAgentId: StringFilter? = null
+    var federationId: StringFilter? = null
+    var trainingJobId: StringFilter? = null
+    var roundExecutionId: StringFilter? = null
+    var cpuLoad: BigDecimalFilter? = null
+    var gpuLoad: BigDecimalFilter? = null
+    var memoryLoad: BigDecimalFilter? = null
+    var lastHeartbeatAt: RangeFilter<LocalDateTime>? = null
+    var telemetryRetentionPolicy: StringFilter? = null
+}
+
 
 class AgentRuntimeTelemetryLatestReadModelProjection : MetadataProjection {
     var nodeId: UUID? = null
@@ -53,6 +71,7 @@ fun AgentRuntimeTelemetryLatestReadModelProjection.toReadModel(): AgentRuntimeTe
 
 interface AgentRuntimeTelemetryLatestReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentRuntimeTelemetryLatestReadModel>
+    fun findAllByCriteria(criteria: AgentRuntimeTelemetryLatestReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeTelemetryLatestReadModel>
     fun findById(id: UUID): AgentRuntimeTelemetryLatestReadModel?
     fun findProjectionById(id: UUID): AgentRuntimeTelemetryLatestReadModelProjection?
     fun save(projection: AgentRuntimeTelemetryLatestReadModelProjection)

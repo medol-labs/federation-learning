@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 
+import tech.jhipster.service.filter.StringFilter
+
 
 data class FederationMembershipDirectoryReadModelKey(
     var federationId: UUID? = null,
@@ -12,6 +14,17 @@ data class FederationMembershipDirectoryReadModelKey(
 ) : java.io.Serializable
 
 class FederationMembershipDirectoryReadModelQuery
+
+class FederationMembershipDirectoryReadModelCriteria {
+    var federationId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var federationName: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var membershipStatus: StringFilter? = null
+    var invitationNote: StringFilter? = null
+    var approvalNote: StringFilter? = null
+}
+
 
 class FederationMembershipDirectoryReadModelProjection : MetadataProjection {
     var federationId: UUID? = null
@@ -48,6 +61,7 @@ fun FederationMembershipDirectoryReadModelProjection.toReadModel(): FederationMe
 
 interface FederationMembershipDirectoryReadModelRepository {
     fun findAll(pageable: Pageable): Page<FederationMembershipDirectoryReadModel>
+    fun findAllByCriteria(criteria: FederationMembershipDirectoryReadModelCriteria?, pageable: Pageable): Page<FederationMembershipDirectoryReadModel>
     fun findById(id: FederationMembershipDirectoryReadModelKey): FederationMembershipDirectoryReadModel?
     fun findProjectionById(id: FederationMembershipDirectoryReadModelKey): FederationMembershipDirectoryReadModelProjection?
     fun findProjectionsByFederationId(federationId: UUID): List<FederationMembershipDirectoryReadModelProjection>

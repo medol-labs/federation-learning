@@ -5,16 +5,26 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest.AgentRuntimeNodeResourceLatestReadModel
+import tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest.AgentRuntimeNodeResourceLatestReadModelCriteria
 import tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest.AgentRuntimeNodeResourceLatestReadModelProjection
 import tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest.AgentRuntimeNodeResourceLatestReadModelRepository
 import tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest.toReadModel
 
 @Repository
-class JpaAgentRuntimeNodeResourceLatestReadModelRepository(private val jpaRepository: SpringDataAgentRuntimeNodeResourceLatestReadModelRepository) : AgentRuntimeNodeResourceLatestReadModelRepository {
+class JpaAgentRuntimeNodeResourceLatestReadModelRepository(
+    private val jpaRepository: SpringDataAgentRuntimeNodeResourceLatestReadModelRepository,
+    private val queryService: AgentRuntimeNodeResourceLatestReadModelQueryService
+) : AgentRuntimeNodeResourceLatestReadModelRepository {
     override fun findAll(pageable: Pageable): Page<AgentRuntimeNodeResourceLatestReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: AgentRuntimeNodeResourceLatestReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeNodeResourceLatestReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): AgentRuntimeNodeResourceLatestReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -81,4 +91,4 @@ class JpaAgentRuntimeNodeResourceLatestReadModelRepository(private val jpaReposi
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

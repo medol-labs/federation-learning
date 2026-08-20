@@ -8,17 +8,30 @@ import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
+import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.math.BigDecimal;
 
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModel
+import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelCriteria
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelKey
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelProjection
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelRepository
 import tech.medo.trainingorchestration.trainingroundprogress.toReadModel
 
 @Repository
-class JpaTrainingRoundProgressReadModelRepository(private val jpaRepository: SpringDataTrainingRoundProgressReadModelRepository, private val objectMapper: ObjectMapper) : TrainingRoundProgressReadModelRepository {
+class JpaTrainingRoundProgressReadModelRepository(
+    private val jpaRepository: SpringDataTrainingRoundProgressReadModelRepository,
+    private val queryService: TrainingRoundProgressReadModelQueryService,
+    private val objectMapper: ObjectMapper
+) : TrainingRoundProgressReadModelRepository {
     override fun findAll(pageable: Pageable): Page<TrainingRoundProgressReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: TrainingRoundProgressReadModelCriteria?, pageable: Pageable): Page<TrainingRoundProgressReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -155,4 +168,4 @@ class JpaTrainingRoundProgressReadModelRepository(private val jpaRepository: Spr
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

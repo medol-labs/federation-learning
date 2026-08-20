@@ -7,16 +7,27 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import tech.medo.dictionarymaintenance.domain.states.DictionaryStateEnum;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.dictionarymaintenance.dictionarycatalog.DictionaryCatalogReadModel
+import tech.medo.dictionarymaintenance.dictionarycatalog.DictionaryCatalogReadModelCriteria
 import tech.medo.dictionarymaintenance.dictionarycatalog.DictionaryCatalogReadModelProjection
 import tech.medo.dictionarymaintenance.dictionarycatalog.DictionaryCatalogReadModelRepository
 import tech.medo.dictionarymaintenance.dictionarycatalog.toReadModel
 
 @Repository
-class JpaDictionaryCatalogReadModelRepository(private val jpaRepository: SpringDataDictionaryCatalogReadModelRepository) : DictionaryCatalogReadModelRepository {
+class JpaDictionaryCatalogReadModelRepository(
+    private val jpaRepository: SpringDataDictionaryCatalogReadModelRepository,
+    private val queryService: DictionaryCatalogReadModelQueryService
+) : DictionaryCatalogReadModelRepository {
     override fun findAllByFilter(dictionaryCode: String?, pageable: Pageable): Page<DictionaryCatalogReadModel> =
         jpaRepository.findAll(filters(dictionaryCode), pageable).map { it.toProjection().toReadModel() }
+
+    override fun findAllByCriteria(criteria: DictionaryCatalogReadModelCriteria?, pageable: Pageable): Page<DictionaryCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): DictionaryCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -73,4 +84,4 @@ class JpaDictionaryCatalogReadModelRepository(private val jpaRepository: SpringD
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

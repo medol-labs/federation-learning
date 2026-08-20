@@ -18,9 +18,10 @@ import java.util.UUID;
 class RoundExecutionCatalogReadModelResource(private val repository: RoundExecutionCatalogReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: RoundExecutionCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<RoundExecutionCatalogReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

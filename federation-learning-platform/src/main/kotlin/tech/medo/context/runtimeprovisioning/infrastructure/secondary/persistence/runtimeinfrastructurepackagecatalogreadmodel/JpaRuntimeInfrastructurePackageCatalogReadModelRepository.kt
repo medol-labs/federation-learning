@@ -5,16 +5,24 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum;
 
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModel
+import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModelCriteria
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModelProjection
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModelRepository
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.toReadModel
 
 @Repository
-class JpaRuntimeInfrastructurePackageCatalogReadModelRepository(private val jpaRepository: SpringDataRuntimeInfrastructurePackageCatalogReadModelRepository) : RuntimeInfrastructurePackageCatalogReadModelRepository {
+class JpaRuntimeInfrastructurePackageCatalogReadModelRepository(
+    private val jpaRepository: SpringDataRuntimeInfrastructurePackageCatalogReadModelRepository,
+    private val queryService: RuntimeInfrastructurePackageCatalogReadModelQueryService
+) : RuntimeInfrastructurePackageCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeInfrastructurePackageCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: RuntimeInfrastructurePackageCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeInfrastructurePackageCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): RuntimeInfrastructurePackageCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -63,4 +71,4 @@ class JpaRuntimeInfrastructurePackageCatalogReadModelRepository(private val jpaR
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

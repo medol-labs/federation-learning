@@ -11,8 +11,39 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BigDecimalFilter
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class DatasetCapabilityReadModelQuery
+
+class DatasetCapabilityReadModelCriteria {
+    var datasetId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var runtimeId: StringFilter? = null
+    var featureSchemaId: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var featureDomain: StringFilter? = null
+    var featureSchemaVersion: StringFilter? = null
+    var datasetName: StringFilter? = null
+    var datasetUsage: StringFilter? = null
+    var sampleCount: IntegerFilter? = null
+    var featureCount: IntegerFilter? = null
+    var schemaCompatible: BooleanFilter? = null
+    var labelCompatible: BooleanFilter? = null
+    var qualityScore: BigDecimalFilter? = null
+    var nonIidScore: BigDecimalFilter? = null
+    var metadataReportId: StringFilter? = null
+    var metadataStatus: StringFilter? = null
+    var contractStatus: StringFilter? = null
+    var approvalStatus: StringFilter? = null
+    var approved: BooleanFilter? = null
+    var lastProfiledAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class DatasetCapabilityReadModelProjection : MetadataProjection {
     var datasetId: UUID? = null
@@ -81,6 +112,7 @@ fun DatasetCapabilityReadModelProjection.toReadModel(): DatasetCapabilityReadMod
 
 interface DatasetCapabilityReadModelRepository {
     fun findAll(pageable: Pageable): Page<DatasetCapabilityReadModel>
+    fun findAllByCriteria(criteria: DatasetCapabilityReadModelCriteria?, pageable: Pageable): Page<DatasetCapabilityReadModel>
     fun findById(id: UUID): DatasetCapabilityReadModel?
     fun findProjectionById(id: UUID): DatasetCapabilityReadModelProjection?
     fun save(projection: DatasetCapabilityReadModelProjection)

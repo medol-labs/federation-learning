@@ -9,8 +9,39 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BigDecimalFilter
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class RuntimeDatasetMetadataCatalogReadModelQuery
+
+class RuntimeDatasetMetadataCatalogReadModelCriteria {
+    var metadataReportId: StringFilter? = null
+    var datasetId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var runtimeId: StringFilter? = null
+    var featureSchemaId: StringFilter? = null
+    var datasetName: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var featureDomain: StringFilter? = null
+    var featureSchemaVersion: StringFilter? = null
+    var sampleCount: IntegerFilter? = null
+    var featureCount: IntegerFilter? = null
+    var schemaCompatible: BooleanFilter? = null
+    var labelCompatible: BooleanFilter? = null
+    var missingValueRate: BigDecimalFilter? = null
+    var duplicateRate: BigDecimalFilter? = null
+    var qualityScore: BigDecimalFilter? = null
+    var nonIidScore: BigDecimalFilter? = null
+    var classBalanceScore: BigDecimalFilter? = null
+    var profilingStatus: StringFilter? = null
+    var failureReason: StringFilter? = null
+    var profiledAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class RuntimeDatasetMetadataCatalogReadModelProjection : MetadataProjection {
     var metadataReportId: UUID? = null
@@ -75,6 +106,7 @@ fun RuntimeDatasetMetadataCatalogReadModelProjection.toReadModel(): RuntimeDatas
 
 interface RuntimeDatasetMetadataCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeDatasetMetadataCatalogReadModel>
+    fun findAllByCriteria(criteria: RuntimeDatasetMetadataCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeDatasetMetadataCatalogReadModel>
     fun findById(id: UUID): RuntimeDatasetMetadataCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeDatasetMetadataCatalogReadModelProjection?
     fun save(projection: RuntimeDatasetMetadataCatalogReadModelProjection)

@@ -8,8 +8,35 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class AgentRuntimeNodeResourceLatestReadModelQuery
+
+class AgentRuntimeNodeResourceLatestReadModelCriteria {
+    var nodeId: StringFilter? = null
+    var runtimeAgentId: StringFilter? = null
+    var runtimeInfrastructureId: StringFilter? = null
+    var runtimeNodeName: StringFilter? = null
+    var nodeReady: BooleanFilter? = null
+    var allocatableCpuCores: IntegerFilter? = null
+    var allocatableMemoryGb: IntegerFilter? = null
+    var allocatableGpuCount: IntegerFilter? = null
+    var allocatedCpuCores: IntegerFilter? = null
+    var allocatedMemoryGb: IntegerFilter? = null
+    var allocatedGpuCount: IntegerFilter? = null
+    var availableCpuCores: IntegerFilter? = null
+    var availableMemoryGb: IntegerFilter? = null
+    var availableGpuCount: IntegerFilter? = null
+    var runningWorkloadCount: IntegerFilter? = null
+    var workloadCapacity: IntegerFilter? = null
+    var observedAt: RangeFilter<LocalDateTime>? = null
+    var telemetryRetentionPolicy: StringFilter? = null
+}
+
 
 class AgentRuntimeNodeResourceLatestReadModelProjection : MetadataProjection {
     var nodeId: UUID? = null
@@ -68,6 +95,7 @@ fun AgentRuntimeNodeResourceLatestReadModelProjection.toReadModel(): AgentRuntim
 
 interface AgentRuntimeNodeResourceLatestReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentRuntimeNodeResourceLatestReadModel>
+    fun findAllByCriteria(criteria: AgentRuntimeNodeResourceLatestReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeNodeResourceLatestReadModel>
     fun findById(id: UUID): AgentRuntimeNodeResourceLatestReadModel?
     fun findProjectionById(id: UUID): AgentRuntimeNodeResourceLatestReadModelProjection?
     fun save(projection: AgentRuntimeNodeResourceLatestReadModelProjection)

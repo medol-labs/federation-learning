@@ -9,8 +9,41 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
 
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class RuntimeInfrastructureAccessViewReadModelQuery
+
+class RuntimeInfrastructureAccessViewReadModelCriteria {
+    var runtimeInfrastructureId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var runtimeInstallationPlanId: StringFilter? = null
+    var runtimeInfrastructurePackageId: StringFilter? = null
+    var runtimeInfrastructurePackageName: StringFilter? = null
+    var runtimeInfrastructurePackageVersion: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var runtimeName: StringFilter? = null
+    var runtimeDeploymentTargetType: StringFilter? = null
+    var runtimeEnvironmentType: StringFilter? = null
+    var agentInstallMode: StringFilter? = null
+    var expectedNodeCount: IntegerFilter? = null
+    var runtimeAgentId: StringFilter? = null
+    var runtimeAgentVersion: StringFilter? = null
+    var infrastructureVerifiedAt: RangeFilter<LocalDateTime>? = null
+    var infrastructureVerificationFailedAt: RangeFilter<LocalDateTime>? = null
+    var infrastructureVerificationFailureReason: StringFilter? = null
+    var agentReadyAt: RangeFilter<LocalDateTime>? = null
+    var agentDeploymentFailedAt: RangeFilter<LocalDateTime>? = null
+    var agentDeploymentFailureReason: StringFilter? = null
+    var agentDeploymentRetryFailedAt: RangeFilter<LocalDateTime>? = null
+    var agentDeploymentRetryFailureReason: StringFilter? = null
+    var connectedAt: RangeFilter<LocalDateTime>? = null
+    var state: Filter<RuntimeInfrastructureStateEnum>? = null
+}
+
 
 class RuntimeInfrastructureAccessViewReadModelProjection : MetadataProjection {
     var runtimeInfrastructureId: UUID? = null
@@ -81,6 +114,7 @@ fun RuntimeInfrastructureAccessViewReadModelProjection.toReadModel(): RuntimeInf
 
 interface RuntimeInfrastructureAccessViewReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeInfrastructureAccessViewReadModel>
+    fun findAllByCriteria(criteria: RuntimeInfrastructureAccessViewReadModelCriteria?, pageable: Pageable): Page<RuntimeInfrastructureAccessViewReadModel>
     fun findById(id: UUID): RuntimeInfrastructureAccessViewReadModel?
     fun findProjectionById(id: UUID): RuntimeInfrastructureAccessViewReadModelProjection?
     fun save(projection: RuntimeInfrastructureAccessViewReadModelProjection)

@@ -5,16 +5,26 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModel
+import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModelCriteria
 import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModelProjection
 import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModelRepository
 import tech.medo.runtimemonitoring.runtimenodeinventoryview.toReadModel
 
 @Repository
-class JpaRuntimeNodeInventoryViewReadModelRepository(private val jpaRepository: SpringDataRuntimeNodeInventoryViewReadModelRepository) : RuntimeNodeInventoryViewReadModelRepository {
+class JpaRuntimeNodeInventoryViewReadModelRepository(
+    private val jpaRepository: SpringDataRuntimeNodeInventoryViewReadModelRepository,
+    private val queryService: RuntimeNodeInventoryViewReadModelQueryService
+) : RuntimeNodeInventoryViewReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeNodeInventoryViewReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: RuntimeNodeInventoryViewReadModelCriteria?, pageable: Pageable): Page<RuntimeNodeInventoryViewReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): RuntimeNodeInventoryViewReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -81,4 +91,4 @@ class JpaRuntimeNodeInventoryViewReadModelRepository(private val jpaRepository: 
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

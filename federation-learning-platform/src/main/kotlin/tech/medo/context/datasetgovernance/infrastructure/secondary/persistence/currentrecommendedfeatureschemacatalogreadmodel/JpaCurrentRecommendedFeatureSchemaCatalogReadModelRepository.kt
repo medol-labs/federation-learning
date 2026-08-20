@@ -4,16 +4,27 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
+import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.datasetgovernance.currentrecommendedfeatureschemacatalog.CurrentRecommendedFeatureSchemaCatalogReadModel
+import tech.medo.datasetgovernance.currentrecommendedfeatureschemacatalog.CurrentRecommendedFeatureSchemaCatalogReadModelCriteria
 import tech.medo.datasetgovernance.currentrecommendedfeatureschemacatalog.CurrentRecommendedFeatureSchemaCatalogReadModelProjection
 import tech.medo.datasetgovernance.currentrecommendedfeatureschemacatalog.CurrentRecommendedFeatureSchemaCatalogReadModelRepository
 import tech.medo.datasetgovernance.currentrecommendedfeatureschemacatalog.toReadModel
 
 @Repository
-class JpaCurrentRecommendedFeatureSchemaCatalogReadModelRepository(private val jpaRepository: SpringDataCurrentRecommendedFeatureSchemaCatalogReadModelRepository) : CurrentRecommendedFeatureSchemaCatalogReadModelRepository {
+class JpaCurrentRecommendedFeatureSchemaCatalogReadModelRepository(
+    private val jpaRepository: SpringDataCurrentRecommendedFeatureSchemaCatalogReadModelRepository,
+    private val queryService: CurrentRecommendedFeatureSchemaCatalogReadModelQueryService
+) : CurrentRecommendedFeatureSchemaCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<CurrentRecommendedFeatureSchemaCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: CurrentRecommendedFeatureSchemaCatalogReadModelCriteria?, pageable: Pageable): Page<CurrentRecommendedFeatureSchemaCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: String): CurrentRecommendedFeatureSchemaCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -54,4 +65,4 @@ class JpaCurrentRecommendedFeatureSchemaCatalogReadModelRepository(private val j
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

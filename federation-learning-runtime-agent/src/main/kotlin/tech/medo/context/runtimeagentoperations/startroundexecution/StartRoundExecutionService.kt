@@ -37,7 +37,6 @@ sealed interface StartRoundExecutionResult {
     ) : StartRoundExecutionResult
 
     data class Unavailable(
-        val runtimeEngineJobId: String?,
         val failureReason: String
     ) : StartRoundExecutionResult
 }

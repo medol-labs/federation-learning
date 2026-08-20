@@ -18,9 +18,10 @@ import java.util.UUID;
 class RuntimeDatasetMetadataCatalogReadModelResource(private val repository: RuntimeDatasetMetadataCatalogReadModelRepository) {
     @GetMapping
     fun findAll(
+        criteria: RuntimeDatasetMetadataCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<RuntimeDatasetMetadataCatalogReadModel> =
-        repository.findAll(pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

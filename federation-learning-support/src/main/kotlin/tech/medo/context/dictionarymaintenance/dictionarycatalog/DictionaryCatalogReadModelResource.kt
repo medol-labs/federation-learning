@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID;
@@ -19,10 +18,10 @@ import java.util.UUID;
 class DictionaryCatalogReadModelResource(private val repository: DictionaryCatalogReadModelRepository) {
     @GetMapping
     fun findAll(
-        @RequestParam(required = false) dictionaryCode: String?,
+        criteria: DictionaryCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<DictionaryCatalogReadModel> =
-        repository.findAllByFilter(dictionaryCode, pageable)
+        repository.findAllByCriteria(criteria, pageable)
 
 
     @GetMapping("/{id}")

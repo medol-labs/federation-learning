@@ -7,16 +7,26 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
+import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum;
+import java.math.BigDecimal;
 
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModel
+import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelCriteria
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelProjection
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelRepository
 import tech.medo.trainingorchestration.trainingjobdashboard.toReadModel
 
 @Repository
-class JpaTrainingJobDashboardReadModelRepository(private val jpaRepository: SpringDataTrainingJobDashboardReadModelRepository, private val objectMapper: ObjectMapper) : TrainingJobDashboardReadModelRepository {
+class JpaTrainingJobDashboardReadModelRepository(
+    private val jpaRepository: SpringDataTrainingJobDashboardReadModelRepository,
+    private val queryService: TrainingJobDashboardReadModelQueryService,
+    private val objectMapper: ObjectMapper
+) : TrainingJobDashboardReadModelRepository {
     override fun findAll(pageable: Pageable): Page<TrainingJobDashboardReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: TrainingJobDashboardReadModelCriteria?, pageable: Pageable): Page<TrainingJobDashboardReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): TrainingJobDashboardReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -109,4 +119,4 @@ class JpaTrainingJobDashboardReadModelRepository(private val jpaRepository: Spri
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

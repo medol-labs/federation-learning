@@ -7,16 +7,29 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
+import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.math.BigDecimal;
 
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModel
+import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelProjection
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.toReadModel
 
 @Repository
-class JpaRoundExecutionCatalogReadModelRepository(private val jpaRepository: SpringDataRoundExecutionCatalogReadModelRepository, private val objectMapper: ObjectMapper) : RoundExecutionCatalogReadModelRepository {
+class JpaRoundExecutionCatalogReadModelRepository(
+    private val jpaRepository: SpringDataRoundExecutionCatalogReadModelRepository,
+    private val queryService: RoundExecutionCatalogReadModelQueryService,
+    private val objectMapper: ObjectMapper
+) : RoundExecutionCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RoundExecutionCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: RoundExecutionCatalogReadModelCriteria?, pageable: Pageable): Page<RoundExecutionCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): RoundExecutionCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -129,4 +142,4 @@ class JpaRoundExecutionCatalogReadModelRepository(private val jpaRepository: Spr
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

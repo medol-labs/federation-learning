@@ -7,8 +7,54 @@ import java.util.UUID;
 import java.math.BigDecimal;
 import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum;
 
+import tech.jhipster.service.filter.BigDecimalFilter
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class TrainingRunConfigurationCatalogReadModelQuery
+
+class TrainingRunConfigurationCatalogReadModelCriteria {
+    var trainingRunConfigurationId: StringFilter? = null
+    var federationId: StringFilter? = null
+    var featureSchemaId: StringFilter? = null
+    var initialModelId: StringFilter? = null
+    var initialModelName: StringFilter? = null
+    var initialModelVersion: StringFilter? = null
+    var federationName: StringFilter? = null
+    var featureDomain: StringFilter? = null
+    var featureSchemaVersion: StringFilter? = null
+    var initialModelArtifactUri: StringFilter? = null
+    var initialModelRegistryRef: StringFilter? = null
+    var initialModelFormat: StringFilter? = null
+    var initialModelArtifactDigest: StringFilter? = null
+    var initialModelSignatureUri: StringFilter? = null
+    var strategyName: StringFilter? = null
+    var aggregationAlgorithm: StringFilter? = null
+    var maxRounds: IntegerFilter? = null
+    var minimumNodesPerRound: IntegerFilter? = null
+    var roundTimeoutSeconds: IntegerFilter? = null
+    var nodeResponseTimeoutSeconds: IntegerFilter? = null
+    var localEpochs: IntegerFilter? = null
+    var batchSize: IntegerFilter? = null
+    var learningRate: BigDecimalFilter? = null
+    var optimizer: StringFilter? = null
+    var lossFunction: StringFilter? = null
+    var gradientClippingNorm: BigDecimalFilter? = null
+    var secureAggregationRequired: BooleanFilter? = null
+    var differentialPrivacyEnabled: BooleanFilter? = null
+    var dpNoiseMultiplier: BigDecimalFilter? = null
+    var dpClipNorm: BigDecimalFilter? = null
+    var minimumAccuracy: BigDecimalFilter? = null
+    var minimumFairnessScore: BigDecimalFilter? = null
+    var failureToleranceRatio: BigDecimalFilter? = null
+    var updateReason: StringFilter? = null
+    var lockedByTrainingJobId: StringFilter? = null
+    var state: Filter<TrainingRunConfigurationStateEnum>? = null
+}
+
 
 class TrainingRunConfigurationCatalogReadModelProjection : MetadataProjection {
     var trainingRunConfigurationId: UUID? = null
@@ -103,6 +149,7 @@ fun TrainingRunConfigurationCatalogReadModelProjection.toReadModel(): TrainingRu
 
 interface TrainingRunConfigurationCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<TrainingRunConfigurationCatalogReadModel>
+    fun findAllByCriteria(criteria: TrainingRunConfigurationCatalogReadModelCriteria?, pageable: Pageable): Page<TrainingRunConfigurationCatalogReadModel>
     fun findById(id: UUID): TrainingRunConfigurationCatalogReadModel?
     fun findProjectionById(id: UUID): TrainingRunConfigurationCatalogReadModelProjection?
     fun save(projection: TrainingRunConfigurationCatalogReadModelProjection)

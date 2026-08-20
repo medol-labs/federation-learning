@@ -6,8 +6,51 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import java.math.BigDecimal;
 
+import tech.jhipster.service.filter.BigDecimalFilter
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class TrainingParticipantEligibilityReadModelQuery
+
+class TrainingParticipantEligibilityReadModelCriteria {
+    var trainingJobId: StringFilter? = null
+    var federationId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var runtimeId: StringFilter? = null
+    var featureSchemaId: StringFilter? = null
+    var federationName: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var featureDomain: StringFilter? = null
+    var featureSchemaVersion: StringFilter? = null
+    var participantStatus: StringFilter? = null
+    var readinessStatus: StringFilter? = null
+    var readinessStage: StringFilter? = null
+    var eligibilityScore: IntegerFilter? = null
+    var runtimeIdentityActive: BooleanFilter? = null
+    var runtimeCapabilitySatisfied: BooleanFilter? = null
+    var runtimeConnectionEstablished: BooleanFilter? = null
+    var runtimeHealthy: BooleanFilter? = null
+    var datasetId: StringFilter? = null
+    var datasetName: StringFilter? = null
+    var datasetReady: BooleanFilter? = null
+    var datasetReadinessStatus: StringFilter? = null
+    var matchedDatasetMetadataReady: BooleanFilter? = null
+    var datasetAccessValidated: BooleanFilter? = null
+    var datasetApprovedForTraining: BooleanFilter? = null
+    var schemaCompatible: BooleanFilter? = null
+    var labelCompatible: BooleanFilter? = null
+    var qualityScore: BigDecimalFilter? = null
+    var securityReady: BooleanFilter? = null
+    var eligible: BooleanFilter? = null
+    var eligibleRuntimeCount: IntegerFilter? = null
+    var minimumNodesPerRound: IntegerFilter? = null
+    var selectionReady: BooleanFilter? = null
+    var eligibilityReason: StringFilter? = null
+    var nextRequiredAction: StringFilter? = null
+}
+
 
 class TrainingParticipantEligibilityReadModelProjection : MetadataProjection {
     var trainingJobId: UUID? = null
@@ -102,6 +145,7 @@ fun TrainingParticipantEligibilityReadModelProjection.toReadModel(): TrainingPar
 
 interface TrainingParticipantEligibilityReadModelRepository {
     fun findAll(pageable: Pageable): Page<TrainingParticipantEligibilityReadModel>
+    fun findAllByCriteria(criteria: TrainingParticipantEligibilityReadModelCriteria?, pageable: Pageable): Page<TrainingParticipantEligibilityReadModel>
     fun findById(id: UUID): TrainingParticipantEligibilityReadModel?
     fun findProjectionById(id: UUID): TrainingParticipantEligibilityReadModelProjection?
     fun save(projection: TrainingParticipantEligibilityReadModelProjection)

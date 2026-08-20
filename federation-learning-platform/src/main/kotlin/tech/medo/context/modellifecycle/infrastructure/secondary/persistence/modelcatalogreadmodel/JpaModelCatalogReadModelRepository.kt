@@ -5,16 +5,25 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import java.math.BigDecimal;
+import tech.medo.modellifecycle.domain.states.ModelStateEnum;
 
 import tech.medo.modellifecycle.modelcatalog.ModelCatalogReadModel
+import tech.medo.modellifecycle.modelcatalog.ModelCatalogReadModelCriteria
 import tech.medo.modellifecycle.modelcatalog.ModelCatalogReadModelProjection
 import tech.medo.modellifecycle.modelcatalog.ModelCatalogReadModelRepository
 import tech.medo.modellifecycle.modelcatalog.toReadModel
 
 @Repository
-class JpaModelCatalogReadModelRepository(private val jpaRepository: SpringDataModelCatalogReadModelRepository) : ModelCatalogReadModelRepository {
+class JpaModelCatalogReadModelRepository(
+    private val jpaRepository: SpringDataModelCatalogReadModelRepository,
+    private val queryService: ModelCatalogReadModelQueryService
+) : ModelCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<ModelCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: ModelCatalogReadModelCriteria?, pageable: Pageable): Page<ModelCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): ModelCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -99,4 +108,4 @@ class JpaModelCatalogReadModelRepository(private val jpaRepository: SpringDataMo
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

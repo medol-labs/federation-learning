@@ -8,8 +8,29 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class AgentDatasetAccessValidationCatalogReadModelQuery
+
+class AgentDatasetAccessValidationCatalogReadModelCriteria {
+    var datasetAccessValidationId: StringFilter? = null
+    var runtimeDatasetBindingId: StringFilter? = null
+    var datasetId: StringFilter? = null
+    var organizationId: StringFilter? = null
+    var featureSchemaId: StringFilter? = null
+    var runtimeId: StringFilter? = null
+    var datasetName: StringFilter? = null
+    var readable: BooleanFilter? = null
+    var schemaReadable: BooleanFilter? = null
+    var sampleBatchReadable: BooleanFilter? = null
+    var validationStatus: StringFilter? = null
+    var failureReason: StringFilter? = null
+    var validatedAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class AgentDatasetAccessValidationCatalogReadModelProjection : MetadataProjection {
     var datasetAccessValidationId: UUID? = null
@@ -58,6 +79,7 @@ fun AgentDatasetAccessValidationCatalogReadModelProjection.toReadModel(): AgentD
 
 interface AgentDatasetAccessValidationCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentDatasetAccessValidationCatalogReadModel>
+    fun findAllByCriteria(criteria: AgentDatasetAccessValidationCatalogReadModelCriteria?, pageable: Pageable): Page<AgentDatasetAccessValidationCatalogReadModel>
     fun findById(id: UUID): AgentDatasetAccessValidationCatalogReadModel?
     fun findProjectionById(id: UUID): AgentDatasetAccessValidationCatalogReadModelProjection?
     fun save(projection: AgentDatasetAccessValidationCatalogReadModelProjection)

@@ -5,16 +5,27 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModel
+import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModelCriteria
 import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModelProjection
 import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModelRepository
 import tech.medo.modelrepository.modelartifactcatalog.toReadModel
 
 @Repository
-class JpaModelArtifactCatalogReadModelRepository(private val jpaRepository: SpringDataModelArtifactCatalogReadModelRepository) : ModelArtifactCatalogReadModelRepository {
+class JpaModelArtifactCatalogReadModelRepository(
+    private val jpaRepository: SpringDataModelArtifactCatalogReadModelRepository,
+    private val queryService: ModelArtifactCatalogReadModelQueryService
+) : ModelArtifactCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<ModelArtifactCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: ModelArtifactCatalogReadModelCriteria?, pageable: Pageable): Page<ModelArtifactCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): ModelArtifactCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -75,4 +86,4 @@ class JpaModelArtifactCatalogReadModelRepository(private val jpaRepository: Spri
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

@@ -19,7 +19,7 @@ class ReportRuntimeInstanceConnectedCommandHandler(
         command: ReportRuntimeInstanceConnectedCommand,
         eventAppender: EventAppender
     ) {
-        val input = ReportRuntimeInstanceConnectedInput(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId, runtimePlatformConnectionReady = command.runtimePlatformConnectionReady, platformApiReachable = command.platformApiReachable, agentAuthenticationSucceeded = command.agentAuthenticationSucceeded, controlChannelEstablished = command.controlChannelEstablished, heartbeatAccepted = command.heartbeatAccepted)
+        val input = ReportRuntimeInstanceConnectedInput(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId, runtimeAgentEndpoint = command.runtimeAgentEndpoint, endpointScope = command.endpointScope, runtimePlatformConnectionReady = command.runtimePlatformConnectionReady, platformApiReachable = command.platformApiReachable, agentAuthenticationSucceeded = command.agentAuthenticationSucceeded, controlChannelEstablished = command.controlChannelEstablished, heartbeatAccepted = command.heartbeatAccepted)
         val portResult = reportRuntimeInstanceConnectedService.execute(input)
         val now = java.time.LocalDateTime.now()
 

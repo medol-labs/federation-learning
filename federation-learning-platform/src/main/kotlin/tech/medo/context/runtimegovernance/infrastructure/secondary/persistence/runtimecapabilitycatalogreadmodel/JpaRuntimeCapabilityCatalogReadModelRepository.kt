@@ -7,16 +7,27 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimegovernance.runtimecapabilitycatalog.RuntimeCapabilityCatalogReadModel
+import tech.medo.runtimegovernance.runtimecapabilitycatalog.RuntimeCapabilityCatalogReadModelCriteria
 import tech.medo.runtimegovernance.runtimecapabilitycatalog.RuntimeCapabilityCatalogReadModelProjection
 import tech.medo.runtimegovernance.runtimecapabilitycatalog.RuntimeCapabilityCatalogReadModelRepository
 import tech.medo.runtimegovernance.runtimecapabilitycatalog.toReadModel
 
 @Repository
-class JpaRuntimeCapabilityCatalogReadModelRepository(private val jpaRepository: SpringDataRuntimeCapabilityCatalogReadModelRepository, private val objectMapper: ObjectMapper) : RuntimeCapabilityCatalogReadModelRepository {
+class JpaRuntimeCapabilityCatalogReadModelRepository(
+    private val jpaRepository: SpringDataRuntimeCapabilityCatalogReadModelRepository,
+    private val queryService: RuntimeCapabilityCatalogReadModelQueryService,
+    private val objectMapper: ObjectMapper
+) : RuntimeCapabilityCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeCapabilityCatalogReadModel> =
-        jpaRepository.findAll(pageable).map { it.toProjection().toReadModel() }
+        findAllByCriteria(null, pageable)
+
+    override fun findAllByCriteria(criteria: RuntimeCapabilityCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeCapabilityCatalogReadModel> =
+        queryService.findByCriteria(criteria, pageable)
 
     override fun findById(id: UUID): RuntimeCapabilityCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
@@ -55,4 +66,4 @@ class JpaRuntimeCapabilityCatalogReadModelRepository(private val jpaRepository: 
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

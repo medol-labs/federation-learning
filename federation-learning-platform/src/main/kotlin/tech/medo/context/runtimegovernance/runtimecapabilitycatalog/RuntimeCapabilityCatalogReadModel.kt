@@ -8,8 +8,18 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class RuntimeCapabilityCatalogReadModelQuery
+
+class RuntimeCapabilityCatalogReadModelCriteria {
+    var runtimeId: StringFilter? = null
+    var capabilityStatus: StringFilter? = null
+    var detectedAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class RuntimeCapabilityCatalogReadModelProjection : MetadataProjection {
     var runtimeId: UUID? = null
@@ -40,6 +50,7 @@ fun RuntimeCapabilityCatalogReadModelProjection.toReadModel(): RuntimeCapability
 
 interface RuntimeCapabilityCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeCapabilityCatalogReadModel>
+    fun findAllByCriteria(criteria: RuntimeCapabilityCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeCapabilityCatalogReadModel>
     fun findById(id: UUID): RuntimeCapabilityCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeCapabilityCatalogReadModelProjection?
     fun save(projection: RuntimeCapabilityCatalogReadModelProjection)

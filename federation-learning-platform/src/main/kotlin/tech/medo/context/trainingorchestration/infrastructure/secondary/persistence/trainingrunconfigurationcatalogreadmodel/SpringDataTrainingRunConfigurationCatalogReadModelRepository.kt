@@ -1,9 +1,12 @@
 package tech.medo.trainingorchestration.infrastructure.secondary.persistence.trainingrunconfigurationcatalogreadmodel
 
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import java.util.UUID;
+import java.math.BigDecimal;
+import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum;
 
 
-interface SpringDataTrainingRunConfigurationCatalogReadModelRepository : JpaRepository<TrainingRunConfigurationCatalogReadModelEntity, UUID> {
+interface SpringDataTrainingRunConfigurationCatalogReadModelRepository : JpaRepository<TrainingRunConfigurationCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<TrainingRunConfigurationCatalogReadModelEntity> {
 
 }

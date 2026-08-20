@@ -9,8 +9,32 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
+
 
 class ModelArtifactCatalogReadModelQuery
+
+class ModelArtifactCatalogReadModelCriteria {
+    var modelId: StringFilter? = null
+    var modelName: StringFilter? = null
+    var modelVersion: StringFilter? = null
+    var sourceType: StringFilter? = null
+    var modelArtifactUri: StringFilter? = null
+    var modelRegistryRef: StringFilter? = null
+    var modelFormat: StringFilter? = null
+    var modelArtifactDigest: StringFilter? = null
+    var modelSignatureUri: StringFilter? = null
+    var modelSizeBytes: IntegerFilter? = null
+    var trainingJobId: StringFilter? = null
+    var roundId: StringFilter? = null
+    var trainingJobObjective: StringFilter? = null
+    var state: Filter<ModelArtifactStateEnum>? = null
+    var registeredAt: RangeFilter<LocalDateTime>? = null
+}
+
 
 class ModelArtifactCatalogReadModelProjection : MetadataProjection {
     var modelId: UUID? = null
@@ -63,6 +87,7 @@ fun ModelArtifactCatalogReadModelProjection.toReadModel(): ModelArtifactCatalogR
 
 interface ModelArtifactCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<ModelArtifactCatalogReadModel>
+    fun findAllByCriteria(criteria: ModelArtifactCatalogReadModelCriteria?, pageable: Pageable): Page<ModelArtifactCatalogReadModel>
     fun findById(id: UUID): ModelArtifactCatalogReadModel?
     fun findProjectionById(id: UUID): ModelArtifactCatalogReadModelProjection?
     fun save(projection: ModelArtifactCatalogReadModelProjection)
