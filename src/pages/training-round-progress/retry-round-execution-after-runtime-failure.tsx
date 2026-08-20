@@ -46,6 +46,7 @@ export const TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure = () =>
     executionSessionId: searchParams.get("executionSessionId") ?? undefined,
     executionPlanId: searchParams.get("executionPlanId") ?? undefined,
     runtimeId: searchParams.get("runtimeId") ?? undefined,
+    organizationId: searchParams.get("organizationId") ?? undefined,
     runtimeEngineJobId: searchParams.get("runtimeEngineJobId") ?? undefined,
   } as Partial<RetryRoundExecutionAfterRuntimeFailureCommandInput>;
 

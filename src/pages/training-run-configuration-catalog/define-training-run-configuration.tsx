@@ -162,13 +162,22 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.initialModelId.label", "Initial Model Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Initial Model Id"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="model_artifact_catalog"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="modelName"
+                  optionValue="modelId"
+                  value={field.value || ""}
+                  onValueChange={field.onChange}
+                  placeholder={t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.initialModelId.placeholder", "Select Initial Model Id")}
+                  meta={{
+                    idField: "modelId",
+                    label: t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.initialModelId.label", "Model Artifact Catalog"),
+                    aggregateRoute: "modelartifact",
+                    queryRoute: "modelartifactcatalog",
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

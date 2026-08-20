@@ -38,6 +38,8 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
   const defaultValues = {
     runtimeAgentId: searchParams.get("runtimeAgentId") ?? undefined,
     runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
+    runtimeAgentEndpoint: searchParams.get("runtimeAgentEndpoint") ?? undefined,
+    endpointScope: searchParams.get("endpointScope") ?? undefined,
   } as Partial<RecordRuntimeConnectionEstablishedCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RecordRuntimeConnectionEstablishedCommandInput, RecordRuntimeConnectionEstablishedCommandInput>({
@@ -93,18 +95,18 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
                 <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.label", "Runtime Agent Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
-                  resource="runtime_agent_lifecycle_catalog"
-                  dataProviderName="federation-learning-runtime-agent"
-                  optionLabel="agentVersion"
+                  resource="runtime_agent_endpoint_catalog"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="runtimeName"
                   optionValue="runtimeAgentId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
                   placeholder={t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.placeholder", "Select Runtime Agent Id")}
                   meta={{
                     idField: "runtimeAgentId",
-                    label: t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.label", "Runtime Agent Lifecycle Catalog"),
-                    aggregateRoute: "runtimeagentlifecycle",
-                    queryRoute: "runtimeagentlifecyclecatalog",
+                    label: t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.label", "Runtime Agent Endpoint Catalog"),
+                    aggregateRoute: "runtimeinfrastructure",
+                    queryRoute: "runtimeagentendpointcatalog",
                   }}
                 />
                 <FormMessage />
@@ -183,6 +185,55 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
                     placeholder={"Enter Runtime Name"}
                   />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="runtimeAgentEndpoint"
+            rules={{ required: "Runtime Agent Endpoint is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentEndpoint.label", "Runtime Agent Endpoint")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Runtime Agent Endpoint"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="endpointScope"
+            rules={{ required: "Endpoint Scope is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.endpointScope.label", "Endpoint Scope")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="dictionary_value_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="displayName"
+                  optionValue="valueCode"
+                  value={field.value || ""}
+                  onValueChange={field.onChange}
+                  placeholder={t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.endpointScope.placeholder", "Select Endpoint Scope")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_ENDPOINT_SCOPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.endpointScope.label", "Dictionary Value Catalog"),
+                    aggregateRoute: "dictionaryvalue",
+                    queryRoute: "dictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

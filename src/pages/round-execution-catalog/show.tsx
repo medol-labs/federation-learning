@@ -105,6 +105,26 @@ export const RoundExecutionCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.runtimeEngineObservedStatus.label", "Runtime Engine Observed Status")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEngineObservedStatus, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.runtimeEngineObservationAt.label", "Runtime Engine Observation At")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEngineObservationAt, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.localUpdateArtifactRef.label", "Local Update Artifact Ref")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.localUpdateArtifactRef, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.metricsArtifactRef.label", "Metrics Artifact Ref")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.metricsArtifactRef, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.localExecutionRequirementsSatisfied.label", "Local Execution Requirements Satisfied")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.localExecutionRequirementsSatisfied, t)}</p>
             </div>

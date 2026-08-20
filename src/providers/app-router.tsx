@@ -140,11 +140,13 @@ import {
   RoundExecutionCatalogList,
   RoundExecutionCatalogShow,
   RoundExecutionCatalogRetryRoundExecutionAfterStartFailure,
-  RoundExecutionCatalogCompleteRoundExecution,
-  RoundExecutionCatalogFailRoundExecution,
   RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure,
   RoundExecutionCatalogSubmitModelUpdateSubmission,
 } from "../pages/round-execution-catalog";
+import {
+  RuntimeAgentEndpointCatalogList,
+  RuntimeAgentEndpointCatalogShow,
+} from "../pages/runtime-agent-endpoint-catalog";
 import {
   RuntimeAgentLifecycleCatalogList,
   RuntimeAgentLifecycleCatalogShow,
@@ -243,11 +245,10 @@ import {
   TrainingRoundProgressShow,
   TrainingRoundProgressCancelTrainingJob,
   TrainingRoundProgressRetryRoundExecutionAfterStartFailure,
-  TrainingRoundProgressCompleteRoundExecution,
-  TrainingRoundProgressFailRoundExecution,
   TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure,
   TrainingRoundProgressSubmitGlobalModelEvaluation,
   TrainingRoundProgressSubmitTrainingJob,
+  TrainingRoundProgressRetryTrainingRoundParticipantSelection,
   TrainingRoundProgressPauseTrainingJob,
 } from "../pages/training-round-progress";
 import {
@@ -404,10 +405,12 @@ export const AppRouter = () => {
           <Route index element={<RoundExecutionCatalogList />} />
           <Route path="show/:id" element={<RoundExecutionCatalogShow />} />
           <Route path=":id/command/retry-round-execution-after-start-failure" element={<RoundExecutionCatalogRetryRoundExecutionAfterStartFailure />} />
-          <Route path=":id/command/complete-round-execution" element={<RoundExecutionCatalogCompleteRoundExecution />} />
-          <Route path=":id/command/fail-round-execution" element={<RoundExecutionCatalogFailRoundExecution />} />
           <Route path=":id/command/retry-round-execution-after-runtime-failure" element={<RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure />} />
           <Route path=":id/command/submit-model-update-submission" element={<RoundExecutionCatalogSubmitModelUpdateSubmission />} />
+        </Route>
+        <Route path="/runtime-agent-endpoint-catalog">
+          <Route index element={<RuntimeAgentEndpointCatalogList />} />
+          <Route path="show/:id" element={<RuntimeAgentEndpointCatalogShow />} />
         </Route>
         <Route path="/runtime-agent-lifecycle-catalog">
           <Route index element={<RuntimeAgentLifecycleCatalogList />} />
@@ -507,11 +510,10 @@ export const AppRouter = () => {
           <Route path="show/:id" element={<TrainingRoundProgressShow />} />
           <Route path=":id/command/cancel-training-job" element={<TrainingRoundProgressCancelTrainingJob />} />
           <Route path=":id/command/retry-round-execution-after-start-failure" element={<TrainingRoundProgressRetryRoundExecutionAfterStartFailure />} />
-          <Route path=":id/command/complete-round-execution" element={<TrainingRoundProgressCompleteRoundExecution />} />
-          <Route path=":id/command/fail-round-execution" element={<TrainingRoundProgressFailRoundExecution />} />
           <Route path=":id/command/retry-round-execution-after-runtime-failure" element={<TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure />} />
           <Route path=":id/command/submit-global-model-evaluation" element={<TrainingRoundProgressSubmitGlobalModelEvaluation />} />
           <Route path=":id/command/submit-training-job" element={<TrainingRoundProgressSubmitTrainingJob />} />
+          <Route path=":id/command/retry-training-round-participant-selection" element={<TrainingRoundProgressRetryTrainingRoundParticipantSelection />} />
           <Route path=":id/command/pause-training-job" element={<TrainingRoundProgressPauseTrainingJob />} />
         </Route>
         <Route path="/training-run-configuration-catalog">

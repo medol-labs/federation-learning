@@ -239,6 +239,8 @@ export const RecordRuntimeConnectionEstablishedCommandSchema = z.object({
   agentInstallMode: z.string(),
   organizationId: z.string().uuid(),
   runtimeName: z.string(),
+  runtimeAgentEndpoint: z.string(),
+  endpointScope: z.string(),
 });
 export type RecordRuntimeConnectionEstablishedCommandInput = z.infer<typeof RecordRuntimeConnectionEstablishedCommandSchema>;
 
@@ -389,6 +391,11 @@ export const CancelTrainingJobCommandSchema = z.object({
   cancelReason: z.string().optional().nullable(),
 });
 export type CancelTrainingJobCommandInput = z.infer<typeof CancelTrainingJobCommandSchema>;
+
+export const RetryTrainingRoundParticipantSelectionCommandSchema = z.object({
+  trainingJobId: z.string().uuid(),
+});
+export type RetryTrainingRoundParticipantSelectionCommandInput = z.infer<typeof RetryTrainingRoundParticipantSelectionCommandSchema>;
 
 export const SubmitModelUpdateSubmissionCommandSchema = z.object({
   executionSessionId: z.string().uuid(),
@@ -569,31 +576,6 @@ export const RevokeDatasetTrainingApprovalCommandSchema = z.object({
   revokeReason: z.string(),
 });
 export type RevokeDatasetTrainingApprovalCommandInput = z.infer<typeof RevokeDatasetTrainingApprovalCommandSchema>;
-
-export const CompleteRoundExecutionCommandSchema = z.object({
-  roundExecutionId: z.string().uuid(),
-  executionSessionId: z.string().uuid(),
-  executionPlanId: z.string().uuid(),
-  trainingJobId: z.string().uuid(),
-  trainingRunConfigurationId: z.string().uuid(),
-  roundId: z.string().uuid(),
-  runtimeId: z.string().uuid(),
-  runtimeEngineJobId: z.string(),
-});
-export type CompleteRoundExecutionCommandInput = z.infer<typeof CompleteRoundExecutionCommandSchema>;
-
-export const FailRoundExecutionCommandSchema = z.object({
-  roundExecutionId: z.string().uuid(),
-  executionSessionId: z.string().uuid(),
-  executionPlanId: z.string().uuid(),
-  trainingJobId: z.string().uuid(),
-  trainingRunConfigurationId: z.string().uuid(),
-  roundId: z.string().uuid(),
-  runtimeId: z.string().uuid(),
-  runtimeEngineJobId: z.string().optional().nullable(),
-  failureReason: z.string(),
-});
-export type FailRoundExecutionCommandInput = z.infer<typeof FailRoundExecutionCommandSchema>;
 
 export const RetryRoundExecutionAfterStartFailureCommandSchema = z.object({
   roundExecutionId: z.string().uuid(),

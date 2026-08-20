@@ -211,7 +211,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   withFormControl
                   resource="round_execution_catalog"
                   dataProviderName="federation-learning-runtime-agent"
-                  optionLabel="artifactRef"
+                  optionLabel="runtimeEngineObservedStatus"
                   optionValue="roundExecutionId"
                   value={field.value || ""}
                   onValueChange={field.onChange}

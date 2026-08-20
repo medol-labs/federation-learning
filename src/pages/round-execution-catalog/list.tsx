@@ -33,6 +33,10 @@ type RoundExecutionCatalogRecord = {
   featureSchemaId?: string;
   baseModelId?: string;
   runtimeEngineJobId?: string;
+  runtimeEngineObservedStatus?: string;
+  runtimeEngineObservationAt?: string;
+  localUpdateArtifactRef?: string;
+  metricsArtifactRef?: string;
   localExecutionRequirementsSatisfied?: boolean;
   runtimeIdentityMatched?: boolean;
   runtimeDatasetBindingAvailable?: boolean;
@@ -294,6 +298,63 @@ export const RoundExecutionCatalogList = () => {
         meta: {
           label: t("resources.round_execution_catalog.fields.runtimeEngineJobId.label", "Runtime Engine Job Id"),
           placeholder: "Enter Runtime Engine Job Id",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEngineObservedStatus", {
+        id: "runtimeEngineObservedStatus",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeEngineObservedStatus.label", "Runtime Engine Observed Status")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeEngineObservedStatus.label", "Runtime Engine Observed Status"),
+          placeholder: "Enter Runtime Engine Observed Status",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEngineObservationAt", {
+        id: "runtimeEngineObservationAt",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeEngineObservationAt.label", "Runtime Engine Observation At")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeEngineObservationAt.label", "Runtime Engine Observation At"),
+          placeholder: "Enter Runtime Engine Observation At",
+          variant: "date",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("localUpdateArtifactRef", {
+        id: "localUpdateArtifactRef",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.localUpdateArtifactRef.label", "Local Update Artifact Ref")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.localUpdateArtifactRef.label", "Local Update Artifact Ref"),
+          placeholder: "Enter Local Update Artifact Ref",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("metricsArtifactRef", {
+        id: "metricsArtifactRef",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.metricsArtifactRef.label", "Metrics Artifact Ref")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.metricsArtifactRef.label", "Metrics Artifact Ref"),
+          placeholder: "Enter Metrics Artifact Ref",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -687,45 +748,6 @@ export const RoundExecutionCatalogList = () => {
                   />
                 </DropdownMenuItem>
                 )}
-                {isCommandVisible(row.original, "", "state", ["Running"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="completeRoundExecution"
-                    recordItemId={row.original.roundExecutionId}
-                    size="sm"
-                    query={{
-                      executionSessionId: row.original.executionSessionId,
-                      executionPlanId: row.original.executionPlanId,
-                      trainingJobId: row.original.trainingJobId,
-                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
-                      roundId: row.original.roundId,
-                      runtimeId: row.original.runtimeId,
-                      runtimeEngineJobId: row.original.runtimeEngineJobId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "state", ["Running"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="failRoundExecution"
-                    recordItemId={row.original.roundExecutionId}
-                    size="sm"
-                    query={{
-                      executionSessionId: row.original.executionSessionId,
-                      executionPlanId: row.original.executionPlanId,
-                      trainingJobId: row.original.trainingJobId,
-                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
-                      roundId: row.original.roundId,
-                      runtimeId: row.original.runtimeId,
-                      runtimeEngineJobId: row.original.runtimeEngineJobId,
-                      failureReason: row.original.failureReason,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
                 {isCommandVisible(row.original, "", "state", ["Failed"]) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -800,7 +822,7 @@ export const RoundExecutionCatalogList = () => {
         tableName: "round_execution_catalog_read_model_entity",
         idField: "roundExecutionId",
         idFields: ["roundExecutionId"],
-        queryFields: ["roundExecutionId","executionSessionId","executionPlanId","trainingJobId","trainingRunConfigurationId","roundId","roundNumber","organizationId","runtimeId","state","featureSchemaId","baseModelId","runtimeEngineJobId","localExecutionRequirementsSatisfied","runtimeIdentityMatched","runtimeDatasetBindingAvailable","datasetAccessValidated","baseModelAvailable","trainingConfigurationSupported","runtimeResourceAvailable","runtimeAgentIdle","updateArtifactId","artifactRef","artifactDigest","trainingLoss","receivedAt","acceptedAt","rejectedAt","startedAt","completedAt","failedAt","submittedAt","failureReason","retryReason","runtimeEngineReleased","runtimeEngineReleaseFailureReason"],
+        queryFields: ["roundExecutionId","executionSessionId","executionPlanId","trainingJobId","trainingRunConfigurationId","roundId","roundNumber","organizationId","runtimeId","state","featureSchemaId","baseModelId","runtimeEngineJobId","runtimeEngineObservedStatus","runtimeEngineObservationAt","localUpdateArtifactRef","metricsArtifactRef","localExecutionRequirementsSatisfied","runtimeIdentityMatched","runtimeDatasetBindingAvailable","datasetAccessValidated","baseModelAvailable","trainingConfigurationSupported","runtimeResourceAvailable","runtimeAgentIdle","updateArtifactId","artifactRef","artifactDigest","trainingLoss","receivedAt","acceptedAt","rejectedAt","startedAt","completedAt","failedAt","submittedAt","failureReason","retryReason","runtimeEngineReleased","runtimeEngineReleaseFailureReason"],
         label: t("resources.round_execution_catalog.label", "Round Execution Catalog"),
         aggregateRoute: "roundexecution",
         queryRoute: "roundexecutioncatalog",

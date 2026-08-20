@@ -892,37 +892,6 @@ export const TrainingRoundProgressList = () => {
                   />
                 </DropdownMenuItem>
                 )}
-                {isCommandVisible(row.original, "", "state", ["Running"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="completeRoundExecution"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                    query={{
-                      trainingJobId: row.original.trainingJobId,
-                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
-                      roundId: row.original.roundId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "state", ["Running"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="failRoundExecution"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                    query={{
-                      trainingJobId: row.original.trainingJobId,
-                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
-                      roundId: row.original.roundId,
-                      failureReason: row.original.failureReason,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
                 {isCommandVisible(row.original, "", "state", ["Failed"]) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -964,6 +933,16 @@ export const TrainingRoundProgressList = () => {
                   <CommandButton
                     variant="ghost"
                     command="submitTrainingJob"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retryTrainingRoundParticipantSelection"
                     recordItemId={row.original.trainingJobId}
                     size="sm"
                   />
