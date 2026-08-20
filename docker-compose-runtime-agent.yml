@@ -1,6 +1,6 @@
 services:
   runtime-agent-umadb:
-    image: umadb/umadb:latest
+    image: umadb/umadb:0.7.8
     ports:
       - "${RUNTIME_AGENT_UMADB_PORT:-50053}:50051"
     volumes:

@@ -59,6 +59,20 @@ class UmaDbEventStorageEngineTest {
     }
 
     @Test
+    void appendPassesZeroConsistencyMarkerToUmaDb() {
+        var client = new RecordingUmaDbClient();
+        var engine = engine(client);
+        var condition = AppendCondition
+                .withCriteria(EventCriteria.havingTags(Tag.of("Order", "order-1")))
+                .withMarker(new GlobalIndexConsistencyMarker(0));
+
+        commit(engine.appendEvents(condition, null, List.of(tagged("created", "OrderCreated", "Order", "order-1"))).join());
+
+        assertEquals(0L, client.appendRequest.condition().after());
+        assertEquals(List.of("Order=order-1"), client.appendRequest.condition().failIfEventsMatch().getFirst().tags());
+    }
+
+    @Test
     void appendAllowsMultipleDcbTagsPerEvent() {
         var client = new RecordingUmaDbClient();
         var engine = engine(client);
@@ -155,6 +169,21 @@ class UmaDbEventStorageEngineTest {
         assertEquals(8L, token.position().orElseThrow());
         assertFalse(entry.containsResource(ConsistencyMarker.RESOURCE_KEY));
         assertEquals(10L, GlobalIndexConsistencyMarker.position(marker));
+    }
+
+    @Test
+    void sourceUsesHeadForTerminalMarkerWhenCriteriaMatchesNoEvents() {
+        var client = new RecordingUmaDbClient();
+        client.events.add(new UmaDbClient.SequencedStoredEvent(
+                4,
+                stored("unrelated", "OrderCreated", Map.of(), "Order", "order-2")
+        ));
+        var stream = engine(client).source(SourcingCondition.conditionFor(EventCriteria.havingTags(Tag.of("Order", "order-1"))));
+
+        var terminal = stream.next().orElseThrow();
+        var marker = terminal.getResource(ConsistencyMarker.RESOURCE_KEY);
+
+        assertEquals(5L, GlobalIndexConsistencyMarker.position(marker));
     }
 
     @Test

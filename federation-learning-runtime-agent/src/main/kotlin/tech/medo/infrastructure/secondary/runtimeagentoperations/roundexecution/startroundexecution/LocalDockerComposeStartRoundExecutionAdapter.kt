@@ -39,7 +39,6 @@ class LocalDockerComposeStartRoundExecutionAdapter(
         val compose = commandRunner.run(properties, listOf("up", "-d", properties.serviceName))
         if (!compose.succeeded) {
             return StartRoundExecutionResult.Unavailable(
-                runtimeEngineJobId = runtimeEngineJobId,
                 failureReason = if (compose.timedOut) {
                     "Runtime engine docker compose up timed out after ${properties.commandTimeout}."
                 } else {
@@ -53,7 +52,6 @@ class LocalDockerComposeStartRoundExecutionAdapter(
             waitUntilHealthy(endpoint)
         } catch (ex: Exception) {
             return StartRoundExecutionResult.Unavailable(
-                runtimeEngineJobId = runtimeEngineJobId,
                 failureReason = "Runtime engine health check failed: ${ex.message ?: ex.javaClass.name}"
             )
         }
@@ -64,7 +62,6 @@ class LocalDockerComposeStartRoundExecutionAdapter(
             runtimeEngineClient.startJob(endpoint, request)
         } catch (ex: Exception) {
             return StartRoundExecutionResult.Unavailable(
-                runtimeEngineJobId = runtimeEngineJobId,
                 failureReason = "Runtime engine job submission failed: ${ex.message ?: ex.javaClass.name}"
             )
         }
