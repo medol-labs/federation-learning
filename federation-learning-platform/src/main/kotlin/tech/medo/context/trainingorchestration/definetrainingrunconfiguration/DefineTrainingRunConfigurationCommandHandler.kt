@@ -8,6 +8,7 @@ import tech.medo.trainingorchestration.definetrainingrunconfiguration.DefineTrai
 
 
 
+
 @Component
 class DefineTrainingRunConfigurationCommandHandler(
     private val decision: DefineTrainingRunConfigurationDecision

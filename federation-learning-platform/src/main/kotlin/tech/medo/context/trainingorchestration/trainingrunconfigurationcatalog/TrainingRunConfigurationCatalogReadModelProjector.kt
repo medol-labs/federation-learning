@@ -109,7 +109,6 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
             entity.minimumFairnessScore = event.minimumFairnessScore
             entity.failureToleranceRatio = event.failureToleranceRatio
             entity.updateReason = event.updateReason
-            entity.state = TrainingRunConfigurationStateEnum.DRAFT
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

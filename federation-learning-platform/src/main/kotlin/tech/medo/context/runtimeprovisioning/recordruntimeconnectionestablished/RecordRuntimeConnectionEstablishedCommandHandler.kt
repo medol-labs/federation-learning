@@ -10,6 +10,7 @@ import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructure
 
 
 
+
 @Component
 class RecordRuntimeConnectionEstablishedCommandHandler(
     private val decision: RecordRuntimeConnectionEstablishedDecision

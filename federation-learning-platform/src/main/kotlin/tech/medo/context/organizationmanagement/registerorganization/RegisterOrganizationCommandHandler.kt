@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component
 import tech.medo.organizationmanagement.registerorganization.RegisterOrganizationCommand
 
 
+
 import tech.medo.organizationmanagement.organization.OrganizationNameReservationState
 
 @Component

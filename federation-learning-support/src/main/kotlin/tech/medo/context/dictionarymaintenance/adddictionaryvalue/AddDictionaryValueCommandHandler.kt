@@ -8,6 +8,7 @@ import tech.medo.dictionarymaintenance.adddictionaryvalue.AddDictionaryValueComm
 
 
 
+
 @Component
 class AddDictionaryValueCommandHandler(
     private val decision: AddDictionaryValueDecision

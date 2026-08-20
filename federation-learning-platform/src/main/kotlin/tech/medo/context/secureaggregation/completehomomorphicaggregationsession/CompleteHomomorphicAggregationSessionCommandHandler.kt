@@ -11,6 +11,7 @@ import tech.medo.secureaggregation.secureaggregationsession.SecureAggregationSes
 
 
 
+
 @Component
 class CompleteHomomorphicAggregationSessionCommandHandler(
     private val decision: CompleteHomomorphicAggregationSessionDecision,

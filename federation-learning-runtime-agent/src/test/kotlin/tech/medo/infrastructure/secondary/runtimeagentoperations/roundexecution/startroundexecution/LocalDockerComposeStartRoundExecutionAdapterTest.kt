@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
+import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelProjection
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionInput
@@ -175,6 +176,12 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
         object : RuntimeDatasetBindingCatalogReadModelRepository {
             override fun findAll(pageable: Pageable): Page<RuntimeDatasetBindingCatalogReadModel> =
                 PageImpl(bindings)
+
+            override fun findAllByCriteria(
+                criteria: RuntimeDatasetBindingCatalogReadModelCriteria?,
+                pageable: Pageable
+            ): Page<RuntimeDatasetBindingCatalogReadModel> =
+                findAll(pageable)
 
             override fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel? = null
             override fun findProjectionById(id: UUID): RuntimeDatasetBindingCatalogReadModelProjection? = null

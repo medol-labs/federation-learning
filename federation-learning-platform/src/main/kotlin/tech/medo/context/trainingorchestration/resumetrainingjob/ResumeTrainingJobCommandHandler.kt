@@ -10,6 +10,7 @@ import tech.medo.trainingorchestration.trainingjob.TrainingJobState
 
 
 
+
 @Component
 class ResumeTrainingJobCommandHandler(
     private val decision: ResumeTrainingJobDecision

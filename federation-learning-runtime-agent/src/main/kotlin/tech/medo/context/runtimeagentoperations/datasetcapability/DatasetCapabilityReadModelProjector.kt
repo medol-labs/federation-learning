@@ -109,7 +109,6 @@ class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabil
             entity.qualityScore = event.qualityScore
             entity.nonIidScore = event.nonIidScore
             entity.metadataReportId = event.metadataReportId
-            entity.metadataStatus = "Reported"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -192,7 +191,6 @@ class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabil
             entity.qualityScore = event.qualityScore
             entity.nonIidScore = event.nonIidScore
             entity.metadataReportId = event.metadataReportId
-            entity.contractStatus = "ContractValidationCompleted"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

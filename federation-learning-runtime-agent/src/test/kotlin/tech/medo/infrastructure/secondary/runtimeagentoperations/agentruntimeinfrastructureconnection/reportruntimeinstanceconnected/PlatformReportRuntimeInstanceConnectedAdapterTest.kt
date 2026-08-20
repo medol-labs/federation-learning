@@ -70,6 +70,8 @@ class PlatformReportRuntimeInstanceConnectedAdapterTest {
         ReportRuntimeInstanceConnectedInput(
             runtimeInfrastructureId = runtimeInfrastructureId,
             runtimeAgentId = runtimeAgentId,
+            runtimeAgentEndpoint = "http://localhost:8082",
+            endpointScope = "LOCAL",
             runtimePlatformConnectionReady = false,
             platformApiReachable = false,
             agentAuthenticationSucceeded = false,

@@ -60,7 +60,6 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AgentDatasetAccessRevalidatedEvent): AgentDatasetAccessValidationState = apply {
-        currentState = AgentDatasetAccessValidationStateEnum.CHECKED
         datasetAccessValidationId = event.datasetAccessValidationId
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId

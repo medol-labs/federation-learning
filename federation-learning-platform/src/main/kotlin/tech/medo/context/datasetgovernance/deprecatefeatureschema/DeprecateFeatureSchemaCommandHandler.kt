@@ -10,6 +10,7 @@ import tech.medo.datasetgovernance.featureschema.FeatureSchemaState
 
 
 
+
 @Component
 class DeprecateFeatureSchemaCommandHandler(
     private val decision: DeprecateFeatureSchemaDecision

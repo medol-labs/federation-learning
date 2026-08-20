@@ -8,6 +8,7 @@ import tech.medo.runtimeprovisioning.registerruntimeinfrastructurepackage.Regist
 
 
 
+
 @Component
 class RegisterRuntimeInfrastructurePackageCommandHandler(
     private val decision: RegisterRuntimeInfrastructurePackageDecision

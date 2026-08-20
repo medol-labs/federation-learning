@@ -8,6 +8,7 @@ import tech.medo.runtimemonitoring.detectruntimeagentoffline.DetectRuntimeAgentO
 
 
 
+
 @Component
 class DetectRuntimeAgentOfflineCommandHandler(
     private val decision: DetectRuntimeAgentOfflineDecision

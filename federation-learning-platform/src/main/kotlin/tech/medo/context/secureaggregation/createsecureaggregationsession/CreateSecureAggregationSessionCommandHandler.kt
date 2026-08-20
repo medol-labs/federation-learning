@@ -8,6 +8,7 @@ import tech.medo.secureaggregation.createsecureaggregationsession.CreateSecureAg
 
 
 
+
 @Component
 class CreateSecureAggregationSessionCommandHandler(
     private val decision: CreateSecureAggregationSessionDecision

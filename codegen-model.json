@@ -23498,7 +23498,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelArtifactCatalog.modelId"
+                ]
+              }
             },
             {
               "name": "strategyName",
@@ -24864,7 +24870,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelArtifactCatalog.modelId"
+                ]
+              }
             },
             {
               "name": "strategyName",
@@ -45870,7 +45882,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationSessionCreated.acceptedRuntimeIds"
+                ]
+              }
             },
             {
               "name": "selectedParticipantCount",
@@ -45884,7 +45902,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationSessionCreated.requiredParticipantCount"
+                ]
+              }
             }
           ],
           "dependencies": [
@@ -59904,7 +59928,7 @@
           "sliceName": "Observe Runtime Engine Job",
           "title": "Runtime Engine Job Observed Running",
           "specification": "Runtime Engine Job Observation Outcome",
-          "rule": "Observing a runtime engine job is an external status check. The adapter queries the runtime engine by runtimeEngineJobId and records RuntimeEngineJobObserved with observedStatus RUNNING, COMPLETED, or FAILED. Completion and failure domain state changes are triggered by follow-up automations instead of embedding runtime engine polling inside CompleteRoundExecution or FailRoundExecution.",
+          "rule": "Observing a runtime engine job is an external status check and must not advance or reset the RoundExecution lifecycle state. The adapter queries the runtime engine by runtimeEngineJobId and records RuntimeEngineJobObserved with observedStatus RUNNING, COMPLETED, or FAILED. Completion and failure domain state changes are triggered by follow-up automations instead of embedding runtime engine polling inside CompleteRoundExecution or FailRoundExecution.",
           "expressions": [],
           "validates": [],
           "given": [
@@ -60076,7 +60100,7 @@
           "sliceName": "Observe Runtime Engine Job",
           "title": "Runtime Engine Job Observed Completed",
           "specification": "Runtime Engine Job Observation Outcome",
-          "rule": "Observing a runtime engine job is an external status check. The adapter queries the runtime engine by runtimeEngineJobId and records RuntimeEngineJobObserved with observedStatus RUNNING, COMPLETED, or FAILED. Completion and failure domain state changes are triggered by follow-up automations instead of embedding runtime engine polling inside CompleteRoundExecution or FailRoundExecution.",
+          "rule": "Observing a runtime engine job is an external status check and must not advance or reset the RoundExecution lifecycle state. The adapter queries the runtime engine by runtimeEngineJobId and records RuntimeEngineJobObserved with observedStatus RUNNING, COMPLETED, or FAILED. Completion and failure domain state changes are triggered by follow-up automations instead of embedding runtime engine polling inside CompleteRoundExecution or FailRoundExecution.",
           "expressions": [],
           "validates": [],
           "given": [
@@ -60248,7 +60272,7 @@
           "sliceName": "Observe Runtime Engine Job",
           "title": "Runtime Engine Job Observed Failed",
           "specification": "Runtime Engine Job Observation Outcome",
-          "rule": "Observing a runtime engine job is an external status check. The adapter queries the runtime engine by runtimeEngineJobId and records RuntimeEngineJobObserved with observedStatus RUNNING, COMPLETED, or FAILED. Completion and failure domain state changes are triggered by follow-up automations instead of embedding runtime engine polling inside CompleteRoundExecution or FailRoundExecution.",
+          "rule": "Observing a runtime engine job is an external status check and must not advance or reset the RoundExecution lifecycle state. The adapter queries the runtime engine by runtimeEngineJobId and records RuntimeEngineJobObserved with observedStatus RUNNING, COMPLETED, or FAILED. Completion and failure domain state changes are triggered by follow-up automations instead of embedding runtime engine polling inside CompleteRoundExecution or FailRoundExecution.",
           "expressions": [],
           "validates": [],
           "given": [

@@ -9,6 +9,7 @@ import tech.medo.runtimeagentoperations.revalidateagentdatasetaccess.RevalidateA
 import tech.medo.runtimeagentoperations.revalidateagentdatasetaccess.RevalidateAgentDatasetAccessService
 import tech.medo.runtimeagentoperations.agentdatasetaccessvalidation.AgentDatasetAccessValidationState
 
+import tech.medo.runtimeagentoperations.domain.states.AgentDatasetAccessValidationStateEnum
 
 
 @Component
@@ -22,6 +23,9 @@ class RevalidateAgentDatasetAccessCommandHandler(
         @InjectEntity(idProperty = "datasetAccessValidationId") state: AgentDatasetAccessValidationState,
         eventAppender: EventAppender
     ) {
+        require(state.currentState == AgentDatasetAccessValidationStateEnum.CHECKED) {
+            "RevalidateAgentDatasetAccess requires AgentDatasetAccessValidation to be Checked."
+        }
         val input = RevalidateAgentDatasetAccessInput(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = command.runtimeDatasetBindingId)
         val portResult = revalidateAgentDatasetAccessService.execute(input)
         val now = java.time.LocalDateTime.now()

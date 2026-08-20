@@ -9,6 +9,7 @@ import tech.medo.secureaggregation.preparehomomorphicencryptioncontext.PrepareHo
 import tech.medo.secureaggregation.preparehomomorphicencryptioncontext.PrepareHomomorphicEncryptionContextService
 import tech.medo.secureaggregation.secureaggregationsession.SecureAggregationSessionState
 
+import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
 
 
 @Component
@@ -22,6 +23,9 @@ class PrepareHomomorphicEncryptionContextCommandHandler(
         @InjectEntity(idProperty = "secureAggregationSessionId") state: SecureAggregationSessionState,
         eventAppender: EventAppender
     ) {
+        require(state.currentState == SecureAggregationSessionStateEnum.PARTICIPANTS_SELECTED) {
+            "PrepareHomomorphicEncryptionContext requires SecureAggregationSession to be ParticipantsSelected."
+        }
         val input = PrepareHomomorphicEncryptionContextInput(secureAggregationSessionId = command.secureAggregationSessionId, encryptionScheme = command.encryptionScheme, publicKeyVersion = command.publicKeyVersion, encryptedParameterScale = command.encryptedParameterScale)
         val portResult = prepareHomomorphicEncryptionContextService.execute(input)
 

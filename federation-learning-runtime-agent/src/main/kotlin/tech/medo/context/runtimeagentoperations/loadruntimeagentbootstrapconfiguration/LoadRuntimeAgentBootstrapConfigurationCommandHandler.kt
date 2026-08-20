@@ -9,6 +9,7 @@ import tech.medo.runtimeagentoperations.loadruntimeagentbootstrapconfiguration.L
 
 
 
+
 @Component
 class LoadRuntimeAgentBootstrapConfigurationCommandHandler(
     private val decision: LoadRuntimeAgentBootstrapConfigurationDecision,

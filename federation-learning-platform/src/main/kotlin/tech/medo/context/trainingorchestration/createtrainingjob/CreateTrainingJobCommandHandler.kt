@@ -8,6 +8,7 @@ import tech.medo.trainingorchestration.createtrainingjob.CreateTrainingJobComman
 
 
 
+
 @Component
 class CreateTrainingJobCommandHandler(
     private val decision: CreateTrainingJobDecision

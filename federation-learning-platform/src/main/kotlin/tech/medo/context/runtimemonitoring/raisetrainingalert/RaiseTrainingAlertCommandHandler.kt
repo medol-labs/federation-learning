@@ -8,6 +8,7 @@ import tech.medo.runtimemonitoring.raisetrainingalert.RaiseTrainingAlertCommand
 
 
 
+
 @Component
 class RaiseTrainingAlertCommandHandler(
     private val decision: RaiseTrainingAlertDecision

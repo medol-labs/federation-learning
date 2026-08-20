@@ -10,6 +10,7 @@ import tech.medo.federationmanagement.federation.FederationState
 
 
 
+
 @Component
 class SuspendFederationCommandHandler(
     private val decision: SuspendFederationDecision

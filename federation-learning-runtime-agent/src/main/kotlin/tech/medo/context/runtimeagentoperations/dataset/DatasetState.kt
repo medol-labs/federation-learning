@@ -93,7 +93,6 @@ class DatasetState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetContractRevalidatedEvent): DatasetState = apply {
-        currentState = DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED
         datasetId = event.datasetId
         featureSchemaId = event.featureSchemaId
         metadataReportId = event.metadataReportId

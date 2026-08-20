@@ -73,7 +73,6 @@ class AgentDatasetProfileState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AgentDatasetReprofiledEvent): AgentDatasetProfileState = apply {
-        currentState = AgentDatasetProfileStateEnum.REPORTED
         metadataReportId = event.metadataReportId
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId

@@ -9,6 +9,7 @@ import tech.medo.runtimeagentoperations.retrydatasetcontractvalidation.RetryData
 import tech.medo.runtimeagentoperations.retrydatasetcontractvalidation.RetryDatasetContractValidationService
 import tech.medo.runtimeagentoperations.dataset.DatasetState
 
+import tech.medo.runtimeagentoperations.domain.states.DatasetStateEnum
 
 
 @Component
@@ -22,6 +23,9 @@ class RetryDatasetContractValidationCommandHandler(
         @InjectEntity(idProperty = "selection") state: DatasetState,
         eventAppender: EventAppender
     ) {
+        require(state.currentState == DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED) {
+            "RetryDatasetContractValidation requires Dataset to be ContractValidationCompleted."
+        }
         val input = RetryDatasetContractValidationInput(datasetId = command.datasetId)
         val portResult = retryDatasetContractValidationService.execute(input)
         val now = java.time.LocalDateTime.now()

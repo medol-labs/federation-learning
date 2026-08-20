@@ -8,6 +8,7 @@ import tech.medo.trainingorchestration.generateparticipantexecutionplan.Generate
 
 
 
+
 @Component
 class GenerateParticipantExecutionPlanCommandHandler(
     private val decision: GenerateParticipantExecutionPlanDecision

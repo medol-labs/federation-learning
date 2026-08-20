@@ -8,6 +8,7 @@ import tech.medo.runtimeagentoperations.receiveparticipantexecutionplan.ReceiveP
 
 
 
+
 @Component
 class ReceiveParticipantExecutionPlanCommandHandler(
     private val decision: ReceiveParticipantExecutionPlanDecision

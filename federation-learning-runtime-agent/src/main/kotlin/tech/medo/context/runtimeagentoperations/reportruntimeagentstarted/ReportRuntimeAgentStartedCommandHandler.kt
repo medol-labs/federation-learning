@@ -10,6 +10,7 @@ import tech.medo.runtimeagentoperations.runtimeagentlifecycle.RuntimeAgentLifecy
 
 
 
+
 @Component
 class ReportRuntimeAgentStartedCommandHandler(
     private val decision: ReportRuntimeAgentStartedDecision

@@ -7,11 +7,13 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModel
+import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModelCriteria
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModelProjection
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModelRepository
 import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition
 import tech.medo.runtimeagentoperations.domain.types.LabelDefinition
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
+import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelProjection
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractInput
@@ -121,6 +123,12 @@ class CsvFileValidateDatasetContractAdapterTest {
             override fun findAll(pageable: Pageable): Page<RuntimeDatasetBindingCatalogReadModel> =
                 PageImpl(bindings.toList())
 
+            override fun findAllByCriteria(
+                criteria: RuntimeDatasetBindingCatalogReadModelCriteria?,
+                pageable: Pageable
+            ): Page<RuntimeDatasetBindingCatalogReadModel> =
+                findAll(pageable)
+
             override fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel? =
                 bindings.firstOrNull { it.runtimeDatasetBindingId == id }
 
@@ -138,6 +146,12 @@ class CsvFileValidateDatasetContractAdapterTest {
         object : DatasetCapabilityReadModelRepository {
             override fun findAll(pageable: Pageable): Page<DatasetCapabilityReadModel> =
                 PageImpl(listOfNotNull(datasetCapability))
+
+            override fun findAllByCriteria(
+                criteria: DatasetCapabilityReadModelCriteria?,
+                pageable: Pageable
+            ): Page<DatasetCapabilityReadModel> =
+                findAll(pageable)
 
             override fun findById(id: UUID): DatasetCapabilityReadModel? =
                 datasetCapability?.takeIf { it.datasetId == id }

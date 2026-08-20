@@ -9,6 +9,7 @@ import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.R
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.ReleaseRuntimeEngineJobAfterCompletionService
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
+import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 
 @Component
@@ -22,6 +23,9 @@ class ReleaseRuntimeEngineJobAfterCompletionCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
+        require(state.currentState == RoundExecutionStateEnum.COMPLETED) {
+            "ReleaseRuntimeEngineJobAfterCompletion requires RoundExecution to be Completed."
+        }
         val input = ReleaseRuntimeEngineJobAfterCompletionInput(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId)
         val portResult = releaseRuntimeEngineJobAfterCompletionService.execute(input)
 

@@ -9,6 +9,7 @@ import tech.medo.runtimeagentoperations.observeruntimeenginejob.ObserveRuntimeEn
 import tech.medo.runtimeagentoperations.observeruntimeenginejob.ObserveRuntimeEngineJobService
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
+import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 
 @Component
@@ -22,6 +23,9 @@ class ObserveRuntimeEngineJobCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
+        require(state.currentState == RoundExecutionStateEnum.RUNNING) {
+            "ObserveRuntimeEngineJob requires RoundExecution to be Running."
+        }
         val input = ObserveRuntimeEngineJobInput(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, runtimeEngineJobId = command.runtimeEngineJobId)
         val portResult = observeRuntimeEngineJobService.execute(input)
 

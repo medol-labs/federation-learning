@@ -8,6 +8,7 @@ import tech.medo.modellifecycle.registercandidatemodel.RegisterCandidateModelCom
 
 
 
+
 @Component
 class RegisterCandidateModelCommandHandler(
     private val decision: RegisterCandidateModelDecision

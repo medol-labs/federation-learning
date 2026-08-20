@@ -9,6 +9,7 @@ import tech.medo.runtimeagentoperations.submitagentlocalmodelupdate.SubmitAgentL
 import tech.medo.runtimeagentoperations.submitagentlocalmodelupdate.SubmitAgentLocalModelUpdateService
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
+import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 
 @Component
@@ -22,6 +23,9 @@ class SubmitAgentLocalModelUpdateCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
+        require(state.currentState == RoundExecutionStateEnum.COMPLETED) {
+            "SubmitAgentLocalModelUpdate requires RoundExecution to be Completed."
+        }
         val input = SubmitAgentLocalModelUpdateInput(modelUpdateSubmissionId = command.modelUpdateSubmissionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, roundExecutionId = command.roundExecutionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, runtimeId = command.runtimeId, featureSchemaId = command.featureSchemaId, localModelId = command.localModelId, updateArtifactId = command.updateArtifactId, artifactRef = command.artifactRef, artifactDigest = command.artifactDigest, trainingLoss = command.trainingLoss)
         val portResult = submitAgentLocalModelUpdateService.execute(input)
 

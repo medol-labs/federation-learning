@@ -10,6 +10,7 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
+
 @Component
 class EvaluateModelUpdateSubmissionCommandHandler(
     private val decision: EvaluateModelUpdateSubmissionDecision

@@ -9,6 +9,7 @@ import tech.medo.runtimegovernance.detectruntimecapabilities.DetectRuntimeCapabi
 
 
 
+
 @Component
 class DetectRuntimeCapabilitiesCommandHandler(
     private val decision: DetectRuntimeCapabilitiesDecision,

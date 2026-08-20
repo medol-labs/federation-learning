@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component
 import tech.medo.dictionarymaintenance.registerdictionary.RegisterDictionaryCommand
 
 
+
 import tech.medo.dictionarymaintenance.dictionary.DictionaryCodeReservationState
 
 @Component

@@ -85,7 +85,6 @@ class AgentDatasetAccessValidationCatalogReadModelProjector(private val reposito
             entity.readable = event.readable
             entity.schemaReadable = event.schemaReadable
             entity.sampleBatchReadable = event.sampleBatchReadable
-            entity.validationStatus = "Checked"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

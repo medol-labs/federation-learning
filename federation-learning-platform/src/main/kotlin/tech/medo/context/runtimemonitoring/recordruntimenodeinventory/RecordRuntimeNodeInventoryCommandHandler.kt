@@ -8,6 +8,7 @@ import tech.medo.runtimemonitoring.recordruntimenodeinventory.RecordRuntimeNodeI
 
 
 
+
 @Component
 class RecordRuntimeNodeInventoryCommandHandler(
     private val decision: RecordRuntimeNodeInventoryDecision

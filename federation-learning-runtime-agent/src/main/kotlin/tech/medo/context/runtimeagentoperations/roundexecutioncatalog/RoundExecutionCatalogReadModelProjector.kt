@@ -123,9 +123,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.metricsArtifactRef = event.metricsArtifactRef
             entity.trainingLoss = event.trainingLoss
             entity.failureReason = event.failureReason
-            entity.state = RoundExecutionStateEnum.RUNNING
             entity.runtimeEngineObservedStatus = event.observedStatus
-            entity.runtimeEngineReleaseFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

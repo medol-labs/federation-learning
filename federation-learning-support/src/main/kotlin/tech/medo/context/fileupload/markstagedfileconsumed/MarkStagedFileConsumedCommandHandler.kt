@@ -10,6 +10,7 @@ import tech.medo.fileupload.stagedfile.StagedFileState
 
 
 
+
 @Component
 class MarkStagedFileConsumedCommandHandler(
     private val decision: MarkStagedFileConsumedDecision

@@ -89,7 +89,6 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRunConfigurationUpdatedEvent): TrainingRunConfigurationState = apply {
-        currentState = TrainingRunConfigurationStateEnum.DRAFT
         trainingRunConfigurationId = event.trainingRunConfigurationId
         federationId = event.federationId
         featureSchemaId = event.featureSchemaId

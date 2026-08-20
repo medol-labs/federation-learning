@@ -8,6 +8,7 @@ import tech.medo.federationmanagement.inviteparticipant.InviteParticipantCommand
 
 
 
+
 @Component
 class InviteParticipantCommandHandler(
     private val decision: InviteParticipantDecision

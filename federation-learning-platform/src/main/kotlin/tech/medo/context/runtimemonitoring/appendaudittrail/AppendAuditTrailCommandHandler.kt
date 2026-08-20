@@ -8,6 +8,7 @@ import tech.medo.runtimemonitoring.appendaudittrail.AppendAuditTrailCommand
 
 
 
+
 @Component
 class AppendAuditTrailCommandHandler(
     private val decision: AppendAuditTrailDecision

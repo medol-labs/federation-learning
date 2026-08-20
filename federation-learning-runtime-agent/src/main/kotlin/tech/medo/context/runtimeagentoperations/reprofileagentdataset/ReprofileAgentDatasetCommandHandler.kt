@@ -9,6 +9,7 @@ import tech.medo.runtimeagentoperations.reprofileagentdataset.ReprofileAgentData
 import tech.medo.runtimeagentoperations.reprofileagentdataset.ReprofileAgentDatasetService
 import tech.medo.runtimeagentoperations.agentdatasetprofile.AgentDatasetProfileState
 
+import tech.medo.runtimeagentoperations.domain.states.AgentDatasetProfileStateEnum
 
 
 @Component
@@ -22,6 +23,9 @@ class ReprofileAgentDatasetCommandHandler(
         @InjectEntity(idProperty = "runtimeDatasetBindingId") state: AgentDatasetProfileState,
         eventAppender: EventAppender
     ) {
+        require(state.currentState == AgentDatasetProfileStateEnum.REPORTED) {
+            "ReprofileAgentDataset requires AgentDatasetProfile to be Reported."
+        }
         val input = ReprofileAgentDatasetInput(metadataReportId = command.metadataReportId, runtimeDatasetBindingId = command.runtimeDatasetBindingId)
         val portResult = reprofileAgentDatasetService.execute(input)
         val now = java.time.LocalDateTime.now()

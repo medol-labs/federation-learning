@@ -196,7 +196,6 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeEngineJobObservedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.RUNNING
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId

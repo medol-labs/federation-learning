@@ -9,6 +9,7 @@ import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.RuntimeInfrastr
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.VerifyRuntimeInfrastructureService
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureState
 
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
 
 @Component
@@ -22,6 +23,9 @@ class VerifyRuntimeInfrastructureCommandHandler(
         @InjectEntity(idProperty = "runtimeInfrastructureId") state: RuntimeInfrastructureState,
         eventAppender: EventAppender
     ) {
+        require(state.currentState == RuntimeInfrastructureStateEnum.REGISTERED) {
+            "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Registered."
+        }
         val input = RuntimeInfrastructureVerificationInput(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId, agentInstallMode = command.agentInstallMode, observedNodeCount = command.observedNodeCount)
         val portResult = verifyRuntimeInfrastructureService.verify(input)
         val now = java.time.LocalDateTime.now()

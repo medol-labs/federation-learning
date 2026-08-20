@@ -27,6 +27,8 @@ class ReportRuntimeInstanceConnectedIntegrationTest(
         val command = ReportRuntimeInstanceConnectedCommand(
             runtimeInfrastructureId = java.util.UUID.randomUUID(),
             runtimeAgentId = java.util.UUID.randomUUID(),
+            runtimeAgentEndpoint = "http://localhost:8082",
+            endpointScope = "LOCAL",
             runtimePlatformConnectionReady = false,
             platformApiReachable = false,
             agentAuthenticationSucceeded = false,

@@ -10,6 +10,7 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
+
 @Component
 class RetryTrainingRoundParticipantSelectionCommandHandler(
     private val decision: RetryTrainingRoundParticipantSelectionDecision

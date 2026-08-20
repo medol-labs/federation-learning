@@ -9,9 +9,11 @@ import org.springframework.data.domain.Pageable
 import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanInput
 import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanResult
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
+import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelProjection
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModel
+import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelProjection
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelRepository
 import java.time.LocalDateTime
@@ -114,6 +116,12 @@ class LocalAcceptExecutionPlanAdapterTest {
             override fun findAll(pageable: Pageable): Page<RuntimeDatasetBindingCatalogReadModel> =
                 PageImpl(bindings.toList())
 
+            override fun findAllByCriteria(
+                criteria: RuntimeDatasetBindingCatalogReadModelCriteria?,
+                pageable: Pageable
+            ): Page<RuntimeDatasetBindingCatalogReadModel> =
+                findAll(pageable)
+
             override fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel? = null
             override fun findProjectionById(id: UUID): RuntimeDatasetBindingCatalogReadModelProjection? = null
             override fun save(projection: RuntimeDatasetBindingCatalogReadModelProjection) = Unit
@@ -125,6 +133,12 @@ class LocalAcceptExecutionPlanAdapterTest {
         object : RoundExecutionCatalogReadModelRepository {
             override fun findAll(pageable: Pageable): Page<RoundExecutionCatalogReadModel> =
                 PageImpl(executions.toList())
+
+            override fun findAllByCriteria(
+                criteria: RoundExecutionCatalogReadModelCriteria?,
+                pageable: Pageable
+            ): Page<RoundExecutionCatalogReadModel> =
+                findAll(pageable)
 
             override fun findById(id: UUID): RoundExecutionCatalogReadModel? = null
             override fun findProjectionById(id: UUID): RoundExecutionCatalogReadModelProjection? = null

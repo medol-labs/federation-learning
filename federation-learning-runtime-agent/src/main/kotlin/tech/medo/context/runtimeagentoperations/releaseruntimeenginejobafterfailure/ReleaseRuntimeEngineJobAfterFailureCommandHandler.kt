@@ -9,6 +9,7 @@ import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterfailure.Rele
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterfailure.ReleaseRuntimeEngineJobAfterFailureService
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
+import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 
 @Component
@@ -22,6 +23,9 @@ class ReleaseRuntimeEngineJobAfterFailureCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
+        require(state.currentState == RoundExecutionStateEnum.FAILED) {
+            "ReleaseRuntimeEngineJobAfterFailure requires RoundExecution to be Failed."
+        }
         val input = ReleaseRuntimeEngineJobAfterFailureInput(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId)
         val portResult = releaseRuntimeEngineJobAfterFailureService.execute(input)
 

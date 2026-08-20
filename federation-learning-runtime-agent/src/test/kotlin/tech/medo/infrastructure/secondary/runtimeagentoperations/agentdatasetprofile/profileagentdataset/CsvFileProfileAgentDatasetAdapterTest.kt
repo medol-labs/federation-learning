@@ -11,6 +11,7 @@ import tech.medo.infrastructure.secondary.runtimeagentoperations.dataset.CsvData
 import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetInput
 import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetResult
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
+import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelProjection
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
 import java.math.BigDecimal
@@ -118,6 +119,12 @@ class CsvFileProfileAgentDatasetAdapterTest {
         object : RuntimeDatasetBindingCatalogReadModelRepository {
             override fun findAll(pageable: Pageable): Page<RuntimeDatasetBindingCatalogReadModel> =
                 PageImpl(bindings.toList())
+
+            override fun findAllByCriteria(
+                criteria: RuntimeDatasetBindingCatalogReadModelCriteria?,
+                pageable: Pageable
+            ): Page<RuntimeDatasetBindingCatalogReadModel> =
+                findAll(pageable)
 
             override fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel? =
                 bindings.firstOrNull { it.runtimeDatasetBindingId == id }

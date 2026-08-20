@@ -9,6 +9,7 @@ import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentInput
 import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentService
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureState
 
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
 
 @Component
@@ -22,6 +23,9 @@ class DeployRuntimeAgentCommandHandler(
         @InjectEntity(idProperty = "runtimeInfrastructureId") state: RuntimeInfrastructureState,
         eventAppender: EventAppender
     ) {
+        require(state.currentState == RuntimeInfrastructureStateEnum.VERIFIED) {
+            "DeployRuntimeAgent requires RuntimeInfrastructure to be Verified."
+        }
         val input = DeployRuntimeAgentInput(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId)
         val portResult = deployRuntimeAgentService.execute(input)
         val now = java.time.LocalDateTime.now()

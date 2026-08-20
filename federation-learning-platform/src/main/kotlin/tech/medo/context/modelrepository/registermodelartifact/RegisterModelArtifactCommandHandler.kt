@@ -8,6 +8,7 @@ import tech.medo.modelrepository.registermodelartifact.RegisterModelArtifactComm
 
 
 
+
 @Component
 class RegisterModelArtifactCommandHandler(
     private val decision: RegisterModelArtifactDecision

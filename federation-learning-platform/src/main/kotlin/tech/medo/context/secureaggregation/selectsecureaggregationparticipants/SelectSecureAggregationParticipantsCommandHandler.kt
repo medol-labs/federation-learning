@@ -9,6 +9,7 @@ import tech.medo.secureaggregation.selectsecureaggregationparticipants.SelectSec
 import tech.medo.secureaggregation.selectsecureaggregationparticipants.SelectSecureAggregationParticipantsService
 import tech.medo.secureaggregation.secureaggregationsession.SecureAggregationSessionState
 
+import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
 
 
 @Component
@@ -22,6 +23,9 @@ class SelectSecureAggregationParticipantsCommandHandler(
         @InjectEntity(idProperty = "secureAggregationSessionId") state: SecureAggregationSessionState,
         eventAppender: EventAppender
     ) {
+        require(state.currentState == SecureAggregationSessionStateEnum.PLANNED) {
+            "SelectSecureAggregationParticipants requires SecureAggregationSession to be Planned."
+        }
         val input = SelectSecureAggregationParticipantsInput(secureAggregationSessionId = command.secureAggregationSessionId, roundId = command.roundId, acceptedRuntimeIds = command.acceptedRuntimeIds, selectedRuntimeIds = command.selectedRuntimeIds, selectedParticipantCount = command.selectedParticipantCount)
         val portResult = selectSecureAggregationParticipantsService.execute(input)
 
