@@ -157,13 +157,13 @@ function addDictionaryValuePayload(dictionary, value, dictionaryId) {
 }
 
 async function findDictionary(dictionaryCode) {
-    const query = `dictionaryCode=${encodeURIComponent(dictionaryCode)}&size=100`;
+    const query = `dictionaryCode.equals=${encodeURIComponent(dictionaryCode)}&size=100`;
     const result = await getJson(`${endpoints.dictionaryCatalog}?${query}`);
     return pageContent(result).find((item) => normalizeCode(item.dictionaryCode) === normalizeCode(dictionaryCode));
 }
 
 async function findDictionaryValues(dictionaryCode) {
-    const query = `dictionaryCode=${encodeURIComponent(dictionaryCode)}&size=500`;
+    const query = `dictionaryCode.equals=${encodeURIComponent(dictionaryCode)}&size=500`;
     const result = await getJson(`${endpoints.dictionaryValueCatalog}?${query}`);
     return pageContent(result);
 }
