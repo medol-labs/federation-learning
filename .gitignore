@@ -9,6 +9,8 @@ python/gemifl/phe_utils/*.pkl
 .idea/
 tmp/
 volumes/
+*.tar
+*.tar.gz
 
 # Distribution / packaging
 .Python

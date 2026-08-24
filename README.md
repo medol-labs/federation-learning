@@ -190,8 +190,31 @@ base image and scheduling policy.
 Build the runtime image:
 
 ```bash
-docker compose build
+node scripts/build-images.mjs
 ```
+
+Images default to `linux/amd64`. Override the target CPU architecture when needed:
+
+```bash
+node scripts/build-images.mjs --platform linux/arm64
+```
+
+Export and import the image for an offline environment:
+
+```bash
+node scripts/export-images.mjs --output federation-learning-runtime-engine-images.tar
+node scripts/import-images.mjs --output federation-learning-runtime-engine-images.tar
+```
+
+Build and export in one command:
+
+```bash
+node scripts/image-bundle.mjs all
+```
+
+The generated image is `medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT`.
+Override the image name with `--prefix`, `--image`, and `--version`, or set
+`RUNTIME_ENGINE_IMAGE` before running Docker Compose.
 
 Start the local runtime engine:
 
