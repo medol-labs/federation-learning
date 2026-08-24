@@ -86,6 +86,20 @@ node scripts/seed-dev-data.mjs --deployment MyBackend
 node scripts/seed-dev-data.mjs --dry-run
 ```
 
+## Clean Development Docker Data
+
+To reset local Docker Compose databases and event-store volumes for generated deployment modules:
+
+```bash
+node scripts/clean-docker-compose-data.mjs --yes
+```
+
+The script discovers `docker-compose.yml` files under the generated backend root and module directories, then runs `docker compose -f <file> down -v --remove-orphans`. Preview the affected compose files without deleting data:
+
+```bash
+node scripts/clean-docker-compose-data.mjs --dry-run
+```
+
 ## Build
 
 ```bash
@@ -95,12 +109,68 @@ cd ..
 
 ## Container Image
 
-Build a Docker image directly from Maven:
+Build all generated deployment images:
 
 ```bash
 cd ..
-./mvnw -pl axon-event-storage-umadb -DskipTests install
-./mvnw -pl federation-learning-platform jib:dockerBuild
+node scripts/build-images.mjs --module federation-learning-platform
+```
+
+Images default to `linux/amd64`. Override the target CPU architecture when needed:
+
+```bash
+cd ..
+node scripts/build-images.mjs --module federation-learning-platform --platform linux/arm64
+```
+
+Export the generated images to a Docker archive for offline transfer:
+
+```bash
+cd ..
+node scripts/export-images.mjs --module federation-learning-platform
+```
+
+Pull and export Docker Compose dependency images, such as databases and event stores, for the same target platform:
+
+```bash
+cd ..
+node scripts/export-dependency-images.mjs --platform linux/amd64 --output dependency-images.tar
+```
+
+Preview the discovered dependency images:
+
+```bash
+cd ..
+node scripts/dependency-images.mjs list
+```
+
+Collect deployment Docker Compose files and matching `.env.example` files into one folder:
+
+```bash
+cd ..
+node scripts/collect-deployment-compose-files.mjs --clean
+```
+
+Import the archive on another machine:
+
+```bash
+node scripts/import-images.mjs --file federation-learning-platform-images.tar
+docker load -i dependency-images.tar
+```
+
+Build and export in one command:
+
+```bash
+cd ..
+node scripts/image-bundle.mjs all --module federation-learning-platform
+```
+
+The build script uses Maven/Jib under the hood:
+
+```bash
+cd ..
+./mvnw -pl federation-learning-platform -am -DskipTests install
+./mvnw -pl federation-learning-platform -DskipTests -Djib.container.platform.os=linux -Djib.container.platform.architecture=amd64 com.google.cloud.tools:jib-maven-plugin:3.4.5:dockerBuild
 ```
 
 The generated image is `medol/federation-learning-platform:0.0.1-SNAPSHOT` and exposes port `8081`.
