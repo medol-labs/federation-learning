@@ -17,5 +17,9 @@ data class ModelUpdateSubmissionAcceptedEvent(
     val trainingRunConfigurationId: UUID,
     val roundId: UUID,
     val runtimeId: UUID,
-    val anomalyScore: BigDecimal
+    val featureSchemaId: UUID,
+    val anomalyScore: BigDecimal,
+    val acceptedModelUpdateCount: Int,
+    val acceptedRuntimeIds: List<UUID>,
+    val minimumNodesPerRound: Int
 )

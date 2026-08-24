@@ -16,6 +16,7 @@ data class EvaluateModelUpdateSubmissionCommand(
     val trainingRunConfigurationId: UUID,
     val roundId: UUID,
     val runtimeId: UUID,
+    val featureSchemaId: UUID,
     val anomalyScore: BigDecimal = java.math.BigDecimal.ZERO
 ) {
     @TargetEntityId

@@ -221,7 +221,10 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         }
             entity.trainingJobId = event.trainingJobId
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.acceptedModelUpdateCount = event.acceptedModelUpdateCount
+            entity.minimumNodesPerRound = event.minimumNodesPerRound
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

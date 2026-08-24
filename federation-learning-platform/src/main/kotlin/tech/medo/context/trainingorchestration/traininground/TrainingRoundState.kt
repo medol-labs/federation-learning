@@ -53,9 +53,9 @@ class TrainingRoundState @EntityCreator constructor() {
     var artifactDigest: String? = null
     var trainingLoss: BigDecimal? = null
     var anomalyScore: BigDecimal? = null
-    var rejectionReason: String? = null
     var acceptedModelUpdateCount: Int? = null
     var acceptedRuntimeIds: List<UUID> = emptyList()
+    var rejectionReason: String? = null
     var secureAggregationSessionId: UUID? = null
     var aggregatedModelId: UUID? = null
     var aggregatedModelArtifactUri: String? = null
@@ -164,7 +164,11 @@ class TrainingRoundState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         roundId = event.roundId
         runtimeId = event.runtimeId
+        featureSchemaId = event.featureSchemaId
         anomalyScore = event.anomalyScore
+        acceptedModelUpdateCount = event.acceptedModelUpdateCount
+        acceptedRuntimeIds = event.acceptedRuntimeIds
+        minimumNodesPerRound = event.minimumNodesPerRound
     }
 
     @EventSourcingHandler

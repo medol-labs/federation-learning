@@ -6828,12 +6828,6 @@
         "name": "AgentLocalModelUpdateSubmitted",
         "title": "Agent Local Model Update Submitted"
       },
-      "trigger": {
-        "id": "event-9616ce0c",
-        "name": "RoundExecutionCompleted",
-        "title": "Round Execution Completed"
-      },
-      "from": "Completed",
       "to": "UpdateSubmitted",
       "startsLifecycle": false
     },
@@ -33982,6 +33976,26 @@
               }
             },
             {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionReceived.featureSchemaId"
+                ]
+              }
+            },
+            {
               "name": "anomalyScore",
               "type": "Decimal",
               "cardinality": "Single",
@@ -34126,8 +34140,64 @@
               "portOutput": false
             },
             {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "anomalyScore",
               "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "acceptedModelUpdateCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "acceptedRuntimeIds",
+              "type": "UUID",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumNodesPerRound",
+              "type": "Int",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -34355,7 +34425,7 @@
           "sliceName": "Evaluate Model Update Submission",
           "title": "Reject Anomalous Update",
           "specification": "Poisoned Local Updates Are Excluded",
-          "rule": "A local model update is evaluated exactly once by aggregation policy. The same evaluation command records ModelUpdateSubmissionAccepted when the update passes policy, or ModelUpdateSubmissionRejected when anomaly checks fail.",
+          "rule": "A local model update is evaluated exactly once by aggregation policy. The same evaluation command records ModelUpdateSubmissionAccepted when the update passes policy, or ModelUpdateSubmissionRejected when anomaly checks fail. ModelUpdateSubmissionAccepted carries the cumulative accepted runtime snapshot for the round so downstream secure aggregation automation can copy complete replayable data from the event.",
           "expressions": [],
           "validates": [],
           "given": [
@@ -34443,6 +34513,9 @@
                   "name": "runtimeId"
                 },
                 {
+                  "name": "featureSchemaId"
+                },
+                {
                   "name": "anomalyScore",
                   "example": "0.98"
                 }
@@ -34526,7 +34599,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.trainingJobId"
+                ]
+              }
             },
             {
               "name": "trainingRunConfigurationId",
@@ -34540,7 +34619,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.trainingRunConfigurationId"
+                ]
+              }
             },
             {
               "name": "featureSchemaId",
@@ -34554,7 +34639,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.featureSchemaId"
+                ]
+              }
             },
             {
               "name": "roundId",
@@ -34568,7 +34659,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.roundId"
+                ]
+              }
             },
             {
               "name": "acceptedModelUpdateCount",
@@ -34582,7 +34679,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.acceptedModelUpdateCount"
+                ]
+              }
             },
             {
               "name": "acceptedRuntimeIds",
@@ -34598,17 +34701,10 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "ModelUpdateSubmissionAccepted.runtimeId"
-                ],
-                "lookup": {
-                  "key": "roundId",
-                  "cacheProjection": "ModelUpdateSubmissionAccepted",
-                  "sourceField": "runtimeId",
-                  "targetField": "acceptedRuntimeIds",
-                  "missingValuePolicy": "keep"
-                }
+                  "ModelUpdateSubmissionAccepted.acceptedRuntimeIds"
+                ]
               }
             },
             {
@@ -34625,17 +34721,10 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "derived",
+                "kind": "direct",
                 "from": [
-                  "TrainingRoundStarted.minimumNodesPerRound"
-                ],
-                "lookup": {
-                  "key": "roundId",
-                  "cacheProjection": "TrainingRoundStarted",
-                  "sourceField": "minimumNodesPerRound",
-                  "targetField": "minimumNodesPerRound",
-                  "missingValuePolicy": "keep"
-                }
+                  "ModelUpdateSubmissionAccepted.minimumNodesPerRound"
+                ]
               }
             }
           ],

@@ -11,5 +11,9 @@ import org.springframework.stereotype.Component
 class RequestAggregationWhenEvaluatedUpdatesCompleteProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: ModelUpdateSubmissionAcceptedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(RequestSecureAggregationCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = java.util.UUID.randomUUID() /* TODO: provide featureSchemaId */, roundId = event.roundId, acceptedModelUpdateCount = 0 /* TODO: provide acceptedModelUpdateCount */, acceptedRuntimeIds = emptyList() /* TODO: provide acceptedRuntimeIds */, minimumNodesPerRound = 0 /* TODO: provide minimumNodesPerRound */)).resultMessage
+        if (event.acceptedModelUpdateCount >= event.minimumNodesPerRound) {
+            commandGateway.send(RequestSecureAggregationCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, acceptedModelUpdateCount = event.acceptedModelUpdateCount, acceptedRuntimeIds = event.acceptedRuntimeIds, minimumNodesPerRound = event.minimumNodesPerRound)).resultMessage
+        } else {
+            java.util.concurrent.CompletableFuture.completedFuture(null)
+        }
 }

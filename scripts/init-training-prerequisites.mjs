@@ -1,0 +1,600 @@
+#!/usr/bin/env node
+
+import {createHash} from 'node:crypto';
+import {existsSync} from 'node:fs';
+import {resolve} from 'node:path';
+
+if (typeof fetch !== 'function') {
+    fail('This script requires Node.js 18 or newer because it uses global fetch.');
+}
+
+const args = parseArgs(process.argv.slice(2));
+const dryRun = Boolean(args['dry-run']);
+const strict = Boolean(args.strict);
+const createJob = Boolean(args['create-job']);
+const activateLifecycle = Boolean(args.activate);
+const timeoutMs = positiveInt(args.timeout, 30000);
+const pollIntervalMs = positiveInt(args['poll-interval'], 800);
+
+const platformUrl = trimSlash(args['platform-url'] ?? process.env.FL_PLATFORM_URL ?? 'http://localhost:8081');
+const runtimeAgentUrl = trimSlash(args['runtime-agent-url'] ?? process.env.FL_RUNTIME_AGENT_URL ?? 'http://localhost:8082');
+const runtimeEngineUrl = trimSlash(args['runtime-engine-url'] ?? process.env.FL_RUNTIME_ENGINE_URL ?? 'http://localhost:18080');
+
+const workspaceRoot = resolve(import.meta.dirname, '../..');
+const defaultDatasetPath = resolve(workspaceRoot, 'volumes/datasets/test.csv');
+const datasetPath = resolve(args['dataset-path'] ?? process.env.FL_DEV_DATASET_PATH ?? defaultDatasetPath);
+
+if (!existsSync(datasetPath)) {
+    fail(`Dataset file does not exist: ${datasetPath}`);
+}
+
+const seed = buildSeed(datasetPath, runtimeAgentUrl, runtimeEngineUrl);
+
+console.log(`[init-training] platformUrl=${platformUrl}`);
+console.log(`[init-training] runtimeAgentUrl=${runtimeAgentUrl}`);
+console.log(`[init-training] runtimeEngineUrl=${runtimeEngineUrl}`);
+console.log(`[init-training] datasetPath=${datasetPath}`);
+
+await ensurePlatformData();
+await ensureRuntimeAgentData();
+
+console.log('[init-training] ready');
+console.log(JSON.stringify({
+    organizationId: seed.organization.organizationId,
+    federationId: seed.federation.federationId,
+    featureSchemaId: seed.featureSchema.featureSchemaId,
+    runtimeId: seed.runtime.runtimeId,
+    runtimeAgentId: seed.runtime.runtimeAgentId,
+    datasetId: seed.dataset.datasetId,
+    modelId: seed.model.modelId,
+    trainingRunConfigurationId: seed.trainingRunConfiguration.trainingRunConfigurationId,
+    trainingJobId: createJob ? seed.trainingJob.trainingJobId : undefined
+}, null, 2));
+
+async function ensurePlatformData() {
+    const organization = await ensureOne({
+        label: 'organization',
+        baseUrl: platformUrl,
+        queryPath: '/organization/organizationdirectory',
+        query: {'organizationName.equals': seed.organization.organizationName},
+        createPath: '/organization/registerorganization',
+        createPayload: seed.organization
+    });
+
+    if (activateLifecycle && !isActive(organization?.state)) {
+        await postCommand(platformUrl, '/organization/activateorganization', {
+            organizationId: seed.organization.organizationId,
+            organizationName: seed.organization.organizationName,
+            activationNote: 'Development bootstrap'
+        }, 'activate organization');
+        await waitForOne(platformUrl, '/organization/organizationdirectory', {
+            'organizationId.equals': seed.organization.organizationId,
+            'state.equals': 'ACTIVE'
+        }, 'active organization');
+    } else if (!isActive(organization?.state)) {
+        console.log('[init-training] skip organization activation; pass --activate when lifecycle transition tags are fixed');
+    }
+
+    const federation = await ensureOne({
+        label: 'federation',
+        baseUrl: platformUrl,
+        queryPath: '/federation/federationoverview',
+        query: {'federationName.equals': seed.federation.federationName},
+        createPath: '/federation/createfederation',
+        createPayload: seed.federation
+    });
+
+    if (activateLifecycle && !isActive(federation?.state)) {
+        await postCommand(platformUrl, '/federation/activatefederation', {
+            federationId: seed.federation.federationId,
+            federationName: seed.federation.federationName,
+            activationNote: 'Development bootstrap'
+        }, 'activate federation');
+        await waitForOne(platformUrl, '/federation/federationoverview', {
+            'federationId.equals': seed.federation.federationId,
+            'state.equals': 'ACTIVE'
+        }, 'active federation');
+    } else if (!isActive(federation?.state)) {
+        console.log('[init-training] skip federation activation; pass --activate when lifecycle transition tags are fixed');
+    }
+
+    const membership = await findOne(platformUrl, '/federationmembership/federationmembershipdirectory', {
+        'federationId.equals': seed.federation.federationId,
+        'organizationId.equals': seed.organization.organizationId
+    });
+    if (!membership) {
+        await postCommand(platformUrl, '/federationmembership/inviteparticipant', {
+            federationId: seed.federation.federationId,
+            organizationId: seed.organization.organizationId,
+            invitationNote: 'Development bootstrap'
+        }, 'invite participant');
+        await waitForOne(platformUrl, '/federationmembership/federationmembershipdirectory', {
+            'federationId.equals': seed.federation.federationId,
+            'organizationId.equals': seed.organization.organizationId
+        }, 'invited participant');
+    }
+    const joinedMembership = await findOne(platformUrl, '/federationmembership/federationmembershipdirectory', {
+        'federationId.equals': seed.federation.federationId,
+        'organizationId.equals': seed.organization.organizationId
+    });
+    if (!isJoinedMembership(joinedMembership)) {
+        await postCommand(platformUrl, '/federationmembership/approveparticipant', {
+            federationId: seed.federation.federationId,
+            organizationId: seed.organization.organizationId,
+            approvalNote: 'Development bootstrap'
+        }, 'approve participant');
+        await waitForOne(platformUrl, '/federationmembership/federationmembershipdirectory', {
+            'federationId.equals': seed.federation.federationId,
+            'organizationId.equals': seed.organization.organizationId
+        }, 'joined participant', isJoinedMembership);
+    }
+
+    const featureSchema = await ensureOne({
+        label: 'feature schema',
+        baseUrl: platformUrl,
+        queryPath: '/featureschema/featureschemacatalog',
+        query: {
+            'featureDomain.equals': seed.featureSchema.featureDomain,
+            'version.equals': seed.featureSchema.version
+        },
+        createPath: '/featureschema/definefeatureschema',
+        createPayload: seed.featureSchema
+    });
+    if (!isPublished(featureSchema?.schemaStatus ?? featureSchema?.state)) {
+        await postCommand(platformUrl, '/featureschema/publishfeatureschema', {
+            featureSchemaId: seed.featureSchema.featureSchemaId,
+            featureDomain: seed.featureSchema.featureDomain,
+            version: seed.featureSchema.version,
+            publishNote: 'Development bootstrap'
+        }, 'publish feature schema');
+        await waitForOne(platformUrl, '/featureschema/featureschemacatalog', {
+            'featureSchemaId.equals': seed.featureSchema.featureSchemaId
+        }, 'published feature schema', (item) => isPublished(item.schemaStatus ?? item.state));
+    }
+
+    await ensureOne({
+        label: 'model artifact',
+        baseUrl: platformUrl,
+        queryPath: '/modelartifact/modelartifactcatalog',
+        query: {
+            'modelName.equals': seed.model.modelName,
+            'modelVersion.equals': seed.model.modelVersion
+        },
+        createPath: '/modelartifact/registermodelartifact',
+        createPayload: seed.model
+    });
+
+    await ensureOne({
+        label: 'runtime identity',
+        baseUrl: platformUrl,
+        queryPath: '/runtimeidentity/runtimeidentitycatalog',
+        query: {'runtimeId.equals': seed.runtime.runtimeId},
+        createPath: '/runtimeidentity/activateruntimeidentity',
+        createPayload: seed.runtime
+    });
+
+    await ensureOne({
+        label: 'runtime agent endpoint',
+        baseUrl: platformUrl,
+        queryPath: '/runtimeinfrastructure/runtimeagentendpointcatalog',
+        query: {'runtimeAgentId.equals': seed.runtime.runtimeAgentId},
+        createPath: '/runtimeinfrastructure/recordruntimeconnectionestablished',
+        createPayload: {
+            runtimeInfrastructureId: seed.runtime.runtimeInfrastructureId,
+            runtimeAgentId: seed.runtime.runtimeAgentId,
+            agentInstallMode: 'MANUAL',
+            organizationId: seed.organization.organizationId,
+            runtimeName: seed.runtime.runtimeName,
+            runtimeAgentEndpoint: runtimeAgentUrl,
+            endpointScope: 'LOCAL_DEV'
+        }
+    });
+
+    await ensureOne({
+        label: 'training run configuration',
+        baseUrl: platformUrl,
+        queryPath: '/trainingrunconfiguration/trainingrunconfigurationcatalog',
+        query: {'trainingRunConfigurationId.equals': seed.trainingRunConfiguration.trainingRunConfigurationId},
+        createPath: '/trainingrunconfiguration/definetrainingrunconfiguration',
+        createPayload: seed.trainingRunConfiguration
+    });
+
+    if (createJob) {
+        await ensureOne({
+            label: 'training job',
+            baseUrl: platformUrl,
+            queryPath: '/trainingjob/trainingjobdashboard',
+            query: {'trainingJobId.equals': seed.trainingJob.trainingJobId},
+            createPath: '/trainingjob/createtrainingjob',
+            createPayload: seed.trainingJob
+        });
+    }
+}
+
+async function ensureRuntimeAgentData() {
+    await ensureOne({
+        label: 'runtime node inventory',
+        baseUrl: runtimeAgentUrl,
+        queryPath: '/agentruntimenodeinventory/agentruntimenodeinventorycatalog',
+        query: {'runtimeNodeInventoryReportId.equals': seed.node.runtimeNodeInventoryReportId},
+        createPath: '/agentruntimenodeinventory/reportagentruntimenodeinventory',
+        createPayload: seed.node
+    });
+
+    await ensureOne({
+        label: 'dataset declaration',
+        baseUrl: runtimeAgentUrl,
+        queryPath: '/dataset/datasetcapability',
+        query: {'datasetId.equals': seed.dataset.datasetId},
+        createPath: '/dataset/declaredataset',
+        createPayload: seed.dataset
+    });
+
+    await ensureOne({
+        label: 'runtime dataset binding',
+        baseUrl: runtimeAgentUrl,
+        queryPath: '/runtimedatasetbinding/runtimedatasetbindingcatalog',
+        query: {
+            'runtimeId.equals': seed.binding.runtimeId,
+            'datasetId.equals': seed.binding.datasetId
+        },
+        createPath: '/runtimedatasetbinding/configureruntimedatasetbinding',
+        createPayload: seed.binding
+    });
+
+    const capability = await waitForOne(runtimeAgentUrl, '/dataset/datasetcapability', {
+        'datasetId.equals': seed.dataset.datasetId
+    }, 'reported dataset capability', (item) =>
+        isReported(item.metadataStatus) && isContractValidated(item.contractStatus)
+    );
+
+    if (!isApproved(capability?.approvalStatus) && capability?.approved !== true) {
+        try {
+            await postCommand(runtimeAgentUrl, '/dataset/approvedatasetfortraining', {
+                datasetId: seed.dataset.datasetId,
+                organizationId: seed.organization.organizationId,
+                featureSchemaId: seed.featureSchema.featureSchemaId,
+                datasetName: seed.dataset.datasetName
+            }, 'approve dataset for training');
+            console.log('[init-training] dataset approval command posted; approval projection is currently non-blocking');
+        } catch (error) {
+            console.warn(`[init-training] dataset approval skipped: ${errorSummary(error)}`);
+        }
+    }
+
+    await ensureOne({
+        label: 'selectable platform runtime dataset metadata',
+        baseUrl: platformUrl,
+        queryPath: '/runtimedatasetmetadata/runtimedatasetmetadatacatalog',
+        query: {
+            'datasetId.equals': seed.dataset.datasetId,
+            'runtimeId.equals': seed.runtime.runtimeId,
+            'schemaCompatible.equals': 'true',
+            'labelCompatible.equals': 'true'
+        },
+        createPath: '/runtimedatasetmetadata/recordruntimedatasetmetadata',
+        createPayload: seed.platformMetadata
+    });
+}
+
+async function ensureOne({label, baseUrl, queryPath, query, createPath, createPayload}) {
+    const existing = await findOne(baseUrl, queryPath, query);
+    if (existing) {
+        console.log(`[init-training] exists ${label}`);
+        return existing;
+    }
+    await postCommand(baseUrl, createPath, createPayload, label);
+    if (dryRun) return createPayload;
+    return waitForOne(baseUrl, queryPath, query, label);
+}
+
+async function findOne(baseUrl, path, query) {
+    const page = await getPage(baseUrl, path, {...query, size: '20'});
+    return (page.content ?? [])[0] ?? null;
+}
+
+async function waitForOne(baseUrl, path, query, label, predicate = () => true) {
+    if (dryRun) return null;
+    const startedAt = Date.now();
+    let lastItem = null;
+    while (Date.now() - startedAt <= timeoutMs) {
+        const page = await getPage(baseUrl, path, {...query, size: '20'});
+        const item = (page.content ?? []).find(predicate);
+        if (item) return item;
+        lastItem = (page.content ?? [])[0] ?? lastItem;
+        await sleep(pollIntervalMs);
+    }
+    fail(`Timed out waiting for ${label}. Last item: ${JSON.stringify(lastItem)}`);
+}
+
+async function getPage(baseUrl, path, query) {
+    const url = `${baseUrl}${path}?${new URLSearchParams(query).toString()}`;
+    if (dryRun) return {content: []};
+    const response = await fetch(url);
+    const body = await response.text();
+    if (!response.ok) {
+        fail(`GET ${url} failed: ${response.status} ${compact(body)}`);
+    }
+    return body ? JSON.parse(body) : {content: []};
+}
+
+async function postCommand(baseUrl, path, payload, label) {
+    const url = `${baseUrl}${path}`;
+    if (dryRun) {
+        console.log(`[init-training] DRY POST ${label} -> ${url}`);
+        console.log(JSON.stringify(payload, null, 2));
+        return;
+    }
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(payload)
+    });
+    const body = await response.text();
+    if (!response.ok) {
+        const message = `POST ${label} failed: ${response.status} ${compact(body)}`;
+        if (strict) fail(message);
+        throw new Error(message);
+    }
+    console.log(`[init-training] posted ${label}`);
+}
+
+function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint) {
+    const organizationId = stableUuid('fl-dev:organization:local-hospital');
+    const federationId = stableUuid('fl-dev:federation:local-demo');
+    const featureSchemaId = stableUuid('fl-dev:feature-schema:tabular-binary:v1');
+    const runtimeInfrastructureId = stableUuid('fl-dev:runtime-infrastructure:local');
+    const runtimeAgentId = stableUuid('fl-dev:runtime-agent:local');
+    const runtimeId = stableUuid('fl-dev:runtime:local');
+    const datasetId = stableUuid('fl-dev:dataset:test-csv');
+    const modelId = stableUuid('fl-dev:model:linear-logistic-regression:v1');
+    const trainingRunConfigurationId = stableUuid('fl-dev:training-run-configuration:local-binary:v1');
+    const trainingJobId = stableUuid('fl-dev:training-job:local-binary');
+
+    return {
+        organization: {
+            organizationId,
+            organizationName: 'FL Dev Hospital',
+            organizationType: 'HOSPITAL',
+            contactEmail: 'fl-dev@example.com'
+        },
+        federation: {
+            federationId,
+            federationName: 'FL Dev Federation',
+            description: 'Local development federation',
+            minimumParticipantCount: 1
+        },
+        featureSchema: {
+            featureSchemaId,
+            featureDomain: 'fl-dev-tabular-binary',
+            version: 'v1',
+            dataModality: 'TABULAR',
+            features: [
+                feature('id', 'STRING', true, false, 'Sample identifier', [], null, true),
+                feature('x1', 'DECIMAL', true, false, 'Demo numeric feature x1'),
+                feature('x2', 'DECIMAL', true, false, 'Demo numeric feature x2')
+            ],
+            labels: [
+                {
+                    labelName: 'y',
+                    dataType: 'INTEGER',
+                    cardinality: 2,
+                    classLabels: ['0', '1'],
+                    isMultilabel: false,
+                    description: 'Binary target label',
+                    validationRules: [],
+                    defaultValue: null
+                }
+            ]
+        },
+        runtime: {
+            runtimeId,
+            runtimeInfrastructureId,
+            runtimeAgentId,
+            organizationId,
+            runtimeName: 'local-runtime'
+        },
+        node: {
+            runtimeNodeInventoryReportId: stableUuid('fl-dev:node-inventory:local-runtime'),
+            organizationId,
+            runtimeInfrastructureId,
+            runtimeAgentId,
+            runtimeNodeName: 'local-runtime',
+            infrastructureNodeId: 'local-dev-node',
+            runtimeNodeRole: 'TRAINER',
+            nodeReady: true,
+            runtimeEngineVersion: 'local',
+            containerEngineVersion: 'docker-compose',
+            operatingSystem: process.platform,
+            architecture: process.arch,
+            inventoryHash: stableUuid(`fl-dev:node-inventory:${runtimeEngineEndpoint}`)
+        },
+        dataset: {
+            datasetId,
+            organizationId,
+            featureSchemaId,
+            datasetName: 'FL Dev Test CSV',
+            datasetType: 'TABULAR',
+            datasetUsage: 'TRAINING'
+        },
+        binding: {
+            runtimeDatasetBindingId: stableUuid('fl-dev:dataset-binding:test-csv-local-runtime'),
+            datasetId,
+            organizationId,
+            featureSchemaId,
+            datasetName: 'FL Dev Test CSV',
+            runtimeId,
+            dataSourceType: 'FILE',
+            host: null,
+            port: null,
+            url: null,
+            databaseName: null,
+            schemaName: null,
+            tableName: null,
+            filePath: datasetPathValue,
+            objectBucket: null,
+            objectPrefix: null,
+            dataFormat: 'CSV',
+            credentialSecretName: null
+        },
+        platformMetadata: {
+            metadataReportId: stableUuid('fl-dev:platform-metadata:test-csv-local-runtime-compatible'),
+            datasetId,
+            organizationId,
+            runtimeId,
+            featureSchemaId,
+            datasetName: 'FL Dev Test CSV',
+            sampleCount: 3,
+            featureCount: 4,
+            schemaCompatible: true,
+            labelCompatible: true,
+            missingValueRate: 0.0,
+            duplicateRate: 0.0,
+            qualityScore: 1.0,
+            nonIidScore: 0.0,
+            classBalanceScore: 0.5
+        },
+        model: {
+            modelId,
+            modelName: 'linear.LogisticRegression',
+            modelVersion: 'v1',
+            sourceType: 'BUILT_IN',
+            stagedFileId: null,
+            modelFormat: 'JSON'
+        },
+        trainingRunConfiguration: {
+            trainingRunConfigurationId,
+            federationId,
+            featureSchemaId,
+            initialModelId: modelId,
+            strategyName: 'LOCAL_DEV',
+            aggregationAlgorithm: 'FED_AVG',
+            maxRounds: 1,
+            minimumNodesPerRound: 1,
+            roundTimeoutSeconds: 600,
+            nodeResponseTimeoutSeconds: 300,
+            localEpochs: 1,
+            batchSize: 32,
+            learningRate: 0.1,
+            optimizer: 'SGD',
+            lossFunction: 'LOG_LOSS',
+            gradientClippingNorm: null,
+            secureAggregationRequired: false,
+            differentialPrivacyEnabled: false,
+            dpNoiseMultiplier: null,
+            dpClipNorm: null,
+            minimumAccuracy: 0.0,
+            minimumFairnessScore: null,
+            failureToleranceRatio: 0.0
+        },
+        trainingJob: {
+            trainingJobId,
+            federationId,
+            trainingRunConfigurationId,
+            objective: 'Local development smoke training'
+        },
+        runtimeAgentEndpoint
+    };
+}
+
+function feature(featureName, dataType, required, nullable, description, validationRules = [], defaultValue = null, isIdentifier = false) {
+    return {
+        featureName,
+        dataType,
+        required,
+        nullable,
+        description,
+        validationRules,
+        defaultValue,
+        isIdentifier,
+        isSensitive: false,
+        encodingStrategy: null,
+        featureTags: []
+    };
+}
+
+function parseArgs(argv) {
+    const result = {};
+    for (let i = 0; i < argv.length; i += 1) {
+        const arg = argv[i];
+        if (!arg.startsWith('--')) continue;
+        const key = arg.slice(2);
+        const next = argv[i + 1];
+        if (!next || next.startsWith('--')) {
+            result[key] = true;
+        } else {
+            result[key] = next;
+            i += 1;
+        }
+    }
+    return result;
+}
+
+function stableUuid(value) {
+    const hex = createHash('sha1').update(value).digest('hex').slice(0, 32);
+    return [
+        hex.slice(0, 8),
+        hex.slice(8, 12),
+        `5${hex.slice(13, 16)}`,
+        `${(Number.parseInt(hex.slice(16, 17), 16) & 0x3 | 0x8).toString(16)}${hex.slice(17, 20)}`,
+        hex.slice(20)
+    ].join('-');
+}
+
+function isActive(value) {
+    return normalize(value) === 'ACTIVE';
+}
+
+function isJoined(value) {
+    return ['JOINED', 'APPROVED', 'ACTIVE'].includes(normalize(value));
+}
+
+function isJoinedMembership(item) {
+    return Boolean(item) && (isJoined(item.membershipStatus ?? item.state) || Boolean(item.approvalNote));
+}
+
+function isPublished(value) {
+    return normalize(value) === 'PUBLISHED';
+}
+
+function isReported(value) {
+    return ['REPORTED', 'METADATAREPORTED'].includes(normalize(value));
+}
+
+function isContractValidated(value) {
+    return ['CONTRACTVALIDATIONCOMPLETED', 'VALIDATED', 'COMPLETED'].includes(normalize(value));
+}
+
+function isApproved(value) {
+    return ['APPROVED', 'TRAININGAPPROVED'].includes(normalize(value));
+}
+
+function normalize(value) {
+    return String(value ?? '').replace(/[_\s-]/g, '').toUpperCase();
+}
+
+function positiveInt(value, fallback) {
+    const parsed = Number.parseInt(value, 10);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
+function trimSlash(value) {
+    return String(value).replace(/\/+$/, '');
+}
+
+function compact(value) {
+    return String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, 600);
+}
+
+function errorSummary(error) {
+    return error?.message ?? String(error);
+}
+
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function fail(message) {
+    console.error(`[init-training] ${message}`);
+    process.exit(1);
+}

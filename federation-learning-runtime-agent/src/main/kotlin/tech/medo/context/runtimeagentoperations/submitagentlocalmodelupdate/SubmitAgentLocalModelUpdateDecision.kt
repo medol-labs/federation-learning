@@ -6,14 +6,12 @@ import tech.medo.runtimeagentoperations.events.AgentLocalModelUpdateSubmittedEve
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
 
-import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
+
 
 
 interface SubmitAgentLocalModelUpdateDecision {
     fun decide(command: SubmitAgentLocalModelUpdateCommand, state: RoundExecutionState, portResult: SubmitAgentLocalModelUpdateResult): List<Any> {
-        require(state.currentState == RoundExecutionStateEnum.COMPLETED) {
-            "SubmitAgentLocalModelUpdate requires RoundExecution to be Completed."
-        }
+        // TODO: validate domain rules against state before appending events.
         return when (portResult) {
                     is SubmitAgentLocalModelUpdateResult.Succeeded -> listOf(AgentLocalModelUpdateSubmittedEvent(modelUpdateSubmissionId = command.modelUpdateSubmissionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, roundExecutionId = command.roundExecutionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, runtimeId = command.runtimeId, featureSchemaId = command.featureSchemaId, localModelId = command.localModelId, updateArtifactId = command.updateArtifactId, artifactRef = command.artifactRef, artifactDigest = command.artifactDigest, trainingLoss = command.trainingLoss))
                 }
