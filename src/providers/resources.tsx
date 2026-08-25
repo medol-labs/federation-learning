@@ -1,13 +1,14 @@
 // Generated from config.json by the refine generator.
 import { IResourceItem } from "@refinedev/core";
 import { FlaskConical, LayoutDashboard, Package } from "lucide-react";
+import { getAppConfig } from "./app-config";
 
 export const backendModules = [
   {
     name: "federation-learning-support",
     label: "Federation Learning Support",
     dataProviderName: "federation-learning-support",
-    apiUrl: import.meta.env.VITE_FEDERATION_LEARNING_SUPPORT_API_URL ?? "http://localhost:8080",
+    apiUrl: getAppConfig("VITE_FEDERATION_LEARNING_SUPPORT_API_URL", "http://localhost:8080"),
     homeRoute: "/dictionary-catalog",
     resources: ["dictionary-catalog","dictionary-value-catalog","staged-file-catalog"],
   },
@@ -15,7 +16,7 @@ export const backendModules = [
     name: "federation-learning-platform",
     label: "Federation Learning Platform",
     dataProviderName: "federation-learning-platform",
-    apiUrl: import.meta.env.VITE_FEDERATION_LEARNING_PLATFORM_API_URL ?? "http://localhost:8081",
+    apiUrl: getAppConfig("VITE_FEDERATION_LEARNING_PLATFORM_API_URL", "http://localhost:8081"),
     homeRoute: "/audit-record-log",
     resources: ["audit-record-log","current-recommended-feature-schema-catalog","feature-schema-catalog","federation-membership-directory","federation-overview","model-artifact-catalog","model-catalog","organization-directory","runtime-agent-endpoint-catalog","runtime-capability-catalog","runtime-dataset-metadata-catalog","runtime-health-dashboard","runtime-identity-catalog","runtime-infrastructure-access-view","runtime-infrastructure-package-catalog","runtime-installation-guide","runtime-installation-plan-catalog","runtime-node-inventory-view","runtime-node-resource-latest","runtime-telemetry-latest","secure-aggregation-session-catalog","training-alert-catalog","training-job-dashboard","training-participant-eligibility","training-round-progress","training-run-configuration-catalog"],
   },
@@ -23,7 +24,7 @@ export const backendModules = [
     name: "federation-learning-runtime-agent",
     label: "Federation Learning Runtime Agent",
     dataProviderName: "federation-learning-runtime-agent",
-    apiUrl: import.meta.env.VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL ?? "http://localhost:8082",
+    apiUrl: getAppConfig("VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL", "http://localhost:8082"),
     homeRoute: "/agent-dataset-access-validation-catalog",
     resources: ["agent-dataset-access-validation-catalog","agent-runtime-infrastructure-connection-catalog","agent-runtime-node-inventory-catalog","agent-runtime-node-resource-latest","agent-runtime-telemetry-latest","dataset-capability","dataset-readiness","round-execution-catalog","runtime-agent-lifecycle-catalog","runtime-dataset-binding-catalog"],
   },
