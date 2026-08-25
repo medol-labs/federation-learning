@@ -56,6 +56,8 @@ services:
         condition: service_started
     ports:
       - "${APP_PORT:-8082}:8082"
+    volumes:
+      - ${RUNTIME_AGENT_DATASETS_DIR:-../../volumes/datasets}:/workspace/datasets:ro
     environment:
       SERVER_PORT: 8082
       SPRING_DOCKER_COMPOSE_ENABLED: "false"

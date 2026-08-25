@@ -2,7 +2,7 @@
 
 import {createHash} from 'node:crypto';
 import {existsSync} from 'node:fs';
-import {resolve} from 'node:path';
+import {basename, resolve} from 'node:path';
 
 if (typeof fetch !== 'function') {
     fail('This script requires Node.js 18 or newer because it uses global fetch.');
@@ -16,24 +16,28 @@ const activateLifecycle = Boolean(args.activate);
 const timeoutMs = positiveInt(args.timeout, 30000);
 const pollIntervalMs = positiveInt(args['poll-interval'], 800);
 
-const platformUrl = trimSlash(args['platform-url'] ?? process.env.FL_PLATFORM_URL ?? 'http://localhost:8081');
-const runtimeAgentUrl = trimSlash(args['runtime-agent-url'] ?? process.env.FL_RUNTIME_AGENT_URL ?? 'http://localhost:8082');
-const runtimeEngineUrl = trimSlash(args['runtime-engine-url'] ?? process.env.FL_RUNTIME_ENGINE_URL ?? 'http://localhost:18080');
+const platformUrl = trimSlash(args['platform-url'] ?? process.env.FL_PLATFORM_URL ?? 'http://192.168.50.2:8081');
+const runtimeAgentUrl = trimSlash(args['runtime-agent-url'] ?? process.env.FL_RUNTIME_AGENT_URL ?? 'http://192.168.50.2:8082');
+const runtimeEngineUrl = trimSlash(args['runtime-engine-url'] ?? process.env.FL_RUNTIME_ENGINE_URL ?? 'http://192.168.50.2:18080');
 
 const workspaceRoot = resolve(import.meta.dirname, '../..');
 const defaultDatasetPath = resolve(workspaceRoot, 'volumes/datasets/test.csv');
 const datasetPath = resolve(args['dataset-path'] ?? process.env.FL_DEV_DATASET_PATH ?? defaultDatasetPath);
+const runtimeDatasetPath = args['runtime-dataset-path'] ??
+    process.env.FL_RUNTIME_DATASET_PATH ??
+    `/workspace/datasets/${basename(datasetPath)}`;
 
 if (!existsSync(datasetPath)) {
     fail(`Dataset file does not exist: ${datasetPath}`);
 }
 
-const seed = buildSeed(datasetPath, runtimeAgentUrl, runtimeEngineUrl);
+const seed = buildSeed(runtimeDatasetPath, runtimeAgentUrl, runtimeEngineUrl);
 
 console.log(`[init-training] platformUrl=${platformUrl}`);
 console.log(`[init-training] runtimeAgentUrl=${runtimeAgentUrl}`);
 console.log(`[init-training] runtimeEngineUrl=${runtimeEngineUrl}`);
 console.log(`[init-training] datasetPath=${datasetPath}`);
+console.log(`[init-training] runtimeDatasetPath=${runtimeDatasetPath}`);
 
 await ensurePlatformData();
 await ensureRuntimeAgentData();
@@ -230,17 +234,25 @@ async function ensureRuntimeAgentData() {
         createPayload: seed.dataset
     });
 
-    await ensureOne({
-        label: 'runtime dataset binding',
-        baseUrl: runtimeAgentUrl,
-        queryPath: '/runtimedatasetbinding/runtimedatasetbindingcatalog',
-        query: {
+    const existingBinding = await findOne(runtimeAgentUrl, '/runtimedatasetbinding/runtimedatasetbindingcatalog', {
+        'runtimeId.equals': seed.binding.runtimeId,
+        'datasetId.equals': seed.binding.datasetId
+    });
+    if (existingBinding) {
+        console.log('[init-training] exists runtime dataset binding');
+        if (existingBinding.filePath && existingBinding.filePath !== seed.binding.filePath) {
+            console.warn(
+                `[init-training] runtime dataset binding uses filePath=${existingBinding.filePath}; ` +
+                `expected ${seed.binding.filePath}. Clear dev data or reconfigure the binding before testing container deployment.`
+            );
+        }
+    } else {
+        await postCommand(runtimeAgentUrl, '/runtimedatasetbinding/configureruntimedatasetbinding', seed.binding, 'runtime dataset binding');
+        await waitForOne(runtimeAgentUrl, '/runtimedatasetbinding/runtimedatasetbindingcatalog', {
             'runtimeId.equals': seed.binding.runtimeId,
             'datasetId.equals': seed.binding.datasetId
-        },
-        createPath: '/runtimedatasetbinding/configureruntimedatasetbinding',
-        createPayload: seed.binding
-    });
+        }, 'runtime dataset binding');
+    }
 
     const capability = await waitForOne(runtimeAgentUrl, '/dataset/datasetcapability', {
         'datasetId.equals': seed.dataset.datasetId
