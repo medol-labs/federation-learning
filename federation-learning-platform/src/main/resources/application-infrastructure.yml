@@ -8,7 +8,6 @@ platform:
       agent-service-name: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_AGENT_SERVICE_NAME:federation-learning-runtime-agent}
       agent-version: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_AGENT_VERSION:docker-compose}
       command-timeout: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_COMMAND_TIMEOUT:PT60S}
-      supported-deployment-target-types: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_SUPPORTED_DEPLOYMENT_TARGET_TYPES:DOCKER_COMPOSE_HOST}
       supported-environment-types: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_SUPPORTED_ENVIRONMENT_TYPES:DOCKER_COMPOSE}
     k3s:
       enabled: ${PLATFORM_RUNTIME_K3S_ENABLED:true}
@@ -19,5 +18,4 @@ platform:
       agent-deployment-name: ${PLATFORM_RUNTIME_K3S_AGENT_DEPLOYMENT_NAME:federation-learning-runtime-agent}
       agent-version: ${PLATFORM_RUNTIME_K3S_AGENT_VERSION:k3s}
       command-timeout: ${PLATFORM_RUNTIME_K3S_COMMAND_TIMEOUT:PT60S}
-      supported-deployment-target-types: ${PLATFORM_RUNTIME_K3S_SUPPORTED_DEPLOYMENT_TARGET_TYPES:K3S,K3S_CLUSTER}
       supported-environment-types: ${PLATFORM_RUNTIME_K3S_SUPPORTED_ENVIRONMENT_TYPES:K3S,KUBERNETES}

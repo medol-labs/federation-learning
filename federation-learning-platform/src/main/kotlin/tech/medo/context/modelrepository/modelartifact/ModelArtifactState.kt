@@ -28,6 +28,7 @@ class ModelArtifactState @EntityCreator constructor() {
     var modelId: UUID? = null
     var modelName: String? = null
     var modelVersion: String? = null
+    var modelDescription: String? = null
     var sourceType: String? = null
     var modelArtifactUri: String? = null
     var modelRegistryRef: String? = null
@@ -42,6 +43,7 @@ class ModelArtifactState @EntityCreator constructor() {
         modelId = event.modelId
         modelName = event.modelName
         modelVersion = event.modelVersion
+        modelDescription = event.modelDescription
         sourceType = event.sourceType
         modelArtifactUri = event.modelArtifactUri
         modelRegistryRef = event.modelRegistryRef

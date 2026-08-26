@@ -43,12 +43,8 @@ class DefineTrainingRunConfigurationIntegrationTest(
             lossFunction = "CROSS_ENTROPY",
             gradientClippingNorm = null,
             secureAggregationRequired = true,
-            differentialPrivacyEnabled = false,
-            dpNoiseMultiplier = null,
-            dpClipNorm = null,
             minimumAccuracy = BigDecimal("0.9"),
-            minimumFairnessScore = null,
-            failureToleranceRatio = BigDecimal("0.2")
+            minimumFairnessScore = null
         )
 
         commandGateway.send(command).getResultMessage().join()

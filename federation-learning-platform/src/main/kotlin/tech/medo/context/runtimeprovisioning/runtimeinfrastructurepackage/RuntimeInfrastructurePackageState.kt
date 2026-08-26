@@ -29,10 +29,6 @@ class RuntimeInfrastructurePackageState @EntityCreator constructor() {
     var packageName: String? = null
     var packageVersion: String? = null
     var runtimeEnvironmentType: String? = null
-    var runtimeDeploymentTargetType: String? = null
-    var installProfile: String? = null
-    var architecture: String? = null
-    var installGuide: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructurePackageRegisteredEvent): RuntimeInfrastructurePackageState = apply {
@@ -41,9 +37,5 @@ class RuntimeInfrastructurePackageState @EntityCreator constructor() {
         packageName = event.packageName
         packageVersion = event.packageVersion
         runtimeEnvironmentType = event.runtimeEnvironmentType
-        runtimeDeploymentTargetType = event.runtimeDeploymentTargetType
-        installProfile = event.installProfile
-        architecture = event.architecture
-        installGuide = event.installGuide
     }
 }

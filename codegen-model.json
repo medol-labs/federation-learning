@@ -6767,7 +6767,7 @@
         "name": "RoundExecutionStartFailed",
         "title": "Round Execution Start Failed"
       },
-      "from": "Running",
+      "from": "StartFailed",
       "to": "Retried",
       "startsLifecycle": false
     },
@@ -6926,7 +6926,7 @@
         "name": "RoundExecutionStartFailed",
         "title": "Round Execution Start Failed"
       },
-      "from": "Running",
+      "from": "StartFailed",
       "to": "RuntimeEngineReleaseHandled",
       "startsLifecycle": false
     },
@@ -6959,7 +6959,7 @@
         "name": "RoundExecutionStartRetryFailed",
         "title": "Round Execution Start Retry Failed"
       },
-      "from": "Retried",
+      "from": "Failed",
       "to": "RuntimeEngineReleaseHandled",
       "startsLifecycle": false
     },
@@ -6992,7 +6992,7 @@
         "name": "RoundExecutionRuntimeRetryFailed",
         "title": "Round Execution Runtime Retry Failed"
       },
-      "from": "Retried",
+      "from": "Failed",
       "to": "RuntimeEngineReleaseHandled",
       "startsLifecycle": false
     },
@@ -14487,64 +14487,6 @@
               "uploadFile": false,
               "file": false,
               "portOutput": false
-            },
-            {
-              "name": "runtimeDeploymentTargetType",
-              "type": "String",
-              "dictionary": "RUNTIME_DEPLOYMENT_TARGET_TYPE",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "installProfile",
-              "type": "String",
-              "dictionary": "RUNTIME_INSTALL_PROFILE",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "architecture",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "installGuide",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
             }
           ],
           "dependencies": [
@@ -14619,64 +14561,6 @@
               "name": "runtimeEnvironmentType",
               "type": "String",
               "dictionary": "RUNTIME_ENVIRONMENT_TYPE",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "runtimeDeploymentTargetType",
-              "type": "String",
-              "dictionary": "RUNTIME_DEPLOYMENT_TARGET_TYPE",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "installProfile",
-              "type": "String",
-              "dictionary": "RUNTIME_INSTALL_PROFILE",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "architecture",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "installGuide",
-              "type": "String",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -14827,64 +14711,6 @@
               "name": "runtimeEnvironmentType",
               "type": "String",
               "dictionary": "RUNTIME_ENVIRONMENT_TYPE",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "runtimeDeploymentTargetType",
-              "type": "String",
-              "dictionary": "RUNTIME_DEPLOYMENT_TARGET_TYPE",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "installProfile",
-              "type": "String",
-              "dictionary": "RUNTIME_INSTALL_PROFILE",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "architecture",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "installGuide",
-              "type": "String",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -15862,33 +15688,6 @@
               }
             },
             {
-              "name": "infrastructureInstallGuide",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "RuntimeInfrastructurePackageCatalog.installGuide"
-                ],
-                "lookup": {
-                  "key": "runtimeInfrastructurePackageId",
-                  "cacheProjection": "RuntimeInfrastructurePackageCatalog",
-                  "sourceField": "installGuide",
-                  "targetField": "infrastructureInstallGuide",
-                  "missingValuePolicy": "keep"
-                }
-              }
-            },
-            {
               "name": "organizationName",
               "type": "String",
               "cardinality": "Single",
@@ -15952,34 +15751,6 @@
               }
             },
             {
-              "name": "runtimeDeploymentTargetType",
-              "type": "String",
-              "dictionary": "RUNTIME_DEPLOYMENT_TARGET_TYPE",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "RuntimeInfrastructurePackageCatalog.runtimeDeploymentTargetType"
-                ],
-                "lookup": {
-                  "key": "runtimeInfrastructurePackageId",
-                  "cacheProjection": "RuntimeInfrastructurePackageCatalog",
-                  "sourceField": "runtimeDeploymentTargetType",
-                  "targetField": "runtimeDeploymentTargetType",
-                  "missingValuePolicy": "keep"
-                }
-              }
-            },
-            {
               "name": "runtimeEnvironmentType",
               "type": "String",
               "dictionary": "RUNTIME_ENVIRONMENT_TYPE",
@@ -16027,61 +15798,6 @@
                   "RuntimeInstallationPlanCreated.agentInstallMode"
                 ],
                 "rule": "Lookup by runtimeInstallationPlanId and display how the platform should request runtime agent installation."
-              }
-            },
-            {
-              "name": "installProfile",
-              "type": "String",
-              "dictionary": "RUNTIME_INSTALL_PROFILE",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "RuntimeInfrastructurePackageCatalog.installProfile"
-                ],
-                "lookup": {
-                  "key": "runtimeInfrastructurePackageId",
-                  "cacheProjection": "RuntimeInfrastructurePackageCatalog",
-                  "sourceField": "installProfile",
-                  "targetField": "installProfile",
-                  "missingValuePolicy": "keep"
-                }
-              }
-            },
-            {
-              "name": "architecture",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "RuntimeInfrastructurePackageCatalog.architecture"
-                ],
-                "lookup": {
-                  "key": "runtimeInfrastructurePackageId",
-                  "cacheProjection": "RuntimeInfrastructurePackageCatalog",
-                  "sourceField": "architecture",
-                  "targetField": "architecture",
-                  "missingValuePolicy": "keep"
-                }
               }
             },
             {
@@ -18785,34 +18501,6 @@
                   "RuntimeInstallationPlanCreated.runtimeName"
                 ],
                 "rule": "Lookup by runtimeInfrastructureId and denormalize the runtime display name into the access view."
-              }
-            },
-            {
-              "name": "runtimeDeploymentTargetType",
-              "type": "String",
-              "dictionary": "RUNTIME_DEPLOYMENT_TARGET_TYPE",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "RuntimeInfrastructurePackageCatalog.runtimeDeploymentTargetType"
-                ],
-                "lookup": {
-                  "key": "runtimeInfrastructurePackageId",
-                  "cacheProjection": "RuntimeInfrastructurePackageCatalog",
-                  "sourceField": "runtimeDeploymentTargetType",
-                  "targetField": "runtimeDeploymentTargetType",
-                  "missingValuePolicy": "keep"
-                }
               }
             },
             {
@@ -22799,8 +22487,23 @@
               "portOutput": false
             },
             {
+              "name": "modelDescription",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "sourceType",
               "type": "String",
+              "dictionary": "MODEL_ARTIFACT_SOURCE_TYPE",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -22829,6 +22532,7 @@
             {
               "name": "modelFormat",
               "type": "String",
+              "dictionary": "MODEL_FORMAT",
               "cardinality": "Single",
               "optional": true,
               "idAttribute": false,
@@ -22910,8 +22614,23 @@
               "portOutput": false
             },
             {
+              "name": "modelDescription",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "sourceType",
               "type": "String",
+              "dictionary": "MODEL_ARTIFACT_SOURCE_TYPE",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -22954,6 +22673,7 @@
             {
               "name": "modelFormat",
               "type": "String",
+              "dictionary": "MODEL_FORMAT",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -23052,7 +22772,7 @@
           "sliceName": "Register Model Artifact",
           "title": "Register Pullable Model Artifact",
           "specification": "Model Artifact Must Be Pullable And Verifiable",
-          "rule": "Registering a model artifact is a port-backed import operation. modelName identifies the logical model and modelVersion identifies the business version under that model; the pair must be unique. modelId remains the system identity for one immutable imported or trained artifact version. For uploaded files, stagedFileId references a file previously staged by FileUpload, not a browser-local file path. The adapter queries FileUpload metadata or content, imports the staged source model into the managed model registry, marks the staged file consumed after a successful import, detects or validates the model format, computes the artifact digest and size, optionally records a signature URI, and emits a pullable immutable artifact snapshot. modelArtifactUri identifies the concrete pullable artifact for that version.\n\nunique (ModelArtifact.modelName, ModelArtifact.modelVersion)",
+          "rule": "Registering a model artifact is a port-backed import operation. modelName identifies the logical model, modelVersion identifies the business version under that model, and modelDescription captures the business purpose, training background, applicable scenarios, or limitations that operators need when selecting the model. The pair must be unique. modelId remains the system identity for one immutable imported or trained artifact version. sourceType is maintained by the MODEL_ARTIFACT_SOURCE_TYPE dictionary and distinguishes externally imported artifacts from artifacts produced by federated training; expected values include EXTERNAL and FEDERATED_TRAINING. For uploaded files, stagedFileId references a file previously staged by FileUpload, not a browser-local file path. The adapter queries FileUpload metadata or content, imports the staged source model into the managed model registry, marks the staged file consumed after a successful import, detects or validates the model format, computes the artifact digest and size, optionally records a signature URI, and emits a pullable immutable artifact snapshot. modelFormat is maintained by the MODEL_FORMAT dictionary; expected values include ONNX, PMML, TENSORFLOW_SAVED_MODEL, PYTORCH_STATE_DICT, XGBOOST, and SKLEARN_PICKLE. modelArtifactUri identifies the concrete pullable artifact for that version.\n\nunique (ModelArtifact.modelName, ModelArtifact.modelVersion)",
           "expressions": [],
           "validates": [],
           "given": [],
@@ -23075,8 +22795,12 @@
                   "example": "v1"
                 },
                 {
+                  "name": "modelDescription",
+                  "example": "Baseline credit risk classifier for federated training"
+                },
+                {
                   "name": "sourceType",
-                  "example": "UPLOAD"
+                  "example": "EXTERNAL"
                 },
                 {
                   "name": "stagedFileId",
@@ -23108,8 +22832,12 @@
                   "example": "v1"
                 },
                 {
+                  "name": "modelDescription",
+                  "example": "Baseline credit risk classifier for federated training"
+                },
+                {
                   "name": "sourceType",
-                  "example": "UPLOAD"
+                  "example": "EXTERNAL"
                 },
                 {
                   "name": "modelArtifactUri"
@@ -23214,8 +22942,23 @@
               "portOutput": false
             },
             {
+              "name": "modelDescription",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "sourceType",
               "type": "String",
+              "dictionary": "MODEL_ARTIFACT_SOURCE_TYPE",
               "cardinality": "Single",
               "optional": true,
               "idAttribute": false,
@@ -23258,6 +23001,7 @@
             {
               "name": "modelFormat",
               "type": "String",
+              "dictionary": "MODEL_FORMAT",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -23687,48 +23431,6 @@
               "portOutput": false
             },
             {
-              "name": "differentialPrivacyEnabled",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "dpNoiseMultiplier",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "dpClipNorm",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
               "name": "minimumAccuracy",
               "type": "Decimal",
               "cardinality": "Single",
@@ -23747,20 +23449,6 @@
               "type": "Decimal",
               "cardinality": "Single",
               "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "failureToleranceRatio",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": false,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -24187,48 +23875,6 @@
               "portOutput": false
             },
             {
-              "name": "differentialPrivacyEnabled",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "dpNoiseMultiplier",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "dpClipNorm",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
               "name": "minimumAccuracy",
               "type": "Decimal",
               "cardinality": "Single",
@@ -24247,20 +23893,6 @@
               "type": "Decimal",
               "cardinality": "Single",
               "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "failureToleranceRatio",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": false,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -24327,7 +23959,7 @@
           "sliceName": "Define Training Run Configuration",
           "title": "Define Runnable Configuration",
           "specification": "Training Configuration Must Be Runnable",
-          "rule": "A training run configuration is accepted only when the selected federation, feature schema, and initial model exist; the round budget, quorum, timeouts, and local training parameters are positive; and differential privacy parameters are complete when differential privacy is enabled.",
+          "rule": "A training run configuration is accepted only when the selected federation, feature schema, and initial model exist; the round budget, quorum, timeouts, local training parameters, and target quality thresholds are valid.",
           "expressions": [],
           "validates": [],
           "given": [],
@@ -24405,25 +24037,11 @@
                   "example": "true"
                 },
                 {
-                  "name": "differentialPrivacyEnabled",
-                  "example": "false"
-                },
-                {
-                  "name": "dpNoiseMultiplier"
-                },
-                {
-                  "name": "dpClipNorm"
-                },
-                {
                   "name": "minimumAccuracy",
                   "example": "0.9"
                 },
                 {
                   "name": "minimumFairnessScore"
-                },
-                {
-                  "name": "failureToleranceRatio",
-                  "example": "0.2"
                 }
               ]
             }
@@ -24523,25 +24141,11 @@
                   "example": "true"
                 },
                 {
-                  "name": "differentialPrivacyEnabled",
-                  "example": "false"
-                },
-                {
-                  "name": "dpNoiseMultiplier"
-                },
-                {
-                  "name": "dpClipNorm"
-                },
-                {
                   "name": "minimumAccuracy",
                   "example": "0.9"
                 },
                 {
                   "name": "minimumFairnessScore"
-                },
-                {
-                  "name": "failureToleranceRatio",
-                  "example": "0.2"
                 }
               ]
             }
@@ -24553,7 +24157,7 @@
           "sliceName": "Define Training Run Configuration",
           "title": "Reject Empty Round Budget",
           "specification": "Training Configuration Must Be Runnable",
-          "rule": "A training run configuration is accepted only when the selected federation, feature schema, and initial model exist; the round budget, quorum, timeouts, and local training parameters are positive; and differential privacy parameters are complete when differential privacy is enabled.",
+          "rule": "A training run configuration is accepted only when the selected federation, feature schema, and initial model exist; the round budget, quorum, timeouts, local training parameters, and target quality thresholds are valid.",
           "expressions": [],
           "validates": [],
           "given": [],
@@ -24631,25 +24235,11 @@
                   "example": "true"
                 },
                 {
-                  "name": "differentialPrivacyEnabled",
-                  "example": "false"
-                },
-                {
-                  "name": "dpNoiseMultiplier"
-                },
-                {
-                  "name": "dpClipNorm"
-                },
-                {
                   "name": "minimumAccuracy",
                   "example": "0.9"
                 },
                 {
                   "name": "minimumFairnessScore"
-                },
-                {
-                  "name": "failureToleranceRatio",
-                  "example": "0.2"
                 }
               ]
             }
@@ -24658,120 +24248,6 @@
             "title": "Rejected",
             "id": "spec-reject-d0e5cbc1",
             "description": "Positive Round Budget Required",
-            "outcome": "REJECT"
-          }
-        },
-        {
-          "id": "gwt-3affdf5e",
-          "chapter": "TrainingOrchestration",
-          "sliceName": "Define Training Run Configuration",
-          "title": "Reject Differential Privacy Without Parameters",
-          "specification": "Training Configuration Must Be Runnable",
-          "rule": "A training run configuration is accepted only when the selected federation, feature schema, and initial model exist; the round budget, quorum, timeouts, and local training parameters are positive; and differential privacy parameters are complete when differential privacy is enabled.",
-          "expressions": [],
-          "validates": [],
-          "given": [],
-          "when": [
-            {
-              "title": "Define Training Run Configuration",
-              "id": "command-11ac738b",
-              "type": "COMMAND",
-              "fields": [
-                {
-                  "name": "trainingRunConfigurationId",
-                  "example": "cfg-3"
-                },
-                {
-                  "name": "federationId",
-                  "example": "fed-1"
-                },
-                {
-                  "name": "featureSchemaId",
-                  "example": "schema-1"
-                },
-                {
-                  "name": "initialModelId",
-                  "example": "model-1"
-                },
-                {
-                  "name": "strategyName",
-                  "example": "FED_AVG"
-                },
-                {
-                  "name": "aggregationAlgorithm",
-                  "example": "FEDERATED_AVERAGING"
-                },
-                {
-                  "name": "maxRounds",
-                  "example": "10"
-                },
-                {
-                  "name": "minimumNodesPerRound",
-                  "example": "3"
-                },
-                {
-                  "name": "roundTimeoutSeconds",
-                  "example": "1800"
-                },
-                {
-                  "name": "nodeResponseTimeoutSeconds",
-                  "example": "300"
-                },
-                {
-                  "name": "localEpochs",
-                  "example": "2"
-                },
-                {
-                  "name": "batchSize",
-                  "example": "64"
-                },
-                {
-                  "name": "learningRate",
-                  "example": "0.01"
-                },
-                {
-                  "name": "optimizer",
-                  "example": "SGD"
-                },
-                {
-                  "name": "lossFunction",
-                  "example": "CROSS_ENTROPY"
-                },
-                {
-                  "name": "gradientClippingNorm"
-                },
-                {
-                  "name": "secureAggregationRequired",
-                  "example": "true"
-                },
-                {
-                  "name": "differentialPrivacyEnabled",
-                  "example": "true"
-                },
-                {
-                  "name": "dpNoiseMultiplier"
-                },
-                {
-                  "name": "dpClipNorm"
-                },
-                {
-                  "name": "minimumAccuracy",
-                  "example": "0.9"
-                },
-                {
-                  "name": "minimumFairnessScore"
-                },
-                {
-                  "name": "failureToleranceRatio",
-                  "example": "0.2"
-                }
-              ]
-            }
-          ],
-          "then": {
-            "title": "Rejected",
-            "id": "spec-reject-3affdf5e",
-            "description": "Differential Privacy Parameters Required",
             "outcome": "REJECT"
           }
         }
@@ -25059,48 +24535,6 @@
               "portOutput": false
             },
             {
-              "name": "differentialPrivacyEnabled",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "dpNoiseMultiplier",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "dpClipNorm",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
               "name": "minimumAccuracy",
               "type": "Decimal",
               "cardinality": "Single",
@@ -25119,20 +24553,6 @@
               "type": "Decimal",
               "cardinality": "Single",
               "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "failureToleranceRatio",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": false,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -25578,48 +24998,6 @@
               "portOutput": false
             },
             {
-              "name": "differentialPrivacyEnabled",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "dpNoiseMultiplier",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "dpClipNorm",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
               "name": "minimumAccuracy",
               "type": "Decimal",
               "cardinality": "Single",
@@ -25638,20 +25016,6 @@
               "type": "Decimal",
               "cardinality": "Single",
               "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "failureToleranceRatio",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": false,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -25803,22 +25167,10 @@
                   "name": "secureAggregationRequired"
                 },
                 {
-                  "name": "differentialPrivacyEnabled"
-                },
-                {
-                  "name": "dpNoiseMultiplier"
-                },
-                {
-                  "name": "dpClipNorm"
-                },
-                {
                   "name": "minimumAccuracy"
                 },
                 {
                   "name": "minimumFairnessScore"
-                },
-                {
-                  "name": "failureToleranceRatio"
                 }
               ]
             }
@@ -25897,25 +25249,11 @@
                   "example": "true"
                 },
                 {
-                  "name": "differentialPrivacyEnabled",
-                  "example": "false"
-                },
-                {
-                  "name": "dpNoiseMultiplier"
-                },
-                {
-                  "name": "dpClipNorm"
-                },
-                {
                   "name": "minimumAccuracy",
                   "example": "0.9"
                 },
                 {
                   "name": "minimumFairnessScore"
-                },
-                {
-                  "name": "failureToleranceRatio",
-                  "example": "0.2"
                 },
                 {
                   "name": "updateReason",
@@ -26019,25 +25357,11 @@
                   "example": "true"
                 },
                 {
-                  "name": "differentialPrivacyEnabled",
-                  "example": "false"
-                },
-                {
-                  "name": "dpNoiseMultiplier"
-                },
-                {
-                  "name": "dpClipNorm"
-                },
-                {
                   "name": "minimumAccuracy",
                   "example": "0.9"
                 },
                 {
                   "name": "minimumFairnessScore"
-                },
-                {
-                  "name": "failureToleranceRatio",
-                  "example": "0.2"
                 },
                 {
                   "name": "updateReason",
@@ -26146,25 +25470,11 @@
                   "example": "true"
                 },
                 {
-                  "name": "differentialPrivacyEnabled",
-                  "example": "false"
-                },
-                {
-                  "name": "dpNoiseMultiplier"
-                },
-                {
-                  "name": "dpClipNorm"
-                },
-                {
                   "name": "minimumAccuracy",
                   "example": "0.9"
                 },
                 {
                   "name": "minimumFairnessScore"
-                },
-                {
-                  "name": "failureToleranceRatio",
-                  "example": "0.2"
                 },
                 {
                   "name": "updateReason",
@@ -26794,48 +26104,6 @@
               "portOutput": false
             },
             {
-              "name": "differentialPrivacyEnabled",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "dpNoiseMultiplier",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "dpClipNorm",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
               "name": "minimumAccuracy",
               "type": "Decimal",
               "cardinality": "Single",
@@ -26854,20 +26122,6 @@
               "type": "Decimal",
               "cardinality": "Single",
               "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "failureToleranceRatio",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": false,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -27345,22 +26599,10 @@
                   "name": "secureAggregationRequired"
                 },
                 {
-                  "name": "differentialPrivacyEnabled"
-                },
-                {
-                  "name": "dpNoiseMultiplier"
-                },
-                {
-                  "name": "dpClipNorm"
-                },
-                {
                   "name": "minimumAccuracy"
                 },
                 {
                   "name": "minimumFairnessScore"
-                },
-                {
-                  "name": "failureToleranceRatio"
                 }
               ]
             }
@@ -47677,20 +46919,6 @@
               "portOutput": false
             },
             {
-              "name": "datasetType",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
               "name": "datasetUsage",
               "type": "String",
               "cardinality": "Single",
@@ -47782,20 +47010,6 @@
             },
             {
               "name": "datasetName",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "datasetType",
               "type": "String",
               "cardinality": "Single",
               "optional": false,
@@ -47925,7 +47139,7 @@
           "sliceName": "Declare Dataset",
           "title": "Declare Dataset With Feature Schema Snapshot",
           "specification": "Feature Schema Snapshot Required For Dataset Declaration",
-          "rule": "Declaring a dataset synchronously loads the referenced feature schema through the DeclareDataset port adapter before the decision emits DatasetDeclared. The adapter must enrich the declaration result with the feature and label snapshot so the runtime agent can validate and profile local data without querying the platform later. If the feature schema cannot be loaded, the adapter throws an exception and the declaration does not emit DatasetDeclared.",
+          "rule": "Declaring a dataset synchronously loads the referenced feature schema through the DeclareDataset port adapter before the decision emits DatasetDeclared. The adapter must enrich the declaration result with the feature and label snapshot so the runtime agent can validate and profile local data without querying the platform later. Dataset usage describes the governance purpose of the dataset, such as training, validation, evaluation, or testing, and is stored as a maintained dictionary value. If the feature schema cannot be loaded, the adapter throws an exception and the declaration does not emit DatasetDeclared.",
           "expressions": [],
           "validates": [],
           "given": [],
@@ -47950,10 +47164,6 @@
                 {
                   "name": "datasetName",
                   "example": "credit-risk"
-                },
-                {
-                  "name": "datasetType",
-                  "example": "TABULAR"
                 },
                 {
                   "name": "datasetUsage",
@@ -47985,10 +47195,6 @@
                   "example": "credit-risk"
                 },
                 {
-                  "name": "datasetType",
-                  "example": "TABULAR"
-                },
-                {
                   "name": "datasetUsage",
                   "example": "TRAINING"
                 },
@@ -48008,7 +47214,7 @@
           "sliceName": "Declare Dataset",
           "title": "Feature Schema Load Failed",
           "specification": "Feature Schema Snapshot Required For Dataset Declaration",
-          "rule": "Declaring a dataset synchronously loads the referenced feature schema through the DeclareDataset port adapter before the decision emits DatasetDeclared. The adapter must enrich the declaration result with the feature and label snapshot so the runtime agent can validate and profile local data without querying the platform later. If the feature schema cannot be loaded, the adapter throws an exception and the declaration does not emit DatasetDeclared.",
+          "rule": "Declaring a dataset synchronously loads the referenced feature schema through the DeclareDataset port adapter before the decision emits DatasetDeclared. The adapter must enrich the declaration result with the feature and label snapshot so the runtime agent can validate and profile local data without querying the platform later. Dataset usage describes the governance purpose of the dataset, such as training, validation, evaluation, or testing, and is stored as a maintained dictionary value. If the feature schema cannot be loaded, the adapter throws an exception and the declaration does not emit DatasetDeclared.",
           "expressions": [],
           "validates": [],
           "given": [],
@@ -48033,10 +47239,6 @@
                 {
                   "name": "datasetName",
                   "example": "credit-risk"
-                },
-                {
-                  "name": "datasetType",
-                  "example": "TABULAR"
                 },
                 {
                   "name": "datasetUsage",
@@ -65488,6 +64690,12 @@
           ],
           "dependencies": [
             {
+              "id": "screen-68596160",
+              "direction": "INBOUND",
+              "title": "Load Runtime Agent Bootstrap Configuration Confirm",
+              "elementType": "SCREEN"
+            },
+            {
               "id": "event-57a8e185",
               "direction": "OUTBOUND",
               "title": "Runtime Agent Bootstrap Configuration Loaded",
@@ -65501,7 +64709,10 @@
             }
           ],
           "startsLifecycle": true,
-          "port": true
+          "port": true,
+          "ui": {
+            "type": "confirm"
+          }
         }
       ],
       "events": [
@@ -65645,7 +64856,28 @@
         }
       ],
       "readmodels": [],
-      "screens": [],
+      "screens": [
+        {
+          "id": "screen-68596160",
+          "name": "LoadRuntimeAgentBootstrapConfigurationConfirm",
+          "title": "Load Runtime Agent Bootstrap Configuration Confirm",
+          "type": "SCREEN",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Load Runtime Agent Bootstrap Configuration",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "command-545f831f",
+              "direction": "OUTBOUND",
+              "title": "Load Runtime Agent Bootstrap Configuration",
+              "elementType": "COMMAND"
+            }
+          ],
+          "ui": {
+            "type": "confirm"
+          }
+        }
+      ],
       "processors": [],
       "specifications": [
         {

@@ -20,7 +20,6 @@ class DeclareDatasetDecisionTest {
             organizationId = UUID.fromString("22222222-2222-4222-8222-222222222222"),
             featureSchemaId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
             datasetName = "credit-risk",
-            datasetType = "TABULAR",
             datasetUsage = "TRAINING"
         )
 
@@ -37,7 +36,6 @@ class DeclareDatasetDecisionTest {
         assertEquals(UUID.fromString("22222222-2222-4222-8222-222222222222"), event.organizationId)
         assertEquals(UUID.fromString("33333333-3333-4333-8333-333333333333"), event.featureSchemaId)
         assertEquals("credit-risk", event.datasetName)
-        assertEquals("TABULAR", event.datasetType)
         assertEquals("TRAINING", event.datasetUsage)
     }
 }

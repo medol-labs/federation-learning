@@ -14,7 +14,6 @@ data class DeclareDatasetInput(
     val organizationId: UUID,
     val featureSchemaId: UUID,
     val datasetName: String,
-    val datasetType: String,
     val datasetUsage: String
 )
 

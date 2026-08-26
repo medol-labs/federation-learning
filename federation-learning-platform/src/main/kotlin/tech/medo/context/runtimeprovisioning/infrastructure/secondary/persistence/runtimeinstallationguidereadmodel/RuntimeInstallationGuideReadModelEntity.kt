@@ -19,15 +19,11 @@ class RuntimeInstallationGuideReadModelEntity : MetadataProjection {
     var runtimeInfrastructurePackageId: UUID? = null
     var runtimeInfrastructurePackageName: String? = null
     var runtimeInfrastructurePackageVersion: String? = null
-    var infrastructureInstallGuide: String? = null
     var organizationName: String? = null
     var runtimeName: String? = null
     var bootstrapCommand: String? = null
-    var runtimeDeploymentTargetType: String? = null
     var runtimeEnvironmentType: String? = null
     var agentInstallMode: String? = null
-    var installProfile: String? = null
-    var architecture: String? = null
     var expectedNodeCount: Int? = null
     override var userId: String? = null
     override var sessionId: String? = null

@@ -40,12 +40,8 @@ class UpdateTrainingRunConfigurationDecisionTest {
             lossFunction = "",
             gradientClippingNorm = null,
             secureAggregationRequired = false,
-            differentialPrivacyEnabled = false,
-            dpNoiseMultiplier = null,
-            dpClipNorm = null,
             minimumAccuracy = java.math.BigDecimal.ZERO,
-            minimumFairnessScore = null,
-            failureToleranceRatio = java.math.BigDecimal.ZERO
+            minimumFairnessScore = null
             )
         )
 
@@ -67,12 +63,8 @@ class UpdateTrainingRunConfigurationDecisionTest {
             lossFunction = "CROSS_ENTROPY",
             gradientClippingNorm = null,
             secureAggregationRequired = true,
-            differentialPrivacyEnabled = false,
-            dpNoiseMultiplier = null,
-            dpClipNorm = null,
             minimumAccuracy = BigDecimal("0.9"),
             minimumFairnessScore = null,
-            failureToleranceRatio = BigDecimal("0.2"),
             updateReason = "Tune round budget before submission."
         )
 
@@ -99,12 +91,8 @@ class UpdateTrainingRunConfigurationDecisionTest {
         assertEquals("CROSS_ENTROPY", event.lossFunction)
         assertEquals(command.gradientClippingNorm, event.gradientClippingNorm)
         assertEquals(true, event.secureAggregationRequired)
-        assertEquals(false, event.differentialPrivacyEnabled)
-        assertEquals(command.dpNoiseMultiplier, event.dpNoiseMultiplier)
-        assertEquals(command.dpClipNorm, event.dpClipNorm)
         assertEquals(BigDecimal("0.9"), event.minimumAccuracy)
         assertEquals(command.minimumFairnessScore, event.minimumFairnessScore)
-        assertEquals(BigDecimal("0.2"), event.failureToleranceRatio)
         assertEquals("Tune round budget before submission.", event.updateReason)
     }
 }

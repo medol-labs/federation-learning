@@ -41,7 +41,7 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
         assertEquals("train", request.operation)
         assertEquals("local-runtime", request.nodeName)
         assertEquals("/workspace/datasets/alice.csv", (request.input["dataset"] as Map<*, *>)["path"])
-        assertEquals("y", (request.input["dataset"] as Map<*, *>)["labelColumn"])
+        assertEquals("readmission_risk", (request.input["dataset"] as Map<*, *>)["labelColumn"])
         assertEquals("/workspace/tmp/runtime-engine/round-1-55555555-5555-4555-8555-555555555555/local-runtime/local_update.json", request.output["localUpdate"])
         assertEquals(0.1, request.modelParameter["learningRate"])
         assertEquals("plain", request.jobParameter["encryptMethod"])

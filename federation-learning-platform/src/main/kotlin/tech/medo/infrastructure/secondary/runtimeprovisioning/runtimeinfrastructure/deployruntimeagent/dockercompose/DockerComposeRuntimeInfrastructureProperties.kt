@@ -12,6 +12,5 @@ class DockerComposeRuntimeInfrastructureProperties {
     var agentServiceName: String = "federation-learning-runtime-agent"
     var agentVersion: String = "docker-compose"
     var commandTimeout: Duration = Duration.ofSeconds(60)
-    var supportedDeploymentTargetTypes: List<String> = listOf("DOCKER_COMPOSE_HOST")
     var supportedEnvironmentTypes: List<String> = listOf("DOCKER_COMPOSE")
 }

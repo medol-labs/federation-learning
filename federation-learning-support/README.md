@@ -88,13 +88,13 @@ node scripts/seed-dev-data.mjs --dry-run
 
 ## Clean Development Docker Data
 
-To reset local Docker Compose databases and event-store volumes for generated deployment modules:
+To reset local Docker Compose databases and event-store volumes for selected generated deployment modules:
 
 ```bash
 node scripts/clean-docker-compose-data.mjs --yes
 ```
 
-The script discovers `docker-compose.yml` files under the generated backend root and module directories, then runs `docker compose -f <file> down -v --remove-orphans`. Preview the affected compose files without deleting data:
+The script discovers `docker-compose.yml` files under the generated backend root and module directories, then opens a checkbox list. Use arrow keys to move, space to select or clear a module, and enter to confirm. It runs `docker compose -f <file> down -v --remove-orphans` only for the selected modules. Preview the selected compose files without deleting data:
 
 ```bash
 node scripts/clean-docker-compose-data.mjs --dry-run
@@ -119,8 +119,7 @@ node scripts/build-images.mjs --module federation-learning-support
 Images default to `linux/amd64`. Override the target CPU architecture when needed:
 
 ```bash
-cd ..
-node scripts/build-images.mjs --module federation-learning-support --platform linux/arm64
+node scripts/build-images.mjs --platform linux/arm64
 ```
 
 Export the generated images to a Docker archive for offline transfer:
@@ -133,21 +132,18 @@ node scripts/export-images.mjs --module federation-learning-support
 Pull and export Docker Compose dependency images, such as databases and event stores, for the same target platform:
 
 ```bash
-cd ..
 node scripts/export-dependency-images.mjs --platform linux/amd64 --output dependency-images.tar
 ```
 
 Preview the discovered dependency images:
 
 ```bash
-cd ..
 node scripts/dependency-images.mjs list
 ```
 
 Collect deployment Docker Compose files and matching `.env.example` files into one folder:
 
 ```bash
-cd ..
 node scripts/collect-deployment-compose-files.mjs --clean
 ```
 

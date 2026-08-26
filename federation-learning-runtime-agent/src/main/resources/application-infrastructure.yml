@@ -13,7 +13,7 @@ runtime-agent:
     runtime-agent-endpoint: ${RUNTIME_AGENT_ENDPOINT:http://localhost:8082}
     endpoint-scope: ${RUNTIME_AGENT_ENDPOINT_SCOPE:LOCAL}
   csv-dataset:
-    label-columns: ${RUNTIME_AGENT_CSV_DATASET_LABEL_COLUMNS:}
+    label-columns: ${RUNTIME_AGENT_CSV_DATASET_LABEL_COLUMNS:readmission_risk}
   feature-schema-lookup:
     enabled: ${RUNTIME_AGENT_FEATURE_SCHEMA_LOOKUP_ENABLED:true}
     platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
@@ -34,6 +34,8 @@ runtime-agent:
     runtime-root-host-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT_HOST_ROOT:../../volumes/tmp/runtime-engine}
     dataset-host-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_HOST_ROOT:../../volumes/datasets}
     dataset-container-root: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_DATASET_CONTAINER_ROOT:/workspace/datasets}
+    label-column: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_LABEL_COLUMN:readmission_risk}
+    id-column: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ID_COLUMN:id}
     model: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODEL:linear.LogisticRegression}
     epoch: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_EPOCH:1}
     learning-rate: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_LEARNING_RATE:0.1}

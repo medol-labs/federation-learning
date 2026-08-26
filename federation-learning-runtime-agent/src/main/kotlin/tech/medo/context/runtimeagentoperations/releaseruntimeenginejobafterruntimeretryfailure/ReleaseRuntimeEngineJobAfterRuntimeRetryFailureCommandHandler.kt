@@ -23,8 +23,8 @@ class ReleaseRuntimeEngineJobAfterRuntimeRetryFailureCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RoundExecutionStateEnum.RETRIED) {
-            "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure requires RoundExecution to be Retried."
+        require(state.currentState == RoundExecutionStateEnum.FAILED) {
+            "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure requires RoundExecution to be Failed."
         }
         val input = ReleaseRuntimeEngineJobAfterRuntimeRetryFailureInput(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId)
         val portResult = releaseRuntimeEngineJobAfterRuntimeRetryFailureService.execute(input)

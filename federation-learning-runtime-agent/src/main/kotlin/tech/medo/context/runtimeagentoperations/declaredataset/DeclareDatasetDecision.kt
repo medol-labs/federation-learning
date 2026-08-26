@@ -12,7 +12,7 @@ import tech.medo.runtimeagentoperations.dataset.DatasetState
 interface DeclareDatasetDecision {
     fun decide(command: DeclareDatasetCommand, portResult: DeclareDatasetResult): List<Any> {
         return when (portResult) {
-                    is DeclareDatasetResult.Succeeded -> listOf(DatasetDeclaredEvent(datasetId = command.datasetId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName, datasetType = command.datasetType, datasetUsage = command.datasetUsage, features = portResult.features, labels = portResult.labels))
+                    is DeclareDatasetResult.Succeeded -> listOf(DatasetDeclaredEvent(datasetId = command.datasetId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName, datasetUsage = command.datasetUsage, features = portResult.features, labels = portResult.labels))
                 }
     }
 }

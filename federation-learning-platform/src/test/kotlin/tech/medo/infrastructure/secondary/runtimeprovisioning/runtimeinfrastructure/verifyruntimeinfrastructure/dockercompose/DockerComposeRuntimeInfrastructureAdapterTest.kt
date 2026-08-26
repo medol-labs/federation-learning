@@ -100,8 +100,7 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
             properties(),
             lookup(
                 runtimePackage = runtimePackage(
-                    runtimeEnvironmentType = "KUBERNETES",
-                    runtimeDeploymentTargetType = "KUBERNETES_CLUSTER"
+                    runtimeEnvironmentType = "KUBERNETES"
                 )
             ),
             FakeDockerComposeCommandRunner()
@@ -169,18 +168,13 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
         )
 
     private fun runtimePackage(
-        runtimeEnvironmentType: String? = "DOCKER_COMPOSE",
-        runtimeDeploymentTargetType: String? = "DOCKER_COMPOSE_HOST"
+        runtimeEnvironmentType: String? = "DOCKER_COMPOSE"
     ): RuntimeInfrastructurePackageCatalogReadModel =
         RuntimeInfrastructurePackageCatalogReadModel(
             runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
             packageName = "local-runtime",
             packageVersion = "1.0.0",
             runtimeEnvironmentType = runtimeEnvironmentType,
-            runtimeDeploymentTargetType = runtimeDeploymentTargetType,
-            installProfile = null,
-            architecture = null,
-            installGuide = null,
             state = null,
             userId = null,
             sessionId = null,

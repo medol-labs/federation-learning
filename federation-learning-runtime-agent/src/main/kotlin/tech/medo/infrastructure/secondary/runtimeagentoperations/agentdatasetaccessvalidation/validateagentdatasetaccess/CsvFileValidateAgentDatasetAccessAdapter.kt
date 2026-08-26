@@ -1,6 +1,8 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.agentdatasetaccessvalidation.validateagentdatasetaccess
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import tech.medo.infrastructure.secondary.runtimeagentoperations.dataset.resolveRuntimeDatasetPath
 import tech.medo.runtimeagentoperations.validateagentdatasetaccess.ValidateAgentDatasetAccessInput
 import tech.medo.runtimeagentoperations.validateagentdatasetaccess.ValidateAgentDatasetAccessResult
 import tech.medo.runtimeagentoperations.validateagentdatasetaccess.ValidateAgentDatasetAccessService
@@ -8,7 +10,12 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 @Component
-class CsvFileValidateAgentDatasetAccessAdapter : ValidateAgentDatasetAccessService {
+class CsvFileValidateAgentDatasetAccessAdapter(
+    @Value("\${runtime-agent.local-runtime-engine.dataset-host-root:../../volumes/datasets}")
+    private val datasetHostRoot: String = "../../volumes/datasets",
+    @Value("\${runtime-agent.local-runtime-engine.dataset-container-root:/workspace/datasets}")
+    private val datasetContainerRoot: String = "/workspace/datasets"
+) : ValidateAgentDatasetAccessService {
     override fun execute(input: ValidateAgentDatasetAccessInput): ValidateAgentDatasetAccessResult {
         fun rejected(reason: String): ValidateAgentDatasetAccessResult.Rejected =
             ValidateAgentDatasetAccessResult.Rejected(
@@ -24,7 +31,7 @@ class CsvFileValidateAgentDatasetAccessAdapter : ValidateAgentDatasetAccessServi
             return rejected("CSV dataset binding filePath is required.")
         }
 
-        val path = Path.of(filePath)
+        val path = resolveRuntimeDatasetPath(filePath, datasetHostRoot, datasetContainerRoot)
         if (!Files.isRegularFile(path)) {
             return rejected("CSV dataset file does not exist: $filePath")
         }

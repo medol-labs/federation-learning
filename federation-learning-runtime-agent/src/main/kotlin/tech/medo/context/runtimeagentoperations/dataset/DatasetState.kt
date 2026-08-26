@@ -40,7 +40,6 @@ class DatasetState @EntityCreator constructor() {
     var organizationId: UUID? = null
     var featureSchemaId: UUID? = null
     var datasetName: String? = null
-    var datasetType: String? = null
     var datasetUsage: String? = null
     var features: List<FeatureDefinition> = emptyList()
     var labels: List<LabelDefinition> = emptyList()
@@ -60,7 +59,6 @@ class DatasetState @EntityCreator constructor() {
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
         datasetName = event.datasetName
-        datasetType = event.datasetType
         datasetUsage = event.datasetUsage
         features = event.features
         labels = event.labels

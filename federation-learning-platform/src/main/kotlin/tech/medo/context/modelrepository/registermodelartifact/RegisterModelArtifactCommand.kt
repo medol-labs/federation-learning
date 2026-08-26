@@ -11,6 +11,7 @@ data class RegisterModelArtifactCommand(
     val modelId: UUID = java.util.UUID.randomUUID(),
     val modelName: String,
     val modelVersion: String,
+    val modelDescription: String?,
     val sourceType: String,
     val stagedFileId: UUID?,
     val modelFormat: String?

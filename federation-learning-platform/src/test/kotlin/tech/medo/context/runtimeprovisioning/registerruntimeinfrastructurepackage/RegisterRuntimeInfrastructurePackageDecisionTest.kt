@@ -15,11 +15,7 @@ class RegisterRuntimeInfrastructurePackageDecisionTest {
             runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
             packageName = "",
             packageVersion = "",
-            runtimeEnvironmentType = "",
-            runtimeDeploymentTargetType = "",
-            installProfile = "",
-            architecture = "",
-            installGuide = ""
+            runtimeEnvironmentType = ""
             )
         )
 

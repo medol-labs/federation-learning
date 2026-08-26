@@ -25,7 +25,6 @@ class RuntimeInfrastructureAccessViewReadModelEntity : MetadataProjection {
     var runtimeInfrastructurePackageVersion: String? = null
     var organizationName: String? = null
     var runtimeName: String? = null
-    var runtimeDeploymentTargetType: String? = null
     var runtimeEnvironmentType: String? = null
     var agentInstallMode: String? = null
     var expectedNodeCount: Int? = null

@@ -23,8 +23,8 @@ class RetryRoundExecutionAfterStartFailureCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RoundExecutionStateEnum.RUNNING) {
-            "RetryRoundExecutionAfterStartFailure requires RoundExecution to be Running."
+        require(state.currentState == RoundExecutionStateEnum.START_FAILED) {
+            "RetryRoundExecutionAfterStartFailure requires RoundExecution to be StartFailed."
         }
         val input = RetryRoundExecutionAfterStartFailureInput(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, baseModelId = command.baseModelId, runtimeEngineJobId = command.runtimeEngineJobId, retryReason = command.retryReason)
         val portResult = retryRoundExecutionAfterStartFailureService.execute(input)

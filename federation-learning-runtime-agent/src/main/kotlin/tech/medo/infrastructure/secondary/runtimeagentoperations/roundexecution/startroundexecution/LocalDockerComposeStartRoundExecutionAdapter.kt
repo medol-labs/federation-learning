@@ -126,8 +126,8 @@ class LocalDockerComposeStartRoundExecutionAdapter(
         val runtimeInput = mutableMapOf<String, Any?>(
             "dataset" to mapOf(
                 "path" to toContainerDatasetPath(datasetPath),
-                "labelColumn" to "y",
-                "id" to "id"
+                "labelColumn" to properties.labelColumn,
+                "id" to properties.idColumn
             )
         )
         if (!globalModelPath.isNullOrBlank()) {

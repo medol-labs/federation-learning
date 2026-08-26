@@ -15,6 +15,8 @@ data class LocalRuntimeEngineProperties(
     val runtimeRootHostRoot: String = "../../volumes/tmp/runtime-engine",
     val datasetHostRoot: String = "../../volumes/datasets",
     val datasetContainerRoot: String = "/workspace/datasets",
+    val labelColumn: String = "readmission_risk",
+    val idColumn: String = "id",
     val model: String = "linear.LogisticRegression",
     val epoch: Int = 1,
     val learningRate: Double = 0.1,

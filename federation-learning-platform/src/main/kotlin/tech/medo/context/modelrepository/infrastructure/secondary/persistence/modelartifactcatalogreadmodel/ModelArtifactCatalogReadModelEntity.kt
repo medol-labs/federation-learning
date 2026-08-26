@@ -20,6 +20,8 @@ class ModelArtifactCatalogReadModelEntity : MetadataProjection {
     var modelId: UUID? = null
     var modelName: String? = null
     var modelVersion: String? = null
+    @Column(columnDefinition = "text")
+    var modelDescription: String? = null
     var sourceType: String? = null
     var modelArtifactUri: String? = null
     var modelRegistryRef: String? = null

@@ -58,12 +58,8 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
             entity.lossFunction = event.lossFunction
             entity.gradientClippingNorm = event.gradientClippingNorm
             entity.secureAggregationRequired = event.secureAggregationRequired
-            entity.differentialPrivacyEnabled = event.differentialPrivacyEnabled
-            entity.dpNoiseMultiplier = event.dpNoiseMultiplier
-            entity.dpClipNorm = event.dpClipNorm
             entity.minimumAccuracy = event.minimumAccuracy
             entity.minimumFairnessScore = event.minimumFairnessScore
-            entity.failureToleranceRatio = event.failureToleranceRatio
             entity.state = TrainingRunConfigurationStateEnum.DRAFT
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -102,12 +98,8 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
             entity.lossFunction = event.lossFunction
             entity.gradientClippingNorm = event.gradientClippingNorm
             entity.secureAggregationRequired = event.secureAggregationRequired
-            entity.differentialPrivacyEnabled = event.differentialPrivacyEnabled
-            entity.dpNoiseMultiplier = event.dpNoiseMultiplier
-            entity.dpClipNorm = event.dpClipNorm
             entity.minimumAccuracy = event.minimumAccuracy
             entity.minimumFairnessScore = event.minimumFairnessScore
-            entity.failureToleranceRatio = event.failureToleranceRatio
             entity.updateReason = event.updateReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

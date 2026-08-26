@@ -11,11 +11,7 @@ data class RegisterRuntimeInfrastructurePackageCommand(
     val runtimeInfrastructurePackageId: UUID = java.util.UUID.randomUUID(),
     val packageName: String,
     val packageVersion: String,
-    val runtimeEnvironmentType: String,
-    val runtimeDeploymentTargetType: String,
-    val installProfile: String,
-    val architecture: String,
-    val installGuide: String
+    val runtimeEnvironmentType: String
 ) {
     @TargetEntityId
     val selection: RuntimeInfrastructurePackageSelection = RuntimeInfrastructurePackageSelection(packageName = packageName.trim().lowercase(), packageVersion = packageVersion)

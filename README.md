@@ -83,13 +83,13 @@ node scripts/seed-dev-data.mjs --dry-run
 
 ## Clean Development Docker Data
 
-To reset local Docker Compose databases and event-store volumes for generated deployment modules:
+To reset local Docker Compose databases and event-store volumes for selected generated deployment modules:
 
 ```bash
 node scripts/clean-docker-compose-data.mjs --yes
 ```
 
-The script discovers `docker-compose.yml` files under the generated backend root and module directories, then runs `docker compose -f <file> down -v --remove-orphans`. Preview the affected compose files without deleting data:
+The script discovers `docker-compose.yml` files under the generated backend root and module directories, then opens a checkbox list. Use arrow keys to move, space to select or clear a module, and enter to confirm. It runs `docker compose -f <file> down -v --remove-orphans` only for the selected modules. Preview the selected compose files without deleting data:
 
 ```bash
 node scripts/clean-docker-compose-data.mjs --dry-run

@@ -17,10 +17,6 @@ class RuntimeInfrastructurePackageCatalogReadModelCriteria {
     var packageName: StringFilter? = null
     var packageVersion: StringFilter? = null
     var runtimeEnvironmentType: StringFilter? = null
-    var runtimeDeploymentTargetType: StringFilter? = null
-    var installProfile: StringFilter? = null
-    var architecture: StringFilter? = null
-    var installGuide: StringFilter? = null
     var state: Filter<RuntimeInfrastructurePackageStateEnum>? = null
 }
 
@@ -30,10 +26,6 @@ class RuntimeInfrastructurePackageCatalogReadModelProjection : MetadataProjectio
     var packageName: String? = null
     var packageVersion: String? = null
     var runtimeEnvironmentType: String? = null
-    var runtimeDeploymentTargetType: String? = null
-    var installProfile: String? = null
-    var architecture: String? = null
-    var installGuide: String? = null
     var state: RuntimeInfrastructurePackageStateEnum? = null
     override var userId: String? = null
     override var sessionId: String? = null
@@ -49,10 +41,6 @@ fun RuntimeInfrastructurePackageCatalogReadModelProjection.toReadModel(): Runtim
     packageName = packageName,
     packageVersion = packageVersion,
     runtimeEnvironmentType = runtimeEnvironmentType,
-    runtimeDeploymentTargetType = runtimeDeploymentTargetType,
-    installProfile = installProfile,
-    architecture = architecture,
-    installGuide = installGuide,
     state = state,
     userId = userId,
     sessionId = sessionId,
@@ -75,10 +63,6 @@ data class RuntimeInfrastructurePackageCatalogReadModel(
     val packageName: String?,
     val packageVersion: String?,
     val runtimeEnvironmentType: String?,
-    val runtimeDeploymentTargetType: String?,
-    val installProfile: String?,
-    val architecture: String?,
-    val installGuide: String?,
     val state: RuntimeInfrastructurePackageStateEnum?,
     val userId: String?,
     val sessionId: String?,

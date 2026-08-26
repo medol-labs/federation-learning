@@ -17,7 +17,6 @@ data class DatasetDeclaredEvent(
     val featureSchemaId: UUID,
     @EventTag(key = "datasetName")
     val datasetName: String,
-    val datasetType: String,
     val datasetUsage: String,
     val features: List<FeatureDefinition>,
     val labels: List<LabelDefinition>

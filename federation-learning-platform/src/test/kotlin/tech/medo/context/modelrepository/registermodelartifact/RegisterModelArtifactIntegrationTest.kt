@@ -28,7 +28,8 @@ class RegisterModelArtifactIntegrationTest(
             modelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             modelName = "credit-risk",
             modelVersion = "v1",
-            sourceType = "UPLOAD",
+            modelDescription = "Baseline credit risk classifier for federated training",
+            sourceType = "EXTERNAL",
             stagedFileId = UUID.nameUUIDFromBytes("staged-file-1".toByteArray()),
             modelFormat = "ONNX"
         )

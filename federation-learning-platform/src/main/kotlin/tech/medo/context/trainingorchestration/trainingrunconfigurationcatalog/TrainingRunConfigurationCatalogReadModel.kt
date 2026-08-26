@@ -44,12 +44,8 @@ class TrainingRunConfigurationCatalogReadModelCriteria {
     var lossFunction: StringFilter? = null
     var gradientClippingNorm: BigDecimalFilter? = null
     var secureAggregationRequired: BooleanFilter? = null
-    var differentialPrivacyEnabled: BooleanFilter? = null
-    var dpNoiseMultiplier: BigDecimalFilter? = null
-    var dpClipNorm: BigDecimalFilter? = null
     var minimumAccuracy: BigDecimalFilter? = null
     var minimumFairnessScore: BigDecimalFilter? = null
-    var failureToleranceRatio: BigDecimalFilter? = null
     var updateReason: StringFilter? = null
     var lockedByTrainingJobId: StringFilter? = null
     var state: Filter<TrainingRunConfigurationStateEnum>? = null
@@ -84,12 +80,8 @@ class TrainingRunConfigurationCatalogReadModelProjection : MetadataProjection {
     var lossFunction: String? = null
     var gradientClippingNorm: BigDecimal? = null
     var secureAggregationRequired: Boolean? = null
-    var differentialPrivacyEnabled: Boolean? = null
-    var dpNoiseMultiplier: BigDecimal? = null
-    var dpClipNorm: BigDecimal? = null
     var minimumAccuracy: BigDecimal? = null
     var minimumFairnessScore: BigDecimal? = null
-    var failureToleranceRatio: BigDecimal? = null
     var updateReason: String? = null
     var lockedByTrainingJobId: UUID? = null
     var state: TrainingRunConfigurationStateEnum? = null
@@ -130,12 +122,8 @@ fun TrainingRunConfigurationCatalogReadModelProjection.toReadModel(): TrainingRu
     lossFunction = lossFunction,
     gradientClippingNorm = gradientClippingNorm,
     secureAggregationRequired = secureAggregationRequired,
-    differentialPrivacyEnabled = differentialPrivacyEnabled,
-    dpNoiseMultiplier = dpNoiseMultiplier,
-    dpClipNorm = dpClipNorm,
     minimumAccuracy = minimumAccuracy,
     minimumFairnessScore = minimumFairnessScore,
-    failureToleranceRatio = failureToleranceRatio,
     updateReason = updateReason,
     lockedByTrainingJobId = lockedByTrainingJobId,
     state = state,
@@ -183,12 +171,8 @@ data class TrainingRunConfigurationCatalogReadModel(
     val lossFunction: String?,
     val gradientClippingNorm: BigDecimal?,
     val secureAggregationRequired: Boolean?,
-    val differentialPrivacyEnabled: Boolean?,
-    val dpNoiseMultiplier: BigDecimal?,
-    val dpClipNorm: BigDecimal?,
     val minimumAccuracy: BigDecimal?,
     val minimumFairnessScore: BigDecimal?,
-    val failureToleranceRatio: BigDecimal?,
     val updateReason: String?,
     val lockedByTrainingJobId: UUID?,
     val state: TrainingRunConfigurationStateEnum?,

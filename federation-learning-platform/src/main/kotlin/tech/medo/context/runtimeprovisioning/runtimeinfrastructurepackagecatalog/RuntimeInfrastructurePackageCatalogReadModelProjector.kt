@@ -24,10 +24,6 @@ class RuntimeInfrastructurePackageCatalogReadModelProjector(private val reposito
             entity.packageName = event.packageName
             entity.packageVersion = event.packageVersion
             entity.runtimeEnvironmentType = event.runtimeEnvironmentType
-            entity.runtimeDeploymentTargetType = event.runtimeDeploymentTargetType
-            entity.installProfile = event.installProfile
-            entity.architecture = event.architecture
-            entity.installGuide = event.installGuide
             entity.state = RuntimeInfrastructurePackageStateEnum.REGISTERED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

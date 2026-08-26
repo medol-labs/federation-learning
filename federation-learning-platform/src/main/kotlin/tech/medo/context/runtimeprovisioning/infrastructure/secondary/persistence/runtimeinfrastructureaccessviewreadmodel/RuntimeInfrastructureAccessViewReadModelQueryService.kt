@@ -39,7 +39,6 @@ class RuntimeInfrastructureAccessViewReadModelQueryService(
             criteria.runtimeInfrastructurePackageVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<String>> { root -> root.get("runtimeInfrastructurePackageVersion") })) }
             criteria.organizationName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<String>> { root -> root.get("organizationName") })) }
             criteria.runtimeName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<String>> { root -> root.get("runtimeName") })) }
-            criteria.runtimeDeploymentTargetType?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<String>> { root -> root.get("runtimeDeploymentTargetType") })) }
             criteria.runtimeEnvironmentType?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<String>> { root -> root.get("runtimeEnvironmentType") })) }
             criteria.agentInstallMode?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<String>> { root -> root.get("agentInstallMode") })) }
             criteria.expectedNodeCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<Int>> { root -> root.get("expectedNodeCount") })) }
@@ -120,7 +119,6 @@ class RuntimeInfrastructureAccessViewReadModelQueryService(
             it.runtimeInfrastructurePackageVersion = this@toProjection.runtimeInfrastructurePackageVersion
             it.organizationName = this@toProjection.organizationName
             it.runtimeName = this@toProjection.runtimeName
-            it.runtimeDeploymentTargetType = this@toProjection.runtimeDeploymentTargetType
             it.runtimeEnvironmentType = this@toProjection.runtimeEnvironmentType
             it.agentInstallMode = this@toProjection.agentInstallMode
             it.expectedNodeCount = this@toProjection.expectedNodeCount

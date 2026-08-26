@@ -16,7 +16,8 @@ class RegisterModelArtifactDecisionTest {
             modelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             modelName = "credit-risk",
             modelVersion = "v1",
-            sourceType = "UPLOAD",
+            modelDescription = "Baseline credit risk classifier for federated training",
+            sourceType = "EXTERNAL",
             stagedFileId = UUID.nameUUIDFromBytes("staged-file-1".toByteArray()),
             modelFormat = "ONNX"
         )
@@ -29,7 +30,8 @@ class RegisterModelArtifactDecisionTest {
         assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.modelId)
         assertEquals("credit-risk", event.modelName)
         assertEquals("v1", event.modelVersion)
-        assertEquals("UPLOAD", event.sourceType)
+        assertEquals("Baseline credit risk classifier for federated training", event.modelDescription)
+        assertEquals("EXTERNAL", event.sourceType)
         assertEquals("ONNX", event.modelFormat)
     }
 }

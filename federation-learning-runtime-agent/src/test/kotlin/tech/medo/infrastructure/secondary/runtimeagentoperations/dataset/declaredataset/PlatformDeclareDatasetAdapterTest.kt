@@ -103,7 +103,6 @@ class PlatformDeclareDatasetAdapterTest {
             organizationId = UUID.fromString("22222222-2222-4222-8222-222222222222"),
             featureSchemaId = FEATURE_SCHEMA_ID,
             datasetName = "credit-risk",
-            datasetType = "TABULAR",
             datasetUsage = "TRAINING"
         )
 

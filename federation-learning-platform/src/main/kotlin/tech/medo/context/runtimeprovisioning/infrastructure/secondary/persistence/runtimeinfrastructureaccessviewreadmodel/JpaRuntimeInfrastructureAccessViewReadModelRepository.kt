@@ -47,7 +47,6 @@ class JpaRuntimeInfrastructureAccessViewReadModelRepository(
             it.runtimeInfrastructurePackageVersion = this@toProjection.runtimeInfrastructurePackageVersion
             it.organizationName = this@toProjection.organizationName
             it.runtimeName = this@toProjection.runtimeName
-            it.runtimeDeploymentTargetType = this@toProjection.runtimeDeploymentTargetType
             it.runtimeEnvironmentType = this@toProjection.runtimeEnvironmentType
             it.agentInstallMode = this@toProjection.agentInstallMode
             it.expectedNodeCount = this@toProjection.expectedNodeCount
@@ -81,7 +80,6 @@ class JpaRuntimeInfrastructureAccessViewReadModelRepository(
             it.runtimeInfrastructurePackageVersion = this@toEntity.runtimeInfrastructurePackageVersion
             it.organizationName = this@toEntity.organizationName
             it.runtimeName = this@toEntity.runtimeName
-            it.runtimeDeploymentTargetType = this@toEntity.runtimeDeploymentTargetType
             it.runtimeEnvironmentType = this@toEntity.runtimeEnvironmentType
             it.agentInstallMode = this@toEntity.agentInstallMode
             it.expectedNodeCount = this@toEntity.expectedNodeCount

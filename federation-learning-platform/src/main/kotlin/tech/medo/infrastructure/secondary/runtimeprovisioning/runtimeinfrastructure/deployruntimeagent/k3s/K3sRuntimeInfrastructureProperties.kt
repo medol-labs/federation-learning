@@ -13,6 +13,5 @@ class K3sRuntimeInfrastructureProperties {
     var agentDeploymentName: String = "federation-learning-runtime-agent"
     var agentVersion: String = "k3s"
     var commandTimeout: Duration = Duration.ofSeconds(60)
-    var supportedDeploymentTargetTypes: List<String> = listOf("K3S", "K3S_CLUSTER")
     var supportedEnvironmentTypes: List<String> = listOf("K3S", "KUBERNETES")
 }

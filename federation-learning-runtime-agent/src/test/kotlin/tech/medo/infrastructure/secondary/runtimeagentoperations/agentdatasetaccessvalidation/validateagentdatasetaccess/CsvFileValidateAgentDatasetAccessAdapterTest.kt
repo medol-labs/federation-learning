@@ -31,6 +31,22 @@ class CsvFileValidateAgentDatasetAccessAdapterTest {
     }
 
     @Test
+    fun mapsContainerDatasetPathToHostDatasetRoot() {
+        val hostRoot = tempDir.resolve("datasets")
+        Files.createDirectories(hostRoot)
+        Files.writeString(hostRoot.resolve("dataset.csv"), "age,label\n42,yes\n")
+        val input = input(filePath = "/workspace/datasets/dataset.csv")
+        val adapter = CsvFileValidateAgentDatasetAccessAdapter(
+            datasetHostRoot = hostRoot.toString(),
+            datasetContainerRoot = "/workspace/datasets"
+        )
+
+        val result = adapter.execute(input)
+
+        assertTrue(result is ValidateAgentDatasetAccessResult.Succeeded)
+    }
+
+    @Test
     fun rejectsMissingCsvFile() {
         val input = input(filePath = tempDir.resolve("missing.csv").toString())
         val adapter = CsvFileValidateAgentDatasetAccessAdapter()

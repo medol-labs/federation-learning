@@ -34,11 +34,7 @@ data class TrainingRunConfigurationUpdatedEvent(
     val lossFunction: String,
     val gradientClippingNorm: BigDecimal?,
     val secureAggregationRequired: Boolean,
-    val differentialPrivacyEnabled: Boolean,
-    val dpNoiseMultiplier: BigDecimal?,
-    val dpClipNorm: BigDecimal?,
     val minimumAccuracy: BigDecimal,
     val minimumFairnessScore: BigDecimal?,
-    val failureToleranceRatio: BigDecimal,
     val updateReason: String?
 )

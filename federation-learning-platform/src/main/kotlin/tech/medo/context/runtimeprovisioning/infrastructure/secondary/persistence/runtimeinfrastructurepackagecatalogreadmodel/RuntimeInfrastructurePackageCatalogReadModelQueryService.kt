@@ -31,10 +31,6 @@ class RuntimeInfrastructurePackageCatalogReadModelQueryService(
             criteria.packageName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructurePackageCatalogReadModelEntity>, Expression<String>> { root -> root.get("packageName") })) }
             criteria.packageVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructurePackageCatalogReadModelEntity>, Expression<String>> { root -> root.get("packageVersion") })) }
             criteria.runtimeEnvironmentType?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructurePackageCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEnvironmentType") })) }
-            criteria.runtimeDeploymentTargetType?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructurePackageCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeDeploymentTargetType") })) }
-            criteria.installProfile?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructurePackageCatalogReadModelEntity>, Expression<String>> { root -> root.get("installProfile") })) }
-            criteria.architecture?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructurePackageCatalogReadModelEntity>, Expression<String>> { root -> root.get("architecture") })) }
-            criteria.installGuide?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructurePackageCatalogReadModelEntity>, Expression<String>> { root -> root.get("installGuide") })) }
             criteria.state?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructurePackageCatalogReadModelEntity>, Expression<RuntimeInfrastructurePackageStateEnum>> { root -> root.get("state") })) }
         }
         return specification
@@ -46,10 +42,6 @@ class RuntimeInfrastructurePackageCatalogReadModelQueryService(
             it.packageName = this@toProjection.packageName
             it.packageVersion = this@toProjection.packageVersion
             it.runtimeEnvironmentType = this@toProjection.runtimeEnvironmentType
-            it.runtimeDeploymentTargetType = this@toProjection.runtimeDeploymentTargetType
-            it.installProfile = this@toProjection.installProfile
-            it.architecture = this@toProjection.architecture
-            it.installGuide = this@toProjection.installGuide
             it.state = this@toProjection.state
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId

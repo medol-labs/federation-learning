@@ -127,8 +127,7 @@ class K3sRuntimeInfrastructureAdapterTest {
             properties(),
             lookup(
                 runtimePackage = runtimePackage(
-                    runtimeEnvironmentType = "DOCKER_COMPOSE",
-                    runtimeDeploymentTargetType = "DOCKER_COMPOSE_HOST"
+                    runtimeEnvironmentType = "DOCKER_COMPOSE"
                 )
             ),
             FakeK3sCommandRunner()
@@ -197,18 +196,13 @@ class K3sRuntimeInfrastructureAdapterTest {
         )
 
     private fun runtimePackage(
-        runtimeEnvironmentType: String? = "K3S",
-        runtimeDeploymentTargetType: String? = "K3S_CLUSTER"
+        runtimeEnvironmentType: String? = "K3S"
     ): RuntimeInfrastructurePackageCatalogReadModel =
         RuntimeInfrastructurePackageCatalogReadModel(
             runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
             packageName = "local-k3s-runtime",
             packageVersion = "1.0.0",
             runtimeEnvironmentType = runtimeEnvironmentType,
-            runtimeDeploymentTargetType = runtimeDeploymentTargetType,
-            installProfile = null,
-            architecture = null,
-            installGuide = null,
             state = null,
             userId = null,
             sessionId = null,

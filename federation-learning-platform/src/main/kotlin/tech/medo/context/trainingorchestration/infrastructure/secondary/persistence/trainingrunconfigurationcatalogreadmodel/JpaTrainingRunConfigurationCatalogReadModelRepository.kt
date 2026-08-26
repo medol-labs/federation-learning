@@ -64,12 +64,8 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
             it.lossFunction = this@toProjection.lossFunction
             it.gradientClippingNorm = this@toProjection.gradientClippingNorm
             it.secureAggregationRequired = this@toProjection.secureAggregationRequired
-            it.differentialPrivacyEnabled = this@toProjection.differentialPrivacyEnabled
-            it.dpNoiseMultiplier = this@toProjection.dpNoiseMultiplier
-            it.dpClipNorm = this@toProjection.dpClipNorm
             it.minimumAccuracy = this@toProjection.minimumAccuracy
             it.minimumFairnessScore = this@toProjection.minimumFairnessScore
-            it.failureToleranceRatio = this@toProjection.failureToleranceRatio
             it.updateReason = this@toProjection.updateReason
             it.lockedByTrainingJobId = this@toProjection.lockedByTrainingJobId
             it.state = this@toProjection.state
@@ -110,12 +106,8 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
             it.lossFunction = this@toEntity.lossFunction
             it.gradientClippingNorm = this@toEntity.gradientClippingNorm
             it.secureAggregationRequired = this@toEntity.secureAggregationRequired
-            it.differentialPrivacyEnabled = this@toEntity.differentialPrivacyEnabled
-            it.dpNoiseMultiplier = this@toEntity.dpNoiseMultiplier
-            it.dpClipNorm = this@toEntity.dpClipNorm
             it.minimumAccuracy = this@toEntity.minimumAccuracy
             it.minimumFairnessScore = this@toEntity.minimumFairnessScore
-            it.failureToleranceRatio = this@toEntity.failureToleranceRatio
             it.updateReason = this@toEntity.updateReason
             it.lockedByTrainingJobId = this@toEntity.lockedByTrainingJobId
             it.state = this@toEntity.state

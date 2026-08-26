@@ -31,12 +31,8 @@ class DefineTrainingRunConfigurationDecisionTest {
             lossFunction = "CROSS_ENTROPY",
             gradientClippingNorm = null,
             secureAggregationRequired = true,
-            differentialPrivacyEnabled = false,
-            dpNoiseMultiplier = null,
-            dpClipNorm = null,
             minimumAccuracy = BigDecimal("0.9"),
-            minimumFairnessScore = null,
-            failureToleranceRatio = BigDecimal("0.2")
+            minimumFairnessScore = null
         )
 
         val events = (object : DefineTrainingRunConfigurationDecision {}).decide(
@@ -61,11 +57,7 @@ class DefineTrainingRunConfigurationDecisionTest {
         assertEquals("CROSS_ENTROPY", event.lossFunction)
         assertEquals(command.gradientClippingNorm, event.gradientClippingNorm)
         assertEquals(true, event.secureAggregationRequired)
-        assertEquals(false, event.differentialPrivacyEnabled)
-        assertEquals(command.dpNoiseMultiplier, event.dpNoiseMultiplier)
-        assertEquals(command.dpClipNorm, event.dpClipNorm)
         assertEquals(BigDecimal("0.9"), event.minimumAccuracy)
         assertEquals(command.minimumFairnessScore, event.minimumFairnessScore)
-        assertEquals(BigDecimal("0.2"), event.failureToleranceRatio)
     }
 }

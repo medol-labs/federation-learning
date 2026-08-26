@@ -33,15 +33,11 @@ class RuntimeInstallationGuideReadModelQueryService(
             criteria.runtimeInfrastructurePackageId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInfrastructurePackageId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeInfrastructurePackageName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("runtimeInfrastructurePackageName") })) }
             criteria.runtimeInfrastructurePackageVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("runtimeInfrastructurePackageVersion") })) }
-            criteria.infrastructureInstallGuide?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("infrastructureInstallGuide") })) }
             criteria.organizationName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("organizationName") })) }
             criteria.runtimeName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("runtimeName") })) }
             criteria.bootstrapCommand?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("bootstrapCommand") })) }
-            criteria.runtimeDeploymentTargetType?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("runtimeDeploymentTargetType") })) }
             criteria.runtimeEnvironmentType?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("runtimeEnvironmentType") })) }
             criteria.agentInstallMode?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("agentInstallMode") })) }
-            criteria.installProfile?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("installProfile") })) }
-            criteria.architecture?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("architecture") })) }
             criteria.expectedNodeCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<Int>> { root -> root.get("expectedNodeCount") })) }
         }
         return specification
@@ -74,15 +70,11 @@ class RuntimeInstallationGuideReadModelQueryService(
             it.runtimeInfrastructurePackageId = this@toProjection.runtimeInfrastructurePackageId
             it.runtimeInfrastructurePackageName = this@toProjection.runtimeInfrastructurePackageName
             it.runtimeInfrastructurePackageVersion = this@toProjection.runtimeInfrastructurePackageVersion
-            it.infrastructureInstallGuide = this@toProjection.infrastructureInstallGuide
             it.organizationName = this@toProjection.organizationName
             it.runtimeName = this@toProjection.runtimeName
             it.bootstrapCommand = this@toProjection.bootstrapCommand
-            it.runtimeDeploymentTargetType = this@toProjection.runtimeDeploymentTargetType
             it.runtimeEnvironmentType = this@toProjection.runtimeEnvironmentType
             it.agentInstallMode = this@toProjection.agentInstallMode
-            it.installProfile = this@toProjection.installProfile
-            it.architecture = this@toProjection.architecture
             it.expectedNodeCount = this@toProjection.expectedNodeCount
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId

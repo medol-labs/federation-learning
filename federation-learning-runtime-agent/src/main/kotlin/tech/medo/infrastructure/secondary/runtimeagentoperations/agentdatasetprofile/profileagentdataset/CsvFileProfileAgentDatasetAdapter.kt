@@ -1,8 +1,10 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.agentdatasetprofile.profileagentdataset
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Component
 import tech.medo.infrastructure.secondary.runtimeagentoperations.dataset.CsvDatasetProperties
+import tech.medo.infrastructure.secondary.runtimeagentoperations.dataset.resolveRuntimeDatasetPath
 import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetInput
 import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetResult
 import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetService
@@ -16,7 +18,11 @@ import java.nio.file.Path
 @Component
 class CsvFileProfileAgentDatasetAdapter(
     private val bindingRepository: RuntimeDatasetBindingCatalogReadModelRepository,
-    private val properties: CsvDatasetProperties
+    private val properties: CsvDatasetProperties,
+    @Value("\${runtime-agent.local-runtime-engine.dataset-host-root:../../volumes/datasets}")
+    private val datasetHostRoot: String = "../../volumes/datasets",
+    @Value("\${runtime-agent.local-runtime-engine.dataset-container-root:/workspace/datasets}")
+    private val datasetContainerRoot: String = "/workspace/datasets"
 ) : ProfileAgentDatasetService {
     override fun execute(input: ProfileAgentDatasetInput): ProfileAgentDatasetResult {
         val binding = bindingRepository.findAll(Pageable.unpaged())
@@ -31,7 +37,7 @@ class CsvFileProfileAgentDatasetAdapter(
             return rejected("CSV runtime dataset binding filePath is required.")
         }
 
-        val path = Path.of(filePath)
+        val path = resolveRuntimeDatasetPath(filePath, datasetHostRoot, datasetContainerRoot)
         if (!Files.isRegularFile(path)) {
             return rejected("CSV dataset file does not exist: $filePath")
         }

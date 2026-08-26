@@ -26,7 +26,6 @@ class RuntimeInfrastructureAccessViewReadModelCriteria {
     var runtimeInfrastructurePackageVersion: StringFilter? = null
     var organizationName: StringFilter? = null
     var runtimeName: StringFilter? = null
-    var runtimeDeploymentTargetType: StringFilter? = null
     var runtimeEnvironmentType: StringFilter? = null
     var agentInstallMode: StringFilter? = null
     var expectedNodeCount: IntegerFilter? = null
@@ -54,7 +53,6 @@ class RuntimeInfrastructureAccessViewReadModelProjection : MetadataProjection {
     var runtimeInfrastructurePackageVersion: String? = null
     var organizationName: String? = null
     var runtimeName: String? = null
-    var runtimeDeploymentTargetType: String? = null
     var runtimeEnvironmentType: String? = null
     var agentInstallMode: String? = null
     var expectedNodeCount: Int? = null
@@ -88,7 +86,6 @@ fun RuntimeInfrastructureAccessViewReadModelProjection.toReadModel(): RuntimeInf
     runtimeInfrastructurePackageVersion = runtimeInfrastructurePackageVersion,
     organizationName = organizationName,
     runtimeName = runtimeName,
-    runtimeDeploymentTargetType = runtimeDeploymentTargetType,
     runtimeEnvironmentType = runtimeEnvironmentType,
     agentInstallMode = agentInstallMode,
     expectedNodeCount = expectedNodeCount,
@@ -129,7 +126,6 @@ data class RuntimeInfrastructureAccessViewReadModel(
     val runtimeInfrastructurePackageVersion: String?,
     val organizationName: String?,
     val runtimeName: String?,
-    val runtimeDeploymentTargetType: String?,
     val runtimeEnvironmentType: String?,
     val agentInstallMode: String?,
     val expectedNodeCount: Int?,

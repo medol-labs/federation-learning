@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import {createHash} from 'node:crypto';
-import {existsSync} from 'node:fs';
+import {existsSync, readFileSync} from 'node:fs';
 import {basename, resolve} from 'node:path';
 
 if (typeof fetch !== 'function') {
@@ -16,9 +16,25 @@ const activateLifecycle = Boolean(args.activate);
 const timeoutMs = positiveInt(args.timeout, 30000);
 const pollIntervalMs = positiveInt(args['poll-interval'], 800);
 
-const platformUrl = trimSlash(args['platform-url'] ?? process.env.FL_PLATFORM_URL ?? 'http://192.168.50.2:8081');
-const runtimeAgentUrl = trimSlash(args['runtime-agent-url'] ?? process.env.FL_RUNTIME_AGENT_URL ?? 'http://192.168.50.2:8082');
-const runtimeEngineUrl = trimSlash(args['runtime-engine-url'] ?? process.env.FL_RUNTIME_ENGINE_URL ?? 'http://192.168.50.2:18080');
+const platformUrl = trimSlash(args['platform-url'] ?? process.env.FL_PLATFORM_URL ?? 'http://localhost:8081');
+const runtimeAgentUrl = trimSlash(args['runtime-agent-url'] ?? process.env.FL_RUNTIME_AGENT_URL ?? 'http://localhost:8082');
+const runtimeEngineUrl = trimSlash(args['runtime-engine-url'] ?? process.env.FL_RUNTIME_ENGINE_URL ?? 'http://localhost:18080');
+const runtimeEnvironmentType = canonicalRuntimeEnvironmentType(
+    args['runtime-environment-type'] ?? process.env.FL_RUNTIME_ENVIRONMENT_TYPE ?? 'DOCKER_COMPOSE'
+);
+const runtimePackageName = String(
+    args['runtime-package-name'] ??
+    process.env.FL_RUNTIME_INFRASTRUCTURE_PACKAGE_NAME ??
+    defaultRuntimePackageName(runtimeEnvironmentType)
+);
+const runtimePackageVersion = String(args['runtime-package-version'] ?? process.env.FL_RUNTIME_INFRASTRUCTURE_PACKAGE_VERSION ?? '0.0.1-SNAPSHOT');
+const runtimeAgentInstallMode = String(args['agent-install-mode'] ?? process.env.FL_RUNTIME_AGENT_INSTALL_MODE ?? 'MANUAL').trim().toUpperCase();
+const runtimeEndpointScope = String(args['endpoint-scope'] ?? process.env.FL_RUNTIME_ENDPOINT_SCOPE ?? 'LOCAL_DEV').trim().toUpperCase();
+const expectedNodeCount = positiveInt(args['expected-node-count'] ?? process.env.FL_RUNTIME_EXPECTED_NODE_COUNT, 1);
+const registerRuntimeInfrastructure = booleanOption(
+    args['register-runtime-infrastructure'] ?? process.env.FL_REGISTER_RUNTIME_INFRASTRUCTURE,
+    false
+);
 
 const workspaceRoot = resolve(import.meta.dirname, '../..');
 const defaultDatasetPath = resolve(workspaceRoot, 'volumes/datasets/test.csv');
@@ -31,13 +47,26 @@ if (!existsSync(datasetPath)) {
     fail(`Dataset file does not exist: ${datasetPath}`);
 }
 
-const seed = buildSeed(runtimeDatasetPath, runtimeAgentUrl, runtimeEngineUrl);
+const seed = buildSeed(runtimeDatasetPath, runtimeAgentUrl, runtimeEngineUrl, {
+    runtimeEnvironmentType,
+    runtimePackageName,
+    runtimePackageVersion,
+    runtimeAgentInstallMode,
+    runtimeEndpointScope,
+    expectedNodeCount
+});
 
 console.log(`[init-training] platformUrl=${platformUrl}`);
 console.log(`[init-training] runtimeAgentUrl=${runtimeAgentUrl}`);
 console.log(`[init-training] runtimeEngineUrl=${runtimeEngineUrl}`);
+console.log(`[init-training] runtimeEnvironmentType=${runtimeEnvironmentType}`);
+console.log(`[init-training] runtimePackage=${runtimePackageName}:${runtimePackageVersion}`);
+console.log(`[init-training] runtimeAgentInstallMode=${runtimeAgentInstallMode}`);
+console.log(`[init-training] registerRuntimeInfrastructure=${registerRuntimeInfrastructure}`);
 console.log(`[init-training] datasetPath=${datasetPath}`);
 console.log(`[init-training] runtimeDatasetPath=${runtimeDatasetPath}`);
+
+assertLocalDatasetHeaderMatchesSeed(datasetPath, seed.featureSchema);
 
 await ensurePlatformData();
 await ensureRuntimeAgentData();
@@ -47,6 +76,9 @@ console.log(JSON.stringify({
     organizationId: seed.organization.organizationId,
     federationId: seed.federation.federationId,
     featureSchemaId: seed.featureSchema.featureSchemaId,
+    runtimeInfrastructurePackageId: seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId,
+    runtimeInstallationPlanId: seed.runtimeInstallationPlan.runtimeInstallationPlanId,
+    runtimeInfrastructureId: seed.runtime.runtimeInfrastructureId,
     runtimeId: seed.runtime.runtimeId,
     runtimeAgentId: seed.runtime.runtimeAgentId,
     datasetId: seed.dataset.datasetId,
@@ -144,6 +176,7 @@ async function ensurePlatformData() {
         createPath: '/featureschema/definefeatureschema',
         createPayload: seed.featureSchema
     });
+    assertSchemaSnapshotMatchesSeed(featureSchema, seed.featureSchema, 'feature schema');
     if (!isPublished(featureSchema?.schemaStatus ?? featureSchema?.state)) {
         await postCommand(platformUrl, '/featureschema/publishfeatureschema', {
             featureSchemaId: seed.featureSchema.featureSchemaId,
@@ -168,11 +201,16 @@ async function ensurePlatformData() {
         createPayload: seed.model
     });
 
+    await ensureRuntimeProvisioningData();
+
     await ensureOne({
         label: 'runtime identity',
         baseUrl: platformUrl,
         queryPath: '/runtimeidentity/runtimeidentitycatalog',
-        query: {'runtimeId.equals': seed.runtime.runtimeId},
+        query: {
+            'runtimeId.equals': seed.runtime.runtimeId,
+            'runtimeInfrastructureId.equals': seed.runtime.runtimeInfrastructureId
+        },
         createPath: '/runtimeidentity/activateruntimeidentity',
         createPayload: seed.runtime
     });
@@ -181,16 +219,19 @@ async function ensurePlatformData() {
         label: 'runtime agent endpoint',
         baseUrl: platformUrl,
         queryPath: '/runtimeinfrastructure/runtimeagentendpointcatalog',
-        query: {'runtimeAgentId.equals': seed.runtime.runtimeAgentId},
+        query: {
+            'runtimeAgentId.equals': seed.runtime.runtimeAgentId,
+            'runtimeInfrastructureId.equals': seed.runtime.runtimeInfrastructureId
+        },
         createPath: '/runtimeinfrastructure/recordruntimeconnectionestablished',
         createPayload: {
             runtimeInfrastructureId: seed.runtime.runtimeInfrastructureId,
             runtimeAgentId: seed.runtime.runtimeAgentId,
-            agentInstallMode: 'MANUAL',
+            agentInstallMode: seed.runtimeInstallationPlan.agentInstallMode,
             organizationId: seed.organization.organizationId,
             runtimeName: seed.runtime.runtimeName,
             runtimeAgentEndpoint: runtimeAgentUrl,
-            endpointScope: 'LOCAL_DEV'
+            endpointScope: seed.runtimeEndpointScope
         }
     });
 
@@ -215,6 +256,84 @@ async function ensurePlatformData() {
     }
 }
 
+async function ensureRuntimeProvisioningData() {
+    const runtimePackage = await ensureOne({
+        label: 'runtime infrastructure package catalog',
+        baseUrl: platformUrl,
+        queryPath: '/runtimeinfrastructurepackage/runtimeinfrastructurepackagecatalog',
+        query: {
+            'packageName.equals': seed.runtimeInfrastructurePackage.packageName,
+            'packageVersion.equals': seed.runtimeInfrastructurePackage.packageVersion
+        },
+        createPath: '/runtimeinfrastructurepackage/registerruntimeinfrastructurepackage',
+        createPayload: seed.runtimeInfrastructurePackage
+    });
+    const runtimeInfrastructurePackageId = runtimePackage?.runtimeInfrastructurePackageId ??
+        seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId;
+    seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId = runtimeInfrastructurePackageId;
+    seed.runtimeInstallationPlan.runtimeInfrastructurePackageId = runtimeInfrastructurePackageId;
+
+    const runtimeInstallationPlan = await ensureOne({
+        label: 'runtime installation plan',
+        baseUrl: platformUrl,
+        queryPath: '/runtimeinstallationplan/runtimeinstallationplancatalog',
+        query: {
+            'organizationId.equals': seed.organization.organizationId,
+            'runtimeInfrastructurePackageId.equals': runtimeInfrastructurePackageId,
+            'runtimeName.equals': seed.runtime.runtimeName
+        },
+        createPath: '/runtimeinstallationplan/createruntimeinstallationplan',
+        createPayload: seed.runtimeInstallationPlan
+    });
+    const runtimeInstallationPlanId = runtimeInstallationPlan?.runtimeInstallationPlanId ??
+        seed.runtimeInstallationPlan.runtimeInstallationPlanId;
+    const runtimeInfrastructureId = runtimeInstallationPlan?.runtimeInfrastructureId ??
+        seed.runtime.runtimeInfrastructureId;
+    seed.runtimeInstallationPlan.runtimeInstallationPlanId = runtimeInstallationPlanId;
+    applyRuntimeInfrastructureId(runtimeInfrastructureId);
+
+    await ensureRuntimeInfrastructurePlanned(runtimeInfrastructureId, runtimeInstallationPlanId);
+    if (registerRuntimeInfrastructure) {
+        await ensureRuntimeInfrastructureRegistered(runtimeInfrastructureId);
+    }
+}
+
+async function ensureRuntimeInfrastructurePlanned(runtimeInfrastructureId, runtimeInstallationPlanId) {
+    const existing = await findOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
+        'runtimeInfrastructureId.equals': runtimeInfrastructureId
+    });
+    if (isRuntimeInfrastructurePlannedOrBeyond(existing?.state)) {
+        console.log('[init-training] exists runtime infrastructure plan');
+        return existing;
+    }
+
+    await postCommand(platformUrl, '/runtimeinfrastructure/planruntimeinfrastructure', {
+        runtimeInfrastructureId,
+        runtimeInstallationPlanId
+    }, 'runtime infrastructure plan');
+    return waitForOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
+        'runtimeInfrastructureId.equals': runtimeInfrastructureId
+    }, 'planned runtime infrastructure', (item) => isRuntimeInfrastructurePlannedOrBeyond(item.state));
+}
+
+async function ensureRuntimeInfrastructureRegistered(runtimeInfrastructureId) {
+    const existing = await findOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
+        'runtimeInfrastructureId.equals': runtimeInfrastructureId
+    });
+    if (isRuntimeInfrastructureRegisteredOrBeyond(existing?.state)) {
+        console.log('[init-training] exists runtime infrastructure registration');
+        return existing;
+    }
+
+    await postCommand(platformUrl, '/runtimeinfrastructure/registerruntimeinfrastructure', {
+        runtimeInfrastructureId,
+        runtimeAgentId: seed.runtime.runtimeAgentId
+    }, 'runtime infrastructure registration');
+    return waitForOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
+        'runtimeInfrastructureId.equals': runtimeInfrastructureId
+    }, 'registered runtime infrastructure', (item) => isRuntimeInfrastructureRegisteredOrBeyond(item.state));
+}
+
 async function ensureRuntimeAgentData() {
     await ensureOne({
         label: 'runtime node inventory',
@@ -225,7 +344,7 @@ async function ensureRuntimeAgentData() {
         createPayload: seed.node
     });
 
-    await ensureOne({
+    const datasetCapability = await ensureOne({
         label: 'dataset declaration',
         baseUrl: runtimeAgentUrl,
         queryPath: '/dataset/datasetcapability',
@@ -233,6 +352,7 @@ async function ensureRuntimeAgentData() {
         createPath: '/dataset/declaredataset',
         createPayload: seed.dataset
     });
+    assertSchemaSnapshotMatchesSeed(datasetCapability, seed.featureSchema, 'dataset capability');
 
     const existingBinding = await findOne(runtimeAgentUrl, '/runtimedatasetbinding/runtimedatasetbindingcatalog', {
         'runtimeId.equals': seed.binding.runtimeId,
@@ -254,11 +374,20 @@ async function ensureRuntimeAgentData() {
         }, 'runtime dataset binding');
     }
 
+    const accessValidation = await ensureAgentDatasetAccessValidation();
+    if (!isAccessValidated(accessValidation?.validationStatus)) {
+        fail(
+            `Agent dataset access validation failed: ${accessValidation?.failureReason ?? accessValidation?.validationStatus ?? 'unknown failure'}. ` +
+            `runtimeDatasetPath=${seed.binding.filePath}`
+        );
+    }
+
     const capability = await waitForOne(runtimeAgentUrl, '/dataset/datasetcapability', {
         'datasetId.equals': seed.dataset.datasetId
-    }, 'reported dataset capability', (item) =>
-        isReported(item.metadataStatus) && isContractValidated(item.contractStatus)
-    );
+    }, 'reported dataset capability', isDatasetCapabilityReadyOrFailed);
+    if (!dryRun && !isDatasetCapabilityReady(capability)) {
+        fail(`Dataset capability was not ready: ${JSON.stringify(capability)}`);
+    }
 
     if (!isApproved(capability?.approvalStatus) && capability?.approved !== true) {
         try {
@@ -287,6 +416,64 @@ async function ensureRuntimeAgentData() {
         createPath: '/runtimedatasetmetadata/recordruntimedatasetmetadata',
         createPayload: seed.platformMetadata
     });
+}
+
+async function ensureAgentDatasetAccessValidation() {
+    if (dryRun) {
+        await postCommand(
+            runtimeAgentUrl,
+            '/agentdatasetaccessvalidation/validateagentdatasetaccess',
+            seed.accessValidation,
+            'agent dataset access validation'
+        );
+        return {...seed.accessValidation, validationStatus: 'Checked'};
+    }
+
+    const existingQuery = {
+        'runtimeDatasetBindingId.equals': seed.binding.runtimeDatasetBindingId,
+        'datasetId.equals': seed.dataset.datasetId
+    };
+    const existingPage = await getPage(runtimeAgentUrl, '/agentdatasetaccessvalidation/agentdatasetaccessvalidationcatalog', {
+        ...existingQuery,
+        size: '50'
+    });
+    const existingItems = existingPage.content ?? [];
+    const validated = existingItems.find((item) => isAccessValidated(item.validationStatus));
+    if (validated) {
+        console.log('[init-training] exists agent dataset access validation');
+        return validated;
+    }
+
+    const failed = existingItems.find((item) => isFailed(item.validationStatus) || item.failureReason);
+    const attempt = failed
+        ? {
+            ...seed.accessValidation,
+            datasetAccessValidationId: stableUuid(
+                `fl-dev:dataset-access-validation:${seed.binding.runtimeDatasetBindingId}:${Date.now()}`
+            )
+        }
+        : seed.accessValidation;
+
+    if (failed) {
+        console.warn(
+            `[init-training] retry agent dataset access validation after previous failure: ` +
+            `${failed.failureReason ?? failed.validationStatus}`
+        );
+    }
+
+    await postCommand(
+        runtimeAgentUrl,
+        '/agentdatasetaccessvalidation/validateagentdatasetaccess',
+        attempt,
+        'agent dataset access validation'
+    );
+    return waitForOne(
+        runtimeAgentUrl,
+        '/agentdatasetaccessvalidation/agentdatasetaccessvalidationcatalog',
+        {'datasetAccessValidationId.equals': attempt.datasetAccessValidationId},
+        'agent dataset access validation',
+        isAccessValidationFinished
+    );
 }
 
 async function ensureOne({label, baseUrl, queryPath, query, createPath, createPayload}) {
@@ -351,17 +538,92 @@ async function postCommand(baseUrl, path, payload, label) {
     console.log(`[init-training] posted ${label}`);
 }
 
-function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint) {
+function applyRuntimeInfrastructureId(runtimeInfrastructureId) {
+    seed.runtime.runtimeInfrastructureId = runtimeInfrastructureId;
+    seed.node.runtimeInfrastructureId = runtimeInfrastructureId;
+    seed.node.runtimeNodeInventoryReportId = stableUuid(
+        `fl-dev:node-inventory:${runtimeInfrastructureId}:${seed.runtime.runtimeAgentId}`
+    );
+    seed.node.inventoryHash = stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeEngineUrl}`);
+}
+
+function assertLocalDatasetHeaderMatchesSeed(localDatasetPath, expectedSchema) {
+    const header = readFileSync(localDatasetPath, 'utf8')
+        .split(/\r?\n/)
+        .find((line) => line.trim().length > 0);
+    if (!header) {
+        fail(`Dataset file is empty: ${localDatasetPath}`);
+    }
+
+    const actualColumns = header.split(',').map((value) => value.trim().replace(/^"|"$/g, ''));
+    const missingFeatures = missingNames(expectedSchema.features, actualColumns, 'featureName');
+    const missingLabels = missingNames(expectedSchema.labels, actualColumns, 'labelName');
+    if (missingFeatures.length > 0 || missingLabels.length > 0) {
+        fail([
+            `Dataset header does not match the seeded feature schema: ${localDatasetPath}.`,
+            `Actual columns: [${actualColumns.join(', ')}].`,
+            missingFeatures.length > 0 ? `Missing feature columns: [${missingFeatures.join(', ')}].` : '',
+            missingLabels.length > 0 ? `Missing label columns: [${missingLabels.join(', ')}].` : ''
+        ].filter(Boolean).join(' '));
+    }
+}
+
+function assertSchemaSnapshotMatchesSeed(actualSnapshot, expectedSchema, label) {
+    if (!actualSnapshot || !Array.isArray(actualSnapshot.features) || !Array.isArray(actualSnapshot.labels)) {
+        return;
+    }
+
+    const missingFeatures = missingNames(expectedSchema.features, actualSnapshot.features, 'featureName');
+    const missingLabels = missingNames(expectedSchema.labels, actualSnapshot.labels, 'labelName');
+    const unexpectedLabels = missingNames(actualSnapshot.labels, expectedSchema.labels, 'labelName');
+    if (missingFeatures.length > 0 || missingLabels.length > 0 || unexpectedLabels.length > 0) {
+        const actualLabels = actualSnapshot.labels.map((item) => item?.labelName).filter(Boolean);
+        const expectedLabels = expectedSchema.labels.map((item) => item?.labelName).filter(Boolean);
+        fail([
+            `Existing ${label} does not match init-training-prerequisites seed data.`,
+            `Expected labels: [${expectedLabels.join(', ')}].`,
+            `Actual labels: [${actualLabels.join(', ')}].`,
+            missingFeatures.length > 0 ? `Missing feature columns: [${missingFeatures.join(', ')}].` : '',
+            missingLabels.length > 0 ? `Missing label columns: [${missingLabels.join(', ')}].` : '',
+            unexpectedLabels.length > 0 ? `Unexpected label columns: [${unexpectedLabels.join(', ')}].` : '',
+            'Reset local dev data or bump the seed version before rerunning.'
+        ].filter(Boolean).join(' '));
+    }
+}
+
+function missingNames(expectedItems, actualItems, nameProperty) {
+    const actualNames = new Set(actualItems.map((item) => normalizeName(typeof item === 'string' ? item : item?.[nameProperty])));
+    return expectedItems
+        .map((item) => typeof item === 'string' ? item : item?.[nameProperty])
+        .filter((name) => name && !actualNames.has(normalizeName(name)));
+}
+
+function normalizeName(value) {
+    return String(value ?? '').trim().replace(/^"|"$/g, '').replace(/[_\s-]/g, '').toLowerCase();
+}
+
+function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions) {
+    const runtimeName = 'local-medical-runtime';
+    const datasetName = 'Hospital Readmission Risk CSV';
+    const labelColumn = 'readmission_risk';
     const organizationId = stableUuid('fl-dev:organization:local-hospital');
-    const federationId = stableUuid('fl-dev:federation:local-demo');
-    const featureSchemaId = stableUuid('fl-dev:feature-schema:tabular-binary:v1');
-    const runtimeInfrastructureId = stableUuid('fl-dev:runtime-infrastructure:local');
-    const runtimeAgentId = stableUuid('fl-dev:runtime-agent:local');
-    const runtimeId = stableUuid('fl-dev:runtime:local');
-    const datasetId = stableUuid('fl-dev:dataset:test-csv');
-    const modelId = stableUuid('fl-dev:model:linear-logistic-regression:v1');
-    const trainingRunConfigurationId = stableUuid('fl-dev:training-run-configuration:local-binary:v1');
-    const trainingJobId = stableUuid('fl-dev:training-job:local-binary');
+    const federationId = stableUuid('fl-dev:federation:medical-readmission-risk');
+    const featureSchemaId = stableUuid('fl-dev:feature-schema:hospital-readmission-risk:v1');
+    const runtimeInfrastructurePackageId = stableUuid(
+        `fl-dev:runtime-infrastructure-package:${runtimeOptions.runtimePackageName}:${runtimeOptions.runtimePackageVersion}`
+    );
+    const runtimeInstallationPlanId = stableUuid(
+        `fl-dev:runtime-installation-plan:${organizationId}:${runtimeOptions.runtimePackageName}:${runtimeOptions.runtimePackageVersion}:${runtimeName}`
+    );
+    const runtimeInfrastructureId = stableNameUuid(`runtime-infrastructure:${runtimeInstallationPlanId}`);
+    const runtimeAgentId = stableUuid('fl-dev:runtime-agent:local-medical');
+    const runtimeId = stableUuid('fl-dev:runtime:local-medical');
+    const datasetId = stableUuid('fl-dev:dataset:hospital-readmission-risk-csv');
+    const runtimeDatasetBindingId = stableUuid('fl-dev:dataset-binding:hospital-readmission-risk-local-runtime');
+    const datasetAccessValidationId = stableUuid('fl-dev:dataset-access-validation:hospital-readmission-risk-local-runtime');
+    const modelId = stableUuid('fl-dev:model:hospital-readmission-logistic-regression:v1');
+    const trainingRunConfigurationId = stableUuid('fl-dev:training-run-configuration:hospital-readmission-risk:v1');
+    const trainingJobId = stableUuid('fl-dev:training-job:hospital-readmission-risk');
 
     return {
         organization: {
@@ -372,28 +634,29 @@ function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint
         },
         federation: {
             federationId,
-            federationName: 'FL Dev Federation',
-            description: 'Local development federation',
+            federationName: 'Medical Readmission Risk Federation',
+            description: 'Local development federation for hospital readmission risk modeling',
             minimumParticipantCount: 1
         },
         featureSchema: {
             featureSchemaId,
-            featureDomain: 'fl-dev-tabular-binary',
+            featureDomain: 'hospital-readmission-risk',
             version: 'v1',
             dataModality: 'TABULAR',
             features: [
-                feature('id', 'STRING', true, false, 'Sample identifier', [], null, true),
-                feature('x1', 'DECIMAL', true, false, 'Demo numeric feature x1'),
-                feature('x2', 'DECIMAL', true, false, 'Demo numeric feature x2')
+                feature('id', 'STRING', true, false, 'Synthetic patient identifier', [], null, true),
+                feature('age_years', 'INTEGER', true, false, 'Patient age in years'),
+                feature('systolic_bp_mm_hg', 'INTEGER', true, false, 'Most recent systolic blood pressure in mmHg'),
+                feature('fasting_glucose_mg_dl', 'INTEGER', true, false, 'Most recent fasting glucose in mg/dL')
             ],
             labels: [
                 {
-                    labelName: 'y',
+                    labelName: labelColumn,
                     dataType: 'INTEGER',
                     cardinality: 2,
                     classLabels: ['0', '1'],
                     isMultilabel: false,
-                    description: 'Binary target label',
+                    description: 'Synthetic 30-day readmission risk label',
                     validationRules: [],
                     defaultValue: null
                 }
@@ -404,37 +667,72 @@ function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint
             runtimeInfrastructureId,
             runtimeAgentId,
             organizationId,
-            runtimeName: 'local-runtime'
+            runtimeName
         },
+        runtimeInfrastructurePackage: {
+            runtimeInfrastructurePackageId,
+            packageName: runtimeOptions.runtimePackageName,
+            packageVersion: runtimeOptions.runtimePackageVersion,
+            runtimeEnvironmentType: runtimeOptions.runtimeEnvironmentType
+        },
+        runtimeInstallationPlan: {
+            runtimeInstallationPlanId,
+            organizationId,
+            runtimeInfrastructurePackageId,
+            runtimeName,
+            agentInstallMode: runtimeOptions.runtimeAgentInstallMode,
+            expectedNodeCount: runtimeOptions.expectedNodeCount
+        },
+        runtimeEndpointScope: runtimeOptions.runtimeEndpointScope,
         node: {
-            runtimeNodeInventoryReportId: stableUuid('fl-dev:node-inventory:local-runtime'),
+            runtimeNodeInventoryReportId: stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeAgentId}`),
             organizationId,
             runtimeInfrastructureId,
             runtimeAgentId,
-            runtimeNodeName: 'local-runtime',
+            runtimeNodeName: runtimeName,
             infrastructureNodeId: 'local-dev-node',
             runtimeNodeRole: 'TRAINER',
             nodeReady: true,
             runtimeEngineVersion: 'local',
-            containerEngineVersion: 'docker-compose',
+            containerEngineVersion: runtimeOptions.runtimeEnvironmentType,
             operatingSystem: process.platform,
             architecture: process.arch,
-            inventoryHash: stableUuid(`fl-dev:node-inventory:${runtimeEngineEndpoint}`)
+            inventoryHash: stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeEngineEndpoint}`)
         },
         dataset: {
             datasetId,
             organizationId,
             featureSchemaId,
-            datasetName: 'FL Dev Test CSV',
-            datasetType: 'TABULAR',
+            datasetName,
             datasetUsage: 'TRAINING'
         },
         binding: {
-            runtimeDatasetBindingId: stableUuid('fl-dev:dataset-binding:test-csv-local-runtime'),
+            runtimeDatasetBindingId,
             datasetId,
             organizationId,
             featureSchemaId,
-            datasetName: 'FL Dev Test CSV',
+            datasetName,
+            runtimeId,
+            dataSourceType: 'FILE',
+            host: null,
+            port: null,
+            url: null,
+            databaseName: null,
+            schemaName: null,
+            tableName: null,
+            filePath: datasetPathValue,
+            objectBucket: null,
+            objectPrefix: null,
+            dataFormat: 'CSV',
+            credentialSecretName: null
+        },
+        accessValidation: {
+            datasetAccessValidationId,
+            runtimeDatasetBindingId,
+            datasetId,
+            organizationId,
+            featureSchemaId,
+            datasetName,
             runtimeId,
             dataSourceType: 'FILE',
             host: null,
@@ -450,14 +748,14 @@ function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint
             credentialSecretName: null
         },
         platformMetadata: {
-            metadataReportId: stableUuid('fl-dev:platform-metadata:test-csv-local-runtime-compatible'),
+            metadataReportId: stableUuid('fl-dev:platform-metadata:hospital-readmission-risk-local-runtime-compatible'),
             datasetId,
             organizationId,
             runtimeId,
             featureSchemaId,
-            datasetName: 'FL Dev Test CSV',
-            sampleCount: 3,
-            featureCount: 4,
+            datasetName,
+            sampleCount: 6,
+            featureCount: 5,
             schemaCompatible: true,
             labelCompatible: true,
             missingValueRate: 0.0,
@@ -470,6 +768,7 @@ function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint
             modelId,
             modelName: 'linear.LogisticRegression',
             modelVersion: 'v1',
+            modelDescription: 'Development baseline logistic regression model for synthetic hospital readmission risk training.',
             sourceType: 'BUILT_IN',
             stagedFileId: null,
             modelFormat: 'JSON'
@@ -492,18 +791,14 @@ function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint
             lossFunction: 'LOG_LOSS',
             gradientClippingNorm: null,
             secureAggregationRequired: false,
-            differentialPrivacyEnabled: false,
-            dpNoiseMultiplier: null,
-            dpClipNorm: null,
             minimumAccuracy: 0.0,
-            minimumFairnessScore: null,
-            failureToleranceRatio: 0.0
+            minimumFairnessScore: null
         },
         trainingJob: {
             trainingJobId,
             federationId,
             trainingRunConfigurationId,
-            objective: 'Local development smoke training'
+            objective: 'Local hospital readmission risk smoke training'
         },
         runtimeAgentEndpoint
     };
@@ -553,6 +848,20 @@ function stableUuid(value) {
     ].join('-');
 }
 
+function stableNameUuid(value) {
+    const bytes = createHash('md5').update(value).digest();
+    bytes[6] = (bytes[6] & 0x0f) | 0x30;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    const hex = bytes.toString('hex');
+    return [
+        hex.slice(0, 8),
+        hex.slice(8, 12),
+        hex.slice(12, 16),
+        hex.slice(16, 20),
+        hex.slice(20)
+    ].join('-');
+}
+
 function isActive(value) {
     return normalize(value) === 'ACTIVE';
 }
@@ -581,8 +890,84 @@ function isApproved(value) {
     return ['APPROVED', 'TRAININGAPPROVED'].includes(normalize(value));
 }
 
+function isAccessValidationFinished(item) {
+    return Boolean(item) && (isAccessValidated(item.validationStatus) || isFailed(item.validationStatus) || Boolean(item.failureReason));
+}
+
+function isAccessValidated(value) {
+    return ['CHECKED', 'VALIDATED', 'ACCESSVALIDATED'].includes(normalize(value));
+}
+
+function isDatasetCapabilityReadyOrFailed(item) {
+    return isDatasetCapabilityReady(item) || isFailed(item?.metadataStatus) || isFailed(item?.contractStatus);
+}
+
+function isDatasetCapabilityReady(item) {
+    return Boolean(item) && isReported(item.metadataStatus) && isContractValidated(item.contractStatus);
+}
+
+function isRuntimeInfrastructurePlannedOrBeyond(value) {
+    return [
+        'PLANNED',
+        'REGISTERED',
+        'VERIFIED',
+        'AGENTREADY',
+        'CONNECTED',
+        'VERIFICATIONFAILED',
+        'RUNTIMEAGENTFAILED'
+    ].includes(normalize(value));
+}
+
+function isRuntimeInfrastructureRegisteredOrBeyond(value) {
+    return [
+        'REGISTERED',
+        'VERIFIED',
+        'AGENTREADY',
+        'CONNECTED',
+        'VERIFICATIONFAILED',
+        'RUNTIMEAGENTFAILED'
+    ].includes(normalize(value));
+}
+
+function isFailed(value) {
+    return ['FAILED', 'REJECTED', 'UNAVAILABLE'].includes(normalize(value));
+}
+
 function normalize(value) {
     return String(value ?? '').replace(/[_\s-]/g, '').toUpperCase();
+}
+
+function booleanOption(value, fallback = false) {
+    if (value == null) return fallback;
+    if (value === true) return true;
+    const normalized = normalize(value);
+    if (['TRUE', '1', 'YES', 'Y', 'ON'].includes(normalized)) return true;
+    if (['FALSE', '0', 'NO', 'N', 'OFF'].includes(normalized)) return false;
+    return fallback;
+}
+
+function defaultRuntimePackageName(environmentType) {
+    switch (normalize(environmentType)) {
+        case 'K3S':
+        case 'KUBERNETES':
+            return 'local-k3s-runtime-agent';
+        case 'DOCKERCOMPOSE':
+        default:
+            return 'local-docker-compose-runtime-agent';
+    }
+}
+
+function canonicalRuntimeEnvironmentType(value) {
+    switch (normalize(value)) {
+        case 'DOCKERCOMPOSE':
+            return 'DOCKER_COMPOSE';
+        case 'KUBERNETES':
+            return 'KUBERNETES';
+        case 'K3S':
+            return 'K3S';
+        default:
+            return String(value ?? '').trim().toUpperCase();
+    }
 }
 
 function positiveInt(value, fallback) {

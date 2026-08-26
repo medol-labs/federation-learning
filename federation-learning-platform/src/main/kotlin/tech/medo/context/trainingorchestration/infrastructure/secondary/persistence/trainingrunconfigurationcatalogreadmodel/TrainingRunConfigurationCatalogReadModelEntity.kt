@@ -42,12 +42,8 @@ class TrainingRunConfigurationCatalogReadModelEntity : MetadataProjection {
     var lossFunction: String? = null
     var gradientClippingNorm: BigDecimal? = null
     var secureAggregationRequired: Boolean? = null
-    var differentialPrivacyEnabled: Boolean? = null
-    var dpNoiseMultiplier: BigDecimal? = null
-    var dpClipNorm: BigDecimal? = null
     var minimumAccuracy: BigDecimal? = null
     var minimumFairnessScore: BigDecimal? = null
-    var failureToleranceRatio: BigDecimal? = null
     @Column(columnDefinition = "text")
     var updateReason: String? = null
     var lockedByTrainingJobId: UUID? = null

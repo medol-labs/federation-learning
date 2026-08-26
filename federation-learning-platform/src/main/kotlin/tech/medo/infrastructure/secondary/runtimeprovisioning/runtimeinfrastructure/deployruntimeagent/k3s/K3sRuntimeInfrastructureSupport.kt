@@ -6,9 +6,7 @@ fun isK3sPackage(
     runtimePackage: RuntimeInfrastructurePackageCatalogReadModel,
     properties: K3sRuntimeInfrastructureProperties
 ): Boolean =
-    properties.supportedDeploymentTargetTypes.any {
-        it.equals(runtimePackage.runtimeDeploymentTargetType, ignoreCase = true)
-    } || properties.supportedEnvironmentTypes.any {
+    properties.supportedEnvironmentTypes.any {
         it.equals(runtimePackage.runtimeEnvironmentType, ignoreCase = true)
     }
 

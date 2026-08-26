@@ -42,6 +42,7 @@ class JpaModelArtifactCatalogReadModelRepository(
             it.modelId = this@toProjection.modelId
             it.modelName = this@toProjection.modelName
             it.modelVersion = this@toProjection.modelVersion
+            it.modelDescription = this@toProjection.modelDescription
             it.sourceType = this@toProjection.sourceType
             it.modelArtifactUri = this@toProjection.modelArtifactUri
             it.modelRegistryRef = this@toProjection.modelRegistryRef
@@ -67,6 +68,7 @@ class JpaModelArtifactCatalogReadModelRepository(
             it.modelId = this@toEntity.modelId
             it.modelName = this@toEntity.modelName
             it.modelVersion = this@toEntity.modelVersion
+            it.modelDescription = this@toEntity.modelDescription
             it.sourceType = this@toEntity.sourceType
             it.modelArtifactUri = this@toEntity.modelArtifactUri
             it.modelRegistryRef = this@toEntity.modelRegistryRef

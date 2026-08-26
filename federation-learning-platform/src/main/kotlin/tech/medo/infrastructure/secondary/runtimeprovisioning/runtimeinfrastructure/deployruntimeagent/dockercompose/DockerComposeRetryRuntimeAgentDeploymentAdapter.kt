@@ -36,7 +36,7 @@ class DockerComposeRetryRuntimeAgentDeploymentAdapter(
             ?: return rejected("Runtime installation plan was not found for runtimeInfrastructureId=${input.runtimeInfrastructureId}.")
         val runtimePackage = lookup.findPackage(plan)
             ?: return rejected("Runtime infrastructure package was not found for runtimeInfrastructurePackageId=${plan.runtimeInfrastructurePackageId}.")
-        if (!isDockerComposePackage(runtimePackage.runtimeDeploymentTargetType, runtimePackage.runtimeEnvironmentType)) {
+        if (!isDockerComposePackage(runtimePackage.runtimeEnvironmentType)) {
             return rejected("Runtime infrastructure package is not a Docker Compose target.")
         }
 
@@ -58,9 +58,8 @@ class DockerComposeRetryRuntimeAgentDeploymentAdapter(
         )
     }
 
-    private fun isDockerComposePackage(targetType: String?, environmentType: String?): Boolean =
-        properties.supportedDeploymentTargetTypes.any { it.equals(targetType, ignoreCase = true) } ||
-            properties.supportedEnvironmentTypes.any { it.equals(environmentType, ignoreCase = true) }
+    private fun isDockerComposePackage(environmentType: String?): Boolean =
+        properties.supportedEnvironmentTypes.any { it.equals(environmentType, ignoreCase = true) }
 
     private fun commandFailure(result: DockerComposeCommandResult): String =
         if (result.timedOut) {

@@ -56,12 +56,8 @@ class TrainingRunConfigurationCatalogReadModelQueryService(
             criteria.lossFunction?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("lossFunction") })) }
             criteria.gradientClippingNorm?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<BigDecimal>> { root -> root.get("gradientClippingNorm") })) }
             criteria.secureAggregationRequired?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("secureAggregationRequired") })) }
-            criteria.differentialPrivacyEnabled?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("differentialPrivacyEnabled") })) }
-            criteria.dpNoiseMultiplier?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<BigDecimal>> { root -> root.get("dpNoiseMultiplier") })) }
-            criteria.dpClipNorm?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<BigDecimal>> { root -> root.get("dpClipNorm") })) }
             criteria.minimumAccuracy?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<BigDecimal>> { root -> root.get("minimumAccuracy") })) }
             criteria.minimumFairnessScore?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<BigDecimal>> { root -> root.get("minimumFairnessScore") })) }
-            criteria.failureToleranceRatio?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<BigDecimal>> { root -> root.get("failureToleranceRatio") })) }
             criteria.updateReason?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("updateReason") })) }
             criteria.lockedByTrainingJobId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("lockedByTrainingJobId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.state?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<TrainingRunConfigurationStateEnum>> { root -> root.get("state") })) }
@@ -117,12 +113,8 @@ class TrainingRunConfigurationCatalogReadModelQueryService(
             it.lossFunction = this@toProjection.lossFunction
             it.gradientClippingNorm = this@toProjection.gradientClippingNorm
             it.secureAggregationRequired = this@toProjection.secureAggregationRequired
-            it.differentialPrivacyEnabled = this@toProjection.differentialPrivacyEnabled
-            it.dpNoiseMultiplier = this@toProjection.dpNoiseMultiplier
-            it.dpClipNorm = this@toProjection.dpClipNorm
             it.minimumAccuracy = this@toProjection.minimumAccuracy
             it.minimumFairnessScore = this@toProjection.minimumFairnessScore
-            it.failureToleranceRatio = this@toProjection.failureToleranceRatio
             it.updateReason = this@toProjection.updateReason
             it.lockedByTrainingJobId = this@toProjection.lockedByTrainingJobId
             it.state = this@toProjection.state

@@ -18,15 +18,11 @@ class RuntimeInstallationGuideReadModelCriteria {
     var runtimeInfrastructurePackageId: StringFilter? = null
     var runtimeInfrastructurePackageName: StringFilter? = null
     var runtimeInfrastructurePackageVersion: StringFilter? = null
-    var infrastructureInstallGuide: StringFilter? = null
     var organizationName: StringFilter? = null
     var runtimeName: StringFilter? = null
     var bootstrapCommand: StringFilter? = null
-    var runtimeDeploymentTargetType: StringFilter? = null
     var runtimeEnvironmentType: StringFilter? = null
     var agentInstallMode: StringFilter? = null
-    var installProfile: StringFilter? = null
-    var architecture: StringFilter? = null
     var expectedNodeCount: IntegerFilter? = null
 }
 
@@ -38,15 +34,11 @@ class RuntimeInstallationGuideReadModelProjection : MetadataProjection {
     var runtimeInfrastructurePackageId: UUID? = null
     var runtimeInfrastructurePackageName: String? = null
     var runtimeInfrastructurePackageVersion: String? = null
-    var infrastructureInstallGuide: String? = null
     var organizationName: String? = null
     var runtimeName: String? = null
     var bootstrapCommand: String? = null
-    var runtimeDeploymentTargetType: String? = null
     var runtimeEnvironmentType: String? = null
     var agentInstallMode: String? = null
-    var installProfile: String? = null
-    var architecture: String? = null
     var expectedNodeCount: Int? = null
     override var userId: String? = null
     override var sessionId: String? = null
@@ -64,15 +56,11 @@ fun RuntimeInstallationGuideReadModelProjection.toReadModel(): RuntimeInstallati
     runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
     runtimeInfrastructurePackageName = runtimeInfrastructurePackageName,
     runtimeInfrastructurePackageVersion = runtimeInfrastructurePackageVersion,
-    infrastructureInstallGuide = infrastructureInstallGuide,
     organizationName = organizationName,
     runtimeName = runtimeName,
     bootstrapCommand = bootstrapCommand,
-    runtimeDeploymentTargetType = runtimeDeploymentTargetType,
     runtimeEnvironmentType = runtimeEnvironmentType,
     agentInstallMode = agentInstallMode,
-    installProfile = installProfile,
-    architecture = architecture,
     expectedNodeCount = expectedNodeCount,
     userId = userId,
     sessionId = sessionId,
@@ -97,15 +85,11 @@ data class RuntimeInstallationGuideReadModel(
     val runtimeInfrastructurePackageId: UUID?,
     val runtimeInfrastructurePackageName: String?,
     val runtimeInfrastructurePackageVersion: String?,
-    val infrastructureInstallGuide: String?,
     val organizationName: String?,
     val runtimeName: String?,
     val bootstrapCommand: String?,
-    val runtimeDeploymentTargetType: String?,
     val runtimeEnvironmentType: String?,
     val agentInstallMode: String?,
-    val installProfile: String?,
-    val architecture: String?,
     val expectedNodeCount: Int?,
     val userId: String?,
     val sessionId: String?,

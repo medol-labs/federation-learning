@@ -13,6 +13,7 @@ data class ModelArtifactRegisteredEvent(
     val modelName: String,
     @EventTag(key = "modelVersion")
     val modelVersion: String,
+    val modelDescription: String?,
     val sourceType: String,
     val modelArtifactUri: String,
     val modelRegistryRef: String,

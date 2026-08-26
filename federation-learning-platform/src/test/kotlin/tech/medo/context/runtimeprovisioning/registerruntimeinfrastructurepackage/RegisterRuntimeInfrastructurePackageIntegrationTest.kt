@@ -28,11 +28,7 @@ class RegisterRuntimeInfrastructurePackageIntegrationTest(
             runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
             packageName = "",
             packageVersion = "",
-            runtimeEnvironmentType = "",
-            runtimeDeploymentTargetType = "",
-            installProfile = "",
-            architecture = "",
-            installGuide = ""
+            runtimeEnvironmentType = ""
         )
 
         commandGateway.send(command).getResultMessage().join()

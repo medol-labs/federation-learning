@@ -26,12 +26,8 @@ data class DefineTrainingRunConfigurationCommand(
     val lossFunction: String,
     val gradientClippingNorm: BigDecimal?,
     val secureAggregationRequired: Boolean,
-    val differentialPrivacyEnabled: Boolean,
-    val dpNoiseMultiplier: BigDecimal?,
-    val dpClipNorm: BigDecimal?,
     val minimumAccuracy: BigDecimal,
-    val minimumFairnessScore: BigDecimal?,
-    val failureToleranceRatio: BigDecimal
+    val minimumFairnessScore: BigDecimal?
 ) {
     @TargetEntityId
     val selection: TrainingRunConfigurationSelection = TrainingRunConfigurationSelection(trainingRunConfigurationId = trainingRunConfigurationId)

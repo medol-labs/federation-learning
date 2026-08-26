@@ -27,9 +27,7 @@ class RuntimeProvisioningLookup(
     ): Boolean? {
         val plan = findPlanByRuntimeInfrastructureId(runtimeInfrastructureId) ?: return null
         val runtimePackage = findPackage(plan) ?: return null
-        return properties.supportedDeploymentTargetTypes.any {
-            it.equals(runtimePackage.runtimeDeploymentTargetType, ignoreCase = true)
-        } || properties.supportedEnvironmentTypes.any {
+        return properties.supportedEnvironmentTypes.any {
             it.equals(runtimePackage.runtimeEnvironmentType, ignoreCase = true)
         }
     }

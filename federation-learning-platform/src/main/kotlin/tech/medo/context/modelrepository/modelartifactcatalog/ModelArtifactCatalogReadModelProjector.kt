@@ -27,6 +27,7 @@ class ModelArtifactCatalogReadModelProjector(private val repository: ModelArtifa
             entity.modelId = event.modelId
             entity.modelName = event.modelName
             entity.modelVersion = event.modelVersion
+            entity.modelDescription = event.modelDescription
             entity.sourceType = event.sourceType
             entity.modelArtifactUri = event.modelArtifactUri
             entity.modelRegistryRef = event.modelRegistryRef

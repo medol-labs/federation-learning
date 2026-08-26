@@ -13,10 +13,6 @@ data class RuntimeInfrastructurePackageRegisteredEvent(
     @EventTag(key = "packageVersion")
     val packageVersion: String,
     val runtimeEnvironmentType: String,
-    val runtimeDeploymentTargetType: String,
-    val installProfile: String,
-    val architecture: String,
-    val installGuide: String,
     @EventTag(key = "packageName")
     val packageNameEventTag: String = packageName.trim().lowercase()
 )

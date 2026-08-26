@@ -20,7 +20,7 @@ class DeclareDatasetCommandHandler(
         command: DeclareDatasetCommand,
         eventAppender: EventAppender
     ) {
-        val input = DeclareDatasetInput(datasetId = command.datasetId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName, datasetType = command.datasetType, datasetUsage = command.datasetUsage)
+        val input = DeclareDatasetInput(datasetId = command.datasetId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName, datasetUsage = command.datasetUsage)
         val portResult = declareDatasetService.execute(input)
 
         eventAppender.append(decision.decide(command, portResult))

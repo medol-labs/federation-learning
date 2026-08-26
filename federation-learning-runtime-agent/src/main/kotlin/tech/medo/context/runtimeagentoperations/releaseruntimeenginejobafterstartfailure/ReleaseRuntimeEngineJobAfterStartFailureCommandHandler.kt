@@ -23,8 +23,8 @@ class ReleaseRuntimeEngineJobAfterStartFailureCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RoundExecutionStateEnum.RUNNING) {
-            "ReleaseRuntimeEngineJobAfterStartFailure requires RoundExecution to be Running."
+        require(state.currentState == RoundExecutionStateEnum.START_FAILED) {
+            "ReleaseRuntimeEngineJobAfterStartFailure requires RoundExecution to be StartFailed."
         }
         val input = ReleaseRuntimeEngineJobAfterStartFailureInput(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId)
         val portResult = releaseRuntimeEngineJobAfterStartFailureService.execute(input)

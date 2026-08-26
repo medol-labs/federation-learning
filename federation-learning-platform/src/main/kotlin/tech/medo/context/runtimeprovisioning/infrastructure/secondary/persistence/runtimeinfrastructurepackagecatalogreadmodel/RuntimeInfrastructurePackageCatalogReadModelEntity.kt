@@ -18,10 +18,6 @@ class RuntimeInfrastructurePackageCatalogReadModelEntity : MetadataProjection {
     var packageName: String? = null
     var packageVersion: String? = null
     var runtimeEnvironmentType: String? = null
-    var runtimeDeploymentTargetType: String? = null
-    var installProfile: String? = null
-    var architecture: String? = null
-    var installGuide: String? = null
     @Enumerated(EnumType.STRING)
     var state: RuntimeInfrastructurePackageStateEnum? = null
     override var userId: String? = null

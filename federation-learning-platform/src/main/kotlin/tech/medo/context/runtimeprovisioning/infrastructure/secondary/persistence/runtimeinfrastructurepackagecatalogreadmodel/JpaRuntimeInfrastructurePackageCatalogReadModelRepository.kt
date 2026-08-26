@@ -40,10 +40,6 @@ class JpaRuntimeInfrastructurePackageCatalogReadModelRepository(
             it.packageName = this@toProjection.packageName
             it.packageVersion = this@toProjection.packageVersion
             it.runtimeEnvironmentType = this@toProjection.runtimeEnvironmentType
-            it.runtimeDeploymentTargetType = this@toProjection.runtimeDeploymentTargetType
-            it.installProfile = this@toProjection.installProfile
-            it.architecture = this@toProjection.architecture
-            it.installGuide = this@toProjection.installGuide
             it.state = this@toProjection.state
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
@@ -59,10 +55,6 @@ class JpaRuntimeInfrastructurePackageCatalogReadModelRepository(
             it.packageName = this@toEntity.packageName
             it.packageVersion = this@toEntity.packageVersion
             it.runtimeEnvironmentType = this@toEntity.runtimeEnvironmentType
-            it.runtimeDeploymentTargetType = this@toEntity.runtimeDeploymentTargetType
-            it.installProfile = this@toEntity.installProfile
-            it.architecture = this@toEntity.architecture
-            it.installGuide = this@toEntity.installGuide
             it.state = this@toEntity.state
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId

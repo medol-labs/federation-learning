@@ -43,12 +43,8 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
     var lossFunction: String? = null
     var gradientClippingNorm: BigDecimal? = null
     var secureAggregationRequired: Boolean? = null
-    var differentialPrivacyEnabled: Boolean? = null
-    var dpNoiseMultiplier: BigDecimal? = null
-    var dpClipNorm: BigDecimal? = null
     var minimumAccuracy: BigDecimal? = null
     var minimumFairnessScore: BigDecimal? = null
-    var failureToleranceRatio: BigDecimal? = null
     var updateReason: String? = null
     var trainingJobId: UUID? = null
 
@@ -79,12 +75,8 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
         lossFunction = event.lossFunction
         gradientClippingNorm = event.gradientClippingNorm
         secureAggregationRequired = event.secureAggregationRequired
-        differentialPrivacyEnabled = event.differentialPrivacyEnabled
-        dpNoiseMultiplier = event.dpNoiseMultiplier
-        dpClipNorm = event.dpClipNorm
         minimumAccuracy = event.minimumAccuracy
         minimumFairnessScore = event.minimumFairnessScore
-        failureToleranceRatio = event.failureToleranceRatio
     }
 
     @EventSourcingHandler
@@ -113,12 +105,8 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
         lossFunction = event.lossFunction
         gradientClippingNorm = event.gradientClippingNorm
         secureAggregationRequired = event.secureAggregationRequired
-        differentialPrivacyEnabled = event.differentialPrivacyEnabled
-        dpNoiseMultiplier = event.dpNoiseMultiplier
-        dpClipNorm = event.dpClipNorm
         minimumAccuracy = event.minimumAccuracy
         minimumFairnessScore = event.minimumFairnessScore
-        failureToleranceRatio = event.failureToleranceRatio
         updateReason = event.updateReason
     }
 

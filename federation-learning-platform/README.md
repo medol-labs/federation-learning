@@ -86,15 +86,67 @@ node scripts/seed-dev-data.mjs --deployment MyBackend
 node scripts/seed-dev-data.mjs --dry-run
 ```
 
+## Training Prerequisites
+
+Prepare the local medical federation, feature schema, model artifact, runtime
+infrastructure package catalog, runtime installation plan, runtime identity,
+runtime agent bootstrap configuration, runtime agent endpoint, dataset
+declaration, runtime dataset binding, dataset access validation, and platform
+runtime dataset metadata:
+
+```bash
+cd ..
+node scripts/init-training-prerequisites.mjs
+```
+
+The script defaults to a manually managed Docker Compose runtime package:
+
+```text
+runtimeEnvironmentType=DOCKER_COMPOSE
+runtimePackage=local-docker-compose-runtime-agent:0.0.1-SNAPSHOT
+agentInstallMode=MANUAL
+```
+
+The default dataset is a synthetic hospital readmission risk CSV under
+`../volumes/datasets/test.csv`. It uses medical-style columns such as
+`age_years`, `systolic_bp_mm_hg`, `fasting_glucose_mg_dl`, and the binary label
+column `readmission_risk`.
+
+Preview payloads without calling services:
+
+```bash
+node scripts/init-training-prerequisites.mjs --dry-run
+```
+
+Useful options:
+
+```bash
+node scripts/init-training-prerequisites.mjs --runtime-environment-type K3S
+node scripts/init-training-prerequisites.mjs --runtime-package-name local-k3s-runtime-agent
+node scripts/init-training-prerequisites.mjs --runtime-package-version 0.0.1-SNAPSHOT
+node scripts/init-training-prerequisites.mjs --agent-install-mode MANUAL
+node scripts/init-training-prerequisites.mjs --expected-node-count 1
+node scripts/init-training-prerequisites.mjs --register-runtime-infrastructure
+node scripts/init-training-prerequisites.mjs --create-job
+```
+
+`--register-runtime-infrastructure` is optional because it can trigger the
+runtime infrastructure verification flow. Keep it off for local bootstrap when
+the runtime agent and runtime engine are already started manually.
+
+If an older local database already contains the previous generic sample schema
+(`x1`, `x2`, `y`), reset local dev data before rerunning the prerequisites so
+the new medical feature schema and dataset capability projections are rebuilt.
+
 ## Clean Development Docker Data
 
-To reset local Docker Compose databases and event-store volumes for generated deployment modules:
+To reset local Docker Compose databases and event-store volumes for selected generated deployment modules:
 
 ```bash
 node scripts/clean-docker-compose-data.mjs --yes
 ```
 
-The script discovers `docker-compose.yml` files under the generated backend root and module directories, then runs `docker compose -f <file> down -v --remove-orphans`. Preview the affected compose files without deleting data:
+The script discovers `docker-compose.yml` files under the generated backend root and module directories, then opens a checkbox list. Use arrow keys to move, space to select or clear a module, and enter to confirm. It runs `docker compose -f <file> down -v --remove-orphans` only for the selected modules. Preview the selected compose files without deleting data:
 
 ```bash
 node scripts/clean-docker-compose-data.mjs --dry-run
@@ -119,8 +171,7 @@ node scripts/build-images.mjs --module federation-learning-platform
 Images default to `linux/amd64`. Override the target CPU architecture when needed:
 
 ```bash
-cd ..
-node scripts/build-images.mjs --module federation-learning-platform --platform linux/arm64
+node scripts/build-images.mjs --platform linux/arm64
 ```
 
 Export the generated images to a Docker archive for offline transfer:
@@ -133,21 +184,18 @@ node scripts/export-images.mjs --module federation-learning-platform
 Pull and export Docker Compose dependency images, such as databases and event stores, for the same target platform:
 
 ```bash
-cd ..
 node scripts/export-dependency-images.mjs --platform linux/amd64 --output dependency-images.tar
 ```
 
 Preview the discovered dependency images:
 
 ```bash
-cd ..
 node scripts/dependency-images.mjs list
 ```
 
 Collect deployment Docker Compose files and matching `.env.example` files into one folder:
 
 ```bash
-cd ..
 node scripts/collect-deployment-compose-files.mjs --clean
 ```
 
