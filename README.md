@@ -193,11 +193,28 @@ Build the runtime image:
 node scripts/build-images.mjs
 ```
 
-Images default to `linux/amd64`. Override the target CPU architecture when needed:
+The default `docker-compose.yml` is intentionally runtime-only and does not
+contain a `build` section. This keeps `docker compose up` usable in offline or
+unstable-network environments when the image already exists locally.
+
+If you want to build through Docker Compose instead of the image script, use the
+build override explicitly:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.build.yml build runtime-engine
+```
+
+Images default to the current host architecture (`linux/arm64` on Apple Silicon,
+`linux/amd64` on x86_64). Override the target CPU architecture when needed:
 
 ```bash
 node scripts/build-images.mjs --platform linux/arm64
 ```
+
+Do not set `DOCKER_DEFAULT_PLATFORM=linux/amd64` in the runtime `.env` on an ARM
+machine unless you intentionally want amd64 emulation. If Docker reports that a
+local `linux/arm64` image does not match the specified `linux/amd64` platform,
+remove that variable or run `unset DOCKER_DEFAULT_PLATFORM` before `docker compose up`.
 
 Export and import the image for an offline environment:
 
@@ -219,11 +236,12 @@ Override the image name with `--prefix`, `--image`, and `--version`, or set
 Start the local runtime engine:
 
 ```bash
+docker image inspect medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT
 docker compose up -d runtime-engine
 curl http://localhost:18080/healthz
 ```
 
-Copy `.env-example` to `.env` to override image name, node name, host port, or
+Copy `.env.example` to `.env` to override image name, node name, host port, or
 mounted host directories. Runtime artifacts are written under
 `../volumes/tmp/runtime-engine` and `../volumes/models/runtime-engine`; datasets
 are read from `../volumes/datasets`.

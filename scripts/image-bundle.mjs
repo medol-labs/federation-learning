@@ -16,7 +16,11 @@ const imageName = String(args.image ?? process.env.IMAGE_NAME ?? defaultImageNam
 const fullImageName = `${imagePrefix}/${imageName}:${imageVersion}`;
 const tarFile = resolve(root, args.output ?? args.file ?? process.env.IMAGE_TAR ?? defaultTar);
 const dockerfile = String(args.dockerfile ?? process.env.RUNTIME_ENGINE_DOCKERFILE ?? defaultDockerfile);
-const platform = String(args.platform ?? process.env.DOCKER_DEFAULT_PLATFORM ?? 'linux/amd64');
+const platform = String(firstNonEmpty(
+    args.platform,
+    process.env.RUNTIME_ENGINE_IMAGE_PLATFORM,
+    process.env.DOCKER_DEFAULT_PLATFORM
+) ?? hostDockerPlatform());
 const dryRun = Boolean(args['dry-run']);
 
 switch (command) {
@@ -96,6 +100,16 @@ function valuesOf(value) {
     return Array.isArray(value) ? value : [value];
 }
 
+function firstNonEmpty(...values) {
+    return values.find((value) => value != null && String(value).trim().length > 0);
+}
+
+function hostDockerPlatform() {
+    if (process.arch === 'arm64') return 'linux/arm64';
+    if (process.arch === 'x64') return 'linux/amd64';
+    return `linux/${process.arch}`;
+}
+
 function parseArgs(argv) {
     const result = {_: []};
     for (let index = 0; index < argv.length; index += 1) {
@@ -136,7 +150,7 @@ Options:
   --image <name>             Docker image name. Defaults to IMAGE_NAME or ${defaultImageName}.
   --prefix <name>            Docker image prefix. Defaults to DOCKER_IMAGE_PREFIX or medol.
   --version <tag>            Image tag. Defaults to IMAGE_VERSION or 0.0.1-SNAPSHOT.
-  --platform <os/arch>       Target CPU architecture. Defaults to DOCKER_DEFAULT_PLATFORM or linux/amd64.
+  --platform <os/arch>       Target CPU architecture. Defaults to RUNTIME_ENGINE_IMAGE_PLATFORM, DOCKER_DEFAULT_PLATFORM, or host architecture.
   --dockerfile <file>        Dockerfile path. Defaults to ${defaultDockerfile}.
   --build-arg <key=value>    Forward a Docker build argument, for example BASE_IMAGE.
   --output <file>            Image archive path. Defaults to IMAGE_TAR or ${defaultTar}.

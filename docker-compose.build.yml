@@ -1,0 +1,8 @@
+services:
+  runtime-engine:
+    build:
+      context: .
+      dockerfile: ./docker/pytorch/Dockerfile
+      args:
+        BASE_IMAGE: ${BASE_IMAGE:-python:3.11-slim}
+    image: ${RUNTIME_ENGINE_IMAGE:-medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT}

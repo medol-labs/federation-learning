@@ -1,8 +1,5 @@
 services:
   runtime-engine:
-    build:
-      context: .
-      dockerfile: ./docker/pytorch/Dockerfile
     image: ${RUNTIME_ENGINE_IMAGE:-medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
     environment:
       RUNTIME_ENGINE_HOST: 0.0.0.0
