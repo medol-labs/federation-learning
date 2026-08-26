@@ -1009,7 +1009,7 @@ export const resources: IResourceItem[] = [
       tableName: "secure_aggregation_session_catalog_read_model_entity",
       idField: "secureAggregationSessionId",
       idFields: ["secureAggregationSessionId"],
-      queryFields: ["secureAggregationSessionId","trainingJobId","trainingRunConfigurationId","featureSchemaId","roundId","requiredParticipantCount","selectedParticipantCount","encryptionContextPrepared","receivedEncryptedUpdateCount","encryptionScheme","publicKeyVersion","encryptedParameterScale","aggregatedModelId","modelFormat","modelArtifactDigest","state","failureReason","createdAt","selectedAt","encryptionContextPreparedAt","decryptedAt","completedAt","failedAt"],
+      queryFields: ["secureAggregationSessionId","trainingJobId","trainingRunConfigurationId","featureSchemaId","roundId","roundNumber","requiredParticipantCount","selectedOrganizationCount","selectedRuntimeCount","selectedParticipantCount","encryptionContextPrepared","receivedEncryptedUpdateCount","encryptionScheme","publicKeyVersion","publicKeyRef","encryptedParameterScale","aggregatedModelId","modelFormat","modelArtifactDigest","state","failureReason","createdAt","selectedAt","encryptionContextPreparedAt","decryptedAt","completedAt","failedAt"],
       actionControls: {"enabledFields":[]},
       aggregateRoute: "secureaggregationsession",
       queryRoute: "secureaggregationsessioncatalog",

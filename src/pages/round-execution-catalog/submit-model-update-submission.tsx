@@ -48,7 +48,12 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
     artifactRef: searchParams.get("artifactRef") ?? undefined,
     artifactDigest: searchParams.get("artifactDigest") ?? undefined,
     trainingLoss: (() => { const value = searchParams.get("trainingLoss"); return value === null ? undefined : Number(value); })(),
+    secureAggregationRequired: (() => { const value = searchParams.get("secureAggregationRequired"); return value === null ? undefined : value === "true"; })(),
+    secureAggregationSessionId: searchParams.get("secureAggregationSessionId") ?? undefined,
+    encryptionScheme: searchParams.get("encryptionScheme") ?? undefined,
+    publicKeyVersion: searchParams.get("publicKeyVersion") ?? undefined,
     localModelId: searchParams.get("localModelId") ?? undefined,
+    updateProtectionType: searchParams.get("updateProtectionType") ?? undefined,
   } as Partial<SubmitModelUpdateSubmissionCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<SubmitModelUpdateSubmissionCommandInput, SubmitModelUpdateSubmissionCommandInput>({
@@ -283,6 +288,94 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
           />
           <FormField
             control={form.control}
+            name="secureAggregationRequired"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationRequired.label", "Secure Aggregation Required")}</FormLabel>
+                <Select
+                  value={field.value === undefined || field.value === null ? undefined : String(field.value)}
+                  onValueChange={(value) => field.onChange(value === "true")}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationRequired.placeholder", "Select Secure Aggregation Required")} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">{t("values.boolean.true", "True")}</SelectItem>
+                    <SelectItem value="false">{t("values.boolean.false", "False")}</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="secureAggregationSessionId"
+            rules={{ required: "Secure Aggregation Session Id is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationSessionId.label", "Secure Aggregation Session Id")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="secure_aggregation_session_catalog"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="publicKeyVersion"
+                  optionValue="secureAggregationSessionId"
+                  value={field.value || ""}
+                  onValueChange={field.onChange}
+                  placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationSessionId.placeholder", "Select Secure Aggregation Session Id")}
+                  meta={{
+                    idField: "secureAggregationSessionId",
+                    label: t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationSessionId.label", "Secure Aggregation Session Catalog"),
+                    aggregateRoute: "secureaggregationsession",
+                    queryRoute: "secureaggregationsessioncatalog",
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="encryptionScheme"
+            rules={{ required: "Encryption Scheme is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.encryptionScheme.label", "Encryption Scheme")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Encryption Scheme"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="publicKeyVersion"
+            rules={{ required: "Public Key Version is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.publicKeyVersion.label", "Public Key Version")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Public Key Version"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="localModelId"
             rules={{ required: "Local Model Id is required" }}
             render={({ field }) => (
@@ -347,6 +440,24 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                     {...field}
                     value={field.value || ""}
                     placeholder={"Enter Artifact Digest"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="updateProtectionType"
+            rules={{ required: "Update Protection Type is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.updateProtectionType.label", "Update Protection Type")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Update Protection Type"}
                   />
                 </FormControl>
                 <FormMessage />

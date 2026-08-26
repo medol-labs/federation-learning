@@ -395,10 +395,15 @@ export const SubmitModelUpdateSubmissionCommandSchema = z.object({
   roundExecutionId: z.string().uuid(),
   runtimeId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
+  secureAggregationRequired: z.boolean(),
+  secureAggregationSessionId: z.string().uuid(),
+  encryptionScheme: z.string(),
+  publicKeyVersion: z.string(),
   localModelId: z.string().uuid(),
   updateArtifactId: z.string().uuid(),
   artifactRef: z.string(),
   artifactDigest: z.string(),
+  updateProtectionType: z.string(),
   trainingLoss: z.coerce.number(),
 });
 export type SubmitModelUpdateSubmissionCommandInput = z.infer<typeof SubmitModelUpdateSubmissionCommandSchema>;
@@ -408,6 +413,7 @@ export const CompleteSecureAggregationCommandSchema = z.object({
   trainingRunConfigurationId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
   roundId: z.string().uuid(),
+  roundNumber: z.coerce.number().int(),
   secureAggregationSessionId: z.string().uuid(),
   aggregatedModelId: z.string().uuid(),
   aggregatedModelArtifactUri: z.string(),
@@ -423,6 +429,7 @@ export const SubmitGlobalModelEvaluationCommandSchema = z.object({
   trainingRunConfigurationId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
   roundId: z.string().uuid(),
+  roundNumber: z.coerce.number().int(),
   aggregatedModelId: z.string().uuid(),
   aggregatedModelArtifactUri: z.string(),
   aggregatedModelRegistryRef: z.string(),
@@ -489,14 +496,6 @@ export const RevokeRuntimeIdentityCommandSchema = z.object({
   revocationReason: z.string(),
 });
 export type RevokeRuntimeIdentityCommandInput = z.infer<typeof RevokeRuntimeIdentityCommandSchema>;
-
-export const RecordEncryptedModelUpdateCommandSchema = z.object({
-  secureAggregationSessionId: z.string().uuid(),
-  submissionId: z.string().uuid(),
-  runtimeId: z.string().uuid(),
-  encryptedUpdateDigest: z.string(),
-});
-export type RecordEncryptedModelUpdateCommandInput = z.infer<typeof RecordEncryptedModelUpdateCommandSchema>;
 
 export const FailSecureAggregationSessionCommandSchema = z.object({
   secureAggregationSessionId: z.string().uuid(),

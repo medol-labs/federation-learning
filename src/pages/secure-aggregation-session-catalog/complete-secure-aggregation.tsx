@@ -39,6 +39,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
     trainingRunConfigurationId: searchParams.get("trainingRunConfigurationId") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
     roundId: searchParams.get("roundId") ?? undefined,
+    roundNumber: (() => { const value = searchParams.get("roundNumber"); return value === null ? undefined : Number(value); })(),
     secureAggregationSessionId: searchParams.get("secureAggregationSessionId") ?? undefined,
     aggregatedModelId: searchParams.get("aggregatedModelId") ?? undefined,
     modelFormat: searchParams.get("modelFormat") ?? undefined,
@@ -159,6 +160,25 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
                     {...field}
                     value={field.value || ""}
                     placeholder={"Enter Round Id"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="roundNumber"
+            rules={{ required: "Round Number is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.roundNumber.label", "Round Number")}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Round Number"}
                   />
                 </FormControl>
                 <FormMessage />

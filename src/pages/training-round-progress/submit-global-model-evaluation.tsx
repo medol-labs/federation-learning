@@ -39,6 +39,7 @@ export const TrainingRoundProgressSubmitGlobalModelEvaluation = () => {
     trainingRunConfigurationId: searchParams.get("trainingRunConfigurationId") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
     roundId: searchParams.get("roundId") ?? undefined,
+    roundNumber: (() => { const value = searchParams.get("roundNumber"); return value === null ? undefined : Number(value); })(),
     aggregatedModelId: searchParams.get("aggregatedModelId") ?? undefined,
     globalAccuracy: (() => { const value = searchParams.get("globalAccuracy"); return value === null ? undefined : Number(value); })(),
     globalFairnessScore: (() => { const value = searchParams.get("globalFairnessScore"); return value === null ? undefined : Number(value); })(),
@@ -160,6 +161,25 @@ export const TrainingRoundProgressSubmitGlobalModelEvaluation = () => {
                     {...field}
                     value={field.value || ""}
                     placeholder={"Enter Round Id"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="roundNumber"
+            rules={{ required: "Round Number is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitGlobalModelEvaluation.fields.roundNumber.label", "Round Number")}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Round Number"}
                   />
                 </FormControl>
                 <FormMessage />

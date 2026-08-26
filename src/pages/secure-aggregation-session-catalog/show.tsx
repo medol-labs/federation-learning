@@ -65,18 +65,33 @@ export const SecureAggregationSessionCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.roundNumber.label", "Round Number")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.roundNumber, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.requiredParticipantCount.label", "Required Participant Count")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.requiredParticipantCount, t)}</p>
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.acceptedRuntimeIds.label", "Accepted Runtime Ids")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.acceptedRuntimeIds, t)}</p>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.selectedOrganizationIds.label", "Selected Organization Ids")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.selectedOrganizationIds, t)}</p>
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.selectedRuntimeIds.label", "Selected Runtime Ids")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.selectedRuntimeIds, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.selectedOrganizationCount.label", "Selected Organization Count")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.selectedOrganizationCount, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.selectedRuntimeCount.label", "Selected Runtime Count")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.selectedRuntimeCount, t)}</p>
             </div>
             <Separator />
             <div>
@@ -102,6 +117,11 @@ export const SecureAggregationSessionCatalogShow = () => {
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.publicKeyVersion.label", "Public Key Version")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.publicKeyVersion, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.secure_aggregation_session_catalog.fields.publicKeyRef.label", "Public Key Ref")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.publicKeyRef, t)}</p>
             </div>
             <Separator />
             <div>

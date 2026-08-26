@@ -921,6 +921,7 @@ export const TrainingRoundProgressList = () => {
                       trainingRunConfigurationId: row.original.trainingRunConfigurationId,
                       featureSchemaId: row.original.featureSchemaId,
                       roundId: row.original.roundId,
+                      roundNumber: row.original.roundNumber,
                       aggregatedModelId: row.original.aggregatedModelId,
                       globalAccuracy: row.original.globalAccuracy,
                       globalFairnessScore: row.original.globalFairnessScore,
