@@ -2,35 +2,35 @@
   "dictionaries": [
     {
       "dictionaryCode": "RUNTIME_ENVIRONMENT_TYPE",
-      "dictionaryName": "Runtime Environment Type",
+      "dictionaryName": "运行环境类型",
       "ownerContext": "RuntimeOnboarding",
       "description": "Runtime environment categories supported by infrastructure packages.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "K3S",
-          "displayName": "K3s",
+          "displayName": "K3s 环境",
           "displayOrder": 10,
           "description": "Lightweight Kubernetes distribution installed for runtime infrastructure.",
           "active": true
         },
         {
           "valueCode": "KUBERNETES",
-          "displayName": "Kubernetes",
+          "displayName": "Kubernetes 环境",
           "displayOrder": 20,
           "description": "Standard Kubernetes-compatible runtime environment.",
           "active": true
         },
         {
           "valueCode": "DOCKER_COMPOSE",
-          "displayName": "Docker Compose",
+          "displayName": "Docker Compose 环境",
           "displayOrder": 30,
           "description": "Single-host runtime environment managed by Docker Compose.",
           "active": true
         },
         {
           "valueCode": "HOST_PROCESS",
-          "displayName": "Host Process",
+          "displayName": "主机进程",
           "displayOrder": 40,
           "description": "Runtime infrastructure started directly on a host for local or physical-machine testing.",
           "active": true
@@ -38,103 +38,22 @@
       ]
     },
     {
-      "dictionaryCode": "RUNTIME_DEPLOYMENT_TARGET_TYPE",
-      "dictionaryName": "Runtime Deployment Target Type",
-      "ownerContext": "RuntimeOnboarding",
-      "description": "Where the runtime infrastructure package is intended to be installed.",
-      "multiTenant": false,
-      "values": [
-        {
-          "valueCode": "K3S_CLUSTER",
-          "displayName": "K3s Cluster",
-          "displayOrder": 10,
-          "description": "Runtime infrastructure package for a K3s cluster.",
-          "active": true
-        },
-        {
-          "valueCode": "KUBERNETES_CLUSTER",
-          "displayName": "Kubernetes Cluster",
-          "displayOrder": 20,
-          "description": "Runtime infrastructure package for a Kubernetes cluster.",
-          "active": true
-        },
-        {
-          "valueCode": "DOCKER_COMPOSE_HOST",
-          "displayName": "Docker Compose Host",
-          "displayOrder": 30,
-          "description": "Runtime infrastructure package for a Docker Compose host.",
-          "active": true
-        },
-        {
-          "valueCode": "LOCAL_HOST",
-          "displayName": "Local Host",
-          "displayOrder": 40,
-          "description": "Runtime infrastructure package for local testing on one host.",
-          "active": true
-        },
-        {
-          "valueCode": "PHYSICAL_HOST",
-          "displayName": "Physical Host",
-          "displayOrder": 50,
-          "description": "Runtime infrastructure package for a directly managed physical machine.",
-          "active": true
-        }
-      ]
-    },
-    {
-      "dictionaryCode": "RUNTIME_INSTALL_PROFILE",
-      "dictionaryName": "Runtime Install Profile",
-      "ownerContext": "RuntimeOnboarding",
-      "description": "Installation profiles maintained with runtime infrastructure packages.",
-      "multiTenant": false,
-      "values": [
-        {
-          "valueCode": "STANDARD",
-          "displayName": "Standard",
-          "displayOrder": 10,
-          "description": "Default production-ready runtime installation profile.",
-          "active": true
-        },
-        {
-          "valueCode": "LIGHTWEIGHT",
-          "displayName": "Lightweight",
-          "displayOrder": 20,
-          "description": "Reduced resource profile for small or local environments.",
-          "active": true
-        },
-        {
-          "valueCode": "LOCAL_TEST",
-          "displayName": "Local Test",
-          "displayOrder": 30,
-          "description": "Developer or local validation profile.",
-          "active": true
-        },
-        {
-          "valueCode": "SECURE_ISOLATED",
-          "displayName": "Secure Isolated",
-          "displayOrder": 40,
-          "description": "Hardened profile for restricted runtime environments.",
-          "active": true
-        }
-      ]
-    },
-    {
       "dictionaryCode": "RUNTIME_AGENT_INSTALL_MODE",
-      "dictionaryName": "Runtime Agent Install Mode",
+      "dictionaryName": "运行代理安装模式",
       "ownerContext": "RuntimeOnboarding",
       "description": "Whether platform automation deploys the runtime agent or provides operator guidance.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "PLATFORM_MANAGED",
-          "displayName": "Platform Managed",
+          "displayName": "平台托管",
           "displayOrder": 10,
           "description": "Platform requests and executes runtime agent deployment after infrastructure verification.",
           "active": true
         },
         {
           "valueCode": "MANUAL_GUIDED",
-          "displayName": "Manual Guided",
+          "displayName": "手动引导",
           "displayOrder": 20,
           "description": "Platform provides installation guidance and an operator triggers the deployment path manually.",
           "active": true
@@ -143,56 +62,56 @@
     },
     {
       "dictionaryCode": "FEATURE_SCHEMA_DATA_MODALITY",
-      "dictionaryName": "Feature Schema Data Modality",
+      "dictionaryName": "特征模式数据模态",
       "ownerContext": "FeatureSchemaManagement",
       "description": "Shape of data described by a feature schema.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "TABULAR",
-          "displayName": "Tabular",
+          "displayName": "表格",
           "displayOrder": 10,
           "description": "Structured rows and columns.",
           "active": true
         },
         {
           "valueCode": "TEXT",
-          "displayName": "Text",
+          "displayName": "文本",
           "displayOrder": 20,
           "description": "Text documents, sentences, prompts, or extracted text.",
           "active": true
         },
         {
           "valueCode": "IMAGE",
-          "displayName": "Image",
+          "displayName": "图像",
           "displayOrder": 30,
           "description": "Image files or image-derived tensors.",
           "active": true
         },
         {
           "valueCode": "AUDIO",
-          "displayName": "Audio",
+          "displayName": "音频",
           "displayOrder": 40,
           "description": "Audio clips, speech, or audio-derived features.",
           "active": true
         },
         {
           "valueCode": "DOCUMENT",
-          "displayName": "Document",
+          "displayName": "文档",
           "displayOrder": 50,
           "description": "Documents such as PDF, Word, or mixed-layout files.",
           "active": true
         },
         {
           "valueCode": "EMBEDDING",
-          "displayName": "Embedding",
+          "displayName": "嵌入向量",
           "displayOrder": 60,
           "description": "Vector embeddings used as model inputs.",
           "active": true
         },
         {
           "valueCode": "MULTIMODAL",
-          "displayName": "Multimodal",
+          "displayName": "多模态",
           "displayOrder": 70,
           "description": "A dataset combining multiple input modalities.",
           "active": true
@@ -201,91 +120,91 @@
     },
     {
       "dictionaryCode": "FEATURE_DATA_TYPE",
-      "dictionaryName": "Feature Data Type",
+      "dictionaryName": "特征数据类型",
       "ownerContext": "FeatureSchemaManagement",
       "description": "Logical value types for feature and label definitions.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "STRING",
-          "displayName": "String",
+          "displayName": "字符串",
           "displayOrder": 10,
           "description": "Textual scalar value.",
           "active": true
         },
         {
           "valueCode": "INTEGER",
-          "displayName": "Integer",
+          "displayName": "整数",
           "displayOrder": 20,
           "description": "Whole-number scalar value.",
           "active": true
         },
         {
           "valueCode": "DECIMAL",
-          "displayName": "Decimal",
+          "displayName": "小数",
           "displayOrder": 30,
           "description": "Numeric scalar with decimals.",
           "active": true
         },
         {
           "valueCode": "BOOLEAN",
-          "displayName": "Boolean",
+          "displayName": "布尔值",
           "displayOrder": 40,
           "description": "True or false value.",
           "active": true
         },
         {
           "valueCode": "DATETIME",
-          "displayName": "DateTime",
+          "displayName": "日期时间",
           "displayOrder": 50,
           "description": "Timestamp or date-time value.",
           "active": true
         },
         {
           "valueCode": "CATEGORY",
-          "displayName": "Category",
+          "displayName": "类别",
           "displayOrder": 60,
           "description": "Finite category value.",
           "active": true
         },
         {
           "valueCode": "VECTOR",
-          "displayName": "Vector",
+          "displayName": "向量",
           "displayOrder": 70,
           "description": "Numeric vector or embedding.",
           "active": true
         },
         {
           "valueCode": "TEXT",
-          "displayName": "Text",
+          "displayName": "文本",
           "displayOrder": 80,
           "description": "Long text content.",
           "active": true
         },
         {
           "valueCode": "IMAGE",
-          "displayName": "Image",
+          "displayName": "图像",
           "displayOrder": 90,
           "description": "Image payload or image path.",
           "active": true
         },
         {
           "valueCode": "AUDIO",
-          "displayName": "Audio",
+          "displayName": "音频",
           "displayOrder": 100,
           "description": "Audio payload or audio path.",
           "active": true
         },
         {
           "valueCode": "JSON",
-          "displayName": "JSON",
+          "displayName": "JSON 对象",
           "displayOrder": 110,
           "description": "Nested or semi-structured JSON value.",
           "active": true
         },
         {
           "valueCode": "BINARY",
-          "displayName": "Binary",
+          "displayName": "二进制",
           "displayOrder": 120,
           "description": "Opaque binary payload.",
           "active": true
@@ -294,70 +213,70 @@
     },
     {
       "dictionaryCode": "FEATURE_ENCODING_STRATEGY",
-      "dictionaryName": "Feature Encoding Strategy",
+      "dictionaryName": "特征编码策略",
       "ownerContext": "FeatureSchemaManagement",
       "description": "Expected feature encoding before local training.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "NONE",
-          "displayName": "None",
+          "displayName": "不编码",
           "displayOrder": 10,
           "description": "No encoding is required.",
           "active": true
         },
         {
           "valueCode": "ONE_HOT",
-          "displayName": "One Hot",
+          "displayName": "独热编码",
           "displayOrder": 20,
           "description": "Encode categories as one-hot vectors.",
           "active": true
         },
         {
           "valueCode": "ORDINAL",
-          "displayName": "Ordinal",
+          "displayName": "序数编码",
           "displayOrder": 30,
           "description": "Encode ordered categories as numeric ranks.",
           "active": true
         },
         {
           "valueCode": "LABEL",
-          "displayName": "Label",
+          "displayName": "标签编码",
           "displayOrder": 40,
           "description": "Encode categories as integer labels.",
           "active": true
         },
         {
           "valueCode": "NORMALIZED",
-          "displayName": "Normalized",
+          "displayName": "归一化",
           "displayOrder": 50,
           "description": "Scale numeric values to a normalized range.",
           "active": true
         },
         {
           "valueCode": "STANDARDIZED",
-          "displayName": "Standardized",
+          "displayName": "标准化",
           "displayOrder": 60,
           "description": "Scale numeric values by mean and standard deviation.",
           "active": true
         },
         {
           "valueCode": "TOKENIZED",
-          "displayName": "Tokenized",
+          "displayName": "分词",
           "displayOrder": 70,
           "description": "Tokenize text-like inputs.",
           "active": true
         },
         {
           "valueCode": "EMBEDDED",
-          "displayName": "Embedded",
+          "displayName": "嵌入编码",
           "displayOrder": 80,
           "description": "Transform values into embedding vectors.",
           "active": true
         },
         {
           "valueCode": "HASHED",
-          "displayName": "Hashed",
+          "displayName": "哈希编码",
           "displayOrder": 90,
           "description": "Use hashing-based feature encoding.",
           "active": true
@@ -366,35 +285,35 @@
     },
     {
       "dictionaryCode": "TRAINING_STRATEGY",
-      "dictionaryName": "Training Strategy",
+      "dictionaryName": "训练策略",
       "ownerContext": "TrainingConfiguration",
       "description": "Federated training strategies selectable in training run configurations.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "FED_AVG",
-          "displayName": "FedAvg",
+          "displayName": "FedAvg 联邦平均",
           "displayOrder": 10,
           "description": "Federated averaging strategy.",
           "active": true
         },
         {
           "valueCode": "FED_PROX",
-          "displayName": "FedProx",
+          "displayName": "FedProx 近端联邦优化",
           "displayOrder": 20,
           "description": "Federated optimization with proximal regularization.",
           "active": true
         },
         {
           "valueCode": "FED_SGD",
-          "displayName": "FedSGD",
+          "displayName": "FedSGD 联邦随机梯度下降",
           "displayOrder": 30,
           "description": "Federated stochastic gradient descent.",
           "active": true
         },
         {
           "valueCode": "SCAFFOLD",
-          "displayName": "SCAFFOLD",
+          "displayName": "SCAFFOLD 控制变量策略",
           "displayOrder": 40,
           "description": "Federated strategy using control variates to reduce client drift.",
           "active": true
@@ -403,42 +322,42 @@
     },
     {
       "dictionaryCode": "AGGREGATION_ALGORITHM",
-      "dictionaryName": "Aggregation Algorithm",
+      "dictionaryName": "聚合算法",
       "ownerContext": "TrainingConfiguration",
       "description": "Global model update aggregation algorithms.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "FEDERATED_AVERAGING",
-          "displayName": "Federated Averaging",
+          "displayName": "联邦平均",
           "displayOrder": 10,
           "description": "Weighted average of participant model updates.",
           "active": true
         },
         {
           "valueCode": "WEIGHTED_AVERAGE",
-          "displayName": "Weighted Average",
+          "displayName": "加权平均",
           "displayOrder": 20,
           "description": "Average weighted by sample count or configured participant weight.",
           "active": true
         },
         {
           "valueCode": "SECURE_WEIGHTED_AVERAGE",
-          "displayName": "Secure Weighted Average",
+          "displayName": "安全加权平均",
           "displayOrder": 30,
           "description": "Weighted average performed over encrypted participant updates.",
           "active": true
         },
         {
           "valueCode": "MEDIAN",
-          "displayName": "Median",
+          "displayName": "中位数",
           "displayOrder": 40,
           "description": "Coordinate-wise median aggregation.",
           "active": true
         },
         {
           "valueCode": "TRIMMED_MEAN",
-          "displayName": "Trimmed Mean",
+          "displayName": "截尾均值",
           "displayOrder": 50,
           "description": "Robust aggregation after trimming outliers.",
           "active": true
@@ -447,35 +366,35 @@
     },
     {
       "dictionaryCode": "TRAINING_OPTIMIZER",
-      "dictionaryName": "Training Optimizer",
+      "dictionaryName": "训练优化器",
       "ownerContext": "TrainingConfiguration",
       "description": "Local optimizer options for runtime training.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "SGD",
-          "displayName": "SGD",
+          "displayName": "SGD 随机梯度下降",
           "displayOrder": 10,
           "description": "Stochastic gradient descent.",
           "active": true
         },
         {
           "valueCode": "ADAM",
-          "displayName": "Adam",
+          "displayName": "Adam 优化器",
           "displayOrder": 20,
           "description": "Adaptive moment estimation optimizer.",
           "active": true
         },
         {
           "valueCode": "ADAMW",
-          "displayName": "AdamW",
+          "displayName": "AdamW 优化器",
           "displayOrder": 30,
           "description": "Adam optimizer with decoupled weight decay.",
           "active": true
         },
         {
           "valueCode": "RMSPROP",
-          "displayName": "RMSProp",
+          "displayName": "RMSProp 优化器",
           "displayOrder": 40,
           "description": "Root mean square propagation optimizer.",
           "active": true
@@ -484,42 +403,42 @@
     },
     {
       "dictionaryCode": "TRAINING_LOSS_FUNCTION",
-      "dictionaryName": "Training Loss Function",
+      "dictionaryName": "训练损失函数",
       "ownerContext": "TrainingConfiguration",
       "description": "Loss functions selectable for local training.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "CROSS_ENTROPY",
-          "displayName": "Cross Entropy",
+          "displayName": "交叉熵",
           "displayOrder": 10,
           "description": "Cross-entropy loss for classification.",
           "active": true
         },
         {
           "valueCode": "BINARY_CROSS_ENTROPY",
-          "displayName": "Binary Cross Entropy",
+          "displayName": "二元交叉熵",
           "displayOrder": 20,
           "description": "Binary cross-entropy loss.",
           "active": true
         },
         {
           "valueCode": "MEAN_SQUARED_ERROR",
-          "displayName": "Mean Squared Error",
+          "displayName": "均方误差",
           "displayOrder": 30,
           "description": "MSE loss for regression.",
           "active": true
         },
         {
           "valueCode": "MEAN_ABSOLUTE_ERROR",
-          "displayName": "Mean Absolute Error",
+          "displayName": "平均绝对误差",
           "displayOrder": 40,
           "description": "MAE loss for regression.",
           "active": true
         },
         {
           "valueCode": "HUBER",
-          "displayName": "Huber",
+          "displayName": "Huber 损失",
           "displayOrder": 50,
           "description": "Huber loss for robust regression.",
           "active": true
@@ -528,35 +447,35 @@
     },
     {
       "dictionaryCode": "MODEL_RELEASE_CHANNEL",
-      "dictionaryName": "Model Release Channel",
+      "dictionaryName": "模型发布通道",
       "ownerContext": "ModelLifecycle",
       "description": "Release channels for promoted model versions.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "EXPERIMENTAL",
-          "displayName": "Experimental",
+          "displayName": "实验",
           "displayOrder": 10,
           "description": "Early model release for controlled validation.",
           "active": true
         },
         {
           "valueCode": "CANARY",
-          "displayName": "Canary",
+          "displayName": "灰度",
           "displayOrder": 20,
           "description": "Limited production exposure.",
           "active": true
         },
         {
           "valueCode": "STAGING",
-          "displayName": "Staging",
+          "displayName": "预发",
           "displayOrder": 30,
           "description": "Pre-production validation channel.",
           "active": true
         },
         {
           "valueCode": "PRODUCTION",
-          "displayName": "Production",
+          "displayName": "生产",
           "displayOrder": 40,
           "description": "Main production serving channel.",
           "active": true
@@ -565,42 +484,42 @@
     },
     {
       "dictionaryCode": "MODEL_PRODUCTION_STAGE",
-      "dictionaryName": "Model Production Stage",
+      "dictionaryName": "模型生产阶段",
       "ownerContext": "ModelLifecycle",
       "description": "Production lifecycle stage of a model version.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "SHADOW",
-          "displayName": "Shadow",
+          "displayName": "影子",
           "displayOrder": 10,
           "description": "Model receives production-like traffic without serving decisions.",
           "active": true
         },
         {
           "valueCode": "CANARY",
-          "displayName": "Canary",
+          "displayName": "灰度",
           "displayOrder": 20,
           "description": "Model serves a small controlled portion of traffic.",
           "active": true
         },
         {
           "valueCode": "ACTIVE",
-          "displayName": "Active",
+          "displayName": "启用",
           "displayOrder": 30,
           "description": "Model is actively used for production decisions.",
           "active": true
         },
         {
           "valueCode": "DEPRECATED",
-          "displayName": "Deprecated",
+          "displayName": "已弃用",
           "displayOrder": 40,
           "description": "Model remains available but should be replaced.",
           "active": true
         },
         {
           "valueCode": "RETIRED",
-          "displayName": "Retired",
+          "displayName": "已退役",
           "displayOrder": 50,
           "description": "Model is no longer intended for production use.",
           "active": true
@@ -609,63 +528,63 @@
     },
     {
       "dictionaryCode": "RUNTIME_CAPABILITY_TYPE",
-      "dictionaryName": "Runtime Capability Type",
+      "dictionaryName": "运行能力类型",
       "ownerContext": "RuntimeGovernance",
       "description": "Capabilities detected from runtime infrastructure and runtime agent environment.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "CPU_TRAINING",
-          "displayName": "CPU Training",
+          "displayName": "CPU 训练",
           "displayOrder": 10,
           "description": "Runtime can execute CPU-based local training.",
           "active": true
         },
         {
           "valueCode": "GPU_TRAINING",
-          "displayName": "GPU Training",
+          "displayName": "GPU 训练",
           "displayOrder": 20,
           "description": "Runtime can execute GPU-accelerated local training.",
           "active": true
         },
         {
           "valueCode": "SECURE_AGGREGATION",
-          "displayName": "Secure Aggregation",
+          "displayName": "安全聚合",
           "displayOrder": 30,
           "description": "Runtime supports encrypted model update submission.",
           "active": true
         },
         {
           "valueCode": "DIFFERENTIAL_PRIVACY",
-          "displayName": "Differential Privacy",
+          "displayName": "差分隐私",
           "displayOrder": 40,
           "description": "Runtime supports local differential privacy processing.",
           "active": true
         },
         {
           "valueCode": "TABULAR_DATA",
-          "displayName": "Tabular Data",
+          "displayName": "表格数据",
           "displayOrder": 50,
           "description": "Runtime can train on tabular datasets.",
           "active": true
         },
         {
           "valueCode": "TEXT_DATA",
-          "displayName": "Text Data",
+          "displayName": "文本数据",
           "displayOrder": 60,
           "description": "Runtime can train on text datasets.",
           "active": true
         },
         {
           "valueCode": "IMAGE_DATA",
-          "displayName": "Image Data",
+          "displayName": "图像数据",
           "displayOrder": 70,
           "description": "Runtime can train on image datasets.",
           "active": true
         },
         {
           "valueCode": "LOCAL_ENGINE_SCHEDULING",
-          "displayName": "Local Engine Scheduling",
+          "displayName": "本地引擎调度",
           "displayOrder": 80,
           "description": "Runtime can start the training engine on demand for round execution.",
           "active": true
@@ -674,28 +593,28 @@
     },
     {
       "dictionaryCode": "SECURE_AGGREGATION_ENCRYPTION_SCHEME",
-      "dictionaryName": "Secure Aggregation Encryption Scheme",
+      "dictionaryName": "安全聚合加密方案",
       "ownerContext": "SecureAggregation",
       "description": "Abstract homomorphic encryption schemes supported by secure aggregation.",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "ADDITIVE_HOMOMORPHIC",
-          "displayName": "Additive Homomorphic",
+          "displayName": "加法同态",
           "displayOrder": 10,
           "description": "Supports aggregation by adding encrypted participant updates.",
           "active": true
         },
         {
           "valueCode": "APPROXIMATE_HOMOMORPHIC",
-          "displayName": "Approximate Homomorphic",
+          "displayName": "近似同态",
           "displayOrder": 20,
           "description": "Supports approximate encrypted numeric aggregation.",
           "active": true
         },
         {
           "valueCode": "THRESHOLD_HOMOMORPHIC",
-          "displayName": "Threshold Homomorphic",
+          "displayName": "阈值同态",
           "displayOrder": 30,
           "description": "Supports encrypted aggregation with threshold key material or threshold decryption.",
           "active": true
@@ -704,130 +623,123 @@
     },
     {
       "dictionaryCode": "RUNTIME_DATA_SOURCE_TYPE",
-      "dictionaryName": "Runtime Data Source Type",
+      "dictionaryName": "运行数据源类型",
       "ownerContext": "RuntimeAgentOperations",
-      "description": "Local data source types configurable inside a runtime agent.",
+      "description": "运行时代理内可配置的本地数据源接入类型。",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "POSTGRESQL",
-          "displayName": "PostgreSQL",
+          "displayName": "PostgreSQL 数据库",
           "displayOrder": 10,
-          "description": "PostgreSQL database table or query source.",
+          "description": "PostgreSQL 数据库表或查询结果数据源。",
           "active": true
         },
         {
           "valueCode": "MYSQL",
-          "displayName": "MySQL",
+          "displayName": "MySQL 数据库",
           "displayOrder": 20,
-          "description": "MySQL database table or query source.",
+          "description": "MySQL 数据库表或查询结果数据源。",
           "active": true
         },
         {
           "valueCode": "SQLSERVER",
-          "displayName": "SQL Server",
+          "displayName": "SQL Server 数据库",
           "displayOrder": 30,
-          "description": "Microsoft SQL Server table or query source.",
+          "description": "SQL Server 数据库表或查询结果数据源。",
           "active": true
         },
         {
           "valueCode": "ORACLE",
-          "displayName": "Oracle",
+          "displayName": "Oracle 数据库",
           "displayOrder": 40,
-          "description": "Oracle database table or query source.",
+          "description": "Oracle 数据库表或查询结果数据源。",
           "active": true
         },
         {
-          "valueCode": "CSV_FILE",
-          "displayName": "CSV File",
+          "valueCode": "FILE",
+          "displayName": "文件",
           "displayOrder": 50,
-          "description": "Local or mounted CSV file source.",
-          "active": true
-        },
-        {
-          "valueCode": "PARQUET_FILE",
-          "displayName": "Parquet File",
-          "displayOrder": 60,
-          "description": "Local or mounted Parquet file source.",
+          "description": "本地或挂载的单文件数据源，具体文件格式由数据格式字段描述。",
           "active": true
         },
         {
           "valueCode": "OBJECT_STORAGE",
-          "displayName": "Object Storage",
-          "displayOrder": 70,
-          "description": "Object bucket and prefix source.",
+          "displayName": "对象存储",
+          "displayOrder": 60,
+          "description": "通过对象存储桶和前缀访问的数据源。",
           "active": true
         },
         {
           "valueCode": "LOCAL_DIRECTORY",
-          "displayName": "Local Directory",
-          "displayOrder": 80,
-          "description": "Directory of files on the runtime host.",
+          "displayName": "本地目录",
+          "displayOrder": 70,
+          "description": "运行时主机上的本地或挂载目录数据源。",
           "active": true
         }
       ]
     },
     {
       "dictionaryCode": "DATA_FORMAT",
-      "dictionaryName": "Data Format",
+      "dictionaryName": "数据格式",
       "ownerContext": "RuntimeAgentOperations",
-      "description": "Physical or logical format of runtime dataset data.",
+      "description": "运行时数据集的物理或逻辑数据格式。",
       "multiTenant": false,
       "values": [
         {
           "valueCode": "TABLE",
-          "displayName": "Table",
+          "displayName": "数据表",
           "displayOrder": 10,
-          "description": "Relational table or query result.",
+          "description": "关系型数据表或查询结果。",
           "active": true
         },
         {
           "valueCode": "CSV",
-          "displayName": "CSV",
+          "displayName": "CSV 格式",
           "displayOrder": 20,
-          "description": "Comma-separated values file.",
+          "description": "逗号分隔值文件。",
           "active": true
         },
         {
           "valueCode": "PARQUET",
-          "displayName": "Parquet",
+          "displayName": "Parquet 格式",
           "displayOrder": 30,
-          "description": "Apache Parquet file.",
+          "description": "Apache Parquet 列式文件。",
           "active": true
         },
         {
           "valueCode": "JSON",
-          "displayName": "JSON",
+          "displayName": "JSON 格式",
           "displayOrder": 40,
-          "description": "JSON or JSON Lines file.",
+          "description": "JSON 或 JSON Lines 文件。",
           "active": true
         },
         {
           "valueCode": "IMAGE_DIRECTORY",
-          "displayName": "Image Directory",
+          "displayName": "图像目录",
           "displayOrder": 50,
-          "description": "Directory layout containing image files.",
+          "description": "按目录组织的图像数据集。",
           "active": true
         },
         {
           "valueCode": "TEXT_DIRECTORY",
-          "displayName": "Text Directory",
+          "displayName": "文本目录",
           "displayOrder": 60,
-          "description": "Directory layout containing text files.",
+          "description": "按目录组织的文本数据集。",
           "active": true
         },
         {
           "valueCode": "AUDIO_DIRECTORY",
-          "displayName": "Audio Directory",
+          "displayName": "音频目录",
           "displayOrder": 70,
-          "description": "Directory layout containing audio files.",
+          "description": "按目录组织的音频数据集。",
           "active": true
         },
         {
           "valueCode": "EMBEDDING_MATRIX",
-          "displayName": "Embedding Matrix",
+          "displayName": "嵌入矩阵",
           "displayOrder": 80,
-          "description": "Vector or embedding matrix data.",
+          "description": "向量或嵌入矩阵数据。",
           "active": true
         }
       ]

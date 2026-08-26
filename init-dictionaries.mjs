@@ -22,6 +22,7 @@ const strict = Boolean(args.strict);
 const headers = requestHeaders(args.header);
 const endpoints = {
     registerDictionary: args['register-path'] ?? '/dictionary/registerdictionary',
+    updateDictionary: args['update-path'] ?? '/dictionary/updatedictionary',
     addDictionaryValue: args['add-value-path'] ?? '/dictionaryvalue/adddictionaryvalue',
     dictionaryCatalog: args['dictionary-catalog-path'] ?? '/dictionary/dictionarycatalog',
     dictionaryValueCatalog: args['value-catalog-path'] ?? '/dictionaryvalue/dictionaryvaluecatalog'
@@ -39,6 +40,7 @@ const dictionaries = normalizeDictionaryData(JSON.parse(await readFile(dataPath,
 let posted = 0;
 let skipped = 0;
 let failed = 0;
+let warned = 0;
 
 console.log(`[dict-init] baseUrl=${baseUrl}, data=${dataPath}`);
 
@@ -47,29 +49,40 @@ for (const dictionary of dictionaries) {
     const existingDictionary = dryRun || force ? undefined : await findDictionary(dictionaryCode);
     const dictionaryId = dictionary.dictionaryId ?? existingDictionary?.dictionaryId ?? stableUuid(`dictionary:${dictionaryCode}`);
     const registerPayload = registerDictionaryPayload(dictionary, dictionaryId);
+    const updatePayload = updateDictionaryPayload(dictionary, dictionaryId);
 
     if (dryRun) {
         printDryRun('RegisterDictionary', endpoints.registerDictionary, registerPayload);
     } else if (existingDictionary && !force) {
-        skipped += 1;
-        console.log(`[dict-init] SKIP dictionary ${dictionaryCode}`);
+        if (needsDictionaryUpdate(existingDictionary, dictionary)) {
+            await postCommand('UpdateDictionary', endpoints.updateDictionary, updatePayload);
+        } else {
+            skipped += 1;
+            console.log(`[dict-init] SKIP dictionary ${dictionaryCode}`);
+        }
     } else {
         await postCommand('RegisterDictionary', endpoints.registerDictionary, registerPayload);
     }
 
     const existingValues = dryRun || force ? [] : await findDictionaryValues(dictionaryCode);
-    const existingValueCodes = new Set(existingValues.map((value) => normalizeCode(value.valueCode)));
+    const existingValueByCode = new Map(existingValues.map((value) => [normalizeCode(value.valueCode), value]));
 
     for (let index = 0; index < dictionary.values.length; index += 1) {
         const value = dictionary.values[index];
         const valueCode = value.valueCode;
         const addPayload = addDictionaryValuePayload(dictionary, value, dictionaryId, index);
+        const existingValue = existingValueByCode.get(normalizeCode(valueCode));
 
         if (dryRun) {
             printDryRun('AddDictionaryValue', endpoints.addDictionaryValue, addPayload);
-        } else if (existingValueCodes.has(normalizeCode(valueCode)) && !force) {
+        } else if (existingValue && !force) {
             skipped += 1;
-            console.log(`[dict-init] SKIP value ${dictionaryCode}.${valueCode}`);
+            if (needsDictionaryValueUpdate(existingValue, value)) {
+                warned += 1;
+                console.warn(`[dict-init] WARN value ${dictionaryCode}.${valueCode} displayName differs: existing="${compact(existingValue.displayName)}", desired="${compact(value.displayName)}". Dictionary values do not currently have an update endpoint, so the existing value was skipped.`);
+            } else {
+                console.log(`[dict-init] SKIP value ${dictionaryCode}.${valueCode}`);
+            }
         } else {
             await postCommand('AddDictionaryValue', endpoints.addDictionaryValue, addPayload);
         }
@@ -79,7 +92,7 @@ for (const dictionary of dictionaries) {
 if (dryRun) {
     console.log('[dict-init] dry run complete');
 } else {
-    console.log(`[dict-init] complete: posted=${posted}, skipped=${skipped}, failed=${failed}`);
+    console.log(`[dict-init] complete: posted=${posted}, skipped=${skipped}, failed=${failed}, warnings=${warned}`);
 }
 
 function parseArgs(argv) {
@@ -141,6 +154,15 @@ function registerDictionaryPayload(dictionary, dictionaryId) {
     };
 }
 
+function updateDictionaryPayload(dictionary, dictionaryId) {
+    return {
+        dictionaryId,
+        dictionaryCode: dictionary.dictionaryCode,
+        dictionaryName: dictionary.dictionaryName,
+        description: dictionary.description ?? null
+    };
+}
+
 function addDictionaryValuePayload(dictionary, value, dictionaryId) {
     return {
         dictionaryValueId: value.dictionaryValueId ?? stableUuid(`dictionary-value:${dictionary.dictionaryCode}:${value.valueCode}`),
@@ -154,6 +176,18 @@ function addDictionaryValuePayload(dictionary, value, dictionaryId) {
         effectiveFrom: value.effectiveFrom ?? null,
         effectiveUntil: value.effectiveUntil ?? null
     };
+}
+
+function needsDictionaryUpdate(existingDictionary, dictionary) {
+    return trimText(existingDictionary.dictionaryName) !== trimText(dictionary.dictionaryName)
+        || trimText(existingDictionary.description) !== trimText(dictionary.description);
+}
+
+function needsDictionaryValueUpdate(existingValue, value) {
+    return trimText(existingValue.displayName) !== trimText(value.displayName)
+        || trimText(existingValue.description) !== trimText(value.description)
+        || Number(existingValue.displayOrder ?? 0) !== Number(value.displayOrder ?? 0)
+        || Boolean(existingValue.active ?? true) !== Boolean(value.active ?? true);
 }
 
 async function findDictionary(dictionaryCode) {
@@ -253,6 +287,10 @@ function trimSlash(value) {
     return String(value).replace(/\/+$/g, '');
 }
 
+function trimText(value) {
+    return value === undefined || value === null ? '' : String(value).trim();
+}
+
 function humanize(value) {
     return String(value ?? '')
         .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
@@ -288,6 +326,7 @@ Options:
   --strict                            Set a non-zero exit code when a POST command fails.
   --header "Name: value"              Extra HTTP header. Repeatable.
   --register-path <path>              RegisterDictionary endpoint path.
+  --update-path <path>                UpdateDictionary endpoint path.
   --add-value-path <path>             AddDictionaryValue endpoint path.
   --dictionary-catalog-path <path>    DictionaryCatalog read endpoint path.
   --value-catalog-path <path>         DictionaryValueCatalog read endpoint path.
