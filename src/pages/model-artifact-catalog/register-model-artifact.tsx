@@ -30,6 +30,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterModelArtifactCommandSchema, type RegisterModelArtifactCommandInput } from "@/domain/schemas";
+import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 import { uploadFile, type PendingFileUpload } from "@/lib/upload-file";
 
 export const ModelArtifactCatalogRegisterModelArtifact = () => {
@@ -42,6 +43,7 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
   const defaultValues = {
     modelName: searchParams.get("modelName") ?? undefined,
     modelVersion: searchParams.get("modelVersion") ?? undefined,
+    modelDescription: searchParams.get("modelDescription") ?? undefined,
     sourceType: searchParams.get("sourceType") ?? undefined,
     modelFormat: searchParams.get("modelFormat") ?? undefined,
   } as Partial<RegisterModelArtifactCommandInput>;
@@ -157,18 +159,50 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
           />
           <FormField
             control={form.control}
+            name="modelDescription"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelDescription.label", "Model Description")}</FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Model Description"}
+                    rows={8}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="sourceType"
             rules={{ required: "Source Type is required" }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.sourceType.label", "Source Type")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Source Type"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="dictionary_value_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="displayName"
+                  optionValue="valueCode"
+                  value={field.value || ""}
+                  onValueChange={field.onChange}
+                  placeholder={t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.sourceType.placeholder", "Select Source Type")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_ARTIFACT_SOURCE_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.sourceType.label", "Dictionary Value Catalog"),
+                    aggregateRoute: "dictionaryvalue",
+                    queryRoute: "dictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}
@@ -200,13 +234,26 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelFormat.label", "Model Format")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Model Format"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="dictionary_value_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="displayName"
+                  optionValue="valueCode"
+                  value={field.value || ""}
+                  onValueChange={field.onChange}
+                  placeholder={t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelFormat.placeholder", "Select Model Format")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_FORMAT"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelFormat.label", "Dictionary Value Catalog"),
+                    aggregateRoute: "dictionaryvalue",
+                    queryRoute: "dictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

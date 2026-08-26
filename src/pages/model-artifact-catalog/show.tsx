@@ -55,6 +55,11 @@ export const ModelArtifactCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelDescription.label", "Model Description")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.modelDescription, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.sourceType.label", "Source Type")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.sourceType, t)}</p>
             </div>

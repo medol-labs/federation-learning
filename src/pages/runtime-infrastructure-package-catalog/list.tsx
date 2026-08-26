@@ -24,10 +24,6 @@ type RuntimeInfrastructurePackageCatalogRecord = {
   packageName: string;
   packageVersion: string;
   runtimeEnvironmentType: string;
-  runtimeDeploymentTargetType: string;
-  installProfile: string;
-  architecture: string;
-  installGuide: string;
   state: "REGISTERED";
 };
 
@@ -129,62 +125,6 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("runtimeDeploymentTargetType", {
-        id: "runtimeDeploymentTargetType",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_package_catalog.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_infrastructure_package_catalog.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type"),
-          placeholder: "Enter Runtime Deployment Target Type",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("installProfile", {
-        id: "installProfile",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_package_catalog.fields.installProfile.label", "Install Profile")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_infrastructure_package_catalog.fields.installProfile.label", "Install Profile"),
-          placeholder: "Enter Install Profile",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("architecture", {
-        id: "architecture",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_package_catalog.fields.architecture.label", "Architecture")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_infrastructure_package_catalog.fields.architecture.label", "Architecture"),
-          placeholder: "Enter Architecture",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("installGuide", {
-        id: "installGuide",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_package_catalog.fields.installGuide.label", "Install Guide")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_infrastructure_package_catalog.fields.installGuide.label", "Install Guide"),
-          placeholder: "Enter Install Guide",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
       columnHelper.accessor("state", {
         id: "state",
         header: ({ column }) => (
@@ -241,7 +181,7 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         tableName: "runtime_infrastructure_package_catalog_read_model_entity",
         idField: "runtimeInfrastructurePackageId",
         idFields: ["runtimeInfrastructurePackageId"],
-        queryFields: ["runtimeInfrastructurePackageId","packageName","packageVersion","runtimeEnvironmentType","runtimeDeploymentTargetType","installProfile","architecture","installGuide","state"],
+        queryFields: ["runtimeInfrastructurePackageId","packageName","packageVersion","runtimeEnvironmentType","state"],
         label: t("resources.runtime_infrastructure_package_catalog.label", "Runtime Infrastructure Package Catalog"),
         aggregateRoute: "runtimeinfrastructurepackage",
         queryRoute: "runtimeinfrastructurepackagecatalog",

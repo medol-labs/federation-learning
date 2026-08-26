@@ -28,7 +28,6 @@ type RuntimeInfrastructureAccessViewRecord = {
   runtimeInfrastructurePackageVersion?: string;
   organizationName?: string;
   runtimeName?: string;
-  runtimeDeploymentTargetType?: string;
   runtimeEnvironmentType?: string;
   agentInstallMode: string;
   expectedNodeCount: number;
@@ -196,20 +195,6 @@ export const RuntimeInfrastructureAccessViewList = () => {
         meta: {
           label: t("resources.runtime_infrastructure_access_view.fields.runtimeName.label", "Runtime Name"),
           placeholder: "Enter Runtime Name",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("runtimeDeploymentTargetType", {
-        id: "runtimeDeploymentTargetType",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_access_view.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_infrastructure_access_view.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type"),
-          placeholder: "Enter Runtime Deployment Target Type",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -493,7 +478,7 @@ export const RuntimeInfrastructureAccessViewList = () => {
         tableName: "runtime_infrastructure_access_view_read_model_entity",
         idField: "runtimeInfrastructureId",
         idFields: ["runtimeInfrastructureId"],
-        queryFields: ["runtimeInfrastructureId","organizationId","runtimeInstallationPlanId","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","organizationName","runtimeName","runtimeDeploymentTargetType","runtimeEnvironmentType","agentInstallMode","expectedNodeCount","runtimeAgentId","runtimeAgentVersion","infrastructureVerifiedAt","infrastructureVerificationFailedAt","infrastructureVerificationFailureReason","agentReadyAt","agentDeploymentFailedAt","agentDeploymentFailureReason","agentDeploymentRetryFailedAt","agentDeploymentRetryFailureReason","connectedAt","state"],
+        queryFields: ["runtimeInfrastructureId","organizationId","runtimeInstallationPlanId","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","organizationName","runtimeName","runtimeEnvironmentType","agentInstallMode","expectedNodeCount","runtimeAgentId","runtimeAgentVersion","infrastructureVerifiedAt","infrastructureVerificationFailedAt","infrastructureVerificationFailureReason","agentReadyAt","agentDeploymentFailedAt","agentDeploymentFailureReason","agentDeploymentRetryFailedAt","agentDeploymentRetryFailureReason","connectedAt","state"],
         label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
         aggregateRoute: "runtimeinfrastructure",
         queryRoute: "runtimeinfrastructureaccessview",

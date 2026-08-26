@@ -60,26 +60,6 @@ export const RuntimeInfrastructurePackageCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_package_catalog.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeDeploymentTargetType, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_package_catalog.fields.installProfile.label", "Install Profile")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.installProfile, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_package_catalog.fields.architecture.label", "Architecture")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.architecture, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_package_catalog.fields.installGuide.label", "Install Guide")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.installGuide, t)}</p>
-            </div>
-            <Separator />
-            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_package_catalog.fields.state.label", "State")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.state, t)}</p>
             </div>

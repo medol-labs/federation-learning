@@ -70,11 +70,6 @@ export const RuntimeInstallationGuideShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.infrastructureInstallGuide.label", "Infrastructure Install Guide")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.infrastructureInstallGuide, t)}</p>
-            </div>
-            <Separator />
-            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.organizationName.label", "Organization Name")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.organizationName, t)}</p>
             </div>
@@ -90,11 +85,6 @@ export const RuntimeInstallationGuideShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeDeploymentTargetType, t)}</p>
-            </div>
-            <Separator />
-            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeEnvironmentType.label", "Runtime Environment Type")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEnvironmentType, t)}</p>
             </div>
@@ -102,16 +92,6 @@ export const RuntimeInstallationGuideShow = () => {
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.agentInstallMode.label", "Agent Install Mode")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.agentInstallMode, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.installProfile.label", "Install Profile")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.installProfile, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.architecture.label", "Architecture")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.architecture, t)}</p>
             </div>
             <Separator />
             <div>

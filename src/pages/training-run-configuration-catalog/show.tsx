@@ -175,21 +175,6 @@ export const TrainingRunConfigurationCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.differentialPrivacyEnabled.label", "Differential Privacy Enabled")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.differentialPrivacyEnabled, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.dpNoiseMultiplier.label", "Dp Noise Multiplier")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.dpNoiseMultiplier, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.dpClipNorm.label", "Dp Clip Norm")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.dpClipNorm, t)}</p>
-            </div>
-            <Separator />
-            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.minimumAccuracy.label", "Minimum Accuracy")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.minimumAccuracy, t)}</p>
             </div>
@@ -197,11 +182,6 @@ export const TrainingRunConfigurationCatalogShow = () => {
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.minimumFairnessScore.label", "Minimum Fairness Score")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.minimumFairnessScore, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.failureToleranceRatio.label", "Failure Tolerance Ratio")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.failureToleranceRatio, t)}</p>
             </div>
             <Separator />
             <div>

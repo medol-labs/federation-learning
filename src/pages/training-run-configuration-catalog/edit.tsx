@@ -52,12 +52,8 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
     lossFunction: searchParams.get("lossFunction") ?? undefined,
     gradientClippingNorm: (() => { const value = searchParams.get("gradientClippingNorm"); return value === null ? undefined : Number(value); })(),
     secureAggregationRequired: (() => { const value = searchParams.get("secureAggregationRequired"); return value === null ? undefined : value === "true"; })(),
-    differentialPrivacyEnabled: (() => { const value = searchParams.get("differentialPrivacyEnabled"); return value === null ? undefined : value === "true"; })(),
-    dpNoiseMultiplier: (() => { const value = searchParams.get("dpNoiseMultiplier"); return value === null ? undefined : Number(value); })(),
-    dpClipNorm: (() => { const value = searchParams.get("dpClipNorm"); return value === null ? undefined : Number(value); })(),
     minimumAccuracy: (() => { const value = searchParams.get("minimumAccuracy"); return value === null ? undefined : Number(value); })(),
     minimumFairnessScore: (() => { const value = searchParams.get("minimumFairnessScore"); return value === null ? undefined : Number(value); })(),
-    failureToleranceRatio: (() => { const value = searchParams.get("failureToleranceRatio"); return value === null ? undefined : Number(value); })(),
     updateReason: searchParams.get("updateReason") ?? undefined,
     trainingRunConfigurationId: searchParams.get("trainingRunConfigurationId") ?? undefined,
   } as Partial<UpdateTrainingRunConfigurationCommandInput>;
@@ -488,67 +484,6 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
           />
           <FormField
             control={form.control}
-            name="differentialPrivacyEnabled"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.differentialPrivacyEnabled.label", "Differential Privacy Enabled")}</FormLabel>
-                <Select
-                  value={field.value === undefined || field.value === null ? undefined : String(field.value)}
-                  onValueChange={(value) => field.onChange(value === "true")}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.differentialPrivacyEnabled.placeholder", "Select Differential Privacy Enabled")} />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="true">{t("values.boolean.true", "True")}</SelectItem>
-                    <SelectItem value="false">{t("values.boolean.false", "False")}</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="dpNoiseMultiplier"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.dpNoiseMultiplier.label", "Dp Noise Multiplier")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Dp Noise Multiplier"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="dpClipNorm"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.dpClipNorm.label", "Dp Clip Norm")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Dp Clip Norm"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="minimumAccuracy"
             rules={{ required: "Minimum Accuracy is required" }}
             render={({ field }) => (
@@ -577,24 +512,6 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                     {...field}
                     value={field.value || ""}
                     placeholder={"Enter Minimum Fairness Score"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="failureToleranceRatio"
-            rules={{ required: "Failure Tolerance Ratio is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.failureToleranceRatio.label", "Failure Tolerance Ratio")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Failure Tolerance Ratio"}
                   />
                 </FormControl>
                 <FormMessage />

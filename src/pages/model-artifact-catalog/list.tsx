@@ -23,6 +23,7 @@ type ModelArtifactCatalogRecord = {
   modelId: string;
   modelName: string;
   modelVersion: string;
+  modelDescription?: string;
   sourceType?: string;
   modelArtifactUri: string;
   modelRegistryRef: string;
@@ -117,6 +118,20 @@ export const ModelArtifactCatalogList = () => {
         meta: {
           label: t("resources.model_artifact_catalog.fields.modelVersion.label", "Model Version"),
           placeholder: "Enter Model Version",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("modelDescription", {
+        id: "modelDescription",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelDescription.label", "Model Description")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.modelDescription.label", "Model Description"),
+          placeholder: "Enter Model Description",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -333,7 +348,7 @@ export const ModelArtifactCatalogList = () => {
         tableName: "model_artifact_catalog_read_model_entity",
         idField: "modelId",
         idFields: ["modelId"],
-        queryFields: ["modelId","modelName","modelVersion","sourceType","modelArtifactUri","modelRegistryRef","modelFormat","modelArtifactDigest","modelSignatureUri","modelSizeBytes","trainingJobId","roundId","trainingJobObjective","state","registeredAt"],
+        queryFields: ["modelId","modelName","modelVersion","modelDescription","sourceType","modelArtifactUri","modelRegistryRef","modelFormat","modelArtifactDigest","modelSignatureUri","modelSizeBytes","trainingJobId","roundId","trainingJobObjective","state","registeredAt"],
         label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
         aggregateRoute: "modelartifact",
         queryRoute: "modelartifactcatalog",

@@ -39,10 +39,6 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
     packageName: searchParams.get("packageName") ?? undefined,
     packageVersion: searchParams.get("packageVersion") ?? undefined,
     runtimeEnvironmentType: searchParams.get("runtimeEnvironmentType") ?? undefined,
-    runtimeDeploymentTargetType: searchParams.get("runtimeDeploymentTargetType") ?? undefined,
-    installProfile: searchParams.get("installProfile") ?? undefined,
-    architecture: searchParams.get("architecture") ?? undefined,
-    installGuide: searchParams.get("installGuide") ?? undefined,
   } as Partial<RegisterRuntimeInfrastructurePackageCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterRuntimeInfrastructurePackageCommandInput, RegisterRuntimeInfrastructurePackageCommandInput>({
@@ -149,104 +145,6 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                     queryFields: ["dictionaryCode","active","state"],
                   }}
                 />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="runtimeDeploymentTargetType"
-            rules={{ required: "Runtime Deployment Target Type is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type")}</FormLabel>
-                <ResourceSelect
-                  withFormControl
-                  resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
-                  optionValue="valueCode"
-                  value={field.value || ""}
-                  onValueChange={field.onChange}
-                  placeholder={t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.runtimeDeploymentTargetType.placeholder", "Select Runtime Deployment Target Type")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_DEPLOYMENT_TARGET_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
-                  sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
-                  meta={{
-                    idField: "dictionaryValueId",
-                    label: t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.runtimeDeploymentTargetType.label", "Dictionary Value Catalog"),
-                    aggregateRoute: "dictionaryvalue",
-                    queryRoute: "dictionaryvaluecatalog",
-                    queryFields: ["dictionaryCode","active","state"],
-                  }}
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="installProfile"
-            rules={{ required: "Install Profile is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.installProfile.label", "Install Profile")}</FormLabel>
-                <ResourceSelect
-                  withFormControl
-                  resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
-                  optionValue="valueCode"
-                  value={field.value || ""}
-                  onValueChange={field.onChange}
-                  placeholder={t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.installProfile.placeholder", "Select Install Profile")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_INSTALL_PROFILE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
-                  sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
-                  meta={{
-                    idField: "dictionaryValueId",
-                    label: t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.installProfile.label", "Dictionary Value Catalog"),
-                    aggregateRoute: "dictionaryvalue",
-                    queryRoute: "dictionaryvaluecatalog",
-                    queryFields: ["dictionaryCode","active","state"],
-                  }}
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="architecture"
-            rules={{ required: "Architecture is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.architecture.label", "Architecture")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Architecture"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="installGuide"
-            rules={{ required: "Install Guide is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.installGuide.label", "Install Guide")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Install Guide"}
-                  />
-                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

@@ -26,15 +26,11 @@ type RuntimeInstallationGuideRecord = {
   runtimeInfrastructurePackageId?: string;
   runtimeInfrastructurePackageName?: string;
   runtimeInfrastructurePackageVersion?: string;
-  infrastructureInstallGuide?: string;
   organizationName?: string;
   runtimeName?: string;
   bootstrapCommand: string;
-  runtimeDeploymentTargetType?: string;
   runtimeEnvironmentType?: string;
   agentInstallMode?: string;
-  installProfile?: string;
-  architecture?: string;
   expectedNodeCount?: number;
 };
 
@@ -164,20 +160,6 @@ export const RuntimeInstallationGuideList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("infrastructureInstallGuide", {
-        id: "infrastructureInstallGuide",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.infrastructureInstallGuide.label", "Infrastructure Install Guide")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_installation_guide.fields.infrastructureInstallGuide.label", "Infrastructure Install Guide"),
-          placeholder: "Enter Infrastructure Install Guide",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
         header: ({ column }) => (
@@ -220,20 +202,6 @@ export const RuntimeInstallationGuideList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("runtimeDeploymentTargetType", {
-        id: "runtimeDeploymentTargetType",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_installation_guide.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type"),
-          placeholder: "Enter Runtime Deployment Target Type",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
       columnHelper.accessor("runtimeEnvironmentType", {
         id: "runtimeEnvironmentType",
         header: ({ column }) => (
@@ -258,34 +226,6 @@ export const RuntimeInstallationGuideList = () => {
         meta: {
           label: t("resources.runtime_installation_guide.fields.agentInstallMode.label", "Agent Install Mode"),
           placeholder: "Enter Agent Install Mode",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("installProfile", {
-        id: "installProfile",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.installProfile.label", "Install Profile")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_installation_guide.fields.installProfile.label", "Install Profile"),
-          placeholder: "Enter Install Profile",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("architecture", {
-        id: "architecture",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.architecture.label", "Architecture")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_installation_guide.fields.architecture.label", "Architecture"),
-          placeholder: "Enter Architecture",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -343,7 +283,7 @@ export const RuntimeInstallationGuideList = () => {
         tableName: "runtime_installation_guide_read_model_entity",
         idField: "runtimeInstallationPlanId",
         idFields: ["runtimeInstallationPlanId"],
-        queryFields: ["runtimeInstallationPlanId","organizationId","runtimeInfrastructureId","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","infrastructureInstallGuide","organizationName","runtimeName","bootstrapCommand","runtimeDeploymentTargetType","runtimeEnvironmentType","agentInstallMode","installProfile","architecture","expectedNodeCount"],
+        queryFields: ["runtimeInstallationPlanId","organizationId","runtimeInfrastructureId","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","organizationName","runtimeName","bootstrapCommand","runtimeEnvironmentType","agentInstallMode","expectedNodeCount"],
         label: t("resources.runtime_installation_guide.label", "Runtime Installation Guide"),
         aggregateRoute: "runtimeinstallationplan",
         queryRoute: "runtimeinstallationguide",

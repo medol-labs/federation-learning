@@ -724,7 +724,7 @@ export const RoundExecutionCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "state", ["Running"]) && (
+                {isCommandVisible(row.original, "", "state", ["StartFailed"]) && (
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"

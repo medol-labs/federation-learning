@@ -204,10 +204,6 @@ export const RegisterRuntimeInfrastructurePackageCommandSchema = z.object({
   packageName: z.string(),
   packageVersion: z.string(),
   runtimeEnvironmentType: z.string(),
-  runtimeDeploymentTargetType: z.string(),
-  installProfile: z.string(),
-  architecture: z.string(),
-  installGuide: z.string(),
 });
 export type RegisterRuntimeInfrastructurePackageCommandInput = z.infer<typeof RegisterRuntimeInfrastructurePackageCommandSchema>;
 
@@ -302,6 +298,7 @@ export type MarkCurrentRecommendedFeatureSchemaVersionCommandInput = z.infer<typ
 export const RegisterModelArtifactCommandSchema = z.object({
   modelName: z.string(),
   modelVersion: z.string(),
+  modelDescription: z.string().optional().nullable(),
   sourceType: z.string(),
   stagedFileId: z.string().uuid().optional().nullable(),
   modelFormat: z.string().optional().nullable(),
@@ -325,12 +322,8 @@ export const DefineTrainingRunConfigurationCommandSchema = z.object({
   lossFunction: z.string(),
   gradientClippingNorm: z.coerce.number().optional().nullable(),
   secureAggregationRequired: z.boolean(),
-  differentialPrivacyEnabled: z.boolean(),
-  dpNoiseMultiplier: z.coerce.number().optional().nullable(),
-  dpClipNorm: z.coerce.number().optional().nullable(),
   minimumAccuracy: z.coerce.number(),
   minimumFairnessScore: z.coerce.number().optional().nullable(),
-  failureToleranceRatio: z.coerce.number(),
 });
 export type DefineTrainingRunConfigurationCommandInput = z.infer<typeof DefineTrainingRunConfigurationCommandSchema>;
 
@@ -352,12 +345,8 @@ export const UpdateTrainingRunConfigurationCommandSchema = z.object({
   lossFunction: z.string(),
   gradientClippingNorm: z.coerce.number().optional().nullable(),
   secureAggregationRequired: z.boolean(),
-  differentialPrivacyEnabled: z.boolean(),
-  dpNoiseMultiplier: z.coerce.number().optional().nullable(),
-  dpClipNorm: z.coerce.number().optional().nullable(),
   minimumAccuracy: z.coerce.number(),
   minimumFairnessScore: z.coerce.number().optional().nullable(),
-  failureToleranceRatio: z.coerce.number(),
   updateReason: z.string().optional().nullable(),
 });
 export type UpdateTrainingRunConfigurationCommandInput = z.infer<typeof UpdateTrainingRunConfigurationCommandSchema>;
@@ -519,7 +508,6 @@ export const DeclareDatasetCommandSchema = z.object({
   organizationId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
   datasetName: z.string(),
-  datasetType: z.string(),
   datasetUsage: z.string(),
 });
 export type DeclareDatasetCommandInput = z.infer<typeof DeclareDatasetCommandSchema>;

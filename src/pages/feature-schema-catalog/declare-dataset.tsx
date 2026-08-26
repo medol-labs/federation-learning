@@ -154,24 +154,6 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
           />
           <FormField
             control={form.control}
-            name="datasetType"
-            rules={{ required: "Dataset Type is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.feature_schema_catalog.commands.declareDataset.fields.datasetType.label", "Dataset Type")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Dataset Type"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="datasetUsage"
             rules={{ required: "Dataset Usage is required" }}
             render={({ field }) => (

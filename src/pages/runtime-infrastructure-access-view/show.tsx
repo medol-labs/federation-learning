@@ -80,11 +80,6 @@ export const RuntimeInfrastructureAccessViewShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_access_view.fields.runtimeDeploymentTargetType.label", "Runtime Deployment Target Type")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeDeploymentTargetType, t)}</p>
-            </div>
-            <Separator />
-            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_access_view.fields.runtimeEnvironmentType.label", "Runtime Environment Type")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEnvironmentType, t)}</p>
             </div>

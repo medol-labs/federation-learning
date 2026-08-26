@@ -47,12 +47,8 @@ type TrainingRunConfigurationCatalogRecord = {
   lossFunction: string;
   gradientClippingNorm?: string;
   secureAggregationRequired: boolean;
-  differentialPrivacyEnabled: boolean;
-  dpNoiseMultiplier?: string;
-  dpClipNorm?: string;
   minimumAccuracy: string;
   minimumFairnessScore?: string;
-  failureToleranceRatio: string;
   updateReason?: string;
   lockedByTrainingJobId?: string;
   state: "DRAFT" | "LOCKED";
@@ -487,51 +483,6 @@ export const TrainingRunConfigurationCatalogList = () => {
         },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
-      columnHelper.accessor("differentialPrivacyEnabled", {
-        id: "differentialPrivacyEnabled",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.differentialPrivacyEnabled.label", "Differential Privacy Enabled")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.training_run_configuration_catalog.fields.differentialPrivacyEnabled.label", "Differential Privacy Enabled"),
-          placeholder: "Enter Differential Privacy Enabled",
-          variant: "boolean",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
-      }),
-      columnHelper.accessor("dpNoiseMultiplier", {
-        id: "dpNoiseMultiplier",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.dpNoiseMultiplier.label", "Dp Noise Multiplier")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.training_run_configuration_catalog.fields.dpNoiseMultiplier.label", "Dp Noise Multiplier"),
-          placeholder: "Enter Dp Noise Multiplier",
-          variant: "number",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("dpClipNorm", {
-        id: "dpClipNorm",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.dpClipNorm.label", "Dp Clip Norm")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.training_run_configuration_catalog.fields.dpClipNorm.label", "Dp Clip Norm"),
-          placeholder: "Enter Dp Clip Norm",
-          variant: "number",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
       columnHelper.accessor("minimumAccuracy", {
         id: "minimumAccuracy",
         header: ({ column }) => (
@@ -557,21 +508,6 @@ export const TrainingRunConfigurationCatalogList = () => {
         meta: {
           label: t("resources.training_run_configuration_catalog.fields.minimumFairnessScore.label", "Minimum Fairness Score"),
           placeholder: "Enter Minimum Fairness Score",
-          variant: "number",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("failureToleranceRatio", {
-        id: "failureToleranceRatio",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.failureToleranceRatio.label", "Failure Tolerance Ratio")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.training_run_configuration_catalog.fields.failureToleranceRatio.label", "Failure Tolerance Ratio"),
-          placeholder: "Enter Failure Tolerance Ratio",
           variant: "number",
           filterOperator: "eq",
         },
@@ -681,7 +617,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         tableName: "training_run_configuration_catalog_read_model_entity",
         idField: "trainingRunConfigurationId",
         idFields: ["trainingRunConfigurationId"],
-        queryFields: ["trainingRunConfigurationId","federationId","featureSchemaId","initialModelId","initialModelName","initialModelVersion","federationName","featureDomain","featureSchemaVersion","initialModelArtifactUri","initialModelRegistryRef","initialModelFormat","initialModelArtifactDigest","initialModelSignatureUri","strategyName","aggregationAlgorithm","maxRounds","minimumNodesPerRound","roundTimeoutSeconds","nodeResponseTimeoutSeconds","localEpochs","batchSize","learningRate","optimizer","lossFunction","gradientClippingNorm","secureAggregationRequired","differentialPrivacyEnabled","dpNoiseMultiplier","dpClipNorm","minimumAccuracy","minimumFairnessScore","failureToleranceRatio","updateReason","lockedByTrainingJobId","state"],
+        queryFields: ["trainingRunConfigurationId","federationId","featureSchemaId","initialModelId","initialModelName","initialModelVersion","federationName","featureDomain","featureSchemaVersion","initialModelArtifactUri","initialModelRegistryRef","initialModelFormat","initialModelArtifactDigest","initialModelSignatureUri","strategyName","aggregationAlgorithm","maxRounds","minimumNodesPerRound","roundTimeoutSeconds","nodeResponseTimeoutSeconds","localEpochs","batchSize","learningRate","optimizer","lossFunction","gradientClippingNorm","secureAggregationRequired","minimumAccuracy","minimumFairnessScore","updateReason","lockedByTrainingJobId","state"],
         label: t("resources.training_run_configuration_catalog.label", "Training Run Configuration Catalog"),
         aggregateRoute: "trainingrunconfiguration",
         queryRoute: "trainingrunconfigurationcatalog",
