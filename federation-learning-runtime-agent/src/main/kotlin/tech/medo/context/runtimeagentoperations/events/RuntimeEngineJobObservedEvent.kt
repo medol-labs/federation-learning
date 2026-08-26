@@ -21,9 +21,15 @@ data class RuntimeEngineJobObservedEvent(
     val organizationId: UUID,
     val featureSchemaId: UUID,
     val runtimeEngineJobId: String,
+    val secureAggregationRequired: Boolean,
+    val secureAggregationSessionId: UUID?,
+    val encryptionScheme: String?,
+    val publicKeyVersion: String?,
     val observedStatus: String,
     val failureReason: String?,
     val localUpdateArtifactRef: String?,
+    val encryptedUpdateArtifactRef: String?,
+    val encryptedUpdateDigest: String?,
     val metricsArtifactRef: String?,
     val trainingLoss: BigDecimal?
 )

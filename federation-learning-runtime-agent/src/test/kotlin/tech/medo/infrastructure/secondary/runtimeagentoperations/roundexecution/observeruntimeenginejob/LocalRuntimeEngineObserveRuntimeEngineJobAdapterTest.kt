@@ -102,7 +102,11 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapterTest {
             runtimeId = UUID.fromString("77777777-7777-4777-8777-777777777777"),
             organizationId = UUID.fromString("88888888-8888-4888-8888-888888888888"),
             featureSchemaId = UUID.fromString("99999999-9999-4999-8999-999999999999"),
-            runtimeEngineJobId = runtimeEngineJobId
+            runtimeEngineJobId = runtimeEngineJobId,
+            secureAggregationRequired = true,
+            secureAggregationSessionId = UUID.fromString("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
+            encryptionScheme = "PAILLIER",
+            publicKeyVersion = "local-dev-v1"
         )
 
     private class RecordingClient(

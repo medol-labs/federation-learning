@@ -13,9 +13,6 @@ class LocalSelectSecureAggregationParticipantsAdapter : SelectSecureAggregationP
     override fun supports(input: SelectSecureAggregationParticipantsInput): Boolean = true
 
     override fun execute(input: SelectSecureAggregationParticipantsInput): SelectSecureAggregationParticipantsResult {
-        require(input.acceptedRuntimeIds.isNotEmpty()) {
-            "Secure aggregation participant selection requires at least one accepted runtime."
-        }
         require(input.selectedRuntimeIds.isNotEmpty()) {
             "Secure aggregation participant selection requires selected runtime ids."
         }

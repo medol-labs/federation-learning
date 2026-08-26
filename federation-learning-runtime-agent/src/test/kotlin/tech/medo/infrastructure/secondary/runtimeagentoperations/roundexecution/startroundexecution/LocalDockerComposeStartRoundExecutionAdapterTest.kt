@@ -139,7 +139,13 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
             baseModelRegistryRef = "local",
             baseModelFormat = "json",
             baseModelArtifactDigest = "sha256:abc",
-            baseModelSignatureUri = null
+            baseModelSignatureUri = null,
+            secureAggregationRequired = true,
+            secureAggregationSessionId = UUID.fromString("dddddddd-dddd-4ddd-8ddd-dddddddddddd"),
+            encryptionScheme = "PAILLIER",
+            publicKeyVersion = "local-dev-v1",
+            publicKeyRef = "local://secure-aggregation/public-keys/local-dev-v1",
+            encryptedParameterScale = 1000000
         )
 
     private fun binding(filePath: String): RuntimeDatasetBindingCatalogReadModel =

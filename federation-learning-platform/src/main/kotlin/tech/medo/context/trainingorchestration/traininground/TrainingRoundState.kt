@@ -36,12 +36,18 @@ class TrainingRoundState @EntityCreator constructor() {
     var roundId: UUID? = null
     var roundNumber: Int? = null
     var minimumNodesPerRound: Int? = null
+    var secureAggregationRequired: Boolean? = null
     var selectedOrganizationIds: List<UUID> = emptyList()
     var selectedRuntimeIds: List<UUID> = emptyList()
     var selectedParticipants: List<TrainingRoundParticipant> = emptyList()
     var selectedOrganizationCount: Int? = null
     var selectedRuntimeCount: Int? = null
     var failureReason: String? = null
+    var secureAggregationSessionId: UUID? = null
+    var encryptionScheme: String? = null
+    var publicKeyVersion: String? = null
+    var publicKeyRef: String? = null
+    var encryptedParameterScale: Int? = null
     var modelUpdateSubmissionId: UUID? = null
     var executionSessionId: UUID? = null
     var executionPlanId: UUID? = null
@@ -51,12 +57,13 @@ class TrainingRoundState @EntityCreator constructor() {
     var updateArtifactId: UUID? = null
     var artifactRef: String? = null
     var artifactDigest: String? = null
+    var updateProtectionType: String? = null
     var trainingLoss: BigDecimal? = null
     var anomalyScore: BigDecimal? = null
     var acceptedModelUpdateCount: Int? = null
     var acceptedRuntimeIds: List<UUID> = emptyList()
     var rejectionReason: String? = null
-    var secureAggregationSessionId: UUID? = null
+    var requiredParticipantCount: Int? = null
     var aggregatedModelId: UUID? = null
     var aggregatedModelArtifactUri: String? = null
     var aggregatedModelRegistryRef: String? = null
@@ -75,6 +82,7 @@ class TrainingRoundState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         minimumNodesPerRound = event.minimumNodesPerRound
+        secureAggregationRequired = event.secureAggregationRequired
         selectedOrganizationIds = event.selectedOrganizationIds
         selectedRuntimeIds = event.selectedRuntimeIds
         selectedParticipants = event.selectedParticipants
@@ -91,6 +99,7 @@ class TrainingRoundState @EntityCreator constructor() {
         roundId = event.roundId
         roundNumber = event.roundNumber
         minimumNodesPerRound = event.minimumNodesPerRound
+        secureAggregationRequired = event.secureAggregationRequired
         selectedOrganizationIds = event.selectedOrganizationIds
         selectedRuntimeIds = event.selectedRuntimeIds
         selectedParticipants = event.selectedParticipants
@@ -118,6 +127,12 @@ class TrainingRoundState @EntityCreator constructor() {
         selectedOrganizationCount = event.selectedOrganizationCount
         selectedRuntimeCount = event.selectedRuntimeCount
         minimumNodesPerRound = event.minimumNodesPerRound
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
+        publicKeyRef = event.publicKeyRef
+        encryptedParameterScale = event.encryptedParameterScale
     }
 
     @EventSourcingHandler
@@ -134,6 +149,12 @@ class TrainingRoundState @EntityCreator constructor() {
         selectedOrganizationCount = event.selectedOrganizationCount
         selectedRuntimeCount = event.selectedRuntimeCount
         minimumNodesPerRound = event.minimumNodesPerRound
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
+        publicKeyRef = event.publicKeyRef
+        encryptedParameterScale = event.encryptedParameterScale
         failureReason = event.failureReason
     }
 
@@ -148,10 +169,15 @@ class TrainingRoundState @EntityCreator constructor() {
         roundExecutionId = event.roundExecutionId
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
         localModelId = event.localModelId
         updateArtifactId = event.updateArtifactId
         artifactRef = event.artifactRef
         artifactDigest = event.artifactDigest
+        updateProtectionType = event.updateProtectionType
         trainingLoss = event.trainingLoss
     }
 
@@ -165,6 +191,14 @@ class TrainingRoundState @EntityCreator constructor() {
         roundId = event.roundId
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
+        updateArtifactId = event.updateArtifactId
+        artifactRef = event.artifactRef
+        artifactDigest = event.artifactDigest
+        updateProtectionType = event.updateProtectionType
         anomalyScore = event.anomalyScore
         acceptedModelUpdateCount = event.acceptedModelUpdateCount
         acceptedRuntimeIds = event.acceptedRuntimeIds
@@ -191,9 +225,14 @@ class TrainingRoundState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
-        acceptedModelUpdateCount = event.acceptedModelUpdateCount
-        acceptedRuntimeIds = event.acceptedRuntimeIds
+        roundNumber = event.roundNumber
+        requiredParticipantCount = event.requiredParticipantCount
+        selectedOrganizationIds = event.selectedOrganizationIds
+        selectedRuntimeIds = event.selectedRuntimeIds
+        selectedOrganizationCount = event.selectedOrganizationCount
+        selectedRuntimeCount = event.selectedRuntimeCount
         minimumNodesPerRound = event.minimumNodesPerRound
+        secureAggregationRequired = event.secureAggregationRequired
     }
 
     @EventSourcingHandler
@@ -203,6 +242,7 @@ class TrainingRoundState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
+        roundNumber = event.roundNumber
         secureAggregationSessionId = event.secureAggregationSessionId
         aggregatedModelId = event.aggregatedModelId
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
@@ -219,6 +259,7 @@ class TrainingRoundState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
+        roundNumber = event.roundNumber
         aggregatedModelId = event.aggregatedModelId
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
         aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
@@ -236,6 +277,7 @@ class TrainingRoundState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
+        roundNumber = event.roundNumber
         aggregatedModelId = event.aggregatedModelId
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
         aggregatedModelRegistryRef = event.aggregatedModelRegistryRef

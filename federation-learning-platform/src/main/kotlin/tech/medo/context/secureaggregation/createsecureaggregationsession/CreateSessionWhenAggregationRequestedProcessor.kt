@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component
 class CreateSessionWhenAggregationRequestedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: SecureAggregationRequestedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(CreateSecureAggregationSessionCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, requiredParticipantCount = event.acceptedModelUpdateCount, acceptedRuntimeIds = event.acceptedRuntimeIds)).resultMessage
+        commandGateway.send(CreateSecureAggregationSessionCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber, requiredParticipantCount = event.requiredParticipantCount, selectedOrganizationIds = event.selectedOrganizationIds, selectedRuntimeIds = event.selectedRuntimeIds, selectedOrganizationCount = event.selectedOrganizationCount, selectedRuntimeCount = event.selectedRuntimeCount, minimumNodesPerRound = event.minimumNodesPerRound, secureAggregationRequired = event.secureAggregationRequired)).resultMessage
 }

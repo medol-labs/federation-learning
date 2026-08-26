@@ -16,6 +16,7 @@ data class TrainingRoundParticipantSelectionFailedEvent(
     val roundId: UUID,
     val roundNumber: Int,
     val minimumNodesPerRound: Int,
+    val secureAggregationRequired: Boolean,
     val selectedOrganizationIds: List<UUID>,
     val selectedRuntimeIds: List<UUID>,
     val selectedParticipants: List<TrainingRoundParticipant>,

@@ -18,7 +18,11 @@ data class ObserveRuntimeEngineJobCommand(
     val runtimeId: UUID,
     val organizationId: UUID,
     val featureSchemaId: UUID,
-    val runtimeEngineJobId: String
+    val runtimeEngineJobId: String,
+    val secureAggregationRequired: Boolean,
+    val secureAggregationSessionId: UUID?,
+    val encryptionScheme: String?,
+    val publicKeyVersion: String?
 ) {
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)

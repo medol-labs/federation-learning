@@ -48,7 +48,13 @@ class ReadModelParticipantExecutionPlanCommandFactory(
                 baseModelRegistryRef = baseModel.baseModelRegistryRef,
                 baseModelFormat = baseModel.baseModelFormat,
                 baseModelArtifactDigest = baseModel.baseModelArtifactDigest,
-                baseModelSignatureUri = baseModel.baseModelSignatureUri
+                baseModelSignatureUri = baseModel.baseModelSignatureUri,
+                secureAggregationRequired = event.secureAggregationRequired,
+                secureAggregationSessionId = event.secureAggregationSessionId,
+                encryptionScheme = event.encryptionScheme,
+                publicKeyVersion = event.publicKeyVersion,
+                publicKeyRef = event.publicKeyRef,
+                encryptedParameterScale = event.encryptedParameterScale
             )
         }
     }

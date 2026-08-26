@@ -18,10 +18,15 @@ data class SubmitAgentLocalModelUpdateCommand(
     val roundId: UUID,
     val runtimeId: UUID,
     val featureSchemaId: UUID,
+    val secureAggregationRequired: Boolean,
+    val secureAggregationSessionId: UUID?,
+    val encryptionScheme: String?,
+    val publicKeyVersion: String?,
     val localModelId: UUID,
     val updateArtifactId: UUID,
     val artifactRef: String,
     val artifactDigest: String,
+    val updateProtectionType: String,
     val trainingLoss: BigDecimal
 ) {
     @TargetEntityId

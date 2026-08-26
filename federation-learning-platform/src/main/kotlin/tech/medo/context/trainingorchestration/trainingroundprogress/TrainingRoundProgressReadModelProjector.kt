@@ -69,6 +69,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.selectedOrganizationCount = event.selectedOrganizationCount
             entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
+            entity.secureAggregationRequired = event.secureAggregationRequired
             entity.state = TrainingRoundStateEnum.PARTICIPANTS_SELECTED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -94,6 +95,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.selectedOrganizationCount = event.selectedOrganizationCount
             entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
+            entity.secureAggregationRequired = event.secureAggregationRequired
             entity.failureReason = event.failureReason
             entity.state = TrainingRoundStateEnum.FAILED
             ProjectionMetadata.assign(entity, message)
@@ -120,6 +122,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.selectedOrganizationCount = event.selectedOrganizationCount
             entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
+            entity.secureAggregationRequired = event.secureAggregationRequired
             entity.state = TrainingRoundStateEnum.RUNNING
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -145,6 +148,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.selectedOrganizationCount = event.selectedOrganizationCount
             entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
+            entity.secureAggregationRequired = event.secureAggregationRequired
             entity.failureReason = event.failureReason
             entity.state = TrainingRoundStateEnum.FAILED
             ProjectionMetadata.assign(entity, message)
@@ -166,6 +170,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
             entity.roundNumber = event.roundNumber
+            entity.secureAggregationRequired = event.secureAggregationRequired
             entity.baseModelId = event.baseModelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -186,6 +191,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
             entity.roundNumber = event.roundNumber
+            entity.secureAggregationRequired = event.secureAggregationRequired
             entity.baseModelId = event.baseModelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -205,6 +211,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.secureAggregationRequired = event.secureAggregationRequired
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -225,6 +232,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.roundId = event.roundId
             entity.acceptedModelUpdateCount = event.acceptedModelUpdateCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
+            entity.secureAggregationRequired = event.secureAggregationRequired
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -260,8 +268,12 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
-            entity.acceptedModelUpdateCount = event.acceptedModelUpdateCount
+            entity.roundNumber = event.roundNumber
+            entity.selectedOrganizationIds = event.selectedOrganizationIds
+            entity.selectedOrganizationCount = event.selectedOrganizationCount
+            entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
+            entity.secureAggregationRequired = event.secureAggregationRequired
             entity.state = TrainingRoundStateEnum.AGGREGATING
             entity.secureAggregationStatus = "Aggregating"
             ProjectionMetadata.assign(entity, message)
@@ -282,6 +294,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
             entity.aggregatedModelId = event.aggregatedModelId
             entity.state = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
             ProjectionMetadata.assign(entity, message)
@@ -302,6 +315,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
             entity.aggregatedModelId = event.aggregatedModelId
             entity.globalAccuracy = event.globalAccuracy
             entity.globalFairnessScore = event.globalFairnessScore
@@ -323,6 +337,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
             entity.aggregatedModelId = event.aggregatedModelId
             entity.globalAccuracy = event.globalAccuracy
             entity.state = TrainingRoundStateEnum.COMPLETED

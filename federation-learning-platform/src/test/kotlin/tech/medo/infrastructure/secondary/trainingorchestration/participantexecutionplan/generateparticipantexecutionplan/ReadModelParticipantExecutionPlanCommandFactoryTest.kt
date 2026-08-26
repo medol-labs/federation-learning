@@ -118,7 +118,13 @@ class ReadModelParticipantExecutionPlanCommandFactoryTest {
             selectedParticipants = participants,
             selectedOrganizationCount = participants.map { it.organizationId }.distinct().size,
             selectedRuntimeCount = participants.map { it.runtimeId }.distinct().size,
-            minimumNodesPerRound = 1
+            minimumNodesPerRound = 1,
+            secureAggregationRequired = true,
+            secureAggregationSessionId = uuid("99999999-9999-4999-8999-999999999999"),
+            encryptionScheme = "PAILLIER",
+            publicKeyVersion = "local-dev-v1",
+            publicKeyRef = "local://secure-aggregation/public-keys/local-dev-v1",
+            encryptedParameterScale = 1000000
         )
 
     private fun configuration(): TrainingRunConfigurationCatalogReadModelProjection =

@@ -26,15 +26,23 @@ class SecureAggregationSessionState @EntityCreator constructor() {
     var trainingRunConfigurationId: UUID? = null
     var featureSchemaId: UUID? = null
     var roundId: UUID? = null
+    var roundNumber: Int? = null
     var requiredParticipantCount: Int? = null
-    var acceptedRuntimeIds: List<UUID> = emptyList()
+    var selectedOrganizationIds: List<UUID> = emptyList()
     var selectedRuntimeIds: List<UUID> = emptyList()
+    var selectedOrganizationCount: Int? = null
+    var selectedRuntimeCount: Int? = null
+    var minimumNodesPerRound: Int? = null
+    var secureAggregationRequired: Boolean? = null
     var selectedParticipantCount: Int? = null
     var encryptionScheme: String? = null
     var publicKeyVersion: String? = null
+    var publicKeyRef: String? = null
     var encryptedParameterScale: Int? = null
     var submissionId: UUID? = null
     var runtimeId: UUID? = null
+    var updateArtifactId: UUID? = null
+    var encryptedUpdateArtifactRef: String? = null
     var encryptedUpdateDigest: String? = null
     var aggregatedModelId: UUID? = null
     var aggregatedModelArtifactUri: String? = null
@@ -52,8 +60,14 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
+        roundNumber = event.roundNumber
         requiredParticipantCount = event.requiredParticipantCount
-        acceptedRuntimeIds = event.acceptedRuntimeIds
+        selectedOrganizationIds = event.selectedOrganizationIds
+        selectedRuntimeIds = event.selectedRuntimeIds
+        selectedOrganizationCount = event.selectedOrganizationCount
+        selectedRuntimeCount = event.selectedRuntimeCount
+        minimumNodesPerRound = event.minimumNodesPerRound
+        secureAggregationRequired = event.secureAggregationRequired
     }
 
     @EventSourcingHandler
@@ -61,17 +75,36 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         currentState = SecureAggregationSessionStateEnum.PARTICIPANTS_SELECTED
         secureAggregationSessionId = event.secureAggregationSessionId
         roundId = event.roundId
-        acceptedRuntimeIds = event.acceptedRuntimeIds
+        trainingJobId = event.trainingJobId
+        trainingRunConfigurationId = event.trainingRunConfigurationId
+        featureSchemaId = event.featureSchemaId
+        roundNumber = event.roundNumber
+        selectedOrganizationIds = event.selectedOrganizationIds
         selectedRuntimeIds = event.selectedRuntimeIds
+        selectedOrganizationCount = event.selectedOrganizationCount
         selectedParticipantCount = event.selectedParticipantCount
+        minimumNodesPerRound = event.minimumNodesPerRound
+        secureAggregationRequired = event.secureAggregationRequired
     }
 
     @EventSourcingHandler
     fun evolve(event: HomomorphicEncryptionContextPreparedEvent): SecureAggregationSessionState = apply {
         currentState = SecureAggregationSessionStateEnum.ENCRYPTION_CONTEXT_PREPARED
         secureAggregationSessionId = event.secureAggregationSessionId
+        trainingJobId = event.trainingJobId
+        trainingRunConfigurationId = event.trainingRunConfigurationId
+        featureSchemaId = event.featureSchemaId
+        roundId = event.roundId
+        roundNumber = event.roundNumber
+        selectedOrganizationIds = event.selectedOrganizationIds
+        selectedRuntimeIds = event.selectedRuntimeIds
+        selectedOrganizationCount = event.selectedOrganizationCount
+        selectedRuntimeCount = event.selectedRuntimeCount
+        minimumNodesPerRound = event.minimumNodesPerRound
+        secureAggregationRequired = event.secureAggregationRequired
         encryptionScheme = event.encryptionScheme
         publicKeyVersion = event.publicKeyVersion
+        publicKeyRef = event.publicKeyRef
         encryptedParameterScale = event.encryptedParameterScale
     }
 
@@ -79,8 +112,16 @@ class SecureAggregationSessionState @EntityCreator constructor() {
     fun evolve(event: EncryptedModelUpdateReceivedEvent): SecureAggregationSessionState = apply {
         secureAggregationSessionId = event.secureAggregationSessionId
         submissionId = event.submissionId
+        trainingJobId = event.trainingJobId
+        trainingRunConfigurationId = event.trainingRunConfigurationId
+        featureSchemaId = event.featureSchemaId
+        roundId = event.roundId
         runtimeId = event.runtimeId
+        updateArtifactId = event.updateArtifactId
+        encryptedUpdateArtifactRef = event.encryptedUpdateArtifactRef
         encryptedUpdateDigest = event.encryptedUpdateDigest
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
     }
 
     @EventSourcingHandler
@@ -91,6 +132,7 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
+        roundNumber = event.roundNumber
         aggregatedModelId = event.aggregatedModelId
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
         aggregatedModelRegistryRef = event.aggregatedModelRegistryRef

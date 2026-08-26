@@ -30,8 +30,14 @@ class CreateSecureAggregationSessionIntegrationTest(
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
             roundId = java.util.UUID.randomUUID(),
+            roundNumber = 0,
             requiredParticipantCount = 0,
-            acceptedRuntimeIds = emptyList()
+            selectedOrganizationIds = emptyList(),
+            selectedRuntimeIds = emptyList(),
+            selectedOrganizationCount = 0,
+            selectedRuntimeCount = 0,
+            minimumNodesPerRound = 0,
+            secureAggregationRequired = false
         )
 
         commandGateway.send(command).getResultMessage().join()

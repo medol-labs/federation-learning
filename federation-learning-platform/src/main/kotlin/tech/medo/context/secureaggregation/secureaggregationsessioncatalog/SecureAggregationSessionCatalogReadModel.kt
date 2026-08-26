@@ -24,12 +24,16 @@ class SecureAggregationSessionCatalogReadModelCriteria {
     var trainingRunConfigurationId: StringFilter? = null
     var featureSchemaId: StringFilter? = null
     var roundId: StringFilter? = null
+    var roundNumber: IntegerFilter? = null
     var requiredParticipantCount: IntegerFilter? = null
+    var selectedOrganizationCount: IntegerFilter? = null
+    var selectedRuntimeCount: IntegerFilter? = null
     var selectedParticipantCount: IntegerFilter? = null
     var encryptionContextPrepared: BooleanFilter? = null
     var receivedEncryptedUpdateCount: IntegerFilter? = null
     var encryptionScheme: StringFilter? = null
     var publicKeyVersion: StringFilter? = null
+    var publicKeyRef: StringFilter? = null
     var encryptedParameterScale: IntegerFilter? = null
     var aggregatedModelId: StringFilter? = null
     var modelFormat: StringFilter? = null
@@ -51,14 +55,18 @@ class SecureAggregationSessionCatalogReadModelProjection : MetadataProjection {
     var trainingRunConfigurationId: UUID? = null
     var featureSchemaId: UUID? = null
     var roundId: UUID? = null
+    var roundNumber: Int? = null
     var requiredParticipantCount: Int? = null
-    var acceptedRuntimeIds: List<UUID> = emptyList()
+    var selectedOrganizationIds: List<UUID> = emptyList()
     var selectedRuntimeIds: List<UUID> = emptyList()
+    var selectedOrganizationCount: Int? = null
+    var selectedRuntimeCount: Int? = null
     var selectedParticipantCount: Int? = null
     var encryptionContextPrepared: Boolean? = null
     var receivedEncryptedUpdateCount: Int? = null
     var encryptionScheme: String? = null
     var publicKeyVersion: String? = null
+    var publicKeyRef: String? = null
     var encryptedParameterScale: Int? = null
     var aggregatedModelId: UUID? = null
     var modelFormat: String? = null
@@ -86,14 +94,18 @@ fun SecureAggregationSessionCatalogReadModelProjection.toReadModel(): SecureAggr
     trainingRunConfigurationId = trainingRunConfigurationId,
     featureSchemaId = featureSchemaId,
     roundId = roundId,
+    roundNumber = roundNumber,
     requiredParticipantCount = requiredParticipantCount,
-    acceptedRuntimeIds = acceptedRuntimeIds,
+    selectedOrganizationIds = selectedOrganizationIds,
     selectedRuntimeIds = selectedRuntimeIds,
+    selectedOrganizationCount = selectedOrganizationCount,
+    selectedRuntimeCount = selectedRuntimeCount,
     selectedParticipantCount = selectedParticipantCount,
     encryptionContextPrepared = encryptionContextPrepared,
     receivedEncryptedUpdateCount = receivedEncryptedUpdateCount,
     encryptionScheme = encryptionScheme,
     publicKeyVersion = publicKeyVersion,
+    publicKeyRef = publicKeyRef,
     encryptedParameterScale = encryptedParameterScale,
     aggregatedModelId = aggregatedModelId,
     modelFormat = modelFormat,
@@ -128,14 +140,18 @@ data class SecureAggregationSessionCatalogReadModel(
     val trainingRunConfigurationId: UUID?,
     val featureSchemaId: UUID?,
     val roundId: UUID?,
+    val roundNumber: Int?,
     val requiredParticipantCount: Int?,
-    val acceptedRuntimeIds: List<UUID>,
+    val selectedOrganizationIds: List<UUID>,
     val selectedRuntimeIds: List<UUID>,
+    val selectedOrganizationCount: Int?,
+    val selectedRuntimeCount: Int?,
     val selectedParticipantCount: Int?,
     val encryptionContextPrepared: Boolean?,
     val receivedEncryptedUpdateCount: Int?,
     val encryptionScheme: String?,
     val publicKeyVersion: String?,
+    val publicKeyRef: String?,
     val encryptedParameterScale: Int?,
     val aggregatedModelId: UUID?,
     val modelFormat: String?,

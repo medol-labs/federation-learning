@@ -13,6 +13,7 @@ data class CompleteHomomorphicAggregationSessionInput(
     val trainingRunConfigurationId: UUID,
     val featureSchemaId: UUID,
     val roundId: UUID,
+    val roundNumber: Int,
     val aggregatedModelId: UUID,
     val aggregatedModelArtifactUri: String,
     val aggregatedModelRegistryRef: String,

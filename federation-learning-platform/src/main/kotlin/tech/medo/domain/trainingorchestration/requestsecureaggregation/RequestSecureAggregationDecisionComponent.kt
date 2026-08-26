@@ -22,26 +22,32 @@ class RequestSecureAggregationDecisionComponent : RequestSecureAggregationDecisi
             return emptyList()
         }
 
-        val minimumNodesPerRound = command.minimumNodesPerRound.takeIf { it > 0 }
-            ?: state.minimumNodesPerRound
-            ?: 1
-        val acceptedModelUpdateCount = command.acceptedModelUpdateCount.takeIf { it > 0 }
-            ?: command.acceptedRuntimeIds.distinct().size
-
-        if (command.acceptedRuntimeIds.isEmpty()) {
-            log.warn(
-                "Skip secure aggregation request because no accepted runtime was provided. trainingJobId={}, roundId={}",
+        if (!command.secureAggregationRequired) {
+            log.info(
+                "Skip secure aggregation request because secure aggregation is not required. trainingJobId={}, roundId={}",
                 command.trainingJobId,
                 command.roundId
             )
             return emptyList()
         }
-        if (acceptedModelUpdateCount < minimumNodesPerRound) {
+
+        val minimumNodesPerRound = command.minimumNodesPerRound.takeIf { it > 0 } ?: 1
+        val selectedRuntimeIds = command.selectedRuntimeIds.distinct()
+
+        if (selectedRuntimeIds.isEmpty()) {
             log.warn(
-                "Skip secure aggregation request because accepted update count is below quorum. trainingJobId={}, roundId={}, acceptedModelUpdateCount={}, minimumNodesPerRound={}",
+                "Skip secure aggregation request because no selected runtime was provided. trainingJobId={}, roundId={}",
+                command.trainingJobId,
+                command.roundId
+            )
+            return emptyList()
+        }
+        if (selectedRuntimeIds.size < minimumNodesPerRound) {
+            log.warn(
+                "Skip secure aggregation request because selected runtime count is below quorum. trainingJobId={}, roundId={}, selectedRuntimeCount={}, minimumNodesPerRound={}",
                 command.trainingJobId,
                 command.roundId,
-                acceptedModelUpdateCount,
+                selectedRuntimeIds.size,
                 minimumNodesPerRound
             )
             return emptyList()
@@ -52,9 +58,14 @@ class RequestSecureAggregationDecisionComponent : RequestSecureAggregationDecisi
                 trainingRunConfigurationId = state.trainingRunConfigurationId ?: command.trainingRunConfigurationId,
                 featureSchemaId = state.featureSchemaId ?: command.featureSchemaId,
                 roundId = command.roundId,
-                acceptedModelUpdateCount = acceptedModelUpdateCount,
-                acceptedRuntimeIds = command.acceptedRuntimeIds.distinct(),
-                minimumNodesPerRound = minimumNodesPerRound
+                roundNumber = command.roundNumber,
+                requiredParticipantCount = command.requiredParticipantCount,
+                selectedOrganizationIds = command.selectedOrganizationIds.distinct(),
+                selectedRuntimeIds = selectedRuntimeIds,
+                selectedOrganizationCount = command.selectedOrganizationCount,
+                selectedRuntimeCount = selectedRuntimeIds.size,
+                minimumNodesPerRound = minimumNodesPerRound,
+                secureAggregationRequired = command.secureAggregationRequired
             )
         )
     }

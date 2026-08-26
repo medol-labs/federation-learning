@@ -11,6 +11,14 @@ data class EncryptedModelUpdateReceivedEvent(
     @EventTag(key = "secureAggregationSessionId")
     val secureAggregationSessionId: UUID,
     val submissionId: UUID,
+    val trainingJobId: UUID,
+    val trainingRunConfigurationId: UUID,
+    val featureSchemaId: UUID,
+    val roundId: UUID,
     val runtimeId: UUID,
-    val encryptedUpdateDigest: String
+    val updateArtifactId: UUID,
+    val encryptedUpdateArtifactRef: String,
+    val encryptedUpdateDigest: String,
+    val encryptionScheme: String,
+    val publicKeyVersion: String
 )

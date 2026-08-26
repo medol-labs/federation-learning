@@ -75,7 +75,13 @@ class LocalAcceptExecutionPlanAdapterTest {
             baseModelRegistryRef = "oci://registry.example.com/fl",
             baseModelFormat = "ONNX",
             baseModelArtifactDigest = "sha256:abc",
-            baseModelSignatureUri = "oci://registry.example.com/fl/model.sig"
+            baseModelSignatureUri = "oci://registry.example.com/fl/model.sig",
+            secureAggregationRequired = true,
+            secureAggregationSessionId = UUID.fromString("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
+            encryptionScheme = "PAILLIER",
+            publicKeyVersion = "local-dev-v1",
+            publicKeyRef = "local://secure-aggregation/public-keys/local-dev-v1",
+            encryptedParameterScale = 1000000
         )
 
     private fun binding(

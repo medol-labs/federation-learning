@@ -21,5 +21,11 @@ data class TrainingRoundStartFailedEvent(
     val selectedOrganizationCount: Int,
     val selectedRuntimeCount: Int,
     val minimumNodesPerRound: Int,
+    val secureAggregationRequired: Boolean,
+    val secureAggregationSessionId: UUID?,
+    val encryptionScheme: String?,
+    val publicKeyVersion: String?,
+    val publicKeyRef: String?,
+    val encryptedParameterScale: Int?,
     val failureReason: String
 )

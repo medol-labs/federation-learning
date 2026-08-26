@@ -33,6 +33,12 @@ class ObserveRuntimeEngineJobDecisionTest {
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            secureAggregationRequired = false,
+            secureAggregationSessionId = null,
+            encryptionScheme = null,
+            publicKeyVersion = null,
+            publicKeyRef = null,
+            encryptedParameterScale = null,
             runtimeEngineJobId = ""
             )
         )
@@ -48,7 +54,11 @@ class ObserveRuntimeEngineJobDecisionTest {
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
-            runtimeEngineJobId = ""
+            runtimeEngineJobId = "",
+            secureAggregationRequired = false,
+            secureAggregationSessionId = null,
+            encryptionScheme = null,
+            publicKeyVersion = null
         )
 
         val events = (object : ObserveRuntimeEngineJobDecision {}).decide(
@@ -58,6 +68,8 @@ class ObserveRuntimeEngineJobDecisionTest {
                 observedStatus = "",
                 failureReason = null,
                 localUpdateArtifactRef = null,
+                encryptedUpdateArtifactRef = null,
+                encryptedUpdateDigest = null,
                 metricsArtifactRef = null,
                 trainingLoss = null
             )
@@ -75,6 +87,10 @@ class ObserveRuntimeEngineJobDecisionTest {
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
         assertEquals(command.runtimeEngineJobId, event.runtimeEngineJobId)
+        assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
+        assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
+        assertEquals(command.encryptionScheme, event.encryptionScheme)
+        assertEquals(command.publicKeyVersion, event.publicKeyVersion)
     }
 
     @Test
@@ -98,6 +114,12 @@ class ObserveRuntimeEngineJobDecisionTest {
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            secureAggregationRequired = false,
+            secureAggregationSessionId = null,
+            encryptionScheme = null,
+            publicKeyVersion = null,
+            publicKeyRef = null,
+            encryptedParameterScale = null,
             runtimeEngineJobId = ""
             )
         )
@@ -113,7 +135,11 @@ class ObserveRuntimeEngineJobDecisionTest {
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
-            runtimeEngineJobId = ""
+            runtimeEngineJobId = "",
+            secureAggregationRequired = false,
+            secureAggregationSessionId = null,
+            encryptionScheme = null,
+            publicKeyVersion = null
         )
 
         val events = (object : ObserveRuntimeEngineJobDecision {}).decide(
@@ -123,6 +149,8 @@ class ObserveRuntimeEngineJobDecisionTest {
                 observedStatus = "",
                 failureReason = null,
                 localUpdateArtifactRef = null,
+                encryptedUpdateArtifactRef = null,
+                encryptedUpdateDigest = null,
                 metricsArtifactRef = null,
                 trainingLoss = null
             )
@@ -140,6 +168,10 @@ class ObserveRuntimeEngineJobDecisionTest {
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
         assertEquals(command.runtimeEngineJobId, event.runtimeEngineJobId)
+        assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
+        assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
+        assertEquals(command.encryptionScheme, event.encryptionScheme)
+        assertEquals(command.publicKeyVersion, event.publicKeyVersion)
     }
 
     @Test
@@ -163,6 +195,12 @@ class ObserveRuntimeEngineJobDecisionTest {
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            secureAggregationRequired = false,
+            secureAggregationSessionId = null,
+            encryptionScheme = null,
+            publicKeyVersion = null,
+            publicKeyRef = null,
+            encryptedParameterScale = null,
             runtimeEngineJobId = ""
             )
         )
@@ -178,7 +216,11 @@ class ObserveRuntimeEngineJobDecisionTest {
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
-            runtimeEngineJobId = ""
+            runtimeEngineJobId = "",
+            secureAggregationRequired = false,
+            secureAggregationSessionId = null,
+            encryptionScheme = null,
+            publicKeyVersion = null
         )
 
         val events = (object : ObserveRuntimeEngineJobDecision {}).decide(
@@ -188,6 +230,8 @@ class ObserveRuntimeEngineJobDecisionTest {
                 observedStatus = "",
                 failureReason = null,
                 localUpdateArtifactRef = null,
+                encryptedUpdateArtifactRef = null,
+                encryptedUpdateDigest = null,
                 metricsArtifactRef = null,
                 trainingLoss = null
             )
@@ -205,5 +249,9 @@ class ObserveRuntimeEngineJobDecisionTest {
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
         assertEquals(command.runtimeEngineJobId, event.runtimeEngineJobId)
+        assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
+        assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
+        assertEquals(command.encryptionScheme, event.encryptionScheme)
+        assertEquals(command.publicKeyVersion, event.publicKeyVersion)
     }
 }

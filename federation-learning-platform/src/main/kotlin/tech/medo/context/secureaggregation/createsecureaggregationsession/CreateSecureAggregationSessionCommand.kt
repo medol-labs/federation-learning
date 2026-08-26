@@ -13,8 +13,14 @@ data class CreateSecureAggregationSessionCommand(
     val trainingRunConfigurationId: UUID,
     val featureSchemaId: UUID,
     val roundId: UUID,
+    val roundNumber: Int,
     val requiredParticipantCount: Int,
-    val acceptedRuntimeIds: List<UUID>
+    val selectedOrganizationIds: List<UUID>,
+    val selectedRuntimeIds: List<UUID>,
+    val selectedOrganizationCount: Int,
+    val selectedRuntimeCount: Int,
+    val minimumNodesPerRound: Int,
+    val secureAggregationRequired: Boolean
 ) {
     @TargetEntityId
     val selection: SecureAggregationSessionSelection = SecureAggregationSessionSelection(secureAggregationSessionId = secureAggregationSessionId)

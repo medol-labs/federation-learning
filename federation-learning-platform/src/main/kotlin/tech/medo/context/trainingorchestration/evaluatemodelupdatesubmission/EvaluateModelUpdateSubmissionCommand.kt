@@ -17,6 +17,14 @@ data class EvaluateModelUpdateSubmissionCommand(
     val roundId: UUID,
     val runtimeId: UUID,
     val featureSchemaId: UUID,
+    val secureAggregationRequired: Boolean,
+    val secureAggregationSessionId: UUID?,
+    val encryptionScheme: String?,
+    val publicKeyVersion: String?,
+    val updateArtifactId: UUID,
+    val artifactRef: String,
+    val artifactDigest: String,
+    val updateProtectionType: String,
     val anomalyScore: BigDecimal = java.math.BigDecimal.ZERO
 ) {
     @TargetEntityId

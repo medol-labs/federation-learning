@@ -26,7 +26,7 @@ class SelectSecureAggregationParticipantsCommandHandler(
         require(state.currentState == SecureAggregationSessionStateEnum.PLANNED) {
             "SelectSecureAggregationParticipants requires SecureAggregationSession to be Planned."
         }
-        val input = SelectSecureAggregationParticipantsInput(secureAggregationSessionId = command.secureAggregationSessionId, roundId = command.roundId, acceptedRuntimeIds = command.acceptedRuntimeIds, selectedRuntimeIds = command.selectedRuntimeIds, selectedParticipantCount = command.selectedParticipantCount)
+        val input = SelectSecureAggregationParticipantsInput(secureAggregationSessionId = command.secureAggregationSessionId, roundId = command.roundId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, featureSchemaId = command.featureSchemaId, roundNumber = command.roundNumber, selectedOrganizationIds = command.selectedOrganizationIds, selectedRuntimeIds = command.selectedRuntimeIds, selectedOrganizationCount = command.selectedOrganizationCount, selectedParticipantCount = command.selectedParticipantCount, minimumNodesPerRound = command.minimumNodesPerRound, secureAggregationRequired = command.secureAggregationRequired)
         val portResult = selectSecureAggregationParticipantsService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))

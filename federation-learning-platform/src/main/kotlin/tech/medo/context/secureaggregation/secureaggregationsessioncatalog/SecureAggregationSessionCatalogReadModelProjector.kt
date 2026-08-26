@@ -32,8 +32,12 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
             entity.requiredParticipantCount = event.requiredParticipantCount
-            entity.acceptedRuntimeIds = event.acceptedRuntimeIds
+            entity.selectedOrganizationIds = event.selectedOrganizationIds
+            entity.selectedRuntimeIds = event.selectedRuntimeIds
+            entity.selectedOrganizationCount = event.selectedOrganizationCount
+            entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.state = SecureAggregationSessionStateEnum.PLANNED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -49,9 +53,14 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
                 this.secureAggregationSessionId = event.secureAggregationSessionId
         }
             entity.secureAggregationSessionId = event.secureAggregationSessionId
+            entity.trainingJobId = event.trainingJobId
+            entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
-            entity.acceptedRuntimeIds = event.acceptedRuntimeIds
+            entity.roundNumber = event.roundNumber
+            entity.selectedOrganizationIds = event.selectedOrganizationIds
             entity.selectedRuntimeIds = event.selectedRuntimeIds
+            entity.selectedOrganizationCount = event.selectedOrganizationCount
             entity.selectedParticipantCount = event.selectedParticipantCount
             entity.state = SecureAggregationSessionStateEnum.PARTICIPANTS_SELECTED
             ProjectionMetadata.assign(entity, message)
@@ -68,8 +77,18 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
                 this.secureAggregationSessionId = event.secureAggregationSessionId
         }
             entity.secureAggregationSessionId = event.secureAggregationSessionId
+            entity.trainingJobId = event.trainingJobId
+            entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
+            entity.selectedOrganizationIds = event.selectedOrganizationIds
+            entity.selectedRuntimeIds = event.selectedRuntimeIds
+            entity.selectedOrganizationCount = event.selectedOrganizationCount
+            entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.encryptionScheme = event.encryptionScheme
             entity.publicKeyVersion = event.publicKeyVersion
+            entity.publicKeyRef = event.publicKeyRef
             entity.encryptedParameterScale = event.encryptedParameterScale
             entity.state = SecureAggregationSessionStateEnum.ENCRYPTION_CONTEXT_PREPARED
             entity.encryptionContextPreparedAt = eventTime(message)
@@ -87,6 +106,12 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
                 this.secureAggregationSessionId = event.secureAggregationSessionId
         }
             entity.secureAggregationSessionId = event.secureAggregationSessionId
+            entity.trainingJobId = event.trainingJobId
+            entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.roundId = event.roundId
+            entity.encryptionScheme = event.encryptionScheme
+            entity.publicKeyVersion = event.publicKeyVersion
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -105,6 +130,7 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
             entity.aggregatedModelId = event.aggregatedModelId
             entity.modelFormat = event.modelFormat
             entity.modelArtifactDigest = event.modelArtifactDigest

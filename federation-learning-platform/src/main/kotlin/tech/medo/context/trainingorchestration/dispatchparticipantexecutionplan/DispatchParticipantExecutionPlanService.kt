@@ -22,7 +22,13 @@ data class DispatchParticipantExecutionPlanInput(
     val baseModelRegistryRef: String,
     val baseModelFormat: String,
     val baseModelArtifactDigest: String,
-    val baseModelSignatureUri: String?
+    val baseModelSignatureUri: String?,
+    val secureAggregationRequired: Boolean,
+    val secureAggregationSessionId: UUID?,
+    val encryptionScheme: String?,
+    val publicKeyVersion: String?,
+    val publicKeyRef: String?,
+    val encryptedParameterScale: Int?
 )
 
 sealed interface DispatchParticipantExecutionPlanResult {

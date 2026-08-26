@@ -32,6 +32,12 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
     var baseModelFormat: String? = null
     var baseModelArtifactDigest: String? = null
     var baseModelSignatureUri: String? = null
+    var secureAggregationRequired: Boolean? = null
+    var secureAggregationSessionId: UUID? = null
+    var encryptionScheme: String? = null
+    var publicKeyVersion: String? = null
+    var publicKeyRef: String? = null
+    var encryptedParameterScale: Int? = null
 
     @EventSourcingHandler
     fun evolve(event: ParticipantExecutionPlanGeneratedEvent): ParticipantExecutionPlanState = apply {
@@ -51,6 +57,12 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
+        publicKeyRef = event.publicKeyRef
+        encryptedParameterScale = event.encryptedParameterScale
     }
 
     @EventSourcingHandler
@@ -71,5 +83,11 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
+        publicKeyRef = event.publicKeyRef
+        encryptedParameterScale = event.encryptedParameterScale
     }
 }

@@ -19,7 +19,11 @@ data class ObserveRuntimeEngineJobInput(
     val runtimeId: UUID,
     val organizationId: UUID,
     val featureSchemaId: UUID,
-    val runtimeEngineJobId: String
+    val runtimeEngineJobId: String,
+    val secureAggregationRequired: Boolean,
+    val secureAggregationSessionId: UUID?,
+    val encryptionScheme: String?,
+    val publicKeyVersion: String?
 )
 
 sealed interface ObserveRuntimeEngineJobResult {
@@ -27,6 +31,8 @@ sealed interface ObserveRuntimeEngineJobResult {
         val observedStatus: String,
         val failureReason: String?,
         val localUpdateArtifactRef: String?,
+        val encryptedUpdateArtifactRef: String?,
+        val encryptedUpdateDigest: String?,
         val metricsArtifactRef: String?,
         val trainingLoss: BigDecimal?
     ) : ObserveRuntimeEngineJobResult

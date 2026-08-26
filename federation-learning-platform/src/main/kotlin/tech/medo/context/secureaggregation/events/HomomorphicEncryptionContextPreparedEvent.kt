@@ -10,7 +10,19 @@ import java.util.UUID;
 data class HomomorphicEncryptionContextPreparedEvent(
     @EventTag(key = "secureAggregationSessionId")
     val secureAggregationSessionId: UUID,
+    val trainingJobId: UUID,
+    val trainingRunConfigurationId: UUID,
+    val featureSchemaId: UUID,
+    val roundId: UUID,
+    val roundNumber: Int,
+    val selectedOrganizationIds: List<UUID>,
+    val selectedRuntimeIds: List<UUID>,
+    val selectedOrganizationCount: Int,
+    val selectedRuntimeCount: Int,
+    val minimumNodesPerRound: Int,
+    val secureAggregationRequired: Boolean,
     val encryptionScheme: String,
     val publicKeyVersion: String,
+    val publicKeyRef: String,
     val encryptedParameterScale: Int
 )

@@ -13,6 +13,7 @@ data class GlobalModelUpdatedEvent(
     val trainingRunConfigurationId: UUID,
     val featureSchemaId: UUID,
     val roundId: UUID,
+    val roundNumber: Int,
     val secureAggregationSessionId: UUID,
     val aggregatedModelId: UUID,
     val aggregatedModelArtifactUri: String,

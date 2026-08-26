@@ -19,7 +19,13 @@ data class StartTrainingRoundCommand(
     val selectedParticipants: List<TrainingRoundParticipant>,
     val selectedOrganizationCount: Int,
     val selectedRuntimeCount: Int,
-    val minimumNodesPerRound: Int
+    val minimumNodesPerRound: Int,
+    val secureAggregationRequired: Boolean,
+    val secureAggregationSessionId: UUID?,
+    val encryptionScheme: String?,
+    val publicKeyVersion: String?,
+    val publicKeyRef: String?,
+    val encryptedParameterScale: Int?
 ) {
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)

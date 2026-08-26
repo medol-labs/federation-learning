@@ -1,11 +1,14 @@
 package tech.medo.runtimeagentoperations.loadruntimeagentbootstrapconfiguration
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import tech.medo.runtimeagentoperations.loadruntimeagentbootstrapconfiguration.LoadRuntimeAgentBootstrapConfigurationCommand
 import tech.medo.runtimeagentoperations.events.RuntimeAgentBootstrapConfigurationLoadedEvent
 import tech.medo.runtimeagentoperations.events.RuntimeAgentBootstrapConfigurationLoadFailedEvent
-import java.time.LocalDateTime
+import tech.medo.runtimeagentoperations.loadruntimeagentbootstrapconfiguration.LoadRuntimeAgentBootstrapConfigurationResult
 import java.util.UUID
+import java.time.LocalDateTime
 
 class LoadRuntimeAgentBootstrapConfigurationDecisionTest {
     @Test
@@ -13,21 +16,22 @@ class LoadRuntimeAgentBootstrapConfigurationDecisionTest {
 
 
         val command = LoadRuntimeAgentBootstrapConfigurationCommand(
-            bootstrapRequestId = UUID.randomUUID()
+            bootstrapRequestId = java.util.UUID.randomUUID()
         )
 
         val events = (object : LoadRuntimeAgentBootstrapConfigurationDecision {}).decide(
             command,
             portResult = LoadRuntimeAgentBootstrapConfigurationResult.Succeeded(
-                runtimeAgentId = UUID.randomUUID(),
-                runtimeInfrastructureId = UUID.randomUUID(),
+                runtimeAgentId = java.util.UUID.randomUUID(),
+                runtimeInfrastructureId = java.util.UUID.randomUUID(),
                 agentVersion = "",
                 bootstrapConfigurationLoaded = false
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
         )
 
-        events.filterIsInstance<RuntimeAgentBootstrapConfigurationLoadedEvent>().single()
+        val event = events.filterIsInstance<RuntimeAgentBootstrapConfigurationLoadedEvent>().single()
+        assertTrue(event is RuntimeAgentBootstrapConfigurationLoadedEvent)
     }
 
     @Test
@@ -35,7 +39,7 @@ class LoadRuntimeAgentBootstrapConfigurationDecisionTest {
 
 
         val command = LoadRuntimeAgentBootstrapConfigurationCommand(
-            bootstrapRequestId = UUID.randomUUID()
+            bootstrapRequestId = java.util.UUID.randomUUID()
         )
 
         val events = (object : LoadRuntimeAgentBootstrapConfigurationDecision {}).decide(

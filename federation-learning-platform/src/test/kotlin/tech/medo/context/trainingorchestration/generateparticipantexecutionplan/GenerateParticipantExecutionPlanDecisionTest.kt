@@ -31,7 +31,13 @@ class GenerateParticipantExecutionPlanDecisionTest {
             baseModelRegistryRef = "",
             baseModelFormat = "",
             baseModelArtifactDigest = "",
-            baseModelSignatureUri = null
+            baseModelSignatureUri = null,
+            secureAggregationRequired = false,
+            secureAggregationSessionId = null,
+            encryptionScheme = null,
+            publicKeyVersion = null,
+            publicKeyRef = null,
+            encryptedParameterScale = null
         )
 
         val events = (object : GenerateParticipantExecutionPlanDecision {}).decide(
@@ -54,6 +60,12 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(command.baseModelFormat, event.baseModelFormat)
         assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
         assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
+        assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
+        assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
+        assertEquals(command.encryptionScheme, event.encryptionScheme)
+        assertEquals(command.publicKeyVersion, event.publicKeyVersion)
+        assertEquals(command.publicKeyRef, event.publicKeyRef)
+        assertEquals(command.encryptedParameterScale, event.encryptedParameterScale)
     }
 
     @Test
@@ -75,7 +87,13 @@ class GenerateParticipantExecutionPlanDecisionTest {
             baseModelRegistryRef = "",
             baseModelFormat = "",
             baseModelArtifactDigest = "",
-            baseModelSignatureUri = null
+            baseModelSignatureUri = null,
+            secureAggregationRequired = false,
+            secureAggregationSessionId = null,
+            encryptionScheme = null,
+            publicKeyVersion = null,
+            publicKeyRef = null,
+            encryptedParameterScale = null
         )
 
         val events = (object : GenerateParticipantExecutionPlanDecision {}).decide(
@@ -98,5 +116,11 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(command.baseModelFormat, event.baseModelFormat)
         assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
         assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
+        assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
+        assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
+        assertEquals(command.encryptionScheme, event.encryptionScheme)
+        assertEquals(command.publicKeyVersion, event.publicKeyVersion)
+        assertEquals(command.publicKeyRef, event.publicKeyRef)
+        assertEquals(command.encryptedParameterScale, event.encryptedParameterScale)
     }
 }

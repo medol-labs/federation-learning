@@ -146,9 +146,9 @@ async function selectTargetsWithCheckboxes(allTargets) {
             stdin.pause();
         }
 
-        function finish(targets) {
+        function finish(selectedTargets) {
             cleanup();
-            resolveSelection(targets);
+            resolveSelection(selectedTargets);
         }
 
         function onKeypress(text, key = {}) {

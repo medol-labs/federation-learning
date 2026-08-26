@@ -49,6 +49,12 @@ class RoundExecutionState @EntityCreator constructor() {
     var baseModelFormat: String? = null
     var baseModelArtifactDigest: String? = null
     var baseModelSignatureUri: String? = null
+    var secureAggregationRequired: Boolean? = null
+    var secureAggregationSessionId: UUID? = null
+    var encryptionScheme: String? = null
+    var publicKeyVersion: String? = null
+    var publicKeyRef: String? = null
+    var encryptedParameterScale: Int? = null
     var localExecutionRequirementsSatisfied: Boolean? = null
     var runtimeIdentityMatched: Boolean? = null
     var runtimeDatasetBindingAvailable: Boolean? = null
@@ -63,6 +69,8 @@ class RoundExecutionState @EntityCreator constructor() {
     var failureReason: String? = null
     var observedStatus: String? = null
     var localUpdateArtifactRef: String? = null
+    var encryptedUpdateArtifactRef: String? = null
+    var encryptedUpdateDigest: String? = null
     var metricsArtifactRef: String? = null
     var trainingLoss: BigDecimal? = null
     var retryReason: String? = null
@@ -71,6 +79,7 @@ class RoundExecutionState @EntityCreator constructor() {
     var updateArtifactId: UUID? = null
     var artifactRef: String? = null
     var artifactDigest: String? = null
+    var updateProtectionType: String? = null
 
     @EventSourcingHandler
     fun evolve(event: ExecutionPlanReceivedEvent): RoundExecutionState = apply {
@@ -90,6 +99,12 @@ class RoundExecutionState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
+        publicKeyRef = event.publicKeyRef
+        encryptedParameterScale = event.encryptedParameterScale
     }
 
     @EventSourcingHandler
@@ -110,6 +125,12 @@ class RoundExecutionState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
+        publicKeyRef = event.publicKeyRef
+        encryptedParameterScale = event.encryptedParameterScale
         localExecutionRequirementsSatisfied = event.localExecutionRequirementsSatisfied
         runtimeIdentityMatched = event.runtimeIdentityMatched
         runtimeDatasetBindingAvailable = event.runtimeDatasetBindingAvailable
@@ -138,6 +159,12 @@ class RoundExecutionState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
+        publicKeyRef = event.publicKeyRef
+        encryptedParameterScale = event.encryptedParameterScale
         localExecutionRequirementsSatisfied = event.localExecutionRequirementsSatisfied
         runtimeIdentityMatched = event.runtimeIdentityMatched
         runtimeDatasetBindingAvailable = event.runtimeDatasetBindingAvailable
@@ -168,6 +195,12 @@ class RoundExecutionState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
+        publicKeyRef = event.publicKeyRef
+        encryptedParameterScale = event.encryptedParameterScale
         runtimeEngineJobId = event.runtimeEngineJobId
     }
 
@@ -190,6 +223,12 @@ class RoundExecutionState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
+        publicKeyRef = event.publicKeyRef
+        encryptedParameterScale = event.encryptedParameterScale
         runtimeEngineJobId = event.runtimeEngineJobId
         failureReason = event.failureReason
     }
@@ -207,9 +246,15 @@ class RoundExecutionState @EntityCreator constructor() {
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
         runtimeEngineJobId = event.runtimeEngineJobId
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
         observedStatus = event.observedStatus
         failureReason = event.failureReason
         localUpdateArtifactRef = event.localUpdateArtifactRef
+        encryptedUpdateArtifactRef = event.encryptedUpdateArtifactRef
+        encryptedUpdateDigest = event.encryptedUpdateDigest
         metricsArtifactRef = event.metricsArtifactRef
         trainingLoss = event.trainingLoss
     }
@@ -228,7 +273,13 @@ class RoundExecutionState @EntityCreator constructor() {
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
         runtimeEngineJobId = event.runtimeEngineJobId
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
         localUpdateArtifactRef = event.localUpdateArtifactRef
+        encryptedUpdateArtifactRef = event.encryptedUpdateArtifactRef
+        encryptedUpdateDigest = event.encryptedUpdateDigest
         metricsArtifactRef = event.metricsArtifactRef
         trainingLoss = event.trainingLoss
     }
@@ -336,10 +387,15 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
+        secureAggregationRequired = event.secureAggregationRequired
+        secureAggregationSessionId = event.secureAggregationSessionId
+        encryptionScheme = event.encryptionScheme
+        publicKeyVersion = event.publicKeyVersion
         localModelId = event.localModelId
         updateArtifactId = event.updateArtifactId
         artifactRef = event.artifactRef
         artifactDigest = event.artifactDigest
+        updateProtectionType = event.updateProtectionType
         trainingLoss = event.trainingLoss
     }
 

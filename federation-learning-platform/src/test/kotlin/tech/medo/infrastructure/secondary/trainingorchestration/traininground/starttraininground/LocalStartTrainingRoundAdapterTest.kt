@@ -45,7 +45,13 @@ class LocalStartTrainingRoundAdapterTest {
             ),
             selectedOrganizationCount = 1,
             selectedRuntimeCount = selectedRuntimeCount,
-            minimumNodesPerRound = minimumNodesPerRound
+            minimumNodesPerRound = minimumNodesPerRound,
+            secureAggregationRequired = true,
+            secureAggregationSessionId = uuid("88888888-8888-4888-8888-888888888888"),
+            encryptionScheme = "PAILLIER",
+            publicKeyVersion = "local-dev-v1",
+            publicKeyRef = "local://secure-aggregation/public-keys/local-dev-v1",
+            encryptedParameterScale = 1000000
         )
 
     private fun uuid(value: String): UUID = UUID.fromString(value)

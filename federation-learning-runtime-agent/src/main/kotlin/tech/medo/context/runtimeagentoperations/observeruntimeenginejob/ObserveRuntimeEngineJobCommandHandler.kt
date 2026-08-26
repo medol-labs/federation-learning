@@ -26,7 +26,7 @@ class ObserveRuntimeEngineJobCommandHandler(
         require(state.currentState == RoundExecutionStateEnum.RUNNING) {
             "ObserveRuntimeEngineJob requires RoundExecution to be Running."
         }
-        val input = ObserveRuntimeEngineJobInput(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, runtimeEngineJobId = command.runtimeEngineJobId)
+        val input = ObserveRuntimeEngineJobInput(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, runtimeEngineJobId = command.runtimeEngineJobId, secureAggregationRequired = command.secureAggregationRequired, secureAggregationSessionId = command.secureAggregationSessionId, encryptionScheme = command.encryptionScheme, publicKeyVersion = command.publicKeyVersion)
         val portResult = observeRuntimeEngineJobService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))

@@ -26,7 +26,13 @@ class ReceiveParticipantExecutionPlanDecisionTest {
             baseModelRegistryRef = "",
             baseModelFormat = "",
             baseModelArtifactDigest = "",
-            baseModelSignatureUri = null
+            baseModelSignatureUri = null,
+            secureAggregationRequired = false,
+            secureAggregationSessionId = null,
+            encryptionScheme = null,
+            publicKeyVersion = null,
+            publicKeyRef = null,
+            encryptedParameterScale = null
             )
         )
 

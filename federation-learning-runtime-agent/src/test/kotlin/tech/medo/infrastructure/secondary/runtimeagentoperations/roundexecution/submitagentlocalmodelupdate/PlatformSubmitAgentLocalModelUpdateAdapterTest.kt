@@ -78,10 +78,15 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
             roundId = UUID.fromString("77777777-7777-4777-8777-777777777777"),
             runtimeId = UUID.fromString("88888888-8888-4888-8888-888888888888"),
             featureSchemaId = UUID.fromString("99999999-9999-4999-8999-999999999999"),
+            secureAggregationRequired = true,
+            secureAggregationSessionId = UUID.fromString("cccccccc-cccc-4ccc-8ccc-cccccccccccc"),
+            encryptionScheme = "PAILLIER",
+            publicKeyVersion = "local-dev-v1",
             localModelId = UUID.fromString("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
             updateArtifactId = UUID.fromString("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"),
             artifactRef = artifactRef,
             artifactDigest = artifactDigest,
+            updateProtectionType = "HOMOMORPHIC_ENCRYPTED",
             trainingLoss = BigDecimal("0.125")
         )
 

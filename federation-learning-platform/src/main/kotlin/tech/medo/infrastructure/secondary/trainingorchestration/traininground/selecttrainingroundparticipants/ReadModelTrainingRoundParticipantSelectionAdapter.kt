@@ -31,6 +31,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         val federationId = trainingJob?.federationId ?: trainingRunConfiguration?.federationId
         val featureSchemaId = trainingJob?.featureSchemaId ?: trainingRunConfiguration?.featureSchemaId
         val minimumNodesPerRound = trainingRunConfiguration?.minimumNodesPerRound ?: trainingJob?.minimumNodesPerRound
+        val secureAggregationRequired = trainingRunConfiguration?.secureAggregationRequired ?: trainingJob?.secureAggregationRequired ?: false
 
         if (trainingRunConfigurationId == null || federationId == null || featureSchemaId == null || minimumNodesPerRound == null || minimumNodesPerRound <= 0) {
             log.warn(
@@ -143,6 +144,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 roundId = roundId,
                 roundNumber = roundNumber,
                 minimumNodesPerRound = minimumNodesPerRound,
+                secureAggregationRequired = secureAggregationRequired,
                 selectedOrganizationIds = selectedOrganizationIds,
                 selectedRuntimeIds = selectedRuntimeIds,
                 selectedParticipants = selectedParticipants,
@@ -158,6 +160,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             roundId = roundId,
             roundNumber = roundNumber,
             minimumNodesPerRound = minimumNodesPerRound,
+            secureAggregationRequired = secureAggregationRequired,
             selectedOrganizationIds = selectedOrganizationIds,
             selectedRuntimeIds = selectedRuntimeIds,
             selectedParticipants = selectedParticipants,

@@ -22,6 +22,7 @@ class RetryTrainingRoundParticipantSelectionDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             minimumNodesPerRound = 0,
+            secureAggregationRequired = false,
             selectedOrganizationIds = emptyList(),
             selectedRuntimeIds = emptyList(),
             selectedParticipants = emptyList(),

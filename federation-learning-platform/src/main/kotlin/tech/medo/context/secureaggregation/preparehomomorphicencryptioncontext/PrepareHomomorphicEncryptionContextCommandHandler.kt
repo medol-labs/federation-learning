@@ -26,7 +26,7 @@ class PrepareHomomorphicEncryptionContextCommandHandler(
         require(state.currentState == SecureAggregationSessionStateEnum.PARTICIPANTS_SELECTED) {
             "PrepareHomomorphicEncryptionContext requires SecureAggregationSession to be ParticipantsSelected."
         }
-        val input = PrepareHomomorphicEncryptionContextInput(secureAggregationSessionId = command.secureAggregationSessionId, encryptionScheme = command.encryptionScheme, publicKeyVersion = command.publicKeyVersion, encryptedParameterScale = command.encryptedParameterScale)
+        val input = PrepareHomomorphicEncryptionContextInput(secureAggregationSessionId = command.secureAggregationSessionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, featureSchemaId = command.featureSchemaId, roundId = command.roundId, roundNumber = command.roundNumber, selectedOrganizationIds = command.selectedOrganizationIds, selectedRuntimeIds = command.selectedRuntimeIds, selectedOrganizationCount = command.selectedOrganizationCount, selectedRuntimeCount = command.selectedRuntimeCount, minimumNodesPerRound = command.minimumNodesPerRound, secureAggregationRequired = command.secureAggregationRequired)
         val portResult = prepareHomomorphicEncryptionContextService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))

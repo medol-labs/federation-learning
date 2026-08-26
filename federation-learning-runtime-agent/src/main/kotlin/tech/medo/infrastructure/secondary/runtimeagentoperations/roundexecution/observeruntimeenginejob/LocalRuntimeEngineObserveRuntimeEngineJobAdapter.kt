@@ -38,6 +38,8 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
                     observedStatus = STATUS_FAILED,
                     failureReason = failureReason,
                     localUpdateArtifactRef = null,
+                    encryptedUpdateArtifactRef = null,
+                    encryptedUpdateDigest = null,
                     metricsArtifactRef = null,
                     trainingLoss = null
                 )
@@ -57,7 +59,7 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
             }
 
             if (!Instant.now().isBefore(deadline)) {
-                return toRunningResult(response)
+                return toRunningResult(input, response)
             }
             Thread.sleep(properties.jobObservationPollInterval.coerceAtLeast(Duration.ofMillis(100)).toMillis())
         } while (true)
@@ -71,33 +73,47 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
         when (normalizedStatus) {
             STATUS_COMPLETED -> {
                 val localUpdateArtifactRef = stringOutput(response, "localUpdate")
+                val encryptedUpdateArtifactRef = encryptedUpdateArtifactRef(input, response, localUpdateArtifactRef)
                 val metricsArtifactRef = stringOutput(response, "metrics")
                 ObserveRuntimeEngineJobResult.Succeeded(
                     observedStatus = STATUS_COMPLETED,
                     failureReason = null,
                     localUpdateArtifactRef = localUpdateArtifactRef,
+                    encryptedUpdateArtifactRef = encryptedUpdateArtifactRef,
+                    encryptedUpdateDigest = encryptedUpdateDigest(input, response, encryptedUpdateArtifactRef),
                     metricsArtifactRef = metricsArtifactRef,
                     trainingLoss = readTrainingLoss(metricsArtifactRef)
                 )
             }
-            STATUS_FAILED -> ObserveRuntimeEngineJobResult.Succeeded(
-                observedStatus = STATUS_FAILED,
-                failureReason = buildFailureReason(input, response),
-                localUpdateArtifactRef = stringOutput(response, "localUpdate"),
-                metricsArtifactRef = stringOutput(response, "metrics"),
-                trainingLoss = readTrainingLoss(stringOutput(response, "metrics"))
-            )
-            else -> toRunningResult(response)
+            STATUS_FAILED -> {
+                val localUpdateArtifactRef = stringOutput(response, "localUpdate")
+                val encryptedUpdateArtifactRef = encryptedUpdateArtifactRef(input, response, localUpdateArtifactRef)
+                ObserveRuntimeEngineJobResult.Succeeded(
+                    observedStatus = STATUS_FAILED,
+                    failureReason = buildFailureReason(input, response),
+                    localUpdateArtifactRef = localUpdateArtifactRef,
+                    encryptedUpdateArtifactRef = encryptedUpdateArtifactRef,
+                    encryptedUpdateDigest = encryptedUpdateDigest(input, response, encryptedUpdateArtifactRef),
+                    metricsArtifactRef = stringOutput(response, "metrics"),
+                    trainingLoss = readTrainingLoss(stringOutput(response, "metrics"))
+                )
+            }
+            else -> toRunningResult(input, response)
         }
 
-    private fun toRunningResult(response: RuntimeEngineJobResponse): ObserveRuntimeEngineJobResult.Succeeded =
-        ObserveRuntimeEngineJobResult.Succeeded(
+    private fun toRunningResult(input: ObserveRuntimeEngineJobInput, response: RuntimeEngineJobResponse): ObserveRuntimeEngineJobResult.Succeeded {
+        val localUpdateArtifactRef = stringOutput(response, "localUpdate")
+        val encryptedUpdateArtifactRef = encryptedUpdateArtifactRef(input, response, localUpdateArtifactRef)
+        return ObserveRuntimeEngineJobResult.Succeeded(
             observedStatus = STATUS_RUNNING,
             failureReason = null,
-            localUpdateArtifactRef = stringOutput(response, "localUpdate"),
+            localUpdateArtifactRef = localUpdateArtifactRef,
+            encryptedUpdateArtifactRef = encryptedUpdateArtifactRef,
+            encryptedUpdateDigest = encryptedUpdateDigest(input, response, encryptedUpdateArtifactRef),
             metricsArtifactRef = stringOutput(response, "metrics"),
             trainingLoss = null
         )
+    }
 
     private fun normalizeStatus(status: String?): String =
         when (status?.trim()?.uppercase()) {
@@ -113,6 +129,27 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
 
     private fun stringOutput(response: RuntimeEngineJobResponse, key: String): String? =
         response.output[key]?.toString()?.takeIf { it.isNotBlank() }
+
+    private fun encryptedUpdateArtifactRef(
+        input: ObserveRuntimeEngineJobInput,
+        response: RuntimeEngineJobResponse,
+        localUpdateArtifactRef: String?
+    ): String? =
+        stringOutput(response, "encryptedUpdate")
+            ?: stringOutput(response, "encryptedUpdateArtifactRef")
+            ?: localUpdateArtifactRef.takeIf { input.secureAggregationRequired }
+
+    private fun encryptedUpdateDigest(
+        input: ObserveRuntimeEngineJobInput,
+        response: RuntimeEngineJobResponse,
+        encryptedUpdateArtifactRef: String?
+    ): String? =
+        stringOutput(response, "encryptedUpdateDigest")
+            ?: stringOutput(response, "localUpdateDigest").takeIf { input.secureAggregationRequired }
+            ?: encryptedUpdateArtifactRef?.let { "sha256:local-dev-${"$input.runtimeEngineJobId:$it".sha256Like()}" }
+
+    private fun String.sha256Like(): String =
+        hashCode().toUInt().toString(16).padStart(8, '0')
 
     private fun readTrainingLoss(metricsArtifactRef: String?): BigDecimal? {
         val metricsPath = metricsArtifactRef?.let(::toReadablePath) ?: return null

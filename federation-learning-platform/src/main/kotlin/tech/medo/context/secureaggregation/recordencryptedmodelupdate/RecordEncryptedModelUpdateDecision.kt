@@ -13,7 +13,7 @@ interface RecordEncryptedModelUpdateDecision {
     fun decide(command: RecordEncryptedModelUpdateCommand, state: SecureAggregationSessionState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(
-            EncryptedModelUpdateReceivedEvent(secureAggregationSessionId = command.secureAggregationSessionId, submissionId = command.submissionId, runtimeId = command.runtimeId, encryptedUpdateDigest = command.encryptedUpdateDigest)
+            EncryptedModelUpdateReceivedEvent(secureAggregationSessionId = command.secureAggregationSessionId, submissionId = command.submissionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, featureSchemaId = command.featureSchemaId, roundId = command.roundId, runtimeId = command.runtimeId, updateArtifactId = command.updateArtifactId, encryptedUpdateArtifactRef = command.encryptedUpdateArtifactRef, encryptedUpdateDigest = command.encryptedUpdateDigest, encryptionScheme = command.encryptionScheme, publicKeyVersion = command.publicKeyVersion)
         )
     }
 }

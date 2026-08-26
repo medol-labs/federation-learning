@@ -19,19 +19,6 @@ cp federation-learning-runtime-agent/.env.example federation-learning-runtime-ag
 
 Health endpoint: `http://localhost:8082/actuator/health`
 
-The local `.env.example` includes runtime bootstrap defaults for the synthetic
-medical training flow:
-
-```text
-RUNTIME_AGENT_ID=2336adf7-e0d4-5d84-81f8-86b68248047a
-RUNTIME_INFRASTRUCTURE_ID=601bc69e-367c-3a2c-bf1c-e34c4184d350
-RUNTIME_AGENT_RUNTIME_NAME=local-medical-runtime
-RUNTIME_AGENT_CSV_DATASET_LABEL_COLUMNS=readmission_risk
-RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_NODE_NAME=local-medical-runtime
-RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_LABEL_COLUMN=readmission_risk
-RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ID_COLUMN=id
-```
-
 OpenAPI endpoints:
 
 - Swagger UI: `http://localhost:8082/swagger-ui.html`
@@ -101,13 +88,13 @@ node scripts/seed-dev-data.mjs --dry-run
 
 ## Clean Development Docker Data
 
-To reset local Docker Compose databases and event-store volumes for selected generated deployment modules:
+To reset local Docker Compose databases and event-store volumes for generated deployment modules:
 
 ```bash
 node scripts/clean-docker-compose-data.mjs --yes
 ```
 
-The script discovers `docker-compose.yml` files under the generated backend root and module directories, then opens a checkbox list. Use arrow keys to move, space to select or clear a module, and enter to confirm. It runs `docker compose -f <file> down -v --remove-orphans` only for the selected modules. Preview the selected compose files without deleting data:
+The script discovers `docker-compose.yml` files under the generated backend root and module directories, then runs `docker compose -f <file> down -v --remove-orphans`. Preview the affected compose files without deleting data:
 
 ```bash
 node scripts/clean-docker-compose-data.mjs --dry-run

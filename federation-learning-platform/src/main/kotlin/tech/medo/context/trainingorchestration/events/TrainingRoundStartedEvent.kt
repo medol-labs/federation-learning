@@ -20,5 +20,11 @@ data class TrainingRoundStartedEvent(
     val selectedParticipants: List<TrainingRoundParticipant>,
     val selectedOrganizationCount: Int,
     val selectedRuntimeCount: Int,
-    val minimumNodesPerRound: Int
+    val minimumNodesPerRound: Int,
+    val secureAggregationRequired: Boolean,
+    val secureAggregationSessionId: UUID?,
+    val encryptionScheme: String?,
+    val publicKeyVersion: String?,
+    val publicKeyRef: String?,
+    val encryptedParameterScale: Int?
 )

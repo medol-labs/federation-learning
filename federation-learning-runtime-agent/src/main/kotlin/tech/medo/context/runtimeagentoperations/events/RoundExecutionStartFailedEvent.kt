@@ -25,6 +25,12 @@ data class RoundExecutionStartFailedEvent(
     val baseModelFormat: String,
     val baseModelArtifactDigest: String,
     val baseModelSignatureUri: String?,
+    val secureAggregationRequired: Boolean,
+    val secureAggregationSessionId: UUID?,
+    val encryptionScheme: String?,
+    val publicKeyVersion: String?,
+    val publicKeyRef: String?,
+    val encryptedParameterScale: Int?,
     val runtimeEngineJobId: String?,
     val failureReason: String
 )

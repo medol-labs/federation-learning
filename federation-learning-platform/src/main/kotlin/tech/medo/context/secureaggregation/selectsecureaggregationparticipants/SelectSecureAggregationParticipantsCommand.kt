@@ -10,9 +10,16 @@ import java.util.UUID;
 data class SelectSecureAggregationParticipantsCommand(
     val secureAggregationSessionId: UUID,
     val roundId: UUID,
-    val acceptedRuntimeIds: List<UUID>,
+    val trainingJobId: UUID,
+    val trainingRunConfigurationId: UUID,
+    val featureSchemaId: UUID,
+    val roundNumber: Int,
+    val selectedOrganizationIds: List<UUID>,
     val selectedRuntimeIds: List<UUID>,
-    val selectedParticipantCount: Int
+    val selectedOrganizationCount: Int,
+    val selectedParticipantCount: Int,
+    val minimumNodesPerRound: Int,
+    val secureAggregationRequired: Boolean
 ) {
     @TargetEntityId
     val selection: SecureAggregationSessionSelection = SecureAggregationSessionSelection(secureAggregationSessionId = secureAggregationSessionId)

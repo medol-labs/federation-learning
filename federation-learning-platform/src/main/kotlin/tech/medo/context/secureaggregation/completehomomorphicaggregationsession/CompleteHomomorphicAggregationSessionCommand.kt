@@ -13,6 +13,7 @@ data class CompleteHomomorphicAggregationSessionCommand(
     val trainingRunConfigurationId: UUID,
     val featureSchemaId: UUID,
     val roundId: UUID,
+    val roundNumber: Int,
     val aggregatedModelId: UUID = java.util.UUID.randomUUID(),
     val aggregatedModelArtifactUri: String,
     val aggregatedModelRegistryRef: String,
