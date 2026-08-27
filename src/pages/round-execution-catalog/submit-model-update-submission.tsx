@@ -314,7 +314,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
           <FormField
             control={form.control}
             name="secureAggregationSessionId"
-            rules={{ required: "Secure Aggregation Session Id is required" }}
+            rules={{}}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationSessionId.label", "Secure Aggregation Session Id")}</FormLabel>
@@ -341,7 +341,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
           <FormField
             control={form.control}
             name="encryptionScheme"
-            rules={{ required: "Encryption Scheme is required" }}
+            rules={{}}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.encryptionScheme.label", "Encryption Scheme")}</FormLabel>
@@ -359,7 +359,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
           <FormField
             control={form.control}
             name="publicKeyVersion"
-            rules={{ required: "Public Key Version is required" }}
+            rules={{}}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.publicKeyVersion.label", "Public Key Version")}</FormLabel>

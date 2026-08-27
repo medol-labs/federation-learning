@@ -3313,7 +3313,7 @@ export const messages = {
     "resources.secure_aggregation_session_catalog.fields.featureSchemaId.label": "特征架构 ID",
     "resources.secure_aggregation_session_catalog.fields.modelArtifactDigest.label": "模型工件摘要",
     "resources.secure_aggregation_session_catalog.fields.modelFormat.label": "模型格式",
-    "resources.secure_aggregation_session_catalog.fields.publicKeyRef.label": "Public密钥引用",
+    "resources.secure_aggregation_session_catalog.fields.publicKeyRef.label": "Public Key Ref",
     "resources.secure_aggregation_session_catalog.fields.publicKeyVersion.label": "公钥版本",
     "resources.secure_aggregation_session_catalog.fields.receivedEncryptedUpdateCount.label": "已接收加密更新数量",
     "resources.secure_aggregation_session_catalog.fields.requiredParticipantCount.label": "所需参与者数量",
