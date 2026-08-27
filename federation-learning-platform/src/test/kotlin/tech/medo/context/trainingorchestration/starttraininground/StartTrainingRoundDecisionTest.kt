@@ -26,7 +26,6 @@ class StartTrainingRoundDecisionTest {
             roundNumber = 0,
             selectedOrganizationIds = emptyList(),
             selectedRuntimeIds = emptyList(),
-            selectedParticipants = emptyList(),
             selectedOrganizationCount = 0,
             selectedRuntimeCount = 3,
             minimumNodesPerRound = 0,
@@ -55,7 +54,6 @@ class StartTrainingRoundDecisionTest {
         assertEquals(command.roundNumber, event.roundNumber)
         assertEquals(command.selectedOrganizationIds, event.selectedOrganizationIds)
         assertEquals(command.selectedRuntimeIds, event.selectedRuntimeIds)
-        assertEquals(command.selectedParticipants, event.selectedParticipants)
         assertEquals(command.selectedOrganizationCount, event.selectedOrganizationCount)
         assertEquals(3, event.selectedRuntimeCount)
         assertEquals(command.minimumNodesPerRound, event.minimumNodesPerRound)
@@ -80,7 +78,6 @@ class StartTrainingRoundDecisionTest {
             roundNumber = 0,
             selectedOrganizationIds = emptyList(),
             selectedRuntimeIds = emptyList(),
-            selectedParticipants = emptyList(),
             selectedOrganizationCount = 0,
             selectedRuntimeCount = 2,
             minimumNodesPerRound = 0,
@@ -109,7 +106,6 @@ class StartTrainingRoundDecisionTest {
         assertEquals(command.roundNumber, event.roundNumber)
         assertEquals(command.selectedOrganizationIds, event.selectedOrganizationIds)
         assertEquals(command.selectedRuntimeIds, event.selectedRuntimeIds)
-        assertEquals(command.selectedParticipants, event.selectedParticipants)
         assertEquals(command.selectedOrganizationCount, event.selectedOrganizationCount)
         assertEquals(2, event.selectedRuntimeCount)
         assertEquals(command.minimumNodesPerRound, event.minimumNodesPerRound)

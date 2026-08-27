@@ -1,7 +1,6 @@
 package tech.medo.trainingorchestration.starttraininground
 
 import java.util.UUID;
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
 
 interface StartTrainingRoundService {
     fun supports(input: StartTrainingRoundInput): Boolean = true
@@ -16,7 +15,6 @@ data class StartTrainingRoundInput(
     val roundNumber: Int,
     val selectedOrganizationIds: List<UUID>,
     val selectedRuntimeIds: List<UUID>,
-    val selectedParticipants: List<TrainingRoundParticipant>,
     val selectedOrganizationCount: Int,
     val selectedRuntimeCount: Int,
     val minimumNodesPerRound: Int,

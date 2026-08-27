@@ -28,6 +28,9 @@ data class RoundExecutionCompletedEvent(
     val localUpdateArtifactRef: String?,
     val encryptedUpdateArtifactRef: String?,
     val encryptedUpdateDigest: String?,
+    val modelUpdateArtifactRef: String?,
+    val modelUpdateArtifactDigest: String?,
+    val updateProtectionType: String?,
     val metricsArtifactRef: String?,
     val trainingLoss: BigDecimal?
 )

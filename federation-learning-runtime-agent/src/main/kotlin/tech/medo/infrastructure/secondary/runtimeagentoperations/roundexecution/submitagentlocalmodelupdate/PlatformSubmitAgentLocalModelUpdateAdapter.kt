@@ -32,20 +32,27 @@ class PlatformSubmitAgentLocalModelUpdateAdapter(
             roundExecutionId = input.roundExecutionId,
             runtimeId = input.runtimeId,
             featureSchemaId = input.featureSchemaId,
+            secureAggregationRequired = input.secureAggregationRequired,
+            secureAggregationSessionId = input.secureAggregationSessionId,
+            encryptionScheme = input.encryptionScheme,
+            publicKeyVersion = input.publicKeyVersion,
             localModelId = input.localModelId,
             updateArtifactId = input.updateArtifactId,
             artifactRef = input.artifactRef,
             artifactDigest = input.artifactDigest.takeIf { it.isNotBlank() } ?: resolveArtifactDigest(input.artifactRef).orEmpty(),
+            updateProtectionType = input.updateProtectionType,
             trainingLoss = input.trainingLoss
         )
 
         return try {
             log.info(
-                "Submitting local model update to platform. trainingJobId={}, roundId={}, roundExecutionId={}, runtimeId={}, artifactRef={}, artifactDigest={}",
+                "Submitting local model update to platform. trainingJobId={}, roundId={}, roundExecutionId={}, runtimeId={}, secureAggregationRequired={}, updateProtectionType={}, artifactRef={}, artifactDigest={}",
                 request.trainingJobId,
                 request.roundId,
                 request.roundExecutionId,
                 request.runtimeId,
+                request.secureAggregationRequired,
+                request.updateProtectionType,
                 request.artifactRef,
                 request.artifactDigest
             )

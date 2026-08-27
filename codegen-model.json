@@ -5327,39 +5327,6 @@
       "startsLifecycle": false
     },
     {
-      "id": "transition-b547343a",
-      "context": "TrainingOrchestration",
-      "owner": {
-        "id": "concept-729766c8",
-        "type": "concept",
-        "name": "TrainingRound",
-        "title": "Training Round"
-      },
-      "slice": {
-        "id": "slice-a46e905e",
-        "name": "RequestSecureAggregation",
-        "title": "Request Secure Aggregation"
-      },
-      "command": {
-        "id": "command-42aad8b3",
-        "name": "RequestSecureAggregation",
-        "title": "Request Secure Aggregation"
-      },
-      "event": {
-        "id": "event-b635228d",
-        "name": "SecureAggregationRequested",
-        "title": "Secure Aggregation Requested"
-      },
-      "trigger": {
-        "id": "event-f36ff121",
-        "name": "TrainingRoundParticipantsSelected",
-        "title": "Training Round Participants Selected"
-      },
-      "from": "ParticipantsSelected",
-      "to": "Aggregating",
-      "startsLifecycle": false
-    },
-    {
       "id": "transition-435cb798",
       "context": "TrainingOrchestration",
       "owner": {
@@ -6856,11 +6823,11 @@
         "title": "Runtime Engine Job Released"
       },
       "trigger": {
-        "id": "event-9616ce0c",
-        "name": "RoundExecutionCompleted",
-        "title": "Round Execution Completed"
+        "id": "event-0b110a67",
+        "name": "AgentLocalModelUpdateSubmitted",
+        "title": "Agent Local Model Update Submitted"
       },
-      "from": "Completed",
+      "from": "UpdateSubmitted",
       "to": "RuntimeEngineReleased",
       "startsLifecycle": false
     },
@@ -30162,33 +30129,6 @@
               }
             },
             {
-              "name": "selectedParticipants",
-              "type": "TrainingRoundParticipant",
-              "cardinality": "Multiple",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "TrainingRoundParticipantsSelected.selectedParticipants"
-                ],
-                "lookup": {
-                  "key": "roundId",
-                  "cacheProjection": "TrainingRoundParticipantsSelected",
-                  "sourceField": "selectedParticipants",
-                  "targetField": "selectedParticipants",
-                  "missingValuePolicy": "keep"
-                }
-              }
-            },
-            {
               "name": "selectedOrganizationCount",
               "type": "Int",
               "cardinality": "Single",
@@ -30525,7 +30465,20 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingRoundParticipantsSelected.selectedParticipants"
+                ],
+                "lookup": {
+                  "key": "roundId",
+                  "cacheProjection": "TrainingRoundParticipantsSelected",
+                  "sourceField": "selectedParticipants",
+                  "targetField": "selectedParticipants",
+                  "missingValuePolicy": "keep"
+                }
+              }
             },
             {
               "name": "selectedOrganizationCount",
@@ -30818,7 +30771,20 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingRoundParticipantsSelected.selectedParticipants"
+                ],
+                "lookup": {
+                  "key": "roundId",
+                  "cacheProjection": "TrainingRoundParticipantsSelected",
+                  "sourceField": "selectedParticipants",
+                  "targetField": "selectedParticipants",
+                  "missingValuePolicy": "keep"
+                }
+              }
             },
             {
               "name": "selectedOrganizationCount",
@@ -31082,9 +31048,6 @@
                   "name": "selectedRuntimeIds"
                 },
                 {
-                  "name": "selectedParticipants"
-                },
-                {
                   "name": "selectedOrganizationCount"
                 },
                 {
@@ -31219,9 +31182,6 @@
                 },
                 {
                   "name": "selectedRuntimeIds"
-                },
-                {
-                  "name": "selectedParticipants"
                 },
                 {
                   "name": "selectedOrganizationCount"
@@ -35946,12 +35906,7 @@
       ],
       "specifications": [],
       "actors": [],
-      "hotspots": [],
-      "stateChange": {
-        "event": "SecureAggregationRequested",
-        "eventId": "event-b635228d",
-        "to": "Aggregating"
-      }
+      "hotspots": []
     },
     {
       "id": "slice-c044ec34",
@@ -63413,6 +63368,49 @@
               "portOutput": false
             },
             {
+              "name": "modelUpdateArtifactRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "modelUpdateArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "updateProtectionType",
+              "type": "String",
+              "dictionary": "MODEL_UPDATE_PROTECTION_TYPE",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "metricsArtifactRef",
               "type": "String",
               "cardinality": "Single",
@@ -63713,6 +63711,15 @@
                   "name": "encryptedUpdateDigest"
                 },
                 {
+                  "name": "modelUpdateArtifactRef"
+                },
+                {
+                  "name": "modelUpdateArtifactDigest"
+                },
+                {
+                  "name": "updateProtectionType"
+                },
+                {
                   "name": "metricsArtifactRef"
                 },
                 {
@@ -63933,6 +63940,15 @@
                   "name": "encryptedUpdateDigest"
                 },
                 {
+                  "name": "modelUpdateArtifactRef"
+                },
+                {
+                  "name": "modelUpdateArtifactDigest"
+                },
+                {
+                  "name": "updateProtectionType"
+                },
+                {
                   "name": "metricsArtifactRef"
                 },
                 {
@@ -64151,6 +64167,15 @@
                 },
                 {
                   "name": "encryptedUpdateDigest"
+                },
+                {
+                  "name": "modelUpdateArtifactRef"
+                },
+                {
+                  "name": "modelUpdateArtifactDigest"
+                },
+                {
+                  "name": "updateProtectionType"
                 },
                 {
                   "name": "metricsArtifactRef"
@@ -64552,6 +64577,66 @@
               }
             },
             {
+              "name": "modelUpdateArtifactRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.modelUpdateArtifactRef"
+                ]
+              }
+            },
+            {
+              "name": "modelUpdateArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.modelUpdateArtifactDigest"
+                ]
+              }
+            },
+            {
+              "name": "updateProtectionType",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeEngineJobObserved.updateProtectionType"
+                ]
+              }
+            },
+            {
               "name": "metricsArtifactRef",
               "type": "String",
               "cardinality": "Single",
@@ -64871,6 +64956,49 @@
               "portOutput": false
             },
             {
+              "name": "modelUpdateArtifactRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "modelUpdateArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "updateProtectionType",
+              "type": "String",
+              "dictionary": "MODEL_UPDATE_PROTECTION_TYPE",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "metricsArtifactRef",
               "type": "String",
               "cardinality": "Single",
@@ -64916,12 +65044,6 @@
               "id": "automation-0b8c877f",
               "direction": "OUTBOUND",
               "title": "Submit Local Model Update When Round Execution Completed",
-              "elementType": "PROCESSOR"
-            },
-            {
-              "id": "automation-5d65fada",
-              "direction": "OUTBOUND",
-              "title": "Release Runtime Engine Job When Round Execution Completed",
               "elementType": "PROCESSOR"
             },
             {
@@ -67354,6 +67476,26 @@
               }
             },
             {
+              "name": "runtimeEngineJobId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionCompleted.runtimeEngineJobId"
+                ]
+              }
+            },
+            {
               "name": "localModelId",
               "type": "UUID",
               "cardinality": "Single",
@@ -67397,7 +67539,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "RoundExecutionCompleted.encryptedUpdateArtifactRef"
+                  "RoundExecutionCompleted.modelUpdateArtifactRef"
                 ]
               }
             },
@@ -67417,14 +67559,13 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "RoundExecutionCompleted.encryptedUpdateDigest"
+                  "RoundExecutionCompleted.modelUpdateArtifactDigest"
                 ]
               }
             },
             {
               "name": "updateProtectionType",
               "type": "String",
-              "dictionary": "MODEL_UPDATE_PROTECTION_TYPE",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -67434,7 +67575,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoundExecutionCompleted.updateProtectionType"
+                ]
+              }
             },
             {
               "name": "trainingLoss",
@@ -67667,6 +67814,20 @@
               "portOutput": false
             },
             {
+              "name": "runtimeEngineJobId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "localModelId",
               "type": "UUID",
               "cardinality": "Single",
@@ -67766,6 +67927,12 @@
               "elementType": "COMMAND"
             },
             {
+              "id": "automation-e2a66c33",
+              "direction": "OUTBOUND",
+              "title": "Release Runtime Engine Job When Local Model Update Submitted",
+              "elementType": "PROCESSOR"
+            },
+            {
               "id": "readmodel-5686facf",
               "direction": "OUTBOUND",
               "title": "Round Execution Catalog",
@@ -67852,7 +68019,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "RoundExecutionCompleted.roundExecutionId"
+                  "AgentLocalModelUpdateSubmitted.roundExecutionId"
                 ]
               }
             },
@@ -67872,16 +68039,16 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "RoundExecutionCompleted.runtimeEngineJobId"
+                  "AgentLocalModelUpdateSubmitted.runtimeEngineJobId"
                 ]
               }
             }
           ],
           "dependencies": [
             {
-              "id": "automation-5d65fada",
+              "id": "automation-e2a66c33",
               "direction": "INBOUND",
-              "title": "Release Runtime Engine Job When Round Execution Completed",
+              "title": "Release Runtime Engine Job When Local Model Update Submitted",
               "elementType": "PROCESSOR"
             },
             {
@@ -67952,18 +68119,18 @@
       "screens": [],
       "processors": [
         {
-          "id": "automation-5d65fada",
-          "name": "ReleaseRuntimeEngineJobWhenRoundExecutionCompleted",
-          "title": "Release Runtime Engine Job When Round Execution Completed",
+          "id": "automation-e2a66c33",
+          "name": "ReleaseRuntimeEngineJobWhenLocalModelUpdateSubmitted",
+          "title": "Release Runtime Engine Job When Local Model Update Submitted",
           "type": "PROCESSOR",
           "modelContext": "RuntimeAgentOperations",
           "slice": "Release Runtime Engine Job After Completion",
           "fields": [],
           "dependencies": [
             {
-              "id": "event-9616ce0c",
+              "id": "event-0b110a67",
               "direction": "INBOUND",
-              "title": "Round Execution Completed",
+              "title": "Agent Local Model Update Submitted",
               "elementType": "EVENT"
             },
             {
@@ -67974,7 +68141,7 @@
             }
           ],
           "metadata": {
-            "on": "RoundExecutionCompleted",
+            "on": "AgentLocalModelUpdateSubmitted",
             "onKind": "event",
             "emits": "ReleaseRuntimeEngineJobAfterCompletion"
           }

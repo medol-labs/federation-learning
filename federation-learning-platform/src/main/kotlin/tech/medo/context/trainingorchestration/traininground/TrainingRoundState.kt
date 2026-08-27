@@ -220,7 +220,6 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: SecureAggregationRequestedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.AGGREGATING
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId

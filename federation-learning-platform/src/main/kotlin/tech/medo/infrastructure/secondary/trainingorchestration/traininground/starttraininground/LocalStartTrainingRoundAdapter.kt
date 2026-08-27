@@ -18,12 +18,6 @@ class LocalStartTrainingRoundAdapter : StartTrainingRoundService {
                 failureReason = "Selected runtime count ${input.selectedRuntimeCount} is below required quorum ${input.minimumNodesPerRound}."
             )
         }
-        if (input.selectedParticipants.isEmpty()) {
-            return StartTrainingRoundResult.Rejected(
-                failureReason = "Selected participant snapshot is empty."
-            )
-        }
-
         log.info(
             "Starting training round locally. trainingJobId={}, roundId={}, roundNumber={}, selectedRuntimeCount={}, minimumNodesPerRound={}",
             input.trainingJobId,

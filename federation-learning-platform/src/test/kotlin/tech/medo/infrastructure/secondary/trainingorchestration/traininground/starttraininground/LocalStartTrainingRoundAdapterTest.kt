@@ -2,7 +2,6 @@ package tech.medo.infrastructure.secondary.trainingorchestration.traininground.s
 
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundInput
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundResult
 import java.util.UUID
@@ -36,13 +35,6 @@ class LocalStartTrainingRoundAdapterTest {
             roundNumber = 1,
             selectedOrganizationIds = listOf(uuid("55555555-5555-4555-8555-555555555555")),
             selectedRuntimeIds = listOf(uuid("66666666-6666-4666-8666-666666666666")),
-            selectedParticipants = listOf(
-                TrainingRoundParticipant(
-                    organizationId = uuid("55555555-5555-4555-8555-555555555555"),
-                    runtimeId = uuid("66666666-6666-4666-8666-666666666666"),
-                    datasetId = uuid("77777777-7777-4777-8777-777777777777")
-                )
-            ),
             selectedOrganizationCount = 1,
             selectedRuntimeCount = selectedRuntimeCount,
             minimumNodesPerRound = minimumNodesPerRound,

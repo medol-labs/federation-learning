@@ -70,6 +70,9 @@ class ObserveRuntimeEngineJobDecisionTest {
                 localUpdateArtifactRef = null,
                 encryptedUpdateArtifactRef = null,
                 encryptedUpdateDigest = null,
+                modelUpdateArtifactRef = null,
+                modelUpdateArtifactDigest = null,
+                updateProtectionType = null,
                 metricsArtifactRef = null,
                 trainingLoss = null
             )
@@ -151,6 +154,9 @@ class ObserveRuntimeEngineJobDecisionTest {
                 localUpdateArtifactRef = null,
                 encryptedUpdateArtifactRef = null,
                 encryptedUpdateDigest = null,
+                modelUpdateArtifactRef = null,
+                modelUpdateArtifactDigest = null,
+                updateProtectionType = null,
                 metricsArtifactRef = null,
                 trainingLoss = null
             )
@@ -232,6 +238,9 @@ class ObserveRuntimeEngineJobDecisionTest {
                 localUpdateArtifactRef = null,
                 encryptedUpdateArtifactRef = null,
                 encryptedUpdateDigest = null,
+                modelUpdateArtifactRef = null,
+                modelUpdateArtifactDigest = null,
+                updateProtectionType = null,
                 metricsArtifactRef = null,
                 trainingLoss = null
             )

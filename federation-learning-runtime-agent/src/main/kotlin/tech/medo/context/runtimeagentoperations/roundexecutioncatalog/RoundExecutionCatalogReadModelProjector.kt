@@ -314,6 +314,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.roundId = event.roundId
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
+            entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.updateArtifactId = event.updateArtifactId
             entity.artifactRef = event.artifactRef
             entity.artifactDigest = event.artifactDigest

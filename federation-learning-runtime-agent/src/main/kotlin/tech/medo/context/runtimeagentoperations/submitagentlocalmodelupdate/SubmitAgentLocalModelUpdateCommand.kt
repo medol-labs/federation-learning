@@ -22,6 +22,7 @@ data class SubmitAgentLocalModelUpdateCommand(
     val secureAggregationSessionId: UUID?,
     val encryptionScheme: String?,
     val publicKeyVersion: String?,
+    val runtimeEngineJobId: String,
     val localModelId: UUID,
     val updateArtifactId: UUID,
     val artifactRef: String,

@@ -3,7 +3,6 @@ package tech.medo.trainingorchestration.starttraininground
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundCommand
 import java.util.UUID;
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.springframework.stereotype.Component
@@ -13,7 +12,7 @@ class StartRoundWhenParticipantsSelectedWithoutSecureAggregationProcessor(privat
     @EventHandler
     fun on(event: TrainingRoundParticipantsSelectedEvent): java.util.concurrent.CompletableFuture<*> =
         if (event.secureAggregationRequired == false) {
-            commandGateway.send(StartTrainingRoundCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber, selectedOrganizationIds = event.selectedOrganizationIds, selectedRuntimeIds = event.selectedRuntimeIds, selectedParticipants = event.selectedParticipants, selectedOrganizationCount = event.selectedOrganizationCount, selectedRuntimeCount = event.selectedRuntimeCount, minimumNodesPerRound = event.minimumNodesPerRound, secureAggregationRequired = event.secureAggregationRequired, secureAggregationSessionId = null /* TODO: provide secureAggregationSessionId */, encryptionScheme = null /* TODO: provide encryptionScheme */, publicKeyVersion = null /* TODO: provide publicKeyVersion */, publicKeyRef = null /* TODO: provide publicKeyRef */, encryptedParameterScale = null /* TODO: provide encryptedParameterScale */)).resultMessage
+            commandGateway.send(StartTrainingRoundCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber, selectedOrganizationIds = event.selectedOrganizationIds, selectedRuntimeIds = event.selectedRuntimeIds, selectedOrganizationCount = event.selectedOrganizationCount, selectedRuntimeCount = event.selectedRuntimeCount, minimumNodesPerRound = event.minimumNodesPerRound, secureAggregationRequired = event.secureAggregationRequired, secureAggregationSessionId = null /* TODO: provide secureAggregationSessionId */, encryptionScheme = null /* TODO: provide encryptionScheme */, publicKeyVersion = null /* TODO: provide publicKeyVersion */, publicKeyRef = null /* TODO: provide publicKeyRef */, encryptedParameterScale = null /* TODO: provide encryptedParameterScale */)).resultMessage
         } else {
             java.util.concurrent.CompletableFuture.completedFuture(null)
         }

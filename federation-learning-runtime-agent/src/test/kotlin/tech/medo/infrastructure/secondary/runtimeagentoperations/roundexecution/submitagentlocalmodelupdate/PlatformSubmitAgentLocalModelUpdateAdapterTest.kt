@@ -38,8 +38,13 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
         assertTrue(result is SubmitAgentLocalModelUpdateResult.Succeeded)
         val request = client.requests.single()
         assertEquals(UUID.fromString("11111111-1111-4111-8111-111111111111"), request.modelUpdateSubmissionId)
+        assertTrue(request.secureAggregationRequired)
+        assertEquals(UUID.fromString("cccccccc-cccc-4ccc-8ccc-cccccccccccc"), request.secureAggregationSessionId)
+        assertEquals("PAILLIER", request.encryptionScheme)
+        assertEquals("local-dev-v1", request.publicKeyVersion)
         assertEquals("/workspace/tmp/runtime-engine/job-1/local-runtime/local_update.json", request.artifactRef)
         assertEquals("sha256:${sha256("""{"weights":[0.1,0.2],"bias":0.3}""")}", request.artifactDigest)
+        assertEquals("HOMOMORPHIC_ENCRYPTED", request.updateProtectionType)
         assertEquals(BigDecimal("0.125"), request.trainingLoss)
     }
 
@@ -82,6 +87,7 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
             secureAggregationSessionId = UUID.fromString("cccccccc-cccc-4ccc-8ccc-cccccccccccc"),
             encryptionScheme = "PAILLIER",
             publicKeyVersion = "local-dev-v1",
+            runtimeEngineJobId = "runtime-engine-job-1",
             localModelId = UUID.fromString("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
             updateArtifactId = UUID.fromString("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"),
             artifactRef = artifactRef,

@@ -71,6 +71,9 @@ class RoundExecutionState @EntityCreator constructor() {
     var localUpdateArtifactRef: String? = null
     var encryptedUpdateArtifactRef: String? = null
     var encryptedUpdateDigest: String? = null
+    var modelUpdateArtifactRef: String? = null
+    var modelUpdateArtifactDigest: String? = null
+    var updateProtectionType: String? = null
     var metricsArtifactRef: String? = null
     var trainingLoss: BigDecimal? = null
     var retryReason: String? = null
@@ -79,7 +82,6 @@ class RoundExecutionState @EntityCreator constructor() {
     var updateArtifactId: UUID? = null
     var artifactRef: String? = null
     var artifactDigest: String? = null
-    var updateProtectionType: String? = null
 
     @EventSourcingHandler
     fun evolve(event: ExecutionPlanReceivedEvent): RoundExecutionState = apply {
@@ -255,6 +257,9 @@ class RoundExecutionState @EntityCreator constructor() {
         localUpdateArtifactRef = event.localUpdateArtifactRef
         encryptedUpdateArtifactRef = event.encryptedUpdateArtifactRef
         encryptedUpdateDigest = event.encryptedUpdateDigest
+        modelUpdateArtifactRef = event.modelUpdateArtifactRef
+        modelUpdateArtifactDigest = event.modelUpdateArtifactDigest
+        updateProtectionType = event.updateProtectionType
         metricsArtifactRef = event.metricsArtifactRef
         trainingLoss = event.trainingLoss
     }
@@ -280,6 +285,9 @@ class RoundExecutionState @EntityCreator constructor() {
         localUpdateArtifactRef = event.localUpdateArtifactRef
         encryptedUpdateArtifactRef = event.encryptedUpdateArtifactRef
         encryptedUpdateDigest = event.encryptedUpdateDigest
+        modelUpdateArtifactRef = event.modelUpdateArtifactRef
+        modelUpdateArtifactDigest = event.modelUpdateArtifactDigest
+        updateProtectionType = event.updateProtectionType
         metricsArtifactRef = event.metricsArtifactRef
         trainingLoss = event.trainingLoss
     }
@@ -391,6 +399,7 @@ class RoundExecutionState @EntityCreator constructor() {
         secureAggregationSessionId = event.secureAggregationSessionId
         encryptionScheme = event.encryptionScheme
         publicKeyVersion = event.publicKeyVersion
+        runtimeEngineJobId = event.runtimeEngineJobId
         localModelId = event.localModelId
         updateArtifactId = event.updateArtifactId
         artifactRef = event.artifactRef

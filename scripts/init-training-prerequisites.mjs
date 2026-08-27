@@ -790,7 +790,7 @@ function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint
             optimizer: 'SGD',
             lossFunction: 'LOG_LOSS',
             gradientClippingNorm: null,
-            secureAggregationRequired: false,
+            secureAggregationRequired: true,
             minimumAccuracy: 0.0,
             minimumFairnessScore: null
         },

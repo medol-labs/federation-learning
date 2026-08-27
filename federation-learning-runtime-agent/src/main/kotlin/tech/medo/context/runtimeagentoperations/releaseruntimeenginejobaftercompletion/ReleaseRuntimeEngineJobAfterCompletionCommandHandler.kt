@@ -23,8 +23,8 @@ class ReleaseRuntimeEngineJobAfterCompletionCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RoundExecutionStateEnum.COMPLETED) {
-            "ReleaseRuntimeEngineJobAfterCompletion requires RoundExecution to be Completed."
+        require(state.currentState == RoundExecutionStateEnum.UPDATE_SUBMITTED) {
+            "ReleaseRuntimeEngineJobAfterCompletion requires RoundExecution to be UpdateSubmitted."
         }
         val input = ReleaseRuntimeEngineJobAfterCompletionInput(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId)
         val portResult = releaseRuntimeEngineJobAfterCompletionService.execute(input)
