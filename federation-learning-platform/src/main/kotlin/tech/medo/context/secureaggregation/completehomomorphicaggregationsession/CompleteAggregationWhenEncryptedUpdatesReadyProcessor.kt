@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component
 class CompleteAggregationWhenEncryptedUpdatesReadyProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: EncryptedModelUpdateReceivedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(CompleteHomomorphicAggregationSessionCommand(secureAggregationSessionId = event.secureAggregationSessionId, trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = 0 /* TODO: provide roundNumber */, aggregatedModelArtifactUri = "" /* TODO: provide aggregatedModelArtifactUri */, aggregatedModelRegistryRef = "" /* TODO: provide aggregatedModelRegistryRef */, modelFormat = "" /* TODO: provide modelFormat */, modelArtifactDigest = "" /* TODO: provide modelArtifactDigest */, aggregatedModelSignatureUri = null /* TODO: provide aggregatedModelSignatureUri */)).resultMessage
+        commandGateway.send(CompleteHomomorphicAggregationSessionCommand(secureAggregationSessionId = event.secureAggregationSessionId, trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber)).resultMessage
 }

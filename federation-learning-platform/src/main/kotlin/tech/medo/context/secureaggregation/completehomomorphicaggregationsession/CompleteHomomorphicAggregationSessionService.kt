@@ -14,16 +14,17 @@ data class CompleteHomomorphicAggregationSessionInput(
     val featureSchemaId: UUID,
     val roundId: UUID,
     val roundNumber: Int,
-    val aggregatedModelId: UUID,
-    val aggregatedModelArtifactUri: String,
-    val aggregatedModelRegistryRef: String,
-    val modelFormat: String,
-    val modelArtifactDigest: String,
-    val aggregatedModelSignatureUri: String?
+    val aggregatedModelId: UUID
 )
 
 sealed interface CompleteHomomorphicAggregationSessionResult {
-    class Succeeded : CompleteHomomorphicAggregationSessionResult
+    data class Succeeded(
+        val aggregatedModelArtifactUri: String,
+        val aggregatedModelRegistryRef: String,
+        val modelFormat: String,
+        val modelArtifactDigest: String,
+        val aggregatedModelSignatureUri: String?
+    ) : CompleteHomomorphicAggregationSessionResult
 
 
 }

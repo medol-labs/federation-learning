@@ -16,6 +16,7 @@ data class ModelUpdateSubmissionAcceptedEvent(
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
     val roundId: UUID,
+    val roundNumber: Int,
     val runtimeId: UUID,
     val featureSchemaId: UUID,
     val secureAggregationRequired: Boolean,

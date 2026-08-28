@@ -14,6 +14,7 @@ data class RecordEncryptedModelUpdateCommand(
     val trainingRunConfigurationId: UUID,
     val featureSchemaId: UUID,
     val roundId: UUID,
+    val roundNumber: Int,
     val runtimeId: UUID,
     val updateArtifactId: UUID,
     val encryptedUpdateArtifactRef: String,

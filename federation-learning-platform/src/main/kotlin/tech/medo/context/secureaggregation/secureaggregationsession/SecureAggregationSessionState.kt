@@ -116,6 +116,7 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
+        roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         updateArtifactId = event.updateArtifactId
         encryptedUpdateArtifactRef = event.encryptedUpdateArtifactRef

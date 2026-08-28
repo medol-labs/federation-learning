@@ -19,6 +19,9 @@ class EvaluateModelUpdateSubmissionDecisionComponent : EvaluateModelUpdateSubmis
                 trainingJobId = command.trainingJobId,
                 trainingRunConfigurationId = command.trainingRunConfigurationId,
                 roundId = command.roundId,
+                roundNumber = requireNotNull(state.roundNumber) {
+                    "roundNumber is required from state."
+                },
                 runtimeId = command.runtimeId,
                 featureSchemaId = command.featureSchemaId,
                 secureAggregationRequired = command.secureAggregationRequired,

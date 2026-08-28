@@ -4,7 +4,6 @@ import org.axonframework.messaging.commandhandling.annotation.Command
 import org.axonframework.modelling.annotation.TargetEntityId
 import tech.medo.trainingorchestration.traininground.TrainingRoundSelection
 import java.util.UUID;
-import java.math.BigDecimal;
 
 
 @Command
@@ -19,9 +18,7 @@ data class SubmitGlobalModelEvaluationCommand(
     val aggregatedModelRegistryRef: String,
     val modelFormat: String,
     val modelArtifactDigest: String,
-    val aggregatedModelSignatureUri: String?,
-    val globalAccuracy: BigDecimal,
-    val globalFairnessScore: BigDecimal
+    val aggregatedModelSignatureUri: String?
 ) {
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)

@@ -110,6 +110,7 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
             entity.encryptionScheme = event.encryptionScheme
             entity.publicKeyVersion = event.publicKeyVersion
             ProjectionMetadata.assign(entity, message)

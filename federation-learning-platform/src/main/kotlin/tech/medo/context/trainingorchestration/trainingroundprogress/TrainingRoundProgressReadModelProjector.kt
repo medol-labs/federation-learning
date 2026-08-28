@@ -230,6 +230,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
             entity.acceptedModelUpdateCount = event.acceptedModelUpdateCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.secureAggregationRequired = event.secureAggregationRequired

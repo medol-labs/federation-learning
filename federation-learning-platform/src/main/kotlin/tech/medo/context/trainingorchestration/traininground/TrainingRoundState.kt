@@ -189,6 +189,7 @@ class TrainingRoundState @EntityCreator constructor() {
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         roundId = event.roundId
+        roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
         secureAggregationRequired = event.secureAggregationRequired
