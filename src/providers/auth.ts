@@ -1,13 +1,58 @@
-import { AuthProvider } from "@refinedev/core";
+import type { AuthProvider } from "@refinedev/core";
+import type { Provider } from "@supabase/supabase-js";
+import {
+  authBackendBaseUrl,
+  authProviderMode,
+  cachedCurrentUser,
+  clearLocalAuth,
+  fetchCurrentUser,
+  storeLocalAuth,
+} from "./api-auth";
 import { supabaseClient } from "./supabase-client";
 
 const authProvider: AuthProvider = {
-  login: async ({ email, password, providerName }) => {
-    // sign in with oauth
+  login: async (params) => {
+    const { email, username, password, providerName } = params as {
+      email?: string;
+      username?: string;
+      password?: string;
+      providerName?: string;
+    };
     try {
+      if (authProviderMode() === "local") {
+        const response = await fetch(`${authBackendBaseUrl()}/api/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username ?? email,
+            password,
+          }),
+        });
+
+        if (!response.ok) {
+          return {
+            success: false,
+            error: {
+              message: "Login failed",
+              name: "Invalid username or password",
+            },
+          };
+        }
+
+        const payload = await response.json();
+        storeLocalAuth(payload.accessToken, payload.user);
+
+        return {
+          success: true,
+          redirectTo: "/",
+        };
+      }
+
       if (providerName) {
         const { data, error } = await supabaseClient.auth.signInWithOAuth({
-          provider: providerName,
+          provider: providerName as Provider,
         });
 
         if (error) {
@@ -25,7 +70,16 @@ const authProvider: AuthProvider = {
         }
       }
 
-      // sign in with email and password
+      if (!email || !password) {
+        return {
+          success: false,
+          error: {
+            message: "Login failed",
+            name: "Email and password are required",
+          },
+        };
+      }
+
       const { data, error } = await supabaseClient.auth.signInWithPassword({
         email,
         password,
@@ -39,6 +93,8 @@ const authProvider: AuthProvider = {
       }
 
       if (data?.user) {
+        await fetchCurrentUser();
+
         return {
           success: true,
           redirectTo: "/",
@@ -164,6 +220,15 @@ const authProvider: AuthProvider = {
     };
   },
   logout: async () => {
+    clearLocalAuth();
+
+    if (authProviderMode() === "local") {
+      return {
+        success: true,
+        redirectTo: "/login",
+      };
+    }
+
     const { error } = await supabaseClient.auth.signOut();
 
     if (error) {
@@ -184,6 +249,14 @@ const authProvider: AuthProvider = {
   },
   check: async () => {
     try {
+      if (authProviderMode() === "local") {
+        await fetchCurrentUser();
+
+        return {
+          authenticated: true,
+        };
+      }
+
       const { data } = await supabaseClient.auth.getSession();
       const { session } = data;
 
@@ -198,6 +271,8 @@ const authProvider: AuthProvider = {
           redirectTo: "/login",
         };
       }
+
+      await fetchCurrentUser();
     } catch (error: any) {
       return {
         authenticated: false,
@@ -215,25 +290,11 @@ const authProvider: AuthProvider = {
     };
   },
   getPermissions: async () => {
-    const user = await supabaseClient.auth.getUser();
-
-    if (user) {
-      return user.data.user?.role;
-    }
-
-    return null;
+    const user = cachedCurrentUser() ?? (await fetchCurrentUser());
+    return user.permissions;
   },
   getIdentity: async () => {
-    const { data } = await supabaseClient.auth.getUser();
-
-    if (data?.user) {
-      return {
-        ...data.user,
-        name: data.user.email,
-      };
-    }
-
-    return null;
+    return cachedCurrentUser() ?? (await fetchCurrentUser());
   },
 };
 
