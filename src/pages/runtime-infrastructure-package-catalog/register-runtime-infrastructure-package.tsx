@@ -71,10 +71,12 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
   });
 
   async function onSubmit(values: RegisterRuntimeInfrastructurePackageCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/runtime-infrastructure-package-catalog");
+    return result;
   }
 
   return (
@@ -152,7 +154,6 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

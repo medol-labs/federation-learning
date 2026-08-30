@@ -640,7 +640,7 @@ export const TrainingJobDashboardList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="createTrainingJob" />
+        <CommandButton variant="default" command="createFederation" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         <CommandButton variant="destructive" command="cancelTrainingJob" size="sm" />

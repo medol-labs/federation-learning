@@ -68,10 +68,12 @@ export const DatasetReadinessRevokeDatasetTrainingApproval = () => {
   });
 
   async function onSubmit(values: RevokeDatasetTrainingApprovalCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/dataset-readiness");
+    return result;
   }
 
   return (
@@ -103,7 +105,6 @@ export const DatasetReadinessRevokeDatasetTrainingApproval = () => {
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

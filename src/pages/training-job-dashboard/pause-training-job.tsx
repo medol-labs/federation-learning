@@ -68,10 +68,12 @@ export const TrainingJobDashboardPauseTrainingJob = () => {
   });
 
   async function onSubmit(values: PauseTrainingJobCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/training-job-dashboard");
+    return result;
   }
 
   return (
@@ -103,7 +105,6 @@ export const TrainingJobDashboardPauseTrainingJob = () => {
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

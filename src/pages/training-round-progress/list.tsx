@@ -910,25 +910,6 @@ export const TrainingRoundProgressList = () => {
                   />
                 </DropdownMenuItem>
                 )}
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="submitGlobalModelEvaluation"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                    query={{
-                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
-                      featureSchemaId: row.original.featureSchemaId,
-                      roundId: row.original.roundId,
-                      roundNumber: row.original.roundNumber,
-                      aggregatedModelId: row.original.aggregatedModelId,
-                      globalAccuracy: row.original.globalAccuracy,
-                      globalFairnessScore: row.original.globalFairnessScore,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
                 {isCommandVisible(row.original, "", "state", ["Draft"]) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -997,6 +978,7 @@ export const TrainingRoundProgressList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        <CommandButton variant="default" command="createTrainingJob" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         <CommandButton variant="destructive" command="cancelTrainingJob" size="sm" />

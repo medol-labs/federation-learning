@@ -86,10 +86,12 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
   });
 
   async function onSubmit(values: SubmitModelUpdateSubmissionCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/round-execution-catalog");
+    return result;
   }
 
   return (
@@ -485,7 +487,6 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

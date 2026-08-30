@@ -386,7 +386,7 @@ export const RuntimeDatasetBindingCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="configureRuntimeDatasetBinding" />
+        <CommandButton variant="default" command="declareDataset" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

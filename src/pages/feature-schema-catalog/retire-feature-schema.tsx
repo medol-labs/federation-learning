@@ -68,10 +68,12 @@ export const FeatureSchemaCatalogRetireFeatureSchema = () => {
   });
 
   async function onSubmit(values: RetireFeatureSchemaCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/feature-schema-catalog");
+    return result;
   }
 
   return (
@@ -103,7 +105,6 @@ export const FeatureSchemaCatalogRetireFeatureSchema = () => {
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

@@ -10,7 +10,7 @@ export const backendModules = [
     dataProviderName: "federation-learning-support",
     apiUrl: getAppConfig("VITE_FEDERATION_LEARNING_SUPPORT_API_URL", "http://localhost:8080"),
     homeRoute: "/dictionary-catalog",
-    resources: ["dictionary-catalog","dictionary-value-catalog","staged-file-catalog"],
+    resources: ["dictionary-catalog","dictionary-value-catalog","permission-catalog","role-catalog","staged-file-catalog","user-account-catalog"],
   },
   {
     name: "federation-learning-platform",
@@ -82,6 +82,14 @@ export const resources: IResourceItem[] = [
     meta: {
       label: "File Upload",
       i18nKey: "chapters.fileupload.label",
+      icon: <FlaskConical />,
+    },
+  },
+  {
+    name: "identityaccessmanagement",
+    meta: {
+      label: "Identity Access Management",
+      i18nKey: "chapters.identityaccessmanagement.label",
       icon: <FlaskConical />,
     },
   },
@@ -160,6 +168,7 @@ export const resources: IResourceItem[] = [
   {
     name: "agent_dataset_access_validation_catalog",
     list: "/agent-dataset-access-validation-catalog",
+    create: "/agent-dataset-access-validation-catalog/command/declare-dataset",
     show: "/agent-dataset-access-validation-catalog/show/:id",
     meta: {
       parent: "runtimeagentoperations",
@@ -176,6 +185,10 @@ export const resources: IResourceItem[] = [
       dataProviderName: "federation-learning-runtime-agent",
       moduleName: "federation-learning-runtime-agent",
       moduleLabel: "Federation Learning Runtime Agent",
+      commandRoute: "/agent-dataset-access-validation-catalog/:id/command/:command",
+      commands: {
+        declareDataset: { label: "Declare Dataset", i18nKey: "resources.agent_dataset_access_validation_catalog.commands.declareDataset.label", route: "/agent-dataset-access-validation-catalog/command/declare-dataset", dataProviderName: "federation-learning-runtime-agent" },
+      },
       canDelete: false,
     },
   },
@@ -208,6 +221,7 @@ export const resources: IResourceItem[] = [
   {
     name: "agent_runtime_node_inventory_catalog",
     list: "/agent-runtime-node-inventory-catalog",
+    create: "/agent-runtime-node-inventory-catalog/command/register-organization",
     show: "/agent-runtime-node-inventory-catalog/show/:id",
     meta: {
       parent: "runtimeagentoperations",
@@ -224,6 +238,10 @@ export const resources: IResourceItem[] = [
       dataProviderName: "federation-learning-runtime-agent",
       moduleName: "federation-learning-runtime-agent",
       moduleLabel: "Federation Learning Runtime Agent",
+      commandRoute: "/agent-runtime-node-inventory-catalog/:id/command/:command",
+      commands: {
+        registerOrganization: { label: "Register Organization", i18nKey: "resources.agent_runtime_node_inventory_catalog.commands.registerOrganization.label", route: "/agent-runtime-node-inventory-catalog/command/register-organization", dataProviderName: "federation-learning-runtime-agent" },
+      },
       canDelete: false,
     },
   },
@@ -318,7 +336,7 @@ export const resources: IResourceItem[] = [
   {
     name: "dataset_capability",
     list: "/dataset-capability",
-    create: "/dataset-capability/command/declare-dataset",
+    create: "/dataset-capability/command/register-organization",
     show: "/dataset-capability/show/:id",
     meta: {
       parent: "runtimeagentoperations",
@@ -337,7 +355,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Runtime Agent",
       commandRoute: "/dataset-capability/:id/command/:command",
       commands: {
-        declareDataset: { label: "Declare Dataset", i18nKey: "resources.dataset_capability.commands.declareDataset.label", route: "/dataset-capability/command/declare-dataset", dataProviderName: "federation-learning-runtime-agent" },
+        registerOrganization: { label: "Register Organization", i18nKey: "resources.dataset_capability.commands.registerOrganization.label", route: "/dataset-capability/command/register-organization", dataProviderName: "federation-learning-runtime-agent" },
         retryDatasetContractValidation: { label: "Retry Dataset Contract Validation", i18nKey: "resources.dataset_capability.commands.retryDatasetContractValidation.label", route: "/dataset-capability/:id/command/retry-dataset-contract-validation", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
         rejectDatasetForTraining: { label: "Reject Dataset For Training", i18nKey: "resources.dataset_capability.commands.rejectDatasetForTraining.label", route: "/dataset-capability/:id/command/reject-dataset-for-training", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
         approveDatasetForTraining: { label: "Approve Dataset For Training", i18nKey: "resources.dataset_capability.commands.approveDatasetForTraining.label", route: "/dataset-capability/:id/command/approve-dataset-for-training", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
@@ -350,7 +368,7 @@ export const resources: IResourceItem[] = [
   {
     name: "dataset_readiness",
     list: "/dataset-readiness",
-    create: "/dataset-readiness/command/declare-dataset",
+    create: "/dataset-readiness/command/register-organization",
     show: "/dataset-readiness/show/:id",
     meta: {
       parent: "runtimeagentoperations",
@@ -369,7 +387,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Runtime Agent",
       commandRoute: "/dataset-readiness/:id/command/:command",
       commands: {
-        declareDataset: { label: "Declare Dataset", i18nKey: "resources.dataset_readiness.commands.declareDataset.label", route: "/dataset-readiness/command/declare-dataset", dataProviderName: "federation-learning-runtime-agent" },
+        registerOrganization: { label: "Register Organization", i18nKey: "resources.dataset_readiness.commands.registerOrganization.label", route: "/dataset-readiness/command/register-organization", dataProviderName: "federation-learning-runtime-agent" },
         retryDatasetContractValidation: { label: "Retry Dataset Contract Validation", i18nKey: "resources.dataset_readiness.commands.retryDatasetContractValidation.label", route: "/dataset-readiness/:id/command/retry-dataset-contract-validation", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
         rejectDatasetForTraining: { label: "Reject Dataset For Training", i18nKey: "resources.dataset_readiness.commands.rejectDatasetForTraining.label", route: "/dataset-readiness/:id/command/reject-dataset-for-training", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
         approveDatasetForTraining: { label: "Approve Dataset For Training", i18nKey: "resources.dataset_readiness.commands.approveDatasetForTraining.label", route: "/dataset-readiness/:id/command/approve-dataset-for-training", dataProviderName: "federation-learning-runtime-agent", stateField: "contractStatus", allowedStates: ["ContractValidationCompleted"] },
@@ -474,7 +492,7 @@ export const resources: IResourceItem[] = [
   {
     name: "federation_membership_directory",
     list: "/federation-membership-directory",
-    create: "/federation-membership-directory/command/invite-participant",
+    create: "/federation-membership-directory/command/create-federation",
     show: "/federation-membership-directory/show/:id",
     meta: {
       parent: "federationmanagement",
@@ -493,8 +511,9 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/federation-membership-directory/:id/command/:command",
       commands: {
-        inviteParticipant: { label: "Invite Participant", i18nKey: "resources.federation_membership_directory.commands.inviteParticipant.label", route: "/federation-membership-directory/command/invite-participant", dataProviderName: "federation-learning-platform" },
+        createFederation: { label: "Create Federation", i18nKey: "resources.federation_membership_directory.commands.createFederation.label", route: "/federation-membership-directory/command/create-federation", dataProviderName: "federation-learning-platform" },
         removeParticipant: { label: "Remove Participant", i18nKey: "resources.federation_membership_directory.commands.removeParticipant.label", route: "/federation-membership-directory/:id/command/remove-participant", dataProviderName: "federation-learning-platform", stateField: "membershipStatus", allowedStates: ["Suspended"] },
+        inviteParticipant: { label: "Invite Participant", i18nKey: "resources.federation_membership_directory.commands.inviteParticipant.label", route: "/federation-membership-directory/:id/command/invite-participant", dataProviderName: "federation-learning-platform" },
         approveParticipant: { label: "Approve Participant", i18nKey: "resources.federation_membership_directory.commands.approveParticipant.label", route: "/federation-membership-directory/:id/command/approve-participant", dataProviderName: "federation-learning-platform", stateField: "membershipStatus", allowedStates: ["Invited"] },
         rejectParticipant: { label: "Reject Participant", i18nKey: "resources.federation_membership_directory.commands.rejectParticipant.label", route: "/federation-membership-directory/:id/command/reject-participant", dataProviderName: "federation-learning-platform", stateField: "membershipStatus", allowedStates: ["Invited"] },
         revokeParticipantInvitation: { label: "Revoke Participant Invitation", i18nKey: "resources.federation_membership_directory.commands.revokeParticipantInvitation.label", route: "/federation-membership-directory/:id/command/revoke-participant-invitation", dataProviderName: "federation-learning-platform", stateField: "membershipStatus", allowedStates: ["Invited"] },
@@ -543,7 +562,7 @@ export const resources: IResourceItem[] = [
   {
     name: "model_artifact_catalog",
     list: "/model-artifact-catalog",
-    create: "/model-artifact-catalog/command/register-model-artifact",
+    create: "/model-artifact-catalog/command/create-training-job",
     show: "/model-artifact-catalog/show/:id",
     meta: {
       parent: "modelrepository",
@@ -562,7 +581,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/model-artifact-catalog/:id/command/:command",
       commands: {
-        registerModelArtifact: { label: "Register Model Artifact", i18nKey: "resources.model_artifact_catalog.commands.registerModelArtifact.label", route: "/model-artifact-catalog/command/register-model-artifact", dataProviderName: "federation-learning-platform" },
+        createTrainingJob: { label: "Create Training Job", i18nKey: "resources.model_artifact_catalog.commands.createTrainingJob.label", route: "/model-artifact-catalog/command/create-training-job", dataProviderName: "federation-learning-platform" },
       },
       canDelete: false,
     },
@@ -570,6 +589,7 @@ export const resources: IResourceItem[] = [
   {
     name: "model_catalog",
     list: "/model-catalog",
+    create: "/model-catalog/command/create-training-job",
     show: "/model-catalog/show/:id",
     meta: {
       parent: "modellifecycle",
@@ -588,6 +608,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/model-catalog/:id/command/:command",
       commands: {
+        createTrainingJob: { label: "Create Training Job", i18nKey: "resources.model_catalog.commands.createTrainingJob.label", route: "/model-catalog/command/create-training-job", dataProviderName: "federation-learning-platform" },
         recordModelEvaluationPackage: { label: "Record Model Evaluation Package", i18nKey: "resources.model_catalog.commands.recordModelEvaluationPackage.label", route: "/model-catalog/:id/command/record-model-evaluation-package", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["Candidate"] },
         approveModel: { label: "Approve Model", i18nKey: "resources.model_catalog.commands.approveModel.label", route: "/model-catalog/:id/command/approve-model", dataProviderName: "federation-learning-platform", enabledField: "canApprove", stateField: "state", allowedStates: ["EvaluationPackaged"] },
         promoteModelToProduction: { label: "Promote Model To Production", i18nKey: "resources.model_catalog.commands.promoteModelToProduction.label", route: "/model-catalog/:id/command/promote-model-to-production", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["Approved"] },
@@ -624,6 +645,60 @@ export const resources: IResourceItem[] = [
         deactivateOrganization: { label: "Deactivate Organization", i18nKey: "resources.organization_directory.commands.deactivateOrganization.label", route: "/organization-directory/:id/command/deactivate-organization", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["Active"] },
         reactivateOrganization: { label: "Reactivate Organization", i18nKey: "resources.organization_directory.commands.reactivateOrganization.label", route: "/organization-directory/:id/command/reactivate-organization", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["Deactivated"] },
         createRuntimeInstallationPlan: { label: "Create Runtime Installation Plan", i18nKey: "resources.organization_directory.commands.createRuntimeInstallationPlan.label", route: "/organization-directory/:id/command/create-runtime-installation-plan", dataProviderName: "federation-learning-platform" },
+      },
+      canDelete: false,
+    },
+  },
+  {
+    name: "permission_catalog",
+    list: "/permission-catalog",
+    create: "/permission-catalog/command/register-permission",
+    show: "/permission-catalog/show/:id",
+    meta: {
+      parent: "identityaccessmanagement",
+      label: "Permission Catalog",
+      i18nKey: "resources.permission_catalog.label",
+      icon: <Package />,
+      tableName: "permission_catalog_read_model_entity",
+      idField: "permissionCode",
+      idFields: ["permissionCode"],
+      queryFields: ["permissionCode","permissionName","description"],
+      actionControls: {"enabledFields":[]},
+      aggregateRoute: "useraccount",
+      queryRoute: "permissioncatalog",
+      dataProviderName: "federation-learning-support",
+      moduleName: "federation-learning-support",
+      moduleLabel: "Federation Learning Support",
+      commandRoute: "/permission-catalog/:id/command/:command",
+      commands: {
+        registerPermission: { label: "Register Permission", i18nKey: "resources.permission_catalog.commands.registerPermission.label", route: "/permission-catalog/command/register-permission", dataProviderName: "federation-learning-support" },
+      },
+      canDelete: false,
+    },
+  },
+  {
+    name: "role_catalog",
+    list: "/role-catalog",
+    create: "/role-catalog/command/register-role",
+    show: "/role-catalog/show/:id",
+    meta: {
+      parent: "identityaccessmanagement",
+      label: "Role Catalog",
+      i18nKey: "resources.role_catalog.label",
+      icon: <Package />,
+      tableName: "role_catalog_read_model_entity",
+      idField: "roleCode",
+      idFields: ["roleCode"],
+      queryFields: ["roleCode","roleName"],
+      actionControls: {"enabledFields":[]},
+      aggregateRoute: "useraccount",
+      queryRoute: "rolecatalog",
+      dataProviderName: "federation-learning-support",
+      moduleName: "federation-learning-support",
+      moduleLabel: "Federation Learning Support",
+      commandRoute: "/role-catalog/:id/command/:command",
+      commands: {
+        registerRole: { label: "Register Role", i18nKey: "resources.role_catalog.commands.registerRole.label", route: "/role-catalog/command/register-role", dataProviderName: "federation-learning-support" },
       },
       canDelete: false,
     },
@@ -730,7 +805,7 @@ export const resources: IResourceItem[] = [
   {
     name: "runtime_dataset_binding_catalog",
     list: "/runtime-dataset-binding-catalog",
-    create: "/runtime-dataset-binding-catalog/command/configure-runtime-dataset-binding",
+    create: "/runtime-dataset-binding-catalog/command/declare-dataset",
     show: "/runtime-dataset-binding-catalog/show/:id",
     meta: {
       parent: "runtimeagentoperations",
@@ -749,7 +824,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Runtime Agent",
       commandRoute: "/runtime-dataset-binding-catalog/:id/command/:command",
       commands: {
-        configureRuntimeDatasetBinding: { label: "Configure Runtime Dataset Binding", i18nKey: "resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.label", route: "/runtime-dataset-binding-catalog/command/configure-runtime-dataset-binding", dataProviderName: "federation-learning-runtime-agent" },
+        declareDataset: { label: "Declare Dataset", i18nKey: "resources.runtime_dataset_binding_catalog.commands.declareDataset.label", route: "/runtime-dataset-binding-catalog/command/declare-dataset", dataProviderName: "federation-learning-runtime-agent" },
       },
       canDelete: false,
     },
@@ -757,6 +832,7 @@ export const resources: IResourceItem[] = [
   {
     name: "runtime_dataset_metadata_catalog",
     list: "/runtime-dataset-metadata-catalog",
+    create: "/runtime-dataset-metadata-catalog/command/register-organization",
     show: "/runtime-dataset-metadata-catalog/show/:id",
     meta: {
       parent: "datasetgovernance",
@@ -773,12 +849,17 @@ export const resources: IResourceItem[] = [
       dataProviderName: "federation-learning-platform",
       moduleName: "federation-learning-platform",
       moduleLabel: "Federation Learning Platform",
+      commandRoute: "/runtime-dataset-metadata-catalog/:id/command/:command",
+      commands: {
+        registerOrganization: { label: "Register Organization", i18nKey: "resources.runtime_dataset_metadata_catalog.commands.registerOrganization.label", route: "/runtime-dataset-metadata-catalog/command/register-organization", dataProviderName: "federation-learning-platform" },
+      },
       canDelete: false,
     },
   },
   {
     name: "runtime_health_dashboard",
     list: "/runtime-health-dashboard",
+    create: "/runtime-health-dashboard/command/create-federation",
     show: "/runtime-health-dashboard/show/:id",
     meta: {
       parent: "runtimemonitoring",
@@ -795,12 +876,17 @@ export const resources: IResourceItem[] = [
       dataProviderName: "federation-learning-platform",
       moduleName: "federation-learning-platform",
       moduleLabel: "Federation Learning Platform",
+      commandRoute: "/runtime-health-dashboard/:id/command/:command",
+      commands: {
+        createFederation: { label: "Create Federation", i18nKey: "resources.runtime_health_dashboard.commands.createFederation.label", route: "/runtime-health-dashboard/command/create-federation", dataProviderName: "federation-learning-platform" },
+      },
       canDelete: false,
     },
   },
   {
     name: "runtime_identity_catalog",
     list: "/runtime-identity-catalog",
+    create: "/runtime-identity-catalog/command/register-organization",
     show: "/runtime-identity-catalog/show/:id",
     meta: {
       parent: "runtimegovernance",
@@ -819,6 +905,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/runtime-identity-catalog/:id/command/:command",
       commands: {
+        registerOrganization: { label: "Register Organization", i18nKey: "resources.runtime_identity_catalog.commands.registerOrganization.label", route: "/runtime-identity-catalog/command/register-organization", dataProviderName: "federation-learning-platform" },
         revokeRuntimeIdentity: { label: "Revoke Runtime Identity", i18nKey: "resources.runtime_identity_catalog.commands.revokeRuntimeIdentity.label", route: "/runtime-identity-catalog/:id/command/revoke-runtime-identity", dataProviderName: "federation-learning-platform", stateField: "identityStatus", allowedStates: ["Active"] },
       },
       canDelete: false,
@@ -827,6 +914,7 @@ export const resources: IResourceItem[] = [
   {
     name: "runtime_infrastructure_access_view",
     list: "/runtime-infrastructure-access-view",
+    create: "/runtime-infrastructure-access-view/command/register-organization",
     show: "/runtime-infrastructure-access-view/show/:id",
     meta: {
       parent: "runtimeprovisioning",
@@ -845,6 +933,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/runtime-infrastructure-access-view/:id/command/:command",
       commands: {
+        registerOrganization: { label: "Register Organization", i18nKey: "resources.runtime_infrastructure_access_view.commands.registerOrganization.label", route: "/runtime-infrastructure-access-view/command/register-organization", dataProviderName: "federation-learning-platform" },
         registerRuntimeInfrastructure: { label: "Register Runtime Infrastructure", i18nKey: "resources.runtime_infrastructure_access_view.commands.registerRuntimeInfrastructure.label", route: "/runtime-infrastructure-access-view/:id/command/register-runtime-infrastructure", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["Planned"] },
       },
       canDelete: false,
@@ -880,7 +969,7 @@ export const resources: IResourceItem[] = [
   {
     name: "runtime_installation_guide",
     list: "/runtime-installation-guide",
-    create: "/runtime-installation-guide/command/create-runtime-installation-plan",
+    create: "/runtime-installation-guide/command/register-organization",
     show: "/runtime-installation-guide/show/:id",
     meta: {
       parent: "runtimeprovisioning",
@@ -899,7 +988,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/runtime-installation-guide/:id/command/:command",
       commands: {
-        createRuntimeInstallationPlan: { label: "Create Runtime Installation Plan", i18nKey: "resources.runtime_installation_guide.commands.createRuntimeInstallationPlan.label", route: "/runtime-installation-guide/command/create-runtime-installation-plan", dataProviderName: "federation-learning-platform" },
+        registerOrganization: { label: "Register Organization", i18nKey: "resources.runtime_installation_guide.commands.registerOrganization.label", route: "/runtime-installation-guide/command/register-organization", dataProviderName: "federation-learning-platform" },
       },
       canDelete: false,
     },
@@ -907,7 +996,7 @@ export const resources: IResourceItem[] = [
   {
     name: "runtime_installation_plan_catalog",
     list: "/runtime-installation-plan-catalog",
-    create: "/runtime-installation-plan-catalog/command/create-runtime-installation-plan",
+    create: "/runtime-installation-plan-catalog/command/register-organization",
     show: "/runtime-installation-plan-catalog/show/:id",
     meta: {
       parent: "runtimeprovisioning",
@@ -926,7 +1015,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/runtime-installation-plan-catalog/:id/command/:command",
       commands: {
-        createRuntimeInstallationPlan: { label: "Create Runtime Installation Plan", i18nKey: "resources.runtime_installation_plan_catalog.commands.createRuntimeInstallationPlan.label", route: "/runtime-installation-plan-catalog/command/create-runtime-installation-plan", dataProviderName: "federation-learning-platform" },
+        registerOrganization: { label: "Register Organization", i18nKey: "resources.runtime_installation_plan_catalog.commands.registerOrganization.label", route: "/runtime-installation-plan-catalog/command/register-organization", dataProviderName: "federation-learning-platform" },
       },
       canDelete: false,
     },
@@ -934,6 +1023,7 @@ export const resources: IResourceItem[] = [
   {
     name: "runtime_node_inventory_view",
     list: "/runtime-node-inventory-view",
+    create: "/runtime-node-inventory-view/command/register-organization",
     show: "/runtime-node-inventory-view/show/:id",
     meta: {
       parent: "runtimemonitoring",
@@ -950,6 +1040,10 @@ export const resources: IResourceItem[] = [
       dataProviderName: "federation-learning-platform",
       moduleName: "federation-learning-platform",
       moduleLabel: "Federation Learning Platform",
+      commandRoute: "/runtime-node-inventory-view/:id/command/:command",
+      commands: {
+        registerOrganization: { label: "Register Organization", i18nKey: "resources.runtime_node_inventory_view.commands.registerOrganization.label", route: "/runtime-node-inventory-view/command/register-organization", dataProviderName: "federation-learning-platform" },
+      },
       canDelete: false,
     },
   },
@@ -1056,6 +1150,7 @@ export const resources: IResourceItem[] = [
   {
     name: "training_alert_catalog",
     list: "/training-alert-catalog",
+    create: "/training-alert-catalog/command/create-training-job",
     show: "/training-alert-catalog/show/:id",
     meta: {
       parent: "runtimemonitoring",
@@ -1074,6 +1169,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/training-alert-catalog/:id/command/:command",
       commands: {
+        createTrainingJob: { label: "Create Training Job", i18nKey: "resources.training_alert_catalog.commands.createTrainingJob.label", route: "/training-alert-catalog/command/create-training-job", dataProviderName: "federation-learning-platform" },
         acknowledgeTrainingAlert: { label: "Acknowledge Training Alert", i18nKey: "resources.training_alert_catalog.commands.acknowledgeTrainingAlert.label", route: "/training-alert-catalog/:id/command/acknowledge-training-alert", dataProviderName: "federation-learning-platform", enabledField: "canAcknowledge", stateField: "state", allowedStates: ["Raised"] },
         resolveTrainingAlert: { label: "Resolve Training Alert", i18nKey: "resources.training_alert_catalog.commands.resolveTrainingAlert.label", route: "/training-alert-catalog/:id/command/resolve-training-alert", dataProviderName: "federation-learning-platform", enabledField: "canResolve", stateField: "state", allowedStates: ["Acknowledged"] },
       },
@@ -1083,7 +1179,7 @@ export const resources: IResourceItem[] = [
   {
     name: "training_job_dashboard",
     list: "/training-job-dashboard",
-    create: "/training-job-dashboard/command/create-training-job",
+    create: "/training-job-dashboard/command/create-federation",
     show: "/training-job-dashboard/show/:id",
     meta: {
       parent: "trainingorchestration",
@@ -1102,7 +1198,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/training-job-dashboard/:id/command/:command",
       commands: {
-        createTrainingJob: { label: "Create Training Job", i18nKey: "resources.training_job_dashboard.commands.createTrainingJob.label", route: "/training-job-dashboard/command/create-training-job", dataProviderName: "federation-learning-platform" },
+        createFederation: { label: "Create Federation", i18nKey: "resources.training_job_dashboard.commands.createFederation.label", route: "/training-job-dashboard/command/create-federation", dataProviderName: "federation-learning-platform" },
         cancelTrainingJob: { label: "Cancel Training Job", i18nKey: "resources.training_job_dashboard.commands.cancelTrainingJob.label", route: "/training-job-dashboard/:id/command/cancel-training-job", dataProviderName: "federation-learning-platform", enabledField: "canCancel" },
         submitTrainingJob: { label: "Submit Training Job", i18nKey: "resources.training_job_dashboard.commands.submitTrainingJob.label", route: "/training-job-dashboard/:id/command/submit-training-job", dataProviderName: "federation-learning-platform", enabledField: "canSubmit", stateField: "state", allowedStates: ["Draft"] },
         pauseTrainingJob: { label: "Pause Training Job", i18nKey: "resources.training_job_dashboard.commands.pauseTrainingJob.label", route: "/training-job-dashboard/:id/command/pause-training-job", dataProviderName: "federation-learning-platform", enabledField: "canPause" },
@@ -1114,7 +1210,7 @@ export const resources: IResourceItem[] = [
   {
     name: "training_participant_eligibility",
     list: "/training-participant-eligibility",
-    create: "/training-participant-eligibility/command/create-training-job",
+    create: "/training-participant-eligibility/command/create-federation",
     show: "/training-participant-eligibility/show/:id",
     meta: {
       parent: "trainingorchestration",
@@ -1133,7 +1229,7 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/training-participant-eligibility/:id/command/:command",
       commands: {
-        createTrainingJob: { label: "Create Training Job", i18nKey: "resources.training_participant_eligibility.commands.createTrainingJob.label", route: "/training-participant-eligibility/command/create-training-job", dataProviderName: "federation-learning-platform" },
+        createFederation: { label: "Create Federation", i18nKey: "resources.training_participant_eligibility.commands.createFederation.label", route: "/training-participant-eligibility/command/create-federation", dataProviderName: "federation-learning-platform" },
         submitTrainingJob: { label: "Submit Training Job", i18nKey: "resources.training_participant_eligibility.commands.submitTrainingJob.label", route: "/training-participant-eligibility/:id/command/submit-training-job", dataProviderName: "federation-learning-platform", stateField: "participantStatus", allowedStates: ["Draft"] },
       },
       canDelete: false,
@@ -1142,6 +1238,7 @@ export const resources: IResourceItem[] = [
   {
     name: "training_round_progress",
     list: "/training-round-progress",
+    create: "/training-round-progress/command/create-training-job",
     show: "/training-round-progress/show/:id",
     meta: {
       parent: "trainingorchestration",
@@ -1160,10 +1257,10 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/training-round-progress/:id/command/:command",
       commands: {
+        createTrainingJob: { label: "Create Training Job", i18nKey: "resources.training_round_progress.commands.createTrainingJob.label", route: "/training-round-progress/command/create-training-job", dataProviderName: "federation-learning-platform" },
         cancelTrainingJob: { label: "Cancel Training Job", i18nKey: "resources.training_round_progress.commands.cancelTrainingJob.label", route: "/training-round-progress/:id/command/cancel-training-job", dataProviderName: "federation-learning-platform" },
         retryRoundExecutionAfterStartFailure: { label: "Retry Round Execution After Start Failure", i18nKey: "resources.training_round_progress.commands.retryRoundExecutionAfterStartFailure.label", route: "/training-round-progress/:id/command/retry-round-execution-after-start-failure", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["StartFailed"] },
         retryRoundExecutionAfterRuntimeFailure: { label: "Retry Round Execution After Runtime Failure", i18nKey: "resources.training_round_progress.commands.retryRoundExecutionAfterRuntimeFailure.label", route: "/training-round-progress/:id/command/retry-round-execution-after-runtime-failure", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["Failed"] },
-        submitGlobalModelEvaluation: { label: "Submit Global Model Evaluation", i18nKey: "resources.training_round_progress.commands.submitGlobalModelEvaluation.label", route: "/training-round-progress/:id/command/submit-global-model-evaluation", dataProviderName: "federation-learning-platform" },
         submitTrainingJob: { label: "Submit Training Job", i18nKey: "resources.training_round_progress.commands.submitTrainingJob.label", route: "/training-round-progress/:id/command/submit-training-job", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["Draft"] },
         retryTrainingRoundParticipantSelection: { label: "Retry Training Round Participant Selection", i18nKey: "resources.training_round_progress.commands.retryTrainingRoundParticipantSelection.label", route: "/training-round-progress/:id/command/retry-training-round-participant-selection", dataProviderName: "federation-learning-platform" },
         pauseTrainingJob: { label: "Pause Training Job", i18nKey: "resources.training_round_progress.commands.pauseTrainingJob.label", route: "/training-round-progress/:id/command/pause-training-job", dataProviderName: "federation-learning-platform" },
@@ -1174,7 +1271,7 @@ export const resources: IResourceItem[] = [
   {
     name: "training_run_configuration_catalog",
     list: "/training-run-configuration-catalog",
-    create: "/training-run-configuration-catalog/command/define-training-run-configuration",
+    create: "/training-run-configuration-catalog/command/create-federation",
     edit: "/training-run-configuration-catalog/edit/:id",
     show: "/training-run-configuration-catalog/show/:id",
     meta: {
@@ -1194,8 +1291,36 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/training-run-configuration-catalog/:id/command/:command",
       commands: {
-        defineTrainingRunConfiguration: { label: "Define Training Run Configuration", i18nKey: "resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.label", route: "/training-run-configuration-catalog/command/define-training-run-configuration", dataProviderName: "federation-learning-platform" },
+        createFederation: { label: "Create Federation", i18nKey: "resources.training_run_configuration_catalog.commands.createFederation.label", route: "/training-run-configuration-catalog/command/create-federation", dataProviderName: "federation-learning-platform" },
         createTrainingJob: { label: "Create Training Job", i18nKey: "resources.training_run_configuration_catalog.commands.createTrainingJob.label", route: "/training-run-configuration-catalog/:id/command/create-training-job", dataProviderName: "federation-learning-platform" },
+      },
+      canDelete: false,
+    },
+  },
+  {
+    name: "user_account_catalog",
+    list: "/user-account-catalog",
+    create: "/user-account-catalog/command/register-user-account",
+    show: "/user-account-catalog/show/:id",
+    meta: {
+      parent: "identityaccessmanagement",
+      label: "User Account Catalog",
+      i18nKey: "resources.user_account_catalog.label",
+      icon: <Package />,
+      tableName: "user_account_catalog_read_model_entity",
+      idField: "userAccountId",
+      idFields: ["userAccountId"],
+      queryFields: ["userAccountId","username","providerSubject","passwordHash","organizationId","active"],
+      actionControls: {"enabledFields":[]},
+      aggregateRoute: "useraccount",
+      queryRoute: "useraccountcatalog",
+      dataProviderName: "federation-learning-support",
+      moduleName: "federation-learning-support",
+      moduleLabel: "Federation Learning Support",
+      commandRoute: "/user-account-catalog/:id/command/:command",
+      commands: {
+        registerUserAccount: { label: "Register User Account", i18nKey: "resources.user_account_catalog.commands.registerUserAccount.label", route: "/user-account-catalog/command/register-user-account", dataProviderName: "federation-learning-support" },
+        generateUserAccountLoginPassword: { label: "Generate User Account Login Password", i18nKey: "resources.user_account_catalog.commands.generateUserAccountLoginPassword.label", route: "/user-account-catalog/:id/command/generate-user-account-login-password", dataProviderName: "federation-learning-support" },
       },
       canDelete: false,
     },

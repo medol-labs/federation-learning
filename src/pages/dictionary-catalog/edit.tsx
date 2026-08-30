@@ -70,10 +70,12 @@ export const DictionaryCatalogUpdateDictionary = () => {
   });
 
   async function onSubmit(values: UpdateDictionaryCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/dictionary-catalog");
+    return result;
   }
 
   return (
@@ -124,7 +126,6 @@ export const DictionaryCatalogUpdateDictionary = () => {
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

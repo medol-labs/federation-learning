@@ -192,6 +192,20 @@ export const FederationMembershipDirectoryList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="inviteParticipant"
+                    recordItemId={row.original.federationId}
+                    size="sm"
+                    query={{
+                      organizationId: row.original.organizationId,
+                      invitationNote: row.original.invitationNote,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
                 {isCommandVisible(row.original, "", "membershipStatus", ["Invited"]) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -293,7 +307,7 @@ export const FederationMembershipDirectoryList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="inviteParticipant" />
+        <CommandButton variant="default" command="createFederation" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         <CommandButton variant="destructive" command="removeParticipant" size="sm" />

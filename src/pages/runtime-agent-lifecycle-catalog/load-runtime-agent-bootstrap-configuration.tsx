@@ -67,10 +67,12 @@ export const RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration 
   });
 
   async function onSubmit(values: LoadRuntimeAgentBootstrapConfigurationCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/runtime-agent-lifecycle-catalog");
+    return result;
   }
 
   return (
@@ -81,7 +83,6 @@ export const RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration 
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

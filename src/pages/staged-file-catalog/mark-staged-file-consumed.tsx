@@ -71,10 +71,12 @@ export const StagedFileCatalogMarkStagedFileConsumed = () => {
   });
 
   async function onSubmit(values: MarkStagedFileConsumedCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/staged-file-catalog");
+    return result;
   }
 
   return (
@@ -142,7 +144,6 @@ export const StagedFileCatalogMarkStagedFileConsumed = () => {
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

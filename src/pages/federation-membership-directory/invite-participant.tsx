@@ -71,10 +71,12 @@ export const FederationMembershipDirectoryInviteParticipant = () => {
   });
 
   async function onSubmit(values: InviteParticipantCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/federation-membership-directory");
+    return result;
   }
 
   return (
@@ -133,7 +135,6 @@ export const FederationMembershipDirectoryInviteParticipant = () => {
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

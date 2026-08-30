@@ -342,6 +342,7 @@ export const TrainingAlertCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        <CommandButton variant="default" command="createTrainingJob" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

@@ -483,7 +483,7 @@ export const RuntimeInstallationPlanCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="createRuntimeInstallationPlan" />
+        <CommandButton variant="default" command="registerOrganization" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

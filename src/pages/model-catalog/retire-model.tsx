@@ -68,10 +68,12 @@ export const ModelCatalogRetireModel = () => {
   });
 
   async function onSubmit(values: RetireModelCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/model-catalog");
+    return result;
   }
 
   return (
@@ -103,7 +105,6 @@ export const ModelCatalogRetireModel = () => {
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

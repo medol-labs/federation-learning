@@ -1,7 +1,7 @@
 // Generated from config.json by the refine generator.
 export * from "./list";
 export * from "./show";
-export * from "./declare-dataset";
+export * from "./register-organization";
 export * from "./retry-dataset-contract-validation";
 export * from "./reject-dataset-for-training";
 export * from "./approve-dataset-for-training";

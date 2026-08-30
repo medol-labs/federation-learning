@@ -30,7 +30,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTrainingJobCommandSchema, type CreateTrainingJobCommandInput } from "@/domain/schemas";
 import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-export const TrainingJobDashboardCreateTrainingJob = () => {
+export const ModelCatalogCreateTrainingJob = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -38,30 +38,29 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
   const defaultValues = {
     federationId: searchParams.get("federationId") ?? undefined,
     trainingRunConfigurationId: searchParams.get("trainingRunConfigurationId") ?? undefined,
-    objective: searchParams.get("objective") ?? undefined,
   } as Partial<CreateTrainingJobCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<CreateTrainingJobCommandInput, CreateTrainingJobCommandInput>({
-    resource: "training_job_dashboard",
+    resource: "model_catalog",
     command: "createTrainingJob",
     aggregateId: id?.toString(),
     redirect: "list",
     dataProviderName: "federation-learning-platform",
     queryDataProviderName: "federation-learning-platform",
     meta: {
-      tableName: "training_job_dashboard_read_model_entity",
-      idField: "trainingJobId",
-      label: t("resources.training_job_dashboard.label", "Training Job Dashboard"),
+      tableName: "model_catalog_read_model_entity",
+      idField: "modelId",
+      label: t("resources.model_catalog.label", "Model Catalog"),
       aggregateRoute: "trainingjob",
-      queryRoute: "trainingjobdashboard",
+      queryRoute: "modelcatalog",
       dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
-      tableName: "training_job_dashboard_read_model_entity",
-      idField: "trainingJobId",
-      label: t("resources.training_job_dashboard.label", "Training Job Dashboard"),
-      aggregateRoute: "trainingjob",
-      queryRoute: "trainingjobdashboard",
+      tableName: "model_catalog_read_model_entity",
+      idField: "modelId",
+      label: t("resources.model_catalog.label", "Model Catalog"),
+      aggregateRoute: "model",
+      queryRoute: "modelcatalog",
       dataProviderName: "federation-learning-platform",
     },
     formProps: {
@@ -71,15 +70,17 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
   });
 
   async function onSubmit(values: CreateTrainingJobCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/model-catalog");
+    return result;
   }
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.training_job_dashboard.commands.createTrainingJob.label", "Create Training Job")} />
+      <CreateViewHeader title={t("resources.model_catalog.commands.createTrainingJob.label", "Create Training Job")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("CreateTrainingJob validation failed", errors))} className="space-y-8">
           <FormField
@@ -88,7 +89,7 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
             rules={{ required: "Federation Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.training_job_dashboard.commands.createTrainingJob.fields.federationId.label", "Federation Id")}</FormLabel>
+                <FormLabel>{t("resources.model_catalog.commands.createTrainingJob.fields.federationId.label", "Federation Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="federation_overview"
@@ -97,10 +98,10 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
                   optionValue="federationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.training_job_dashboard.commands.createTrainingJob.fields.federationId.placeholder", "Select Federation Id")}
+                  placeholder={t("resources.model_catalog.commands.createTrainingJob.fields.federationId.placeholder", "Select Federation Id")}
                   meta={{
                     idField: "federationId",
-                    label: t("resources.training_job_dashboard.commands.createTrainingJob.fields.federationId.label", "Federation Overview"),
+                    label: t("resources.model_catalog.commands.createTrainingJob.fields.federationId.label", "Federation Overview"),
                     aggregateRoute: "federation",
                     queryRoute: "federationoverview",
                   }}
@@ -115,7 +116,7 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
             rules={{ required: "Training Run Configuration Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.training_job_dashboard.commands.createTrainingJob.fields.trainingRunConfigurationId.label", "Training Run Configuration Id")}</FormLabel>
+                <FormLabel>{t("resources.model_catalog.commands.createTrainingJob.fields.trainingRunConfigurationId.label", "Training Run Configuration Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="training_run_configuration_catalog"
@@ -124,10 +125,10 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.training_job_dashboard.commands.createTrainingJob.fields.trainingRunConfigurationId.placeholder", "Select Training Run Configuration Id")}
+                  placeholder={t("resources.model_catalog.commands.createTrainingJob.fields.trainingRunConfigurationId.placeholder", "Select Training Run Configuration Id")}
                   meta={{
                     idField: "trainingRunConfigurationId",
-                    label: t("resources.training_job_dashboard.commands.createTrainingJob.fields.trainingRunConfigurationId.label", "Training Run Configuration Catalog"),
+                    label: t("resources.model_catalog.commands.createTrainingJob.fields.trainingRunConfigurationId.label", "Training Run Configuration Catalog"),
                     aggregateRoute: "trainingrunconfiguration",
                     queryRoute: "trainingrunconfigurationcatalog",
                   }}
@@ -142,7 +143,7 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
             rules={{ required: "Objective is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.training_job_dashboard.commands.createTrainingJob.fields.objective.label", "Objective")}</FormLabel>
+                <FormLabel>{t("resources.model_catalog.commands.createTrainingJob.fields.objective.label", "Objective")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -157,7 +158,6 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

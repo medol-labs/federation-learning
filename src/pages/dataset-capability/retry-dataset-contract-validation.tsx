@@ -68,10 +68,12 @@ export const DatasetCapabilityRetryDatasetContractValidation = () => {
   });
 
   async function onSubmit(values: RetryDatasetContractValidationCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/dataset-capability");
+    return result;
   }
 
   return (
@@ -85,7 +87,6 @@ export const DatasetCapabilityRetryDatasetContractValidation = () => {
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}

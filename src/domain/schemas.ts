@@ -424,23 +424,6 @@ export const CompleteSecureAggregationCommandSchema = z.object({
 });
 export type CompleteSecureAggregationCommandInput = z.infer<typeof CompleteSecureAggregationCommandSchema>;
 
-export const SubmitGlobalModelEvaluationCommandSchema = z.object({
-  trainingJobId: z.string().uuid(),
-  trainingRunConfigurationId: z.string().uuid(),
-  featureSchemaId: z.string().uuid(),
-  roundId: z.string().uuid(),
-  roundNumber: z.coerce.number().int(),
-  aggregatedModelId: z.string().uuid(),
-  aggregatedModelArtifactUri: z.string(),
-  aggregatedModelRegistryRef: z.string(),
-  modelFormat: z.string(),
-  modelArtifactDigest: z.string(),
-  aggregatedModelSignatureUri: z.string().optional().nullable(),
-  globalAccuracy: z.coerce.number(),
-  globalFairnessScore: z.coerce.number(),
-});
-export type SubmitGlobalModelEvaluationCommandInput = z.infer<typeof SubmitGlobalModelEvaluationCommandSchema>;
-
 export const RecordModelEvaluationPackageCommandSchema = z.object({
   modelId: z.string().uuid(),
   trainingJobId: z.string().uuid(),
@@ -601,4 +584,49 @@ export type RetryRoundExecutionAfterRuntimeFailureCommandInput = z.infer<typeof 
 export const LoadRuntimeAgentBootstrapConfigurationCommandSchema = z.object({
 });
 export type LoadRuntimeAgentBootstrapConfigurationCommandInput = z.infer<typeof LoadRuntimeAgentBootstrapConfigurationCommandSchema>;
+
+export const RegisterUserAccountCommandSchema = z.object({
+  username: z.string(),
+  providerSubject: z.string().optional().nullable(),
+  passwordHash: z.string().optional().nullable(),
+  organizationId: z.string().uuid().optional().nullable(),
+});
+export type RegisterUserAccountCommandInput = z.infer<typeof RegisterUserAccountCommandSchema>;
+
+export const DeactivateUserAccountCommandSchema = z.object({
+  userAccountId: z.string().uuid(),
+  reason: z.string(),
+});
+export type DeactivateUserAccountCommandInput = z.infer<typeof DeactivateUserAccountCommandSchema>;
+
+export const GenerateUserAccountLoginPasswordCommandSchema = z.object({
+  userAccountId: z.string().uuid(),
+  passwordResetRequired: z.boolean(),
+});
+export type GenerateUserAccountLoginPasswordCommandInput = z.infer<typeof GenerateUserAccountLoginPasswordCommandSchema>;
+
+export const RegisterRoleCommandSchema = z.object({
+  roleCode: z.string(),
+  roleName: z.string(),
+});
+export type RegisterRoleCommandInput = z.infer<typeof RegisterRoleCommandSchema>;
+
+export const RegisterPermissionCommandSchema = z.object({
+  permissionCode: z.string(),
+  permissionName: z.string(),
+  description: z.string().optional().nullable(),
+});
+export type RegisterPermissionCommandInput = z.infer<typeof RegisterPermissionCommandSchema>;
+
+export const GrantPermissionToRoleCommandSchema = z.object({
+  roleCode: z.string(),
+  permissionCode: z.string(),
+});
+export type GrantPermissionToRoleCommandInput = z.infer<typeof GrantPermissionToRoleCommandSchema>;
+
+export const AssignRoleToUserCommandSchema = z.object({
+  userAccountId: z.string().uuid(),
+  roleCode: z.string(),
+});
+export type AssignRoleToUserCommandInput = z.infer<typeof AssignRoleToUserCommandSchema>;
 

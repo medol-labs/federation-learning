@@ -313,6 +313,7 @@ export const AgentDatasetAccessValidationCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        <CommandButton variant="default" command="declareDataset" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

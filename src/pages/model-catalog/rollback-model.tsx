@@ -69,10 +69,12 @@ export const ModelCatalogRollbackModel = () => {
   });
 
   async function onSubmit(values: RollbackModelCommandInput) {
-    return onFinish({
+    const result = await onFinish({
       ...defaultValues,
       ...values,
     });
+    navigate("/model-catalog");
+    return result;
   }
 
   return (
@@ -122,7 +124,6 @@ export const ModelCatalogRollbackModel = () => {
           <div className="flex gap-2">
             <Button
               type="submit"
-              {...form.saveButtonProps}
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? t("buttons.submitting", "Submitting...") : t("buttons.submit", "Submit")}
