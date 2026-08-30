@@ -48,7 +48,7 @@ export const TrainingRoundProgressCompleteSecureAggregation = () => {
     modelFormat: searchParams.get("modelFormat") ?? undefined,
     modelArtifactDigest: searchParams.get("modelArtifactDigest") ?? undefined,
     aggregatedModelSignatureUri: searchParams.get("aggregatedModelSignatureUri") ?? undefined,
-  } as Partial<CompleteSecureAggregationCommandInput>;
+  } as unknown as Partial<CompleteSecureAggregationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<CompleteSecureAggregationCommandInput, CompleteSecureAggregationCommandInput>({
     resource: "training_round_progress",

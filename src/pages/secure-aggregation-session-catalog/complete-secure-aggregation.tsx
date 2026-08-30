@@ -48,7 +48,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
     aggregatedModelArtifactUri: searchParams.get("aggregatedModelArtifactUri") ?? undefined,
     aggregatedModelRegistryRef: searchParams.get("aggregatedModelRegistryRef") ?? undefined,
     aggregatedModelSignatureUri: searchParams.get("aggregatedModelSignatureUri") ?? undefined,
-  } as Partial<CompleteSecureAggregationCommandInput>;
+  } as unknown as Partial<CompleteSecureAggregationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<CompleteSecureAggregationCommandInput, CompleteSecureAggregationCommandInput>({
     resource: "secure_aggregation_session_catalog",

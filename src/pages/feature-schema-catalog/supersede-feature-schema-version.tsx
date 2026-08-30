@@ -37,7 +37,7 @@ export const FeatureSchemaCatalogSupersedeFeatureSchemaVersion = () => {
   const defaultValues = {
     supersededByFeatureSchemaId: searchParams.get("supersededByFeatureSchemaId") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-  } as Partial<SupersedeFeatureSchemaVersionCommandInput>;
+  } as unknown as Partial<SupersedeFeatureSchemaVersionCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<SupersedeFeatureSchemaVersionCommandInput, SupersedeFeatureSchemaVersionCommandInput>({
     resource: "feature_schema_catalog",

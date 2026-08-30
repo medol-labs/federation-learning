@@ -38,7 +38,7 @@ export const FederationOverviewRemoveParticipant = () => {
   const defaultValues = {
     federationId: searchParams.get("federationId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
-  } as Partial<RemoveParticipantCommandInput>;
+  } as unknown as Partial<RemoveParticipantCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RemoveParticipantCommandInput, RemoveParticipantCommandInput>({
     resource: "federation_overview",

@@ -36,7 +36,7 @@ export const FeatureSchemaCatalogPublishFeatureSchema = () => {
   const { id } = useParsed();
   const defaultValues = {
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-  } as Partial<PublishFeatureSchemaCommandInput>;
+  } as unknown as Partial<PublishFeatureSchemaCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<PublishFeatureSchemaCommandInput, PublishFeatureSchemaCommandInput>({
     resource: "feature_schema_catalog",

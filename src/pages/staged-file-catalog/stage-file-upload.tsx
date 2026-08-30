@@ -47,7 +47,7 @@ export const StagedFileCatalogStageFileUpload = () => {
     stagedFileLocation: searchParams.get("stagedFileLocation") ?? undefined,
     checksum: searchParams.get("checksum") ?? undefined,
     expiresAt: searchParams.get("expiresAt") ?? undefined,
-  } as Partial<StageFileUploadCommandInput>;
+  } as unknown as Partial<StageFileUploadCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<StageFileUploadCommandInput, StageFileUploadCommandInput>({
     resource: "staged_file_catalog",

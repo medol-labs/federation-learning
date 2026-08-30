@@ -37,7 +37,7 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
   const { id } = useParsed();
   const defaultValues = {
     organizationId: searchParams.get("organizationId") ?? undefined,
-  } as Partial<CreateRuntimeInstallationPlanCommandInput>;
+  } as unknown as Partial<CreateRuntimeInstallationPlanCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<CreateRuntimeInstallationPlanCommandInput, CreateRuntimeInstallationPlanCommandInput>({
     resource: "organization_directory",

@@ -39,7 +39,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
     packageName: searchParams.get("packageName") ?? undefined,
     packageVersion: searchParams.get("packageVersion") ?? undefined,
     runtimeEnvironmentType: searchParams.get("runtimeEnvironmentType") ?? undefined,
-  } as Partial<RegisterRuntimeInfrastructurePackageCommandInput>;
+  } as unknown as Partial<RegisterRuntimeInfrastructurePackageCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterRuntimeInfrastructurePackageCommandInput, RegisterRuntimeInfrastructurePackageCommandInput>({
     resource: "runtime_infrastructure_package_catalog",

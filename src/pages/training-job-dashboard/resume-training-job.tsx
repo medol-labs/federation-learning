@@ -36,7 +36,7 @@ export const TrainingJobDashboardResumeTrainingJob = () => {
   const { id } = useParsed();
   const defaultValues = {
     trainingJobId: searchParams.get("trainingJobId") ?? undefined,
-  } as Partial<ResumeTrainingJobCommandInput>;
+  } as unknown as Partial<ResumeTrainingJobCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ResumeTrainingJobCommandInput, ResumeTrainingJobCommandInput>({
     resource: "training_job_dashboard",

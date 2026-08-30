@@ -38,7 +38,7 @@ export const FederationOverviewSuspendParticipant = () => {
   const defaultValues = {
     federationId: searchParams.get("federationId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
-  } as Partial<SuspendParticipantCommandInput>;
+  } as unknown as Partial<SuspendParticipantCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<SuspendParticipantCommandInput, SuspendParticipantCommandInput>({
     resource: "federation_overview",

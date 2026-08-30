@@ -37,7 +37,7 @@ export const DictionaryValueCatalogDisableDictionaryValue = () => {
   const defaultValues = {
     disabledReason: searchParams.get("disabledReason") ?? undefined,
     dictionaryValueId: searchParams.get("dictionaryValueId") ?? undefined,
-  } as Partial<DisableDictionaryValueCommandInput>;
+  } as unknown as Partial<DisableDictionaryValueCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<DisableDictionaryValueCommandInput, DisableDictionaryValueCommandInput>({
     resource: "dictionary_value_catalog",

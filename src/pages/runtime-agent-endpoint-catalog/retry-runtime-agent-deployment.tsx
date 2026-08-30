@@ -30,7 +30,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RetryRuntimeAgentDeploymentCommandSchema, type RetryRuntimeAgentDeploymentCommandInput } from "@/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-export const RuntimeInfrastructureAccessViewRetryRuntimeAgentDeployment = () => {
+export const RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -38,29 +38,29 @@ export const RuntimeInfrastructureAccessViewRetryRuntimeAgentDeployment = () => 
   const defaultValues = {
     runtimeAgentId: searchParams.get("runtimeAgentId") ?? undefined,
     runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
-  } as Partial<RetryRuntimeAgentDeploymentCommandInput>;
+  } as unknown as Partial<RetryRuntimeAgentDeploymentCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RetryRuntimeAgentDeploymentCommandInput, RetryRuntimeAgentDeploymentCommandInput>({
-    resource: "runtime_infrastructure_access_view",
+    resource: "runtime_agent_endpoint_catalog",
     command: "retryRuntimeAgentDeployment",
     aggregateId: id?.toString(),
     redirect: "list",
     dataProviderName: "federation-learning-platform",
     queryDataProviderName: "federation-learning-platform",
     meta: {
-      tableName: "runtime_infrastructure_access_view_read_model_entity",
-      idField: "runtimeInfrastructureId",
-      label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
+      tableName: "runtime_agent_endpoint_catalog_read_model_entity",
+      idField: "runtimeAgentId",
+      label: t("resources.runtime_agent_endpoint_catalog.label", "Runtime Agent Endpoint Catalog"),
       aggregateRoute: "runtimeinfrastructure",
-      queryRoute: "runtimeinfrastructureaccessview",
+      queryRoute: "runtimeagentendpointcatalog",
       dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
-      tableName: "runtime_infrastructure_access_view_read_model_entity",
-      idField: "runtimeInfrastructureId",
-      label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
+      tableName: "runtime_agent_endpoint_catalog_read_model_entity",
+      idField: "runtimeAgentId",
+      label: t("resources.runtime_agent_endpoint_catalog.label", "Runtime Agent Endpoint Catalog"),
       aggregateRoute: "runtimeinfrastructure",
-      queryRoute: "runtimeinfrastructureaccessview",
+      queryRoute: "runtimeagentendpointcatalog",
       dataProviderName: "federation-learning-platform",
     },
     formProps: {
@@ -74,13 +74,13 @@ export const RuntimeInfrastructureAccessViewRetryRuntimeAgentDeployment = () => 
       ...defaultValues,
       ...values,
     });
-    navigate("/runtime-infrastructure-access-view");
+    navigate("/runtime-agent-endpoint-catalog");
     return result;
   }
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.runtime_infrastructure_access_view.commands.retryRuntimeAgentDeployment.label", "Retry Runtime Agent Deployment")} />
+      <CreateViewHeader title={t("resources.runtime_agent_endpoint_catalog.commands.retryRuntimeAgentDeployment.label", "Retry Runtime Agent Deployment")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RetryRuntimeAgentDeployment validation failed", errors))} className="space-y-8">
           {defaultValues.runtimeAgentId !== undefined && defaultValues.runtimeAgentId !== null ? (
@@ -95,7 +95,7 @@ export const RuntimeInfrastructureAccessViewRetryRuntimeAgentDeployment = () => 
             rules={{ required: "Current Runtime Infrastructure State is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.retryRuntimeAgentDeployment.fields.currentRuntimeInfrastructureState.label", "Current Runtime Infrastructure State")}</FormLabel>
+                <FormLabel>{t("resources.runtime_agent_endpoint_catalog.commands.retryRuntimeAgentDeployment.fields.currentRuntimeInfrastructureState.label", "Current Runtime Infrastructure State")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="runtime_infrastructure_access_view"
@@ -104,10 +104,10 @@ export const RuntimeInfrastructureAccessViewRetryRuntimeAgentDeployment = () => 
                   optionValue="state"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.runtime_infrastructure_access_view.commands.retryRuntimeAgentDeployment.fields.currentRuntimeInfrastructureState.placeholder", "Select Current Runtime Infrastructure State")}
+                  placeholder={t("resources.runtime_agent_endpoint_catalog.commands.retryRuntimeAgentDeployment.fields.currentRuntimeInfrastructureState.placeholder", "Select Current Runtime Infrastructure State")}
                   meta={{
                     idField: "runtimeInfrastructureId",
-                    label: t("resources.runtime_infrastructure_access_view.commands.retryRuntimeAgentDeployment.fields.currentRuntimeInfrastructureState.label", "Runtime Infrastructure Access View"),
+                    label: t("resources.runtime_agent_endpoint_catalog.commands.retryRuntimeAgentDeployment.fields.currentRuntimeInfrastructureState.label", "Runtime Infrastructure Access View"),
                     aggregateRoute: "runtimeinfrastructure",
                     queryRoute: "runtimeinfrastructureaccessview",
                   }}
@@ -122,7 +122,7 @@ export const RuntimeInfrastructureAccessViewRetryRuntimeAgentDeployment = () => 
             rules={{ required: "Retry Reason is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.retryRuntimeAgentDeployment.fields.retryReason.label", "Retry Reason")}</FormLabel>
+                <FormLabel>{t("resources.runtime_agent_endpoint_catalog.commands.retryRuntimeAgentDeployment.fields.retryReason.label", "Retry Reason")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}

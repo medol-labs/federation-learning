@@ -38,7 +38,7 @@ export const FederationMembershipDirectoryRevokeParticipantInvitation = () => {
   const defaultValues = {
     organizationId: searchParams.get("organizationId") ?? undefined,
     federationId: searchParams.get("federationId") ?? undefined,
-  } as Partial<RevokeParticipantInvitationCommandInput>;
+  } as unknown as Partial<RevokeParticipantInvitationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RevokeParticipantInvitationCommandInput, RevokeParticipantInvitationCommandInput>({
     resource: "federation_membership_directory",

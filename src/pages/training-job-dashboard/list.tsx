@@ -582,21 +582,21 @@ export const TrainingJobDashboardList = () => {
                   />
                 </DropdownMenuItem>
                 )}
-                {isCommandVisible(row.original, "canPause", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="pauseTrainingJob"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                  />
-                </DropdownMenuItem>
-                )}
                 {isCommandVisible(row.original, "canResume", "state", ["Paused"]) && (
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="resumeTrainingJob"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "canPause", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="pauseTrainingJob"
                     recordItemId={row.original.trainingJobId}
                     size="sm"
                   />
@@ -640,7 +640,6 @@ export const TrainingJobDashboardList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="createFederation" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         <CommandButton variant="destructive" command="cancelTrainingJob" size="sm" />

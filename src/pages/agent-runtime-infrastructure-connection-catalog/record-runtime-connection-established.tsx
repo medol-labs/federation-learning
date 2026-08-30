@@ -40,7 +40,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
     runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
     runtimeAgentEndpoint: searchParams.get("runtimeAgentEndpoint") ?? undefined,
     endpointScope: searchParams.get("endpointScope") ?? undefined,
-  } as Partial<RecordRuntimeConnectionEstablishedCommandInput>;
+  } as unknown as Partial<RecordRuntimeConnectionEstablishedCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RecordRuntimeConnectionEstablishedCommandInput, RecordRuntimeConnectionEstablishedCommandInput>({
     resource: "agent_runtime_infrastructure_connection_catalog",

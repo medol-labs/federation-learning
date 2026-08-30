@@ -36,7 +36,7 @@ export const ModelCatalogRetireModel = () => {
   const { id } = useParsed();
   const defaultValues = {
     modelId: searchParams.get("modelId") ?? undefined,
-  } as Partial<RetireModelCommandInput>;
+  } as unknown as Partial<RetireModelCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RetireModelCommandInput, RetireModelCommandInput>({
     resource: "model_catalog",

@@ -37,7 +37,7 @@ export const FederationOverviewInviteParticipant = () => {
   const { id } = useParsed();
   const defaultValues = {
     federationId: searchParams.get("federationId") ?? undefined,
-  } as Partial<InviteParticipantCommandInput>;
+  } as unknown as Partial<InviteParticipantCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<InviteParticipantCommandInput, InviteParticipantCommandInput>({
     resource: "federation_overview",

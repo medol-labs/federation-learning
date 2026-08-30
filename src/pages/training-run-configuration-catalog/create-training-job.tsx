@@ -38,7 +38,7 @@ export const TrainingRunConfigurationCatalogCreateTrainingJob = () => {
   const defaultValues = {
     federationId: searchParams.get("federationId") ?? undefined,
     trainingRunConfigurationId: searchParams.get("trainingRunConfigurationId") ?? undefined,
-  } as Partial<CreateTrainingJobCommandInput>;
+  } as unknown as Partial<CreateTrainingJobCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<CreateTrainingJobCommandInput, CreateTrainingJobCommandInput>({
     resource: "training_run_configuration_catalog",

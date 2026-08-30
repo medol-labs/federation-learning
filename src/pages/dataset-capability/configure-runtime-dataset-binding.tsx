@@ -41,7 +41,7 @@ export const DatasetCapabilityConfigureRuntimeDatasetBinding = () => {
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
     datasetName: searchParams.get("datasetName") ?? undefined,
     runtimeId: searchParams.get("runtimeId") ?? undefined,
-  } as Partial<ConfigureRuntimeDatasetBindingCommandInput>;
+  } as unknown as Partial<ConfigureRuntimeDatasetBindingCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ConfigureRuntimeDatasetBindingCommandInput, ConfigureRuntimeDatasetBindingCommandInput>({
     resource: "dataset_capability",

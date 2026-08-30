@@ -36,7 +36,7 @@ export const UserAccountCatalogDeactivateUserAccount = () => {
   const { id } = useParsed();
   const defaultValues = {
     userAccountId: searchParams.get("userAccountId") ?? undefined,
-  } as Partial<DeactivateUserAccountCommandInput>;
+  } as unknown as Partial<DeactivateUserAccountCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<DeactivateUserAccountCommandInput, DeactivateUserAccountCommandInput>({
     resource: "user_account_catalog",

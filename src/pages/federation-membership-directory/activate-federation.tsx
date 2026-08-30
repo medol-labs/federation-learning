@@ -36,7 +36,7 @@ export const FederationMembershipDirectoryActivateFederation = () => {
   const { id } = useParsed();
   const defaultValues = {
     federationId: searchParams.get("federationId") ?? undefined,
-  } as Partial<ActivateFederationCommandInput>;
+  } as unknown as Partial<ActivateFederationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ActivateFederationCommandInput, ActivateFederationCommandInput>({
     resource: "federation_membership_directory",

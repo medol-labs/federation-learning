@@ -39,7 +39,7 @@ export const StagedFileCatalogMarkStagedFileConsumed = () => {
     consumedByCommand: searchParams.get("consumedByCommand") ?? undefined,
     consumedByCommandId: searchParams.get("consumedByCommandId") ?? undefined,
     stagedFileId: searchParams.get("stagedFileId") ?? undefined,
-  } as Partial<MarkStagedFileConsumedCommandInput>;
+  } as unknown as Partial<MarkStagedFileConsumedCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<MarkStagedFileConsumedCommandInput, MarkStagedFileConsumedCommandInput>({
     resource: "staged_file_catalog",

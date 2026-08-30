@@ -37,7 +37,7 @@ export const OrganizationDirectoryRegisterOrganization = () => {
   const defaultValues = {
     organizationName: searchParams.get("organizationName") ?? undefined,
     organizationType: searchParams.get("organizationType") ?? undefined,
-  } as Partial<RegisterOrganizationCommandInput>;
+  } as unknown as Partial<RegisterOrganizationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterOrganizationCommandInput, RegisterOrganizationCommandInput>({
     resource: "organization_directory",

@@ -629,7 +629,7 @@ export const TrainingRunConfigurationCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="createFederation" />
+        <CommandButton variant="default" command="defineTrainingRunConfiguration" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

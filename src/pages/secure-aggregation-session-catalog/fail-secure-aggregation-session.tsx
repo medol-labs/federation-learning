@@ -37,7 +37,7 @@ export const SecureAggregationSessionCatalogFailSecureAggregationSession = () =>
   const defaultValues = {
     failureReason: searchParams.get("failureReason") ?? undefined,
     secureAggregationSessionId: searchParams.get("secureAggregationSessionId") ?? undefined,
-  } as Partial<FailSecureAggregationSessionCommandInput>;
+  } as unknown as Partial<FailSecureAggregationSessionCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<FailSecureAggregationSessionCommandInput, FailSecureAggregationSessionCommandInput>({
     resource: "secure_aggregation_session_catalog",

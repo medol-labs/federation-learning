@@ -44,7 +44,7 @@ export const ModelCatalogRecordModelEvaluationPackage = () => {
     modelCardId: searchParams.get("modelCardId") ?? undefined,
     baselineModelId: searchParams.get("baselineModelId") ?? undefined,
     modelId: searchParams.get("modelId") ?? undefined,
-  } as Partial<RecordModelEvaluationPackageCommandInput>;
+  } as unknown as Partial<RecordModelEvaluationPackageCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RecordModelEvaluationPackageCommandInput, RecordModelEvaluationPackageCommandInput>({
     resource: "model_catalog",

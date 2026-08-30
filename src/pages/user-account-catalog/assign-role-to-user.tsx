@@ -1,6 +1,7 @@
 // Generated from config.json by the refine generator.
-import { useParsed } from "@refinedev/core";
+import { useParsed, useList } from "@refinedev/core";
 import { useTranslate } from "@refinedev/core";
+import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import type { Control } from "react-hook-form";
 import { useFieldArray } from "react-hook-form";
@@ -132,9 +133,9 @@ export const UserAccountCatalogAssignRoleToUser = () => {
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
-    roleCodes: searchParams.get("roleCodes")?.split(",").map((value) => value.trim()).filter(Boolean) ?? undefined,
     userAccountId: searchParams.get("userAccountId") ?? undefined,
-  } as Partial<AssignRoleToUserCommandInput>;
+    roleCodes: [],
+  } as unknown as Partial<AssignRoleToUserCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<AssignRoleToUserCommandInput, AssignRoleToUserCommandInput>({
     resource: "user_account_catalog",
@@ -164,6 +165,35 @@ export const UserAccountCatalogAssignRoleToUser = () => {
       resolver: zodResolver(AssignRoleToUserCommandSchema) as never,
     },
   });
+  const roleCodesHistory = useList<Record<string, unknown>>({
+    resource: "user_role_assignment_catalog",
+    dataProviderName: "federation-learning-support",
+    pagination: { currentPage: 1, pageSize: 1000, mode: "server" },
+    filters: defaultValues.userAccountId
+      ? [{ field: "userAccountId", operator: "eq", value: defaultValues.userAccountId }]
+      : [],
+    meta: {
+      tableName: "user_role_assignment_catalog_read_model_entity",
+      idField: "userAccountId",
+      label: "User Role Assignment Catalog",
+      aggregateRoute: "userroleassignment",
+      queryRoute: "userroleassignmentcatalog",
+      queryFields: ["userAccountId","roleCode"],
+    },
+    queryOptions: {
+      enabled: Boolean(defaultValues.userAccountId),
+    },
+  });
+
+  useEffect(() => {
+    const values = (roleCodesHistory.result.data ?? [])
+      .map((item: Record<string, unknown>) => item.roleCode)
+      .filter((value: unknown): value is string => typeof value === "string" && value.trim().length > 0);
+    const current = form.getValues("roleCodes" as never) as unknown;
+    if (values.length > 0 && (!Array.isArray(current) || current.length === 0)) {
+      form.setValue("roleCodes" as never, Array.from(new Set(values)) as never, { shouldDirty: false });
+    }
+  }, [roleCodesHistory.result.data, form]);
 
   async function onSubmit(values: AssignRoleToUserCommandInput) {
     const result = await onFinish({
@@ -179,9 +209,24 @@ export const UserAccountCatalogAssignRoleToUser = () => {
       <CreateViewHeader title={t("resources.user_account_catalog.commands.assignRoleToUser.label", "Assign Role To User")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("AssignRoleToUser validation failed", errors))} className="space-y-8">
-          {defaultValues.userAccountId !== undefined && defaultValues.userAccountId !== null ? (
-            <input type="hidden" {...form.register("userAccountId" as never)} />
-          ) : null}
+          <FormField
+            control={form.control}
+            name="userAccountId"
+            rules={{ required: "User Account Id is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.user_account_catalog.commands.assignRoleToUser.fields.userAccountId.label", "User Account Id")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter User Account Id"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="roleCodes"
@@ -202,7 +247,7 @@ export const UserAccountCatalogAssignRoleToUser = () => {
                   meta={{
                     idField: "roleId",
                     label: t("resources.user_account_catalog.commands.assignRoleToUser.fields.roleCodes.label", "Role Catalog"),
-                    aggregateRoute: "useraccount",
+                    aggregateRoute: "role",
                     queryRoute: "rolecatalog",
                   }}
                 />

@@ -25,7 +25,6 @@ type UserAccountCatalogRecord = {
   providerSubject?: string;
   passwordHash?: string;
   active: boolean;
-  roleCodes: string[];
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -141,20 +140,6 @@ export const UserAccountCatalogList = () => {
         },
         cell: ({ getValue }) => getValue() ? "Yes" : "No",
       }),
-      columnHelper.accessor("roleCodes", {
-        id: "roleCodes",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.user_account_catalog.fields.roleCodes.label", "Role Codes")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: false,
-        meta: {
-          label: t("resources.user_account_catalog.fields.roleCodes.label", "Role Codes"),
-          placeholder: "Enter Role Codes",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
       columnHelper.display({
         id: "actions",
         header: t("table.actions", "Actions"),
@@ -195,7 +180,7 @@ export const UserAccountCatalogList = () => {
                     recordItemId={row.original.userAccountId}
                     size="sm"
                     query={{
-                      roleCodes: row.original.roleCodes,
+                      userAccountId: row.original.userAccountId,
                     }}
                   />
                 </DropdownMenuItem>

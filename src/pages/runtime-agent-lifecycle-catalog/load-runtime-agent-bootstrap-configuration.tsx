@@ -35,7 +35,7 @@ export const RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration 
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
-  } as Partial<LoadRuntimeAgentBootstrapConfigurationCommandInput>;
+  } as unknown as Partial<LoadRuntimeAgentBootstrapConfigurationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<LoadRuntimeAgentBootstrapConfigurationCommandInput, LoadRuntimeAgentBootstrapConfigurationCommandInput>({
     resource: "runtime_agent_lifecycle_catalog",

@@ -164,7 +164,7 @@ export const PermissionCatalogList = () => {
         idFields: ["permissionId"],
         queryFields: ["permissionId","permissionCode","permissionName","description"],
         label: t("resources.permission_catalog.label", "Permission Catalog"),
-        aggregateRoute: "useraccount",
+        aggregateRoute: "permission",
         queryRoute: "permissioncatalog",
         dataProviderName: "federation-learning-support",
       },

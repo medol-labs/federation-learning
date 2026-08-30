@@ -16,7 +16,6 @@ import { Register } from "../pages/register";
 import {
   AgentDatasetAccessValidationCatalogList,
   AgentDatasetAccessValidationCatalogShow,
-  AgentDatasetAccessValidationCatalogDeclareDataset,
 } from "../pages/agent-dataset-access-validation-catalog";
 import {
   AgentRuntimeInfrastructureConnectionCatalogList,
@@ -26,7 +25,6 @@ import {
 import {
   AgentRuntimeNodeInventoryCatalogList,
   AgentRuntimeNodeInventoryCatalogShow,
-  AgentRuntimeNodeInventoryCatalogRegisterOrganization,
 } from "../pages/agent-runtime-node-inventory-catalog";
 import {
   AgentRuntimeNodeResourceLatestList,
@@ -43,11 +41,12 @@ import {
 import {
   CurrentRecommendedFeatureSchemaCatalogList,
   CurrentRecommendedFeatureSchemaCatalogShow,
+  CurrentRecommendedFeatureSchemaCatalogDefineFeatureSchema,
 } from "../pages/current-recommended-feature-schema-catalog";
 import {
   DatasetCapabilityList,
   DatasetCapabilityShow,
-  DatasetCapabilityRegisterOrganization,
+  DatasetCapabilityDeclareDataset,
   DatasetCapabilityRetryDatasetContractValidation,
   DatasetCapabilityRejectDatasetForTraining,
   DatasetCapabilityApproveDatasetForTraining,
@@ -57,12 +56,11 @@ import {
 import {
   DatasetReadinessList,
   DatasetReadinessShow,
-  DatasetReadinessRegisterOrganization,
-  DatasetReadinessRetryDatasetContractValidation,
+  DatasetReadinessConfigureRuntimeDatasetBinding,
   DatasetReadinessRejectDatasetForTraining,
   DatasetReadinessApproveDatasetForTraining,
+  DatasetReadinessRetryDatasetContractValidation,
   DatasetReadinessRevokeDatasetTrainingApproval,
-  DatasetReadinessConfigureRuntimeDatasetBinding,
 } from "../pages/dataset-readiness";
 import {
   DictionaryCatalogList,
@@ -82,20 +80,18 @@ import {
 import {
   FeatureSchemaCatalogList,
   FeatureSchemaCatalogShow,
-  FeatureSchemaCatalogDefineFeatureSchema,
   FeatureSchemaCatalogPublishFeatureSchema,
   FeatureSchemaCatalogDeprecateFeatureSchema,
-  FeatureSchemaCatalogRetireFeatureSchema,
   FeatureSchemaCatalogSupersedeFeatureSchemaVersion,
   FeatureSchemaCatalogMarkCurrentRecommendedFeatureSchemaVersion,
   FeatureSchemaCatalogDeclareDataset,
+  FeatureSchemaCatalogRetireFeatureSchema,
 } from "../pages/feature-schema-catalog";
 import {
   FederationMembershipDirectoryList,
   FederationMembershipDirectoryShow,
-  FederationMembershipDirectoryCreateFederation,
-  FederationMembershipDirectoryRemoveParticipant,
   FederationMembershipDirectoryInviteParticipant,
+  FederationMembershipDirectoryRemoveParticipant,
   FederationMembershipDirectoryApproveParticipant,
   FederationMembershipDirectoryRejectParticipant,
   FederationMembershipDirectoryRevokeParticipantInvitation,
@@ -119,12 +115,11 @@ import {
 import {
   ModelArtifactCatalogList,
   ModelArtifactCatalogShow,
-  ModelArtifactCatalogCreateTrainingJob,
+  ModelArtifactCatalogRegisterModelArtifact,
 } from "../pages/model-artifact-catalog";
 import {
   ModelCatalogList,
   ModelCatalogShow,
-  ModelCatalogCreateTrainingJob,
   ModelCatalogRecordModelEvaluationPackage,
   ModelCatalogApproveModel,
   ModelCatalogPromoteModelToProduction,
@@ -152,6 +147,10 @@ import {
   RoleCatalogGrantPermissionToRole,
 } from "../pages/role-catalog";
 import {
+  RolePermissionGrantCatalogList,
+  RolePermissionGrantCatalogShow,
+} from "../pages/role-permission-grant-catalog";
+import {
   RoundExecutionCatalogList,
   RoundExecutionCatalogShow,
   RoundExecutionCatalogRetryRoundExecutionAfterStartFailure,
@@ -162,6 +161,7 @@ import {
   RuntimeAgentEndpointCatalogList,
   RuntimeAgentEndpointCatalogShow,
   RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished,
+  RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment,
 } from "../pages/runtime-agent-endpoint-catalog";
 import {
   RuntimeAgentLifecycleCatalogList,
@@ -175,31 +175,25 @@ import {
 import {
   RuntimeDatasetBindingCatalogList,
   RuntimeDatasetBindingCatalogShow,
-  RuntimeDatasetBindingCatalogDeclareDataset,
+  RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding,
 } from "../pages/runtime-dataset-binding-catalog";
 import {
   RuntimeDatasetMetadataCatalogList,
   RuntimeDatasetMetadataCatalogShow,
-  RuntimeDatasetMetadataCatalogRegisterOrganization,
 } from "../pages/runtime-dataset-metadata-catalog";
 import {
   RuntimeHealthDashboardList,
   RuntimeHealthDashboardShow,
-  RuntimeHealthDashboardCreateFederation,
 } from "../pages/runtime-health-dashboard";
 import {
   RuntimeIdentityCatalogList,
   RuntimeIdentityCatalogShow,
-  RuntimeIdentityCatalogRegisterOrganization,
   RuntimeIdentityCatalogRevokeRuntimeIdentity,
 } from "../pages/runtime-identity-catalog";
 import {
   RuntimeInfrastructureAccessViewList,
   RuntimeInfrastructureAccessViewShow,
-  RuntimeInfrastructureAccessViewRegisterOrganization,
   RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure,
-  RuntimeInfrastructureAccessViewRetryRuntimeAgentDeployment,
-  RuntimeInfrastructureAccessViewRecordRuntimeConnectionEstablished,
 } from "../pages/runtime-infrastructure-access-view";
 import {
   RuntimeInfrastructurePackageCatalogList,
@@ -209,17 +203,15 @@ import {
 import {
   RuntimeInstallationGuideList,
   RuntimeInstallationGuideShow,
-  RuntimeInstallationGuideRegisterOrganization,
 } from "../pages/runtime-installation-guide";
 import {
   RuntimeInstallationPlanCatalogList,
   RuntimeInstallationPlanCatalogShow,
-  RuntimeInstallationPlanCatalogRegisterOrganization,
+  RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan,
 } from "../pages/runtime-installation-plan-catalog";
 import {
   RuntimeNodeInventoryViewList,
   RuntimeNodeInventoryViewShow,
-  RuntimeNodeInventoryViewRegisterOrganization,
 } from "../pages/runtime-node-inventory-view";
 import {
   RuntimeNodeResourceLatestList,
@@ -245,42 +237,42 @@ import {
 import {
   TrainingAlertCatalogList,
   TrainingAlertCatalogShow,
-  TrainingAlertCatalogCreateTrainingJob,
   TrainingAlertCatalogAcknowledgeTrainingAlert,
   TrainingAlertCatalogResolveTrainingAlert,
 } from "../pages/training-alert-catalog";
 import {
   TrainingJobDashboardList,
   TrainingJobDashboardShow,
-  TrainingJobDashboardCreateFederation,
   TrainingJobDashboardCancelTrainingJob,
   TrainingJobDashboardSubmitTrainingJob,
-  TrainingJobDashboardPauseTrainingJob,
   TrainingJobDashboardResumeTrainingJob,
+  TrainingJobDashboardPauseTrainingJob,
 } from "../pages/training-job-dashboard";
 import {
   TrainingParticipantEligibilityList,
   TrainingParticipantEligibilityShow,
-  TrainingParticipantEligibilityCreateFederation,
+  TrainingParticipantEligibilityCreateTrainingJob,
+  TrainingParticipantEligibilityCancelTrainingJob,
   TrainingParticipantEligibilitySubmitTrainingJob,
+  TrainingParticipantEligibilityPauseTrainingJob,
+  TrainingParticipantEligibilityResumeTrainingJob,
 } from "../pages/training-participant-eligibility";
 import {
   TrainingRoundProgressList,
   TrainingRoundProgressShow,
-  TrainingRoundProgressCreateTrainingJob,
   TrainingRoundProgressCancelTrainingJob,
-  TrainingRoundProgressRetryRoundExecutionAfterStartFailure,
-  TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure,
   TrainingRoundProgressSubmitModelUpdateSubmission,
   TrainingRoundProgressCompleteSecureAggregation,
-  TrainingRoundProgressSubmitTrainingJob,
   TrainingRoundProgressRetryTrainingRoundParticipantSelection,
+  TrainingRoundProgressSubmitTrainingJob,
   TrainingRoundProgressPauseTrainingJob,
+  TrainingRoundProgressRetryRoundExecutionAfterStartFailure,
+  TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure,
 } from "../pages/training-round-progress";
 import {
   TrainingRunConfigurationCatalogList,
   TrainingRunConfigurationCatalogShow,
-  TrainingRunConfigurationCatalogCreateFederation,
+  TrainingRunConfigurationCatalogDefineTrainingRunConfiguration,
   TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration,
   TrainingRunConfigurationCatalogCreateTrainingJob,
 } from "../pages/training-run-configuration-catalog";
@@ -292,6 +284,10 @@ import {
   UserAccountCatalogDeactivateUserAccount,
   UserAccountCatalogAssignRoleToUser,
 } from "../pages/user-account-catalog";
+import {
+  UserRoleAssignmentCatalogList,
+  UserRoleAssignmentCatalogShow,
+} from "../pages/user-role-assignment-catalog";
 
 export const AppRouter = () => {
   return (
@@ -314,7 +310,6 @@ export const AppRouter = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/agent-dataset-access-validation-catalog">
           <Route index element={<AgentDatasetAccessValidationCatalogList />} />
-          <Route path="command/declare-dataset" element={<AgentDatasetAccessValidationCatalogDeclareDataset />} />
           <Route path="show/:id" element={<AgentDatasetAccessValidationCatalogShow />} />
         </Route>
         <Route path="/agent-runtime-infrastructure-connection-catalog">
@@ -324,7 +319,6 @@ export const AppRouter = () => {
         </Route>
         <Route path="/agent-runtime-node-inventory-catalog">
           <Route index element={<AgentRuntimeNodeInventoryCatalogList />} />
-          <Route path="command/register-organization" element={<AgentRuntimeNodeInventoryCatalogRegisterOrganization />} />
           <Route path="show/:id" element={<AgentRuntimeNodeInventoryCatalogShow />} />
         </Route>
         <Route path="/agent-runtime-node-resource-latest">
@@ -341,11 +335,12 @@ export const AppRouter = () => {
         </Route>
         <Route path="/current-recommended-feature-schema-catalog">
           <Route index element={<CurrentRecommendedFeatureSchemaCatalogList />} />
+          <Route path="command/define-feature-schema" element={<CurrentRecommendedFeatureSchemaCatalogDefineFeatureSchema />} />
           <Route path="show/:id" element={<CurrentRecommendedFeatureSchemaCatalogShow />} />
         </Route>
         <Route path="/dataset-capability">
           <Route index element={<DatasetCapabilityList />} />
-          <Route path="command/register-organization" element={<DatasetCapabilityRegisterOrganization />} />
+          <Route path="command/declare-dataset" element={<DatasetCapabilityDeclareDataset />} />
           <Route path="show/:id" element={<DatasetCapabilityShow />} />
           <Route path=":id/command/retry-dataset-contract-validation" element={<DatasetCapabilityRetryDatasetContractValidation />} />
           <Route path=":id/command/reject-dataset-for-training" element={<DatasetCapabilityRejectDatasetForTraining />} />
@@ -355,13 +350,12 @@ export const AppRouter = () => {
         </Route>
         <Route path="/dataset-readiness">
           <Route index element={<DatasetReadinessList />} />
-          <Route path="command/register-organization" element={<DatasetReadinessRegisterOrganization />} />
           <Route path="show/:id" element={<DatasetReadinessShow />} />
-          <Route path=":id/command/retry-dataset-contract-validation" element={<DatasetReadinessRetryDatasetContractValidation />} />
+          <Route path=":id/command/configure-runtime-dataset-binding" element={<DatasetReadinessConfigureRuntimeDatasetBinding />} />
           <Route path=":id/command/reject-dataset-for-training" element={<DatasetReadinessRejectDatasetForTraining />} />
           <Route path=":id/command/approve-dataset-for-training" element={<DatasetReadinessApproveDatasetForTraining />} />
+          <Route path=":id/command/retry-dataset-contract-validation" element={<DatasetReadinessRetryDatasetContractValidation />} />
           <Route path=":id/command/revoke-dataset-training-approval" element={<DatasetReadinessRevokeDatasetTrainingApproval />} />
-          <Route path=":id/command/configure-runtime-dataset-binding" element={<DatasetReadinessConfigureRuntimeDatasetBinding />} />
         </Route>
         <Route path="/dictionary-catalog">
           <Route index element={<DictionaryCatalogList />} />
@@ -380,21 +374,19 @@ export const AppRouter = () => {
         </Route>
         <Route path="/feature-schema-catalog">
           <Route index element={<FeatureSchemaCatalogList />} />
-          <Route path="command/define-feature-schema" element={<FeatureSchemaCatalogDefineFeatureSchema />} />
           <Route path="show/:id" element={<FeatureSchemaCatalogShow />} />
           <Route path=":id/command/publish-feature-schema" element={<FeatureSchemaCatalogPublishFeatureSchema />} />
           <Route path=":id/command/deprecate-feature-schema" element={<FeatureSchemaCatalogDeprecateFeatureSchema />} />
-          <Route path=":id/command/retire-feature-schema" element={<FeatureSchemaCatalogRetireFeatureSchema />} />
           <Route path=":id/command/supersede-feature-schema-version" element={<FeatureSchemaCatalogSupersedeFeatureSchemaVersion />} />
           <Route path=":id/command/mark-current-recommended-feature-schema-version" element={<FeatureSchemaCatalogMarkCurrentRecommendedFeatureSchemaVersion />} />
           <Route path=":id/command/declare-dataset" element={<FeatureSchemaCatalogDeclareDataset />} />
+          <Route path=":id/command/retire-feature-schema" element={<FeatureSchemaCatalogRetireFeatureSchema />} />
         </Route>
         <Route path="/federation-membership-directory">
           <Route index element={<FederationMembershipDirectoryList />} />
-          <Route path="command/create-federation" element={<FederationMembershipDirectoryCreateFederation />} />
+          <Route path="command/invite-participant" element={<FederationMembershipDirectoryInviteParticipant />} />
           <Route path="show/:id" element={<FederationMembershipDirectoryShow />} />
           <Route path=":id/command/remove-participant" element={<FederationMembershipDirectoryRemoveParticipant />} />
-          <Route path=":id/command/invite-participant" element={<FederationMembershipDirectoryInviteParticipant />} />
           <Route path=":id/command/approve-participant" element={<FederationMembershipDirectoryApproveParticipant />} />
           <Route path=":id/command/reject-participant" element={<FederationMembershipDirectoryRejectParticipant />} />
           <Route path=":id/command/revoke-participant-invitation" element={<FederationMembershipDirectoryRevokeParticipantInvitation />} />
@@ -417,12 +409,11 @@ export const AppRouter = () => {
         </Route>
         <Route path="/model-artifact-catalog">
           <Route index element={<ModelArtifactCatalogList />} />
-          <Route path="command/create-training-job" element={<ModelArtifactCatalogCreateTrainingJob />} />
+          <Route path="command/register-model-artifact" element={<ModelArtifactCatalogRegisterModelArtifact />} />
           <Route path="show/:id" element={<ModelArtifactCatalogShow />} />
         </Route>
         <Route path="/model-catalog">
           <Route index element={<ModelCatalogList />} />
-          <Route path="command/create-training-job" element={<ModelCatalogCreateTrainingJob />} />
           <Route path="show/:id" element={<ModelCatalogShow />} />
           <Route path=":id/command/record-model-evaluation-package" element={<ModelCatalogRecordModelEvaluationPackage />} />
           <Route path=":id/command/approve-model" element={<ModelCatalogApproveModel />} />
@@ -450,6 +441,10 @@ export const AppRouter = () => {
           <Route path="show/:id" element={<RoleCatalogShow />} />
           <Route path=":id/command/grant-permission-to-role" element={<RoleCatalogGrantPermissionToRole />} />
         </Route>
+        <Route path="/role-permission-grant-catalog">
+          <Route index element={<RolePermissionGrantCatalogList />} />
+          <Route path="show/:id" element={<RolePermissionGrantCatalogShow />} />
+        </Route>
         <Route path="/round-execution-catalog">
           <Route index element={<RoundExecutionCatalogList />} />
           <Route path="show/:id" element={<RoundExecutionCatalogShow />} />
@@ -461,6 +456,7 @@ export const AppRouter = () => {
           <Route index element={<RuntimeAgentEndpointCatalogList />} />
           <Route path="show/:id" element={<RuntimeAgentEndpointCatalogShow />} />
           <Route path=":id/command/record-runtime-connection-established" element={<RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished />} />
+          <Route path=":id/command/retry-runtime-agent-deployment" element={<RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment />} />
         </Route>
         <Route path="/runtime-agent-lifecycle-catalog">
           <Route index element={<RuntimeAgentLifecycleCatalogList />} />
@@ -473,32 +469,26 @@ export const AppRouter = () => {
         </Route>
         <Route path="/runtime-dataset-binding-catalog">
           <Route index element={<RuntimeDatasetBindingCatalogList />} />
-          <Route path="command/declare-dataset" element={<RuntimeDatasetBindingCatalogDeclareDataset />} />
+          <Route path="command/configure-runtime-dataset-binding" element={<RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding />} />
           <Route path="show/:id" element={<RuntimeDatasetBindingCatalogShow />} />
         </Route>
         <Route path="/runtime-dataset-metadata-catalog">
           <Route index element={<RuntimeDatasetMetadataCatalogList />} />
-          <Route path="command/register-organization" element={<RuntimeDatasetMetadataCatalogRegisterOrganization />} />
           <Route path="show/:id" element={<RuntimeDatasetMetadataCatalogShow />} />
         </Route>
         <Route path="/runtime-health-dashboard">
           <Route index element={<RuntimeHealthDashboardList />} />
-          <Route path="command/create-federation" element={<RuntimeHealthDashboardCreateFederation />} />
           <Route path="show/:id" element={<RuntimeHealthDashboardShow />} />
         </Route>
         <Route path="/runtime-identity-catalog">
           <Route index element={<RuntimeIdentityCatalogList />} />
-          <Route path="command/register-organization" element={<RuntimeIdentityCatalogRegisterOrganization />} />
           <Route path="show/:id" element={<RuntimeIdentityCatalogShow />} />
           <Route path=":id/command/revoke-runtime-identity" element={<RuntimeIdentityCatalogRevokeRuntimeIdentity />} />
         </Route>
         <Route path="/runtime-infrastructure-access-view">
           <Route index element={<RuntimeInfrastructureAccessViewList />} />
-          <Route path="command/register-organization" element={<RuntimeInfrastructureAccessViewRegisterOrganization />} />
           <Route path="show/:id" element={<RuntimeInfrastructureAccessViewShow />} />
           <Route path=":id/command/register-runtime-infrastructure" element={<RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure />} />
-          <Route path=":id/command/retry-runtime-agent-deployment" element={<RuntimeInfrastructureAccessViewRetryRuntimeAgentDeployment />} />
-          <Route path=":id/command/record-runtime-connection-established" element={<RuntimeInfrastructureAccessViewRecordRuntimeConnectionEstablished />} />
         </Route>
         <Route path="/runtime-infrastructure-package-catalog">
           <Route index element={<RuntimeInfrastructurePackageCatalogList />} />
@@ -507,17 +497,15 @@ export const AppRouter = () => {
         </Route>
         <Route path="/runtime-installation-guide">
           <Route index element={<RuntimeInstallationGuideList />} />
-          <Route path="command/register-organization" element={<RuntimeInstallationGuideRegisterOrganization />} />
           <Route path="show/:id" element={<RuntimeInstallationGuideShow />} />
         </Route>
         <Route path="/runtime-installation-plan-catalog">
           <Route index element={<RuntimeInstallationPlanCatalogList />} />
-          <Route path="command/register-organization" element={<RuntimeInstallationPlanCatalogRegisterOrganization />} />
+          <Route path="command/create-runtime-installation-plan" element={<RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan />} />
           <Route path="show/:id" element={<RuntimeInstallationPlanCatalogShow />} />
         </Route>
         <Route path="/runtime-node-inventory-view">
           <Route index element={<RuntimeNodeInventoryViewList />} />
-          <Route path="command/register-organization" element={<RuntimeNodeInventoryViewRegisterOrganization />} />
           <Route path="show/:id" element={<RuntimeNodeInventoryViewShow />} />
         </Route>
         <Route path="/runtime-node-resource-latest">
@@ -543,42 +531,42 @@ export const AppRouter = () => {
         </Route>
         <Route path="/training-alert-catalog">
           <Route index element={<TrainingAlertCatalogList />} />
-          <Route path="command/create-training-job" element={<TrainingAlertCatalogCreateTrainingJob />} />
           <Route path="show/:id" element={<TrainingAlertCatalogShow />} />
           <Route path=":id/command/acknowledge-training-alert" element={<TrainingAlertCatalogAcknowledgeTrainingAlert />} />
           <Route path=":id/command/resolve-training-alert" element={<TrainingAlertCatalogResolveTrainingAlert />} />
         </Route>
         <Route path="/training-job-dashboard">
           <Route index element={<TrainingJobDashboardList />} />
-          <Route path="command/create-federation" element={<TrainingJobDashboardCreateFederation />} />
           <Route path="show/:id" element={<TrainingJobDashboardShow />} />
           <Route path=":id/command/cancel-training-job" element={<TrainingJobDashboardCancelTrainingJob />} />
           <Route path=":id/command/submit-training-job" element={<TrainingJobDashboardSubmitTrainingJob />} />
-          <Route path=":id/command/pause-training-job" element={<TrainingJobDashboardPauseTrainingJob />} />
           <Route path=":id/command/resume-training-job" element={<TrainingJobDashboardResumeTrainingJob />} />
+          <Route path=":id/command/pause-training-job" element={<TrainingJobDashboardPauseTrainingJob />} />
         </Route>
         <Route path="/training-participant-eligibility">
           <Route index element={<TrainingParticipantEligibilityList />} />
-          <Route path="command/create-federation" element={<TrainingParticipantEligibilityCreateFederation />} />
+          <Route path="command/create-training-job" element={<TrainingParticipantEligibilityCreateTrainingJob />} />
           <Route path="show/:id" element={<TrainingParticipantEligibilityShow />} />
+          <Route path=":id/command/cancel-training-job" element={<TrainingParticipantEligibilityCancelTrainingJob />} />
           <Route path=":id/command/submit-training-job" element={<TrainingParticipantEligibilitySubmitTrainingJob />} />
+          <Route path=":id/command/pause-training-job" element={<TrainingParticipantEligibilityPauseTrainingJob />} />
+          <Route path=":id/command/resume-training-job" element={<TrainingParticipantEligibilityResumeTrainingJob />} />
         </Route>
         <Route path="/training-round-progress">
           <Route index element={<TrainingRoundProgressList />} />
-          <Route path="command/create-training-job" element={<TrainingRoundProgressCreateTrainingJob />} />
           <Route path="show/:id" element={<TrainingRoundProgressShow />} />
           <Route path=":id/command/cancel-training-job" element={<TrainingRoundProgressCancelTrainingJob />} />
-          <Route path=":id/command/retry-round-execution-after-start-failure" element={<TrainingRoundProgressRetryRoundExecutionAfterStartFailure />} />
-          <Route path=":id/command/retry-round-execution-after-runtime-failure" element={<TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure />} />
           <Route path=":id/command/submit-model-update-submission" element={<TrainingRoundProgressSubmitModelUpdateSubmission />} />
           <Route path=":id/command/complete-secure-aggregation" element={<TrainingRoundProgressCompleteSecureAggregation />} />
-          <Route path=":id/command/submit-training-job" element={<TrainingRoundProgressSubmitTrainingJob />} />
           <Route path=":id/command/retry-training-round-participant-selection" element={<TrainingRoundProgressRetryTrainingRoundParticipantSelection />} />
+          <Route path=":id/command/submit-training-job" element={<TrainingRoundProgressSubmitTrainingJob />} />
           <Route path=":id/command/pause-training-job" element={<TrainingRoundProgressPauseTrainingJob />} />
+          <Route path=":id/command/retry-round-execution-after-start-failure" element={<TrainingRoundProgressRetryRoundExecutionAfterStartFailure />} />
+          <Route path=":id/command/retry-round-execution-after-runtime-failure" element={<TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure />} />
         </Route>
         <Route path="/training-run-configuration-catalog">
           <Route index element={<TrainingRunConfigurationCatalogList />} />
-          <Route path="command/create-federation" element={<TrainingRunConfigurationCatalogCreateFederation />} />
+          <Route path="command/define-training-run-configuration" element={<TrainingRunConfigurationCatalogDefineTrainingRunConfiguration />} />
           <Route path="edit/:id" element={<TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration />} />
           <Route path="show/:id" element={<TrainingRunConfigurationCatalogShow />} />
           <Route path=":id/command/create-training-job" element={<TrainingRunConfigurationCatalogCreateTrainingJob />} />
@@ -590,6 +578,10 @@ export const AppRouter = () => {
           <Route path=":id/command/generate-user-account-login-password" element={<UserAccountCatalogGenerateUserAccountLoginPassword />} />
           <Route path=":id/command/deactivate-user-account" element={<UserAccountCatalogDeactivateUserAccount />} />
           <Route path=":id/command/assign-role-to-user" element={<UserAccountCatalogAssignRoleToUser />} />
+        </Route>
+        <Route path="/user-role-assignment-catalog">
+          <Route index element={<UserRoleAssignmentCatalogList />} />
+          <Route path="show/:id" element={<UserRoleAssignmentCatalogShow />} />
         </Route>
         <Route path="*" element={<ErrorComponent />} />
       </Route>

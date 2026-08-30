@@ -36,7 +36,7 @@ export const DatasetReadinessRetryDatasetContractValidation = () => {
   const { id } = useParsed();
   const defaultValues = {
     datasetId: searchParams.get("datasetId") ?? undefined,
-  } as Partial<RetryDatasetContractValidationCommandInput>;
+  } as unknown as Partial<RetryDatasetContractValidationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RetryDatasetContractValidationCommandInput, RetryDatasetContractValidationCommandInput>({
     resource: "dataset_readiness",

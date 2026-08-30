@@ -23,7 +23,6 @@ type RoleCatalogRecord = {
   roleId: string;
   roleCode: string;
   roleName: string;
-  permissionCodes: string[];
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -110,20 +109,6 @@ export const RoleCatalogList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("permissionCodes", {
-        id: "permissionCodes",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.role_catalog.fields.permissionCodes.label", "Permission Codes")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: false,
-        meta: {
-          label: t("resources.role_catalog.fields.permissionCodes.label", "Permission Codes"),
-          placeholder: "Enter Permission Codes",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
       columnHelper.display({
         id: "actions",
         header: t("table.actions", "Actions"),
@@ -144,7 +129,8 @@ export const RoleCatalogList = () => {
                     recordItemId={row.original.roleId}
                     size="sm"
                     query={{
-                      permissionCodes: row.original.permissionCodes,
+                      roleId: row.original.roleId,
+                      roleCode: row.original.roleCode,
                     }}
                   />
                 </DropdownMenuItem>
@@ -177,7 +163,7 @@ export const RoleCatalogList = () => {
         idFields: ["roleId"],
         queryFields: ["roleId","roleCode","roleName"],
         label: t("resources.role_catalog.label", "Role Catalog"),
-        aggregateRoute: "useraccount",
+        aggregateRoute: "role",
         queryRoute: "rolecatalog",
         dataProviderName: "federation-learning-support",
       },

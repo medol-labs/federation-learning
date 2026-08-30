@@ -48,7 +48,7 @@ export const TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure = () =>
     runtimeId: searchParams.get("runtimeId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
     runtimeEngineJobId: searchParams.get("runtimeEngineJobId") ?? undefined,
-  } as Partial<RetryRoundExecutionAfterRuntimeFailureCommandInput>;
+  } as unknown as Partial<RetryRoundExecutionAfterRuntimeFailureCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RetryRoundExecutionAfterRuntimeFailureCommandInput, RetryRoundExecutionAfterRuntimeFailureCommandInput>({
     resource: "training_round_progress",

@@ -43,7 +43,7 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
     displayOrder: (() => { const value = searchParams.get("displayOrder"); return value === null ? undefined : Number(value); })(),
     description: searchParams.get("description") ?? undefined,
     active: (() => { const value = searchParams.get("active"); return value === null ? undefined : value === "true"; })(),
-  } as Partial<AddDictionaryValueCommandInput>;
+  } as unknown as Partial<AddDictionaryValueCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<AddDictionaryValueCommandInput, AddDictionaryValueCommandInput>({
     resource: "dictionary_value_catalog",

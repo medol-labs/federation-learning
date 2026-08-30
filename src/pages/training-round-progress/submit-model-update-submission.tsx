@@ -54,7 +54,7 @@ export const TrainingRoundProgressSubmitModelUpdateSubmission = () => {
     artifactDigest: searchParams.get("artifactDigest") ?? undefined,
     updateProtectionType: searchParams.get("updateProtectionType") ?? undefined,
     trainingLoss: (() => { const value = searchParams.get("trainingLoss"); return value === null ? undefined : Number(value); })(),
-  } as Partial<SubmitModelUpdateSubmissionCommandInput>;
+  } as unknown as Partial<SubmitModelUpdateSubmissionCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<SubmitModelUpdateSubmissionCommandInput, SubmitModelUpdateSubmissionCommandInput>({
     resource: "training_round_progress",

@@ -38,7 +38,7 @@ export const FederationMembershipDirectorySuspendParticipant = () => {
   const defaultValues = {
     organizationId: searchParams.get("organizationId") ?? undefined,
     federationId: searchParams.get("federationId") ?? undefined,
-  } as Partial<SuspendParticipantCommandInput>;
+  } as unknown as Partial<SuspendParticipantCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<SuspendParticipantCommandInput, SuspendParticipantCommandInput>({
     resource: "federation_membership_directory",

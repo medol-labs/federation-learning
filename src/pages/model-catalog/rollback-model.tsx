@@ -37,7 +37,7 @@ export const ModelCatalogRollbackModel = () => {
   const defaultValues = {
     previousModelId: searchParams.get("previousModelId") ?? undefined,
     modelId: searchParams.get("modelId") ?? undefined,
-  } as Partial<RollbackModelCommandInput>;
+  } as unknown as Partial<RollbackModelCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RollbackModelCommandInput, RollbackModelCommandInput>({
     resource: "model_catalog",

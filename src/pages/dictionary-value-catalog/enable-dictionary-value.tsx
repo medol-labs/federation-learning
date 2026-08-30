@@ -36,7 +36,7 @@ export const DictionaryValueCatalogEnableDictionaryValue = () => {
   const { id } = useParsed();
   const defaultValues = {
     dictionaryValueId: searchParams.get("dictionaryValueId") ?? undefined,
-  } as Partial<EnableDictionaryValueCommandInput>;
+  } as unknown as Partial<EnableDictionaryValueCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<EnableDictionaryValueCommandInput, EnableDictionaryValueCommandInput>({
     resource: "dictionary_value_catalog",

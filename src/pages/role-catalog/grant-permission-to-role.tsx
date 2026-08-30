@@ -1,6 +1,7 @@
 // Generated from config.json by the refine generator.
-import { useParsed } from "@refinedev/core";
+import { useParsed, useList } from "@refinedev/core";
 import { useTranslate } from "@refinedev/core";
+import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import type { Control } from "react-hook-form";
 import { useFieldArray } from "react-hook-form";
@@ -132,10 +133,10 @@ export const RoleCatalogGrantPermissionToRole = () => {
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
-    permissionCodes: searchParams.get("permissionCodes")?.split(",").map((value) => value.trim()).filter(Boolean) ?? undefined,
     roleId: searchParams.get("roleId") ?? undefined,
     roleCode: searchParams.get("roleCode") ?? undefined,
-  } as Partial<GrantPermissionToRoleCommandInput>;
+    permissionCodes: [],
+  } as unknown as Partial<GrantPermissionToRoleCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<GrantPermissionToRoleCommandInput, GrantPermissionToRoleCommandInput>({
     resource: "role_catalog",
@@ -156,7 +157,7 @@ export const RoleCatalogGrantPermissionToRole = () => {
       tableName: "role_catalog_read_model_entity",
       idField: "roleId",
       label: t("resources.role_catalog.label", "Role Catalog"),
-      aggregateRoute: "useraccount",
+      aggregateRoute: "role",
       queryRoute: "rolecatalog",
       dataProviderName: "federation-learning-support",
     },
@@ -165,6 +166,35 @@ export const RoleCatalogGrantPermissionToRole = () => {
       resolver: zodResolver(GrantPermissionToRoleCommandSchema) as never,
     },
   });
+  const permissionCodesHistory = useList<Record<string, unknown>>({
+    resource: "role_permission_grant_catalog",
+    dataProviderName: "federation-learning-support",
+    pagination: { currentPage: 1, pageSize: 1000, mode: "server" },
+    filters: defaultValues.roleId
+      ? [{ field: "roleId", operator: "eq", value: defaultValues.roleId }]
+      : [],
+    meta: {
+      tableName: "role_permission_grant_catalog_read_model_entity",
+      idField: "roleCode",
+      label: "Role Permission Grant Catalog",
+      aggregateRoute: "rolepermissiongrant",
+      queryRoute: "rolepermissiongrantcatalog",
+      queryFields: ["roleId","permissionCode"],
+    },
+    queryOptions: {
+      enabled: Boolean(defaultValues.roleId),
+    },
+  });
+
+  useEffect(() => {
+    const values = (permissionCodesHistory.result.data ?? [])
+      .map((item: Record<string, unknown>) => item.permissionCode)
+      .filter((value: unknown): value is string => typeof value === "string" && value.trim().length > 0);
+    const current = form.getValues("permissionCodes" as never) as unknown;
+    if (values.length > 0 && (!Array.isArray(current) || current.length === 0)) {
+      form.setValue("permissionCodes" as never, Array.from(new Set(values)) as never, { shouldDirty: false });
+    }
+  }, [permissionCodesHistory.result.data, form]);
 
   async function onSubmit(values: GrantPermissionToRoleCommandInput) {
     const result = await onFinish({
@@ -180,12 +210,51 @@ export const RoleCatalogGrantPermissionToRole = () => {
       <CreateViewHeader title={t("resources.role_catalog.commands.grantPermissionToRole.label", "Grant Permission To Role")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("GrantPermissionToRole validation failed", errors))} className="space-y-8">
-          {defaultValues.roleId !== undefined && defaultValues.roleId !== null ? (
-            <input type="hidden" {...form.register("roleId" as never)} />
-          ) : null}
-          {defaultValues.roleCode !== undefined && defaultValues.roleCode !== null ? (
-            <input type="hidden" {...form.register("roleCode" as never)} />
-          ) : null}
+          <FormField
+            control={form.control}
+            name="roleId"
+            rules={{ required: "Role Id is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.role_catalog.commands.grantPermissionToRole.fields.roleId.label", "Role Id")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Role Id"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="roleCode"
+            rules={{ required: "Role Code is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.role_catalog.commands.grantPermissionToRole.fields.roleCode.label", "Role Code")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="role_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="roleName"
+                  optionValue="roleCode"
+                  value={field.value || ""}
+                  onValueChange={field.onChange}
+                  placeholder={t("resources.role_catalog.commands.grantPermissionToRole.fields.roleCode.placeholder", "Select Role Code")}
+                  meta={{
+                    idField: "roleId",
+                    label: t("resources.role_catalog.commands.grantPermissionToRole.fields.roleCode.label", "Role Catalog"),
+                    aggregateRoute: "role",
+                    queryRoute: "rolecatalog",
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="permissionCodes"
@@ -206,7 +275,7 @@ export const RoleCatalogGrantPermissionToRole = () => {
                   meta={{
                     idField: "permissionId",
                     label: t("resources.role_catalog.commands.grantPermissionToRole.fields.permissionCodes.label", "Permission Catalog"),
-                    aggregateRoute: "useraccount",
+                    aggregateRoute: "permission",
                     queryRoute: "permissioncatalog",
                   }}
                 />

@@ -38,7 +38,7 @@ export const DictionaryCatalogRegisterDictionary = () => {
     dictionaryCode: searchParams.get("dictionaryCode") ?? undefined,
     dictionaryName: searchParams.get("dictionaryName") ?? undefined,
     description: searchParams.get("description") ?? undefined,
-  } as Partial<RegisterDictionaryCommandInput>;
+  } as unknown as Partial<RegisterDictionaryCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterDictionaryCommandInput, RegisterDictionaryCommandInput>({
     resource: "dictionary_catalog",

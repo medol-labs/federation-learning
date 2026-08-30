@@ -36,7 +36,7 @@ export const TrainingAlertCatalogAcknowledgeTrainingAlert = () => {
   const { id } = useParsed();
   const defaultValues = {
     alertId: searchParams.get("alertId") ?? undefined,
-  } as Partial<AcknowledgeTrainingAlertCommandInput>;
+  } as unknown as Partial<AcknowledgeTrainingAlertCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<AcknowledgeTrainingAlertCommandInput, AcknowledgeTrainingAlertCommandInput>({
     resource: "training_alert_catalog",

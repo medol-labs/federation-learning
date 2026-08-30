@@ -36,7 +36,7 @@ export const FederationOverviewReactivateFederation = () => {
   const { id } = useParsed();
   const defaultValues = {
     federationId: searchParams.get("federationId") ?? undefined,
-  } as Partial<ReactivateFederationCommandInput>;
+  } as unknown as Partial<ReactivateFederationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ReactivateFederationCommandInput, ReactivateFederationCommandInput>({
     resource: "federation_overview",

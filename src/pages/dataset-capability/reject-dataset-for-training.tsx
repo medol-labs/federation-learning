@@ -36,7 +36,7 @@ export const DatasetCapabilityRejectDatasetForTraining = () => {
   const { id } = useParsed();
   const defaultValues = {
     datasetId: searchParams.get("datasetId") ?? undefined,
-  } as Partial<RejectDatasetForTrainingCommandInput>;
+  } as unknown as Partial<RejectDatasetForTrainingCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RejectDatasetForTrainingCommandInput, RejectDatasetForTrainingCommandInput>({
     resource: "dataset_capability",

@@ -602,7 +602,6 @@ export const ModelCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="createTrainingJob" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

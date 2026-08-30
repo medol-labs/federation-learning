@@ -54,7 +54,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
     publicKeyVersion: searchParams.get("publicKeyVersion") ?? undefined,
     localModelId: searchParams.get("localModelId") ?? undefined,
     updateProtectionType: searchParams.get("updateProtectionType") ?? undefined,
-  } as Partial<SubmitModelUpdateSubmissionCommandInput>;
+  } as unknown as Partial<SubmitModelUpdateSubmissionCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<SubmitModelUpdateSubmissionCommandInput, SubmitModelUpdateSubmissionCommandInput>({
     resource: "round_execution_catalog",

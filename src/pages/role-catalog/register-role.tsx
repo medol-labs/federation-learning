@@ -37,7 +37,7 @@ export const RoleCatalogRegisterRole = () => {
   const defaultValues = {
     roleCode: searchParams.get("roleCode") ?? undefined,
     roleName: searchParams.get("roleName") ?? undefined,
-  } as Partial<RegisterRoleCommandInput>;
+  } as unknown as Partial<RegisterRoleCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterRoleCommandInput, RegisterRoleCommandInput>({
     resource: "role_catalog",
@@ -58,7 +58,7 @@ export const RoleCatalogRegisterRole = () => {
       tableName: "role_catalog_read_model_entity",
       idField: "roleId",
       label: t("resources.role_catalog.label", "Role Catalog"),
-      aggregateRoute: "useraccount",
+      aggregateRoute: "role",
       queryRoute: "rolecatalog",
       dataProviderName: "federation-learning-support",
     },

@@ -64,11 +64,6 @@ export const UserAccountCatalogShow = () => {
               <p className="text-sm text-muted-foreground">{formatValue(record?.active, t)}</p>
             </div>
             <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.user_account_catalog.fields.roleCodes.label", "Role Codes")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.roleCodes, t)}</p>
-            </div>
-            <Separator />
           </CardContent>
         </Card>
       </div>

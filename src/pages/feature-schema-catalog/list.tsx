@@ -249,16 +249,6 @@ export const FeatureSchemaCatalogList = () => {
                   />
                 </DropdownMenuItem>
                 )}
-                {isCommandVisible(row.original, "", "schemaStatus", ["Deprecated"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="retireFeatureSchema"
-                    recordItemId={row.original.featureSchemaId}
-                    size="sm"
-                  />
-                </DropdownMenuItem>
-                )}
                 {isCommandVisible(row.original, "", "", []) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -292,6 +282,16 @@ export const FeatureSchemaCatalogList = () => {
                     query={{
                       featureSchemaId: row.original.featureSchemaId,
                     }}
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "schemaStatus", ["Deprecated"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retireFeatureSchema"
+                    recordItemId={row.original.featureSchemaId}
+                    size="sm"
                   />
                 </DropdownMenuItem>
                 )}
@@ -333,7 +333,6 @@ export const FeatureSchemaCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="defineFeatureSchema" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

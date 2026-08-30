@@ -874,42 +874,6 @@ export const TrainingRoundProgressList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "state", ["StartFailed"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="retryRoundExecutionAfterStartFailure"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                    query={{
-                      trainingJobId: row.original.trainingJobId,
-                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
-                      roundId: row.original.roundId,
-                      roundNumber: row.original.roundNumber,
-                      featureSchemaId: row.original.featureSchemaId,
-                      baseModelId: row.original.baseModelId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "state", ["Failed"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="retryRoundExecutionAfterRuntimeFailure"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                    query={{
-                      trainingJobId: row.original.trainingJobId,
-                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
-                      roundId: row.original.roundId,
-                      roundNumber: row.original.roundNumber,
-                      featureSchemaId: row.original.featureSchemaId,
-                      baseModelId: row.original.baseModelId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
                 {isCommandVisible(row.original, "", "", []) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -945,6 +909,16 @@ export const TrainingRoundProgressList = () => {
                   />
                 </DropdownMenuItem>
                 )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retryTrainingRoundParticipantSelection"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
                 {isCommandVisible(row.original, "", "state", ["Draft"]) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -959,19 +933,45 @@ export const TrainingRoundProgressList = () => {
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
-                    command="retryTrainingRoundParticipantSelection"
+                    command="pauseTrainingJob"
                     recordItemId={row.original.trainingJobId}
                     size="sm"
                   />
                 </DropdownMenuItem>
                 )}
-                {isCommandVisible(row.original, "", "", []) && (
+                {isCommandVisible(row.original, "", "state", ["StartFailed"]) && (
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
-                    command="pauseTrainingJob"
+                    command="retryRoundExecutionAfterStartFailure"
                     recordItemId={row.original.trainingJobId}
                     size="sm"
+                    query={{
+                      trainingJobId: row.original.trainingJobId,
+                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
+                      roundId: row.original.roundId,
+                      roundNumber: row.original.roundNumber,
+                      featureSchemaId: row.original.featureSchemaId,
+                      baseModelId: row.original.baseModelId,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "state", ["Failed"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retryRoundExecutionAfterRuntimeFailure"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                    query={{
+                      trainingJobId: row.original.trainingJobId,
+                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
+                      roundId: row.original.roundId,
+                      roundNumber: row.original.roundNumber,
+                      featureSchemaId: row.original.featureSchemaId,
+                      baseModelId: row.original.baseModelId,
+                    }}
                   />
                 </DropdownMenuItem>
                 )}
@@ -1013,7 +1013,6 @@ export const TrainingRoundProgressList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="createTrainingJob" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         <CommandButton variant="destructive" command="cancelTrainingJob" size="sm" />

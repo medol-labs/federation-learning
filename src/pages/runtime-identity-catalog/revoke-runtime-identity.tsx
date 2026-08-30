@@ -36,7 +36,7 @@ export const RuntimeIdentityCatalogRevokeRuntimeIdentity = () => {
   const { id } = useParsed();
   const defaultValues = {
     runtimeId: searchParams.get("runtimeId") ?? undefined,
-  } as Partial<RevokeRuntimeIdentityCommandInput>;
+  } as unknown as Partial<RevokeRuntimeIdentityCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RevokeRuntimeIdentityCommandInput, RevokeRuntimeIdentityCommandInput>({
     resource: "runtime_identity_catalog",

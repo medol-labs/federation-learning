@@ -36,7 +36,7 @@ export const FeatureSchemaCatalogMarkCurrentRecommendedFeatureSchemaVersion = ()
   const { id } = useParsed();
   const defaultValues = {
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-  } as Partial<MarkCurrentRecommendedFeatureSchemaVersionCommandInput>;
+  } as unknown as Partial<MarkCurrentRecommendedFeatureSchemaVersionCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<MarkCurrentRecommendedFeatureSchemaVersionCommandInput, MarkCurrentRecommendedFeatureSchemaVersionCommandInput>({
     resource: "feature_schema_catalog",

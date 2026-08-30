@@ -38,7 +38,7 @@ export const FederationOverviewApproveParticipant = () => {
   const defaultValues = {
     federationId: searchParams.get("federationId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
-  } as Partial<ApproveParticipantCommandInput>;
+  } as unknown as Partial<ApproveParticipantCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ApproveParticipantCommandInput, ApproveParticipantCommandInput>({
     resource: "federation_overview",

@@ -56,7 +56,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
     minimumFairnessScore: (() => { const value = searchParams.get("minimumFairnessScore"); return value === null ? undefined : Number(value); })(),
     updateReason: searchParams.get("updateReason") ?? undefined,
     trainingRunConfigurationId: searchParams.get("trainingRunConfigurationId") ?? undefined,
-  } as Partial<UpdateTrainingRunConfigurationCommandInput>;
+  } as unknown as Partial<UpdateTrainingRunConfigurationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<UpdateTrainingRunConfigurationCommandInput, UpdateTrainingRunConfigurationCommandInput>({
     resource: "training_run_configuration_catalog",

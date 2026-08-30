@@ -36,7 +36,7 @@ export const TrainingRoundProgressRetryTrainingRoundParticipantSelection = () =>
   const { id } = useParsed();
   const defaultValues = {
     trainingJobId: searchParams.get("trainingJobId") ?? undefined,
-  } as Partial<RetryTrainingRoundParticipantSelectionCommandInput>;
+  } as unknown as Partial<RetryTrainingRoundParticipantSelectionCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RetryTrainingRoundParticipantSelectionCommandInput, RetryTrainingRoundParticipantSelectionCommandInput>({
     resource: "training_round_progress",

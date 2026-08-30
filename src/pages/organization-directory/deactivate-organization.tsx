@@ -36,7 +36,7 @@ export const OrganizationDirectoryDeactivateOrganization = () => {
   const { id } = useParsed();
   const defaultValues = {
     organizationId: searchParams.get("organizationId") ?? undefined,
-  } as Partial<DeactivateOrganizationCommandInput>;
+  } as unknown as Partial<DeactivateOrganizationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<DeactivateOrganizationCommandInput, DeactivateOrganizationCommandInput>({
     resource: "organization_directory",

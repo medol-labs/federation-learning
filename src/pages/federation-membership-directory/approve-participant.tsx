@@ -39,7 +39,7 @@ export const FederationMembershipDirectoryApproveParticipant = () => {
     organizationId: searchParams.get("organizationId") ?? undefined,
     approvalNote: searchParams.get("approvalNote") ?? undefined,
     federationId: searchParams.get("federationId") ?? undefined,
-  } as Partial<ApproveParticipantCommandInput>;
+  } as unknown as Partial<ApproveParticipantCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ApproveParticipantCommandInput, ApproveParticipantCommandInput>({
     resource: "federation_membership_directory",

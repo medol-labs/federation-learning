@@ -39,7 +39,7 @@ export const ModelCatalogPromoteModelToProduction = () => {
     releaseChannel: searchParams.get("releaseChannel") ?? undefined,
     productionStage: searchParams.get("productionStage") ?? undefined,
     modelId: searchParams.get("modelId") ?? undefined,
-  } as Partial<PromoteModelToProductionCommandInput>;
+  } as unknown as Partial<PromoteModelToProductionCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<PromoteModelToProductionCommandInput, PromoteModelToProductionCommandInput>({
     resource: "model_catalog",

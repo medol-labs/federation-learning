@@ -525,7 +525,7 @@ export const DatasetCapabilityList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="registerOrganization" />
+        <CommandButton variant="default" command="declareDataset" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

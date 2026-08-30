@@ -36,7 +36,7 @@ export const RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure = () =
   const { id } = useParsed();
   const defaultValues = {
     runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
-  } as Partial<RegisterRuntimeInfrastructureCommandInput>;
+  } as unknown as Partial<RegisterRuntimeInfrastructureCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterRuntimeInfrastructureCommandInput, RegisterRuntimeInfrastructureCommandInput>({
     resource: "runtime_infrastructure_access_view",

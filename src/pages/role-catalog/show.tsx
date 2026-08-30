@@ -24,7 +24,7 @@ export const RoleCatalogShow = () => {
       tableName: "role_catalog_read_model_entity",
       idField: "roleId",
       label: t("resources.role_catalog.label", "Role Catalog"),
-      aggregateRoute: "useraccount",
+      aggregateRoute: "role",
       queryRoute: "rolecatalog",
       dataProviderName: "federation-learning-support",
     },
@@ -52,11 +52,6 @@ export const RoleCatalogShow = () => {
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.role_catalog.fields.roleName.label", "Role Name")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.roleName, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.role_catalog.fields.permissionCodes.label", "Permission Codes")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.permissionCodes, t)}</p>
             </div>
             <Separator />
           </CardContent>

@@ -36,7 +36,7 @@ export const FeatureSchemaCatalogRetireFeatureSchema = () => {
   const { id } = useParsed();
   const defaultValues = {
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-  } as Partial<RetireFeatureSchemaCommandInput>;
+  } as unknown as Partial<RetireFeatureSchemaCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RetireFeatureSchemaCommandInput, RetireFeatureSchemaCommandInput>({
     resource: "feature_schema_catalog",

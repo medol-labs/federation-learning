@@ -37,7 +37,7 @@ export const FederationOverviewCreateFederation = () => {
   const defaultValues = {
     federationName: searchParams.get("federationName") ?? undefined,
     minimumParticipantCount: (() => { const value = searchParams.get("minimumParticipantCount"); return value === null ? undefined : Number(value); })(),
-  } as Partial<CreateFederationCommandInput>;
+  } as unknown as Partial<CreateFederationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<CreateFederationCommandInput, CreateFederationCommandInput>({
     resource: "federation_overview",

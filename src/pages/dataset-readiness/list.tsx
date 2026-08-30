@@ -648,13 +648,20 @@ export const DatasetReadinessList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
+                {isCommandVisible(row.original, "", "", []) && (
                 <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
-                    command="retryDatasetContractValidation"
+                    command="configureRuntimeDatasetBinding"
                     recordItemId={row.original.datasetId}
                     size="sm"
+                    query={{
+                      datasetId: row.original.datasetId,
+                      organizationId: row.original.organizationId,
+                      featureSchemaId: row.original.featureSchemaId,
+                      datasetName: row.original.datasetName,
+                      runtimeId: row.original.runtimeId,
+                    }}
                   />
                 </DropdownMenuItem>
                 )}
@@ -678,6 +685,16 @@ export const DatasetReadinessList = () => {
                   />
                 </DropdownMenuItem>
                 )}
+                {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retryDatasetContractValidation"
+                    recordItemId={row.original.datasetId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
                 {isCommandVisible(row.original, "", "approvalStatus", ["Approved"]) && (
                 <DropdownMenuItem>
                   <CommandButton
@@ -685,23 +702,6 @@ export const DatasetReadinessList = () => {
                     command="revokeDatasetTrainingApproval"
                     recordItemId={row.original.datasetId}
                     size="sm"
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="configureRuntimeDatasetBinding"
-                    recordItemId={row.original.datasetId}
-                    size="sm"
-                    query={{
-                      datasetId: row.original.datasetId,
-                      organizationId: row.original.organizationId,
-                      featureSchemaId: row.original.featureSchemaId,
-                      datasetName: row.original.datasetName,
-                      runtimeId: row.original.runtimeId,
-                    }}
                   />
                 </DropdownMenuItem>
                 )}
@@ -743,7 +743,6 @@ export const DatasetReadinessList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="registerOrganization" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

@@ -39,7 +39,7 @@ export const DictionaryCatalogAddDictionaryValue = () => {
     dictionaryId: searchParams.get("dictionaryId") ?? undefined,
     dictionaryCode: searchParams.get("dictionaryCode") ?? undefined,
     description: searchParams.get("description") ?? undefined,
-  } as Partial<AddDictionaryValueCommandInput>;
+  } as unknown as Partial<AddDictionaryValueCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<AddDictionaryValueCommandInput, AddDictionaryValueCommandInput>({
     resource: "dictionary_catalog",

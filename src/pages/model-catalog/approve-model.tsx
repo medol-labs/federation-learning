@@ -36,7 +36,7 @@ export const ModelCatalogApproveModel = () => {
   const { id } = useParsed();
   const defaultValues = {
     modelId: searchParams.get("modelId") ?? undefined,
-  } as Partial<ApproveModelCommandInput>;
+  } as unknown as Partial<ApproveModelCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ApproveModelCommandInput, ApproveModelCommandInput>({
     resource: "model_catalog",

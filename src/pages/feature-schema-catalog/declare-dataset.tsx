@@ -37,7 +37,7 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
   const { id } = useParsed();
   const defaultValues = {
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-  } as Partial<DeclareDatasetCommandInput>;
+  } as unknown as Partial<DeclareDatasetCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<DeclareDatasetCommandInput, DeclareDatasetCommandInput>({
     resource: "feature_schema_catalog",

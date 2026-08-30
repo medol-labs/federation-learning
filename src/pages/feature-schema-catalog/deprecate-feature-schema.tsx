@@ -36,7 +36,7 @@ export const FeatureSchemaCatalogDeprecateFeatureSchema = () => {
   const { id } = useParsed();
   const defaultValues = {
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-  } as Partial<DeprecateFeatureSchemaCommandInput>;
+  } as unknown as Partial<DeprecateFeatureSchemaCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<DeprecateFeatureSchemaCommandInput, DeprecateFeatureSchemaCommandInput>({
     resource: "feature_schema_catalog",

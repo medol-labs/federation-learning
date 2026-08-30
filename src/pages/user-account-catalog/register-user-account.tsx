@@ -38,7 +38,7 @@ export const UserAccountCatalogRegisterUserAccount = () => {
     username: searchParams.get("username") ?? undefined,
     providerSubject: searchParams.get("providerSubject") ?? undefined,
     passwordHash: searchParams.get("passwordHash") ?? undefined,
-  } as Partial<RegisterUserAccountCommandInput>;
+  } as unknown as Partial<RegisterUserAccountCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterUserAccountCommandInput, RegisterUserAccountCommandInput>({
     resource: "user_account_catalog",

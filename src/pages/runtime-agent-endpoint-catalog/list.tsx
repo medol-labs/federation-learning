@@ -246,6 +246,19 @@ export const RuntimeAgentEndpointCatalogList = () => {
                   />
                 </DropdownMenuItem>
                 )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retryRuntimeAgentDeployment"
+                    recordItemId={row.original.runtimeAgentId}
+                    size="sm"
+                    query={{
+                      runtimeAgentId: row.original.runtimeAgentId,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.runtimeAgentId} size="sm" />
                 </DropdownMenuItem>

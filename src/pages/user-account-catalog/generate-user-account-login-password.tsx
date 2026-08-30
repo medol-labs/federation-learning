@@ -46,7 +46,7 @@ export const UserAccountCatalogGenerateUserAccountLoginPassword = () => {
   const [commandResult, setCommandResult] = useState<Record<string, unknown> | null>(null);
   const defaultValues = {
     userAccountId: searchParams.get("userAccountId") ?? undefined,
-  } as Partial<GenerateUserAccountLoginPasswordCommandInput>;
+  } as unknown as Partial<GenerateUserAccountLoginPasswordCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<GenerateUserAccountLoginPasswordCommandInput, GenerateUserAccountLoginPasswordCommandInput>({
     resource: "user_account_catalog",

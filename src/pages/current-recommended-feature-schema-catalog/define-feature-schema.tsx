@@ -126,39 +126,59 @@ function ScalarArrayField({
   );
 }
 
-export const FeatureSchemaCatalogDefineFeatureSchema = () => {
+export const CurrentRecommendedFeatureSchemaCatalogDefineFeatureSchema = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
     featureDomain: searchParams.get("featureDomain") ?? undefined,
-    dataModality: searchParams.get("dataModality") ?? undefined,
-    features: searchParams.get("features")?.split(",").map((value) => value.trim()).filter(Boolean) ?? undefined,
-    labels: searchParams.get("labels")?.split(",").map((value) => value.trim()).filter(Boolean) ?? undefined,
-  } as Partial<DefineFeatureSchemaCommandInput>;
+    features: [{
+  featureName: "",
+  dataType: "",
+  required: false,
+  nullable: false,
+  description: "",
+  validationRules: [""],
+  defaultValue: "",
+  isIdentifier: false,
+  isSensitive: false,
+  encodingStrategy: "",
+  featureTags: [""]
+}],
+    labels: [{
+  labelName: "",
+  dataType: "",
+  cardinality: undefined,
+  classLabels: [""],
+  isMultilabel: false,
+  description: "",
+  validationRules: [""],
+  defaultValue: ""
+}],
+  } as unknown as Partial<DefineFeatureSchemaCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<DefineFeatureSchemaCommandInput, DefineFeatureSchemaCommandInput>({
-    resource: "feature_schema_catalog",
+    resource: "current_recommended_feature_schema_catalog",
     command: "defineFeatureSchema",
     aggregateId: id?.toString(),
     redirect: "list",
     dataProviderName: "federation-learning-platform",
     queryDataProviderName: "federation-learning-platform",
     meta: {
-      tableName: "feature_schema_catalog_read_model_entity",
-      idField: "featureSchemaId",
-      label: t("resources.feature_schema_catalog.label", "Feature Schema Catalog"),
+      tableName: "current_recommended_feature_schema_catalog_read_model_entity",
+      idField: "featureDomain",
+      label: t("resources.current_recommended_feature_schema_catalog.label", "Current Recommended Feature Schema Catalog"),
       aggregateRoute: "featureschema",
-      queryRoute: "featureschemacatalog",
+      queryRoute: "currentrecommendedfeatureschemacatalog",
       dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
-      tableName: "feature_schema_catalog_read_model_entity",
-      idField: "featureSchemaId",
-      label: t("resources.feature_schema_catalog.label", "Feature Schema Catalog"),
+      tableName: "current_recommended_feature_schema_catalog_read_model_entity",
+      idField: "featureDomain",
+      label: t("resources.current_recommended_feature_schema_catalog.label", "Current Recommended Feature Schema Catalog"),
       aggregateRoute: "featureschema",
-      queryRoute: "featureschemacatalog",
+      queryRoute: "currentrecommendedfeatureschemacatalog",
       dataProviderName: "federation-learning-platform",
     },
     formProps: {
@@ -180,13 +200,13 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
       ...defaultValues,
       ...values,
     });
-    navigate("/feature-schema-catalog");
+    navigate("/current-recommended-feature-schema-catalog");
     return result;
   }
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.feature_schema_catalog.commands.defineFeatureSchema.label", "Define Feature Schema")} />
+      <CreateViewHeader title={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.label", "Define Feature Schema")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DefineFeatureSchema validation failed", errors))} className="space-y-8">
           <FormField
@@ -195,7 +215,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
             rules={{ required: "Feature Domain is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.featureDomain.label", "Feature Domain")}</FormLabel>
+                <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.featureDomain.label", "Feature Domain")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -213,7 +233,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
             rules={{ required: "Data Modality is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.dataModality.label", "Data Modality")}</FormLabel>
+                <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.dataModality.label", "Data Modality")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
@@ -222,13 +242,13 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                   optionValue="valueCode"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.dataModality.placeholder", "Select Data Modality")}
+                  placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.dataModality.placeholder", "Select Data Modality")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"FEATURE_SCHEMA_DATA_MODALITY"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
-                    label: t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.dataModality.label", "Dictionary Value Catalog"),
+                    label: t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.dataModality.label", "Dictionary Value Catalog"),
                     aggregateRoute: "dictionaryvalue",
                     queryRoute: "dictionaryvaluecatalog",
                     queryFields: ["dictionaryCode","active","state"],
@@ -240,7 +260,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
           />
           <div className="space-y-4 rounded-md border p-4">
             <div className="flex items-center justify-between gap-2">
-              <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.label", "Features")}</FormLabel>
+              <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.label", "Features")}</FormLabel>
               <Button
                 type="button"
                 variant="outline"
@@ -265,7 +285,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
             {featuresFields.fields.map((item, index) => (
               <div key={item.id} className="space-y-4 rounded-md border p-4">
                 <div className="flex items-center justify-between gap-2">
-                  <div className="text-sm font-medium">{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.label", "Features")} {index + 1}</div>
+                  <div className="text-sm font-medium">{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.label", "Features")} {index + 1}</div>
                   <Button
                     type="button"
                     variant="ghost"
@@ -282,12 +302,12 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{ required: "Feature Name is required" }}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.featureName.label", "Feature Name")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.featureName.label", "Feature Name")}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             value={field.value ?? ""}
-                            placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.featureName.placeholder", "Enter Feature Name")}
+                            placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.featureName.placeholder", "Enter Feature Name")}
                           />
                         </FormControl>
                         <FormMessage />
@@ -300,12 +320,12 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{ required: "Data Type is required" }}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.dataType.label", "Data Type")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.dataType.label", "Data Type")}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             value={field.value ?? ""}
-                            placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.dataType.placeholder", "Enter Data Type")}
+                            placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.dataType.placeholder", "Enter Data Type")}
                           />
                         </FormControl>
                         <FormMessage />
@@ -318,14 +338,14 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{}}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.required.label", "Required")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.required.label", "Required")}</FormLabel>
                         <Select
                           value={field.value === undefined || field.value === null ? undefined : String(field.value)}
                           onValueChange={(value) => field.onChange(value === "true")}
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.required.placeholder", "Select Required")} />
+                              <SelectValue placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.required.placeholder", "Select Required")} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -343,14 +363,14 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{}}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.nullable.label", "Nullable")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.nullable.label", "Nullable")}</FormLabel>
                         <Select
                           value={field.value === undefined || field.value === null ? undefined : String(field.value)}
                           onValueChange={(value) => field.onChange(value === "true")}
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.nullable.placeholder", "Select Nullable")} />
+                              <SelectValue placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.nullable.placeholder", "Select Nullable")} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -368,12 +388,12 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{}}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.description.label", "Description")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.description.label", "Description")}</FormLabel>
                         <FormControl>
                           <Textarea
                             {...field}
                             value={field.value ?? ""}
-                            placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.description.placeholder", "Enter Description")}
+                            placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.description.placeholder", "Enter Description")}
                             rows={8}
                           />
                         </FormControl>
@@ -384,7 +404,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                   <ScalarArrayField
                     control={form.control}
                     name={`features.${index}.validationRules`}
-                    label={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.validationRules.label", "Validation Rules")}
+                    label={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.validationRules.label", "Validation Rules")}
                     inputType={null}
                     itemDefaultValue={""}
                     options={undefined}
@@ -395,12 +415,12 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{}}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.defaultValue.label", "Default Value")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.defaultValue.label", "Default Value")}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             value={field.value ?? ""}
-                            placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.defaultValue.placeholder", "Enter Default Value")}
+                            placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.defaultValue.placeholder", "Enter Default Value")}
                           />
                         </FormControl>
                         <FormMessage />
@@ -413,14 +433,14 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{}}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.isIdentifier.label", "Is Identifier")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.isIdentifier.label", "Is Identifier")}</FormLabel>
                         <Select
                           value={field.value === undefined || field.value === null ? undefined : String(field.value)}
                           onValueChange={(value) => field.onChange(value === "true")}
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.isIdentifier.placeholder", "Select Is Identifier")} />
+                              <SelectValue placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.isIdentifier.placeholder", "Select Is Identifier")} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -438,14 +458,14 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{}}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.isSensitive.label", "Is Sensitive")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.isSensitive.label", "Is Sensitive")}</FormLabel>
                         <Select
                           value={field.value === undefined || field.value === null ? undefined : String(field.value)}
                           onValueChange={(value) => field.onChange(value === "true")}
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.isSensitive.placeholder", "Select Is Sensitive")} />
+                              <SelectValue placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.isSensitive.placeholder", "Select Is Sensitive")} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -463,12 +483,12 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{}}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.encodingStrategy.label", "Encoding Strategy")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.encodingStrategy.label", "Encoding Strategy")}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             value={field.value ?? ""}
-                            placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.encodingStrategy.placeholder", "Enter Encoding Strategy")}
+                            placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.encodingStrategy.placeholder", "Enter Encoding Strategy")}
                           />
                         </FormControl>
                         <FormMessage />
@@ -478,7 +498,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                   <ScalarArrayField
                     control={form.control}
                     name={`features.${index}.featureTags`}
-                    label={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.featureTags.label", "Feature Tags")}
+                    label={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.features.fields.featureTags.label", "Feature Tags")}
                     inputType={null}
                     itemDefaultValue={""}
                     options={undefined}
@@ -489,7 +509,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
           </div>
           <div className="space-y-4 rounded-md border p-4">
             <div className="flex items-center justify-between gap-2">
-              <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.label", "Labels")}</FormLabel>
+              <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.label", "Labels")}</FormLabel>
               <Button
                 type="button"
                 variant="outline"
@@ -511,7 +531,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
             {labelsFields.fields.map((item, index) => (
               <div key={item.id} className="space-y-4 rounded-md border p-4">
                 <div className="flex items-center justify-between gap-2">
-                  <div className="text-sm font-medium">{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.label", "Labels")} {index + 1}</div>
+                  <div className="text-sm font-medium">{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.label", "Labels")} {index + 1}</div>
                   <Button
                     type="button"
                     variant="ghost"
@@ -528,12 +548,12 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{ required: "Label Name is required" }}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.labelName.label", "Label Name")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.labelName.label", "Label Name")}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             value={field.value ?? ""}
-                            placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.labelName.placeholder", "Enter Label Name")}
+                            placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.labelName.placeholder", "Enter Label Name")}
                           />
                         </FormControl>
                         <FormMessage />
@@ -546,12 +566,12 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{ required: "Data Type is required" }}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.dataType.label", "Data Type")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.dataType.label", "Data Type")}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             value={field.value ?? ""}
-                            placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.dataType.placeholder", "Enter Data Type")}
+                            placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.dataType.placeholder", "Enter Data Type")}
                           />
                         </FormControl>
                         <FormMessage />
@@ -564,13 +584,13 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{ required: "Cardinality is required" }}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.cardinality.label", "Cardinality")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.cardinality.label", "Cardinality")}</FormLabel>
                         <FormControl>
                           <Input
                             type="number"
                             {...field}
                             value={field.value ?? ""}
-                            placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.cardinality.placeholder", "Enter Cardinality")}
+                            placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.cardinality.placeholder", "Enter Cardinality")}
                           />
                         </FormControl>
                         <FormMessage />
@@ -580,7 +600,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                   <ScalarArrayField
                     control={form.control}
                     name={`labels.${index}.classLabels`}
-                    label={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.classLabels.label", "Class Labels")}
+                    label={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.classLabels.label", "Class Labels")}
                     inputType={null}
                     itemDefaultValue={""}
                     options={undefined}
@@ -591,14 +611,14 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{}}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.isMultilabel.label", "Is Multilabel")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.isMultilabel.label", "Is Multilabel")}</FormLabel>
                         <Select
                           value={field.value === undefined || field.value === null ? undefined : String(field.value)}
                           onValueChange={(value) => field.onChange(value === "true")}
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.isMultilabel.placeholder", "Select Is Multilabel")} />
+                              <SelectValue placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.isMultilabel.placeholder", "Select Is Multilabel")} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -616,12 +636,12 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{}}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.description.label", "Description")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.description.label", "Description")}</FormLabel>
                         <FormControl>
                           <Textarea
                             {...field}
                             value={field.value ?? ""}
-                            placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.description.placeholder", "Enter Description")}
+                            placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.description.placeholder", "Enter Description")}
                             rows={8}
                           />
                         </FormControl>
@@ -632,7 +652,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                   <ScalarArrayField
                     control={form.control}
                     name={`labels.${index}.validationRules`}
-                    label={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.validationRules.label", "Validation Rules")}
+                    label={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.validationRules.label", "Validation Rules")}
                     inputType={null}
                     itemDefaultValue={""}
                     options={undefined}
@@ -643,12 +663,12 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     rules={{}}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.defaultValue.label", "Default Value")}</FormLabel>
+                        <FormLabel>{t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.defaultValue.label", "Default Value")}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             value={field.value ?? ""}
-                            placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.defaultValue.placeholder", "Enter Default Value")}
+                            placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.labels.fields.defaultValue.placeholder", "Enter Default Value")}
                           />
                         </FormControl>
                         <FormMessage />

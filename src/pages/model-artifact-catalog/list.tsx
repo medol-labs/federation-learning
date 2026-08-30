@@ -360,7 +360,7 @@ export const ModelArtifactCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="createTrainingJob" />
+        <CommandButton variant="default" command="registerModelArtifact" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

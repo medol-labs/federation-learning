@@ -24,7 +24,7 @@ export const PermissionCatalogShow = () => {
       tableName: "permission_catalog_read_model_entity",
       idField: "permissionId",
       label: t("resources.permission_catalog.label", "Permission Catalog"),
-      aggregateRoute: "useraccount",
+      aggregateRoute: "permission",
       queryRoute: "permissioncatalog",
       dataProviderName: "federation-learning-support",
     },

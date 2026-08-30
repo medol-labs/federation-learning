@@ -37,7 +37,7 @@ export const DictionaryCatalogArchiveDictionary = () => {
   const defaultValues = {
     archiveReason: searchParams.get("archiveReason") ?? undefined,
     dictionaryId: searchParams.get("dictionaryId") ?? undefined,
-  } as Partial<ArchiveDictionaryCommandInput>;
+  } as unknown as Partial<ArchiveDictionaryCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ArchiveDictionaryCommandInput, ArchiveDictionaryCommandInput>({
     resource: "dictionary_catalog",

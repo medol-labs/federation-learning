@@ -37,7 +37,7 @@ export const TrainingAlertCatalogResolveTrainingAlert = () => {
   const defaultValues = {
     resolutionSummary: searchParams.get("resolutionSummary") ?? undefined,
     alertId: searchParams.get("alertId") ?? undefined,
-  } as Partial<ResolveTrainingAlertCommandInput>;
+  } as unknown as Partial<ResolveTrainingAlertCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ResolveTrainingAlertCommandInput, ResolveTrainingAlertCommandInput>({
     resource: "training_alert_catalog",

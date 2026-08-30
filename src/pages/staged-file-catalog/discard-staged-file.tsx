@@ -37,7 +37,7 @@ export const StagedFileCatalogDiscardStagedFile = () => {
   const defaultValues = {
     discardReason: searchParams.get("discardReason") ?? undefined,
     stagedFileId: searchParams.get("stagedFileId") ?? undefined,
-  } as Partial<DiscardStagedFileCommandInput>;
+  } as unknown as Partial<DiscardStagedFileCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<DiscardStagedFileCommandInput, DiscardStagedFileCommandInput>({
     resource: "staged_file_catalog",

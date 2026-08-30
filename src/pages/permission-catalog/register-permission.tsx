@@ -38,7 +38,7 @@ export const PermissionCatalogRegisterPermission = () => {
     permissionCode: searchParams.get("permissionCode") ?? undefined,
     permissionName: searchParams.get("permissionName") ?? undefined,
     description: searchParams.get("description") ?? undefined,
-  } as Partial<RegisterPermissionCommandInput>;
+  } as unknown as Partial<RegisterPermissionCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterPermissionCommandInput, RegisterPermissionCommandInput>({
     resource: "permission_catalog",
@@ -59,7 +59,7 @@ export const PermissionCatalogRegisterPermission = () => {
       tableName: "permission_catalog_read_model_entity",
       idField: "permissionId",
       label: t("resources.permission_catalog.label", "Permission Catalog"),
-      aggregateRoute: "useraccount",
+      aggregateRoute: "permission",
       queryRoute: "permissioncatalog",
       dataProviderName: "federation-learning-support",
     },

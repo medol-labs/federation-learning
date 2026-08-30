@@ -49,7 +49,7 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
     runtimeEngineJobId: searchParams.get("runtimeEngineJobId") ?? undefined,
     retryReason: searchParams.get("retryReason") ?? undefined,
     roundExecutionId: searchParams.get("roundExecutionId") ?? undefined,
-  } as Partial<RetryRoundExecutionAfterStartFailureCommandInput>;
+  } as unknown as Partial<RetryRoundExecutionAfterStartFailureCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RetryRoundExecutionAfterStartFailureCommandInput, RetryRoundExecutionAfterStartFailureCommandInput>({
     resource: "round_execution_catalog",
