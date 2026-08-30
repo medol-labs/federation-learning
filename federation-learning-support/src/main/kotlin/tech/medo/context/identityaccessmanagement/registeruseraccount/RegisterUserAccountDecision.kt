@@ -17,7 +17,7 @@ interface RegisterUserAccountDecision {
         }
         return listOf(
             UserAccountUsernameReservedEvent(userAccountId = command.userAccountId, username = command.username, normalizedName = command.username.trim().lowercase()),
-            UserAccountRegisteredEvent(userAccountId = command.userAccountId, username = command.username, providerSubject = command.providerSubject, passwordHash = command.passwordHash, organizationId = command.organizationId)
+            UserAccountRegisteredEvent(userAccountId = command.userAccountId, username = command.username, providerSubject = command.providerSubject, passwordHash = command.passwordHash)
         )
     }
 }

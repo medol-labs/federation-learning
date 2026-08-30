@@ -12,7 +12,7 @@ import tech.medo.identityaccessmanagement.role.RoleState
 interface RegisterRoleDecision {
     fun decide(command: RegisterRoleCommand): List<Any> {
         return listOf(
-            RoleRegisteredEvent(roleCode = command.roleCode, roleName = command.roleName)
+            RoleRegisteredEvent(roleId = command.roleId, roleCode = command.roleCode, roleName = command.roleName, roleCodeEventTag = "" /* TODO: derive value */)
         )
     }
 }

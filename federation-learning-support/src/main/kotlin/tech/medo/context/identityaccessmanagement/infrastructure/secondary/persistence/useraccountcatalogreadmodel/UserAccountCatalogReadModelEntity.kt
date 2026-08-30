@@ -17,7 +17,6 @@ class UserAccountCatalogReadModelEntity : MetadataProjection {
     var username: String? = null
     var providerSubject: String? = null
     var passwordHash: String? = null
-    var organizationId: UUID? = null
     var active: Boolean? = null
     @Column(columnDefinition = "text")
     var roleCodes: String? = null

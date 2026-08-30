@@ -7,11 +7,13 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import tech.medo.shared.application.metadata.MetadataProjection
+import java.util.UUID;
 
 
 @Entity
 class PermissionCatalogReadModelEntity : MetadataProjection {
     @Id
+    var permissionId: UUID? = null
     var permissionCode: String? = null
     var permissionName: String? = null
     @Column(columnDefinition = "text")

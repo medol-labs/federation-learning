@@ -23,10 +23,9 @@ class UserAccountState @EntityCreator constructor() {
     var username: String? = null
     var providerSubject: String? = null
     var passwordHash: String? = null
-    var organizationId: UUID? = null
     var reason: String? = null
     var passwordResetRequired: Boolean? = null
-    var roleCode: String? = null
+    var roleCodes: List<String> = emptyList()
 
     @EventSourcingHandler
     fun evolve(event: UserAccountRegisteredEvent): UserAccountState = apply {
@@ -35,7 +34,6 @@ class UserAccountState @EntityCreator constructor() {
         username = event.username
         providerSubject = event.providerSubject
         passwordHash = event.passwordHash
-        organizationId = event.organizationId
     }
 
     @EventSourcingHandler
@@ -55,6 +53,6 @@ class UserAccountState @EntityCreator constructor() {
     @EventSourcingHandler
     fun evolve(event: RoleAssignedToUserEvent): UserAccountState = apply {
         userAccountId = event.userAccountId
-        roleCode = event.roleCode
+        roleCodes = event.roleCodes
     }
 }

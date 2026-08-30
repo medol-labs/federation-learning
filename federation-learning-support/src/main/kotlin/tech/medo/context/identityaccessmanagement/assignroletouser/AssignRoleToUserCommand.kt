@@ -9,7 +9,7 @@ import java.util.UUID;
 @Command
 data class AssignRoleToUserCommand(
     val userAccountId: UUID,
-    val roleCode: String
+    val roleCodes: List<String>
 ) {
     @TargetEntityId
     val selection: UserAccountSelection = UserAccountSelection(userAccountId = userAccountId)

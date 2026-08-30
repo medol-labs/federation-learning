@@ -1,0 +1,11 @@
+package tech.medo.organizationmanagement.infrastructure.secondary.persistence.userorganizationmembershipdirectoryreadmodel
+
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor
+import java.util.UUID;
+import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum;
+
+
+interface SpringDataUserOrganizationMembershipDirectoryReadModelRepository : JpaRepository<UserOrganizationMembershipDirectoryReadModelEntity, UUID>, JpaSpecificationExecutor<UserOrganizationMembershipDirectoryReadModelEntity> {
+
+}

@@ -27,7 +27,6 @@ class UserAccountCatalogReadModelProjector(private val repository: UserAccountCa
             entity.username = event.username
             entity.providerSubject = event.providerSubject
             entity.passwordHash = event.passwordHash
-            entity.organizationId = event.organizationId
             entity.active = true
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -73,7 +72,7 @@ class UserAccountCatalogReadModelProjector(private val repository: UserAccountCa
                 this.userAccountId = event.userAccountId
         }
             entity.userAccountId = event.userAccountId
-            entity.roleCodes = (entity.roleCodes + event.roleCode).distinct()
+            entity.roleCodes = event.roleCodes
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

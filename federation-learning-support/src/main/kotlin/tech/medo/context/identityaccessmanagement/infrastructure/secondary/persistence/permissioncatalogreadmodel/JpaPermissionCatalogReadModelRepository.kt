@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
+import java.util.UUID;
 
 import tech.medo.identityaccessmanagement.identityaccesscatalogs.PermissionCatalogReadModel
 import tech.medo.identityaccessmanagement.identityaccesscatalogs.PermissionCatalogReadModelCriteria
@@ -22,10 +23,10 @@ class JpaPermissionCatalogReadModelRepository(
     override fun findAllByCriteria(criteria: PermissionCatalogReadModelCriteria?, pageable: Pageable): Page<PermissionCatalogReadModel> =
         queryService.findByCriteria(criteria, pageable)
 
-    override fun findById(id: String): PermissionCatalogReadModel? =
+    override fun findById(id: UUID): PermissionCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
 
-    override fun findProjectionById(id: String): PermissionCatalogReadModelProjection? =
+    override fun findProjectionById(id: UUID): PermissionCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
 
     override fun save(projection: PermissionCatalogReadModelProjection) {
@@ -34,6 +35,7 @@ class JpaPermissionCatalogReadModelRepository(
 
     private fun PermissionCatalogReadModelEntity.toProjection(): PermissionCatalogReadModelProjection =
         PermissionCatalogReadModelProjection().also {
+            it.permissionId = this@toProjection.permissionId
             it.permissionCode = this@toProjection.permissionCode
             it.permissionName = this@toProjection.permissionName
             it.description = this@toProjection.description
@@ -47,6 +49,7 @@ class JpaPermissionCatalogReadModelRepository(
 
     private fun PermissionCatalogReadModelProjection.toEntity(): PermissionCatalogReadModelEntity =
         PermissionCatalogReadModelEntity().also {
+            it.permissionId = this@toEntity.permissionId
             it.permissionCode = this@toEntity.permissionCode
             it.permissionName = this@toEntity.permissionName
             it.description = this@toEntity.description

@@ -9,12 +9,14 @@ import org.axonframework.messaging.eventstreaming.Tag
 import tech.medo.identityaccessmanagement.events.PermissionRegisteredEvent
 import tech.medo.identityaccessmanagement.domain.states.PermissionStateEnum
 
+import java.util.UUID;
 
 
 @EventSourced(idType = String::class, tagKey = PermissionTags.PERMISSION_CODE)
 class PermissionState @EntityCreator constructor() {
 
     var currentState: PermissionStateEnum? = null
+    var permissionId: UUID? = null
     var permissionCode: String? = null
     var permissionName: String? = null
     var description: String? = null
@@ -22,6 +24,7 @@ class PermissionState @EntityCreator constructor() {
     @EventSourcingHandler
     fun evolve(event: PermissionRegisteredEvent): PermissionState = apply {
         currentState = PermissionStateEnum.REGISTERED
+        permissionId = event.permissionId
         permissionCode = event.permissionCode
         permissionName = event.permissionName
         description = event.description

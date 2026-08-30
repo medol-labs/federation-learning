@@ -9,6 +9,7 @@ import jakarta.persistence.criteria.Root
 import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import java.util.function.Function
+import java.util.UUID;
 
 import tech.medo.identityaccessmanagement.identityaccesscatalogs.PermissionCatalogReadModel
 import tech.medo.identityaccessmanagement.identityaccesscatalogs.PermissionCatalogReadModelCriteria
@@ -25,6 +26,7 @@ class PermissionCatalogReadModelQueryService(
     private fun createSpecification(criteria: PermissionCatalogReadModelCriteria?): Specification<PermissionCatalogReadModelEntity> {
         var specification = Specification.where<PermissionCatalogReadModelEntity>(null)
         if (criteria != null) {
+            criteria.permissionId?.let { specification = specification.and(buildSpecification(it, Function<Root<PermissionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("permissionId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.permissionCode?.let { specification = specification.and(buildSpecification(it, Function<Root<PermissionCatalogReadModelEntity>, Expression<String>> { root -> root.get("permissionCode") })) }
             criteria.permissionName?.let { specification = specification.and(buildSpecification(it, Function<Root<PermissionCatalogReadModelEntity>, Expression<String>> { root -> root.get("permissionName") })) }
             criteria.description?.let { specification = specification.and(buildSpecification(it, Function<Root<PermissionCatalogReadModelEntity>, Expression<String>> { root -> root.get("description") })) }
@@ -34,6 +36,7 @@ class PermissionCatalogReadModelQueryService(
 
     private fun PermissionCatalogReadModelEntity.toProjection(): PermissionCatalogReadModelProjection =
         PermissionCatalogReadModelProjection().also {
+            it.permissionId = this@toProjection.permissionId
             it.permissionCode = this@toProjection.permissionCode
             it.permissionName = this@toProjection.permissionName
             it.description = this@toProjection.description

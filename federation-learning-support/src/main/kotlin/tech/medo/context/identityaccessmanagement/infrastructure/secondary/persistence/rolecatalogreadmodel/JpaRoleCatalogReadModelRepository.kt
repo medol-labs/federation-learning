@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
+import java.util.UUID;
 
 import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModel
 import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModelCriteria
@@ -25,10 +26,10 @@ class JpaRoleCatalogReadModelRepository(
     override fun findAllByCriteria(criteria: RoleCatalogReadModelCriteria?, pageable: Pageable): Page<RoleCatalogReadModel> =
         queryService.findByCriteria(criteria, pageable)
 
-    override fun findById(id: String): RoleCatalogReadModel? =
+    override fun findById(id: UUID): RoleCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
 
-    override fun findProjectionById(id: String): RoleCatalogReadModelProjection? =
+    override fun findProjectionById(id: UUID): RoleCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
 
     override fun save(projection: RoleCatalogReadModelProjection) {
@@ -37,6 +38,7 @@ class JpaRoleCatalogReadModelRepository(
 
     private fun RoleCatalogReadModelEntity.toProjection(): RoleCatalogReadModelProjection =
         RoleCatalogReadModelProjection().also {
+            it.roleId = this@toProjection.roleId
             it.roleCode = this@toProjection.roleCode
             it.roleName = this@toProjection.roleName
             it.permissionCodes = this@toProjection.permissionCodes?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
@@ -50,6 +52,7 @@ class JpaRoleCatalogReadModelRepository(
 
     private fun RoleCatalogReadModelProjection.toEntity(): RoleCatalogReadModelEntity =
         RoleCatalogReadModelEntity().also {
+            it.roleId = this@toEntity.roleId
             it.roleCode = this@toEntity.roleCode
             it.roleName = this@toEntity.roleName
             it.permissionCodes = objectMapper.writeValueAsString(this@toEntity.permissionCodes)

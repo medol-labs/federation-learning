@@ -13,7 +13,7 @@ interface AssignRoleToUserDecision {
     fun decide(command: AssignRoleToUserCommand, state: UserAccountState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(
-            RoleAssignedToUserEvent(userAccountId = command.userAccountId, roleCode = command.roleCode)
+            RoleAssignedToUserEvent(userAccountId = command.userAccountId, roleCodes = command.roleCodes)
         )
     }
 }

@@ -3,6 +3,7 @@ package tech.medo.identityaccessmanagement.identityaccesscatalogs
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
+import java.util.UUID;
 
 import tech.jhipster.service.filter.StringFilter
 
@@ -10,6 +11,7 @@ import tech.jhipster.service.filter.StringFilter
 class PermissionCatalogReadModelQuery
 
 class PermissionCatalogReadModelCriteria {
+    var permissionId: StringFilter? = null
     var permissionCode: StringFilter? = null
     var permissionName: StringFilter? = null
     var description: StringFilter? = null
@@ -17,6 +19,7 @@ class PermissionCatalogReadModelCriteria {
 
 
 class PermissionCatalogReadModelProjection : MetadataProjection {
+    var permissionId: UUID? = null
     var permissionCode: String? = null
     var permissionName: String? = null
     var description: String? = null
@@ -30,6 +33,7 @@ class PermissionCatalogReadModelProjection : MetadataProjection {
 
 fun PermissionCatalogReadModelProjection.toReadModel(): PermissionCatalogReadModel =
     PermissionCatalogReadModel(
+    permissionId = permissionId,
     permissionCode = permissionCode,
     permissionName = permissionName,
     description = description,
@@ -44,12 +48,13 @@ fun PermissionCatalogReadModelProjection.toReadModel(): PermissionCatalogReadMod
 interface PermissionCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<PermissionCatalogReadModel>
     fun findAllByCriteria(criteria: PermissionCatalogReadModelCriteria?, pageable: Pageable): Page<PermissionCatalogReadModel>
-    fun findById(id: String): PermissionCatalogReadModel?
-    fun findProjectionById(id: String): PermissionCatalogReadModelProjection?
+    fun findById(id: UUID): PermissionCatalogReadModel?
+    fun findProjectionById(id: UUID): PermissionCatalogReadModelProjection?
     fun save(projection: PermissionCatalogReadModelProjection)
 }
 
 data class PermissionCatalogReadModel(
+    val permissionId: UUID?,
     val permissionCode: String?,
     val permissionName: String?,
     val description: String?,

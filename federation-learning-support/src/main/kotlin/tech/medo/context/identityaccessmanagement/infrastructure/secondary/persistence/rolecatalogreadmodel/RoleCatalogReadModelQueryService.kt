@@ -9,6 +9,7 @@ import jakarta.persistence.criteria.Root
 import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import java.util.function.Function
+import java.util.UUID;
 
 import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModel
 import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModelCriteria
@@ -26,6 +27,7 @@ class RoleCatalogReadModelQueryService(
     private fun createSpecification(criteria: RoleCatalogReadModelCriteria?): Specification<RoleCatalogReadModelEntity> {
         var specification = Specification.where<RoleCatalogReadModelEntity>(null)
         if (criteria != null) {
+            criteria.roleId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoleCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("roleId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.roleCode?.let { specification = specification.and(buildSpecification(it, Function<Root<RoleCatalogReadModelEntity>, Expression<String>> { root -> root.get("roleCode") })) }
             criteria.roleName?.let { specification = specification.and(buildSpecification(it, Function<Root<RoleCatalogReadModelEntity>, Expression<String>> { root -> root.get("roleName") })) }
         }
@@ -34,6 +36,7 @@ class RoleCatalogReadModelQueryService(
 
     private fun RoleCatalogReadModelEntity.toProjection(): RoleCatalogReadModelProjection =
         RoleCatalogReadModelProjection().also {
+            it.roleId = this@toProjection.roleId
             it.roleCode = this@toProjection.roleCode
             it.roleName = this@toProjection.roleName
             it.permissionCodes = this@toProjection.permissionCodes?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()

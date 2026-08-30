@@ -18,9 +18,10 @@ class RoleCatalogReadModelProjector(private val repository: RoleCatalogReadModel
         message: EventMessage
     ) {
 
-        val entity = repository.findProjectionById(event.roleCode) ?: RoleCatalogReadModelProjection().apply {
-                this.roleCode = event.roleCode
+        val entity = repository.findProjectionById(event.roleId) ?: RoleCatalogReadModelProjection().apply {
+                this.roleId = event.roleId
         }
+            entity.roleId = event.roleId
             entity.roleCode = event.roleCode
             entity.roleName = event.roleName
             ProjectionMetadata.assign(entity, message)
@@ -33,11 +34,12 @@ class RoleCatalogReadModelProjector(private val repository: RoleCatalogReadModel
         message: EventMessage
     ) {
 
-        val entity = repository.findProjectionById(event.roleCode) ?: RoleCatalogReadModelProjection().apply {
-                this.roleCode = event.roleCode
+        val entity = repository.findProjectionById(event.roleId) ?: RoleCatalogReadModelProjection().apply {
+                this.roleId = event.roleId
         }
+            entity.roleId = event.roleId
             entity.roleCode = event.roleCode
-            entity.permissionCodes = (entity.permissionCodes + event.permissionCode).distinct()
+            entity.permissionCodes = event.permissionCodes
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

@@ -17,9 +17,10 @@ class PermissionCatalogReadModelProjector(private val repository: PermissionCata
         message: EventMessage
     ) {
 
-        val entity = repository.findProjectionById(event.permissionCode) ?: PermissionCatalogReadModelProjection().apply {
-                this.permissionCode = event.permissionCode
+        val entity = repository.findProjectionById(event.permissionId) ?: PermissionCatalogReadModelProjection().apply {
+                this.permissionId = event.permissionId
         }
+            entity.permissionId = event.permissionId
             entity.permissionCode = event.permissionCode
             entity.permissionName = event.permissionName
             entity.description = event.description

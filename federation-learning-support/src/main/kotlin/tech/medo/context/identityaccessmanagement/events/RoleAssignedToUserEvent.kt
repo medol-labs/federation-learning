@@ -10,5 +10,5 @@ import java.util.UUID;
 data class RoleAssignedToUserEvent(
     @EventTag(key = "userAccountId")
     val userAccountId: UUID,
-    val roleCode: String
+    val roleCodes: List<String>
 )

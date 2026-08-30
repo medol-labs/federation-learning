@@ -42,7 +42,6 @@ class JpaUserAccountCatalogReadModelRepository(
             it.username = this@toProjection.username
             it.providerSubject = this@toProjection.providerSubject
             it.passwordHash = this@toProjection.passwordHash
-            it.organizationId = this@toProjection.organizationId
             it.active = this@toProjection.active
             it.roleCodes = this@toProjection.roleCodes?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.userId = this@toProjection.userId
@@ -59,7 +58,6 @@ class JpaUserAccountCatalogReadModelRepository(
             it.username = this@toEntity.username
             it.providerSubject = this@toEntity.providerSubject
             it.passwordHash = this@toEntity.passwordHash
-            it.organizationId = this@toEntity.organizationId
             it.active = this@toEntity.active
             it.roleCodes = objectMapper.writeValueAsString(this@toEntity.roleCodes)
             it.userId = this@toEntity.userId

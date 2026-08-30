@@ -23,7 +23,7 @@ class LocalGenerateUserAccountLoginPasswordAdapter(
     }
 
     private fun temporaryPassword(): String {
-        val bytes = ByteArray(18)
+        val bytes = ByteArray(6)
         secureRandom.nextBytes(bytes)
         return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes)
     }

@@ -7,11 +7,13 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import tech.medo.shared.application.metadata.MetadataProjection
+import java.util.UUID;
 
 
 @Entity
 class RoleCatalogReadModelEntity : MetadataProjection {
     @Id
+    var roleId: UUID? = null
     var roleCode: String? = null
     var roleName: String? = null
     @Column(columnDefinition = "text")

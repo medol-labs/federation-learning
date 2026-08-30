@@ -2,8 +2,9 @@ package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
+import java.util.UUID;
 
 
-interface SpringDataPermissionCatalogReadModelRepository : JpaRepository<PermissionCatalogReadModelEntity, String>, JpaSpecificationExecutor<PermissionCatalogReadModelEntity> {
+interface SpringDataPermissionCatalogReadModelRepository : JpaRepository<PermissionCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<PermissionCatalogReadModelEntity> {
 
 }

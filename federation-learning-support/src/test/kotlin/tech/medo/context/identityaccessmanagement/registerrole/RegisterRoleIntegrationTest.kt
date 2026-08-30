@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import tech.medo.identityaccessmanagement.registerrole.RegisterRoleCommand
-
+import java.util.UUID
 
 @SpringBootTest(properties = [
     "spring.docker.compose.enabled=false",
@@ -25,6 +25,7 @@ class RegisterRoleIntegrationTest(
     @Test
     fun RegisterRoleintegration() {
         val command = RegisterRoleCommand(
+            roleId = java.util.UUID.randomUUID(),
             roleCode = "",
             roleName = ""
         )

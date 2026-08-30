@@ -3,6 +3,7 @@ package tech.medo.identityaccessmanagement.identityaccesscatalogs
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
+import java.util.UUID;
 
 import tech.jhipster.service.filter.StringFilter
 
@@ -10,12 +11,14 @@ import tech.jhipster.service.filter.StringFilter
 class RoleCatalogReadModelQuery
 
 class RoleCatalogReadModelCriteria {
+    var roleId: StringFilter? = null
     var roleCode: StringFilter? = null
     var roleName: StringFilter? = null
 }
 
 
 class RoleCatalogReadModelProjection : MetadataProjection {
+    var roleId: UUID? = null
     var roleCode: String? = null
     var roleName: String? = null
     var permissionCodes: List<String> = emptyList()
@@ -29,6 +32,7 @@ class RoleCatalogReadModelProjection : MetadataProjection {
 
 fun RoleCatalogReadModelProjection.toReadModel(): RoleCatalogReadModel =
     RoleCatalogReadModel(
+    roleId = roleId,
     roleCode = roleCode,
     roleName = roleName,
     permissionCodes = permissionCodes,
@@ -43,12 +47,13 @@ fun RoleCatalogReadModelProjection.toReadModel(): RoleCatalogReadModel =
 interface RoleCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RoleCatalogReadModel>
     fun findAllByCriteria(criteria: RoleCatalogReadModelCriteria?, pageable: Pageable): Page<RoleCatalogReadModel>
-    fun findById(id: String): RoleCatalogReadModel?
-    fun findProjectionById(id: String): RoleCatalogReadModelProjection?
+    fun findById(id: UUID): RoleCatalogReadModel?
+    fun findProjectionById(id: UUID): RoleCatalogReadModelProjection?
     fun save(projection: RoleCatalogReadModelProjection)
 }
 
 data class RoleCatalogReadModel(
+    val roleId: UUID?,
     val roleCode: String?,
     val roleName: String?,
     val permissionCodes: List<String>,

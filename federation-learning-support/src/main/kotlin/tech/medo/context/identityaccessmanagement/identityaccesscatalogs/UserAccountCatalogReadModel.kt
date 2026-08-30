@@ -16,7 +16,6 @@ class UserAccountCatalogReadModelCriteria {
     var username: StringFilter? = null
     var providerSubject: StringFilter? = null
     var passwordHash: StringFilter? = null
-    var organizationId: StringFilter? = null
     var active: BooleanFilter? = null
 }
 
@@ -26,7 +25,6 @@ class UserAccountCatalogReadModelProjection : MetadataProjection {
     var username: String? = null
     var providerSubject: String? = null
     var passwordHash: String? = null
-    var organizationId: UUID? = null
     var active: Boolean? = null
     var roleCodes: List<String> = emptyList()
     override var userId: String? = null
@@ -43,7 +41,6 @@ fun UserAccountCatalogReadModelProjection.toReadModel(): UserAccountCatalogReadM
     username = username,
     providerSubject = providerSubject,
     passwordHash = passwordHash,
-    organizationId = organizationId,
     active = active,
     roleCodes = roleCodes,
     userId = userId,
@@ -67,7 +64,6 @@ data class UserAccountCatalogReadModel(
     val username: String?,
     val providerSubject: String?,
     val passwordHash: String?,
-    val organizationId: UUID?,
     val active: Boolean?,
     val roleCodes: List<String>,
     val userId: String?,

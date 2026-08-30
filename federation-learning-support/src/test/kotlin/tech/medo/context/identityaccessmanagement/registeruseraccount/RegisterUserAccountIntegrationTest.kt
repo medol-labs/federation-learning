@@ -28,8 +28,7 @@ class RegisterUserAccountIntegrationTest(
             userAccountId = java.util.UUID.randomUUID(),
             username = "",
             providerSubject = null,
-            passwordHash = null,
-            organizationId = null
+            passwordHash = null
         )
 
         commandGateway.send(command).getResultMessage().join()

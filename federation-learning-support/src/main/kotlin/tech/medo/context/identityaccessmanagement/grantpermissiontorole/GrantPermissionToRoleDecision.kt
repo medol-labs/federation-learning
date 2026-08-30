@@ -13,7 +13,7 @@ interface GrantPermissionToRoleDecision {
     fun decide(command: GrantPermissionToRoleCommand, state: RoleState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(
-            PermissionGrantedToRoleEvent(roleCode = command.roleCode, permissionCode = command.permissionCode)
+            PermissionGrantedToRoleEvent(roleId = command.roleId, roleCode = command.roleCode, permissionCodes = command.permissionCodes, roleCodeEventTag = "" /* TODO: derive value */)
         )
     }
 }

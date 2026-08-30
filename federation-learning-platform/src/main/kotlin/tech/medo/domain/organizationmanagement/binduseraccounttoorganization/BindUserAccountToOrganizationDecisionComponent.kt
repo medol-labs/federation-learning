@@ -1,0 +1,7 @@
+package tech.medo.domain.organizationmanagement.binduseraccounttoorganization
+
+import org.springframework.stereotype.Component
+import tech.medo.organizationmanagement.binduseraccounttoorganization.BindUserAccountToOrganizationDecision
+
+@Component
+class BindUserAccountToOrganizationDecisionComponent : BindUserAccountToOrganizationDecision

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID;
 
 
 @CrossOrigin
@@ -27,7 +28,7 @@ class PermissionCatalogReadModelResource(private val repository: PermissionCatal
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('permission_catalog:read')")
     @GetMapping("/{id}")
-    fun findOne(@PathVariable id: String): ResponseEntity<PermissionCatalogReadModel> =
+    fun findOne(@PathVariable id: UUID): ResponseEntity<PermissionCatalogReadModel> =
         repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import tech.medo.identityaccessmanagement.registerpermission.RegisterPermissionCommand
-
+import java.util.UUID
 
 @SpringBootTest(properties = [
     "spring.docker.compose.enabled=false",
@@ -25,6 +25,7 @@ class RegisterPermissionIntegrationTest(
     @Test
     fun RegisterPermissionintegration() {
         val command = RegisterPermissionCommand(
+            permissionId = java.util.UUID.randomUUID(),
             permissionCode = "",
             permissionName = "",
             description = null
