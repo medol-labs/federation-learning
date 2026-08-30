@@ -1,4 +1,4 @@
-package tech.medo.identityaccessmanagement.identityaccesscatalogs
+package tech.medo.identityaccessmanagement.userroleassignmentcatalog
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -15,20 +15,15 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/useraccount/useraccountcatalog")
-class UserAccountCatalogReadModelResource(private val repository: UserAccountCatalogReadModelRepository) {
-    @PreAuthorize("hasAuthority('*:*') or hasAuthority('user_account_catalog:list') or hasAuthority('user_account_catalog:read')")
+@RequestMapping("/userroleassignment/userroleassignmentcatalog")
+class UserRoleAssignmentCatalogReadModelResource(private val repository: UserRoleAssignmentCatalogReadModelRepository) {
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('user_role_assignment_catalog:list') or hasAuthority('user_role_assignment_catalog:read')")
     @GetMapping
     fun findAll(
-        criteria: UserAccountCatalogReadModelCriteria,
+        criteria: UserRoleAssignmentCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
-    ): Page<UserAccountCatalogReadModel> =
+    ): Page<UserRoleAssignmentCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
 
-
-    @PreAuthorize("hasAuthority('*:*') or hasAuthority('user_account_catalog:read')")
-    @GetMapping("/{id}")
-    fun findOne(@PathVariable id: UUID): ResponseEntity<UserAccountCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

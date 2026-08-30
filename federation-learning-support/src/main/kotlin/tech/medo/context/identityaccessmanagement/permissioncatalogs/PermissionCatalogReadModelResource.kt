@@ -1,4 +1,4 @@
-package tech.medo.identityaccessmanagement.identityaccesscatalogs
+package tech.medo.identityaccessmanagement.permissioncatalogs
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/useraccount/permissioncatalog")
+@RequestMapping("/permission/permissioncatalog")
 class PermissionCatalogReadModelResource(private val repository: PermissionCatalogReadModelRepository) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('permission_catalog:list') or hasAuthority('permission_catalog:read')")
     @GetMapping

@@ -5,11 +5,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 import tech.jhipster.service.filter.StringFilter
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModelCriteria
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModelRepository
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.UserAccountCatalogReadModel
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.UserAccountCatalogReadModelCriteria
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.UserAccountCatalogReadModelRepository
+import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModel
+import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelCriteria
+import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelRepository
+import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermissionGrantCatalogReadModelCriteria
+import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermissionGrantCatalogReadModelRepository
+import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssignmentCatalogReadModelCriteria
+import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssignmentCatalogReadModelRepository
 
 @Component
 @ConditionalOnMissingBean(
@@ -18,7 +20,8 @@ import tech.medo.identityaccessmanagement.identityaccesscatalogs.UserAccountCata
 )
 class BuiltinReadModelAuthIdentityRepository(
     private val userAccounts: UserAccountCatalogReadModelRepository,
-    private val roles: RoleCatalogReadModelRepository,
+    private val userRoleAssignments: UserRoleAssignmentCatalogReadModelRepository,
+    private val rolePermissionGrants: RolePermissionGrantCatalogReadModelRepository,
 ) : AuthIdentityRepository {
     override fun findByUsername(username: String): AuthIdentity? =
         findBest(UserAccountCatalogReadModelCriteria().apply {
@@ -34,9 +37,9 @@ class BuiltinReadModelAuthIdentityRepository(
         userAccounts.findById(id)?.toAuthIdentity()
 
     override fun hasUserWithRole(roleCode: String): Boolean =
-        userAccounts.findAll(PageRequest.of(0, 1000))
+        userRoleAssignments.findAll(PageRequest.of(0, 1000))
             .content
-            .any { account -> account.roleCodes.any { it.equals(roleCode, ignoreCase = true) } }
+            .any { assignment -> assignment.roleCode?.equals(roleCode, ignoreCase = true) == true }
 
     private fun findBest(criteria: UserAccountCatalogReadModelCriteria): AuthIdentity? =
         userAccounts.findAllByCriteria(criteria, PageRequest.of(0, 1000))
@@ -52,7 +55,7 @@ class BuiltinReadModelAuthIdentityRepository(
     private fun UserAccountCatalogReadModel.toAuthIdentity(): AuthIdentity? {
         val id = userAccountId ?: return null
         val loginName = username ?: return null
-        val grantedRoles = roleCodes.filter { it.isNotBlank() }.toSet()
+        val grantedRoles = roleCodesForUser(id)
         return AuthIdentity(
             id = id,
             username = loginName,
@@ -68,12 +71,22 @@ class BuiltinReadModelAuthIdentityRepository(
         )
     }
 
+    private fun roleCodesForUser(userAccountId: UUID): Set<String> =
+        userRoleAssignments.findAllByCriteria(UserRoleAssignmentCatalogReadModelCriteria().apply {
+            this.userAccountId = exact(userAccountId.toString())
+        }, PageRequest.of(0, 1000))
+            .content
+            .mapNotNull { assignment -> assignment.roleCode }
+            .filter { roleCode -> roleCode.isNotBlank() }
+            .toSet()
+
     private fun permissionsForRoleCode(roleCode: String): List<String> =
-        roles.findAllByCriteria(RoleCatalogReadModelCriteria().apply {
+        rolePermissionGrants.findAllByCriteria(RolePermissionGrantCatalogReadModelCriteria().apply {
             this.roleCode = exact(roleCode)
         }, PageRequest.of(0, 1000))
             .content
-            .flatMap { it.permissionCodes }
+            .mapNotNull { grant -> grant.permissionCode }
+            .filter { permissionCode -> permissionCode.isNotBlank() }
 
     private fun exact(value: String): StringFilter =
         StringFilter().apply {

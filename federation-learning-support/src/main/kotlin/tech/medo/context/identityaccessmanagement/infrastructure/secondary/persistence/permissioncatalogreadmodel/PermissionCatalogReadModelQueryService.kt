@@ -11,10 +11,10 @@ import tech.jhipster.service.QueryService
 import java.util.function.Function
 import java.util.UUID;
 
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.PermissionCatalogReadModel
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.PermissionCatalogReadModelCriteria
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.PermissionCatalogReadModelProjection
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.toReadModel
+import tech.medo.identityaccessmanagement.permissioncatalogs.PermissionCatalogReadModel
+import tech.medo.identityaccessmanagement.permissioncatalogs.PermissionCatalogReadModelCriteria
+import tech.medo.identityaccessmanagement.permissioncatalogs.PermissionCatalogReadModelProjection
+import tech.medo.identityaccessmanagement.permissioncatalogs.toReadModel
 
 @Service
 class PermissionCatalogReadModelQueryService(

@@ -1,4 +1,4 @@
-package tech.medo.identityaccessmanagement.identityaccesscatalogs
+package tech.medo.identityaccessmanagement.useraccountcatalogs
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
@@ -8,7 +8,6 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 import tech.medo.identityaccessmanagement.events.UserAccountRegisteredEvent
 import tech.medo.identityaccessmanagement.events.UserAccountDeactivatedEvent
 import tech.medo.identityaccessmanagement.events.UserAccountLoginPasswordGeneratedEvent
-import tech.medo.identityaccessmanagement.events.RoleAssignedToUserEvent
 
 
 
@@ -58,21 +57,6 @@ class UserAccountCatalogReadModelProjector(private val repository: UserAccountCa
         }
             entity.userAccountId = event.userAccountId
             entity.passwordHash = event.passwordHash
-            ProjectionMetadata.assign(entity, message)
-        repository.save(entity)
-    }
-
-    @EventHandler
-    fun on(
-        event: RoleAssignedToUserEvent,
-        message: EventMessage
-    ) {
-
-        val entity = repository.findProjectionById(event.userAccountId) ?: UserAccountCatalogReadModelProjection().apply {
-                this.userAccountId = event.userAccountId
-        }
-            entity.userAccountId = event.userAccountId
-            entity.roleCodes = event.roleCodes
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

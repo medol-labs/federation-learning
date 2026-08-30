@@ -1,4 +1,4 @@
-package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.useraccountcatalogreadmodel
+package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.userroleassignmentcatalogreadmodel
 
 import jakarta.persistence.Entity
 import jakarta.persistence.Column
@@ -7,17 +7,19 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import tech.medo.shared.application.metadata.MetadataProjection
+import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssignmentCatalogReadModelKey
 import java.util.UUID;
 
 
+@IdClass(UserRoleAssignmentCatalogReadModelKey::class)
 @Entity
-class UserAccountCatalogReadModelEntity : MetadataProjection {
+class UserRoleAssignmentCatalogReadModelEntity : MetadataProjection {
     @Id
     var userAccountId: UUID? = null
     var username: String? = null
-    var providerSubject: String? = null
-    var passwordHash: String? = null
-    var active: Boolean? = null
+    @Id
+    var roleCode: String? = null
+    var roleName: String? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

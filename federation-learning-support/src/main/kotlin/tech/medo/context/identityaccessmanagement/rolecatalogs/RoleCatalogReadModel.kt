@@ -1,4 +1,4 @@
-package tech.medo.identityaccessmanagement.identityaccesscatalogs
+package tech.medo.identityaccessmanagement.rolecatalogs
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -21,7 +21,6 @@ class RoleCatalogReadModelProjection : MetadataProjection {
     var roleId: UUID? = null
     var roleCode: String? = null
     var roleName: String? = null
-    var permissionCodes: List<String> = emptyList()
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -35,7 +34,6 @@ fun RoleCatalogReadModelProjection.toReadModel(): RoleCatalogReadModel =
     roleId = roleId,
     roleCode = roleCode,
     roleName = roleName,
-    permissionCodes = permissionCodes,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -56,7 +54,6 @@ data class RoleCatalogReadModel(
     val roleId: UUID?,
     val roleCode: String?,
     val roleName: String?,
-    val permissionCodes: List<String>,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

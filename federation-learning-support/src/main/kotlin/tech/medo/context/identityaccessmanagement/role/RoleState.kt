@@ -8,6 +8,7 @@ import org.axonframework.messaging.eventstreaming.EventCriteria
 import org.axonframework.messaging.eventstreaming.Tag
 import tech.medo.identityaccessmanagement.events.RoleRegisteredEvent
 import tech.medo.identityaccessmanagement.events.PermissionGrantedToRoleEvent
+import tech.medo.identityaccessmanagement.events.PermissionRevokedFromRoleEvent
 import tech.medo.identityaccessmanagement.domain.states.RoleStateEnum
 
 import java.util.UUID;
@@ -20,7 +21,7 @@ class RoleState @EntityCreator constructor() {
     var roleId: UUID? = null
     var roleCode: String? = null
     var roleName: String? = null
-    var permissionCodes: List<String> = emptyList()
+    var permissionCode: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RoleRegisteredEvent): RoleState = apply {
@@ -32,8 +33,16 @@ class RoleState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: PermissionGrantedToRoleEvent): RoleState = apply {
+        currentState = RoleStateEnum.REGISTERED
         roleId = event.roleId
         roleCode = event.roleCode
-        permissionCodes = event.permissionCodes
+        permissionCode = event.permissionCode
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: PermissionRevokedFromRoleEvent): RoleState = apply {
+        roleId = event.roleId
+        roleCode = event.roleCode
+        permissionCode = event.permissionCode
     }
 }

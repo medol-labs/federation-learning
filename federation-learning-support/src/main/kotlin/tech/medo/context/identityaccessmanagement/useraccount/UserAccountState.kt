@@ -10,6 +10,7 @@ import tech.medo.identityaccessmanagement.events.UserAccountRegisteredEvent
 import tech.medo.identityaccessmanagement.events.UserAccountDeactivatedEvent
 import tech.medo.identityaccessmanagement.events.UserAccountLoginPasswordGeneratedEvent
 import tech.medo.identityaccessmanagement.events.RoleAssignedToUserEvent
+import tech.medo.identityaccessmanagement.events.RoleUnassignedFromUserEvent
 import tech.medo.identityaccessmanagement.domain.states.UserAccountStateEnum
 
 import java.util.UUID;
@@ -25,7 +26,7 @@ class UserAccountState @EntityCreator constructor() {
     var passwordHash: String? = null
     var reason: String? = null
     var passwordResetRequired: Boolean? = null
-    var roleCodes: List<String> = emptyList()
+    var roleCode: String? = null
 
     @EventSourcingHandler
     fun evolve(event: UserAccountRegisteredEvent): UserAccountState = apply {
@@ -52,7 +53,14 @@ class UserAccountState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoleAssignedToUserEvent): UserAccountState = apply {
+        currentState = UserAccountStateEnum.ACTIVE
         userAccountId = event.userAccountId
-        roleCodes = event.roleCodes
+        roleCode = event.roleCode
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: RoleUnassignedFromUserEvent): UserAccountState = apply {
+        userAccountId = event.userAccountId
+        roleCode = event.roleCode
     }
 }

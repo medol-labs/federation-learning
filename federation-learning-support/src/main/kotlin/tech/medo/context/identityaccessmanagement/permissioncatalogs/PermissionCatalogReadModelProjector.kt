@@ -1,4 +1,4 @@
-package tech.medo.identityaccessmanagement.identityaccesscatalogs
+package tech.medo.identityaccessmanagement.permissioncatalogs
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage

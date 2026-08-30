@@ -11,15 +11,14 @@ import tech.jhipster.service.QueryService
 import java.util.function.Function
 import java.util.UUID;
 
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModel
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModelCriteria
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModelProjection
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.toReadModel
+import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModel
+import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModelCriteria
+import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModelProjection
+import tech.medo.identityaccessmanagement.rolecatalogs.toReadModel
 
 @Service
 class RoleCatalogReadModelQueryService(
-    private val repository: SpringDataRoleCatalogReadModelRepository,
-    private val objectMapper: com.fasterxml.jackson.databind.ObjectMapper
+    private val repository: SpringDataRoleCatalogReadModelRepository
 ) : QueryService<RoleCatalogReadModelEntity>() {
     fun findByCriteria(criteria: RoleCatalogReadModelCriteria?, pageable: Pageable): Page<RoleCatalogReadModel> =
         repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
@@ -39,7 +38,6 @@ class RoleCatalogReadModelQueryService(
             it.roleId = this@toProjection.roleId
             it.roleCode = this@toProjection.roleCode
             it.roleName = this@toProjection.roleName
-            it.permissionCodes = this@toProjection.permissionCodes?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

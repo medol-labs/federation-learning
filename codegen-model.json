@@ -220,6 +220,14 @@
             "Active",
             "Deactivated"
           ]
+        },
+        {
+          "id": "concept-6f6a9f8d",
+          "name": "UserOrganizationMembership",
+          "title": "User Organization Membership",
+          "states": [
+            "Active"
+          ]
         }
       ],
       "externalSystems": [],
@@ -248,6 +256,16 @@
           "id": "slice-6b07d6cb",
           "name": "OrganizationDirectory",
           "title": "Organization Directory"
+        },
+        {
+          "id": "slice-6a19bd8c",
+          "name": "BindUserAccountToOrganization",
+          "title": "Bind User Account To Organization"
+        },
+        {
+          "id": "slice-a484259a",
+          "name": "UserOrganizationMembershipDirectory",
+          "title": "User Organization Membership Directory"
         }
       ]
     },
@@ -1748,6 +1766,18 @@
           "states": [
             "Registered"
           ]
+        },
+        {
+          "id": "concept-39e2b8e1",
+          "name": "UserRoleAssignment",
+          "title": "User Role Assignment",
+          "states": []
+        },
+        {
+          "id": "concept-08f3fd46",
+          "name": "RolePermissionGrant",
+          "title": "Role Permission Grant",
+          "states": []
         }
       ],
       "externalSystems": [],
@@ -1788,9 +1818,29 @@
           "title": "Assign Role To User"
         },
         {
-          "id": "slice-584fdb91",
-          "name": "IdentityAccessCatalogs",
-          "title": "Identity Access Catalogs"
+          "id": "slice-425842d5",
+          "name": "UserAccountCatalogs",
+          "title": "User Account Catalogs"
+        },
+        {
+          "id": "slice-10714181",
+          "name": "RoleCatalogs",
+          "title": "Role Catalogs"
+        },
+        {
+          "id": "slice-9f1bec7a",
+          "name": "PermissionCatalogs",
+          "title": "Permission Catalogs"
+        },
+        {
+          "id": "slice-33855446",
+          "name": "UserRoleAssignmentCatalog",
+          "title": "User Role Assignment Catalog"
+        },
+        {
+          "id": "slice-4d6e3a7f",
+          "name": "RolePermissionGrantCatalog",
+          "title": "Role Permission Grant Catalog"
         }
       ]
     }
@@ -2530,6 +2580,27 @@
           "id": "slice-6b07d6cb",
           "name": "OrganizationDirectory",
           "title": "Organization Directory"
+        }
+      ]
+    },
+    {
+      "id": "concept-6f6a9f8d",
+      "name": "UserOrganizationMembership",
+      "title": "User Organization Membership",
+      "context": "OrganizationManagement",
+      "states": [
+        "Active"
+      ],
+      "slices": [
+        {
+          "id": "slice-6a19bd8c",
+          "name": "BindUserAccountToOrganization",
+          "title": "Bind User Account To Organization"
+        },
+        {
+          "id": "slice-a484259a",
+          "name": "UserOrganizationMembershipDirectory",
+          "title": "User Organization Membership Directory"
         }
       ]
     },
@@ -3774,9 +3845,9 @@
           "title": "Assign Role To User"
         },
         {
-          "id": "slice-584fdb91",
-          "name": "IdentityAccessCatalogs",
-          "title": "Identity Access Catalogs"
+          "id": "slice-425842d5",
+          "name": "UserAccountCatalogs",
+          "title": "User Account Catalogs"
         }
       ]
     },
@@ -3798,6 +3869,11 @@
           "id": "slice-1d773a87",
           "name": "GrantPermissionToRole",
           "title": "Grant Permission To Role"
+        },
+        {
+          "id": "slice-10714181",
+          "name": "RoleCatalogs",
+          "title": "Role Catalogs"
         }
       ]
     },
@@ -3814,6 +3890,39 @@
           "id": "slice-1bda8ebb",
           "name": "RegisterPermission",
           "title": "Register Permission"
+        },
+        {
+          "id": "slice-9f1bec7a",
+          "name": "PermissionCatalogs",
+          "title": "Permission Catalogs"
+        }
+      ]
+    },
+    {
+      "id": "concept-39e2b8e1",
+      "name": "UserRoleAssignment",
+      "title": "User Role Assignment",
+      "context": "IdentityAccessManagement",
+      "states": [],
+      "slices": [
+        {
+          "id": "slice-33855446",
+          "name": "UserRoleAssignmentCatalog",
+          "title": "User Role Assignment Catalog"
+        }
+      ]
+    },
+    {
+      "id": "concept-08f3fd46",
+      "name": "RolePermissionGrant",
+      "title": "Role Permission Grant",
+      "context": "IdentityAccessManagement",
+      "states": [],
+      "slices": [
+        {
+          "id": "slice-4d6e3a7f",
+          "name": "RolePermissionGrantCatalog",
+          "title": "Role Permission Grant Catalog"
         }
       ]
     }
@@ -3944,6 +4053,33 @@
       "from": "Deactivated",
       "to": "Active",
       "startsLifecycle": false
+    },
+    {
+      "id": "transition-6523c718",
+      "context": "OrganizationManagement",
+      "owner": {
+        "id": "concept-6f6a9f8d",
+        "type": "concept",
+        "name": "UserOrganizationMembership",
+        "title": "User Organization Membership"
+      },
+      "slice": {
+        "id": "slice-6a19bd8c",
+        "name": "BindUserAccountToOrganization",
+        "title": "Bind User Account To Organization"
+      },
+      "command": {
+        "id": "command-54ee0de8",
+        "name": "BindUserAccountToOrganization",
+        "title": "Bind User Account To Organization"
+      },
+      "event": {
+        "id": "event-39705328",
+        "name": "UserAccountBoundToOrganization",
+        "title": "User Account Bound To Organization"
+      },
+      "to": "Active",
+      "startsLifecycle": true
     },
     {
       "id": "transition-d81bc066",
@@ -7395,6 +7531,60 @@
       },
       "to": "Registered",
       "startsLifecycle": true
+    },
+    {
+      "id": "transition-d89a0a9b",
+      "context": "IdentityAccessManagement",
+      "owner": {
+        "id": "concept-cb7435bf",
+        "type": "concept",
+        "name": "Role",
+        "title": "Role"
+      },
+      "slice": {
+        "id": "slice-1d773a87",
+        "name": "GrantPermissionToRole",
+        "title": "Grant Permission To Role"
+      },
+      "command": {
+        "id": "command-cc9d4dda",
+        "name": "GrantPermissionToRole",
+        "title": "Grant Permission To Role"
+      },
+      "event": {
+        "id": "event-4d13df38",
+        "name": "PermissionGrantedToRole",
+        "title": "Permission Granted To Role"
+      },
+      "to": "Registered",
+      "startsLifecycle": false
+    },
+    {
+      "id": "transition-e387efaf",
+      "context": "IdentityAccessManagement",
+      "owner": {
+        "id": "concept-ed072007",
+        "type": "concept",
+        "name": "UserAccount",
+        "title": "User Account"
+      },
+      "slice": {
+        "id": "slice-0766b926",
+        "name": "AssignRoleToUser",
+        "title": "Assign Role To User"
+      },
+      "command": {
+        "id": "command-4f06876a",
+        "name": "AssignRoleToUser",
+        "title": "Assign Role To User"
+      },
+      "event": {
+        "id": "event-174883bc",
+        "name": "RoleAssignedToUser",
+        "title": "Role Assigned To User"
+      },
+      "to": "Active",
+      "startsLifecycle": false
     }
   ],
   "actors": [
@@ -7727,6 +7917,12 @@
               "id": "readmodel-bfa22344",
               "direction": "OUTBOUND",
               "title": "Organization Directory",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-5aa7412c",
+              "direction": "OUTBOUND",
+              "title": "User Organization Membership Directory",
               "elementType": "READMODEL"
             },
             {
@@ -8552,8 +8748,486 @@
       "hotspots": []
     },
     {
-      "id": "slice-c07f2984",
+      "id": "slice-6a19bd8c",
       "index": 5,
+      "name": "BindUserAccountToOrganization",
+      "title": "Bind User Account To Organization",
+      "chapter": "OrganizationManagement",
+      "context": "OrganizationManagement",
+      "tags": [],
+      "concepts": [
+        "UserOrganizationMembership"
+      ],
+      "commands": [
+        {
+          "id": "command-54ee0de8",
+          "name": "BindUserAccountToOrganization",
+          "title": "Bind User Account To Organization",
+          "type": "COMMAND",
+          "modelContext": "OrganizationManagement",
+          "slice": "Bind User Account To Organization",
+          "fields": [
+            {
+              "name": "userOrganizationMembershipId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": true,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "userAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "UserAccountCatalog.userAccountId"
+                ]
+              }
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "OrganizationDirectory.organizationId"
+                ]
+              }
+            },
+            {
+              "name": "organizationUserRole",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "screen-734dffec",
+              "direction": "INBOUND",
+              "title": "Organization Admin Screen",
+              "elementType": "SCREEN"
+            },
+            {
+              "id": "event-39705328",
+              "direction": "OUTBOUND",
+              "title": "User Account Bound To Organization",
+              "elementType": "EVENT"
+            }
+          ],
+          "startsLifecycle": true
+        }
+      ],
+      "events": [
+        {
+          "id": "event-39705328",
+          "name": "UserAccountBoundToOrganization",
+          "title": "User Account Bound To Organization",
+          "type": "EVENT",
+          "modelContext": "OrganizationManagement",
+          "slice": "Bind User Account To Organization",
+          "fields": [
+            {
+              "name": "userOrganizationMembershipId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "userAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "organizationUserRole",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-54ee0de8",
+              "direction": "INBOUND",
+              "title": "Bind User Account To Organization",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-5aa7412c",
+              "direction": "OUTBOUND",
+              "title": "User Organization Membership Directory",
+              "elementType": "READMODEL"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [
+        {
+          "id": "screen-734dffec",
+          "name": "OrganizationAdminScreen",
+          "title": "Organization Admin Screen",
+          "type": "SCREEN",
+          "modelContext": "OrganizationManagement",
+          "slice": "Bind User Account To Organization",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "command-54ee0de8",
+              "direction": "OUTBOUND",
+              "title": "Bind User Account To Organization",
+              "elementType": "COMMAND"
+            }
+          ]
+        }
+      ],
+      "processors": [],
+      "specifications": [
+        {
+          "id": "gwt-83e5ba91",
+          "chapter": "OrganizationManagement",
+          "sliceName": "Bind User Account To Organization",
+          "title": "Reject Duplicate User Organization Binding",
+          "specification": "User Account Organization Binding Unique",
+          "rule": "A user account can be bound to the same business organization only once.",
+          "expressions": [
+            "unique (UserOrganizationMembership.userAccountId, UserOrganizationMembership.organizationId)"
+          ],
+          "validates": [
+            "unique (UserOrganizationMembership.userAccountId, UserOrganizationMembership.organizationId)"
+          ],
+          "given": [
+            {
+              "title": "User Account Bound To Organization",
+              "id": "event-39705328",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "userOrganizationMembershipId"
+                },
+                {
+                  "name": "userAccountId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "organizationUserRole"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Bind User Account To Organization",
+              "id": "command-54ee0de8",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "userOrganizationMembershipId"
+                },
+                {
+                  "name": "userAccountId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "organizationUserRole"
+                }
+              ]
+            }
+          ],
+          "then": {
+            "title": "Rejected",
+            "id": "spec-reject-83e5ba91",
+            "description": "User account is already bound to this organization.",
+            "outcome": "REJECT"
+          }
+        }
+      ],
+      "actors": [
+        {
+          "id": "actor-c78863e2",
+          "name": "PlatformAdmin",
+          "title": "Platform Admin"
+        }
+      ],
+      "hotspots": [],
+      "stateChange": {
+        "event": "UserAccountBoundToOrganization",
+        "eventId": "event-39705328",
+        "to": "Active"
+      }
+    },
+    {
+      "id": "slice-a484259a",
+      "index": 6,
+      "name": "UserOrganizationMembershipDirectory",
+      "title": "User Organization Membership Directory",
+      "chapter": "OrganizationManagement",
+      "context": "OrganizationManagement",
+      "tags": [],
+      "concepts": [
+        "UserOrganizationMembership"
+      ],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-5aa7412c",
+          "name": "UserOrganizationMembershipDirectory",
+          "title": "User Organization Membership Directory",
+          "type": "READMODEL",
+          "modelContext": "OrganizationManagement",
+          "slice": "User Organization Membership Directory",
+          "fields": [
+            {
+              "name": "userOrganizationMembershipId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "userAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "username",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "UserAccountCatalog.username"
+                ],
+                "lookup": {
+                  "key": "userAccountId",
+                  "cacheProjection": "UserAccountCatalog",
+                  "sourceField": "username",
+                  "targetField": "username",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "OrganizationDirectory.organizationName"
+                ],
+                "lookup": {
+                  "key": "organizationId",
+                  "cacheProjection": "OrganizationDirectory",
+                  "sourceField": "organizationName",
+                  "targetField": "organizationName",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
+              "name": "organizationUserRole",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "state",
+              "type": "UserOrganizationMembership.State",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-39705328",
+              "direction": "INBOUND",
+              "title": "User Account Bound To Organization",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-d81a5d20",
+              "direction": "INBOUND",
+              "title": "User Account Registered",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-6a7fde18",
+              "direction": "INBOUND",
+              "title": "Organization Registered",
+              "elementType": "EVENT"
+            }
+          ],
+          "listElement": true
+        }
+      ],
+      "screens": [
+        {
+          "id": "screen-f985f02e",
+          "name": "OrganizationAdminScreen",
+          "title": "Organization Admin Screen",
+          "type": "SCREEN",
+          "modelContext": "OrganizationManagement",
+          "slice": "User Organization Membership Directory",
+          "fields": [],
+          "dependencies": []
+        }
+      ],
+      "processors": [],
+      "specifications": [],
+      "actors": [],
+      "hotspots": []
+    },
+    {
+      "id": "slice-c07f2984",
+      "index": 7,
       "name": "CreateFederation",
       "title": "Create Federation",
       "chapter": "FederationManagement",
@@ -8882,7 +9556,7 @@
     },
     {
       "id": "slice-23fca68d",
-      "index": 6,
+      "index": 8,
       "name": "ActivateFederation",
       "title": "Activate Federation",
       "chapter": "FederationManagement",
@@ -9055,7 +9729,7 @@
     },
     {
       "id": "slice-07294882",
-      "index": 7,
+      "index": 9,
       "name": "SuspendFederation",
       "title": "Suspend Federation",
       "chapter": "FederationManagement",
@@ -9234,7 +9908,7 @@
     },
     {
       "id": "slice-45517110",
-      "index": 8,
+      "index": 10,
       "name": "ReactivateFederation",
       "title": "Reactivate Federation",
       "chapter": "FederationManagement",
@@ -9401,7 +10075,7 @@
     },
     {
       "id": "slice-3142237f",
-      "index": 9,
+      "index": 11,
       "name": "FederationOverview",
       "title": "Federation Overview",
       "chapter": "FederationManagement",
@@ -9625,7 +10299,7 @@
     },
     {
       "id": "slice-4b7f303d",
-      "index": 10,
+      "index": 12,
       "name": "InviteParticipant",
       "title": "Invite Participant",
       "chapter": "FederationManagement",
@@ -9852,7 +10526,7 @@
     },
     {
       "id": "slice-06fbbc2f",
-      "index": 11,
+      "index": 13,
       "name": "FederationMembershipDirectory",
       "title": "Federation Membership Directory",
       "chapter": "FederationManagement",
@@ -10064,7 +10738,7 @@
     },
     {
       "id": "slice-5b2f4d4f",
-      "index": 12,
+      "index": 14,
       "name": "ApproveParticipant",
       "title": "Approve Participant",
       "chapter": "FederationManagement",
@@ -10391,7 +11065,7 @@
     },
     {
       "id": "slice-079c4b5b",
-      "index": 13,
+      "index": 15,
       "name": "RejectParticipant",
       "title": "Reject Participant",
       "chapter": "FederationManagement",
@@ -10592,7 +11266,7 @@
     },
     {
       "id": "slice-82c251ab",
-      "index": 14,
+      "index": 16,
       "name": "RevokeParticipantInvitation",
       "title": "Revoke Participant Invitation",
       "chapter": "FederationManagement",
@@ -10793,7 +11467,7 @@
     },
     {
       "id": "slice-eb9b2c84",
-      "index": 15,
+      "index": 17,
       "name": "SuspendParticipant",
       "title": "Suspend Participant",
       "chapter": "FederationManagement",
@@ -11012,7 +11686,7 @@
     },
     {
       "id": "slice-e0ca60d6",
-      "index": 16,
+      "index": 18,
       "name": "RemoveParticipant",
       "title": "Remove Participant",
       "chapter": "FederationManagement",
@@ -11219,7 +11893,7 @@
     },
     {
       "id": "slice-b3836611",
-      "index": 17,
+      "index": 19,
       "name": "RegisterDictionary",
       "title": "Register Dictionary",
       "chapter": "DictionaryMaintenance",
@@ -11518,7 +12192,7 @@
     },
     {
       "id": "slice-7eebcd09",
-      "index": 18,
+      "index": 20,
       "name": "UpdateDictionary",
       "title": "Update Dictionary",
       "chapter": "DictionaryMaintenance",
@@ -11702,7 +12376,7 @@
     },
     {
       "id": "slice-ecb054da",
-      "index": 19,
+      "index": 21,
       "name": "ArchiveDictionary",
       "title": "Archive Dictionary",
       "chapter": "DictionaryMaintenance",
@@ -11869,7 +12543,7 @@
     },
     {
       "id": "slice-76628373",
-      "index": 20,
+      "index": 22,
       "name": "DictionaryCatalog",
       "title": "Dictionary Catalog",
       "chapter": "DictionaryMaintenance",
@@ -12047,7 +12721,7 @@
     },
     {
       "id": "slice-8d146c60",
-      "index": 21,
+      "index": 23,
       "name": "AddDictionaryValue",
       "title": "Add Dictionary Value",
       "chapter": "DictionaryMaintenance",
@@ -12390,7 +13064,7 @@
     },
     {
       "id": "slice-ddea9399",
-      "index": 22,
+      "index": 24,
       "name": "DisableDictionaryValue",
       "title": "Disable Dictionary Value",
       "chapter": "DictionaryMaintenance",
@@ -12563,7 +13237,7 @@
     },
     {
       "id": "slice-04b196a4",
-      "index": 23,
+      "index": 25,
       "name": "EnableDictionaryValue",
       "title": "Enable Dictionary Value",
       "chapter": "DictionaryMaintenance",
@@ -12724,7 +13398,7 @@
     },
     {
       "id": "slice-0889f5f8",
-      "index": 24,
+      "index": 26,
       "name": "DictionaryValueCatalog",
       "title": "Dictionary Value Catalog",
       "chapter": "DictionaryMaintenance",
@@ -12981,7 +13655,7 @@
     },
     {
       "id": "slice-a6d081b3",
-      "index": 25,
+      "index": 27,
       "name": "StageFileUpload",
       "title": "Stage File Upload",
       "chapter": "FileUpload",
@@ -13435,7 +14109,7 @@
     },
     {
       "id": "slice-8928f6ed",
-      "index": 26,
+      "index": 28,
       "name": "MarkStagedFileConsumed",
       "title": "Mark Staged File Consumed",
       "chapter": "FileUpload",
@@ -13721,7 +14395,7 @@
     },
     {
       "id": "slice-8e15c8a0",
-      "index": 27,
+      "index": 29,
       "name": "DiscardStagedFile",
       "title": "Discard Staged File",
       "chapter": "FileUpload",
@@ -14015,7 +14689,7 @@
     },
     {
       "id": "slice-5d518349",
-      "index": 28,
+      "index": 30,
       "name": "ExpireStagedFile",
       "title": "Expire Staged File",
       "chapter": "FileUpload",
@@ -14348,7 +15022,7 @@
     },
     {
       "id": "slice-1b411581",
-      "index": 29,
+      "index": 31,
       "name": "StagedFileCatalog",
       "title": "Staged File Catalog",
       "chapter": "FileUpload",
@@ -14658,7 +15332,7 @@
     },
     {
       "id": "slice-fadc8c3e",
-      "index": 30,
+      "index": 32,
       "name": "RegisterRuntimeInfrastructurePackage",
       "title": "Register Runtime Infrastructure Package",
       "chapter": "RuntimeProvisioning",
@@ -14898,7 +15572,7 @@
     },
     {
       "id": "slice-e15cefbe",
-      "index": 31,
+      "index": 33,
       "name": "RuntimeInfrastructurePackageCatalog",
       "title": "Runtime Infrastructure Package Catalog",
       "chapter": "RuntimeProvisioning",
@@ -15009,7 +15683,7 @@
     },
     {
       "id": "slice-f35904ad",
-      "index": 32,
+      "index": 34,
       "name": "CreateRuntimeInstallationPlan",
       "title": "Create Runtime Installation Plan",
       "chapter": "RuntimeProvisioning",
@@ -15327,7 +16001,7 @@
     },
     {
       "id": "slice-0e61278c",
-      "index": 33,
+      "index": 35,
       "name": "RuntimeInstallationPlanCatalog",
       "title": "Runtime Installation Plan Catalog",
       "chapter": "RuntimeProvisioning",
@@ -15803,7 +16477,7 @@
     },
     {
       "id": "slice-7d947a8a",
-      "index": 34,
+      "index": 36,
       "name": "RuntimeInstallationGuide",
       "title": "Runtime Installation Guide",
       "chapter": "RuntimeProvisioning",
@@ -16123,7 +16797,7 @@
     },
     {
       "id": "slice-ae3ed4a4",
-      "index": 35,
+      "index": 37,
       "name": "PlanRuntimeInfrastructure",
       "title": "Plan Runtime Infrastructure",
       "chapter": "RuntimeProvisioning",
@@ -16314,7 +16988,7 @@
     },
     {
       "id": "slice-f113419e",
-      "index": 36,
+      "index": 38,
       "name": "RegisterRuntimeInfrastructure",
       "title": "Register Runtime Infrastructure",
       "chapter": "RuntimeProvisioning",
@@ -16475,7 +17149,7 @@
     },
     {
       "id": "slice-1524114e",
-      "index": 37,
+      "index": 39,
       "name": "VerifyRuntimeInfrastructure",
       "title": "Verify Runtime Infrastructure",
       "chapter": "RuntimeProvisioning",
@@ -17028,7 +17702,7 @@
     },
     {
       "id": "slice-b8a32014",
-      "index": 38,
+      "index": 40,
       "name": "DeployRuntimeAgent",
       "title": "Deploy Runtime Agent",
       "chapter": "RuntimeProvisioning",
@@ -17449,7 +18123,7 @@
     },
     {
       "id": "slice-6432e41e",
-      "index": 39,
+      "index": 41,
       "name": "RetryRuntimeAgentDeployment",
       "title": "Retry Runtime Agent Deployment",
       "chapter": "RuntimeProvisioning",
@@ -18011,7 +18685,7 @@
     },
     {
       "id": "slice-15dea9b5",
-      "index": 40,
+      "index": 42,
       "name": "RecordRuntimeConnectionEstablished",
       "title": "Record Runtime Connection Established",
       "chapter": "RuntimeProvisioning",
@@ -18379,7 +19053,7 @@
     },
     {
       "id": "slice-0f1cd9f9",
-      "index": 41,
+      "index": 43,
       "name": "RuntimeAgentEndpointCatalog",
       "title": "Runtime Agent Endpoint Catalog",
       "chapter": "RuntimeProvisioning",
@@ -18584,7 +19258,7 @@
     },
     {
       "id": "slice-39822ec6",
-      "index": 42,
+      "index": 44,
       "name": "RuntimeInfrastructureAccessView",
       "title": "Runtime Infrastructure Access View",
       "chapter": "RuntimeProvisioning",
@@ -19067,7 +19741,7 @@
     },
     {
       "id": "slice-d92096fb",
-      "index": 43,
+      "index": 45,
       "name": "DefineFeatureSchema",
       "title": "Define Feature Schema",
       "chapter": "DatasetGovernance",
@@ -19495,7 +20169,7 @@
     },
     {
       "id": "slice-9a1a067d",
-      "index": 44,
+      "index": 46,
       "name": "PublishFeatureSchema",
       "title": "Publish Feature Schema",
       "chapter": "DatasetGovernance",
@@ -19760,7 +20434,7 @@
     },
     {
       "id": "slice-d0d6ce25",
-      "index": 45,
+      "index": 47,
       "name": "DeprecateFeatureSchema",
       "title": "Deprecate Feature Schema",
       "chapter": "DatasetGovernance",
@@ -19933,7 +20607,7 @@
     },
     {
       "id": "slice-50e78e0f",
-      "index": 46,
+      "index": 48,
       "name": "RetireFeatureSchema",
       "title": "Retire Feature Schema",
       "chapter": "DatasetGovernance",
@@ -20100,7 +20774,7 @@
     },
     {
       "id": "slice-c6a6a6c8",
-      "index": 47,
+      "index": 49,
       "name": "SupersedeFeatureSchemaVersion",
       "title": "Supersede Feature Schema Version",
       "chapter": "DatasetGovernance",
@@ -20439,7 +21113,7 @@
     },
     {
       "id": "slice-76cab273",
-      "index": 48,
+      "index": 50,
       "name": "MarkCurrentRecommendedFeatureSchemaVersion",
       "title": "Mark Current Recommended Feature Schema Version",
       "chapter": "DatasetGovernance",
@@ -20731,7 +21405,7 @@
     },
     {
       "id": "slice-73f5eccd",
-      "index": 49,
+      "index": 51,
       "name": "CurrentRecommendedFeatureSchemaCatalog",
       "title": "Current Recommended Feature Schema Catalog",
       "chapter": "DatasetGovernance",
@@ -20841,7 +21515,7 @@
     },
     {
       "id": "slice-8f30e501",
-      "index": 50,
+      "index": 52,
       "name": "FeatureSchemaCatalog",
       "title": "Feature Schema Catalog",
       "chapter": "DatasetGovernance",
@@ -21052,7 +21726,7 @@
     },
     {
       "id": "slice-ad05f2d9",
-      "index": 51,
+      "index": 53,
       "name": "RecordRuntimeDatasetMetadata",
       "title": "Record Runtime Dataset Metadata",
       "chapter": "DatasetGovernance",
@@ -21673,7 +22347,7 @@
     },
     {
       "id": "slice-c7f572a3",
-      "index": 52,
+      "index": 54,
       "name": "RecordRuntimeDatasetReprofiledMetadata",
       "title": "Record Runtime Dataset Reprofiled Metadata",
       "chapter": "DatasetGovernance",
@@ -22287,7 +22961,7 @@
     },
     {
       "id": "slice-1ed8c787",
-      "index": 53,
+      "index": 55,
       "name": "RuntimeDatasetMetadataCatalog",
       "title": "Runtime Dataset Metadata Catalog",
       "chapter": "DatasetGovernance",
@@ -22672,7 +23346,7 @@
     },
     {
       "id": "slice-7ccc677e",
-      "index": 54,
+      "index": 56,
       "name": "RegisterModelArtifact",
       "title": "Register Model Artifact",
       "chapter": "ModelRepository",
@@ -23132,7 +23806,7 @@
     },
     {
       "id": "slice-e846ef48",
-      "index": 55,
+      "index": 57,
       "name": "ModelArtifactCatalog",
       "title": "Model Artifact Catalog",
       "chapter": "ModelRepository",
@@ -23417,7 +24091,7 @@
     },
     {
       "id": "slice-83322758",
-      "index": 56,
+      "index": 58,
       "name": "DefineTrainingRunConfiguration",
       "title": "Define Training Run Configuration",
       "chapter": "TrainingOrchestration",
@@ -24521,7 +25195,7 @@
     },
     {
       "id": "slice-017ad176",
-      "index": 57,
+      "index": 59,
       "name": "UpdateTrainingRunConfiguration",
       "title": "Update Training Run Configuration",
       "chapter": "TrainingOrchestration",
@@ -25760,7 +26434,7 @@
     },
     {
       "id": "slice-e7dd4f24",
-      "index": 58,
+      "index": 60,
       "name": "LockTrainingRunConfiguration",
       "title": "Lock Training Run Configuration",
       "chapter": "TrainingOrchestration",
@@ -25933,7 +26607,7 @@
     },
     {
       "id": "slice-04d3f902",
-      "index": 59,
+      "index": 61,
       "name": "TrainingRunConfigurationCatalog",
       "title": "Training Run Configuration Catalog",
       "chapter": "TrainingOrchestration",
@@ -26477,7 +27151,7 @@
     },
     {
       "id": "slice-6537d1cd",
-      "index": 60,
+      "index": 62,
       "name": "CreateTrainingJob",
       "title": "Create Training Job",
       "chapter": "TrainingOrchestration",
@@ -26970,7 +27644,7 @@
     },
     {
       "id": "slice-201ffbf1",
-      "index": 61,
+      "index": 63,
       "name": "SubmitTrainingJob",
       "title": "Submit Training Job",
       "chapter": "TrainingOrchestration",
@@ -27259,7 +27933,7 @@
     },
     {
       "id": "slice-ba4b3f70",
-      "index": 62,
+      "index": 64,
       "name": "TrainingParticipantEligibility",
       "title": "Training Participant Eligibility",
       "chapter": "TrainingOrchestration",
@@ -27945,7 +28619,7 @@
     },
     {
       "id": "slice-dde5a363",
-      "index": 63,
+      "index": 65,
       "name": "PauseTrainingJob",
       "title": "Pause Training Job",
       "chapter": "TrainingOrchestration",
@@ -28112,7 +28786,7 @@
     },
     {
       "id": "slice-c1c60d34",
-      "index": 64,
+      "index": 66,
       "name": "ResumeTrainingJob",
       "title": "Resume Training Job",
       "chapter": "TrainingOrchestration",
@@ -28273,7 +28947,7 @@
     },
     {
       "id": "slice-3af09f8b",
-      "index": 65,
+      "index": 67,
       "name": "CancelTrainingJob",
       "title": "Cancel Training Job",
       "chapter": "TrainingOrchestration",
@@ -28434,7 +29108,7 @@
     },
     {
       "id": "slice-6ad9864e",
-      "index": 66,
+      "index": 68,
       "name": "ScheduleNextTrainingRound",
       "title": "Schedule Next Training Round",
       "chapter": "TrainingOrchestration",
@@ -28482,7 +29156,7 @@
     },
     {
       "id": "slice-44fd29f8",
-      "index": 67,
+      "index": 69,
       "name": "CompleteTrainingJob",
       "title": "Complete Training Job",
       "chapter": "TrainingOrchestration",
@@ -28730,7 +29404,7 @@
     },
     {
       "id": "slice-b90f5d7f",
-      "index": 68,
+      "index": 70,
       "name": "TrainingJobDashboard",
       "title": "Training Job Dashboard",
       "chapter": "TrainingOrchestration",
@@ -29281,7 +29955,7 @@
     },
     {
       "id": "slice-093e2668",
-      "index": 69,
+      "index": 71,
       "name": "SelectTrainingRoundParticipants",
       "title": "Select Training Round Participants",
       "chapter": "TrainingOrchestration",
@@ -29992,7 +30666,7 @@
     },
     {
       "id": "slice-3afb3435",
-      "index": 70,
+      "index": 72,
       "name": "RetryTrainingRoundParticipantSelection",
       "title": "Retry Training Round Participant Selection",
       "chapter": "TrainingOrchestration",
@@ -30241,7 +30915,7 @@
     },
     {
       "id": "slice-6a16fc72",
-      "index": 71,
+      "index": 73,
       "name": "StartTrainingRound",
       "title": "Start Training Round",
       "chapter": "TrainingOrchestration",
@@ -31579,7 +32253,7 @@
     },
     {
       "id": "slice-fabbea45",
-      "index": 72,
+      "index": 74,
       "name": "GenerateParticipantExecutionPlan",
       "title": "Generate Participant Execution Plan",
       "chapter": "TrainingOrchestration",
@@ -32843,7 +33517,7 @@
     },
     {
       "id": "slice-04a9daf0",
-      "index": 73,
+      "index": 75,
       "name": "DispatchParticipantExecutionPlan",
       "title": "Dispatch Participant Execution Plan",
       "chapter": "TrainingOrchestration",
@@ -33676,7 +34350,7 @@
     },
     {
       "id": "slice-ff26cad0",
-      "index": 74,
+      "index": 76,
       "name": "SubmitModelUpdateSubmission",
       "title": "Submit Model Update Submission",
       "chapter": "TrainingOrchestration",
@@ -34357,7 +35031,7 @@
     },
     {
       "id": "slice-fc1ff76d",
-      "index": 75,
+      "index": 77,
       "name": "EvaluateModelUpdateSubmission",
       "title": "Evaluate Model Update Submission",
       "chapter": "TrainingOrchestration",
@@ -35705,7 +36379,7 @@
     },
     {
       "id": "slice-a46e905e",
-      "index": 76,
+      "index": 78,
       "name": "RequestSecureAggregation",
       "title": "Request Secure Aggregation",
       "chapter": "TrainingOrchestration",
@@ -36219,7 +36893,7 @@
     },
     {
       "id": "slice-c044ec34",
-      "index": 77,
+      "index": 79,
       "name": "CompleteSecureAggregation",
       "title": "Complete Secure Aggregation",
       "chapter": "TrainingOrchestration",
@@ -36714,7 +37388,7 @@
     },
     {
       "id": "slice-129ead8e",
-      "index": 78,
+      "index": 80,
       "name": "SubmitGlobalModelEvaluation",
       "title": "Submit Global Model Evaluation",
       "chapter": "TrainingOrchestration",
@@ -37193,7 +37867,7 @@
     },
     {
       "id": "slice-4a16b8df",
-      "index": 79,
+      "index": 81,
       "name": "CompleteTrainingRound",
       "title": "Complete Training Round",
       "chapter": "TrainingOrchestration",
@@ -37965,7 +38639,7 @@
     },
     {
       "id": "slice-8107a71a",
-      "index": 80,
+      "index": 82,
       "name": "FailTrainingRound",
       "title": "Fail Training Round",
       "chapter": "TrainingOrchestration",
@@ -38489,7 +39163,7 @@
     },
     {
       "id": "slice-158bd8b1",
-      "index": 81,
+      "index": 83,
       "name": "TrainingRoundProgress",
       "title": "Training Round Progress",
       "chapter": "TrainingOrchestration",
@@ -39388,7 +40062,7 @@
     },
     {
       "id": "slice-7806d9ed",
-      "index": 82,
+      "index": 84,
       "name": "RegisterCandidateModel",
       "title": "Register Candidate Model",
       "chapter": "ModelLifecycle",
@@ -39695,7 +40369,7 @@
     },
     {
       "id": "slice-c947b39a",
-      "index": 83,
+      "index": 85,
       "name": "RecordModelEvaluationPackage",
       "title": "Record Model Evaluation Package",
       "chapter": "ModelLifecycle",
@@ -40193,7 +40867,7 @@
     },
     {
       "id": "slice-a4c2bdcc",
-      "index": 84,
+      "index": 86,
       "name": "ApproveModel",
       "title": "Approve Model",
       "chapter": "ModelLifecycle",
@@ -40504,7 +41178,7 @@
     },
     {
       "id": "slice-e0aca431",
-      "index": 85,
+      "index": 87,
       "name": "PromoteModelToProduction",
       "title": "Promote Model To Production",
       "chapter": "ModelLifecycle",
@@ -40855,7 +41529,7 @@
     },
     {
       "id": "slice-33930733",
-      "index": 86,
+      "index": 88,
       "name": "RollbackModel",
       "title": "Rollback Model",
       "chapter": "ModelLifecycle",
@@ -41044,7 +41718,7 @@
     },
     {
       "id": "slice-9e8c0ad2",
-      "index": 87,
+      "index": 89,
       "name": "RetireModel",
       "title": "Retire Model",
       "chapter": "ModelLifecycle",
@@ -41205,7 +41879,7 @@
     },
     {
       "id": "slice-daa3e2fe",
-      "index": 88,
+      "index": 90,
       "name": "ModelCatalog",
       "title": "Model Catalog",
       "chapter": "ModelLifecycle",
@@ -41668,7 +42342,7 @@
     },
     {
       "id": "slice-97531d57",
-      "index": 89,
+      "index": 91,
       "name": "RuntimeTelemetryLatest",
       "title": "Runtime Telemetry Latest",
       "chapter": "RuntimeMonitoring",
@@ -41903,7 +42577,7 @@
     },
     {
       "id": "slice-d498ecb8",
-      "index": 90,
+      "index": 92,
       "name": "DetectRuntimeAgentOffline",
       "title": "Detect Runtime Agent Offline",
       "chapter": "RuntimeMonitoring",
@@ -42117,7 +42791,7 @@
     },
     {
       "id": "slice-fd282504",
-      "index": 91,
+      "index": 93,
       "name": "MarkRuntimeAgentRecovered",
       "title": "Mark Runtime Agent Recovered",
       "chapter": "RuntimeMonitoring",
@@ -42330,7 +43004,7 @@
     },
     {
       "id": "slice-7aeba98f",
-      "index": 92,
+      "index": 94,
       "name": "DetectRuntimeNodeResourcePressure",
       "title": "Detect Runtime Node Resource Pressure",
       "chapter": "RuntimeMonitoring",
@@ -42610,7 +43284,7 @@
     },
     {
       "id": "slice-3f7c280e",
-      "index": 93,
+      "index": 95,
       "name": "RecordRuntimeNodeInventory",
       "title": "Record Runtime Node Inventory",
       "chapter": "RuntimeMonitoring",
@@ -43119,7 +43793,7 @@
     },
     {
       "id": "slice-79929d9e",
-      "index": 94,
+      "index": 96,
       "name": "RuntimeNodeInventoryView",
       "title": "Runtime Node Inventory View",
       "chapter": "RuntimeMonitoring",
@@ -43443,7 +44117,7 @@
     },
     {
       "id": "slice-c5ab698a",
-      "index": 95,
+      "index": 97,
       "name": "RuntimeNodeResourceLatest",
       "title": "Runtime Node Resource Latest",
       "chapter": "RuntimeMonitoring",
@@ -43750,7 +44424,7 @@
     },
     {
       "id": "slice-17654acc",
-      "index": 96,
+      "index": 98,
       "name": "DetectRuntimeNodeCapacityChange",
       "title": "Detect Runtime Node Capacity Change",
       "chapter": "RuntimeMonitoring",
@@ -44052,7 +44726,7 @@
     },
     {
       "id": "slice-dc4e224d",
-      "index": 97,
+      "index": 99,
       "name": "RuntimeHealthDashboard",
       "title": "Runtime Health Dashboard",
       "chapter": "RuntimeMonitoring",
@@ -44414,7 +45088,7 @@
     },
     {
       "id": "slice-f43e8d0f",
-      "index": 98,
+      "index": 100,
       "name": "RaiseTrainingAlert",
       "title": "Raise Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -44689,7 +45363,7 @@
     },
     {
       "id": "slice-102e6798",
-      "index": 99,
+      "index": 101,
       "name": "TrainingAlertCatalog",
       "title": "Training Alert Catalog",
       "chapter": "RuntimeMonitoring",
@@ -44949,7 +45623,7 @@
     },
     {
       "id": "slice-63ac1487",
-      "index": 100,
+      "index": 102,
       "name": "AcknowledgeTrainingAlert",
       "title": "Acknowledge Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -45116,7 +45790,7 @@
     },
     {
       "id": "slice-c3edeeef",
-      "index": 101,
+      "index": 103,
       "name": "ResolveTrainingAlert",
       "title": "Resolve Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -45277,7 +45951,7 @@
     },
     {
       "id": "slice-bf4467da",
-      "index": 102,
+      "index": 104,
       "name": "AppendAuditTrail",
       "title": "Append Audit Trail",
       "chapter": "RuntimeMonitoring",
@@ -45828,7 +46502,7 @@
     },
     {
       "id": "slice-5556fb33",
-      "index": 103,
+      "index": 105,
       "name": "AuditRecordLog",
       "title": "Audit Record Log",
       "chapter": "RuntimeMonitoring",
@@ -45938,7 +46612,7 @@
     },
     {
       "id": "slice-6883883e",
-      "index": 104,
+      "index": 106,
       "name": "ActivateRuntimeIdentity",
       "title": "Activate Runtime Identity",
       "chapter": "RuntimeGovernance",
@@ -46304,7 +46978,7 @@
     },
     {
       "id": "slice-6949bdab",
-      "index": 105,
+      "index": 107,
       "name": "RevokeRuntimeIdentity",
       "title": "Revoke Runtime Identity",
       "chapter": "RuntimeGovernance",
@@ -46489,7 +47163,7 @@
     },
     {
       "id": "slice-267be0b4",
-      "index": 106,
+      "index": 108,
       "name": "DetectRuntimeCapabilities",
       "title": "Detect Runtime Capabilities",
       "chapter": "RuntimeGovernance",
@@ -46672,7 +47346,7 @@
     },
     {
       "id": "slice-53705008",
-      "index": 107,
+      "index": 109,
       "name": "RuntimeIdentityCatalog",
       "title": "Runtime Identity Catalog",
       "chapter": "RuntimeGovernance",
@@ -46863,7 +47537,7 @@
     },
     {
       "id": "slice-a09f6b28",
-      "index": 108,
+      "index": 110,
       "name": "RuntimeCapabilityCatalog",
       "title": "Runtime Capability Catalog",
       "chapter": "RuntimeGovernance",
@@ -46960,7 +47634,7 @@
     },
     {
       "id": "slice-0df6c6b1",
-      "index": 109,
+      "index": 111,
       "name": "CreateSecureAggregationSession",
       "title": "Create Secure Aggregation Session",
       "chapter": "SecureAggregation",
@@ -47513,7 +48187,7 @@
     },
     {
       "id": "slice-af59eab5",
-      "index": 110,
+      "index": 112,
       "name": "SelectSecureAggregationParticipants",
       "title": "Select Secure Aggregation Participants",
       "chapter": "SecureAggregation",
@@ -48027,7 +48701,7 @@
     },
     {
       "id": "slice-a903d2aa",
-      "index": 111,
+      "index": 113,
       "name": "PrepareHomomorphicEncryptionContext",
       "title": "Prepare Homomorphic Encryption Context",
       "chapter": "SecureAggregation",
@@ -48603,7 +49277,7 @@
     },
     {
       "id": "slice-5d843deb",
-      "index": 112,
+      "index": 114,
       "name": "RecordEncryptedModelUpdate",
       "title": "Record Encrypted Model Update",
       "chapter": "SecureAggregation",
@@ -49158,7 +49832,7 @@
     },
     {
       "id": "slice-74fb7a88",
-      "index": 113,
+      "index": 115,
       "name": "CompleteHomomorphicAggregationSession",
       "title": "Complete Homomorphic Aggregation Session",
       "chapter": "SecureAggregation",
@@ -49573,7 +50247,7 @@
     },
     {
       "id": "slice-5c7bd7e5",
-      "index": 114,
+      "index": 116,
       "name": "FailSecureAggregationSession",
       "title": "Fail Secure Aggregation Session",
       "chapter": "SecureAggregation",
@@ -49710,7 +50384,7 @@
     },
     {
       "id": "slice-ae5b24d8",
-      "index": 115,
+      "index": 117,
       "name": "SecureAggregationSessionCatalog",
       "title": "Secure Aggregation Session Catalog",
       "chapter": "SecureAggregation",
@@ -50187,7 +50861,7 @@
     },
     {
       "id": "slice-725195cc",
-      "index": 116,
+      "index": 118,
       "name": "DeclareDataset",
       "title": "Declare Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -50625,7 +51299,7 @@
     },
     {
       "id": "slice-5a2194a7",
-      "index": 117,
+      "index": 119,
       "name": "ConfigureRuntimeDatasetBinding",
       "title": "Configure Runtime Dataset Binding",
       "chapter": "RuntimeAgentOperations",
@@ -51427,7 +52101,7 @@
     },
     {
       "id": "slice-358d4122",
-      "index": 118,
+      "index": 120,
       "name": "RuntimeDatasetBindingCatalog",
       "title": "Runtime Dataset Binding Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -51727,7 +52401,7 @@
     },
     {
       "id": "slice-c31ba9a1",
-      "index": 119,
+      "index": 121,
       "name": "ValidateAgentDatasetAccess",
       "title": "Validate Agent Dataset Access",
       "chapter": "RuntimeAgentOperations",
@@ -52843,7 +53517,7 @@
     },
     {
       "id": "slice-aa47e014",
-      "index": 120,
+      "index": 122,
       "name": "RevalidateAgentDatasetAccess",
       "title": "Revalidate Agent Dataset Access",
       "chapter": "RuntimeAgentOperations",
@@ -53477,7 +54151,7 @@
     },
     {
       "id": "slice-ba3dc29b",
-      "index": 121,
+      "index": 123,
       "name": "AgentDatasetAccessValidationCatalog",
       "title": "Agent Dataset Access Validation Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -53723,7 +54397,7 @@
     },
     {
       "id": "slice-f44b66bc",
-      "index": 122,
+      "index": 124,
       "name": "ProfileAgentDataset",
       "title": "Profile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -54667,7 +55341,7 @@
     },
     {
       "id": "slice-d6f2a3cf",
-      "index": 123,
+      "index": 125,
       "name": "ReprofileAgentDataset",
       "title": "Reprofile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -55487,7 +56161,7 @@
     },
     {
       "id": "slice-2529cf36",
-      "index": 124,
+      "index": 126,
       "name": "ValidateDatasetContract",
       "title": "Validate Dataset Contract",
       "chapter": "RuntimeAgentOperations",
@@ -56063,7 +56737,7 @@
     },
     {
       "id": "slice-2e18bcb1",
-      "index": 125,
+      "index": 127,
       "name": "RetryDatasetContractValidation",
       "title": "Retry Dataset Contract Validation",
       "chapter": "RuntimeAgentOperations",
@@ -56702,7 +57376,7 @@
     },
     {
       "id": "slice-d28aff88",
-      "index": 126,
+      "index": 128,
       "name": "RejectDatasetForTraining",
       "title": "Reject Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -56869,7 +57543,7 @@
     },
     {
       "id": "slice-284a72da",
-      "index": 127,
+      "index": 129,
       "name": "ApproveDatasetForTraining",
       "title": "Approve Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -57157,7 +57831,7 @@
     },
     {
       "id": "slice-847c2855",
-      "index": 128,
+      "index": 130,
       "name": "RevokeDatasetTrainingApproval",
       "title": "Revoke Dataset Training Approval",
       "chapter": "RuntimeAgentOperations",
@@ -57336,7 +58010,7 @@
     },
     {
       "id": "slice-30869f70",
-      "index": 129,
+      "index": 131,
       "name": "DatasetCapability",
       "title": "Dataset Capability",
       "chapter": "RuntimeAgentOperations",
@@ -57797,7 +58471,7 @@
     },
     {
       "id": "slice-ff9e2f26",
-      "index": 130,
+      "index": 132,
       "name": "DatasetReadiness",
       "title": "Dataset Readiness",
       "chapter": "RuntimeAgentOperations",
@@ -58496,7 +59170,7 @@
     },
     {
       "id": "slice-5bf739cd",
-      "index": 131,
+      "index": 133,
       "name": "ReceiveParticipantExecutionPlan",
       "title": "Receive Participant Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -59322,7 +59996,7 @@
     },
     {
       "id": "slice-64faaa9b",
-      "index": 132,
+      "index": 134,
       "name": "AcceptExecutionPlan",
       "title": "Accept Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -61222,7 +61896,7 @@
     },
     {
       "id": "slice-4d4016d0",
-      "index": 133,
+      "index": 135,
       "name": "StartRoundExecution",
       "title": "Start Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -63016,7 +63690,7 @@
     },
     {
       "id": "slice-0cecfd3f",
-      "index": 134,
+      "index": 136,
       "name": "ObserveRuntimeEngineJob",
       "title": "Observe Runtime Engine Job",
       "chapter": "RuntimeAgentOperations",
@@ -64474,7 +65148,7 @@
     },
     {
       "id": "slice-b1a48287",
-      "index": 135,
+      "index": 137,
       "name": "CompleteRoundExecution",
       "title": "Complete Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -65375,7 +66049,7 @@
     },
     {
       "id": "slice-45c663e8",
-      "index": 136,
+      "index": 138,
       "name": "FailRoundExecution",
       "title": "Fail Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -65912,7 +66586,7 @@
     },
     {
       "id": "slice-ff352882",
-      "index": 137,
+      "index": 139,
       "name": "RetryRoundExecutionAfterStartFailure",
       "title": "Retry Round Execution After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -66681,7 +67355,7 @@
     },
     {
       "id": "slice-2cb34062",
-      "index": 138,
+      "index": 140,
       "name": "RetryRoundExecutionAfterRuntimeFailure",
       "title": "Retry Round Execution After Runtime Failure",
       "chapter": "RuntimeAgentOperations",
@@ -67478,7 +68152,7 @@
     },
     {
       "id": "slice-d54dcc12",
-      "index": 139,
+      "index": 141,
       "name": "SubmitAgentLocalModelUpdate",
       "title": "Submit Agent Local Model Update",
       "chapter": "RuntimeAgentOperations",
@@ -68260,7 +68934,7 @@
     },
     {
       "id": "slice-6485fdce",
-      "index": 140,
+      "index": 142,
       "name": "ReleaseRuntimeEngineJobAfterCompletion",
       "title": "Release Runtime Engine Job After Completion",
       "chapter": "RuntimeAgentOperations",
@@ -68434,7 +69108,7 @@
     },
     {
       "id": "slice-ef8420f2",
-      "index": 141,
+      "index": 143,
       "name": "ReleaseRuntimeEngineJobAfterFailure",
       "title": "Release Runtime Engine Job After Failure",
       "chapter": "RuntimeAgentOperations",
@@ -68622,7 +69296,7 @@
     },
     {
       "id": "slice-30156076",
-      "index": 142,
+      "index": 144,
       "name": "ReleaseRuntimeEngineJobAfterStartFailure",
       "title": "Release Runtime Engine Job After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -68810,7 +69484,7 @@
     },
     {
       "id": "slice-5d7a0380",
-      "index": 143,
+      "index": 145,
       "name": "ReleaseRuntimeEngineJobAfterRetryFailure",
       "title": "Release Runtime Engine Job After Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -68998,7 +69672,7 @@
     },
     {
       "id": "slice-bc1eac14",
-      "index": 144,
+      "index": 146,
       "name": "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure",
       "title": "Release Runtime Engine Job After Runtime Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -69186,7 +69860,7 @@
     },
     {
       "id": "slice-eb00f5f7",
-      "index": 145,
+      "index": 147,
       "name": "RoundExecutionCatalog",
       "title": "Round Execution Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -69908,7 +70582,7 @@
     },
     {
       "id": "slice-d248addb",
-      "index": 146,
+      "index": 148,
       "name": "LoadRuntimeAgentBootstrapConfiguration",
       "title": "Load Runtime Agent Bootstrap Configuration",
       "chapter": "RuntimeAgentOperations",
@@ -70233,7 +70907,7 @@
     },
     {
       "id": "slice-c7d2df46",
-      "index": 147,
+      "index": 149,
       "name": "ReportRuntimeAgentStarted",
       "title": "Report Runtime Agent Started",
       "chapter": "RuntimeAgentOperations",
@@ -70451,7 +71125,7 @@
     },
     {
       "id": "slice-75635ed7",
-      "index": 148,
+      "index": 150,
       "name": "ReportRuntimeInstanceSelfCheckPassed",
       "title": "Report Runtime Instance Self Check Passed",
       "chapter": "RuntimeAgentOperations",
@@ -70866,7 +71540,7 @@
     },
     {
       "id": "slice-574f1d44",
-      "index": 149,
+      "index": 151,
       "name": "RuntimeAgentLifecycleCatalog",
       "title": "Runtime Agent Lifecycle Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -71162,7 +71836,7 @@
     },
     {
       "id": "slice-e5b0caa2",
-      "index": 150,
+      "index": 152,
       "name": "ReportRuntimeInstanceConnected",
       "title": "Report Runtime Instance Connected",
       "chapter": "RuntimeAgentOperations",
@@ -71978,7 +72652,7 @@
     },
     {
       "id": "slice-8d5d066d",
-      "index": 151,
+      "index": 153,
       "name": "AgentRuntimeInfrastructureConnectionCatalog",
       "title": "Agent Runtime Infrastructure Connection Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -72178,7 +72852,7 @@
     },
     {
       "id": "slice-ff0c55e7",
-      "index": 152,
+      "index": 154,
       "name": "AgentRuntimeTelemetryLatest",
       "title": "Agent Runtime Telemetry Latest",
       "chapter": "RuntimeAgentOperations",
@@ -72351,7 +73025,7 @@
     },
     {
       "id": "slice-d8eaacb9",
-      "index": 153,
+      "index": 155,
       "name": "ReportAgentRuntimeNodeInventory",
       "title": "Report Agent Runtime Node Inventory",
       "chapter": "RuntimeAgentOperations",
@@ -72819,7 +73493,7 @@
     },
     {
       "id": "slice-6a815e36",
-      "index": 154,
+      "index": 156,
       "name": "AgentRuntimeNodeInventoryCatalog",
       "title": "Agent Runtime Node Inventory Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -73082,7 +73756,7 @@
     },
     {
       "id": "slice-a56419ba",
-      "index": 155,
+      "index": 157,
       "name": "AgentRuntimeNodeResourceLatest",
       "title": "Agent Runtime Node Resource Latest",
       "chapter": "RuntimeAgentOperations",
@@ -73367,7 +74041,7 @@
     },
     {
       "id": "slice-4fcce762",
-      "index": 156,
+      "index": 158,
       "name": "RegisterUserAccount",
       "title": "Register User Account",
       "chapter": "IdentityAccessManagement",
@@ -73521,6 +74195,12 @@
           ],
           "dependencies": [
             {
+              "id": "readmodel-5aa7412c",
+              "direction": "OUTBOUND",
+              "title": "User Organization Membership Directory",
+              "elementType": "READMODEL"
+            },
+            {
               "id": "command-c00913ea",
               "direction": "INBOUND",
               "title": "Register User Account",
@@ -73533,7 +74213,7 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-99fa1b3d",
+              "id": "readmodel-dd0b05e1",
               "direction": "OUTBOUND",
               "title": "User Account Catalog",
               "elementType": "READMODEL"
@@ -73626,7 +74306,7 @@
     },
     {
       "id": "slice-2f4abaeb",
-      "index": 157,
+      "index": 159,
       "name": "DeactivateUserAccount",
       "title": "Deactivate User Account",
       "chapter": "IdentityAccessManagement",
@@ -73729,7 +74409,7 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-99fa1b3d",
+              "id": "readmodel-dd0b05e1",
               "direction": "OUTBOUND",
               "title": "User Account Catalog",
               "elementType": "READMODEL"
@@ -73757,7 +74437,7 @@
     },
     {
       "id": "slice-5da5f728",
-      "index": 158,
+      "index": 160,
       "name": "GenerateUserAccountLoginPassword",
       "title": "Generate User Account Login Password",
       "chapter": "IdentityAccessManagement",
@@ -73898,7 +74578,7 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-99fa1b3d",
+              "id": "readmodel-dd0b05e1",
               "direction": "OUTBOUND",
               "title": "User Account Catalog",
               "elementType": "READMODEL"
@@ -73921,7 +74601,7 @@
     },
     {
       "id": "slice-7b54b84c",
-      "index": 159,
+      "index": 161,
       "name": "RegisterRole",
       "title": "Register Role",
       "chapter": "IdentityAccessManagement",
@@ -74058,7 +74738,7 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-3698b9ff",
+              "id": "readmodel-a27b318f",
               "direction": "OUTBOUND",
               "title": "Role Catalog",
               "elementType": "READMODEL"
@@ -74086,7 +74766,7 @@
     },
     {
       "id": "slice-1bda8ebb",
-      "index": 160,
+      "index": 162,
       "name": "RegisterPermission",
       "title": "Register Permission",
       "chapter": "IdentityAccessManagement",
@@ -74251,7 +74931,7 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-a83bb50a",
+              "id": "readmodel-6baaa1f9",
               "direction": "OUTBOUND",
               "title": "Permission Catalog",
               "elementType": "READMODEL"
@@ -74279,7 +74959,7 @@
     },
     {
       "id": "slice-1d773a87",
-      "index": 161,
+      "index": 163,
       "name": "GrantPermissionToRole",
       "title": "Grant Permission To Role",
       "chapter": "IdentityAccessManagement",
@@ -74304,12 +74984,18 @@
               "optional": false,
               "idAttribute": true,
               "generated": false,
-              "technicalAttribute": true,
+              "technicalAttribute": false,
               "query": false,
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoleCatalog.roleId"
+                ]
+              }
             },
             {
               "name": "roleCode",
@@ -74318,12 +75004,18 @@
               "optional": false,
               "idAttribute": false,
               "generated": false,
-              "technicalAttribute": true,
+              "technicalAttribute": false,
               "query": false,
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RoleCatalog.roleCode"
+                ]
+              }
             },
             {
               "name": "permissionCodes",
@@ -74394,9 +75086,9 @@
               "portOutput": false
             },
             {
-              "name": "permissionCodes",
+              "name": "permissionCode",
               "type": "String",
-              "cardinality": "Multiple",
+              "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
               "generated": false,
@@ -74416,12 +75108,65 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-3698b9ff",
+              "id": "readmodel-d509ddb8",
               "direction": "OUTBOUND",
-              "title": "Role Catalog",
+              "title": "Role Permission Grant Catalog",
               "elementType": "READMODEL"
             }
           ]
+        },
+        {
+          "id": "event-32984364",
+          "name": "PermissionRevokedFromRole",
+          "title": "Permission Revoked From Role",
+          "type": "EVENT",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "Grant Permission To Role",
+          "fields": [
+            {
+              "name": "roleId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roleCode",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "permissionCode",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": []
         }
       ],
       "readmodels": [],
@@ -74435,11 +75180,16 @@
           "title": "Identity Administrator"
         }
       ],
-      "hotspots": []
+      "hotspots": [],
+      "stateChange": {
+        "event": "PermissionGrantedToRole",
+        "eventId": "event-4d13df38",
+        "to": "Registered"
+      }
     },
     {
       "id": "slice-0766b926",
-      "index": 162,
+      "index": 164,
       "name": "AssignRoleToUser",
       "title": "Assign Role To User",
       "chapter": "IdentityAccessManagement",
@@ -74464,12 +75214,18 @@
               "optional": false,
               "idAttribute": true,
               "generated": false,
-              "technicalAttribute": true,
+              "technicalAttribute": false,
               "query": false,
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "UserAccountCatalog.userAccountId"
+                ]
+              }
             },
             {
               "name": "roleCodes",
@@ -74526,9 +75282,9 @@
               "portOutput": false
             },
             {
-              "name": "roleCodes",
+              "name": "roleCode",
               "type": "String",
-              "cardinality": "Multiple",
+              "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
               "generated": false,
@@ -74548,12 +75304,51 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-99fa1b3d",
+              "id": "readmodel-55ee69e6",
               "direction": "OUTBOUND",
-              "title": "User Account Catalog",
+              "title": "User Role Assignment Catalog",
               "elementType": "READMODEL"
             }
           ]
+        },
+        {
+          "id": "event-a9a85c5e",
+          "name": "RoleUnassignedFromUser",
+          "title": "Role Unassigned From User",
+          "type": "EVENT",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "Assign Role To User",
+          "fields": [
+            {
+              "name": "userAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roleCode",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": []
         }
       ],
       "readmodels": [],
@@ -74567,13 +75362,18 @@
           "title": "Identity Administrator"
         }
       ],
-      "hotspots": []
+      "hotspots": [],
+      "stateChange": {
+        "event": "RoleAssignedToUser",
+        "eventId": "event-174883bc",
+        "to": "Active"
+      }
     },
     {
-      "id": "slice-584fdb91",
-      "index": 163,
-      "name": "IdentityAccessCatalogs",
-      "title": "Identity Access Catalogs",
+      "id": "slice-425842d5",
+      "index": 165,
+      "name": "UserAccountCatalogs",
+      "title": "User Account Catalogs",
       "chapter": "IdentityAccessManagement",
       "context": "IdentityAccessManagement",
       "tags": [],
@@ -74584,12 +75384,12 @@
       "events": [],
       "readmodels": [
         {
-          "id": "readmodel-99fa1b3d",
+          "id": "readmodel-dd0b05e1",
           "name": "UserAccountCatalog",
           "title": "User Account Catalog",
           "type": "READMODEL",
           "modelContext": "IdentityAccessManagement",
-          "slice": "Identity Access Catalogs",
+          "slice": "User Account Catalogs",
           "fields": [
             {
               "name": "userAccountId",
@@ -74660,20 +75460,6 @@
               "uploadFile": false,
               "file": false,
               "portOutput": false
-            },
-            {
-              "name": "roleCodes",
-              "type": "String",
-              "cardinality": "Multiple",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
             }
           ],
           "dependencies": [
@@ -74694,23 +75480,44 @@
               "direction": "INBOUND",
               "title": "User Account Deactivated",
               "elementType": "EVENT"
-            },
-            {
-              "id": "event-174883bc",
-              "direction": "INBOUND",
-              "title": "Role Assigned To User",
-              "elementType": "EVENT"
             }
           ],
           "listElement": true
-        },
+        }
+      ],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [
         {
-          "id": "readmodel-3698b9ff",
+          "id": "actor-55595ba0",
+          "name": "IdentityAdministrator",
+          "title": "Identity Administrator"
+        }
+      ],
+      "hotspots": []
+    },
+    {
+      "id": "slice-10714181",
+      "index": 166,
+      "name": "RoleCatalogs",
+      "title": "Role Catalogs",
+      "chapter": "IdentityAccessManagement",
+      "context": "IdentityAccessManagement",
+      "tags": [],
+      "concepts": [
+        "Role"
+      ],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-a27b318f",
           "name": "RoleCatalog",
           "title": "Role Catalog",
           "type": "READMODEL",
           "modelContext": "IdentityAccessManagement",
-          "slice": "Identity Access Catalogs",
+          "slice": "Role Catalogs",
           "fields": [
             {
               "name": "roleId",
@@ -74753,20 +75560,6 @@
               "uploadFile": false,
               "file": false,
               "portOutput": false
-            },
-            {
-              "name": "permissionCodes",
-              "type": "String",
-              "cardinality": "Multiple",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
             }
           ],
           "dependencies": [
@@ -74775,23 +75568,44 @@
               "direction": "INBOUND",
               "title": "Role Registered",
               "elementType": "EVENT"
-            },
-            {
-              "id": "event-4d13df38",
-              "direction": "INBOUND",
-              "title": "Permission Granted To Role",
-              "elementType": "EVENT"
             }
           ],
           "listElement": true
-        },
+        }
+      ],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [
         {
-          "id": "readmodel-a83bb50a",
+          "id": "actor-55595ba0",
+          "name": "IdentityAdministrator",
+          "title": "Identity Administrator"
+        }
+      ],
+      "hotspots": []
+    },
+    {
+      "id": "slice-9f1bec7a",
+      "index": 167,
+      "name": "PermissionCatalogs",
+      "title": "Permission Catalogs",
+      "chapter": "IdentityAccessManagement",
+      "context": "IdentityAccessManagement",
+      "tags": [],
+      "concepts": [
+        "Permission"
+      ],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-6baaa1f9",
           "name": "PermissionCatalog",
           "title": "Permission Catalog",
           "type": "READMODEL",
           "modelContext": "IdentityAccessManagement",
-          "slice": "Identity Access Catalogs",
+          "slice": "Permission Catalogs",
           "fields": [
             {
               "name": "permissionId",
@@ -74855,6 +75669,289 @@
               "id": "event-6a7d7146",
               "direction": "INBOUND",
               "title": "Permission Registered",
+              "elementType": "EVENT"
+            }
+          ],
+          "listElement": true
+        }
+      ],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [
+        {
+          "id": "actor-55595ba0",
+          "name": "IdentityAdministrator",
+          "title": "Identity Administrator"
+        }
+      ],
+      "hotspots": []
+    },
+    {
+      "id": "slice-33855446",
+      "index": 168,
+      "name": "UserRoleAssignmentCatalog",
+      "title": "User Role Assignment Catalog",
+      "chapter": "IdentityAccessManagement",
+      "context": "IdentityAccessManagement",
+      "tags": [],
+      "concepts": [
+        "UserRoleAssignment"
+      ],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-55ee69e6",
+          "name": "UserRoleAssignmentCatalog",
+          "title": "User Role Assignment Catalog",
+          "type": "READMODEL",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "User Role Assignment Catalog",
+          "fields": [
+            {
+              "name": "userAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "username",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "UserAccountCatalog.username"
+                ],
+                "lookup": {
+                  "key": "userAccountId",
+                  "cacheProjection": "UserAccountCatalog",
+                  "sourceField": "username",
+                  "targetField": "username",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
+              "name": "roleCode",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roleName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RoleCatalog.roleName"
+                ],
+                "lookup": {
+                  "key": "roleCode",
+                  "cacheProjection": "RoleCatalog",
+                  "sourceField": "roleName",
+                  "targetField": "roleName",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-174883bc",
+              "direction": "INBOUND",
+              "title": "Role Assigned To User",
+              "elementType": "EVENT"
+            }
+          ],
+          "listElement": true
+        }
+      ],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [
+        {
+          "id": "actor-55595ba0",
+          "name": "IdentityAdministrator",
+          "title": "Identity Administrator"
+        }
+      ],
+      "hotspots": []
+    },
+    {
+      "id": "slice-4d6e3a7f",
+      "index": 169,
+      "name": "RolePermissionGrantCatalog",
+      "title": "Role Permission Grant Catalog",
+      "chapter": "IdentityAccessManagement",
+      "context": "IdentityAccessManagement",
+      "tags": [],
+      "concepts": [
+        "RolePermissionGrant"
+      ],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-d509ddb8",
+          "name": "RolePermissionGrantCatalog",
+          "title": "Role Permission Grant Catalog",
+          "type": "READMODEL",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "Role Permission Grant Catalog",
+          "fields": [
+            {
+              "name": "roleId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roleCode",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RoleCatalog.roleCode"
+                ],
+                "lookup": {
+                  "key": "roleId",
+                  "cacheProjection": "RoleCatalog",
+                  "sourceField": "roleCode",
+                  "targetField": "roleCode",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
+              "name": "roleName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RoleCatalog.roleName"
+                ],
+                "lookup": {
+                  "key": "roleId",
+                  "cacheProjection": "RoleCatalog",
+                  "sourceField": "roleName",
+                  "targetField": "roleName",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
+              "name": "permissionCode",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "permissionName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "PermissionCatalog.permissionName"
+                ],
+                "lookup": {
+                  "key": "permissionCode",
+                  "cacheProjection": "PermissionCatalog",
+                  "sourceField": "permissionName",
+                  "targetField": "permissionName",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-4d13df38",
+              "direction": "INBOUND",
+              "title": "Permission Granted To Role",
               "elementType": "EVENT"
             }
           ],

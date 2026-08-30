@@ -3,22 +3,19 @@ package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
 
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.UserAccountCatalogReadModel
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.UserAccountCatalogReadModelCriteria
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.UserAccountCatalogReadModelProjection
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.UserAccountCatalogReadModelRepository
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.toReadModel
+import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModel
+import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelCriteria
+import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelProjection
+import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelRepository
+import tech.medo.identityaccessmanagement.useraccountcatalogs.toReadModel
 
 @Repository
 class JpaUserAccountCatalogReadModelRepository(
     private val jpaRepository: SpringDataUserAccountCatalogReadModelRepository,
-    private val queryService: UserAccountCatalogReadModelQueryService,
-    private val objectMapper: ObjectMapper
+    private val queryService: UserAccountCatalogReadModelQueryService
 ) : UserAccountCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<UserAccountCatalogReadModel> =
         findAllByCriteria(null, pageable)
@@ -43,7 +40,6 @@ class JpaUserAccountCatalogReadModelRepository(
             it.providerSubject = this@toProjection.providerSubject
             it.passwordHash = this@toProjection.passwordHash
             it.active = this@toProjection.active
-            it.roleCodes = this@toProjection.roleCodes?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -59,7 +55,6 @@ class JpaUserAccountCatalogReadModelRepository(
             it.providerSubject = this@toEntity.providerSubject
             it.passwordHash = this@toEntity.passwordHash
             it.active = this@toEntity.active
-            it.roleCodes = objectMapper.writeValueAsString(this@toEntity.roleCodes)
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

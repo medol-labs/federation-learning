@@ -7,7 +7,7 @@ import java.util.UUID;
 
 
 @Event
-data class RoleAssignedToUserEvent(
+data class RoleUnassignedFromUserEvent(
     @EventTag(key = "userAccountId")
     val userAccountId: UUID,
     val roleCode: String

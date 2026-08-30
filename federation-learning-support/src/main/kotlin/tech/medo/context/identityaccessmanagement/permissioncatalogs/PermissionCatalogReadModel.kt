@@ -1,4 +1,4 @@
-package tech.medo.identityaccessmanagement.identityaccesscatalogs
+package tech.medo.identityaccessmanagement.permissioncatalogs
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

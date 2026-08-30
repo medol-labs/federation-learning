@@ -16,8 +16,6 @@ class RoleCatalogReadModelEntity : MetadataProjection {
     var roleId: UUID? = null
     var roleCode: String? = null
     var roleName: String? = null
-    @Column(columnDefinition = "text")
-    var permissionCodes: String? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

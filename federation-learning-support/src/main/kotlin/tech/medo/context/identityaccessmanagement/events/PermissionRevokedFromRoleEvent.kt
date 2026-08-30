@@ -7,7 +7,7 @@ import java.util.UUID;
 
 
 @Event
-data class PermissionGrantedToRoleEvent(
+data class PermissionRevokedFromRoleEvent(
     val roleId: UUID,
     val roleCode: String,
     val permissionCode: String,

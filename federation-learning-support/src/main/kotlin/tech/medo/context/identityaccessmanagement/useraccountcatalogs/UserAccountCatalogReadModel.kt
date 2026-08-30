@@ -1,4 +1,4 @@
-package tech.medo.identityaccessmanagement.identityaccesscatalogs
+package tech.medo.identityaccessmanagement.useraccountcatalogs
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -26,7 +26,6 @@ class UserAccountCatalogReadModelProjection : MetadataProjection {
     var providerSubject: String? = null
     var passwordHash: String? = null
     var active: Boolean? = null
-    var roleCodes: List<String> = emptyList()
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -42,7 +41,6 @@ fun UserAccountCatalogReadModelProjection.toReadModel(): UserAccountCatalogReadM
     providerSubject = providerSubject,
     passwordHash = passwordHash,
     active = active,
-    roleCodes = roleCodes,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -65,7 +63,6 @@ data class UserAccountCatalogReadModel(
     val providerSubject: String?,
     val passwordHash: String?,
     val active: Boolean?,
-    val roleCodes: List<String>,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

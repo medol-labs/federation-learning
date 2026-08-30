@@ -3,22 +3,19 @@ package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
 
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModel
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModelCriteria
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModelProjection
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.RoleCatalogReadModelRepository
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.toReadModel
+import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModel
+import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModelCriteria
+import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModelProjection
+import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModelRepository
+import tech.medo.identityaccessmanagement.rolecatalogs.toReadModel
 
 @Repository
 class JpaRoleCatalogReadModelRepository(
     private val jpaRepository: SpringDataRoleCatalogReadModelRepository,
-    private val queryService: RoleCatalogReadModelQueryService,
-    private val objectMapper: ObjectMapper
+    private val queryService: RoleCatalogReadModelQueryService
 ) : RoleCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RoleCatalogReadModel> =
         findAllByCriteria(null, pageable)
@@ -41,7 +38,6 @@ class JpaRoleCatalogReadModelRepository(
             it.roleId = this@toProjection.roleId
             it.roleCode = this@toProjection.roleCode
             it.roleName = this@toProjection.roleName
-            it.permissionCodes = this@toProjection.permissionCodes?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -55,7 +51,6 @@ class JpaRoleCatalogReadModelRepository(
             it.roleId = this@toEntity.roleId
             it.roleCode = this@toEntity.roleCode
             it.roleName = this@toEntity.roleName
-            it.permissionCodes = objectMapper.writeValueAsString(this@toEntity.permissionCodes)
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

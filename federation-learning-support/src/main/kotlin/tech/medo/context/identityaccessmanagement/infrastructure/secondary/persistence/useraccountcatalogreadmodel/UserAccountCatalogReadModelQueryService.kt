@@ -11,15 +11,14 @@ import tech.jhipster.service.QueryService
 import java.util.function.Function
 import java.util.UUID;
 
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.UserAccountCatalogReadModel
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.UserAccountCatalogReadModelCriteria
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.UserAccountCatalogReadModelProjection
-import tech.medo.identityaccessmanagement.identityaccesscatalogs.toReadModel
+import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModel
+import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelCriteria
+import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelProjection
+import tech.medo.identityaccessmanagement.useraccountcatalogs.toReadModel
 
 @Service
 class UserAccountCatalogReadModelQueryService(
-    private val repository: SpringDataUserAccountCatalogReadModelRepository,
-    private val objectMapper: com.fasterxml.jackson.databind.ObjectMapper
+    private val repository: SpringDataUserAccountCatalogReadModelRepository
 ) : QueryService<UserAccountCatalogReadModelEntity>() {
     fun findByCriteria(criteria: UserAccountCatalogReadModelCriteria?, pageable: Pageable): Page<UserAccountCatalogReadModel> =
         repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
@@ -43,7 +42,6 @@ class UserAccountCatalogReadModelQueryService(
             it.providerSubject = this@toProjection.providerSubject
             it.passwordHash = this@toProjection.passwordHash
             it.active = this@toProjection.active
-            it.roleCodes = this@toProjection.roleCodes?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
