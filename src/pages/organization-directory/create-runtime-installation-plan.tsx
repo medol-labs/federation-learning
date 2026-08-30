@@ -28,7 +28,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateRuntimeInstallationPlanCommandSchema, type CreateRuntimeInstallationPlanCommandInput } from "@/domain/schemas";
-import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
+import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
 export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
   const t = useTranslate();

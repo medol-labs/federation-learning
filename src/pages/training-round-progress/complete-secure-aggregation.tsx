@@ -30,7 +30,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CompleteSecureAggregationCommandSchema, type CompleteSecureAggregationCommandInput } from "@/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
+export const TrainingRoundProgressCompleteSecureAggregation = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -40,37 +40,37 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
     roundId: searchParams.get("roundId") ?? undefined,
     roundNumber: (() => { const value = searchParams.get("roundNumber"); return value === null ? undefined : Number(value); })(),
-    secureAggregationSessionId: searchParams.get("secureAggregationSessionId") ?? undefined,
     aggregatedModelId: searchParams.get("aggregatedModelId") ?? undefined,
-    modelFormat: searchParams.get("modelFormat") ?? undefined,
-    modelArtifactDigest: searchParams.get("modelArtifactDigest") ?? undefined,
     trainingJobId: searchParams.get("trainingJobId") ?? undefined,
+    secureAggregationSessionId: searchParams.get("secureAggregationSessionId") ?? undefined,
     aggregatedModelArtifactUri: searchParams.get("aggregatedModelArtifactUri") ?? undefined,
     aggregatedModelRegistryRef: searchParams.get("aggregatedModelRegistryRef") ?? undefined,
+    modelFormat: searchParams.get("modelFormat") ?? undefined,
+    modelArtifactDigest: searchParams.get("modelArtifactDigest") ?? undefined,
     aggregatedModelSignatureUri: searchParams.get("aggregatedModelSignatureUri") ?? undefined,
   } as Partial<CompleteSecureAggregationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<CompleteSecureAggregationCommandInput, CompleteSecureAggregationCommandInput>({
-    resource: "secure_aggregation_session_catalog",
+    resource: "training_round_progress",
     command: "completeSecureAggregation",
     aggregateId: id?.toString(),
     redirect: "list",
     dataProviderName: "federation-learning-platform",
     queryDataProviderName: "federation-learning-platform",
     meta: {
-      tableName: "secure_aggregation_session_catalog_read_model_entity",
-      idField: "secureAggregationSessionId",
-      label: t("resources.secure_aggregation_session_catalog.label", "Secure Aggregation Session Catalog"),
+      tableName: "training_round_progress_read_model_entity",
+      idField: "trainingJobId",
+      label: t("resources.training_round_progress.label", "Training Round Progress"),
       aggregateRoute: "traininground",
-      queryRoute: "secureaggregationsessioncatalog",
+      queryRoute: "trainingroundprogress",
       dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
-      tableName: "secure_aggregation_session_catalog_read_model_entity",
-      idField: "secureAggregationSessionId",
-      label: t("resources.secure_aggregation_session_catalog.label", "Secure Aggregation Session Catalog"),
-      aggregateRoute: "secureaggregationsession",
-      queryRoute: "secureaggregationsessioncatalog",
+      tableName: "training_round_progress_read_model_entity",
+      idField: "trainingJobId",
+      label: t("resources.training_round_progress.label", "Training Round Progress"),
+      aggregateRoute: "traininground",
+      queryRoute: "trainingroundprogress",
       dataProviderName: "federation-learning-platform",
     },
     formProps: {
@@ -84,13 +84,13 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
       ...defaultValues,
       ...values,
     });
-    navigate("/secure-aggregation-session-catalog");
+    navigate("/training-round-progress");
     return result;
   }
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.label", "Complete Secure Aggregation")} />
+      <CreateViewHeader title={t("resources.training_round_progress.commands.completeSecureAggregation.label", "Complete Secure Aggregation")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("CompleteSecureAggregation validation failed", errors))} className="space-y-8">
           {defaultValues.trainingJobId !== undefined && defaultValues.trainingJobId !== null ? (
@@ -102,7 +102,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
             rules={{ required: "Training Run Configuration Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.trainingRunConfigurationId.label", "Training Run Configuration Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.completeSecureAggregation.fields.trainingRunConfigurationId.label", "Training Run Configuration Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="training_run_configuration_catalog"
@@ -111,10 +111,10 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.trainingRunConfigurationId.placeholder", "Select Training Run Configuration Id")}
+                  placeholder={t("resources.training_round_progress.commands.completeSecureAggregation.fields.trainingRunConfigurationId.placeholder", "Select Training Run Configuration Id")}
                   meta={{
                     idField: "trainingRunConfigurationId",
-                    label: t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.trainingRunConfigurationId.label", "Training Run Configuration Catalog"),
+                    label: t("resources.training_round_progress.commands.completeSecureAggregation.fields.trainingRunConfigurationId.label", "Training Run Configuration Catalog"),
                     aggregateRoute: "trainingrunconfiguration",
                     queryRoute: "trainingrunconfigurationcatalog",
                   }}
@@ -129,7 +129,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
             rules={{ required: "Feature Schema Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.featureSchemaId.label", "Feature Schema Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.completeSecureAggregation.fields.featureSchemaId.label", "Feature Schema Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="feature_schema_catalog"
@@ -138,10 +138,10 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
                   optionValue="featureSchemaId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
+                  placeholder={t("resources.training_round_progress.commands.completeSecureAggregation.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
                   meta={{
                     idField: "featureSchemaId",
-                    label: t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.featureSchemaId.label", "Feature Schema Catalog"),
+                    label: t("resources.training_round_progress.commands.completeSecureAggregation.fields.featureSchemaId.label", "Feature Schema Catalog"),
                     aggregateRoute: "featureschema",
                     queryRoute: "featureschemacatalog",
                   }}
@@ -156,7 +156,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
             rules={{ required: "Round Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.roundId.label", "Round Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.completeSecureAggregation.fields.roundId.label", "Round Id")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -174,7 +174,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
             rules={{ required: "Round Number is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.roundNumber.label", "Round Number")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.completeSecureAggregation.fields.roundNumber.label", "Round Number")}</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -193,7 +193,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
             rules={{ required: "Secure Aggregation Session Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.secureAggregationSessionId.label", "Secure Aggregation Session Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.completeSecureAggregation.fields.secureAggregationSessionId.label", "Secure Aggregation Session Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="secure_aggregation_session_catalog"
@@ -202,10 +202,10 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
                   optionValue="secureAggregationSessionId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.secureAggregationSessionId.placeholder", "Select Secure Aggregation Session Id")}
+                  placeholder={t("resources.training_round_progress.commands.completeSecureAggregation.fields.secureAggregationSessionId.placeholder", "Select Secure Aggregation Session Id")}
                   meta={{
                     idField: "secureAggregationSessionId",
-                    label: t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.secureAggregationSessionId.label", "Secure Aggregation Session Catalog"),
+                    label: t("resources.training_round_progress.commands.completeSecureAggregation.fields.secureAggregationSessionId.label", "Secure Aggregation Session Catalog"),
                     aggregateRoute: "secureaggregationsession",
                     queryRoute: "secureaggregationsessioncatalog",
                   }}
@@ -220,7 +220,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
             rules={{ required: "Aggregated Model Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.aggregatedModelId.label", "Aggregated Model Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.completeSecureAggregation.fields.aggregatedModelId.label", "Aggregated Model Id")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -238,7 +238,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
             rules={{ required: "Aggregated Model Artifact Uri is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.aggregatedModelArtifactUri.label", "Aggregated Model Artifact Uri")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.completeSecureAggregation.fields.aggregatedModelArtifactUri.label", "Aggregated Model Artifact Uri")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -256,7 +256,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
             rules={{ required: "Aggregated Model Registry Ref is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.aggregatedModelRegistryRef.label", "Aggregated Model Registry Ref")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.completeSecureAggregation.fields.aggregatedModelRegistryRef.label", "Aggregated Model Registry Ref")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -274,7 +274,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
             rules={{ required: "Model Format is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.modelFormat.label", "Model Format")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.completeSecureAggregation.fields.modelFormat.label", "Model Format")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -292,7 +292,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
             rules={{ required: "Model Artifact Digest is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.modelArtifactDigest.label", "Model Artifact Digest")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.completeSecureAggregation.fields.modelArtifactDigest.label", "Model Artifact Digest")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -310,7 +310,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
             rules={{}}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.aggregatedModelSignatureUri.label", "Aggregated Model Signature Uri")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.completeSecureAggregation.fields.aggregatedModelSignatureUri.label", "Aggregated Model Signature Uri")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}

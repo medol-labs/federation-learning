@@ -30,40 +30,43 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RecordRuntimeConnectionEstablishedCommandSchema, type RecordRuntimeConnectionEstablishedCommandInput } from "@/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionEstablished = () => {
+export const RuntimeInfrastructureAccessViewRecordRuntimeConnectionEstablished = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
     runtimeAgentId: searchParams.get("runtimeAgentId") ?? undefined,
+    agentInstallMode: searchParams.get("agentInstallMode") ?? undefined,
+    organizationId: searchParams.get("organizationId") ?? undefined,
+    runtimeName: searchParams.get("runtimeName") ?? undefined,
     runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
     runtimeAgentEndpoint: searchParams.get("runtimeAgentEndpoint") ?? undefined,
     endpointScope: searchParams.get("endpointScope") ?? undefined,
   } as Partial<RecordRuntimeConnectionEstablishedCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RecordRuntimeConnectionEstablishedCommandInput, RecordRuntimeConnectionEstablishedCommandInput>({
-    resource: "agent_runtime_infrastructure_connection_catalog",
+    resource: "runtime_infrastructure_access_view",
     command: "recordRuntimeConnectionEstablished",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-runtime-agent",
-    queryDataProviderName: "federation-learning-runtime-agent",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
-      tableName: "agent_runtime_infrastructure_connection_catalog_read_model_entity",
+      tableName: "runtime_infrastructure_access_view_read_model_entity",
       idField: "runtimeInfrastructureId",
-      label: t("resources.agent_runtime_infrastructure_connection_catalog.label", "Agent Runtime Infrastructure Connection Catalog"),
+      label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
       aggregateRoute: "runtimeinfrastructure",
-      queryRoute: "agentruntimeinfrastructureconnectioncatalog",
-      dataProviderName: "federation-learning-runtime-agent",
+      queryRoute: "runtimeinfrastructureaccessview",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
-      tableName: "agent_runtime_infrastructure_connection_catalog_read_model_entity",
+      tableName: "runtime_infrastructure_access_view_read_model_entity",
       idField: "runtimeInfrastructureId",
-      label: t("resources.agent_runtime_infrastructure_connection_catalog.label", "Agent Runtime Infrastructure Connection Catalog"),
-      aggregateRoute: "agentruntimeinfrastructureconnection",
-      queryRoute: "agentruntimeinfrastructureconnectioncatalog",
-      dataProviderName: "federation-learning-runtime-agent",
+      label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
+      aggregateRoute: "runtimeinfrastructure",
+      queryRoute: "runtimeinfrastructureaccessview",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -76,13 +79,13 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
       ...defaultValues,
       ...values,
     });
-    navigate("/agent-runtime-infrastructure-connection-catalog");
+    navigate("/runtime-infrastructure-access-view");
     return result;
   }
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.label", "Record Runtime Connection Established")} />
+      <CreateViewHeader title={t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.label", "Record Runtime Connection Established")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RecordRuntimeConnectionEstablished validation failed", errors))} className="space-y-8">
           {defaultValues.runtimeInfrastructureId !== undefined && defaultValues.runtimeInfrastructureId !== null ? (
@@ -94,7 +97,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
             rules={{ required: "Runtime Agent Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.label", "Runtime Agent Id")}</FormLabel>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.label", "Runtime Agent Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="runtime_agent_endpoint_catalog"
@@ -103,10 +106,10 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
                   optionValue="runtimeAgentId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.placeholder", "Select Runtime Agent Id")}
+                  placeholder={t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.placeholder", "Select Runtime Agent Id")}
                   meta={{
                     idField: "runtimeAgentId",
-                    label: t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.label", "Runtime Agent Endpoint Catalog"),
+                    label: t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.label", "Runtime Agent Endpoint Catalog"),
                     aggregateRoute: "runtimeinfrastructure",
                     queryRoute: "runtimeagentendpointcatalog",
                   }}
@@ -121,7 +124,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
             rules={{ required: "Agent Install Mode is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.label", "Agent Install Mode")}</FormLabel>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.label", "Agent Install Mode")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
@@ -130,13 +133,13 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
                   optionValue="valueCode"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.placeholder", "Select Agent Install Mode")}
+                  placeholder={t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.placeholder", "Select Agent Install Mode")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_INSTALL_MODE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
-                    label: t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.label", "Dictionary Value Catalog"),
+                    label: t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.label", "Dictionary Value Catalog"),
                     aggregateRoute: "dictionaryvalue",
                     queryRoute: "dictionaryvaluecatalog",
                     queryFields: ["dictionaryCode","active","state"],
@@ -152,7 +155,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
             rules={{ required: "Organization Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.organizationId.label", "Organization Id")}</FormLabel>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.organizationId.label", "Organization Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="organization_directory"
@@ -161,10 +164,10 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
                   optionValue="organizationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.organizationId.placeholder", "Select Organization Id")}
+                  placeholder={t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.organizationId.placeholder", "Select Organization Id")}
                   meta={{
                     idField: "organizationId",
-                    label: t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.organizationId.label", "Organization Directory"),
+                    label: t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.organizationId.label", "Organization Directory"),
                     aggregateRoute: "organization",
                     queryRoute: "organizationdirectory",
                   }}
@@ -179,7 +182,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
             rules={{ required: "Runtime Name is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeName.label", "Runtime Name")}</FormLabel>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.runtimeName.label", "Runtime Name")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -197,7 +200,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
             rules={{ required: "Runtime Agent Endpoint is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentEndpoint.label", "Runtime Agent Endpoint")}</FormLabel>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentEndpoint.label", "Runtime Agent Endpoint")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -215,7 +218,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
             rules={{ required: "Endpoint Scope is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.endpointScope.label", "Endpoint Scope")}</FormLabel>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.endpointScope.label", "Endpoint Scope")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="dictionary_value_catalog"
@@ -224,13 +227,13 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
                   optionValue="valueCode"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.endpointScope.placeholder", "Select Endpoint Scope")}
+                  placeholder={t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.endpointScope.placeholder", "Select Endpoint Scope")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_ENDPOINT_SCOPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
                     idField: "dictionaryValueId",
-                    label: t("resources.agent_runtime_infrastructure_connection_catalog.commands.recordRuntimeConnectionEstablished.fields.endpointScope.label", "Dictionary Value Catalog"),
+                    label: t("resources.runtime_infrastructure_access_view.commands.recordRuntimeConnectionEstablished.fields.endpointScope.label", "Dictionary Value Catalog"),
                     aggregateRoute: "dictionaryvalue",
                     queryRoute: "dictionaryvaluecatalog",
                     queryFields: ["dictionaryCode","active","state"],

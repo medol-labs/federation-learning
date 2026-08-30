@@ -20,6 +20,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { MoreHorizontal } from "lucide-react";
 
 type RoleCatalogRecord = {
+  roleId: string;
   roleCode: string;
   roleName: string;
   permissionCodes: string[];
@@ -66,6 +67,20 @@ export const RoleCatalogList = () => {
         size: 32,
         enableSorting: false,
         enableHiding: false,
+      }),
+      columnHelper.accessor("roleId", {
+        id: "roleId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.role_catalog.fields.roleId.label", "Role Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.role_catalog.fields.roleId.label", "Role Id"),
+          placeholder: "Enter Role Id",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roleCode", {
         id: "roleCode",
@@ -121,8 +136,21 @@ export const RoleCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "", []) && (
                 <DropdownMenuItem>
-                  <ShowButton variant="ghost" recordItemId={row.original.roleCode} size="sm" />
+                  <CommandButton
+                    variant="ghost"
+                    command="grantPermissionToRole"
+                    recordItemId={row.original.roleId}
+                    size="sm"
+                    query={{
+                      permissionCodes: row.original.permissionCodes,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
+                <DropdownMenuItem>
+                  <ShowButton variant="ghost" recordItemId={row.original.roleId} size="sm" />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -139,15 +167,15 @@ export const RoleCatalogList = () => {
     initialState: {
       columnPinning: { right: ["actions"], left: ["select"] },
     },
-    getRowId: (row) => String(row.roleCode),
+    getRowId: (row) => String(row.roleId),
     refineCoreProps: {
       dataProviderName: "federation-learning-support",
       syncWithLocation: false,
       meta: {
         tableName: "role_catalog_read_model_entity",
-        idField: "roleCode",
-        idFields: ["roleCode"],
-        queryFields: ["roleCode","roleName"],
+        idField: "roleId",
+        idFields: ["roleId"],
+        queryFields: ["roleId","roleCode","roleName"],
         label: t("resources.role_catalog.label", "Role Catalog"),
         aggregateRoute: "useraccount",
         queryRoute: "rolecatalog",

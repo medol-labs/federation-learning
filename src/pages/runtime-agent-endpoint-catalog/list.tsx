@@ -228,6 +228,24 @@ export const RuntimeAgentEndpointCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="recordRuntimeConnectionEstablished"
+                    recordItemId={row.original.runtimeAgentId}
+                    size="sm"
+                    query={{
+                      runtimeAgentId: row.original.runtimeAgentId,
+                      organizationId: row.original.organizationId,
+                      runtimeName: row.original.runtimeName,
+                      runtimeAgentEndpoint: row.original.runtimeAgentEndpoint,
+                      endpointScope: row.original.endpointScope,
+                      runtimeInfrastructureId: row.original.runtimeInfrastructureId,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.runtimeAgentId} size="sm" />
                 </DropdownMenuItem>

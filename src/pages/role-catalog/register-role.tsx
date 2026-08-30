@@ -48,7 +48,7 @@ export const RoleCatalogRegisterRole = () => {
     queryDataProviderName: "federation-learning-support",
     meta: {
       tableName: "role_catalog_read_model_entity",
-      idField: "roleCode",
+      idField: "roleId",
       label: t("resources.role_catalog.label", "Role Catalog"),
       aggregateRoute: "role",
       queryRoute: "rolecatalog",
@@ -56,7 +56,7 @@ export const RoleCatalogRegisterRole = () => {
     },
     queryMeta: {
       tableName: "role_catalog_read_model_entity",
-      idField: "roleCode",
+      idField: "roleId",
       label: t("resources.role_catalog.label", "Role Catalog"),
       aggregateRoute: "useraccount",
       queryRoute: "rolecatalog",

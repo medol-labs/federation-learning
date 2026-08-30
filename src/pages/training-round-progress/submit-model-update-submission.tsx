@@ -30,54 +30,54 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitModelUpdateSubmissionCommandSchema, type SubmitModelUpdateSubmissionCommandInput } from "@/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
-export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
+export const TrainingRoundProgressSubmitModelUpdateSubmission = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
-    executionSessionId: searchParams.get("executionSessionId") ?? undefined,
-    executionPlanId: searchParams.get("executionPlanId") ?? undefined,
     trainingJobId: searchParams.get("trainingJobId") ?? undefined,
     trainingRunConfigurationId: searchParams.get("trainingRunConfigurationId") ?? undefined,
     roundId: searchParams.get("roundId") ?? undefined,
+    featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
+    secureAggregationRequired: (() => { const value = searchParams.get("secureAggregationRequired"); return value === null ? undefined : value === "true"; })(),
+    executionSessionId: searchParams.get("executionSessionId") ?? undefined,
+    executionPlanId: searchParams.get("executionPlanId") ?? undefined,
     roundExecutionId: searchParams.get("roundExecutionId") ?? undefined,
     runtimeId: searchParams.get("runtimeId") ?? undefined,
-    featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-    updateArtifactId: searchParams.get("updateArtifactId") ?? undefined,
-    artifactRef: searchParams.get("artifactRef") ?? undefined,
-    artifactDigest: searchParams.get("artifactDigest") ?? undefined,
-    trainingLoss: (() => { const value = searchParams.get("trainingLoss"); return value === null ? undefined : Number(value); })(),
-    secureAggregationRequired: (() => { const value = searchParams.get("secureAggregationRequired"); return value === null ? undefined : value === "true"; })(),
     secureAggregationSessionId: searchParams.get("secureAggregationSessionId") ?? undefined,
     encryptionScheme: searchParams.get("encryptionScheme") ?? undefined,
     publicKeyVersion: searchParams.get("publicKeyVersion") ?? undefined,
     localModelId: searchParams.get("localModelId") ?? undefined,
+    updateArtifactId: searchParams.get("updateArtifactId") ?? undefined,
+    artifactRef: searchParams.get("artifactRef") ?? undefined,
+    artifactDigest: searchParams.get("artifactDigest") ?? undefined,
     updateProtectionType: searchParams.get("updateProtectionType") ?? undefined,
+    trainingLoss: (() => { const value = searchParams.get("trainingLoss"); return value === null ? undefined : Number(value); })(),
   } as Partial<SubmitModelUpdateSubmissionCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<SubmitModelUpdateSubmissionCommandInput, SubmitModelUpdateSubmissionCommandInput>({
-    resource: "round_execution_catalog",
+    resource: "training_round_progress",
     command: "submitModelUpdateSubmission",
     aggregateId: id?.toString(),
     redirect: "list",
-    dataProviderName: "federation-learning-runtime-agent",
-    queryDataProviderName: "federation-learning-runtime-agent",
+    dataProviderName: "federation-learning-platform",
+    queryDataProviderName: "federation-learning-platform",
     meta: {
-      tableName: "round_execution_catalog_read_model_entity",
-      idField: "roundExecutionId",
-      label: t("resources.round_execution_catalog.label", "Round Execution Catalog"),
+      tableName: "training_round_progress_read_model_entity",
+      idField: "trainingJobId",
+      label: t("resources.training_round_progress.label", "Training Round Progress"),
       aggregateRoute: "traininground",
-      queryRoute: "roundexecutioncatalog",
-      dataProviderName: "federation-learning-runtime-agent",
+      queryRoute: "trainingroundprogress",
+      dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
-      tableName: "round_execution_catalog_read_model_entity",
-      idField: "roundExecutionId",
-      label: t("resources.round_execution_catalog.label", "Round Execution Catalog"),
-      aggregateRoute: "roundexecution",
-      queryRoute: "roundexecutioncatalog",
-      dataProviderName: "federation-learning-runtime-agent",
+      tableName: "training_round_progress_read_model_entity",
+      idField: "trainingJobId",
+      label: t("resources.training_round_progress.label", "Training Round Progress"),
+      aggregateRoute: "traininground",
+      queryRoute: "trainingroundprogress",
+      dataProviderName: "federation-learning-platform",
     },
     formProps: {
       defaultValues,
@@ -90,13 +90,13 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
       ...defaultValues,
       ...values,
     });
-    navigate("/round-execution-catalog");
+    navigate("/training-round-progress");
     return result;
   }
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.label", "Submit Model Update Submission")} />
+      <CreateViewHeader title={t("resources.training_round_progress.commands.submitModelUpdateSubmission.label", "Submit Model Update Submission")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("SubmitModelUpdateSubmission validation failed", errors))} className="space-y-8">
           <FormField
@@ -105,7 +105,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Execution Session Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.executionSessionId.label", "Execution Session Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.executionSessionId.label", "Execution Session Id")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -123,7 +123,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Execution Plan Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.executionPlanId.label", "Execution Plan Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.executionPlanId.label", "Execution Plan Id")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -141,7 +141,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Training Job Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingJobId.label", "Training Job Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.trainingJobId.label", "Training Job Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="training_participant_eligibility"
@@ -150,10 +150,10 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionValue="trainingJobId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingJobId.placeholder", "Select Training Job Id")}
+                  placeholder={t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.trainingJobId.placeholder", "Select Training Job Id")}
                   meta={{
                     idField: "trainingJobId",
-                    label: t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingJobId.label", "Training Participant Eligibility"),
+                    label: t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.trainingJobId.label", "Training Participant Eligibility"),
                     aggregateRoute: "trainingjob",
                     queryRoute: "trainingparticipanteligibility",
                   }}
@@ -168,7 +168,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Training Run Configuration Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingRunConfigurationId.label", "Training Run Configuration Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.trainingRunConfigurationId.label", "Training Run Configuration Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="training_run_configuration_catalog"
@@ -177,10 +177,10 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingRunConfigurationId.placeholder", "Select Training Run Configuration Id")}
+                  placeholder={t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.trainingRunConfigurationId.placeholder", "Select Training Run Configuration Id")}
                   meta={{
                     idField: "trainingRunConfigurationId",
-                    label: t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingRunConfigurationId.label", "Training Run Configuration Catalog"),
+                    label: t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.trainingRunConfigurationId.label", "Training Run Configuration Catalog"),
                     aggregateRoute: "trainingrunconfiguration",
                     queryRoute: "trainingrunconfigurationcatalog",
                   }}
@@ -195,7 +195,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Round Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.roundId.label", "Round Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.roundId.label", "Round Id")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -213,7 +213,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Round Execution Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.roundExecutionId.label", "Round Execution Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.roundExecutionId.label", "Round Execution Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="round_execution_catalog"
@@ -222,10 +222,10 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionValue="roundExecutionId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.roundExecutionId.placeholder", "Select Round Execution Id")}
+                  placeholder={t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.roundExecutionId.placeholder", "Select Round Execution Id")}
                   meta={{
                     idField: "roundExecutionId",
-                    label: t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.roundExecutionId.label", "Round Execution Catalog"),
+                    label: t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.roundExecutionId.label", "Round Execution Catalog"),
                     aggregateRoute: "roundexecution",
                     queryRoute: "roundexecutioncatalog",
                   }}
@@ -240,7 +240,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Runtime Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.runtimeId.label", "Runtime Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.runtimeId.label", "Runtime Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="runtime_identity_catalog"
@@ -249,10 +249,10 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionValue="runtimeId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.runtimeId.placeholder", "Select Runtime Id")}
+                  placeholder={t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.runtimeId.placeholder", "Select Runtime Id")}
                   meta={{
                     idField: "runtimeId",
-                    label: t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.runtimeId.label", "Runtime Identity Catalog"),
+                    label: t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.runtimeId.label", "Runtime Identity Catalog"),
                     aggregateRoute: "runtimeidentity",
                     queryRoute: "runtimeidentitycatalog",
                   }}
@@ -267,7 +267,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Feature Schema Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.featureSchemaId.label", "Feature Schema Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.featureSchemaId.label", "Feature Schema Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="feature_schema_catalog"
@@ -276,10 +276,10 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionValue="featureSchemaId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
+                  placeholder={t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
                   meta={{
                     idField: "featureSchemaId",
-                    label: t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.featureSchemaId.label", "Feature Schema Catalog"),
+                    label: t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.featureSchemaId.label", "Feature Schema Catalog"),
                     aggregateRoute: "featureschema",
                     queryRoute: "featureschemacatalog",
                   }}
@@ -294,14 +294,14 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{}}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationRequired.label", "Secure Aggregation Required")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.secureAggregationRequired.label", "Secure Aggregation Required")}</FormLabel>
                 <Select
                   value={field.value === undefined || field.value === null ? undefined : String(field.value)}
                   onValueChange={(value) => field.onChange(value === "true")}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationRequired.placeholder", "Select Secure Aggregation Required")} />
+                      <SelectValue placeholder={t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.secureAggregationRequired.placeholder", "Select Secure Aggregation Required")} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -319,7 +319,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{}}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationSessionId.label", "Secure Aggregation Session Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.secureAggregationSessionId.label", "Secure Aggregation Session Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
                   resource="secure_aggregation_session_catalog"
@@ -328,10 +328,10 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionValue="secureAggregationSessionId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
-                  placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationSessionId.placeholder", "Select Secure Aggregation Session Id")}
+                  placeholder={t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.secureAggregationSessionId.placeholder", "Select Secure Aggregation Session Id")}
                   meta={{
                     idField: "secureAggregationSessionId",
-                    label: t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationSessionId.label", "Secure Aggregation Session Catalog"),
+                    label: t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.secureAggregationSessionId.label", "Secure Aggregation Session Catalog"),
                     aggregateRoute: "secureaggregationsession",
                     queryRoute: "secureaggregationsessioncatalog",
                   }}
@@ -346,7 +346,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{}}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.encryptionScheme.label", "Encryption Scheme")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.encryptionScheme.label", "Encryption Scheme")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -364,7 +364,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{}}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.publicKeyVersion.label", "Public Key Version")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.publicKeyVersion.label", "Public Key Version")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -382,7 +382,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Local Model Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.localModelId.label", "Local Model Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.localModelId.label", "Local Model Id")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -400,7 +400,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Update Artifact Id is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.updateArtifactId.label", "Update Artifact Id")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.updateArtifactId.label", "Update Artifact Id")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -418,7 +418,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Artifact Ref is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.artifactRef.label", "Artifact Ref")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.artifactRef.label", "Artifact Ref")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -436,7 +436,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Artifact Digest is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.artifactDigest.label", "Artifact Digest")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.artifactDigest.label", "Artifact Digest")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -454,7 +454,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Update Protection Type is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.updateProtectionType.label", "Update Protection Type")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.updateProtectionType.label", "Update Protection Type")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -472,7 +472,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
             rules={{ required: "Training Loss is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingLoss.label", "Training Loss")}</FormLabel>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.trainingLoss.label", "Training Loss")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}

@@ -452,6 +452,36 @@ export const RuntimeInfrastructureAccessViewList = () => {
                   />
                 </DropdownMenuItem>
                 )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="retryRuntimeAgentDeployment"
+                    recordItemId={row.original.runtimeInfrastructureId}
+                    size="sm"
+                    query={{
+                      runtimeAgentId: row.original.runtimeAgentId,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="recordRuntimeConnectionEstablished"
+                    recordItemId={row.original.runtimeInfrastructureId}
+                    size="sm"
+                    query={{
+                      runtimeAgentId: row.original.runtimeAgentId,
+                      agentInstallMode: row.original.agentInstallMode,
+                      organizationId: row.original.organizationId,
+                      runtimeName: row.original.runtimeName,
+                      runtimeInfrastructureId: row.original.runtimeInfrastructureId,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.runtimeInfrastructureId} size="sm" />
                 </DropdownMenuItem>

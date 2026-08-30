@@ -589,7 +589,6 @@ export const RegisterUserAccountCommandSchema = z.object({
   username: z.string(),
   providerSubject: z.string().optional().nullable(),
   passwordHash: z.string().optional().nullable(),
-  organizationId: z.string().uuid().optional().nullable(),
 });
 export type RegisterUserAccountCommandInput = z.infer<typeof RegisterUserAccountCommandSchema>;
 
@@ -619,14 +618,15 @@ export const RegisterPermissionCommandSchema = z.object({
 export type RegisterPermissionCommandInput = z.infer<typeof RegisterPermissionCommandSchema>;
 
 export const GrantPermissionToRoleCommandSchema = z.object({
+  roleId: z.string().uuid(),
   roleCode: z.string(),
-  permissionCode: z.string(),
+  permissionCodes: z.array(z.string()),
 });
 export type GrantPermissionToRoleCommandInput = z.infer<typeof GrantPermissionToRoleCommandSchema>;
 
 export const AssignRoleToUserCommandSchema = z.object({
   userAccountId: z.string().uuid(),
-  roleCode: z.string(),
+  roleCodes: z.array(z.string()),
 });
 export type AssignRoleToUserCommandInput = z.infer<typeof AssignRoleToUserCommandSchema>;
 

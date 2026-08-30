@@ -27,22 +27,20 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterUserAccountCommandSchema, type RegisterUserAccountCommandInput } from "@/domain/schemas";
+import { DeactivateUserAccountCommandSchema, type DeactivateUserAccountCommandInput } from "@/domain/schemas";
 
-export const UserAccountCatalogRegisterUserAccount = () => {
+export const UserAccountCatalogDeactivateUserAccount = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
-    username: searchParams.get("username") ?? undefined,
-    providerSubject: searchParams.get("providerSubject") ?? undefined,
-    passwordHash: searchParams.get("passwordHash") ?? undefined,
-  } as Partial<RegisterUserAccountCommandInput>;
+    userAccountId: searchParams.get("userAccountId") ?? undefined,
+  } as Partial<DeactivateUserAccountCommandInput>;
 
-  const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterUserAccountCommandInput, RegisterUserAccountCommandInput>({
+  const { refineCore: { onFinish }, ...form } = useCommandForm<DeactivateUserAccountCommandInput, DeactivateUserAccountCommandInput>({
     resource: "user_account_catalog",
-    command: "registerUserAccount",
+    command: "deactivateUserAccount",
     aggregateId: id?.toString(),
     redirect: "list",
     dataProviderName: "federation-learning-support",
@@ -65,11 +63,11 @@ export const UserAccountCatalogRegisterUserAccount = () => {
     },
     formProps: {
       defaultValues,
-      resolver: zodResolver(RegisterUserAccountCommandSchema) as never,
+      resolver: zodResolver(DeactivateUserAccountCommandSchema) as never,
     },
   });
 
-  async function onSubmit(values: RegisterUserAccountCommandInput) {
+  async function onSubmit(values: DeactivateUserAccountCommandInput) {
     const result = await onFinish({
       ...defaultValues,
       ...values,
@@ -80,27 +78,24 @@ export const UserAccountCatalogRegisterUserAccount = () => {
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.user_account_catalog.commands.registerUserAccount.label", "Register User Account")} />
+      <CreateViewHeader title={t("resources.user_account_catalog.commands.deactivateUserAccount.label", "Deactivate User Account")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RegisterUserAccount validation failed", errors))} className="space-y-8">
-          {defaultValues.providerSubject !== undefined && defaultValues.providerSubject !== null ? (
-            <input type="hidden" {...form.register("providerSubject" as never)} />
-          ) : null}
-          {defaultValues.passwordHash !== undefined && defaultValues.passwordHash !== null ? (
-            <input type="hidden" {...form.register("passwordHash" as never)} />
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DeactivateUserAccount validation failed", errors))} className="space-y-8">
+          {defaultValues.userAccountId !== undefined && defaultValues.userAccountId !== null ? (
+            <input type="hidden" {...form.register("userAccountId" as never)} />
           ) : null}
           <FormField
             control={form.control}
-            name="username"
-            rules={{ required: "Username is required" }}
+            name="reason"
+            rules={{ required: "Reason is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.user_account_catalog.commands.registerUserAccount.fields.username.label", "Username")}</FormLabel>
+                <FormLabel>{t("resources.user_account_catalog.commands.deactivateUserAccount.fields.reason.label", "Reason")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Username"}
+                    placeholder={"Enter Reason"}
                   />
                 </FormControl>
                 <FormMessage />

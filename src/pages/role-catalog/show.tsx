@@ -22,7 +22,7 @@ export const RoleCatalogShow = () => {
     dataProviderName: "federation-learning-support",
     meta: {
       tableName: "role_catalog_read_model_entity",
-      idField: "roleCode",
+      idField: "roleId",
       label: t("resources.role_catalog.label", "Role Catalog"),
       aggregateRoute: "useraccount",
       queryRoute: "rolecatalog",
@@ -36,9 +36,14 @@ export const RoleCatalogShow = () => {
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>{record?.roleCode ?? t("resources.role_catalog.label", "Role Catalog")}</CardTitle>
+            <CardTitle>{record?.roleId ?? t("resources.role_catalog.label", "Role Catalog")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.role_catalog.fields.roleId.label", "Role Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.roleId, t)}</p>
+            </div>
+            <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.role_catalog.fields.roleCode.label", "Role Code")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.roleCode, t)}</p>

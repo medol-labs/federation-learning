@@ -24,7 +24,6 @@ type UserAccountCatalogRecord = {
   username: string;
   providerSubject?: string;
   passwordHash?: string;
-  organizationId?: string;
   active: boolean;
   roleCodes: string[];
 };
@@ -127,20 +126,6 @@ export const UserAccountCatalogList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("organizationId", {
-        id: "organizationId",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.user_account_catalog.fields.organizationId.label", "Organization Id")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.user_account_catalog.fields.organizationId.label", "Organization Id"),
-          placeholder: "Enter Organization Id",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
       columnHelper.accessor("active", {
         id: "active",
         header: ({ column }) => (
@@ -192,6 +177,29 @@ export const UserAccountCatalogList = () => {
                   />
                 </DropdownMenuItem>
                 )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="deactivateUserAccount"
+                    recordItemId={row.original.userAccountId}
+                    size="sm"
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="assignRoleToUser"
+                    recordItemId={row.original.userAccountId}
+                    size="sm"
+                    query={{
+                      roleCodes: row.original.roleCodes,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
                 <DropdownMenuItem>
                   <ShowButton variant="ghost" recordItemId={row.original.userAccountId} size="sm" />
                 </DropdownMenuItem>
@@ -218,7 +226,7 @@ export const UserAccountCatalogList = () => {
         tableName: "user_account_catalog_read_model_entity",
         idField: "userAccountId",
         idFields: ["userAccountId"],
-        queryFields: ["userAccountId","username","providerSubject","passwordHash","organizationId","active"],
+        queryFields: ["userAccountId","username","providerSubject","passwordHash","active"],
         label: t("resources.user_account_catalog.label", "User Account Catalog"),
         aggregateRoute: "useraccount",
         queryRoute: "useraccountcatalog",

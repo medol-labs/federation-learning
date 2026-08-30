@@ -31,7 +31,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DefineFeatureSchemaCommandSchema, type DefineFeatureSchemaCommandInput } from "@/domain/schemas";
-import { ResourceSelect } from "@/components/refine-ui/form/resource-select";
+import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
 type ScalarArrayFieldProps = {
   control: Control<any>;
   name: string;

@@ -60,11 +60,6 @@ export const UserAccountCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.user_account_catalog.fields.organizationId.label", "Organization Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.organizationId, t)}</p>
-            </div>
-            <Separator />
-            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_account_catalog.fields.active.label", "Active")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.active, t)}</p>
             </div>

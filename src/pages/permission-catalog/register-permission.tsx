@@ -49,7 +49,7 @@ export const PermissionCatalogRegisterPermission = () => {
     queryDataProviderName: "federation-learning-support",
     meta: {
       tableName: "permission_catalog_read_model_entity",
-      idField: "permissionCode",
+      idField: "permissionId",
       label: t("resources.permission_catalog.label", "Permission Catalog"),
       aggregateRoute: "permission",
       queryRoute: "permissioncatalog",
@@ -57,7 +57,7 @@ export const PermissionCatalogRegisterPermission = () => {
     },
     queryMeta: {
       tableName: "permission_catalog_read_model_entity",
-      idField: "permissionCode",
+      idField: "permissionId",
       label: t("resources.permission_catalog.label", "Permission Catalog"),
       aggregateRoute: "useraccount",
       queryRoute: "permissioncatalog",

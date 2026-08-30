@@ -910,6 +910,41 @@ export const TrainingRoundProgressList = () => {
                   />
                 </DropdownMenuItem>
                 )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="submitModelUpdateSubmission"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                    query={{
+                      trainingJobId: row.original.trainingJobId,
+                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
+                      roundId: row.original.roundId,
+                      featureSchemaId: row.original.featureSchemaId,
+                      secureAggregationRequired: row.original.secureAggregationRequired,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
+                {isCommandVisible(row.original, "", "", []) && (
+                <DropdownMenuItem>
+                  <CommandButton
+                    variant="ghost"
+                    command="completeSecureAggregation"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                    query={{
+                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
+                      featureSchemaId: row.original.featureSchemaId,
+                      roundId: row.original.roundId,
+                      roundNumber: row.original.roundNumber,
+                      aggregatedModelId: row.original.aggregatedModelId,
+                      trainingJobId: row.original.trainingJobId,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
                 {isCommandVisible(row.original, "", "state", ["Draft"]) && (
                 <DropdownMenuItem>
                   <CommandButton

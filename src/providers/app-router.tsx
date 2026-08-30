@@ -149,6 +149,7 @@ import {
   RoleCatalogList,
   RoleCatalogShow,
   RoleCatalogRegisterRole,
+  RoleCatalogGrantPermissionToRole,
 } from "../pages/role-catalog";
 import {
   RoundExecutionCatalogList,
@@ -160,6 +161,7 @@ import {
 import {
   RuntimeAgentEndpointCatalogList,
   RuntimeAgentEndpointCatalogShow,
+  RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished,
 } from "../pages/runtime-agent-endpoint-catalog";
 import {
   RuntimeAgentLifecycleCatalogList,
@@ -196,6 +198,8 @@ import {
   RuntimeInfrastructureAccessViewShow,
   RuntimeInfrastructureAccessViewRegisterOrganization,
   RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure,
+  RuntimeInfrastructureAccessViewRetryRuntimeAgentDeployment,
+  RuntimeInfrastructureAccessViewRecordRuntimeConnectionEstablished,
 } from "../pages/runtime-infrastructure-access-view";
 import {
   RuntimeInfrastructurePackageCatalogList,
@@ -267,6 +271,8 @@ import {
   TrainingRoundProgressCancelTrainingJob,
   TrainingRoundProgressRetryRoundExecutionAfterStartFailure,
   TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure,
+  TrainingRoundProgressSubmitModelUpdateSubmission,
+  TrainingRoundProgressCompleteSecureAggregation,
   TrainingRoundProgressSubmitTrainingJob,
   TrainingRoundProgressRetryTrainingRoundParticipantSelection,
   TrainingRoundProgressPauseTrainingJob,
@@ -283,6 +289,8 @@ import {
   UserAccountCatalogShow,
   UserAccountCatalogRegisterUserAccount,
   UserAccountCatalogGenerateUserAccountLoginPassword,
+  UserAccountCatalogDeactivateUserAccount,
+  UserAccountCatalogAssignRoleToUser,
 } from "../pages/user-account-catalog";
 
 export const AppRouter = () => {
@@ -440,6 +448,7 @@ export const AppRouter = () => {
           <Route index element={<RoleCatalogList />} />
           <Route path="command/register-role" element={<RoleCatalogRegisterRole />} />
           <Route path="show/:id" element={<RoleCatalogShow />} />
+          <Route path=":id/command/grant-permission-to-role" element={<RoleCatalogGrantPermissionToRole />} />
         </Route>
         <Route path="/round-execution-catalog">
           <Route index element={<RoundExecutionCatalogList />} />
@@ -451,6 +460,7 @@ export const AppRouter = () => {
         <Route path="/runtime-agent-endpoint-catalog">
           <Route index element={<RuntimeAgentEndpointCatalogList />} />
           <Route path="show/:id" element={<RuntimeAgentEndpointCatalogShow />} />
+          <Route path=":id/command/record-runtime-connection-established" element={<RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished />} />
         </Route>
         <Route path="/runtime-agent-lifecycle-catalog">
           <Route index element={<RuntimeAgentLifecycleCatalogList />} />
@@ -487,6 +497,8 @@ export const AppRouter = () => {
           <Route path="command/register-organization" element={<RuntimeInfrastructureAccessViewRegisterOrganization />} />
           <Route path="show/:id" element={<RuntimeInfrastructureAccessViewShow />} />
           <Route path=":id/command/register-runtime-infrastructure" element={<RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure />} />
+          <Route path=":id/command/retry-runtime-agent-deployment" element={<RuntimeInfrastructureAccessViewRetryRuntimeAgentDeployment />} />
+          <Route path=":id/command/record-runtime-connection-established" element={<RuntimeInfrastructureAccessViewRecordRuntimeConnectionEstablished />} />
         </Route>
         <Route path="/runtime-infrastructure-package-catalog">
           <Route index element={<RuntimeInfrastructurePackageCatalogList />} />
@@ -558,6 +570,8 @@ export const AppRouter = () => {
           <Route path=":id/command/cancel-training-job" element={<TrainingRoundProgressCancelTrainingJob />} />
           <Route path=":id/command/retry-round-execution-after-start-failure" element={<TrainingRoundProgressRetryRoundExecutionAfterStartFailure />} />
           <Route path=":id/command/retry-round-execution-after-runtime-failure" element={<TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure />} />
+          <Route path=":id/command/submit-model-update-submission" element={<TrainingRoundProgressSubmitModelUpdateSubmission />} />
+          <Route path=":id/command/complete-secure-aggregation" element={<TrainingRoundProgressCompleteSecureAggregation />} />
           <Route path=":id/command/submit-training-job" element={<TrainingRoundProgressSubmitTrainingJob />} />
           <Route path=":id/command/retry-training-round-participant-selection" element={<TrainingRoundProgressRetryTrainingRoundParticipantSelection />} />
           <Route path=":id/command/pause-training-job" element={<TrainingRoundProgressPauseTrainingJob />} />
@@ -574,6 +588,8 @@ export const AppRouter = () => {
           <Route path="command/register-user-account" element={<UserAccountCatalogRegisterUserAccount />} />
           <Route path="show/:id" element={<UserAccountCatalogShow />} />
           <Route path=":id/command/generate-user-account-login-password" element={<UserAccountCatalogGenerateUserAccountLoginPassword />} />
+          <Route path=":id/command/deactivate-user-account" element={<UserAccountCatalogDeactivateUserAccount />} />
+          <Route path=":id/command/assign-role-to-user" element={<UserAccountCatalogAssignRoleToUser />} />
         </Route>
         <Route path="*" element={<ErrorComponent />} />
       </Route>

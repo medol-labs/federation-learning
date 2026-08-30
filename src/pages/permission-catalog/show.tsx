@@ -22,7 +22,7 @@ export const PermissionCatalogShow = () => {
     dataProviderName: "federation-learning-support",
     meta: {
       tableName: "permission_catalog_read_model_entity",
-      idField: "permissionCode",
+      idField: "permissionId",
       label: t("resources.permission_catalog.label", "Permission Catalog"),
       aggregateRoute: "useraccount",
       queryRoute: "permissioncatalog",
@@ -36,9 +36,14 @@ export const PermissionCatalogShow = () => {
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>{record?.permissionCode ?? t("resources.permission_catalog.label", "Permission Catalog")}</CardTitle>
+            <CardTitle>{record?.permissionId ?? t("resources.permission_catalog.label", "Permission Catalog")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.permission_catalog.fields.permissionId.label", "Permission Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.permissionId, t)}</p>
+            </div>
+            <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.permission_catalog.fields.permissionCode.label", "Permission Code")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.permissionCode, t)}</p>

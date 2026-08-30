@@ -20,6 +20,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { MoreHorizontal } from "lucide-react";
 
 type PermissionCatalogRecord = {
+  permissionId: string;
   permissionCode: string;
   permissionName: string;
   description?: string;
@@ -66,6 +67,20 @@ export const PermissionCatalogList = () => {
         size: 32,
         enableSorting: false,
         enableHiding: false,
+      }),
+      columnHelper.accessor("permissionId", {
+        id: "permissionId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.permission_catalog.fields.permissionId.label", "Permission Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.permission_catalog.fields.permissionId.label", "Permission Id"),
+          placeholder: "Enter Permission Id",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("permissionCode", {
         id: "permissionCode",
@@ -122,7 +137,7 @@ export const PermissionCatalogList = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>
-                  <ShowButton variant="ghost" recordItemId={row.original.permissionCode} size="sm" />
+                  <ShowButton variant="ghost" recordItemId={row.original.permissionId} size="sm" />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -139,15 +154,15 @@ export const PermissionCatalogList = () => {
     initialState: {
       columnPinning: { right: ["actions"], left: ["select"] },
     },
-    getRowId: (row) => String(row.permissionCode),
+    getRowId: (row) => String(row.permissionId),
     refineCoreProps: {
       dataProviderName: "federation-learning-support",
       syncWithLocation: false,
       meta: {
         tableName: "permission_catalog_read_model_entity",
-        idField: "permissionCode",
-        idFields: ["permissionCode"],
-        queryFields: ["permissionCode","permissionName","description"],
+        idField: "permissionId",
+        idFields: ["permissionId"],
+        queryFields: ["permissionId","permissionCode","permissionName","description"],
         label: t("resources.permission_catalog.label", "Permission Catalog"),
         aggregateRoute: "useraccount",
         queryRoute: "permissioncatalog",
