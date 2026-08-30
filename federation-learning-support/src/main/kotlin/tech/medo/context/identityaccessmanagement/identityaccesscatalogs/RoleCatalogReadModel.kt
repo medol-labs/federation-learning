@@ -41,7 +41,7 @@ fun RoleCatalogReadModelProjection.toReadModel(): RoleCatalogReadModel =
     )
 
 interface RoleCatalogReadModelRepository {
-    fun findAllByFilter(roleCode: String?, roleName: String?, pageable: Pageable): Page<RoleCatalogReadModel>
+    fun findAll(pageable: Pageable): Page<RoleCatalogReadModel>
     fun findAllByCriteria(criteria: RoleCatalogReadModelCriteria?, pageable: Pageable): Page<RoleCatalogReadModel>
     fun findById(id: String): RoleCatalogReadModel?
     fun findProjectionById(id: String): RoleCatalogReadModelProjection?

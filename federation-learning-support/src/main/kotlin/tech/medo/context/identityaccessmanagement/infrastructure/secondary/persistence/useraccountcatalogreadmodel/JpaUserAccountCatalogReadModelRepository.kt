@@ -1,10 +1,10 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.useraccountcatalogreadmodel
 
-import jakarta.persistence.criteria.Predicate
-import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
 
@@ -17,10 +17,11 @@ import tech.medo.identityaccessmanagement.identityaccesscatalogs.toReadModel
 @Repository
 class JpaUserAccountCatalogReadModelRepository(
     private val jpaRepository: SpringDataUserAccountCatalogReadModelRepository,
-    private val queryService: UserAccountCatalogReadModelQueryService
+    private val queryService: UserAccountCatalogReadModelQueryService,
+    private val objectMapper: ObjectMapper
 ) : UserAccountCatalogReadModelRepository {
-    override fun findAllByFilter(username: String?, providerSubject: String?, organizationId: UUID?, active: Boolean?, pageable: Pageable): Page<UserAccountCatalogReadModel> =
-        jpaRepository.findAll(filters(username, providerSubject, organizationId, active), pageable).map { it.toProjection().toReadModel() }
+    override fun findAll(pageable: Pageable): Page<UserAccountCatalogReadModel> =
+        findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: UserAccountCatalogReadModelCriteria?, pageable: Pageable): Page<UserAccountCatalogReadModel> =
         queryService.findByCriteria(criteria, pageable)
@@ -35,24 +36,15 @@ class JpaUserAccountCatalogReadModelRepository(
         jpaRepository.save(projection.toEntity())
     }
 
-    private fun filters(username: String?, providerSubject: String?, organizationId: UUID?, active: Boolean?): Specification<UserAccountCatalogReadModelEntity> =
-        Specification { root, _, criteriaBuilder ->
-            val predicates = mutableListOf<Predicate>()
-            username?.let { predicates.add(criteriaBuilder.equal(root.get<String>("username"), it)) }
-            providerSubject?.let { predicates.add(criteriaBuilder.equal(root.get<String>("providerSubject"), it)) }
-            organizationId?.let { predicates.add(criteriaBuilder.equal(root.get<UUID>("organizationId"), it)) }
-            active?.let { predicates.add(criteriaBuilder.equal(root.get<Boolean>("active"), it)) }
-            criteriaBuilder.and(*predicates.toTypedArray())
-        }
-
-
     private fun UserAccountCatalogReadModelEntity.toProjection(): UserAccountCatalogReadModelProjection =
         UserAccountCatalogReadModelProjection().also {
             it.userAccountId = this@toProjection.userAccountId
             it.username = this@toProjection.username
             it.providerSubject = this@toProjection.providerSubject
+            it.passwordHash = this@toProjection.passwordHash
             it.organizationId = this@toProjection.organizationId
             it.active = this@toProjection.active
+            it.roleCodes = this@toProjection.roleCodes?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -66,8 +58,10 @@ class JpaUserAccountCatalogReadModelRepository(
             it.userAccountId = this@toEntity.userAccountId
             it.username = this@toEntity.username
             it.providerSubject = this@toEntity.providerSubject
+            it.passwordHash = this@toEntity.passwordHash
             it.organizationId = this@toEntity.organizationId
             it.active = this@toEntity.active
+            it.roleCodes = objectMapper.writeValueAsString(this@toEntity.roleCodes)
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

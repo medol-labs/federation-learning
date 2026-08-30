@@ -337,6 +337,7 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
             entity.roundExecutionId = event.roundExecutionId
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.state = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASED
+            entity.runtimeEngineReleased = true
             entity.runtimeEngineObservedStatus = "RuntimeEngineReleased"
             entity.runtimeEngineReleaseFailureReason = null
             ProjectionMetadata.assign(entity, message)

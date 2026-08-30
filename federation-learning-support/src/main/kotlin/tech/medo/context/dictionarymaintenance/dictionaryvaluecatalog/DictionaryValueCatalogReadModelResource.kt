@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -17,6 +18,7 @@ import tech.medo.dictionarymaintenance.domain.states.DictionaryValueStateEnum;
 @RestController
 @RequestMapping("/dictionaryvalue/dictionaryvaluecatalog")
 class DictionaryValueCatalogReadModelResource(private val repository: DictionaryValueCatalogReadModelRepository) {
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('dictionary_value_catalog:list') or hasAuthority('dictionary_value_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: DictionaryValueCatalogReadModelCriteria,
@@ -25,6 +27,7 @@ class DictionaryValueCatalogReadModelResource(private val repository: Dictionary
         repository.findAllByCriteria(criteria, pageable)
 
 
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('dictionary_value_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<DictionaryValueCatalogReadModel> =
         repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()

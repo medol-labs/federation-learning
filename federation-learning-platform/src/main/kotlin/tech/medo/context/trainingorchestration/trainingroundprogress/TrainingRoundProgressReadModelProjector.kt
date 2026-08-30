@@ -212,6 +212,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
             entity.secureAggregationRequired = event.secureAggregationRequired
+            entity.artifactRefs = (entity.artifactRefs + event.artifactRef).distinct()
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -234,6 +235,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.acceptedModelUpdateCount = event.acceptedModelUpdateCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.secureAggregationRequired = event.secureAggregationRequired
+            entity.artifactRefs = (entity.artifactRefs + event.artifactRef).distinct()
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

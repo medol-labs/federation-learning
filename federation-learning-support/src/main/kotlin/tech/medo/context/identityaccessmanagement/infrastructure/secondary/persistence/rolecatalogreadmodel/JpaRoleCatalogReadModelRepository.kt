@@ -1,7 +1,5 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.rolecatalogreadmodel
 
-import jakarta.persistence.criteria.Predicate
-import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -21,8 +19,8 @@ class JpaRoleCatalogReadModelRepository(
     private val queryService: RoleCatalogReadModelQueryService,
     private val objectMapper: ObjectMapper
 ) : RoleCatalogReadModelRepository {
-    override fun findAllByFilter(roleCode: String?, roleName: String?, pageable: Pageable): Page<RoleCatalogReadModel> =
-        jpaRepository.findAll(filters(roleCode, roleName), pageable).map { it.toProjection().toReadModel() }
+    override fun findAll(pageable: Pageable): Page<RoleCatalogReadModel> =
+        findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: RoleCatalogReadModelCriteria?, pageable: Pageable): Page<RoleCatalogReadModel> =
         queryService.findByCriteria(criteria, pageable)
@@ -36,15 +34,6 @@ class JpaRoleCatalogReadModelRepository(
     override fun save(projection: RoleCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
-
-    private fun filters(roleCode: String?, roleName: String?): Specification<RoleCatalogReadModelEntity> =
-        Specification { root, _, criteriaBuilder ->
-            val predicates = mutableListOf<Predicate>()
-            roleCode?.let { predicates.add(criteriaBuilder.equal(root.get<String>("roleCode"), it)) }
-            roleName?.let { predicates.add(criteriaBuilder.equal(root.get<String>("roleName"), it)) }
-            criteriaBuilder.and(*predicates.toTypedArray())
-        }
-
 
     private fun RoleCatalogReadModelEntity.toProjection(): RoleCatalogReadModelProjection =
         RoleCatalogReadModelProjection().also {

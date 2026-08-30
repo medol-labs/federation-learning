@@ -6,10 +6,9 @@ import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.identityaccessmanagement.registeruseraccount.RegisterUserAccountCommand
 
-import tech.medo.identityaccessmanagement.useraccount.UserAccountState
 
 
-
+import tech.medo.identityaccessmanagement.useraccount.UserAccountUsernameReservationState
 
 @Component
 class RegisterUserAccountCommandHandler(
@@ -18,9 +17,9 @@ class RegisterUserAccountCommandHandler(
     @CommandHandler
     fun handle(
         command: RegisterUserAccountCommand,
-        @InjectEntity(idProperty = "userAccountId") state: UserAccountState,
+        @InjectEntity(idProperty = "userAccountUsernameSelection") userAccountUsernameReservation: UserAccountUsernameReservationState,
         eventAppender: EventAppender
     ) {
-        eventAppender.append(decision.decide(command, state))
+        eventAppender.append(decision.decide(command, userAccountUsernameReservation))
     }
 }

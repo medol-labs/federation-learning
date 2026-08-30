@@ -241,6 +241,7 @@ class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabil
         }
             entity.datasetId = event.datasetId
             entity.organizationId = event.organizationId
+            entity.approved = true
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

@@ -49,6 +49,7 @@ class DictionaryValueCatalogReadModelProjector(private val repository: Dictionar
             entity.dictionaryValueId = event.dictionaryValueId
             entity.disabledReason = event.disabledReason
             entity.state = DictionaryValueStateEnum.DISABLED
+            entity.active = false
             entity.disabledAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -65,6 +66,7 @@ class DictionaryValueCatalogReadModelProjector(private val repository: Dictionar
         }
             entity.dictionaryValueId = event.dictionaryValueId
             entity.state = DictionaryValueStateEnum.ACTIVE
+            entity.active = true
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

@@ -15,6 +15,7 @@ class UserAccountCatalogReadModelCriteria {
     var userAccountId: StringFilter? = null
     var username: StringFilter? = null
     var providerSubject: StringFilter? = null
+    var passwordHash: StringFilter? = null
     var organizationId: StringFilter? = null
     var active: BooleanFilter? = null
 }
@@ -24,8 +25,10 @@ class UserAccountCatalogReadModelProjection : MetadataProjection {
     var userAccountId: UUID? = null
     var username: String? = null
     var providerSubject: String? = null
+    var passwordHash: String? = null
     var organizationId: UUID? = null
     var active: Boolean? = null
+    var roleCodes: List<String> = emptyList()
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -39,8 +42,10 @@ fun UserAccountCatalogReadModelProjection.toReadModel(): UserAccountCatalogReadM
     userAccountId = userAccountId,
     username = username,
     providerSubject = providerSubject,
+    passwordHash = passwordHash,
     organizationId = organizationId,
     active = active,
+    roleCodes = roleCodes,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -50,7 +55,7 @@ fun UserAccountCatalogReadModelProjection.toReadModel(): UserAccountCatalogReadM
     )
 
 interface UserAccountCatalogReadModelRepository {
-    fun findAllByFilter(username: String?, providerSubject: String?, organizationId: UUID?, active: Boolean?, pageable: Pageable): Page<UserAccountCatalogReadModel>
+    fun findAll(pageable: Pageable): Page<UserAccountCatalogReadModel>
     fun findAllByCriteria(criteria: UserAccountCatalogReadModelCriteria?, pageable: Pageable): Page<UserAccountCatalogReadModel>
     fun findById(id: UUID): UserAccountCatalogReadModel?
     fun findProjectionById(id: UUID): UserAccountCatalogReadModelProjection?
@@ -61,8 +66,10 @@ data class UserAccountCatalogReadModel(
     val userAccountId: UUID?,
     val username: String?,
     val providerSubject: String?,
+    val passwordHash: String?,
     val organizationId: UUID?,
     val active: Boolean?,
+    val roleCodes: List<String>,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

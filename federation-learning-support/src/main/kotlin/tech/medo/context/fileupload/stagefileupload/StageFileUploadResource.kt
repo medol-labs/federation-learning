@@ -3,6 +3,7 @@ package tech.medo.fileupload.stagefileupload
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -19,6 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
+
 import java.util.concurrent.CompletableFuture
 
 @CrossOrigin
@@ -28,6 +30,7 @@ class StageFileUploadResource(
     private val commandGateway: CommandGateway,
     private val stageFileUploadUploadedFileStorage: StageFileUploadUploadedFileStorage
 ) {
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('stage_file_upload:execute')")
     @PostMapping("/stagefileupload/file", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun StageFileUploadFile(
         @RequestPart("uploadedFile") uploadedFile: MultipartFile,

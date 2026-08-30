@@ -1,0 +1,7 @@
+package tech.medo.domain.identityaccessmanagement.registerrole
+
+import org.springframework.stereotype.Component
+import tech.medo.identityaccessmanagement.registerrole.RegisterRoleDecision
+
+@Component
+class RegisterRoleDecisionComponent : RegisterRoleDecision

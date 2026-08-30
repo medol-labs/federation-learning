@@ -3,12 +3,14 @@ package tech.medo.secureaggregation.preparehomomorphicencryptioncontext
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import tech.medo.shared.application.metadata.MetadataFactory
+
 
 import java.util.concurrent.CompletableFuture
 
@@ -18,6 +20,7 @@ import java.util.concurrent.CompletableFuture
 class PrepareHomomorphicEncryptionContextResource(
     private val commandGateway: CommandGateway
 ) {
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('prepare_homomorphic_encryption_context:execute')")
     @PostMapping("/preparehomomorphicencryptioncontext")
     fun PrepareHomomorphicEncryptionContext(
         @Valid @RequestBody command: PrepareHomomorphicEncryptionContextCommand,

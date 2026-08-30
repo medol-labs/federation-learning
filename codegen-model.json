@@ -1740,6 +1740,14 @@
           "states": [
             "Registered"
           ]
+        },
+        {
+          "id": "concept-527ab40c",
+          "name": "Permission",
+          "title": "Permission",
+          "states": [
+            "Registered"
+          ]
         }
       ],
       "externalSystems": [],
@@ -1755,9 +1763,19 @@
           "title": "Deactivate User Account"
         },
         {
+          "id": "slice-5da5f728",
+          "name": "GenerateUserAccountLoginPassword",
+          "title": "Generate User Account Login Password"
+        },
+        {
           "id": "slice-7b54b84c",
           "name": "RegisterRole",
           "title": "Register Role"
+        },
+        {
+          "id": "slice-1bda8ebb",
+          "name": "RegisterPermission",
+          "title": "Register Permission"
         },
         {
           "id": "slice-1d773a87",
@@ -3741,6 +3759,11 @@
           "title": "Register User Account"
         },
         {
+          "id": "slice-5da5f728",
+          "name": "GenerateUserAccountLoginPassword",
+          "title": "Generate User Account Login Password"
+        },
+        {
           "id": "slice-2f4abaeb",
           "name": "DeactivateUserAccount",
           "title": "Deactivate User Account"
@@ -3749,6 +3772,11 @@
           "id": "slice-0766b926",
           "name": "AssignRoleToUser",
           "title": "Assign Role To User"
+        },
+        {
+          "id": "slice-584fdb91",
+          "name": "IdentityAccessCatalogs",
+          "title": "Identity Access Catalogs"
         }
       ]
     },
@@ -3770,6 +3798,22 @@
           "id": "slice-1d773a87",
           "name": "GrantPermissionToRole",
           "title": "Grant Permission To Role"
+        }
+      ]
+    },
+    {
+      "id": "concept-527ab40c",
+      "name": "Permission",
+      "title": "Permission",
+      "context": "IdentityAccessManagement",
+      "states": [
+        "Registered"
+      ],
+      "slices": [
+        {
+          "id": "slice-1bda8ebb",
+          "name": "RegisterPermission",
+          "title": "Register Permission"
         }
       ]
     }
@@ -7321,6 +7365,33 @@
         "id": "event-3ce4a19c",
         "name": "RoleRegistered",
         "title": "Role Registered"
+      },
+      "to": "Registered",
+      "startsLifecycle": true
+    },
+    {
+      "id": "transition-49a465e9",
+      "context": "IdentityAccessManagement",
+      "owner": {
+        "id": "concept-527ab40c",
+        "type": "concept",
+        "name": "Permission",
+        "title": "Permission"
+      },
+      "slice": {
+        "id": "slice-1bda8ebb",
+        "name": "RegisterPermission",
+        "title": "Register Permission"
+      },
+      "command": {
+        "id": "command-09732d38",
+        "name": "RegisterPermission",
+        "title": "Register Permission"
+      },
+      "event": {
+        "id": "event-6a7d7146",
+        "name": "PermissionRegistered",
+        "title": "Permission Registered"
       },
       "to": "Registered",
       "startsLifecycle": true
@@ -73349,7 +73420,21 @@
               "optional": true,
               "idAttribute": false,
               "generated": false,
-              "technicalAttribute": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "passwordHash",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
               "query": false,
               "display": false,
               "uploadFile": false,
@@ -73426,7 +73511,21 @@
               "optional": true,
               "idAttribute": false,
               "generated": false,
-              "technicalAttribute": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "passwordHash",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
               "query": false,
               "display": false,
               "uploadFile": false,
@@ -73456,6 +73555,12 @@
               "elementType": "COMMAND"
             },
             {
+              "id": "command-0d92bf52",
+              "direction": "OUTBOUND",
+              "title": "Generate User Account Login Password",
+              "elementType": "COMMAND"
+            },
+            {
               "id": "readmodel-99fa1b3d",
               "direction": "OUTBOUND",
               "title": "User Account Catalog",
@@ -73467,7 +73572,78 @@
       "readmodels": [],
       "screens": [],
       "processors": [],
-      "specifications": [],
+      "specifications": [
+        {
+          "id": "gwt-ae2983ee",
+          "chapter": "IdentityAccessManagement",
+          "sliceName": "Register User Account",
+          "title": "Reject Duplicate Username",
+          "specification": "User Account Username Unique",
+          "rule": "Active user account usernames must be unique.",
+          "expressions": [
+            "unique UserAccount.username"
+          ],
+          "validates": [
+            "unique UserAccount.username"
+          ],
+          "given": [
+            {
+              "title": "User Account Registered",
+              "id": "event-d81a5d20",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "userAccountId"
+                },
+                {
+                  "name": "username",
+                  "example": "admin"
+                },
+                {
+                  "name": "providerSubject"
+                },
+                {
+                  "name": "passwordHash"
+                },
+                {
+                  "name": "organizationId"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Register User Account",
+              "id": "command-c00913ea",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "userAccountId"
+                },
+                {
+                  "name": "username",
+                  "example": "admin"
+                },
+                {
+                  "name": "providerSubject"
+                },
+                {
+                  "name": "passwordHash"
+                },
+                {
+                  "name": "organizationId"
+                }
+              ]
+            }
+          ],
+          "then": {
+            "title": "Rejected",
+            "id": "spec-reject-ae2983ee",
+            "description": "Username already exists.",
+            "outcome": "REJECT"
+          }
+        }
+      ],
       "actors": [
         {
           "id": "actor-55595ba0",
@@ -73614,8 +73790,172 @@
       }
     },
     {
-      "id": "slice-7b54b84c",
+      "id": "slice-5da5f728",
       "index": 158,
+      "name": "GenerateUserAccountLoginPassword",
+      "title": "Generate User Account Login Password",
+      "chapter": "IdentityAccessManagement",
+      "context": "IdentityAccessManagement",
+      "tags": [],
+      "port": true,
+      "concepts": [
+        "UserAccount"
+      ],
+      "commands": [
+        {
+          "id": "command-0d92bf52",
+          "name": "GenerateUserAccountLoginPassword",
+          "title": "Generate User Account Login Password",
+          "type": "COMMAND",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "Generate User Account Login Password",
+          "fields": [
+            {
+              "name": "userAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "passwordResetRequired",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "resultFields": [
+            {
+              "name": "temporaryPassword",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-d81a5d20",
+              "direction": "INBOUND",
+              "title": "User Account Registered",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-96a5d013",
+              "direction": "OUTBOUND",
+              "title": "User Account Login Password Generated",
+              "elementType": "EVENT"
+            }
+          ],
+          "port": true
+        }
+      ],
+      "events": [
+        {
+          "id": "event-96a5d013",
+          "name": "UserAccountLoginPasswordGenerated",
+          "title": "User Account Login Password Generated",
+          "type": "EVENT",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "Generate User Account Login Password",
+          "fields": [
+            {
+              "name": "userAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "passwordHash",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "passwordResetRequired",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-0d92bf52",
+              "direction": "INBOUND",
+              "title": "Generate User Account Login Password",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-99fa1b3d",
+              "direction": "OUTBOUND",
+              "title": "User Account Catalog",
+              "elementType": "READMODEL"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [
+        {
+          "id": "actor-55595ba0",
+          "name": "IdentityAdministrator",
+          "title": "Identity Administrator"
+        }
+      ],
+      "hotspots": []
+    },
+    {
+      "id": "slice-7b54b84c",
+      "index": 159,
       "name": "RegisterRole",
       "title": "Register Role",
       "chapter": "IdentityAccessManagement",
@@ -73746,8 +74086,168 @@
       }
     },
     {
+      "id": "slice-1bda8ebb",
+      "index": 160,
+      "name": "RegisterPermission",
+      "title": "Register Permission",
+      "chapter": "IdentityAccessManagement",
+      "context": "IdentityAccessManagement",
+      "tags": [],
+      "concepts": [
+        "Permission"
+      ],
+      "commands": [
+        {
+          "id": "command-09732d38",
+          "name": "RegisterPermission",
+          "title": "Register Permission",
+          "type": "COMMAND",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "Register Permission",
+          "fields": [
+            {
+              "name": "permissionCode",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "permissionName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "description",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-6a7d7146",
+              "direction": "OUTBOUND",
+              "title": "Permission Registered",
+              "elementType": "EVENT"
+            }
+          ],
+          "startsLifecycle": true
+        }
+      ],
+      "events": [
+        {
+          "id": "event-6a7d7146",
+          "name": "PermissionRegistered",
+          "title": "Permission Registered",
+          "type": "EVENT",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "Register Permission",
+          "fields": [
+            {
+              "name": "permissionCode",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "permissionName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "description",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-09732d38",
+              "direction": "INBOUND",
+              "title": "Register Permission",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-a83bb50a",
+              "direction": "OUTBOUND",
+              "title": "Permission Catalog",
+              "elementType": "READMODEL"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [
+        {
+          "id": "actor-55595ba0",
+          "name": "IdentityAdministrator",
+          "title": "Identity Administrator"
+        }
+      ],
+      "hotspots": [],
+      "stateChange": {
+        "event": "PermissionRegistered",
+        "eventId": "event-6a7d7146",
+        "to": "Registered"
+      }
+    },
+    {
       "id": "slice-1d773a87",
-      "index": 159,
+      "index": 161,
       "name": "GrantPermissionToRole",
       "title": "Grant Permission To Role",
       "chapter": "IdentityAccessManagement",
@@ -73873,7 +74373,7 @@
     },
     {
       "id": "slice-0766b926",
-      "index": 160,
+      "index": 162,
       "name": "AssignRoleToUser",
       "title": "Assign Role To User",
       "chapter": "IdentityAccessManagement",
@@ -73999,13 +74499,15 @@
     },
     {
       "id": "slice-584fdb91",
-      "index": 161,
+      "index": 163,
       "name": "IdentityAccessCatalogs",
       "title": "Identity Access Catalogs",
       "chapter": "IdentityAccessManagement",
       "context": "IdentityAccessManagement",
       "tags": [],
-      "concepts": [],
+      "concepts": [
+        "UserAccount"
+      ],
       "commands": [],
       "events": [],
       "readmodels": [
@@ -74060,6 +74562,20 @@
               "portOutput": false
             },
             {
+              "name": "passwordHash",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "organizationId",
               "type": "UUID",
               "cardinality": "Single",
@@ -74086,6 +74602,20 @@
               "uploadFile": false,
               "file": false,
               "portOutput": false
+            },
+            {
+              "name": "roleCodes",
+              "type": "String",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
             }
           ],
           "dependencies": [
@@ -74093,6 +74623,12 @@
               "id": "event-d81a5d20",
               "direction": "INBOUND",
               "title": "User Account Registered",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-96a5d013",
+              "direction": "INBOUND",
+              "title": "User Account Login Password Generated",
               "elementType": "EVENT"
             },
             {
@@ -74172,6 +74708,67 @@
               "id": "event-4d13df38",
               "direction": "INBOUND",
               "title": "Permission Granted To Role",
+              "elementType": "EVENT"
+            }
+          ],
+          "listElement": true
+        },
+        {
+          "id": "readmodel-a83bb50a",
+          "name": "PermissionCatalog",
+          "title": "Permission Catalog",
+          "type": "READMODEL",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "Identity Access Catalogs",
+          "fields": [
+            {
+              "name": "permissionCode",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "permissionName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "description",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-6a7d7146",
+              "direction": "INBOUND",
+              "title": "Permission Registered",
               "elementType": "EVENT"
             }
           ],

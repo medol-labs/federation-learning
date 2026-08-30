@@ -1,0 +1,7 @@
+package tech.medo.domain.identityaccessmanagement.assignroletouser
+
+import org.springframework.stereotype.Component
+import tech.medo.identityaccessmanagement.assignroletouser.AssignRoleToUserDecision
+
+@Component
+class AssignRoleToUserDecisionComponent : AssignRoleToUserDecision

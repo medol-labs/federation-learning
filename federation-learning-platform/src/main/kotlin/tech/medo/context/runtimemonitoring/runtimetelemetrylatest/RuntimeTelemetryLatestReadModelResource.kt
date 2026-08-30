@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/noderuntimehealth/runtimetelemetrylatest")
 class RuntimeTelemetryLatestReadModelResource(private val repository: RuntimeTelemetryLatestReadModelRepository) {
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_telemetry_latest:list') or hasAuthority('runtime_telemetry_latest:read')")
     @GetMapping
     fun findAll(
         criteria: RuntimeTelemetryLatestReadModelCriteria,
@@ -24,6 +26,7 @@ class RuntimeTelemetryLatestReadModelResource(private val repository: RuntimeTel
         repository.findAllByCriteria(criteria, pageable)
 
 
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_telemetry_latest:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<RuntimeTelemetryLatestReadModel> =
         repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()

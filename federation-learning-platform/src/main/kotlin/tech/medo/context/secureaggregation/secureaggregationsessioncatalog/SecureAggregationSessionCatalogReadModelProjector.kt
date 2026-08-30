@@ -91,6 +91,7 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
             entity.publicKeyRef = event.publicKeyRef
             entity.encryptedParameterScale = event.encryptedParameterScale
             entity.state = SecureAggregationSessionStateEnum.ENCRYPTION_CONTEXT_PREPARED
+            entity.encryptionContextPrepared = true
             entity.encryptionContextPreparedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

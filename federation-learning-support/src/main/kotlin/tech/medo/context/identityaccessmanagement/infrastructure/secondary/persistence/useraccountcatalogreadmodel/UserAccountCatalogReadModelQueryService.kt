@@ -18,7 +18,8 @@ import tech.medo.identityaccessmanagement.identityaccesscatalogs.toReadModel
 
 @Service
 class UserAccountCatalogReadModelQueryService(
-    private val repository: SpringDataUserAccountCatalogReadModelRepository
+    private val repository: SpringDataUserAccountCatalogReadModelRepository,
+    private val objectMapper: com.fasterxml.jackson.databind.ObjectMapper
 ) : QueryService<UserAccountCatalogReadModelEntity>() {
     fun findByCriteria(criteria: UserAccountCatalogReadModelCriteria?, pageable: Pageable): Page<UserAccountCatalogReadModel> =
         repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
@@ -29,6 +30,7 @@ class UserAccountCatalogReadModelQueryService(
             criteria.userAccountId?.let { specification = specification.and(buildSpecification(it, Function<Root<UserAccountCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("userAccountId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.username?.let { specification = specification.and(buildSpecification(it, Function<Root<UserAccountCatalogReadModelEntity>, Expression<String>> { root -> root.get("username") })) }
             criteria.providerSubject?.let { specification = specification.and(buildSpecification(it, Function<Root<UserAccountCatalogReadModelEntity>, Expression<String>> { root -> root.get("providerSubject") })) }
+            criteria.passwordHash?.let { specification = specification.and(buildSpecification(it, Function<Root<UserAccountCatalogReadModelEntity>, Expression<String>> { root -> root.get("passwordHash") })) }
             criteria.organizationId?.let { specification = specification.and(buildSpecification(it, Function<Root<UserAccountCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("organizationId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.active?.let { specification = specification.and(buildSpecification(it, Function<Root<UserAccountCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("active") })) }
         }
@@ -40,8 +42,10 @@ class UserAccountCatalogReadModelQueryService(
             it.userAccountId = this@toProjection.userAccountId
             it.username = this@toProjection.username
             it.providerSubject = this@toProjection.providerSubject
+            it.passwordHash = this@toProjection.passwordHash
             it.organizationId = this@toProjection.organizationId
             it.active = this@toProjection.active
+            it.roleCodes = this@toProjection.roleCodes?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

@@ -8,6 +8,7 @@ import org.axonframework.messaging.eventstreaming.EventCriteria
 import org.axonframework.messaging.eventstreaming.Tag
 import tech.medo.identityaccessmanagement.events.UserAccountRegisteredEvent
 import tech.medo.identityaccessmanagement.events.UserAccountDeactivatedEvent
+import tech.medo.identityaccessmanagement.events.UserAccountLoginPasswordGeneratedEvent
 import tech.medo.identityaccessmanagement.events.RoleAssignedToUserEvent
 import tech.medo.identityaccessmanagement.domain.states.UserAccountStateEnum
 
@@ -21,15 +22,19 @@ class UserAccountState @EntityCreator constructor() {
     var userAccountId: UUID? = null
     var username: String? = null
     var providerSubject: String? = null
+    var passwordHash: String? = null
     var organizationId: UUID? = null
     var reason: String? = null
+    var passwordResetRequired: Boolean? = null
     var roleCode: String? = null
 
     @EventSourcingHandler
     fun evolve(event: UserAccountRegisteredEvent): UserAccountState = apply {
+        currentState = UserAccountStateEnum.ACTIVE
         userAccountId = event.userAccountId
         username = event.username
         providerSubject = event.providerSubject
+        passwordHash = event.passwordHash
         organizationId = event.organizationId
     }
 
@@ -38,6 +43,13 @@ class UserAccountState @EntityCreator constructor() {
         currentState = UserAccountStateEnum.DEACTIVATED
         userAccountId = event.userAccountId
         reason = event.reason
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: UserAccountLoginPasswordGeneratedEvent): UserAccountState = apply {
+        userAccountId = event.userAccountId
+        passwordHash = event.passwordHash
+        passwordResetRequired = event.passwordResetRequired
     }
 
     @EventSourcingHandler

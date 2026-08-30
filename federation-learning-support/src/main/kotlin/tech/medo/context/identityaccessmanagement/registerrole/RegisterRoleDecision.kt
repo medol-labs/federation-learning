@@ -10,8 +10,7 @@ import tech.medo.identityaccessmanagement.role.RoleState
 
 
 interface RegisterRoleDecision {
-    fun decide(command: RegisterRoleCommand, state: RoleState): List<Any> {
-        // TODO: validate domain rules against state before appending events.
+    fun decide(command: RegisterRoleCommand): List<Any> {
         return listOf(
             RoleRegisteredEvent(roleCode = command.roleCode, roleName = command.roleName)
         )
