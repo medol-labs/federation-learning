@@ -622,6 +622,29 @@
       ]
     },
     {
+      "dictionaryCode": "MODEL_UPDATE_PROTECTION_TYPE",
+      "dictionaryName": "模型更新保护类型",
+      "ownerContext": "TrainingOrchestration",
+      "description": "模型更新制品提交到平台前采用的保护方式。",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "PLAINTEXT",
+          "displayName": "明文更新",
+          "displayOrder": 10,
+          "description": "非安全聚合训练轮次提交的本地模型更新制品。",
+          "active": true
+        },
+        {
+          "valueCode": "HOMOMORPHIC_ENCRYPTED",
+          "displayName": "同态加密更新",
+          "displayOrder": 20,
+          "description": "安全聚合训练轮次提交的同态加密模型更新制品。",
+          "active": true
+        }
+      ]
+    },
+    {
       "dictionaryCode": "RUNTIME_DATA_SOURCE_TYPE",
       "dictionaryName": "运行数据源类型",
       "ownerContext": "RuntimeAgentOperations",
