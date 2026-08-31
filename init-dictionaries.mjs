@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 import {readFile} from 'node:fs/promises';
-import {existsSync} from 'node:fs';
+import {existsSync, readFileSync} from 'node:fs';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const args = parseArgs(process.argv.slice(2));
+loadEnvFiles([resolve(scriptDir, '.env'), resolve(process.cwd(), '.env')]);
 
 if (args.help || args.h) {
     printHelp();
@@ -111,6 +112,32 @@ function parseArgs(argv) {
         }
     }
     return result;
+}
+
+function loadEnvFiles(paths) {
+    const loaded = new Set();
+    for (const path of paths) {
+        if (loaded.has(path) || !existsSync(path)) continue;
+        loaded.add(path);
+        const text = readFileSync(path, 'utf8');
+        for (const line of text.split(/\r?\n/)) {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith('#')) continue;
+            const separator = trimmed.indexOf('=');
+            if (separator <= 0) continue;
+            const key = trimmed.slice(0, separator).trim();
+            const rawValue = trimmed.slice(separator + 1).trim();
+            if (!key || Object.hasOwn(process.env, key)) continue;
+            process.env[key] = unquoteEnvValue(rawValue);
+        }
+    }
+}
+
+function unquoteEnvValue(value) {
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+        return value.slice(1, -1);
+    }
+    return value;
 }
 
 function normalizeDictionaryData(raw) {
@@ -256,6 +283,15 @@ function requestHeaders(rawHeaders) {
         if (separator <= 0) fail(`Invalid --header value "${text}". Use "Header-Name: value".`);
         result[text.slice(0, separator).trim()] = text.slice(separator + 1).trim();
     }
+    const apiToken = process.env.FL_API_TOKEN?.trim();
+    if (apiToken && !Object.hasOwn(result, 'Authorization')) {
+        result.Authorization = apiToken.startsWith('Bearer ') ? apiToken : `Bearer ${apiToken}`;
+    }
+
+    const internalToken = args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN;
+    if (internalToken && !Object.hasOwn(result, 'X-MEDOL-INTERNAL-TOKEN')) {
+        result['X-MEDOL-INTERNAL-TOKEN'] = String(internalToken).trim();
+    }
     return result;
 }
 
@@ -325,6 +361,7 @@ Options:
   --force                             Post commands without checking existing read models.
   --strict                            Set a non-zero exit code when a POST command fails.
   --header "Name: value"              Extra HTTP header. Repeatable.
+  --internal-token <token>            Send X-MEDOL-INTERNAL-TOKEN for local/internal bootstrap calls.
   --register-path <path>              RegisterDictionary endpoint path.
   --update-path <path>                UpdateDictionary endpoint path.
   --add-value-path <path>             AddDictionaryValue endpoint path.
