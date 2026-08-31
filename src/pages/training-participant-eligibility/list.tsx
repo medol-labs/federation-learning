@@ -626,14 +626,6 @@ export const TrainingParticipantEligibilityList = () => {
         header: t("table.actions", "Actions"),
         cell: ({ row }) => (
           <div className="flex gap-2">
-            {isCommandVisible(row.original, "", "", []) && (
-            <CommandButton
-              variant="outline"
-              command="cancelTrainingJob"
-              recordItemId={row.original.trainingJobId}
-              size="sm"
-            />
-            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -646,26 +638,6 @@ export const TrainingParticipantEligibilityList = () => {
                   <CommandButton
                     variant="ghost"
                     command="submitTrainingJob"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="pauseTrainingJob"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "participantStatus", ["Paused"]) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="resumeTrainingJob"
                     recordItemId={row.original.trainingJobId}
                     size="sm"
                   />
@@ -709,10 +681,9 @@ export const TrainingParticipantEligibilityList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="createTrainingJob" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
-        <CommandButton variant="destructive" command="cancelTrainingJob" size="sm" />
+        null
       }>
         <ListToolbar
           table={table.reactTable}

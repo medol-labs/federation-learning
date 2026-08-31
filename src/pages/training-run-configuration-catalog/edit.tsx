@@ -36,6 +36,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
+    configurationName: searchParams.get("configurationName") ?? undefined,
     federationId: searchParams.get("federationId") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
     initialModelId: searchParams.get("initialModelId") ?? undefined,
@@ -104,6 +105,24 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
           {defaultValues.trainingRunConfigurationId !== undefined && defaultValues.trainingRunConfigurationId !== null ? (
             <input type="hidden" {...form.register("trainingRunConfigurationId" as never)} />
           ) : null}
+          <FormField
+            control={form.control}
+            name="configurationName"
+            rules={{ required: "Configuration Name is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.configurationName.label", "Configuration Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Configuration Name"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="federationId"

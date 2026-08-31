@@ -64,6 +64,13 @@ export const ReactivateOrganizationCommandSchema = z.object({
 });
 export type ReactivateOrganizationCommandInput = z.infer<typeof ReactivateOrganizationCommandSchema>;
 
+export const BindUserAccountToOrganizationCommandSchema = z.object({
+  userAccountId: z.string().uuid(),
+  organizationId: z.string().uuid(),
+  organizationUserRole: z.string().optional().nullable(),
+});
+export type BindUserAccountToOrganizationCommandInput = z.infer<typeof BindUserAccountToOrganizationCommandSchema>;
+
 export const CreateFederationCommandSchema = z.object({
   federationName: z.string(),
   description: z.string(),
@@ -306,6 +313,7 @@ export const RegisterModelArtifactCommandSchema = z.object({
 export type RegisterModelArtifactCommandInput = z.infer<typeof RegisterModelArtifactCommandSchema>;
 
 export const DefineTrainingRunConfigurationCommandSchema = z.object({
+  configurationName: z.string(),
   federationId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
   initialModelId: z.string().uuid(),
@@ -329,6 +337,7 @@ export type DefineTrainingRunConfigurationCommandInput = z.infer<typeof DefineTr
 
 export const UpdateTrainingRunConfigurationCommandSchema = z.object({
   trainingRunConfigurationId: z.string().uuid(),
+  configurationName: z.string(),
   federationId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
   initialModelId: z.string().uuid(),
@@ -414,6 +423,8 @@ export const CompleteSecureAggregationCommandSchema = z.object({
   featureSchemaId: z.string().uuid(),
   roundId: z.string().uuid(),
   roundNumber: z.coerce.number().int(),
+  maxRounds: z.coerce.number().int(),
+  minimumAccuracy: z.coerce.number(),
   secureAggregationSessionId: z.string().uuid(),
   aggregatedModelId: z.string().uuid(),
   aggregatedModelArtifactUri: z.string(),
@@ -629,4 +640,10 @@ export const AssignRoleToUserCommandSchema = z.object({
   roleCodes: z.array(z.string()),
 });
 export type AssignRoleToUserCommandInput = z.infer<typeof AssignRoleToUserCommandSchema>;
+
+export const IssueServiceAccountApiTokenCommandSchema = z.object({
+  userAccountId: z.string().uuid(),
+  tokenName: z.string(),
+});
+export type IssueServiceAccountApiTokenCommandInput = z.infer<typeof IssueServiceAccountApiTokenCommandSchema>;
 

@@ -1,4 +1,4 @@
 // Generated from config.json by the refine generator.
 export * from "./list";
 export * from "./show";
-export * from "./submit-training-job";
+export * from "./issue-service-account-api-token";

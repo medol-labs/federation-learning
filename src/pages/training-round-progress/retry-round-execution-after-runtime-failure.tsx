@@ -141,7 +141,7 @@ export const TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure = () =>
                 <FormLabel>{t("resources.training_round_progress.commands.retryRoundExecutionAfterRuntimeFailure.fields.trainingJobId.label", "Training Job Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
-                  resource="training_participant_eligibility"
+                  resource="training_job_dashboard"
                   dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="trainingJobId"
@@ -150,9 +150,9 @@ export const TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure = () =>
                   placeholder={t("resources.training_round_progress.commands.retryRoundExecutionAfterRuntimeFailure.fields.trainingJobId.placeholder", "Select Training Job Id")}
                   meta={{
                     idField: "trainingJobId",
-                    label: t("resources.training_round_progress.commands.retryRoundExecutionAfterRuntimeFailure.fields.trainingJobId.label", "Training Participant Eligibility"),
+                    label: t("resources.training_round_progress.commands.retryRoundExecutionAfterRuntimeFailure.fields.trainingJobId.label", "Training Job Dashboard"),
                     aggregateRoute: "trainingjob",
-                    queryRoute: "trainingparticipanteligibility",
+                    queryRoute: "trainingjobdashboard",
                   }}
                 />
                 <FormMessage />
@@ -170,7 +170,7 @@ export const TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure = () =>
                   withFormControl
                   resource="training_run_configuration_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="initialModelName"
+                  optionLabel="configurationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}

@@ -121,7 +121,7 @@ export const TrainingRunConfigurationCatalogCreateTrainingJob = () => {
                   withFormControl
                   resource="training_run_configuration_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="initialModelName"
+                  optionLabel="configurationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}

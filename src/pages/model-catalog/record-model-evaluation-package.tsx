@@ -101,7 +101,7 @@ export const ModelCatalogRecordModelEvaluationPackage = () => {
                 <FormLabel>{t("resources.model_catalog.commands.recordModelEvaluationPackage.fields.trainingJobId.label", "Training Job Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
-                  resource="training_participant_eligibility"
+                  resource="training_job_dashboard"
                   dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="trainingJobId"
@@ -110,9 +110,9 @@ export const ModelCatalogRecordModelEvaluationPackage = () => {
                   placeholder={t("resources.model_catalog.commands.recordModelEvaluationPackage.fields.trainingJobId.placeholder", "Select Training Job Id")}
                   meta={{
                     idField: "trainingJobId",
-                    label: t("resources.model_catalog.commands.recordModelEvaluationPackage.fields.trainingJobId.label", "Training Participant Eligibility"),
+                    label: t("resources.model_catalog.commands.recordModelEvaluationPackage.fields.trainingJobId.label", "Training Job Dashboard"),
                     aggregateRoute: "trainingjob",
-                    queryRoute: "trainingparticipanteligibility",
+                    queryRoute: "trainingjobdashboard",
                   }}
                 />
                 <FormMessage />

@@ -36,6 +36,7 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
+    configurationName: searchParams.get("configurationName") ?? undefined,
     federationId: searchParams.get("federationId") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
     initialModelId: searchParams.get("initialModelId") ?? undefined,
@@ -99,6 +100,24 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
       <CreateViewHeader title={t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.label", "Define Training Run Configuration")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DefineTrainingRunConfiguration validation failed", errors))} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="configurationName"
+            rules={{ required: "Configuration Name is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.configurationName.label", "Configuration Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Configuration Name"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="federationId"

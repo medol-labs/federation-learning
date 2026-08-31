@@ -45,6 +45,11 @@ export const TrainingRunConfigurationCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.configurationName.label", "Configuration Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.configurationName, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.federationId.label", "Federation Id")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.federationId, t)}</p>
             </div>

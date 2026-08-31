@@ -929,6 +929,11 @@
           "title": "Submit Training Job"
         },
         {
+          "id": "slice-b90f5d7f",
+          "name": "TrainingJobDashboard",
+          "title": "Training Job Dashboard"
+        },
+        {
           "id": "slice-ba4b3f70",
           "name": "TrainingParticipantEligibility",
           "title": "Training Participant Eligibility"
@@ -957,11 +962,6 @@
           "id": "slice-44fd29f8",
           "name": "CompleteTrainingJob",
           "title": "Complete Training Job"
-        },
-        {
-          "id": "slice-b90f5d7f",
-          "name": "TrainingJobDashboard",
-          "title": "Training Job Dashboard"
         },
         {
           "id": "slice-093e2668",
@@ -1778,6 +1778,14 @@
           "name": "RolePermissionGrant",
           "title": "Role Permission Grant",
           "states": []
+        },
+        {
+          "id": "concept-938c4b38",
+          "name": "ServiceAccountApiToken",
+          "title": "Service Account Api Token",
+          "states": [
+            "Issued"
+          ]
         }
       ],
       "externalSystems": [],
@@ -1818,6 +1826,11 @@
           "title": "Assign Role To User"
         },
         {
+          "id": "slice-b263007b",
+          "name": "IssueServiceAccountApiToken",
+          "title": "Issue Service Account Api Token"
+        },
+        {
           "id": "slice-425842d5",
           "name": "UserAccountCatalogs",
           "title": "User Account Catalogs"
@@ -1841,6 +1854,11 @@
           "id": "slice-4d6e3a7f",
           "name": "RolePermissionGrantCatalog",
           "title": "Role Permission Grant Catalog"
+        },
+        {
+          "id": "slice-6047e82e",
+          "name": "ServiceAccountApiTokenCatalogs",
+          "title": "Service Account Api Token Catalogs"
         }
       ]
     }
@@ -3059,11 +3077,6 @@
           "title": "Submit Training Job"
         },
         {
-          "id": "slice-ba4b3f70",
-          "name": "TrainingParticipantEligibility",
-          "title": "Training Participant Eligibility"
-        },
-        {
           "id": "slice-dde5a363",
           "name": "PauseTrainingJob",
           "title": "Pause Training Job"
@@ -3092,6 +3105,11 @@
           "id": "slice-b90f5d7f",
           "name": "TrainingJobDashboard",
           "title": "Training Job Dashboard"
+        },
+        {
+          "id": "slice-ba4b3f70",
+          "name": "TrainingParticipantEligibility",
+          "title": "Training Participant Eligibility"
         }
       ]
     },
@@ -3923,6 +3941,27 @@
           "id": "slice-4d6e3a7f",
           "name": "RolePermissionGrantCatalog",
           "title": "Role Permission Grant Catalog"
+        }
+      ]
+    },
+    {
+      "id": "concept-938c4b38",
+      "name": "ServiceAccountApiToken",
+      "title": "Service Account Api Token",
+      "context": "IdentityAccessManagement",
+      "states": [
+        "Issued"
+      ],
+      "slices": [
+        {
+          "id": "slice-b263007b",
+          "name": "IssueServiceAccountApiToken",
+          "title": "Issue Service Account Api Token"
+        },
+        {
+          "id": "slice-6047e82e",
+          "name": "ServiceAccountApiTokenCatalogs",
+          "title": "Service Account Api Token Catalogs"
         }
       ]
     }
@@ -6916,39 +6955,6 @@
       "startsLifecycle": false
     },
     {
-      "id": "transition-709c45ae",
-      "context": "RuntimeAgentOperations",
-      "owner": {
-        "id": "concept-14e04b52",
-        "type": "concept",
-        "name": "RoundExecution",
-        "title": "Round Execution"
-      },
-      "slice": {
-        "id": "slice-0cecfd3f",
-        "name": "ObserveRuntimeEngineJob",
-        "title": "Observe Runtime Engine Job"
-      },
-      "command": {
-        "id": "command-4cdf6d17",
-        "name": "ObserveRuntimeEngineJob",
-        "title": "Observe Runtime Engine Job"
-      },
-      "event": {
-        "id": "event-bf91246c",
-        "name": "RuntimeEngineJobObserved",
-        "title": "Runtime Engine Job Observed"
-      },
-      "trigger": {
-        "id": "event-82cf8a97",
-        "name": "RoundExecutionStarted",
-        "title": "Round Execution Started"
-      },
-      "from": "Running",
-      "to": "Running",
-      "startsLifecycle": false
-    },
-    {
       "id": "transition-9d998b08",
       "context": "RuntimeAgentOperations",
       "owner": {
@@ -6977,7 +6983,6 @@
         "name": "RuntimeEngineJobObserved",
         "title": "Runtime Engine Job Observed"
       },
-      "from": "Running",
       "to": "Completed",
       "startsLifecycle": false
     },
@@ -7010,7 +7015,6 @@
         "name": "RuntimeEngineJobObserved",
         "title": "Runtime Engine Job Observed"
       },
-      "from": "Running",
       "to": "Failed",
       "startsLifecycle": false
     },
@@ -7585,6 +7589,33 @@
       },
       "to": "Active",
       "startsLifecycle": false
+    },
+    {
+      "id": "transition-0b54704d",
+      "context": "IdentityAccessManagement",
+      "owner": {
+        "id": "concept-938c4b38",
+        "type": "concept",
+        "name": "ServiceAccountApiToken",
+        "title": "Service Account Api Token"
+      },
+      "slice": {
+        "id": "slice-b263007b",
+        "name": "IssueServiceAccountApiToken",
+        "title": "Issue Service Account Api Token"
+      },
+      "command": {
+        "id": "command-de6c6b0e",
+        "name": "IssueServiceAccountApiToken",
+        "title": "Issue Service Account Api Token"
+      },
+      "event": {
+        "id": "event-1f95b4df",
+        "name": "ServiceAccountApiTokenIssued",
+        "title": "Service Account Api Token Issued"
+      },
+      "to": "Issued",
+      "startsLifecycle": true
     }
   ],
   "actors": [
@@ -7732,6 +7763,11 @@
       "id": "actor-55595ba0",
       "name": "IdentityAdministrator",
       "title": "Identity Administrator"
+    },
+    {
+      "id": "actor-edf36c71",
+      "name": "SuperAdministrator",
+      "title": "Super Administrator"
     }
   ],
   "slices": [
@@ -9430,15 +9466,15 @@
               "elementType": "READMODEL"
             },
             {
-              "id": "readmodel-9aa4f7c7",
-              "direction": "OUTBOUND",
-              "title": "Training Participant Eligibility",
-              "elementType": "READMODEL"
-            },
-            {
               "id": "readmodel-37cc6ebd",
               "direction": "OUTBOUND",
               "title": "Training Job Dashboard",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-9aa4f7c7",
+              "direction": "OUTBOUND",
+              "title": "Training Participant Eligibility",
               "elementType": "READMODEL"
             },
             {
@@ -20017,15 +20053,15 @@
               "elementType": "READMODEL"
             },
             {
-              "id": "readmodel-9aa4f7c7",
-              "direction": "OUTBOUND",
-              "title": "Training Participant Eligibility",
-              "elementType": "READMODEL"
-            },
-            {
               "id": "readmodel-37cc6ebd",
               "direction": "OUTBOUND",
               "title": "Training Job Dashboard",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-9aa4f7c7",
+              "direction": "OUTBOUND",
+              "title": "Training Participant Eligibility",
               "elementType": "READMODEL"
             },
             {
@@ -24124,6 +24160,20 @@
               "portOutput": false
             },
             {
+              "name": "configurationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "federationId",
               "type": "UUID",
               "cardinality": "Single",
@@ -24422,6 +24472,20 @@
               "technicalAttribute": true,
               "query": false,
               "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "configurationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
               "uploadFile": false,
               "file": false,
               "portOutput": false
@@ -24901,6 +24965,10 @@
                   "example": "cfg-1"
                 },
                 {
+                  "name": "configurationName",
+                  "example": "Readmission Risk Baseline"
+                },
+                {
                   "name": "federationId",
                   "example": "fed-1"
                 },
@@ -24982,6 +25050,10 @@
                 {
                   "name": "trainingRunConfigurationId",
                   "example": "cfg-1"
+                },
+                {
+                  "name": "configurationName",
+                  "example": "Readmission Risk Baseline"
                 },
                 {
                   "name": "federationId",
@@ -25097,6 +25169,10 @@
                 {
                   "name": "trainingRunConfigurationId",
                   "example": "cfg-2"
+                },
+                {
+                  "name": "configurationName",
+                  "example": "Invalid Round Budget"
                 },
                 {
                   "name": "federationId",
@@ -25223,6 +25299,20 @@
               "technicalAttribute": true,
               "query": false,
               "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "configurationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
               "uploadFile": false,
               "file": false,
               "portOutput": false
@@ -25545,6 +25635,20 @@
               "technicalAttribute": true,
               "query": false,
               "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "configurationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
               "uploadFile": false,
               "file": false,
               "portOutput": false
@@ -26025,6 +26129,9 @@
                   "example": "cfg-1"
                 },
                 {
+                  "name": "configurationName"
+                },
+                {
                   "name": "federationId"
                 },
                 {
@@ -26113,6 +26220,10 @@
                   "example": "cfg-1"
                 },
                 {
+                  "name": "configurationName",
+                  "example": "Readmission Risk Tuned"
+                },
+                {
                   "name": "federationId",
                   "example": "fed-1"
                 },
@@ -26198,6 +26309,10 @@
                 {
                   "name": "trainingRunConfigurationId",
                   "example": "cfg-1"
+                },
+                {
+                  "name": "configurationName",
+                  "example": "Readmission Risk Tuned"
                 },
                 {
                   "name": "federationId",
@@ -26332,6 +26447,10 @@
                 {
                   "name": "trainingRunConfigurationId",
                   "example": "cfg-2"
+                },
+                {
+                  "name": "configurationName",
+                  "example": "Locked Configuration Fix"
                 },
                 {
                   "name": "federationId",
@@ -26642,6 +26761,20 @@
               "portOutput": false
             },
             {
+              "name": "configurationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "federationId",
               "type": "UUID",
               "cardinality": "Single",
@@ -26692,7 +26825,7 @@
               "generated": false,
               "technicalAttribute": false,
               "query": false,
-              "display": true,
+              "display": false,
               "uploadFile": false,
               "file": false,
               "portOutput": false
@@ -27377,15 +27510,15 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-9aa4f7c7",
-              "direction": "OUTBOUND",
-              "title": "Training Participant Eligibility",
-              "elementType": "READMODEL"
-            },
-            {
               "id": "readmodel-37cc6ebd",
               "direction": "OUTBOUND",
               "title": "Training Job Dashboard",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-9aa4f7c7",
+              "direction": "OUTBOUND",
+              "title": "Training Participant Eligibility",
               "elementType": "READMODEL"
             },
             {
@@ -27455,6 +27588,9 @@
                 {
                   "name": "trainingRunConfigurationId",
                   "example": "config-1"
+                },
+                {
+                  "name": "configurationName"
                 },
                 {
                   "name": "federationId"
@@ -27770,15 +27906,15 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "readmodel-9aa4f7c7",
-              "direction": "OUTBOUND",
-              "title": "Training Participant Eligibility",
-              "elementType": "READMODEL"
-            },
-            {
               "id": "readmodel-37cc6ebd",
               "direction": "OUTBOUND",
               "title": "Training Job Dashboard",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-9aa4f7c7",
+              "direction": "OUTBOUND",
+              "title": "Training Participant Eligibility",
               "elementType": "READMODEL"
             },
             {
@@ -27932,8 +28068,559 @@
       }
     },
     {
-      "id": "slice-ba4b3f70",
+      "id": "slice-b90f5d7f",
       "index": 64,
+      "name": "TrainingJobDashboard",
+      "title": "Training Job Dashboard",
+      "chapter": "TrainingOrchestration",
+      "context": "TrainingOrchestration",
+      "tags": [],
+      "concepts": [
+        "TrainingJob"
+      ],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-37cc6ebd",
+          "name": "TrainingJobDashboard",
+          "title": "Training Job Dashboard",
+          "type": "READMODEL",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Training Job Dashboard",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "federationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "federationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "FederationCreated.federationName"
+                ],
+                "rule": "Lookup by federationId and denormalize the federation display name into the training job dashboard."
+              }
+            },
+            {
+              "name": "featureDomain",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "FeatureSchemaDefined.featureDomain"
+                ],
+                "rule": "Lookup by featureSchemaId and denormalize the feature schema domain into the training job dashboard."
+              }
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "FeatureSchemaDefined.version"
+                ],
+                "rule": "Lookup by featureSchemaId and denormalize the feature schema version into the training job dashboard."
+              }
+            },
+            {
+              "name": "objective",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "strategyName",
+              "type": "String",
+              "dictionary": "TRAINING_STRATEGY",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String",
+              "dictionary": "AGGREGATION_ALGORITHM",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "secureAggregationRequired",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "state",
+              "type": "TrainingJob.State",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "workflowStage",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "workflowStep",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "nextAction",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "availableActions",
+              "type": "String",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "blockedReason",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "canSubmit",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "canStartRound",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "canPause",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "canResume",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "canCancel",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "canComplete",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "currentRoundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "startedRuntimeCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumNodesPerRound",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roundProgressPercent",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "globalAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "finalModelId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "stopReason",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-034b788f",
+              "direction": "INBOUND",
+              "title": "Federation Created",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-c8c97883",
+              "direction": "INBOUND",
+              "title": "Feature Schema Defined",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-1c585df0",
+              "direction": "INBOUND",
+              "title": "Training Job Created",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-63af1a91",
+              "direction": "INBOUND",
+              "title": "Training Job Submitted",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-15179660",
+              "direction": "INBOUND",
+              "title": "Training Job Paused",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-f8f47712",
+              "direction": "INBOUND",
+              "title": "Training Job Resumed",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-45b81c49",
+              "direction": "INBOUND",
+              "title": "Training Job Canceled",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-229f5549",
+              "direction": "INBOUND",
+              "title": "Training Round Started",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-81791a42",
+              "direction": "INBOUND",
+              "title": "Training Round Completed",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-eb2a050e",
+              "direction": "INBOUND",
+              "title": "Training Job Completed",
+              "elementType": "EVENT"
+            }
+          ],
+          "listElement": true
+        }
+      ],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [],
+      "hotspots": []
+    },
+    {
+      "id": "slice-ba4b3f70",
+      "index": 65,
       "name": "TrainingParticipantEligibility",
       "title": "Training Participant Eligibility",
       "chapter": "TrainingOrchestration",
@@ -28619,7 +29306,7 @@
     },
     {
       "id": "slice-dde5a363",
-      "index": 65,
+      "index": 66,
       "name": "PauseTrainingJob",
       "title": "Pause Training Job",
       "chapter": "TrainingOrchestration",
@@ -28728,6 +29415,12 @@
           ],
           "dependencies": [
             {
+              "id": "readmodel-37cc6ebd",
+              "direction": "OUTBOUND",
+              "title": "Training Job Dashboard",
+              "elementType": "READMODEL"
+            },
+            {
               "id": "command-c4a297d1",
               "direction": "INBOUND",
               "title": "Pause Training Job",
@@ -28738,12 +29431,6 @@
               "direction": "OUTBOUND",
               "title": "Resume Training Job",
               "elementType": "COMMAND"
-            },
-            {
-              "id": "readmodel-37cc6ebd",
-              "direction": "OUTBOUND",
-              "title": "Training Job Dashboard",
-              "elementType": "READMODEL"
             }
           ]
         }
@@ -28786,7 +29473,7 @@
     },
     {
       "id": "slice-c1c60d34",
-      "index": 66,
+      "index": 67,
       "name": "ResumeTrainingJob",
       "title": "Resume Training Job",
       "chapter": "TrainingOrchestration",
@@ -28895,16 +29582,16 @@
           ],
           "dependencies": [
             {
-              "id": "command-1ac9bcf9",
-              "direction": "INBOUND",
-              "title": "Resume Training Job",
-              "elementType": "COMMAND"
-            },
-            {
               "id": "readmodel-37cc6ebd",
               "direction": "OUTBOUND",
               "title": "Training Job Dashboard",
               "elementType": "READMODEL"
+            },
+            {
+              "id": "command-1ac9bcf9",
+              "direction": "INBOUND",
+              "title": "Resume Training Job",
+              "elementType": "COMMAND"
             }
           ]
         }
@@ -28947,7 +29634,7 @@
     },
     {
       "id": "slice-3af09f8b",
-      "index": 67,
+      "index": 68,
       "name": "CancelTrainingJob",
       "title": "Cancel Training Job",
       "chapter": "TrainingOrchestration",
@@ -29056,16 +29743,16 @@
           ],
           "dependencies": [
             {
-              "id": "command-60bb4715",
-              "direction": "INBOUND",
-              "title": "Cancel Training Job",
-              "elementType": "COMMAND"
-            },
-            {
               "id": "readmodel-37cc6ebd",
               "direction": "OUTBOUND",
               "title": "Training Job Dashboard",
               "elementType": "READMODEL"
+            },
+            {
+              "id": "command-60bb4715",
+              "direction": "INBOUND",
+              "title": "Cancel Training Job",
+              "elementType": "COMMAND"
             }
           ]
         }
@@ -29108,7 +29795,7 @@
     },
     {
       "id": "slice-6ad9864e",
-      "index": 68,
+      "index": 69,
       "name": "ScheduleNextTrainingRound",
       "title": "Schedule Next Training Round",
       "chapter": "TrainingOrchestration",
@@ -29132,20 +29819,22 @@
           "fields": [],
           "dependencies": [
             {
-              "id": "command-5362dd01",
-              "direction": "OUTBOUND",
-              "title": "Select Training Round Participants",
-              "elementType": "COMMAND"
-            },
-            {
               "id": "event-81791a42",
               "direction": "INBOUND",
               "title": "Training Round Completed",
               "elementType": "EVENT"
+            },
+            {
+              "id": "command-5362dd01",
+              "direction": "OUTBOUND",
+              "title": "Select Training Round Participants",
+              "elementType": "COMMAND"
             }
           ],
           "metadata": {
-            "condition": "shouldStartNextRound == true",
+            "on": "TrainingRoundCompleted",
+            "onKind": "event",
+            "condition": "roundNumber < maxRounds",
             "emits": "SelectTrainingRoundParticipants"
           }
         }
@@ -29156,7 +29845,7 @@
     },
     {
       "id": "slice-44fd29f8",
-      "index": 69,
+      "index": 70,
       "name": "CompleteTrainingJob",
       "title": "Complete Training Job",
       "chapter": "TrainingOrchestration",
@@ -29200,7 +29889,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRoundCompleted.roundId"
+                ]
+              }
             },
             {
               "name": "finalModelId",
@@ -29214,7 +29909,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRoundCompleted.aggregatedModelId"
+                ]
+              }
             },
             {
               "name": "stopReason",
@@ -29222,8 +29923,8 @@
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
+              "generated": true,
+              "technicalAttribute": true,
               "query": false,
               "display": false,
               "uploadFile": false,
@@ -29233,15 +29934,9 @@
           ],
           "dependencies": [
             {
-              "id": "automation-932e4167",
+              "id": "automation-226b76c2",
               "direction": "INBOUND",
-              "title": "Complete Job When Round Budget Exhausted",
-              "elementType": "PROCESSOR"
-            },
-            {
-              "id": "automation-85fb17c6",
-              "direction": "INBOUND",
-              "title": "Complete Job When Global Metric Reached",
+              "title": "Complete Job When Training Stop Criteria Met",
               "elementType": "PROCESSOR"
             },
             {
@@ -29321,16 +30016,16 @@
           ],
           "dependencies": [
             {
-              "id": "command-7229cb35",
-              "direction": "INBOUND",
-              "title": "Complete Training Job",
-              "elementType": "COMMAND"
-            },
-            {
               "id": "readmodel-37cc6ebd",
               "direction": "OUTBOUND",
               "title": "Training Job Dashboard",
               "elementType": "READMODEL"
+            },
+            {
+              "id": "command-7229cb35",
+              "direction": "INBOUND",
+              "title": "Complete Training Job",
+              "elementType": "COMMAND"
             },
             {
               "id": "automation-375412f8",
@@ -29345,41 +30040,20 @@
       "screens": [],
       "processors": [
         {
-          "id": "automation-932e4167",
-          "name": "CompleteJobWhenRoundBudgetExhausted",
-          "title": "Complete Job When Round Budget Exhausted",
+          "id": "automation-226b76c2",
+          "name": "CompleteJobWhenTrainingStopCriteriaMet",
+          "title": "Complete Job When Training Stop Criteria Met",
           "type": "PROCESSOR",
           "modelContext": "TrainingOrchestration",
           "slice": "Complete Training Job",
           "fields": [],
           "dependencies": [
-            {
-              "id": "command-7229cb35",
-              "direction": "OUTBOUND",
-              "title": "Complete Training Job",
-              "elementType": "COMMAND"
-            },
             {
               "id": "event-81791a42",
               "direction": "INBOUND",
               "title": "Training Round Completed",
               "elementType": "EVENT"
-            }
-          ],
-          "metadata": {
-            "condition": "currentRoundNumber >= maxRounds",
-            "emits": "CompleteTrainingJob"
-          }
-        },
-        {
-          "id": "automation-85fb17c6",
-          "name": "CompleteJobWhenGlobalMetricReached",
-          "title": "Complete Job When Global Metric Reached",
-          "type": "PROCESSOR",
-          "modelContext": "TrainingOrchestration",
-          "slice": "Complete Training Job",
-          "fields": [],
-          "dependencies": [
+            },
             {
               "id": "command-7229cb35",
               "direction": "OUTBOUND",
@@ -29388,7 +30062,9 @@
             }
           ],
           "metadata": {
-            "condition": "globalAccuracy >= minimumAccuracy",
+            "on": "TrainingRoundCompleted",
+            "onKind": "event",
+            "condition": "roundNumber >= maxRounds",
             "emits": "CompleteTrainingJob"
           }
         }
@@ -29401,557 +30077,6 @@
         "eventId": "event-eb2a050e",
         "to": "Completed"
       }
-    },
-    {
-      "id": "slice-b90f5d7f",
-      "index": 70,
-      "name": "TrainingJobDashboard",
-      "title": "Training Job Dashboard",
-      "chapter": "TrainingOrchestration",
-      "context": "TrainingOrchestration",
-      "tags": [],
-      "concepts": [
-        "TrainingJob"
-      ],
-      "commands": [],
-      "events": [],
-      "readmodels": [
-        {
-          "id": "readmodel-37cc6ebd",
-          "name": "TrainingJobDashboard",
-          "title": "Training Job Dashboard",
-          "type": "READMODEL",
-          "modelContext": "TrainingOrchestration",
-          "slice": "Training Job Dashboard",
-          "fields": [
-            {
-              "name": "trainingJobId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": true,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "federationId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "trainingRunConfigurationId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "featureSchemaId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "federationName",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "FederationCreated.federationName"
-                ],
-                "rule": "Lookup by federationId and denormalize the federation display name into the training job dashboard."
-              }
-            },
-            {
-              "name": "featureDomain",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "FeatureSchemaDefined.featureDomain"
-                ],
-                "rule": "Lookup by featureSchemaId and denormalize the feature schema domain into the training job dashboard."
-              }
-            },
-            {
-              "name": "featureSchemaVersion",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "FeatureSchemaDefined.version"
-                ],
-                "rule": "Lookup by featureSchemaId and denormalize the feature schema version into the training job dashboard."
-              }
-            },
-            {
-              "name": "objective",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "strategyName",
-              "type": "String",
-              "dictionary": "TRAINING_STRATEGY",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "aggregationAlgorithm",
-              "type": "String",
-              "dictionary": "AGGREGATION_ALGORITHM",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "secureAggregationRequired",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "state",
-              "type": "TrainingJob.State",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "workflowStage",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "workflowStep",
-              "type": "Int",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "nextAction",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "availableActions",
-              "type": "String",
-              "cardinality": "Multiple",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "blockedReason",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "canSubmit",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "canStartRound",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "canPause",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "canResume",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "canCancel",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "canComplete",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "currentRoundNumber",
-              "type": "Int",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "startedRuntimeCount",
-              "type": "Int",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "minimumNodesPerRound",
-              "type": "Int",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "maxRounds",
-              "type": "Int",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "roundProgressPercent",
-              "type": "Int",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "globalAccuracy",
-              "type": "Decimal",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "finalModelId",
-              "type": "UUID",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "stopReason",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            }
-          ],
-          "dependencies": [
-            {
-              "id": "event-034b788f",
-              "direction": "INBOUND",
-              "title": "Federation Created",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "event-c8c97883",
-              "direction": "INBOUND",
-              "title": "Feature Schema Defined",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "event-1c585df0",
-              "direction": "INBOUND",
-              "title": "Training Job Created",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "event-63af1a91",
-              "direction": "INBOUND",
-              "title": "Training Job Submitted",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "event-15179660",
-              "direction": "INBOUND",
-              "title": "Training Job Paused",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "event-f8f47712",
-              "direction": "INBOUND",
-              "title": "Training Job Resumed",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "event-45b81c49",
-              "direction": "INBOUND",
-              "title": "Training Job Canceled",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "event-229f5549",
-              "direction": "INBOUND",
-              "title": "Training Round Started",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "event-81791a42",
-              "direction": "INBOUND",
-              "title": "Training Round Completed",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "event-eb2a050e",
-              "direction": "INBOUND",
-              "title": "Training Job Completed",
-              "elementType": "EVENT"
-            }
-          ],
-          "listElement": true
-        }
-      ],
-      "screens": [],
-      "processors": [],
-      "specifications": [],
-      "actors": [],
-      "hotspots": []
     },
     {
       "id": "slice-093e2668",
@@ -30099,6 +30224,34 @@
             {
               "name": "roundNumber",
               "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -30303,6 +30456,34 @@
             {
               "name": "roundNumber",
               "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -30543,6 +30724,12 @@
                   "name": "roundNumber"
                 },
                 {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
                   "name": "minimumNodesPerRound"
                 },
                 {
@@ -30626,6 +30813,12 @@
                 },
                 {
                   "name": "roundNumber"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
                 },
                 {
                   "name": "minimumNodesPerRound"
@@ -30848,6 +31041,12 @@
                 },
                 {
                   "name": "roundNumber"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
                 },
                 {
                   "name": "minimumNodesPerRound"
@@ -31152,6 +31351,50 @@
                   "HomomorphicEncryptionContextPrepared.minimumNodesPerRound"
                 ],
                 "rule": "Use the selected participant snapshot for plaintext rounds and the prepared encryption context for secure aggregation rounds."
+              }
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingRoundParticipantsSelected.maxRounds",
+                  "HomomorphicEncryptionContextPrepared.maxRounds"
+                ],
+                "rule": "Carry the configured maximum round budget for downstream completion and next-round decisions."
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "TrainingRoundParticipantsSelected.minimumAccuracy",
+                  "HomomorphicEncryptionContextPrepared.minimumAccuracy"
+                ],
+                "rule": "Carry the target global accuracy for downstream completion and next-round decisions."
               }
             },
             {
@@ -31483,6 +31726,34 @@
               "portOutput": false
             },
             {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "secureAggregationRequired",
               "type": "Boolean",
               "cardinality": "Single",
@@ -31570,6 +31841,12 @@
           ],
           "dependencies": [
             {
+              "id": "readmodel-37cc6ebd",
+              "direction": "OUTBOUND",
+              "title": "Training Job Dashboard",
+              "elementType": "READMODEL"
+            },
+            {
               "id": "command-c4a297d1",
               "direction": "OUTBOUND",
               "title": "Pause Training Job",
@@ -31580,12 +31857,6 @@
               "direction": "OUTBOUND",
               "title": "Cancel Training Job",
               "elementType": "COMMAND"
-            },
-            {
-              "id": "readmodel-37cc6ebd",
-              "direction": "OUTBOUND",
-              "title": "Training Job Dashboard",
-              "elementType": "READMODEL"
             },
             {
               "id": "command-4a2e471b",
@@ -31777,6 +32048,34 @@
             {
               "name": "minimumNodesPerRound",
               "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -32018,6 +32317,12 @@
                   "name": "minimumNodesPerRound"
                 },
                 {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
                   "name": "secureAggregationRequired"
                 },
                 {
@@ -32080,6 +32385,12 @@
                 },
                 {
                   "name": "minimumNodesPerRound"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
                 },
                 {
                   "name": "secureAggregationRequired"
@@ -32154,6 +32465,12 @@
                   "name": "minimumNodesPerRound"
                 },
                 {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
                   "name": "secureAggregationRequired"
                 },
                 {
@@ -32216,6 +32533,12 @@
                 },
                 {
                   "name": "minimumNodesPerRound"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
                 },
                 {
                   "name": "secureAggregationRequired"
@@ -33124,6 +33447,12 @@
                   "name": "minimumNodesPerRound"
                 },
                 {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
                   "name": "secureAggregationRequired"
                 },
                 {
@@ -33326,6 +33655,12 @@
                 },
                 {
                   "name": "roundNumber"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
                 },
                 {
                   "name": "aggregatedModelId",
@@ -35514,6 +35849,46 @@
               }
             },
             {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRoundStarted.maxRounds"
+                ]
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRoundStarted.minimumAccuracy"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -35987,6 +36362,12 @@
                   "example": "2"
                 },
                 {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
                   "name": "secureAggregationRequired"
                 },
                 {
@@ -36166,6 +36547,12 @@
                 },
                 {
                   "name": "roundNumber"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
                 },
                 {
                   "name": "runtimeId",
@@ -36618,6 +37005,46 @@
               }
             },
             {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRoundParticipantsSelected.maxRounds"
+                ]
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRoundParticipantsSelected.minimumAccuracy"
+                ]
+              }
+            },
+            {
               "name": "secureAggregationRequired",
               "type": "Boolean",
               "cardinality": "Single",
@@ -36806,6 +37233,34 @@
             {
               "name": "minimumNodesPerRound",
               "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -37008,6 +37463,46 @@
                 "kind": "direct",
                 "from": [
                   "SecureAggregationCompleted.roundNumber"
+                ]
+              }
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationCompleted.maxRounds"
+                ]
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationCompleted.minimumAccuracy"
                 ]
               }
             },
@@ -37236,6 +37731,34 @@
             {
               "name": "roundNumber",
               "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -37484,6 +38007,46 @@
               }
             },
             {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "GlobalModelUpdated.maxRounds"
+                ]
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "GlobalModelUpdated.minimumAccuracy"
+                ]
+              }
+            },
+            {
               "name": "aggregatedModelId",
               "type": "UUID",
               "cardinality": "Single",
@@ -37683,6 +38246,34 @@
             {
               "name": "roundNumber",
               "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -37962,6 +38553,46 @@
               }
             },
             {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "GlobalModelEvaluationSubmitted.maxRounds"
+                ]
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "GlobalModelEvaluationSubmitted.minimumAccuracy"
+                ]
+              }
+            },
+            {
               "name": "aggregatedModelId",
               "type": "UUID",
               "cardinality": "Single",
@@ -38186,6 +38817,34 @@
               "portOutput": false
             },
             {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "aggregatedModelId",
               "type": "UUID",
               "cardinality": "Single",
@@ -38286,22 +38945,22 @@
           ],
           "dependencies": [
             {
+              "id": "readmodel-37cc6ebd",
+              "direction": "OUTBOUND",
+              "title": "Training Job Dashboard",
+              "elementType": "READMODEL"
+            },
+            {
               "id": "automation-84abdd9e",
               "direction": "OUTBOUND",
               "title": "Select Next Round Participants When Training Should Continue",
               "elementType": "PROCESSOR"
             },
             {
-              "id": "automation-932e4167",
+              "id": "automation-226b76c2",
               "direction": "OUTBOUND",
-              "title": "Complete Job When Round Budget Exhausted",
+              "title": "Complete Job When Training Stop Criteria Met",
               "elementType": "PROCESSOR"
-            },
-            {
-              "id": "readmodel-37cc6ebd",
-              "direction": "OUTBOUND",
-              "title": "Training Job Dashboard",
-              "elementType": "READMODEL"
             },
             {
               "id": "command-efac37e1",
@@ -38385,6 +39044,12 @@
                   "name": "roundNumber"
                 },
                 {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
                   "name": "aggregatedModelId",
                   "example": "model-1"
                 },
@@ -38438,6 +39103,12 @@
                   "name": "roundNumber"
                 },
                 {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
                   "name": "aggregatedModelId",
                   "example": "model-1"
                 },
@@ -38486,6 +39157,12 @@
                 },
                 {
                   "name": "roundNumber"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
                 },
                 {
                   "name": "aggregatedModelId",
@@ -38548,6 +39225,12 @@
                   "name": "roundNumber"
                 },
                 {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
                   "name": "secureAggregationSessionId"
                 },
                 {
@@ -38595,6 +39278,12 @@
                 },
                 {
                   "name": "roundNumber"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
                 },
                 {
                   "name": "aggregatedModelId",
@@ -47887,6 +48576,46 @@
               }
             },
             {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationRequested.maxRounds"
+                ]
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationRequested.minimumAccuracy"
+                ]
+              }
+            },
+            {
               "name": "secureAggregationRequired",
               "type": "Boolean",
               "cardinality": "Single",
@@ -48090,6 +48819,34 @@
             {
               "name": "minimumNodesPerRound",
               "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -48421,6 +49178,46 @@
               }
             },
             {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationSessionCreated.maxRounds"
+                ]
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationSessionCreated.minimumAccuracy"
+                ]
+              }
+            },
+            {
               "name": "secureAggregationRequired",
               "type": "Boolean",
               "cardinality": "Single",
@@ -48610,6 +49407,34 @@
             {
               "name": "minimumNodesPerRound",
               "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -48935,6 +49760,46 @@
               }
             },
             {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationParticipantsSelected.maxRounds"
+                ]
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "SecureAggregationParticipantsSelected.minimumAccuracy"
+                ]
+              }
+            },
+            {
               "name": "secureAggregationRequired",
               "type": "Boolean",
               "cardinality": "Single",
@@ -49124,6 +49989,34 @@
             {
               "name": "minimumNodesPerRound",
               "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -49436,6 +50329,46 @@
               }
             },
             {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.maxRounds"
+                ]
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.minimumAccuracy"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -49668,6 +50601,34 @@
             {
               "name": "roundNumber",
               "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -49966,6 +50927,46 @@
               }
             },
             {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "EncryptedModelUpdateReceived.maxRounds"
+                ]
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "EncryptedModelUpdateReceived.minimumAccuracy"
+                ]
+              }
+            },
+            {
               "name": "aggregatedModelId",
               "type": "UUID",
               "cardinality": "Single",
@@ -50079,6 +51080,34 @@
             {
               "name": "roundNumber",
               "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -59209,6 +60238,26 @@
               }
             },
             {
+              "name": "roundExecutionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ParticipantExecutionPlanDispatched.executionPlanId"
+                ]
+              }
+            },
+            {
               "name": "executionSessionId",
               "type": "UUID",
               "cardinality": "Single",
@@ -59650,6 +60699,20 @@
               "portOutput": false
             },
             {
+              "name": "roundExecutionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "executionSessionId",
               "type": "UUID",
               "cardinality": "Single",
@@ -60032,6 +61095,26 @@
                 "kind": "direct",
                 "from": [
                   "ExecutionPlanReceived.executionPlanId"
+                ]
+              }
+            },
+            {
+              "name": "roundExecutionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanReceived.roundExecutionId"
                 ]
               }
             },
@@ -60483,6 +61566,20 @@
               "portOutput": false
             },
             {
+              "name": "roundExecutionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "executionSessionId",
               "type": "UUID",
               "cardinality": "Single",
@@ -60913,6 +62010,20 @@
               "idAttribute": true,
               "generated": false,
               "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roundExecutionId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
               "query": false,
               "display": false,
               "uploadFile": false,
@@ -61396,6 +62507,9 @@
                   "example": "execution-plan-1"
                 },
                 {
+                  "name": "roundExecutionId"
+                },
+                {
                   "name": "executionSessionId"
                 },
                 {
@@ -61469,6 +62583,9 @@
                   "example": "execution-plan-1"
                 },
                 {
+                  "name": "roundExecutionId"
+                },
+                {
                   "name": "executionSessionId"
                 },
                 {
@@ -61540,6 +62657,9 @@
                 {
                   "name": "executionPlanId",
                   "example": "execution-plan-1"
+                },
+                {
+                  "name": "roundExecutionId"
                 },
                 {
                   "name": "executionSessionId"
@@ -61649,6 +62769,9 @@
                   "example": "execution-plan-2"
                 },
                 {
+                  "name": "roundExecutionId"
+                },
+                {
                   "name": "executionSessionId"
                 },
                 {
@@ -61722,6 +62845,9 @@
                   "example": "execution-plan-2"
                 },
                 {
+                  "name": "roundExecutionId"
+                },
+                {
                   "name": "executionSessionId"
                 },
                 {
@@ -61793,6 +62919,9 @@
                 {
                   "name": "executionPlanId",
                   "example": "execution-plan-2"
+                },
+                {
+                  "name": "roundExecutionId"
                 },
                 {
                   "name": "executionSessionId"
@@ -61921,13 +63050,19 @@
               "cardinality": "Single",
               "optional": false,
               "idAttribute": true,
-              "generated": true,
+              "generated": false,
               "technicalAttribute": true,
               "query": false,
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ExecutionPlanAccepted.roundExecutionId"
+                ]
+              }
             },
             {
               "name": "executionSessionId",
@@ -63172,6 +64307,9 @@
                   "example": "execution-plan-1"
                 },
                 {
+                  "name": "roundExecutionId"
+                },
+                {
                   "name": "executionSessionId"
                 },
                 {
@@ -63432,6 +64570,9 @@
                 {
                   "name": "executionPlanId",
                   "example": "execution-plan-2"
+                },
+                {
+                  "name": "roundExecutionId"
                 },
                 {
                   "name": "executionSessionId"
@@ -65139,12 +66280,7 @@
         }
       ],
       "actors": [],
-      "hotspots": [],
-      "stateChange": {
-        "event": "RuntimeEngineJobObserved",
-        "eventId": "event-bf91246c",
-        "to": "Running"
-      }
+      "hotspots": []
     },
     {
       "id": "slice-b1a48287",
@@ -74232,12 +75368,8 @@
           "title": "Reject Duplicate Username",
           "specification": "User Account Username Unique",
           "rule": "Active user account usernames must be unique.",
-          "expressions": [
-            "unique UserAccount.username"
-          ],
-          "validates": [
-            "unique UserAccount.username"
-          ],
+          "expressions": [],
+          "validates": [],
           "given": [
             {
               "title": "User Account Registered",
@@ -75370,8 +76502,539 @@
       }
     },
     {
-      "id": "slice-425842d5",
+      "id": "slice-b263007b",
       "index": 165,
+      "name": "IssueServiceAccountApiToken",
+      "title": "Issue Service Account Api Token",
+      "chapter": "IdentityAccessManagement",
+      "context": "IdentityAccessManagement",
+      "tags": [
+        {
+          "name": "userAccountId"
+        }
+      ],
+      "port": true,
+      "concepts": [
+        "ServiceAccountApiToken"
+      ],
+      "commands": [
+        {
+          "id": "command-de6c6b0e",
+          "name": "IssueServiceAccountApiToken",
+          "title": "Issue Service Account Api Token",
+          "type": "COMMAND",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "Issue Service Account Api Token",
+          "fields": [
+            {
+              "name": "apiTokenId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": true,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "userAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "UserAccountCatalog.userAccountId"
+                ]
+              }
+            },
+            {
+              "name": "tokenName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "resultFields": [
+            {
+              "name": "apiToken",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-1f95b4df",
+              "direction": "OUTBOUND",
+              "title": "Service Account Api Token Issued",
+              "elementType": "EVENT"
+            }
+          ],
+          "startsLifecycle": true,
+          "port": true
+        }
+      ],
+      "events": [
+        {
+          "id": "event-1f95b4df",
+          "name": "ServiceAccountApiTokenIssued",
+          "title": "Service Account Api Token Issued",
+          "type": "EVENT",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "Issue Service Account Api Token",
+          "fields": [
+            {
+              "name": "apiTokenId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "userAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "username",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "tokenName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "tokenPrefix",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "tokenDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "issuedAt",
+              "type": "LocalDateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roles",
+              "type": "String",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "permissions",
+              "type": "String",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-de6c6b0e",
+              "direction": "INBOUND",
+              "title": "Issue Service Account Api Token",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-30d2c471",
+              "direction": "OUTBOUND",
+              "title": "Service Account Api Token Catalog",
+              "elementType": "READMODEL"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "processors": [],
+      "specifications": [
+        {
+          "id": "gwt-f91c73f0",
+          "chapter": "IdentityAccessManagement",
+          "sliceName": "Issue Service Account Api Token",
+          "title": "Super Administrator Issues Token For Service Account",
+          "specification": "Only Super Administrator Can Issue Service Account Api Token",
+          "rule": "Service account API tokens are intended for third-party system integration only.\nNormal users do not issue tokens for themselves. A super administrator creates\na dedicated service account user, grants the required roles, and issues a long-lived\ntoken for that account.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "User Account Registered",
+              "id": "event-d81a5d20",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "userAccountId",
+                  "example": "00000000-0000-0000-0000-000000000001"
+                },
+                {
+                  "name": "username",
+                  "example": "dictionary-sync-service"
+                },
+                {
+                  "name": "providerSubject"
+                },
+                {
+                  "name": "passwordHash"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Issue Service Account Api Token",
+              "id": "command-de6c6b0e",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "apiTokenId"
+                },
+                {
+                  "name": "userAccountId",
+                  "example": "00000000-0000-0000-0000-000000000001"
+                },
+                {
+                  "name": "tokenName",
+                  "example": "dictionary init"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Service Account Api Token Issued",
+              "id": "event-1f95b4df",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "apiTokenId"
+                },
+                {
+                  "name": "userAccountId",
+                  "example": "00000000-0000-0000-0000-000000000001"
+                },
+                {
+                  "name": "username"
+                },
+                {
+                  "name": "tokenName",
+                  "example": "dictionary init"
+                },
+                {
+                  "name": "tokenPrefix"
+                },
+                {
+                  "name": "tokenDigest"
+                },
+                {
+                  "name": "issuedAt"
+                },
+                {
+                  "name": "roles"
+                },
+                {
+                  "name": "permissions"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-2febdf8c",
+          "chapter": "IdentityAccessManagement",
+          "sliceName": "Issue Service Account Api Token",
+          "title": "Issued Event Stores Digest Instead Of Plaintext Token",
+          "specification": "Service Account Api Token Plaintext Returned Once",
+          "rule": "The generated API token plaintext is returned only as the command result.\nDomain events and read models store only the token prefix and token digest.",
+          "expressions": [],
+          "validates": [],
+          "given": [],
+          "when": [
+            {
+              "title": "Issue Service Account Api Token",
+              "id": "command-de6c6b0e",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "apiTokenId"
+                },
+                {
+                  "name": "userAccountId"
+                },
+                {
+                  "name": "tokenName",
+                  "example": "offline integration"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Service Account Api Token Issued",
+              "id": "event-1f95b4df",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "apiTokenId"
+                },
+                {
+                  "name": "userAccountId"
+                },
+                {
+                  "name": "username"
+                },
+                {
+                  "name": "tokenName",
+                  "example": "offline integration"
+                },
+                {
+                  "name": "tokenPrefix"
+                },
+                {
+                  "name": "tokenDigest"
+                },
+                {
+                  "name": "issuedAt"
+                },
+                {
+                  "name": "roles"
+                },
+                {
+                  "name": "permissions"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gwt-1363bf63",
+          "chapter": "IdentityAccessManagement",
+          "sliceName": "Issue Service Account Api Token",
+          "title": "Issued Token Captures Current Permissions",
+          "specification": "Service Account Api Token Captures Permission Snapshot",
+          "rule": "The issued token carries the service account roles and permissions at issuance time.\nWhen permissions change, the operator generates a new token for the service account.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Role Assigned To User",
+              "id": "event-174883bc",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "userAccountId"
+                },
+                {
+                  "name": "roleCode",
+                  "example": "DictionaryInitializer"
+                }
+              ]
+            },
+            {
+              "title": "Permission Granted To Role",
+              "id": "event-4d13df38",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "roleId"
+                },
+                {
+                  "name": "roleCode",
+                  "example": "DictionaryInitializer"
+                },
+                {
+                  "name": "permissionCode",
+                  "example": "register_dictionary:execute"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Issue Service Account Api Token",
+              "id": "command-de6c6b0e",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "apiTokenId"
+                },
+                {
+                  "name": "userAccountId"
+                },
+                {
+                  "name": "tokenName",
+                  "example": "dictionary initializer"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Service Account Api Token Issued",
+              "id": "event-1f95b4df",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "apiTokenId"
+                },
+                {
+                  "name": "userAccountId"
+                },
+                {
+                  "name": "username"
+                },
+                {
+                  "name": "tokenName",
+                  "example": "dictionary initializer"
+                },
+                {
+                  "name": "tokenPrefix"
+                },
+                {
+                  "name": "tokenDigest"
+                },
+                {
+                  "name": "issuedAt"
+                },
+                {
+                  "name": "roles"
+                },
+                {
+                  "name": "permissions"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "actors": [
+        {
+          "id": "actor-edf36c71",
+          "name": "SuperAdministrator",
+          "title": "Super Administrator"
+        }
+      ],
+      "hotspots": [],
+      "stateChange": {
+        "event": "ServiceAccountApiTokenIssued",
+        "eventId": "event-1f95b4df",
+        "to": "Issued"
+      }
+    },
+    {
+      "id": "slice-425842d5",
+      "index": 166,
       "name": "UserAccountCatalogs",
       "title": "User Account Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -75499,7 +77162,7 @@
     },
     {
       "id": "slice-10714181",
-      "index": 166,
+      "index": 167,
       "name": "RoleCatalogs",
       "title": "Role Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -75587,7 +77250,7 @@
     },
     {
       "id": "slice-9f1bec7a",
-      "index": 167,
+      "index": 168,
       "name": "PermissionCatalogs",
       "title": "Permission Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -75689,7 +77352,7 @@
     },
     {
       "id": "slice-33855446",
-      "index": 168,
+      "index": 169,
       "name": "UserRoleAssignmentCatalog",
       "title": "User Role Assignment Catalog",
       "chapter": "IdentityAccessManagement",
@@ -75817,7 +77480,7 @@
     },
     {
       "id": "slice-4d6e3a7f",
-      "index": 169,
+      "index": 170,
       "name": "RolePermissionGrantCatalog",
       "title": "Role Permission Grant Catalog",
       "chapter": "IdentityAccessManagement",
@@ -75966,6 +77629,164 @@
           "id": "actor-55595ba0",
           "name": "IdentityAdministrator",
           "title": "Identity Administrator"
+        }
+      ],
+      "hotspots": []
+    },
+    {
+      "id": "slice-6047e82e",
+      "index": 171,
+      "name": "ServiceAccountApiTokenCatalogs",
+      "title": "Service Account Api Token Catalogs",
+      "chapter": "IdentityAccessManagement",
+      "context": "IdentityAccessManagement",
+      "tags": [],
+      "concepts": [
+        "ServiceAccountApiToken"
+      ],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-30d2c471",
+          "name": "ServiceAccountApiTokenCatalog",
+          "title": "Service Account Api Token Catalog",
+          "type": "READMODEL",
+          "modelContext": "IdentityAccessManagement",
+          "slice": "Service Account Api Token Catalogs",
+          "fields": [
+            {
+              "name": "apiTokenId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "userAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "username",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "tokenName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "tokenPrefix",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "issuedAt",
+              "type": "LocalDateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roles",
+              "type": "String",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "permissions",
+              "type": "String",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-1f95b4df",
+              "direction": "INBOUND",
+              "title": "Service Account Api Token Issued",
+              "elementType": "EVENT"
+            }
+          ],
+          "listElement": true
+        }
+      ],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [
+        {
+          "id": "actor-edf36c71",
+          "name": "SuperAdministrator",
+          "title": "Super Administrator"
         }
       ],
       "hotspots": []

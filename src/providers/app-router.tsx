@@ -228,6 +228,11 @@ import {
   SecureAggregationSessionCatalogCompleteSecureAggregation,
 } from "../pages/secure-aggregation-session-catalog";
 import {
+  ServiceAccountApiTokenCatalogList,
+  ServiceAccountApiTokenCatalogShow,
+  ServiceAccountApiTokenCatalogIssueServiceAccountApiToken,
+} from "../pages/service-account-api-token-catalog";
+import {
   StagedFileCatalogList,
   StagedFileCatalogShow,
   StagedFileCatalogStageFileUpload,
@@ -243,19 +248,16 @@ import {
 import {
   TrainingJobDashboardList,
   TrainingJobDashboardShow,
+  TrainingJobDashboardCreateTrainingJob,
   TrainingJobDashboardCancelTrainingJob,
   TrainingJobDashboardSubmitTrainingJob,
-  TrainingJobDashboardResumeTrainingJob,
   TrainingJobDashboardPauseTrainingJob,
+  TrainingJobDashboardResumeTrainingJob,
 } from "../pages/training-job-dashboard";
 import {
   TrainingParticipantEligibilityList,
   TrainingParticipantEligibilityShow,
-  TrainingParticipantEligibilityCreateTrainingJob,
-  TrainingParticipantEligibilityCancelTrainingJob,
   TrainingParticipantEligibilitySubmitTrainingJob,
-  TrainingParticipantEligibilityPauseTrainingJob,
-  TrainingParticipantEligibilityResumeTrainingJob,
 } from "../pages/training-participant-eligibility";
 import {
   TrainingRoundProgressList,
@@ -284,6 +286,11 @@ import {
   UserAccountCatalogDeactivateUserAccount,
   UserAccountCatalogAssignRoleToUser,
 } from "../pages/user-account-catalog";
+import {
+  UserOrganizationMembershipDirectoryList,
+  UserOrganizationMembershipDirectoryShow,
+  UserOrganizationMembershipDirectoryBindUserAccountToOrganization,
+} from "../pages/user-organization-membership-directory";
 import {
   UserRoleAssignmentCatalogList,
   UserRoleAssignmentCatalogShow,
@@ -522,6 +529,11 @@ export const AppRouter = () => {
           <Route path=":id/command/fail-secure-aggregation-session" element={<SecureAggregationSessionCatalogFailSecureAggregationSession />} />
           <Route path=":id/command/complete-secure-aggregation" element={<SecureAggregationSessionCatalogCompleteSecureAggregation />} />
         </Route>
+        <Route path="/service-account-api-token-catalog">
+          <Route index element={<ServiceAccountApiTokenCatalogList />} />
+          <Route path="command/issue-service-account-api-token" element={<ServiceAccountApiTokenCatalogIssueServiceAccountApiToken />} />
+          <Route path="show/:id" element={<ServiceAccountApiTokenCatalogShow />} />
+        </Route>
         <Route path="/staged-file-catalog">
           <Route index element={<StagedFileCatalogList />} />
           <Route path="command/stage-file-upload" element={<StagedFileCatalogStageFileUpload />} />
@@ -537,20 +549,17 @@ export const AppRouter = () => {
         </Route>
         <Route path="/training-job-dashboard">
           <Route index element={<TrainingJobDashboardList />} />
+          <Route path="command/create-training-job" element={<TrainingJobDashboardCreateTrainingJob />} />
           <Route path="show/:id" element={<TrainingJobDashboardShow />} />
           <Route path=":id/command/cancel-training-job" element={<TrainingJobDashboardCancelTrainingJob />} />
           <Route path=":id/command/submit-training-job" element={<TrainingJobDashboardSubmitTrainingJob />} />
-          <Route path=":id/command/resume-training-job" element={<TrainingJobDashboardResumeTrainingJob />} />
           <Route path=":id/command/pause-training-job" element={<TrainingJobDashboardPauseTrainingJob />} />
+          <Route path=":id/command/resume-training-job" element={<TrainingJobDashboardResumeTrainingJob />} />
         </Route>
         <Route path="/training-participant-eligibility">
           <Route index element={<TrainingParticipantEligibilityList />} />
-          <Route path="command/create-training-job" element={<TrainingParticipantEligibilityCreateTrainingJob />} />
           <Route path="show/:id" element={<TrainingParticipantEligibilityShow />} />
-          <Route path=":id/command/cancel-training-job" element={<TrainingParticipantEligibilityCancelTrainingJob />} />
           <Route path=":id/command/submit-training-job" element={<TrainingParticipantEligibilitySubmitTrainingJob />} />
-          <Route path=":id/command/pause-training-job" element={<TrainingParticipantEligibilityPauseTrainingJob />} />
-          <Route path=":id/command/resume-training-job" element={<TrainingParticipantEligibilityResumeTrainingJob />} />
         </Route>
         <Route path="/training-round-progress">
           <Route index element={<TrainingRoundProgressList />} />
@@ -578,6 +587,11 @@ export const AppRouter = () => {
           <Route path=":id/command/generate-user-account-login-password" element={<UserAccountCatalogGenerateUserAccountLoginPassword />} />
           <Route path=":id/command/deactivate-user-account" element={<UserAccountCatalogDeactivateUserAccount />} />
           <Route path=":id/command/assign-role-to-user" element={<UserAccountCatalogAssignRoleToUser />} />
+        </Route>
+        <Route path="/user-organization-membership-directory">
+          <Route index element={<UserOrganizationMembershipDirectoryList />} />
+          <Route path="command/bind-user-account-to-organization" element={<UserOrganizationMembershipDirectoryBindUserAccountToOrganization />} />
+          <Route path="show/:id" element={<UserOrganizationMembershipDirectoryShow />} />
         </Route>
         <Route path="/user-role-assignment-catalog">
           <Route index element={<UserRoleAssignmentCatalogList />} />

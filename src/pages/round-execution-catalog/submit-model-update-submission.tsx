@@ -144,7 +144,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                 <FormLabel>{t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingJobId.label", "Training Job Id")}</FormLabel>
                 <ResourceSelect
                   withFormControl
-                  resource="training_participant_eligibility"
+                  resource="training_job_dashboard"
                   dataProviderName="federation-learning-platform"
                   optionLabel="federationName"
                   optionValue="trainingJobId"
@@ -153,9 +153,9 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingJobId.placeholder", "Select Training Job Id")}
                   meta={{
                     idField: "trainingJobId",
-                    label: t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingJobId.label", "Training Participant Eligibility"),
+                    label: t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingJobId.label", "Training Job Dashboard"),
                     aggregateRoute: "trainingjob",
-                    queryRoute: "trainingparticipanteligibility",
+                    queryRoute: "trainingjobdashboard",
                   }}
                 />
                 <FormMessage />
@@ -173,7 +173,7 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   withFormControl
                   resource="training_run_configuration_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="initialModelName"
+                  optionLabel="configurationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}

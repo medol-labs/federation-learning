@@ -21,6 +21,7 @@ import { MoreHorizontal } from "lucide-react";
 
 type TrainingRunConfigurationCatalogRecord = {
   trainingRunConfigurationId: string;
+  configurationName: string;
   federationId: string;
   featureSchemaId: string;
   initialModelId: string;
@@ -106,6 +107,20 @@ export const TrainingRunConfigurationCatalogList = () => {
         meta: {
           label: t("resources.training_run_configuration_catalog.fields.trainingRunConfigurationId.label", "Training Run Configuration Id"),
           placeholder: "Enter Training Run Configuration Id",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("configurationName", {
+        id: "configurationName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.configurationName.label", "Configuration Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.configurationName.label", "Configuration Name"),
+          placeholder: "Enter Configuration Name",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -617,7 +632,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         tableName: "training_run_configuration_catalog_read_model_entity",
         idField: "trainingRunConfigurationId",
         idFields: ["trainingRunConfigurationId"],
-        queryFields: ["trainingRunConfigurationId","federationId","featureSchemaId","initialModelId","initialModelName","initialModelVersion","federationName","featureDomain","featureSchemaVersion","initialModelArtifactUri","initialModelRegistryRef","initialModelFormat","initialModelArtifactDigest","initialModelSignatureUri","strategyName","aggregationAlgorithm","maxRounds","minimumNodesPerRound","roundTimeoutSeconds","nodeResponseTimeoutSeconds","localEpochs","batchSize","learningRate","optimizer","lossFunction","gradientClippingNorm","secureAggregationRequired","minimumAccuracy","minimumFairnessScore","updateReason","lockedByTrainingJobId","state"],
+        queryFields: ["trainingRunConfigurationId","configurationName","federationId","featureSchemaId","initialModelId","initialModelName","initialModelVersion","federationName","featureDomain","featureSchemaVersion","initialModelArtifactUri","initialModelRegistryRef","initialModelFormat","initialModelArtifactDigest","initialModelSignatureUri","strategyName","aggregationAlgorithm","maxRounds","minimumNodesPerRound","roundTimeoutSeconds","nodeResponseTimeoutSeconds","localEpochs","batchSize","learningRate","optimizer","lossFunction","gradientClippingNorm","secureAggregationRequired","minimumAccuracy","minimumFairnessScore","updateReason","lockedByTrainingJobId","state"],
         label: t("resources.training_run_configuration_catalog.label", "Training Run Configuration Catalog"),
         aggregateRoute: "trainingrunconfiguration",
         queryRoute: "trainingrunconfigurationcatalog",

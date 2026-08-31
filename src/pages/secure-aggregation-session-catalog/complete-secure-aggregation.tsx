@@ -45,6 +45,8 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
     modelFormat: searchParams.get("modelFormat") ?? undefined,
     modelArtifactDigest: searchParams.get("modelArtifactDigest") ?? undefined,
     trainingJobId: searchParams.get("trainingJobId") ?? undefined,
+    maxRounds: (() => { const value = searchParams.get("maxRounds"); return value === null ? undefined : Number(value); })(),
+    minimumAccuracy: (() => { const value = searchParams.get("minimumAccuracy"); return value === null ? undefined : Number(value); })(),
     aggregatedModelArtifactUri: searchParams.get("aggregatedModelArtifactUri") ?? undefined,
     aggregatedModelRegistryRef: searchParams.get("aggregatedModelRegistryRef") ?? undefined,
     aggregatedModelSignatureUri: searchParams.get("aggregatedModelSignatureUri") ?? undefined,
@@ -107,7 +109,7 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
                   withFormControl
                   resource="training_run_configuration_catalog"
                   dataProviderName="federation-learning-platform"
-                  optionLabel="initialModelName"
+                  optionLabel="configurationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
                   onValueChange={field.onChange}
@@ -181,6 +183,43 @@ export const SecureAggregationSessionCatalogCompleteSecureAggregation = () => {
                     {...field}
                     value={field.value || ""}
                     placeholder={"Enter Round Number"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="maxRounds"
+            rules={{ required: "Max Rounds is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.maxRounds.label", "Max Rounds")}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Max Rounds"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="minimumAccuracy"
+            rules={{ required: "Minimum Accuracy is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.fields.minimumAccuracy.label", "Minimum Accuracy")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Minimum Accuracy"}
                   />
                 </FormControl>
                 <FormMessage />
