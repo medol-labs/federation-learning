@@ -9,6 +9,7 @@ import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedE
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionFailedEvent
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsResult
 import java.util.UUID
+import java.math.BigDecimal
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 import java.time.LocalDateTime
 
@@ -28,6 +29,8 @@ class SelectTrainingRoundParticipantsDecisionTest {
                 featureSchemaId = java.util.UUID.randomUUID(),
                 roundId = java.util.UUID.randomUUID(),
                 roundNumber = 0,
+                maxRounds = 0,
+                minimumAccuracy = java.math.BigDecimal.ZERO,
                 minimumNodesPerRound = 0,
                 secureAggregationRequired = false,
                 selectedOrganizationIds = emptyList(),
@@ -58,6 +61,8 @@ class SelectTrainingRoundParticipantsDecisionTest {
                 featureSchemaId = java.util.UUID.randomUUID(),
                 roundId = java.util.UUID.randomUUID(),
                 roundNumber = 0,
+                maxRounds = 0,
+                minimumAccuracy = java.math.BigDecimal.ZERO,
                 minimumNodesPerRound = 0,
                 secureAggregationRequired = false,
                 selectedOrganizationIds = emptyList(),

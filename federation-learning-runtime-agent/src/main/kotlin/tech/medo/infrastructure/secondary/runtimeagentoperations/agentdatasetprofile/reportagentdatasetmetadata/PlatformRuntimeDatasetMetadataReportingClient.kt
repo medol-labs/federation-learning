@@ -3,12 +3,14 @@ package tech.medo.infrastructure.secondary.runtimeagentoperations.agentdatasetpr
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import tech.medo.shared.security.MedolFeignSecurityConfiguration
 import java.math.BigDecimal
 import java.util.UUID
 
 @FeignClient(
     name = "federationLearningPlatformRuntimeDatasetMetadataReportingClient",
-    url = "\${runtime-agent.dataset-metadata-reporting.platform-url:http://localhost:8080}"
+    url = "\${runtime-agent.dataset-metadata-reporting.platform-url:http://localhost:8080}",
+    configuration = [MedolFeignSecurityConfiguration::class]
 )
 interface PlatformRuntimeDatasetMetadataReportingClient {
     @PostMapping("/runtimedatasetmetadata/recordruntimedatasetmetadata")

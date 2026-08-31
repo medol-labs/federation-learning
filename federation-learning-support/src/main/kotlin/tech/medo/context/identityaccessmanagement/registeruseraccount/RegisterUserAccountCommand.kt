@@ -5,7 +5,6 @@ import org.axonframework.modelling.annotation.TargetEntityId
 import tech.medo.identityaccessmanagement.useraccount.UserAccountSelection
 import java.util.UUID;
 
-import tech.medo.identityaccessmanagement.useraccount.UserAccountUsernameSelection
 
 @Command
 data class RegisterUserAccountCommand(
@@ -17,5 +16,4 @@ data class RegisterUserAccountCommand(
     @TargetEntityId
     val selection: UserAccountSelection = UserAccountSelection(userAccountId = userAccountId)
 
-    val userAccountUsernameSelection: UserAccountUsernameSelection = UserAccountUsernameSelection(normalizedName = username.trim().lowercase())
 }

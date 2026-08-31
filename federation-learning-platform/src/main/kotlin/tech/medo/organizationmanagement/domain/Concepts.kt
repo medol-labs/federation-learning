@@ -6,4 +6,10 @@ object Concepts {
         val slices = listOf("RegisterOrganization", "ActivateOrganization", "DeactivateOrganization", "ReactivateOrganization", "OrganizationDirectory")
         val states = listOf("Registered", "Active", "Deactivated")
     }
+
+    data object UserOrganizationMembership {
+        const val NAME = "UserOrganizationMembership"
+        val slices = listOf("BindUserAccountToOrganization", "UserOrganizationMembershipDirectory")
+        val states = listOf("Active")
+    }
 }

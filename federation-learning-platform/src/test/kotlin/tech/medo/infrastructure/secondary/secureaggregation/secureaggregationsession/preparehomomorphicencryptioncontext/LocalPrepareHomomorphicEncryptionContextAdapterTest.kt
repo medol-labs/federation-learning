@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.secureaggregation.preparehomomorphicencryptioncontext.PrepareHomomorphicEncryptionContextInput
 import tech.medo.secureaggregation.preparehomomorphicencryptioncontext.PrepareHomomorphicEncryptionContextResult
+import java.math.BigDecimal
 import java.util.UUID
 
 class LocalPrepareHomomorphicEncryptionContextAdapterTest {
@@ -22,6 +23,8 @@ class LocalPrepareHomomorphicEncryptionContextAdapterTest {
             selectedOrganizationCount = 1,
             selectedRuntimeCount = 1,
             minimumNodesPerRound = 1,
+            maxRounds = 1,
+            minimumAccuracy = BigDecimal("0.90"),
             secureAggregationRequired = true
         )
 

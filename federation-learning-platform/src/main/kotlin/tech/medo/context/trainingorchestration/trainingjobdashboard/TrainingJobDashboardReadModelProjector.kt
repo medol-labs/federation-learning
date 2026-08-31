@@ -141,6 +141,7 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
             entity.featureSchemaId = event.featureSchemaId
             entity.secureAggregationRequired = event.secureAggregationRequired
             entity.minimumNodesPerRound = event.minimumNodesPerRound
+            entity.maxRounds = event.maxRounds
             entity.currentRoundNumber = event.roundNumber
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -158,6 +159,7 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
             entity.trainingJobId = event.trainingJobId
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
+            entity.maxRounds = event.maxRounds
             entity.globalAccuracy = event.globalAccuracy
             entity.currentRoundNumber = event.roundNumber
             ProjectionMetadata.assign(entity, message)

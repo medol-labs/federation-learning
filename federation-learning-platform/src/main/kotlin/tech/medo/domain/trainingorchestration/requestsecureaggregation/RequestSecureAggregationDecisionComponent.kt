@@ -65,6 +65,8 @@ class RequestSecureAggregationDecisionComponent : RequestSecureAggregationDecisi
                 selectedOrganizationCount = command.selectedOrganizationCount,
                 selectedRuntimeCount = selectedRuntimeIds.size,
                 minimumNodesPerRound = minimumNodesPerRound,
+                maxRounds = command.maxRounds,
+                minimumAccuracy = command.minimumAccuracy,
                 secureAggregationRequired = command.secureAggregationRequired
             )
         )

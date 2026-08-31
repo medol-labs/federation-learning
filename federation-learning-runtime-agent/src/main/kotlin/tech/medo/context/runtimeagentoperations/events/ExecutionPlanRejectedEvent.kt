@@ -10,6 +10,7 @@ import java.util.UUID;
 data class ExecutionPlanRejectedEvent(
     @EventTag(key = "executionPlanId")
     val executionPlanId: UUID,
+    val roundExecutionId: UUID,
     val executionSessionId: UUID,
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,

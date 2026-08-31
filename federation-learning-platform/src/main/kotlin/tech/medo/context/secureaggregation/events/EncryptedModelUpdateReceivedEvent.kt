@@ -3,6 +3,7 @@ package tech.medo.secureaggregation.events
 import org.axonframework.eventsourcing.annotation.EventTag
 import org.axonframework.messaging.eventhandling.annotation.Event
 import java.util.UUID;
+import java.math.BigDecimal;
 
 
 
@@ -16,6 +17,8 @@ data class EncryptedModelUpdateReceivedEvent(
     val featureSchemaId: UUID,
     val roundId: UUID,
     val roundNumber: Int,
+    val maxRounds: Int,
+    val minimumAccuracy: BigDecimal,
     val runtimeId: UUID,
     val updateArtifactId: UUID,
     val encryptedUpdateArtifactRef: String,

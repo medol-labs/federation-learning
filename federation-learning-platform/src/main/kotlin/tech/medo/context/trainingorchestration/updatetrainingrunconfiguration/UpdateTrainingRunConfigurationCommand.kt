@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Command
 data class UpdateTrainingRunConfigurationCommand(
     val trainingRunConfigurationId: UUID,
+    val configurationName: String,
     val federationId: UUID,
     val featureSchemaId: UUID,
     val initialModelId: UUID,

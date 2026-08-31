@@ -7,6 +7,7 @@ import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedE
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsCommand
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsDecision
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsResult
+import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -28,6 +29,8 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
                     featureSchemaId = portResult.featureSchemaId,
                     roundId = portResult.roundId,
                     roundNumber = portResult.roundNumber,
+                    maxRounds = portResult.maxRounds,
+                    minimumAccuracy = portResult.minimumAccuracy,
                     minimumNodesPerRound = portResult.minimumNodesPerRound,
                     secureAggregationRequired = portResult.secureAggregationRequired,
                     selectedOrganizationIds = portResult.selectedOrganizationIds,
@@ -45,6 +48,8 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
                     featureSchemaId = UUID.randomUUID(),
                     roundId = UUID.randomUUID(),
                     roundNumber = 0,
+                    maxRounds = 0,
+                    minimumAccuracy = BigDecimal.ZERO,
                     minimumNodesPerRound = 0,
                     secureAggregationRequired = false,
                     selectedOrganizationIds = emptyList(),
@@ -84,6 +89,8 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
                 featureSchemaId = result.featureSchemaId,
                 roundId = result.roundId,
                 roundNumber = result.roundNumber,
+                maxRounds = result.maxRounds,
+                minimumAccuracy = result.minimumAccuracy,
                 minimumNodesPerRound = result.minimumNodesPerRound,
                 secureAggregationRequired = result.secureAggregationRequired,
                 selectedOrganizationIds = result.selectedOrganizationIds,

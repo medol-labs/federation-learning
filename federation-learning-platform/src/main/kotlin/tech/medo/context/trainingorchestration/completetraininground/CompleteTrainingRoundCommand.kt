@@ -14,6 +14,8 @@ data class CompleteTrainingRoundCommand(
     val featureSchemaId: UUID,
     val roundId: UUID,
     val roundNumber: Int,
+    val maxRounds: Int,
+    val minimumAccuracy: BigDecimal,
     val aggregatedModelId: UUID,
     val aggregatedModelArtifactUri: String,
     val aggregatedModelRegistryRef: String,

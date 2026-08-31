@@ -30,16 +30,29 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         val trainingRunConfigurationId = trainingJob?.trainingRunConfigurationId
         val federationId = trainingJob?.federationId ?: trainingRunConfiguration?.federationId
         val featureSchemaId = trainingJob?.featureSchemaId ?: trainingRunConfiguration?.featureSchemaId
+        val maxRounds = trainingRunConfiguration?.maxRounds ?: trainingJob?.maxRounds
+        val minimumAccuracy = trainingRunConfiguration?.minimumAccuracy
         val minimumNodesPerRound = trainingRunConfiguration?.minimumNodesPerRound ?: trainingJob?.minimumNodesPerRound
         val secureAggregationRequired = trainingRunConfiguration?.secureAggregationRequired ?: trainingJob?.secureAggregationRequired ?: false
 
-        if (trainingRunConfigurationId == null || federationId == null || featureSchemaId == null || minimumNodesPerRound == null || minimumNodesPerRound <= 0) {
+        if (
+            trainingRunConfigurationId == null ||
+            federationId == null ||
+            featureSchemaId == null ||
+            maxRounds == null ||
+            maxRounds <= 0 ||
+            minimumAccuracy == null ||
+            minimumNodesPerRound == null ||
+            minimumNodesPerRound <= 0
+        ) {
             log.warn(
-                "Skip training round participant selection because job context is incomplete. trainingJobId={}, trainingRunConfigurationIdPresent={}, federationIdPresent={}, featureSchemaIdPresent={}, minimumNodesPerRound={}",
+                "Skip training round participant selection because job context is incomplete. trainingJobId={}, trainingRunConfigurationIdPresent={}, federationIdPresent={}, featureSchemaIdPresent={}, maxRounds={}, minimumAccuracy={}, minimumNodesPerRound={}",
                 input.trainingJobId,
                 trainingRunConfigurationId != null,
                 federationId != null,
                 featureSchemaId != null,
+                maxRounds,
+                minimumAccuracy,
                 minimumNodesPerRound
             )
             error("Training job context is incomplete for participant selection.")
@@ -143,6 +156,8 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 featureSchemaId = featureSchemaId,
                 roundId = roundId,
                 roundNumber = roundNumber,
+                maxRounds = maxRounds,
+                minimumAccuracy = minimumAccuracy,
                 minimumNodesPerRound = minimumNodesPerRound,
                 secureAggregationRequired = secureAggregationRequired,
                 selectedOrganizationIds = selectedOrganizationIds,
@@ -159,6 +174,8 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             featureSchemaId = featureSchemaId,
             roundId = roundId,
             roundNumber = roundNumber,
+            maxRounds = maxRounds,
+            minimumAccuracy = minimumAccuracy,
             minimumNodesPerRound = minimumNodesPerRound,
             secureAggregationRequired = secureAggregationRequired,
             selectedOrganizationIds = selectedOrganizationIds,

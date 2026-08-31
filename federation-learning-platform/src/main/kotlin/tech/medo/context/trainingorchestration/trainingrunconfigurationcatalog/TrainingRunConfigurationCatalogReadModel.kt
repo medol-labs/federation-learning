@@ -18,6 +18,7 @@ class TrainingRunConfigurationCatalogReadModelQuery
 
 class TrainingRunConfigurationCatalogReadModelCriteria {
     var trainingRunConfigurationId: StringFilter? = null
+    var configurationName: StringFilter? = null
     var federationId: StringFilter? = null
     var featureSchemaId: StringFilter? = null
     var initialModelId: StringFilter? = null
@@ -54,6 +55,7 @@ class TrainingRunConfigurationCatalogReadModelCriteria {
 
 class TrainingRunConfigurationCatalogReadModelProjection : MetadataProjection {
     var trainingRunConfigurationId: UUID? = null
+    var configurationName: String? = null
     var federationId: UUID? = null
     var featureSchemaId: UUID? = null
     var initialModelId: UUID? = null
@@ -96,6 +98,7 @@ class TrainingRunConfigurationCatalogReadModelProjection : MetadataProjection {
 fun TrainingRunConfigurationCatalogReadModelProjection.toReadModel(): TrainingRunConfigurationCatalogReadModel =
     TrainingRunConfigurationCatalogReadModel(
     trainingRunConfigurationId = trainingRunConfigurationId,
+    configurationName = configurationName,
     federationId = federationId,
     featureSchemaId = featureSchemaId,
     initialModelId = initialModelId,
@@ -145,6 +148,7 @@ interface TrainingRunConfigurationCatalogReadModelRepository {
 
 data class TrainingRunConfigurationCatalogReadModel(
     val trainingRunConfigurationId: UUID?,
+    val configurationName: String?,
     val federationId: UUID?,
     val featureSchemaId: UUID?,
     val initialModelId: UUID?,

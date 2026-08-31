@@ -30,6 +30,7 @@ class TrainingRunConfigurationCatalogReadModelQueryService(
         var specification = Specification.where<TrainingRunConfigurationCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.trainingRunConfigurationId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("trainingRunConfigurationId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.configurationName?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("configurationName") })) }
             criteria.federationId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("federationId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.featureSchemaId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("featureSchemaId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.initialModelId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("initialModelId") as JpaExpression<UUID>).cast(String::class.java) })) }
@@ -87,6 +88,7 @@ class TrainingRunConfigurationCatalogReadModelQueryService(
     private fun TrainingRunConfigurationCatalogReadModelEntity.toProjection(): TrainingRunConfigurationCatalogReadModelProjection =
         TrainingRunConfigurationCatalogReadModelProjection().also {
             it.trainingRunConfigurationId = this@toProjection.trainingRunConfigurationId
+            it.configurationName = this@toProjection.configurationName
             it.federationId = this@toProjection.federationId
             it.featureSchemaId = this@toProjection.featureSchemaId
             it.initialModelId = this@toProjection.initialModelId

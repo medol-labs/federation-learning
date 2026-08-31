@@ -19,6 +19,7 @@ class StartRoundExecutionDecisionTest {
         state.evolve(
             ExecutionPlanAcceptedEvent(
             executionPlanId = UUID.nameUUIDFromBytes("execution-plan-1".toByteArray()),
+            roundExecutionId = java.util.UUID.randomUUID(),
             executionSessionId = java.util.UUID.randomUUID(),
             trainingJobId = java.util.UUID.randomUUID(),
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
@@ -115,6 +116,7 @@ class StartRoundExecutionDecisionTest {
         state.evolve(
             ExecutionPlanAcceptedEvent(
             executionPlanId = UUID.nameUUIDFromBytes("execution-plan-2".toByteArray()),
+            roundExecutionId = java.util.UUID.randomUUID(),
             executionSessionId = java.util.UUID.randomUUID(),
             trainingJobId = java.util.UUID.randomUUID(),
             trainingRunConfigurationId = java.util.UUID.randomUUID(),

@@ -30,4 +30,10 @@ object Concepts {
         val slices = listOf("RolePermissionGrantCatalog")
         val states = emptyList<String>()
     }
+
+    data object ServiceAccountApiToken {
+        const val NAME = "ServiceAccountApiToken"
+        val slices = listOf("IssueServiceAccountApiToken", "ServiceAccountApiTokenCatalogs")
+        val states = listOf("Issued")
+    }
 }

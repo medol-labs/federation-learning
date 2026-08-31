@@ -20,6 +20,7 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
 
     var currentState: TrainingRunConfigurationStateEnum? = null
     var trainingRunConfigurationId: UUID? = null
+    var configurationName: String? = null
     var federationId: UUID? = null
     var featureSchemaId: UUID? = null
     var initialModelId: UUID? = null
@@ -52,6 +53,7 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
     fun evolve(event: TrainingRunConfigurationDefinedEvent): TrainingRunConfigurationState = apply {
         currentState = TrainingRunConfigurationStateEnum.DRAFT
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        configurationName = event.configurationName
         federationId = event.federationId
         featureSchemaId = event.featureSchemaId
         initialModelId = event.initialModelId
@@ -82,6 +84,7 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
     @EventSourcingHandler
     fun evolve(event: TrainingRunConfigurationUpdatedEvent): TrainingRunConfigurationState = apply {
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        configurationName = event.configurationName
         federationId = event.federationId
         featureSchemaId = event.featureSchemaId
         initialModelId = event.initialModelId

@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Command
 data class DefineTrainingRunConfigurationCommand(
     val trainingRunConfigurationId: UUID = java.util.UUID.randomUUID(),
+    val configurationName: String,
     val federationId: UUID,
     val featureSchemaId: UUID,
     val initialModelId: UUID,

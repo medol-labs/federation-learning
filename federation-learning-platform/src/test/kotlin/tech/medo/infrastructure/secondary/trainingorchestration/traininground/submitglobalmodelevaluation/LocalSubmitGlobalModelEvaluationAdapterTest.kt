@@ -1,5 +1,6 @@
 package tech.medo.infrastructure.secondary.trainingorchestration.traininground.submitglobalmodelevaluation
 
+import java.math.BigDecimal
 import java.util.UUID
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -17,6 +18,8 @@ class LocalSubmitGlobalModelEvaluationAdapterTest {
             featureSchemaId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
             roundId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
             roundNumber = 1,
+            maxRounds = 1,
+            minimumAccuracy = BigDecimal("0.90"),
             aggregatedModelId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
             aggregatedModelArtifactUri = "file:///tmp/global_model.json",
             aggregatedModelRegistryRef = "local://federation-learning/global-models",

@@ -9,6 +9,7 @@ import tech.medo.trainingorchestration.events.TrainingRoundStartFailedEvent
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundResult
 import java.util.UUID
+import java.math.BigDecimal
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 import java.time.LocalDateTime
 
@@ -29,6 +30,8 @@ class StartTrainingRoundDecisionTest {
             selectedOrganizationCount = 0,
             selectedRuntimeCount = 3,
             minimumNodesPerRound = 0,
+            maxRounds = 0,
+            minimumAccuracy = java.math.BigDecimal.ZERO,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,
@@ -57,6 +60,8 @@ class StartTrainingRoundDecisionTest {
         assertEquals(command.selectedOrganizationCount, event.selectedOrganizationCount)
         assertEquals(3, event.selectedRuntimeCount)
         assertEquals(command.minimumNodesPerRound, event.minimumNodesPerRound)
+        assertEquals(command.maxRounds, event.maxRounds)
+        assertEquals(command.minimumAccuracy, event.minimumAccuracy)
         assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
         assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
         assertEquals(command.encryptionScheme, event.encryptionScheme)
@@ -81,6 +86,8 @@ class StartTrainingRoundDecisionTest {
             selectedOrganizationCount = 0,
             selectedRuntimeCount = 2,
             minimumNodesPerRound = 0,
+            maxRounds = 0,
+            minimumAccuracy = java.math.BigDecimal.ZERO,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,
@@ -109,6 +116,8 @@ class StartTrainingRoundDecisionTest {
         assertEquals(command.selectedOrganizationCount, event.selectedOrganizationCount)
         assertEquals(2, event.selectedRuntimeCount)
         assertEquals(command.minimumNodesPerRound, event.minimumNodesPerRound)
+        assertEquals(command.maxRounds, event.maxRounds)
+        assertEquals(command.minimumAccuracy, event.minimumAccuracy)
         assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
         assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
         assertEquals(command.encryptionScheme, event.encryptionScheme)

@@ -2,6 +2,8 @@ package tech.medo.infrastructure.secondary.trainingorchestration.participantexec
 
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
+import tech.medo.shared.security.InternalTokenAuthenticationFilter
+import tech.medo.shared.security.MedolSecurityProperties
 import java.util.UUID
 
 interface RuntimeAgentExecutionPlanClient {
@@ -13,7 +15,8 @@ interface RuntimeAgentExecutionPlanClient {
 
 @Component
 class RestClientRuntimeAgentExecutionPlanClient(
-    restClientBuilder: RestClient.Builder
+    restClientBuilder: RestClient.Builder,
+    private val securityProperties: MedolSecurityProperties,
 ) : RuntimeAgentExecutionPlanClient {
     private val restClient = restClientBuilder.build()
 
@@ -28,6 +31,12 @@ class RestClientRuntimeAgentExecutionPlanClient(
 
         return restClient.post()
             .uri("$baseUrl/roundexecution/receiveparticipantexecutionplan")
+            .headers { headers ->
+                val token = securityProperties.internalToken.trim()
+                if (token.isNotBlank()) {
+                    headers.set(InternalTokenAuthenticationFilter.INTERNAL_TOKEN_HEADER, token)
+                }
+            }
             .body(request)
             .retrieve()
             .body(ReceiveParticipantExecutionPlanResponse::class.java)
@@ -37,6 +46,7 @@ class RestClientRuntimeAgentExecutionPlanClient(
 
 data class ReceiveParticipantExecutionPlanRequest(
     val executionPlanId: UUID,
+    val roundExecutionId: UUID,
     val executionSessionId: UUID,
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
@@ -55,6 +65,7 @@ data class ReceiveParticipantExecutionPlanRequest(
 
 data class ReceiveParticipantExecutionPlanResponse(
     val executionPlanId: UUID? = null,
+    val roundExecutionId: UUID? = null,
     val executionSessionId: UUID? = null,
     val trainingJobId: UUID? = null,
     val trainingRunConfigurationId: UUID? = null,

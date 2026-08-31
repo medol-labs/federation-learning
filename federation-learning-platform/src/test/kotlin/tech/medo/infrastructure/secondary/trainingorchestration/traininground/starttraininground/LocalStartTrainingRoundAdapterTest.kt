@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundInput
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundResult
+import java.math.BigDecimal
 import java.util.UUID
 
 class LocalStartTrainingRoundAdapterTest {
@@ -38,6 +39,8 @@ class LocalStartTrainingRoundAdapterTest {
             selectedOrganizationCount = 1,
             selectedRuntimeCount = selectedRuntimeCount,
             minimumNodesPerRound = minimumNodesPerRound,
+            maxRounds = 1,
+            minimumAccuracy = BigDecimal("0.90"),
             secureAggregationRequired = true,
             secureAggregationSessionId = uuid("88888888-8888-4888-8888-888888888888"),
             encryptionScheme = "PAILLIER",

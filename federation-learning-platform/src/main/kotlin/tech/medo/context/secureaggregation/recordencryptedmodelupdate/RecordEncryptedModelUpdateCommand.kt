@@ -4,6 +4,7 @@ import org.axonframework.messaging.commandhandling.annotation.Command
 import org.axonframework.modelling.annotation.TargetEntityId
 import tech.medo.secureaggregation.secureaggregationsession.SecureAggregationSessionSelection
 import java.util.UUID;
+import java.math.BigDecimal;
 
 
 @Command
@@ -15,6 +16,8 @@ data class RecordEncryptedModelUpdateCommand(
     val featureSchemaId: UUID,
     val roundId: UUID,
     val roundNumber: Int,
+    val maxRounds: Int,
+    val minimumAccuracy: BigDecimal,
     val runtimeId: UUID,
     val updateArtifactId: UUID,
     val encryptedUpdateArtifactRef: String,

@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition
 import tech.medo.runtimeagentoperations.domain.types.LabelDefinition
+import tech.medo.shared.security.MedolFeignSecurityConfiguration
 import java.util.UUID
 
 @FeignClient(
     name = "federationLearningPlatformFeatureSchemaCatalogClient",
-    url = "\${runtime-agent.feature-schema-lookup.platform-url:http://localhost:8081}"
+    url = "\${runtime-agent.feature-schema-lookup.platform-url:http://localhost:8081}",
+    configuration = [MedolFeignSecurityConfiguration::class]
 )
 interface PlatformFeatureSchemaCatalogClient {
     @GetMapping("/featureschema/featureschemacatalog/{id}")

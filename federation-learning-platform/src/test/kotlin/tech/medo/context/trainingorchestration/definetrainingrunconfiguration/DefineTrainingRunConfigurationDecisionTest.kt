@@ -15,6 +15,7 @@ class DefineTrainingRunConfigurationDecisionTest {
 
         val command = DefineTrainingRunConfigurationCommand(
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("cfg-1".toByteArray()),
+            configurationName = "Readmission Risk Baseline",
             federationId = UUID.nameUUIDFromBytes("fed-1".toByteArray()),
             featureSchemaId = UUID.nameUUIDFromBytes("schema-1".toByteArray()),
             initialModelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
@@ -41,6 +42,7 @@ class DefineTrainingRunConfigurationDecisionTest {
 
         val event = events.filterIsInstance<TrainingRunConfigurationDefinedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("cfg-1".toByteArray()), event.trainingRunConfigurationId)
+        assertEquals("Readmission Risk Baseline", event.configurationName)
         assertEquals(UUID.nameUUIDFromBytes("fed-1".toByteArray()), event.federationId)
         assertEquals(UUID.nameUUIDFromBytes("schema-1".toByteArray()), event.featureSchemaId)
         assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.initialModelId)

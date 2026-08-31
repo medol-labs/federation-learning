@@ -9,6 +9,7 @@ interface AcceptExecutionPlanService {
 
 data class AcceptExecutionPlanInput(
     val executionPlanId: UUID,
+    val roundExecutionId: UUID,
     val executionSessionId: UUID,
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,

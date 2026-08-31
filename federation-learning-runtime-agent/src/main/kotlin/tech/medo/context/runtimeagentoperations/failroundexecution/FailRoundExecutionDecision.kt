@@ -6,14 +6,12 @@ import tech.medo.runtimeagentoperations.events.RoundExecutionFailedEvent
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
 
-import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
+
 
 
 interface FailRoundExecutionDecision {
     fun decide(command: FailRoundExecutionCommand, state: RoundExecutionState): List<Any> {
-        require(state.currentState == RoundExecutionStateEnum.RUNNING) {
-            "FailRoundExecution requires RoundExecution to be Running."
-        }
+        // TODO: validate domain rules against state before appending events.
         return listOf(
             RoundExecutionFailedEvent(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, runtimeEngineJobId = command.runtimeEngineJobId, failureReason = command.failureReason)
         )

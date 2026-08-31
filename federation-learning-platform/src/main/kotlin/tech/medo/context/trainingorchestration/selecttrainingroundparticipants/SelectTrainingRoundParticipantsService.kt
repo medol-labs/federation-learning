@@ -1,6 +1,7 @@
 package tech.medo.trainingorchestration.selecttrainingroundparticipants
 
 import java.util.UUID;
+import java.math.BigDecimal;
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
 
 interface SelectTrainingRoundParticipantsService {
@@ -18,6 +19,8 @@ sealed interface SelectTrainingRoundParticipantsResult {
         val featureSchemaId: UUID,
         val roundId: UUID,
         val roundNumber: Int,
+        val maxRounds: Int,
+        val minimumAccuracy: BigDecimal,
         val minimumNodesPerRound: Int,
         val secureAggregationRequired: Boolean,
         val selectedOrganizationIds: List<UUID>,
@@ -32,6 +35,8 @@ sealed interface SelectTrainingRoundParticipantsResult {
         val featureSchemaId: UUID,
         val roundId: UUID,
         val roundNumber: Int,
+        val maxRounds: Int,
+        val minimumAccuracy: BigDecimal,
         val minimumNodesPerRound: Int,
         val secureAggregationRequired: Boolean,
         val selectedOrganizationIds: List<UUID>,

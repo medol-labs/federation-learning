@@ -21,6 +21,8 @@ class CompleteTrainingRoundDecisionTest {
             featureSchemaId = java.util.UUID.randomUUID(),
             roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
             roundNumber = 0,
+            maxRounds = 0,
+            minimumAccuracy = java.math.BigDecimal.ZERO,
             aggregatedModelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             aggregatedModelArtifactUri = "",
             aggregatedModelRegistryRef = "",
@@ -38,6 +40,8 @@ class CompleteTrainingRoundDecisionTest {
             featureSchemaId = java.util.UUID.randomUUID(),
             roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
             roundNumber = 0,
+            maxRounds = 0,
+            minimumAccuracy = java.math.BigDecimal.ZERO,
             aggregatedModelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             aggregatedModelArtifactUri = "",
             aggregatedModelRegistryRef = "",
@@ -58,6 +62,8 @@ class CompleteTrainingRoundDecisionTest {
         assertEquals(command.featureSchemaId, event.featureSchemaId)
         assertEquals(UUID.nameUUIDFromBytes("round-1".toByteArray()), event.roundId)
         assertEquals(command.roundNumber, event.roundNumber)
+        assertEquals(command.maxRounds, event.maxRounds)
+        assertEquals(command.minimumAccuracy, event.minimumAccuracy)
         assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.aggregatedModelId)
         assertEquals(command.aggregatedModelArtifactUri, event.aggregatedModelArtifactUri)
         assertEquals(command.aggregatedModelRegistryRef, event.aggregatedModelRegistryRef)

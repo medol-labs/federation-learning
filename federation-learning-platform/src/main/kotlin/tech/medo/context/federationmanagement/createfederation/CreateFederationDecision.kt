@@ -16,7 +16,7 @@ interface CreateFederationDecision {
             "Name already exists."
         }
         return listOf(
-            FederationNameReservedEvent(federationId = command.federationId, federationName = command.federationName, normalizedName = command.federationName.trim().lowercase()),
+                        FederationNameReservedEvent(federationId = command.federationId, federationName = command.federationName, normalizedName = command.federationName.trim().lowercase()),
             FederationCreatedEvent(federationId = command.federationId, federationName = command.federationName, description = command.description, minimumParticipantCount = command.minimumParticipantCount)
         )
     }

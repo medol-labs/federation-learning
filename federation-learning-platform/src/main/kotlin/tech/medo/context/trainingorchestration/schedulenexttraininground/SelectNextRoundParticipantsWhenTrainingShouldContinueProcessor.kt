@@ -11,5 +11,9 @@ import org.springframework.stereotype.Component
 class SelectNextRoundParticipantsWhenTrainingShouldContinueProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: TrainingRoundCompletedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(SelectTrainingRoundParticipantsCommand(trainingJobId = event.trainingJobId)).resultMessage
+        if (event.roundNumber < event.maxRounds) {
+            commandGateway.send(SelectTrainingRoundParticipantsCommand(trainingJobId = event.trainingJobId)).resultMessage
+        } else {
+            java.util.concurrent.CompletableFuture.completedFuture(null)
+        }
 }

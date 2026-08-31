@@ -16,6 +16,7 @@ import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationSta
 class TrainingRunConfigurationCatalogReadModelEntity : MetadataProjection {
     @Id
     var trainingRunConfigurationId: UUID? = null
+    var configurationName: String? = null
     var federationId: UUID? = null
     var featureSchemaId: UUID? = null
     var initialModelId: UUID? = null

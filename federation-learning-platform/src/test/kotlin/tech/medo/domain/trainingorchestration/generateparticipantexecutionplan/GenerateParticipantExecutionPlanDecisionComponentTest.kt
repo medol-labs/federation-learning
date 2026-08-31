@@ -1,12 +1,12 @@
-package tech.medo.infrastructure.secondary.trainingorchestration.participantexecutionplan.generateparticipantexecutionplan
+package tech.medo.domain.trainingorchestration.generateparticipantexecutionplan
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
-import tech.medo.trainingorchestration.events.TrainingRoundStartedEvent
+import tech.medo.trainingorchestration.events.ParticipantExecutionPlanGeneratedEvent
+import tech.medo.trainingorchestration.generateparticipantexecutionplan.GenerateParticipantExecutionPlanCommand
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModel
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelCriteria
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelKey
@@ -18,7 +18,7 @@ import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingR
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelRepository
 import java.util.UUID
 
-class ReadModelParticipantExecutionPlanCommandFactoryTest {
+class GenerateParticipantExecutionPlanDecisionComponentTest {
     private val trainingRunConfigurationId = uuid("11111111-1111-4111-8111-111111111111")
     private val featureSchemaId = uuid("22222222-2222-4222-8222-222222222222")
     private val trainingJobId = uuid("33333333-3333-4333-8333-333333333333")
@@ -26,112 +26,79 @@ class ReadModelParticipantExecutionPlanCommandFactoryTest {
     private val initialModelId = uuid("55555555-5555-4555-8555-555555555555")
 
     @Test
-    fun fansOutOneExecutionPlanCommandPerSelectedParticipant() {
-        val factory = ReadModelParticipantExecutionPlanCommandFactory(
-            trainingRunConfigurationCatalog = configurationRepository(configuration()),
-            trainingRoundProgress = progressRepository()
-        )
+    fun fillsBaseModelSnapshotFromTrainingRunConfiguration() {
+        val decision = decision(configuration())
 
-        val commands = factory.buildCommands(
-            event(
-                participants = listOf(
-                    TrainingRoundParticipant(
-                        organizationId = uuid("66666666-6666-4666-8666-666666666666"),
-                        runtimeId = uuid("77777777-7777-4777-8777-777777777777"),
-                        datasetId = uuid("88888888-8888-4888-8888-888888888888")
-                    ),
-                    TrainingRoundParticipant(
-                        organizationId = uuid("99999999-9999-4999-8999-999999999999"),
-                        runtimeId = uuid("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
-                        datasetId = uuid("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb")
-                    )
-                )
-            )
-        )
+        val event = decision.decide(command()).single() as ParticipantExecutionPlanGeneratedEvent
 
-        assertEquals(2, commands.size)
-        assertEquals(
-            listOf(
-                uuid("77777777-7777-4777-8777-777777777777"),
-                uuid("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa")
-            ),
-            commands.map { it.runtimeId }
-        )
-        commands.forEach { command ->
-            assertEquals(trainingJobId, command.trainingJobId)
-            assertEquals(trainingRunConfigurationId, command.trainingRunConfigurationId)
-            assertEquals(featureSchemaId, command.featureSchemaId)
-            assertEquals(roundId, command.roundId)
-            assertEquals(1, command.roundNumber)
-            assertEquals(initialModelId, command.baseModelId)
-            assertEquals("file:///models/initial.json", command.baseModelArtifactUri)
-            assertEquals("local", command.baseModelRegistryRef)
-            assertEquals("json", command.baseModelFormat)
-            assertEquals("sha256:initial", command.baseModelArtifactDigest)
-            assertEquals("file:///models/initial.sig", command.baseModelSignatureUri)
-        }
+        assertEquals(trainingJobId, event.trainingJobId)
+        assertEquals(trainingRunConfigurationId, event.trainingRunConfigurationId)
+        assertEquals(featureSchemaId, event.featureSchemaId)
+        assertEquals(roundId, event.roundId)
+        assertEquals(1, event.roundNumber)
+        assertEquals(uuid("77777777-7777-4777-8777-777777777777"), event.runtimeId)
+        assertEquals(initialModelId, event.baseModelId)
+        assertEquals("file:///models/initial.json", event.baseModelArtifactUri)
+        assertEquals("local", event.baseModelRegistryRef)
+        assertEquals("json", event.baseModelFormat)
+        assertEquals("sha256:initial", event.baseModelArtifactDigest)
+        assertEquals("file:///models/initial.sig", event.baseModelSignatureUri)
     }
 
     @Test
     fun fallsBackToInitialModelWhenPreviousRoundDoesNotExposeArtifactSnapshot() {
         val previousRound = TrainingRoundProgressReadModelProjection().apply {
-            trainingJobId = this@ReadModelParticipantExecutionPlanCommandFactoryTest.trainingJobId
+            trainingJobId = this@GenerateParticipantExecutionPlanDecisionComponentTest.trainingJobId
             roundId = uuid("cccccccc-cccc-4ccc-8ccc-cccccccccccc")
             roundNumber = 1
             aggregatedModelId = uuid("dddddddd-dddd-4ddd-8ddd-dddddddddddd")
         }
-        val factory = ReadModelParticipantExecutionPlanCommandFactory(
-            trainingRunConfigurationCatalog = configurationRepository(configuration()),
-            trainingRoundProgress = progressRepository(previousRound)
-        )
+        val decision = decision(configuration(), previousRound)
 
-        val command = factory.buildCommands(
-            event(
-                roundNumber = 2,
-                participants = listOf(
-                    TrainingRoundParticipant(
-                        organizationId = uuid("66666666-6666-4666-8666-666666666666"),
-                        runtimeId = uuid("77777777-7777-4777-8777-777777777777"),
-                        datasetId = uuid("88888888-8888-4888-8888-888888888888")
-                    )
-                )
-            )
-        ).single()
+        val event = decision.decide(command(roundNumber = 2)).single() as ParticipantExecutionPlanGeneratedEvent
 
-        assertEquals(initialModelId, command.baseModelId)
-        assertEquals("file:///models/initial.json", command.baseModelArtifactUri)
-        assertEquals("sha256:initial", command.baseModelArtifactDigest)
+        assertEquals(initialModelId, event.baseModelId)
+        assertEquals("file:///models/initial.json", event.baseModelArtifactUri)
+        assertEquals("sha256:initial", event.baseModelArtifactDigest)
     }
 
-    private fun event(
-        roundNumber: Int = 1,
-        participants: List<TrainingRoundParticipant>
-    ): TrainingRoundStartedEvent =
-        TrainingRoundStartedEvent(
+    private fun decision(
+        configuration: TrainingRunConfigurationCatalogReadModelProjection,
+        vararg progress: TrainingRoundProgressReadModelProjection,
+    ): GenerateParticipantExecutionPlanDecisionComponent =
+        GenerateParticipantExecutionPlanDecisionComponent(
+            trainingRunConfigurationCatalog = configurationRepository(configuration),
+            trainingRoundProgress = progressRepository(*progress),
+        )
+
+    private fun command(roundNumber: Int = 1): GenerateParticipantExecutionPlanCommand =
+        GenerateParticipantExecutionPlanCommand(
             trainingJobId = trainingJobId,
             trainingRunConfigurationId = trainingRunConfigurationId,
             featureSchemaId = featureSchemaId,
             roundId = roundId,
             roundNumber = roundNumber,
-            selectedOrganizationIds = participants.map { it.organizationId },
-            selectedRuntimeIds = participants.map { it.runtimeId },
-            selectedParticipants = participants,
-            selectedOrganizationCount = participants.map { it.organizationId }.distinct().size,
-            selectedRuntimeCount = participants.map { it.runtimeId }.distinct().size,
-            minimumNodesPerRound = 1,
+            runtimeId = uuid("77777777-7777-4777-8777-777777777777"),
+            organizationId = uuid("66666666-6666-4666-8666-666666666666"),
+            baseModelId = uuid("99999999-9999-4999-8999-999999999999"),
+            baseModelArtifactUri = "",
+            baseModelRegistryRef = "",
+            baseModelFormat = "",
+            baseModelArtifactDigest = "",
+            baseModelSignatureUri = null,
             secureAggregationRequired = true,
-            secureAggregationSessionId = uuid("99999999-9999-4999-8999-999999999999"),
+            secureAggregationSessionId = uuid("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
             encryptionScheme = "PAILLIER",
             publicKeyVersion = "local-dev-v1",
             publicKeyRef = "local://secure-aggregation/public-keys/local-dev-v1",
-            encryptedParameterScale = 1000000
+            encryptedParameterScale = 1000000,
         )
 
     private fun configuration(): TrainingRunConfigurationCatalogReadModelProjection =
         TrainingRunConfigurationCatalogReadModelProjection().apply {
-            trainingRunConfigurationId = this@ReadModelParticipantExecutionPlanCommandFactoryTest.trainingRunConfigurationId
-            featureSchemaId = this@ReadModelParticipantExecutionPlanCommandFactoryTest.featureSchemaId
-            initialModelId = this@ReadModelParticipantExecutionPlanCommandFactoryTest.initialModelId
+            trainingRunConfigurationId = this@GenerateParticipantExecutionPlanDecisionComponentTest.trainingRunConfigurationId
+            featureSchemaId = this@GenerateParticipantExecutionPlanDecisionComponentTest.featureSchemaId
+            initialModelId = this@GenerateParticipantExecutionPlanDecisionComponentTest.initialModelId
             initialModelArtifactUri = "file:///models/initial.json"
             initialModelRegistryRef = "local"
             initialModelFormat = "json"
@@ -140,7 +107,7 @@ class ReadModelParticipantExecutionPlanCommandFactoryTest {
         }
 
     private fun configurationRepository(
-        projection: TrainingRunConfigurationCatalogReadModelProjection
+        projection: TrainingRunConfigurationCatalogReadModelProjection,
     ): TrainingRunConfigurationCatalogReadModelRepository =
         object : TrainingRunConfigurationCatalogReadModelRepository {
             override fun findAll(pageable: Pageable): Page<TrainingRunConfigurationCatalogReadModel> =
@@ -148,7 +115,7 @@ class ReadModelParticipantExecutionPlanCommandFactoryTest {
 
             override fun findAllByCriteria(
                 criteria: TrainingRunConfigurationCatalogReadModelCriteria?,
-                pageable: Pageable
+                pageable: Pageable,
             ): Page<TrainingRunConfigurationCatalogReadModel> =
                 findAll(pageable)
 
@@ -161,7 +128,7 @@ class ReadModelParticipantExecutionPlanCommandFactoryTest {
         }
 
     private fun progressRepository(
-        vararg projections: TrainingRoundProgressReadModelProjection
+        vararg projections: TrainingRoundProgressReadModelProjection,
     ): TrainingRoundProgressReadModelRepository =
         object : TrainingRoundProgressReadModelRepository {
             override fun findAll(pageable: Pageable): Page<TrainingRoundProgressReadModel> =
@@ -169,12 +136,14 @@ class ReadModelParticipantExecutionPlanCommandFactoryTest {
 
             override fun findAllByCriteria(
                 criteria: TrainingRoundProgressReadModelCriteria?,
-                pageable: Pageable
+                pageable: Pageable,
             ): Page<TrainingRoundProgressReadModel> =
                 findAll(pageable)
 
             override fun findById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModel? = null
-            override fun findProjectionById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModelProjection? = null
+
+            override fun findProjectionById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModelProjection? =
+                null
 
             override fun findProjectionsByTrainingJobId(trainingJobId: UUID): List<TrainingRoundProgressReadModelProjection> =
                 projections.filter { it.trainingJobId == trainingJobId }

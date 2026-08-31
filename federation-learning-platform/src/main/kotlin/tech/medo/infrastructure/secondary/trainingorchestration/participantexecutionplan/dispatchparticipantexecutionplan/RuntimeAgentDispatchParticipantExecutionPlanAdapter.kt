@@ -20,6 +20,7 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapter(
     override fun execute(input: DispatchParticipantExecutionPlanInput): DispatchParticipantExecutionPlanResult {
         val request = ReceiveParticipantExecutionPlanRequest(
             executionPlanId = input.executionPlanId,
+            roundExecutionId = input.executionPlanId,
             executionSessionId = input.executionSessionId,
             trainingJobId = input.trainingJobId,
             trainingRunConfigurationId = input.trainingRunConfigurationId,

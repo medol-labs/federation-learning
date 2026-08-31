@@ -4,6 +4,7 @@ import org.axonframework.eventsourcing.annotation.EventTag
 import org.axonframework.messaging.eventhandling.annotation.Event
 import java.util.UUID;
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
+import java.math.BigDecimal;
 
 
 
@@ -21,6 +22,8 @@ data class TrainingRoundStartedEvent(
     val selectedOrganizationCount: Int,
     val selectedRuntimeCount: Int,
     val minimumNodesPerRound: Int,
+    val maxRounds: Int,
+    val minimumAccuracy: BigDecimal,
     val secureAggregationRequired: Boolean,
     val secureAggregationSessionId: UUID?,
     val encryptionScheme: String?,

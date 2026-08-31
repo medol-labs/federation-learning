@@ -19,6 +19,7 @@ class AcceptExecutionPlanDecisionTest {
         state.evolve(
             ExecutionPlanReceivedEvent(
             executionPlanId = UUID.nameUUIDFromBytes("execution-plan-1".toByteArray()),
+            roundExecutionId = java.util.UUID.randomUUID(),
             executionSessionId = java.util.UUID.randomUUID(),
             trainingJobId = java.util.UUID.randomUUID(),
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
@@ -44,6 +45,7 @@ class AcceptExecutionPlanDecisionTest {
 
         val command = AcceptExecutionPlanCommand(
             executionPlanId = UUID.nameUUIDFromBytes("execution-plan-1".toByteArray()),
+            roundExecutionId = java.util.UUID.randomUUID(),
             executionSessionId = java.util.UUID.randomUUID(),
             trainingJobId = java.util.UUID.randomUUID(),
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
@@ -84,6 +86,7 @@ class AcceptExecutionPlanDecisionTest {
 
         val event = events.filterIsInstance<ExecutionPlanAcceptedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("execution-plan-1".toByteArray()), event.executionPlanId)
+        assertEquals(command.roundExecutionId, event.roundExecutionId)
         assertEquals(command.executionSessionId, event.executionSessionId)
         assertEquals(command.trainingJobId, event.trainingJobId)
         assertEquals(command.trainingRunConfigurationId, event.trainingRunConfigurationId)
@@ -112,6 +115,7 @@ class AcceptExecutionPlanDecisionTest {
         state.evolve(
             ExecutionPlanReceivedEvent(
             executionPlanId = UUID.nameUUIDFromBytes("execution-plan-2".toByteArray()),
+            roundExecutionId = java.util.UUID.randomUUID(),
             executionSessionId = java.util.UUID.randomUUID(),
             trainingJobId = java.util.UUID.randomUUID(),
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
@@ -137,6 +141,7 @@ class AcceptExecutionPlanDecisionTest {
 
         val command = AcceptExecutionPlanCommand(
             executionPlanId = UUID.nameUUIDFromBytes("execution-plan-2".toByteArray()),
+            roundExecutionId = java.util.UUID.randomUUID(),
             executionSessionId = java.util.UUID.randomUUID(),
             trainingJobId = java.util.UUID.randomUUID(),
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
@@ -178,6 +183,7 @@ class AcceptExecutionPlanDecisionTest {
 
         val event = events.filterIsInstance<ExecutionPlanRejectedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("execution-plan-2".toByteArray()), event.executionPlanId)
+        assertEquals(command.roundExecutionId, event.roundExecutionId)
         assertEquals(command.executionSessionId, event.executionSessionId)
         assertEquals(command.trainingJobId, event.trainingJobId)
         assertEquals(command.trainingRunConfigurationId, event.trainingRunConfigurationId)

@@ -35,6 +35,7 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
                 this.trainingRunConfigurationId = event.trainingRunConfigurationId
         }
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.configurationName = event.configurationName
             entity.federationId = event.federationId
             entity.featureSchemaId = event.featureSchemaId
             entity.initialModelId = event.initialModelId
@@ -75,6 +76,7 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
                 this.trainingRunConfigurationId = event.trainingRunConfigurationId
         }
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.configurationName = event.configurationName
             entity.federationId = event.federationId
             entity.featureSchemaId = event.featureSchemaId
             entity.initialModelId = event.initialModelId

@@ -13,8 +13,8 @@ import tech.medo.identityaccessmanagement.useraccount.UserAccountState
 interface AssignRoleToUserDecision {
     fun decide(command: AssignRoleToUserCommand, state: UserAccountState): List<Any> {
         // TODO: validate domain rules against state before appending events.
-        return listOf(
-            RoleAssignedToUserEvent(userAccountId = command.userAccountId, roleCode = requireNotNull(state.roleCode) { "roleCode is required from state." })
-        )
+        return command.roleCodes.map { roleCode ->
+                RoleAssignedToUserEvent(userAccountId = command.userAccountId, roleCode = roleCode)
+            }
     }
 }

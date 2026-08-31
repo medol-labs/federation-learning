@@ -9,7 +9,7 @@ object Concepts {
 
     data object TrainingJob {
         const val NAME = "TrainingJob"
-        val slices = listOf("CreateTrainingJob", "SubmitTrainingJob", "TrainingParticipantEligibility", "PauseTrainingJob", "ResumeTrainingJob", "CancelTrainingJob", "ScheduleNextTrainingRound", "CompleteTrainingJob", "TrainingJobDashboard")
+        val slices = listOf("CreateTrainingJob", "SubmitTrainingJob", "PauseTrainingJob", "ResumeTrainingJob", "CancelTrainingJob", "ScheduleNextTrainingRound", "CompleteTrainingJob", "TrainingJobDashboard", "TrainingParticipantEligibility")
         val states = listOf("Draft", "Submitted", "Running", "Paused", "Canceled", "Completed")
     }
 

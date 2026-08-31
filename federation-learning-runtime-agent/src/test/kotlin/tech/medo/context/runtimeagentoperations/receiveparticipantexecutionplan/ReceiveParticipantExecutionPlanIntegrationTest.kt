@@ -26,6 +26,7 @@ class ReceiveParticipantExecutionPlanIntegrationTest(
     fun ReceiveParticipantExecutionPlanintegration() {
         val command = ReceiveParticipantExecutionPlanCommand(
             executionPlanId = java.util.UUID.randomUUID(),
+            roundExecutionId = java.util.UUID.randomUUID(),
             executionSessionId = java.util.UUID.randomUUID(),
             trainingJobId = java.util.UUID.randomUUID(),
             trainingRunConfigurationId = java.util.UUID.randomUUID(),

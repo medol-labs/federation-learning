@@ -8,6 +8,7 @@ import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionF
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionRetryRequestedEvent
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
 import java.util.UUID
+import java.math.BigDecimal
 import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 
 class RetryTrainingRoundParticipantSelectionDecisionTest {
@@ -21,6 +22,8 @@ class RetryTrainingRoundParticipantSelectionDecisionTest {
             featureSchemaId = java.util.UUID.randomUUID(),
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
+            maxRounds = 0,
+            minimumAccuracy = java.math.BigDecimal.ZERO,
             minimumNodesPerRound = 0,
             secureAggregationRequired = false,
             selectedOrganizationIds = emptyList(),

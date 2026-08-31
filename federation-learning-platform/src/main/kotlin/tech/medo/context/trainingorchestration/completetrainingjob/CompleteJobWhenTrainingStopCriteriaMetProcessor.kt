@@ -8,8 +8,12 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.springframework.stereotype.Component
 
 @Component
-class CompleteJobWhenRoundBudgetExhaustedProcessor(private val commandGateway: CommandGateway) {
+class CompleteJobWhenTrainingStopCriteriaMetProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: TrainingRoundCompletedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(CompleteTrainingJobCommand(trainingJobId = event.trainingJobId, finalRoundId = java.util.UUID.randomUUID() /* TODO: provide finalRoundId */, finalModelId = java.util.UUID.randomUUID() /* TODO: provide finalModelId */, stopReason = "" /* TODO: provide stopReason */)).resultMessage
+        if (event.roundNumber >= event.maxRounds) {
+            commandGateway.send(CompleteTrainingJobCommand(trainingJobId = event.trainingJobId, finalRoundId = event.roundId, finalModelId = event.aggregatedModelId)).resultMessage
+        } else {
+            java.util.concurrent.CompletableFuture.completedFuture(null)
+        }
 }

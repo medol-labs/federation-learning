@@ -1,6 +1,7 @@
 package tech.medo.secureaggregation.completehomomorphicaggregationsession
 
 import java.util.UUID;
+import java.math.BigDecimal;
 
 interface CompleteHomomorphicAggregationSessionService {
     fun supports(input: CompleteHomomorphicAggregationSessionInput): Boolean = true
@@ -14,6 +15,8 @@ data class CompleteHomomorphicAggregationSessionInput(
     val featureSchemaId: UUID,
     val roundId: UUID,
     val roundNumber: Int,
+    val maxRounds: Int,
+    val minimumAccuracy: BigDecimal,
     val aggregatedModelId: UUID
 )
 

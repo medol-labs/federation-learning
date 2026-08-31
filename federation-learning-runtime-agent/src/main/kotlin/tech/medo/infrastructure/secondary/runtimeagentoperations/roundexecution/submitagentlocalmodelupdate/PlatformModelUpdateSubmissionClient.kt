@@ -3,12 +3,14 @@ package tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import tech.medo.shared.security.MedolFeignSecurityConfiguration
 import java.math.BigDecimal
 import java.util.UUID
 
 @FeignClient(
     name = "federationLearningPlatformModelUpdateSubmissionClient",
-    url = "\${runtime-agent.local-model-update-submission.platform-url:http://localhost:8080}"
+    url = "\${runtime-agent.local-model-update-submission.platform-url:http://localhost:8080}",
+    configuration = [MedolFeignSecurityConfiguration::class]
 )
 interface PlatformModelUpdateSubmissionClient {
     @PostMapping("/traininground/submitmodelupdatesubmission")

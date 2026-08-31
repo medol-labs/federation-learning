@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import tech.medo.secureaggregation.createsecureaggregationsession.CreateSecureAggregationSessionCommand
 import java.util.UUID
+import java.math.BigDecimal
 
 @SpringBootTest(properties = [
     "spring.docker.compose.enabled=false",
@@ -37,6 +38,8 @@ class CreateSecureAggregationSessionIntegrationTest(
             selectedOrganizationCount = 0,
             selectedRuntimeCount = 0,
             minimumNodesPerRound = 0,
+            maxRounds = 0,
+            minimumAccuracy = java.math.BigDecimal.ZERO,
             secureAggregationRequired = false
         )
 

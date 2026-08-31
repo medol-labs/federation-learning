@@ -22,8 +22,8 @@ import tech.medo.trainingorchestration.events.TrainingRoundFailedEvent
 import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
 
 import java.util.UUID;
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
 import java.math.BigDecimal;
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
 
 
 @EventSourced(idType = UUID::class, tagKey = TrainingRoundTags.TRAINING_JOB_ID)
@@ -35,6 +35,8 @@ class TrainingRoundState @EntityCreator constructor() {
     var featureSchemaId: UUID? = null
     var roundId: UUID? = null
     var roundNumber: Int? = null
+    var maxRounds: Int? = null
+    var minimumAccuracy: BigDecimal? = null
     var minimumNodesPerRound: Int? = null
     var secureAggregationRequired: Boolean? = null
     var selectedOrganizationIds: List<UUID> = emptyList()
@@ -81,6 +83,8 @@ class TrainingRoundState @EntityCreator constructor() {
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         minimumNodesPerRound = event.minimumNodesPerRound
         secureAggregationRequired = event.secureAggregationRequired
         selectedOrganizationIds = event.selectedOrganizationIds
@@ -98,6 +102,8 @@ class TrainingRoundState @EntityCreator constructor() {
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         minimumNodesPerRound = event.minimumNodesPerRound
         secureAggregationRequired = event.secureAggregationRequired
         selectedOrganizationIds = event.selectedOrganizationIds
@@ -127,6 +133,8 @@ class TrainingRoundState @EntityCreator constructor() {
         selectedOrganizationCount = event.selectedOrganizationCount
         selectedRuntimeCount = event.selectedRuntimeCount
         minimumNodesPerRound = event.minimumNodesPerRound
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         secureAggregationRequired = event.secureAggregationRequired
         secureAggregationSessionId = event.secureAggregationSessionId
         encryptionScheme = event.encryptionScheme
@@ -149,6 +157,8 @@ class TrainingRoundState @EntityCreator constructor() {
         selectedOrganizationCount = event.selectedOrganizationCount
         selectedRuntimeCount = event.selectedRuntimeCount
         minimumNodesPerRound = event.minimumNodesPerRound
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         secureAggregationRequired = event.secureAggregationRequired
         secureAggregationSessionId = event.secureAggregationSessionId
         encryptionScheme = event.encryptionScheme
@@ -190,6 +200,8 @@ class TrainingRoundState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         roundId = event.roundId
         roundNumber = event.roundNumber
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
         secureAggregationRequired = event.secureAggregationRequired
@@ -232,6 +244,8 @@ class TrainingRoundState @EntityCreator constructor() {
         selectedOrganizationCount = event.selectedOrganizationCount
         selectedRuntimeCount = event.selectedRuntimeCount
         minimumNodesPerRound = event.minimumNodesPerRound
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         secureAggregationRequired = event.secureAggregationRequired
     }
 
@@ -243,6 +257,8 @@ class TrainingRoundState @EntityCreator constructor() {
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         secureAggregationSessionId = event.secureAggregationSessionId
         aggregatedModelId = event.aggregatedModelId
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
@@ -260,6 +276,8 @@ class TrainingRoundState @EntityCreator constructor() {
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         aggregatedModelId = event.aggregatedModelId
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
         aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
@@ -278,6 +296,8 @@ class TrainingRoundState @EntityCreator constructor() {
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         aggregatedModelId = event.aggregatedModelId
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
         aggregatedModelRegistryRef = event.aggregatedModelRegistryRef

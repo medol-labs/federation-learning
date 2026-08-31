@@ -35,6 +35,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     var currentState: RoundExecutionStateEnum? = null
     var executionPlanId: UUID? = null
+    var roundExecutionId: UUID? = null
     var executionSessionId: UUID? = null
     var trainingJobId: UUID? = null
     var trainingRunConfigurationId: UUID? = null
@@ -64,7 +65,6 @@ class RoundExecutionState @EntityCreator constructor() {
     var runtimeResourceAvailable: Boolean? = null
     var runtimeAgentIdle: Boolean? = null
     var rejectionReasons: List<String> = emptyList()
-    var roundExecutionId: UUID? = null
     var runtimeEngineJobId: String? = null
     var failureReason: String? = null
     var observedStatus: String? = null
@@ -87,6 +87,7 @@ class RoundExecutionState @EntityCreator constructor() {
     fun evolve(event: ExecutionPlanReceivedEvent): RoundExecutionState = apply {
         currentState = RoundExecutionStateEnum.PLAN_RECEIVED
         executionPlanId = event.executionPlanId
+        roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
@@ -113,6 +114,7 @@ class RoundExecutionState @EntityCreator constructor() {
     fun evolve(event: ExecutionPlanAcceptedEvent): RoundExecutionState = apply {
         currentState = RoundExecutionStateEnum.PLAN_ACCEPTED
         executionPlanId = event.executionPlanId
+        roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
@@ -147,6 +149,7 @@ class RoundExecutionState @EntityCreator constructor() {
     fun evolve(event: ExecutionPlanRejectedEvent): RoundExecutionState = apply {
         currentState = RoundExecutionStateEnum.PLAN_REJECTED
         executionPlanId = event.executionPlanId
+        roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
@@ -237,6 +240,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeEngineJobObservedEvent): RoundExecutionState = apply {
+        currentState = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASED
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId

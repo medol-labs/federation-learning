@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Command
 data class StartRoundExecutionCommand(
-    val roundExecutionId: UUID = java.util.UUID.randomUUID(),
+    val roundExecutionId: UUID,
     val executionSessionId: UUID,
     val executionPlanId: UUID,
     val trainingJobId: UUID,

@@ -16,7 +16,7 @@ interface DefineFeatureSchemaDecision {
             "FeatureDomain Version already exists."
         }
         return listOf(
-            FeatureSchemaFeatureDomainVersionReservedEvent(featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, version = command.version, normalizedFeatureDomain = command.featureDomain.trim().lowercase(), normalizedVersion = command.version.trim().lowercase()),
+                        FeatureSchemaFeatureDomainVersionReservedEvent(featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, version = command.version, normalizedFeatureDomain = command.featureDomain.trim().lowercase(), normalizedVersion = command.version.trim().lowercase()),
             FeatureSchemaDefinedEvent(featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, version = command.version, dataModality = command.dataModality, features = command.features, labels = command.labels, featureCount = 0 /* TODO: Count entries in the features collection. */)
         )
     }

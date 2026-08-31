@@ -9,6 +9,7 @@ if (typeof fetch !== 'function') {
 }
 
 const args = parseArgs(process.argv.slice(2));
+loadEnvFiles([resolve(import.meta.dirname, '../.env'), resolve(process.cwd(), '.env')]);
 const dryRun = Boolean(args['dry-run']);
 const strict = Boolean(args.strict);
 const createJob = Boolean(args['create-job']);
@@ -509,7 +510,9 @@ async function waitForOne(baseUrl, path, query, label, predicate = () => true) {
 async function getPage(baseUrl, path, query) {
     const url = `${baseUrl}${path}?${new URLSearchParams(query).toString()}`;
     if (dryRun) return {content: []};
-    const response = await fetch(url);
+    const response = await fetch(url, {
+        headers: requestHeaders()
+    });
     const body = await response.text();
     if (!response.ok) {
         fail(`GET ${url} failed: ${response.status} ${compact(body)}`);
@@ -526,7 +529,7 @@ async function postCommand(baseUrl, path, payload, label) {
     }
     const response = await fetch(url, {
         method: 'POST',
-        headers: {'content-type': 'application/json'},
+        headers: requestHeaders({'content-type': 'application/json'}),
         body: JSON.stringify(payload)
     });
     const body = await response.text();
@@ -775,6 +778,7 @@ function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint
         },
         trainingRunConfiguration: {
             trainingRunConfigurationId,
+            configurationName: 'Hospital Readmission Risk Local Dev',
             federationId,
             featureSchemaId,
             initialModelId: modelId,
@@ -833,6 +837,46 @@ function parseArgs(argv) {
             result[key] = next;
             i += 1;
         }
+    }
+    return result;
+}
+
+function loadEnvFiles(paths) {
+    const loaded = new Set();
+    for (const path of paths) {
+        if (loaded.has(path) || !existsSync(path)) continue;
+        loaded.add(path);
+        const text = readFileSync(path, 'utf8');
+        for (const line of text.split(/\r?\n/)) {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith('#')) continue;
+            const separator = trimmed.indexOf('=');
+            if (separator <= 0) continue;
+            const key = trimmed.slice(0, separator).trim();
+            const rawValue = trimmed.slice(separator + 1).trim();
+            if (!key || Object.hasOwn(process.env, key)) continue;
+            process.env[key] = unquoteEnvValue(rawValue);
+        }
+    }
+}
+
+function unquoteEnvValue(value) {
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+        return value.slice(1, -1);
+    }
+    return value;
+}
+
+function requestHeaders(baseHeaders = {}) {
+    const result = {...baseHeaders};
+    const apiToken = process.env.FL_API_TOKEN?.trim();
+    if (apiToken && !Object.hasOwn(result, 'Authorization')) {
+        result.Authorization = apiToken.startsWith('Bearer ') ? apiToken : `Bearer ${apiToken}`;
+    }
+
+    const internalToken = args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN;
+    if (internalToken && !Object.hasOwn(result, 'X-MEDOL-INTERNAL-TOKEN')) {
+        result['X-MEDOL-INTERNAL-TOKEN'] = String(internalToken).trim();
     }
     return result;
 }

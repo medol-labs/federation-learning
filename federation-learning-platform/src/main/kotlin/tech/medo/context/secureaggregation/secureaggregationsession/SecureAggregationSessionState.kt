@@ -15,6 +15,7 @@ import tech.medo.secureaggregation.events.SecureAggregationFailedEvent
 import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
 
 import java.util.UUID;
+import java.math.BigDecimal;
 
 
 @EventSourced(idType = UUID::class, tagKey = SecureAggregationSessionTags.SECURE_AGGREGATION_SESSION_ID)
@@ -33,6 +34,8 @@ class SecureAggregationSessionState @EntityCreator constructor() {
     var selectedOrganizationCount: Int? = null
     var selectedRuntimeCount: Int? = null
     var minimumNodesPerRound: Int? = null
+    var maxRounds: Int? = null
+    var minimumAccuracy: BigDecimal? = null
     var secureAggregationRequired: Boolean? = null
     var selectedParticipantCount: Int? = null
     var encryptionScheme: String? = null
@@ -67,6 +70,8 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         selectedOrganizationCount = event.selectedOrganizationCount
         selectedRuntimeCount = event.selectedRuntimeCount
         minimumNodesPerRound = event.minimumNodesPerRound
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         secureAggregationRequired = event.secureAggregationRequired
     }
 
@@ -84,6 +89,8 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         selectedOrganizationCount = event.selectedOrganizationCount
         selectedParticipantCount = event.selectedParticipantCount
         minimumNodesPerRound = event.minimumNodesPerRound
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         secureAggregationRequired = event.secureAggregationRequired
     }
 
@@ -101,6 +108,8 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         selectedOrganizationCount = event.selectedOrganizationCount
         selectedRuntimeCount = event.selectedRuntimeCount
         minimumNodesPerRound = event.minimumNodesPerRound
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         secureAggregationRequired = event.secureAggregationRequired
         encryptionScheme = event.encryptionScheme
         publicKeyVersion = event.publicKeyVersion
@@ -117,6 +126,8 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         runtimeId = event.runtimeId
         updateArtifactId = event.updateArtifactId
         encryptedUpdateArtifactRef = event.encryptedUpdateArtifactRef
@@ -134,6 +145,8 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
         aggregatedModelId = event.aggregatedModelId
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
         aggregatedModelRegistryRef = event.aggregatedModelRegistryRef

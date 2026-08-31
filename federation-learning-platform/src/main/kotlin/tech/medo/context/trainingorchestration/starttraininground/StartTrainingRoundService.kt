@@ -1,6 +1,7 @@
 package tech.medo.trainingorchestration.starttraininground
 
 import java.util.UUID;
+import java.math.BigDecimal;
 
 interface StartTrainingRoundService {
     fun supports(input: StartTrainingRoundInput): Boolean = true
@@ -18,6 +19,8 @@ data class StartTrainingRoundInput(
     val selectedOrganizationCount: Int,
     val selectedRuntimeCount: Int,
     val minimumNodesPerRound: Int,
+    val maxRounds: Int,
+    val minimumAccuracy: BigDecimal,
     val secureAggregationRequired: Boolean,
     val secureAggregationSessionId: UUID?,
     val encryptionScheme: String?,

@@ -3,6 +3,7 @@ package tech.medo.trainingorchestration.events
 import org.axonframework.eventsourcing.annotation.EventTag
 import org.axonframework.messaging.eventhandling.annotation.Event
 import java.util.UUID;
+import java.math.BigDecimal;
 
 
 
@@ -14,6 +15,8 @@ data class GlobalModelUpdatedEvent(
     val featureSchemaId: UUID,
     val roundId: UUID,
     val roundNumber: Int,
+    val maxRounds: Int,
+    val minimumAccuracy: BigDecimal,
     val secureAggregationSessionId: UUID,
     val aggregatedModelId: UUID,
     val aggregatedModelArtifactUri: String,

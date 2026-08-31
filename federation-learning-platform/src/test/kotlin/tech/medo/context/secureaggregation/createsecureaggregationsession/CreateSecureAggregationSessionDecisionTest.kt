@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import tech.medo.secureaggregation.createsecureaggregationsession.CreateSecureAggregationSessionCommand
 import tech.medo.secureaggregation.events.SecureAggregationSessionCreatedEvent
 import java.util.UUID
+import java.math.BigDecimal
 
 class CreateSecureAggregationSessionDecisionTest {
     @Test
@@ -24,6 +25,8 @@ class CreateSecureAggregationSessionDecisionTest {
             selectedOrganizationCount = 0,
             selectedRuntimeCount = 0,
             minimumNodesPerRound = 0,
+            maxRounds = 0,
+            minimumAccuracy = java.math.BigDecimal.ZERO,
             secureAggregationRequired = false
             )
         )

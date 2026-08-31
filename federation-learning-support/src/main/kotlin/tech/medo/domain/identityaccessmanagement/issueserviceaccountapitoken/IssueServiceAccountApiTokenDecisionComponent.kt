@@ -1,0 +1,7 @@
+package tech.medo.domain.identityaccessmanagement.issueserviceaccountapitoken
+
+import org.springframework.stereotype.Component
+import tech.medo.identityaccessmanagement.issueserviceaccountapitoken.IssueServiceAccountApiTokenDecision
+
+@Component
+class IssueServiceAccountApiTokenDecisionComponent : IssueServiceAccountApiTokenDecision

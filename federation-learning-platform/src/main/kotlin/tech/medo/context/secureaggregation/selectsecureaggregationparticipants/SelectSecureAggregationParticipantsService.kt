@@ -1,6 +1,7 @@
 package tech.medo.secureaggregation.selectsecureaggregationparticipants
 
 import java.util.UUID;
+import java.math.BigDecimal;
 
 interface SelectSecureAggregationParticipantsService {
     fun supports(input: SelectSecureAggregationParticipantsInput): Boolean = true
@@ -19,6 +20,8 @@ data class SelectSecureAggregationParticipantsInput(
     val selectedOrganizationCount: Int,
     val selectedParticipantCount: Int,
     val minimumNodesPerRound: Int,
+    val maxRounds: Int,
+    val minimumAccuracy: BigDecimal,
     val secureAggregationRequired: Boolean
 )
 

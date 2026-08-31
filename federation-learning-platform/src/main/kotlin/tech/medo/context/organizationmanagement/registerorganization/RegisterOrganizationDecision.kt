@@ -16,8 +16,8 @@ interface RegisterOrganizationDecision {
             "Name already exists."
         }
         return listOf(
-            OrganizationNameReservedEvent(organizationId = command.organizationId, organizationName = command.organizationName, normalizedName = command.organizationName.trim().lowercase()),
-            OrganizationRegisteredEvent(organizationId = command.organizationId, organizationName = command.organizationName, organizationType = command.organizationType, contactEmail = command.contactEmail, organizationNameEventTag = "" /* TODO: derive value */)
+                        OrganizationNameReservedEvent(organizationId = command.organizationId, organizationName = command.organizationName, normalizedName = command.organizationName.trim().lowercase()),
+            OrganizationRegisteredEvent(organizationId = command.organizationId, organizationName = command.organizationName, organizationType = command.organizationType, contactEmail = command.contactEmail)
         )
     }
 }

@@ -16,7 +16,7 @@ interface RegisterDictionaryDecision {
             "Code already exists."
         }
         return listOf(
-            DictionaryCodeReservedEvent(dictionaryId = command.dictionaryId, dictionaryCode = command.dictionaryCode, normalizedName = command.dictionaryCode.value.trim().lowercase()),
+                        DictionaryCodeReservedEvent(dictionaryId = command.dictionaryId, dictionaryCode = command.dictionaryCode, normalizedName = command.dictionaryCode.value.trim().lowercase()),
             DictionaryRegisteredEvent(dictionaryId = command.dictionaryId, dictionaryCode = command.dictionaryCode, dictionaryName = command.dictionaryName, description = command.description)
         )
     }

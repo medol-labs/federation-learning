@@ -17,6 +17,7 @@ class UpdateTrainingRunConfigurationDecisionTest {
         state.evolve(
             TrainingRunConfigurationDefinedEvent(
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("cfg-1".toByteArray()),
+            configurationName = "",
             federationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
             initialModelId = java.util.UUID.randomUUID(),
@@ -47,6 +48,7 @@ class UpdateTrainingRunConfigurationDecisionTest {
 
         val command = UpdateTrainingRunConfigurationCommand(
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("cfg-1".toByteArray()),
+            configurationName = "Readmission Risk Tuned",
             federationId = UUID.nameUUIDFromBytes("fed-1".toByteArray()),
             featureSchemaId = UUID.nameUUIDFromBytes("schema-1".toByteArray()),
             initialModelId = UUID.nameUUIDFromBytes("model-2".toByteArray()),
@@ -75,6 +77,7 @@ class UpdateTrainingRunConfigurationDecisionTest {
 
         val event = events.filterIsInstance<TrainingRunConfigurationUpdatedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("cfg-1".toByteArray()), event.trainingRunConfigurationId)
+        assertEquals("Readmission Risk Tuned", event.configurationName)
         assertEquals(UUID.nameUUIDFromBytes("fed-1".toByteArray()), event.federationId)
         assertEquals(UUID.nameUUIDFromBytes("schema-1".toByteArray()), event.featureSchemaId)
         assertEquals(UUID.nameUUIDFromBytes("model-2".toByteArray()), event.initialModelId)

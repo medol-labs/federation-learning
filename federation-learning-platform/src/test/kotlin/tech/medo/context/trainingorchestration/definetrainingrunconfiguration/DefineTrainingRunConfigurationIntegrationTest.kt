@@ -27,6 +27,7 @@ class DefineTrainingRunConfigurationIntegrationTest(
     fun DefineRunnableConfiguration() {
         val command = DefineTrainingRunConfigurationCommand(
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("cfg-1".toByteArray()),
+            configurationName = "Readmission Risk Baseline",
             federationId = UUID.nameUUIDFromBytes("fed-1".toByteArray()),
             featureSchemaId = UUID.nameUUIDFromBytes("schema-1".toByteArray()),
             initialModelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),

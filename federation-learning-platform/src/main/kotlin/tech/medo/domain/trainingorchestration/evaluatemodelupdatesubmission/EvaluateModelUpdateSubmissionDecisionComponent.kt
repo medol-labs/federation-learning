@@ -22,6 +22,12 @@ class EvaluateModelUpdateSubmissionDecisionComponent : EvaluateModelUpdateSubmis
                 roundNumber = requireNotNull(state.roundNumber) {
                     "roundNumber is required from state."
                 },
+                maxRounds = requireNotNull(state.maxRounds) {
+                    "maxRounds is required from state."
+                },
+                minimumAccuracy = requireNotNull(state.minimumAccuracy) {
+                    "minimumAccuracy is required from state."
+                },
                 runtimeId = command.runtimeId,
                 featureSchemaId = command.featureSchemaId,
                 secureAggregationRequired = command.secureAggregationRequired,

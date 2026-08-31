@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 data class TrainingRunConfigurationDefinedEvent(
     @EventTag(key = "trainingRunConfigurationId")
     val trainingRunConfigurationId: UUID,
+    val configurationName: String,
     val federationId: UUID,
     val featureSchemaId: UUID,
     val initialModelId: UUID,

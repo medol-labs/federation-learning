@@ -4,6 +4,7 @@ import org.axonframework.messaging.commandhandling.annotation.Command
 import org.axonframework.modelling.annotation.TargetEntityId
 import tech.medo.secureaggregation.secureaggregationsession.SecureAggregationSessionSelection
 import java.util.UUID;
+import java.math.BigDecimal;
 
 
 @Command
@@ -20,6 +21,8 @@ data class CreateSecureAggregationSessionCommand(
     val selectedOrganizationCount: Int,
     val selectedRuntimeCount: Int,
     val minimumNodesPerRound: Int,
+    val maxRounds: Int,
+    val minimumAccuracy: BigDecimal,
     val secureAggregationRequired: Boolean
 ) {
     @TargetEntityId

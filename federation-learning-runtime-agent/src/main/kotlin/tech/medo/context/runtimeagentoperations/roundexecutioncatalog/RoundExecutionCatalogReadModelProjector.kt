@@ -31,18 +31,94 @@ import java.time.ZoneOffset
 @Component
 class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecutionCatalogReadModelRepository) {
     @EventHandler
-    fun on(event: ExecutionPlanReceivedEvent) {
-        // Skipped: ExecutionPlanReceivedEvent does not provide enough key fields to locate RoundExecutionCatalogReadModelProjection.
+    fun on(
+        event: ExecutionPlanReceivedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.roundExecutionId) ?: RoundExecutionCatalogReadModelProjection().apply {
+                this.roundExecutionId = event.roundExecutionId
+        }
+            entity.roundExecutionId = event.roundExecutionId
+            entity.executionSessionId = event.executionSessionId
+            entity.executionPlanId = event.executionPlanId
+            entity.trainingJobId = event.trainingJobId
+            entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
+            entity.organizationId = event.organizationId
+            entity.runtimeId = event.runtimeId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.baseModelId = event.baseModelId
+            entity.state = RoundExecutionStateEnum.PLAN_RECEIVED
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
     }
 
     @EventHandler
-    fun on(event: ExecutionPlanAcceptedEvent) {
-        // Skipped: ExecutionPlanAcceptedEvent does not provide enough key fields to locate RoundExecutionCatalogReadModelProjection.
+    fun on(
+        event: ExecutionPlanAcceptedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.roundExecutionId) ?: RoundExecutionCatalogReadModelProjection().apply {
+                this.roundExecutionId = event.roundExecutionId
+        }
+            entity.roundExecutionId = event.roundExecutionId
+            entity.executionSessionId = event.executionSessionId
+            entity.executionPlanId = event.executionPlanId
+            entity.trainingJobId = event.trainingJobId
+            entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
+            entity.organizationId = event.organizationId
+            entity.runtimeId = event.runtimeId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.baseModelId = event.baseModelId
+            entity.localExecutionRequirementsSatisfied = event.localExecutionRequirementsSatisfied
+            entity.runtimeIdentityMatched = event.runtimeIdentityMatched
+            entity.runtimeDatasetBindingAvailable = event.runtimeDatasetBindingAvailable
+            entity.datasetAccessValidated = event.datasetAccessValidated
+            entity.baseModelAvailable = event.baseModelAvailable
+            entity.trainingConfigurationSupported = event.trainingConfigurationSupported
+            entity.runtimeResourceAvailable = event.runtimeResourceAvailable
+            entity.runtimeAgentIdle = event.runtimeAgentIdle
+            entity.state = RoundExecutionStateEnum.PLAN_ACCEPTED
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
     }
 
     @EventHandler
-    fun on(event: ExecutionPlanRejectedEvent) {
-        // Skipped: ExecutionPlanRejectedEvent does not provide enough key fields to locate RoundExecutionCatalogReadModelProjection.
+    fun on(
+        event: ExecutionPlanRejectedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.roundExecutionId) ?: RoundExecutionCatalogReadModelProjection().apply {
+                this.roundExecutionId = event.roundExecutionId
+        }
+            entity.roundExecutionId = event.roundExecutionId
+            entity.executionSessionId = event.executionSessionId
+            entity.executionPlanId = event.executionPlanId
+            entity.trainingJobId = event.trainingJobId
+            entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.roundId = event.roundId
+            entity.roundNumber = event.roundNumber
+            entity.organizationId = event.organizationId
+            entity.runtimeId = event.runtimeId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.baseModelId = event.baseModelId
+            entity.localExecutionRequirementsSatisfied = event.localExecutionRequirementsSatisfied
+            entity.runtimeIdentityMatched = event.runtimeIdentityMatched
+            entity.runtimeDatasetBindingAvailable = event.runtimeDatasetBindingAvailable
+            entity.datasetAccessValidated = event.datasetAccessValidated
+            entity.baseModelAvailable = event.baseModelAvailable
+            entity.trainingConfigurationSupported = event.trainingConfigurationSupported
+            entity.runtimeResourceAvailable = event.runtimeResourceAvailable
+            entity.runtimeAgentIdle = event.runtimeAgentIdle
+            entity.rejectionReasons = event.rejectionReasons
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
     }
 
     @EventHandler

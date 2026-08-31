@@ -21,6 +21,8 @@ class EvaluateModelUpdateSubmissionDecisionComponentTest {
                     featureSchemaId = uuid("schema-1"),
                     roundId = uuid("round-1"),
                     roundNumber = 1,
+                    maxRounds = 1,
+                    minimumAccuracy = BigDecimal("0.90"),
                     selectedOrganizationIds = emptyList(),
                     selectedRuntimeIds = emptyList(),
                     selectedParticipants = emptyList(),

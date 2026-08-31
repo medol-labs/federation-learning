@@ -9,6 +9,7 @@ import java.util.UUID;
 @Command
 data class ReceiveParticipantExecutionPlanCommand(
     val executionPlanId: UUID,
+    val roundExecutionId: UUID,
     val executionSessionId: UUID,
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,

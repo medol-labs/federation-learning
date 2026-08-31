@@ -38,6 +38,7 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
     private fun TrainingRunConfigurationCatalogReadModelEntity.toProjection(): TrainingRunConfigurationCatalogReadModelProjection =
         TrainingRunConfigurationCatalogReadModelProjection().also {
             it.trainingRunConfigurationId = this@toProjection.trainingRunConfigurationId
+            it.configurationName = this@toProjection.configurationName
             it.federationId = this@toProjection.federationId
             it.featureSchemaId = this@toProjection.featureSchemaId
             it.initialModelId = this@toProjection.initialModelId
@@ -80,6 +81,7 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
     private fun TrainingRunConfigurationCatalogReadModelProjection.toEntity(): TrainingRunConfigurationCatalogReadModelEntity =
         TrainingRunConfigurationCatalogReadModelEntity().also {
             it.trainingRunConfigurationId = this@toEntity.trainingRunConfigurationId
+            it.configurationName = this@toEntity.configurationName
             it.federationId = this@toEntity.federationId
             it.featureSchemaId = this@toEntity.featureSchemaId
             it.initialModelId = this@toEntity.initialModelId

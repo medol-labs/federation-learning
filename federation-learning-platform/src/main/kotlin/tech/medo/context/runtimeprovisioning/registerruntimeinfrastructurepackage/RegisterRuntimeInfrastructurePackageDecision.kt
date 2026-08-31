@@ -12,7 +12,7 @@ import tech.medo.runtimeprovisioning.runtimeinfrastructurepackage.RuntimeInfrast
 interface RegisterRuntimeInfrastructurePackageDecision {
     fun decide(command: RegisterRuntimeInfrastructurePackageCommand): List<Any> {
         return listOf(
-            RuntimeInfrastructurePackageRegisteredEvent(runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, packageName = command.packageName, packageVersion = command.packageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, packageNameEventTag = "" /* TODO: derive value */)
+            RuntimeInfrastructurePackageRegisteredEvent(runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, packageName = command.packageName, packageVersion = command.packageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType)
         )
     }
 }

@@ -29,6 +29,8 @@ class EvaluateModelUpdateSubmissionDecisionTest {
             selectedOrganizationCount = 0,
             selectedRuntimeCount = 2,
             minimumNodesPerRound = 2,
+            maxRounds = 0,
+            minimumAccuracy = java.math.BigDecimal.ZERO,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,

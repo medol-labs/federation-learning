@@ -1,6 +1,7 @@
 package tech.medo.secureaggregation.preparehomomorphicencryptioncontext
 
 import java.util.UUID;
+import java.math.BigDecimal;
 
 interface PrepareHomomorphicEncryptionContextService {
     fun supports(input: PrepareHomomorphicEncryptionContextInput): Boolean = true
@@ -19,6 +20,8 @@ data class PrepareHomomorphicEncryptionContextInput(
     val selectedOrganizationCount: Int,
     val selectedRuntimeCount: Int,
     val minimumNodesPerRound: Int,
+    val maxRounds: Int,
+    val minimumAccuracy: BigDecimal,
     val secureAggregationRequired: Boolean
 )
 

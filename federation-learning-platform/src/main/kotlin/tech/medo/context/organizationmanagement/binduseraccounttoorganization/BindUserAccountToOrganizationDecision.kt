@@ -16,7 +16,7 @@ interface BindUserAccountToOrganizationDecision {
             "UserAccountId OrganizationId already exists."
         }
         return listOf(
-            UserOrganizationMembershipUserAccountIdOrganizationIdReservedEvent(userOrganizationMembershipId = command.userOrganizationMembershipId, userAccountId = command.userAccountId, organizationId = command.organizationId, normalizedUserAccountId = command.userAccountId.toString().trim().lowercase(), normalizedOrganizationId = command.organizationId.toString().trim().lowercase()),
+                        UserOrganizationMembershipUserAccountIdOrganizationIdReservedEvent(userOrganizationMembershipId = command.userOrganizationMembershipId, userAccountId = command.userAccountId, organizationId = command.organizationId, normalizedUserAccountId = command.userAccountId.toString().trim().lowercase(), normalizedOrganizationId = command.organizationId.toString().trim().lowercase()),
             UserAccountBoundToOrganizationEvent(userOrganizationMembershipId = command.userOrganizationMembershipId, userAccountId = command.userAccountId, organizationId = command.organizationId, organizationUserRole = command.organizationUserRole)
         )
     }
