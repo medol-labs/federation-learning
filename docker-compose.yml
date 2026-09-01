@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: ./docker/pytorch/Dockerfile
     image: ${RUNTIME_ENGINE_IMAGE:-medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
+    restart: unless-stopped
     environment:
       RUNTIME_ENGINE_HOST: 0.0.0.0
       RUNTIME_ENGINE_PORT: 8080
