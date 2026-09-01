@@ -11,6 +11,7 @@ data class RegisterUserAccountCommand(
     val userAccountId: UUID = java.util.UUID.randomUUID(),
     val username: String,
     val providerSubject: String?,
+    val userSource: String?,
     val passwordHash: String?
 ) {
     @TargetEntityId

@@ -39,6 +39,7 @@ class JpaRuntimeDatasetMetadataCatalogReadModelRepository(
 
     private fun RuntimeDatasetMetadataCatalogReadModelEntity.toProjection(): RuntimeDatasetMetadataCatalogReadModelProjection =
         RuntimeDatasetMetadataCatalogReadModelProjection().also {
+            it.runtimeDatasetBindingId = this@toProjection.runtimeDatasetBindingId
             it.metadataReportId = this@toProjection.metadataReportId
             it.datasetId = this@toProjection.datasetId
             it.organizationId = this@toProjection.organizationId
@@ -70,6 +71,7 @@ class JpaRuntimeDatasetMetadataCatalogReadModelRepository(
 
     private fun RuntimeDatasetMetadataCatalogReadModelProjection.toEntity(): RuntimeDatasetMetadataCatalogReadModelEntity =
         RuntimeDatasetMetadataCatalogReadModelEntity().also {
+            it.runtimeDatasetBindingId = this@toEntity.runtimeDatasetBindingId
             it.metadataReportId = this@toEntity.metadataReportId
             it.datasetId = this@toEntity.datasetId
             it.organizationId = this@toEntity.organizationId

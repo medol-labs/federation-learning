@@ -30,9 +30,10 @@ class RuntimeDatasetMetadataCatalogReadModelProjector(private val repository: Ru
         message: EventMessage
     ) {
 
-        val entity = repository.findProjectionById(event.metadataReportId) ?: RuntimeDatasetMetadataCatalogReadModelProjection().apply {
-                this.metadataReportId = event.metadataReportId
+        val entity = repository.findProjectionById(event.runtimeDatasetBindingId) ?: RuntimeDatasetMetadataCatalogReadModelProjection().apply {
+                this.runtimeDatasetBindingId = event.runtimeDatasetBindingId
         }
+            entity.runtimeDatasetBindingId = event.runtimeDatasetBindingId
             entity.metadataReportId = event.metadataReportId
             entity.datasetId = event.datasetId
             entity.organizationId = event.organizationId
@@ -59,9 +60,10 @@ class RuntimeDatasetMetadataCatalogReadModelProjector(private val repository: Ru
         message: EventMessage
     ) {
 
-        val entity = repository.findProjectionById(event.metadataReportId) ?: RuntimeDatasetMetadataCatalogReadModelProjection().apply {
-                this.metadataReportId = event.metadataReportId
+        val entity = repository.findProjectionById(event.runtimeDatasetBindingId) ?: RuntimeDatasetMetadataCatalogReadModelProjection().apply {
+                this.runtimeDatasetBindingId = event.runtimeDatasetBindingId
         }
+            entity.runtimeDatasetBindingId = event.runtimeDatasetBindingId
             entity.metadataReportId = event.metadataReportId
             entity.datasetId = event.datasetId
             entity.organizationId = event.organizationId

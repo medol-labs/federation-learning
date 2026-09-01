@@ -12,7 +12,7 @@ import tech.medo.identityaccessmanagement.useraccount.UserAccountState
 interface RegisterUserAccountDecision {
     fun decide(command: RegisterUserAccountCommand): List<Any> {
         return listOf(
-            UserAccountRegisteredEvent(userAccountId = command.userAccountId, username = command.username, providerSubject = command.providerSubject, passwordHash = command.passwordHash)
+            UserAccountRegisteredEvent(userAccountId = command.userAccountId, username = command.username, providerSubject = command.providerSubject, userSource = command.userSource, passwordHash = command.passwordHash)
         )
     }
 }

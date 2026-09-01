@@ -12,7 +12,7 @@ import tech.medo.datasetgovernance.runtimedatasetmetadata.RuntimeDatasetMetadata
 interface RecordRuntimeDatasetMetadataDecision {
     fun decide(command: RecordRuntimeDatasetMetadataCommand): List<Any> {
         return listOf(
-            DatasetMetadataReportedEvent(metadataReportId = command.metadataReportId, datasetId = command.datasetId, organizationId = command.organizationId, runtimeId = command.runtimeId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName, sampleCount = command.sampleCount, featureCount = command.featureCount, schemaCompatible = command.schemaCompatible, labelCompatible = command.labelCompatible, missingValueRate = command.missingValueRate, duplicateRate = command.duplicateRate, qualityScore = command.qualityScore, nonIidScore = command.nonIidScore, classBalanceScore = command.classBalanceScore)
+            DatasetMetadataReportedEvent(runtimeDatasetBindingId = command.runtimeDatasetBindingId, metadataReportId = command.metadataReportId, datasetId = command.datasetId, organizationId = command.organizationId, runtimeId = command.runtimeId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName, sampleCount = command.sampleCount, featureCount = command.featureCount, schemaCompatible = command.schemaCompatible, labelCompatible = command.labelCompatible, missingValueRate = command.missingValueRate, duplicateRate = command.duplicateRate, qualityScore = command.qualityScore, nonIidScore = command.nonIidScore, classBalanceScore = command.classBalanceScore)
         )
     }
 }

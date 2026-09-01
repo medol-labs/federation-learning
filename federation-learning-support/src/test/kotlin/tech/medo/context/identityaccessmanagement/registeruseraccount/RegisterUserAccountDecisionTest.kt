@@ -15,6 +15,7 @@ class RegisterUserAccountDecisionTest {
             userAccountId = java.util.UUID.randomUUID(),
             username = "",
             providerSubject = null,
+            userSource = null,
             passwordHash = null
             )
         )

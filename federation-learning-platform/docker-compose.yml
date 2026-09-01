@@ -20,6 +20,7 @@ services:
   # axon-server:
   #   image: axoniq/axonserver:2026.0.3-jdk-21
   #   hostname: axon-server
+  #   restart: unless-stopped
   #   profiles:
   #     - axon-server
   #   ports:

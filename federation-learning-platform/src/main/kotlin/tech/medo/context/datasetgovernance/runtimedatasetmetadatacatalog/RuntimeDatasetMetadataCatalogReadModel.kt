@@ -19,6 +19,7 @@ import tech.jhipster.service.filter.StringFilter
 class RuntimeDatasetMetadataCatalogReadModelQuery
 
 class RuntimeDatasetMetadataCatalogReadModelCriteria {
+    var runtimeDatasetBindingId: StringFilter? = null
     var metadataReportId: StringFilter? = null
     var datasetId: StringFilter? = null
     var organizationId: StringFilter? = null
@@ -44,6 +45,7 @@ class RuntimeDatasetMetadataCatalogReadModelCriteria {
 
 
 class RuntimeDatasetMetadataCatalogReadModelProjection : MetadataProjection {
+    var runtimeDatasetBindingId: UUID? = null
     var metadataReportId: UUID? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
@@ -75,6 +77,7 @@ class RuntimeDatasetMetadataCatalogReadModelProjection : MetadataProjection {
 
 fun RuntimeDatasetMetadataCatalogReadModelProjection.toReadModel(): RuntimeDatasetMetadataCatalogReadModel =
     RuntimeDatasetMetadataCatalogReadModel(
+    runtimeDatasetBindingId = runtimeDatasetBindingId,
     metadataReportId = metadataReportId,
     datasetId = datasetId,
     organizationId = organizationId,
@@ -113,6 +116,7 @@ interface RuntimeDatasetMetadataCatalogReadModelRepository {
 }
 
 data class RuntimeDatasetMetadataCatalogReadModel(
+    val runtimeDatasetBindingId: UUID?,
     val metadataReportId: UUID?,
     val datasetId: UUID?,
     val organizationId: UUID?,

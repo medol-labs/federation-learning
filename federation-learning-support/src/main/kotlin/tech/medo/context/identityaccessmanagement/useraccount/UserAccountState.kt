@@ -23,6 +23,7 @@ class UserAccountState @EntityCreator constructor() {
     var userAccountId: UUID? = null
     var username: String? = null
     var providerSubject: String? = null
+    var userSource: String? = null
     var passwordHash: String? = null
     var reason: String? = null
     var passwordResetRequired: Boolean? = null
@@ -34,6 +35,7 @@ class UserAccountState @EntityCreator constructor() {
         userAccountId = event.userAccountId
         username = event.username
         providerSubject = event.providerSubject
+        userSource = event.userSource
         passwordHash = event.passwordHash
     }
 

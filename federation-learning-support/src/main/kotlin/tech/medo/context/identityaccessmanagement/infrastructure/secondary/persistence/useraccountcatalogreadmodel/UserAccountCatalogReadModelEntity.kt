@@ -16,6 +16,7 @@ class UserAccountCatalogReadModelEntity : MetadataProjection {
     var userAccountId: UUID? = null
     var username: String? = null
     var providerSubject: String? = null
+    var userSource: String? = null
     var passwordHash: String? = null
     var active: Boolean? = null
     override var userId: String? = null

@@ -38,6 +38,7 @@ class JpaUserAccountCatalogReadModelRepository(
             it.userAccountId = this@toProjection.userAccountId
             it.username = this@toProjection.username
             it.providerSubject = this@toProjection.providerSubject
+            it.userSource = this@toProjection.userSource
             it.passwordHash = this@toProjection.passwordHash
             it.active = this@toProjection.active
             it.userId = this@toProjection.userId
@@ -53,6 +54,7 @@ class JpaUserAccountCatalogReadModelRepository(
             it.userAccountId = this@toEntity.userAccountId
             it.username = this@toEntity.username
             it.providerSubject = this@toEntity.providerSubject
+            it.userSource = this@toEntity.userSource
             it.passwordHash = this@toEntity.passwordHash
             it.active = this@toEntity.active
             it.userId = this@toEntity.userId

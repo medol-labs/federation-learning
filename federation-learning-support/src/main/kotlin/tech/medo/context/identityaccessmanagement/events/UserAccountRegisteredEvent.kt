@@ -12,5 +12,6 @@ data class UserAccountRegisteredEvent(
     val userAccountId: UUID,
     val username: String,
     val providerSubject: String?,
+    val userSource: String?,
     val passwordHash: String?
 )

@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 class RuntimeDatasetMetadataCatalogReadModelEntity : MetadataProjection {
     @Id
+    var runtimeDatasetBindingId: UUID? = null
     var metadataReportId: UUID? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null

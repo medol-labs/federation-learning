@@ -75320,6 +75320,20 @@
               "portOutput": false
             },
             {
+              "name": "userSource",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "passwordHash",
               "type": "String",
               "cardinality": "Single",
@@ -75384,6 +75398,20 @@
             },
             {
               "name": "providerSubject",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "userSource",
               "type": "String",
               "cardinality": "Single",
               "optional": true,
@@ -75469,6 +75497,9 @@
                   "name": "providerSubject"
                 },
                 {
+                  "name": "userSource"
+                },
+                {
                   "name": "passwordHash"
                 }
               ]
@@ -75489,6 +75520,9 @@
                 },
                 {
                   "name": "providerSubject"
+                },
+                {
+                  "name": "userSource"
                 },
                 {
                   "name": "passwordHash"
@@ -76868,6 +76902,9 @@
                   "name": "providerSubject"
                 },
                 {
+                  "name": "userSource"
+                },
+                {
                   "name": "passwordHash"
                 }
               ]
@@ -77172,6 +77209,20 @@
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "userSource",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
               "query": false,
               "display": false,
               "uploadFile": false,

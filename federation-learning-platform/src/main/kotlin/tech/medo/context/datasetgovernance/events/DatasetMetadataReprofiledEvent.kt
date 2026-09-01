@@ -9,7 +9,8 @@ import java.math.BigDecimal;
 
 @Event
 data class DatasetMetadataReprofiledEvent(
-    @EventTag(key = "metadataReportId")
+    @EventTag(key = "runtimeDatasetBindingId")
+    val runtimeDatasetBindingId: UUID,
     val metadataReportId: UUID,
     val datasetId: UUID,
     val organizationId: UUID,

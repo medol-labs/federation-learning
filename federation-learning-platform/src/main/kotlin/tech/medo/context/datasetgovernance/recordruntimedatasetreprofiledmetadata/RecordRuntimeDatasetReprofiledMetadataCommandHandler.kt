@@ -18,7 +18,7 @@ class RecordRuntimeDatasetReprofiledMetadataCommandHandler(
     @CommandHandler
     fun handle(
         command: RecordRuntimeDatasetReprofiledMetadataCommand,
-        @InjectEntity(idProperty = "metadataReportId") state: RuntimeDatasetMetadataState,
+        @InjectEntity(idProperty = "runtimeDatasetBindingId") state: RuntimeDatasetMetadataState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))

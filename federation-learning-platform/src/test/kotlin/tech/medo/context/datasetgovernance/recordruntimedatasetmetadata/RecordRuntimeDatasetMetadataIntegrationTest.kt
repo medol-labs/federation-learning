@@ -26,6 +26,7 @@ class RecordRuntimeDatasetMetadataIntegrationTest(
     @Test
     fun RecordRuntimeDatasetMetadataintegration() {
         val command = RecordRuntimeDatasetMetadataCommand(
+            runtimeDatasetBindingId = java.util.UUID.randomUUID(),
             metadataReportId = java.util.UUID.randomUUID(),
             datasetId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),

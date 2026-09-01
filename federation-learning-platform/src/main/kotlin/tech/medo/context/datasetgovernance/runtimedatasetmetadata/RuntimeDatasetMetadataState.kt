@@ -14,10 +14,11 @@ import java.util.UUID;
 import java.math.BigDecimal;
 
 
-@EventSourced(idType = UUID::class, tagKey = RuntimeDatasetMetadataTags.METADATA_REPORT_ID)
+@EventSourced(idType = UUID::class, tagKey = RuntimeDatasetMetadataTags.RUNTIME_DATASET_BINDING_ID)
 class RuntimeDatasetMetadataState @EntityCreator constructor() {
 
     var currentState: RuntimeDatasetMetadataStateEnum? = null
+    var runtimeDatasetBindingId: UUID? = null
     var metadataReportId: UUID? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
@@ -37,6 +38,7 @@ class RuntimeDatasetMetadataState @EntityCreator constructor() {
     @EventSourcingHandler
     fun evolve(event: DatasetMetadataReportedEvent): RuntimeDatasetMetadataState = apply {
         currentState = RuntimeDatasetMetadataStateEnum.METADATA_REPORTED
+        runtimeDatasetBindingId = event.runtimeDatasetBindingId
         metadataReportId = event.metadataReportId
         datasetId = event.datasetId
         organizationId = event.organizationId
@@ -57,6 +59,7 @@ class RuntimeDatasetMetadataState @EntityCreator constructor() {
     @EventSourcingHandler
     fun evolve(event: DatasetMetadataReprofiledEvent): RuntimeDatasetMetadataState = apply {
         currentState = RuntimeDatasetMetadataStateEnum.METADATA_REPORTED
+        runtimeDatasetBindingId = event.runtimeDatasetBindingId
         metadataReportId = event.metadataReportId
         datasetId = event.datasetId
         organizationId = event.organizationId

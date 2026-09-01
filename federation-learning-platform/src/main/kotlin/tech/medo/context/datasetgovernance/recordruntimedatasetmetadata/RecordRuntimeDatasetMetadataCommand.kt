@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 
 @Command
 data class RecordRuntimeDatasetMetadataCommand(
+    val runtimeDatasetBindingId: UUID,
     val metadataReportId: UUID,
     val datasetId: UUID,
     val organizationId: UUID,
@@ -26,6 +27,6 @@ data class RecordRuntimeDatasetMetadataCommand(
     val classBalanceScore: BigDecimal?
 ) {
     @TargetEntityId
-    val selection: RuntimeDatasetMetadataSelection = RuntimeDatasetMetadataSelection(metadataReportId = metadataReportId)
+    val selection: RuntimeDatasetMetadataSelection = RuntimeDatasetMetadataSelection(runtimeDatasetBindingId = runtimeDatasetBindingId)
 
 }

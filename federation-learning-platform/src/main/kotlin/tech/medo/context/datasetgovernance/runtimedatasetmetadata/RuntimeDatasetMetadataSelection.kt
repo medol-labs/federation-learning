@@ -4,11 +4,11 @@ import java.util.UUID;
 
 
 data class RuntimeDatasetMetadataSelection(
-    val metadataReportId: UUID
+    val runtimeDatasetBindingId: UUID
 )
 
 object RuntimeDatasetMetadataTags {
-    const val METADATA_REPORT_ID = "metadataReportId"
+    const val RUNTIME_DATASET_BINDING_ID = "runtimeDatasetBindingId"
 }
 
 object RuntimeDatasetMetadataMetadata {

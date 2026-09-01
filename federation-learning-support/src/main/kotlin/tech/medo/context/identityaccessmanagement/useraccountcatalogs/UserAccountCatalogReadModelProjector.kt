@@ -25,6 +25,7 @@ class UserAccountCatalogReadModelProjector(private val repository: UserAccountCa
             entity.userAccountId = event.userAccountId
             entity.username = event.username
             entity.providerSubject = event.providerSubject
+            entity.userSource = event.userSource
             entity.passwordHash = event.passwordHash
             entity.active = true
             ProjectionMetadata.assign(entity, message)

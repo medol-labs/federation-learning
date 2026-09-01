@@ -31,6 +31,7 @@ class RuntimeDatasetMetadataCatalogReadModelQueryService(
     private fun createSpecification(criteria: RuntimeDatasetMetadataCatalogReadModelCriteria?): Specification<RuntimeDatasetMetadataCatalogReadModelEntity> {
         var specification = Specification.where<RuntimeDatasetMetadataCatalogReadModelEntity>(null)
         if (criteria != null) {
+            criteria.runtimeDatasetBindingId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetMetadataCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeDatasetBindingId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.metadataReportId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetMetadataCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("metadataReportId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.datasetId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetMetadataCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("datasetId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.organizationId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetMetadataCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("organizationId") as JpaExpression<UUID>).cast(String::class.java) })) }
@@ -109,6 +110,7 @@ class RuntimeDatasetMetadataCatalogReadModelQueryService(
 
     private fun RuntimeDatasetMetadataCatalogReadModelEntity.toProjection(): RuntimeDatasetMetadataCatalogReadModelProjection =
         RuntimeDatasetMetadataCatalogReadModelProjection().also {
+            it.runtimeDatasetBindingId = this@toProjection.runtimeDatasetBindingId
             it.metadataReportId = this@toProjection.metadataReportId
             it.datasetId = this@toProjection.datasetId
             it.organizationId = this@toProjection.organizationId
