@@ -13,6 +13,7 @@ import { Dashboard } from "../pages/dashboard";
 import { ForgotPassword } from "../pages/forgot-password";
 import { Login } from "../pages/login";
 import { Register } from "../pages/register";
+import { PortalSso } from "../pages/sso/portal";
 import {
   AgentDatasetAccessValidationCatalogList,
   AgentDatasetAccessValidationCatalogShow,
@@ -180,6 +181,7 @@ import {
 import {
   RuntimeDatasetMetadataCatalogList,
   RuntimeDatasetMetadataCatalogShow,
+  RuntimeDatasetMetadataCatalogReprofileAgentDataset,
 } from "../pages/runtime-dataset-metadata-catalog";
 import {
   RuntimeHealthDashboardList,
@@ -299,6 +301,7 @@ import {
 export const AppRouter = () => {
   return (
     <Routes>
+      <Route path="/sso/portal" element={<PortalSso />} />
       <Route
         element={
           <Authenticated
@@ -482,6 +485,7 @@ export const AppRouter = () => {
         <Route path="/runtime-dataset-metadata-catalog">
           <Route index element={<RuntimeDatasetMetadataCatalogList />} />
           <Route path="show/:id" element={<RuntimeDatasetMetadataCatalogShow />} />
+          <Route path=":id/command/reprofile-agent-dataset" element={<RuntimeDatasetMetadataCatalogReprofileAgentDataset />} />
         </Route>
         <Route path="/runtime-health-dashboard">
           <Route index element={<RuntimeHealthDashboardList />} />

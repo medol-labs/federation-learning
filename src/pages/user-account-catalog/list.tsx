@@ -23,6 +23,7 @@ type UserAccountCatalogRecord = {
   userAccountId: string;
   username: string;
   providerSubject?: string;
+  userSource?: string;
   passwordHash?: string;
   active: boolean;
 };
@@ -107,6 +108,20 @@ export const UserAccountCatalogList = () => {
         meta: {
           label: t("resources.user_account_catalog.fields.providerSubject.label", "Provider Subject"),
           placeholder: "Enter Provider Subject",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("userSource", {
+        id: "userSource",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.user_account_catalog.fields.userSource.label", "User Source")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.user_account_catalog.fields.userSource.label", "User Source"),
+          placeholder: "Enter User Source",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -211,7 +226,7 @@ export const UserAccountCatalogList = () => {
         tableName: "user_account_catalog_read_model_entity",
         idField: "userAccountId",
         idFields: ["userAccountId"],
-        queryFields: ["userAccountId","username","providerSubject","passwordHash","active"],
+        queryFields: ["userAccountId","username","providerSubject","userSource","passwordHash","active"],
         label: t("resources.user_account_catalog.label", "User Account Catalog"),
         aggregateRoute: "useraccount",
         queryRoute: "useraccountcatalog",

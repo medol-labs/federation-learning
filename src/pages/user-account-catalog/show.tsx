@@ -55,6 +55,11 @@ export const UserAccountCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.user_account_catalog.fields.userSource.label", "User Source")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.userSource, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_account_catalog.fields.passwordHash.label", "Password Hash")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.passwordHash, t)}</p>
             </div>

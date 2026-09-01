@@ -599,6 +599,7 @@ export type LoadRuntimeAgentBootstrapConfigurationCommandInput = z.infer<typeof 
 export const RegisterUserAccountCommandSchema = z.object({
   username: z.string(),
   providerSubject: z.string().optional().nullable(),
+  userSource: z.string().optional().nullable(),
   passwordHash: z.string().optional().nullable(),
 });
 export type RegisterUserAccountCommandInput = z.infer<typeof RegisterUserAccountCommandSchema>;

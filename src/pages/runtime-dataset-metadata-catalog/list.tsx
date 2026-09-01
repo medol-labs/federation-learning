@@ -20,6 +20,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { MoreHorizontal } from "lucide-react";
 
 type RuntimeDatasetMetadataCatalogRecord = {
+  runtimeDatasetBindingId: string;
   metadataReportId: string;
   datasetId: string;
   organizationId: string;
@@ -84,6 +85,20 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         size: 32,
         enableSorting: false,
         enableHiding: false,
+      }),
+      columnHelper.accessor("runtimeDatasetBindingId", {
+        id: "runtimeDatasetBindingId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.runtimeDatasetBindingId.label", "Runtime Dataset Binding Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.runtimeDatasetBindingId.label", "Runtime Dataset Binding Id"),
+          placeholder: "Enter Runtime Dataset Binding Id",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
       columnHelper.accessor("metadataReportId", {
         id: "metadataReportId",
@@ -401,8 +416,21 @@ export const RuntimeDatasetMetadataCatalogList = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {isCommandVisible(row.original, "", "profilingStatus", ["Reported"]) && (
                 <DropdownMenuItem>
-                  <ShowButton variant="ghost" recordItemId={row.original.metadataReportId} size="sm" />
+                  <CommandButton
+                    variant="ghost"
+                    command="reprofileAgentDataset"
+                    recordItemId={row.original.runtimeDatasetBindingId}
+                    size="sm"
+                    query={{
+                      runtimeDatasetBindingId: row.original.runtimeDatasetBindingId,
+                    }}
+                  />
+                </DropdownMenuItem>
+                )}
+                <DropdownMenuItem>
+                  <ShowButton variant="ghost" recordItemId={row.original.runtimeDatasetBindingId} size="sm" />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -419,15 +447,15 @@ export const RuntimeDatasetMetadataCatalogList = () => {
     initialState: {
       columnPinning: { right: ["actions"], left: ["select"] },
     },
-    getRowId: (row) => String(row.metadataReportId),
+    getRowId: (row) => String(row.runtimeDatasetBindingId),
     refineCoreProps: {
       dataProviderName: "federation-learning-platform",
       syncWithLocation: false,
       meta: {
         tableName: "runtime_dataset_metadata_catalog_read_model_entity",
-        idField: "metadataReportId",
-        idFields: ["metadataReportId"],
-        queryFields: ["metadataReportId","datasetId","organizationId","runtimeId","featureSchemaId","datasetName","organizationName","featureDomain","featureSchemaVersion","sampleCount","featureCount","schemaCompatible","labelCompatible","missingValueRate","duplicateRate","qualityScore","nonIidScore","classBalanceScore","profilingStatus","failureReason","profiledAt"],
+        idField: "runtimeDatasetBindingId",
+        idFields: ["runtimeDatasetBindingId"],
+        queryFields: ["runtimeDatasetBindingId","metadataReportId","datasetId","organizationId","runtimeId","featureSchemaId","datasetName","organizationName","featureDomain","featureSchemaVersion","sampleCount","featureCount","schemaCompatible","labelCompatible","missingValueRate","duplicateRate","qualityScore","nonIidScore","classBalanceScore","profilingStatus","failureReason","profiledAt"],
         label: t("resources.runtime_dataset_metadata_catalog.label", "Runtime Dataset Metadata Catalog"),
         aggregateRoute: "runtimedatasetmetadata",
         queryRoute: "runtimedatasetmetadatacatalog",

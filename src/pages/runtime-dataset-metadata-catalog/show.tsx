@@ -22,7 +22,7 @@ export const RuntimeDatasetMetadataCatalogShow = () => {
     dataProviderName: "federation-learning-platform",
     meta: {
       tableName: "runtime_dataset_metadata_catalog_read_model_entity",
-      idField: "metadataReportId",
+      idField: "runtimeDatasetBindingId",
       label: t("resources.runtime_dataset_metadata_catalog.label", "Runtime Dataset Metadata Catalog"),
       aggregateRoute: "runtimedatasetmetadata",
       queryRoute: "runtimedatasetmetadatacatalog",
@@ -36,9 +36,14 @@ export const RuntimeDatasetMetadataCatalogShow = () => {
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>{record?.metadataReportId ?? t("resources.runtime_dataset_metadata_catalog.label", "Runtime Dataset Metadata Catalog")}</CardTitle>
+            <CardTitle>{record?.runtimeDatasetBindingId ?? t("resources.runtime_dataset_metadata_catalog.label", "Runtime Dataset Metadata Catalog")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_metadata_catalog.fields.runtimeDatasetBindingId.label", "Runtime Dataset Binding Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeDatasetBindingId, t)}</p>
+            </div>
+            <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_metadata_catalog.fields.metadataReportId.label", "Metadata Report Id")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.metadataReportId, t)}</p>

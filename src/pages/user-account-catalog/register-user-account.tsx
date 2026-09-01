@@ -37,6 +37,7 @@ export const UserAccountCatalogRegisterUserAccount = () => {
   const defaultValues = {
     username: searchParams.get("username") ?? undefined,
     providerSubject: searchParams.get("providerSubject") ?? undefined,
+    userSource: searchParams.get("userSource") ?? undefined,
     passwordHash: searchParams.get("passwordHash") ?? undefined,
   } as unknown as Partial<RegisterUserAccountCommandInput>;
 
@@ -85,6 +86,9 @@ export const UserAccountCatalogRegisterUserAccount = () => {
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RegisterUserAccount validation failed", errors))} className="space-y-8">
           {defaultValues.providerSubject !== undefined && defaultValues.providerSubject !== null ? (
             <input type="hidden" {...form.register("providerSubject" as never)} />
+          ) : null}
+          {defaultValues.userSource !== undefined && defaultValues.userSource !== null ? (
+            <input type="hidden" {...form.register("userSource" as never)} />
           ) : null}
           {defaultValues.passwordHash !== undefined && defaultValues.passwordHash !== null ? (
             <input type="hidden" {...form.register("passwordHash" as never)} />
