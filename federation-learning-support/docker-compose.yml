@@ -2,6 +2,7 @@ services:
   postgres:
     image: postgres:16
     platform: ${DOCKER_PLATFORM:-}
+    restart: unless-stopped
     ports:
       - "${DB_PORT:-5432}:5432"
     environment:
@@ -42,6 +43,7 @@ services:
   umadb:
     image: umadb/umadb:0.7.8
     platform: ${DOCKER_PLATFORM:-}
+    restart: unless-stopped
     ports:
       - "${UMADB_PORT:-50051}:50051"
     volumes:
@@ -50,6 +52,7 @@ services:
   federation-learning-support:
     image: ${APP_IMAGE:-medol/federation-learning-support:0.0.1-SNAPSHOT}
     platform: ${DOCKER_PLATFORM:-}
+    restart: unless-stopped
     profiles:
       - application
     depends_on:

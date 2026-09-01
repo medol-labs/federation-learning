@@ -12,7 +12,7 @@ Generated from Medol CodegenModel for Axon Framework 5.1.1.
 Run a backend module from this generated multi-module root. Each deployment module owns its own `docker-compose.yml`:
 
 ```bash
-cp <module-name>/.env.example <module-name>/.env
+cp <module-name>/.env-example <module-name>/.env
 ./mvnw -pl <module-name> -am spring-boot:run
 ```
 
@@ -49,7 +49,7 @@ MEDOL_AXON_EVENT_STORAGE=inmemory AXON_SERVER_ENABLED=false ./mvnw -pl <module-n
 Use the generated UmaDB DCB event store adapter from the `axon-event-storage-umadb` module with this deployment module's `.env` file:
 
 ```bash
-cp <module-name>/.env.example <module-name>/.env
+cp <module-name>/.env-example <module-name>/.env
 docker compose -f <module-name>/docker-compose.yml up -d postgres umadb
 ./mvnw -pl <module-name> -am spring-boot:run
 ```
@@ -133,7 +133,7 @@ Preview the discovered dependency images:
 node scripts/dependency-images.mjs list
 ```
 
-Collect deployment Docker Compose files and matching `.env.example` files into one folder:
+Collect deployment Docker Compose files and matching `.env-example` files into one folder:
 
 ```bash
 node scripts/collect-deployment-compose-files.mjs --clean

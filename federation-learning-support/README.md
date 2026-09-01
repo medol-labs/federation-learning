@@ -13,7 +13,7 @@ Run this module from the generated multi-module root so Maven can include the si
 
 ```bash
 cd ..
-cp federation-learning-support/.env.example federation-learning-support/.env
+cp federation-learning-support/.env-example federation-learning-support/.env
 ./mvnw -pl federation-learning-support -am spring-boot:run
 ```
 
@@ -53,7 +53,7 @@ Use the generated UmaDB DCB event store adapter from the `axon-event-storage-uma
 
 ```bash
 cd ..
-cp federation-learning-support/.env.example federation-learning-support/.env
+cp federation-learning-support/.env-example federation-learning-support/.env
 docker compose -f federation-learning-support/docker-compose.yml up -d postgres umadb
 ./mvnw -pl federation-learning-support -am spring-boot:run
 ```
@@ -141,7 +141,7 @@ Preview the discovered dependency images:
 node scripts/dependency-images.mjs list
 ```
 
-Collect deployment Docker Compose files and matching `.env.example` files into one folder:
+Collect deployment Docker Compose files and matching `.env-example` files into one folder:
 
 ```bash
 node scripts/collect-deployment-compose-files.mjs --clean

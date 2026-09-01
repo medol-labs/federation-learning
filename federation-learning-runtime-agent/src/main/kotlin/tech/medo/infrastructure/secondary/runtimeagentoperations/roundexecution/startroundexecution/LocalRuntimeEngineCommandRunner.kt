@@ -2,6 +2,7 @@ package tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import java.nio.file.Path
 import java.time.Duration
 import java.util.concurrent.TimeUnit
 
@@ -20,6 +21,9 @@ class DockerComposeLocalRuntimeEngineCommandRunner : LocalRuntimeEngineCommandRu
         log.debug("Running local runtime engine command: {}", command.joinToString(" "))
         val process = ProcessBuilder(command)
             .redirectErrorStream(true)
+            .apply {
+                environment().putAll(properties.runtimeEngineComposeEnvironment())
+            }
             .start()
 
         val output = StringBuilder()
@@ -54,6 +58,43 @@ class DockerComposeLocalRuntimeEngineCommandRunner : LocalRuntimeEngineCommandRu
         private val log = LoggerFactory.getLogger(DockerComposeLocalRuntimeEngineCommandRunner::class.java)
     }
 }
+
+private fun LocalRuntimeEngineProperties.runtimeEngineComposeEnvironment(): Map<String, String> =
+    buildMap {
+        if (datasetHostRoot.isNotBlank()) {
+            put("RUNTIME_ENGINE_DATASETS_DIR", datasetHostRoot.toAbsolutePathString())
+        }
+        if (runtimeRootHostRoot.isNotBlank()) {
+            put("RUNTIME_ENGINE_TMP_DIR", runtimeTmpHostRoot())
+        }
+        if (runtimeRoot.isNotBlank()) {
+            put("RUNTIME_ENGINE_ROOT", runtimeRoot)
+        }
+        if (nodeName.isNotBlank()) {
+            put("RUNTIME_ENGINE_NODE_NAME", nodeName)
+        }
+    }
+
+private fun LocalRuntimeEngineProperties.runtimeTmpHostRoot(): String {
+    val containerTmpRoot = "/workspace/tmp"
+    val normalizedRuntimeRoot = runtimeRoot.trimEnd('/')
+    if (!normalizedRuntimeRoot.startsWith("$containerTmpRoot/")) {
+        return runtimeRootHostRoot
+    }
+
+    val suffix = normalizedRuntimeRoot.removePrefix("$containerTmpRoot/").trim('/')
+    if (suffix.isBlank()) {
+        return runtimeRootHostRoot
+    }
+
+    val suffixSegments = suffix.split('/').filter { it.isNotBlank() }
+    return suffixSegments.fold(Path.of(runtimeRootHostRoot).toAbsolutePath().normalize()) { path, _ ->
+        path.parent ?: path
+    }.toString()
+}
+
+private fun String.toAbsolutePathString(): String =
+    Path.of(this).toAbsolutePath().normalize().toString()
 
 data class LocalRuntimeEngineCommandResult(
     val exitCode: Int,
