@@ -113,7 +113,7 @@ function packageConsole() {
     const consoleComposeDir = join(packageDirs.compose, 'console');
     collectFiles(defaults.consoleRoot, consoleComposeDir, [
         'docker-compose.yml',
-        '.env.example'
+        '.env-example'
     ]);
     manifest.artifacts.push({type: 'composeBundle', name: 'console', path: relative(outputRoot, consoleComposeDir)});
 }
@@ -127,7 +127,7 @@ function packageRuntimeEngine() {
     const runtimeEngineComposeDir = join(packageDirs.compose, 'runtime-engine');
     collectFiles(defaults.runtimeEngineRoot, runtimeEngineComposeDir, [
         'docker-compose.yml',
-        '.env.example'
+        '.env-example'
     ]);
     manifest.artifacts.push({type: 'composeBundle', name: 'runtime-engine', path: relative(outputRoot, runtimeEngineComposeDir)});
 }

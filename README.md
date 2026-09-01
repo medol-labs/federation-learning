@@ -68,4 +68,4 @@ node package-offline-deployment.mjs --skip-archive
 ```
 
 The package contains image tar files under `images/`, Docker Compose and
-`.env.example` files under `compose/`, and a `manifest.json` for traceability.
+`.env-example` files under `compose/`, and a `manifest.json` for traceability.
