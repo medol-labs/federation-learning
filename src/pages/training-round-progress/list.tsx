@@ -9,15 +9,13 @@ import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { RefineDataTable } from "@/components/refine-ui/data-table/refine-data-table";
+import { RowActionMenu } from "@/components/refine-ui/row-action-menu";
 import {
   ListToolbar,
   ListView,
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
 import type { TrainingRoundParticipant } from "@/domain/value-types";
 
 type TrainingRoundProgressRecord = {
@@ -867,15 +865,8 @@ export const TrainingRoundProgressList = () => {
               size="sm"
             />
             )}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+            <RowActionMenu>
                 {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="submitModelUpdateSubmission"
@@ -889,58 +880,32 @@ export const TrainingRoundProgressList = () => {
                       secureAggregationRequired: row.original.secureAggregationRequired,
                     }}
                   />
-                </DropdownMenuItem>
                 )}
                 {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
-                  <CommandButton
-                    variant="ghost"
-                    command="completeSecureAggregation"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                    query={{
-                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
-                      featureSchemaId: row.original.featureSchemaId,
-                      roundId: row.original.roundId,
-                      roundNumber: row.original.roundNumber,
-                      aggregatedModelId: row.original.aggregatedModelId,
-                      trainingJobId: row.original.trainingJobId,
-                    }}
-                  />
-                </DropdownMenuItem>
-                )}
-                {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="retryTrainingRoundParticipantSelection"
                     recordItemId={row.original.trainingJobId}
                     size="sm"
                   />
-                </DropdownMenuItem>
                 )}
                 {isCommandVisible(row.original, "", "state", ["Draft"]) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="submitTrainingJob"
                     recordItemId={row.original.trainingJobId}
                     size="sm"
                   />
-                </DropdownMenuItem>
                 )}
                 {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="pauseTrainingJob"
                     recordItemId={row.original.trainingJobId}
                     size="sm"
                   />
-                </DropdownMenuItem>
                 )}
                 {isCommandVisible(row.original, "", "state", ["StartFailed"]) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="retryRoundExecutionAfterStartFailure"
@@ -955,10 +920,8 @@ export const TrainingRoundProgressList = () => {
                       baseModelId: row.original.baseModelId,
                     }}
                   />
-                </DropdownMenuItem>
                 )}
                 {isCommandVisible(row.original, "", "state", ["Failed"]) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="retryRoundExecutionAfterRuntimeFailure"
@@ -973,13 +936,9 @@ export const TrainingRoundProgressList = () => {
                       baseModelId: row.original.baseModelId,
                     }}
                   />
-                </DropdownMenuItem>
                 )}
-                <DropdownMenuItem>
-                  <ShowButton variant="ghost" recordItemId={row.original.trainingJobId} size="sm" />
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              <ShowButton variant="ghost" recordItemId={row.original.trainingJobId} size="sm" />
+            </RowActionMenu>
           </div>
         ),
         enableSorting: false,

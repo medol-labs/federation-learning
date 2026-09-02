@@ -27,63 +27,63 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DiscardStagedFileCommandSchema, type DiscardStagedFileCommandInput } from "@/domain/schemas";
+import { DiscardFileCommandSchema, type DiscardFileCommandInput } from "@/domain/schemas";
 
-export const StagedFileCatalogDiscardStagedFile = () => {
+export const UploadedFileCatalogDiscardFile = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
     discardReason: searchParams.get("discardReason") ?? undefined,
-    stagedFileId: searchParams.get("stagedFileId") ?? undefined,
-  } as unknown as Partial<DiscardStagedFileCommandInput>;
+    fileId: searchParams.get("fileId") ?? undefined,
+  } as unknown as Partial<DiscardFileCommandInput>;
 
-  const { refineCore: { onFinish }, ...form } = useCommandForm<DiscardStagedFileCommandInput, DiscardStagedFileCommandInput>({
-    resource: "staged_file_catalog",
-    command: "discardStagedFile",
+  const { refineCore: { onFinish }, ...form } = useCommandForm<DiscardFileCommandInput, DiscardFileCommandInput>({
+    resource: "uploaded_file_catalog",
+    command: "discardFile",
     aggregateId: id?.toString(),
     redirect: "list",
     dataProviderName: "federation-learning-support",
     queryDataProviderName: "federation-learning-support",
     meta: {
-      tableName: "staged_file_catalog_read_model_entity",
-      idField: "stagedFileId",
-      label: t("resources.staged_file_catalog.label", "Staged File Catalog"),
-      aggregateRoute: "stagedfile",
-      queryRoute: "stagedfilecatalog",
+      tableName: "uploaded_file_catalog_read_model_entity",
+      idField: "fileId",
+      label: t("resources.uploaded_file_catalog.label", "Uploaded File Catalog"),
+      aggregateRoute: "uploadedfile",
+      queryRoute: "uploadedfilecatalog",
       dataProviderName: "federation-learning-support",
     },
     queryMeta: {
-      tableName: "staged_file_catalog_read_model_entity",
-      idField: "stagedFileId",
-      label: t("resources.staged_file_catalog.label", "Staged File Catalog"),
-      aggregateRoute: "stagedfile",
-      queryRoute: "stagedfilecatalog",
+      tableName: "uploaded_file_catalog_read_model_entity",
+      idField: "fileId",
+      label: t("resources.uploaded_file_catalog.label", "Uploaded File Catalog"),
+      aggregateRoute: "uploadedfile",
+      queryRoute: "uploadedfilecatalog",
       dataProviderName: "federation-learning-support",
     },
     formProps: {
       defaultValues,
-      resolver: zodResolver(DiscardStagedFileCommandSchema) as never,
+      resolver: zodResolver(DiscardFileCommandSchema) as never,
     },
   });
 
-  async function onSubmit(values: DiscardStagedFileCommandInput) {
+  async function onSubmit(values: DiscardFileCommandInput) {
     const result = await onFinish({
       ...defaultValues,
       ...values,
     });
-    navigate("/staged-file-catalog");
+    navigate("/uploaded-file-catalog");
     return result;
   }
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.staged_file_catalog.commands.discardStagedFile.label", "Discard Staged File")} />
+      <CreateViewHeader title={t("resources.uploaded_file_catalog.commands.discardFile.label", "Discard File")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DiscardStagedFile validation failed", errors))} className="space-y-8">
-          {defaultValues.stagedFileId !== undefined && defaultValues.stagedFileId !== null ? (
-            <input type="hidden" {...form.register("stagedFileId" as never)} />
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DiscardFile validation failed", errors))} className="space-y-8">
+          {defaultValues.fileId !== undefined && defaultValues.fileId !== null ? (
+            <input type="hidden" {...form.register("fileId" as never)} />
           ) : null}
           <FormField
             control={form.control}
@@ -91,7 +91,7 @@ export const StagedFileCatalogDiscardStagedFile = () => {
             rules={{}}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.staged_file_catalog.commands.discardStagedFile.fields.discardReason.label", "Discard Reason")}</FormLabel>
+                <FormLabel>{t("resources.uploaded_file_catalog.commands.discardFile.fields.discardReason.label", "Discard Reason")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}

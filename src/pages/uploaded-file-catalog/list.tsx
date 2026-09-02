@@ -9,30 +9,28 @@ import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { RefineDataTable } from "@/components/refine-ui/data-table/refine-data-table";
+import { RowActionMenu } from "@/components/refine-ui/row-action-menu";
 import {
   ListToolbar,
   ListView,
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
 
-type StagedFileCatalogRecord = {
-  stagedFileId: string;
+type UploadedFileCatalogRecord = {
+  fileId: string;
   originalFileName: string;
   contentType?: string;
   sizeBytes?: number;
   purpose: string;
-  stagedFileLocation: string;
+  fileLocation: string;
   checksum?: string;
-  state: "STAGED" | "CONSUMED" | "DISCARDED" | "EXPIRED";
-  stagedAt?: string;
-  consumedAt?: string;
-  consumedByContext?: string;
-  consumedByCommand?: string;
-  consumedByCommandId?: string;
+  state: "AVAILABLE" | "REFERENCED" | "DISCARDED" | "EXPIRED";
+  uploadedAt?: string;
+  referencedAt?: string;
+  referencedByContext?: string;
+  referencedByCommand?: string;
+  referencedByCommandId?: string;
   discardedAt?: string;
   discardReason?: string;
   expiresAt?: string;
@@ -44,7 +42,7 @@ const normalizeWorkflowState = (value: unknown) =>
   String(value ?? "").replace(/[^A-Za-z0-9]/g, "").toLowerCase();
 
 const isCommandVisible = (
-  record: StagedFileCatalogRecord,
+  record: UploadedFileCatalogRecord,
   enabledField?: string,
   stateField?: string,
   allowedStates: string[] = [],
@@ -57,10 +55,10 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
-export const StagedFileCatalogList = () => {
+export const UploadedFileCatalogList = () => {
   const t = useTranslate();
   const columns = React.useMemo(() => {
-    const columnHelper = createColumnHelper<StagedFileCatalogRecord>();
+    const columnHelper = createColumnHelper<UploadedFileCatalogRecord>();
     return [
       columnHelper.display({
         id: "select",
@@ -82,16 +80,16 @@ export const StagedFileCatalogList = () => {
         enableSorting: false,
         enableHiding: false,
       }),
-      columnHelper.accessor("stagedFileId", {
-        id: "stagedFileId",
+      columnHelper.accessor("fileId", {
+        id: "fileId",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.stagedFileId.label", "Staged File Id")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.fileId.label", "File Id")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.stagedFileId.label", "Staged File Id"),
-          placeholder: "Enter Staged File Id",
+          label: t("resources.uploaded_file_catalog.fields.fileId.label", "File Id"),
+          placeholder: "Enter File Id",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -99,12 +97,12 @@ export const StagedFileCatalogList = () => {
       columnHelper.accessor("originalFileName", {
         id: "originalFileName",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.originalFileName.label", "Original File Name")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.originalFileName.label", "Original File Name")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.originalFileName.label", "Original File Name"),
+          label: t("resources.uploaded_file_catalog.fields.originalFileName.label", "Original File Name"),
           placeholder: "Enter Original File Name",
           variant: "text",
         },
@@ -113,12 +111,12 @@ export const StagedFileCatalogList = () => {
       columnHelper.accessor("contentType", {
         id: "contentType",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.contentType.label", "Content Type")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.contentType.label", "Content Type")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.contentType.label", "Content Type"),
+          label: t("resources.uploaded_file_catalog.fields.contentType.label", "Content Type"),
           placeholder: "Enter Content Type",
           variant: "text",
         },
@@ -127,12 +125,12 @@ export const StagedFileCatalogList = () => {
       columnHelper.accessor("sizeBytes", {
         id: "sizeBytes",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.sizeBytes.label", "Size Bytes")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.sizeBytes.label", "Size Bytes")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.sizeBytes.label", "Size Bytes"),
+          label: t("resources.uploaded_file_catalog.fields.sizeBytes.label", "Size Bytes"),
           placeholder: "Enter Size Bytes",
           variant: "number",
           filterOperator: "eq",
@@ -142,27 +140,27 @@ export const StagedFileCatalogList = () => {
       columnHelper.accessor("purpose", {
         id: "purpose",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.purpose.label", "Purpose")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.purpose.label", "Purpose")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.purpose.label", "Purpose"),
+          label: t("resources.uploaded_file_catalog.fields.purpose.label", "Purpose"),
           placeholder: "Enter Purpose",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("stagedFileLocation", {
-        id: "stagedFileLocation",
+      columnHelper.accessor("fileLocation", {
+        id: "fileLocation",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.stagedFileLocation.label", "Staged File Location")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.fileLocation.label", "File Location")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.stagedFileLocation.label", "Staged File Location"),
-          placeholder: "Enter Staged File Location",
+          label: t("resources.uploaded_file_catalog.fields.fileLocation.label", "File Location"),
+          placeholder: "Enter File Location",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -170,12 +168,12 @@ export const StagedFileCatalogList = () => {
       columnHelper.accessor("checksum", {
         id: "checksum",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.checksum.label", "Checksum")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.checksum.label", "Checksum")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.checksum.label", "Checksum"),
+          label: t("resources.uploaded_file_catalog.fields.checksum.label", "Checksum"),
           placeholder: "Enter Checksum",
           variant: "text",
         },
@@ -184,92 +182,92 @@ export const StagedFileCatalogList = () => {
       columnHelper.accessor("state", {
         id: "state",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.state.label", "State")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.state.label", "State")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.state.label", "State"),
+          label: t("resources.uploaded_file_catalog.fields.state.label", "State"),
           placeholder: "Select State",
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Staged", value: "STAGED" },
-            { label: "Consumed", value: "CONSUMED" },
+            { label: "Available", value: "AVAILABLE" },
+            { label: "Referenced", value: "REFERENCED" },
             { label: "Discarded", value: "DISCARDED" },
             { label: "Expired", value: "EXPIRED" },
           ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("stagedAt", {
-        id: "stagedAt",
+      columnHelper.accessor("uploadedAt", {
+        id: "uploadedAt",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.stagedAt.label", "Staged At")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.uploadedAt.label", "Uploaded At")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.stagedAt.label", "Staged At"),
-          placeholder: "Enter Staged At",
+          label: t("resources.uploaded_file_catalog.fields.uploadedAt.label", "Uploaded At"),
+          placeholder: "Enter Uploaded At",
           variant: "date",
           filterOperator: "eq",
         },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
-      columnHelper.accessor("consumedAt", {
-        id: "consumedAt",
+      columnHelper.accessor("referencedAt", {
+        id: "referencedAt",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.consumedAt.label", "Consumed At")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.referencedAt.label", "Referenced At")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.consumedAt.label", "Consumed At"),
-          placeholder: "Enter Consumed At",
+          label: t("resources.uploaded_file_catalog.fields.referencedAt.label", "Referenced At"),
+          placeholder: "Enter Referenced At",
           variant: "date",
           filterOperator: "eq",
         },
         cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
-      columnHelper.accessor("consumedByContext", {
-        id: "consumedByContext",
+      columnHelper.accessor("referencedByContext", {
+        id: "referencedByContext",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.consumedByContext.label", "Consumed By Context")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.referencedByContext.label", "Referenced By Context")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.consumedByContext.label", "Consumed By Context"),
-          placeholder: "Enter Consumed By Context",
+          label: t("resources.uploaded_file_catalog.fields.referencedByContext.label", "Referenced By Context"),
+          placeholder: "Enter Referenced By Context",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("consumedByCommand", {
-        id: "consumedByCommand",
+      columnHelper.accessor("referencedByCommand", {
+        id: "referencedByCommand",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.consumedByCommand.label", "Consumed By Command")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.referencedByCommand.label", "Referenced By Command")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.consumedByCommand.label", "Consumed By Command"),
-          placeholder: "Enter Consumed By Command",
+          label: t("resources.uploaded_file_catalog.fields.referencedByCommand.label", "Referenced By Command"),
+          placeholder: "Enter Referenced By Command",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("consumedByCommandId", {
-        id: "consumedByCommandId",
+      columnHelper.accessor("referencedByCommandId", {
+        id: "referencedByCommandId",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.consumedByCommandId.label", "Consumed By Command Id")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.referencedByCommandId.label", "Referenced By Command Id")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.consumedByCommandId.label", "Consumed By Command Id"),
-          placeholder: "Enter Consumed By Command Id",
+          label: t("resources.uploaded_file_catalog.fields.referencedByCommandId.label", "Referenced By Command Id"),
+          placeholder: "Enter Referenced By Command Id",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -277,12 +275,12 @@ export const StagedFileCatalogList = () => {
       columnHelper.accessor("discardedAt", {
         id: "discardedAt",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.discardedAt.label", "Discarded At")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.discardedAt.label", "Discarded At")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.discardedAt.label", "Discarded At"),
+          label: t("resources.uploaded_file_catalog.fields.discardedAt.label", "Discarded At"),
           placeholder: "Enter Discarded At",
           variant: "date",
           filterOperator: "eq",
@@ -292,12 +290,12 @@ export const StagedFileCatalogList = () => {
       columnHelper.accessor("discardReason", {
         id: "discardReason",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.discardReason.label", "Discard Reason")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.discardReason.label", "Discard Reason")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.discardReason.label", "Discard Reason"),
+          label: t("resources.uploaded_file_catalog.fields.discardReason.label", "Discard Reason"),
           placeholder: "Enter Discard Reason",
           variant: "text",
         },
@@ -306,12 +304,12 @@ export const StagedFileCatalogList = () => {
       columnHelper.accessor("expiresAt", {
         id: "expiresAt",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.expiresAt.label", "Expires At")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.expiresAt.label", "Expires At")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.expiresAt.label", "Expires At"),
+          label: t("resources.uploaded_file_catalog.fields.expiresAt.label", "Expires At"),
           placeholder: "Enter Expires At",
           variant: "date",
           filterOperator: "eq",
@@ -321,12 +319,12 @@ export const StagedFileCatalogList = () => {
       columnHelper.accessor("expiredAt", {
         id: "expiredAt",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.expiredAt.label", "Expired At")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.expiredAt.label", "Expired At")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.expiredAt.label", "Expired At"),
+          label: t("resources.uploaded_file_catalog.fields.expiredAt.label", "Expired At"),
           placeholder: "Enter Expired At",
           variant: "date",
           filterOperator: "eq",
@@ -336,12 +334,12 @@ export const StagedFileCatalogList = () => {
       columnHelper.accessor("expirationReason", {
         id: "expirationReason",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.staged_file_catalog.fields.expirationReason.label", "Expiration Reason")} />
+          <DataTableColumnHeader column={column} label={t("resources.uploaded_file_catalog.fields.expirationReason.label", "Expiration Reason")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.staged_file_catalog.fields.expirationReason.label", "Expiration Reason"),
+          label: t("resources.uploaded_file_catalog.fields.expirationReason.label", "Expiration Reason"),
           placeholder: "Enter Expiration Reason",
           variant: "text",
         },
@@ -352,46 +350,41 @@ export const StagedFileCatalogList = () => {
         header: t("table.actions", "Actions"),
         cell: ({ row }) => (
           <div className="flex gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {isCommandVisible(row.original, "", "state", ["Staged"]) && (
-                <DropdownMenuItem>
+            <RowActionMenu>
+                {isCommandVisible(row.original, "", "state", ["Available"]) && (
                   <CommandButton
                     variant="ghost"
-                    command="markStagedFileConsumed"
-                    recordItemId={row.original.stagedFileId}
+                    command="markFileReferenced"
+                    recordItemId={row.original.fileId}
                     size="sm"
                     query={{
-                      consumedByContext: row.original.consumedByContext,
-                      consumedByCommand: row.original.consumedByCommand,
-                      consumedByCommandId: row.original.consumedByCommandId,
+                      referencedByContext: row.original.referencedByContext,
+                      referencedByCommand: row.original.referencedByCommand,
+                      referencedByCommandId: row.original.referencedByCommandId,
                     }}
                   />
-                </DropdownMenuItem>
                 )}
-                {isCommandVisible(row.original, "", "state", ["Staged"]) && (
-                <DropdownMenuItem>
+                {isCommandVisible(row.original, "", "state", ["Available"]) && (
                   <CommandButton
                     variant="ghost"
-                    command="discardStagedFile"
-                    recordItemId={row.original.stagedFileId}
+                    command="discardFile"
+                    recordItemId={row.original.fileId}
                     size="sm"
                     query={{
                       discardReason: row.original.discardReason,
                     }}
                   />
-                </DropdownMenuItem>
                 )}
-                <DropdownMenuItem>
-                  <ShowButton variant="ghost" recordItemId={row.original.stagedFileId} size="sm" />
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                {isCommandVisible(row.original, "", "", []) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="downloadFile"
+                    recordItemId={row.original.fileId}
+                    size="sm"
+                  />
+                )}
+              <ShowButton variant="ghost" recordItemId={row.original.fileId} size="sm" />
+            </RowActionMenu>
           </div>
         ),
         enableSorting: false,
@@ -405,18 +398,18 @@ export const StagedFileCatalogList = () => {
     initialState: {
       columnPinning: { right: ["actions"], left: ["select"] },
     },
-    getRowId: (row) => String(row.stagedFileId),
+    getRowId: (row) => String(row.fileId),
     refineCoreProps: {
       dataProviderName: "federation-learning-support",
       syncWithLocation: false,
       meta: {
-        tableName: "staged_file_catalog_read_model_entity",
-        idField: "stagedFileId",
-        idFields: ["stagedFileId"],
-        queryFields: ["stagedFileId","originalFileName","contentType","sizeBytes","purpose","stagedFileLocation","checksum","state","stagedAt","consumedAt","consumedByContext","consumedByCommand","consumedByCommandId","discardedAt","discardReason","expiresAt","expiredAt","expirationReason"],
-        label: t("resources.staged_file_catalog.label", "Staged File Catalog"),
-        aggregateRoute: "stagedfile",
-        queryRoute: "stagedfilecatalog",
+        tableName: "uploaded_file_catalog_read_model_entity",
+        idField: "fileId",
+        idFields: ["fileId"],
+        queryFields: ["fileId","originalFileName","contentType","sizeBytes","purpose","fileLocation","checksum","state","uploadedAt","referencedAt","referencedByContext","referencedByCommand","referencedByCommandId","discardedAt","discardReason","expiresAt","expiredAt","expirationReason"],
+        label: t("resources.uploaded_file_catalog.label", "Uploaded File Catalog"),
+        aggregateRoute: "uploadedfile",
+        queryRoute: "uploadedfilecatalog",
         dataProviderName: "federation-learning-support",
       },
     },
@@ -425,7 +418,7 @@ export const StagedFileCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
-        <CommandButton variant="default" command="stageFileUpload" />
+        <CommandButton variant="default" command="uploadFile" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

@@ -9,15 +9,13 @@ import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { RefineDataTable } from "@/components/refine-ui/data-table/refine-data-table";
+import { RowActionMenu } from "@/components/refine-ui/row-action-menu";
 import {
   ListToolbar,
   ListView,
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
 
 type RoundExecutionCatalogRecord = {
   roundExecutionId: string;
@@ -717,15 +715,8 @@ export const RoundExecutionCatalogList = () => {
         header: t("table.actions", "Actions"),
         cell: ({ row }) => (
           <div className="flex gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+            <RowActionMenu>
                 {isCommandVisible(row.original, "", "state", ["StartFailed"]) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="retryRoundExecutionAfterStartFailure"
@@ -746,10 +737,8 @@ export const RoundExecutionCatalogList = () => {
                       retryReason: row.original.retryReason,
                     }}
                   />
-                </DropdownMenuItem>
                 )}
                 {isCommandVisible(row.original, "", "state", ["Failed"]) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="retryRoundExecutionAfterRuntimeFailure"
@@ -770,10 +759,8 @@ export const RoundExecutionCatalogList = () => {
                       retryReason: row.original.retryReason,
                     }}
                   />
-                </DropdownMenuItem>
                 )}
                 {isCommandVisible(row.original, "", "", []) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="submitModelUpdateSubmission"
@@ -794,13 +781,9 @@ export const RoundExecutionCatalogList = () => {
                       trainingLoss: row.original.trainingLoss,
                     }}
                   />
-                </DropdownMenuItem>
                 )}
-                <DropdownMenuItem>
-                  <ShowButton variant="ghost" recordItemId={row.original.roundExecutionId} size="sm" />
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              <ShowButton variant="ghost" recordItemId={row.original.roundExecutionId} size="sm" />
+            </RowActionMenu>
           </div>
         ),
         enableSorting: false,

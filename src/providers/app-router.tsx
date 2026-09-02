@@ -117,6 +117,7 @@ import {
   ModelArtifactCatalogList,
   ModelArtifactCatalogShow,
   ModelArtifactCatalogRegisterModelArtifact,
+  ModelArtifactCatalogDownloadModelArtifact,
 } from "../pages/model-artifact-catalog";
 import {
   ModelCatalogList,
@@ -227,20 +228,12 @@ import {
   SecureAggregationSessionCatalogList,
   SecureAggregationSessionCatalogShow,
   SecureAggregationSessionCatalogFailSecureAggregationSession,
-  SecureAggregationSessionCatalogCompleteSecureAggregation,
 } from "../pages/secure-aggregation-session-catalog";
 import {
   ServiceAccountApiTokenCatalogList,
   ServiceAccountApiTokenCatalogShow,
   ServiceAccountApiTokenCatalogIssueServiceAccountApiToken,
 } from "../pages/service-account-api-token-catalog";
-import {
-  StagedFileCatalogList,
-  StagedFileCatalogShow,
-  StagedFileCatalogStageFileUpload,
-  StagedFileCatalogMarkStagedFileConsumed,
-  StagedFileCatalogDiscardStagedFile,
-} from "../pages/staged-file-catalog";
 import {
   TrainingAlertCatalogList,
   TrainingAlertCatalogShow,
@@ -266,7 +259,6 @@ import {
   TrainingRoundProgressShow,
   TrainingRoundProgressCancelTrainingJob,
   TrainingRoundProgressSubmitModelUpdateSubmission,
-  TrainingRoundProgressCompleteSecureAggregation,
   TrainingRoundProgressRetryTrainingRoundParticipantSelection,
   TrainingRoundProgressSubmitTrainingJob,
   TrainingRoundProgressPauseTrainingJob,
@@ -280,6 +272,14 @@ import {
   TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration,
   TrainingRunConfigurationCatalogCreateTrainingJob,
 } from "../pages/training-run-configuration-catalog";
+import {
+  UploadedFileCatalogList,
+  UploadedFileCatalogShow,
+  UploadedFileCatalogUploadFile,
+  UploadedFileCatalogMarkFileReferenced,
+  UploadedFileCatalogDiscardFile,
+  UploadedFileCatalogDownloadFile,
+} from "../pages/uploaded-file-catalog";
 import {
   UserAccountCatalogList,
   UserAccountCatalogShow,
@@ -421,6 +421,7 @@ export const AppRouter = () => {
           <Route index element={<ModelArtifactCatalogList />} />
           <Route path="command/register-model-artifact" element={<ModelArtifactCatalogRegisterModelArtifact />} />
           <Route path="show/:id" element={<ModelArtifactCatalogShow />} />
+          <Route path=":id/command/download-model-artifact" element={<ModelArtifactCatalogDownloadModelArtifact />} />
         </Route>
         <Route path="/model-catalog">
           <Route index element={<ModelCatalogList />} />
@@ -531,19 +532,11 @@ export const AppRouter = () => {
           <Route index element={<SecureAggregationSessionCatalogList />} />
           <Route path="show/:id" element={<SecureAggregationSessionCatalogShow />} />
           <Route path=":id/command/fail-secure-aggregation-session" element={<SecureAggregationSessionCatalogFailSecureAggregationSession />} />
-          <Route path=":id/command/complete-secure-aggregation" element={<SecureAggregationSessionCatalogCompleteSecureAggregation />} />
         </Route>
         <Route path="/service-account-api-token-catalog">
           <Route index element={<ServiceAccountApiTokenCatalogList />} />
           <Route path="command/issue-service-account-api-token" element={<ServiceAccountApiTokenCatalogIssueServiceAccountApiToken />} />
           <Route path="show/:id" element={<ServiceAccountApiTokenCatalogShow />} />
-        </Route>
-        <Route path="/staged-file-catalog">
-          <Route index element={<StagedFileCatalogList />} />
-          <Route path="command/stage-file-upload" element={<StagedFileCatalogStageFileUpload />} />
-          <Route path="show/:id" element={<StagedFileCatalogShow />} />
-          <Route path=":id/command/mark-staged-file-consumed" element={<StagedFileCatalogMarkStagedFileConsumed />} />
-          <Route path=":id/command/discard-staged-file" element={<StagedFileCatalogDiscardStagedFile />} />
         </Route>
         <Route path="/training-alert-catalog">
           <Route index element={<TrainingAlertCatalogList />} />
@@ -570,7 +563,6 @@ export const AppRouter = () => {
           <Route path="show/:id" element={<TrainingRoundProgressShow />} />
           <Route path=":id/command/cancel-training-job" element={<TrainingRoundProgressCancelTrainingJob />} />
           <Route path=":id/command/submit-model-update-submission" element={<TrainingRoundProgressSubmitModelUpdateSubmission />} />
-          <Route path=":id/command/complete-secure-aggregation" element={<TrainingRoundProgressCompleteSecureAggregation />} />
           <Route path=":id/command/retry-training-round-participant-selection" element={<TrainingRoundProgressRetryTrainingRoundParticipantSelection />} />
           <Route path=":id/command/submit-training-job" element={<TrainingRoundProgressSubmitTrainingJob />} />
           <Route path=":id/command/pause-training-job" element={<TrainingRoundProgressPauseTrainingJob />} />
@@ -583,6 +575,14 @@ export const AppRouter = () => {
           <Route path="edit/:id" element={<TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration />} />
           <Route path="show/:id" element={<TrainingRunConfigurationCatalogShow />} />
           <Route path=":id/command/create-training-job" element={<TrainingRunConfigurationCatalogCreateTrainingJob />} />
+        </Route>
+        <Route path="/uploaded-file-catalog">
+          <Route index element={<UploadedFileCatalogList />} />
+          <Route path="command/upload-file" element={<UploadedFileCatalogUploadFile />} />
+          <Route path="show/:id" element={<UploadedFileCatalogShow />} />
+          <Route path=":id/command/mark-file-referenced" element={<UploadedFileCatalogMarkFileReferenced />} />
+          <Route path=":id/command/discard-file" element={<UploadedFileCatalogDiscardFile />} />
+          <Route path=":id/command/download-file" element={<UploadedFileCatalogDownloadFile />} />
         </Route>
         <Route path="/user-account-catalog">
           <Route index element={<UserAccountCatalogList />} />

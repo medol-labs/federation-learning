@@ -10,7 +10,7 @@ export const backendModules = [
     dataProviderName: "federation-learning-support",
     apiUrl: getAppConfig("VITE_FEDERATION_LEARNING_SUPPORT_API_URL", "http://localhost:8080"),
     homeRoute: "/dictionary-catalog",
-    resources: ["dictionary-catalog","dictionary-value-catalog","permission-catalog","role-catalog","role-permission-grant-catalog","service-account-api-token-catalog","staged-file-catalog","user-account-catalog","user-role-assignment-catalog"],
+    resources: ["dictionary-catalog","dictionary-value-catalog","permission-catalog","role-catalog","role-permission-grant-catalog","service-account-api-token-catalog","uploaded-file-catalog","user-account-catalog","user-role-assignment-catalog"],
   },
   {
     name: "federation-learning-platform",
@@ -36,9 +36,9 @@ export const authBackendModule =
 
 export const fileUploadCapability = {
   "dataProviderName": "federation-learning-support",
-  "path": "/stagedfile/stagefileupload/file",
+  "path": "/uploadedfile/uploadfile/file",
   "fileField": "uploadedFile",
-  "idField": "stagedFileId",
+  "idField": "fileId",
   "additionalFields": [
     {
       "name": "purpose",
@@ -576,6 +576,7 @@ export const resources: IResourceItem[] = [
       commandRoute: "/model-artifact-catalog/:id/command/:command",
       commands: {
         registerModelArtifact: { label: "Register Model Artifact", i18nKey: "resources.model_artifact_catalog.commands.registerModelArtifact.label", route: "/model-artifact-catalog/command/register-model-artifact", dataProviderName: "federation-learning-platform" },
+        downloadModelArtifact: { label: "Download Model Artifact", i18nKey: "resources.model_artifact_catalog.commands.downloadModelArtifact.label", route: "/model-artifact-catalog/:id/command/download-model-artifact", dataProviderName: "federation-learning-platform" },
       },
       canDelete: false,
     },
@@ -1113,7 +1114,6 @@ export const resources: IResourceItem[] = [
       commandRoute: "/secure-aggregation-session-catalog/:id/command/:command",
       commands: {
         failSecureAggregationSession: { label: "Fail Secure Aggregation Session", i18nKey: "resources.secure_aggregation_session_catalog.commands.failSecureAggregationSession.label", route: "/secure-aggregation-session-catalog/:id/command/fail-secure-aggregation-session", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["Planned"] },
-        completeSecureAggregation: { label: "Complete Secure Aggregation", i18nKey: "resources.secure_aggregation_session_catalog.commands.completeSecureAggregation.label", route: "/secure-aggregation-session-catalog/:id/command/complete-secure-aggregation", dataProviderName: "federation-learning-platform" },
       },
       canDelete: false,
     },
@@ -1141,35 +1141,6 @@ export const resources: IResourceItem[] = [
       commandRoute: "/service-account-api-token-catalog/:id/command/:command",
       commands: {
         issueServiceAccountApiToken: { label: "Issue Service Account Api Token", i18nKey: "resources.service_account_api_token_catalog.commands.issueServiceAccountApiToken.label", route: "/service-account-api-token-catalog/command/issue-service-account-api-token", dataProviderName: "federation-learning-support" },
-      },
-      canDelete: false,
-    },
-  },
-  {
-    name: "staged_file_catalog",
-    list: "/staged-file-catalog",
-    create: "/staged-file-catalog/command/stage-file-upload",
-    show: "/staged-file-catalog/show/:id",
-    meta: {
-      parent: "fileupload",
-      label: "Staged File Catalog",
-      i18nKey: "resources.staged_file_catalog.label",
-      icon: <Package />,
-      tableName: "staged_file_catalog_read_model_entity",
-      idField: "stagedFileId",
-      idFields: ["stagedFileId"],
-      queryFields: ["stagedFileId","originalFileName","contentType","sizeBytes","purpose","stagedFileLocation","checksum","state","stagedAt","consumedAt","consumedByContext","consumedByCommand","consumedByCommandId","discardedAt","discardReason","expiresAt","expiredAt","expirationReason"],
-      actionControls: {"enabledFields":[]},
-      aggregateRoute: "stagedfile",
-      queryRoute: "stagedfilecatalog",
-      dataProviderName: "federation-learning-support",
-      moduleName: "federation-learning-support",
-      moduleLabel: "Federation Learning Support",
-      commandRoute: "/staged-file-catalog/:id/command/:command",
-      commands: {
-        stageFileUpload: { label: "Stage File Upload", i18nKey: "resources.staged_file_catalog.commands.stageFileUpload.label", route: "/staged-file-catalog/command/stage-file-upload", dataProviderName: "federation-learning-support" },
-        markStagedFileConsumed: { label: "Mark Staged File Consumed", i18nKey: "resources.staged_file_catalog.commands.markStagedFileConsumed.label", route: "/staged-file-catalog/:id/command/mark-staged-file-consumed", dataProviderName: "federation-learning-support", stateField: "state", allowedStates: ["Staged"] },
-        discardStagedFile: { label: "Discard Staged File", i18nKey: "resources.staged_file_catalog.commands.discardStagedFile.label", route: "/staged-file-catalog/:id/command/discard-staged-file", dataProviderName: "federation-learning-support", stateField: "state", allowedStates: ["Staged"] },
       },
       canDelete: false,
     },
@@ -1281,7 +1252,6 @@ export const resources: IResourceItem[] = [
       commands: {
         cancelTrainingJob: { label: "Cancel Training Job", i18nKey: "resources.training_round_progress.commands.cancelTrainingJob.label", route: "/training-round-progress/:id/command/cancel-training-job", dataProviderName: "federation-learning-platform" },
         submitModelUpdateSubmission: { label: "Submit Model Update Submission", i18nKey: "resources.training_round_progress.commands.submitModelUpdateSubmission.label", route: "/training-round-progress/:id/command/submit-model-update-submission", dataProviderName: "federation-learning-platform" },
-        completeSecureAggregation: { label: "Complete Secure Aggregation", i18nKey: "resources.training_round_progress.commands.completeSecureAggregation.label", route: "/training-round-progress/:id/command/complete-secure-aggregation", dataProviderName: "federation-learning-platform" },
         retryTrainingRoundParticipantSelection: { label: "Retry Training Round Participant Selection", i18nKey: "resources.training_round_progress.commands.retryTrainingRoundParticipantSelection.label", route: "/training-round-progress/:id/command/retry-training-round-participant-selection", dataProviderName: "federation-learning-platform" },
         submitTrainingJob: { label: "Submit Training Job", i18nKey: "resources.training_round_progress.commands.submitTrainingJob.label", route: "/training-round-progress/:id/command/submit-training-job", dataProviderName: "federation-learning-platform", stateField: "state", allowedStates: ["Draft"] },
         pauseTrainingJob: { label: "Pause Training Job", i18nKey: "resources.training_round_progress.commands.pauseTrainingJob.label", route: "/training-round-progress/:id/command/pause-training-job", dataProviderName: "federation-learning-platform" },
@@ -1316,6 +1286,36 @@ export const resources: IResourceItem[] = [
       commands: {
         defineTrainingRunConfiguration: { label: "Define Training Run Configuration", i18nKey: "resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.label", route: "/training-run-configuration-catalog/command/define-training-run-configuration", dataProviderName: "federation-learning-platform" },
         createTrainingJob: { label: "Create Training Job", i18nKey: "resources.training_run_configuration_catalog.commands.createTrainingJob.label", route: "/training-run-configuration-catalog/:id/command/create-training-job", dataProviderName: "federation-learning-platform" },
+      },
+      canDelete: false,
+    },
+  },
+  {
+    name: "uploaded_file_catalog",
+    list: "/uploaded-file-catalog",
+    create: "/uploaded-file-catalog/command/upload-file",
+    show: "/uploaded-file-catalog/show/:id",
+    meta: {
+      parent: "fileupload",
+      label: "Uploaded File Catalog",
+      i18nKey: "resources.uploaded_file_catalog.label",
+      icon: <Package />,
+      tableName: "uploaded_file_catalog_read_model_entity",
+      idField: "fileId",
+      idFields: ["fileId"],
+      queryFields: ["fileId","originalFileName","contentType","sizeBytes","purpose","fileLocation","checksum","state","uploadedAt","referencedAt","referencedByContext","referencedByCommand","referencedByCommandId","discardedAt","discardReason","expiresAt","expiredAt","expirationReason"],
+      actionControls: {"enabledFields":[]},
+      aggregateRoute: "uploadedfile",
+      queryRoute: "uploadedfilecatalog",
+      dataProviderName: "federation-learning-support",
+      moduleName: "federation-learning-support",
+      moduleLabel: "Federation Learning Support",
+      commandRoute: "/uploaded-file-catalog/:id/command/:command",
+      commands: {
+        uploadFile: { label: "Upload File", i18nKey: "resources.uploaded_file_catalog.commands.uploadFile.label", route: "/uploaded-file-catalog/command/upload-file", dataProviderName: "federation-learning-support" },
+        markFileReferenced: { label: "Mark File Referenced", i18nKey: "resources.uploaded_file_catalog.commands.markFileReferenced.label", route: "/uploaded-file-catalog/:id/command/mark-file-referenced", dataProviderName: "federation-learning-support", stateField: "state", allowedStates: ["Available"] },
+        discardFile: { label: "Discard File", i18nKey: "resources.uploaded_file_catalog.commands.discardFile.label", route: "/uploaded-file-catalog/:id/command/discard-file", dataProviderName: "federation-learning-support", stateField: "state", allowedStates: ["Available"] },
+        downloadFile: { label: "Download File", i18nKey: "resources.uploaded_file_catalog.commands.downloadFile.label", route: "/uploaded-file-catalog/:id/command/download-file", dataProviderName: "federation-learning-support" },
       },
       canDelete: false,
     },

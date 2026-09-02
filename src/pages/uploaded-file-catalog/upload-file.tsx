@@ -29,10 +29,10 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { StageFileUploadCommandSchema, type StageFileUploadCommandInput } from "@/domain/schemas";
+import { UploadFileCommandSchema, type UploadFileCommandInput } from "@/domain/schemas";
 import { uploadFile, type PendingFileUpload } from "@/lib/upload-file";
 
-export const StagedFileCatalogStageFileUpload = () => {
+export const UploadedFileCatalogUploadFile = () => {
   const t = useTranslate();
   const { open } = useNotification();
   const navigate = useNavigate();
@@ -44,37 +44,37 @@ export const StagedFileCatalogStageFileUpload = () => {
     originalFileName: searchParams.get("originalFileName") ?? undefined,
     contentType: searchParams.get("contentType") ?? undefined,
     sizeBytes: (() => { const value = searchParams.get("sizeBytes"); return value === null ? undefined : Number(value); })(),
-    stagedFileLocation: searchParams.get("stagedFileLocation") ?? undefined,
+    fileLocation: searchParams.get("fileLocation") ?? undefined,
     checksum: searchParams.get("checksum") ?? undefined,
     expiresAt: searchParams.get("expiresAt") ?? undefined,
-  } as unknown as Partial<StageFileUploadCommandInput>;
+  } as unknown as Partial<UploadFileCommandInput>;
 
-  const { refineCore: { onFinish }, ...form } = useCommandForm<StageFileUploadCommandInput, StageFileUploadCommandInput>({
-    resource: "staged_file_catalog",
-    command: "stageFileUpload",
+  const { refineCore: { onFinish }, ...form } = useCommandForm<UploadFileCommandInput, UploadFileCommandInput>({
+    resource: "uploaded_file_catalog",
+    command: "uploadFile",
     aggregateId: id?.toString(),
     redirect: "list",
     dataProviderName: "federation-learning-support",
     queryDataProviderName: "federation-learning-support",
     meta: {
-      tableName: "staged_file_catalog_read_model_entity",
-      idField: "stagedFileId",
-      label: t("resources.staged_file_catalog.label", "Staged File Catalog"),
-      aggregateRoute: "stagedfile",
-      queryRoute: "stagedfilecatalog",
+      tableName: "uploaded_file_catalog_read_model_entity",
+      idField: "fileId",
+      label: t("resources.uploaded_file_catalog.label", "Uploaded File Catalog"),
+      aggregateRoute: "uploadedfile",
+      queryRoute: "uploadedfilecatalog",
       dataProviderName: "federation-learning-support",
     },
     queryMeta: {
-      tableName: "staged_file_catalog_read_model_entity",
-      idField: "stagedFileId",
-      label: t("resources.staged_file_catalog.label", "Staged File Catalog"),
-      aggregateRoute: "stagedfile",
-      queryRoute: "stagedfilecatalog",
+      tableName: "uploaded_file_catalog_read_model_entity",
+      idField: "fileId",
+      label: t("resources.uploaded_file_catalog.label", "Uploaded File Catalog"),
+      aggregateRoute: "uploadedfile",
+      queryRoute: "uploadedfilecatalog",
       dataProviderName: "federation-learning-support",
     },
     formProps: {
       defaultValues,
-      resolver: zodResolver(StageFileUploadCommandSchema.pick({
+      resolver: zodResolver(UploadFileCommandSchema.pick({
         uploadedFile: true,
         purpose: true,
       })) as never,
@@ -90,11 +90,11 @@ export const StagedFileCatalogStageFileUpload = () => {
     onChange(uploadId);
   }
 
-  async function onSubmit(values: StageFileUploadCommandInput) {
+  async function onSubmit(values: UploadFileCommandInput) {
     const nextValues = {
       ...defaultValues,
       ...values,
-    } as StageFileUploadCommandInput;
+    } as UploadFileCommandInput;
     if (!pendingFileUploads.uploadedFile) {
       open?.({
         type: "error",
@@ -109,7 +109,7 @@ export const StagedFileCatalogStageFileUpload = () => {
         uploadedId = await uploadFile({
           file: pendingFileUploads.uploadedFile!.file,
           uploadId: pendingFileUploads.uploadedFile!.uploadId,
-          source: "staged_file_catalog.stageFileUpload.uploadedFile",
+          source: "uploaded_file_catalog.uploadFile.uploadedFile",
           values: {
             ...nextValues,
             uploadedFile: pendingFileUploads.uploadedFile!.uploadId,
@@ -136,9 +136,9 @@ export const StagedFileCatalogStageFileUpload = () => {
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.staged_file_catalog.commands.stageFileUpload.label", "Stage File Upload")} />
+      <CreateViewHeader title={t("resources.uploaded_file_catalog.commands.uploadFile.label", "Upload File")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("StageFileUpload validation failed", errors))} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("UploadFile validation failed", errors))} className="space-y-8">
           {defaultValues.originalFileName !== undefined && defaultValues.originalFileName !== null ? (
             <input type="hidden" {...form.register("originalFileName" as never)} />
           ) : null}
@@ -148,8 +148,8 @@ export const StagedFileCatalogStageFileUpload = () => {
           {defaultValues.sizeBytes !== undefined && defaultValues.sizeBytes !== null ? (
             <input type="hidden" {...form.register("sizeBytes" as never)} />
           ) : null}
-          {defaultValues.stagedFileLocation !== undefined && defaultValues.stagedFileLocation !== null ? (
-            <input type="hidden" {...form.register("stagedFileLocation" as never)} />
+          {defaultValues.fileLocation !== undefined && defaultValues.fileLocation !== null ? (
+            <input type="hidden" {...form.register("fileLocation" as never)} />
           ) : null}
           {defaultValues.checksum !== undefined && defaultValues.checksum !== null ? (
             <input type="hidden" {...form.register("checksum" as never)} />
@@ -163,7 +163,7 @@ export const StagedFileCatalogStageFileUpload = () => {
             rules={{ required: "Uploaded File is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.staged_file_catalog.commands.stageFileUpload.fields.uploadedFile.label", "Uploaded File")}</FormLabel>
+                <FormLabel>{t("resources.uploaded_file_catalog.commands.uploadFile.fields.uploadedFile.label", "Uploaded File")}</FormLabel>
                 <FormControl>
                   <Input
                     type="file"
@@ -183,7 +183,7 @@ export const StagedFileCatalogStageFileUpload = () => {
             rules={{ required: "Purpose is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.staged_file_catalog.commands.stageFileUpload.fields.purpose.label", "Purpose")}</FormLabel>
+                <FormLabel>{t("resources.uploaded_file_catalog.commands.uploadFile.fields.purpose.label", "Purpose")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}

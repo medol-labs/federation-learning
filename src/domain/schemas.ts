@@ -181,31 +181,36 @@ export const EnableDictionaryValueCommandSchema = z.object({
 });
 export type EnableDictionaryValueCommandInput = z.infer<typeof EnableDictionaryValueCommandSchema>;
 
-export const StageFileUploadCommandSchema = z.object({
+export const UploadFileCommandSchema = z.object({
   uploadedFile: z.string(),
   originalFileName: z.string(),
   contentType: z.string().optional().nullable(),
   sizeBytes: z.coerce.number().optional().nullable(),
-  stagedFileLocation: z.string(),
+  fileLocation: z.string(),
   checksum: z.string().optional().nullable(),
   expiresAt: dateTimeLocalSchema,
   purpose: z.string(),
 });
-export type StageFileUploadCommandInput = z.infer<typeof StageFileUploadCommandSchema>;
+export type UploadFileCommandInput = z.infer<typeof UploadFileCommandSchema>;
 
-export const MarkStagedFileConsumedCommandSchema = z.object({
-  stagedFileId: z.string().uuid(),
-  consumedByContext: z.string(),
-  consumedByCommand: z.string(),
-  consumedByCommandId: z.string().uuid().optional().nullable(),
+export const MarkFileReferencedCommandSchema = z.object({
+  fileId: z.string().uuid(),
+  referencedByContext: z.string(),
+  referencedByCommand: z.string(),
+  referencedByCommandId: z.string().uuid().optional().nullable(),
 });
-export type MarkStagedFileConsumedCommandInput = z.infer<typeof MarkStagedFileConsumedCommandSchema>;
+export type MarkFileReferencedCommandInput = z.infer<typeof MarkFileReferencedCommandSchema>;
 
-export const DiscardStagedFileCommandSchema = z.object({
-  stagedFileId: z.string().uuid(),
+export const DownloadFileCommandSchema = z.object({
+  fileId: z.string().uuid(),
+});
+export type DownloadFileCommandInput = z.infer<typeof DownloadFileCommandSchema>;
+
+export const DiscardFileCommandSchema = z.object({
+  fileId: z.string().uuid(),
   discardReason: z.string().optional().nullable(),
 });
-export type DiscardStagedFileCommandInput = z.infer<typeof DiscardStagedFileCommandSchema>;
+export type DiscardFileCommandInput = z.infer<typeof DiscardFileCommandSchema>;
 
 export const RegisterRuntimeInfrastructurePackageCommandSchema = z.object({
   packageName: z.string(),
@@ -307,10 +312,15 @@ export const RegisterModelArtifactCommandSchema = z.object({
   modelVersion: z.string(),
   modelDescription: z.string().optional().nullable(),
   sourceType: z.string(),
-  stagedFileId: z.string().uuid().optional().nullable(),
+  fileId: z.string().uuid().optional().nullable(),
   modelFormat: z.string().optional().nullable(),
 });
 export type RegisterModelArtifactCommandInput = z.infer<typeof RegisterModelArtifactCommandSchema>;
+
+export const DownloadModelArtifactCommandSchema = z.object({
+  modelId: z.string().uuid(),
+});
+export type DownloadModelArtifactCommandInput = z.infer<typeof DownloadModelArtifactCommandSchema>;
 
 export const DefineTrainingRunConfigurationCommandSchema = z.object({
   configurationName: z.string(),
@@ -416,24 +426,6 @@ export const SubmitModelUpdateSubmissionCommandSchema = z.object({
   trainingLoss: z.coerce.number(),
 });
 export type SubmitModelUpdateSubmissionCommandInput = z.infer<typeof SubmitModelUpdateSubmissionCommandSchema>;
-
-export const CompleteSecureAggregationCommandSchema = z.object({
-  trainingJobId: z.string().uuid(),
-  trainingRunConfigurationId: z.string().uuid(),
-  featureSchemaId: z.string().uuid(),
-  roundId: z.string().uuid(),
-  roundNumber: z.coerce.number().int(),
-  maxRounds: z.coerce.number().int(),
-  minimumAccuracy: z.coerce.number(),
-  secureAggregationSessionId: z.string().uuid(),
-  aggregatedModelId: z.string().uuid(),
-  aggregatedModelArtifactUri: z.string(),
-  aggregatedModelRegistryRef: z.string(),
-  modelFormat: z.string(),
-  modelArtifactDigest: z.string(),
-  aggregatedModelSignatureUri: z.string().optional().nullable(),
-});
-export type CompleteSecureAggregationCommandInput = z.infer<typeof CompleteSecureAggregationCommandSchema>;
 
 export const RecordModelEvaluationPackageCommandSchema = z.object({
   modelId: z.string().uuid(),

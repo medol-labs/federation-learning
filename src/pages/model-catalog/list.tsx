@@ -9,15 +9,13 @@ import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { RefineDataTable } from "@/components/refine-ui/data-table/refine-data-table";
+import { RowActionMenu } from "@/components/refine-ui/row-action-menu";
 import {
   ListToolbar,
   ListView,
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
 
 type ModelCatalogRecord = {
   modelId: string;
@@ -491,15 +489,8 @@ export const ModelCatalogList = () => {
         header: t("table.actions", "Actions"),
         cell: ({ row }) => (
           <div className="flex gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+            <RowActionMenu>
                 {isCommandVisible(row.original, "", "state", ["Candidate"]) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="recordModelEvaluationPackage"
@@ -515,20 +506,16 @@ export const ModelCatalogList = () => {
                       baselineModelId: row.original.baselineModelId,
                     }}
                   />
-                </DropdownMenuItem>
                 )}
                 {isCommandVisible(row.original, "canApprove", "state", ["EvaluationPackaged"]) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="approveModel"
                     recordItemId={row.original.modelId}
                     size="sm"
                   />
-                </DropdownMenuItem>
                 )}
                 {isCommandVisible(row.original, "", "state", ["Approved"]) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="promoteModelToProduction"
@@ -539,10 +526,8 @@ export const ModelCatalogList = () => {
                       productionStage: row.original.productionStage,
                     }}
                   />
-                </DropdownMenuItem>
                 )}
                 {isCommandVisible(row.original, "canRollback", "state", ["Production"]) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="rollbackModel"
@@ -552,23 +537,17 @@ export const ModelCatalogList = () => {
                       previousModelId: row.original.previousModelId,
                     }}
                   />
-                </DropdownMenuItem>
                 )}
                 {isCommandVisible(row.original, "canRetire", "state", ["Production"]) && (
-                <DropdownMenuItem>
                   <CommandButton
                     variant="ghost"
                     command="retireModel"
                     recordItemId={row.original.modelId}
                     size="sm"
                   />
-                </DropdownMenuItem>
                 )}
-                <DropdownMenuItem>
-                  <ShowButton variant="ghost" recordItemId={row.original.modelId} size="sm" />
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              <ShowButton variant="ghost" recordItemId={row.original.modelId} size="sm" />
+            </RowActionMenu>
           </div>
         ),
         enableSorting: false,

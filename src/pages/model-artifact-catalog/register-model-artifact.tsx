@@ -91,16 +91,16 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
       ...defaultValues,
       ...values,
     } as RegisterModelArtifactCommandInput;
-    if (pendingFileUploads.stagedFileId) {
+    if (pendingFileUploads.fileId) {
       let uploadedId: string;
       try {
         uploadedId = await uploadFile({
-          file: pendingFileUploads.stagedFileId!.file,
-          uploadId: pendingFileUploads.stagedFileId!.uploadId,
-          source: "model_artifact_catalog.registerModelArtifact.stagedFileId",
+          file: pendingFileUploads.fileId!.file,
+          uploadId: pendingFileUploads.fileId!.uploadId,
+          source: "model_artifact_catalog.registerModelArtifact.fileId",
           values: {
             ...nextValues,
-            stagedFileId: pendingFileUploads.stagedFileId!.uploadId,
+            fileId: pendingFileUploads.fileId!.uploadId,
           } as Record<string, unknown>,
         });
       } catch (error) {
@@ -111,7 +111,7 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
         });
         return;
       }
-      nextValues.stagedFileId = uploadedId as never;
+      nextValues.fileId = uploadedId as never;
     }
     const result = await onFinish(nextValues);
     navigate("/model-artifact-catalog");
@@ -211,17 +211,17 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
           />
           <FormField
             control={form.control}
-            name="stagedFileId"
+            name="fileId"
             rules={{}}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.stagedFileId.label", "Staged File Id")}</FormLabel>
+                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.fileId.label", "File Id")}</FormLabel>
                 <FormControl>
                   <Input
                     type="file"
                     onChange={(event) => {
                       const file = event.target.files?.[0];
-                      setPendingFile("stagedFileId", file, field.onChange);
+                      setPendingFile("fileId", file, field.onChange);
                     }}
                   />
                 </FormControl>
