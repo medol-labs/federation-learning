@@ -10,6 +10,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
 
+from gemifl.runtime.plugins import aggregation_plugin_capabilities, model_plugin_capabilities
+
 
 log = logging.getLogger("gemifl.runtime.node")
 
@@ -32,6 +34,11 @@ class RuntimeState:
 
         job_dir = self.runtime_root / job_id / payload["nodeName"]
         job_dir.mkdir(parents=True, exist_ok=True)
+        if payload.get("operation") == "aggregate":
+            payload.setdefault("output", {}).setdefault(
+                "globalModel",
+                str(job_dir / "global_model.json"),
+            )
         config_path = job_dir / "config.json"
         log.info(
             "Starting runtime job jobId=%s nodeName=%s operation=%s role=%s runtimeRoot=%s jobDir=%s",
@@ -127,6 +134,27 @@ class RuntimeHandler(BaseHTTPRequestHandler):
         if parsed.path == "/healthz":
             self.respond(200, {"status": "ok", "nodeName": self.state.node_name})
             return
+        if parsed.path == "/capabilities":
+            self.respond(
+                200,
+                {
+                    "nodeName": self.state.node_name,
+                    "modelPlugins": model_plugin_capabilities(),
+                    "aggregationPlugins": aggregation_plugin_capabilities(),
+                },
+            )
+            return
+        if parsed.path.startswith("/jobs/") and "/artifacts/" in parsed.path:
+            parts = parsed.path.strip("/").split("/")
+            if len(parts) != 4:
+                self.respond(404, {"error": "Artifact was not found"})
+                return
+            _, job_id, _, artifact_name = parts
+            try:
+                self.respond_with_job_artifact(job_id, artifact_name)
+            except KeyError:
+                self.respond(404, {"error": f"Artifact {artifact_name} for job {job_id} was not found"})
+            return
         if parsed.path.startswith("/jobs/"):
             job_id = parsed.path.split("/", 2)[2]
             try:
@@ -189,6 +217,24 @@ class RuntimeHandler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("content-type", "application/json")
         self.send_header("content-length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def respond_with_job_artifact(self, job_id: str, artifact_name: str) -> None:
+        job = self.state.jobs.get(job_id)
+        if not job:
+            raise KeyError(job_id)
+        artifact_path = job.get("output", {}).get(artifact_name)
+        if not artifact_path:
+            raise KeyError(artifact_name)
+        path = Path(artifact_path).resolve()
+        if not path.is_file():
+            raise KeyError(artifact_name)
+        body = path.read_bytes()
+        self.send_response(200)
+        self.send_header("content-type", "application/octet-stream")
+        self.send_header("content-length", str(len(body)))
+        self.send_header("content-disposition", f'attachment; filename="{path.name}"')
         self.end_headers()
         self.wfile.write(body)
 
