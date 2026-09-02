@@ -10,7 +10,6 @@ import tech.medo.identityaccessmanagement.useraccount.UserAccountState
 
 
 
-
 @Component
 class DeactivateUserAccountCommandHandler(
     private val decision: DeactivateUserAccountDecision

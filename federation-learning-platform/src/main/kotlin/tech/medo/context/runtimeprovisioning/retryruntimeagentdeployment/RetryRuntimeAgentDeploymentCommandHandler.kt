@@ -11,7 +11,6 @@ import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructure
 
 
 
-
 @Component
 class RetryRuntimeAgentDeploymentCommandHandler(
     private val decision: RetryRuntimeAgentDeploymentDecision,

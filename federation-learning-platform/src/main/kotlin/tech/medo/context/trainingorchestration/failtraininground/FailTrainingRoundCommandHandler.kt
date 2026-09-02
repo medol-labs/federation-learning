@@ -10,7 +10,6 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
-
 @Component
 class FailTrainingRoundCommandHandler(
     private val decision: FailTrainingRoundDecision

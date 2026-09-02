@@ -6,11 +6,13 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
+import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 
 
 @Entity
+@Table(name = "user_account_catalog")
 class UserAccountCatalogReadModelEntity : MetadataProjection {
     @Id
     var userAccountId: UUID? = null

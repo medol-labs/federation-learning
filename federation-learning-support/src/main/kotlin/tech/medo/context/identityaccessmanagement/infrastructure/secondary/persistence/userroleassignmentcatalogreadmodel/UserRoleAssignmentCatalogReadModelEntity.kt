@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
+import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssignmentCatalogReadModelKey
 import java.util.UUID;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @IdClass(UserRoleAssignmentCatalogReadModelKey::class)
 @Entity
+@Table(name = "user_role_assignment_catalog")
 class UserRoleAssignmentCatalogReadModelEntity : MetadataProjection {
     @Id
     var userAccountId: UUID? = null

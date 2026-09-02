@@ -2,6 +2,7 @@ package tech.medo.runtimeprovisioning.registerruntimeinfrastructure
 
 import tech.medo.runtimeprovisioning.registerruntimeinfrastructure.RegisterRuntimeInfrastructureCommand
 
+
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureRegisteredEvent
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureState
 

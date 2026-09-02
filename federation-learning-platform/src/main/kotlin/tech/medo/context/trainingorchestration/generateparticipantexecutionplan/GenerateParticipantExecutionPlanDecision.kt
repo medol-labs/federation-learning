@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.generateparticipantexecutionplan
 
 import tech.medo.trainingorchestration.generateparticipantexecutionplan.GenerateParticipantExecutionPlanCommand
 
+
 import tech.medo.trainingorchestration.events.ParticipantExecutionPlanGeneratedEvent
 import tech.medo.trainingorchestration.participantexecutionplan.ParticipantExecutionPlanState
 

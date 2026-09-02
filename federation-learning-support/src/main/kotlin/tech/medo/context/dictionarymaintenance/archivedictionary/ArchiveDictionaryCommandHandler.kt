@@ -10,7 +10,6 @@ import tech.medo.dictionarymaintenance.dictionary.DictionaryState
 
 
 
-
 @Component
 class ArchiveDictionaryCommandHandler(
     private val decision: ArchiveDictionaryDecision

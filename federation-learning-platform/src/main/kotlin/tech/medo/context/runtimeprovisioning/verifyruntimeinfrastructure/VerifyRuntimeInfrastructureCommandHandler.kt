@@ -8,7 +8,6 @@ import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.VerifyRuntimeIn
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.RuntimeInfrastructureVerificationInput
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.VerifyRuntimeInfrastructureService
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureState
-
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
 

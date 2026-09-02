@@ -60,7 +60,13 @@ data class ReceiveParticipantExecutionPlanRequest(
     val baseModelRegistryRef: String,
     val baseModelFormat: String,
     val baseModelArtifactDigest: String,
-    val baseModelSignatureUri: String?
+    val baseModelSignatureUri: String?,
+    val secureAggregationRequired: Boolean,
+    val secureAggregationSessionId: UUID?,
+    val encryptionScheme: String?,
+    val publicKeyVersion: String?,
+    val publicKeyRef: String?,
+    val encryptedParameterScale: Int?
 )
 
 data class ReceiveParticipantExecutionPlanResponse(
@@ -79,5 +85,11 @@ data class ReceiveParticipantExecutionPlanResponse(
     val baseModelRegistryRef: String? = null,
     val baseModelFormat: String? = null,
     val baseModelArtifactDigest: String? = null,
-    val baseModelSignatureUri: String? = null
+    val baseModelSignatureUri: String? = null,
+    val secureAggregationRequired: Boolean? = null,
+    val secureAggregationSessionId: UUID? = null,
+    val encryptionScheme: String? = null,
+    val publicKeyVersion: String? = null,
+    val publicKeyRef: String? = null,
+    val encryptedParameterScale: Int? = null
 )

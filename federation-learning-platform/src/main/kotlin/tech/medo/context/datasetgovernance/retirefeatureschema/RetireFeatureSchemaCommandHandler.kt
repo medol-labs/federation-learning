@@ -10,7 +10,6 @@ import tech.medo.datasetgovernance.featureschema.FeatureSchemaState
 
 
 
-
 @Component
 class RetireFeatureSchemaCommandHandler(
     private val decision: RetireFeatureSchemaDecision

@@ -6,12 +6,14 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
+import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import java.math.BigDecimal;
 
 
 @Entity
+@Table(name = "training_participant_eligibility")
 class TrainingParticipantEligibilityReadModelEntity : MetadataProjection {
     @Id
     var trainingJobId: UUID? = null

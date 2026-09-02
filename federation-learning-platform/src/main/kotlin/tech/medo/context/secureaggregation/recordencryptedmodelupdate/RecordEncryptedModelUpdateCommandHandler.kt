@@ -10,7 +10,6 @@ import tech.medo.secureaggregation.secureaggregationsession.SecureAggregationSes
 
 
 
-
 @Component
 class RecordEncryptedModelUpdateCommandHandler(
     private val decision: RecordEncryptedModelUpdateDecision

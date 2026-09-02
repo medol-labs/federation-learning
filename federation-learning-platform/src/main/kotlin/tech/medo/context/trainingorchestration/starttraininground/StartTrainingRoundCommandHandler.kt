@@ -8,7 +8,6 @@ import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundComm
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundInput
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundService
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
-
 import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
 
 

@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.definetrainingrunconfiguration
 
 import tech.medo.trainingorchestration.definetrainingrunconfiguration.DefineTrainingRunConfigurationCommand
 
+
 import tech.medo.trainingorchestration.events.TrainingRunConfigurationDefinedEvent
 import tech.medo.trainingorchestration.trainingrunconfiguration.TrainingRunConfigurationState
 

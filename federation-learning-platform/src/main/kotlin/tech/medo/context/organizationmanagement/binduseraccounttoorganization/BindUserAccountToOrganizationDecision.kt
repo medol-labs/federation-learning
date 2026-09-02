@@ -2,6 +2,7 @@ package tech.medo.organizationmanagement.binduseraccounttoorganization
 
 import tech.medo.organizationmanagement.binduseraccounttoorganization.BindUserAccountToOrganizationCommand
 
+
 import tech.medo.organizationmanagement.events.UserAccountBoundToOrganizationEvent
 import tech.medo.organizationmanagement.events.UserOrganizationMembershipUserAccountIdOrganizationIdReservedEvent
 import tech.medo.organizationmanagement.userorganizationmembership.UserOrganizationMembershipState

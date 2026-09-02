@@ -2,6 +2,7 @@ package tech.medo.federationmanagement.suspendparticipant
 
 import tech.medo.federationmanagement.suspendparticipant.SuspendParticipantCommand
 
+
 import tech.medo.federationmanagement.events.ParticipantSuspendedEvent
 import tech.medo.federationmanagement.federationmembership.FederationMembershipState
 

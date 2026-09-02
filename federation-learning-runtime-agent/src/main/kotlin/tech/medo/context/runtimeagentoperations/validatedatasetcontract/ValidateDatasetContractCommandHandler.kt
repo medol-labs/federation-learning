@@ -11,7 +11,6 @@ import tech.medo.runtimeagentoperations.dataset.DatasetState
 
 
 
-
 @Component
 class ValidateDatasetContractCommandHandler(
     private val decision: ValidateDatasetContractDecision,

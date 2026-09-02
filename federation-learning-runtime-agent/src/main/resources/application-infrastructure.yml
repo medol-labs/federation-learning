@@ -23,6 +23,8 @@ runtime-agent:
   local-model-update-submission:
     enabled: ${RUNTIME_AGENT_LOCAL_MODEL_UPDATE_SUBMISSION_ENABLED:true}
     platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
+    support-url: ${FEDERATION_LEARNING_SUPPORT_URL:http://localhost:8080}
+    internal-token: ${MEDOL_SECURITY_INTERNAL_TOKEN:local-dev-internal-token}
   local-runtime-engine:
     enabled: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENABLED:true}
     compose-file: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMPOSE_FILE:../../federation-learning-runtime-engine/docker-compose.yml}

@@ -1,6 +1,7 @@
 package tech.medo.identityaccessmanagement.generateuseraccountloginpassword
 
 import tech.medo.identityaccessmanagement.generateuseraccountloginpassword.GenerateUserAccountLoginPasswordCommand
+
 import tech.medo.identityaccessmanagement.generateuseraccountloginpassword.GenerateUserAccountLoginPasswordResult
 import tech.medo.identityaccessmanagement.events.UserAccountLoginPasswordGeneratedEvent
 import tech.medo.identityaccessmanagement.useraccount.UserAccountState

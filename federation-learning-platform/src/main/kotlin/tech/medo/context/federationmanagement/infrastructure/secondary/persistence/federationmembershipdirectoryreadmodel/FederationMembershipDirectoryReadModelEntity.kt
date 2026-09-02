@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
+import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelKey
 import java.util.UUID;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @IdClass(FederationMembershipDirectoryReadModelKey::class)
 @Entity
+@Table(name = "federation_membership_directory")
 class FederationMembershipDirectoryReadModelEntity : MetadataProjection {
     @Id
     var federationId: UUID? = null

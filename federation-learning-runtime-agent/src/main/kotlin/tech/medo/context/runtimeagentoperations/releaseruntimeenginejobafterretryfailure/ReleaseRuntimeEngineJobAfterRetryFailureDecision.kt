@@ -1,6 +1,7 @@
 package tech.medo.runtimeagentoperations.releaseruntimeenginejobafterretryfailure
 
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterretryfailure.ReleaseRuntimeEngineJobAfterRetryFailureCommand
+
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterretryfailure.ReleaseRuntimeEngineJobAfterRetryFailureResult
 import tech.medo.runtimeagentoperations.events.RuntimeEngineJobReleaseFailedOrSkippedAfterRetryEvent
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
@@ -15,7 +16,7 @@ interface ReleaseRuntimeEngineJobAfterRetryFailureDecision {
             "ReleaseRuntimeEngineJobAfterRetryFailure requires RoundExecution to be Failed."
         }
         return when (portResult) {
-                    is ReleaseRuntimeEngineJobAfterRetryFailureResult.Succeeded -> listOf(RuntimeEngineJobReleaseFailedOrSkippedAfterRetryEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, failureReason = portResult.failureReason, executionPlanId = command.executionPlanId))
+                    is ReleaseRuntimeEngineJobAfterRetryFailureResult.Succeeded -> listOf(RuntimeEngineJobReleaseFailedOrSkippedAfterRetryEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, runtimeEngineReleaseFailureReason = portResult.runtimeEngineReleaseFailureReason, executionPlanId = command.executionPlanId))
                 }
     }
 }

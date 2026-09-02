@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.resumetrainingjob
 
 import tech.medo.trainingorchestration.resumetrainingjob.ResumeTrainingJobCommand
 
+
 import tech.medo.trainingorchestration.events.TrainingJobResumedEvent
 import tech.medo.trainingorchestration.trainingjob.TrainingJobState
 

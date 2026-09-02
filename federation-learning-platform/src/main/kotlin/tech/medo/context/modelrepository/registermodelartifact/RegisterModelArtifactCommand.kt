@@ -13,7 +13,7 @@ data class RegisterModelArtifactCommand(
     val modelVersion: String,
     val modelDescription: String?,
     val sourceType: String,
-    val stagedFileId: UUID?,
+    val fileId: UUID?,
     val modelFormat: String?
 ) {
     @TargetEntityId

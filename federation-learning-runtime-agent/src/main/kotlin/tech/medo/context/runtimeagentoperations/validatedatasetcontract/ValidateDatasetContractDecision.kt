@@ -1,6 +1,7 @@
 package tech.medo.runtimeagentoperations.validatedatasetcontract
 
 import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractCommand
+
 import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractResult
 import tech.medo.runtimeagentoperations.events.DatasetContractValidatedEvent
 import tech.medo.runtimeagentoperations.events.DatasetContractValidationFailedEvent

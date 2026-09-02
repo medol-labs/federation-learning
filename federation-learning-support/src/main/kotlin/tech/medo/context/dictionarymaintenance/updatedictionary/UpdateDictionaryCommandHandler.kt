@@ -10,7 +10,6 @@ import tech.medo.dictionarymaintenance.dictionary.DictionaryState
 
 
 
-
 @Component
 class UpdateDictionaryCommandHandler(
     private val decision: UpdateDictionaryDecision

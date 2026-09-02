@@ -2,6 +2,7 @@ package tech.medo.federationmanagement.approveparticipant
 
 import tech.medo.federationmanagement.approveparticipant.ApproveParticipantCommand
 
+
 import tech.medo.federationmanagement.events.ParticipantJoinedEvent
 import tech.medo.federationmanagement.federationmembership.FederationMembershipState
 

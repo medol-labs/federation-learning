@@ -2,6 +2,7 @@ package tech.medo.identityaccessmanagement.assignroletouser
 
 import tech.medo.identityaccessmanagement.assignroletouser.AssignRoleToUserCommand
 
+
 import tech.medo.identityaccessmanagement.events.RoleAssignedToUserEvent
 import tech.medo.identityaccessmanagement.events.RoleUnassignedFromUserEvent
 import tech.medo.identityaccessmanagement.useraccount.UserAccountState

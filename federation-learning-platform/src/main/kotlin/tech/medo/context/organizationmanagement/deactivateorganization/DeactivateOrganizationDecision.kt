@@ -2,6 +2,7 @@ package tech.medo.organizationmanagement.deactivateorganization
 
 import tech.medo.organizationmanagement.deactivateorganization.DeactivateOrganizationCommand
 
+
 import tech.medo.organizationmanagement.events.OrganizationDeactivatedEvent
 import tech.medo.organizationmanagement.organization.OrganizationState
 

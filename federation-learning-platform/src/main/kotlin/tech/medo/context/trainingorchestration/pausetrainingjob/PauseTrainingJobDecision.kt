@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.pausetrainingjob
 
 import tech.medo.trainingorchestration.pausetrainingjob.PauseTrainingJobCommand
 
+
 import tech.medo.trainingorchestration.events.TrainingJobPausedEvent
 import tech.medo.trainingorchestration.trainingjob.TrainingJobState
 

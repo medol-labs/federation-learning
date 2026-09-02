@@ -24,5 +24,9 @@ data class EncryptedModelUpdateReceivedEvent(
     val encryptedUpdateArtifactRef: String,
     val encryptedUpdateDigest: String,
     val encryptionScheme: String,
-    val publicKeyVersion: String
+    val publicKeyVersion: String,
+    val receivedEncryptedUpdateCount: Int,
+    val receivedRuntimeIds: List<UUID>,
+    val receivedEncryptedUpdateArtifactRefs: List<String>,
+    val selectedParticipantCount: Int
 )

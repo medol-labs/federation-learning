@@ -11,7 +11,6 @@ import tech.medo.identityaccessmanagement.useraccount.UserAccountState
 
 
 
-
 @Component
 class GenerateUserAccountLoginPasswordCommandHandler(
     private val decision: GenerateUserAccountLoginPasswordDecision,

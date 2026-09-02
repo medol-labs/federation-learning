@@ -2,6 +2,7 @@ package tech.medo.dictionarymaintenance.updatedictionary
 
 import tech.medo.dictionarymaintenance.updatedictionary.UpdateDictionaryCommand
 
+
 import tech.medo.dictionarymaintenance.events.DictionaryUpdatedEvent
 import tech.medo.dictionarymaintenance.dictionary.DictionaryState
 

@@ -2,6 +2,7 @@ package tech.medo.modellifecycle.registercandidatemodel
 
 import tech.medo.modellifecycle.registercandidatemodel.RegisterCandidateModelCommand
 
+
 import tech.medo.modellifecycle.events.ModelCandidateRegisteredEvent
 import tech.medo.modellifecycle.model.ModelState
 

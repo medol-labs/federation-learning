@@ -2,6 +2,7 @@ package tech.medo.datasetgovernance.deprecatefeatureschema
 
 import tech.medo.datasetgovernance.deprecatefeatureschema.DeprecateFeatureSchemaCommand
 
+
 import tech.medo.datasetgovernance.events.FeatureSchemaDeprecatedEvent
 import tech.medo.datasetgovernance.featureschema.FeatureSchemaState
 

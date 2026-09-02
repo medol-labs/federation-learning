@@ -2,6 +2,7 @@ package tech.medo.datasetgovernance.markcurrentrecommendedfeatureschemaversion
 
 import tech.medo.datasetgovernance.markcurrentrecommendedfeatureschemaversion.MarkCurrentRecommendedFeatureSchemaVersionCommand
 
+
 import tech.medo.datasetgovernance.events.CurrentRecommendedFeatureSchemaVersionMarkedEvent
 import tech.medo.datasetgovernance.featureschema.FeatureSchemaState
 

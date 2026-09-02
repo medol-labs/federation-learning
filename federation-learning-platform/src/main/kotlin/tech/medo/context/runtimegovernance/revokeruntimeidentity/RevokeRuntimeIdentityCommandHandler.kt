@@ -10,7 +10,6 @@ import tech.medo.runtimegovernance.runtimeidentity.RuntimeIdentityState
 
 
 
-
 @Component
 class RevokeRuntimeIdentityCommandHandler(
     private val decision: RevokeRuntimeIdentityDecision

@@ -82,6 +82,7 @@ class RoundExecutionState @EntityCreator constructor() {
     var updateArtifactId: UUID? = null
     var artifactRef: String? = null
     var artifactDigest: String? = null
+    var runtimeEngineReleaseFailureReason: String? = null
 
     @EventSourcingHandler
     fun evolve(event: ExecutionPlanReceivedEvent): RoundExecutionState = apply {
@@ -424,7 +425,7 @@ class RoundExecutionState @EntityCreator constructor() {
         currentState = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
         roundExecutionId = event.roundExecutionId
         runtimeEngineJobId = event.runtimeEngineJobId
-        failureReason = event.failureReason
+        runtimeEngineReleaseFailureReason = event.runtimeEngineReleaseFailureReason
     }
 
     @EventSourcingHandler
@@ -432,7 +433,7 @@ class RoundExecutionState @EntityCreator constructor() {
         currentState = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
         roundExecutionId = event.roundExecutionId
         runtimeEngineJobId = event.runtimeEngineJobId
-        failureReason = event.failureReason
+        runtimeEngineReleaseFailureReason = event.runtimeEngineReleaseFailureReason
     }
 
     @EventSourcingHandler
@@ -440,7 +441,7 @@ class RoundExecutionState @EntityCreator constructor() {
         currentState = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
         roundExecutionId = event.roundExecutionId
         runtimeEngineJobId = event.runtimeEngineJobId
-        failureReason = event.failureReason
+        runtimeEngineReleaseFailureReason = event.runtimeEngineReleaseFailureReason
     }
 
     @EventSourcingHandler
@@ -448,6 +449,6 @@ class RoundExecutionState @EntityCreator constructor() {
         currentState = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
         roundExecutionId = event.roundExecutionId
         runtimeEngineJobId = event.runtimeEngineJobId
-        failureReason = event.failureReason
+        runtimeEngineReleaseFailureReason = event.runtimeEngineReleaseFailureReason
     }
 }

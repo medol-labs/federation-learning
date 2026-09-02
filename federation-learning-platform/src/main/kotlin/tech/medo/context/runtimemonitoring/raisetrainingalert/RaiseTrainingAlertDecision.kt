@@ -2,6 +2,7 @@ package tech.medo.runtimemonitoring.raisetrainingalert
 
 import tech.medo.runtimemonitoring.raisetrainingalert.RaiseTrainingAlertCommand
 
+
 import tech.medo.runtimemonitoring.events.TrainingAlertRaisedEvent
 import tech.medo.runtimemonitoring.trainingalert.TrainingAlertState
 

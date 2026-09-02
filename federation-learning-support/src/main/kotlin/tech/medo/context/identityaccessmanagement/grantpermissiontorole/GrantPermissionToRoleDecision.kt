@@ -2,6 +2,7 @@ package tech.medo.identityaccessmanagement.grantpermissiontorole
 
 import tech.medo.identityaccessmanagement.grantpermissiontorole.GrantPermissionToRoleCommand
 
+
 import tech.medo.identityaccessmanagement.events.PermissionGrantedToRoleEvent
 import tech.medo.identityaccessmanagement.events.PermissionRevokedFromRoleEvent
 import tech.medo.identityaccessmanagement.role.RoleState

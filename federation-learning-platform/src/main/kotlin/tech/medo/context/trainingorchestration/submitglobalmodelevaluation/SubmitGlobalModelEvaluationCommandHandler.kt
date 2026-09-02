@@ -11,7 +11,6 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
-
 @Component
 class SubmitGlobalModelEvaluationCommandHandler(
     private val decision: SubmitGlobalModelEvaluationDecision,

@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
+import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationSta
 
 
 @Entity
+@Table(name = "training_run_configuration_catalog")
 class TrainingRunConfigurationCatalogReadModelEntity : MetadataProjection {
     @Id
     var trainingRunConfigurationId: UUID? = null

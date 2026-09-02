@@ -2,6 +2,7 @@ package tech.medo.runtimeagentoperations.reportruntimeinstanceselfcheckpassed
 
 import tech.medo.runtimeagentoperations.reportruntimeinstanceselfcheckpassed.ReportRuntimeInstanceSelfCheckPassedCommand
 
+
 import tech.medo.runtimeagentoperations.events.RuntimeInstanceSelfCheckPassedEvent
 import tech.medo.runtimeagentoperations.runtimeagentlifecycle.RuntimeAgentLifecycleState
 

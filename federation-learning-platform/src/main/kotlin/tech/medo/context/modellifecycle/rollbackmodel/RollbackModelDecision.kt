@@ -2,6 +2,7 @@ package tech.medo.modellifecycle.rollbackmodel
 
 import tech.medo.modellifecycle.rollbackmodel.RollbackModelCommand
 
+
 import tech.medo.modellifecycle.events.ModelRolledBackEvent
 import tech.medo.modellifecycle.model.ModelState
 

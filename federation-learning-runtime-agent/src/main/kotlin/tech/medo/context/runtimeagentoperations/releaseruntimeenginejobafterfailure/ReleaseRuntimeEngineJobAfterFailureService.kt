@@ -14,7 +14,7 @@ data class ReleaseRuntimeEngineJobAfterFailureInput(
 
 sealed interface ReleaseRuntimeEngineJobAfterFailureResult {
     data class Succeeded(
-        val failureReason: String?
+        val runtimeEngineReleaseFailureReason: String?
     ) : ReleaseRuntimeEngineJobAfterFailureResult
 
 

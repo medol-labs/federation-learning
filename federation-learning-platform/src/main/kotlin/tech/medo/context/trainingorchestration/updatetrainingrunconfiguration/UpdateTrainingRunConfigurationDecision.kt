@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.updatetrainingrunconfiguration
 
 import tech.medo.trainingorchestration.updatetrainingrunconfiguration.UpdateTrainingRunConfigurationCommand
 
+
 import tech.medo.trainingorchestration.events.TrainingRunConfigurationUpdatedEvent
 import tech.medo.trainingorchestration.trainingrunconfiguration.TrainingRunConfigurationState
 

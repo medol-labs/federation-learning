@@ -10,7 +10,6 @@ import tech.medo.modellifecycle.model.ModelState
 
 
 
-
 @Component
 class RollbackModelCommandHandler(
     private val decision: RollbackModelDecision

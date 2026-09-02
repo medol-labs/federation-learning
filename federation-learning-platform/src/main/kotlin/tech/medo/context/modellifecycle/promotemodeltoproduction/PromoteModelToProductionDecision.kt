@@ -2,6 +2,7 @@ package tech.medo.modellifecycle.promotemodeltoproduction
 
 import tech.medo.modellifecycle.promotemodeltoproduction.PromoteModelToProductionCommand
 
+
 import tech.medo.modellifecycle.events.ModelPromotedToProductionEvent
 import tech.medo.modellifecycle.model.ModelState
 

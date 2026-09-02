@@ -2,6 +2,7 @@ package tech.medo.federationmanagement.reactivatefederation
 
 import tech.medo.federationmanagement.reactivatefederation.ReactivateFederationCommand
 
+
 import tech.medo.federationmanagement.events.FederationReactivatedEvent
 import tech.medo.federationmanagement.federation.FederationState
 

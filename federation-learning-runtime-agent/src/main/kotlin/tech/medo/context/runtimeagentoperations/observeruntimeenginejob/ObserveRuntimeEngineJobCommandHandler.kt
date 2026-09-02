@@ -11,7 +11,6 @@ import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
 
 
-
 @Component
 class ObserveRuntimeEngineJobCommandHandler(
     private val decision: ObserveRuntimeEngineJobDecision,

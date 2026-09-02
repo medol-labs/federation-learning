@@ -1,7 +1,0 @@
-package tech.medo.domain.fileupload.markstagedfileconsumed
-
-import org.springframework.stereotype.Component
-import tech.medo.fileupload.markstagedfileconsumed.MarkStagedFileConsumedDecision
-
-@Component
-class MarkStagedFileConsumedDecisionComponent : MarkStagedFileConsumedDecision

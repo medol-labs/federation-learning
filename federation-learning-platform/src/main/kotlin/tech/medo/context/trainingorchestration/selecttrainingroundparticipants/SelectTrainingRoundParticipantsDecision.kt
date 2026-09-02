@@ -1,6 +1,7 @@
 package tech.medo.trainingorchestration.selecttrainingroundparticipants
 
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsCommand
+
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsResult
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantSelectionFailedEvent

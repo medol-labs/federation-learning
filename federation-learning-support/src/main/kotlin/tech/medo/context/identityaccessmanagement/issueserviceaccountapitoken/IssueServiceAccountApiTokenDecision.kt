@@ -1,6 +1,7 @@
 package tech.medo.identityaccessmanagement.issueserviceaccountapitoken
 
 import tech.medo.identityaccessmanagement.issueserviceaccountapitoken.IssueServiceAccountApiTokenCommand
+
 import tech.medo.identityaccessmanagement.issueserviceaccountapitoken.IssueServiceAccountApiTokenResult
 import tech.medo.identityaccessmanagement.events.ServiceAccountApiTokenIssuedEvent
 import tech.medo.identityaccessmanagement.serviceaccountapitoken.ServiceAccountApiTokenState

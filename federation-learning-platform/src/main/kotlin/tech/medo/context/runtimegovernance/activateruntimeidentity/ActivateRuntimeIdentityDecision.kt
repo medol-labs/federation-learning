@@ -2,6 +2,7 @@ package tech.medo.runtimegovernance.activateruntimeidentity
 
 import tech.medo.runtimegovernance.activateruntimeidentity.ActivateRuntimeIdentityCommand
 
+
 import tech.medo.runtimegovernance.events.RuntimeIdentityActivatedEvent
 import tech.medo.runtimegovernance.runtimeidentity.RuntimeIdentityState
 

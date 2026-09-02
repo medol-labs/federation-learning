@@ -2,6 +2,7 @@ package tech.medo.identityaccessmanagement.registeruseraccount
 
 import tech.medo.identityaccessmanagement.registeruseraccount.RegisterUserAccountCommand
 
+
 import tech.medo.identityaccessmanagement.events.UserAccountRegisteredEvent
 import tech.medo.identityaccessmanagement.useraccount.UserAccountState
 

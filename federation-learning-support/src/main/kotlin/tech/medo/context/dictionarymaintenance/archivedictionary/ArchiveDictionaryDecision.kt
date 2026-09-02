@@ -2,6 +2,7 @@ package tech.medo.dictionarymaintenance.archivedictionary
 
 import tech.medo.dictionarymaintenance.archivedictionary.ArchiveDictionaryCommand
 
+
 import tech.medo.dictionarymaintenance.events.DictionaryArchivedEvent
 import tech.medo.dictionarymaintenance.dictionary.DictionaryState
 

@@ -18,7 +18,7 @@ class RegisterModelArtifactDecisionTest {
             modelVersion = "v1",
             modelDescription = "Baseline credit risk classifier for federated training",
             sourceType = "EXTERNAL",
-            stagedFileId = UUID.nameUUIDFromBytes("staged-file-1".toByteArray()),
+            fileId = UUID.nameUUIDFromBytes("file-1".toByteArray()),
             modelFormat = "ONNX"
         )
 

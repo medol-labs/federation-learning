@@ -9,19 +9,24 @@ import tech.medo.runtimeagentoperations.submitagentlocalmodelupdate.SubmitAgentL
 import tech.medo.runtimeagentoperations.submitagentlocalmodelupdate.SubmitAgentLocalModelUpdateService
 import java.nio.file.Files
 import java.nio.file.Path
-import java.security.MessageDigest
 
 @Component
 class PlatformSubmitAgentLocalModelUpdateAdapter(
     private val client: PlatformModelUpdateSubmissionClient,
     private val properties: LocalModelUpdateSubmissionProperties,
-    private val runtimeEngineProperties: LocalRuntimeEngineProperties
+    private val runtimeEngineProperties: LocalRuntimeEngineProperties,
+    private val fileUploadClient: SupportFileUploadClient
 ) : SubmitAgentLocalModelUpdateService {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun supports(input: SubmitAgentLocalModelUpdateInput): Boolean = properties.enabled
 
     override fun execute(input: SubmitAgentLocalModelUpdateInput): SubmitAgentLocalModelUpdateResult {
+        val localArtifactPath = toReadablePath(input.artifactRef)
+        require(Files.isRegularFile(localArtifactPath)) {
+            "Local model update artifact is not readable: $localArtifactPath"
+        }
+        val uploadedFile = fileUploadClient.upload(input.updateArtifactId, localArtifactPath)
         val request = SubmitModelUpdateSubmissionRequest(
             modelUpdateSubmissionId = input.modelUpdateSubmissionId,
             executionSessionId = input.executionSessionId,
@@ -38,8 +43,8 @@ class PlatformSubmitAgentLocalModelUpdateAdapter(
             publicKeyVersion = input.publicKeyVersion,
             localModelId = input.localModelId,
             updateArtifactId = input.updateArtifactId,
-            artifactRef = input.artifactRef,
-            artifactDigest = input.artifactDigest.takeIf { it.isNotBlank() } ?: resolveArtifactDigest(input.artifactRef).orEmpty(),
+            artifactRef = uploadedFile.artifactUri,
+            artifactDigest = uploadedFile.digest,
             updateProtectionType = input.updateProtectionType,
             trainingLoss = input.trainingLoss
         )
@@ -66,19 +71,6 @@ class PlatformSubmitAgentLocalModelUpdateAdapter(
         }
     }
 
-    private fun resolveArtifactDigest(artifactRef: String): String? {
-        val path = toReadablePath(artifactRef)
-        if (!Files.isRegularFile(path)) {
-            log.warn("Local model update artifact is not readable. artifactRef={}, resolvedPath={}", artifactRef, path)
-            return null
-        }
-        return runCatching {
-            "sha256:${sha256(path)}"
-        }.onFailure { ex ->
-            log.warn("Failed to calculate local model update artifact digest. artifactRef={}, resolvedPath={}", artifactRef, path, ex)
-        }.getOrNull()
-    }
-
     private fun toReadablePath(artifactRef: String): Path {
         val normalizedRef = artifactRef.removePrefix("file://")
         val runtimeRoot = runtimeEngineProperties.runtimeRoot.trimEnd('/')
@@ -90,16 +82,4 @@ class PlatformSubmitAgentLocalModelUpdateAdapter(
         }
     }
 
-    private fun sha256(path: Path): String {
-        val digest = MessageDigest.getInstance("SHA-256")
-        Files.newInputStream(path).use { input ->
-            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-            while (true) {
-                val read = input.read(buffer)
-                if (read < 0) break
-                digest.update(buffer, 0, read)
-            }
-        }
-        return digest.digest().joinToString("") { "%02x".format(it) }
-    }
 }

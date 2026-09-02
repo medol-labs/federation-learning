@@ -11,7 +11,6 @@ import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
 
 
-
 @Component
 class SubmitAgentLocalModelUpdateCommandHandler(
     private val decision: SubmitAgentLocalModelUpdateDecision,

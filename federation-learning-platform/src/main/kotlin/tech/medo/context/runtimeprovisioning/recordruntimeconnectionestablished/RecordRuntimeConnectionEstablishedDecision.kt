@@ -2,6 +2,7 @@ package tech.medo.runtimeprovisioning.recordruntimeconnectionestablished
 
 import tech.medo.runtimeprovisioning.recordruntimeconnectionestablished.RecordRuntimeConnectionEstablishedCommand
 
+
 import tech.medo.runtimeprovisioning.events.RuntimeConnectionEstablishedEvent
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureState
 

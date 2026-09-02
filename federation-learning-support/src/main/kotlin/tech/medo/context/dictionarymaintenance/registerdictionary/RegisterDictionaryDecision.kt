@@ -2,6 +2,7 @@ package tech.medo.dictionarymaintenance.registerdictionary
 
 import tech.medo.dictionarymaintenance.registerdictionary.RegisterDictionaryCommand
 
+
 import tech.medo.dictionarymaintenance.events.DictionaryRegisteredEvent
 import tech.medo.dictionarymaintenance.events.DictionaryCodeReservedEvent
 import tech.medo.dictionarymaintenance.dictionary.DictionaryState

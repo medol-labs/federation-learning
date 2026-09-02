@@ -2,6 +2,7 @@ package tech.medo.modellifecycle.retiremodel
 
 import tech.medo.modellifecycle.retiremodel.RetireModelCommand
 
+
 import tech.medo.modellifecycle.events.ModelRetiredEvent
 import tech.medo.modellifecycle.model.ModelState
 

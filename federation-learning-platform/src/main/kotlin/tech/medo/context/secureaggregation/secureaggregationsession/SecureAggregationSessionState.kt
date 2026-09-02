@@ -47,12 +47,20 @@ class SecureAggregationSessionState @EntityCreator constructor() {
     var updateArtifactId: UUID? = null
     var encryptedUpdateArtifactRef: String? = null
     var encryptedUpdateDigest: String? = null
+    var receivedEncryptedUpdateCount: Int? = null
+    var receivedRuntimeIds: List<UUID> = emptyList()
+    var receivedEncryptedUpdateArtifactRefs: List<String> = emptyList()
     var aggregatedModelId: UUID? = null
+    var aggregatedModelName: String? = null
+    var aggregatedModelVersion: String? = null
+    var aggregatedModelDescription: String? = null
+    var modelSourceType: String? = null
     var aggregatedModelArtifactUri: String? = null
     var aggregatedModelRegistryRef: String? = null
     var modelFormat: String? = null
     var modelArtifactDigest: String? = null
     var aggregatedModelSignatureUri: String? = null
+    var aggregatedModelSizeBytes: Int? = null
     var failureReason: String? = null
 
     @EventSourcingHandler
@@ -134,6 +142,10 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         encryptedUpdateDigest = event.encryptedUpdateDigest
         encryptionScheme = event.encryptionScheme
         publicKeyVersion = event.publicKeyVersion
+        receivedEncryptedUpdateCount = event.receivedEncryptedUpdateCount
+        receivedRuntimeIds = event.receivedRuntimeIds
+        receivedEncryptedUpdateArtifactRefs = event.receivedEncryptedUpdateArtifactRefs
+        selectedParticipantCount = event.selectedParticipantCount
     }
 
     @EventSourcingHandler
@@ -148,11 +160,16 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
         aggregatedModelId = event.aggregatedModelId
+        aggregatedModelName = event.aggregatedModelName
+        aggregatedModelVersion = event.aggregatedModelVersion
+        aggregatedModelDescription = event.aggregatedModelDescription
+        modelSourceType = event.modelSourceType
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
         aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
         modelFormat = event.modelFormat
         modelArtifactDigest = event.modelArtifactDigest
         aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
+        aggregatedModelSizeBytes = event.aggregatedModelSizeBytes
     }
 
     @EventSourcingHandler

@@ -10,7 +10,6 @@ import tech.medo.runtimemonitoring.trainingalert.TrainingAlertState
 
 
 
-
 @Component
 class AcknowledgeTrainingAlertCommandHandler(
     private val decision: AcknowledgeTrainingAlertDecision

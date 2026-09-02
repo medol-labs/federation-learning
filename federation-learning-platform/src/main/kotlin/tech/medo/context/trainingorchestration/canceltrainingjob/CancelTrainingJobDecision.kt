@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.canceltrainingjob
 
 import tech.medo.trainingorchestration.canceltrainingjob.CancelTrainingJobCommand
 
+
 import tech.medo.trainingorchestration.events.TrainingJobCanceledEvent
 import tech.medo.trainingorchestration.trainingjob.TrainingJobState
 

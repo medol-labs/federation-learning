@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.completetrainingjob
 
 import tech.medo.trainingorchestration.completetrainingjob.CompleteTrainingJobCommand
 
+
 import tech.medo.trainingorchestration.events.TrainingJobCompletedEvent
 import tech.medo.trainingorchestration.trainingjob.TrainingJobState
 

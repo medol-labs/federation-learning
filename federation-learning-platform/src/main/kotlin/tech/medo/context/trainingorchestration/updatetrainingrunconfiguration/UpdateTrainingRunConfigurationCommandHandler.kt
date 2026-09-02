@@ -10,7 +10,6 @@ import tech.medo.trainingorchestration.trainingrunconfiguration.TrainingRunConfi
 
 
 
-
 @Component
 class UpdateTrainingRunConfigurationCommandHandler(
     private val decision: UpdateTrainingRunConfigurationDecision

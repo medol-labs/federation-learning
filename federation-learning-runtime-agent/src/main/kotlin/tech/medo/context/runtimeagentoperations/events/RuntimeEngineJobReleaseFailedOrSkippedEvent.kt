@@ -10,7 +10,7 @@ import java.util.UUID;
 data class RuntimeEngineJobReleaseFailedOrSkippedEvent(
     val roundExecutionId: UUID,
     val runtimeEngineJobId: String?,
-    val failureReason: String?,
+    val runtimeEngineReleaseFailureReason: String?,
     @EventTag(key = "executionPlanId")
     val executionPlanId: UUID
 )

@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
+import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.dictionarymaintenance.domain.states.DictionaryStateEnum;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
+@Table(name = "dictionary_catalog")
 class DictionaryCatalogReadModelEntity : MetadataProjection {
     @Id
     var dictionaryId: UUID? = null

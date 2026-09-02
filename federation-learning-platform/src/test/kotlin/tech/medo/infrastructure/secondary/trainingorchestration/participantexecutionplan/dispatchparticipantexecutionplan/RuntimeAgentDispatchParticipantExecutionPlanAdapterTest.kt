@@ -37,6 +37,12 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapterTest {
         assertEquals(input.baseModelFormat, client.request?.baseModelFormat)
         assertEquals(input.baseModelArtifactDigest, client.request?.baseModelArtifactDigest)
         assertEquals(input.baseModelSignatureUri, client.request?.baseModelSignatureUri)
+        assertEquals(input.secureAggregationRequired, client.request?.secureAggregationRequired)
+        assertEquals(input.secureAggregationSessionId, client.request?.secureAggregationSessionId)
+        assertEquals(input.encryptionScheme, client.request?.encryptionScheme)
+        assertEquals(input.publicKeyVersion, client.request?.publicKeyVersion)
+        assertEquals(input.publicKeyRef, client.request?.publicKeyRef)
+        assertEquals(input.encryptedParameterScale, client.request?.encryptedParameterScale)
     }
 
     private class RecordingRuntimeAgentExecutionPlanClient : RuntimeAgentExecutionPlanClient {

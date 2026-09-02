@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
+import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum;
@@ -16,6 +17,7 @@ import java.math.BigDecimal;
 
 
 @Entity
+@Table(name = "round_execution_catalog")
 class RoundExecutionCatalogReadModelEntity : MetadataProjection {
     @Id
     var roundExecutionId: UUID? = null

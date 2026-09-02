@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
+import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
+@Table(name = "agent_runtime_infrastructure_connection_catalog")
 class AgentRuntimeInfrastructureConnectionCatalogReadModelEntity : MetadataProjection {
     @Id
     var runtimeInfrastructureId: UUID? = null

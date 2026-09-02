@@ -2,6 +2,7 @@ package tech.medo.runtimegovernance.revokeruntimeidentity
 
 import tech.medo.runtimegovernance.revokeruntimeidentity.RevokeRuntimeIdentityCommand
 
+
 import tech.medo.runtimegovernance.events.RuntimeIdentityRevokedEvent
 import tech.medo.runtimegovernance.runtimeidentity.RuntimeIdentityState
 

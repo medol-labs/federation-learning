@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
+import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
+@Table(name = "training_alert_catalog")
 class TrainingAlertCatalogReadModelEntity : MetadataProjection {
     @Id
     var alertId: UUID? = null

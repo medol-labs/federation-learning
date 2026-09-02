@@ -10,7 +10,6 @@ import tech.medo.identityaccessmanagement.role.RoleState
 
 
 
-
 @Component
 class GrantPermissionToRoleCommandHandler(
     private val decision: GrantPermissionToRoleDecision

@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.submittrainingjob
 
 import tech.medo.trainingorchestration.submittrainingjob.SubmitTrainingJobCommand
 
+
 import tech.medo.trainingorchestration.events.TrainingJobSubmittedEvent
 import tech.medo.trainingorchestration.trainingjob.TrainingJobState
 

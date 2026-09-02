@@ -2,6 +2,7 @@ package tech.medo.federationmanagement.revokeparticipantinvitation
 
 import tech.medo.federationmanagement.revokeparticipantinvitation.RevokeParticipantInvitationCommand
 
+
 import tech.medo.federationmanagement.events.ParticipantInvitationRevokedEvent
 import tech.medo.federationmanagement.federationmembership.FederationMembershipState
 

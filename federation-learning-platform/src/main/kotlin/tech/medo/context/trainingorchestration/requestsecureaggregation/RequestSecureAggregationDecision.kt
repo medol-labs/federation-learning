@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.requestsecureaggregation
 
 import tech.medo.trainingorchestration.requestsecureaggregation.RequestSecureAggregationCommand
 
+
 import tech.medo.trainingorchestration.events.SecureAggregationRequestedEvent
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
 

@@ -10,7 +10,6 @@ import tech.medo.trainingorchestration.trainingjob.TrainingJobState
 
 
 
-
 @Component
 class CancelTrainingJobCommandHandler(
     private val decision: CancelTrainingJobDecision

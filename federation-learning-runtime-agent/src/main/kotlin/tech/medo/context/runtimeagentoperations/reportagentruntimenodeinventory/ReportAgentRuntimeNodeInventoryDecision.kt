@@ -2,6 +2,7 @@ package tech.medo.runtimeagentoperations.reportagentruntimenodeinventory
 
 import tech.medo.runtimeagentoperations.reportagentruntimenodeinventory.ReportAgentRuntimeNodeInventoryCommand
 
+
 import tech.medo.runtimeagentoperations.events.AgentRuntimeNodeInventoryReportedEvent
 import tech.medo.runtimeagentoperations.agentruntimenodeinventory.AgentRuntimeNodeInventoryState
 

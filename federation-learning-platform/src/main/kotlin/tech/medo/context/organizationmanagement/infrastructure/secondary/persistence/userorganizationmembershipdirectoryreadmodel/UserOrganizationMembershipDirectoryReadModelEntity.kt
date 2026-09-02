@@ -6,12 +6,14 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.IdClass
+import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum;
 
 
 @Entity
+@Table(name = "user_organization_membership_directory")
 class UserOrganizationMembershipDirectoryReadModelEntity : MetadataProjection {
     @Id
     var userOrganizationMembershipId: UUID? = null

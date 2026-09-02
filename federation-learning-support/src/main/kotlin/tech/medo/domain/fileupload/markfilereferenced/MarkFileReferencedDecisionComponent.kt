@@ -1,0 +1,7 @@
+package tech.medo.domain.fileupload.markfilereferenced
+
+import org.springframework.stereotype.Component
+import tech.medo.fileupload.markfilereferenced.MarkFileReferencedDecision
+
+@Component
+class MarkFileReferencedDecisionComponent : MarkFileReferencedDecision

@@ -2,6 +2,7 @@ package tech.medo.organizationmanagement.registerorganization
 
 import tech.medo.organizationmanagement.registerorganization.RegisterOrganizationCommand
 
+
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.organizationmanagement.events.OrganizationNameReservedEvent
 import tech.medo.organizationmanagement.organization.OrganizationState

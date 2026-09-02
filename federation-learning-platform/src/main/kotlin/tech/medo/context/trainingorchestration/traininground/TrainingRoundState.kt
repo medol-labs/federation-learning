@@ -67,11 +67,16 @@ class TrainingRoundState @EntityCreator constructor() {
     var rejectionReason: String? = null
     var requiredParticipantCount: Int? = null
     var aggregatedModelId: UUID? = null
+    var aggregatedModelName: String? = null
+    var aggregatedModelVersion: String? = null
+    var aggregatedModelDescription: String? = null
+    var modelSourceType: String? = null
     var aggregatedModelArtifactUri: String? = null
     var aggregatedModelRegistryRef: String? = null
     var modelFormat: String? = null
     var modelArtifactDigest: String? = null
     var aggregatedModelSignatureUri: String? = null
+    var aggregatedModelSizeBytes: Int? = null
     var globalAccuracy: BigDecimal? = null
     var globalFairnessScore: BigDecimal? = null
 
@@ -261,11 +266,16 @@ class TrainingRoundState @EntityCreator constructor() {
         minimumAccuracy = event.minimumAccuracy
         secureAggregationSessionId = event.secureAggregationSessionId
         aggregatedModelId = event.aggregatedModelId
+        aggregatedModelName = event.aggregatedModelName
+        aggregatedModelVersion = event.aggregatedModelVersion
+        aggregatedModelDescription = event.aggregatedModelDescription
+        modelSourceType = event.modelSourceType
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
         aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
         modelFormat = event.modelFormat
         modelArtifactDigest = event.modelArtifactDigest
         aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
+        aggregatedModelSizeBytes = event.aggregatedModelSizeBytes
     }
 
     @EventSourcingHandler

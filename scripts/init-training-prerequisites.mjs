@@ -12,7 +12,7 @@ const args = parseArgs(process.argv.slice(2));
 loadEnvFiles([resolve(import.meta.dirname, '../.env'), resolve(process.cwd(), '.env')]);
 const dryRun = Boolean(args['dry-run']);
 const strict = Boolean(args.strict);
-const createJob = Boolean(args['create-job']);
+const createJob = booleanOption(args['create-job'] ?? process.env.FL_CREATE_TRAINING_JOB, true);
 const activateLifecycle = Boolean(args.activate);
 const timeoutMs = positiveInt(args.timeout, 30000);
 const pollIntervalMs = positiveInt(args['poll-interval'], 800);
@@ -64,6 +64,7 @@ console.log(`[init-training] runtimeEnvironmentType=${runtimeEnvironmentType}`);
 console.log(`[init-training] runtimePackage=${runtimePackageName}:${runtimePackageVersion}`);
 console.log(`[init-training] runtimeAgentInstallMode=${runtimeAgentInstallMode}`);
 console.log(`[init-training] registerRuntimeInfrastructure=${registerRuntimeInfrastructure}`);
+console.log(`[init-training] createAndSubmitTrainingJob=${createJob}`);
 console.log(`[init-training] datasetPath=${datasetPath}`);
 console.log(`[init-training] runtimeDatasetPath=${runtimeDatasetPath}`);
 
@@ -71,6 +72,7 @@ assertLocalDatasetHeaderMatchesSeed(datasetPath, seed.featureSchema);
 
 await ensurePlatformData();
 await ensureRuntimeAgentData();
+await ensureTrainingJob();
 
 console.log('[init-training] ready');
 console.log(JSON.stringify({
@@ -245,16 +247,31 @@ async function ensurePlatformData() {
         createPayload: seed.trainingRunConfiguration
     });
 
-    if (createJob) {
-        await ensureOne({
-            label: 'training job',
-            baseUrl: platformUrl,
-            queryPath: '/trainingjob/trainingjobdashboard',
-            query: {'trainingJobId.equals': seed.trainingJob.trainingJobId},
-            createPath: '/trainingjob/createtrainingjob',
-            createPayload: seed.trainingJob
-        });
+}
+
+async function ensureTrainingJob() {
+    if (!createJob) return;
+
+    const trainingJob = await ensureOne({
+        label: 'training job',
+        baseUrl: platformUrl,
+        queryPath: '/trainingjob/trainingjobdashboard',
+        query: {'trainingJobId.equals': seed.trainingJob.trainingJobId},
+        createPath: '/trainingjob/createtrainingjob',
+        createPayload: seed.trainingJob
+    });
+
+    if (isTrainingJobSubmittedOrBeyond(trainingJob?.state)) {
+        console.log('[init-training] exists submitted training job');
+        return;
     }
+
+    await postCommand(platformUrl, '/trainingjob/submittrainingjob', {
+        trainingJobId: seed.trainingJob.trainingJobId
+    }, 'submit training job');
+    await waitForOne(platformUrl, '/trainingjob/trainingjobdashboard', {
+        'trainingJobId.equals': seed.trainingJob.trainingJobId
+    }, 'submitted training job', (item) => isTrainingJobSubmittedOrBeyond(item.state));
 }
 
 async function ensureRuntimeProvisioningData() {
@@ -409,8 +426,7 @@ async function ensureRuntimeAgentData() {
         baseUrl: platformUrl,
         queryPath: '/runtimedatasetmetadata/runtimedatasetmetadatacatalog',
         query: {
-            'datasetId.equals': seed.dataset.datasetId,
-            'runtimeId.equals': seed.runtime.runtimeId,
+            'runtimeDatasetBindingId.equals': seed.binding.runtimeDatasetBindingId,
             'schemaCompatible.equals': 'true',
             'labelCompatible.equals': 'true'
         },
@@ -751,6 +767,7 @@ function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint
             credentialSecretName: null
         },
         platformMetadata: {
+            runtimeDatasetBindingId,
             metadataReportId: stableUuid('fl-dev:platform-metadata:hospital-readmission-risk-local-runtime-compatible'),
             datasetId,
             organizationId,
@@ -908,6 +925,10 @@ function stableNameUuid(value) {
 
 function isActive(value) {
     return normalize(value) === 'ACTIVE';
+}
+
+function isTrainingJobSubmittedOrBeyond(value) {
+    return ['SUBMITTED', 'RUNNING', 'PAUSED', 'CANCELED', 'COMPLETED'].includes(normalize(value));
 }
 
 function isJoined(value) {

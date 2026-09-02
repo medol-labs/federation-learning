@@ -10,7 +10,6 @@ import tech.medo.organizationmanagement.organization.OrganizationState
 
 
 
-
 @Component
 class ReactivateOrganizationCommandHandler(
     private val decision: ReactivateOrganizationDecision

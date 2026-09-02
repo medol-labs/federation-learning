@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.completetraininground
 
 import tech.medo.trainingorchestration.completetraininground.CompleteTrainingRoundCommand
 
+
 import tech.medo.trainingorchestration.events.TrainingRoundCompletedEvent
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
 

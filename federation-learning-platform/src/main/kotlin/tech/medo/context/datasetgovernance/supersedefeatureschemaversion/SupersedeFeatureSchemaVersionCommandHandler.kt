@@ -10,7 +10,6 @@ import tech.medo.datasetgovernance.featureschema.FeatureSchemaState
 
 
 
-
 @Component
 class SupersedeFeatureSchemaVersionCommandHandler(
     private val decision: SupersedeFeatureSchemaVersionDecision

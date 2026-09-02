@@ -10,7 +10,6 @@ import tech.medo.modellifecycle.model.ModelState
 
 
 
-
 @Component
 class ApproveModelCommandHandler(
     private val decision: ApproveModelDecision

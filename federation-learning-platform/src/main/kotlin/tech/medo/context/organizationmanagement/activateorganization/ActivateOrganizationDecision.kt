@@ -2,6 +2,7 @@ package tech.medo.organizationmanagement.activateorganization
 
 import tech.medo.organizationmanagement.activateorganization.ActivateOrganizationCommand
 
+
 import tech.medo.organizationmanagement.events.OrganizationActivatedEvent
 import tech.medo.organizationmanagement.organization.OrganizationState
 

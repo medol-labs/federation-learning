@@ -10,7 +10,6 @@ import tech.medo.runtimeagentoperations.runtimeagentlifecycle.RuntimeAgentLifecy
 
 
 
-
 @Component
 class ReportRuntimeInstanceSelfCheckPassedCommandHandler(
     private val decision: ReportRuntimeInstanceSelfCheckPassedDecision

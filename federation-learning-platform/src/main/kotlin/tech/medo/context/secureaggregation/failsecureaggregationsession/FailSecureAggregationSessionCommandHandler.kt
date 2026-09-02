@@ -10,7 +10,6 @@ import tech.medo.secureaggregation.secureaggregationsession.SecureAggregationSes
 
 
 
-
 @Component
 class FailSecureAggregationSessionCommandHandler(
     private val decision: FailSecureAggregationSessionDecision

@@ -18,11 +18,16 @@ data class CompleteSecureAggregationCommand(
     val minimumAccuracy: BigDecimal,
     val secureAggregationSessionId: UUID,
     val aggregatedModelId: UUID,
+    val aggregatedModelName: String,
+    val aggregatedModelVersion: String,
+    val aggregatedModelDescription: String?,
+    val modelSourceType: String,
     val aggregatedModelArtifactUri: String,
     val aggregatedModelRegistryRef: String,
     val modelFormat: String,
     val modelArtifactDigest: String,
-    val aggregatedModelSignatureUri: String?
+    val aggregatedModelSignatureUri: String?,
+    val aggregatedModelSizeBytes: Int?
 ) {
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)

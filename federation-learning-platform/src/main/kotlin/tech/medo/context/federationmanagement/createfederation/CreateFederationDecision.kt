@@ -2,6 +2,7 @@ package tech.medo.federationmanagement.createfederation
 
 import tech.medo.federationmanagement.createfederation.CreateFederationCommand
 
+
 import tech.medo.federationmanagement.events.FederationCreatedEvent
 import tech.medo.federationmanagement.events.FederationNameReservedEvent
 import tech.medo.federationmanagement.federation.FederationState

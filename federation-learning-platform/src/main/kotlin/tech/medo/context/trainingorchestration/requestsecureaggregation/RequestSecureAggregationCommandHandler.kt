@@ -10,7 +10,6 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
-
 @Component
 class RequestSecureAggregationCommandHandler(
     private val decision: RequestSecureAggregationDecision

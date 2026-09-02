@@ -34,7 +34,13 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapter(
             baseModelRegistryRef = input.baseModelRegistryRef,
             baseModelFormat = input.baseModelFormat,
             baseModelArtifactDigest = input.baseModelArtifactDigest,
-            baseModelSignatureUri = input.baseModelSignatureUri
+            baseModelSignatureUri = input.baseModelSignatureUri,
+            secureAggregationRequired = input.secureAggregationRequired,
+            secureAggregationSessionId = input.secureAggregationSessionId,
+            encryptionScheme = input.encryptionScheme,
+            publicKeyVersion = input.publicKeyVersion,
+            publicKeyRef = input.publicKeyRef,
+            encryptedParameterScale = input.encryptedParameterScale
         )
 
         return try {

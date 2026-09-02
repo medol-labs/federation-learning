@@ -10,7 +10,6 @@ import tech.medo.runtimeagentoperations.submitagentlocalmodelupdate.SubmitAgentL
 import java.math.BigDecimal
 import java.nio.file.Files
 import java.nio.file.Path
-import java.security.MessageDigest
 import java.util.UUID
 
 class PlatformSubmitAgentLocalModelUpdateAdapterTest {
@@ -20,8 +19,10 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
         Files.createDirectories(artifactPath.parent)
         Files.writeString(artifactPath, """{"weights":[0.1,0.2],"bias":0.3}""")
         val client = RecordingClient()
+        val fileUploadClient = RecordingFileUploadClient()
         val adapter = adapter(
             client = client,
+            fileUploadClient = fileUploadClient,
             runtimeEngineProperties = LocalRuntimeEngineProperties(
                 runtimeRoot = "/workspace/tmp/runtime-engine",
                 runtimeRootHostRoot = tempDir.toString()
@@ -42,31 +43,36 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
         assertEquals(UUID.fromString("cccccccc-cccc-4ccc-8ccc-cccccccccccc"), request.secureAggregationSessionId)
         assertEquals("PAILLIER", request.encryptionScheme)
         assertEquals("local-dev-v1", request.publicKeyVersion)
-        assertEquals("/workspace/tmp/runtime-engine/job-1/local-runtime/local_update.json", request.artifactRef)
-        assertEquals("sha256:${sha256("""{"weights":[0.1,0.2],"bias":0.3}""")}", request.artifactDigest)
+        assertEquals("http://support/api/files/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb/content", request.artifactRef)
+        assertEquals("sha256:stored", request.artifactDigest)
         assertEquals("HOMOMORPHIC_ENCRYPTED", request.updateProtectionType)
         assertEquals(BigDecimal("0.125"), request.trainingLoss)
+        assertEquals(artifactPath, fileUploadClient.paths.single())
     }
 
     @Test
-    fun keepsProvidedArtifactDigest() {
+    fun usesStoredArtifactDigestAsTheCanonicalDigest(@TempDir tempDir: Path) {
+        val artifactPath = tempDir.resolve("local_update.json")
+        Files.writeString(artifactPath, "{}")
         val client = RecordingClient()
-        val adapter = adapter(client = client)
+        val adapter = adapter(client = client, fileUploadClient = RecordingFileUploadClient())
 
-        adapter.execute(input(artifactDigest = "sha256:provided"))
+        adapter.execute(input(artifactRef = artifactPath.toString(), artifactDigest = "sha256:provided"))
 
-        assertEquals("sha256:provided", client.requests.single().artifactDigest)
+        assertEquals("sha256:stored", client.requests.single().artifactDigest)
     }
 
     private fun adapter(
         client: PlatformModelUpdateSubmissionClient,
+        fileUploadClient: SupportFileUploadClient,
         properties: LocalModelUpdateSubmissionProperties = LocalModelUpdateSubmissionProperties(enabled = true),
         runtimeEngineProperties: LocalRuntimeEngineProperties = LocalRuntimeEngineProperties()
     ): PlatformSubmitAgentLocalModelUpdateAdapter =
         PlatformSubmitAgentLocalModelUpdateAdapter(
             client = client,
             properties = properties,
-            runtimeEngineProperties = runtimeEngineProperties
+            runtimeEngineProperties = runtimeEngineProperties,
+            fileUploadClient = fileUploadClient
         )
 
     private fun input(
@@ -96,11 +102,6 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
             trainingLoss = BigDecimal("0.125")
         )
 
-    private fun sha256(content: String): String {
-        val bytes = MessageDigest.getInstance("SHA-256").digest(content.toByteArray())
-        return bytes.joinToString("") { "%02x".format(it) }
-    }
-
     private class RecordingClient : PlatformModelUpdateSubmissionClient {
         val requests = mutableListOf<SubmitModelUpdateSubmissionRequest>()
 
@@ -109,6 +110,22 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
         ): SubmitModelUpdateSubmissionResponse {
             requests += request
             return SubmitModelUpdateSubmissionResponse(modelUpdateSubmissionId = request.modelUpdateSubmissionId)
+        }
+    }
+
+    private class RecordingFileUploadClient : SupportFileUploadClient {
+        val paths = mutableListOf<Path>()
+
+        override fun upload(fileId: UUID, path: Path): UploadedFile {
+            paths.add(path)
+            return UploadedFile(
+                fileId = fileId,
+                fileLocation = "http://support/api/files/$fileId/content",
+                originalFileName = path.fileName.toString(),
+                contentType = "application/json",
+                sizeBytes = Files.size(path),
+                checksum = "sha256:stored"
+            )
         }
     }
 }

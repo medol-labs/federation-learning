@@ -19,3 +19,14 @@ platform:
       agent-version: ${PLATFORM_RUNTIME_K3S_AGENT_VERSION:k3s}
       command-timeout: ${PLATFORM_RUNTIME_K3S_COMMAND_TIMEOUT:PT60S}
       supported-environment-types: ${PLATFORM_RUNTIME_K3S_SUPPORTED_ENVIRONMENT_TYPES:K3S,KUBERNETES}
+
+federation-learning:
+  aggregation:
+    enabled: ${FL_AGGREGATION_ENABLED:true}
+    runtime-engine-endpoint: ${FL_AGGREGATION_RUNTIME_ENGINE_ENDPOINT:http://localhost:18080}
+    support-endpoint: ${FEDERATION_LEARNING_SUPPORT_URL:http://localhost:8080}
+    internal-token: ${MEDOL_SECURITY_INTERNAL_TOKEN:local-dev-internal-token}
+    node-name: ${FL_AGGREGATION_NODE_NAME:platform-aggregator}
+    aggregation-algorithm: ${FL_AGGREGATION_ALGORITHM:FED_AVG}
+    poll-interval: ${FL_AGGREGATION_POLL_INTERVAL:PT1S}
+    job-timeout: ${FL_AGGREGATION_JOB_TIMEOUT:PT5M}

@@ -2,6 +2,7 @@ package tech.medo.trainingorchestration.locktrainingrunconfiguration
 
 import tech.medo.trainingorchestration.locktrainingrunconfiguration.LockTrainingRunConfigurationCommand
 
+
 import tech.medo.trainingorchestration.events.TrainingRunConfigurationLockedEvent
 import tech.medo.trainingorchestration.trainingrunconfiguration.TrainingRunConfigurationState
 

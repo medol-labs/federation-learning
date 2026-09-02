@@ -1,0 +1,7 @@
+package tech.medo.domain.modelrepository.registerfederatedmodelartifact
+
+import org.springframework.stereotype.Component
+import tech.medo.modelrepository.registerfederatedmodelartifact.RegisterFederatedModelArtifactDecision
+
+@Component
+class RegisterFederatedModelArtifactDecisionComponent : RegisterFederatedModelArtifactDecision

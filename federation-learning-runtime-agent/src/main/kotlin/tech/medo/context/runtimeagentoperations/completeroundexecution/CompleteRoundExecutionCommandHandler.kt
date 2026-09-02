@@ -10,7 +10,6 @@ import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 
 
 
-
 @Component
 class CompleteRoundExecutionCommandHandler(
     private val decision: CompleteRoundExecutionDecision

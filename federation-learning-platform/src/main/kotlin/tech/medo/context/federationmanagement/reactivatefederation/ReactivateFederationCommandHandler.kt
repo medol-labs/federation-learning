@@ -10,7 +10,6 @@ import tech.medo.federationmanagement.federation.FederationState
 
 
 
-
 @Component
 class ReactivateFederationCommandHandler(
     private val decision: ReactivateFederationDecision

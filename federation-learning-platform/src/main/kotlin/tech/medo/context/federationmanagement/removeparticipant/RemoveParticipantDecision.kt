@@ -2,6 +2,7 @@ package tech.medo.federationmanagement.removeparticipant
 
 import tech.medo.federationmanagement.removeparticipant.RemoveParticipantCommand
 
+
 import tech.medo.federationmanagement.events.ParticipantRemovedEvent
 import tech.medo.federationmanagement.federationmembership.FederationMembershipState
 

@@ -2,6 +2,7 @@ package tech.medo.federationmanagement.rejectparticipant
 
 import tech.medo.federationmanagement.rejectparticipant.RejectParticipantCommand
 
+
 import tech.medo.federationmanagement.events.ParticipantRejectedEvent
 import tech.medo.federationmanagement.federationmembership.FederationMembershipState
 

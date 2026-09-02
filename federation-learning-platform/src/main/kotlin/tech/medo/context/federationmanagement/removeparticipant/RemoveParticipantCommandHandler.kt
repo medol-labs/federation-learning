@@ -10,7 +10,6 @@ import tech.medo.federationmanagement.federationmembership.FederationMembershipS
 
 
 
-
 @Component
 class RemoveParticipantCommandHandler(
     private val decision: RemoveParticipantDecision

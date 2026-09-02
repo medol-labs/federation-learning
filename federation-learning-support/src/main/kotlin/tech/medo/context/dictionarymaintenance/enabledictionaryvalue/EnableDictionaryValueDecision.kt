@@ -2,6 +2,7 @@ package tech.medo.dictionarymaintenance.enabledictionaryvalue
 
 import tech.medo.dictionarymaintenance.enabledictionaryvalue.EnableDictionaryValueCommand
 
+
 import tech.medo.dictionarymaintenance.events.DictionaryValueEnabledEvent
 import tech.medo.dictionarymaintenance.dictionaryvalue.DictionaryValueState
 

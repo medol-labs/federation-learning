@@ -10,7 +10,6 @@ import tech.medo.identityaccessmanagement.useraccount.UserAccountState
 
 
 
-
 @Component
 class AssignRoleToUserCommandHandler(
     private val decision: AssignRoleToUserDecision

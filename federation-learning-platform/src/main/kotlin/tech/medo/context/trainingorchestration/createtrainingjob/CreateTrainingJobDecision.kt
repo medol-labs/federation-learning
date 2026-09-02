@@ -1,6 +1,7 @@
 package tech.medo.trainingorchestration.createtrainingjob
 
 import tech.medo.trainingorchestration.createtrainingjob.CreateTrainingJobCommand
+import tech.medo.trainingorchestration.trainingrunconfiguration.TrainingRunConfigurationState
 
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
 import tech.medo.trainingorchestration.trainingjob.TrainingJobState
@@ -10,9 +11,9 @@ import tech.medo.trainingorchestration.trainingjob.TrainingJobState
 
 
 interface CreateTrainingJobDecision {
-    fun decide(command: CreateTrainingJobCommand): List<Any> {
+    fun decide(command: CreateTrainingJobCommand, state: TrainingRunConfigurationState): List<Any> {
         return listOf(
-            TrainingJobCreatedEvent(trainingJobId = command.trainingJobId, federationId = command.federationId, initialModelId = java.util.UUID.randomUUID() /* TODO: Carry the initial model selected by the training run configuration. */, featureSchemaId = java.util.UUID.randomUUID() /* TODO: Use the feature schema selected in the runnable training run configuration. */, trainingRunConfigurationId = command.trainingRunConfigurationId, objective = command.objective)
+            TrainingJobCreatedEvent(trainingJobId = command.trainingJobId, federationId = command.federationId, initialModelId = requireNotNull(state.initialModelId) { "initialModelId is required from state." }, featureSchemaId = requireNotNull(state.featureSchemaId) { "featureSchemaId is required from state." }, trainingRunConfigurationId = command.trainingRunConfigurationId, objective = command.objective)
         )
     }
 }

@@ -2,6 +2,7 @@ package tech.medo.runtimemonitoring.appendaudittrail
 
 import tech.medo.runtimemonitoring.appendaudittrail.AppendAuditTrailCommand
 
+
 import tech.medo.runtimemonitoring.events.AuditTrailAppendedEvent
 import tech.medo.runtimemonitoring.auditrecord.AuditRecordState
 

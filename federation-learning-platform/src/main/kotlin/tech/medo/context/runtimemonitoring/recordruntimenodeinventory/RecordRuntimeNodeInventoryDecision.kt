@@ -2,6 +2,7 @@ package tech.medo.runtimemonitoring.recordruntimenodeinventory
 
 import tech.medo.runtimemonitoring.recordruntimenodeinventory.RecordRuntimeNodeInventoryCommand
 
+
 import tech.medo.runtimemonitoring.events.RuntimeNodeInventoryReportedEvent
 import tech.medo.runtimemonitoring.runtimenodeinventory.RuntimeNodeInventoryState
 

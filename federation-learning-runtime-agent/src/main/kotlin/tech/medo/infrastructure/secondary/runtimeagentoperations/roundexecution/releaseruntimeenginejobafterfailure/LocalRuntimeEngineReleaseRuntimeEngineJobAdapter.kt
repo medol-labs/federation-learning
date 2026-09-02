@@ -49,22 +49,30 @@ class LocalRuntimeEngineReleaseRuntimeEngineJobAdapter(
 
     override fun execute(input: ReleaseRuntimeEngineJobAfterFailureInput): ReleaseRuntimeEngineJobAfterFailureResult {
         val failureReason = release(input.roundExecutionId.toString(), input.runtimeEngineJobId)
-        return ReleaseRuntimeEngineJobAfterFailureResult.Succeeded(failureReason = failureReason)
+        return ReleaseRuntimeEngineJobAfterFailureResult.Succeeded(
+            runtimeEngineReleaseFailureReason = failureReason
+        )
     }
 
     override fun execute(input: ReleaseRuntimeEngineJobAfterStartFailureInput): ReleaseRuntimeEngineJobAfterStartFailureResult {
         val failureReason = release(input.roundExecutionId.toString(), input.runtimeEngineJobId)
-        return ReleaseRuntimeEngineJobAfterStartFailureResult.Succeeded(failureReason = failureReason)
+        return ReleaseRuntimeEngineJobAfterStartFailureResult.Succeeded(
+            runtimeEngineReleaseFailureReason = failureReason
+        )
     }
 
     override fun execute(input: ReleaseRuntimeEngineJobAfterRetryFailureInput): ReleaseRuntimeEngineJobAfterRetryFailureResult {
         val failureReason = release(input.roundExecutionId.toString(), input.runtimeEngineJobId)
-        return ReleaseRuntimeEngineJobAfterRetryFailureResult.Succeeded(failureReason = failureReason)
+        return ReleaseRuntimeEngineJobAfterRetryFailureResult.Succeeded(
+            runtimeEngineReleaseFailureReason = failureReason
+        )
     }
 
     override fun execute(input: ReleaseRuntimeEngineJobAfterRuntimeRetryFailureInput): ReleaseRuntimeEngineJobAfterRuntimeRetryFailureResult {
         val failureReason = release(input.roundExecutionId.toString(), input.runtimeEngineJobId)
-        return ReleaseRuntimeEngineJobAfterRuntimeRetryFailureResult.Succeeded(failureReason = failureReason)
+        return ReleaseRuntimeEngineJobAfterRuntimeRetryFailureResult.Succeeded(
+            runtimeEngineReleaseFailureReason = failureReason
+        )
     }
 
     private fun release(roundExecutionId: String, runtimeEngineJobId: String?): String? {

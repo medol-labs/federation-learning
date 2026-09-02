@@ -10,7 +10,6 @@ import tech.medo.runtimemonitoring.noderuntimehealth.NodeRuntimeHealthState
 
 
 
-
 @Component
 class MarkRuntimeAgentRecoveredCommandHandler(
     private val decision: MarkRuntimeAgentRecoveredDecision
