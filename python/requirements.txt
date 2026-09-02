@@ -2,6 +2,7 @@ grpcio==1.62.1
 protobuf==4.25.3
 cloudpickle
 torch
+torchvision
 pytorch-tabnet
 numpy
 pandas
@@ -13,3 +14,6 @@ matplotlib
 phe
 multiprocess
 setuptools
+transformers
+nibabel
+torch-geometric

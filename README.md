@@ -174,7 +174,8 @@ reachable from Runtime Engine.
 ## Runtime Plugins
 
 Platform-orchestrated jobs use code-level runtime plugins. The platform stores
-and dispatches plugin codes such as `SKLEARN_LOGISTIC_REGRESSION` or `FED_AVG`;
+and dispatches plugin codes such as `SKLEARN_LOGISTIC_REGRESSION`, `DENSENET`,
+`RESNET`, `TABNET`, `UNET`, `BERT`, or `FED_AVG`;
 the runtime engine resolves those codes through local registries under
 `python/gemifl/runtime/plugins`.
 
@@ -183,10 +184,28 @@ The current built-in plugins are:
 ```text
 Model plugins:
   SKLEARN_LOGISTIC_REGRESSION
+  DENSENET
+  RESNET
+  TABNET
+  UNET
+  UNET_3D
+  BERT
+  CLINICAL_BERT
+  GCN
 
 Aggregation plugins:
   FED_AVG
 ```
+
+`DENSENET`, `RESNET`, `TABNET`, `UNET`, `UNET_3D`, `BERT`, `CLINICAL_BERT`,
+and `GCN` are adapters around the existing legacy model classes. They expect
+their training and validation inputs through `input.dataset.train` and
+`input.dataset.val` or the equivalent node parameter data source, plus the
+model-specific `modelParameter` values required by the underlying class, such as
+image folders, CSV column settings, pretrained BERT paths, or graph data files.
+They emit a local update descriptor that points at the saved model pickle and
+PyTorch state-dict artifacts; they do not use `FED_AVG`'s JSON weight aggregation
+format yet.
 
 `GET /capabilities` returns the registered model and aggregation plugins for the
 running node. New plugins are added by implementing a plugin class and
