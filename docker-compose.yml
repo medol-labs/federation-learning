@@ -1,3 +1,5 @@
+name: ${RUNTIME_ENGINE_PROJECT_NAME:-runtime-engine}
+
 services:
   runtime-engine:
     build:
@@ -11,6 +13,10 @@ services:
       RUNTIME_ENGINE_ROOT: /workspace/tmp/runtime-engine
       RUNTIME_ENGINE_NODE_NAME: ${RUNTIME_ENGINE_NODE_NAME:-local-runtime}
       RUNTIME_ENGINE_PAILLIER_KEY_DIR: /workspace/secrets/paillier
+      RUNTIME_ENGINE_FILE_ACCESS_BASE_URL: ${RUNTIME_ENGINE_FILE_ACCESS_BASE_URL:-http://host.docker.internal:8080}
+      MEDOL_SECURITY_INTERNAL_TOKEN: ${MEDOL_SECURITY_INTERNAL_TOKEN:-local-dev-internal-token}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     healthcheck:
       test:
         - CMD
