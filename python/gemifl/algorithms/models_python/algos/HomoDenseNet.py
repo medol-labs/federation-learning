@@ -189,6 +189,15 @@ class HomoDenseNet:
         valloader = preprocessor.get_dataloader("val")
         self.dataloaders = {"train": trainloader, "val": valloader}
         self.data_sizes = {x: len(self.dataloaders[x].sampler) for x in ['train', 'val']}
+        self.logger.info(
+            "Loaded legacy DenseNet dataset node=%s trainSamples=%s validationSamples=%s "
+            "trainBatches=%s validationBatches=%s",
+            self.my_node_name,
+            self.data_sizes["train"],
+            self.data_sizes["val"],
+            len(trainloader),
+            len(valloader),
+        )
 
     def get_device(self):
         nodes_parameter = self.config.get_nodes_parameter(self.my_node_name)
@@ -215,6 +224,13 @@ class HomoDenseNet:
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.config.get_model_parameter("lr"))
         # Decay LR by a factor of 0.1 every 7 epochs
         self.exp_lr_scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=7, gamma=0.1)
+        self.logger.info(
+            "Initialized legacy DenseNet node=%s trainableParameters=%s learningRate=%s device=%s",
+            self.my_node_name,
+            sum(parameter.numel() for parameter in self.model.parameters() if parameter.requires_grad),
+            self.optimizer.param_groups[0]["lr"],
+            self.device,
+        )
 
     def get_weights(self):
         weight_dict = {}
@@ -243,7 +259,13 @@ class HomoDenseNet:
         current_loss = 0.0
         current_corrects = 0
         phase = "train"
-        for inputs, labels in self.dataloaders[phase]:
+        self.logger.info(
+            "Legacy DenseNet epoch started node=%s batches=%s learningRate=%s",
+            self.my_node_name,
+            len(self.dataloaders[phase]),
+            self.optimizer.param_groups[0]["lr"],
+        )
+        for batch_index, (inputs, labels) in enumerate(self.dataloaders[phase], start=1):
             inputs = inputs.to(self.device)
             labels = labels.to(self.device)
 
@@ -266,6 +288,13 @@ class HomoDenseNet:
 
             # We want variables to hold the loss statistics
             current_loss += loss.item() * inputs.size(0)
+            self.logger.debug(
+                "Legacy DenseNet batch completed node=%s batch=%s/%s loss=%.6f",
+                self.my_node_name,
+                batch_index,
+                len(self.dataloaders[phase]),
+                loss.item(),
+            )
 
         self.__train_eval(current_loss)
 
@@ -275,10 +304,23 @@ class HomoDenseNet:
         if epoch_loss < self.best_loss:
             self.best_loss = epoch_loss
             self.best_model_wts = self.get_weights()
+        self.logger.info(
+            "Legacy DenseNet epoch completed node=%s averageLoss=%.6f bestLoss=%.6f",
+            self.my_node_name,
+            epoch_loss,
+            self.best_loss,
+        )
 
     def evaluate(self, task_type):
         self.model.eval()
         phase = "val"
+        self.logger.info(
+            "Legacy DenseNet validation started node=%s samples=%s batches=%s taskType=%s",
+            self.my_node_name,
+            self.data_sizes[phase],
+            len(self.dataloaders[phase]),
+            task_type,
+        )
         labels_all = []
         preds_all = []
         probs_all = []
@@ -305,10 +347,14 @@ class HomoDenseNet:
             self.bestauc = current_score["best_score"]
         else:
             current_score["best_score"] = self.bestauc
+        self.logger.info(
+            "Legacy DenseNet validation completed node=%s metrics=%s",
+            self.my_node_name,
+            current_score,
+        )
         return current_score
 
     def dumpfile(self):
         with open(self.model_save, 'wb') as mf:
             pickle.dump(self.model, mf)
         torch.save(self.model.state_dict(), self.weight_save)
-

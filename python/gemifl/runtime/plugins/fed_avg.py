@@ -10,9 +10,9 @@ from gemifl.runtime.plugins.io import default_artifact_path, read_json, write_js
 log = logging.getLogger("gemifl.runtime.plugins.fed_avg")
 
 
-class FedAvgAggregationPlugin:
-    code = "FED_AVG"
-    aliases = ("FED_AVG", "FEDERATED_AVERAGING", "WEIGHTED_FED_AVG")
+class FedAvgJsonAggregationPlugin:
+    code = "FED_AVG_JSON"
+    aliases = ("FED_AVG", "FEDERATED_AVERAGING", "WEIGHTED_FED_AVG", "FED_AVG_JSON")
     supported_update_formats = ("JSON",)
 
     def aggregate(self, config: dict) -> None:

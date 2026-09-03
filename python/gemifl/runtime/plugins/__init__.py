@@ -3,6 +3,7 @@ from gemifl.runtime.plugins.registry import (
     get_aggregation_plugin,
     get_model_plugin,
     model_plugin_capabilities,
+    plugin_profile,
 )
 
 __all__ = [
@@ -10,4 +11,5 @@ __all__ = [
     "get_aggregation_plugin",
     "get_model_plugin",
     "model_plugin_capabilities",
+    "plugin_profile",
 ]

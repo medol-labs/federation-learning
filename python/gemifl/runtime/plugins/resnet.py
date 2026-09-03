@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from gemifl.algorithms.models_python.algos.HomoResNet import HomoResNet
-from gemifl.runtime.plugins.legacy_image_classifier import LegacyImageClassifierPlugin
+from gemifl.runtime.plugins.legacy_model import LegacyModelPlugin
 
 
-class ResNetPlugin(LegacyImageClassifierPlugin):
-    code = "RESNET"
+class ResNetPlugin(LegacyModelPlugin):
+    code = "PYTORCH_RESNET_CLASSIFIER"
     aliases = ("RESNET", "HOMO_RESNET", "HomoResNet")
     legacy_model_class = HomoResNet
 

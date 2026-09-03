@@ -10,8 +10,10 @@ setup(
         "console_scripts": [
             "runtime-engine-run-job = gemifl.runtime.executor:main",
             "runtime-engine-node = gemifl.runtime.node:main",
+            "runtime-engine-capabilities = gemifl.runtime.capabilities:main",
             "gemifl-run-job = gemifl.runtime.executor:main",
-            "gemifl-runtime-node = gemifl.runtime.node:main"
+            "gemifl-runtime-node = gemifl.runtime.node:main",
+            "gemifl-runtime-capabilities = gemifl.runtime.capabilities:main"
         ]
     },
 )

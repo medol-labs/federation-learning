@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from gemifl.algorithms.models_python.algos.HomoGcn import HomoGcn
-from gemifl.runtime.plugins.legacy_image_classifier import LegacyImageClassifierPlugin
+from gemifl.runtime.plugins.legacy_model import LegacyModelPlugin
 
 
-class GCNPlugin(LegacyImageClassifierPlugin):
-    code = "GCN"
+class GCNPlugin(LegacyModelPlugin):
+    code = "PYTORCH_GCN_CLASSIFIER"
     aliases = ("GCN", "HOMO_GCN", "HomoGcn")
     supported_formats = ("PYTORCH_STATE_DICT", "PICKLE")
     supported_tasks = ("GRAPH_CLASSIFICATION", "MOLECULAR_GRAPH_CLASSIFICATION")

@@ -1,0 +1,8 @@
+-r requirements-sklearn.txt
+pytorch-tabnet
+tqdm
+matplotlib
+multiprocess
+transformers
+nibabel
+torch-geometric

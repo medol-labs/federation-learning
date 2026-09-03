@@ -4,14 +4,14 @@ import logging
 from pathlib import Path
 from typing import Type
 
-from gemifl.runtime.plugins.io import default_artifact_path, write_json
+from gemifl.runtime.plugins.io import default_artifact_path, read_json, write_json
 from gemifl.utils.config_parser import ConfigParser
 
 
-log = logging.getLogger("gemifl.runtime.plugins.legacy_image_classifier")
+log = logging.getLogger("gemifl.runtime.plugins.legacy_model")
 
 
-class LegacyImageClassifierPlugin:
+class LegacyModelPlugin:
     code = ""
     aliases: tuple[str, ...] = ()
     supported_formats = ("PYTORCH_STATE_DICT", "PICKLE")
@@ -29,6 +29,7 @@ class LegacyImageClassifierPlugin:
 
         legacy_config = self._to_legacy_config(config)
         model = self.legacy_model_class(ConfigParser(legacy_config), log)
+        self._load_initial_model(model, config)
         epochs = int(legacy_config["model_parameter"].get("epochs", 1))
         task_type = legacy_config["model_parameter"].get("task_type", "multiclass")
 
@@ -82,6 +83,9 @@ class LegacyImageClassifierPlugin:
 
         model_parameter.setdefault("model_save", self._artifact_path(config, "model.pkl"))
         model_parameter.setdefault("weight_save", self._artifact_path(config, "model_state_dict.pt"))
+        initial_model_path = self._initial_model_path(config)
+        if initial_model_path:
+            model_parameter.setdefault("load_model_path", initial_model_path)
         model_parameter.setdefault("data_type", self.default_data_type)
         model_parameter.setdefault("train_batch_size", self.default_train_batch_size)
         model_parameter.setdefault("valid_batch_size", self.default_valid_batch_size)
@@ -119,3 +123,101 @@ class LegacyImageClassifierPlugin:
         path = Path(default_artifact_path(config, name))
         path.parent.mkdir(parents=True, exist_ok=True)
         return str(path)
+
+    def _load_initial_model(self, model, config: dict) -> None:
+        initial_model = config.get("input", {}).get("globalModel")
+        if not initial_model:
+            return
+
+        parameters = self._initial_model_parameters(initial_model)
+        if parameters and hasattr(model, "set_weights"):
+            model.set_weights(parameters)
+            log.info(
+                "Loaded initial model parameters jobId=%s plugin=%s",
+                config.get("jobId"),
+                self.code,
+            )
+            return
+
+        artifact_path = self._initial_model_path(config)
+        if artifact_path and self._load_state_dict_artifact(model, artifact_path):
+            log.info(
+                "Loaded initial model state dict jobId=%s plugin=%s artifact=%s",
+                config.get("jobId"),
+                self.code,
+                artifact_path,
+            )
+            return
+
+        log.info(
+            "Initial model was provided but no compatible legacy weight payload was found jobId=%s plugin=%s",
+            config.get("jobId"),
+            self.code,
+        )
+
+    def _initial_model_parameters(self, initial_model):
+        if isinstance(initial_model, dict):
+            parameters = initial_model.get("parameters") or initial_model.get("weights")
+            if isinstance(parameters, dict):
+                return parameters
+            artifact = initial_model.get("weightArtifact") or initial_model.get("modelArtifact")
+            if artifact:
+                return self._initial_model_parameters(artifact)
+            return None
+
+        artifact_path = self._normalize_artifact_path(initial_model)
+        if not artifact_path:
+            return None
+
+        path = Path(artifact_path)
+        if not path.exists() or path.suffix.lower() != ".json":
+            return None
+
+        payload = read_json(path)
+        parameters = payload.get("parameters") or payload.get("weights")
+        if isinstance(parameters, dict):
+            return parameters
+        artifact = payload.get("weightArtifact") or payload.get("modelArtifact")
+        if artifact:
+            return self._initial_model_parameters(artifact)
+        return None
+
+    def _initial_model_path(self, config: dict) -> str | None:
+        initial_model = config.get("input", {}).get("globalModel")
+        if isinstance(initial_model, dict):
+            artifact = initial_model.get("weightArtifact") or initial_model.get("modelArtifact")
+            return self._normalize_artifact_path(artifact)
+        return self._normalize_artifact_path(initial_model)
+
+    def _normalize_artifact_path(self, artifact) -> str | None:
+        if not isinstance(artifact, str) or not artifact:
+            return None
+        if artifact.startswith("file://"):
+            return artifact.removeprefix("file://")
+        return artifact
+
+    def _load_state_dict_artifact(self, model, artifact_path: str) -> bool:
+        path = Path(artifact_path)
+        if not path.exists() or path.suffix.lower() not in {".pt", ".pth"}:
+            return False
+
+        import torch
+
+        payload = torch.load(path, map_location="cpu")
+        state_dict = payload.get("state_dict") if isinstance(payload, dict) and "state_dict" in payload else payload
+        target = self._state_dict_target(model)
+        if not target:
+            return False
+        target.load_state_dict(state_dict)
+        return True
+
+    def _state_dict_target(self, model):
+        target = getattr(model, "model", None)
+        if target is None:
+            return None
+        if hasattr(target, "load_state_dict"):
+            return target
+        network = getattr(target, "network", None)
+        if network is not None and hasattr(network, "load_state_dict"):
+            return network
+        return None

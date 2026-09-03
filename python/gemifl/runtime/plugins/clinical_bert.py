@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from gemifl.algorithms.models_python.algos.HomoClinicalBert import HomoClinicalBert
-from gemifl.runtime.plugins.legacy_image_classifier import LegacyImageClassifierPlugin
+from gemifl.runtime.plugins.legacy_model import LegacyModelPlugin
 
 
-class ClinicalBertPlugin(LegacyImageClassifierPlugin):
-    code = "CLINICAL_BERT"
+class ClinicalBertPlugin(LegacyModelPlugin):
+    code = "PYTORCH_CLINICAL_BERT_CLASSIFIER"
     aliases = ("CLINICAL_BERT", "CLINICALBERT", "HOMO_CLINICAL_BERT", "HomoClinicalBert")
     supported_formats = ("PYTORCH_STATE_DICT", "PICKLE")
     supported_tasks = ("TEXT_CLASSIFICATION", "CLINICAL_TEXT_CLASSIFICATION")

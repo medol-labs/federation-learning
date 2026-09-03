@@ -10,9 +10,6 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
 
-from gemifl.runtime.plugins import aggregation_plugin_capabilities, model_plugin_capabilities
-
-
 log = logging.getLogger("gemifl.runtime.node")
 
 
@@ -133,16 +130,6 @@ class RuntimeHandler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         if parsed.path == "/healthz":
             self.respond(200, {"status": "ok", "nodeName": self.state.node_name})
-            return
-        if parsed.path == "/capabilities":
-            self.respond(
-                200,
-                {
-                    "nodeName": self.state.node_name,
-                    "modelPlugins": model_plugin_capabilities(),
-                    "aggregationPlugins": aggregation_plugin_capabilities(),
-                },
-            )
             return
         if parsed.path.startswith("/jobs/") and "/artifacts/" in parsed.path:
             parts = parsed.path.strip("/").split("/")

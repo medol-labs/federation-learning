@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from gemifl.algorithms.models_python.algos.HomoBertClassifier import HomoBertClassifier
-from gemifl.runtime.plugins.legacy_image_classifier import LegacyImageClassifierPlugin
+from gemifl.runtime.plugins.legacy_model import LegacyModelPlugin
 
 
-class BertPlugin(LegacyImageClassifierPlugin):
-    code = "BERT"
+class BertPlugin(LegacyModelPlugin):
+    code = "PYTORCH_BERT_CLASSIFIER"
     aliases = ("BERT", "HOMO_BERT", "HomoBertClassifier")
     supported_formats = ("PYTORCH_STATE_DICT", "PICKLE")
     supported_tasks = ("TEXT_CLASSIFICATION", "NLP_CLASSIFICATION")
