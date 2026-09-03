@@ -9,7 +9,16 @@ import tech.medo.trainingorchestration.traininground.TrainingRoundState
 @Component
 class EvaluateModelUpdateSubmissionDecisionComponent : EvaluateModelUpdateSubmissionDecision {
     override fun decide(command: EvaluateModelUpdateSubmissionCommand, state: TrainingRoundState): List<Any> {
+        val isNewRuntime = command.runtimeId !in state.acceptedRuntimeIds
         val acceptedRuntimeIds = (state.acceptedRuntimeIds + command.runtimeId).distinct()
+        val acceptedModelUpdateArtifactRefs =
+            (state.acceptedModelUpdateArtifactRefs + command.artifactRef).distinct()
+        val minimumNodesPerRound = requireNotNull(state.minimumNodesPerRound) {
+            "minimumNodesPerRound is required from state."
+        }
+        val requiredModelUpdateCount = requireNotNull(state.selectedRuntimeCount) {
+            "selectedRuntimeCount is required from state."
+        }
 
         return listOf(
             ModelUpdateSubmissionAcceptedEvent(
@@ -28,6 +37,7 @@ class EvaluateModelUpdateSubmissionDecisionComponent : EvaluateModelUpdateSubmis
                 minimumAccuracy = requireNotNull(state.minimumAccuracy) {
                     "minimumAccuracy is required from state."
                 },
+                aggregationAlgorithm = state.aggregationAlgorithm,
                 runtimeId = command.runtimeId,
                 featureSchemaId = command.featureSchemaId,
                 secureAggregationRequired = command.secureAggregationRequired,
@@ -41,9 +51,13 @@ class EvaluateModelUpdateSubmissionDecisionComponent : EvaluateModelUpdateSubmis
                 anomalyScore = command.anomalyScore,
                 acceptedModelUpdateCount = acceptedRuntimeIds.size,
                 acceptedRuntimeIds = acceptedRuntimeIds,
-                minimumNodesPerRound = requireNotNull(state.minimumNodesPerRound) {
-                    "minimumNodesPerRound is required from state."
-                }
+                acceptedModelUpdateArtifactRefs = acceptedModelUpdateArtifactRefs,
+                minimumNodesPerRound = minimumNodesPerRound,
+                requiredModelUpdateCount = requiredModelUpdateCount,
+                plainAggregationReady =
+                    !command.secureAggregationRequired &&
+                        isNewRuntime &&
+                        acceptedRuntimeIds.size >= requiredModelUpdateCount
             )
         )
     }

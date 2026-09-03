@@ -23,6 +23,7 @@ class EvaluateModelUpdateSubmissionDecisionComponentTest {
                     roundNumber = 1,
                     maxRounds = 1,
                     minimumAccuracy = BigDecimal("0.90"),
+                    aggregationAlgorithm = "FED_AVG",
                     selectedOrganizationIds = emptyList(),
                     selectedRuntimeIds = emptyList(),
                     selectedParticipants = emptyList(),
@@ -67,6 +68,64 @@ class EvaluateModelUpdateSubmissionDecisionComponentTest {
         assertEquals(listOf(runtimeId), event.acceptedRuntimeIds)
         assertEquals(1, event.acceptedModelUpdateCount)
         assertEquals(1, event.minimumNodesPerRound)
+    }
+
+    @Test
+    fun `marks plaintext aggregation ready when accepted updates reach quorum`() {
+        val state = TrainingRoundState().apply {
+            evolve(
+                TrainingRoundStartedEvent(
+                    trainingJobId = uuid("plain-job"),
+                    trainingRunConfigurationId = uuid("plain-config"),
+                    featureSchemaId = uuid("plain-schema"),
+                    roundId = uuid("plain-round"),
+                    roundNumber = 1,
+                    selectedOrganizationIds = emptyList(),
+                    selectedRuntimeIds = emptyList(),
+                    selectedParticipants = emptyList(),
+                    selectedOrganizationCount = 1,
+                    selectedRuntimeCount = 1,
+                    minimumNodesPerRound = 1,
+                    maxRounds = 1,
+                    minimumAccuracy = BigDecimal("0.90"),
+                    aggregationAlgorithm = "FED_AVG_PYTORCH_STATE_DICT",
+                    secureAggregationRequired = false,
+                    secureAggregationSessionId = null,
+                    encryptionScheme = null,
+                    publicKeyVersion = null,
+                    publicKeyRef = null,
+                    encryptedParameterScale = null
+                )
+            )
+        }
+        val artifactRef = "file:///updates/local-update.json"
+
+        val event = EvaluateModelUpdateSubmissionDecisionComponent().decide(
+            command = EvaluateModelUpdateSubmissionCommand(
+                modelUpdateSubmissionId = uuid("plain-submission"),
+                executionSessionId = uuid("plain-session"),
+                executionPlanId = uuid("plain-plan"),
+                trainingJobId = uuid("plain-job"),
+                trainingRunConfigurationId = uuid("plain-config"),
+                roundId = uuid("plain-round"),
+                runtimeId = uuid("plain-runtime"),
+                featureSchemaId = uuid("plain-schema"),
+                secureAggregationRequired = false,
+                secureAggregationSessionId = null,
+                encryptionScheme = null,
+                publicKeyVersion = null,
+                updateArtifactId = uuid("plain-artifact"),
+                artifactRef = artifactRef,
+                artifactDigest = "sha256:plain",
+                updateProtectionType = "PLAINTEXT",
+                anomalyScore = BigDecimal.ZERO
+            ),
+            state = state
+        ).filterIsInstance<ModelUpdateSubmissionAcceptedEvent>().single()
+
+        assertEquals(listOf(artifactRef), event.acceptedModelUpdateArtifactRefs)
+        assertEquals("FED_AVG_PYTORCH_STATE_DICT", event.aggregationAlgorithm)
+        assertEquals(true, event.plainAggregationReady)
     }
 
     private fun uuid(value: String): UUID = UUID.nameUUIDFromBytes(value.toByteArray())

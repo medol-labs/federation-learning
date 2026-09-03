@@ -1,22 +1,22 @@
-package tech.medo.trainingorchestration.completesecureaggregation
+package tech.medo.trainingorchestration.completemodelaggregation
 
 import org.axonframework.messaging.commandhandling.annotation.CommandHandler
 import org.axonframework.messaging.eventhandling.gateway.EventAppender
 import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
-import tech.medo.trainingorchestration.completesecureaggregation.CompleteSecureAggregationCommand
+import tech.medo.trainingorchestration.completemodelaggregation.CompleteModelAggregationCommand
 
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 
 
 @Component
-class CompleteSecureAggregationCommandHandler(
-    private val decision: CompleteSecureAggregationDecision
+class CompleteModelAggregationCommandHandler(
+    private val decision: CompleteModelAggregationDecision
 ) {
     @CommandHandler
     fun handle(
-        command: CompleteSecureAggregationCommand,
+        command: CompleteModelAggregationCommand,
         @InjectEntity(idProperty = "trainingJobId") state: TrainingRoundState,
         eventAppender: EventAppender
     ) {

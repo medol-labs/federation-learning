@@ -41,6 +41,7 @@ class LocalStartTrainingRoundAdapterTest {
             minimumNodesPerRound = minimumNodesPerRound,
             maxRounds = 1,
             minimumAccuracy = BigDecimal("0.90"),
+            aggregationAlgorithm = "FED_AVG",
             secureAggregationRequired = true,
             secureAggregationSessionId = uuid("88888888-8888-4888-8888-888888888888"),
             encryptionScheme = "PAILLIER",

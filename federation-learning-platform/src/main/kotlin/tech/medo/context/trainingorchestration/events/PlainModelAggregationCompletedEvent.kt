@@ -4,12 +4,11 @@ import org.axonframework.eventsourcing.annotation.EventTag
 import org.axonframework.messaging.eventhandling.annotation.Event
 import java.util.UUID;
 import java.math.BigDecimal;
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
 
 
 
 @Event
-data class TrainingRoundParticipantsSelectedEvent(
+data class PlainModelAggregationCompletedEvent(
     @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
@@ -18,12 +17,15 @@ data class TrainingRoundParticipantsSelectedEvent(
     val roundNumber: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
-    val aggregationAlgorithm: String,
-    val minimumNodesPerRound: Int,
-    val secureAggregationRequired: Boolean,
-    val selectedOrganizationIds: List<UUID>,
-    val selectedRuntimeIds: List<UUID>,
-    val selectedParticipants: List<TrainingRoundParticipant>,
-    val selectedOrganizationCount: Int,
-    val selectedRuntimeCount: Int
+    val aggregatedModelId: UUID,
+    val aggregatedModelName: String,
+    val aggregatedModelVersion: String,
+    val aggregatedModelDescription: String?,
+    val modelSourceType: String,
+    val aggregatedModelArtifactUri: String,
+    val aggregatedModelRegistryRef: String,
+    val modelFormat: String,
+    val modelArtifactDigest: String,
+    val aggregatedModelSignatureUri: String?,
+    val aggregatedModelSizeBytes: Int?
 )

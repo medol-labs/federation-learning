@@ -35,6 +35,11 @@ class LocalDockerComposeStartRoundExecutionAdapter(
                 failureReason = "Runtime dataset binding ${binding.runtimeDatasetBindingId} does not provide a filePath."
             )
         val runtimeEngineJobId = defaultRuntimeEngineJobId(input)
+        val modelPlugin = input.baseModelRegistryRef.takeIf { it.isNotBlank() }
+            ?: return StartRoundExecutionResult.Rejected(
+                runtimeEngineJobId = runtimeEngineJobId,
+                failureReason = "Execution plan ${input.executionPlanId} does not provide a runtime engine model plugin.",
+            )
 
         val compose = commandRunner.run(properties, listOf("up", "-d", properties.serviceName))
         if (!compose.succeeded) {
@@ -56,7 +61,7 @@ class LocalDockerComposeStartRoundExecutionAdapter(
             )
         }
 
-        val request = buildJobRequest(input, runtimeEngineJobId, datasetPath)
+        val request = buildJobRequest(input, runtimeEngineJobId, modelPlugin, datasetPath)
         val response = try {
             log.info("Submitting runtime engine job. endpoint={}, request={}", endpoint, request)
             runtimeEngineClient.startJob(endpoint, request)
@@ -115,10 +120,13 @@ class LocalDockerComposeStartRoundExecutionAdapter(
     private fun buildJobRequest(
         input: StartRoundExecutionInput,
         runtimeEngineJobId: String,
+        modelPlugin: String,
         datasetPath: String
     ): RuntimeEngineJobRequest {
         val localUpdatePath = "${properties.runtimeRoot}/$runtimeEngineJobId/${properties.nodeName}/local_update.json"
         val metricsPath = "${properties.runtimeRoot}/$runtimeEngineJobId/${properties.nodeName}/metrics.json"
+        val weightArtifactPath = "${properties.runtimeRoot}/$runtimeEngineJobId/${properties.nodeName}/model_state_dict.pt"
+        val modelArtifactPath = "${properties.runtimeRoot}/$runtimeEngineJobId/${properties.nodeName}/model.pt"
         val globalModelPath = input.baseModelArtifactUri
             .takeIf { it.startsWith("/") || it.startsWith("file://") }
             ?.removePrefix("file://")
@@ -143,14 +151,17 @@ class LocalDockerComposeStartRoundExecutionAdapter(
             input = runtimeInput,
             output = mapOf(
                 "localUpdate" to localUpdatePath,
-                "metrics" to metricsPath
+                "metrics" to metricsPath,
+                "weightArtifact" to weightArtifactPath,
+                "modelArtifact" to modelArtifactPath,
             ),
             modelParameter = mapOf(
-                "model" to properties.model,
+                "modelPlugin" to modelPlugin,
                 "engine" to "python",
                 "process" to "train",
+                "epochs" to properties.epoch,
                 "epoch" to properties.epoch,
-                "learningRate" to properties.learningRate
+                "learningRate" to properties.learningRate,
             ),
             jobParameter = mapOf(
                 "encryptMethod" to "plain",

@@ -139,6 +139,7 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
             entity.trainingJobId = event.trainingJobId
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
+            entity.aggregationAlgorithm = event.aggregationAlgorithm
             entity.secureAggregationRequired = event.secureAggregationRequired
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.maxRounds = event.maxRounds

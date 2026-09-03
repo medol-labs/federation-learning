@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.completemodelaggregation
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.completemodelaggregation.CompleteModelAggregationDecision
+
+@Component
+class CompleteModelAggregationDecisionComponent : CompleteModelAggregationDecision

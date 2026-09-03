@@ -18,6 +18,7 @@ data class TrainingRoundParticipantSelectionFailedEvent(
     val roundNumber: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
+    val aggregationAlgorithm: String,
     val minimumNodesPerRound: Int,
     val secureAggregationRequired: Boolean,
     val selectedOrganizationIds: List<UUID>,

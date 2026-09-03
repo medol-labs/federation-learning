@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import {createHash} from 'node:crypto';
-import {existsSync, readFileSync} from 'node:fs';
+import {existsSync, readdirSync, readFileSync} from 'node:fs';
 import {basename, resolve} from 'node:path';
 
 if (typeof fetch !== 'function') {
@@ -16,6 +16,7 @@ const createJob = booleanOption(args['create-job'] ?? process.env.FL_CREATE_TRAI
 const activateLifecycle = Boolean(args.activate);
 const timeoutMs = positiveInt(args.timeout, 30000);
 const pollIntervalMs = positiveInt(args['poll-interval'], 800);
+const trainingScenario = normalizeScenario(args.scenario ?? args['training-scenario'] ?? process.env.FL_TRAINING_SCENARIO ?? 'densenet');
 
 const platformUrl = trimSlash(args['platform-url'] ?? process.env.FL_PLATFORM_URL ?? 'http://localhost:8081');
 const runtimeAgentUrl = trimSlash(args['runtime-agent-url'] ?? process.env.FL_RUNTIME_AGENT_URL ?? 'http://localhost:8082');
@@ -38,17 +39,17 @@ const registerRuntimeInfrastructure = booleanOption(
 );
 
 const workspaceRoot = resolve(import.meta.dirname, '../..');
-const defaultDatasetPath = resolve(workspaceRoot, 'volumes/datasets/test.csv');
+const defaultDatasetPath = defaultDatasetPathForScenario(trainingScenario, workspaceRoot);
 const datasetPath = resolve(args['dataset-path'] ?? process.env.FL_DEV_DATASET_PATH ?? defaultDatasetPath);
 const runtimeDatasetPath = args['runtime-dataset-path'] ??
     process.env.FL_RUNTIME_DATASET_PATH ??
-    `/workspace/datasets/${basename(datasetPath)}`;
+    defaultRuntimeDatasetPath(trainingScenario, datasetPath);
 
 if (!existsSync(datasetPath)) {
     fail(`Dataset file does not exist: ${datasetPath}`);
 }
 
-const seed = buildSeed(runtimeDatasetPath, runtimeAgentUrl, runtimeEngineUrl, {
+const seed = buildSeed(trainingScenario, runtimeDatasetPath, runtimeAgentUrl, runtimeEngineUrl, {
     runtimeEnvironmentType,
     runtimePackageName,
     runtimePackageVersion,
@@ -65,10 +66,12 @@ console.log(`[init-training] runtimePackage=${runtimePackageName}:${runtimePacka
 console.log(`[init-training] runtimeAgentInstallMode=${runtimeAgentInstallMode}`);
 console.log(`[init-training] registerRuntimeInfrastructure=${registerRuntimeInfrastructure}`);
 console.log(`[init-training] createAndSubmitTrainingJob=${createJob}`);
+console.log(`[init-training] trainingScenario=${trainingScenario}`);
 console.log(`[init-training] datasetPath=${datasetPath}`);
 console.log(`[init-training] runtimeDatasetPath=${runtimeDatasetPath}`);
 
-assertLocalDatasetHeaderMatchesSeed(datasetPath, seed.featureSchema);
+assertLocalDatasetMatchesSeed(trainingScenario, datasetPath, seed.featureSchema);
+warnIfRuntimeAgentConfigurationLikelyMismatches(trainingScenario);
 
 await ensurePlatformData();
 await ensureRuntimeAgentData();
@@ -392,19 +395,27 @@ async function ensureRuntimeAgentData() {
         }, 'runtime dataset binding');
     }
 
-    const accessValidation = await ensureAgentDatasetAccessValidation();
-    if (!isAccessValidated(accessValidation?.validationStatus)) {
-        fail(
-            `Agent dataset access validation failed: ${accessValidation?.failureReason ?? accessValidation?.validationStatus ?? 'unknown failure'}. ` +
-            `runtimeDatasetPath=${seed.binding.filePath}`
-        );
-    }
+    let capability = datasetCapability;
+    if (seed.requiresCsvRuntimeAgentDatasetAdapters) {
+        const accessValidation = await ensureAgentDatasetAccessValidation();
+        if (!isAccessValidated(accessValidation?.validationStatus)) {
+            fail(
+                `Agent dataset access validation failed: ${accessValidation?.failureReason ?? accessValidation?.validationStatus ?? 'unknown failure'}. ` +
+                `runtimeDatasetPath=${seed.binding.filePath}`
+            );
+        }
 
-    const capability = await waitForOne(runtimeAgentUrl, '/dataset/datasetcapability', {
-        'datasetId.equals': seed.dataset.datasetId
-    }, 'reported dataset capability', isDatasetCapabilityReadyOrFailed);
-    if (!dryRun && !isDatasetCapabilityReady(capability)) {
-        fail(`Dataset capability was not ready: ${JSON.stringify(capability)}`);
+        capability = await waitForOne(runtimeAgentUrl, '/dataset/datasetcapability', {
+            'datasetId.equals': seed.dataset.datasetId
+        }, 'reported dataset capability', isDatasetCapabilityReadyOrFailed);
+        if (!dryRun && !isDatasetCapabilityReady(capability)) {
+            fail(`Dataset capability was not ready: ${JSON.stringify(capability)}`);
+        }
+    } else {
+        console.log(
+            `[init-training] skip runtime-agent CSV dataset access/profile/contract checks for ${seed.trainingScenario}; ` +
+            'ImageFolder adapters are not available yet.'
+        );
     }
 
     if (!isApproved(capability?.approvalStatus) && capability?.approved !== true) {
@@ -566,6 +577,52 @@ function applyRuntimeInfrastructureId(runtimeInfrastructureId) {
     seed.node.inventoryHash = stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeEngineUrl}`);
 }
 
+function assertLocalDatasetMatchesSeed(scenario, localDatasetPath, expectedSchema) {
+    if (scenario === 'densenet') {
+        assertImageFolderDataset(localDatasetPath);
+        return;
+    }
+    assertLocalDatasetHeaderMatchesSeed(localDatasetPath, expectedSchema);
+}
+
+function assertImageFolderDataset(localDatasetPath) {
+    const root = resolve(localDatasetPath);
+    const entries = safeReadDir(root);
+    const classDirs = entries.filter((entry) => entry.isDirectory());
+    if (classDirs.length < 2) {
+        fail(`ImageFolder dataset requires at least two class directories: ${root}`);
+    }
+    const emptyClasses = classDirs
+        .filter((entry) => !directoryContainsImage(resolve(root, entry.name)))
+        .map((entry) => entry.name);
+    if (emptyClasses.length > 0) {
+        fail(`ImageFolder dataset classes have no image files: ${emptyClasses.join(', ')}`);
+    }
+}
+
+function directoryContainsImage(directory) {
+    const imageExtensions = new Set([
+        '.jpg', '.jpeg', '.png', '.ppm', '.bmp', '.pgm', '.tif', '.tiff', '.webp', '.pnm', '.pbm'
+    ]);
+    return safeReadDir(directory).some((entry) => {
+        const entryPath = resolve(directory, entry.name);
+        if (entry.isDirectory()) {
+            return directoryContainsImage(entryPath);
+        }
+        const extensionIndex = entry.name.lastIndexOf('.');
+        const extension = extensionIndex >= 0 ? entry.name.slice(extensionIndex).toLowerCase() : '';
+        return entry.isFile() && imageExtensions.has(extension);
+    });
+}
+
+function safeReadDir(path) {
+    try {
+        return readdirSync(path, {withFileTypes: true});
+    } catch (error) {
+        fail(`Unable to read dataset directory ${path}: ${errorSummary(error)}`);
+    }
+}
+
 function assertLocalDatasetHeaderMatchesSeed(localDatasetPath, expectedSchema) {
     const header = readFileSync(localDatasetPath, 'utf8')
         .split(/\r?\n/)
@@ -621,7 +678,217 @@ function normalizeName(value) {
     return String(value ?? '').trim().replace(/^"|"$/g, '').replace(/[_\s-]/g, '').toLowerCase();
 }
 
-function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions) {
+function buildSeed(scenario, datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions) {
+    if (scenario === 'csv') {
+        return buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions);
+    }
+    return buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions);
+}
+
+function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions) {
+    const runtimeName = 'local-vision-runtime';
+    const datasetName = 'Tiny ImageNet DenseNet ImageFolder';
+    const organizationId = stableUuid('fl-dev:organization:local-vision-lab');
+    const federationId = stableUuid('fl-dev:federation:tiny-imagenet-densenet');
+    const featureSchemaId = stableUuid('fl-dev:feature-schema:tiny-imagenet-image-classification:v1');
+    const runtimeInfrastructurePackageId = stableUuid(
+        `fl-dev:runtime-infrastructure-package:${runtimeOptions.runtimePackageName}:${runtimeOptions.runtimePackageVersion}`
+    );
+    const runtimeInstallationPlanId = stableUuid(
+        `fl-dev:runtime-installation-plan:${organizationId}:${runtimeOptions.runtimePackageName}:${runtimeOptions.runtimePackageVersion}:${runtimeName}`
+    );
+    const runtimeInfrastructureId = stableNameUuid(`runtime-infrastructure:${runtimeInstallationPlanId}`);
+    const runtimeAgentId = stableUuid('fl-dev:runtime-agent:local-vision');
+    const runtimeId = stableUuid('fl-dev:runtime:local-vision');
+    const datasetId = stableUuid('fl-dev:dataset:tiny-imagenet-densenet-imagefolder');
+    const runtimeDatasetBindingId = stableUuid('fl-dev:dataset-binding:tiny-imagenet-densenet-local-runtime');
+    const datasetAccessValidationId = stableUuid('fl-dev:dataset-access-validation:tiny-imagenet-densenet-local-runtime');
+    const modelId = stableUuid('fl-dev:model:torchvision-densenet121:v1');
+    const trainingRunConfigurationId = stableUuid('fl-dev:training-run-configuration:tiny-imagenet-densenet:v1');
+    const trainingJobId = stableUuid('fl-dev:training-job:tiny-imagenet-densenet');
+
+    return {
+        trainingScenario: 'densenet',
+        requiresCsvRuntimeAgentDatasetAdapters: false,
+        organization: {
+            organizationId,
+            organizationName: 'FL Dev Vision Lab',
+            organizationType: 'LABORATORY',
+            contactEmail: 'fl-dev@example.com'
+        },
+        federation: {
+            federationId,
+            federationName: 'Tiny ImageNet DenseNet Federation',
+            description: 'Local development federation for DenseNet image classification smoke testing',
+            minimumParticipantCount: 1
+        },
+        featureSchema: {
+            featureSchemaId,
+            featureDomain: 'tiny-imagenet-image-classification',
+            version: 'v1',
+            dataModality: 'IMAGE',
+            features: [
+                feature('image', 'FILE', true, false, 'Image sample file in ImageFolder layout'),
+                feature('class_directory', 'STRING', true, false, 'ImageFolder class directory name')
+            ],
+            labels: [
+                {
+                    labelName: 'class',
+                    dataType: 'STRING',
+                    cardinality: 2,
+                    classLabels: ['n01443537', 'n01629819'],
+                    isMultilabel: false,
+                    description: 'ImageFolder class label',
+                    validationRules: [],
+                    defaultValue: null
+                }
+            ]
+        },
+        runtime: {
+            runtimeId,
+            runtimeInfrastructureId,
+            runtimeAgentId,
+            organizationId,
+            runtimeName
+        },
+        runtimeInfrastructurePackage: {
+            runtimeInfrastructurePackageId,
+            packageName: runtimeOptions.runtimePackageName,
+            packageVersion: runtimeOptions.runtimePackageVersion,
+            runtimeEnvironmentType: runtimeOptions.runtimeEnvironmentType
+        },
+        runtimeInstallationPlan: {
+            runtimeInstallationPlanId,
+            organizationId,
+            runtimeInfrastructurePackageId,
+            runtimeName,
+            agentInstallMode: runtimeOptions.runtimeAgentInstallMode,
+            expectedNodeCount: runtimeOptions.expectedNodeCount
+        },
+        runtimeEndpointScope: runtimeOptions.runtimeEndpointScope,
+        node: {
+            runtimeNodeInventoryReportId: stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeAgentId}`),
+            organizationId,
+            runtimeInfrastructureId,
+            runtimeAgentId,
+            runtimeNodeName: runtimeName,
+            infrastructureNodeId: 'local-dev-node',
+            runtimeNodeRole: 'TRAINER',
+            nodeReady: true,
+            runtimeEngineVersion: 'local',
+            containerEngineVersion: runtimeOptions.runtimeEnvironmentType,
+            operatingSystem: process.platform,
+            architecture: process.arch,
+            inventoryHash: stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeEngineEndpoint}`)
+        },
+        dataset: {
+            datasetId,
+            organizationId,
+            featureSchemaId,
+            datasetName,
+            datasetUsage: 'TRAINING'
+        },
+        binding: {
+            runtimeDatasetBindingId,
+            datasetId,
+            organizationId,
+            featureSchemaId,
+            datasetName,
+            runtimeId,
+            dataSourceType: 'FILE',
+            host: null,
+            port: null,
+            url: null,
+            databaseName: null,
+            schemaName: null,
+            tableName: null,
+            filePath: datasetPathValue,
+            objectBucket: null,
+            objectPrefix: null,
+            dataFormat: 'IMAGE_FOLDER',
+            credentialSecretName: null
+        },
+        accessValidation: {
+            datasetAccessValidationId,
+            runtimeDatasetBindingId,
+            datasetId,
+            organizationId,
+            featureSchemaId,
+            datasetName,
+            runtimeId,
+            dataSourceType: 'FILE',
+            host: null,
+            port: null,
+            url: null,
+            databaseName: null,
+            schemaName: null,
+            tableName: null,
+            filePath: datasetPathValue,
+            objectBucket: null,
+            objectPrefix: null,
+            dataFormat: 'IMAGE_FOLDER',
+            credentialSecretName: null
+        },
+        platformMetadata: {
+            runtimeDatasetBindingId,
+            metadataReportId: stableUuid('fl-dev:platform-metadata:tiny-imagenet-densenet-local-runtime-compatible'),
+            datasetId,
+            organizationId,
+            runtimeId,
+            featureSchemaId,
+            datasetName,
+            sampleCount: 40,
+            featureCount: 2,
+            schemaCompatible: true,
+            labelCompatible: true,
+            missingValueRate: 0.0,
+            duplicateRate: 0.0,
+            qualityScore: 1.0,
+            nonIidScore: 0.0,
+            classBalanceScore: 0.5
+        },
+        model: {
+            modelId,
+            modelName: 'PYTORCH_TORCHVISION_DENSENET121_CLASSIFIER',
+            modelVersion: 'v1',
+            modelDescription: 'Development DenseNet121 classifier for Tiny ImageNet ImageFolder smoke testing.',
+            sourceType: 'BUILT_IN',
+            fileId: null,
+            modelFormat: 'PYTORCH_STATE_DICT'
+        },
+        trainingRunConfiguration: {
+            trainingRunConfigurationId,
+            configurationName: 'Tiny ImageNet DenseNet Local Dev',
+            federationId,
+            featureSchemaId,
+            initialModelId: modelId,
+            strategyName: 'LOCAL_DEV_DENSENET',
+            aggregationAlgorithm: 'FED_AVG_PYTORCH_STATE_DICT',
+            maxRounds: 1,
+            minimumNodesPerRound: 1,
+            roundTimeoutSeconds: 600,
+            nodeResponseTimeoutSeconds: 300,
+            localEpochs: 1,
+            batchSize: 4,
+            learningRate: 0.001,
+            optimizer: 'ADAM',
+            lossFunction: 'CROSS_ENTROPY',
+            gradientClippingNorm: null,
+            secureAggregationRequired: true,
+            minimumAccuracy: 0.0,
+            minimumFairnessScore: null
+        },
+        trainingJob: {
+            trainingJobId,
+            federationId,
+            trainingRunConfigurationId,
+            objective: 'Local Tiny ImageNet DenseNet smoke training'
+        },
+        runtimeAgentEndpoint
+    };
+}
+
+function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions) {
     const runtimeName = 'local-medical-runtime';
     const datasetName = 'Hospital Readmission Risk CSV';
     const labelColumn = 'readmission_risk';
@@ -645,6 +912,8 @@ function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint
     const trainingJobId = stableUuid('fl-dev:training-job:hospital-readmission-risk');
 
     return {
+        trainingScenario: 'csv',
+        requiresCsvRuntimeAgentDatasetAdapters: true,
         organization: {
             organizationId,
             organizationName: 'FL Dev Hospital',
@@ -790,7 +1059,7 @@ function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint
             modelVersion: 'v1',
             modelDescription: 'Development baseline logistic regression model for synthetic hospital readmission risk training.',
             sourceType: 'BUILT_IN',
-            stagedFileId: null,
+            fileId: null,
             modelFormat: 'JSON'
         },
         trainingRunConfiguration: {
@@ -800,7 +1069,7 @@ function buildSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint
             featureSchemaId,
             initialModelId: modelId,
             strategyName: 'LOCAL_DEV',
-            aggregationAlgorithm: 'FED_AVG',
+            aggregationAlgorithm: 'FED_AVG_JSON',
             maxRounds: 1,
             minimumNodesPerRound: 1,
             roundTimeoutSeconds: 600,
@@ -856,6 +1125,42 @@ function parseArgs(argv) {
         }
     }
     return result;
+}
+
+function normalizeScenario(value) {
+    const normalized = String(value ?? '').trim().toLowerCase().replace(/[_\s]/g, '-');
+    if (['csv', 'logistic', 'logistic-regression'].includes(normalized)) {
+        return 'csv';
+    }
+    if (['densenet', 'densenet121', 'tiny-imagenet', 'tiny-imagenet-densenet'].includes(normalized)) {
+        return 'densenet';
+    }
+    fail(`Unsupported training scenario: ${value}. Supported scenarios: densenet, csv`);
+}
+
+function defaultDatasetPathForScenario(scenario, root) {
+    if (scenario === 'csv') {
+        return resolve(root, 'volumes/datasets/test.csv');
+    }
+    return resolve(root, 'volumes/datasets/tiny-imagenet-densenet-dev/train');
+}
+
+function defaultRuntimeDatasetPath(scenario, localDatasetPath) {
+    if (scenario === 'csv') {
+        return `/workspace/datasets/${basename(localDatasetPath)}`;
+    }
+    return '/workspace/datasets/tiny-imagenet-densenet-dev/train';
+}
+
+function warnIfRuntimeAgentConfigurationLikelyMismatches(scenario) {
+    if (scenario !== 'densenet') {
+        return;
+    }
+    console.log(
+        '[init-training] DenseNet scenario expects runtime-agent local runtime engine configuration: ' +
+        'runtime engine image/profile=pytorch-vision, dataset mounted at /workspace/datasets, ' +
+        'and modelPlugin delivered through the participant execution plan.'
+    );
 }
 
 function loadEnvFiles(paths) {

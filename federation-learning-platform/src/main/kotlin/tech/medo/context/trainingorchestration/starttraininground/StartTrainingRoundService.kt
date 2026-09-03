@@ -21,6 +21,7 @@ data class StartTrainingRoundInput(
     val minimumNodesPerRound: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
+    val aggregationAlgorithm: String?,
     val secureAggregationRequired: Boolean,
     val secureAggregationSessionId: UUID?,
     val encryptionScheme: String?,

@@ -32,6 +32,7 @@ class StartTrainingRoundDecisionTest {
             minimumNodesPerRound = 0,
             maxRounds = 0,
             minimumAccuracy = java.math.BigDecimal.ZERO,
+            aggregationAlgorithm = null,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,
@@ -62,6 +63,7 @@ class StartTrainingRoundDecisionTest {
         assertEquals(command.minimumNodesPerRound, event.minimumNodesPerRound)
         assertEquals(command.maxRounds, event.maxRounds)
         assertEquals(command.minimumAccuracy, event.minimumAccuracy)
+        assertEquals(command.aggregationAlgorithm, event.aggregationAlgorithm)
         assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
         assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
         assertEquals(command.encryptionScheme, event.encryptionScheme)
@@ -88,6 +90,7 @@ class StartTrainingRoundDecisionTest {
             minimumNodesPerRound = 0,
             maxRounds = 0,
             minimumAccuracy = java.math.BigDecimal.ZERO,
+            aggregationAlgorithm = null,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,

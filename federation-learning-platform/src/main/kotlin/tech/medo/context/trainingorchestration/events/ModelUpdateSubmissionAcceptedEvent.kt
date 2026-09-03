@@ -19,6 +19,7 @@ data class ModelUpdateSubmissionAcceptedEvent(
     val roundNumber: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
+    val aggregationAlgorithm: String?,
     val runtimeId: UUID,
     val featureSchemaId: UUID,
     val secureAggregationRequired: Boolean,
@@ -32,5 +33,8 @@ data class ModelUpdateSubmissionAcceptedEvent(
     val anomalyScore: BigDecimal,
     val acceptedModelUpdateCount: Int,
     val acceptedRuntimeIds: List<UUID>,
-    val minimumNodesPerRound: Int
+    val acceptedModelUpdateArtifactRefs: List<String>,
+    val minimumNodesPerRound: Int,
+    val requiredModelUpdateCount: Int,
+    val plainAggregationReady: Boolean
 )

@@ -32,6 +32,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         val featureSchemaId = trainingJob?.featureSchemaId ?: trainingRunConfiguration?.featureSchemaId
         val maxRounds = trainingRunConfiguration?.maxRounds ?: trainingJob?.maxRounds
         val minimumAccuracy = trainingRunConfiguration?.minimumAccuracy
+        val aggregationAlgorithm = trainingRunConfiguration?.aggregationAlgorithm
         val minimumNodesPerRound = trainingRunConfiguration?.minimumNodesPerRound ?: trainingJob?.minimumNodesPerRound
         val secureAggregationRequired = trainingRunConfiguration?.secureAggregationRequired ?: trainingJob?.secureAggregationRequired ?: false
 
@@ -42,6 +43,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             maxRounds == null ||
             maxRounds <= 0 ||
             minimumAccuracy == null ||
+            aggregationAlgorithm == null ||
             minimumNodesPerRound == null ||
             minimumNodesPerRound <= 0
         ) {
@@ -158,6 +160,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 roundNumber = roundNumber,
                 maxRounds = maxRounds,
                 minimumAccuracy = minimumAccuracy,
+                aggregationAlgorithm = aggregationAlgorithm,
                 minimumNodesPerRound = minimumNodesPerRound,
                 secureAggregationRequired = secureAggregationRequired,
                 selectedOrganizationIds = selectedOrganizationIds,
@@ -176,6 +179,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             roundNumber = roundNumber,
             maxRounds = maxRounds,
             minimumAccuracy = minimumAccuracy,
+            aggregationAlgorithm = aggregationAlgorithm,
             minimumNodesPerRound = minimumNodesPerRound,
             secureAggregationRequired = secureAggregationRequired,
             selectedOrganizationIds = selectedOrganizationIds,

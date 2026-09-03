@@ -1,4 +1,4 @@
-package tech.medo.trainingorchestration.starttraininground
+package tech.medo.trainingorchestration.aggregateplainmodelupdates
 
 import org.axonframework.messaging.commandhandling.annotation.Command
 import org.axonframework.modelling.annotation.TargetEntityId
@@ -8,26 +8,17 @@ import java.math.BigDecimal;
 
 
 @Command
-data class StartTrainingRoundCommand(
+data class AggregatePlainModelUpdatesCommand(
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
     val featureSchemaId: UUID,
     val roundId: UUID,
     val roundNumber: Int,
-    val selectedOrganizationIds: List<UUID>,
-    val selectedRuntimeIds: List<UUID>,
-    val selectedOrganizationCount: Int,
-    val selectedRuntimeCount: Int,
-    val minimumNodesPerRound: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
-    val aggregationAlgorithm: String?,
-    val secureAggregationRequired: Boolean,
-    val secureAggregationSessionId: UUID?,
-    val encryptionScheme: String?,
-    val publicKeyVersion: String?,
-    val publicKeyRef: String?,
-    val encryptedParameterScale: Int?
+    val aggregationAlgorithm: String,
+    val aggregatedModelId: UUID = java.util.UUID.randomUUID(),
+    val modelUpdateArtifactRefs: List<String>
 ) {
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)

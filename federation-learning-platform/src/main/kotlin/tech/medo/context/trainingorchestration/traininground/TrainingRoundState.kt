@@ -14,6 +14,7 @@ import tech.medo.trainingorchestration.events.TrainingRoundStartFailedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionReceivedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionAcceptedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionRejectedEvent
+import tech.medo.trainingorchestration.events.PlainModelAggregationCompletedEvent
 import tech.medo.trainingorchestration.events.SecureAggregationRequestedEvent
 import tech.medo.trainingorchestration.events.GlobalModelUpdatedEvent
 import tech.medo.trainingorchestration.events.GlobalModelEvaluationSubmittedEvent
@@ -37,6 +38,7 @@ class TrainingRoundState @EntityCreator constructor() {
     var roundNumber: Int? = null
     var maxRounds: Int? = null
     var minimumAccuracy: BigDecimal? = null
+    var aggregationAlgorithm: String? = null
     var minimumNodesPerRound: Int? = null
     var secureAggregationRequired: Boolean? = null
     var selectedOrganizationIds: List<UUID> = emptyList()
@@ -64,8 +66,10 @@ class TrainingRoundState @EntityCreator constructor() {
     var anomalyScore: BigDecimal? = null
     var acceptedModelUpdateCount: Int? = null
     var acceptedRuntimeIds: List<UUID> = emptyList()
+    var acceptedModelUpdateArtifactRefs: List<String> = emptyList()
+    var requiredModelUpdateCount: Int? = null
+    var plainAggregationReady: Boolean? = null
     var rejectionReason: String? = null
-    var requiredParticipantCount: Int? = null
     var aggregatedModelId: UUID? = null
     var aggregatedModelName: String? = null
     var aggregatedModelVersion: String? = null
@@ -77,6 +81,7 @@ class TrainingRoundState @EntityCreator constructor() {
     var modelArtifactDigest: String? = null
     var aggregatedModelSignatureUri: String? = null
     var aggregatedModelSizeBytes: Int? = null
+    var requiredParticipantCount: Int? = null
     var globalAccuracy: BigDecimal? = null
     var globalFairnessScore: BigDecimal? = null
 
@@ -90,6 +95,7 @@ class TrainingRoundState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
+        aggregationAlgorithm = event.aggregationAlgorithm
         minimumNodesPerRound = event.minimumNodesPerRound
         secureAggregationRequired = event.secureAggregationRequired
         selectedOrganizationIds = event.selectedOrganizationIds
@@ -109,6 +115,7 @@ class TrainingRoundState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
+        aggregationAlgorithm = event.aggregationAlgorithm
         minimumNodesPerRound = event.minimumNodesPerRound
         secureAggregationRequired = event.secureAggregationRequired
         selectedOrganizationIds = event.selectedOrganizationIds
@@ -140,6 +147,7 @@ class TrainingRoundState @EntityCreator constructor() {
         minimumNodesPerRound = event.minimumNodesPerRound
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
+        aggregationAlgorithm = event.aggregationAlgorithm
         secureAggregationRequired = event.secureAggregationRequired
         secureAggregationSessionId = event.secureAggregationSessionId
         encryptionScheme = event.encryptionScheme
@@ -207,6 +215,7 @@ class TrainingRoundState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
+        aggregationAlgorithm = event.aggregationAlgorithm
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
         secureAggregationRequired = event.secureAggregationRequired
@@ -220,7 +229,10 @@ class TrainingRoundState @EntityCreator constructor() {
         anomalyScore = event.anomalyScore
         acceptedModelUpdateCount = event.acceptedModelUpdateCount
         acceptedRuntimeIds = event.acceptedRuntimeIds
+        acceptedModelUpdateArtifactRefs = event.acceptedModelUpdateArtifactRefs
         minimumNodesPerRound = event.minimumNodesPerRound
+        requiredModelUpdateCount = event.requiredModelUpdateCount
+        plainAggregationReady = event.plainAggregationReady
     }
 
     @EventSourcingHandler
@@ -234,6 +246,29 @@ class TrainingRoundState @EntityCreator constructor() {
         updateArtifactId = event.updateArtifactId
         anomalyScore = event.anomalyScore
         rejectionReason = event.rejectionReason
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: PlainModelAggregationCompletedEvent): TrainingRoundState = apply {
+        currentState = TrainingRoundStateEnum.COMPLETED
+        trainingJobId = event.trainingJobId
+        trainingRunConfigurationId = event.trainingRunConfigurationId
+        featureSchemaId = event.featureSchemaId
+        roundId = event.roundId
+        roundNumber = event.roundNumber
+        maxRounds = event.maxRounds
+        minimumAccuracy = event.minimumAccuracy
+        aggregatedModelId = event.aggregatedModelId
+        aggregatedModelName = event.aggregatedModelName
+        aggregatedModelVersion = event.aggregatedModelVersion
+        aggregatedModelDescription = event.aggregatedModelDescription
+        modelSourceType = event.modelSourceType
+        aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
+        aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
+        modelFormat = event.modelFormat
+        modelArtifactDigest = event.modelArtifactDigest
+        aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
+        aggregatedModelSizeBytes = event.aggregatedModelSizeBytes
     }
 
     @EventSourcingHandler

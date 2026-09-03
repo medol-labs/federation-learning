@@ -31,6 +31,7 @@ class EvaluateModelUpdateSubmissionDecisionTest {
             minimumNodesPerRound = 2,
             maxRounds = 0,
             minimumAccuracy = java.math.BigDecimal.ZERO,
+            aggregationAlgorithm = null,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,

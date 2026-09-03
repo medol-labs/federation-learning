@@ -1,4 +1,4 @@
-package tech.medo.trainingorchestration.completesecureaggregation
+package tech.medo.trainingorchestration.completemodelaggregation
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
@@ -17,14 +17,14 @@ import java.util.concurrent.CompletableFuture
 @CrossOrigin
 @RestController
 @RequestMapping("/traininground")
-class CompleteSecureAggregationResource(
+class CompleteModelAggregationResource(
     private val commandGateway: CommandGateway
 ) {
-    @PreAuthorize("hasAuthority('*:*') or hasAuthority('complete_secure_aggregation:execute')")
-    @PostMapping("/completesecureaggregation")
-    fun CompleteSecureAggregation(
-        @Valid @RequestBody command: CompleteSecureAggregationCommand,
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('complete_model_aggregation:execute')")
+    @PostMapping("/completemodelaggregation")
+    fun CompleteModelAggregation(
+        @Valid @RequestBody command: CompleteModelAggregationCommand,
         request: HttpServletRequest
-    ): CompletableFuture<CompleteSecureAggregationCommand> =
+    ): CompletableFuture<CompleteModelAggregationCommand> =
         commandGateway.send(command, MetadataFactory.from(request)).resultMessage.thenApply { command }
 }

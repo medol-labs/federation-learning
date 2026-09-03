@@ -17,7 +17,7 @@ data class GlobalModelUpdatedEvent(
     val roundNumber: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
-    val secureAggregationSessionId: UUID,
+    val secureAggregationSessionId: UUID?,
     val aggregatedModelId: UUID,
     val aggregatedModelName: String,
     val aggregatedModelVersion: String,

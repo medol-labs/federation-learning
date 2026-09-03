@@ -24,6 +24,7 @@ class RetryTrainingRoundParticipantSelectionDecisionTest {
             roundNumber = 0,
             maxRounds = 0,
             minimumAccuracy = java.math.BigDecimal.ZERO,
+            aggregationAlgorithm = "",
             minimumNodesPerRound = 0,
             secureAggregationRequired = false,
             selectedOrganizationIds = emptyList(),

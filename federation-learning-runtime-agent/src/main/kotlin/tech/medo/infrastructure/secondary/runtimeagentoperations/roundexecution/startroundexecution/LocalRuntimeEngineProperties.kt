@@ -7,8 +7,8 @@ import java.time.Duration
 data class LocalRuntimeEngineProperties(
     val enabled: Boolean = true,
     val composeFile: String = "../../federation-learning-runtime-engine/docker-compose.yml",
-    val projectName: String = "runtime-engine",
-    val serviceName: String = "runtime-engine",
+    val projectName: String = "federation-learning-runtime-engine",
+    val serviceName: String = "federation-learning-runtime-engine",
     val endpoint: String = "http://localhost:18080",
     val nodeName: String = "local-runtime",
     val runtimeRoot: String = "/workspace/tmp/runtime-engine",
@@ -17,7 +17,6 @@ data class LocalRuntimeEngineProperties(
     val datasetContainerRoot: String = "/workspace/datasets",
     val labelColumn: String = "readmission_risk",
     val idColumn: String = "id",
-    val model: String = "linear.LogisticRegression",
     val epoch: Int = 1,
     val learningRate: Double = 0.1,
     val commandTimeout: Duration = Duration.ofMinutes(2),

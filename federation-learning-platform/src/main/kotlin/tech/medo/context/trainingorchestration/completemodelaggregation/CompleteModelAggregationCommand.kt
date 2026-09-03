@@ -1,4 +1,4 @@
-package tech.medo.trainingorchestration.completesecureaggregation
+package tech.medo.trainingorchestration.completemodelaggregation
 
 import org.axonframework.messaging.commandhandling.annotation.Command
 import org.axonframework.modelling.annotation.TargetEntityId
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 
 @Command
-data class CompleteSecureAggregationCommand(
+data class CompleteModelAggregationCommand(
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
     val featureSchemaId: UUID,
@@ -16,7 +16,7 @@ data class CompleteSecureAggregationCommand(
     val roundNumber: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
-    val secureAggregationSessionId: UUID,
+    val secureAggregationSessionId: UUID?,
     val aggregatedModelId: UUID,
     val aggregatedModelName: String,
     val aggregatedModelVersion: String,
