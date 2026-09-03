@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.io.TempDir
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
@@ -25,6 +26,8 @@ import tech.medo.runtimeprovisioning.runtimeinstallationplancatalog.RuntimeInsta
 import tech.medo.runtimeprovisioning.runtimeinstallationplancatalog.RuntimeInstallationPlanCatalogReadModelRepository
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.RuntimeInfrastructureVerification
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.RuntimeInfrastructureVerificationInput
+import java.nio.file.Files
+import java.nio.file.Path
 import java.time.Duration
 import java.util.UUID
 
@@ -32,6 +35,10 @@ class K3sRuntimeInfrastructureAdapterTest {
     private val runtimeInfrastructureId = UUID.fromString("00000000-0000-0000-0000-000000000011")
     private val runtimeInfrastructurePackageId = UUID.fromString("00000000-0000-0000-0000-000000000012")
     private val runtimeAgentId = UUID.fromString("00000000-0000-0000-0000-000000000013")
+    private val organizationId = UUID.fromString("00000000-0000-0000-0000-000000000015")
+
+    @TempDir
+    lateinit var tempDir: Path
 
     @Test
     fun `verify succeeds and counts observable k3s nodes`() {
@@ -76,7 +83,7 @@ class K3sRuntimeInfrastructureAdapterTest {
     }
 
     @Test
-    fun `deploy applies manifest and waits for runtime agent rollout`() {
+    fun `deploy renders managed manifest and waits for runtime agent rollout`() {
         val runner = FakeK3sCommandRunner(
             K3sCommandResult(exitCode = 0, output = "configured", timedOut = false),
             K3sCommandResult(exitCode = 0, output = "deployment successfully rolled out", timedOut = false)
@@ -92,13 +99,25 @@ class K3sRuntimeInfrastructureAdapterTest {
 
         val succeeded = assertInstanceOf(DeployRuntimeAgentResult.Succeeded::class.java, result)
         assertEquals("test-k3s-agent-version", succeeded.agentVersion)
+        val manifestPath = tempDir.resolve("runtime-agent-test-000000000000.yaml").toString()
         assertEquals(
             listOf(
-                listOf("apply", "-n", "runtime-test", "-f", "runtime-agent-test.yaml"),
-                listOf("rollout", "status", "deployment/runtime-agent-test", "-n", "runtime-test")
+                listOf("apply", "-n", "runtime-test", "-f", manifestPath),
+                listOf("rollout", "status", "deployment/runtime-agent-test-000000000000", "-n", "runtime-test")
             ),
             runner.calls
         )
+        val manifest = Files.readString(tempDir.resolve("runtime-agent-test-000000000000.yaml"))
+        assertTrue(manifest.contains("name: \"runtime-agent-test-000000000000\""))
+        assertTrue(manifest.contains("name: \"RUNTIME_AGENT_ID\""))
+        assertTrue(manifest.contains("value: \"$runtimeAgentId\""))
+        assertTrue(manifest.contains("name: \"RUNTIME_INFRASTRUCTURE_ID\""))
+        assertTrue(manifest.contains("value: \"$runtimeInfrastructureId\""))
+        assertTrue(manifest.contains("name: \"RUNTIME_AGENT_INSTALL_MODE\""))
+        assertTrue(manifest.contains("value: \"PLATFORM_MANAGED\""))
+        assertTrue(manifest.contains("name: \"RUNTIME_AGENT_ORGANIZATION_ID\""))
+        assertTrue(manifest.contains("value: \"$organizationId\""))
+        assertTrue(manifest.contains("value: \"http://runtime-agent-test-000000000000:8082\""))
     }
 
     @Test
@@ -117,7 +136,7 @@ class K3sRuntimeInfrastructureAdapterTest {
         )
 
         val unavailable = assertInstanceOf(DeployRuntimeAgentResult.Unavailable::class.java, result)
-        assertTrue(unavailable.failureReason.contains("kubectl rollout status deployment/runtime-agent-test"))
+        assertTrue(unavailable.failureReason.contains("kubectl rollout status deployment/runtime-agent-test-000000000000"))
         assertTrue(unavailable.failureReason.contains("exitCode=1"))
     }
 
@@ -146,7 +165,7 @@ class K3sRuntimeInfrastructureAdapterTest {
     private fun properties(): K3sRuntimeInfrastructureProperties =
         K3sRuntimeInfrastructureProperties().apply {
             namespace = "runtime-test"
-            agentManifestFile = "runtime-agent-test.yaml"
+            renderedManifestDirectory = tempDir.toString()
             agentDeploymentName = "runtime-agent-test"
             agentVersion = "test-k3s-agent-version"
             commandTimeout = Duration.ofSeconds(5)
@@ -164,7 +183,7 @@ class K3sRuntimeInfrastructureAdapterTest {
     private fun runtimeInstallationPlan(): RuntimeInstallationPlanCatalogReadModel =
         RuntimeInstallationPlanCatalogReadModel(
             runtimeInstallationPlanId = UUID.fromString("00000000-0000-0000-0000-000000000014"),
-            organizationId = null,
+            organizationId = organizationId,
             organizationName = null,
             runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
             runtimeInfrastructurePackageName = null,

@@ -29,11 +29,10 @@ class K3sRetryRuntimeAgentDeploymentAdapter(
 
     override fun execute(input: RetryRuntimeAgentDeploymentInput): RetryRuntimeAgentDeploymentResult {
         log.debug(
-            "Retrying runtime agent deployment with K3S runtimeInfrastructureId={}, runtimeAgentId={}, namespace={}, manifest={}",
+            "Retrying runtime agent deployment with K3S runtimeInfrastructureId={}, runtimeAgentId={}, namespace={}",
             input.runtimeInfrastructureId,
             input.runtimeAgentId,
-            properties.namespace,
-            properties.agentManifestFile
+            properties.namespace
         )
         val plan = lookup.findPlanByRuntimeInfrastructureId(input.runtimeInfrastructureId)
             ?: return rejected("Runtime installation plan was not found for runtimeInfrastructureId=${input.runtimeInfrastructureId}.")
@@ -42,23 +41,32 @@ class K3sRetryRuntimeAgentDeploymentAdapter(
         if (!isK3sPackage(runtimePackage, properties)) {
             return rejected("Runtime infrastructure package is not a K3S target.")
         }
+        if (plan.organizationId == null) {
+            return rejected("Runtime installation plan organizationId is required for platform-managed K3S runtime agent startup.")
+        }
+        val manifest = prepareRuntimeAgentManifest(
+            properties,
+            input.runtimeAgentId,
+            input.runtimeInfrastructureId,
+            plan
+        )
 
         val apply = runner.run(
             properties,
-            listOf("apply", "-n", properties.namespace, "-f", properties.agentManifestFile)
+            listOf("apply", "-n", properties.namespace, "-f", manifest.manifestFile)
         )
         if (!apply.succeeded) {
-            val failure = k3sCommandFailure("kubectl apply -n ${properties.namespace} -f ${properties.agentManifestFile}", apply, properties)
+            val failure = k3sCommandFailure("kubectl apply -n ${properties.namespace} -f ${manifest.manifestFile}", apply, properties)
             log.debug("K3S runtime agent deployment retry unavailable during apply: {}", failure)
             return RetryRuntimeAgentDeploymentResult.Unavailable(failure)
         }
 
         val rollout = runner.run(
             properties,
-            listOf("rollout", "status", "deployment/${properties.agentDeploymentName}", "-n", properties.namespace)
+            listOf("rollout", "status", "deployment/${manifest.deploymentName}", "-n", properties.namespace)
         )
         if (!rollout.succeeded) {
-            val failure = k3sCommandFailure("kubectl rollout status deployment/${properties.agentDeploymentName} -n ${properties.namespace}", rollout, properties)
+            val failure = k3sCommandFailure("kubectl rollout status deployment/${manifest.deploymentName} -n ${properties.namespace}", rollout, properties)
             log.debug("K3S runtime agent deployment retry unavailable during rollout: {}", failure)
             return RetryRuntimeAgentDeploymentResult.Unavailable(failure)
         }
@@ -67,7 +75,7 @@ class K3sRetryRuntimeAgentDeploymentAdapter(
             "K3S runtime agent deployment retried runtimeInfrastructureId={}, runtimeAgentId={}, deployment={}, agentVersion={}",
             input.runtimeInfrastructureId,
             input.runtimeAgentId,
-            properties.agentDeploymentName,
+            manifest.deploymentName,
             properties.agentVersion
         )
         return RetryRuntimeAgentDeploymentResult.Succeeded(
