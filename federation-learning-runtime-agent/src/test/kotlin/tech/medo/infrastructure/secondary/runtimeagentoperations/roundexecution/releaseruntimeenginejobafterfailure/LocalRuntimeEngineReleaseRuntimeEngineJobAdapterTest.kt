@@ -23,7 +23,7 @@ class LocalRuntimeEngineReleaseRuntimeEngineJobAdapterTest {
 
         assertTrue(result is ReleaseRuntimeEngineJobAfterFailureResult.Succeeded)
         result as ReleaseRuntimeEngineJobAfterFailureResult.Succeeded
-        assertNull(result.failureReason)
+        assertNull(result.runtimeEngineReleaseFailureReason)
         assertEquals(listOf("http://localhost:18080" to "job-1"), client.cancelledJobs)
     }
 
@@ -36,7 +36,10 @@ class LocalRuntimeEngineReleaseRuntimeEngineJobAdapterTest {
 
         assertTrue(result is ReleaseRuntimeEngineJobAfterFailureResult.Succeeded)
         result as ReleaseRuntimeEngineJobAfterFailureResult.Succeeded
-        assertEquals("Runtime engine job release skipped because runtimeEngineJobId is empty.", result.failureReason)
+        assertEquals(
+            "Runtime engine job release skipped because runtimeEngineJobId is empty.",
+            result.runtimeEngineReleaseFailureReason
+        )
         assertTrue(client.cancelledJobs.isEmpty())
     }
 
@@ -49,7 +52,10 @@ class LocalRuntimeEngineReleaseRuntimeEngineJobAdapterTest {
 
         assertTrue(result is ReleaseRuntimeEngineJobAfterFailureResult.Succeeded)
         result as ReleaseRuntimeEngineJobAfterFailureResult.Succeeded
-        assertEquals("Runtime engine job job-1 release failed: engine unavailable", result.failureReason)
+        assertEquals(
+            "Runtime engine job job-1 release failed: engine unavailable",
+            result.runtimeEngineReleaseFailureReason
+        )
     }
 
     private fun adapter(client: RuntimeEngineClient): LocalRuntimeEngineReleaseRuntimeEngineJobAdapter =
