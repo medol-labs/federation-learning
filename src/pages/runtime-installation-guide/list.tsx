@@ -27,6 +27,11 @@ type RuntimeInstallationGuideRecord = {
   organizationName?: string;
   runtimeName?: string;
   bootstrapCommand: string;
+  nodeLabelCommand: string;
+  nodeTaintCommand: string;
+  runtimeAgentNodeSelectorYaml: string;
+  runtimeAgentTolerationsYaml: string;
+  bootstrapConfigYaml: string;
   runtimeEnvironmentType?: string;
   agentInstallMode?: string;
   expectedNodeCount?: number;
@@ -197,6 +202,82 @@ export const RuntimeInstallationGuideList = () => {
           label: t("resources.runtime_installation_guide.fields.bootstrapCommand.label", "Bootstrap Command"),
           placeholder: "Enter Bootstrap Command",
           variant: "text",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("nodeLabelCommand", {
+        id: "nodeLabelCommand",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.nodeLabelCommand.label", "Node Label Command")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.nodeLabelCommand.label", "Node Label Command"),
+          placeholder: "Enter Node Label Command",
+          variant: "text",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("nodeTaintCommand", {
+        id: "nodeTaintCommand",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.nodeTaintCommand.label", "Node Taint Command")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.nodeTaintCommand.label", "Node Taint Command"),
+          placeholder: "Enter Node Taint Command",
+          variant: "text",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeAgentNodeSelectorYaml", {
+        id: "runtimeAgentNodeSelectorYaml",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.runtimeAgentNodeSelectorYaml.label", "Runtime Agent Node Selector Yaml")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeAgentNodeSelectorYaml.label", "Runtime Agent Node Selector Yaml"),
+          placeholder: "Enter Runtime Agent Node Selector Yaml",
+          variant: "text",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeAgentTolerationsYaml", {
+        id: "runtimeAgentTolerationsYaml",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.runtimeAgentTolerationsYaml.label", "Runtime Agent Tolerations Yaml")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeAgentTolerationsYaml.label", "Runtime Agent Tolerations Yaml"),
+          placeholder: "Enter Runtime Agent Tolerations Yaml",
+          variant: "text",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("bootstrapConfigYaml", {
+        id: "bootstrapConfigYaml",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.bootstrapConfigYaml.label", "Bootstrap Config Yaml")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.bootstrapConfigYaml.label", "Bootstrap Config Yaml"),
+          placeholder: "Enter Bootstrap Config Yaml",
+          variant: "text",
+          filterOperator: "eq",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
@@ -272,7 +353,7 @@ export const RuntimeInstallationGuideList = () => {
         tableName: "runtime_installation_guide_read_model_entity",
         idField: "runtimeInstallationPlanId",
         idFields: ["runtimeInstallationPlanId"],
-        queryFields: ["runtimeInstallationPlanId","organizationId","runtimeInfrastructureId","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","organizationName","runtimeName","bootstrapCommand","runtimeEnvironmentType","agentInstallMode","expectedNodeCount"],
+        queryFields: ["runtimeInstallationPlanId","organizationId","runtimeInfrastructureId","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","organizationName","runtimeName","bootstrapCommand","nodeLabelCommand","nodeTaintCommand","runtimeAgentNodeSelectorYaml","runtimeAgentTolerationsYaml","bootstrapConfigYaml","runtimeEnvironmentType","agentInstallMode","expectedNodeCount"],
         label: t("resources.runtime_installation_guide.label", "Runtime Installation Guide"),
         aggregateRoute: "runtimeinstallationplan",
         queryRoute: "runtimeinstallationguide",

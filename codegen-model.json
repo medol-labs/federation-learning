@@ -588,6 +588,7 @@
           "states": [
             "Planned",
             "Registered",
+            "Prepared",
             "Verified",
             "VerificationFailed",
             "AgentReady",
@@ -639,6 +640,11 @@
           "id": "slice-f113419e",
           "name": "RegisterRuntimeInfrastructure",
           "title": "Register Runtime Infrastructure"
+        },
+        {
+          "id": "slice-bc1ece78",
+          "name": "ConfirmRuntimeInfrastructurePrepared",
+          "title": "Confirm Runtime Infrastructure Prepared"
         },
         {
           "id": "slice-1524114e",
@@ -1014,14 +1020,19 @@
           "title": "Evaluate Model Update Submission"
         },
         {
+          "id": "slice-1a9b72f8",
+          "name": "AggregatePlainModelUpdates",
+          "title": "Aggregate Plain Model Updates"
+        },
+        {
           "id": "slice-a46e905e",
           "name": "RequestSecureAggregation",
           "title": "Request Secure Aggregation"
         },
         {
-          "id": "slice-c044ec34",
-          "name": "CompleteSecureAggregation",
-          "title": "Complete Secure Aggregation"
+          "id": "slice-4b6bcf1e",
+          "name": "CompleteModelAggregation",
+          "title": "Complete Model Aggregation"
         },
         {
           "id": "slice-129ead8e",
@@ -2889,6 +2900,7 @@
       "states": [
         "Planned",
         "Registered",
+        "Prepared",
         "Verified",
         "VerificationFailed",
         "AgentReady",
@@ -2906,6 +2918,11 @@
           "id": "slice-f113419e",
           "name": "RegisterRuntimeInfrastructure",
           "title": "Register Runtime Infrastructure"
+        },
+        {
+          "id": "slice-bc1ece78",
+          "name": "ConfirmRuntimeInfrastructurePrepared",
+          "title": "Confirm Runtime Infrastructure Prepared"
         },
         {
           "id": "slice-1524114e",
@@ -3184,14 +3201,19 @@
           "title": "Evaluate Model Update Submission"
         },
         {
+          "id": "slice-1a9b72f8",
+          "name": "AggregatePlainModelUpdates",
+          "title": "Aggregate Plain Model Updates"
+        },
+        {
           "id": "slice-a46e905e",
           "name": "RequestSecureAggregation",
           "title": "Request Secure Aggregation"
         },
         {
-          "id": "slice-c044ec34",
-          "name": "CompleteSecureAggregation",
-          "title": "Complete Secure Aggregation"
+          "id": "slice-4b6bcf1e",
+          "name": "CompleteModelAggregation",
+          "title": "Complete Model Aggregation"
         },
         {
           "id": "slice-129ead8e",
@@ -4882,6 +4904,39 @@
       "startsLifecycle": false
     },
     {
+      "id": "transition-630b68d7",
+      "context": "RuntimeProvisioning",
+      "owner": {
+        "id": "concept-eecaaa9f",
+        "type": "concept",
+        "name": "RuntimeInfrastructure",
+        "title": "Runtime Infrastructure"
+      },
+      "slice": {
+        "id": "slice-bc1ece78",
+        "name": "ConfirmRuntimeInfrastructurePrepared",
+        "title": "Confirm Runtime Infrastructure Prepared"
+      },
+      "command": {
+        "id": "command-8568e8b1",
+        "name": "ConfirmRuntimeInfrastructurePrepared",
+        "title": "Confirm Runtime Infrastructure Prepared"
+      },
+      "event": {
+        "id": "event-2673bc36",
+        "name": "RuntimeInfrastructurePrepared",
+        "title": "Runtime Infrastructure Prepared"
+      },
+      "trigger": {
+        "id": "event-9d489759",
+        "name": "RuntimeInfrastructureRegistered",
+        "title": "Runtime Infrastructure Registered"
+      },
+      "from": "Registered",
+      "to": "Prepared",
+      "startsLifecycle": false
+    },
+    {
       "id": "transition-f9a1678f",
       "context": "RuntimeProvisioning",
       "owner": {
@@ -4906,11 +4961,11 @@
         "title": "Runtime Infrastructure Verified"
       },
       "trigger": {
-        "id": "event-9d489759",
-        "name": "RuntimeInfrastructureRegistered",
-        "title": "Runtime Infrastructure Registered"
+        "id": "event-2673bc36",
+        "name": "RuntimeInfrastructurePrepared",
+        "title": "Runtime Infrastructure Prepared"
       },
-      "from": "Registered",
+      "from": "Prepared",
       "to": "Verified",
       "startsLifecycle": false
     },
@@ -5248,7 +5303,7 @@
         "title": "Federated Model Artifact Registered"
       },
       "trigger": {
-        "id": "event-4759d38f",
+        "id": "event-45b8c5f5",
         "name": "GlobalModelUpdated",
         "title": "Global Model Updated"
       },
@@ -5737,7 +5792,7 @@
       "startsLifecycle": false
     },
     {
-      "id": "transition-435cb798",
+      "id": "transition-0a8ecaac",
       "context": "TrainingOrchestration",
       "owner": {
         "id": "concept-729766c8",
@@ -5746,17 +5801,50 @@
         "title": "Training Round"
       },
       "slice": {
-        "id": "slice-c044ec34",
-        "name": "CompleteSecureAggregation",
-        "title": "Complete Secure Aggregation"
+        "id": "slice-1a9b72f8",
+        "name": "AggregatePlainModelUpdates",
+        "title": "Aggregate Plain Model Updates"
       },
       "command": {
-        "id": "command-223cdee9",
-        "name": "CompleteSecureAggregation",
-        "title": "Complete Secure Aggregation"
+        "id": "command-451b6887",
+        "name": "AggregatePlainModelUpdates",
+        "title": "Aggregate Plain Model Updates"
       },
       "event": {
-        "id": "event-4759d38f",
+        "id": "event-d584a78e",
+        "name": "PlainModelAggregationCompleted",
+        "title": "Plain Model Aggregation Completed"
+      },
+      "trigger": {
+        "id": "event-62be80d4",
+        "name": "ModelUpdateSubmissionAccepted",
+        "title": "Model Update Submission Accepted"
+      },
+      "from": "Evaluated",
+      "to": "Completed",
+      "startsLifecycle": false
+    },
+    {
+      "id": "transition-0fa3f8fa",
+      "context": "TrainingOrchestration",
+      "owner": {
+        "id": "concept-729766c8",
+        "type": "concept",
+        "name": "TrainingRound",
+        "title": "Training Round"
+      },
+      "slice": {
+        "id": "slice-4b6bcf1e",
+        "name": "CompleteModelAggregation",
+        "title": "Complete Model Aggregation"
+      },
+      "command": {
+        "id": "command-6d1a8e33",
+        "name": "CompleteModelAggregation",
+        "title": "Complete Model Aggregation"
+      },
+      "event": {
+        "id": "event-45b8c5f5",
         "name": "GlobalModelUpdated",
         "title": "Global Model Updated"
       },
@@ -16112,6 +16200,7 @@
           "name": "organizationId"
         }
       ],
+      "port": true,
       "concepts": [
         "RuntimeInstallationPlan"
       ],
@@ -16130,6 +16219,20 @@
               "cardinality": "Single",
               "optional": false,
               "idAttribute": true,
+              "generated": true,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
               "generated": true,
               "technicalAttribute": true,
               "query": false,
@@ -16230,7 +16333,8 @@
               "elementType": "EVENT"
             }
           ],
-          "startsLifecycle": true
+          "startsLifecycle": true,
+          "port": true
         }
       ],
       "events": [
@@ -16262,7 +16366,7 @@
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
-              "generated": true,
+              "generated": false,
               "technicalAttribute": true,
               "query": false,
               "display": false,
@@ -16311,6 +16415,90 @@
               "uploadFile": false,
               "file": false,
               "portOutput": false
+            },
+            {
+              "name": "bootstrapCommand",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "nodeLabelCommand",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "nodeTaintCommand",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "runtimeAgentNodeSelectorYaml",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "runtimeAgentTolerationsYaml",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "bootstrapConfigYaml",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
             },
             {
               "name": "agentInstallMode",
@@ -16629,6 +16817,34 @@
               "portOutput": false
             },
             {
+              "name": "preparedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "preparedNodeCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "observedNodeCount",
               "type": "Int",
               "cardinality": "Single",
@@ -16840,6 +17056,12 @@
               "id": "event-9d489759",
               "direction": "INBOUND",
               "title": "Runtime Infrastructure Registered",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-2673bc36",
+              "direction": "INBOUND",
+              "title": "Runtime Infrastructure Prepared",
               "elementType": "EVENT"
             },
             {
@@ -17077,7 +17299,7 @@
             },
             {
               "name": "bootstrapCommand",
-              "type": "String",
+              "type": "Text",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -17091,9 +17313,114 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "RuntimeInstallationPlanCreated.runtimeInstallationPlanId"
+                  "RuntimeInstallationPlanCreated.bootstrapCommand"
                 ],
                 "rule": "Render the copyable install/start command using the runtime installation plan and platform-managed bootstrap service."
+              }
+            },
+            {
+              "name": "nodeLabelCommand",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeInstallationPlanCreated.nodeLabelCommand"
+                ],
+                "rule": "Render the kubectl command that labels a joined K3s agent node with the generated runtimeInfrastructureId so platform-managed workloads can target that participant runtime."
+              }
+            },
+            {
+              "name": "nodeTaintCommand",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeInstallationPlanCreated.nodeTaintCommand"
+                ],
+                "rule": "Render the kubectl command that taints the joined participant node as runtime-only so unrelated workloads are not scheduled there."
+              }
+            },
+            {
+              "name": "runtimeAgentNodeSelectorYaml",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeInstallationPlanCreated.runtimeAgentNodeSelectorYaml"
+                ],
+                "rule": "Render the nodeSelector YAML fragment used by platform-managed runtime-agent and runtime-engine workloads."
+              }
+            },
+            {
+              "name": "runtimeAgentTolerationsYaml",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeInstallationPlanCreated.runtimeAgentTolerationsYaml"
+                ],
+                "rule": "Render the tolerations YAML fragment used by platform-managed runtime-agent and runtime-engine workloads."
+              }
+            },
+            {
+              "name": "bootstrapConfigYaml",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeInstallationPlanCreated.bootstrapConfigYaml"
+                ],
+                "rule": "Render a copyable participant node bootstrap configuration containing labels, taints, runtimeInfrastructureId, and the workload scheduling fragments."
               }
             },
             {
@@ -17446,6 +17773,26 @@
               }
             },
             {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeInfrastructurePlanned.runtimeInstallationPlanId"
+                ]
+              }
+            },
+            {
               "name": "runtimeAgentId",
               "type": "UUID",
               "cardinality": "Single",
@@ -17500,6 +17847,20 @@
               "portOutput": false
             },
             {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "runtimeAgentId",
               "type": "UUID",
               "cardinality": "Single",
@@ -17528,10 +17889,10 @@
               "elementType": "COMMAND"
             },
             {
-              "id": "automation-e6d38ca7",
+              "id": "command-8568e8b1",
               "direction": "OUTBOUND",
-              "title": "Verify Infrastructure When Registered",
-              "elementType": "PROCESSOR"
+              "title": "Confirm Runtime Infrastructure Prepared",
+              "elementType": "COMMAND"
             },
             {
               "id": "readmodel-02ea1fc7",
@@ -17567,8 +17928,367 @@
       }
     },
     {
-      "id": "slice-1524114e",
+      "id": "slice-bc1ece78",
       "index": 40,
+      "name": "ConfirmRuntimeInfrastructurePrepared",
+      "title": "Confirm Runtime Infrastructure Prepared",
+      "chapter": "RuntimeProvisioning",
+      "context": "RuntimeProvisioning",
+      "tags": [],
+      "concepts": [
+        "RuntimeInfrastructure"
+      ],
+      "commands": [
+        {
+          "id": "command-8568e8b1",
+          "name": "ConfirmRuntimeInfrastructurePrepared",
+          "title": "Confirm Runtime Infrastructure Prepared",
+          "type": "COMMAND",
+          "modelContext": "RuntimeProvisioning",
+          "slice": "Confirm Runtime Infrastructure Prepared",
+          "fields": [
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeInfrastructureRegistered.runtimeInfrastructureId"
+                ]
+              }
+            },
+            {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeInfrastructureRegistered.runtimeInstallationPlanId"
+                ]
+              }
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeInfrastructureRegistered.runtimeAgentId"
+                ]
+              }
+            },
+            {
+              "name": "preparedNodeCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "preparationNotes",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-9d489759",
+              "direction": "INBOUND",
+              "title": "Runtime Infrastructure Registered",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "screen-40e472b6",
+              "direction": "INBOUND",
+              "title": "Runtime Installation Guide Screen",
+              "elementType": "SCREEN"
+            },
+            {
+              "id": "event-2673bc36",
+              "direction": "OUTBOUND",
+              "title": "Runtime Infrastructure Prepared",
+              "elementType": "EVENT"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "event-2673bc36",
+          "name": "RuntimeInfrastructurePrepared",
+          "title": "Runtime Infrastructure Prepared",
+          "type": "EVENT",
+          "modelContext": "RuntimeProvisioning",
+          "slice": "Confirm Runtime Infrastructure Prepared",
+          "fields": [
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "preparedNodeCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "preparationNotes",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "readmodel-3be9a609",
+              "direction": "OUTBOUND",
+              "title": "Runtime Installation Plan Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "command-8568e8b1",
+              "direction": "INBOUND",
+              "title": "Confirm Runtime Infrastructure Prepared",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "automation-59198bd6",
+              "direction": "OUTBOUND",
+              "title": "Verify Infrastructure When Prepared",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "readmodel-02ea1fc7",
+              "direction": "OUTBOUND",
+              "title": "Runtime Infrastructure Access View",
+              "elementType": "READMODEL"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [
+        {
+          "id": "screen-40e472b6",
+          "name": "RuntimeInstallationGuideScreen",
+          "title": "Runtime Installation Guide Screen",
+          "type": "SCREEN",
+          "modelContext": "RuntimeProvisioning",
+          "slice": "Confirm Runtime Infrastructure Prepared",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "command-8568e8b1",
+              "direction": "OUTBOUND",
+              "title": "Confirm Runtime Infrastructure Prepared",
+              "elementType": "COMMAND"
+            }
+          ]
+        }
+      ],
+      "processors": [],
+      "specifications": [
+        {
+          "id": "gwt-bd1d476f",
+          "chapter": "RuntimeProvisioning",
+          "sliceName": "Confirm Runtime Infrastructure Prepared",
+          "title": "Confirm Runtime Infrastructure Prepared",
+          "specification": "Runtime Infrastructure Prepared Before Verification",
+          "rule": "Runtime infrastructure registration records the planned participant infrastructure only. Verification and platform-managed runtime agent deployment must wait until the runtime installer confirms that the K3s agent node has joined the target cluster and the generated labels and taints have been applied.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Runtime Infrastructure Registered",
+              "id": "event-9d489759",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "runtimeInfrastructureId",
+                  "example": "runtime-infra-1"
+                },
+                {
+                  "name": "runtimeInstallationPlanId"
+                },
+                {
+                  "name": "runtimeAgentId"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Confirm Runtime Infrastructure Prepared",
+              "id": "command-8568e8b1",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "runtimeInfrastructureId",
+                  "example": "runtime-infra-1"
+                },
+                {
+                  "name": "runtimeInstallationPlanId"
+                },
+                {
+                  "name": "runtimeAgentId"
+                },
+                {
+                  "name": "preparedNodeCount",
+                  "example": "1"
+                },
+                {
+                  "name": "preparationNotes",
+                  "example": "K3s agent joined and node scheduling labels were applied."
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Runtime Infrastructure Prepared",
+              "id": "event-2673bc36",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "runtimeInfrastructureId",
+                  "example": "runtime-infra-1"
+                },
+                {
+                  "name": "runtimeInstallationPlanId"
+                },
+                {
+                  "name": "runtimeAgentId"
+                },
+                {
+                  "name": "preparedNodeCount",
+                  "example": "1"
+                },
+                {
+                  "name": "preparationNotes",
+                  "example": "K3s agent joined and node scheduling labels were applied."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "actors": [
+        {
+          "id": "actor-e3c1b889",
+          "name": "RuntimeInstaller",
+          "title": "Runtime Installer"
+        }
+      ],
+      "hotspots": [],
+      "stateChange": {
+        "event": "RuntimeInfrastructurePrepared",
+        "eventId": "event-2673bc36",
+        "to": "Prepared"
+      }
+    },
+    {
+      "id": "slice-1524114e",
+      "index": 41,
       "name": "VerifyRuntimeInfrastructure",
       "title": "Verify Runtime Infrastructure",
       "chapter": "RuntimeProvisioning",
@@ -17603,7 +18323,27 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "RuntimeInfrastructureRegistered.runtimeInfrastructureId"
+                  "RuntimeInfrastructurePrepared.runtimeInfrastructureId"
+                ]
+              }
+            },
+            {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeInfrastructurePrepared.runtimeInstallationPlanId"
                 ]
               }
             },
@@ -17623,86 +18363,16 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "RuntimeInfrastructureRegistered.runtimeAgentId"
+                  "RuntimeInfrastructurePrepared.runtimeAgentId"
                 ]
               }
-            },
-            {
-              "name": "agentInstallMode",
-              "type": "String",
-              "dictionary": "RUNTIME_AGENT_INSTALL_MODE",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false,
-              "source": {
-                "kind": "derived",
-                "from": [
-                  "RuntimeInstallationPlanCreated.agentInstallMode"
-                ],
-                "lookup": {
-                  "key": "runtimeInfrastructureId",
-                  "cacheProjection": "RuntimeInstallationPlanCreated",
-                  "sourceField": "agentInstallMode",
-                  "targetField": "agentInstallMode",
-                  "missingValuePolicy": "keep"
-                }
-              }
-            },
-            {
-              "name": "verificationPassed",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "observedNodeCount",
-              "type": "Int",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "failureReason",
-              "type": "String",
-              "cardinality": "Single",
-              "optional": true,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
             }
           ],
           "dependencies": [
             {
-              "id": "automation-e6d38ca7",
+              "id": "automation-59198bd6",
               "direction": "INBOUND",
-              "title": "Verify Infrastructure When Registered",
+              "title": "Verify Infrastructure When Prepared",
               "elementType": "PROCESSOR"
             },
             {
@@ -17751,6 +18421,20 @@
               "portOutput": false
             },
             {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "runtimeAgentId",
               "type": "UUID",
               "cardinality": "Single",
@@ -17777,7 +18461,7 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": true
             },
             {
               "name": "observedNodeCount",
@@ -17791,7 +18475,7 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": true
             }
           ],
           "dependencies": [
@@ -17844,10 +18528,24 @@
               "portOutput": false
             },
             {
+              "name": "runtimeInstallationPlanId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "observedNodeCount",
               "type": "Int",
               "cardinality": "Single",
-              "optional": false,
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -17855,7 +18553,7 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": true
             },
             {
               "name": "failureReason",
@@ -17869,7 +18567,7 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": true
             }
           ],
           "dependencies": [
@@ -17916,18 +18614,18 @@
       ],
       "processors": [
         {
-          "id": "automation-e6d38ca7",
-          "name": "VerifyInfrastructureWhenRegistered",
-          "title": "Verify Infrastructure When Registered",
+          "id": "automation-59198bd6",
+          "name": "VerifyInfrastructureWhenPrepared",
+          "title": "Verify Infrastructure When Prepared",
           "type": "PROCESSOR",
           "modelContext": "RuntimeProvisioning",
           "slice": "Verify Runtime Infrastructure",
           "fields": [],
           "dependencies": [
             {
-              "id": "event-9d489759",
+              "id": "event-2673bc36",
               "direction": "INBOUND",
-              "title": "Runtime Infrastructure Registered",
+              "title": "Runtime Infrastructure Prepared",
               "elementType": "EVENT"
             },
             {
@@ -17938,7 +18636,7 @@
             }
           ],
           "metadata": {
-            "on": "RuntimeInfrastructureRegistered",
+            "on": "RuntimeInfrastructurePrepared",
             "onKind": "event",
             "emits": "VerifyRuntimeInfrastructure"
           }
@@ -17951,13 +18649,13 @@
           "sliceName": "Verify Runtime Infrastructure",
           "title": "Runtime Infrastructure Verification Passed",
           "specification": "Runtime Infrastructure Verification Outcome",
-          "rule": "Runtime infrastructure verification runs once after the runtime infrastructure is registered. The verification processor resolves the selected runtime infrastructure package and records exactly one outcome: RuntimeInfrastructureVerified when the runtime environment is usable, or RuntimeInfrastructureVerificationFailed when required checks fail.",
+          "rule": "Runtime infrastructure verification runs once after the runtime installer confirms that the participant node has joined the target runtime infrastructure and the generated scheduling labels and taints have been applied. The verification processor resolves the selected runtime infrastructure package and records exactly one outcome: RuntimeInfrastructureVerified when the runtime environment is usable, or RuntimeInfrastructureVerificationFailed when required checks fail.",
           "expressions": [],
           "validates": [],
           "given": [
             {
-              "title": "Runtime Infrastructure Registered",
-              "id": "event-9d489759",
+              "title": "Runtime Infrastructure Prepared",
+              "id": "event-2673bc36",
               "type": "EVENT",
               "fields": [
                 {
@@ -17965,7 +18663,16 @@
                   "example": "runtime-infra-1"
                 },
                 {
+                  "name": "runtimeInstallationPlanId"
+                },
+                {
                   "name": "runtimeAgentId"
+                },
+                {
+                  "name": "preparedNodeCount"
+                },
+                {
+                  "name": "preparationNotes"
                 }
               ]
             }
@@ -17981,22 +18688,10 @@
                   "example": "runtime-infra-1"
                 },
                 {
+                  "name": "runtimeInstallationPlanId"
+                },
+                {
                   "name": "runtimeAgentId"
-                },
-                {
-                  "name": "agentInstallMode",
-                  "example": "PLATFORM_MANAGED"
-                },
-                {
-                  "name": "verificationPassed",
-                  "example": "true"
-                },
-                {
-                  "name": "observedNodeCount",
-                  "example": "3"
-                },
-                {
-                  "name": "failureReason"
                 }
               ]
             }
@@ -18012,15 +18707,16 @@
                   "example": "runtime-infra-1"
                 },
                 {
+                  "name": "runtimeInstallationPlanId"
+                },
+                {
                   "name": "runtimeAgentId"
                 },
                 {
-                  "name": "agentInstallMode",
-                  "example": "PLATFORM_MANAGED"
+                  "name": "agentInstallMode"
                 },
                 {
-                  "name": "observedNodeCount",
-                  "example": "3"
+                  "name": "observedNodeCount"
                 }
               ]
             }
@@ -18032,13 +18728,13 @@
           "sliceName": "Verify Runtime Infrastructure",
           "title": "Runtime Infrastructure Verification Failed",
           "specification": "Runtime Infrastructure Verification Outcome",
-          "rule": "Runtime infrastructure verification runs once after the runtime infrastructure is registered. The verification processor resolves the selected runtime infrastructure package and records exactly one outcome: RuntimeInfrastructureVerified when the runtime environment is usable, or RuntimeInfrastructureVerificationFailed when required checks fail.",
+          "rule": "Runtime infrastructure verification runs once after the runtime installer confirms that the participant node has joined the target runtime infrastructure and the generated scheduling labels and taints have been applied. The verification processor resolves the selected runtime infrastructure package and records exactly one outcome: RuntimeInfrastructureVerified when the runtime environment is usable, or RuntimeInfrastructureVerificationFailed when required checks fail.",
           "expressions": [],
           "validates": [],
           "given": [
             {
-              "title": "Runtime Infrastructure Registered",
-              "id": "event-9d489759",
+              "title": "Runtime Infrastructure Prepared",
+              "id": "event-2673bc36",
               "type": "EVENT",
               "fields": [
                 {
@@ -18046,7 +18742,16 @@
                   "example": "runtime-infra-2"
                 },
                 {
+                  "name": "runtimeInstallationPlanId"
+                },
+                {
                   "name": "runtimeAgentId"
+                },
+                {
+                  "name": "preparedNodeCount"
+                },
+                {
+                  "name": "preparationNotes"
                 }
               ]
             }
@@ -18062,22 +18767,10 @@
                   "example": "runtime-infra-2"
                 },
                 {
+                  "name": "runtimeInstallationPlanId"
+                },
+                {
                   "name": "runtimeAgentId"
-                },
-                {
-                  "name": "agentInstallMode"
-                },
-                {
-                  "name": "verificationPassed",
-                  "example": "false"
-                },
-                {
-                  "name": "observedNodeCount",
-                  "example": "0"
-                },
-                {
-                  "name": "failureReason",
-                  "example": "Runtime infrastructure is unreachable."
                 }
               ]
             }
@@ -18093,12 +18786,13 @@
                   "example": "runtime-infra-2"
                 },
                 {
-                  "name": "observedNodeCount",
-                  "example": "0"
+                  "name": "runtimeInstallationPlanId"
                 },
                 {
-                  "name": "failureReason",
-                  "example": "Runtime infrastructure is unreachable."
+                  "name": "observedNodeCount"
+                },
+                {
+                  "name": "failureReason"
                 }
               ]
             }
@@ -18121,7 +18815,7 @@
     },
     {
       "id": "slice-b8a32014",
-      "index": 41,
+      "index": 42,
       "name": "DeployRuntimeAgent",
       "title": "Deploy Runtime Agent",
       "chapter": "RuntimeProvisioning",
@@ -18414,6 +19108,9 @@
                   "example": "runtime-infra-1"
                 },
                 {
+                  "name": "runtimeInstallationPlanId"
+                },
+                {
                   "name": "runtimeAgentId"
                 },
                 {
@@ -18481,6 +19178,9 @@
                   "example": "runtime-infra-2"
                 },
                 {
+                  "name": "runtimeInstallationPlanId"
+                },
+                {
                   "name": "runtimeAgentId"
                 },
                 {
@@ -18542,7 +19242,7 @@
     },
     {
       "id": "slice-6432e41e",
-      "index": 42,
+      "index": 43,
       "name": "RetryRuntimeAgentDeployment",
       "title": "Retry Runtime Agent Deployment",
       "chapter": "RuntimeProvisioning",
@@ -19104,7 +19804,7 @@
     },
     {
       "id": "slice-15dea9b5",
-      "index": 43,
+      "index": 44,
       "name": "RecordRuntimeConnectionEstablished",
       "title": "Record Runtime Connection Established",
       "chapter": "RuntimeProvisioning",
@@ -19472,7 +20172,7 @@
     },
     {
       "id": "slice-0f1cd9f9",
-      "index": 44,
+      "index": 45,
       "name": "RuntimeAgentEndpointCatalog",
       "title": "Runtime Agent Endpoint Catalog",
       "chapter": "RuntimeProvisioning",
@@ -19677,7 +20377,7 @@
     },
     {
       "id": "slice-39822ec6",
-      "index": 45,
+      "index": 46,
       "name": "RuntimeInfrastructureAccessView",
       "title": "Runtime Infrastructure Access View",
       "chapter": "RuntimeProvisioning",
@@ -19935,6 +20635,34 @@
               "portOutput": false
             },
             {
+              "name": "infrastructurePreparedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "preparedNodeCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "infrastructureVerifiedAt",
               "type": "DateTime",
               "cardinality": "Single",
@@ -20107,6 +20835,12 @@
               "elementType": "EVENT"
             },
             {
+              "id": "event-2673bc36",
+              "direction": "INBOUND",
+              "title": "Runtime Infrastructure Prepared",
+              "elementType": "EVENT"
+            },
+            {
               "id": "event-e8571c1d",
               "direction": "INBOUND",
               "title": "Runtime Infrastructure Verified",
@@ -20160,7 +20894,7 @@
     },
     {
       "id": "slice-d92096fb",
-      "index": 46,
+      "index": 47,
       "name": "DefineFeatureSchema",
       "title": "Define Feature Schema",
       "chapter": "DatasetGovernance",
@@ -20588,7 +21322,7 @@
     },
     {
       "id": "slice-9a1a067d",
-      "index": 47,
+      "index": 48,
       "name": "PublishFeatureSchema",
       "title": "Publish Feature Schema",
       "chapter": "DatasetGovernance",
@@ -20853,7 +21587,7 @@
     },
     {
       "id": "slice-d0d6ce25",
-      "index": 48,
+      "index": 49,
       "name": "DeprecateFeatureSchema",
       "title": "Deprecate Feature Schema",
       "chapter": "DatasetGovernance",
@@ -21026,7 +21760,7 @@
     },
     {
       "id": "slice-50e78e0f",
-      "index": 49,
+      "index": 50,
       "name": "RetireFeatureSchema",
       "title": "Retire Feature Schema",
       "chapter": "DatasetGovernance",
@@ -21193,7 +21927,7 @@
     },
     {
       "id": "slice-c6a6a6c8",
-      "index": 50,
+      "index": 51,
       "name": "SupersedeFeatureSchemaVersion",
       "title": "Supersede Feature Schema Version",
       "chapter": "DatasetGovernance",
@@ -21532,7 +22266,7 @@
     },
     {
       "id": "slice-76cab273",
-      "index": 51,
+      "index": 52,
       "name": "MarkCurrentRecommendedFeatureSchemaVersion",
       "title": "Mark Current Recommended Feature Schema Version",
       "chapter": "DatasetGovernance",
@@ -21824,7 +22558,7 @@
     },
     {
       "id": "slice-73f5eccd",
-      "index": 52,
+      "index": 53,
       "name": "CurrentRecommendedFeatureSchemaCatalog",
       "title": "Current Recommended Feature Schema Catalog",
       "chapter": "DatasetGovernance",
@@ -21934,7 +22668,7 @@
     },
     {
       "id": "slice-8f30e501",
-      "index": 53,
+      "index": 54,
       "name": "FeatureSchemaCatalog",
       "title": "Feature Schema Catalog",
       "chapter": "DatasetGovernance",
@@ -22145,7 +22879,7 @@
     },
     {
       "id": "slice-ad05f2d9",
-      "index": 54,
+      "index": 55,
       "name": "RecordRuntimeDatasetMetadata",
       "title": "Record Runtime Dataset Metadata",
       "chapter": "DatasetGovernance",
@@ -22800,7 +23534,7 @@
     },
     {
       "id": "slice-c7f572a3",
-      "index": 55,
+      "index": 56,
       "name": "RecordRuntimeDatasetReprofiledMetadata",
       "title": "Record Runtime Dataset Reprofiled Metadata",
       "chapter": "DatasetGovernance",
@@ -23448,7 +24182,7 @@
     },
     {
       "id": "slice-1ed8c787",
-      "index": 56,
+      "index": 57,
       "name": "RuntimeDatasetMetadataCatalog",
       "title": "Runtime Dataset Metadata Catalog",
       "chapter": "DatasetGovernance",
@@ -23847,7 +24581,7 @@
     },
     {
       "id": "slice-7ccc677e",
-      "index": 57,
+      "index": 58,
       "name": "RegisterModelArtifact",
       "title": "Register Model Artifact",
       "chapter": "ModelRepository",
@@ -24313,7 +25047,7 @@
     },
     {
       "id": "slice-e846ef48",
-      "index": 58,
+      "index": 59,
       "name": "ModelArtifactCatalog",
       "title": "Model Artifact Catalog",
       "chapter": "ModelRepository",
@@ -24587,7 +25321,7 @@
               "elementType": "EVENT"
             },
             {
-              "id": "event-4759d38f",
+              "id": "event-45b8c5f5",
               "direction": "INBOUND",
               "title": "Global Model Updated",
               "elementType": "EVENT"
@@ -24604,7 +25338,7 @@
     },
     {
       "id": "slice-d38fbaed",
-      "index": 59,
+      "index": 60,
       "name": "DownloadModelArtifact",
       "title": "Download Model Artifact",
       "chapter": "ModelRepository",
@@ -24973,7 +25707,7 @@
     },
     {
       "id": "slice-eef6ed6c",
-      "index": 60,
+      "index": 61,
       "name": "RegisterFederatedModelArtifact",
       "title": "Register Federated Model Artifact",
       "chapter": "ModelRepository",
@@ -25489,7 +26223,7 @@
           "fields": [],
           "dependencies": [
             {
-              "id": "event-4759d38f",
+              "id": "event-45b8c5f5",
               "direction": "INBOUND",
               "title": "Global Model Updated",
               "elementType": "EVENT"
@@ -25627,7 +26361,7 @@
     },
     {
       "id": "slice-83322758",
-      "index": 61,
+      "index": 62,
       "name": "DefineTrainingRunConfiguration",
       "title": "Define Training Run Configuration",
       "chapter": "TrainingOrchestration",
@@ -26113,7 +26847,7 @@
                 "from": [
                   "ModelArtifact.modelRegistryRef"
                 ],
-                "rule": "Snapshot the model registry reference so runtime agents can identify where the initial global model is managed."
+                "rule": "Snapshot the model registry reference so runtime agents can identify where the initial global model is managed. For built-in runtime-engine models this value is the runtime engine model plugin code, copied from the selected ModelArtifact rather than read from runtime-agent environment variables."
               }
             },
             {
@@ -26771,7 +27505,7 @@
     },
     {
       "id": "slice-017ad176",
-      "index": 62,
+      "index": 63,
       "name": "UpdateTrainingRunConfiguration",
       "title": "Update Training Run Configuration",
       "chapter": "TrainingOrchestration",
@@ -28053,7 +28787,7 @@
     },
     {
       "id": "slice-e7dd4f24",
-      "index": 63,
+      "index": 64,
       "name": "LockTrainingRunConfiguration",
       "title": "Lock Training Run Configuration",
       "chapter": "TrainingOrchestration",
@@ -28226,7 +28960,7 @@
     },
     {
       "id": "slice-04d3f902",
-      "index": 64,
+      "index": 65,
       "name": "TrainingRunConfigurationCatalog",
       "title": "Training Run Configuration Catalog",
       "chapter": "TrainingOrchestration",
@@ -28784,7 +29518,7 @@
     },
     {
       "id": "slice-6537d1cd",
-      "index": 65,
+      "index": 66,
       "name": "CreateTrainingJob",
       "title": "Create Training Job",
       "chapter": "TrainingOrchestration",
@@ -29280,7 +30014,7 @@
     },
     {
       "id": "slice-201ffbf1",
-      "index": 66,
+      "index": 67,
       "name": "SubmitTrainingJob",
       "title": "Submit Training Job",
       "chapter": "TrainingOrchestration",
@@ -29569,7 +30303,7 @@
     },
     {
       "id": "slice-b90f5d7f",
-      "index": 67,
+      "index": 68,
       "name": "TrainingJobDashboard",
       "title": "Training Job Dashboard",
       "chapter": "TrainingOrchestration",
@@ -30120,7 +30854,7 @@
     },
     {
       "id": "slice-ba4b3f70",
-      "index": 68,
+      "index": 69,
       "name": "TrainingParticipantEligibility",
       "title": "Training Participant Eligibility",
       "chapter": "TrainingOrchestration",
@@ -30806,7 +31540,7 @@
     },
     {
       "id": "slice-dde5a363",
-      "index": 69,
+      "index": 70,
       "name": "PauseTrainingJob",
       "title": "Pause Training Job",
       "chapter": "TrainingOrchestration",
@@ -30973,7 +31707,7 @@
     },
     {
       "id": "slice-c1c60d34",
-      "index": 70,
+      "index": 71,
       "name": "ResumeTrainingJob",
       "title": "Resume Training Job",
       "chapter": "TrainingOrchestration",
@@ -31134,7 +31868,7 @@
     },
     {
       "id": "slice-3af09f8b",
-      "index": 71,
+      "index": 72,
       "name": "CancelTrainingJob",
       "title": "Cancel Training Job",
       "chapter": "TrainingOrchestration",
@@ -31295,7 +32029,7 @@
     },
     {
       "id": "slice-6ad9864e",
-      "index": 72,
+      "index": 73,
       "name": "ScheduleNextTrainingRound",
       "title": "Schedule Next Training Round",
       "chapter": "TrainingOrchestration",
@@ -31345,7 +32079,7 @@
     },
     {
       "id": "slice-44fd29f8",
-      "index": 73,
+      "index": 74,
       "name": "CompleteTrainingJob",
       "title": "Complete Training Job",
       "chapter": "TrainingOrchestration",
@@ -31580,7 +32314,7 @@
     },
     {
       "id": "slice-093e2668",
-      "index": 74,
+      "index": 75,
       "name": "SelectTrainingRoundParticipants",
       "title": "Select Training Round Participants",
       "chapter": "TrainingOrchestration",
@@ -31752,6 +32486,21 @@
             {
               "name": "minimumAccuracy",
               "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String",
+              "dictionary": "AGGREGATION_ALGORITHM",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -31984,6 +32733,21 @@
             {
               "name": "minimumAccuracy",
               "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String",
+              "dictionary": "AGGREGATION_ALGORITHM",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -32230,6 +32994,9 @@
                   "name": "minimumAccuracy"
                 },
                 {
+                  "name": "aggregationAlgorithm"
+                },
+                {
                   "name": "minimumNodesPerRound"
                 },
                 {
@@ -32321,6 +33088,9 @@
                   "name": "minimumAccuracy"
                 },
                 {
+                  "name": "aggregationAlgorithm"
+                },
+                {
                   "name": "minimumNodesPerRound"
                 },
                 {
@@ -32359,7 +33129,7 @@
     },
     {
       "id": "slice-3afb3435",
-      "index": 75,
+      "index": 76,
       "name": "RetryTrainingRoundParticipantSelection",
       "title": "Retry Training Round Participant Selection",
       "chapter": "TrainingOrchestration",
@@ -32549,6 +33319,9 @@
                   "name": "minimumAccuracy"
                 },
                 {
+                  "name": "aggregationAlgorithm"
+                },
+                {
                   "name": "minimumNodesPerRound"
                 },
                 {
@@ -32614,7 +33387,7 @@
     },
     {
       "id": "slice-6a16fc72",
-      "index": 76,
+      "index": 77,
       "name": "StartTrainingRound",
       "title": "Start Training Round",
       "chapter": "TrainingOrchestration",
@@ -32895,6 +33668,26 @@
                   "HomomorphicEncryptionContextPrepared.minimumAccuracy"
                 ],
                 "rule": "Carry the target global accuracy for downstream completion and next-round decisions."
+              }
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRoundParticipantsSelected.aggregationAlgorithm"
+                ]
               }
             },
             {
@@ -33244,6 +34037,20 @@
               "type": "Decimal",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -33817,6 +34624,9 @@
                   "name": "minimumAccuracy"
                 },
                 {
+                  "name": "aggregationAlgorithm"
+                },
+                {
                   "name": "secureAggregationRequired"
                 },
                 {
@@ -33885,6 +34695,9 @@
                 },
                 {
                   "name": "minimumAccuracy"
+                },
+                {
+                  "name": "aggregationAlgorithm"
                 },
                 {
                   "name": "secureAggregationRequired"
@@ -33963,6 +34776,9 @@
                 },
                 {
                   "name": "minimumAccuracy"
+                },
+                {
+                  "name": "aggregationAlgorithm"
                 },
                 {
                   "name": "secureAggregationRequired"
@@ -34070,7 +34886,7 @@
     },
     {
       "id": "slice-fabbea45",
-      "index": 77,
+      "index": 78,
       "name": "GenerateParticipantExecutionPlan",
       "title": "Generate Participant Execution Plan",
       "chapter": "TrainingOrchestration",
@@ -34947,6 +35763,9 @@
                   "name": "minimumAccuracy"
                 },
                 {
+                  "name": "aggregationAlgorithm"
+                },
+                {
                   "name": "secureAggregationRequired"
                 },
                 {
@@ -35346,7 +36165,7 @@
     },
     {
       "id": "slice-04a9daf0",
-      "index": 78,
+      "index": 79,
       "name": "DispatchParticipantExecutionPlan",
       "title": "Dispatch Participant Execution Plan",
       "chapter": "TrainingOrchestration",
@@ -36179,7 +36998,7 @@
     },
     {
       "id": "slice-ff26cad0",
-      "index": 79,
+      "index": 80,
       "name": "SubmitModelUpdateSubmission",
       "title": "Submit Model Update Submission",
       "chapter": "TrainingOrchestration",
@@ -36860,7 +37679,7 @@
     },
     {
       "id": "slice-fc1ff76d",
-      "index": 80,
+      "index": 81,
       "name": "EvaluateModelUpdateSubmission",
       "title": "Evaluate Model Update Submission",
       "chapter": "TrainingOrchestration",
@@ -37383,6 +38202,26 @@
               }
             },
             {
+              "name": "aggregationAlgorithm",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRoundStarted.aggregationAlgorithm"
+                ]
+              }
+            },
+            {
               "name": "runtimeId",
               "type": "UUID",
               "cardinality": "Single",
@@ -37583,6 +38422,28 @@
               }
             },
             {
+              "name": "acceptedModelUpdateArtifactRefs",
+              "type": "String",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.acceptedModelUpdateArtifactRefs",
+                  "EvaluateModelUpdateSubmission.artifactRef"
+                ],
+                "rule": "appendDistinct(ModelUpdateSubmissionAccepted.acceptedModelUpdateArtifactRefs, EvaluateModelUpdateSubmission.artifactRef)"
+              }
+            },
+            {
               "name": "minimumNodesPerRound",
               "type": "Int",
               "cardinality": "Single",
@@ -37601,6 +38462,51 @@
                   "TrainingRoundStarted.minimumNodesPerRound"
                 ]
               }
+            },
+            {
+              "name": "requiredModelUpdateCount",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRoundStarted.selectedRuntimeCount"
+                ]
+              }
+            },
+            {
+              "name": "plainAggregationReady",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "EvaluateModelUpdateSubmission.secureAggregationRequired",
+                  "EvaluateModelUpdateSubmission.runtimeId",
+                  "ModelUpdateSubmissionAccepted.acceptedRuntimeIds",
+                  "ModelUpdateSubmissionAccepted.acceptedModelUpdateCount",
+                  "ModelUpdateSubmissionAccepted.requiredModelUpdateCount"
+                ],
+                "rule": "True only when secure aggregation is disabled and a newly accepted runtime makes the cumulative accepted model update count reach the selected runtime count."
+              }
             }
           ],
           "dependencies": [
@@ -37609,6 +38515,12 @@
               "direction": "INBOUND",
               "title": "Evaluate Model Update Submission",
               "elementType": "COMMAND"
+            },
+            {
+              "id": "automation-f84c6e95",
+              "direction": "OUTBOUND",
+              "title": "Aggregate Plain Updates When Quorum Reached",
+              "elementType": "PROCESSOR"
             },
             {
               "id": "readmodel-b866abe9",
@@ -37862,6 +38774,9 @@
                   "name": "minimumAccuracy"
                 },
                 {
+                  "name": "aggregationAlgorithm"
+                },
+                {
                   "name": "secureAggregationRequired"
                 },
                 {
@@ -38049,6 +38964,9 @@
                   "name": "minimumAccuracy"
                 },
                 {
+                  "name": "aggregationAlgorithm"
+                },
+                {
                   "name": "runtimeId",
                   "example": "runtime-1"
                 },
@@ -38090,7 +39008,16 @@
                   "name": "acceptedRuntimeIds"
                 },
                 {
+                  "name": "acceptedModelUpdateArtifactRefs"
+                },
+                {
                   "name": "minimumNodesPerRound"
+                },
+                {
+                  "name": "requiredModelUpdateCount"
+                },
+                {
+                  "name": "plainAggregationReady"
                 }
               ]
             }
@@ -38259,8 +39186,773 @@
       }
     },
     {
+      "id": "slice-1a9b72f8",
+      "index": 82,
+      "name": "AggregatePlainModelUpdates",
+      "title": "Aggregate Plain Model Updates",
+      "chapter": "TrainingOrchestration",
+      "context": "TrainingOrchestration",
+      "tags": [],
+      "port": true,
+      "concepts": [
+        "TrainingRound"
+      ],
+      "commands": [
+        {
+          "id": "command-451b6887",
+          "name": "AggregatePlainModelUpdates",
+          "title": "Aggregate Plain Model Updates",
+          "type": "COMMAND",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Aggregate Plain Model Updates",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.trainingJobId"
+                ]
+              }
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.trainingRunConfigurationId"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.roundId"
+                ]
+              }
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.roundNumber"
+                ]
+              }
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.maxRounds"
+                ]
+              }
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.minimumAccuracy"
+                ]
+              }
+            },
+            {
+              "name": "aggregationAlgorithm",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.aggregationAlgorithm"
+                ]
+              }
+            },
+            {
+              "name": "aggregatedModelId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": true,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "modelUpdateArtifactRefs",
+              "type": "String",
+              "cardinality": "Multiple",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "ModelUpdateSubmissionAccepted.acceptedModelUpdateArtifactRefs"
+                ]
+              }
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "automation-f84c6e95",
+              "direction": "INBOUND",
+              "title": "Aggregate Plain Updates When Quorum Reached",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "event-d584a78e",
+              "direction": "OUTBOUND",
+              "title": "Plain Model Aggregation Completed",
+              "elementType": "EVENT"
+            }
+          ],
+          "port": true
+        }
+      ],
+      "events": [
+        {
+          "id": "event-d584a78e",
+          "name": "PlainModelAggregationCompleted",
+          "title": "Plain Model Aggregation Completed",
+          "type": "EVENT",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Aggregate Plain Model Updates",
+          "fields": [
+            {
+              "name": "trainingJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "trainingRunConfigurationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roundId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "roundNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "maxRounds",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "minimumAccuracy",
+              "type": "Decimal",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "aggregatedModelId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "aggregatedModelName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "aggregatedModelVersion",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "aggregatedModelDescription",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "modelSourceType",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "aggregatedModelArtifactUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "aggregatedModelRegistryRef",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "modelFormat",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "modelArtifactDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "aggregatedModelSignatureUri",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            },
+            {
+              "name": "aggregatedModelSizeBytes",
+              "type": "Int",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": true
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-451b6887",
+              "direction": "INBOUND",
+              "title": "Aggregate Plain Model Updates",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "automation-69020f99",
+              "direction": "OUTBOUND",
+              "title": "Complete Plain Aggregation When Completed",
+              "elementType": "PROCESSOR"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "processors": [
+        {
+          "id": "automation-f84c6e95",
+          "name": "AggregatePlainUpdatesWhenQuorumReached",
+          "title": "Aggregate Plain Updates When Quorum Reached",
+          "type": "PROCESSOR",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Aggregate Plain Model Updates",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "event-62be80d4",
+              "direction": "INBOUND",
+              "title": "Model Update Submission Accepted",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "command-451b6887",
+              "direction": "OUTBOUND",
+              "title": "Aggregate Plain Model Updates",
+              "elementType": "COMMAND"
+            }
+          ],
+          "metadata": {
+            "on": "ModelUpdateSubmissionAccepted",
+            "onKind": "event",
+            "condition": "plainAggregationReady == true",
+            "emits": "AggregatePlainModelUpdates"
+          }
+        }
+      ],
+      "specifications": [
+        {
+          "id": "gwt-1133e836",
+          "chapter": "TrainingOrchestration",
+          "sliceName": "Aggregate Plain Model Updates",
+          "title": "Aggregate Accepted Plain Updates",
+          "specification": "Plain Model Updates Are Aggregated After Quorum",
+          "rule": "A round that does not require secure aggregation must aggregate accepted plaintext model updates after every selected runtime has contributed an accepted update. The aggregation input is the cumulative immutable artifact reference snapshot carried by ModelUpdateSubmissionAccepted. Completion produces the same global model metadata required by evaluation and model registration without creating a secure aggregation session. Duplicate submissions from an already accepted runtime must not trigger aggregation again.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Model Update Submission Accepted",
+              "id": "event-62be80d4",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "modelUpdateSubmissionId"
+                },
+                {
+                  "name": "executionSessionId"
+                },
+                {
+                  "name": "executionPlanId"
+                },
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "roundId",
+                  "example": "round-1"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
+                  "name": "aggregationAlgorithm"
+                },
+                {
+                  "name": "runtimeId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "secureAggregationRequired",
+                  "example": "false"
+                },
+                {
+                  "name": "secureAggregationSessionId"
+                },
+                {
+                  "name": "encryptionScheme"
+                },
+                {
+                  "name": "publicKeyVersion"
+                },
+                {
+                  "name": "updateArtifactId"
+                },
+                {
+                  "name": "artifactRef"
+                },
+                {
+                  "name": "artifactDigest"
+                },
+                {
+                  "name": "updateProtectionType"
+                },
+                {
+                  "name": "anomalyScore"
+                },
+                {
+                  "name": "acceptedModelUpdateCount",
+                  "example": "1"
+                },
+                {
+                  "name": "acceptedRuntimeIds"
+                },
+                {
+                  "name": "acceptedModelUpdateArtifactRefs"
+                },
+                {
+                  "name": "minimumNodesPerRound",
+                  "example": "1"
+                },
+                {
+                  "name": "requiredModelUpdateCount"
+                },
+                {
+                  "name": "plainAggregationReady"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Aggregate Plain Model Updates",
+              "id": "command-451b6887",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId",
+                  "example": "round-1"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
+                  "name": "aggregationAlgorithm"
+                },
+                {
+                  "name": "aggregatedModelId"
+                },
+                {
+                  "name": "modelUpdateArtifactRefs"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Plain Model Aggregation Completed",
+              "id": "event-d584a78e",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "trainingJobId",
+                  "example": "job-1"
+                },
+                {
+                  "name": "trainingRunConfigurationId"
+                },
+                {
+                  "name": "featureSchemaId"
+                },
+                {
+                  "name": "roundId",
+                  "example": "round-1"
+                },
+                {
+                  "name": "roundNumber"
+                },
+                {
+                  "name": "maxRounds"
+                },
+                {
+                  "name": "minimumAccuracy"
+                },
+                {
+                  "name": "aggregatedModelId"
+                },
+                {
+                  "name": "aggregatedModelName"
+                },
+                {
+                  "name": "aggregatedModelVersion"
+                },
+                {
+                  "name": "aggregatedModelDescription"
+                },
+                {
+                  "name": "modelSourceType"
+                },
+                {
+                  "name": "aggregatedModelArtifactUri"
+                },
+                {
+                  "name": "aggregatedModelRegistryRef"
+                },
+                {
+                  "name": "modelFormat"
+                },
+                {
+                  "name": "modelArtifactDigest"
+                },
+                {
+                  "name": "aggregatedModelSignatureUri"
+                },
+                {
+                  "name": "aggregatedModelSizeBytes"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "actors": [],
+      "hotspots": [],
+      "stateChange": {
+        "event": "PlainModelAggregationCompleted",
+        "eventId": "event-d584a78e",
+        "to": "Completed"
+      }
+    },
+    {
       "id": "slice-a46e905e",
-      "index": 81,
+      "index": 83,
       "name": "RequestSecureAggregation",
       "title": "Request Secure Aggregation",
       "chapter": "TrainingOrchestration",
@@ -38841,10 +40533,10 @@
       "hotspots": []
     },
     {
-      "id": "slice-c044ec34",
-      "index": 82,
-      "name": "CompleteSecureAggregation",
-      "title": "Complete Secure Aggregation",
+      "id": "slice-4b6bcf1e",
+      "index": 84,
+      "name": "CompleteModelAggregation",
+      "title": "Complete Model Aggregation",
       "chapter": "TrainingOrchestration",
       "context": "TrainingOrchestration",
       "tags": [],
@@ -38853,12 +40545,12 @@
       ],
       "commands": [
         {
-          "id": "command-223cdee9",
-          "name": "CompleteSecureAggregation",
-          "title": "Complete Secure Aggregation",
+          "id": "command-6d1a8e33",
+          "name": "CompleteModelAggregation",
+          "title": "Complete Model Aggregation",
           "type": "COMMAND",
           "modelContext": "TrainingOrchestration",
-          "slice": "Complete Secure Aggregation",
+          "slice": "Complete Model Aggregation",
           "fields": [
             {
               "name": "trainingJobId",
@@ -38874,10 +40566,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.trainingJobId"
-                ]
+                  "SecureAggregationCompleted.trainingJobId",
+                  "PlainModelAggregationCompleted.trainingJobId"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -38894,10 +40588,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.trainingRunConfigurationId"
-                ]
+                  "SecureAggregationCompleted.trainingRunConfigurationId",
+                  "PlainModelAggregationCompleted.trainingRunConfigurationId"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -38914,10 +40610,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.featureSchemaId"
-                ]
+                  "SecureAggregationCompleted.featureSchemaId",
+                  "PlainModelAggregationCompleted.featureSchemaId"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -38934,10 +40632,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.roundId"
-                ]
+                  "SecureAggregationCompleted.roundId",
+                  "PlainModelAggregationCompleted.roundId"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -38954,10 +40654,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.roundNumber"
-                ]
+                  "SecureAggregationCompleted.roundNumber",
+                  "PlainModelAggregationCompleted.roundNumber"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -38974,10 +40676,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.maxRounds"
-                ]
+                  "SecureAggregationCompleted.maxRounds",
+                  "PlainModelAggregationCompleted.maxRounds"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -38994,17 +40698,19 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.minimumAccuracy"
-                ]
+                  "SecureAggregationCompleted.minimumAccuracy",
+                  "PlainModelAggregationCompleted.minimumAccuracy"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
               "name": "secureAggregationSessionId",
               "type": "UUID",
               "cardinality": "Single",
-              "optional": false,
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -39034,10 +40740,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.aggregatedModelId"
-                ]
+                  "SecureAggregationCompleted.aggregatedModelId",
+                  "PlainModelAggregationCompleted.aggregatedModelId"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -39054,10 +40762,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.aggregatedModelName"
-                ]
+                  "SecureAggregationCompleted.aggregatedModelName",
+                  "PlainModelAggregationCompleted.aggregatedModelName"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -39074,10 +40784,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.aggregatedModelVersion"
-                ]
+                  "SecureAggregationCompleted.aggregatedModelVersion",
+                  "PlainModelAggregationCompleted.aggregatedModelVersion"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -39094,10 +40806,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.aggregatedModelDescription"
-                ]
+                  "SecureAggregationCompleted.aggregatedModelDescription",
+                  "PlainModelAggregationCompleted.aggregatedModelDescription"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -39114,10 +40828,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.modelSourceType"
-                ]
+                  "SecureAggregationCompleted.modelSourceType",
+                  "PlainModelAggregationCompleted.modelSourceType"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -39134,10 +40850,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.aggregatedModelArtifactUri"
-                ]
+                  "SecureAggregationCompleted.aggregatedModelArtifactUri",
+                  "PlainModelAggregationCompleted.aggregatedModelArtifactUri"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -39154,10 +40872,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.aggregatedModelRegistryRef"
-                ]
+                  "SecureAggregationCompleted.aggregatedModelRegistryRef",
+                  "PlainModelAggregationCompleted.aggregatedModelRegistryRef"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -39174,10 +40894,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.modelFormat"
-                ]
+                  "SecureAggregationCompleted.modelFormat",
+                  "PlainModelAggregationCompleted.modelFormat"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -39194,10 +40916,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.modelArtifactDigest"
-                ]
+                  "SecureAggregationCompleted.modelArtifactDigest",
+                  "PlainModelAggregationCompleted.modelArtifactDigest"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -39214,10 +40938,12 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.aggregatedModelSignatureUri"
-                ]
+                  "SecureAggregationCompleted.aggregatedModelSignatureUri",
+                  "PlainModelAggregationCompleted.aggregatedModelSignatureUri"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             },
             {
@@ -39234,22 +40960,30 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "SecureAggregationCompleted.aggregatedModelSizeBytes"
-                ]
+                  "SecureAggregationCompleted.aggregatedModelSizeBytes",
+                  "PlainModelAggregationCompleted.aggregatedModelSizeBytes"
+                ],
+                "rule": "Use the completed secure or plaintext aggregation result."
               }
             }
           ],
           "dependencies": [
             {
-              "id": "automation-3dd1d9f0",
+              "id": "automation-9183190a",
               "direction": "INBOUND",
               "title": "Complete Secure Aggregation When Session Completed",
               "elementType": "PROCESSOR"
             },
             {
-              "id": "event-4759d38f",
+              "id": "automation-69020f99",
+              "direction": "INBOUND",
+              "title": "Complete Plain Aggregation When Completed",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "event-45b8c5f5",
               "direction": "OUTBOUND",
               "title": "Global Model Updated",
               "elementType": "EVENT"
@@ -39259,12 +40993,12 @@
       ],
       "events": [
         {
-          "id": "event-4759d38f",
+          "id": "event-45b8c5f5",
           "name": "GlobalModelUpdated",
           "title": "Global Model Updated",
           "type": "EVENT",
           "modelContext": "TrainingOrchestration",
-          "slice": "Complete Secure Aggregation",
+          "slice": "Complete Model Aggregation",
           "fields": [
             {
               "name": "trainingJobId",
@@ -39368,7 +41102,7 @@
               "name": "secureAggregationSessionId",
               "type": "UUID",
               "cardinality": "Single",
-              "optional": false,
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -39547,9 +41281,9 @@
               "elementType": "PROCESSOR"
             },
             {
-              "id": "command-223cdee9",
+              "id": "command-6d1a8e33",
               "direction": "INBOUND",
-              "title": "Complete Secure Aggregation",
+              "title": "Complete Model Aggregation",
               "elementType": "COMMAND"
             },
             {
@@ -39571,12 +41305,12 @@
       "screens": [],
       "processors": [
         {
-          "id": "automation-3dd1d9f0",
+          "id": "automation-9183190a",
           "name": "CompleteSecureAggregationWhenSessionCompleted",
           "title": "Complete Secure Aggregation When Session Completed",
           "type": "PROCESSOR",
           "modelContext": "TrainingOrchestration",
-          "slice": "Complete Secure Aggregation",
+          "slice": "Complete Model Aggregation",
           "fields": [],
           "dependencies": [
             {
@@ -39586,16 +41320,44 @@
               "elementType": "EVENT"
             },
             {
-              "id": "command-223cdee9",
+              "id": "command-6d1a8e33",
               "direction": "OUTBOUND",
-              "title": "Complete Secure Aggregation",
+              "title": "Complete Model Aggregation",
               "elementType": "COMMAND"
             }
           ],
           "metadata": {
             "on": "SecureAggregationCompleted",
             "onKind": "event",
-            "emits": "CompleteSecureAggregation"
+            "emits": "CompleteModelAggregation"
+          }
+        },
+        {
+          "id": "automation-69020f99",
+          "name": "CompletePlainAggregationWhenCompleted",
+          "title": "Complete Plain Aggregation When Completed",
+          "type": "PROCESSOR",
+          "modelContext": "TrainingOrchestration",
+          "slice": "Complete Model Aggregation",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "event-d584a78e",
+              "direction": "INBOUND",
+              "title": "Plain Model Aggregation Completed",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "command-6d1a8e33",
+              "direction": "OUTBOUND",
+              "title": "Complete Model Aggregation",
+              "elementType": "COMMAND"
+            }
+          ],
+          "metadata": {
+            "on": "PlainModelAggregationCompleted",
+            "onKind": "event",
+            "emits": "CompleteModelAggregation"
           }
         }
       ],
@@ -39604,13 +41366,13 @@
       "hotspots": [],
       "stateChange": {
         "event": "GlobalModelUpdated",
-        "eventId": "event-4759d38f",
+        "eventId": "event-45b8c5f5",
         "to": "EvaluatingGlobalModel"
       }
     },
     {
       "id": "slice-129ead8e",
-      "index": 83,
+      "index": 85,
       "name": "SubmitGlobalModelEvaluation",
       "title": "Submit Global Model Evaluation",
       "chapter": "TrainingOrchestration",
@@ -40132,7 +41894,7 @@
           "fields": [],
           "dependencies": [
             {
-              "id": "event-4759d38f",
+              "id": "event-45b8c5f5",
               "direction": "INBOUND",
               "title": "Global Model Updated",
               "elementType": "EVENT"
@@ -40157,7 +41919,7 @@
     },
     {
       "id": "slice-4a16b8df",
-      "index": 84,
+      "index": 86,
       "name": "CompleteTrainingRound",
       "title": "Complete Training Round",
       "chapter": "TrainingOrchestration",
@@ -40902,7 +42664,7 @@
           "given": [
             {
               "title": "Global Model Updated",
-              "id": "event-4759d38f",
+              "id": "event-45b8c5f5",
               "type": "EVENT",
               "fields": [
                 {
@@ -41042,7 +42804,7 @@
     },
     {
       "id": "slice-8107a71a",
-      "index": 85,
+      "index": 87,
       "name": "FailTrainingRound",
       "title": "Fail Training Round",
       "chapter": "TrainingOrchestration",
@@ -41531,7 +43293,7 @@
     },
     {
       "id": "slice-158bd8b1",
-      "index": 86,
+      "index": 88,
       "name": "TrainingRoundProgress",
       "title": "Training Round Progress",
       "chapter": "TrainingOrchestration",
@@ -42395,7 +44157,7 @@
               "elementType": "EVENT"
             },
             {
-              "id": "event-4759d38f",
+              "id": "event-45b8c5f5",
               "direction": "INBOUND",
               "title": "Global Model Updated",
               "elementType": "EVENT"
@@ -42430,7 +44192,7 @@
     },
     {
       "id": "slice-7806d9ed",
-      "index": 87,
+      "index": 89,
       "name": "RegisterCandidateModel",
       "title": "Register Candidate Model",
       "chapter": "ModelLifecycle",
@@ -42737,7 +44499,7 @@
     },
     {
       "id": "slice-c947b39a",
-      "index": 88,
+      "index": 90,
       "name": "RecordModelEvaluationPackage",
       "title": "Record Model Evaluation Package",
       "chapter": "ModelLifecycle",
@@ -43235,7 +44997,7 @@
     },
     {
       "id": "slice-a4c2bdcc",
-      "index": 89,
+      "index": 91,
       "name": "ApproveModel",
       "title": "Approve Model",
       "chapter": "ModelLifecycle",
@@ -43546,7 +45308,7 @@
     },
     {
       "id": "slice-e0aca431",
-      "index": 90,
+      "index": 92,
       "name": "PromoteModelToProduction",
       "title": "Promote Model To Production",
       "chapter": "ModelLifecycle",
@@ -43897,7 +45659,7 @@
     },
     {
       "id": "slice-33930733",
-      "index": 91,
+      "index": 93,
       "name": "RollbackModel",
       "title": "Rollback Model",
       "chapter": "ModelLifecycle",
@@ -44086,7 +45848,7 @@
     },
     {
       "id": "slice-9e8c0ad2",
-      "index": 92,
+      "index": 94,
       "name": "RetireModel",
       "title": "Retire Model",
       "chapter": "ModelLifecycle",
@@ -44247,7 +46009,7 @@
     },
     {
       "id": "slice-daa3e2fe",
-      "index": 93,
+      "index": 95,
       "name": "ModelCatalog",
       "title": "Model Catalog",
       "chapter": "ModelLifecycle",
@@ -44710,7 +46472,7 @@
     },
     {
       "id": "slice-97531d57",
-      "index": 94,
+      "index": 96,
       "name": "RuntimeTelemetryLatest",
       "title": "Runtime Telemetry Latest",
       "chapter": "RuntimeMonitoring",
@@ -44945,7 +46707,7 @@
     },
     {
       "id": "slice-d498ecb8",
-      "index": 95,
+      "index": 97,
       "name": "DetectRuntimeAgentOffline",
       "title": "Detect Runtime Agent Offline",
       "chapter": "RuntimeMonitoring",
@@ -45159,7 +46921,7 @@
     },
     {
       "id": "slice-fd282504",
-      "index": 96,
+      "index": 98,
       "name": "MarkRuntimeAgentRecovered",
       "title": "Mark Runtime Agent Recovered",
       "chapter": "RuntimeMonitoring",
@@ -45372,7 +47134,7 @@
     },
     {
       "id": "slice-7aeba98f",
-      "index": 97,
+      "index": 99,
       "name": "DetectRuntimeNodeResourcePressure",
       "title": "Detect Runtime Node Resource Pressure",
       "chapter": "RuntimeMonitoring",
@@ -45652,7 +47414,7 @@
     },
     {
       "id": "slice-3f7c280e",
-      "index": 98,
+      "index": 100,
       "name": "RecordRuntimeNodeInventory",
       "title": "Record Runtime Node Inventory",
       "chapter": "RuntimeMonitoring",
@@ -46161,7 +47923,7 @@
     },
     {
       "id": "slice-79929d9e",
-      "index": 99,
+      "index": 101,
       "name": "RuntimeNodeInventoryView",
       "title": "Runtime Node Inventory View",
       "chapter": "RuntimeMonitoring",
@@ -46485,7 +48247,7 @@
     },
     {
       "id": "slice-c5ab698a",
-      "index": 100,
+      "index": 102,
       "name": "RuntimeNodeResourceLatest",
       "title": "Runtime Node Resource Latest",
       "chapter": "RuntimeMonitoring",
@@ -46792,7 +48554,7 @@
     },
     {
       "id": "slice-17654acc",
-      "index": 101,
+      "index": 103,
       "name": "DetectRuntimeNodeCapacityChange",
       "title": "Detect Runtime Node Capacity Change",
       "chapter": "RuntimeMonitoring",
@@ -47094,7 +48856,7 @@
     },
     {
       "id": "slice-dc4e224d",
-      "index": 102,
+      "index": 104,
       "name": "RuntimeHealthDashboard",
       "title": "Runtime Health Dashboard",
       "chapter": "RuntimeMonitoring",
@@ -47456,7 +49218,7 @@
     },
     {
       "id": "slice-f43e8d0f",
-      "index": 103,
+      "index": 105,
       "name": "RaiseTrainingAlert",
       "title": "Raise Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -47731,7 +49493,7 @@
     },
     {
       "id": "slice-102e6798",
-      "index": 104,
+      "index": 106,
       "name": "TrainingAlertCatalog",
       "title": "Training Alert Catalog",
       "chapter": "RuntimeMonitoring",
@@ -47991,7 +49753,7 @@
     },
     {
       "id": "slice-63ac1487",
-      "index": 105,
+      "index": 107,
       "name": "AcknowledgeTrainingAlert",
       "title": "Acknowledge Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -48158,7 +49920,7 @@
     },
     {
       "id": "slice-c3edeeef",
-      "index": 106,
+      "index": 108,
       "name": "ResolveTrainingAlert",
       "title": "Resolve Training Alert",
       "chapter": "RuntimeMonitoring",
@@ -48319,7 +50081,7 @@
     },
     {
       "id": "slice-bf4467da",
-      "index": 107,
+      "index": 109,
       "name": "AppendAuditTrail",
       "title": "Append Audit Trail",
       "chapter": "RuntimeMonitoring",
@@ -48870,7 +50632,7 @@
     },
     {
       "id": "slice-5556fb33",
-      "index": 108,
+      "index": 110,
       "name": "AuditRecordLog",
       "title": "Audit Record Log",
       "chapter": "RuntimeMonitoring",
@@ -48980,7 +50742,7 @@
     },
     {
       "id": "slice-6883883e",
-      "index": 109,
+      "index": 111,
       "name": "ActivateRuntimeIdentity",
       "title": "Activate Runtime Identity",
       "chapter": "RuntimeGovernance",
@@ -49346,7 +51108,7 @@
     },
     {
       "id": "slice-6949bdab",
-      "index": 110,
+      "index": 112,
       "name": "RevokeRuntimeIdentity",
       "title": "Revoke Runtime Identity",
       "chapter": "RuntimeGovernance",
@@ -49531,7 +51293,7 @@
     },
     {
       "id": "slice-267be0b4",
-      "index": 111,
+      "index": 113,
       "name": "DetectRuntimeCapabilities",
       "title": "Detect Runtime Capabilities",
       "chapter": "RuntimeGovernance",
@@ -49714,7 +51476,7 @@
     },
     {
       "id": "slice-53705008",
-      "index": 112,
+      "index": 114,
       "name": "RuntimeIdentityCatalog",
       "title": "Runtime Identity Catalog",
       "chapter": "RuntimeGovernance",
@@ -49905,7 +51667,7 @@
     },
     {
       "id": "slice-a09f6b28",
-      "index": 113,
+      "index": 115,
       "name": "RuntimeCapabilityCatalog",
       "title": "Runtime Capability Catalog",
       "chapter": "RuntimeGovernance",
@@ -50002,7 +51764,7 @@
     },
     {
       "id": "slice-0df6c6b1",
-      "index": 114,
+      "index": 116,
       "name": "CreateSecureAggregationSession",
       "title": "Create Secure Aggregation Session",
       "chapter": "SecureAggregation",
@@ -50623,7 +52385,7 @@
     },
     {
       "id": "slice-af59eab5",
-      "index": 115,
+      "index": 117,
       "name": "SelectSecureAggregationParticipants",
       "title": "Select Secure Aggregation Participants",
       "chapter": "SecureAggregation",
@@ -51205,7 +52967,7 @@
     },
     {
       "id": "slice-a903d2aa",
-      "index": 116,
+      "index": 118,
       "name": "PrepareHomomorphicEncryptionContext",
       "title": "Prepare Homomorphic Encryption Context",
       "chapter": "SecureAggregation",
@@ -51849,7 +53611,7 @@
     },
     {
       "id": "slice-5d843deb",
-      "index": 117,
+      "index": 119,
       "name": "RecordEncryptedModelUpdate",
       "title": "Record Encrypted Model Update",
       "chapter": "SecureAggregation",
@@ -52558,7 +54320,7 @@
     },
     {
       "id": "slice-74fb7a88",
-      "index": 118,
+      "index": 120,
       "name": "CompleteHomomorphicAggregationSession",
       "title": "Complete Homomorphic Aggregation Session",
       "chapter": "SecureAggregation",
@@ -53061,7 +54823,7 @@
           ],
           "dependencies": [
             {
-              "id": "automation-3dd1d9f0",
+              "id": "automation-9183190a",
               "direction": "OUTBOUND",
               "title": "Complete Secure Aggregation When Session Completed",
               "elementType": "PROCESSOR"
@@ -53131,7 +54893,7 @@
     },
     {
       "id": "slice-5c7bd7e5",
-      "index": 119,
+      "index": 121,
       "name": "FailSecureAggregationSession",
       "title": "Fail Secure Aggregation Session",
       "chapter": "SecureAggregation",
@@ -53268,7 +55030,7 @@
     },
     {
       "id": "slice-ae5b24d8",
-      "index": 120,
+      "index": 122,
       "name": "SecureAggregationSessionCatalog",
       "title": "Secure Aggregation Session Catalog",
       "chapter": "SecureAggregation",
@@ -53745,7 +55507,7 @@
     },
     {
       "id": "slice-725195cc",
-      "index": 121,
+      "index": 123,
       "name": "DeclareDataset",
       "title": "Declare Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -54183,7 +55945,7 @@
     },
     {
       "id": "slice-5a2194a7",
-      "index": 122,
+      "index": 124,
       "name": "ConfigureRuntimeDatasetBinding",
       "title": "Configure Runtime Dataset Binding",
       "chapter": "RuntimeAgentOperations",
@@ -54985,7 +56747,7 @@
     },
     {
       "id": "slice-358d4122",
-      "index": 123,
+      "index": 125,
       "name": "RuntimeDatasetBindingCatalog",
       "title": "Runtime Dataset Binding Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -55285,7 +57047,7 @@
     },
     {
       "id": "slice-c31ba9a1",
-      "index": 124,
+      "index": 126,
       "name": "ValidateAgentDatasetAccess",
       "title": "Validate Agent Dataset Access",
       "chapter": "RuntimeAgentOperations",
@@ -56401,7 +58163,7 @@
     },
     {
       "id": "slice-aa47e014",
-      "index": 125,
+      "index": 127,
       "name": "RevalidateAgentDatasetAccess",
       "title": "Revalidate Agent Dataset Access",
       "chapter": "RuntimeAgentOperations",
@@ -57035,7 +58797,7 @@
     },
     {
       "id": "slice-ba3dc29b",
-      "index": 126,
+      "index": 128,
       "name": "AgentDatasetAccessValidationCatalog",
       "title": "Agent Dataset Access Validation Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -57281,7 +59043,7 @@
     },
     {
       "id": "slice-f44b66bc",
-      "index": 127,
+      "index": 129,
       "name": "ProfileAgentDataset",
       "title": "Profile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -58225,7 +59987,7 @@
     },
     {
       "id": "slice-d6f2a3cf",
-      "index": 128,
+      "index": 130,
       "name": "ReprofileAgentDataset",
       "title": "Reprofile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -59045,7 +60807,7 @@
     },
     {
       "id": "slice-2529cf36",
-      "index": 129,
+      "index": 131,
       "name": "ValidateDatasetContract",
       "title": "Validate Dataset Contract",
       "chapter": "RuntimeAgentOperations",
@@ -59621,7 +61383,7 @@
     },
     {
       "id": "slice-2e18bcb1",
-      "index": 130,
+      "index": 132,
       "name": "RetryDatasetContractValidation",
       "title": "Retry Dataset Contract Validation",
       "chapter": "RuntimeAgentOperations",
@@ -60260,7 +62022,7 @@
     },
     {
       "id": "slice-d28aff88",
-      "index": 131,
+      "index": 133,
       "name": "RejectDatasetForTraining",
       "title": "Reject Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -60427,7 +62189,7 @@
     },
     {
       "id": "slice-284a72da",
-      "index": 132,
+      "index": 134,
       "name": "ApproveDatasetForTraining",
       "title": "Approve Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -60715,7 +62477,7 @@
     },
     {
       "id": "slice-847c2855",
-      "index": 133,
+      "index": 135,
       "name": "RevokeDatasetTrainingApproval",
       "title": "Revoke Dataset Training Approval",
       "chapter": "RuntimeAgentOperations",
@@ -60894,7 +62656,7 @@
     },
     {
       "id": "slice-30869f70",
-      "index": 134,
+      "index": 136,
       "name": "DatasetCapability",
       "title": "Dataset Capability",
       "chapter": "RuntimeAgentOperations",
@@ -61355,7 +63117,7 @@
     },
     {
       "id": "slice-ff9e2f26",
-      "index": 135,
+      "index": 137,
       "name": "DatasetReadiness",
       "title": "Dataset Readiness",
       "chapter": "RuntimeAgentOperations",
@@ -62054,7 +63816,7 @@
     },
     {
       "id": "slice-5bf739cd",
-      "index": 136,
+      "index": 138,
       "name": "ReceiveParticipantExecutionPlan",
       "title": "Receive Participant Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -62914,7 +64676,7 @@
     },
     {
       "id": "slice-64faaa9b",
-      "index": 137,
+      "index": 139,
       "name": "AcceptExecutionPlan",
       "title": "Accept Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -64880,7 +66642,7 @@
     },
     {
       "id": "slice-4d4016d0",
-      "index": 138,
+      "index": 140,
       "name": "StartRoundExecution",
       "title": "Start Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -66148,7 +67910,7 @@
           "sliceName": "Start Round Execution",
           "title": "Round Execution Started",
           "specification": "Round Execution Runtime Engine Start Outcome",
-          "rule": "Starting a round execution is responsible for launching the local runtime engine on demand for this participant round, not for calling a pre-existing always-on engine. The adapter prepares the local training workspace and configuration, starts the matching runtime engine service, process, or container, submits the local model training job to that engine, and records the created runtimeEngineJobId. The port records exactly one outcome: RoundExecutionStarted when the runtime engine is running and the training job has been accepted, or RoundExecutionStartFailed when environment preparation, engine startup, model loading, resource allocation, or training job submission fails.\nWhen secureAggregationRequired is true, StartRoundExecution must pass encryptionScheme, publicKeyVersion, publicKeyRef, and encryptedParameterScale to the runtime engine so the local model update is encrypted inside the participant runtime boundary before any update artifact is reported to the platform.",
+          "rule": "Starting a round execution is responsible for launching the local runtime engine on demand for this participant round, not for calling a pre-existing always-on engine. The adapter prepares the local training workspace and configuration, starts the matching runtime engine service, process, or container, submits the local model training job to that engine, and records the created runtimeEngineJobId. The port records exactly one outcome: RoundExecutionStarted when the runtime engine is running and the training job has been accepted, or RoundExecutionStartFailed when environment preparation, engine startup, model loading, resource allocation, or training job submission fails.\nRuntime engine model selection must come from the participant execution plan base model snapshot. Runtime agents must not decide the model plugin from local environment variables because the selected model is platform training configuration data.\nWhen secureAggregationRequired is true, StartRoundExecution must pass encryptionScheme, publicKeyVersion, publicKeyRef, and encryptedParameterScale to the runtime engine so the local model update is encrypted inside the participant runtime boundary before any update artifact is reported to the platform.",
           "expressions": [],
           "validates": [],
           "given": [
@@ -66413,7 +68175,7 @@
           "sliceName": "Start Round Execution",
           "title": "Round Execution Start Failed",
           "specification": "Round Execution Runtime Engine Start Outcome",
-          "rule": "Starting a round execution is responsible for launching the local runtime engine on demand for this participant round, not for calling a pre-existing always-on engine. The adapter prepares the local training workspace and configuration, starts the matching runtime engine service, process, or container, submits the local model training job to that engine, and records the created runtimeEngineJobId. The port records exactly one outcome: RoundExecutionStarted when the runtime engine is running and the training job has been accepted, or RoundExecutionStartFailed when environment preparation, engine startup, model loading, resource allocation, or training job submission fails.\nWhen secureAggregationRequired is true, StartRoundExecution must pass encryptionScheme, publicKeyVersion, publicKeyRef, and encryptedParameterScale to the runtime engine so the local model update is encrypted inside the participant runtime boundary before any update artifact is reported to the platform.",
+          "rule": "Starting a round execution is responsible for launching the local runtime engine on demand for this participant round, not for calling a pre-existing always-on engine. The adapter prepares the local training workspace and configuration, starts the matching runtime engine service, process, or container, submits the local model training job to that engine, and records the created runtimeEngineJobId. The port records exactly one outcome: RoundExecutionStarted when the runtime engine is running and the training job has been accepted, or RoundExecutionStartFailed when environment preparation, engine startup, model loading, resource allocation, or training job submission fails.\nRuntime engine model selection must come from the participant execution plan base model snapshot. Runtime agents must not decide the model plugin from local environment variables because the selected model is platform training configuration data.\nWhen secureAggregationRequired is true, StartRoundExecution must pass encryptionScheme, publicKeyVersion, publicKeyRef, and encryptedParameterScale to the runtime engine so the local model update is encrypted inside the participant runtime boundary before any update artifact is reported to the platform.",
           "expressions": [],
           "validates": [],
           "given": [
@@ -66686,7 +68448,7 @@
     },
     {
       "id": "slice-0cecfd3f",
-      "index": 139,
+      "index": 141,
       "name": "ObserveRuntimeEngineJob",
       "title": "Observe Runtime Engine Job",
       "chapter": "RuntimeAgentOperations",
@@ -68139,7 +69901,7 @@
     },
     {
       "id": "slice-b1a48287",
-      "index": 140,
+      "index": 142,
       "name": "CompleteRoundExecution",
       "title": "Complete Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -69040,7 +70802,7 @@
     },
     {
       "id": "slice-45c663e8",
-      "index": 141,
+      "index": 143,
       "name": "FailRoundExecution",
       "title": "Fail Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -69577,7 +71339,7 @@
     },
     {
       "id": "slice-ff352882",
-      "index": 142,
+      "index": 144,
       "name": "RetryRoundExecutionAfterStartFailure",
       "title": "Retry Round Execution After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -70346,7 +72108,7 @@
     },
     {
       "id": "slice-2cb34062",
-      "index": 143,
+      "index": 145,
       "name": "RetryRoundExecutionAfterRuntimeFailure",
       "title": "Retry Round Execution After Runtime Failure",
       "chapter": "RuntimeAgentOperations",
@@ -71143,7 +72905,7 @@
     },
     {
       "id": "slice-d54dcc12",
-      "index": 144,
+      "index": 146,
       "name": "SubmitAgentLocalModelUpdate",
       "title": "Submit Agent Local Model Update",
       "chapter": "RuntimeAgentOperations",
@@ -71925,7 +73687,7 @@
     },
     {
       "id": "slice-6485fdce",
-      "index": 145,
+      "index": 147,
       "name": "ReleaseRuntimeEngineJobAfterCompletion",
       "title": "Release Runtime Engine Job After Completion",
       "chapter": "RuntimeAgentOperations",
@@ -72099,7 +73861,7 @@
     },
     {
       "id": "slice-ef8420f2",
-      "index": 146,
+      "index": 148,
       "name": "ReleaseRuntimeEngineJobAfterFailure",
       "title": "Release Runtime Engine Job After Failure",
       "chapter": "RuntimeAgentOperations",
@@ -72287,7 +74049,7 @@
     },
     {
       "id": "slice-30156076",
-      "index": 147,
+      "index": 149,
       "name": "ReleaseRuntimeEngineJobAfterStartFailure",
       "title": "Release Runtime Engine Job After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -72475,7 +74237,7 @@
     },
     {
       "id": "slice-5d7a0380",
-      "index": 148,
+      "index": 150,
       "name": "ReleaseRuntimeEngineJobAfterRetryFailure",
       "title": "Release Runtime Engine Job After Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -72663,7 +74425,7 @@
     },
     {
       "id": "slice-bc1eac14",
-      "index": 149,
+      "index": 151,
       "name": "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure",
       "title": "Release Runtime Engine Job After Runtime Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -72851,7 +74613,7 @@
     },
     {
       "id": "slice-eb00f5f7",
-      "index": 150,
+      "index": 152,
       "name": "RoundExecutionCatalog",
       "title": "Round Execution Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -73573,7 +75335,7 @@
     },
     {
       "id": "slice-d248addb",
-      "index": 151,
+      "index": 153,
       "name": "LoadRuntimeAgentBootstrapConfiguration",
       "title": "Load Runtime Agent Bootstrap Configuration",
       "chapter": "RuntimeAgentOperations",
@@ -73898,7 +75660,7 @@
     },
     {
       "id": "slice-c7d2df46",
-      "index": 152,
+      "index": 154,
       "name": "ReportRuntimeAgentStarted",
       "title": "Report Runtime Agent Started",
       "chapter": "RuntimeAgentOperations",
@@ -74116,7 +75878,7 @@
     },
     {
       "id": "slice-75635ed7",
-      "index": 153,
+      "index": 155,
       "name": "ReportRuntimeInstanceSelfCheckPassed",
       "title": "Report Runtime Instance Self Check Passed",
       "chapter": "RuntimeAgentOperations",
@@ -74531,7 +76293,7 @@
     },
     {
       "id": "slice-574f1d44",
-      "index": 154,
+      "index": 156,
       "name": "RuntimeAgentLifecycleCatalog",
       "title": "Runtime Agent Lifecycle Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -74827,7 +76589,7 @@
     },
     {
       "id": "slice-e5b0caa2",
-      "index": 155,
+      "index": 157,
       "name": "ReportRuntimeInstanceConnected",
       "title": "Report Runtime Instance Connected",
       "chapter": "RuntimeAgentOperations",
@@ -75643,7 +77405,7 @@
     },
     {
       "id": "slice-8d5d066d",
-      "index": 156,
+      "index": 158,
       "name": "AgentRuntimeInfrastructureConnectionCatalog",
       "title": "Agent Runtime Infrastructure Connection Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -75843,7 +77605,7 @@
     },
     {
       "id": "slice-ff0c55e7",
-      "index": 157,
+      "index": 159,
       "name": "AgentRuntimeTelemetryLatest",
       "title": "Agent Runtime Telemetry Latest",
       "chapter": "RuntimeAgentOperations",
@@ -76016,7 +77778,7 @@
     },
     {
       "id": "slice-d8eaacb9",
-      "index": 158,
+      "index": 160,
       "name": "ReportAgentRuntimeNodeInventory",
       "title": "Report Agent Runtime Node Inventory",
       "chapter": "RuntimeAgentOperations",
@@ -76484,7 +78246,7 @@
     },
     {
       "id": "slice-6a815e36",
-      "index": 159,
+      "index": 161,
       "name": "AgentRuntimeNodeInventoryCatalog",
       "title": "Agent Runtime Node Inventory Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -76747,7 +78509,7 @@
     },
     {
       "id": "slice-a56419ba",
-      "index": 160,
+      "index": 162,
       "name": "AgentRuntimeNodeResourceLatest",
       "title": "Agent Runtime Node Resource Latest",
       "chapter": "RuntimeAgentOperations",
@@ -77032,7 +78794,7 @@
     },
     {
       "id": "slice-4fcce762",
-      "index": 161,
+      "index": 163,
       "name": "RegisterUserAccount",
       "title": "Register User Account",
       "chapter": "IdentityAccessManagement",
@@ -77327,7 +79089,7 @@
     },
     {
       "id": "slice-2f4abaeb",
-      "index": 162,
+      "index": 164,
       "name": "DeactivateUserAccount",
       "title": "Deactivate User Account",
       "chapter": "IdentityAccessManagement",
@@ -77458,7 +79220,7 @@
     },
     {
       "id": "slice-5da5f728",
-      "index": 163,
+      "index": 165,
       "name": "GenerateUserAccountLoginPassword",
       "title": "Generate User Account Login Password",
       "chapter": "IdentityAccessManagement",
@@ -77622,7 +79384,7 @@
     },
     {
       "id": "slice-7b54b84c",
-      "index": 164,
+      "index": 166,
       "name": "RegisterRole",
       "title": "Register Role",
       "chapter": "IdentityAccessManagement",
@@ -77787,7 +79549,7 @@
     },
     {
       "id": "slice-1bda8ebb",
-      "index": 165,
+      "index": 167,
       "name": "RegisterPermission",
       "title": "Register Permission",
       "chapter": "IdentityAccessManagement",
@@ -77980,7 +79742,7 @@
     },
     {
       "id": "slice-1d773a87",
-      "index": 166,
+      "index": 168,
       "name": "GrantPermissionToRole",
       "title": "Grant Permission To Role",
       "chapter": "IdentityAccessManagement",
@@ -78210,7 +79972,7 @@
     },
     {
       "id": "slice-0766b926",
-      "index": 167,
+      "index": 169,
       "name": "AssignRoleToUser",
       "title": "Assign Role To User",
       "chapter": "IdentityAccessManagement",
@@ -78392,7 +80154,7 @@
     },
     {
       "id": "slice-b263007b",
-      "index": 168,
+      "index": 170,
       "name": "IssueServiceAccountApiToken",
       "title": "Issue Service Account Api Token",
       "chapter": "IdentityAccessManagement",
@@ -78926,7 +80688,7 @@
     },
     {
       "id": "slice-425842d5",
-      "index": 169,
+      "index": 171,
       "name": "UserAccountCatalogs",
       "title": "User Account Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -79068,7 +80830,7 @@
     },
     {
       "id": "slice-10714181",
-      "index": 170,
+      "index": 172,
       "name": "RoleCatalogs",
       "title": "Role Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -79156,7 +80918,7 @@
     },
     {
       "id": "slice-9f1bec7a",
-      "index": 171,
+      "index": 173,
       "name": "PermissionCatalogs",
       "title": "Permission Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -79258,7 +81020,7 @@
     },
     {
       "id": "slice-33855446",
-      "index": 172,
+      "index": 174,
       "name": "UserRoleAssignmentCatalog",
       "title": "User Role Assignment Catalog",
       "chapter": "IdentityAccessManagement",
@@ -79386,7 +81148,7 @@
     },
     {
       "id": "slice-4d6e3a7f",
-      "index": 173,
+      "index": 175,
       "name": "RolePermissionGrantCatalog",
       "title": "Role Permission Grant Catalog",
       "chapter": "IdentityAccessManagement",
@@ -79541,7 +81303,7 @@
     },
     {
       "id": "slice-6047e82e",
-      "index": 174,
+      "index": 176,
       "name": "ServiceAccountApiTokenCatalogs",
       "title": "Service Account Api Token Catalogs",
       "chapter": "IdentityAccessManagement",

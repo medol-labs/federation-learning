@@ -95,6 +95,16 @@ export const RuntimeInstallationPlanCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_plan_catalog.fields.preparedAt.label", "Prepared At")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.preparedAt, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_plan_catalog.fields.preparedNodeCount.label", "Prepared Node Count")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.preparedNodeCount, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_plan_catalog.fields.observedNodeCount.label", "Observed Node Count")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.observedNodeCount, t)}</p>
             </div>

@@ -2,4 +2,5 @@
 export * from "./list";
 export * from "./show";
 export * from "./record-runtime-connection-established";
+export * from "./confirm-runtime-infrastructure-prepared";
 export * from "./retry-runtime-agent-deployment";

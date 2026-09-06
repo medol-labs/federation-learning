@@ -163,6 +163,7 @@ import {
   RuntimeAgentEndpointCatalogList,
   RuntimeAgentEndpointCatalogShow,
   RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished,
+  RuntimeAgentEndpointCatalogConfirmRuntimeInfrastructurePrepared,
   RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment,
 } from "../pages/runtime-agent-endpoint-catalog";
 import {
@@ -197,6 +198,7 @@ import {
   RuntimeInfrastructureAccessViewList,
   RuntimeInfrastructureAccessViewShow,
   RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure,
+  RuntimeInfrastructureAccessViewConfirmRuntimeInfrastructurePrepared,
 } from "../pages/runtime-infrastructure-access-view";
 import {
   RuntimeInfrastructurePackageCatalogList,
@@ -211,6 +213,8 @@ import {
   RuntimeInstallationPlanCatalogList,
   RuntimeInstallationPlanCatalogShow,
   RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan,
+  RuntimeInstallationPlanCatalogRegisterRuntimeInfrastructure,
+  RuntimeInstallationPlanCatalogConfirmRuntimeInfrastructurePrepared,
 } from "../pages/runtime-installation-plan-catalog";
 import {
   RuntimeNodeInventoryViewList,
@@ -467,6 +471,7 @@ export const AppRouter = () => {
           <Route index element={<RuntimeAgentEndpointCatalogList />} />
           <Route path="show/:id" element={<RuntimeAgentEndpointCatalogShow />} />
           <Route path=":id/command/record-runtime-connection-established" element={<RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished />} />
+          <Route path=":id/command/confirm-runtime-infrastructure-prepared" element={<RuntimeAgentEndpointCatalogConfirmRuntimeInfrastructurePrepared />} />
           <Route path=":id/command/retry-runtime-agent-deployment" element={<RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment />} />
         </Route>
         <Route path="/runtime-agent-lifecycle-catalog">
@@ -501,6 +506,7 @@ export const AppRouter = () => {
           <Route index element={<RuntimeInfrastructureAccessViewList />} />
           <Route path="show/:id" element={<RuntimeInfrastructureAccessViewShow />} />
           <Route path=":id/command/register-runtime-infrastructure" element={<RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure />} />
+          <Route path=":id/command/confirm-runtime-infrastructure-prepared" element={<RuntimeInfrastructureAccessViewConfirmRuntimeInfrastructurePrepared />} />
         </Route>
         <Route path="/runtime-infrastructure-package-catalog">
           <Route index element={<RuntimeInfrastructurePackageCatalogList />} />
@@ -515,6 +521,8 @@ export const AppRouter = () => {
           <Route index element={<RuntimeInstallationPlanCatalogList />} />
           <Route path="command/create-runtime-installation-plan" element={<RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan />} />
           <Route path="show/:id" element={<RuntimeInstallationPlanCatalogShow />} />
+          <Route path=":id/command/register-runtime-infrastructure" element={<RuntimeInstallationPlanCatalogRegisterRuntimeInfrastructure />} />
+          <Route path=":id/command/confirm-runtime-infrastructure-prepared" element={<RuntimeInstallationPlanCatalogConfirmRuntimeInfrastructurePrepared />} />
         </Route>
         <Route path="/runtime-node-inventory-view">
           <Route index element={<RuntimeNodeInventoryViewList />} />

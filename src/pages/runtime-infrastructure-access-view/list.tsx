@@ -31,6 +31,8 @@ type RuntimeInfrastructureAccessViewRecord = {
   expectedNodeCount: number;
   runtimeAgentId?: string;
   runtimeAgentVersion?: string;
+  infrastructurePreparedAt?: string;
+  preparedNodeCount?: number;
   infrastructureVerifiedAt?: string;
   infrastructureVerificationFailedAt?: string;
   infrastructureVerificationFailureReason?: string;
@@ -40,7 +42,7 @@ type RuntimeInfrastructureAccessViewRecord = {
   agentDeploymentRetryFailedAt?: string;
   agentDeploymentRetryFailureReason?: string;
   connectedAt?: string;
-  state: "PLANNED" | "REGISTERED" | "VERIFIED" | "VERIFICATION_FAILED" | "AGENT_READY" | "RUNTIME_AGENT_FAILED" | "OFFLINE" | "CONNECTED";
+  state: "PLANNED" | "REGISTERED" | "PREPARED" | "VERIFIED" | "VERIFICATION_FAILED" | "AGENT_READY" | "RUNTIME_AGENT_FAILED" | "OFFLINE" | "CONNECTED";
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -268,6 +270,36 @@ export const RuntimeInfrastructureAccessViewList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("infrastructurePreparedAt", {
+        id: "infrastructurePreparedAt",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_access_view.fields.infrastructurePreparedAt.label", "Infrastructure Prepared At")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.infrastructurePreparedAt.label", "Infrastructure Prepared At"),
+          placeholder: "Enter Infrastructure Prepared At",
+          variant: "date",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("preparedNodeCount", {
+        id: "preparedNodeCount",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_infrastructure_access_view.fields.preparedNodeCount.label", "Prepared Node Count")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_infrastructure_access_view.fields.preparedNodeCount.label", "Prepared Node Count"),
+          placeholder: "Enter Prepared Node Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("infrastructureVerifiedAt", {
         id: "infrastructureVerifiedAt",
         header: ({ column }) => (
@@ -415,6 +447,7 @@ export const RuntimeInfrastructureAccessViewList = () => {
           options: [
             { label: "Planned", value: "PLANNED" },
             { label: "Registered", value: "REGISTERED" },
+            { label: "Prepared", value: "PREPARED" },
             { label: "Verified", value: "VERIFIED" },
             { label: "Verification Failed", value: "VERIFICATION_FAILED" },
             { label: "Agent Ready", value: "AGENT_READY" },
@@ -439,6 +472,21 @@ export const RuntimeInfrastructureAccessViewList = () => {
                     size="sm"
                     query={{
                       runtimeInfrastructureId: row.original.runtimeInfrastructureId,
+                      runtimeInstallationPlanId: row.original.runtimeInstallationPlanId,
+                    }}
+                  />
+                )}
+                {isCommandVisible(row.original, "", "state", ["Registered"]) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="confirmRuntimeInfrastructurePrepared"
+                    recordItemId={row.original.runtimeInfrastructureId}
+                    size="sm"
+                    query={{
+                      preparedNodeCount: row.original.preparedNodeCount,
+                      runtimeInfrastructureId: row.original.runtimeInfrastructureId,
+                      runtimeInstallationPlanId: row.original.runtimeInstallationPlanId,
+                      runtimeAgentId: row.original.runtimeAgentId,
                     }}
                   />
                 )}
@@ -465,7 +513,7 @@ export const RuntimeInfrastructureAccessViewList = () => {
         tableName: "runtime_infrastructure_access_view_read_model_entity",
         idField: "runtimeInfrastructureId",
         idFields: ["runtimeInfrastructureId"],
-        queryFields: ["runtimeInfrastructureId","organizationId","runtimeInstallationPlanId","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","organizationName","runtimeName","runtimeEnvironmentType","agentInstallMode","expectedNodeCount","runtimeAgentId","runtimeAgentVersion","infrastructureVerifiedAt","infrastructureVerificationFailedAt","infrastructureVerificationFailureReason","agentReadyAt","agentDeploymentFailedAt","agentDeploymentFailureReason","agentDeploymentRetryFailedAt","agentDeploymentRetryFailureReason","connectedAt","state"],
+        queryFields: ["runtimeInfrastructureId","organizationId","runtimeInstallationPlanId","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","organizationName","runtimeName","runtimeEnvironmentType","agentInstallMode","expectedNodeCount","runtimeAgentId","runtimeAgentVersion","infrastructurePreparedAt","preparedNodeCount","infrastructureVerifiedAt","infrastructureVerificationFailedAt","infrastructureVerificationFailureReason","agentReadyAt","agentDeploymentFailedAt","agentDeploymentFailureReason","agentDeploymentRetryFailedAt","agentDeploymentRetryFailureReason","connectedAt","state"],
         label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
         aggregateRoute: "runtimeinfrastructure",
         queryRoute: "runtimeinfrastructureaccessview",

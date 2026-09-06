@@ -2,3 +2,4 @@
 export * from "./list";
 export * from "./show";
 export * from "./register-runtime-infrastructure";
+export * from "./confirm-runtime-infrastructure-prepared";

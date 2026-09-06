@@ -29,6 +29,8 @@ type RuntimeInstallationPlanCatalogRecord = {
   expectedNodeCount: number;
   planStatus: string;
   runtimeInfrastructureId?: string;
+  preparedAt?: string;
+  preparedNodeCount?: number;
   observedNodeCount?: number;
   runtimeAgentId?: string;
   runtimeAgentVersion?: string;
@@ -241,6 +243,36 @@ export const RuntimeInstallationPlanCatalogList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("preparedAt", {
+        id: "preparedAt",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_plan_catalog.fields.preparedAt.label", "Prepared At")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.preparedAt.label", "Prepared At"),
+          placeholder: "Enter Prepared At",
+          variant: "date",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("preparedNodeCount", {
+        id: "preparedNodeCount",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_plan_catalog.fields.preparedNodeCount.label", "Prepared Node Count")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_plan_catalog.fields.preparedNodeCount.label", "Prepared Node Count"),
+          placeholder: "Enter Prepared Node Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("observedNodeCount", {
         id: "observedNodeCount",
         header: ({ column }) => (
@@ -437,6 +469,32 @@ export const RuntimeInstallationPlanCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+                {isCommandVisible(row.original, "", "planStatus", ["Planned"]) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="registerRuntimeInfrastructure"
+                    recordItemId={row.original.runtimeInstallationPlanId}
+                    size="sm"
+                    query={{
+                      runtimeInfrastructureId: row.original.runtimeInfrastructureId,
+                      runtimeInstallationPlanId: row.original.runtimeInstallationPlanId,
+                    }}
+                  />
+                )}
+                {isCommandVisible(row.original, "", "planStatus", ["Registered"]) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="confirmRuntimeInfrastructurePrepared"
+                    recordItemId={row.original.runtimeInstallationPlanId}
+                    size="sm"
+                    query={{
+                      preparedNodeCount: row.original.preparedNodeCount,
+                      runtimeInfrastructureId: row.original.runtimeInfrastructureId,
+                      runtimeInstallationPlanId: row.original.runtimeInstallationPlanId,
+                      runtimeAgentId: row.original.runtimeAgentId,
+                    }}
+                  />
+                )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeInstallationPlanId} size="sm" />
             </RowActionMenu>
           </div>
@@ -460,7 +518,7 @@ export const RuntimeInstallationPlanCatalogList = () => {
         tableName: "runtime_installation_plan_catalog_read_model_entity",
         idField: "runtimeInstallationPlanId",
         idFields: ["runtimeInstallationPlanId"],
-        queryFields: ["runtimeInstallationPlanId","organizationId","organizationName","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","runtimeName","agentInstallMode","expectedNodeCount","planStatus","runtimeInfrastructureId","observedNodeCount","runtimeAgentId","runtimeAgentVersion","plannedAt","verifiedAt","verificationFailedAt","verificationFailureReason","agentReadyAt","agentDeploymentFailedAt","agentDeploymentFailureReason","agentDeploymentRetryFailedAt","agentDeploymentRetryFailureReason","lastConnectedAt"],
+        queryFields: ["runtimeInstallationPlanId","organizationId","organizationName","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","runtimeName","agentInstallMode","expectedNodeCount","planStatus","runtimeInfrastructureId","preparedAt","preparedNodeCount","observedNodeCount","runtimeAgentId","runtimeAgentVersion","plannedAt","verifiedAt","verificationFailedAt","verificationFailureReason","agentReadyAt","agentDeploymentFailedAt","agentDeploymentFailureReason","agentDeploymentRetryFailedAt","agentDeploymentRetryFailureReason","lastConnectedAt"],
         label: t("resources.runtime_installation_plan_catalog.label", "Runtime Installation Plan Catalog"),
         aggregateRoute: "runtimeinstallationplan",
         queryRoute: "runtimeinstallationplancatalog",

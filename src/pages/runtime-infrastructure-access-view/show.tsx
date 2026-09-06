@@ -105,6 +105,16 @@ export const RuntimeInfrastructureAccessViewShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_access_view.fields.infrastructurePreparedAt.label", "Infrastructure Prepared At")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.infrastructurePreparedAt, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_access_view.fields.preparedNodeCount.label", "Prepared Node Count")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.preparedNodeCount, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_access_view.fields.infrastructureVerifiedAt.label", "Infrastructure Verified At")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.infrastructureVerifiedAt, t)}</p>
             </div>

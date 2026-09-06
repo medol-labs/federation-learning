@@ -29,7 +29,7 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterRuntimeInfrastructureCommandSchema, type RegisterRuntimeInfrastructureCommandInput } from "@/domain/schemas";
 
-export const RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure = () => {
+export const RuntimeInstallationPlanCatalogRegisterRuntimeInfrastructure = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -40,26 +40,26 @@ export const RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure = () =
   } as unknown as Partial<RegisterRuntimeInfrastructureCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RegisterRuntimeInfrastructureCommandInput, RegisterRuntimeInfrastructureCommandInput>({
-    resource: "runtime_infrastructure_access_view",
+    resource: "runtime_installation_plan_catalog",
     command: "registerRuntimeInfrastructure",
     aggregateId: id?.toString(),
     redirect: "list",
     dataProviderName: "federation-learning-platform",
     queryDataProviderName: "federation-learning-platform",
     meta: {
-      tableName: "runtime_infrastructure_access_view_read_model_entity",
-      idField: "runtimeInfrastructureId",
-      label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
+      tableName: "runtime_installation_plan_catalog_read_model_entity",
+      idField: "runtimeInstallationPlanId",
+      label: t("resources.runtime_installation_plan_catalog.label", "Runtime Installation Plan Catalog"),
       aggregateRoute: "runtimeinfrastructure",
-      queryRoute: "runtimeinfrastructureaccessview",
+      queryRoute: "runtimeinstallationplancatalog",
       dataProviderName: "federation-learning-platform",
     },
     queryMeta: {
-      tableName: "runtime_infrastructure_access_view_read_model_entity",
-      idField: "runtimeInfrastructureId",
-      label: t("resources.runtime_infrastructure_access_view.label", "Runtime Infrastructure Access View"),
-      aggregateRoute: "runtimeinfrastructure",
-      queryRoute: "runtimeinfrastructureaccessview",
+      tableName: "runtime_installation_plan_catalog_read_model_entity",
+      idField: "runtimeInstallationPlanId",
+      label: t("resources.runtime_installation_plan_catalog.label", "Runtime Installation Plan Catalog"),
+      aggregateRoute: "runtimeinstallationplan",
+      queryRoute: "runtimeinstallationplancatalog",
       dataProviderName: "federation-learning-platform",
     },
     formProps: {
@@ -73,13 +73,13 @@ export const RuntimeInfrastructureAccessViewRegisterRuntimeInfrastructure = () =
       ...defaultValues,
       ...values,
     });
-    navigate("/runtime-infrastructure-access-view");
+    navigate("/runtime-installation-plan-catalog");
     return result;
   }
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.runtime_infrastructure_access_view.commands.registerRuntimeInfrastructure.label", "Register Runtime Infrastructure")} />
+      <CreateViewHeader title={t("resources.runtime_installation_plan_catalog.commands.registerRuntimeInfrastructure.label", "Register Runtime Infrastructure")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RegisterRuntimeInfrastructure validation failed", errors))} className="space-y-8">
           {defaultValues.runtimeInfrastructureId !== undefined && defaultValues.runtimeInfrastructureId !== null ? (

@@ -230,8 +230,18 @@ export type CreateRuntimeInstallationPlanCommandInput = z.infer<typeof CreateRun
 
 export const RegisterRuntimeInfrastructureCommandSchema = z.object({
   runtimeInfrastructureId: z.string().uuid(),
+  runtimeInstallationPlanId: z.string().uuid(),
 });
 export type RegisterRuntimeInfrastructureCommandInput = z.infer<typeof RegisterRuntimeInfrastructureCommandSchema>;
+
+export const ConfirmRuntimeInfrastructurePreparedCommandSchema = z.object({
+  runtimeInfrastructureId: z.string().uuid(),
+  runtimeInstallationPlanId: z.string().uuid(),
+  runtimeAgentId: z.string().uuid(),
+  preparedNodeCount: z.coerce.number().int(),
+  preparationNotes: z.string().optional().nullable(),
+});
+export type ConfirmRuntimeInfrastructurePreparedCommandInput = z.infer<typeof ConfirmRuntimeInfrastructurePreparedCommandSchema>;
 
 export const RetryRuntimeAgentDeploymentCommandSchema = z.object({
   runtimeAgentId: z.string().uuid(),
