@@ -52,6 +52,8 @@ class JpaRuntimeInfrastructureAccessViewReadModelRepository(
             it.expectedNodeCount = this@toProjection.expectedNodeCount
             it.runtimeAgentId = this@toProjection.runtimeAgentId
             it.runtimeAgentVersion = this@toProjection.runtimeAgentVersion
+            it.infrastructurePreparedAt = this@toProjection.infrastructurePreparedAt
+            it.preparedNodeCount = this@toProjection.preparedNodeCount
             it.infrastructureVerifiedAt = this@toProjection.infrastructureVerifiedAt
             it.infrastructureVerificationFailedAt = this@toProjection.infrastructureVerificationFailedAt
             it.infrastructureVerificationFailureReason = this@toProjection.infrastructureVerificationFailureReason
@@ -85,6 +87,8 @@ class JpaRuntimeInfrastructureAccessViewReadModelRepository(
             it.expectedNodeCount = this@toEntity.expectedNodeCount
             it.runtimeAgentId = this@toEntity.runtimeAgentId
             it.runtimeAgentVersion = this@toEntity.runtimeAgentVersion
+            it.infrastructurePreparedAt = this@toEntity.infrastructurePreparedAt
+            it.preparedNodeCount = this@toEntity.preparedNodeCount
             it.infrastructureVerifiedAt = this@toEntity.infrastructureVerifiedAt
             it.infrastructureVerificationFailedAt = this@toEntity.infrastructureVerificationFailedAt
             it.infrastructureVerificationFailureReason = this@toEntity.infrastructureVerificationFailureReason

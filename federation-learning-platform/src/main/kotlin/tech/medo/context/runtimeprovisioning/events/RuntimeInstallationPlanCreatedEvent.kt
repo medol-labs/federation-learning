@@ -14,6 +14,12 @@ data class RuntimeInstallationPlanCreatedEvent(
     val organizationId: UUID,
     val runtimeInfrastructurePackageId: UUID,
     val runtimeName: String,
+    val bootstrapCommand: String,
+    val nodeLabelCommand: String,
+    val nodeTaintCommand: String,
+    val runtimeAgentNodeSelectorYaml: String,
+    val runtimeAgentTolerationsYaml: String,
+    val bootstrapConfigYaml: String,
     val agentInstallMode: String,
     val expectedNodeCount: Int
 )

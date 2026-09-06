@@ -10,6 +10,7 @@ import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegister
 import tech.medo.runtimeprovisioning.events.RuntimeInstallationPlanCreatedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePlannedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureRegisteredEvent
+import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePreparedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerifiedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationFailedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentInstallationSucceededEvent
@@ -84,8 +85,30 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
             entity.runtimeAgentId = event.runtimeAgentId
             entity.state = RuntimeInfrastructureStateEnum.REGISTERED
+            entity.infrastructureVerificationFailedAt = null
+            entity.infrastructureVerificationFailureReason = null
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructurePreparedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeInfrastructureId) ?: RuntimeInfrastructureAccessViewReadModelProjection().apply {
+                this.runtimeInfrastructureId = event.runtimeInfrastructureId
+        }
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.runtimeAgentId = event.runtimeAgentId
+            entity.preparedNodeCount = event.preparedNodeCount
+            entity.state = RuntimeInfrastructureStateEnum.PREPARED
+            entity.infrastructurePreparedAt = eventTime(message)
             entity.infrastructureVerificationFailedAt = null
             entity.infrastructureVerificationFailureReason = null
             ProjectionMetadata.assign(entity, message)
@@ -102,6 +125,7 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
             entity.agentInstallMode = event.agentInstallMode
             entity.runtimeAgentId = event.runtimeAgentId
             entity.state = RuntimeInfrastructureStateEnum.VERIFIED
@@ -122,6 +146,7 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
             entity.infrastructureVerificationFailedAt = eventTime(message)
             entity.infrastructureVerificationFailureReason = event.failureReason
             entity.state = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED

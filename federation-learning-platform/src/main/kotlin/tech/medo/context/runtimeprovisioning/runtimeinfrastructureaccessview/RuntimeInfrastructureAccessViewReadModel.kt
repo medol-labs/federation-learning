@@ -31,6 +31,8 @@ class RuntimeInfrastructureAccessViewReadModelCriteria {
     var expectedNodeCount: IntegerFilter? = null
     var runtimeAgentId: StringFilter? = null
     var runtimeAgentVersion: StringFilter? = null
+    var infrastructurePreparedAt: RangeFilter<LocalDateTime>? = null
+    var preparedNodeCount: IntegerFilter? = null
     var infrastructureVerifiedAt: RangeFilter<LocalDateTime>? = null
     var infrastructureVerificationFailedAt: RangeFilter<LocalDateTime>? = null
     var infrastructureVerificationFailureReason: StringFilter? = null
@@ -58,6 +60,8 @@ class RuntimeInfrastructureAccessViewReadModelProjection : MetadataProjection {
     var expectedNodeCount: Int? = null
     var runtimeAgentId: UUID? = null
     var runtimeAgentVersion: String? = null
+    var infrastructurePreparedAt: LocalDateTime? = null
+    var preparedNodeCount: Int? = null
     var infrastructureVerifiedAt: LocalDateTime? = null
     var infrastructureVerificationFailedAt: LocalDateTime? = null
     var infrastructureVerificationFailureReason: String? = null
@@ -91,6 +95,8 @@ fun RuntimeInfrastructureAccessViewReadModelProjection.toReadModel(): RuntimeInf
     expectedNodeCount = expectedNodeCount,
     runtimeAgentId = runtimeAgentId,
     runtimeAgentVersion = runtimeAgentVersion,
+    infrastructurePreparedAt = infrastructurePreparedAt,
+    preparedNodeCount = preparedNodeCount,
     infrastructureVerifiedAt = infrastructureVerifiedAt,
     infrastructureVerificationFailedAt = infrastructureVerificationFailedAt,
     infrastructureVerificationFailureReason = infrastructureVerificationFailureReason,
@@ -131,6 +137,8 @@ data class RuntimeInfrastructureAccessViewReadModel(
     val expectedNodeCount: Int?,
     val runtimeAgentId: UUID?,
     val runtimeAgentVersion: String?,
+    val infrastructurePreparedAt: LocalDateTime?,
+    val preparedNodeCount: Int?,
     val infrastructureVerifiedAt: LocalDateTime?,
     val infrastructureVerificationFailedAt: LocalDateTime?,
     val infrastructureVerificationFailureReason: String?,

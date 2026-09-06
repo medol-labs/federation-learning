@@ -35,6 +35,7 @@ class K3sRuntimeInfrastructureAdapterTest {
     private val runtimeInfrastructureId = UUID.fromString("00000000-0000-0000-0000-000000000011")
     private val runtimeInfrastructurePackageId = UUID.fromString("00000000-0000-0000-0000-000000000012")
     private val runtimeAgentId = UUID.fromString("00000000-0000-0000-0000-000000000013")
+    private val runtimeInstallationPlanId = UUID.fromString("00000000-0000-0000-0000-000000000014")
     private val organizationId = UUID.fromString("00000000-0000-0000-0000-000000000015")
 
     @TempDir
@@ -51,14 +52,21 @@ class K3sRuntimeInfrastructureAdapterTest {
         val result = adapter.verify(
             RuntimeInfrastructureVerificationInput(
                 runtimeInfrastructureId = runtimeInfrastructureId,
-                runtimeAgentId = runtimeAgentId,
-                agentInstallMode = "MANUAL",
-                observedNodeCount = 0
+                runtimeInstallationPlanId = runtimeInstallationPlanId,
+                runtimeAgentId = runtimeAgentId
             )
         )
 
-        assertInstanceOf(RuntimeInfrastructureVerification.Succeeded::class.java, result)
-        assertEquals(listOf(listOf("version", "--client"), listOf("get", "nodes", "-o", "name")), runner.calls)
+        val succeeded = assertInstanceOf(RuntimeInfrastructureVerification.Succeeded::class.java, result)
+        assertEquals("AUTO", succeeded.agentInstallMode)
+        assertEquals(2, succeeded.observedNodeCount)
+        assertEquals(
+            listOf(
+                listOf("version", "--client"),
+                listOf("get", "nodes", "-l", "medol.dev/runtime-infrastructure-id=$runtimeInfrastructureId", "-o", "name")
+            ),
+            runner.calls
+        )
     }
 
     @Test
@@ -72,14 +80,17 @@ class K3sRuntimeInfrastructureAdapterTest {
         val result = adapter.verify(
             RuntimeInfrastructureVerificationInput(
                 runtimeInfrastructureId = runtimeInfrastructureId,
-                runtimeAgentId = runtimeAgentId,
-                agentInstallMode = "MANUAL",
-                observedNodeCount = 0
+                runtimeInstallationPlanId = runtimeInstallationPlanId,
+                runtimeAgentId = runtimeAgentId
             )
         )
 
         val rejected = assertInstanceOf(RuntimeInfrastructureVerification.Rejected::class.java, result)
-        assertEquals("K3S cluster has no observable nodes.", rejected.failureReason)
+        assertEquals(0, rejected.observedNodeCount)
+        assertEquals(
+            "K3S cluster has no nodes labeled with medol.dev/runtime-infrastructure-id=$runtimeInfrastructureId.",
+            rejected.failureReason
+        )
     }
 
     @Test
@@ -118,6 +129,11 @@ class K3sRuntimeInfrastructureAdapterTest {
         assertTrue(manifest.contains("name: \"RUNTIME_AGENT_ORGANIZATION_ID\""))
         assertTrue(manifest.contains("value: \"$organizationId\""))
         assertTrue(manifest.contains("value: \"http://runtime-agent-test-000000000000:8082\""))
+        assertTrue(manifest.contains("nodeSelector:"))
+        assertTrue(manifest.contains("medol.dev/node-role: \"runtime\""))
+        assertTrue(manifest.contains("medol.dev/runtime-infrastructure-id: \"$runtimeInfrastructureId\""))
+        assertTrue(manifest.contains("key: \"medol.dev/runtime-only\""))
+        assertTrue(manifest.contains("effect: \"NoSchedule\""))
     }
 
     @Test
@@ -182,7 +198,7 @@ class K3sRuntimeInfrastructureAdapterTest {
 
     private fun runtimeInstallationPlan(): RuntimeInstallationPlanCatalogReadModel =
         RuntimeInstallationPlanCatalogReadModel(
-            runtimeInstallationPlanId = UUID.fromString("00000000-0000-0000-0000-000000000014"),
+            runtimeInstallationPlanId = runtimeInstallationPlanId,
             organizationId = organizationId,
             organizationName = null,
             runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
@@ -193,6 +209,8 @@ class K3sRuntimeInfrastructureAdapterTest {
             expectedNodeCount = 2,
             planStatus = null,
             runtimeInfrastructureId = runtimeInfrastructureId,
+            preparedAt = null,
+            preparedNodeCount = null,
             observedNodeCount = null,
             runtimeAgentId = runtimeAgentId,
             runtimeAgentVersion = null,

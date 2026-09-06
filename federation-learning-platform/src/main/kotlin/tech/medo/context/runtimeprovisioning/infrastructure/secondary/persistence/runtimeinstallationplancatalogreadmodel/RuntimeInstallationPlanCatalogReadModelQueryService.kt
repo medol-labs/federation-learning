@@ -41,6 +41,8 @@ class RuntimeInstallationPlanCatalogReadModelQueryService(
             criteria.expectedNodeCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeInstallationPlanCatalogReadModelEntity>, Expression<Int>> { root -> root.get("expectedNodeCount") })) }
             criteria.planStatus?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationPlanCatalogReadModelEntity>, Expression<String>> { root -> root.get("planStatus") })) }
             criteria.runtimeInfrastructureId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationPlanCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInfrastructureId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.preparedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeInstallationPlanCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("preparedAt") })) }
+            criteria.preparedNodeCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeInstallationPlanCatalogReadModelEntity>, Expression<Int>> { root -> root.get("preparedNodeCount") })) }
             criteria.observedNodeCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeInstallationPlanCatalogReadModelEntity>, Expression<Int>> { root -> root.get("observedNodeCount") })) }
             criteria.runtimeAgentId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationPlanCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeAgentId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeAgentVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationPlanCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeAgentVersion") })) }
@@ -122,6 +124,8 @@ class RuntimeInstallationPlanCatalogReadModelQueryService(
             it.expectedNodeCount = this@toProjection.expectedNodeCount
             it.planStatus = this@toProjection.planStatus
             it.runtimeInfrastructureId = this@toProjection.runtimeInfrastructureId
+            it.preparedAt = this@toProjection.preparedAt
+            it.preparedNodeCount = this@toProjection.preparedNodeCount
             it.observedNodeCount = this@toProjection.observedNodeCount
             it.runtimeAgentId = this@toProjection.runtimeAgentId
             it.runtimeAgentVersion = this@toProjection.runtimeAgentVersion

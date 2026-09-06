@@ -21,6 +21,11 @@ class RuntimeInstallationGuideReadModelCriteria {
     var organizationName: StringFilter? = null
     var runtimeName: StringFilter? = null
     var bootstrapCommand: StringFilter? = null
+    var nodeLabelCommand: StringFilter? = null
+    var nodeTaintCommand: StringFilter? = null
+    var runtimeAgentNodeSelectorYaml: StringFilter? = null
+    var runtimeAgentTolerationsYaml: StringFilter? = null
+    var bootstrapConfigYaml: StringFilter? = null
     var runtimeEnvironmentType: StringFilter? = null
     var agentInstallMode: StringFilter? = null
     var expectedNodeCount: IntegerFilter? = null
@@ -37,6 +42,11 @@ class RuntimeInstallationGuideReadModelProjection : MetadataProjection {
     var organizationName: String? = null
     var runtimeName: String? = null
     var bootstrapCommand: String? = null
+    var nodeLabelCommand: String? = null
+    var nodeTaintCommand: String? = null
+    var runtimeAgentNodeSelectorYaml: String? = null
+    var runtimeAgentTolerationsYaml: String? = null
+    var bootstrapConfigYaml: String? = null
     var runtimeEnvironmentType: String? = null
     var agentInstallMode: String? = null
     var expectedNodeCount: Int? = null
@@ -59,6 +69,11 @@ fun RuntimeInstallationGuideReadModelProjection.toReadModel(): RuntimeInstallati
     organizationName = organizationName,
     runtimeName = runtimeName,
     bootstrapCommand = bootstrapCommand,
+    nodeLabelCommand = nodeLabelCommand,
+    nodeTaintCommand = nodeTaintCommand,
+    runtimeAgentNodeSelectorYaml = runtimeAgentNodeSelectorYaml,
+    runtimeAgentTolerationsYaml = runtimeAgentTolerationsYaml,
+    bootstrapConfigYaml = bootstrapConfigYaml,
     runtimeEnvironmentType = runtimeEnvironmentType,
     agentInstallMode = agentInstallMode,
     expectedNodeCount = expectedNodeCount,
@@ -88,6 +103,11 @@ data class RuntimeInstallationGuideReadModel(
     val organizationName: String?,
     val runtimeName: String?,
     val bootstrapCommand: String?,
+    val nodeLabelCommand: String?,
+    val nodeTaintCommand: String?,
+    val runtimeAgentNodeSelectorYaml: String?,
+    val runtimeAgentTolerationsYaml: String?,
+    val bootstrapConfigYaml: String?,
     val runtimeEnvironmentType: String?,
     val agentInstallMode: String?,
     val expectedNodeCount: Int?,

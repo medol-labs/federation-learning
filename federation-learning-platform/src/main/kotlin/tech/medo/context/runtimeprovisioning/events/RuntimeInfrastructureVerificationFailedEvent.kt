@@ -10,6 +10,7 @@ import java.util.UUID;
 data class RuntimeInfrastructureVerificationFailedEvent(
     @EventTag(key = "runtimeInfrastructureId")
     val runtimeInfrastructureId: UUID,
-    val observedNodeCount: Int,
+    val runtimeInstallationPlanId: UUID,
+    val observedNodeCount: Int?,
     val failureReason: String
 )

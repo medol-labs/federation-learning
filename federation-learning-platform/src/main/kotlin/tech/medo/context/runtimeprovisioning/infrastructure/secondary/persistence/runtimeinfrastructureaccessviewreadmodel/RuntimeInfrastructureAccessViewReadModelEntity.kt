@@ -32,6 +32,8 @@ class RuntimeInfrastructureAccessViewReadModelEntity : MetadataProjection {
     var expectedNodeCount: Int? = null
     var runtimeAgentId: UUID? = null
     var runtimeAgentVersion: String? = null
+    var infrastructurePreparedAt: LocalDateTime? = null
+    var preparedNodeCount: Int? = null
     var infrastructureVerifiedAt: LocalDateTime? = null
     var infrastructureVerificationFailedAt: LocalDateTime? = null
     @Column(columnDefinition = "text")

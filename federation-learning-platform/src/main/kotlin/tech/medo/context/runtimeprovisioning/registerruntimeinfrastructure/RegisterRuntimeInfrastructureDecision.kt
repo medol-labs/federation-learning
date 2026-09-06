@@ -16,7 +16,7 @@ interface RegisterRuntimeInfrastructureDecision {
             "RegisterRuntimeInfrastructure requires RuntimeInfrastructure to be Planned."
         }
         return listOf(
-            RuntimeInfrastructureRegisteredEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId)
+            RuntimeInfrastructureRegisteredEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, runtimeAgentId = command.runtimeAgentId)
         )
     }
 }

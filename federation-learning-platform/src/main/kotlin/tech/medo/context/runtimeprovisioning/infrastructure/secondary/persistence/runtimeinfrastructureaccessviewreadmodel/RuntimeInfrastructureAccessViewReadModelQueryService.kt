@@ -44,6 +44,8 @@ class RuntimeInfrastructureAccessViewReadModelQueryService(
             criteria.expectedNodeCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<Int>> { root -> root.get("expectedNodeCount") })) }
             criteria.runtimeAgentId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeAgentId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeAgentVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<String>> { root -> root.get("runtimeAgentVersion") })) }
+            criteria.infrastructurePreparedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("infrastructurePreparedAt") })) }
+            criteria.preparedNodeCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<Int>> { root -> root.get("preparedNodeCount") })) }
             criteria.infrastructureVerifiedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("infrastructureVerifiedAt") })) }
             criteria.infrastructureVerificationFailedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("infrastructureVerificationFailedAt") })) }
             criteria.infrastructureVerificationFailureReason?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<String>> { root -> root.get("infrastructureVerificationFailureReason") })) }
@@ -124,6 +126,8 @@ class RuntimeInfrastructureAccessViewReadModelQueryService(
             it.expectedNodeCount = this@toProjection.expectedNodeCount
             it.runtimeAgentId = this@toProjection.runtimeAgentId
             it.runtimeAgentVersion = this@toProjection.runtimeAgentVersion
+            it.infrastructurePreparedAt = this@toProjection.infrastructurePreparedAt
+            it.preparedNodeCount = this@toProjection.preparedNodeCount
             it.infrastructureVerifiedAt = this@toProjection.infrastructureVerifiedAt
             it.infrastructureVerificationFailedAt = this@toProjection.infrastructureVerificationFailedAt
             it.infrastructureVerificationFailureReason = this@toProjection.infrastructureVerificationFailureReason

@@ -49,6 +49,8 @@ class JpaRuntimeInstallationPlanCatalogReadModelRepository(
             it.expectedNodeCount = this@toProjection.expectedNodeCount
             it.planStatus = this@toProjection.planStatus
             it.runtimeInfrastructureId = this@toProjection.runtimeInfrastructureId
+            it.preparedAt = this@toProjection.preparedAt
+            it.preparedNodeCount = this@toProjection.preparedNodeCount
             it.observedNodeCount = this@toProjection.observedNodeCount
             it.runtimeAgentId = this@toProjection.runtimeAgentId
             it.runtimeAgentVersion = this@toProjection.runtimeAgentVersion
@@ -83,6 +85,8 @@ class JpaRuntimeInstallationPlanCatalogReadModelRepository(
             it.expectedNodeCount = this@toEntity.expectedNodeCount
             it.planStatus = this@toEntity.planStatus
             it.runtimeInfrastructureId = this@toEntity.runtimeInfrastructureId
+            it.preparedAt = this@toEntity.preparedAt
+            it.preparedNodeCount = this@toEntity.preparedNodeCount
             it.observedNodeCount = this@toEntity.observedNodeCount
             it.runtimeAgentId = this@toEntity.runtimeAgentId
             it.runtimeAgentVersion = this@toEntity.runtimeAgentVersion

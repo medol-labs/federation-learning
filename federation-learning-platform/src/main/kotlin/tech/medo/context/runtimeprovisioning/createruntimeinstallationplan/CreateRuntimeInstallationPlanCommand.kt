@@ -9,6 +9,7 @@ import java.util.UUID;
 @Command
 data class CreateRuntimeInstallationPlanCommand(
     val runtimeInstallationPlanId: UUID = java.util.UUID.randomUUID(),
+    val runtimeInfrastructureId: UUID = java.util.UUID.randomUUID(),
     val organizationId: UUID,
     val runtimeInfrastructurePackageId: UUID,
     val runtimeName: String,

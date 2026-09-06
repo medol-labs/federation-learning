@@ -27,6 +27,8 @@ class RuntimeInstallationPlanCatalogReadModelCriteria {
     var expectedNodeCount: IntegerFilter? = null
     var planStatus: StringFilter? = null
     var runtimeInfrastructureId: StringFilter? = null
+    var preparedAt: RangeFilter<LocalDateTime>? = null
+    var preparedNodeCount: IntegerFilter? = null
     var observedNodeCount: IntegerFilter? = null
     var runtimeAgentId: StringFilter? = null
     var runtimeAgentVersion: StringFilter? = null
@@ -55,6 +57,8 @@ class RuntimeInstallationPlanCatalogReadModelProjection : MetadataProjection {
     var expectedNodeCount: Int? = null
     var planStatus: String? = null
     var runtimeInfrastructureId: UUID? = null
+    var preparedAt: LocalDateTime? = null
+    var preparedNodeCount: Int? = null
     var observedNodeCount: Int? = null
     var runtimeAgentId: UUID? = null
     var runtimeAgentVersion: String? = null
@@ -89,6 +93,8 @@ fun RuntimeInstallationPlanCatalogReadModelProjection.toReadModel(): RuntimeInst
     expectedNodeCount = expectedNodeCount,
     planStatus = planStatus,
     runtimeInfrastructureId = runtimeInfrastructureId,
+    preparedAt = preparedAt,
+    preparedNodeCount = preparedNodeCount,
     observedNodeCount = observedNodeCount,
     runtimeAgentId = runtimeAgentId,
     runtimeAgentVersion = runtimeAgentVersion,
@@ -130,6 +136,8 @@ data class RuntimeInstallationPlanCatalogReadModel(
     val expectedNodeCount: Int?,
     val planStatus: String?,
     val runtimeInfrastructureId: UUID?,
+    val preparedAt: LocalDateTime?,
+    val preparedNodeCount: Int?,
     val observedNodeCount: Int?,
     val runtimeAgentId: UUID?,
     val runtimeAgentVersion: String?,

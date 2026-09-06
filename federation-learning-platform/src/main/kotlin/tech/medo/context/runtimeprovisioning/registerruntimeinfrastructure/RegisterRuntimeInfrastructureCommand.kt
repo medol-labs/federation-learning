@@ -9,6 +9,7 @@ import java.util.UUID;
 @Command
 data class RegisterRuntimeInfrastructureCommand(
     val runtimeInfrastructureId: UUID,
+    val runtimeInstallationPlanId: UUID,
     val runtimeAgentId: UUID = java.util.UUID.randomUUID()
 ) {
     @TargetEntityId

@@ -22,10 +22,10 @@ class VerifyRuntimeInfrastructureCommandHandler(
         @InjectEntity(idProperty = "runtimeInfrastructureId") state: RuntimeInfrastructureState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RuntimeInfrastructureStateEnum.REGISTERED) {
-            "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Registered."
+        require(state.currentState == RuntimeInfrastructureStateEnum.PREPARED) {
+            "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Prepared."
         }
-        val input = RuntimeInfrastructureVerificationInput(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId, agentInstallMode = command.agentInstallMode, observedNodeCount = command.observedNodeCount)
+        val input = RuntimeInfrastructureVerificationInput(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, runtimeAgentId = command.runtimeAgentId)
         val portResult = verifyRuntimeInfrastructureService.verify(input)
         val now = java.time.LocalDateTime.now()
 

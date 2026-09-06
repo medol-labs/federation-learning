@@ -29,6 +29,8 @@ class RuntimeInstallationPlanCatalogReadModelEntity : MetadataProjection {
     var expectedNodeCount: Int? = null
     var planStatus: String? = null
     var runtimeInfrastructureId: UUID? = null
+    var preparedAt: LocalDateTime? = null
+    var preparedNodeCount: Int? = null
     var observedNodeCount: Int? = null
     var runtimeAgentId: UUID? = null
     var runtimeAgentVersion: String? = null

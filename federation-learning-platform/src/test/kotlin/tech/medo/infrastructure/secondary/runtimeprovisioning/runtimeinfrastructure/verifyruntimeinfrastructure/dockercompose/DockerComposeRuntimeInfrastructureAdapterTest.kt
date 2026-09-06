@@ -32,6 +32,7 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
     private val runtimeInfrastructureId = UUID.fromString("00000000-0000-0000-0000-000000000001")
     private val runtimeInfrastructurePackageId = UUID.fromString("00000000-0000-0000-0000-000000000002")
     private val runtimeAgentId = UUID.fromString("00000000-0000-0000-0000-000000000003")
+    private val runtimeInstallationPlanId = UUID.fromString("00000000-0000-0000-0000-000000000004")
 
     @Test
     fun `verify succeeds when docker compose version and config succeed`() {
@@ -44,13 +45,14 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
         val result = adapter.verify(
             RuntimeInfrastructureVerificationInput(
                 runtimeInfrastructureId = runtimeInfrastructureId,
-                runtimeAgentId = runtimeAgentId,
-                agentInstallMode = "MANUAL",
-                observedNodeCount = 0
+                runtimeInstallationPlanId = runtimeInstallationPlanId,
+                runtimeAgentId = runtimeAgentId
             )
         )
 
-        assertInstanceOf(RuntimeInfrastructureVerification.Succeeded::class.java, result)
+        val succeeded = assertInstanceOf(RuntimeInfrastructureVerification.Succeeded::class.java, result)
+        assertEquals("AUTO", succeeded.agentInstallMode)
+        assertEquals(1, succeeded.observedNodeCount)
         assertEquals(listOf(listOf("version"), listOf("config", "--services")), runner.calls)
     }
 
@@ -64,9 +66,8 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
         val result = adapter.verify(
             RuntimeInfrastructureVerificationInput(
                 runtimeInfrastructureId = runtimeInfrastructureId,
-                runtimeAgentId = runtimeAgentId,
-                agentInstallMode = "MANUAL",
-                observedNodeCount = 0
+                runtimeInstallationPlanId = runtimeInstallationPlanId,
+                runtimeAgentId = runtimeAgentId
             )
         )
 
@@ -135,7 +136,7 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
 
     private fun runtimeInstallationPlan(): RuntimeInstallationPlanCatalogReadModel =
         RuntimeInstallationPlanCatalogReadModel(
-            runtimeInstallationPlanId = UUID.fromString("00000000-0000-0000-0000-000000000004"),
+            runtimeInstallationPlanId = runtimeInstallationPlanId,
             organizationId = null,
             organizationName = null,
             runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
@@ -146,6 +147,8 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
             expectedNodeCount = 1,
             planStatus = null,
             runtimeInfrastructureId = runtimeInfrastructureId,
+            preparedAt = null,
+            preparedNodeCount = null,
             observedNodeCount = null,
             runtimeAgentId = runtimeAgentId,
             runtimeAgentVersion = null,

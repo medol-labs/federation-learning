@@ -37,6 +37,12 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
             entity.runtimeName = event.runtimeName
+            entity.bootstrapCommand = event.bootstrapCommand
+            entity.nodeLabelCommand = event.nodeLabelCommand
+            entity.nodeTaintCommand = event.nodeTaintCommand
+            entity.runtimeAgentNodeSelectorYaml = event.runtimeAgentNodeSelectorYaml
+            entity.runtimeAgentTolerationsYaml = event.runtimeAgentTolerationsYaml
+            entity.bootstrapConfigYaml = event.bootstrapConfigYaml
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
             ProjectionMetadata.assign(entity, message)

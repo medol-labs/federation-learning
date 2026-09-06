@@ -39,6 +39,8 @@ class K3sVerifyRuntimeInfrastructureAdapter(
         if (!isK3sPackage(runtimePackage, properties)) {
             return rejected("Runtime infrastructure package is not a K3S target.")
         }
+        val agentInstallMode = plan.agentInstallMode
+            ?: return rejected("Runtime installation plan agentInstallMode is required for K3S verification.")
 
         val version = runner.run(properties, listOf("version", "--client"))
         if (!version.succeeded) {
@@ -47,16 +49,27 @@ class K3sVerifyRuntimeInfrastructureAdapter(
             return RuntimeInfrastructureVerification.Unavailable(failure)
         }
 
-        val nodes = runner.run(properties, listOf("get", "nodes", "-o", "name"))
+        val nodeSelector = "medol.dev/runtime-infrastructure-id=${input.runtimeInfrastructureId}"
+        val nodes = runner.run(properties, listOf("get", "nodes", "-l", nodeSelector, "-o", "name"))
         if (!nodes.succeeded) {
-            return rejected(k3sCommandFailure("kubectl get nodes -o name", nodes, properties))
+            return rejected(k3sCommandFailure("kubectl get nodes -l $nodeSelector -o name", nodes, properties))
         }
 
         val observedNodeCount = nodes.output
             .lineSequence()
             .count { it.isNotBlank() }
+        val expectedNodeCount = plan.expectedNodeCount ?: 1
         if (observedNodeCount <= 0) {
-            return rejected("K3S cluster has no observable nodes.")
+            return RuntimeInfrastructureVerification.Rejected(
+                observedNodeCount = observedNodeCount,
+                failureReason = "K3S cluster has no nodes labeled with medol.dev/runtime-infrastructure-id=${input.runtimeInfrastructureId}."
+            )
+        }
+        if (observedNodeCount < expectedNodeCount) {
+            return RuntimeInfrastructureVerification.Rejected(
+                observedNodeCount = observedNodeCount,
+                failureReason = "K3S runtime infrastructure observed $observedNodeCount target node(s), expected at least $expectedNodeCount."
+            )
         }
 
         log.debug(
@@ -64,12 +77,18 @@ class K3sVerifyRuntimeInfrastructureAdapter(
             input.runtimeInfrastructureId,
             observedNodeCount
         )
-        return RuntimeInfrastructureVerification.Succeeded()
+        return RuntimeInfrastructureVerification.Succeeded(
+            agentInstallMode = agentInstallMode,
+            observedNodeCount = observedNodeCount
+        )
     }
 
     private fun rejected(failureReason: String): RuntimeInfrastructureVerification.Rejected {
         log.debug("K3S verification rejected: {}", failureReason)
-        return RuntimeInfrastructureVerification.Rejected(failureReason)
+        return RuntimeInfrastructureVerification.Rejected(
+            observedNodeCount = null,
+            failureReason = failureReason
+        )
     }
 
     companion object {

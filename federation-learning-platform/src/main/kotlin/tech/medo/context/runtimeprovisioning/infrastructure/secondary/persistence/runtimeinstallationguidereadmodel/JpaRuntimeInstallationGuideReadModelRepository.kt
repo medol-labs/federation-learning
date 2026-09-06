@@ -44,6 +44,11 @@ class JpaRuntimeInstallationGuideReadModelRepository(
             it.organizationName = this@toProjection.organizationName
             it.runtimeName = this@toProjection.runtimeName
             it.bootstrapCommand = this@toProjection.bootstrapCommand
+            it.nodeLabelCommand = this@toProjection.nodeLabelCommand
+            it.nodeTaintCommand = this@toProjection.nodeTaintCommand
+            it.runtimeAgentNodeSelectorYaml = this@toProjection.runtimeAgentNodeSelectorYaml
+            it.runtimeAgentTolerationsYaml = this@toProjection.runtimeAgentTolerationsYaml
+            it.bootstrapConfigYaml = this@toProjection.bootstrapConfigYaml
             it.runtimeEnvironmentType = this@toProjection.runtimeEnvironmentType
             it.agentInstallMode = this@toProjection.agentInstallMode
             it.expectedNodeCount = this@toProjection.expectedNodeCount
@@ -66,6 +71,11 @@ class JpaRuntimeInstallationGuideReadModelRepository(
             it.organizationName = this@toEntity.organizationName
             it.runtimeName = this@toEntity.runtimeName
             it.bootstrapCommand = this@toEntity.bootstrapCommand
+            it.nodeLabelCommand = this@toEntity.nodeLabelCommand
+            it.nodeTaintCommand = this@toEntity.nodeTaintCommand
+            it.runtimeAgentNodeSelectorYaml = this@toEntity.runtimeAgentNodeSelectorYaml
+            it.runtimeAgentTolerationsYaml = this@toEntity.runtimeAgentTolerationsYaml
+            it.bootstrapConfigYaml = this@toEntity.bootstrapConfigYaml
             it.runtimeEnvironmentType = this@toEntity.runtimeEnvironmentType
             it.agentInstallMode = this@toEntity.agentInstallMode
             it.expectedNodeCount = this@toEntity.expectedNodeCount

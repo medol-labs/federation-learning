@@ -73,6 +73,14 @@ spec:
       labels:
         app: ${quote(deploymentName)}
     spec:
+      nodeSelector:
+        medol.dev/node-role: "runtime"
+        medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+      tolerations:
+        - key: "medol.dev/runtime-only"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
       containers:
         - name: "runtime-agent"
           image: ${quote(properties.agentImage)}

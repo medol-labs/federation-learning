@@ -21,6 +21,12 @@ class RuntimeInstallationPlanState @EntityCreator constructor() {
     var organizationId: UUID? = null
     var runtimeInfrastructurePackageId: UUID? = null
     var runtimeName: String? = null
+    var bootstrapCommand: String? = null
+    var nodeLabelCommand: String? = null
+    var nodeTaintCommand: String? = null
+    var runtimeAgentNodeSelectorYaml: String? = null
+    var runtimeAgentTolerationsYaml: String? = null
+    var bootstrapConfigYaml: String? = null
     var agentInstallMode: String? = null
     var expectedNodeCount: Int? = null
 
@@ -32,6 +38,12 @@ class RuntimeInstallationPlanState @EntityCreator constructor() {
         organizationId = event.organizationId
         runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
         runtimeName = event.runtimeName
+        bootstrapCommand = event.bootstrapCommand
+        nodeLabelCommand = event.nodeLabelCommand
+        nodeTaintCommand = event.nodeTaintCommand
+        runtimeAgentNodeSelectorYaml = event.runtimeAgentNodeSelectorYaml
+        runtimeAgentTolerationsYaml = event.runtimeAgentTolerationsYaml
+        bootstrapConfigYaml = event.bootstrapConfigYaml
         agentInstallMode = event.agentInstallMode
         expectedNodeCount = event.expectedNodeCount
     }

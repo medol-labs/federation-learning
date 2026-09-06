@@ -37,6 +37,8 @@ class DockerComposeVerifyRuntimeInfrastructureAdapter(
         if (!isDockerComposePackage(runtimePackage.runtimeEnvironmentType)) {
             return rejected("Runtime infrastructure package is not a Docker Compose target.")
         }
+        val agentInstallMode = plan.agentInstallMode
+            ?: return rejected("Runtime installation plan agentInstallMode is required for verification.")
 
         val version = runner.run(properties, listOf("version"))
         if (!version.succeeded) {
@@ -49,9 +51,15 @@ class DockerComposeVerifyRuntimeInfrastructureAdapter(
         if (!config.succeeded) {
             return rejected(commandFailure("docker compose config --services", config))
         }
+        val observedServiceCount = config.output
+            .lineSequence()
+            .count { it.isNotBlank() }
 
         log.debug("Docker Compose runtime infrastructure verified runtimeInfrastructureId={}", input.runtimeInfrastructureId)
-        return RuntimeInfrastructureVerification.Succeeded()
+        return RuntimeInfrastructureVerification.Succeeded(
+            agentInstallMode = agentInstallMode,
+            observedNodeCount = observedServiceCount
+        )
     }
 
     private fun isDockerComposePackage(environmentType: String?): Boolean =
@@ -66,7 +74,10 @@ class DockerComposeVerifyRuntimeInfrastructureAdapter(
 
     private fun rejected(failureReason: String): RuntimeInfrastructureVerification.Rejected {
         log.debug("Docker Compose verification rejected: {}", failureReason)
-        return RuntimeInfrastructureVerification.Rejected(failureReason)
+        return RuntimeInfrastructureVerification.Rejected(
+            observedNodeCount = null,
+            failureReason = failureReason
+        )
     }
 
     companion object {

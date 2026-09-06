@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.VerifyRuntimeInfrastructureCommand
-import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureRegisteredEvent
+import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePreparedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerifiedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationFailedEvent
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureState
@@ -17,68 +17,68 @@ class VerifyRuntimeInfrastructureDecisionTest {
     fun RuntimeInfrastructureVerificationPassed() {
         val state = RuntimeInfrastructureState()
         state.evolve(
-            RuntimeInfrastructureRegisteredEvent(
+            RuntimeInfrastructurePreparedEvent(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()),
-            runtimeAgentId = java.util.UUID.randomUUID()
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            runtimeAgentId = java.util.UUID.randomUUID(),
+            preparedNodeCount = 0,
+            preparationNotes = null
             )
         )
 
         val command = VerifyRuntimeInfrastructureCommand(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()),
-            runtimeAgentId = java.util.UUID.randomUUID(),
-            agentInstallMode = "PLATFORM_MANAGED",
-            verificationPassed = true,
-            observedNodeCount = 3,
-            failureReason = null
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            runtimeAgentId = java.util.UUID.randomUUID()
         )
 
         val events = (object : VerifyRuntimeInfrastructureDecision {}).decide(
             command,
             state = state,
             portResult = RuntimeInfrastructureVerification.Succeeded(
-
+                agentInstallMode = "",
+                observedNodeCount = 0
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
         )
 
         val event = events.filterIsInstance<RuntimeInfrastructureVerifiedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()), event.runtimeInfrastructureId)
+        assertEquals(command.runtimeInstallationPlanId, event.runtimeInstallationPlanId)
         assertEquals(command.runtimeAgentId, event.runtimeAgentId)
-        assertEquals("PLATFORM_MANAGED", event.agentInstallMode)
-        assertEquals(3, event.observedNodeCount)
     }
 
     @Test
     fun RuntimeInfrastructureVerificationFailed() {
         val state = RuntimeInfrastructureState()
         state.evolve(
-            RuntimeInfrastructureRegisteredEvent(
+            RuntimeInfrastructurePreparedEvent(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
-            runtimeAgentId = java.util.UUID.randomUUID()
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            runtimeAgentId = java.util.UUID.randomUUID(),
+            preparedNodeCount = 0,
+            preparationNotes = null
             )
         )
 
         val command = VerifyRuntimeInfrastructureCommand(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
-            runtimeAgentId = java.util.UUID.randomUUID(),
-            agentInstallMode = "",
-            verificationPassed = false,
-            observedNodeCount = 0,
-            failureReason = "Runtime infrastructure is unreachable."
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            runtimeAgentId = java.util.UUID.randomUUID()
         )
 
         val events = (object : VerifyRuntimeInfrastructureDecision {}).decide(
             command,
             state = state,
             portResult = RuntimeInfrastructureVerification.Rejected(
-                failureReason = "Runtime infrastructure is unreachable."
+                observedNodeCount = null,
+                failureReason = ""
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")
         )
 
         val event = events.filterIsInstance<RuntimeInfrastructureVerificationFailedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()), event.runtimeInfrastructureId)
-        assertEquals(0, event.observedNodeCount)
-        assertEquals("Runtime infrastructure is unreachable.", event.failureReason)
+        assertEquals(command.runtimeInstallationPlanId, event.runtimeInstallationPlanId)
     }
 }

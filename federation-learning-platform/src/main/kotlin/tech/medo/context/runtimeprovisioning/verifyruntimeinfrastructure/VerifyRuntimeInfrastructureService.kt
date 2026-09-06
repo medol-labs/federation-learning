@@ -9,15 +9,18 @@ interface VerifyRuntimeInfrastructureService {
 
 data class RuntimeInfrastructureVerificationInput(
     val runtimeInfrastructureId: UUID,
-    val runtimeAgentId: UUID,
-    val agentInstallMode: String,
-    val observedNodeCount: Int
+    val runtimeInstallationPlanId: UUID,
+    val runtimeAgentId: UUID
 )
 
 sealed interface RuntimeInfrastructureVerification {
-    class Succeeded : RuntimeInfrastructureVerification
+    data class Succeeded(
+        val agentInstallMode: String,
+        val observedNodeCount: Int
+    ) : RuntimeInfrastructureVerification
 
     data class Rejected(
+        val observedNodeCount: Int?,
         val failureReason: String
     ) : RuntimeInfrastructureVerification
 

@@ -36,6 +36,11 @@ class RuntimeInstallationGuideReadModelQueryService(
             criteria.organizationName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("organizationName") })) }
             criteria.runtimeName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("runtimeName") })) }
             criteria.bootstrapCommand?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("bootstrapCommand") })) }
+            criteria.nodeLabelCommand?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("nodeLabelCommand") })) }
+            criteria.nodeTaintCommand?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("nodeTaintCommand") })) }
+            criteria.runtimeAgentNodeSelectorYaml?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("runtimeAgentNodeSelectorYaml") })) }
+            criteria.runtimeAgentTolerationsYaml?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("runtimeAgentTolerationsYaml") })) }
+            criteria.bootstrapConfigYaml?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("bootstrapConfigYaml") })) }
             criteria.runtimeEnvironmentType?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("runtimeEnvironmentType") })) }
             criteria.agentInstallMode?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("agentInstallMode") })) }
             criteria.expectedNodeCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<Int>> { root -> root.get("expectedNodeCount") })) }
@@ -73,6 +78,11 @@ class RuntimeInstallationGuideReadModelQueryService(
             it.organizationName = this@toProjection.organizationName
             it.runtimeName = this@toProjection.runtimeName
             it.bootstrapCommand = this@toProjection.bootstrapCommand
+            it.nodeLabelCommand = this@toProjection.nodeLabelCommand
+            it.nodeTaintCommand = this@toProjection.nodeTaintCommand
+            it.runtimeAgentNodeSelectorYaml = this@toProjection.runtimeAgentNodeSelectorYaml
+            it.runtimeAgentTolerationsYaml = this@toProjection.runtimeAgentTolerationsYaml
+            it.bootstrapConfigYaml = this@toProjection.bootstrapConfigYaml
             it.runtimeEnvironmentType = this@toProjection.runtimeEnvironmentType
             it.agentInstallMode = this@toProjection.agentInstallMode
             it.expectedNodeCount = this@toProjection.expectedNodeCount

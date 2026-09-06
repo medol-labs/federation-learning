@@ -13,13 +13,13 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 
 interface VerifyRuntimeInfrastructureDecision {
     fun decide(command: VerifyRuntimeInfrastructureCommand, state: RuntimeInfrastructureState, portResult: RuntimeInfrastructureVerification, now: java.time.LocalDateTime): List<Any> {
-        require(state.currentState == RuntimeInfrastructureStateEnum.REGISTERED) {
-            "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Registered."
+        require(state.currentState == RuntimeInfrastructureStateEnum.PREPARED) {
+            "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Prepared."
         }
         return when (portResult) {
-                    is RuntimeInfrastructureVerification.Succeeded -> listOf(RuntimeInfrastructureVerifiedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId, agentInstallMode = command.agentInstallMode, observedNodeCount = command.observedNodeCount))
-                    is RuntimeInfrastructureVerification.Rejected -> listOf(RuntimeInfrastructureVerificationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, observedNodeCount = command.observedNodeCount, failureReason = portResult.failureReason))
-                    is RuntimeInfrastructureVerification.Unavailable -> listOf(RuntimeInfrastructureVerificationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, observedNodeCount = command.observedNodeCount, failureReason = portResult.failureReason))
+                    is RuntimeInfrastructureVerification.Succeeded -> listOf(RuntimeInfrastructureVerifiedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, runtimeAgentId = command.runtimeAgentId, agentInstallMode = portResult.agentInstallMode, observedNodeCount = portResult.observedNodeCount))
+                    is RuntimeInfrastructureVerification.Rejected -> listOf(RuntimeInfrastructureVerificationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, observedNodeCount = portResult.observedNodeCount, failureReason = portResult.failureReason))
+                    is RuntimeInfrastructureVerification.Unavailable -> listOf(RuntimeInfrastructureVerificationFailedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, observedNodeCount = null, failureReason = portResult.failureReason))
                 }
     }
 }

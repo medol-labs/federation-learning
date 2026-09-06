@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeprovisioning.confirmruntimeinfrastructureprepared
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeprovisioning.confirmruntimeinfrastructureprepared.ConfirmRuntimeInfrastructurePreparedDecision
+
+@Component
+class ConfirmRuntimeInfrastructurePreparedDecisionComponent : ConfirmRuntimeInfrastructurePreparedDecision

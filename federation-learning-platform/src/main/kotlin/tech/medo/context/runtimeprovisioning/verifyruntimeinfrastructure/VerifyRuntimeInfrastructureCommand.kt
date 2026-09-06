@@ -9,11 +9,8 @@ import java.util.UUID;
 @Command
 data class VerifyRuntimeInfrastructureCommand(
     val runtimeInfrastructureId: UUID,
-    val runtimeAgentId: UUID,
-    val agentInstallMode: String,
-    val verificationPassed: Boolean,
-    val observedNodeCount: Int,
-    val failureReason: String?
+    val runtimeInstallationPlanId: UUID,
+    val runtimeAgentId: UUID
 ) {
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
