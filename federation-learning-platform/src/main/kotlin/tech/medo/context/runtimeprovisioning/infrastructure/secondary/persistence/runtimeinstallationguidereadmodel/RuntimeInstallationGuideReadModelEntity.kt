@@ -9,6 +9,7 @@ import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
 
 
 @Entity
@@ -18,6 +19,9 @@ class RuntimeInstallationGuideReadModelEntity : MetadataProjection {
     var runtimeInstallationPlanId: UUID? = null
     var organizationId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
+    var runtimeAgentId: UUID? = null
+    @Enumerated(EnumType.STRING)
+    var runtimeInfrastructureState: RuntimeInfrastructureStateEnum? = null
     var runtimeInfrastructurePackageId: UUID? = null
     var runtimeInfrastructurePackageName: String? = null
     var runtimeInfrastructurePackageVersion: String? = null

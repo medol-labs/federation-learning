@@ -4,7 +4,9 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
 
+import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
 import tech.jhipster.service.filter.StringFilter
 
@@ -15,6 +17,8 @@ class RuntimeInstallationGuideReadModelCriteria {
     var runtimeInstallationPlanId: StringFilter? = null
     var organizationId: StringFilter? = null
     var runtimeInfrastructureId: StringFilter? = null
+    var runtimeAgentId: StringFilter? = null
+    var runtimeInfrastructureState: Filter<RuntimeInfrastructureStateEnum>? = null
     var runtimeInfrastructurePackageId: StringFilter? = null
     var runtimeInfrastructurePackageName: StringFilter? = null
     var runtimeInfrastructurePackageVersion: StringFilter? = null
@@ -36,6 +40,8 @@ class RuntimeInstallationGuideReadModelProjection : MetadataProjection {
     var runtimeInstallationPlanId: UUID? = null
     var organizationId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
+    var runtimeAgentId: UUID? = null
+    var runtimeInfrastructureState: RuntimeInfrastructureStateEnum? = null
     var runtimeInfrastructurePackageId: UUID? = null
     var runtimeInfrastructurePackageName: String? = null
     var runtimeInfrastructurePackageVersion: String? = null
@@ -63,6 +69,8 @@ fun RuntimeInstallationGuideReadModelProjection.toReadModel(): RuntimeInstallati
     runtimeInstallationPlanId = runtimeInstallationPlanId,
     organizationId = organizationId,
     runtimeInfrastructureId = runtimeInfrastructureId,
+    runtimeAgentId = runtimeAgentId,
+    runtimeInfrastructureState = runtimeInfrastructureState,
     runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
     runtimeInfrastructurePackageName = runtimeInfrastructurePackageName,
     runtimeInfrastructurePackageVersion = runtimeInfrastructurePackageVersion,
@@ -97,6 +105,8 @@ data class RuntimeInstallationGuideReadModel(
     val runtimeInstallationPlanId: UUID?,
     val organizationId: UUID?,
     val runtimeInfrastructureId: UUID?,
+    val runtimeAgentId: UUID?,
+    val runtimeInfrastructureState: RuntimeInfrastructureStateEnum?,
     val runtimeInfrastructurePackageId: UUID?,
     val runtimeInfrastructurePackageName: String?,
     val runtimeInfrastructurePackageVersion: String?,

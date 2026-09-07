@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
 
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModel
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModelCriteria
@@ -38,6 +39,8 @@ class JpaRuntimeInstallationGuideReadModelRepository(
             it.runtimeInstallationPlanId = this@toProjection.runtimeInstallationPlanId
             it.organizationId = this@toProjection.organizationId
             it.runtimeInfrastructureId = this@toProjection.runtimeInfrastructureId
+            it.runtimeAgentId = this@toProjection.runtimeAgentId
+            it.runtimeInfrastructureState = this@toProjection.runtimeInfrastructureState
             it.runtimeInfrastructurePackageId = this@toProjection.runtimeInfrastructurePackageId
             it.runtimeInfrastructurePackageName = this@toProjection.runtimeInfrastructurePackageName
             it.runtimeInfrastructurePackageVersion = this@toProjection.runtimeInfrastructurePackageVersion
@@ -65,6 +68,8 @@ class JpaRuntimeInstallationGuideReadModelRepository(
             it.runtimeInstallationPlanId = this@toEntity.runtimeInstallationPlanId
             it.organizationId = this@toEntity.organizationId
             it.runtimeInfrastructureId = this@toEntity.runtimeInfrastructureId
+            it.runtimeAgentId = this@toEntity.runtimeAgentId
+            it.runtimeInfrastructureState = this@toEntity.runtimeInfrastructureState
             it.runtimeInfrastructurePackageId = this@toEntity.runtimeInfrastructurePackageId
             it.runtimeInfrastructurePackageName = this@toEntity.runtimeInfrastructurePackageName
             it.runtimeInfrastructurePackageVersion = this@toEntity.runtimeInfrastructurePackageVersion

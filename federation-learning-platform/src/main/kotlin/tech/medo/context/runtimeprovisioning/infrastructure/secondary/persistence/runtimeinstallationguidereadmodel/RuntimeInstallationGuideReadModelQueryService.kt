@@ -11,6 +11,7 @@ import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.util.UUID;
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
 
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModel
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModelCriteria
@@ -30,6 +31,8 @@ class RuntimeInstallationGuideReadModelQueryService(
             criteria.runtimeInstallationPlanId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInstallationPlanId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.organizationId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("organizationId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeInfrastructureId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInfrastructureId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.runtimeAgentId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeAgentId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.runtimeInfrastructureState?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<RuntimeInfrastructureStateEnum>> { root -> root.get("runtimeInfrastructureState") })) }
             criteria.runtimeInfrastructurePackageId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInfrastructurePackageId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeInfrastructurePackageName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("runtimeInfrastructurePackageName") })) }
             criteria.runtimeInfrastructurePackageVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> root.get("runtimeInfrastructurePackageVersion") })) }
@@ -72,6 +75,8 @@ class RuntimeInstallationGuideReadModelQueryService(
             it.runtimeInstallationPlanId = this@toProjection.runtimeInstallationPlanId
             it.organizationId = this@toProjection.organizationId
             it.runtimeInfrastructureId = this@toProjection.runtimeInfrastructureId
+            it.runtimeAgentId = this@toProjection.runtimeAgentId
+            it.runtimeInfrastructureState = this@toProjection.runtimeInfrastructureState
             it.runtimeInfrastructurePackageId = this@toProjection.runtimeInfrastructurePackageId
             it.runtimeInfrastructurePackageName = this@toProjection.runtimeInfrastructurePackageName
             it.runtimeInfrastructurePackageVersion = this@toProjection.runtimeInfrastructurePackageVersion
