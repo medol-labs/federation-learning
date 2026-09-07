@@ -22,6 +22,8 @@ type RuntimeInstallationGuideRecord = {
   runtimeInstallationPlanId: string;
   organizationId: string;
   runtimeInfrastructureId: string;
+  runtimeAgentId?: string;
+  runtimeInfrastructureState?: "PLANNED" | "REGISTERED" | "PREPARED" | "VERIFIED" | "VERIFICATION_FAILED" | "AGENT_READY" | "RUNTIME_AGENT_FAILED" | "OFFLINE" | "CONNECTED";
   runtimeInfrastructurePackageId?: string;
   runtimeInfrastructurePackageName?: string;
   runtimeInfrastructurePackageVersion?: string;
@@ -119,6 +121,46 @@ export const RuntimeInstallationGuideList = () => {
           label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id"),
           placeholder: "Enter Runtime Infrastructure Id",
           variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeAgentId", {
+        id: "runtimeAgentId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.runtimeAgentId.label", "Runtime Agent Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeAgentId.label", "Runtime Agent Id"),
+          placeholder: "Enter Runtime Agent Id",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeInfrastructureState", {
+        id: "runtimeInfrastructureState",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.label", "Runtime Infrastructure State")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.label", "Runtime Infrastructure State"),
+          placeholder: "Select Runtime Infrastructure State",
+          variant: "multiSelect",
+          filterOperator: "inArray",
+          options: [
+            { label: "Planned", value: "PLANNED" },
+            { label: "Registered", value: "REGISTERED" },
+            { label: "Prepared", value: "PREPARED" },
+            { label: "Verified", value: "VERIFIED" },
+            { label: "Verification Failed", value: "VERIFICATION_FAILED" },
+            { label: "Agent Ready", value: "AGENT_READY" },
+            { label: "Runtime Agent Failed", value: "RUNTIME_AGENT_FAILED" },
+            { label: "Offline", value: "OFFLINE" },
+            { label: "Connected", value: "CONNECTED" },
+          ],
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
@@ -331,6 +373,31 @@ export const RuntimeInstallationGuideList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+                {isCommandVisible(row.original, "", "runtimeInfrastructureState", ["Registered"]) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="confirmRuntimeInfrastructurePrepared"
+                    recordItemId={row.original.runtimeInstallationPlanId}
+                    size="sm"
+                    query={{
+                      runtimeInfrastructureId: row.original.runtimeInfrastructureId,
+                      runtimeInstallationPlanId: row.original.runtimeInstallationPlanId,
+                      runtimeAgentId: row.original.runtimeAgentId,
+                    }}
+                  />
+                )}
+                {isCommandVisible(row.original, "", "runtimeInfrastructureState", ["Planned"]) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="registerRuntimeInfrastructure"
+                    recordItemId={row.original.runtimeInstallationPlanId}
+                    size="sm"
+                    query={{
+                      runtimeInfrastructureId: row.original.runtimeInfrastructureId,
+                      runtimeInstallationPlanId: row.original.runtimeInstallationPlanId,
+                    }}
+                  />
+                )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeInstallationPlanId} size="sm" />
             </RowActionMenu>
           </div>
@@ -354,7 +421,7 @@ export const RuntimeInstallationGuideList = () => {
         tableName: "runtime_installation_guide_read_model_entity",
         idField: "runtimeInstallationPlanId",
         idFields: ["runtimeInstallationPlanId"],
-        queryFields: ["runtimeInstallationPlanId","organizationId","runtimeInfrastructureId","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","organizationName","runtimeName","bootstrapCommand","nodeLabelCommand","nodeTaintCommand","runtimeAgentNodeSelectorYaml","runtimeAgentTolerationsYaml","bootstrapConfigYaml","runtimeEnvironmentType","agentInstallMode","expectedNodeCount"],
+        queryFields: ["runtimeInstallationPlanId","organizationId","runtimeInfrastructureId","runtimeAgentId","runtimeInfrastructureState","runtimeInfrastructurePackageId","runtimeInfrastructurePackageName","runtimeInfrastructurePackageVersion","organizationName","runtimeName","bootstrapCommand","nodeLabelCommand","nodeTaintCommand","runtimeAgentNodeSelectorYaml","runtimeAgentTolerationsYaml","bootstrapConfigYaml","runtimeEnvironmentType","agentInstallMode","expectedNodeCount"],
         label: t("resources.runtime_installation_guide.label", "Runtime Installation Guide"),
         aggregateRoute: "runtimeinstallationplan",
         queryRoute: "runtimeinstallationguide",

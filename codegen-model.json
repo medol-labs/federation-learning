@@ -17181,6 +17181,47 @@
               "portOutput": false
             },
             {
+              "name": "runtimeAgentId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeInfrastructureRegistered.runtimeAgentId"
+                ],
+                "lookup": {
+                  "key": "runtimeInfrastructureId",
+                  "cacheProjection": "RuntimeInfrastructureRegistered",
+                  "sourceField": "runtimeAgentId",
+                  "targetField": "runtimeAgentId",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
+              "name": "runtimeInfrastructureState",
+              "type": "RuntimeInfrastructure.State",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "runtimeInfrastructurePackageId",
               "type": "UUID",
               "cardinality": "Single",
@@ -17513,6 +17554,36 @@
               "direction": "INBOUND",
               "title": "Runtime Installation Plan Created",
               "elementType": "EVENT"
+            },
+            {
+              "id": "event-71fb8f7b",
+              "direction": "INBOUND",
+              "title": "Runtime Infrastructure Planned",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-9d489759",
+              "direction": "INBOUND",
+              "title": "Runtime Infrastructure Registered",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-2673bc36",
+              "direction": "INBOUND",
+              "title": "Runtime Infrastructure Prepared",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-e8571c1d",
+              "direction": "INBOUND",
+              "title": "Runtime Infrastructure Verified",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-9742d847",
+              "direction": "INBOUND",
+              "title": "Runtime Infrastructure Verification Failed",
+              "elementType": "EVENT"
             }
           ],
           "listElement": true
@@ -17662,6 +17733,12 @@
               "id": "readmodel-3be9a609",
               "direction": "OUTBOUND",
               "title": "Runtime Installation Plan Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-da54e769",
+              "direction": "OUTBOUND",
+              "title": "Runtime Installation Guide",
               "elementType": "READMODEL"
             },
             {
@@ -17880,6 +17957,12 @@
               "id": "readmodel-3be9a609",
               "direction": "OUTBOUND",
               "title": "Runtime Installation Plan Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-da54e769",
+              "direction": "OUTBOUND",
+              "title": "Runtime Installation Guide",
               "elementType": "READMODEL"
             },
             {
@@ -18143,6 +18226,12 @@
               "id": "readmodel-3be9a609",
               "direction": "OUTBOUND",
               "title": "Runtime Installation Plan Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-da54e769",
+              "direction": "OUTBOUND",
+              "title": "Runtime Installation Guide",
               "elementType": "READMODEL"
             },
             {
@@ -18486,6 +18575,12 @@
               "elementType": "READMODEL"
             },
             {
+              "id": "readmodel-da54e769",
+              "direction": "OUTBOUND",
+              "title": "Runtime Installation Guide",
+              "elementType": "READMODEL"
+            },
+            {
               "id": "command-72356ef7",
               "direction": "INBOUND",
               "title": "Verify Runtime Infrastructure",
@@ -18575,6 +18670,12 @@
               "id": "readmodel-3be9a609",
               "direction": "OUTBOUND",
               "title": "Runtime Installation Plan Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-da54e769",
+              "direction": "OUTBOUND",
+              "title": "Runtime Installation Guide",
               "elementType": "READMODEL"
             },
             {

@@ -134,8 +134,8 @@ import {
   OrganizationDirectoryRegisterOrganization,
   OrganizationDirectoryActivateOrganization,
   OrganizationDirectoryDeactivateOrganization,
-  OrganizationDirectoryReactivateOrganization,
   OrganizationDirectoryCreateRuntimeInstallationPlan,
+  OrganizationDirectoryReactivateOrganization,
 } from "../pages/organization-directory";
 import {
   PermissionCatalogList,
@@ -163,7 +163,6 @@ import {
   RuntimeAgentEndpointCatalogList,
   RuntimeAgentEndpointCatalogShow,
   RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished,
-  RuntimeAgentEndpointCatalogConfirmRuntimeInfrastructurePrepared,
   RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment,
 } from "../pages/runtime-agent-endpoint-catalog";
 import {
@@ -208,6 +207,8 @@ import {
 import {
   RuntimeInstallationGuideList,
   RuntimeInstallationGuideShow,
+  RuntimeInstallationGuideConfirmRuntimeInfrastructurePrepared,
+  RuntimeInstallationGuideRegisterRuntimeInfrastructure,
 } from "../pages/runtime-installation-guide";
 import {
   RuntimeInstallationPlanCatalogList,
@@ -442,8 +443,8 @@ export const AppRouter = () => {
           <Route path="show/:id" element={<OrganizationDirectoryShow />} />
           <Route path=":id/command/activate-organization" element={<OrganizationDirectoryActivateOrganization />} />
           <Route path=":id/command/deactivate-organization" element={<OrganizationDirectoryDeactivateOrganization />} />
-          <Route path=":id/command/reactivate-organization" element={<OrganizationDirectoryReactivateOrganization />} />
           <Route path=":id/command/create-runtime-installation-plan" element={<OrganizationDirectoryCreateRuntimeInstallationPlan />} />
+          <Route path=":id/command/reactivate-organization" element={<OrganizationDirectoryReactivateOrganization />} />
         </Route>
         <Route path="/permission-catalog">
           <Route index element={<PermissionCatalogList />} />
@@ -471,7 +472,6 @@ export const AppRouter = () => {
           <Route index element={<RuntimeAgentEndpointCatalogList />} />
           <Route path="show/:id" element={<RuntimeAgentEndpointCatalogShow />} />
           <Route path=":id/command/record-runtime-connection-established" element={<RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished />} />
-          <Route path=":id/command/confirm-runtime-infrastructure-prepared" element={<RuntimeAgentEndpointCatalogConfirmRuntimeInfrastructurePrepared />} />
           <Route path=":id/command/retry-runtime-agent-deployment" element={<RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment />} />
         </Route>
         <Route path="/runtime-agent-lifecycle-catalog">
@@ -516,6 +516,8 @@ export const AppRouter = () => {
         <Route path="/runtime-installation-guide">
           <Route index element={<RuntimeInstallationGuideList />} />
           <Route path="show/:id" element={<RuntimeInstallationGuideShow />} />
+          <Route path=":id/command/confirm-runtime-infrastructure-prepared" element={<RuntimeInstallationGuideConfirmRuntimeInfrastructurePrepared />} />
+          <Route path=":id/command/register-runtime-infrastructure" element={<RuntimeInstallationGuideRegisterRuntimeInfrastructure />} />
         </Route>
         <Route path="/runtime-installation-plan-catalog">
           <Route index element={<RuntimeInstallationPlanCatalogList />} />

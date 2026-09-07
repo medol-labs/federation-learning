@@ -175,14 +175,6 @@ export const OrganizationDirectoryList = () => {
                     size="sm"
                   />
                 )}
-                {isCommandVisible(row.original, "", "state", ["Deactivated"]) && (
-                  <CommandButton
-                    variant="ghost"
-                    command="reactivateOrganization"
-                    recordItemId={row.original.organizationId}
-                    size="sm"
-                  />
-                )}
                 {isCommandVisible(row.original, "", "", []) && (
                   <CommandButton
                     variant="ghost"
@@ -192,6 +184,14 @@ export const OrganizationDirectoryList = () => {
                     query={{
                       organizationId: row.original.organizationId,
                     }}
+                  />
+                )}
+                {isCommandVisible(row.original, "", "state", ["Deactivated"]) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="reactivateOrganization"
+                    recordItemId={row.original.organizationId}
+                    size="sm"
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.organizationId} size="sm" />

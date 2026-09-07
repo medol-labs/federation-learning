@@ -56,6 +56,16 @@ export const RuntimeInstallationGuideShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeAgentId.label", "Runtime Agent Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentId, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.label", "Runtime Infrastructure State")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructureState, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInfrastructurePackageId.label", "Runtime Infrastructure Package Id")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructurePackageId, t)}</p>
             </div>

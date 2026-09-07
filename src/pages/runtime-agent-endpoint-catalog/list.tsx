@@ -236,18 +236,6 @@ export const RuntimeAgentEndpointCatalogList = () => {
                     }}
                   />
                 )}
-                {isCommandVisible(row.original, "", "connectionStatus", ["Registered"]) && (
-                  <CommandButton
-                    variant="ghost"
-                    command="confirmRuntimeInfrastructurePrepared"
-                    recordItemId={row.original.runtimeAgentId}
-                    size="sm"
-                    query={{
-                      runtimeInfrastructureId: row.original.runtimeInfrastructureId,
-                      runtimeAgentId: row.original.runtimeAgentId,
-                    }}
-                  />
-                )}
                 {isCommandVisible(row.original, "", "", []) && (
                   <CommandButton
                     variant="ghost"
