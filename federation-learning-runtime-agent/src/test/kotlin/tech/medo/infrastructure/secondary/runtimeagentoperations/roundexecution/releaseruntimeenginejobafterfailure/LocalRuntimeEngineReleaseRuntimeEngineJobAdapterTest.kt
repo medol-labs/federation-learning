@@ -9,6 +9,7 @@ import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.
 import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution.RuntimeEngineHealthResponse
 import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution.RuntimeEngineJobRequest
 import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution.RuntimeEngineJobResponse
+import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution.RuntimeEngineResourceManager
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterfailure.ReleaseRuntimeEngineJobAfterFailureInput
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterfailure.ReleaseRuntimeEngineJobAfterFailureResult
 import java.util.UUID
@@ -64,8 +65,15 @@ class LocalRuntimeEngineReleaseRuntimeEngineJobAdapterTest {
                 enabled = true,
                 endpoint = "http://localhost:18080/"
             ),
-            runtimeEngineClient = client
+            runtimeEngineClient = client,
+            runtimeEngineResourceManager = NoOpRuntimeEngineResourceManager
         )
+
+    private object NoOpRuntimeEngineResourceManager : RuntimeEngineResourceManager {
+        override fun ensureStarted(jobId: String) = Unit
+
+        override fun delete(jobId: String) = Unit
+    }
 
     private fun input(runtimeEngineJobId: String?): ReleaseRuntimeEngineJobAfterFailureInput =
         ReleaseRuntimeEngineJobAfterFailureInput(

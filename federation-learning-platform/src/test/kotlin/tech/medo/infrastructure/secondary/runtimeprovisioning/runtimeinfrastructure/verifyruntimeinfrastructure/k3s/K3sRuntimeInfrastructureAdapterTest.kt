@@ -152,7 +152,7 @@ class K3sRuntimeInfrastructureAdapterTest {
         )
 
         val unavailable = assertInstanceOf(DeployRuntimeAgentResult.Unavailable::class.java, result)
-        assertTrue(unavailable.failureReason.contains("kubectl rollout status deployment/runtime-agent-test-000000000000"))
+        assertTrue(unavailable.failureReason.contains("Kubernetes API await Deployment runtime-agent-test-000000000000"))
         assertTrue(unavailable.failureReason.contains("exitCode=1"))
     }
 

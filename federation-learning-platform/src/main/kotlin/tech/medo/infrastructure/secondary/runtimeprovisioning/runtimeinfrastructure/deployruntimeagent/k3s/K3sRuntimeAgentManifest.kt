@@ -73,6 +73,7 @@ spec:
       labels:
         app: ${quote(deploymentName)}
     spec:
+      serviceAccountName: ${quote(properties.runtimeEngineServiceAccountName)}
       nodeSelector:
         medol.dev/node-role: "runtime"
         medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
@@ -141,6 +142,26 @@ spec:
               value: ${quote(endpoint)}
             - name: "RUNTIME_AGENT_ENDPOINT_SCOPE"
               value: ${quote(properties.endpointScope)}
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODE"
+              value: "kubernetes"
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_NAMESPACE"
+              value: ${quote(properties.namespace)}
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_SERVICE_ACCOUNT_NAME"
+              value: ${quote(properties.runtimeEngineServiceAccountName)}
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE"
+              value: ${quote(properties.runtimeEngineImage)}
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE_PULL_POLICY"
+              value: ${quote(properties.runtimeEngineImagePullPolicy)}
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_DATASET_HOST_PATH"
+              value: ${quote(properties.runtimeEngineDatasetHostPath)}
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_RUNTIME_HOST_PATH"
+              value: ${quote(properties.runtimeEngineWorkHostPath)}
+          volumeMounts:
+            - name: "runtime-datasets"
+              mountPath: "/workspace/datasets"
+              readOnly: true
+            - name: "runtime-work"
+              mountPath: "/workspace/tmp/runtime-engine"
           readinessProbe:
             httpGet:
               path: "/actuator/health"
@@ -157,6 +178,15 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 12
             initialDelaySeconds: 30
+      volumes:
+        - name: "runtime-datasets"
+          hostPath:
+            path: ${quote(properties.runtimeEngineDatasetHostPath)}
+            type: "Directory"
+        - name: "runtime-work"
+          hostPath:
+            path: ${quote(properties.runtimeEngineWorkHostPath)}
+            type: "DirectoryOrCreate"
 ---
 apiVersion: v1
 kind: Service

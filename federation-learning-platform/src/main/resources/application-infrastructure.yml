@@ -11,8 +11,6 @@ platform:
       supported-environment-types: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_SUPPORTED_ENVIRONMENT_TYPES:DOCKER_COMPOSE}
     k3s:
       enabled: ${PLATFORM_RUNTIME_K3S_ENABLED:true}
-      kubectl-executable: ${PLATFORM_RUNTIME_K3S_KUBECTL_EXECUTABLE:kubectl}
-      kubeconfig: ${PLATFORM_RUNTIME_K3S_KUBECONFIG:}
       namespace: ${PLATFORM_RUNTIME_K3S_NAMESPACE:default}
       agent-manifest-file: ${PLATFORM_RUNTIME_K3S_AGENT_MANIFEST_FILE:}
       rendered-manifest-directory: ${PLATFORM_RUNTIME_K3S_RENDERED_MANIFEST_DIRECTORY:target/runtime-agent-manifests}
@@ -27,6 +25,11 @@ platform:
       umadb-target: ${PLATFORM_RUNTIME_K3S_UMADB_TARGET:umadb:50051}
       endpoint-scope: ${PLATFORM_RUNTIME_K3S_ENDPOINT_SCOPE:CLUSTER}
       agent-version: ${PLATFORM_RUNTIME_K3S_AGENT_VERSION:k3s}
+      runtime-engine-service-account-name: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_SERVICE_ACCOUNT_NAME:federation-learning-runtime-engine-scheduler}
+      runtime-engine-image: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE:medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
+      runtime-engine-image-pull-policy: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE_PULL_POLICY:IfNotPresent}
+      runtime-engine-dataset-host-path: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_DATASET_HOST_PATH:/workspace/datasets}
+      runtime-engine-work-host-path: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_WORK_HOST_PATH:/workspace/tmp/runtime-engine}
       command-timeout: ${PLATFORM_RUNTIME_K3S_COMMAND_TIMEOUT:PT60S}
       supported-environment-types: ${PLATFORM_RUNTIME_K3S_SUPPORTED_ENVIRONMENT_TYPES:K3S,KUBERNETES}
 

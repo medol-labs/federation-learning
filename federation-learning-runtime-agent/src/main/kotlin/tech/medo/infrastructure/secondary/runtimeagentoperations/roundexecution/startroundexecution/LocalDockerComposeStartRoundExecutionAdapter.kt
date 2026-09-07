@@ -1,9 +1,11 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution
 
 import org.slf4j.LoggerFactory
-import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
+import tech.jhipster.service.filter.StringFilter
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
+import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionInput
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionResult
@@ -21,7 +23,7 @@ class LocalDockerComposeStartRoundExecutionAdapter(
 ) : StartRoundExecutionService {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    override fun supports(input: StartRoundExecutionInput): Boolean = properties.enabled
+    override fun supports(input: StartRoundExecutionInput): Boolean = properties.enabled && properties.usesDockerCompose()
 
     override fun execute(input: StartRoundExecutionInput): StartRoundExecutionResult {
         val binding = findBinding(input)
@@ -90,12 +92,15 @@ class LocalDockerComposeStartRoundExecutionAdapter(
     }
 
     private fun findBinding(input: StartRoundExecutionInput): RuntimeDatasetBindingCatalogReadModel? =
-        bindingRepository.findAll(Pageable.unpaged()).content
-                .firstOrNull()
-            // .filter { it.runtimeId == input.runtimeId }
-            // .filter { it.organizationId == input.organizationId }
-            // .filter { it.datasetId != null }
-            // .maxByOrNull { it.configuredAt ?: java.time.LocalDateTime.MIN }
+        bindingRepository.findAllByCriteria(
+            RuntimeDatasetBindingCatalogReadModelCriteria().apply {
+                runtimeId = StringFilter().apply { equals = input.runtimeId.toString() }
+                organizationId = StringFilter().apply { equals = input.organizationId.toString() }
+            },
+            PageRequest.of(0, 20)
+        ).content
+            .filter { it.datasetId != null }
+            .maxByOrNull { it.configuredAt ?: java.time.LocalDateTime.MIN }
 
     private fun waitUntilHealthy(endpoint: String) {
         val deadline = Instant.now().plus(properties.healthTimeout.coerceAtLeast(Duration.ofSeconds(1)))

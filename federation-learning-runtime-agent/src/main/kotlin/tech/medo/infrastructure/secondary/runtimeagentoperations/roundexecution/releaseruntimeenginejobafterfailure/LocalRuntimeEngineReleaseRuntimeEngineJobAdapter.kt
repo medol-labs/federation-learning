@@ -4,6 +4,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution.LocalRuntimeEngineProperties
 import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution.RuntimeEngineClient
+import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution.RuntimeEngineResourceManager
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.ReleaseRuntimeEngineJobAfterCompletionInput
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.ReleaseRuntimeEngineJobAfterCompletionResult
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.ReleaseRuntimeEngineJobAfterCompletionService
@@ -23,7 +24,8 @@ import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterstartfailure
 @Component
 class LocalRuntimeEngineReleaseRuntimeEngineJobAdapter(
     private val properties: LocalRuntimeEngineProperties,
-    private val runtimeEngineClient: RuntimeEngineClient
+    private val runtimeEngineClient: RuntimeEngineClient,
+    private val runtimeEngineResourceManager: RuntimeEngineResourceManager
 ) : ReleaseRuntimeEngineJobAfterCompletionService,
     ReleaseRuntimeEngineJobAfterFailureService,
     ReleaseRuntimeEngineJobAfterStartFailureService,
@@ -78,7 +80,7 @@ class LocalRuntimeEngineReleaseRuntimeEngineJobAdapter(
     private fun release(roundExecutionId: String, runtimeEngineJobId: String?): String? {
         val jobId = runtimeEngineJobId?.takeIf { it.isNotBlank() }
             ?: return "Runtime engine job release skipped because runtimeEngineJobId is empty."
-        val endpoint = properties.endpoint.trim().removeSuffix("/")
+        val endpoint = properties.endpointFor(jobId)
         return try {
             val response = runtimeEngineClient.cancelJob(endpoint, jobId)
             log.info(
@@ -89,6 +91,9 @@ class LocalRuntimeEngineReleaseRuntimeEngineJobAdapter(
                 response.status,
                 response.exitCode
             )
+            if (properties.usesKubernetes()) {
+                runtimeEngineResourceManager.delete(jobId)
+            }
             null
         } catch (ex: Exception) {
             val reason = "Runtime engine job $jobId release failed: ${ex.message ?: ex.javaClass.name}"

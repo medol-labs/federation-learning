@@ -44,7 +44,7 @@ class K3sVerifyRuntimeInfrastructureAdapter(
 
         val version = runner.run(properties, listOf("version", "--client"))
         if (!version.succeeded) {
-            val failure = k3sCommandFailure("kubectl version --client", version, properties)
+            val failure = k3sCommandFailure("Kubernetes API client initialization", version, properties)
             log.debug("K3S verification unavailable: {}", failure)
             return RuntimeInfrastructureVerification.Unavailable(failure)
         }
@@ -52,7 +52,7 @@ class K3sVerifyRuntimeInfrastructureAdapter(
         val nodeSelector = "medol.dev/runtime-infrastructure-id=${input.runtimeInfrastructureId}"
         val nodes = runner.run(properties, listOf("get", "nodes", "-l", nodeSelector, "-o", "name"))
         if (!nodes.succeeded) {
-            return rejected(k3sCommandFailure("kubectl get nodes -l $nodeSelector -o name", nodes, properties))
+            return rejected(k3sCommandFailure("Kubernetes API list nodes with selector $nodeSelector", nodes, properties))
         }
 
         val observedNodeCount = nodes.output

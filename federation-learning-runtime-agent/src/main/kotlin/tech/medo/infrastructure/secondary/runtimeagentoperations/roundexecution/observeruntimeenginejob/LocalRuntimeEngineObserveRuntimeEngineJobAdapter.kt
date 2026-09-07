@@ -25,7 +25,7 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
     override fun supports(input: ObserveRuntimeEngineJobInput): Boolean = properties.enabled
 
     override fun execute(input: ObserveRuntimeEngineJobInput): ObserveRuntimeEngineJobResult {
-        val endpoint = properties.endpoint.trim().removeSuffix("/")
+        val endpoint = properties.endpointFor(input.runtimeEngineJobId)
         val deadline = Instant.now().plus(properties.jobObservationTimeout.coerceAtLeast(Duration.ZERO))
         var response: RuntimeEngineJobResponse
         do {

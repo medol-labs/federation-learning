@@ -6,8 +6,6 @@ import java.time.Duration
 @ConfigurationProperties(prefix = "platform.runtime.k3s")
 class K3sRuntimeInfrastructureProperties {
     var enabled: Boolean = true
-    var kubectlExecutable: String = "kubectl"
-    var kubeconfig: String? = null
     var namespace: String = "default"
     var agentManifestFile: String? = null
     var renderedManifestDirectory: String = "target/runtime-agent-manifests"
@@ -22,6 +20,11 @@ class K3sRuntimeInfrastructureProperties {
     var umadbTarget: String = "umadb:50051"
     var endpointScope: String = "CLUSTER"
     var agentVersion: String = "k3s"
+    var runtimeEngineServiceAccountName: String = "federation-learning-runtime-engine-scheduler"
+    var runtimeEngineImage: String = "medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT"
+    var runtimeEngineImagePullPolicy: String = "IfNotPresent"
+    var runtimeEngineDatasetHostPath: String = "/workspace/datasets"
+    var runtimeEngineWorkHostPath: String = "/workspace/tmp/runtime-engine"
     var commandTimeout: Duration = Duration.ofSeconds(60)
     var supportedEnvironmentTypes: List<String> = listOf("K3S", "KUBERNETES")
 }

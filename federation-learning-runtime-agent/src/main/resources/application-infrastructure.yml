@@ -27,6 +27,7 @@ runtime-agent:
     internal-token: ${MEDOL_SECURITY_INTERNAL_TOKEN:local-dev-internal-token}
   local-runtime-engine:
     enabled: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENABLED:true}
+    mode: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODE:docker-compose}
     compose-file: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_COMPOSE_FILE:../../federation-learning-runtime-engine/docker-compose.yml}
     project-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_PROJECT_NAME:federation-learning-runtime-engine}
     service-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_SERVICE_NAME:federation-learning-runtime-engine}
@@ -45,3 +46,11 @@ runtime-agent:
     health-poll-interval: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_HEALTH_POLL_INTERVAL:PT1S}
     job-observation-timeout: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_JOB_OBSERVATION_TIMEOUT:PT5M}
     job-observation-poll-interval: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_JOB_OBSERVATION_POLL_INTERVAL:PT2S}
+    kubernetes-namespace: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_NAMESPACE:default}
+    kubernetes-service-account-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_SERVICE_ACCOUNT_NAME:federation-learning-runtime-engine-scheduler}
+    kubernetes-image: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE:medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
+    kubernetes-image-pull-policy: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE_PULL_POLICY:IfNotPresent}
+    kubernetes-container-port: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_CONTAINER_PORT:18080}
+    kubernetes-runtime-infrastructure-id: ${RUNTIME_INFRASTRUCTURE_ID:}
+    kubernetes-dataset-host-path: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_DATASET_HOST_PATH:/workspace/datasets}
+    kubernetes-runtime-host-path: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_RUNTIME_HOST_PATH:/workspace/tmp/runtime-engine}
