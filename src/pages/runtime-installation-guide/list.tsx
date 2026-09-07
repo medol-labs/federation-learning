@@ -16,6 +16,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 
 type RuntimeInstallationGuideRecord = {
   runtimeInstallationPlanId: string;
@@ -204,7 +205,7 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("nodeLabelCommand", {
         id: "nodeLabelCommand",
@@ -219,7 +220,7 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("nodeTaintCommand", {
         id: "nodeTaintCommand",
@@ -234,7 +235,7 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("runtimeAgentNodeSelectorYaml", {
         id: "runtimeAgentNodeSelectorYaml",
@@ -249,7 +250,7 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("runtimeAgentTolerationsYaml", {
         id: "runtimeAgentTolerationsYaml",
@@ -264,7 +265,7 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("bootstrapConfigYaml", {
         id: "bootstrapConfigYaml",
@@ -279,7 +280,7 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("runtimeEnvironmentType", {
         id: "runtimeEnvironmentType",

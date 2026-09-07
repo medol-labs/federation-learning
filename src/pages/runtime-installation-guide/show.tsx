@@ -2,6 +2,7 @@
 import { useShow, useTranslate } from "@refinedev/core";
 
 import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
+import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 import {
   Card,
   CardContent,
@@ -81,32 +82,32 @@ export const RuntimeInstallationGuideShow = () => {
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.bootstrapCommand.label", "Bootstrap Command")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.bootstrapCommand, t)}</p>
+              <CopyableText value={record?.bootstrapCommand} />
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.nodeLabelCommand.label", "Node Label Command")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.nodeLabelCommand, t)}</p>
+              <CopyableText value={record?.nodeLabelCommand} />
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.nodeTaintCommand.label", "Node Taint Command")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.nodeTaintCommand, t)}</p>
+              <CopyableText value={record?.nodeTaintCommand} />
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeAgentNodeSelectorYaml.label", "Runtime Agent Node Selector Yaml")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentNodeSelectorYaml, t)}</p>
+              <CopyableText value={record?.runtimeAgentNodeSelectorYaml} />
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeAgentTolerationsYaml.label", "Runtime Agent Tolerations Yaml")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentTolerationsYaml, t)}</p>
+              <CopyableText value={record?.runtimeAgentTolerationsYaml} />
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.bootstrapConfigYaml.label", "Bootstrap Config Yaml")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.bootstrapConfigYaml, t)}</p>
+              <CopyableText value={record?.bootstrapConfigYaml} />
             </div>
             <Separator />
             <div>
