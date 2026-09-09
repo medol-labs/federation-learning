@@ -1,0 +1,7 @@
+package tech.medo.domain.organizationmanagement.deactivateorganization
+
+import org.springframework.stereotype.Component
+import tech.medo.organizationmanagement.deactivateorganization.DeactivateOrganizationDecision
+
+@Component
+class DeactivateOrganizationDecisionComponent : DeactivateOrganizationDecision

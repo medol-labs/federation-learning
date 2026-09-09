@@ -1,0 +1,7 @@
+package tech.medo.domain.datasetgovernance.supersedefeatureschemaversion
+
+import org.springframework.stereotype.Component
+import tech.medo.datasetgovernance.supersedefeatureschemaversion.SupersedeFeatureSchemaVersionDecision
+
+@Component
+class SupersedeFeatureSchemaVersionDecisionComponent : SupersedeFeatureSchemaVersionDecision

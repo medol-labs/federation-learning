@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimemonitoring.detectruntimenoderesourcepressure
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimemonitoring.detectruntimenoderesourcepressure.DetectRuntimeNodeResourcePressureDecision
+
+@Component
+class DetectRuntimeNodeResourcePressureDecisionComponent : DetectRuntimeNodeResourcePressureDecision

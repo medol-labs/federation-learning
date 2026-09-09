@@ -1,0 +1,9 @@
+target/
+.env
+.idea/
+*.iml
+.DS_Store
+*.tar
+*.tar.gz
+deployment-compose-files/
+volumes/umadb/uma.db

@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.retryroundexecutionafterruntimefailure
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.retryroundexecutionafterruntimefailure.RetryRoundExecutionAfterRuntimeFailureDecision
+
+@Component
+class RetryRoundExecutionAfterRuntimeFailureDecisionComponent : RetryRoundExecutionAfterRuntimeFailureDecision

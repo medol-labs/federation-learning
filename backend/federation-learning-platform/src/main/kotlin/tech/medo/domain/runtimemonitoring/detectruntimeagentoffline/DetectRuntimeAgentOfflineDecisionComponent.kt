@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimemonitoring.detectruntimeagentoffline
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimemonitoring.detectruntimeagentoffline.DetectRuntimeAgentOfflineDecision
+
+@Component
+class DetectRuntimeAgentOfflineDecisionComponent : DetectRuntimeAgentOfflineDecision

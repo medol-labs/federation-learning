@@ -1,0 +1,11 @@
+package tech.medo.runtimeprovisioning.infrastructure.secondary.persistence.runtimeinfrastructurepackagecatalogreadmodel
+
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor
+import java.util.UUID;
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum;
+
+
+interface SpringDataRuntimeInfrastructurePackageCatalogReadModelRepository : JpaRepository<RuntimeInfrastructurePackageCatalogReadModelEntity, UUID>, JpaSpecificationExecutor<RuntimeInfrastructurePackageCatalogReadModelEntity> {
+
+}

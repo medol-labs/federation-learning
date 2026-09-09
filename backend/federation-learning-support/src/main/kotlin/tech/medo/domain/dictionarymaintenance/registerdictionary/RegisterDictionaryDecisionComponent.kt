@@ -1,0 +1,7 @@
+package tech.medo.domain.dictionarymaintenance.registerdictionary
+
+import org.springframework.stereotype.Component
+import tech.medo.dictionarymaintenance.registerdictionary.RegisterDictionaryDecision
+
+@Component
+class RegisterDictionaryDecisionComponent : RegisterDictionaryDecision

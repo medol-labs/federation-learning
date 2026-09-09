@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.failroundexecution
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.failroundexecution.FailRoundExecutionDecision
+
+@Component
+class FailRoundExecutionDecisionComponent : FailRoundExecutionDecision

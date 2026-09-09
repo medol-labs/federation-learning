@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.reportruntimeinstanceselfcheckpassed
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.reportruntimeinstanceselfcheckpassed.ReportRuntimeInstanceSelfCheckPassedDecision
+
+@Component
+class ReportRuntimeInstanceSelfCheckPassedDecisionComponent : ReportRuntimeInstanceSelfCheckPassedDecision

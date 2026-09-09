@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeprovisioning.deployruntimeagent
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentDecision
+
+@Component
+class DeployRuntimeAgentDecisionComponent : DeployRuntimeAgentDecision

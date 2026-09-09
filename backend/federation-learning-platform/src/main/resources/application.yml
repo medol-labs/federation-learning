@@ -1,0 +1,109 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  config:
+    import:
+      - optional:classpath:application-infrastructure.yml
+      - optional:file:./config/application-infrastructure.yml
+      - optional:file:.env[.properties]
+      - optional:file:federation-learning-platform/.env[.properties]
+  application:
+    name: federation-learning-platform
+  docker:
+    compose:
+      enabled: ${SPRING_DOCKER_COMPOSE_ENABLED:true}
+      file: ${DOCKER_COMPOSE_FILE:docker-compose.yml}
+      lifecycle-management: start-and-stop
+      profiles:
+        active: axon-server
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/federation_learning_platform}
+    username: ${DB_USERNAME:medol}
+    password: ${DB_PASSWORD:medol}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+axon:
+  update-check:
+    disabled: ${AXON_UPDATE_CHECK_DISABLED:false}
+  converter:
+    general: jackson2
+    messages: jackson2
+    events: jackson2
+  axonserver:
+    enabled: ${AXON_SERVER_ENABLED:false}
+    servers: ${AXON_SERVER_SERVERS:localhost:8124}
+    context: ${AXON_SERVER_CONTEXT:default}
+    event-store:
+      enabled: ${AXON_SERVER_EVENT_STORE_ENABLED:true}
+
+medol:
+  security:
+    enabled: ${MEDOL_SECURITY_ENABLED:true}
+    provider: ${MEDOL_SECURITY_PROVIDER:local}
+    jwt-secret: ${MEDOL_SECURITY_JWT_SECRET:change-me-change-me-change-me-change-me}
+    local-token-ttl-seconds: ${MEDOL_SECURITY_LOCAL_TOKEN_TTL_SECONDS:28800}
+    allowed-origins: ${MEDOL_SECURITY_ALLOWED_ORIGINS:http://localhost:*,http://127.0.0.1:*}
+    internal-token: ${MEDOL_SECURITY_INTERNAL_TOKEN:local-dev-internal-token}
+    internal-subject: ${MEDOL_SECURITY_INTERNAL_SUBJECT:00000000-0000-0000-0000-000000000001}
+    internal-username: ${MEDOL_SECURITY_INTERNAL_USERNAME:internal-service}
+    internal-roles: ${MEDOL_SECURITY_INTERNAL_ROLES:SERVICE}
+    internal-permissions: ${MEDOL_SECURITY_INTERNAL_PERMISSIONS:*:*}
+    admin-bootstrap:
+      enabled: ${MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED:false}
+      setup-token: ${MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN:}
+    supabase:
+      issuer-uri: ${SUPABASE_JWT_ISSUER_URI:}
+      jwk-set-uri: ${SUPABASE_JWT_JWK_SET_URI:}
+    portal-sso:
+      enabled: ${MEDOL_SECURITY_PORTAL_SSO_ENABLED:false}
+      jwt-secret: ${MEDOL_SECURITY_PORTAL_SSO_JWT_SECRET:}
+      issuer: ${MEDOL_SECURITY_PORTAL_SSO_ISSUER:}
+      audience: ${MEDOL_SECURITY_PORTAL_SSO_AUDIENCE:}
+      default-redirect-path: ${MEDOL_SECURITY_PORTAL_SSO_DEFAULT_REDIRECT_PATH:/}
+      user-source: ${MEDOL_SECURITY_PORTAL_SSO_USER_SOURCE:PORTAL_SSO}
+  axon:
+    flow-logging:
+      enabled: ${MEDOL_AXON_FLOW_LOGGING_ENABLED:true}
+    event-storage: ${MEDOL_AXON_EVENT_STORAGE:umadb}
+    umadb:
+      target: ${UMADB_TARGET:localhost:50052}
+      plaintext: ${UMADB_PLAINTEXT:true}
+      api-key: ${UMADB_API_KEY:}
+      batch-size: ${UMADB_BATCH_SIZE:256}
+      request-timeout: ${UMADB_REQUEST_TIMEOUT:PT10S}
+
+external:
+  runtime-agent:
+    endpoint: ${RUNTIME_AGENT_URL:}
+
+integration:
+  federation-learning-support:
+    endpoint: ${FEDERATION_LEARNING_SUPPORT_URL:}
+  federation-learning-runtime-agent:
+    endpoint: ${FEDERATION_LEARNING_RUNTIME_AGENT_URL:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  exception-conversion-word: "%ex{10}"
+  level:
+    tech.medo.shared.application.axon: ${MEDOL_AXON_FLOW_LOG_LEVEL:INFO}
+    org.axonframework: ${AXON_LOG_LEVEL:INFO}

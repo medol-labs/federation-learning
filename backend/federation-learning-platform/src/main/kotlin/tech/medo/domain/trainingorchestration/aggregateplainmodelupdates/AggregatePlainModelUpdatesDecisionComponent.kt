@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.aggregateplainmodelupdates
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.aggregateplainmodelupdates.AggregatePlainModelUpdatesDecision
+
+@Component
+class AggregatePlainModelUpdatesDecisionComponent : AggregatePlainModelUpdatesDecision

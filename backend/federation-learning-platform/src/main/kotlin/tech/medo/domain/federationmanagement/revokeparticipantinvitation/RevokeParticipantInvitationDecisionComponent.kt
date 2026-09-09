@@ -1,0 +1,7 @@
+package tech.medo.domain.federationmanagement.revokeparticipantinvitation
+
+import org.springframework.stereotype.Component
+import tech.medo.federationmanagement.revokeparticipantinvitation.RevokeParticipantInvitationDecision
+
+@Component
+class RevokeParticipantInvitationDecisionComponent : RevokeParticipantInvitationDecision

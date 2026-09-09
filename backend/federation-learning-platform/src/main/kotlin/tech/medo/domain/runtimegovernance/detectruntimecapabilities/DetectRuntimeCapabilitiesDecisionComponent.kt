@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimegovernance.detectruntimecapabilities
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimegovernance.detectruntimecapabilities.DetectRuntimeCapabilitiesDecision
+
+@Component
+class DetectRuntimeCapabilitiesDecisionComponent : DetectRuntimeCapabilitiesDecision

@@ -1,0 +1,45 @@
+platform:
+  runtime:
+    docker-compose:
+      enabled: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_ENABLED:true}
+      compose-file: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_FILE:../docker-compose-runtime-agent.yml}
+      project-name: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_PROJECT_NAME:}
+      project-directory: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_PROJECT_DIRECTORY:..}
+      agent-service-name: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_AGENT_SERVICE_NAME:federation-learning-runtime-agent}
+      agent-version: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_AGENT_VERSION:docker-compose}
+      command-timeout: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_COMMAND_TIMEOUT:PT60S}
+      supported-environment-types: ${PLATFORM_RUNTIME_DOCKER_COMPOSE_SUPPORTED_ENVIRONMENT_TYPES:DOCKER_COMPOSE}
+    k3s:
+      enabled: ${PLATFORM_RUNTIME_K3S_ENABLED:true}
+      namespace: ${PLATFORM_RUNTIME_K3S_NAMESPACE:default}
+      agent-manifest-file: ${PLATFORM_RUNTIME_K3S_AGENT_MANIFEST_FILE:}
+      rendered-manifest-directory: ${PLATFORM_RUNTIME_K3S_RENDERED_MANIFEST_DIRECTORY:target/runtime-agent-manifests}
+      agent-deployment-name: ${PLATFORM_RUNTIME_K3S_AGENT_DEPLOYMENT_NAME:federation-learning-runtime-agent}
+      agent-image: ${PLATFORM_RUNTIME_K3S_AGENT_IMAGE:medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT}
+      agent-replicas: ${PLATFORM_RUNTIME_K3S_AGENT_REPLICAS:1}
+      agent-container-port: ${PLATFORM_RUNTIME_K3S_AGENT_CONTAINER_PORT:8082}
+      platform-url: ${PLATFORM_RUNTIME_K3S_PLATFORM_URL:http://federation-learning-platform:8081}
+      support-url: ${PLATFORM_RUNTIME_K3S_SUPPORT_URL:http://federation-learning-support:8080}
+      database-url: ${PLATFORM_RUNTIME_K3S_DATABASE_URL:jdbc:postgresql://postgres:5432/federation_learning_runtime_agent}
+      database-secret-name: ${PLATFORM_RUNTIME_K3S_DATABASE_SECRET_NAME:postgres-secret}
+      umadb-target: ${PLATFORM_RUNTIME_K3S_UMADB_TARGET:umadb:50051}
+      endpoint-scope: ${PLATFORM_RUNTIME_K3S_ENDPOINT_SCOPE:CLUSTER}
+      agent-version: ${PLATFORM_RUNTIME_K3S_AGENT_VERSION:k3s}
+      runtime-engine-service-account-name: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_SERVICE_ACCOUNT_NAME:federation-learning-runtime-engine-scheduler}
+      runtime-engine-image: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE:medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
+      runtime-engine-image-pull-policy: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE_PULL_POLICY:IfNotPresent}
+      runtime-engine-dataset-host-path: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_DATASET_HOST_PATH:/workspace/datasets}
+      runtime-engine-work-host-path: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_WORK_HOST_PATH:/workspace/tmp/runtime-engine}
+      command-timeout: ${PLATFORM_RUNTIME_K3S_COMMAND_TIMEOUT:PT60S}
+      supported-environment-types: ${PLATFORM_RUNTIME_K3S_SUPPORTED_ENVIRONMENT_TYPES:K3S,KUBERNETES}
+
+federation-learning:
+  aggregation:
+    enabled: ${FL_AGGREGATION_ENABLED:true}
+    runtime-engine-endpoint: ${FL_AGGREGATION_RUNTIME_ENGINE_ENDPOINT:http://localhost:18080}
+    support-endpoint: ${FEDERATION_LEARNING_SUPPORT_URL:http://localhost:8080}
+    internal-token: ${MEDOL_SECURITY_INTERNAL_TOKEN:local-dev-internal-token}
+    node-name: ${FL_AGGREGATION_NODE_NAME:platform-aggregator}
+    aggregation-algorithm: ${FL_AGGREGATION_ALGORITHM:FED_AVG}
+    poll-interval: ${FL_AGGREGATION_POLL_INTERVAL:PT1S}
+    job-timeout: ${FL_AGGREGATION_JOB_TIMEOUT:PT5M}

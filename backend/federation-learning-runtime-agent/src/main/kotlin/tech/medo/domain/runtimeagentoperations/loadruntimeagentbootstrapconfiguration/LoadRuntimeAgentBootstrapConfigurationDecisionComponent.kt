@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.loadruntimeagentbootstrapconfiguration
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.loadruntimeagentbootstrapconfiguration.LoadRuntimeAgentBootstrapConfigurationDecision
+
+@Component
+class LoadRuntimeAgentBootstrapConfigurationDecisionComponent : LoadRuntimeAgentBootstrapConfigurationDecision

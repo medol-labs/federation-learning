@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.starttraininground
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundDecision
+
+@Component
+class StartTrainingRoundDecisionComponent : StartTrainingRoundDecision

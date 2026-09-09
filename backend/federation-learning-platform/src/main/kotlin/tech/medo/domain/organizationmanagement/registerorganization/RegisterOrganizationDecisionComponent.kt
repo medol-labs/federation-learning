@@ -1,0 +1,7 @@
+package tech.medo.domain.organizationmanagement.registerorganization
+
+import org.springframework.stereotype.Component
+import tech.medo.organizationmanagement.registerorganization.RegisterOrganizationDecision
+
+@Component
+class RegisterOrganizationDecisionComponent : RegisterOrganizationDecision

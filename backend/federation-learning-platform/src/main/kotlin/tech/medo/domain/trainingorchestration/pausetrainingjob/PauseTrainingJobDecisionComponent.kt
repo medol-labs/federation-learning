@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.pausetrainingjob
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.pausetrainingjob.PauseTrainingJobDecision
+
+@Component
+class PauseTrainingJobDecisionComponent : PauseTrainingJobDecision

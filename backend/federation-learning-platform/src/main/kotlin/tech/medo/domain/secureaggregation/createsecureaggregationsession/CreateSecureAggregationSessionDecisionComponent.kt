@@ -1,0 +1,7 @@
+package tech.medo.domain.secureaggregation.createsecureaggregationsession
+
+import org.springframework.stereotype.Component
+import tech.medo.secureaggregation.createsecureaggregationsession.CreateSecureAggregationSessionDecision
+
+@Component
+class CreateSecureAggregationSessionDecisionComponent : CreateSecureAggregationSessionDecision

@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.resumetrainingjob
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.resumetrainingjob.ResumeTrainingJobDecision
+
+@Component
+class ResumeTrainingJobDecisionComponent : ResumeTrainingJobDecision

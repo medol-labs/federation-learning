@@ -1,0 +1,7 @@
+package tech.medo.domain.datasetgovernance.markcurrentrecommendedfeatureschemaversion
+
+import org.springframework.stereotype.Component
+import tech.medo.datasetgovernance.markcurrentrecommendedfeatureschemaversion.MarkCurrentRecommendedFeatureSchemaVersionDecision
+
+@Component
+class MarkCurrentRecommendedFeatureSchemaVersionDecisionComponent : MarkCurrentRecommendedFeatureSchemaVersionDecision

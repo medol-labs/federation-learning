@@ -1,0 +1,7 @@
+package tech.medo.domain.federationmanagement.suspendparticipant
+
+import org.springframework.stereotype.Component
+import tech.medo.federationmanagement.suspendparticipant.SuspendParticipantDecision
+
+@Component
+class SuspendParticipantDecisionComponent : SuspendParticipantDecision

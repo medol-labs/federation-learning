@@ -1,0 +1,7 @@
+package tech.medo.domain.identityaccessmanagement.registerpermission
+
+import org.springframework.stereotype.Component
+import tech.medo.identityaccessmanagement.registerpermission.RegisterPermissionDecision
+
+@Component
+class RegisterPermissionDecisionComponent : RegisterPermissionDecision

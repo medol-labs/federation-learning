@@ -1,0 +1,5 @@
+file-upload:
+  public-base-url: ${FILE_UPLOAD_PUBLIC_BASE_URL:http://localhost:${server.port:8080}}
+  local:
+    root-directory: ${FILE_UPLOAD_LOCAL_ROOT_DIRECTORY:${java.io.tmpdir}/medo/file-upload}
+    expiration-minutes: ${FILE_UPLOAD_LOCAL_EXPIRATION_MINUTES:60}

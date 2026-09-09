@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimegovernance.activateruntimeidentity
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimegovernance.activateruntimeidentity.ActivateRuntimeIdentityDecision
+
+@Component
+class ActivateRuntimeIdentityDecisionComponent : ActivateRuntimeIdentityDecision

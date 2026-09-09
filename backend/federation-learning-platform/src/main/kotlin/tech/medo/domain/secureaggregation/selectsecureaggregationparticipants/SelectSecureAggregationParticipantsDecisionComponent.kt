@@ -1,0 +1,7 @@
+package tech.medo.domain.secureaggregation.selectsecureaggregationparticipants
+
+import org.springframework.stereotype.Component
+import tech.medo.secureaggregation.selectsecureaggregationparticipants.SelectSecureAggregationParticipantsDecision
+
+@Component
+class SelectSecureAggregationParticipantsDecisionComponent : SelectSecureAggregationParticipantsDecision

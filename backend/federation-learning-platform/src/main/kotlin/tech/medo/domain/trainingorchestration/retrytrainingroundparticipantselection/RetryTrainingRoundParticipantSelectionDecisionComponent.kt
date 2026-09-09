@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.retrytrainingroundparticipantselection
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.retrytrainingroundparticipantselection.RetryTrainingRoundParticipantSelectionDecision
+
+@Component
+class RetryTrainingRoundParticipantSelectionDecisionComponent : RetryTrainingRoundParticipantSelectionDecision

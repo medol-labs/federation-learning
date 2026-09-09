@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.releaseruntimeenginejobafterstartfailure
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterstartfailure.ReleaseRuntimeEngineJobAfterStartFailureDecision
+
+@Component
+class ReleaseRuntimeEngineJobAfterStartFailureDecisionComponent : ReleaseRuntimeEngineJobAfterStartFailureDecision

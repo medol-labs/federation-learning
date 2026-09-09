@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimemonitoring.recordruntimenodeinventory
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimemonitoring.recordruntimenodeinventory.RecordRuntimeNodeInventoryDecision
+
+@Component
+class RecordRuntimeNodeInventoryDecisionComponent : RecordRuntimeNodeInventoryDecision

@@ -1,0 +1,7 @@
+package tech.medo.domain.federationmanagement.removeparticipant
+
+import org.springframework.stereotype.Component
+import tech.medo.federationmanagement.removeparticipant.RemoveParticipantDecision
+
+@Component
+class RemoveParticipantDecisionComponent : RemoveParticipantDecision

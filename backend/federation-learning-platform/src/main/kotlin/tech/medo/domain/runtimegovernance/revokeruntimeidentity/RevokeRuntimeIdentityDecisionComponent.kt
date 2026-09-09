@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimegovernance.revokeruntimeidentity
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimegovernance.revokeruntimeidentity.RevokeRuntimeIdentityDecision
+
+@Component
+class RevokeRuntimeIdentityDecisionComponent : RevokeRuntimeIdentityDecision

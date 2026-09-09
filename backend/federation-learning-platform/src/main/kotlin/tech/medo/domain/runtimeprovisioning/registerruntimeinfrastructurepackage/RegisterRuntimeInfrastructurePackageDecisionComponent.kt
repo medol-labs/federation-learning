@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeprovisioning.registerruntimeinfrastructurepackage
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeprovisioning.registerruntimeinfrastructurepackage.RegisterRuntimeInfrastructurePackageDecision
+
+@Component
+class RegisterRuntimeInfrastructurePackageDecisionComponent : RegisterRuntimeInfrastructurePackageDecision

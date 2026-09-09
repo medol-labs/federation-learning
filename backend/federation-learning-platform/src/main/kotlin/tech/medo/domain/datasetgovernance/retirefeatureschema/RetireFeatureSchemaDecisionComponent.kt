@@ -1,0 +1,7 @@
+package tech.medo.domain.datasetgovernance.retirefeatureschema
+
+import org.springframework.stereotype.Component
+import tech.medo.datasetgovernance.retirefeatureschema.RetireFeatureSchemaDecision
+
+@Component
+class RetireFeatureSchemaDecisionComponent : RetireFeatureSchemaDecision

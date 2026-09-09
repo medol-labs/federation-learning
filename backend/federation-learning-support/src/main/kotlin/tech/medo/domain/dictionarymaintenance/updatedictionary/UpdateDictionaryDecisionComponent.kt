@@ -1,0 +1,7 @@
+package tech.medo.domain.dictionarymaintenance.updatedictionary
+
+import org.springframework.stereotype.Component
+import tech.medo.dictionarymaintenance.updatedictionary.UpdateDictionaryDecision
+
+@Component
+class UpdateDictionaryDecisionComponent : UpdateDictionaryDecision

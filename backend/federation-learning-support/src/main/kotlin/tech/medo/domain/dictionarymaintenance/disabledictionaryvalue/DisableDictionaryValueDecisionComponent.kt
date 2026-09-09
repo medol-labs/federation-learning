@@ -1,0 +1,7 @@
+package tech.medo.domain.dictionarymaintenance.disabledictionaryvalue
+
+import org.springframework.stereotype.Component
+import tech.medo.dictionarymaintenance.disabledictionaryvalue.DisableDictionaryValueDecision
+
+@Component
+class DisableDictionaryValueDecisionComponent : DisableDictionaryValueDecision

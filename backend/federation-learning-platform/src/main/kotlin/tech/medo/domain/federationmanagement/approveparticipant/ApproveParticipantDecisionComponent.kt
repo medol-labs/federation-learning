@@ -1,0 +1,7 @@
+package tech.medo.domain.federationmanagement.approveparticipant
+
+import org.springframework.stereotype.Component
+import tech.medo.federationmanagement.approveparticipant.ApproveParticipantDecision
+
+@Component
+class ApproveParticipantDecisionComponent : ApproveParticipantDecision

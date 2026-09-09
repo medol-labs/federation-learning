@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.profileagentdataset
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetDecision
+
+@Component
+class ProfileAgentDatasetDecisionComponent : ProfileAgentDatasetDecision

@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.submitmodelupdatesubmission
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.submitmodelupdatesubmission.SubmitModelUpdateSubmissionDecision
+
+@Component
+class SubmitModelUpdateSubmissionDecisionComponent : SubmitModelUpdateSubmissionDecision

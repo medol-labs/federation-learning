@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeprovisioning.verifyruntimeinfrastructure
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.VerifyRuntimeInfrastructureDecision
+
+@Component
+class VerifyRuntimeInfrastructureDecisionComponent : VerifyRuntimeInfrastructureDecision

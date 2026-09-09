@@ -1,0 +1,7 @@
+package tech.medo.domain.datasetgovernance.recordruntimedatasetmetadata
+
+import org.springframework.stereotype.Component
+import tech.medo.datasetgovernance.recordruntimedatasetmetadata.RecordRuntimeDatasetMetadataDecision
+
+@Component
+class RecordRuntimeDatasetMetadataDecisionComponent : RecordRuntimeDatasetMetadataDecision

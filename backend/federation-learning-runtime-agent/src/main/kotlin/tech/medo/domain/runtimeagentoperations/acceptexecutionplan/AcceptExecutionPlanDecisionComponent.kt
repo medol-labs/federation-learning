@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.acceptexecutionplan
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanDecision
+
+@Component
+class AcceptExecutionPlanDecisionComponent : AcceptExecutionPlanDecision

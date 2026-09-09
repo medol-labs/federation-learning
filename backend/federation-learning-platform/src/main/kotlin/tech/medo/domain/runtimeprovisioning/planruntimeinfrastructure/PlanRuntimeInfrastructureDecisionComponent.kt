@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeprovisioning.planruntimeinfrastructure
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeprovisioning.planruntimeinfrastructure.PlanRuntimeInfrastructureDecision
+
+@Component
+class PlanRuntimeInfrastructureDecisionComponent : PlanRuntimeInfrastructureDecision

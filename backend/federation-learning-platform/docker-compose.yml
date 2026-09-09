@@ -1,0 +1,103 @@
+services:
+  postgres:
+    image: postgres:16
+    platform: ${DOCKER_PLATFORM:-}
+    restart: unless-stopped
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    environment:
+      POSTGRES_USER: medol
+      POSTGRES_PASSWORD: medol
+      POSTGRES_DB: federation_learning_platform
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medol -d federation_learning_platform"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # axon-server:
+  #   image: axoniq/axonserver:2026.0.3-jdk-21
+  #   hostname: axon-server
+  #   restart: unless-stopped
+  #   profiles:
+  #     - axon-server
+  #   ports:
+  #     - "${AXON_SERVER_HTTP_PORT:-8024}:8024"
+  #     - "${AXON_SERVER_GRPC_PORT:-8124}:8124"
+  #   environment:
+  #     axoniq_axonserver_hostname: axon-server
+  #     axoniq_axonserver_autocluster_first: axon-server
+  #     axoniq_axonserver_autocluster_dcb: "true"
+  #     axoniq_axonserver_autocluster_contexts: _admin,default
+  #   volumes:
+  #     - axon_server_data:/axonserver/data
+  #     - axon_server_events:/axonserver/events
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8024/actuator/health"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 10
+  #     start_period: 30s
+
+  umadb:
+    image: umadb/umadb:0.7.8
+    platform: ${DOCKER_PLATFORM:-}
+    restart: unless-stopped
+    ports:
+      - "${UMADB_PORT:-50052}:50051"
+    volumes:
+      - umadb_data:/data
+
+  federation-learning-platform:
+    image: ${APP_IMAGE:-medol/federation-learning-platform:0.0.1-SNAPSHOT}
+    platform: ${DOCKER_PLATFORM:-}
+    restart: unless-stopped
+    profiles:
+      - application
+    depends_on:
+      postgres:
+        condition: service_healthy
+      umadb:
+        condition: service_started
+    ports:
+      - "${APP_PORT:-8081}:8081"
+    environment:
+      SERVER_PORT: 8081
+      SPRING_DOCKER_COMPOSE_ENABLED: "false"
+      DB_URL: jdbc:postgresql://postgres:5432/federation_learning_platform
+      DB_USERNAME: medol
+      DB_PASSWORD: medol
+      MEDOL_SECURITY_ENABLED: ${MEDOL_SECURITY_ENABLED:-true}
+      MEDOL_SECURITY_PROVIDER: ${MEDOL_SECURITY_PROVIDER:-local}
+      MEDOL_SECURITY_JWT_SECRET: ${MEDOL_SECURITY_JWT_SECRET:-change-me-change-me-change-me-change-me}
+      MEDOL_SECURITY_LOCAL_TOKEN_TTL_SECONDS: ${MEDOL_SECURITY_LOCAL_TOKEN_TTL_SECONDS:-28800}
+      MEDOL_SECURITY_ALLOWED_ORIGINS: ${MEDOL_SECURITY_ALLOWED_ORIGINS:-http://localhost:*,http://127.0.0.1:*}
+      MEDOL_SECURITY_INTERNAL_TOKEN: ${MEDOL_SECURITY_INTERNAL_TOKEN:-local-dev-internal-token}
+      MEDOL_SECURITY_INTERNAL_SUBJECT: ${MEDOL_SECURITY_INTERNAL_SUBJECT:-00000000-0000-0000-0000-000000000001}
+      MEDOL_SECURITY_INTERNAL_USERNAME: ${MEDOL_SECURITY_INTERNAL_USERNAME:-internal-service}
+      MEDOL_SECURITY_INTERNAL_ROLES: ${MEDOL_SECURITY_INTERNAL_ROLES:-SERVICE}
+      MEDOL_SECURITY_INTERNAL_PERMISSIONS: ${MEDOL_SECURITY_INTERNAL_PERMISSIONS:-*:*}
+      MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED: ${MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED:-false}
+      MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN: ${MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN:-}
+      SUPABASE_JWT_ISSUER_URI: ${SUPABASE_JWT_ISSUER_URI:-}
+      SUPABASE_JWT_JWK_SET_URI: ${SUPABASE_JWT_JWK_SET_URI:-}
+      MEDOL_AXON_EVENT_STORAGE: ${MEDOL_AXON_EVENT_STORAGE:-umadb}
+      UMADB_TARGET: ${APP_UMADB_TARGET:-umadb:50051}
+      UMADB_PLAINTEXT: ${UMADB_PLAINTEXT:-true}
+      UMADB_API_KEY: ${UMADB_API_KEY:-}
+      UMADB_BATCH_SIZE: ${UMADB_BATCH_SIZE:-256}
+      UMADB_REQUEST_TIMEOUT: ${UMADB_REQUEST_TIMEOUT:-PT10S}
+      AXON_SERVER_ENABLED: "false"
+      AXON_SERVER_EVENT_STORE_ENABLED: "false"
+      AXON_UPDATE_CHECK_DISABLED: ${AXON_UPDATE_CHECK_DISABLED:-true}
+      RUNTIME_AGENT_URL: ${RUNTIME_AGENT_URL:-}
+      FEDERATION_LEARNING_SUPPORT_URL: ${FEDERATION_LEARNING_SUPPORT_URL:-}
+      FEDERATION_LEARNING_RUNTIME_AGENT_URL: ${FEDERATION_LEARNING_RUNTIME_AGENT_URL:-}
+
+volumes:
+  postgres_data:
+  axon_server_data:
+  axon_server_events:
+  umadb_data:

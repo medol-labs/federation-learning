@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeprovisioning.createruntimeinstallationplan
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeprovisioning.createruntimeinstallationplan.CreateRuntimeInstallationPlanDecision
+
+@Component
+class CreateRuntimeInstallationPlanDecisionComponent : CreateRuntimeInstallationPlanDecision

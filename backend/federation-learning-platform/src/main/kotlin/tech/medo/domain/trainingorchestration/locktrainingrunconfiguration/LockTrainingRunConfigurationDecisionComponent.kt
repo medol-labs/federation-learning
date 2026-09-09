@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.locktrainingrunconfiguration
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.locktrainingrunconfiguration.LockTrainingRunConfigurationDecision
+
+@Component
+class LockTrainingRunConfigurationDecisionComponent : LockTrainingRunConfigurationDecision

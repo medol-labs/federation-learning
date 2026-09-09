@@ -1,0 +1,7 @@
+package tech.medo.domain.secureaggregation.completehomomorphicaggregationsession
+
+import org.springframework.stereotype.Component
+import tech.medo.secureaggregation.completehomomorphicaggregationsession.CompleteHomomorphicAggregationSessionDecision
+
+@Component
+class CompleteHomomorphicAggregationSessionDecisionComponent : CompleteHomomorphicAggregationSessionDecision

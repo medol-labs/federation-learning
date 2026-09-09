@@ -1,0 +1,30 @@
+package tech.medo.runtimeagentoperations.submitagentlocalmodelupdate
+
+import org.axonframework.messaging.commandhandling.annotation.CommandHandler
+import org.axonframework.messaging.eventhandling.gateway.EventAppender
+import org.axonframework.modelling.annotation.InjectEntity
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.submitagentlocalmodelupdate.SubmitAgentLocalModelUpdateCommand
+import tech.medo.runtimeagentoperations.submitagentlocalmodelupdate.SubmitAgentLocalModelUpdateInput
+import tech.medo.runtimeagentoperations.submitagentlocalmodelupdate.SubmitAgentLocalModelUpdateService
+import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
+
+
+
+@Component
+class SubmitAgentLocalModelUpdateCommandHandler(
+    private val decision: SubmitAgentLocalModelUpdateDecision,
+    private val submitAgentLocalModelUpdateService: SubmitAgentLocalModelUpdateService
+) {
+    @CommandHandler
+    fun handle(
+        command: SubmitAgentLocalModelUpdateCommand,
+        @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
+        eventAppender: EventAppender
+    ) {
+        val input = SubmitAgentLocalModelUpdateInput(modelUpdateSubmissionId = command.modelUpdateSubmissionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, roundExecutionId = command.roundExecutionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, runtimeId = command.runtimeId, featureSchemaId = command.featureSchemaId, secureAggregationRequired = command.secureAggregationRequired, secureAggregationSessionId = command.secureAggregationSessionId, encryptionScheme = command.encryptionScheme, publicKeyVersion = command.publicKeyVersion, runtimeEngineJobId = command.runtimeEngineJobId, localModelId = command.localModelId, updateArtifactId = command.updateArtifactId, artifactRef = command.artifactRef, artifactDigest = command.artifactDigest, updateProtectionType = command.updateProtectionType, trainingLoss = command.trainingLoss)
+        val portResult = submitAgentLocalModelUpdateService.execute(input)
+
+        eventAppender.append(decision.decide(command, state, portResult))
+    }
+}

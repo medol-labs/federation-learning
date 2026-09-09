@@ -1,0 +1,7 @@
+package tech.medo.domain.federationmanagement.rejectparticipant
+
+import org.springframework.stereotype.Component
+import tech.medo.federationmanagement.rejectparticipant.RejectParticipantDecision
+
+@Component
+class RejectParticipantDecisionComponent : RejectParticipantDecision

@@ -1,0 +1,7 @@
+package tech.medo.domain.identityaccessmanagement.grantpermissiontorole
+
+import org.springframework.stereotype.Component
+import tech.medo.identityaccessmanagement.grantpermissiontorole.GrantPermissionToRoleDecision
+
+@Component
+class GrantPermissionToRoleDecisionComponent : GrantPermissionToRoleDecision

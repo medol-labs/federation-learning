@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.startroundexecution
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionDecision
+
+@Component
+class StartRoundExecutionDecisionComponent : StartRoundExecutionDecision

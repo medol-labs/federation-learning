@@ -1,0 +1,7 @@
+package tech.medo.domain.datasetgovernance.deprecatefeatureschema
+
+import org.springframework.stereotype.Component
+import tech.medo.datasetgovernance.deprecatefeatureschema.DeprecateFeatureSchemaDecision
+
+@Component
+class DeprecateFeatureSchemaDecisionComponent : DeprecateFeatureSchemaDecision

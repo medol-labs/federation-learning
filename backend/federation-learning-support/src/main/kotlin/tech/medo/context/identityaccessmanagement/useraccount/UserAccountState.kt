@@ -1,0 +1,68 @@
+package tech.medo.identityaccessmanagement.useraccount
+
+import org.axonframework.eventsourcing.annotation.EventCriteriaBuilder
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler
+import org.axonframework.eventsourcing.annotation.reflection.EntityCreator
+import org.axonframework.extension.spring.stereotype.EventSourced
+import org.axonframework.messaging.eventstreaming.EventCriteria
+import org.axonframework.messaging.eventstreaming.Tag
+import tech.medo.identityaccessmanagement.events.UserAccountRegisteredEvent
+import tech.medo.identityaccessmanagement.events.UserAccountDeactivatedEvent
+import tech.medo.identityaccessmanagement.events.UserAccountLoginPasswordGeneratedEvent
+import tech.medo.identityaccessmanagement.events.RoleAssignedToUserEvent
+import tech.medo.identityaccessmanagement.events.RoleUnassignedFromUserEvent
+import tech.medo.identityaccessmanagement.domain.states.UserAccountStateEnum
+
+import java.util.UUID;
+
+
+@EventSourced(idType = UUID::class, tagKey = UserAccountTags.USER_ACCOUNT_ID)
+class UserAccountState @EntityCreator constructor() {
+
+    var currentState: UserAccountStateEnum? = null
+    var userAccountId: UUID? = null
+    var username: String? = null
+    var providerSubject: String? = null
+    var userSource: String? = null
+    var passwordHash: String? = null
+    var reason: String? = null
+    var passwordResetRequired: Boolean? = null
+    var roleCode: String? = null
+
+    @EventSourcingHandler
+    fun evolve(event: UserAccountRegisteredEvent): UserAccountState = apply {
+        currentState = UserAccountStateEnum.ACTIVE
+        userAccountId = event.userAccountId
+        username = event.username
+        providerSubject = event.providerSubject
+        userSource = event.userSource
+        passwordHash = event.passwordHash
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: UserAccountDeactivatedEvent): UserAccountState = apply {
+        currentState = UserAccountStateEnum.DEACTIVATED
+        userAccountId = event.userAccountId
+        reason = event.reason
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: UserAccountLoginPasswordGeneratedEvent): UserAccountState = apply {
+        userAccountId = event.userAccountId
+        passwordHash = event.passwordHash
+        passwordResetRequired = event.passwordResetRequired
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: RoleAssignedToUserEvent): UserAccountState = apply {
+        currentState = UserAccountStateEnum.ACTIVE
+        userAccountId = event.userAccountId
+        roleCode = event.roleCode
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: RoleUnassignedFromUserEvent): UserAccountState = apply {
+        userAccountId = event.userAccountId
+        roleCode = event.roleCode
+    }
+}

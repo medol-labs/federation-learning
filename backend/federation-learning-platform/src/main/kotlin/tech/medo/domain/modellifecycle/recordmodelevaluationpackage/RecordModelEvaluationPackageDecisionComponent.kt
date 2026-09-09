@@ -1,0 +1,7 @@
+package tech.medo.domain.modellifecycle.recordmodelevaluationpackage
+
+import org.springframework.stereotype.Component
+import tech.medo.modellifecycle.recordmodelevaluationpackage.RecordModelEvaluationPackageDecision
+
+@Component
+class RecordModelEvaluationPackageDecisionComponent : RecordModelEvaluationPackageDecision
