@@ -1,0 +1,10 @@
+.env
+**/.env
+**/target/
+**/build/
+**/dist/
+**/node_modules/
+**/.venv/
+volumes/
+operations/**/.work/
+deployment-compose-files/
