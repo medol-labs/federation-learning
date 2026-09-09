@@ -2,9 +2,9 @@ name: Medol Generated System
 
 generators:
   axon5:
-    output: backend
+    output: federation-learning-platform
   refine:
-    output: console
+    output: federation-learning-console
   operations:
     output: .
 
