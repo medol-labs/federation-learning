@@ -1,0 +1,15 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "console"
+spec:
+  template:
+    spec:
+      containers:
+        - name: "console"
+          envFrom:
+            - configMapRef:
+                name: "console-dev-config"
+            - secretRef:
+                name: "console-dev-secret"
+                optional: true

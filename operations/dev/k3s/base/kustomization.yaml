@@ -1,0 +1,7 @@
+resources:
+  - "namespace.yaml"
+  - "infrastructure.yaml"
+  - "applications.yaml"
+  - "runtime-agent-scheduler-rbac.yaml"
+  - "apisix-config.yaml"
+  - "apisix.yaml"

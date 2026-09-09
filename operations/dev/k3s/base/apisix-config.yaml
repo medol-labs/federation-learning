@@ -1,0 +1,64 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "apisix-config"
+data:
+  config.yaml: |
+    apisix:
+      node_listen: 9080
+      enable_admin: false
+    deployment:
+      role: "data_plane"
+      role_data_plane:
+        config_provider: "yaml"
+  apisix.yaml: |
+    routes:
+      - id: "console-root"
+        name: "Frontend Console Root"
+        uri: "/*"
+        upstream_id: "console"
+      - id: "federation-learning-support-api"
+        name: "Federation Learning Support API"
+        uri: "/api/federation-learning-support/*"
+        upstream_id: "federation-learning-support"
+        plugins:
+          proxy-rewrite:
+            regex_uri:
+              - "^/api/federation-learning-support/(.*)"
+              - "/$1"
+      - id: "federation-learning-platform-api"
+        name: "Federation Learning Platform API"
+        uri: "/api/federation-learning-platform/*"
+        upstream_id: "federation-learning-platform"
+        plugins:
+          proxy-rewrite:
+            regex_uri:
+              - "^/api/federation-learning-platform/(.*)"
+              - "/$1"
+      - id: "federation-learning-runtime-agent-api"
+        name: "Federation Learning Runtime Agent API"
+        uri: "/api/federation-learning-runtime-agent/*"
+        upstream_id: "federation-learning-runtime-agent"
+        plugins:
+          proxy-rewrite:
+            regex_uri:
+              - "^/api/federation-learning-runtime-agent/(.*)"
+              - "/$1"
+    upstreams:
+      - id: "console"
+        type: "roundrobin"
+        nodes:
+          "console:80": 1
+      - id: "federation-learning-support"
+        type: "roundrobin"
+        nodes:
+          "federation-learning-support:8080": 1
+      - id: "federation-learning-platform"
+        type: "roundrobin"
+        nodes:
+          "federation-learning-platform:8081": 1
+      - id: "federation-learning-runtime-agent"
+        type: "roundrobin"
+        nodes:
+          "federation-learning-runtime-agent:8082": 1
+    #END

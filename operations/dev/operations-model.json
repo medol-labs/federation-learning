@@ -1,0 +1,731 @@
+{
+  "version": "medol.operations/v1",
+  "name": "federation-learning-platform",
+  "title": "FederationLearningPlatform",
+  "imagePrefix": "medol",
+  "imageTag": "0.0.1-SNAPSHOT",
+  "applications": [
+    {
+      "kind": "frontend",
+      "name": "console",
+      "title": "Frontend Console",
+      "artifactName": "federation-learning-platform-console",
+      "imageName": "medol/federation-learning-platform-console",
+      "servicePort": 80,
+      "exposeExternally": false,
+      "environmentVariables": [
+        {
+          "name": "VITE_API_URL",
+          "value": "https://iwdfzvfqbtokqetmbmbp.supabase.co"
+        },
+        {
+          "name": "VITE_SUPABASE_API_KEY",
+          "value": "${VITE_SUPABASE_API_KEY:-}"
+        },
+        {
+          "name": "VITE_FEDERATION_LEARNING_SUPPORT_API_URL",
+          "value": "/api/federation-learning-support"
+        },
+        {
+          "name": "VITE_FEDERATION_LEARNING_PLATFORM_API_URL",
+          "value": "/api/federation-learning-platform"
+        },
+        {
+          "name": "VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL",
+          "value": "/api/federation-learning-runtime-agent"
+        },
+        {
+          "name": "VITE_AXON_API_URL",
+          "value": "/api/federation-learning-support"
+        }
+      ],
+      "dependencies": [],
+      "healthCheck": {
+        "path": "/health",
+        "intervalSeconds": 10,
+        "timeoutSeconds": 3,
+        "retries": 5
+      },
+      "deploymentProfile": {
+        "replicas": 1,
+        "resourceProfile": "small"
+      },
+      "envVarPrefix": "CONSOLE"
+    },
+    {
+      "kind": "backend",
+      "name": "federation-learning-support",
+      "title": "Federation Learning Support",
+      "artifactName": "federation-learning-support",
+      "imageName": "medol/federation-learning-support",
+      "servicePort": 8080,
+      "exposeExternally": false,
+      "contexts": [
+        "DictionaryMaintenance",
+        "FileUpload",
+        "IdentityAccessManagement"
+      ],
+      "gatewayPath": "/api/federation-learning-support",
+      "environmentVariables": [
+        {
+          "name": "SERVER_PORT",
+          "value": "8080"
+        },
+        {
+          "name": "SPRING_DOCKER_COMPOSE_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "DB_URL",
+          "value": "jdbc:postgresql://postgres:5432/federation_learning_support"
+        },
+        {
+          "name": "DB_USERNAME",
+          "value": "${POSTGRES_USER:-medol}"
+        },
+        {
+          "name": "DB_PASSWORD",
+          "value": "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
+        },
+        {
+          "name": "MEDOL_AXON_EVENT_STORAGE",
+          "value": "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
+        },
+        {
+          "name": "UMADB_TARGET",
+          "value": "${UMADB_TARGET:-umadb:50051}"
+        },
+        {
+          "name": "UMADB_PLAINTEXT",
+          "value": "${UMADB_PLAINTEXT:-true}"
+        },
+        {
+          "name": "UMADB_API_KEY",
+          "value": "${UMADB_API_KEY:-}"
+        },
+        {
+          "name": "UMADB_BATCH_SIZE",
+          "value": "${UMADB_BATCH_SIZE:-256}"
+        },
+        {
+          "name": "UMADB_REQUEST_TIMEOUT",
+          "value": "${UMADB_REQUEST_TIMEOUT:-PT10S}"
+        },
+        {
+          "name": "AXON_SERVER_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "AXON_SERVER_EVENT_STORE_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "AXON_SERVER_SERVERS",
+          "value": "${AXON_SERVER_SERVERS:-axon-server:8124}"
+        },
+        {
+          "name": "AXON_UPDATE_CHECK_DISABLED",
+          "value": "${AXON_UPDATE_CHECK_DISABLED:-true}"
+        },
+        {
+          "name": "FEDERATION_LEARNING_PLATFORM_URL",
+          "value": "http://federation-learning-platform:8081"
+        },
+        {
+          "name": "FEDERATION_LEARNING_RUNTIME_AGENT_URL",
+          "value": "http://federation-learning-runtime-agent:8082"
+        }
+      ],
+      "dependencies": [
+        "postgres",
+        "umadb"
+      ],
+      "healthCheck": {
+        "path": "/actuator/health",
+        "intervalSeconds": 10,
+        "timeoutSeconds": 5,
+        "retries": 12,
+        "startPeriodSeconds": 30
+      },
+      "deploymentProfile": {
+        "replicas": 1,
+        "resourceProfile": "standard"
+      },
+      "envVarPrefix": "FEDERATION_LEARNING_SUPPORT"
+    },
+    {
+      "kind": "backend",
+      "name": "federation-learning-platform",
+      "title": "Federation Learning Platform",
+      "artifactName": "federation-learning-platform",
+      "imageName": "medol/federation-learning-platform",
+      "servicePort": 8081,
+      "exposeExternally": false,
+      "contexts": [
+        "OrganizationManagement",
+        "FederationManagement",
+        "DatasetGovernance",
+        "ModelRepository",
+        "TrainingOrchestration",
+        "ModelLifecycle",
+        "RuntimeMonitoring",
+        "RuntimeGovernance",
+        "SecureAggregation",
+        "RuntimeProvisioning"
+      ],
+      "gatewayPath": "/api/federation-learning-platform",
+      "environmentVariables": [
+        {
+          "name": "SERVER_PORT",
+          "value": "8081"
+        },
+        {
+          "name": "SPRING_DOCKER_COMPOSE_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "DB_URL",
+          "value": "jdbc:postgresql://postgres:5432/federation_learning_platform"
+        },
+        {
+          "name": "DB_USERNAME",
+          "value": "${POSTGRES_USER:-medol}"
+        },
+        {
+          "name": "DB_PASSWORD",
+          "value": "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
+        },
+        {
+          "name": "MEDOL_AXON_EVENT_STORAGE",
+          "value": "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
+        },
+        {
+          "name": "UMADB_TARGET",
+          "value": "${UMADB_TARGET:-umadb:50051}"
+        },
+        {
+          "name": "UMADB_PLAINTEXT",
+          "value": "${UMADB_PLAINTEXT:-true}"
+        },
+        {
+          "name": "UMADB_API_KEY",
+          "value": "${UMADB_API_KEY:-}"
+        },
+        {
+          "name": "UMADB_BATCH_SIZE",
+          "value": "${UMADB_BATCH_SIZE:-256}"
+        },
+        {
+          "name": "UMADB_REQUEST_TIMEOUT",
+          "value": "${UMADB_REQUEST_TIMEOUT:-PT10S}"
+        },
+        {
+          "name": "AXON_SERVER_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "AXON_SERVER_EVENT_STORE_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "AXON_SERVER_SERVERS",
+          "value": "${AXON_SERVER_SERVERS:-axon-server:8124}"
+        },
+        {
+          "name": "AXON_UPDATE_CHECK_DISABLED",
+          "value": "${AXON_UPDATE_CHECK_DISABLED:-true}"
+        },
+        {
+          "name": "FEDERATION_LEARNING_SUPPORT_URL",
+          "value": "http://federation-learning-support:8080"
+        },
+        {
+          "name": "FEDERATION_LEARNING_RUNTIME_AGENT_URL",
+          "value": "http://federation-learning-runtime-agent:8082"
+        }
+      ],
+      "dependencies": [
+        "postgres",
+        "umadb"
+      ],
+      "healthCheck": {
+        "path": "/actuator/health",
+        "intervalSeconds": 10,
+        "timeoutSeconds": 5,
+        "retries": 12,
+        "startPeriodSeconds": 30
+      },
+      "deploymentProfile": {
+        "replicas": 1,
+        "resourceProfile": "standard"
+      },
+      "envVarPrefix": "FEDERATION_LEARNING_PLATFORM"
+    },
+    {
+      "kind": "backend",
+      "name": "federation-learning-runtime-agent",
+      "title": "Federation Learning Runtime Agent",
+      "artifactName": "federation-learning-runtime-agent",
+      "imageName": "medol/federation-learning-runtime-agent",
+      "servicePort": 8082,
+      "exposeExternally": false,
+      "contexts": [
+        "RuntimeAgentOperations"
+      ],
+      "gatewayPath": "/api/federation-learning-runtime-agent",
+      "environmentVariables": [
+        {
+          "name": "SERVER_PORT",
+          "value": "8082"
+        },
+        {
+          "name": "SPRING_DOCKER_COMPOSE_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "DB_URL",
+          "value": "jdbc:postgresql://postgres:5432/federation_learning_runtime_agent"
+        },
+        {
+          "name": "DB_USERNAME",
+          "value": "${POSTGRES_USER:-medol}"
+        },
+        {
+          "name": "DB_PASSWORD",
+          "value": "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
+        },
+        {
+          "name": "MEDOL_AXON_EVENT_STORAGE",
+          "value": "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
+        },
+        {
+          "name": "UMADB_TARGET",
+          "value": "${UMADB_TARGET:-umadb:50051}"
+        },
+        {
+          "name": "UMADB_PLAINTEXT",
+          "value": "${UMADB_PLAINTEXT:-true}"
+        },
+        {
+          "name": "UMADB_API_KEY",
+          "value": "${UMADB_API_KEY:-}"
+        },
+        {
+          "name": "UMADB_BATCH_SIZE",
+          "value": "${UMADB_BATCH_SIZE:-256}"
+        },
+        {
+          "name": "UMADB_REQUEST_TIMEOUT",
+          "value": "${UMADB_REQUEST_TIMEOUT:-PT10S}"
+        },
+        {
+          "name": "AXON_SERVER_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "AXON_SERVER_EVENT_STORE_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "AXON_SERVER_SERVERS",
+          "value": "${AXON_SERVER_SERVERS:-axon-server:8124}"
+        },
+        {
+          "name": "AXON_UPDATE_CHECK_DISABLED",
+          "value": "${AXON_UPDATE_CHECK_DISABLED:-true}"
+        },
+        {
+          "name": "FEDERATION_LEARNING_SUPPORT_URL",
+          "value": "http://federation-learning-support:8080"
+        },
+        {
+          "name": "FEDERATION_LEARNING_PLATFORM_URL",
+          "value": "http://federation-learning-platform:8081"
+        }
+      ],
+      "dependencies": [
+        "postgres",
+        "umadb"
+      ],
+      "healthCheck": {
+        "path": "/actuator/health",
+        "intervalSeconds": 10,
+        "timeoutSeconds": 5,
+        "retries": 12,
+        "startPeriodSeconds": 30
+      },
+      "deploymentProfile": {
+        "replicas": 1,
+        "resourceProfile": "standard"
+      },
+      "envVarPrefix": "FEDERATION_LEARNING_RUNTIME_AGENT"
+    }
+  ],
+  "infrastructure": [
+    {
+      "type": "postgres",
+      "name": "postgres",
+      "image": "postgres:16",
+      "servicePort": 5432,
+      "volumeName": "postgres_data",
+      "environmentVariables": [
+        {
+          "name": "POSTGRES_USER",
+          "value": "${POSTGRES_USER:-medol}"
+        },
+        {
+          "name": "POSTGRES_PASSWORD",
+          "value": "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
+        },
+        {
+          "name": "POSTGRES_DB",
+          "value": "${POSTGRES_DB:-medol}"
+        }
+      ],
+      "healthCheck": {
+        "command": "pg_isready -U ${POSTGRES_USER:-medol} -d ${POSTGRES_DB:-medol}",
+        "intervalSeconds": 5,
+        "timeoutSeconds": 5,
+        "retries": 10
+      },
+      "enabled": true
+    },
+    {
+      "type": "umadb",
+      "name": "umadb",
+      "image": "umadb/umadb:0.7.8",
+      "servicePort": 50051,
+      "volumeName": "umadb_data",
+      "environmentVariables": [],
+      "enabled": true
+    },
+    {
+      "type": "axon-server",
+      "name": "axon-server",
+      "image": "axoniq/axonserver:2026.0.3-jdk-21",
+      "servicePort": 8124,
+      "managementPort": 8024,
+      "volumeNames": [
+        "axon_server_data",
+        "axon_server_events"
+      ],
+      "environmentVariables": [
+        {
+          "name": "axoniq_axonserver_hostname",
+          "value": "axon-server"
+        },
+        {
+          "name": "axoniq_axonserver_autocluster_first",
+          "value": "axon-server"
+        },
+        {
+          "name": "axoniq_axonserver_autocluster_dcb",
+          "value": "true"
+        },
+        {
+          "name": "axoniq_axonserver_autocluster_contexts",
+          "value": "_admin,default"
+        }
+      ],
+      "profile": "axon-server",
+      "healthCheck": {
+        "path": "/actuator/health",
+        "port": 8024,
+        "intervalSeconds": 10,
+        "timeoutSeconds": 5,
+        "retries": 10,
+        "startPeriodSeconds": 30
+      },
+      "enabled": false
+    }
+  ],
+  "gateway": {
+    "enabled": true,
+    "provider": "apisix",
+    "name": "apisix",
+    "image": "apache/apisix:3.13.0-debian",
+    "servicePort": 9080,
+    "adminPort": 9180,
+    "routes": [
+      {
+        "id": "console-root",
+        "name": "Frontend Console Root",
+        "paths": [
+          "/*"
+        ],
+        "methods": [],
+        "upstreamId": "console",
+        "plugins": []
+      },
+      {
+        "id": "federation-learning-support-api",
+        "name": "Federation Learning Support API",
+        "paths": [
+          "/api/federation-learning-support/*"
+        ],
+        "methods": [],
+        "upstreamId": "federation-learning-support",
+        "plugins": [
+          {
+            "name": "proxy-rewrite",
+            "configuration": {
+              "regex_uri": [
+                "^/api/federation-learning-support/(.*)",
+                "/$1"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "federation-learning-platform-api",
+        "name": "Federation Learning Platform API",
+        "paths": [
+          "/api/federation-learning-platform/*"
+        ],
+        "methods": [],
+        "upstreamId": "federation-learning-platform",
+        "plugins": [
+          {
+            "name": "proxy-rewrite",
+            "configuration": {
+              "regex_uri": [
+                "^/api/federation-learning-platform/(.*)",
+                "/$1"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "federation-learning-runtime-agent-api",
+        "name": "Federation Learning Runtime Agent API",
+        "paths": [
+          "/api/federation-learning-runtime-agent/*"
+        ],
+        "methods": [],
+        "upstreamId": "federation-learning-runtime-agent",
+        "plugins": [
+          {
+            "name": "proxy-rewrite",
+            "configuration": {
+              "regex_uri": [
+                "^/api/federation-learning-runtime-agent/(.*)",
+                "/$1"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "upstreams": [
+      {
+        "id": "console",
+        "serviceName": "console",
+        "servicePort": 80
+      },
+      {
+        "id": "federation-learning-support",
+        "serviceName": "federation-learning-support",
+        "servicePort": 8080
+      },
+      {
+        "id": "federation-learning-platform",
+        "serviceName": "federation-learning-platform",
+        "servicePort": 8081
+      },
+      {
+        "id": "federation-learning-runtime-agent",
+        "serviceName": "federation-learning-runtime-agent",
+        "servicePort": 8082
+      }
+    ],
+    "plugins": []
+  },
+  "environments": [
+    {
+      "name": "dev",
+      "variables": {
+        "IMAGE_TAG": "0.0.1-SNAPSHOT",
+        "GATEWAY_PORT": "9080",
+        "POSTGRES_USER": "medol",
+        "POSTGRES_PASSWORD": "change-me",
+        "POSTGRES_DB": "medol"
+      },
+      "applicationOverrides": {
+        "console": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false
+        },
+        "federation-learning-platform": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": true,
+          "hostPort": 8081
+        },
+        "federation-learning-runtime-agent": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": true,
+          "hostPort": 8082
+        },
+        "federation-learning-support": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": true,
+          "hostPort": 8080
+        }
+      },
+      "infrastructureOverrides": {
+        "axon-server": {
+          "exposePorts": false
+        },
+        "postgres": {
+          "exposePorts": true
+        },
+        "umadb": {
+          "exposePorts": true
+        }
+      }
+    },
+    {
+      "name": "test",
+      "variables": {
+        "IMAGE_TAG": "0.0.1-SNAPSHOT",
+        "GATEWAY_PORT": "9080",
+        "POSTGRES_USER": "medol",
+        "POSTGRES_PASSWORD": "change-me",
+        "POSTGRES_DB": "medol"
+      },
+      "applicationOverrides": {
+        "console": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false
+        },
+        "federation-learning-platform": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false,
+          "hostPort": 8081
+        },
+        "federation-learning-runtime-agent": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false,
+          "hostPort": 8082
+        },
+        "federation-learning-support": {
+          "replicas": 1,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false,
+          "hostPort": 8080
+        }
+      },
+      "infrastructureOverrides": {
+        "axon-server": {
+          "exposePorts": false
+        },
+        "postgres": {
+          "exposePorts": false
+        },
+        "umadb": {
+          "exposePorts": false
+        }
+      }
+    },
+    {
+      "name": "staging",
+      "variables": {
+        "IMAGE_TAG": "0.0.1-SNAPSHOT",
+        "GATEWAY_PORT": "9080",
+        "POSTGRES_USER": "medol",
+        "POSTGRES_PASSWORD": "change-me",
+        "POSTGRES_DB": "medol"
+      },
+      "applicationOverrides": {
+        "console": {
+          "replicas": 2,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false
+        },
+        "federation-learning-platform": {
+          "replicas": 2,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false,
+          "hostPort": 8081
+        },
+        "federation-learning-runtime-agent": {
+          "replicas": 2,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false,
+          "hostPort": 8082
+        },
+        "federation-learning-support": {
+          "replicas": 2,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false,
+          "hostPort": 8080
+        }
+      },
+      "infrastructureOverrides": {
+        "axon-server": {
+          "exposePorts": false
+        },
+        "postgres": {
+          "exposePorts": false
+        },
+        "umadb": {
+          "exposePorts": false
+        }
+      }
+    },
+    {
+      "name": "prod",
+      "variables": {
+        "IMAGE_TAG": "0.0.1-SNAPSHOT",
+        "GATEWAY_PORT": "9080",
+        "POSTGRES_USER": "medol",
+        "POSTGRES_PASSWORD": "change-me",
+        "POSTGRES_DB": "medol"
+      },
+      "applicationOverrides": {
+        "console": {
+          "replicas": 2,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false
+        },
+        "federation-learning-platform": {
+          "replicas": 2,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false,
+          "hostPort": 8081
+        },
+        "federation-learning-runtime-agent": {
+          "replicas": 2,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false,
+          "hostPort": 8082
+        },
+        "federation-learning-support": {
+          "replicas": 2,
+          "imageTag": "0.0.1-SNAPSHOT",
+          "exposePorts": false,
+          "hostPort": 8080
+        }
+      },
+      "infrastructureOverrides": {
+        "axon-server": {
+          "exposePorts": false
+        },
+        "postgres": {
+          "exposePorts": false
+        },
+        "umadb": {
+          "exposePorts": false
+        }
+      }
+    }
+  ]
+}

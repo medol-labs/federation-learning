@@ -1,0 +1,30 @@
+apiVersion: "k3d.io/v1alpha5"
+kind: "Simple"
+metadata:
+  name: "federation-learning-platform-dev"
+image: "rancher/k3s:v1.33.5-k3s1"
+servers: 1
+agents: 2
+kubeAPI:
+  hostIP: "127.0.0.1"
+  hostPort: "6550"
+ports:
+  - port: "30080:30080"
+    nodeFilters:
+      - "server:0"
+volumes:
+  - volume: "../../../volumes/datasets:/workspace/datasets"
+    nodeFilters:
+      - "agent:*"
+  - volume: "../../../volumes/tmp/runtime-engine:/workspace/tmp/runtime-engine"
+    nodeFilters:
+      - "agent:*"
+options:
+  k3d:
+    wait: true
+    timeout: "120s"
+  k3s:
+    extraArgs:
+      - arg: "--disable=traefik"
+        nodeFilters:
+          - "server:*"

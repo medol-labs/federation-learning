@@ -1,0 +1,38 @@
+hostname: ${HARBOR_HOSTNAME:-federation-learning-platform-harbor.local}
+
+http:
+  port: ${HARBOR_HTTP_PORT:-8088}
+
+# Configure HTTPS certificates before enabling this in production.
+# https:
+#   port: ${HARBOR_HTTPS_PORT:-8443}
+#   certificate: /your/certificate/path
+#   private_key: /your/private/key/path
+
+harbor_admin_password: ${HARBOR_ADMIN_PASSWORD:-change-me}
+
+database:
+  password: ${HARBOR_DATABASE_PASSWORD:-root123}
+  max_idle_conns: 100
+  max_open_conns: 900
+
+data_volume: ${HARBOR_DATA_VOLUME:-./data}
+
+trivy:
+  ignore_unfixed: false
+  skip_update: true
+  offline_scan: true
+
+jobservice:
+  max_job_workers: 10
+  job_loggers:
+    - STD_OUTPUT
+
+log:
+  level: info
+  local:
+    rotate_count: 50
+    rotate_size: 200M
+    location: /var/log/harbor
+
+_version: 2.12.0
