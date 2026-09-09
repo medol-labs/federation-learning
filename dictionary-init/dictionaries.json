@@ -1,0 +1,1110 @@
+{
+  "dictionaries": [
+    {
+      "dictionaryCode": "RUNTIME_ENVIRONMENT_TYPE",
+      "dictionaryName": "运行环境类型",
+      "ownerContext": "RuntimeOnboarding",
+      "description": "Runtime environment categories supported by infrastructure packages.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "K3S",
+          "displayName": "K3s 环境",
+          "displayOrder": 10,
+          "description": "Lightweight Kubernetes distribution installed for runtime infrastructure.",
+          "active": true
+        },
+        {
+          "valueCode": "KUBERNETES",
+          "displayName": "Kubernetes 环境",
+          "displayOrder": 20,
+          "description": "Standard Kubernetes-compatible runtime environment.",
+          "active": true
+        },
+        {
+          "valueCode": "DOCKER_COMPOSE",
+          "displayName": "Docker Compose 环境",
+          "displayOrder": 30,
+          "description": "Single-host runtime environment managed by Docker Compose.",
+          "active": true
+        },
+        {
+          "valueCode": "HOST_PROCESS",
+          "displayName": "主机进程",
+          "displayOrder": 40,
+          "description": "Runtime infrastructure started directly on a host for local or physical-machine testing.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_AGENT_INSTALL_MODE",
+      "dictionaryName": "运行代理安装模式",
+      "ownerContext": "RuntimeOnboarding",
+      "description": "Whether platform automation deploys the runtime agent or provides operator guidance.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "PLATFORM_MANAGED",
+          "displayName": "平台托管",
+          "displayOrder": 10,
+          "description": "Platform requests and executes runtime agent deployment after infrastructure verification.",
+          "active": true
+        },
+        {
+          "valueCode": "MANUAL_GUIDED",
+          "displayName": "手动引导",
+          "displayOrder": 20,
+          "description": "Platform provides installation guidance and an operator triggers the deployment path manually.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "FEATURE_SCHEMA_DATA_MODALITY",
+      "dictionaryName": "特征模式数据模态",
+      "ownerContext": "FeatureSchemaManagement",
+      "description": "Shape of data described by a feature schema.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "TABULAR",
+          "displayName": "表格",
+          "displayOrder": 10,
+          "description": "Structured rows and columns.",
+          "active": true
+        },
+        {
+          "valueCode": "TEXT",
+          "displayName": "文本",
+          "displayOrder": 20,
+          "description": "Text documents, sentences, prompts, or extracted text.",
+          "active": true
+        },
+        {
+          "valueCode": "IMAGE",
+          "displayName": "图像",
+          "displayOrder": 30,
+          "description": "Image files or image-derived tensors.",
+          "active": true
+        },
+        {
+          "valueCode": "AUDIO",
+          "displayName": "音频",
+          "displayOrder": 40,
+          "description": "Audio clips, speech, or audio-derived features.",
+          "active": true
+        },
+        {
+          "valueCode": "DOCUMENT",
+          "displayName": "文档",
+          "displayOrder": 50,
+          "description": "Documents such as PDF, Word, or mixed-layout files.",
+          "active": true
+        },
+        {
+          "valueCode": "EMBEDDING",
+          "displayName": "嵌入向量",
+          "displayOrder": 60,
+          "description": "Vector embeddings used as model inputs.",
+          "active": true
+        },
+        {
+          "valueCode": "MULTIMODAL",
+          "displayName": "多模态",
+          "displayOrder": 70,
+          "description": "A dataset combining multiple input modalities.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "FEATURE_DATA_TYPE",
+      "dictionaryName": "特征数据类型",
+      "ownerContext": "FeatureSchemaManagement",
+      "description": "Logical value types for feature and label definitions.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "STRING",
+          "displayName": "字符串",
+          "displayOrder": 10,
+          "description": "Textual scalar value.",
+          "active": true
+        },
+        {
+          "valueCode": "INTEGER",
+          "displayName": "整数",
+          "displayOrder": 20,
+          "description": "Whole-number scalar value.",
+          "active": true
+        },
+        {
+          "valueCode": "DECIMAL",
+          "displayName": "小数",
+          "displayOrder": 30,
+          "description": "Numeric scalar with decimals.",
+          "active": true
+        },
+        {
+          "valueCode": "BOOLEAN",
+          "displayName": "布尔值",
+          "displayOrder": 40,
+          "description": "True or false value.",
+          "active": true
+        },
+        {
+          "valueCode": "DATETIME",
+          "displayName": "日期时间",
+          "displayOrder": 50,
+          "description": "Timestamp or date-time value.",
+          "active": true
+        },
+        {
+          "valueCode": "CATEGORY",
+          "displayName": "类别",
+          "displayOrder": 60,
+          "description": "Finite category value.",
+          "active": true
+        },
+        {
+          "valueCode": "VECTOR",
+          "displayName": "向量",
+          "displayOrder": 70,
+          "description": "Numeric vector or embedding.",
+          "active": true
+        },
+        {
+          "valueCode": "TEXT",
+          "displayName": "文本",
+          "displayOrder": 80,
+          "description": "Long text content.",
+          "active": true
+        },
+        {
+          "valueCode": "IMAGE",
+          "displayName": "图像",
+          "displayOrder": 90,
+          "description": "Image payload or image path.",
+          "active": true
+        },
+        {
+          "valueCode": "AUDIO",
+          "displayName": "音频",
+          "displayOrder": 100,
+          "description": "Audio payload or audio path.",
+          "active": true
+        },
+        {
+          "valueCode": "JSON",
+          "displayName": "JSON 对象",
+          "displayOrder": 110,
+          "description": "Nested or semi-structured JSON value.",
+          "active": true
+        },
+        {
+          "valueCode": "BINARY",
+          "displayName": "二进制",
+          "displayOrder": 120,
+          "description": "Opaque binary payload.",
+          "active": true
+        },
+        {
+          "valueCode": "FILE",
+          "displayName": "文件引用",
+          "displayOrder": 130,
+          "description": "File path or staged file reference used by file and image datasets.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "FEATURE_ENCODING_STRATEGY",
+      "dictionaryName": "特征编码策略",
+      "ownerContext": "FeatureSchemaManagement",
+      "description": "Expected feature encoding before local training.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "NONE",
+          "displayName": "不编码",
+          "displayOrder": 10,
+          "description": "No encoding is required.",
+          "active": true
+        },
+        {
+          "valueCode": "ONE_HOT",
+          "displayName": "独热编码",
+          "displayOrder": 20,
+          "description": "Encode categories as one-hot vectors.",
+          "active": true
+        },
+        {
+          "valueCode": "ORDINAL",
+          "displayName": "序数编码",
+          "displayOrder": 30,
+          "description": "Encode ordered categories as numeric ranks.",
+          "active": true
+        },
+        {
+          "valueCode": "LABEL",
+          "displayName": "标签编码",
+          "displayOrder": 40,
+          "description": "Encode categories as integer labels.",
+          "active": true
+        },
+        {
+          "valueCode": "NORMALIZED",
+          "displayName": "归一化",
+          "displayOrder": 50,
+          "description": "Scale numeric values to a normalized range.",
+          "active": true
+        },
+        {
+          "valueCode": "STANDARDIZED",
+          "displayName": "标准化",
+          "displayOrder": 60,
+          "description": "Scale numeric values by mean and standard deviation.",
+          "active": true
+        },
+        {
+          "valueCode": "TOKENIZED",
+          "displayName": "分词",
+          "displayOrder": 70,
+          "description": "Tokenize text-like inputs.",
+          "active": true
+        },
+        {
+          "valueCode": "EMBEDDED",
+          "displayName": "嵌入编码",
+          "displayOrder": 80,
+          "description": "Transform values into embedding vectors.",
+          "active": true
+        },
+        {
+          "valueCode": "HASHED",
+          "displayName": "哈希编码",
+          "displayOrder": 90,
+          "description": "Use hashing-based feature encoding.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "TRAINING_STRATEGY",
+      "dictionaryName": "训练策略",
+      "ownerContext": "TrainingConfiguration",
+      "description": "Federated training strategies selectable in training run configurations.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "FED_AVG",
+          "displayName": "FedAvg 联邦平均",
+          "displayOrder": 10,
+          "description": "Federated averaging strategy.",
+          "active": true
+        },
+        {
+          "valueCode": "FED_PROX",
+          "displayName": "FedProx 近端联邦优化",
+          "displayOrder": 20,
+          "description": "Federated optimization with proximal regularization.",
+          "active": true
+        },
+        {
+          "valueCode": "FED_SGD",
+          "displayName": "FedSGD 联邦随机梯度下降",
+          "displayOrder": 30,
+          "description": "Federated stochastic gradient descent.",
+          "active": true
+        },
+        {
+          "valueCode": "SCAFFOLD",
+          "displayName": "SCAFFOLD 控制变量策略",
+          "displayOrder": 40,
+          "description": "Federated strategy using control variates to reduce client drift.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "AGGREGATION_ALGORITHM",
+      "dictionaryName": "聚合算法",
+      "ownerContext": "TrainingConfiguration",
+      "description": "Runtime engine aggregation plugins supported by the current engine build.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "FED_AVG_JSON",
+          "displayName": "FedAvg JSON 聚合",
+          "displayOrder": 10,
+          "description": "Federated averaging for JSON model update artifacts. Aliases: FED_AVG, FEDERATED_AVERAGING, WEIGHTED_FED_AVG.",
+          "active": true
+        },
+        {
+          "valueCode": "FED_AVG_PYTORCH_STATE_DICT",
+          "displayName": "FedAvg PyTorch State Dict 聚合",
+          "displayOrder": 20,
+          "description": "Federated averaging for PyTorch state_dict model update artifacts. Aliases: PYTORCH_STATE_DICT_FED_AVG, FED_AVG_TORCH_STATE_DICT, WEIGHTED_FED_AVG_PYTORCH_STATE_DICT.",
+          "active": true
+        },
+        {
+          "valueCode": "FEDERATED_AVERAGING",
+          "displayName": "联邦平均（兼容别名）",
+          "displayOrder": 90,
+          "description": "Compatibility alias for FED_AVG_JSON. Prefer explicit runtime engine plugin codes in new configurations.",
+          "active": false
+        },
+        {
+          "valueCode": "WEIGHTED_AVERAGE",
+          "displayName": "加权平均（暂未启用）",
+          "displayOrder": 100,
+          "description": "Reserved dictionary value. The current runtime engine does not expose a standalone weighted average plugin.",
+          "active": false
+        },
+        {
+          "valueCode": "SECURE_WEIGHTED_AVERAGE",
+          "displayName": "安全加权平均（暂未启用）",
+          "displayOrder": 110,
+          "description": "Reserved dictionary value. Secure aggregation currently feeds supported FedAvg plugins rather than a separate algorithm plugin.",
+          "active": false
+        },
+        {
+          "valueCode": "MEDIAN",
+          "displayName": "中位数（暂未启用）",
+          "displayOrder": 120,
+          "description": "Reserved dictionary value. The current runtime engine does not expose a median aggregation plugin.",
+          "active": false
+        },
+        {
+          "valueCode": "TRIMMED_MEAN",
+          "displayName": "截尾均值（暂未启用）",
+          "displayOrder": 130,
+          "description": "Reserved dictionary value. The current runtime engine does not expose a trimmed mean aggregation plugin.",
+          "active": false
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "TRAINING_OPTIMIZER",
+      "dictionaryName": "训练优化器",
+      "ownerContext": "TrainingConfiguration",
+      "description": "Local optimizer options for runtime training.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "SGD",
+          "displayName": "SGD 随机梯度下降",
+          "displayOrder": 10,
+          "description": "Stochastic gradient descent.",
+          "active": true
+        },
+        {
+          "valueCode": "ADAM",
+          "displayName": "Adam 优化器",
+          "displayOrder": 20,
+          "description": "Adaptive moment estimation optimizer.",
+          "active": true
+        },
+        {
+          "valueCode": "ADAMW",
+          "displayName": "AdamW 优化器",
+          "displayOrder": 30,
+          "description": "Adam optimizer with decoupled weight decay.",
+          "active": true
+        },
+        {
+          "valueCode": "RMSPROP",
+          "displayName": "RMSProp 优化器",
+          "displayOrder": 40,
+          "description": "Root mean square propagation optimizer.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "TRAINING_LOSS_FUNCTION",
+      "dictionaryName": "训练损失函数",
+      "ownerContext": "TrainingConfiguration",
+      "description": "Loss functions selectable for local training.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "CROSS_ENTROPY",
+          "displayName": "交叉熵",
+          "displayOrder": 10,
+          "description": "Cross-entropy loss for classification.",
+          "active": true
+        },
+        {
+          "valueCode": "BINARY_CROSS_ENTROPY",
+          "displayName": "二元交叉熵",
+          "displayOrder": 20,
+          "description": "Binary cross-entropy loss.",
+          "active": true
+        },
+        {
+          "valueCode": "MEAN_SQUARED_ERROR",
+          "displayName": "均方误差",
+          "displayOrder": 30,
+          "description": "MSE loss for regression.",
+          "active": true
+        },
+        {
+          "valueCode": "MEAN_ABSOLUTE_ERROR",
+          "displayName": "平均绝对误差",
+          "displayOrder": 40,
+          "description": "MAE loss for regression.",
+          "active": true
+        },
+        {
+          "valueCode": "HUBER",
+          "displayName": "Huber 损失",
+          "displayOrder": 50,
+          "description": "Huber loss for robust regression.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "MODEL_RELEASE_CHANNEL",
+      "dictionaryName": "模型发布通道",
+      "ownerContext": "ModelLifecycle",
+      "description": "Release channels for promoted model versions.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "EXPERIMENTAL",
+          "displayName": "实验",
+          "displayOrder": 10,
+          "description": "Early model release for controlled validation.",
+          "active": true
+        },
+        {
+          "valueCode": "CANARY",
+          "displayName": "灰度",
+          "displayOrder": 20,
+          "description": "Limited production exposure.",
+          "active": true
+        },
+        {
+          "valueCode": "STAGING",
+          "displayName": "预发",
+          "displayOrder": 30,
+          "description": "Pre-production validation channel.",
+          "active": true
+        },
+        {
+          "valueCode": "PRODUCTION",
+          "displayName": "生产",
+          "displayOrder": 40,
+          "description": "Main production serving channel.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "MODEL_PRODUCTION_STAGE",
+      "dictionaryName": "模型生产阶段",
+      "ownerContext": "ModelLifecycle",
+      "description": "Production lifecycle stage of a model version.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "SHADOW",
+          "displayName": "影子",
+          "displayOrder": 10,
+          "description": "Model receives production-like traffic without serving decisions.",
+          "active": true
+        },
+        {
+          "valueCode": "CANARY",
+          "displayName": "灰度",
+          "displayOrder": 20,
+          "description": "Model serves a small controlled portion of traffic.",
+          "active": true
+        },
+        {
+          "valueCode": "ACTIVE",
+          "displayName": "启用",
+          "displayOrder": 30,
+          "description": "Model is actively used for production decisions.",
+          "active": true
+        },
+        {
+          "valueCode": "DEPRECATED",
+          "displayName": "已弃用",
+          "displayOrder": 40,
+          "description": "Model remains available but should be replaced.",
+          "active": true
+        },
+        {
+          "valueCode": "RETIRED",
+          "displayName": "已退役",
+          "displayOrder": 50,
+          "description": "Model is no longer intended for production use.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_CAPABILITY_TYPE",
+      "dictionaryName": "运行能力类型",
+      "ownerContext": "RuntimeGovernance",
+      "description": "Capabilities detected from runtime infrastructure and runtime agent environment.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "CPU_TRAINING",
+          "displayName": "CPU 训练",
+          "displayOrder": 10,
+          "description": "Runtime can execute CPU-based local training.",
+          "active": true
+        },
+        {
+          "valueCode": "GPU_TRAINING",
+          "displayName": "GPU 训练",
+          "displayOrder": 20,
+          "description": "Runtime can execute GPU-accelerated local training.",
+          "active": true
+        },
+        {
+          "valueCode": "SECURE_AGGREGATION",
+          "displayName": "安全聚合",
+          "displayOrder": 30,
+          "description": "Runtime supports encrypted model update submission.",
+          "active": true
+        },
+        {
+          "valueCode": "DIFFERENTIAL_PRIVACY",
+          "displayName": "差分隐私",
+          "displayOrder": 40,
+          "description": "Runtime supports local differential privacy processing.",
+          "active": true
+        },
+        {
+          "valueCode": "TABULAR_DATA",
+          "displayName": "表格数据",
+          "displayOrder": 50,
+          "description": "Runtime can train on tabular datasets.",
+          "active": true
+        },
+        {
+          "valueCode": "TEXT_DATA",
+          "displayName": "文本数据",
+          "displayOrder": 60,
+          "description": "Runtime can train on text datasets.",
+          "active": true
+        },
+        {
+          "valueCode": "IMAGE_DATA",
+          "displayName": "图像数据",
+          "displayOrder": 70,
+          "description": "Runtime can train on image datasets.",
+          "active": true
+        },
+        {
+          "valueCode": "LOCAL_ENGINE_SCHEDULING",
+          "displayName": "本地引擎调度",
+          "displayOrder": 80,
+          "description": "Runtime can start the training engine on demand for round execution.",
+          "active": true
+        },
+        {
+          "valueCode": "MODEL_PLUGIN",
+          "displayName": "模型插件",
+          "displayOrder": 90,
+          "description": "Runtime engine exposes one or more model plugins.",
+          "active": true
+        },
+        {
+          "valueCode": "AGGREGATION_PLUGIN",
+          "displayName": "聚合插件",
+          "displayOrder": 100,
+          "description": "Runtime engine exposes one or more aggregation plugins.",
+          "active": true
+        },
+        {
+          "valueCode": "PLUGIN_PROFILE",
+          "displayName": "插件 Profile",
+          "displayOrder": 110,
+          "description": "Runtime engine is packaged with a specific plugin profile.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "SECURE_AGGREGATION_ENCRYPTION_SCHEME",
+      "dictionaryName": "安全聚合加密方案",
+      "ownerContext": "SecureAggregation",
+      "description": "Abstract homomorphic encryption schemes supported by secure aggregation.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "ADDITIVE_HOMOMORPHIC",
+          "displayName": "加法同态",
+          "displayOrder": 10,
+          "description": "Supports aggregation by adding encrypted participant updates.",
+          "active": true
+        },
+        {
+          "valueCode": "APPROXIMATE_HOMOMORPHIC",
+          "displayName": "近似同态",
+          "displayOrder": 20,
+          "description": "Supports approximate encrypted numeric aggregation.",
+          "active": true
+        },
+        {
+          "valueCode": "THRESHOLD_HOMOMORPHIC",
+          "displayName": "阈值同态",
+          "displayOrder": 30,
+          "description": "Supports encrypted aggregation with threshold key material or threshold decryption.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "MODEL_UPDATE_PROTECTION_TYPE",
+      "dictionaryName": "模型更新保护类型",
+      "ownerContext": "TrainingOrchestration",
+      "description": "模型更新制品提交到平台前采用的保护方式。",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "PLAINTEXT",
+          "displayName": "明文更新",
+          "displayOrder": 10,
+          "description": "非安全聚合训练轮次提交的本地模型更新制品。",
+          "active": true
+        },
+        {
+          "valueCode": "HOMOMORPHIC_ENCRYPTED",
+          "displayName": "同态加密更新",
+          "displayOrder": 20,
+          "description": "安全聚合训练轮次提交的同态加密模型更新制品。",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_DATA_SOURCE_TYPE",
+      "dictionaryName": "运行数据源类型",
+      "ownerContext": "RuntimeAgentOperations",
+      "description": "运行时代理内可配置的本地数据源接入类型。",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "POSTGRESQL",
+          "displayName": "PostgreSQL 数据库",
+          "displayOrder": 10,
+          "description": "PostgreSQL 数据库表或查询结果数据源。",
+          "active": true
+        },
+        {
+          "valueCode": "MYSQL",
+          "displayName": "MySQL 数据库",
+          "displayOrder": 20,
+          "description": "MySQL 数据库表或查询结果数据源。",
+          "active": true
+        },
+        {
+          "valueCode": "SQLSERVER",
+          "displayName": "SQL Server 数据库",
+          "displayOrder": 30,
+          "description": "SQL Server 数据库表或查询结果数据源。",
+          "active": true
+        },
+        {
+          "valueCode": "ORACLE",
+          "displayName": "Oracle 数据库",
+          "displayOrder": 40,
+          "description": "Oracle 数据库表或查询结果数据源。",
+          "active": true
+        },
+        {
+          "valueCode": "FILE",
+          "displayName": "文件",
+          "displayOrder": 50,
+          "description": "本地或挂载的单文件数据源，具体文件格式由数据格式字段描述。",
+          "active": true
+        },
+        {
+          "valueCode": "OBJECT_STORAGE",
+          "displayName": "对象存储",
+          "displayOrder": 60,
+          "description": "通过对象存储桶和前缀访问的数据源。",
+          "active": true
+        },
+        {
+          "valueCode": "LOCAL_DIRECTORY",
+          "displayName": "本地目录",
+          "displayOrder": 70,
+          "description": "运行时主机上的本地或挂载目录数据源。",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "DATA_FORMAT",
+      "dictionaryName": "数据格式",
+      "ownerContext": "RuntimeAgentOperations",
+      "description": "运行时数据集的物理或逻辑数据格式。",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "TABLE",
+          "displayName": "数据表",
+          "displayOrder": 10,
+          "description": "关系型数据表或查询结果。",
+          "active": true
+        },
+        {
+          "valueCode": "CSV",
+          "displayName": "CSV 格式",
+          "displayOrder": 20,
+          "description": "逗号分隔值文件。",
+          "active": true
+        },
+        {
+          "valueCode": "PARQUET",
+          "displayName": "Parquet 格式",
+          "displayOrder": 30,
+          "description": "Apache Parquet 列式文件。",
+          "active": true
+        },
+        {
+          "valueCode": "JSON",
+          "displayName": "JSON 格式",
+          "displayOrder": 40,
+          "description": "JSON 或 JSON Lines 文件。",
+          "active": true
+        },
+        {
+          "valueCode": "IMAGE_DIRECTORY",
+          "displayName": "图像目录",
+          "displayOrder": 50,
+          "description": "按目录组织的图像数据集。",
+          "active": true
+        },
+        {
+          "valueCode": "IMAGE_FOLDER",
+          "displayName": "ImageFolder 图像目录",
+          "displayOrder": 55,
+          "description": "TorchVision ImageFolder-compatible image dataset layout.",
+          "active": true
+        },
+        {
+          "valueCode": "TEXT_DIRECTORY",
+          "displayName": "文本目录",
+          "displayOrder": 60,
+          "description": "按目录组织的文本数据集。",
+          "active": true
+        },
+        {
+          "valueCode": "AUDIO_DIRECTORY",
+          "displayName": "音频目录",
+          "displayOrder": 70,
+          "description": "按目录组织的音频数据集。",
+          "active": true
+        },
+        {
+          "valueCode": "EMBEDDING_MATRIX",
+          "displayName": "嵌入矩阵",
+          "displayOrder": 80,
+          "description": "向量或嵌入矩阵数据。",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "RUNTIME_ENGINE_PLUGIN_PROFILE",
+      "dictionaryName": "运行引擎插件 Profile",
+      "ownerContext": "RuntimeGovernance",
+      "description": "Runtime engine plugin profiles used to package and expose subsets of model and aggregation plugins.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "core",
+          "displayName": "Core 基础能力",
+          "displayOrder": 10,
+          "description": "Core runtime engine components without optional model plugin groups.",
+          "active": true
+        },
+        {
+          "valueCode": "sklearn",
+          "displayName": "Scikit-learn 表格模型",
+          "displayOrder": 20,
+          "description": "Scikit-learn based tabular model plugins.",
+          "active": true
+        },
+        {
+          "valueCode": "pytorch-vision",
+          "displayName": "PyTorch 视觉模型",
+          "displayOrder": 30,
+          "description": "PyTorch image classification and segmentation model plugins.",
+          "active": true
+        },
+        {
+          "valueCode": "pytorch-tabular",
+          "displayName": "PyTorch 表格模型",
+          "displayOrder": 40,
+          "description": "PyTorch tabular model plugins.",
+          "active": true
+        },
+        {
+          "valueCode": "pytorch-nlp",
+          "displayName": "PyTorch NLP 模型",
+          "displayOrder": 50,
+          "description": "PyTorch text model plugins.",
+          "active": true
+        },
+        {
+          "valueCode": "pytorch-graph",
+          "displayName": "PyTorch 图模型",
+          "displayOrder": 60,
+          "description": "PyTorch graph model plugins.",
+          "active": true
+        },
+        {
+          "valueCode": "full",
+          "displayName": "Full 全量能力",
+          "displayOrder": 70,
+          "description": "All runtime engine plugin groups available in one image or environment.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "MODEL_PLUGIN",
+      "dictionaryName": "模型插件",
+      "ownerContext": "ModelRepository",
+      "description": "Model plugins currently registered by federation-learning-runtime-engine.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "SKLEARN_LOGISTIC_REGRESSION",
+          "displayName": "Scikit-learn Logistic Regression",
+          "displayOrder": 10,
+          "description": "Binary classification model plugin. Aliases: linear.LogisticRegression, SKLEARN_LOGISTIC_REGRESSION.",
+          "active": true
+        },
+        {
+          "valueCode": "PYTORCH_DENSENET_CLASSIFIER",
+          "displayName": "PyTorch DenseNet Classifier",
+          "displayOrder": 20,
+          "description": "Image and medical image classification plugin. Aliases: DENSENET, HOMO_DENSENET, HomoDenseNet.",
+          "active": true
+        },
+        {
+          "valueCode": "PYTORCH_TORCHVISION_DENSENET121_CLASSIFIER",
+          "displayName": "TorchVision DenseNet121 Classifier",
+          "displayOrder": 30,
+          "description": "TorchVision DenseNet121 image classifier plugin. Aliases: TORCHVISION_DENSENET121, DENSENET121, PYTORCH_DENSENET121_CLASSIFIER.",
+          "active": true
+        },
+        {
+          "valueCode": "PYTORCH_RESNET_CLASSIFIER",
+          "displayName": "PyTorch ResNet Classifier",
+          "displayOrder": 40,
+          "description": "Image and medical image classification plugin. Aliases: RESNET, HOMO_RESNET, HomoResNet.",
+          "active": true
+        },
+        {
+          "valueCode": "PYTORCH_TABNET_CLASSIFIER",
+          "displayName": "PyTorch TabNet Classifier",
+          "displayOrder": 50,
+          "description": "Tabular, binary, and multiclass classification plugin. Aliases: TABNET, HOMO_TABNET, HomoTabNetClassifer.",
+          "active": true
+        },
+        {
+          "valueCode": "PYTORCH_UNET_2D_SEGMENTER",
+          "displayName": "PyTorch UNet 2D Segmenter",
+          "displayOrder": 60,
+          "description": "Image and medical image segmentation plugin. Aliases: UNET, UNET_2D, HOMO_UNET_2D, HomoUNet2d.",
+          "active": true
+        },
+        {
+          "valueCode": "PYTORCH_UNET_3D_SEGMENTER",
+          "displayName": "PyTorch UNet 3D Segmenter",
+          "displayOrder": 70,
+          "description": "3D medical image segmentation plugin. Aliases: UNET_3D, HOMO_UNET_3D, HomoUNet3d.",
+          "active": true
+        },
+        {
+          "valueCode": "PYTORCH_BERT_CLASSIFIER",
+          "displayName": "PyTorch BERT Classifier",
+          "displayOrder": 80,
+          "description": "Text classification plugin. Aliases: BERT, HOMO_BERT, HomoBertClassifier.",
+          "active": true
+        },
+        {
+          "valueCode": "PYTORCH_CLINICAL_BERT_CLASSIFIER",
+          "displayName": "PyTorch Clinical BERT Classifier",
+          "displayOrder": 90,
+          "description": "Clinical text classification plugin. Aliases: CLINICAL_BERT, CLINICALBERT, HOMO_CLINICAL_BERT, HomoClinicalBert.",
+          "active": true
+        },
+        {
+          "valueCode": "PYTORCH_GCN_CLASSIFIER",
+          "displayName": "PyTorch GCN Classifier",
+          "displayOrder": 100,
+          "description": "Graph and molecular graph classification plugin. Aliases: GCN, HOMO_GCN, HomoGcn.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "MODEL_ARTIFACT_FORMAT",
+      "dictionaryName": "模型制品格式",
+      "ownerContext": "ModelRepository",
+      "description": "Model artifact formats supported by runtime engine model plugins.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "JSON",
+          "displayName": "JSON 权重",
+          "displayOrder": 10,
+          "description": "JSON model parameters or update artifact.",
+          "active": true
+        },
+        {
+          "valueCode": "PYTORCH_STATE_DICT",
+          "displayName": "PyTorch State Dict",
+          "displayOrder": 20,
+          "description": "PyTorch state_dict artifact.",
+          "active": true
+        },
+        {
+          "valueCode": "PICKLE",
+          "displayName": "Pickle 制品",
+          "displayOrder": 30,
+          "description": "Python pickle artifact used by selected PyTorch plugins.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "MODEL_UPDATE_FORMAT",
+      "dictionaryName": "模型更新格式",
+      "ownerContext": "TrainingOrchestration",
+      "description": "Local model update artifact formats supported by aggregation plugins.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "JSON",
+          "displayName": "JSON 更新",
+          "displayOrder": 10,
+          "description": "JSON local model update, aggregated by FED_AVG_JSON.",
+          "active": true
+        },
+        {
+          "valueCode": "PYTORCH_STATE_DICT",
+          "displayName": "PyTorch State Dict 更新",
+          "displayOrder": 20,
+          "description": "PyTorch state_dict local model update, aggregated by FED_AVG_PYTORCH_STATE_DICT.",
+          "active": true
+        },
+        {
+          "valueCode": "PICKLE",
+          "displayName": "Pickle 更新",
+          "displayOrder": 30,
+          "description": "Pickle update artifact for plugins that persist Python-native model state.",
+          "active": false
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "MODEL_TASK_TYPE",
+      "dictionaryName": "模型任务类型",
+      "ownerContext": "ModelRepository",
+      "description": "Task types declared by runtime engine model plugins.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "BINARY_CLASSIFICATION",
+          "displayName": "二分类",
+          "displayOrder": 10,
+          "description": "Binary classification task.",
+          "active": true
+        },
+        {
+          "valueCode": "MULTICLASS_CLASSIFICATION",
+          "displayName": "多分类",
+          "displayOrder": 20,
+          "description": "Multiclass classification task.",
+          "active": true
+        },
+        {
+          "valueCode": "TABULAR_CLASSIFICATION",
+          "displayName": "表格分类",
+          "displayOrder": 30,
+          "description": "Tabular classification task.",
+          "active": true
+        },
+        {
+          "valueCode": "IMAGE_CLASSIFICATION",
+          "displayName": "图像分类",
+          "displayOrder": 40,
+          "description": "Image classification task.",
+          "active": true
+        },
+        {
+          "valueCode": "MEDICAL_IMAGE_CLASSIFICATION",
+          "displayName": "医学图像分类",
+          "displayOrder": 50,
+          "description": "Medical image classification task.",
+          "active": true
+        },
+        {
+          "valueCode": "IMAGE_SEGMENTATION",
+          "displayName": "图像分割",
+          "displayOrder": 60,
+          "description": "Image segmentation task.",
+          "active": true
+        },
+        {
+          "valueCode": "MEDICAL_IMAGE_SEGMENTATION",
+          "displayName": "医学图像分割",
+          "displayOrder": 70,
+          "description": "Medical image segmentation task.",
+          "active": true
+        },
+        {
+          "valueCode": "TEXT_CLASSIFICATION",
+          "displayName": "文本分类",
+          "displayOrder": 80,
+          "description": "Text classification task.",
+          "active": true
+        },
+        {
+          "valueCode": "NLP_CLASSIFICATION",
+          "displayName": "NLP 分类",
+          "displayOrder": 90,
+          "description": "Natural language classification task.",
+          "active": true
+        },
+        {
+          "valueCode": "CLINICAL_TEXT_CLASSIFICATION",
+          "displayName": "临床文本分类",
+          "displayOrder": 100,
+          "description": "Clinical text classification task.",
+          "active": true
+        },
+        {
+          "valueCode": "GRAPH_CLASSIFICATION",
+          "displayName": "图分类",
+          "displayOrder": 110,
+          "description": "Graph classification task.",
+          "active": true
+        },
+        {
+          "valueCode": "MOLECULAR_GRAPH_CLASSIFICATION",
+          "displayName": "分子图分类",
+          "displayOrder": 120,
+          "description": "Molecular graph classification task.",
+          "active": true
+        }
+      ]
+    }
+  ]
+}
