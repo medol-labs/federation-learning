@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {existsSync} from 'node:fs';
+import {existsSync, readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
 
@@ -10,6 +10,7 @@ const defaultDockerfile = './docker/pytorch/Dockerfile';
 const args = parseArgs(process.argv.slice(2));
 const command = args._[0] ?? 'help';
 const root = resolve(process.cwd(), args.root ?? '.');
+loadDotEnv(resolve(root, '.env'));
 const imagePrefix = String(args.prefix ?? process.env.DOCKER_IMAGE_PREFIX ?? 'medol').replace(/\/+$/, '');
 const imageVersion = String(args.version ?? process.env.IMAGE_VERSION ?? '0.0.1-SNAPSHOT');
 const imageName = String(args.image ?? process.env.IMAGE_NAME ?? defaultImageName);
@@ -32,6 +33,9 @@ switch (command) {
         break;
     case 'import':
         importImage();
+        break;
+    case 'push':
+        pushImage();
         break;
     case 'all':
         buildImage();
@@ -59,6 +63,10 @@ function importImage() {
         fail(`Image archive was not found: ${tarFile}`);
     }
     run('docker', ['load', '-i', tarFile]);
+}
+
+function pushImage() {
+    run('docker', ['push', fullImageName]);
 }
 
 function printPlan() {
@@ -100,6 +108,21 @@ function valuesOf(value) {
     return Array.isArray(value) ? value : [value];
 }
 
+function loadDotEnv(path) {
+    if (!existsSync(path)) return;
+    const lines = readFileSync(path, 'utf8').split(/\r?\n/);
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith('#') || !trimmed.includes('=')) continue;
+        const index = trimmed.indexOf('=');
+        const key = trimmed.slice(0, index).trim();
+        const value = trimmed.slice(index + 1).trim().replace(/^['"]|['"]$/g, '');
+        if (key && process.env[key] === undefined) {
+            process.env[key] = value;
+        }
+    }
+}
+
 function firstNonEmpty(...values) {
     return values.find((value) => value != null && String(value).trim().length > 0);
 }
@@ -138,6 +161,7 @@ function printUsage() {
   node scripts/image-bundle.mjs build [options]
   node scripts/image-bundle.mjs export [options]
   node scripts/image-bundle.mjs import [options]
+  node scripts/image-bundle.mjs push [options]
   node scripts/image-bundle.mjs all [options]
   node scripts/image-bundle.mjs list [options]
 
@@ -145,6 +169,7 @@ Wrappers:
   node scripts/build-images.mjs
   node scripts/export-images.mjs
   node scripts/import-images.mjs
+  node scripts/push-images.mjs
 
 Options:
   --image <name>             Docker image name. Defaults to IMAGE_NAME or ${defaultImageName}.

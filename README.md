@@ -537,6 +537,12 @@ node scripts/export-images.mjs --output federation-learning-runtime-engine-image
 node scripts/import-images.mjs --output federation-learning-runtime-engine-images.tar
 ```
 
+Push the image to a registry:
+
+```bash
+DOCKER_IMAGE_PREFIX=192.168.50.2:5000/federation-learning-platform node scripts/push-images.mjs
+```
+
 Build and export in one command:
 
 ```bash
