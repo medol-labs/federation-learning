@@ -1,0 +1,6 @@
+-r requirements-core.txt
+numpy
+pandas
+scikit-learn
+scipy
+phe

@@ -1,0 +1,25 @@
+{
+    "jobId": "horizontal-logistic-regression-demo-round-1-alice",
+    "roundId": 1,
+    "nodeName": "Alice",
+    "role": "trainer",
+    "operation": "train",
+    "input": {
+        "dataset": {
+            "path": "datasets/homo_lr/train_breast_cancer_host.csv",
+            "labelColumn": "y",
+            "id": "id"
+        }
+    },
+    "output": {
+        "localUpdate": "tmp/runtime-engine/horizontal-logistic-regression-demo/alice_round_1_update.json",
+        "metrics": "tmp/runtime-engine/horizontal-logistic-regression-demo/alice_round_1_metrics.json"
+    },
+    "modelParameter": {
+        "model": "linear.LogisticRegression",
+        "process": "train",
+        "engine": "python",
+        "epoch": "1",
+        "learningRate": 0.1
+    }
+}

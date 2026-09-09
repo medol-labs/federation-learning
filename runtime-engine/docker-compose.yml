@@ -1,0 +1,33 @@
+services:
+  federation-learning-runtime-engine:
+    image: ${RUNTIME_ENGINE_IMAGE:-medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
+    restart: unless-stopped
+    environment:
+      RUNTIME_ENGINE_HOST: 0.0.0.0
+      RUNTIME_ENGINE_PORT: 8080
+      RUNTIME_ENGINE_ROOT: /workspace/tmp/runtime-engine
+      RUNTIME_ENGINE_NODE_NAME: ${RUNTIME_ENGINE_NODE_NAME:-local-runtime}
+      RUNTIME_ENGINE_PLUGIN_PROFILE: ${RUNTIME_ENGINE_PLUGIN_PROFILE:-full}
+      RUNTIME_ENGINE_ENABLED_MODEL_PLUGINS: ${RUNTIME_ENGINE_ENABLED_MODEL_PLUGINS:-}
+      RUNTIME_ENGINE_PAILLIER_KEY_DIR: /workspace/secrets/paillier
+      RUNTIME_ENGINE_FILE_ACCESS_BASE_URL: ${RUNTIME_ENGINE_FILE_ACCESS_BASE_URL:-http://host.docker.internal:8080}
+      MEDOL_SECURITY_INTERNAL_TOKEN: ${MEDOL_SECURITY_INTERNAL_TOKEN:-local-dev-internal-token}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import json, urllib.request; json.load(urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2))"
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    ports:
+      - "${RUNTIME_ENGINE_HOST_PORT:-18080}:8080"
+    volumes:
+      - ${RUNTIME_ENGINE_DATASETS_DIR:-../volumes/datasets}:/workspace/datasets
+      - ${RUNTIME_ENGINE_TMP_DIR:-../volumes/tmp}:/workspace/tmp
+      - ${RUNTIME_ENGINE_MODELS_DIR:-../volumes/models}/runtime-engine:/workspace/models
+      - ${RUNTIME_ENGINE_PAILLIER_KEY_DIR:-../volumes/secrets/paillier}:/workspace/secrets/paillier:ro

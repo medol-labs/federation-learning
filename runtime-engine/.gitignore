@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+python/gemifl/test.pt
+python/gemifl/weight.checkpoint
+python/gemifl/phe_utils/key_pairs.py
+python/gemifl/phe_utils/*.pkl
+.idea/
+tmp/
+volumes/
+*.tar
+*.tar.gz
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+
+.venv/
+venv/
