@@ -1,0 +1,25 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "federation-learning-runtime-agent"
+spec:
+  template:
+    spec:
+      serviceAccountName: "federation-learning-platform-runtime-engine-scheduler"
+      containers:
+        - name: "federation-learning-runtime-agent"
+          volumeMounts:
+            - name: "runtime-datasets"
+              mountPath: "/workspace/datasets"
+              readOnly: true
+            - name: "runtime-work"
+              mountPath: "/workspace/tmp/runtime-engine"
+      volumes:
+        - name: "runtime-datasets"
+          hostPath:
+            path: "/workspace/datasets"
+            type: "Directory"
+        - name: "runtime-work"
+          hostPath:
+            path: "/workspace/tmp/runtime-engine"
+            type: "DirectoryOrCreate"

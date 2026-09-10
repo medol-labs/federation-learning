@@ -5,7 +5,7 @@ metadata:
   labels:
     "app.kubernetes.io/name": "federation-learning-platform-runtime-agent-scheduler"
     "app.kubernetes.io/component": "runtime-agent-scheduler"
-    "app.kubernetes.io/managed-by": "medol-operations-generator"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
 ---
 apiVersion: "rbac.authorization.k8s.io/v1"
 kind: "Role"
@@ -14,7 +14,7 @@ metadata:
   labels:
     "app.kubernetes.io/name": "federation-learning-platform-runtime-agent-scheduler"
     "app.kubernetes.io/component": "runtime-agent-scheduler"
-    "app.kubernetes.io/managed-by": "medol-operations-generator"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
 rules:
   - apiGroups:
       - "apps"
@@ -49,7 +49,7 @@ metadata:
   labels:
     "app.kubernetes.io/name": "federation-learning-platform-runtime-agent-scheduler"
     "app.kubernetes.io/component": "runtime-agent-scheduler"
-    "app.kubernetes.io/managed-by": "medol-operations-generator"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
 subjects:
   - kind: "ServiceAccount"
     name: "federation-learning-platform-runtime-agent-scheduler"
@@ -61,11 +61,11 @@ roleRef:
 apiVersion: "rbac.authorization.k8s.io/v1"
 kind: "ClusterRole"
 metadata:
-  name: "federation-learning-platform-runtime-agent-scheduler-node-reader"
+  name: "federation-learning-platform-runtime-node-reader"
   labels:
-    "app.kubernetes.io/name": "federation-learning-platform-runtime-agent-scheduler-node-reader"
+    "app.kubernetes.io/name": "federation-learning-platform-runtime-node-reader"
     "app.kubernetes.io/component": "runtime-infrastructure-verifier"
-    "app.kubernetes.io/managed-by": "medol-operations-generator"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
 rules:
   - apiGroups:
       - ""
@@ -79,11 +79,11 @@ rules:
 apiVersion: "rbac.authorization.k8s.io/v1"
 kind: "ClusterRoleBinding"
 metadata:
-  name: "federation-learning-platform-runtime-agent-scheduler-node-reader"
+  name: "federation-learning-platform-runtime-node-reader"
   labels:
-    "app.kubernetes.io/name": "federation-learning-platform-runtime-agent-scheduler-node-reader"
+    "app.kubernetes.io/name": "federation-learning-platform-runtime-node-reader"
     "app.kubernetes.io/component": "runtime-infrastructure-verifier"
-    "app.kubernetes.io/managed-by": "medol-operations-generator"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
 subjects:
   - kind: "ServiceAccount"
     name: "federation-learning-platform-runtime-agent-scheduler"
@@ -91,7 +91,7 @@ subjects:
 roleRef:
   apiGroup: "rbac.authorization.k8s.io"
   kind: "ClusterRole"
-  name: "federation-learning-platform-runtime-agent-scheduler-node-reader"
+  name: "federation-learning-platform-runtime-node-reader"
 ---
 apiVersion: "v1"
 kind: "ServiceAccount"
@@ -100,7 +100,7 @@ metadata:
   labels:
     "app.kubernetes.io/name": "federation-learning-platform-runtime-engine-scheduler"
     "app.kubernetes.io/component": "runtime-engine-scheduler"
-    "app.kubernetes.io/managed-by": "medol-operations-generator"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
 ---
 apiVersion: "rbac.authorization.k8s.io/v1"
 kind: "Role"
@@ -109,7 +109,7 @@ metadata:
   labels:
     "app.kubernetes.io/name": "federation-learning-platform-runtime-engine-scheduler"
     "app.kubernetes.io/component": "runtime-engine-scheduler"
-    "app.kubernetes.io/managed-by": "medol-operations-generator"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
 rules:
   - apiGroups:
       - "apps"
@@ -144,7 +144,7 @@ metadata:
   labels:
     "app.kubernetes.io/name": "federation-learning-platform-runtime-engine-scheduler"
     "app.kubernetes.io/component": "runtime-engine-scheduler"
-    "app.kubernetes.io/managed-by": "medol-operations-generator"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
 subjects:
   - kind: "ServiceAccount"
     name: "federation-learning-platform-runtime-engine-scheduler"

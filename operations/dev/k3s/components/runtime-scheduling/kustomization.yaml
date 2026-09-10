@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+  - "runtime-scheduler-rbac.yaml"
+patches:
+  - path: "patches/platform-runtime-scheduler.yaml"
+  - path: "patches/runtime-agent-engine-scheduler.yaml"
+  - path: "patches/runtime-scheduler-config.yaml"

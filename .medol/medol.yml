@@ -9,12 +9,11 @@ generators:
     output: .
 
 operations:
-  # Configure this only when images are pushed to a registry.
-  # registry:
-  #   host: registry.internal:5000
-  #   scheme: http
-  #   namespace: team
-  #   insecure: true
+  registry:
+    host: 192.168.50.2:5000
+    scheme: http
+    namespace: fl
+    insecure: true
 
 workspaceFiles:
   overwrite: false

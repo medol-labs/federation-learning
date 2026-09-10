@@ -1,0 +1,4 @@
+resources:
+  - "../../environments/dev"
+components:
+  - "../../components/runtime-scheduling"

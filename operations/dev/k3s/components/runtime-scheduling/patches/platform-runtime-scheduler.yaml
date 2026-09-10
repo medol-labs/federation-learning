@@ -1,0 +1,8 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "federation-learning-platform"
+spec:
+  template:
+    spec:
+      serviceAccountName: "federation-learning-platform-runtime-agent-scheduler"

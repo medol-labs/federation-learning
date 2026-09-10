@@ -1,0 +1,14 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "federation-learning-platform-dev-config"
+data:
+  PLATFORM_RUNTIME_K3S_AGENT_IMAGE: "192.168.50.2:5000/fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT"
+  PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE: "192.168.50.2:5000/fl/federation-learning-runtime-engine:0.0.1-SNAPSHOT"
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "federation-learning-runtime-agent-dev-config"
+data:
+  RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE: "192.168.50.2:5000/fl/federation-learning-runtime-engine:0.0.1-SNAPSHOT"

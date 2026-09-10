@@ -12,13 +12,6 @@ ports:
   - port: "30080:30080"
     nodeFilters:
       - "server:0"
-volumes:
-  - volume: "../../../volumes/datasets:/workspace/datasets"
-    nodeFilters:
-      - "agent:*"
-  - volume: "../../../volumes/tmp/runtime-engine:/workspace/tmp/runtime-engine"
-    nodeFilters:
-      - "agent:*"
 options:
   k3d:
     wait: true
