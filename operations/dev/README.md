@@ -31,6 +31,18 @@ CodegenModel
   -> Docker Compose / Kubernetes / K3s / APISIX renderers
 ```
 
+## Image Bundle Command
+
+Use `images.mjs` to orchestrate generated backend, frontend, runtime-engine, and infrastructure images from this monorepo:
+
+```bash
+node operations/<environment>/images.mjs list
+node operations/<environment>/images.mjs all --platform linux/amd64
+node operations/<environment>/images.mjs push --prefix registry.example.com/team
+node operations/<environment>/images.mjs push-dependencies --prefix registry.example.com/team
+node operations/<environment>/images.mjs import
+```
+
 ## Not Implemented
 
 - Terraform
