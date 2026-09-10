@@ -30,8 +30,14 @@ class LocalStartTrainingRoundAdapterTest {
     ): StartTrainingRoundInput =
         StartTrainingRoundInput(
             trainingJobId = uuid("11111111-1111-4111-8111-111111111111"),
+            federationId = uuid("77777777-7777-4777-8777-777777777777"),
+            federationName = "Test Federation",
             trainingRunConfigurationId = uuid("22222222-2222-4222-8222-222222222222"),
+            configurationName = "Default Training Configuration",
+            trainingJobObjective = "Train fraud detection model",
             featureSchemaId = uuid("33333333-3333-4333-8333-333333333333"),
+            featureDomain = "fraud",
+            featureSchemaVersion = "v1",
             roundId = uuid("44444444-4444-4444-8444-444444444444"),
             roundNumber = 1,
             selectedOrganizationIds = listOf(uuid("55555555-5555-4555-8555-555555555555")),

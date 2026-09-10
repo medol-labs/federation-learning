@@ -13,7 +13,7 @@ import tech.medo.modellifecycle.model.ModelState
 interface RegisterCandidateModelDecision {
     fun decide(command: RegisterCandidateModelCommand): List<Any> {
         return listOf(
-            ModelCandidateRegisteredEvent(modelId = command.modelId, trainingJobId = command.trainingJobId, finalRoundId = command.finalRoundId, modelArtifactId = command.modelArtifactId, modelArtifactDigest = command.modelArtifactDigest, evaluationReportId = command.evaluationReportId, finalGlobalAccuracy = command.finalGlobalAccuracy)
+            ModelCandidateRegisteredEvent(modelId = command.modelId, trainingJobId = command.trainingJobId, trainingJobObjective = command.trainingJobObjective, finalRoundId = command.finalRoundId, modelArtifactId = command.modelArtifactId, modelArtifactDigest = command.modelArtifactDigest, evaluationReportId = command.evaluationReportId, finalGlobalAccuracy = command.finalGlobalAccuracy)
         )
     }
 }

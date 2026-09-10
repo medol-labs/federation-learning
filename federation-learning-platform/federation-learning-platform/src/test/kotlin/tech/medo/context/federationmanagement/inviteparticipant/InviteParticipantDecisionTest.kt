@@ -13,7 +13,9 @@ class InviteParticipantDecisionTest {
         val events = (object : InviteParticipantDecision {}).decide(
             InviteParticipantCommand(
             federationId = java.util.UUID.randomUUID(),
+            federationName = null,
             organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
             invitationNote = ""
             )
         )

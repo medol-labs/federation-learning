@@ -19,6 +19,12 @@ class NodeRuntimeHealthState @EntityCreator constructor() {
     var currentState: NodeRuntimeHealthStateEnum? = null
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
+    var federationId: UUID? = null
+    var federationName: String? = null
+    var trainingJobId: UUID? = null
+    var trainingJobObjective: String? = null
+    var roundExecutionId: UUID? = null
+    var runtimeNodeName: String? = null
     var offlineReason: String? = null
     var recoveryReason: String? = null
 
@@ -27,6 +33,12 @@ class NodeRuntimeHealthState @EntityCreator constructor() {
         currentState = NodeRuntimeHealthStateEnum.OFFLINE
         nodeId = event.nodeId
         runtimeAgentId = event.runtimeAgentId
+        federationId = event.federationId
+        federationName = event.federationName
+        trainingJobId = event.trainingJobId
+        trainingJobObjective = event.trainingJobObjective
+        roundExecutionId = event.roundExecutionId
+        runtimeNodeName = event.runtimeNodeName
         offlineReason = event.offlineReason
     }
 
@@ -35,6 +47,12 @@ class NodeRuntimeHealthState @EntityCreator constructor() {
         currentState = NodeRuntimeHealthStateEnum.HEALTHY
         nodeId = event.nodeId
         runtimeAgentId = event.runtimeAgentId
+        federationId = event.federationId
+        federationName = event.federationName
+        trainingJobId = event.trainingJobId
+        trainingJobObjective = event.trainingJobObjective
+        roundExecutionId = event.roundExecutionId
+        runtimeNodeName = event.runtimeNodeName
         recoveryReason = event.recoveryReason
     }
 }

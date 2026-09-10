@@ -16,7 +16,7 @@ interface RevokeParticipantInvitationDecision {
             "RevokeParticipantInvitation requires FederationMembership to be Invited."
         }
         return listOf(
-            ParticipantInvitationRevokedEvent(federationId = command.federationId, organizationId = command.organizationId, revokeReason = command.revokeReason)
+            ParticipantInvitationRevokedEvent(federationId = command.federationId, federationName = command.federationName, organizationId = command.organizationId, organizationName = command.organizationName, revokeReason = command.revokeReason)
         )
     }
 }

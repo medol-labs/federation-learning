@@ -134,7 +134,9 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.runtimeEnvironmentType.placeholder", "Select Runtime Environment Type")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_ENVIRONMENT_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}

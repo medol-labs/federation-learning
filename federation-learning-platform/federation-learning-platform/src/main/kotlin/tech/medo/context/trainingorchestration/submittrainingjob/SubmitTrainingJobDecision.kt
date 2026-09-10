@@ -16,7 +16,7 @@ interface SubmitTrainingJobDecision {
             "SubmitTrainingJob requires TrainingJob to be Draft."
         }
         return listOf(
-            TrainingJobSubmittedEvent(trainingJobId = command.trainingJobId, trainingRunConfigurationId = requireNotNull(state.trainingRunConfigurationId) { "trainingRunConfigurationId is required from state." })
+            TrainingJobSubmittedEvent(trainingJobId = command.trainingJobId, trainingRunConfigurationId = requireNotNull(state.trainingRunConfigurationId) { "trainingRunConfigurationId is required from state." }, federationId = requireNotNull(state.federationId) { "federationId is required from state." }, federationName = state.federationName, configurationName = state.configurationName, featureSchemaId = requireNotNull(state.featureSchemaId) { "featureSchemaId is required from state." }, featureDomain = state.featureDomain, featureSchemaVersion = state.featureSchemaVersion, trainingJobObjective = requireNotNull(state.trainingJobObjective) { "trainingJobObjective is required from state." }, objective = requireNotNull(state.objective) { "objective is required from state." })
         )
     }
 }

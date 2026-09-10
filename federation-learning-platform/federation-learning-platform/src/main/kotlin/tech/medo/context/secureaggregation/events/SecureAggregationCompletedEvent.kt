@@ -13,6 +13,7 @@ data class SecureAggregationCompletedEvent(
     val secureAggregationSessionId: UUID,
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
+    val trainingJobObjective: String,
     val featureSchemaId: UUID,
     val roundId: UUID,
     val roundNumber: Int,

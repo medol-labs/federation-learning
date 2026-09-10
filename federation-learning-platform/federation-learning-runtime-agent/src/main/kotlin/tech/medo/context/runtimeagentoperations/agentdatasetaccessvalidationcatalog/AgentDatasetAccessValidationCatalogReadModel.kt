@@ -20,9 +20,13 @@ class AgentDatasetAccessValidationCatalogReadModelCriteria {
     var runtimeDatasetBindingId: StringFilter? = null
     var datasetId: StringFilter? = null
     var organizationId: StringFilter? = null
+    var organizationName: StringFilter? = null
     var featureSchemaId: StringFilter? = null
+    var featureDomain: StringFilter? = null
+    var featureSchemaVersion: StringFilter? = null
     var runtimeId: StringFilter? = null
     var datasetName: StringFilter? = null
+    var runtimeName: StringFilter? = null
     var readable: BooleanFilter? = null
     var schemaReadable: BooleanFilter? = null
     var sampleBatchReadable: BooleanFilter? = null
@@ -37,9 +41,13 @@ class AgentDatasetAccessValidationCatalogReadModelProjection : MetadataProjectio
     var runtimeDatasetBindingId: UUID? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
+    var organizationName: String? = null
     var featureSchemaId: UUID? = null
+    var featureDomain: String? = null
+    var featureSchemaVersion: String? = null
     var runtimeId: UUID? = null
     var datasetName: String? = null
+    var runtimeName: String? = null
     var readable: Boolean? = null
     var schemaReadable: Boolean? = null
     var sampleBatchReadable: Boolean? = null
@@ -60,9 +68,13 @@ fun AgentDatasetAccessValidationCatalogReadModelProjection.toReadModel(): AgentD
     runtimeDatasetBindingId = runtimeDatasetBindingId,
     datasetId = datasetId,
     organizationId = organizationId,
+    organizationName = organizationName,
     featureSchemaId = featureSchemaId,
+    featureDomain = featureDomain,
+    featureSchemaVersion = featureSchemaVersion,
     runtimeId = runtimeId,
     datasetName = datasetName,
+    runtimeName = runtimeName,
     readable = readable,
     schemaReadable = schemaReadable,
     sampleBatchReadable = sampleBatchReadable,
@@ -90,9 +102,13 @@ data class AgentDatasetAccessValidationCatalogReadModel(
     val runtimeDatasetBindingId: UUID?,
     val datasetId: UUID?,
     val organizationId: UUID?,
+    val organizationName: String?,
     val featureSchemaId: UUID?,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
     val runtimeId: UUID?,
     val datasetName: String?,
+    val runtimeName: String?,
     val readable: Boolean?,
     val schemaReadable: Boolean?,
     val sampleBatchReadable: Boolean?,

@@ -61,12 +61,14 @@ class K3sVerifyRuntimeInfrastructureAdapter(
         val expectedNodeCount = plan.expectedNodeCount ?: 1
         if (observedNodeCount <= 0) {
             return RuntimeInfrastructureVerification.Rejected(
+                agentInstallMode = agentInstallMode,
                 observedNodeCount = observedNodeCount,
                 failureReason = "K3S cluster has no nodes labeled with medol.dev/runtime-infrastructure-id=${input.runtimeInfrastructureId}."
             )
         }
         if (observedNodeCount < expectedNodeCount) {
             return RuntimeInfrastructureVerification.Rejected(
+                agentInstallMode = agentInstallMode,
                 observedNodeCount = observedNodeCount,
                 failureReason = "K3S runtime infrastructure observed $observedNodeCount target node(s), expected at least $expectedNodeCount."
             )
@@ -86,6 +88,7 @@ class K3sVerifyRuntimeInfrastructureAdapter(
     private fun rejected(failureReason: String): RuntimeInfrastructureVerification.Rejected {
         log.debug("K3S verification rejected: {}", failureReason)
         return RuntimeInfrastructureVerification.Rejected(
+            agentInstallMode = "UNKNOWN",
             observedNodeCount = null,
             failureReason = failureReason
         )

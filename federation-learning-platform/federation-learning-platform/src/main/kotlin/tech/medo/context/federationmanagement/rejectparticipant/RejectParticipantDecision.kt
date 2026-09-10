@@ -16,7 +16,7 @@ interface RejectParticipantDecision {
             "RejectParticipant requires FederationMembership to be Invited."
         }
         return listOf(
-            ParticipantRejectedEvent(federationId = command.federationId, organizationId = command.organizationId, rejectionReason = command.rejectionReason)
+            ParticipantRejectedEvent(federationId = command.federationId, federationName = command.federationName, organizationId = command.organizationId, organizationName = command.organizationName, rejectionReason = command.rejectionReason)
         )
     }
 }

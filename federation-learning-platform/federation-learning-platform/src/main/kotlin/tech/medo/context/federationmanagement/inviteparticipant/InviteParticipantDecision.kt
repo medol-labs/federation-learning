@@ -13,7 +13,7 @@ import tech.medo.federationmanagement.federationmembership.FederationMembershipS
 interface InviteParticipantDecision {
     fun decide(command: InviteParticipantCommand): List<Any> {
         return listOf(
-            ParticipantInvitedEvent(federationId = command.federationId, organizationId = command.organizationId, invitationNote = command.invitationNote)
+            ParticipantInvitedEvent(federationId = command.federationId, federationName = command.federationName, organizationId = command.organizationId, organizationName = command.organizationName, invitationNote = command.invitationNote)
         )
     }
 }

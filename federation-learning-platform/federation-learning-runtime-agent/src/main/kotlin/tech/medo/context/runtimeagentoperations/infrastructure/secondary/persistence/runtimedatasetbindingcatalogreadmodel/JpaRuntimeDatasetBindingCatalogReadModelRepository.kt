@@ -42,7 +42,12 @@ class JpaRuntimeDatasetBindingCatalogReadModelRepository(
             it.datasetId = this@toProjection.datasetId
             it.organizationId = this@toProjection.organizationId
             it.runtimeId = this@toProjection.runtimeId
+            it.organizationName = this@toProjection.organizationName
+            it.featureSchemaId = this@toProjection.featureSchemaId
+            it.featureDomain = this@toProjection.featureDomain
+            it.featureSchemaVersion = this@toProjection.featureSchemaVersion
             it.datasetName = this@toProjection.datasetName
+            it.runtimeName = this@toProjection.runtimeName
             it.dataSourceType = this@toProjection.dataSourceType
             it.host = this@toProjection.host
             it.port = this@toProjection.port
@@ -70,7 +75,12 @@ class JpaRuntimeDatasetBindingCatalogReadModelRepository(
             it.datasetId = this@toEntity.datasetId
             it.organizationId = this@toEntity.organizationId
             it.runtimeId = this@toEntity.runtimeId
+            it.organizationName = this@toEntity.organizationName
+            it.featureSchemaId = this@toEntity.featureSchemaId
+            it.featureDomain = this@toEntity.featureDomain
+            it.featureSchemaVersion = this@toEntity.featureSchemaVersion
             it.datasetName = this@toEntity.datasetName
+            it.runtimeName = this@toEntity.runtimeName
             it.dataSourceType = this@toEntity.dataSourceType
             it.host = this@toEntity.host
             it.port = this@toEntity.port

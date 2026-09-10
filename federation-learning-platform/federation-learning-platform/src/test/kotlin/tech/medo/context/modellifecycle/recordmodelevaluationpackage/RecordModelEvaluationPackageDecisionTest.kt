@@ -18,6 +18,7 @@ class RecordModelEvaluationPackageDecisionTest {
             ModelCandidateRegisteredEvent(
             modelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             trainingJobId = java.util.UUID.randomUUID(),
+            trainingJobObjective = "",
             finalRoundId = java.util.UUID.randomUUID(),
             modelArtifactId = java.util.UUID.randomUUID(),
             modelArtifactDigest = "",

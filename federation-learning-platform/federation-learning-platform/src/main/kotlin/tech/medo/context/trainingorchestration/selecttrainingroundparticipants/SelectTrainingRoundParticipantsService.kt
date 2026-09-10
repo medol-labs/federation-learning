@@ -10,13 +10,19 @@ interface SelectTrainingRoundParticipantsService {
 }
 
 data class SelectTrainingRoundParticipantsInput(
-    val trainingJobId: UUID
+    val trainingJobId: UUID,
+    val federationId: UUID,
+    val federationName: String?,
+    val trainingRunConfigurationId: UUID,
+    val configurationName: String?,
+    val featureSchemaId: UUID,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
+    val trainingJobObjective: String
 )
 
 sealed interface SelectTrainingRoundParticipantsResult {
     data class Succeeded(
-        val trainingRunConfigurationId: UUID,
-        val featureSchemaId: UUID,
         val roundId: UUID,
         val roundNumber: Int,
         val maxRounds: Int,
@@ -32,8 +38,6 @@ sealed interface SelectTrainingRoundParticipantsResult {
     ) : SelectTrainingRoundParticipantsResult
 
     data class Rejected(
-        val trainingRunConfigurationId: UUID,
-        val featureSchemaId: UUID,
         val roundId: UUID,
         val roundNumber: Int,
         val maxRounds: Int,

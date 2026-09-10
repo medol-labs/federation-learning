@@ -179,7 +179,9 @@ export const FederationMembershipDirectoryList = () => {
               recordItemId={row.original.federationId}
               size="sm"
               query={{
+                federationName: row.original.federationName,
                 organizationId: row.original.organizationId,
+                organizationName: row.original.organizationName,
               }}
             />
             )}
@@ -191,7 +193,9 @@ export const FederationMembershipDirectoryList = () => {
                     recordItemId={row.original.federationId}
                     size="sm"
                     query={{
+                      federationName: row.original.federationName,
                       organizationId: row.original.organizationId,
+                      organizationName: row.original.organizationName,
                       approvalNote: row.original.approvalNote,
                     }}
                   />
@@ -203,7 +207,9 @@ export const FederationMembershipDirectoryList = () => {
                     recordItemId={row.original.federationId}
                     size="sm"
                     query={{
+                      federationName: row.original.federationName,
                       organizationId: row.original.organizationId,
+                      organizationName: row.original.organizationName,
                     }}
                   />
                 )}
@@ -214,7 +220,9 @@ export const FederationMembershipDirectoryList = () => {
                     recordItemId={row.original.federationId}
                     size="sm"
                     query={{
+                      federationName: row.original.federationName,
                       organizationId: row.original.organizationId,
+                      organizationName: row.original.organizationName,
                     }}
                   />
                 )}
@@ -225,7 +233,9 @@ export const FederationMembershipDirectoryList = () => {
                     recordItemId={row.original.federationId}
                     size="sm"
                     query={{
+                      federationName: row.original.federationName,
                       organizationId: row.original.organizationId,
+                      organizationName: row.original.organizationName,
                     }}
                   />
                 )}

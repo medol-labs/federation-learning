@@ -149,7 +149,9 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionLabel="federationName"
                   optionValue="trainingJobId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingJobId.placeholder", "Select Training Job Id")}
                   meta={{
                     idField: "trainingJobId",
@@ -176,7 +178,9 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionLabel="configurationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.trainingRunConfigurationId.placeholder", "Select Training Run Configuration Id")}
                   meta={{
                     idField: "trainingRunConfigurationId",
@@ -221,7 +225,9 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionLabel="runtimeEngineObservedStatus"
                   optionValue="roundExecutionId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.roundExecutionId.placeholder", "Select Round Execution Id")}
                   meta={{
                     idField: "roundExecutionId",
@@ -248,7 +254,9 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionLabel="runtimeName"
                   optionValue="runtimeId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.runtimeId.placeholder", "Select Runtime Id")}
                   meta={{
                     idField: "runtimeId",
@@ -275,7 +283,9 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionLabel="featureDomain"
                   optionValue="featureSchemaId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
                   meta={{
                     idField: "featureSchemaId",
@@ -327,7 +337,9 @@ export const RoundExecutionCatalogSubmitModelUpdateSubmission = () => {
                   optionLabel="publicKeyVersion"
                   optionValue="secureAggregationSessionId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.round_execution_catalog.commands.submitModelUpdateSubmission.fields.secureAggregationSessionId.placeholder", "Select Secure Aggregation Session Id")}
                   meta={{
                     idField: "secureAggregationSessionId",

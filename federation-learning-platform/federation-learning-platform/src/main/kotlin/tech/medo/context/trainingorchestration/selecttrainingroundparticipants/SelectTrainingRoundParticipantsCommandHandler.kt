@@ -20,7 +20,7 @@ class SelectTrainingRoundParticipantsCommandHandler(
         command: SelectTrainingRoundParticipantsCommand,
         eventAppender: EventAppender
     ) {
-        val input = SelectTrainingRoundParticipantsInput(trainingJobId = command.trainingJobId)
+        val input = SelectTrainingRoundParticipantsInput(trainingJobId = command.trainingJobId, federationId = command.federationId, federationName = command.federationName, trainingRunConfigurationId = command.trainingRunConfigurationId, configurationName = command.configurationName, featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, featureSchemaVersion = command.featureSchemaVersion, trainingJobObjective = command.trainingJobObjective)
         val portResult = selectTrainingRoundParticipantsService.execute(input)
         val now = java.time.LocalDateTime.now()
 

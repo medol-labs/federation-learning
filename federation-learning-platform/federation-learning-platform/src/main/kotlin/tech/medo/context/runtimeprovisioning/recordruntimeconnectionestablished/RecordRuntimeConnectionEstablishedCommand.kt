@@ -12,6 +12,7 @@ data class RecordRuntimeConnectionEstablishedCommand(
     val runtimeAgentId: UUID,
     val agentInstallMode: String,
     val organizationId: UUID,
+    val organizationName: String?,
     val runtimeName: String,
     val runtimeAgentEndpoint: String,
     val endpointScope: String

@@ -22,9 +22,13 @@ type AgentDatasetAccessValidationCatalogRecord = {
   runtimeDatasetBindingId: string;
   datasetId: string;
   organizationId: string;
+  organizationName?: string;
   featureSchemaId: string;
+  featureDomain?: string;
+  featureSchemaVersion?: string;
   runtimeId: string;
   datasetName?: string;
+  runtimeName?: string;
   readable: boolean;
   schemaReadable: boolean;
   sampleBatchReadable: boolean;
@@ -131,6 +135,20 @@ export const AgentDatasetAccessValidationCatalogList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("organizationName", {
+        id: "organizationName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.agent_dataset_access_validation_catalog.fields.organizationName.label", "Organization Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_dataset_access_validation_catalog.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
         header: ({ column }) => (
@@ -141,6 +159,34 @@ export const AgentDatasetAccessValidationCatalogList = () => {
         meta: {
           label: t("resources.agent_dataset_access_validation_catalog.fields.featureSchemaId.label", "Feature Schema Id"),
           placeholder: "Enter Feature Schema Id",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("featureDomain", {
+        id: "featureDomain",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.agent_dataset_access_validation_catalog.fields.featureDomain.label", "Feature Domain")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_dataset_access_validation_catalog.fields.featureDomain.label", "Feature Domain"),
+          placeholder: "Enter Feature Domain",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("featureSchemaVersion", {
+        id: "featureSchemaVersion",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.agent_dataset_access_validation_catalog.fields.featureSchemaVersion.label", "Feature Schema Version")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_dataset_access_validation_catalog.fields.featureSchemaVersion.label", "Feature Schema Version"),
+          placeholder: "Enter Feature Schema Version",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -169,6 +215,20 @@ export const AgentDatasetAccessValidationCatalogList = () => {
         meta: {
           label: t("resources.agent_dataset_access_validation_catalog.fields.datasetName.label", "Dataset Name"),
           placeholder: "Enter Dataset Name",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeName", {
+        id: "runtimeName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.agent_dataset_access_validation_catalog.fields.runtimeName.label", "Runtime Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_dataset_access_validation_catalog.fields.runtimeName.label", "Runtime Name"),
+          placeholder: "Enter Runtime Name",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -290,7 +350,7 @@ export const AgentDatasetAccessValidationCatalogList = () => {
         tableName: "agent_dataset_access_validation_catalog_read_model_entity",
         idField: "datasetAccessValidationId",
         idFields: ["datasetAccessValidationId"],
-        queryFields: ["datasetAccessValidationId","runtimeDatasetBindingId","datasetId","organizationId","featureSchemaId","runtimeId","datasetName","readable","schemaReadable","sampleBatchReadable","validationStatus","failureReason","validatedAt"],
+        queryFields: ["datasetAccessValidationId","runtimeDatasetBindingId","datasetId","organizationId","organizationName","featureSchemaId","featureDomain","featureSchemaVersion","runtimeId","datasetName","runtimeName","readable","schemaReadable","sampleBatchReadable","validationStatus","failureReason","validatedAt"],
         label: t("resources.agent_dataset_access_validation_catalog.label", "Agent Dataset Access Validation Catalog"),
         aggregateRoute: "agentdatasetaccessvalidation",
         queryRoute: "agentdatasetaccessvalidationcatalog",

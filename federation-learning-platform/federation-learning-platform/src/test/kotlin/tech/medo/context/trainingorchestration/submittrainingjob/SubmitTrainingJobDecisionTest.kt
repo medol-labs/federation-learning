@@ -17,9 +17,14 @@ class SubmitTrainingJobDecisionTest {
             TrainingJobCreatedEvent(
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
             federationId = java.util.UUID.randomUUID(),
+            federationName = null,
             initialModelId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("config-1".toByteArray()),
+            configurationName = null,
+            featureDomain = null,
+            featureSchemaVersion = null,
+            trainingJobObjective = "",
             objective = ""
             )
         )

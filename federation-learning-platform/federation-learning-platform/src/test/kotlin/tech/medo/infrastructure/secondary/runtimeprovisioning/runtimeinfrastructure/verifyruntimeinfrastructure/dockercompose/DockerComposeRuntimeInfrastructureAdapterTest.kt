@@ -43,11 +43,7 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
         val adapter = DockerComposeVerifyRuntimeInfrastructureAdapter(properties(), lookup(), runner)
 
         val result = adapter.verify(
-            RuntimeInfrastructureVerificationInput(
-                runtimeInfrastructureId = runtimeInfrastructureId,
-                runtimeInstallationPlanId = runtimeInstallationPlanId,
-                runtimeAgentId = runtimeAgentId
-            )
+            verificationInput()
         )
 
         val succeeded = assertInstanceOf(RuntimeInfrastructureVerification.Succeeded::class.java, result)
@@ -64,11 +60,7 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
         val adapter = DockerComposeVerifyRuntimeInfrastructureAdapter(properties(), lookup(), runner)
 
         val result = adapter.verify(
-            RuntimeInfrastructureVerificationInput(
-                runtimeInfrastructureId = runtimeInfrastructureId,
-                runtimeInstallationPlanId = runtimeInstallationPlanId,
-                runtimeAgentId = runtimeAgentId
-            )
+            verificationInput()
         )
 
         val unavailable = assertInstanceOf(RuntimeInfrastructureVerification.Unavailable::class.java, result)
@@ -84,10 +76,7 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
         val adapter = DockerComposeDeployRuntimeAgentAdapter(properties(), lookup(), runner)
 
         val result = adapter.execute(
-            DeployRuntimeAgentInput(
-                runtimeAgentId = runtimeAgentId,
-                runtimeInfrastructureId = runtimeInfrastructureId
-            )
+            deployInput()
         )
 
         val succeeded = assertInstanceOf(DeployRuntimeAgentResult.Succeeded::class.java, result)
@@ -108,10 +97,7 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
         )
 
         val supported = adapter.supports(
-            DeployRuntimeAgentInput(
-                runtimeAgentId = runtimeAgentId,
-                runtimeInfrastructureId = runtimeInfrastructureId
-            )
+            deployInput()
         )
 
         assertFalse(supported)
@@ -124,6 +110,37 @@ class DockerComposeRuntimeInfrastructureAdapterTest {
             agentVersion = "test-agent-version"
             commandTimeout = Duration.ofSeconds(5)
         }
+
+    private fun verificationInput(): RuntimeInfrastructureVerificationInput =
+        RuntimeInfrastructureVerificationInput(
+            runtimeInfrastructureId = runtimeInfrastructureId,
+            runtimeInstallationPlanId = runtimeInstallationPlanId,
+            organizationId = UUID.fromString("00000000-0000-0000-0000-000000000005"),
+            organizationName = "Test Organization",
+            runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
+            runtimeInfrastructurePackageName = "Docker Compose Runtime Package",
+            runtimeInfrastructurePackageVersion = "1.0.0",
+            runtimeEnvironmentType = "DOCKER_COMPOSE",
+            runtimeName = "local runtime",
+            expectedNodeCount = 1,
+            runtimeAgentId = runtimeAgentId
+        )
+
+    private fun deployInput(): DeployRuntimeAgentInput =
+        DeployRuntimeAgentInput(
+            runtimeAgentId = runtimeAgentId,
+            runtimeInfrastructureId = runtimeInfrastructureId,
+            runtimeInstallationPlanId = runtimeInstallationPlanId,
+            organizationId = UUID.fromString("00000000-0000-0000-0000-000000000005"),
+            organizationName = "Test Organization",
+            runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
+            runtimeInfrastructurePackageName = "Docker Compose Runtime Package",
+            runtimeInfrastructurePackageVersion = "1.0.0",
+            runtimeEnvironmentType = "DOCKER_COMPOSE",
+            runtimeName = "local runtime",
+            agentInstallMode = "AUTO",
+            expectedNodeCount = 1
+        )
 
     private fun lookup(
         plan: RuntimeInstallationPlanCatalogReadModel = runtimeInstallationPlan(),

@@ -42,9 +42,13 @@ class JpaAgentDatasetAccessValidationCatalogReadModelRepository(
             it.runtimeDatasetBindingId = this@toProjection.runtimeDatasetBindingId
             it.datasetId = this@toProjection.datasetId
             it.organizationId = this@toProjection.organizationId
+            it.organizationName = this@toProjection.organizationName
             it.featureSchemaId = this@toProjection.featureSchemaId
+            it.featureDomain = this@toProjection.featureDomain
+            it.featureSchemaVersion = this@toProjection.featureSchemaVersion
             it.runtimeId = this@toProjection.runtimeId
             it.datasetName = this@toProjection.datasetName
+            it.runtimeName = this@toProjection.runtimeName
             it.readable = this@toProjection.readable
             it.schemaReadable = this@toProjection.schemaReadable
             it.sampleBatchReadable = this@toProjection.sampleBatchReadable
@@ -65,9 +69,13 @@ class JpaAgentDatasetAccessValidationCatalogReadModelRepository(
             it.runtimeDatasetBindingId = this@toEntity.runtimeDatasetBindingId
             it.datasetId = this@toEntity.datasetId
             it.organizationId = this@toEntity.organizationId
+            it.organizationName = this@toEntity.organizationName
             it.featureSchemaId = this@toEntity.featureSchemaId
+            it.featureDomain = this@toEntity.featureDomain
+            it.featureSchemaVersion = this@toEntity.featureSchemaVersion
             it.runtimeId = this@toEntity.runtimeId
             it.datasetName = this@toEntity.datasetName
+            it.runtimeName = this@toEntity.runtimeName
             it.readable = this@toEntity.readable
             it.schemaReadable = this@toEntity.schemaReadable
             it.sampleBatchReadable = this@toEntity.sampleBatchReadable

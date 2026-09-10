@@ -27,7 +27,11 @@ class CreateTrainingJobIntegrationTest(
         val command = CreateTrainingJobCommand(
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
             federationId = java.util.UUID.randomUUID(),
+            federationName = null,
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("config-1".toByteArray()),
+            configurationName = null,
+            featureDomain = null,
+            featureSchemaVersion = null,
             objective = ""
         )
 

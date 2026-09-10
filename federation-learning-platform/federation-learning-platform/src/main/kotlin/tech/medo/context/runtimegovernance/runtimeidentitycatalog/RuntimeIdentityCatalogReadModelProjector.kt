@@ -33,6 +33,7 @@ class RuntimeIdentityCatalogReadModelProjector(private val repository: RuntimeId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
             entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
             entity.runtimeName = event.runtimeName
             entity.identityStatus = "Active"
             ProjectionMetadata.assign(entity, message)

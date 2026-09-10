@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component
 class PlanRuntimeInfrastructureWhenInstallationPlanCreatedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: RuntimeInstallationPlanCreatedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(PlanRuntimeInfrastructureCommand(runtimeInfrastructureId = event.runtimeInfrastructureId, runtimeInstallationPlanId = event.runtimeInstallationPlanId)).resultMessage
+        commandGateway.send(PlanRuntimeInfrastructureCommand(runtimeInfrastructureId = event.runtimeInfrastructureId, runtimeInstallationPlanId = event.runtimeInstallationPlanId, organizationId = event.organizationId, organizationName = event.organizationName, runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = event.runtimeEnvironmentType, runtimeName = event.runtimeName, agentInstallMode = event.agentInstallMode, expectedNodeCount = event.expectedNodeCount)).resultMessage
 }

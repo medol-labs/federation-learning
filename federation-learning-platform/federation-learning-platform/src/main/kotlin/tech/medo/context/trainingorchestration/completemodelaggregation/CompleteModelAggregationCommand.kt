@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 data class CompleteModelAggregationCommand(
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
+    val trainingJobObjective: String,
     val featureSchemaId: UUID,
     val roundId: UUID,
     val roundNumber: Int,

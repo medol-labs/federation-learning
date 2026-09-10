@@ -37,6 +37,7 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
   const { id } = useParsed();
   const defaultValues = {
     organizationId: searchParams.get("organizationId") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
   } as unknown as Partial<CreateRuntimeInstallationPlanCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<CreateRuntimeInstallationPlanCommandInput, CreateRuntimeInstallationPlanCommandInput>({
@@ -82,6 +83,12 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
       <CreateViewHeader title={t("resources.organization_directory.commands.createRuntimeInstallationPlan.label", "Create Runtime Installation Plan")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("CreateRuntimeInstallationPlan validation failed", errors))} className="space-y-8">
+          {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
+            <input type="hidden" {...form.register("organizationName" as never)} />
+          ) : null}
+          <input type="hidden" {...form.register("runtimeInfrastructurePackageName" as never)} />
+          <input type="hidden" {...form.register("runtimeInfrastructurePackageVersion" as never)} />
+          <input type="hidden" {...form.register("runtimeEnvironmentType" as never)} />
           <FormField
             control={form.control}
             name="organizationId"
@@ -96,7 +103,14 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "organizationName" as never,
+                      String(option?.record?.["organizationName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.organization_directory.commands.createRuntimeInstallationPlan.fields.organizationId.placeholder", "Select Organization Id")}
                   meta={{
                     idField: "organizationId",
@@ -123,7 +137,24 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
                   optionLabel="packageName"
                   optionValue="runtimeInfrastructurePackageId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "runtimeInfrastructurePackageName" as never,
+                      String(option?.record?.["packageName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "runtimeInfrastructurePackageVersion" as never,
+                      String(option?.record?.["packageVersion"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "runtimeEnvironmentType" as never,
+                      String(option?.record?.["runtimeEnvironmentType"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.organization_directory.commands.createRuntimeInstallationPlan.fields.runtimeInfrastructurePackageId.placeholder", "Select Runtime Infrastructure Package Id")}
                   meta={{
                     idField: "runtimeInfrastructurePackageId",
@@ -168,7 +199,9 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.organization_directory.commands.createRuntimeInstallationPlan.fields.agentInstallMode.placeholder", "Select Agent Install Mode")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_INSTALL_MODE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}

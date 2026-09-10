@@ -23,9 +23,13 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
     var runtimeDatasetBindingId: UUID? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
+    var organizationName: String? = null
     var featureSchemaId: UUID? = null
+    var featureDomain: String? = null
+    var featureSchemaVersion: String? = null
     var datasetName: String? = null
     var runtimeId: UUID? = null
+    var runtimeName: String? = null
     var readable: Boolean? = null
     var schemaReadable: Boolean? = null
     var sampleBatchReadable: Boolean? = null
@@ -38,9 +42,13 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         datasetName = event.datasetName
         runtimeId = event.runtimeId
+        runtimeName = event.runtimeName
         readable = event.readable
         schemaReadable = event.schemaReadable
         sampleBatchReadable = event.sampleBatchReadable
@@ -52,9 +60,13 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         datasetName = event.datasetName
         runtimeId = event.runtimeId
+        runtimeName = event.runtimeName
         failureReason = event.failureReason
     }
 
@@ -64,9 +76,13 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         datasetName = event.datasetName
         runtimeId = event.runtimeId
+        runtimeName = event.runtimeName
         readable = event.readable
         schemaReadable = event.schemaReadable
         sampleBatchReadable = event.sampleBatchReadable
@@ -78,9 +94,13 @@ class AgentDatasetAccessValidationState @EntityCreator constructor() {
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         datasetName = event.datasetName
         runtimeId = event.runtimeId
+        runtimeName = event.runtimeName
         failureReason = event.failureReason
     }
 }

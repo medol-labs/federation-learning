@@ -40,6 +40,7 @@ class ModelArtifactState @EntityCreator constructor() {
     var modelSizeBytes: Int? = null
     var downloadUri: String? = null
     var trainingJobId: UUID? = null
+    var trainingJobObjective: String? = null
     var roundId: UUID? = null
 
     @EventSourcingHandler
@@ -83,6 +84,7 @@ class ModelArtifactState @EntityCreator constructor() {
         modelSignatureUri = event.modelSignatureUri
         modelSizeBytes = event.modelSizeBytes
         trainingJobId = event.trainingJobId
+        trainingJobObjective = event.trainingJobObjective
         roundId = event.roundId
     }
 }

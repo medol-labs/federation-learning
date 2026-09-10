@@ -27,7 +27,9 @@ class BindUserAccountToOrganizationIntegrationTest(
         val command = BindUserAccountToOrganizationCommand(
             userOrganizationMembershipId = java.util.UUID.randomUUID(),
             userAccountId = java.util.UUID.randomUUID(),
+            username = null,
             organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
             organizationUserRole = null
         )
 

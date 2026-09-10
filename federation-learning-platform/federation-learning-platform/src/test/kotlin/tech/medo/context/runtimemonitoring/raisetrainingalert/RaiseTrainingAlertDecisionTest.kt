@@ -15,6 +15,8 @@ class RaiseTrainingAlertDecisionTest {
             alertId = java.util.UUID.randomUUID(),
             nodeId = java.util.UUID.randomUUID(),
             trainingJobId = null,
+            runtimeNodeName = null,
+            trainingJobObjective = null,
             severity = "",
             message = ""
             )

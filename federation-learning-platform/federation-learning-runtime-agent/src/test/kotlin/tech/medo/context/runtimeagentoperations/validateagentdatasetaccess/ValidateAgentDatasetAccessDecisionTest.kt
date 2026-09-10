@@ -20,9 +20,13 @@ class ValidateAgentDatasetAccessDecisionTest {
             runtimeDatasetBindingId = UUID.fromString("22222222-2222-4222-8222-222222222222"),
             datasetId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
             organizationId = UUID.fromString("77777777-7777-4777-8777-777777777777"),
+            organizationName = null,
             featureSchemaId = UUID.fromString("88888888-8888-4888-8888-888888888888"),
+            featureDomain = null,
+            featureSchemaVersion = null,
             datasetName = "",
             runtimeId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
+            runtimeName = null,
             dataSourceType = "FILE",
             host = null,
             port = null,
@@ -52,9 +56,13 @@ class ValidateAgentDatasetAccessDecisionTest {
         assertEquals(UUID.fromString("22222222-2222-4222-8222-222222222222"), event.runtimeDatasetBindingId)
         assertEquals(UUID.fromString("33333333-3333-4333-8333-333333333333"), event.datasetId)
         assertEquals(UUID.fromString("77777777-7777-4777-8777-777777777777"), event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
         assertEquals(UUID.fromString("88888888-8888-4888-8888-888888888888"), event.featureSchemaId)
+        assertEquals(command.featureDomain, event.featureDomain)
+        assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
         assertEquals(command.datasetName, event.datasetName)
         assertEquals(UUID.fromString("44444444-4444-4444-8444-444444444444"), event.runtimeId)
+        assertEquals(command.runtimeName, event.runtimeName)
     }
 
     @Test
@@ -66,9 +74,13 @@ class ValidateAgentDatasetAccessDecisionTest {
             runtimeDatasetBindingId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
             datasetId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
             organizationId = UUID.fromString("77777777-7777-4777-8777-777777777777"),
+            organizationName = null,
             featureSchemaId = UUID.fromString("88888888-8888-4888-8888-888888888888"),
+            featureDomain = null,
+            featureSchemaVersion = null,
             datasetName = "",
             runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666"),
+            runtimeName = null,
             dataSourceType = "FILE",
             host = null,
             port = null,
@@ -96,8 +108,12 @@ class ValidateAgentDatasetAccessDecisionTest {
         assertEquals(UUID.fromString("44444444-4444-4444-8444-444444444444"), event.runtimeDatasetBindingId)
         assertEquals(UUID.fromString("55555555-5555-4555-8555-555555555555"), event.datasetId)
         assertEquals(UUID.fromString("77777777-7777-4777-8777-777777777777"), event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
         assertEquals(UUID.fromString("88888888-8888-4888-8888-888888888888"), event.featureSchemaId)
+        assertEquals(command.featureDomain, event.featureDomain)
+        assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
         assertEquals(command.datasetName, event.datasetName)
         assertEquals(UUID.fromString("66666666-6666-4666-8666-666666666666"), event.runtimeId)
+        assertEquals(command.runtimeName, event.runtimeName)
     }
 }

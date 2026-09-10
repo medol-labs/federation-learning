@@ -39,6 +39,10 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
     federationId: searchParams.get("federationId") ?? undefined,
     trainingRunConfigurationId: searchParams.get("trainingRunConfigurationId") ?? undefined,
     objective: searchParams.get("objective") ?? undefined,
+    federationName: searchParams.get("federationName") ?? undefined,
+    configurationName: searchParams.get("configurationName") ?? undefined,
+    featureDomain: searchParams.get("featureDomain") ?? undefined,
+    featureSchemaVersion: searchParams.get("featureSchemaVersion") ?? undefined,
   } as unknown as Partial<CreateTrainingJobCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<CreateTrainingJobCommandInput, CreateTrainingJobCommandInput>({
@@ -84,6 +88,18 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
       <CreateViewHeader title={t("resources.training_job_dashboard.commands.createTrainingJob.label", "Create Training Job")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("CreateTrainingJob validation failed", errors))} className="space-y-8">
+          {defaultValues.federationName !== undefined && defaultValues.federationName !== null ? (
+            <input type="hidden" {...form.register("federationName" as never)} />
+          ) : null}
+          {defaultValues.configurationName !== undefined && defaultValues.configurationName !== null ? (
+            <input type="hidden" {...form.register("configurationName" as never)} />
+          ) : null}
+          {defaultValues.featureDomain !== undefined && defaultValues.featureDomain !== null ? (
+            <input type="hidden" {...form.register("featureDomain" as never)} />
+          ) : null}
+          {defaultValues.featureSchemaVersion !== undefined && defaultValues.featureSchemaVersion !== null ? (
+            <input type="hidden" {...form.register("featureSchemaVersion" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="federationId"
@@ -98,7 +114,14 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
                   optionLabel="federationName"
                   optionValue="federationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "federationName" as never,
+                      String(option?.record?.["federationName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.training_job_dashboard.commands.createTrainingJob.fields.federationId.placeholder", "Select Federation Id")}
                   meta={{
                     idField: "federationId",
@@ -125,7 +148,24 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
                   optionLabel="configurationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "configurationName" as never,
+                      String(option?.record?.["configurationName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "featureDomain" as never,
+                      String(option?.record?.["featureDomain"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "featureSchemaVersion" as never,
+                      String(option?.record?.["featureSchemaVersion"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.training_job_dashboard.commands.createTrainingJob.fields.trainingRunConfigurationId.placeholder", "Select Training Run Configuration Id")}
                   meta={{
                     idField: "trainingRunConfigurationId",

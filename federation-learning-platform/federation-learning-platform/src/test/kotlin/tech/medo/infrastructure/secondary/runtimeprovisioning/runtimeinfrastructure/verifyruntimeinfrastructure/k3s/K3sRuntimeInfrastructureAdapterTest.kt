@@ -50,11 +50,7 @@ class K3sRuntimeInfrastructureAdapterTest {
         val adapter = K3sVerifyRuntimeInfrastructureAdapter(properties(), lookup(), runner)
 
         val result = adapter.verify(
-            RuntimeInfrastructureVerificationInput(
-                runtimeInfrastructureId = runtimeInfrastructureId,
-                runtimeInstallationPlanId = runtimeInstallationPlanId,
-                runtimeAgentId = runtimeAgentId
-            )
+            verificationInput()
         )
 
         val succeeded = assertInstanceOf(RuntimeInfrastructureVerification.Succeeded::class.java, result)
@@ -78,11 +74,7 @@ class K3sRuntimeInfrastructureAdapterTest {
         val adapter = K3sVerifyRuntimeInfrastructureAdapter(properties(), lookup(), runner)
 
         val result = adapter.verify(
-            RuntimeInfrastructureVerificationInput(
-                runtimeInfrastructureId = runtimeInfrastructureId,
-                runtimeInstallationPlanId = runtimeInstallationPlanId,
-                runtimeAgentId = runtimeAgentId
-            )
+            verificationInput()
         )
 
         val rejected = assertInstanceOf(RuntimeInfrastructureVerification.Rejected::class.java, result)
@@ -102,10 +94,7 @@ class K3sRuntimeInfrastructureAdapterTest {
         val adapter = K3sDeployRuntimeAgentAdapter(properties(), lookup(), runner)
 
         val result = adapter.execute(
-            DeployRuntimeAgentInput(
-                runtimeAgentId = runtimeAgentId,
-                runtimeInfrastructureId = runtimeInfrastructureId
-            )
+            deployInput()
         )
 
         val succeeded = assertInstanceOf(DeployRuntimeAgentResult.Succeeded::class.java, result)
@@ -145,10 +134,7 @@ class K3sRuntimeInfrastructureAdapterTest {
         val adapter = K3sDeployRuntimeAgentAdapter(properties(), lookup(), runner)
 
         val result = adapter.execute(
-            DeployRuntimeAgentInput(
-                runtimeAgentId = runtimeAgentId,
-                runtimeInfrastructureId = runtimeInfrastructureId
-            )
+            deployInput()
         )
 
         val unavailable = assertInstanceOf(DeployRuntimeAgentResult.Unavailable::class.java, result)
@@ -169,10 +155,7 @@ class K3sRuntimeInfrastructureAdapterTest {
         )
 
         val supported = adapter.supports(
-            DeployRuntimeAgentInput(
-                runtimeAgentId = runtimeAgentId,
-                runtimeInfrastructureId = runtimeInfrastructureId
-            )
+            deployInput()
         )
 
         assertFalse(supported)
@@ -186,6 +169,37 @@ class K3sRuntimeInfrastructureAdapterTest {
             agentVersion = "test-k3s-agent-version"
             commandTimeout = Duration.ofSeconds(5)
         }
+
+    private fun verificationInput(): RuntimeInfrastructureVerificationInput =
+        RuntimeInfrastructureVerificationInput(
+            runtimeInfrastructureId = runtimeInfrastructureId,
+            runtimeInstallationPlanId = runtimeInstallationPlanId,
+            organizationId = organizationId,
+            organizationName = "Test Organization",
+            runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
+            runtimeInfrastructurePackageName = "K3s Runtime Package",
+            runtimeInfrastructurePackageVersion = "1.0.0",
+            runtimeEnvironmentType = "K3S",
+            runtimeName = "local k3s runtime",
+            expectedNodeCount = 2,
+            runtimeAgentId = runtimeAgentId
+        )
+
+    private fun deployInput(): DeployRuntimeAgentInput =
+        DeployRuntimeAgentInput(
+            runtimeAgentId = runtimeAgentId,
+            runtimeInfrastructureId = runtimeInfrastructureId,
+            runtimeInstallationPlanId = runtimeInstallationPlanId,
+            organizationId = organizationId,
+            organizationName = "Test Organization",
+            runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
+            runtimeInfrastructurePackageName = "K3s Runtime Package",
+            runtimeInfrastructurePackageVersion = "1.0.0",
+            runtimeEnvironmentType = "K3S",
+            runtimeName = "local k3s runtime",
+            agentInstallMode = "PLATFORM_MANAGED",
+            expectedNodeCount = 2
+        )
 
     private fun lookup(
         plan: RuntimeInstallationPlanCatalogReadModel = runtimeInstallationPlan(),

@@ -21,6 +21,7 @@ class RecordEncryptedModelUpdateDecisionComponent : RecordEncryptedModelUpdateDe
                 submissionId = command.submissionId,
                 trainingJobId = command.trainingJobId,
                 trainingRunConfigurationId = command.trainingRunConfigurationId,
+                trainingJobObjective = command.trainingJobObjective,
                 featureSchemaId = command.featureSchemaId,
                 roundId = command.roundId,
                 roundNumber = command.roundNumber,

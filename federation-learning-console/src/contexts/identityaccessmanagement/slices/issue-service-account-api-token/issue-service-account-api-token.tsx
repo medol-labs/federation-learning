@@ -112,7 +112,9 @@ export const ServiceAccountApiTokenCatalogIssueServiceAccountApiToken = () => {
                   optionLabel="username"
                   optionValue="userAccountId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.service_account_api_token_catalog.commands.issueServiceAccountApiToken.fields.userAccountId.placeholder", "Select User Account Id")}
                   meta={{
                     idField: "userAccountId",

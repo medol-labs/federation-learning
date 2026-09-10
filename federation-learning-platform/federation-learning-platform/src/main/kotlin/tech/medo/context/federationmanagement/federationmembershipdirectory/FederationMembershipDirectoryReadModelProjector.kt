@@ -72,6 +72,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
+            entity.federationName = event.federationName
+            entity.organizationName = event.organizationName
             entity.invitationNote = event.invitationNote
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -89,6 +91,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
+            entity.federationName = event.federationName
+            entity.organizationName = event.organizationName
             entity.approvalNote = event.approvalNote
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -106,6 +110,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
+            entity.federationName = event.federationName
+            entity.organizationName = event.organizationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -122,6 +128,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
+            entity.federationName = event.federationName
+            entity.organizationName = event.organizationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -138,6 +146,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
+            entity.federationName = event.federationName
+            entity.organizationName = event.organizationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -154,6 +164,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
             entity.federationId = event.federationId
             entity.organizationId = event.organizationId
+            entity.federationName = event.federationName
+            entity.organizationName = event.organizationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

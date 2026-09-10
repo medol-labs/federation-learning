@@ -23,12 +23,13 @@ class RuntimeDatasetMetadataCatalogReadModelCriteria {
     var metadataReportId: StringFilter? = null
     var datasetId: StringFilter? = null
     var organizationId: StringFilter? = null
-    var runtimeId: StringFilter? = null
-    var featureSchemaId: StringFilter? = null
-    var datasetName: StringFilter? = null
     var organizationName: StringFilter? = null
+    var runtimeId: StringFilter? = null
+    var runtimeName: StringFilter? = null
+    var featureSchemaId: StringFilter? = null
     var featureDomain: StringFilter? = null
     var featureSchemaVersion: StringFilter? = null
+    var datasetName: StringFilter? = null
     var sampleCount: IntegerFilter? = null
     var featureCount: IntegerFilter? = null
     var schemaCompatible: BooleanFilter? = null
@@ -49,12 +50,13 @@ class RuntimeDatasetMetadataCatalogReadModelProjection : MetadataProjection {
     var metadataReportId: UUID? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
-    var runtimeId: UUID? = null
-    var featureSchemaId: UUID? = null
-    var datasetName: String? = null
     var organizationName: String? = null
+    var runtimeId: UUID? = null
+    var runtimeName: String? = null
+    var featureSchemaId: UUID? = null
     var featureDomain: String? = null
     var featureSchemaVersion: String? = null
+    var datasetName: String? = null
     var sampleCount: Int? = null
     var featureCount: Int? = null
     var schemaCompatible: Boolean? = null
@@ -81,12 +83,13 @@ fun RuntimeDatasetMetadataCatalogReadModelProjection.toReadModel(): RuntimeDatas
     metadataReportId = metadataReportId,
     datasetId = datasetId,
     organizationId = organizationId,
-    runtimeId = runtimeId,
-    featureSchemaId = featureSchemaId,
-    datasetName = datasetName,
     organizationName = organizationName,
+    runtimeId = runtimeId,
+    runtimeName = runtimeName,
+    featureSchemaId = featureSchemaId,
     featureDomain = featureDomain,
     featureSchemaVersion = featureSchemaVersion,
+    datasetName = datasetName,
     sampleCount = sampleCount,
     featureCount = featureCount,
     schemaCompatible = schemaCompatible,
@@ -120,12 +123,13 @@ data class RuntimeDatasetMetadataCatalogReadModel(
     val metadataReportId: UUID?,
     val datasetId: UUID?,
     val organizationId: UUID?,
-    val runtimeId: UUID?,
-    val featureSchemaId: UUID?,
-    val datasetName: String?,
     val organizationName: String?,
+    val runtimeId: UUID?,
+    val runtimeName: String?,
+    val featureSchemaId: UUID?,
     val featureDomain: String?,
     val featureSchemaVersion: String?,
+    val datasetName: String?,
     val sampleCount: Int?,
     val featureCount: Int?,
     val schemaCompatible: Boolean?,

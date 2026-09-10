@@ -16,7 +16,7 @@ interface MarkRuntimeAgentRecoveredDecision {
             "MarkRuntimeAgentRecovered requires NodeRuntimeHealth to be Offline."
         }
         return listOf(
-            RuntimeAgentRecoveredEvent(nodeId = command.nodeId, runtimeAgentId = command.runtimeAgentId, recoveryReason = command.recoveryReason)
+            RuntimeAgentRecoveredEvent(nodeId = command.nodeId, runtimeAgentId = command.runtimeAgentId, federationId = command.federationId, federationName = command.federationName, trainingJobId = command.trainingJobId, trainingJobObjective = command.trainingJobObjective, roundExecutionId = command.roundExecutionId, runtimeNodeName = command.runtimeNodeName, recoveryReason = command.recoveryReason)
         )
     }
 }

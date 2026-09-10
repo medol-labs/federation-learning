@@ -650,6 +650,9 @@ export const DatasetReadinessList = () => {
                       datasetId: row.original.datasetId,
                       organizationId: row.original.organizationId,
                       featureSchemaId: row.original.featureSchemaId,
+                      organizationName: row.original.organizationName,
+                      featureDomain: row.original.featureDomain,
+                      featureSchemaVersion: row.original.featureSchemaVersion,
                       datasetName: row.original.datasetName,
                       runtimeId: row.original.runtimeId,
                     }}

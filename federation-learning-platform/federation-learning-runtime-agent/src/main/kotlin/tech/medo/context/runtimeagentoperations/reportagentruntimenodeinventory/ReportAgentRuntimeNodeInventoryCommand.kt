@@ -10,8 +10,10 @@ import java.util.UUID;
 data class ReportAgentRuntimeNodeInventoryCommand(
     val runtimeNodeInventoryReportId: UUID = java.util.UUID.randomUUID(),
     val organizationId: UUID,
+    val organizationName: String?,
     val runtimeInfrastructureId: UUID,
     val runtimeAgentId: UUID,
+    val runtimeName: String?,
     val runtimeNodeName: String,
     val infrastructureNodeId: String?,
     val runtimeNodeRole: String,

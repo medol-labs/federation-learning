@@ -19,7 +19,11 @@ class RuntimeInstallationPlanState @EntityCreator constructor() {
     var runtimeInstallationPlanId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
     var organizationId: UUID? = null
+    var organizationName: String? = null
     var runtimeInfrastructurePackageId: UUID? = null
+    var runtimeInfrastructurePackageName: String? = null
+    var runtimeInfrastructurePackageVersion: String? = null
+    var runtimeEnvironmentType: String? = null
     var runtimeName: String? = null
     var bootstrapCommand: String? = null
     var nodeLabelCommand: String? = null
@@ -36,7 +40,11 @@ class RuntimeInstallationPlanState @EntityCreator constructor() {
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         runtimeInfrastructureId = event.runtimeInfrastructureId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
         runtimeName = event.runtimeName
         bootstrapCommand = event.bootstrapCommand
         nodeLabelCommand = event.nodeLabelCommand

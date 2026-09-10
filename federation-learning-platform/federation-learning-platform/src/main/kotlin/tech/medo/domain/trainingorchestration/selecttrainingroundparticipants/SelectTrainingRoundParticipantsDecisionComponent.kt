@@ -25,8 +25,14 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
             is SelectTrainingRoundParticipantsResult.Rejected -> listOf(
                 TrainingRoundParticipantSelectionFailedEvent(
                     trainingJobId = command.trainingJobId,
-                    trainingRunConfigurationId = portResult.trainingRunConfigurationId,
-                    featureSchemaId = portResult.featureSchemaId,
+                    federationId = command.federationId,
+                    federationName = command.federationName,
+                    trainingRunConfigurationId = command.trainingRunConfigurationId,
+                    configurationName = command.configurationName,
+                    featureSchemaId = command.featureSchemaId,
+                    featureDomain = command.featureDomain,
+                    featureSchemaVersion = command.featureSchemaVersion,
+                    trainingJobObjective = command.trainingJobObjective,
                     roundId = portResult.roundId,
                     roundNumber = portResult.roundNumber,
                     maxRounds = portResult.maxRounds,
@@ -45,8 +51,14 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
             is SelectTrainingRoundParticipantsResult.Unavailable -> listOf(
                 TrainingRoundParticipantSelectionFailedEvent(
                     trainingJobId = command.trainingJobId,
-                    trainingRunConfigurationId = UUID.randomUUID(),
-                    featureSchemaId = UUID.randomUUID(),
+                    federationId = command.federationId,
+                    federationName = command.federationName,
+                    trainingRunConfigurationId = command.trainingRunConfigurationId,
+                    configurationName = command.configurationName,
+                    featureSchemaId = command.featureSchemaId,
+                    featureDomain = command.featureDomain,
+                    featureSchemaVersion = command.featureSchemaVersion,
+                    trainingJobObjective = command.trainingJobObjective,
                     roundId = UUID.randomUUID(),
                     roundNumber = 0,
                     maxRounds = 0,
@@ -78,7 +90,7 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
         log.info(
             "Selected training round participants. trainingJobId={}, featureSchemaId={}, selectedRuntimeCount={}, selectedOrganizationCount={}, minimumNodesPerRound={}",
             command.trainingJobId,
-            result.featureSchemaId,
+            command.featureSchemaId,
             result.selectedRuntimeCount,
             result.selectedOrganizationCount,
             result.minimumNodesPerRound
@@ -87,8 +99,14 @@ class SelectTrainingRoundParticipantsDecisionComponent : SelectTrainingRoundPart
         return listOf(
             TrainingRoundParticipantsSelectedEvent(
                 trainingJobId = command.trainingJobId,
-                trainingRunConfigurationId = result.trainingRunConfigurationId,
-                featureSchemaId = result.featureSchemaId,
+                federationId = command.federationId,
+                federationName = command.federationName,
+                trainingRunConfigurationId = command.trainingRunConfigurationId,
+                configurationName = command.configurationName,
+                featureSchemaId = command.featureSchemaId,
+                featureDomain = command.featureDomain,
+                featureSchemaVersion = command.featureSchemaVersion,
+                trainingJobObjective = command.trainingJobObjective,
                 roundId = result.roundId,
                 roundNumber = result.roundNumber,
                 maxRounds = result.maxRounds,

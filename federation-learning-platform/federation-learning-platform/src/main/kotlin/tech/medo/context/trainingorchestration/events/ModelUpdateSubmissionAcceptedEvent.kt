@@ -15,6 +15,7 @@ data class ModelUpdateSubmissionAcceptedEvent(
     @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
+    val trainingJobObjective: String,
     val roundId: UUID,
     val roundNumber: Int,
     val maxRounds: Int,

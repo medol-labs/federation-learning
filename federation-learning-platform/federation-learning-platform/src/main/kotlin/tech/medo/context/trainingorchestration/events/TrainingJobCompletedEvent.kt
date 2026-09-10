@@ -12,5 +12,6 @@ data class TrainingJobCompletedEvent(
     val trainingJobId: UUID,
     val finalRoundId: UUID,
     val finalModelId: UUID,
+    val trainingJobObjective: String,
     val stopReason: String
 )

@@ -16,6 +16,7 @@ class ActivateRuntimeIdentityDecisionTest {
             runtimeInfrastructureId = java.util.UUID.randomUUID(),
             runtimeAgentId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
             runtimeName = ""
             )
         )

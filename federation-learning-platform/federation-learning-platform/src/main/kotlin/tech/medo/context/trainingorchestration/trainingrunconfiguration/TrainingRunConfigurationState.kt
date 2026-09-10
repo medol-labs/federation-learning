@@ -22,7 +22,10 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
     var trainingRunConfigurationId: UUID? = null
     var configurationName: String? = null
     var federationId: UUID? = null
+    var federationName: String? = null
     var featureSchemaId: UUID? = null
+    var featureDomain: String? = null
+    var featureSchemaVersion: String? = null
     var initialModelId: UUID? = null
     var initialModelName: String? = null
     var initialModelVersion: String? = null
@@ -55,7 +58,10 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         configurationName = event.configurationName
         federationId = event.federationId
+        federationName = event.federationName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         initialModelId = event.initialModelId
         initialModelName = event.initialModelName
         initialModelVersion = event.initialModelVersion
@@ -86,7 +92,10 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
         trainingRunConfigurationId = event.trainingRunConfigurationId
         configurationName = event.configurationName
         federationId = event.federationId
+        federationName = event.federationName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         initialModelId = event.initialModelId
         initialModelName = event.initialModelName
         initialModelVersion = event.initialModelVersion

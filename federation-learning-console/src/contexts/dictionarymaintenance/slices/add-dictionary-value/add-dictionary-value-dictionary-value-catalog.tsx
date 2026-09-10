@@ -102,7 +102,9 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
                   optionLabel="dictionaryName"
                   optionValue="dictionaryId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.dictionary_value_catalog.commands.addDictionaryValue.fields.dictionaryId.placeholder", "Select Dictionary Id")}
                   meta={{
                     idField: "dictionaryId",

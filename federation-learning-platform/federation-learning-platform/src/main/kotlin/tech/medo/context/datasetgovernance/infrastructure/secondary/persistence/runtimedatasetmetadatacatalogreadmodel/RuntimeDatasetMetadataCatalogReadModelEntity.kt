@@ -23,12 +23,13 @@ class RuntimeDatasetMetadataCatalogReadModelEntity : MetadataProjection {
     var metadataReportId: UUID? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
-    var runtimeId: UUID? = null
-    var featureSchemaId: UUID? = null
-    var datasetName: String? = null
     var organizationName: String? = null
+    var runtimeId: UUID? = null
+    var runtimeName: String? = null
+    var featureSchemaId: UUID? = null
     var featureDomain: String? = null
     var featureSchemaVersion: String? = null
+    var datasetName: String? = null
     var sampleCount: Int? = null
     var featureCount: Int? = null
     var schemaCompatible: Boolean? = null

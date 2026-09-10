@@ -28,7 +28,12 @@ class DetectRuntimeNodeResourcePressureIntegrationTest(
         val command = DetectRuntimeNodeResourcePressureCommand(
             nodeId = java.util.UUID.randomUUID(),
             runtimeAgentId = java.util.UUID.randomUUID(),
+            federationId = null,
+            federationName = null,
             trainingJobId = null,
+            trainingJobObjective = null,
+            roundExecutionId = null,
+            runtimeNodeName = null,
             pressureType = "",
             observedValue = java.math.BigDecimal.ZERO,
             thresholdValue = java.math.BigDecimal.ZERO

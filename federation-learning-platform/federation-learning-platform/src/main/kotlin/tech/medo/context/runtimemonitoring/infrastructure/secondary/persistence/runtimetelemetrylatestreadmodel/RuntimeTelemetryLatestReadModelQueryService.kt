@@ -34,8 +34,11 @@ class RuntimeTelemetryLatestReadModelQueryService(
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeAgentId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeAgentId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.federationId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("federationId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.federationName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> root.get("federationName") })) }
             criteria.trainingJobId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("trainingJobId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.trainingJobObjective?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> root.get("trainingJobObjective") })) }
             criteria.roundExecutionId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("roundExecutionId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.runtimeNodeName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> root.get("runtimeNodeName") })) }
             criteria.cpuLoad?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<BigDecimal>> { root -> root.get("cpuLoad") })) }
             criteria.gpuLoad?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<BigDecimal>> { root -> root.get("gpuLoad") })) }
             criteria.memoryLoad?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<BigDecimal>> { root -> root.get("memoryLoad") })) }
@@ -104,8 +107,11 @@ class RuntimeTelemetryLatestReadModelQueryService(
             it.nodeId = this@toProjection.nodeId
             it.runtimeAgentId = this@toProjection.runtimeAgentId
             it.federationId = this@toProjection.federationId
+            it.federationName = this@toProjection.federationName
             it.trainingJobId = this@toProjection.trainingJobId
+            it.trainingJobObjective = this@toProjection.trainingJobObjective
             it.roundExecutionId = this@toProjection.roundExecutionId
+            it.runtimeNodeName = this@toProjection.runtimeNodeName
             it.cpuLoad = this@toProjection.cpuLoad
             it.gpuLoad = this@toProjection.gpuLoad
             it.memoryLoad = this@toProjection.memoryLoad

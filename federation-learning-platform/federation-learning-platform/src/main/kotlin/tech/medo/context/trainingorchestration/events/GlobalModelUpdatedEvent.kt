@@ -12,6 +12,7 @@ data class GlobalModelUpdatedEvent(
     @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val trainingRunConfigurationId: UUID,
+    val trainingJobObjective: String,
     val featureSchemaId: UUID,
     val roundId: UUID,
     val roundNumber: Int,

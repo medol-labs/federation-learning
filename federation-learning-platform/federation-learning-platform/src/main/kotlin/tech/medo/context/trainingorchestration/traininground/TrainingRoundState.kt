@@ -32,8 +32,14 @@ class TrainingRoundState @EntityCreator constructor() {
 
     var currentState: TrainingRoundStateEnum? = null
     var trainingJobId: UUID? = null
+    var federationId: UUID? = null
+    var federationName: String? = null
     var trainingRunConfigurationId: UUID? = null
+    var configurationName: String? = null
     var featureSchemaId: UUID? = null
+    var featureDomain: String? = null
+    var featureSchemaVersion: String? = null
+    var trainingJobObjective: String? = null
     var roundId: UUID? = null
     var roundNumber: Int? = null
     var maxRounds: Int? = null
@@ -89,8 +95,14 @@ class TrainingRoundState @EntityCreator constructor() {
     fun evolve(event: TrainingRoundParticipantsSelectedEvent): TrainingRoundState = apply {
         currentState = TrainingRoundStateEnum.PARTICIPANTS_SELECTED
         trainingJobId = event.trainingJobId
+        federationId = event.federationId
+        federationName = event.federationName
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        configurationName = event.configurationName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
+        trainingJobObjective = event.trainingJobObjective
         roundId = event.roundId
         roundNumber = event.roundNumber
         maxRounds = event.maxRounds
@@ -109,8 +121,14 @@ class TrainingRoundState @EntityCreator constructor() {
     fun evolve(event: TrainingRoundParticipantSelectionFailedEvent): TrainingRoundState = apply {
         currentState = TrainingRoundStateEnum.FAILED
         trainingJobId = event.trainingJobId
+        federationId = event.federationId
+        federationName = event.federationName
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        configurationName = event.configurationName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
+        trainingJobObjective = event.trainingJobObjective
         roundId = event.roundId
         roundNumber = event.roundNumber
         maxRounds = event.maxRounds
@@ -135,8 +153,14 @@ class TrainingRoundState @EntityCreator constructor() {
     fun evolve(event: TrainingRoundStartedEvent): TrainingRoundState = apply {
         currentState = TrainingRoundStateEnum.RUNNING
         trainingJobId = event.trainingJobId
+        federationId = event.federationId
+        federationName = event.federationName
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        configurationName = event.configurationName
+        trainingJobObjective = event.trainingJobObjective
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         roundId = event.roundId
         roundNumber = event.roundNumber
         selectedOrganizationIds = event.selectedOrganizationIds
@@ -160,8 +184,14 @@ class TrainingRoundState @EntityCreator constructor() {
     fun evolve(event: TrainingRoundStartFailedEvent): TrainingRoundState = apply {
         currentState = TrainingRoundStateEnum.FAILED
         trainingJobId = event.trainingJobId
+        federationId = event.federationId
+        federationName = event.federationName
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        configurationName = event.configurationName
+        trainingJobObjective = event.trainingJobObjective
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         roundId = event.roundId
         roundNumber = event.roundNumber
         selectedOrganizationIds = event.selectedOrganizationIds
@@ -211,6 +241,7 @@ class TrainingRoundState @EntityCreator constructor() {
         executionPlanId = event.executionPlanId
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        trainingJobObjective = event.trainingJobObjective
         roundId = event.roundId
         roundNumber = event.roundNumber
         maxRounds = event.maxRounds
@@ -253,6 +284,7 @@ class TrainingRoundState @EntityCreator constructor() {
         currentState = TrainingRoundStateEnum.COMPLETED
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        trainingJobObjective = event.trainingJobObjective
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber
@@ -274,8 +306,14 @@ class TrainingRoundState @EntityCreator constructor() {
     @EventSourcingHandler
     fun evolve(event: SecureAggregationRequestedEvent): TrainingRoundState = apply {
         trainingJobId = event.trainingJobId
+        federationId = event.federationId
+        federationName = event.federationName
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        configurationName = event.configurationName
+        trainingJobObjective = event.trainingJobObjective
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         roundId = event.roundId
         roundNumber = event.roundNumber
         requiredParticipantCount = event.requiredParticipantCount
@@ -294,6 +332,7 @@ class TrainingRoundState @EntityCreator constructor() {
         currentState = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        trainingJobObjective = event.trainingJobObjective
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber
@@ -318,6 +357,7 @@ class TrainingRoundState @EntityCreator constructor() {
         currentState = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        trainingJobObjective = event.trainingJobObjective
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber
@@ -338,6 +378,7 @@ class TrainingRoundState @EntityCreator constructor() {
         currentState = TrainingRoundStateEnum.COMPLETED
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        trainingJobObjective = event.trainingJobObjective
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber

@@ -25,7 +25,7 @@ class DeployRuntimeAgentCommandHandler(
         require(state.currentState == RuntimeInfrastructureStateEnum.VERIFIED) {
             "DeployRuntimeAgent requires RuntimeInfrastructure to be Verified."
         }
-        val input = DeployRuntimeAgentInput(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId)
+        val input = DeployRuntimeAgentInput(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, agentInstallMode = command.agentInstallMode, expectedNodeCount = command.expectedNodeCount)
         val portResult = deployRuntimeAgentService.execute(input)
         val now = java.time.LocalDateTime.now()
 

@@ -12,7 +12,11 @@ data class RuntimeInstallationPlanCreatedEvent(
     val runtimeInfrastructureId: UUID,
     @EventTag(key = "organizationId")
     val organizationId: UUID,
+    val organizationName: String?,
     val runtimeInfrastructurePackageId: UUID,
+    val runtimeInfrastructurePackageName: String?,
+    val runtimeInfrastructurePackageVersion: String?,
+    val runtimeEnvironmentType: String?,
     val runtimeName: String,
     val bootstrapCommand: String,
     val nodeLabelCommand: String,

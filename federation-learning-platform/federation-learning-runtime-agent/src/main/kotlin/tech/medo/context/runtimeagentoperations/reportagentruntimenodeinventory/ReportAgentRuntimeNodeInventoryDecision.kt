@@ -13,7 +13,7 @@ import tech.medo.runtimeagentoperations.agentruntimenodeinventory.AgentRuntimeNo
 interface ReportAgentRuntimeNodeInventoryDecision {
     fun decide(command: ReportAgentRuntimeNodeInventoryCommand): List<Any> {
         return listOf(
-            AgentRuntimeNodeInventoryReportedEvent(runtimeNodeInventoryReportId = command.runtimeNodeInventoryReportId, organizationId = command.organizationId, runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId, runtimeNodeName = command.runtimeNodeName, infrastructureNodeId = command.infrastructureNodeId, runtimeNodeRole = command.runtimeNodeRole, nodeReady = command.nodeReady, runtimeEngineVersion = command.runtimeEngineVersion, containerEngineVersion = command.containerEngineVersion, operatingSystem = command.operatingSystem, architecture = command.architecture, inventoryHash = command.inventoryHash)
+            AgentRuntimeNodeInventoryReportedEvent(runtimeNodeInventoryReportId = command.runtimeNodeInventoryReportId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId, runtimeName = command.runtimeName, runtimeNodeName = command.runtimeNodeName, infrastructureNodeId = command.infrastructureNodeId, runtimeNodeRole = command.runtimeNodeRole, nodeReady = command.nodeReady, runtimeEngineVersion = command.runtimeEngineVersion, containerEngineVersion = command.containerEngineVersion, operatingSystem = command.operatingSystem, architecture = command.architecture, inventoryHash = command.inventoryHash)
         )
     }
 }

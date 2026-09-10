@@ -12,7 +12,10 @@ interface DeclareDatasetService {
 data class DeclareDatasetInput(
     val datasetId: UUID,
     val organizationId: UUID,
+    val organizationName: String?,
     val featureSchemaId: UUID,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
     val datasetName: String,
     val datasetUsage: String
 )

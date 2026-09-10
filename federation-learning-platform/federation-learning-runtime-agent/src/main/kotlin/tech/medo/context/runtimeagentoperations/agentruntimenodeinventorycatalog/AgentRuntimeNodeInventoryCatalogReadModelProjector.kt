@@ -24,6 +24,7 @@ class AgentRuntimeNodeInventoryCatalogReadModelProjector(private val repository:
             entity.organizationId = event.organizationId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.organizationName = event.organizationName
             entity.runtimeNodeName = event.runtimeNodeName
             entity.infrastructureNodeId = event.infrastructureNodeId
             entity.runtimeNodeRole = event.runtimeNodeRole

@@ -37,6 +37,7 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
   const { id } = useParsed();
   const defaultValues = {
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
+    featureDomain: searchParams.get("featureDomain") ?? undefined,
   } as unknown as Partial<DeclareDatasetCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<DeclareDatasetCommandInput, DeclareDatasetCommandInput>({
@@ -82,6 +83,11 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
       <CreateViewHeader title={t("resources.feature_schema_catalog.commands.declareDataset.label", "Declare Dataset")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DeclareDataset validation failed", errors))} className="space-y-8">
+          {defaultValues.featureDomain !== undefined && defaultValues.featureDomain !== null ? (
+            <input type="hidden" {...form.register("featureDomain" as never)} />
+          ) : null}
+          <input type="hidden" {...form.register("organizationName" as never)} />
+          <input type="hidden" {...form.register("featureSchemaVersion" as never)} />
           <FormField
             control={form.control}
             name="organizationId"
@@ -96,7 +102,14 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "organizationName" as never,
+                      String(option?.record?.["organizationName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.feature_schema_catalog.commands.declareDataset.fields.organizationId.placeholder", "Select Organization Id")}
                   meta={{
                     idField: "organizationId",
@@ -123,7 +136,19 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
                   optionLabel="featureDomain"
                   optionValue="featureSchemaId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "featureDomain" as never,
+                      String(option?.record?.["featureDomain"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "featureSchemaVersion" as never,
+                      String(option?.record?.["version"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.feature_schema_catalog.commands.declareDataset.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
                   meta={{
                     idField: "featureSchemaId",

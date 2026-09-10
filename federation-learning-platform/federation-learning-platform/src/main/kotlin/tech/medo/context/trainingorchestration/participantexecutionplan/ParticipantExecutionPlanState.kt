@@ -20,7 +20,11 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
     var executionPlanId: UUID? = null
     var executionSessionId: UUID? = null
     var trainingJobId: UUID? = null
+    var federationId: UUID? = null
+    var federationName: String? = null
     var trainingRunConfigurationId: UUID? = null
+    var configurationName: String? = null
+    var trainingJobObjective: String? = null
     var featureSchemaId: UUID? = null
     var roundId: UUID? = null
     var roundNumber: Int? = null
@@ -45,7 +49,11 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
         executionPlanId = event.executionPlanId
         executionSessionId = event.executionSessionId
         trainingJobId = event.trainingJobId
+        federationId = event.federationId
+        federationName = event.federationName
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        configurationName = event.configurationName
+        trainingJobObjective = event.trainingJobObjective
         featureSchemaId = event.featureSchemaId
         roundId = event.roundId
         roundNumber = event.roundNumber

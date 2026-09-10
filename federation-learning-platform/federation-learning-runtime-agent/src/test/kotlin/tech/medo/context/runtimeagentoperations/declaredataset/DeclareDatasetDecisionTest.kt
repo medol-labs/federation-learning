@@ -18,7 +18,10 @@ class DeclareDatasetDecisionTest {
         val command = DeclareDatasetCommand(
             datasetId = UUID.fromString("11111111-1111-4111-8111-111111111111"),
             organizationId = UUID.fromString("22222222-2222-4222-8222-222222222222"),
+            organizationName = null,
             featureSchemaId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
+            featureDomain = null,
+            featureSchemaVersion = null,
             datasetName = "credit-risk",
             datasetUsage = "TRAINING"
         )
@@ -34,7 +37,10 @@ class DeclareDatasetDecisionTest {
         val event = events.filterIsInstance<DatasetDeclaredEvent>().single()
         assertEquals(UUID.fromString("11111111-1111-4111-8111-111111111111"), event.datasetId)
         assertEquals(UUID.fromString("22222222-2222-4222-8222-222222222222"), event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
         assertEquals(UUID.fromString("33333333-3333-4333-8333-333333333333"), event.featureSchemaId)
+        assertEquals(command.featureDomain, event.featureDomain)
+        assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
         assertEquals("credit-risk", event.datasetName)
         assertEquals("TRAINING", event.datasetUsage)
     }

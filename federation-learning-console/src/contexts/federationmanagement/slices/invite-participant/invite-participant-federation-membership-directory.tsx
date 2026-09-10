@@ -39,6 +39,8 @@ export const FederationMembershipDirectoryInviteParticipant = () => {
     organizationId: searchParams.get("organizationId") ?? undefined,
     invitationNote: searchParams.get("invitationNote") ?? undefined,
     federationId: searchParams.get("federationId") ?? undefined,
+    federationName: searchParams.get("federationName") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
   } as unknown as Partial<InviteParticipantCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<InviteParticipantCommandInput, InviteParticipantCommandInput>({
@@ -87,6 +89,12 @@ export const FederationMembershipDirectoryInviteParticipant = () => {
           {defaultValues.federationId !== undefined && defaultValues.federationId !== null ? (
             <input type="hidden" {...form.register("federationId" as never)} />
           ) : null}
+          {defaultValues.federationName !== undefined && defaultValues.federationName !== null ? (
+            <input type="hidden" {...form.register("federationName" as never)} />
+          ) : null}
+          {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
+            <input type="hidden" {...form.register("organizationName" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="organizationId"
@@ -101,7 +109,14 @@ export const FederationMembershipDirectoryInviteParticipant = () => {
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "organizationName" as never,
+                      String(option?.record?.["organizationName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.federation_membership_directory.commands.inviteParticipant.fields.organizationId.placeholder", "Select Organization Id")}
                   meta={{
                     idField: "organizationId",

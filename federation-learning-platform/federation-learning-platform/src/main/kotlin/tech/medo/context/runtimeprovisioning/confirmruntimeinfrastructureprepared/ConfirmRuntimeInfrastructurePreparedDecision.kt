@@ -16,7 +16,7 @@ interface ConfirmRuntimeInfrastructurePreparedDecision {
             "ConfirmRuntimeInfrastructurePrepared requires RuntimeInfrastructure to be Registered."
         }
         return listOf(
-            RuntimeInfrastructurePreparedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, runtimeAgentId = command.runtimeAgentId, preparedNodeCount = command.preparedNodeCount, preparationNotes = command.preparationNotes)
+            RuntimeInfrastructurePreparedEvent(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, agentInstallMode = command.agentInstallMode, expectedNodeCount = command.expectedNodeCount, runtimeAgentId = command.runtimeAgentId, preparedNodeCount = command.preparedNodeCount, preparationNotes = command.preparationNotes)
         )
     }
 }

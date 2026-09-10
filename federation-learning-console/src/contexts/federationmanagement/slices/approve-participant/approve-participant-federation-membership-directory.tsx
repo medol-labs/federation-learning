@@ -36,7 +36,9 @@ export const FederationMembershipDirectoryApproveParticipant = () => {
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
+    federationName: searchParams.get("federationName") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
     approvalNote: searchParams.get("approvalNote") ?? undefined,
     federationId: searchParams.get("federationId") ?? undefined,
   } as unknown as Partial<ApproveParticipantCommandInput>;
@@ -89,6 +91,24 @@ export const FederationMembershipDirectoryApproveParticipant = () => {
           ) : null}
           <FormField
             control={form.control}
+            name="federationName"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.federation_membership_directory.commands.approveParticipant.fields.federationName.label", "Federation Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Federation Name"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="organizationId"
             rules={{ required: "Organization Id is required" }}
             render={({ field }) => (
@@ -101,7 +121,9 @@ export const FederationMembershipDirectoryApproveParticipant = () => {
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.federation_membership_directory.commands.approveParticipant.fields.organizationId.placeholder", "Select Organization Id")}
                   meta={{
                     idField: "organizationId",
@@ -110,6 +132,24 @@ export const FederationMembershipDirectoryApproveParticipant = () => {
                     queryRoute: "organizationdirectory",
                   }}
                 />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="organizationName"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.federation_membership_directory.commands.approveParticipant.fields.organizationName.label", "Organization Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Organization Name"}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

@@ -43,6 +43,9 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
             entity.federationId = event.federationId
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
+            entity.federationName = event.federationName
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.objective = event.objective
             entity.state = TrainingJobStateEnum.DRAFT
             ProjectionMetadata.assign(entity, message)
@@ -59,7 +62,13 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
                 this.trainingJobId = event.trainingJobId
         }
             entity.trainingJobId = event.trainingJobId
+            entity.federationId = event.federationId
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.federationName = event.federationName
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
+            entity.objective = event.objective
             entity.state = TrainingJobStateEnum.SUBMITTED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -137,8 +146,12 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
                 this.trainingJobId = event.trainingJobId
         }
             entity.trainingJobId = event.trainingJobId
+            entity.federationId = event.federationId
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
+            entity.federationName = event.federationName
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.aggregationAlgorithm = event.aggregationAlgorithm
             entity.secureAggregationRequired = event.secureAggregationRequired
             entity.minimumNodesPerRound = event.minimumNodesPerRound

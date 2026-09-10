@@ -12,8 +12,14 @@ import java.math.BigDecimal;
 data class TrainingRoundStartedEvent(
     @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
+    val federationId: UUID,
+    val federationName: String?,
     val trainingRunConfigurationId: UUID,
+    val configurationName: String?,
+    val trainingJobObjective: String,
     val featureSchemaId: UUID,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
     val roundId: UUID,
     val roundNumber: Int,
     val selectedOrganizationIds: List<UUID>,

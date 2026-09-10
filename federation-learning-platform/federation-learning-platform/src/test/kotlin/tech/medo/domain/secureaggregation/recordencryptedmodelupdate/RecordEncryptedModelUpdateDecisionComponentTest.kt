@@ -47,6 +47,7 @@ class RecordEncryptedModelUpdateDecisionComponentTest {
         submissionId = UUID.randomUUID(),
         trainingJobId = UUID.randomUUID(),
         trainingRunConfigurationId = UUID.randomUUID(),
+        trainingJobObjective = "Train fraud detection model",
         featureSchemaId = UUID.randomUUID(),
         roundId = UUID.randomUUID(),
         roundNumber = 1,

@@ -11,6 +11,8 @@ data class UserAccountBoundToOrganizationEvent(
     @EventTag(key = "userOrganizationMembershipId")
     val userOrganizationMembershipId: UUID,
     val userAccountId: UUID,
+    val username: String?,
     val organizationId: UUID,
+    val organizationName: String?,
     val organizationUserRole: String?
 )

@@ -19,7 +19,12 @@ class RuntimeNodeResourcePressureState @EntityCreator constructor() {
     var currentState: RuntimeNodeResourcePressureStateEnum? = null
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
+    var federationId: UUID? = null
+    var federationName: String? = null
     var trainingJobId: UUID? = null
+    var trainingJobObjective: String? = null
+    var roundExecutionId: UUID? = null
+    var runtimeNodeName: String? = null
     var pressureType: String? = null
     var observedValue: BigDecimal? = null
     var thresholdValue: BigDecimal? = null
@@ -29,7 +34,12 @@ class RuntimeNodeResourcePressureState @EntityCreator constructor() {
         currentState = RuntimeNodeResourcePressureStateEnum.PRESSURE_DETECTED
         nodeId = event.nodeId
         runtimeAgentId = event.runtimeAgentId
+        federationId = event.federationId
+        federationName = event.federationName
         trainingJobId = event.trainingJobId
+        trainingJobObjective = event.trainingJobObjective
+        roundExecutionId = event.roundExecutionId
+        runtimeNodeName = event.runtimeNodeName
         pressureType = event.pressureType
         observedValue = event.observedValue
         thresholdValue = event.thresholdValue

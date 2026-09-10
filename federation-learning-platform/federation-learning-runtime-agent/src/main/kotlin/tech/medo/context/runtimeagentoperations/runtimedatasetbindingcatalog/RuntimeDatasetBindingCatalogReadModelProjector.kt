@@ -32,7 +32,12 @@ class RuntimeDatasetBindingCatalogReadModelProjector(private val repository: Run
             entity.datasetId = event.datasetId
             entity.organizationId = event.organizationId
             entity.runtimeId = event.runtimeId
+            entity.organizationName = event.organizationName
+            entity.featureSchemaId = event.featureSchemaId
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.datasetName = event.datasetName
+            entity.runtimeName = event.runtimeName
             entity.dataSourceType = event.dataSourceType
             entity.host = event.host
             entity.port = event.port

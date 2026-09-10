@@ -11,6 +11,7 @@ data class CompleteTrainingJobCommand(
     val trainingJobId: UUID,
     val finalRoundId: UUID,
     val finalModelId: UUID,
+    val trainingJobObjective: String,
     val stopReason: String = ""
 ) {
     @TargetEntityId

@@ -12,7 +12,7 @@ class CompleteJobWhenTrainingStopCriteriaMetProcessor(private val commandGateway
     @EventHandler
     fun on(event: TrainingRoundCompletedEvent): java.util.concurrent.CompletableFuture<*> =
         if (event.roundNumber >= event.maxRounds) {
-            commandGateway.send(CompleteTrainingJobCommand(trainingJobId = event.trainingJobId, finalRoundId = event.roundId, finalModelId = event.aggregatedModelId)).resultMessage
+            commandGateway.send(CompleteTrainingJobCommand(trainingJobId = event.trainingJobId, finalRoundId = event.roundId, finalModelId = event.aggregatedModelId, trainingJobObjective = event.trainingJobObjective)).resultMessage
         } else {
             java.util.concurrent.CompletableFuture.completedFuture(null)
         }

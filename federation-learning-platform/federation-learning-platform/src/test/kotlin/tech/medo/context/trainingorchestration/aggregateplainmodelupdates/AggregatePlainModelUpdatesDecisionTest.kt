@@ -22,6 +22,7 @@ class AggregatePlainModelUpdatesDecisionTest {
             executionPlanId = java.util.UUID.randomUUID(),
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
+            trainingJobObjective = "",
             roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
             roundNumber = 0,
             maxRounds = 0,
@@ -50,6 +51,7 @@ class AggregatePlainModelUpdatesDecisionTest {
         val command = AggregatePlainModelUpdatesCommand(
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
+            trainingJobObjective = "",
             featureSchemaId = java.util.UUID.randomUUID(),
             roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
             roundNumber = 0,
@@ -80,6 +82,7 @@ class AggregatePlainModelUpdatesDecisionTest {
         val event = events.filterIsInstance<PlainModelAggregationCompletedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("job-1".toByteArray()), event.trainingJobId)
         assertEquals(command.trainingRunConfigurationId, event.trainingRunConfigurationId)
+        assertEquals(command.trainingJobObjective, event.trainingJobObjective)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
         assertEquals(UUID.nameUUIDFromBytes("round-1".toByteArray()), event.roundId)
         assertEquals(command.roundNumber, event.roundNumber)

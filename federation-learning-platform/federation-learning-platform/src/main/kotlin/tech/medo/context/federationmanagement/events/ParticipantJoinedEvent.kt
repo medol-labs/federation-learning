@@ -10,7 +10,9 @@ import java.util.UUID;
 data class ParticipantJoinedEvent(
     @EventTag(key = "federationId")
     val federationId: UUID,
+    val federationName: String?,
     @EventTag(key = "organizationId")
     val organizationId: UUID,
+    val organizationName: String?,
     val approvalNote: String?
 )

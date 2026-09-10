@@ -12,6 +12,7 @@ data class ActivateRuntimeIdentityCommand(
     val runtimeInfrastructureId: UUID,
     val runtimeAgentId: UUID,
     val organizationId: UUID,
+    val organizationName: String?,
     val runtimeName: String
 ) {
     @TargetEntityId

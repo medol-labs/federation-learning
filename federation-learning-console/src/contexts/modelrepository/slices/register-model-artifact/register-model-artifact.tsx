@@ -192,7 +192,9 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.sourceType.placeholder", "Select Source Type")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_ARTIFACT_SOURCE_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
@@ -243,7 +245,9 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelFormat.placeholder", "Select Model Format")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_FORMAT"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}

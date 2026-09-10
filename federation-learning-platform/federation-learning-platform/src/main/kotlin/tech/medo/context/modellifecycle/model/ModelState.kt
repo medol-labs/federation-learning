@@ -24,6 +24,7 @@ class ModelState @EntityCreator constructor() {
     var currentState: ModelStateEnum? = null
     var modelId: UUID? = null
     var trainingJobId: UUID? = null
+    var trainingJobObjective: String? = null
     var finalRoundId: UUID? = null
     var modelArtifactId: UUID? = null
     var modelArtifactDigest: String? = null
@@ -46,6 +47,7 @@ class ModelState @EntityCreator constructor() {
         currentState = ModelStateEnum.CANDIDATE
         modelId = event.modelId
         trainingJobId = event.trainingJobId
+        trainingJobObjective = event.trainingJobObjective
         finalRoundId = event.finalRoundId
         modelArtifactId = event.modelArtifactId
         modelArtifactDigest = event.modelArtifactDigest

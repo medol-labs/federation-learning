@@ -16,14 +16,18 @@ class ApproveParticipantDecisionTest {
         state.evolve(
             ParticipantInvitedEvent(
             federationId = UUID.nameUUIDFromBytes("fed-1".toByteArray()),
+            federationName = null,
             organizationId = UUID.nameUUIDFromBytes("org-1".toByteArray()),
+            organizationName = null,
             invitationNote = ""
             )
         )
 
         val command = ApproveParticipantCommand(
             federationId = UUID.nameUUIDFromBytes("fed-1".toByteArray()),
+            federationName = null,
             organizationId = UUID.nameUUIDFromBytes("org-1".toByteArray()),
+            organizationName = null,
             approvalNote = null
         )
 
@@ -34,7 +38,9 @@ class ApproveParticipantDecisionTest {
 
         val event = events.filterIsInstance<ParticipantJoinedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("fed-1".toByteArray()), event.federationId)
+        assertEquals(command.federationName, event.federationName)
         assertEquals(UUID.nameUUIDFromBytes("org-1".toByteArray()), event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
         assertEquals(command.approvalNote, event.approvalNote)
     }
 }

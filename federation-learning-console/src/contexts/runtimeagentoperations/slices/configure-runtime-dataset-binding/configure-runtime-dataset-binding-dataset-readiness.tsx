@@ -39,6 +39,9 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
     datasetId: searchParams.get("datasetId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
+    featureDomain: searchParams.get("featureDomain") ?? undefined,
+    featureSchemaVersion: searchParams.get("featureSchemaVersion") ?? undefined,
     datasetName: searchParams.get("datasetName") ?? undefined,
     runtimeId: searchParams.get("runtimeId") ?? undefined,
   } as unknown as Partial<ConfigureRuntimeDatasetBindingCommandInput>;
@@ -86,6 +89,7 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
       <CreateViewHeader title={t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.label", "Configure Runtime Dataset Binding")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("ConfigureRuntimeDatasetBinding validation failed", errors))} className="space-y-8">
+          <input type="hidden" {...form.register("runtimeName" as never)} />
           <FormField
             control={form.control}
             name="datasetId"
@@ -100,7 +104,9 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
                   optionLabel="datasetName"
                   optionValue="datasetId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.datasetId.placeholder", "Select Dataset Id")}
                   meta={{
                     idField: "datasetId",
@@ -127,7 +133,9 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.organizationId.placeholder", "Select Organization Id")}
                   meta={{
                     idField: "organizationId",
@@ -154,7 +162,9 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
                   optionLabel="featureDomain"
                   optionValue="featureSchemaId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
                   meta={{
                     idField: "featureSchemaId",
@@ -163,6 +173,71 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
                     queryRoute: "featureschemacatalog",
                   }}
                 />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="organizationName"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.organizationName.label", "Organization Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Organization Name"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="featureDomain"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.featureDomain.label", "Feature Domain")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="current_recommended_feature_schema_catalog"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="recommendedVersion"
+                  optionValue="featureDomain"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.featureDomain.placeholder", "Select Feature Domain")}
+                  meta={{
+                    idField: "featureDomain",
+                    label: t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.featureDomain.label", "Current Recommended Feature Schema Catalog"),
+                    aggregateRoute: "featureschema",
+                    queryRoute: "currentrecommendedfeatureschemacatalog",
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="featureSchemaVersion"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.featureSchemaVersion.label", "Feature Schema Version")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Feature Schema Version"}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -199,7 +274,14 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
                   optionLabel="runtimeName"
                   optionValue="runtimeId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "runtimeName" as never,
+                      String(option?.record?.["runtimeName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.runtimeId.placeholder", "Select Runtime Id")}
                   meta={{
                     idField: "runtimeId",
@@ -226,7 +308,9 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.dataSourceType.placeholder", "Select Data Source Type")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_DATA_SOURCE_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
@@ -420,7 +504,9 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.fields.dataFormat.placeholder", "Select Data Format")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"DATA_FORMAT"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}

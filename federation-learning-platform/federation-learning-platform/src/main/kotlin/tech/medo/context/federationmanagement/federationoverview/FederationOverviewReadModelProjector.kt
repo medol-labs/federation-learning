@@ -95,6 +95,7 @@ class FederationOverviewReadModelProjector(private val repository: FederationOve
                 this.federationId = event.federationId
         }
             entity.federationId = event.federationId
+            entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -109,6 +110,7 @@ class FederationOverviewReadModelProjector(private val repository: FederationOve
                 this.federationId = event.federationId
         }
             entity.federationId = event.federationId
+            entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -123,6 +125,7 @@ class FederationOverviewReadModelProjector(private val repository: FederationOve
                 this.federationId = event.federationId
         }
             entity.federationId = event.federationId
+            entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -137,6 +140,7 @@ class FederationOverviewReadModelProjector(private val repository: FederationOve
                 this.federationId = event.federationId
         }
             entity.federationId = event.federationId
+            entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -151,6 +155,7 @@ class FederationOverviewReadModelProjector(private val repository: FederationOve
                 this.federationId = event.federationId
         }
             entity.federationId = event.federationId
+            entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -165,13 +170,24 @@ class FederationOverviewReadModelProjector(private val repository: FederationOve
                 this.federationId = event.federationId
         }
             entity.federationId = event.federationId
+            entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
 
     @EventHandler
-    fun on(event: TrainingJobSubmittedEvent) {
-        // Skipped: TrainingJobSubmittedEvent does not provide enough key fields to locate FederationOverviewReadModelProjection.
+    fun on(
+        event: TrainingJobSubmittedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.federationId) ?: FederationOverviewReadModelProjection().apply {
+                this.federationId = event.federationId
+        }
+            entity.federationId = event.federationId
+            entity.federationName = event.federationName
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
     }
 
     @EventHandler

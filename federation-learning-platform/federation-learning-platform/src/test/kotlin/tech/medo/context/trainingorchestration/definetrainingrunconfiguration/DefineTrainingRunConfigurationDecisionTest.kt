@@ -17,8 +17,13 @@ class DefineTrainingRunConfigurationDecisionTest {
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("cfg-1".toByteArray()),
             configurationName = "Readmission Risk Baseline",
             federationId = UUID.nameUUIDFromBytes("fed-1".toByteArray()),
+            federationName = null,
             featureSchemaId = UUID.nameUUIDFromBytes("schema-1".toByteArray()),
+            featureDomain = null,
+            featureSchemaVersion = null,
             initialModelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
+            initialModelName = null,
+            initialModelVersion = null,
             strategyName = "FED_AVG",
             aggregationAlgorithm = "FEDERATED_AVERAGING",
             maxRounds = 10,
@@ -44,8 +49,13 @@ class DefineTrainingRunConfigurationDecisionTest {
         assertEquals(UUID.nameUUIDFromBytes("cfg-1".toByteArray()), event.trainingRunConfigurationId)
         assertEquals("Readmission Risk Baseline", event.configurationName)
         assertEquals(UUID.nameUUIDFromBytes("fed-1".toByteArray()), event.federationId)
+        assertEquals(command.federationName, event.federationName)
         assertEquals(UUID.nameUUIDFromBytes("schema-1".toByteArray()), event.featureSchemaId)
+        assertEquals(command.featureDomain, event.featureDomain)
+        assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
         assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.initialModelId)
+        assertEquals(command.initialModelName, event.initialModelName)
+        assertEquals(command.initialModelVersion, event.initialModelVersion)
         assertEquals("FED_AVG", event.strategyName)
         assertEquals("FEDERATED_AVERAGING", event.aggregationAlgorithm)
         assertEquals(10, event.maxRounds)

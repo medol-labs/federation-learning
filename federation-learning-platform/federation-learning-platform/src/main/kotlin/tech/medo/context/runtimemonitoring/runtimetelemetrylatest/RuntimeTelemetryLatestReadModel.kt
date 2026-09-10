@@ -21,8 +21,11 @@ class RuntimeTelemetryLatestReadModelCriteria {
     var nodeId: StringFilter? = null
     var runtimeAgentId: StringFilter? = null
     var federationId: StringFilter? = null
+    var federationName: StringFilter? = null
     var trainingJobId: StringFilter? = null
+    var trainingJobObjective: StringFilter? = null
     var roundExecutionId: StringFilter? = null
+    var runtimeNodeName: StringFilter? = null
     var cpuLoad: BigDecimalFilter? = null
     var gpuLoad: BigDecimalFilter? = null
     var memoryLoad: BigDecimalFilter? = null
@@ -38,8 +41,11 @@ class RuntimeTelemetryLatestReadModelProjection : MetadataProjection {
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
     var federationId: UUID? = null
+    var federationName: String? = null
     var trainingJobId: UUID? = null
+    var trainingJobObjective: String? = null
     var roundExecutionId: UUID? = null
+    var runtimeNodeName: String? = null
     var cpuLoad: BigDecimal? = null
     var gpuLoad: BigDecimal? = null
     var memoryLoad: BigDecimal? = null
@@ -61,8 +67,11 @@ fun RuntimeTelemetryLatestReadModelProjection.toReadModel(): RuntimeTelemetryLat
     nodeId = nodeId,
     runtimeAgentId = runtimeAgentId,
     federationId = federationId,
+    federationName = federationName,
     trainingJobId = trainingJobId,
+    trainingJobObjective = trainingJobObjective,
     roundExecutionId = roundExecutionId,
+    runtimeNodeName = runtimeNodeName,
     cpuLoad = cpuLoad,
     gpuLoad = gpuLoad,
     memoryLoad = memoryLoad,
@@ -91,8 +100,11 @@ data class RuntimeTelemetryLatestReadModel(
     val nodeId: UUID?,
     val runtimeAgentId: UUID?,
     val federationId: UUID?,
+    val federationName: String?,
     val trainingJobId: UUID?,
+    val trainingJobObjective: String?,
     val roundExecutionId: UUID?,
+    val runtimeNodeName: String?,
     val cpuLoad: BigDecimal?,
     val gpuLoad: BigDecimal?,
     val memoryLoad: BigDecimal?,

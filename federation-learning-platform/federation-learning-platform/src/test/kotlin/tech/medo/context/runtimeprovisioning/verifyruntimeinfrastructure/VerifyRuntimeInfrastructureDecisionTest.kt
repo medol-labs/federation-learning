@@ -20,6 +20,15 @@ class VerifyRuntimeInfrastructureDecisionTest {
             RuntimeInfrastructurePreparedEvent(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()),
             runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            agentInstallMode = "",
+            expectedNodeCount = 0,
             runtimeAgentId = java.util.UUID.randomUUID(),
             preparedNodeCount = 0,
             preparationNotes = null
@@ -29,6 +38,14 @@ class VerifyRuntimeInfrastructureDecisionTest {
         val command = VerifyRuntimeInfrastructureCommand(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()),
             runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            expectedNodeCount = 0,
             runtimeAgentId = java.util.UUID.randomUUID()
         )
 
@@ -45,7 +62,15 @@ class VerifyRuntimeInfrastructureDecisionTest {
         val event = events.filterIsInstance<RuntimeInfrastructureVerifiedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()), event.runtimeInfrastructureId)
         assertEquals(command.runtimeInstallationPlanId, event.runtimeInstallationPlanId)
+        assertEquals(command.organizationId, event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
+        assertEquals(command.runtimeInfrastructurePackageId, event.runtimeInfrastructurePackageId)
+        assertEquals(command.runtimeInfrastructurePackageName, event.runtimeInfrastructurePackageName)
+        assertEquals(command.runtimeInfrastructurePackageVersion, event.runtimeInfrastructurePackageVersion)
+        assertEquals(command.runtimeEnvironmentType, event.runtimeEnvironmentType)
+        assertEquals(command.runtimeName, event.runtimeName)
         assertEquals(command.runtimeAgentId, event.runtimeAgentId)
+        assertEquals(command.expectedNodeCount, event.expectedNodeCount)
     }
 
     @Test
@@ -55,6 +80,15 @@ class VerifyRuntimeInfrastructureDecisionTest {
             RuntimeInfrastructurePreparedEvent(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
             runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            agentInstallMode = "",
+            expectedNodeCount = 0,
             runtimeAgentId = java.util.UUID.randomUUID(),
             preparedNodeCount = 0,
             preparationNotes = null
@@ -64,6 +98,14 @@ class VerifyRuntimeInfrastructureDecisionTest {
         val command = VerifyRuntimeInfrastructureCommand(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
             runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            expectedNodeCount = 0,
             runtimeAgentId = java.util.UUID.randomUUID()
         )
 
@@ -71,6 +113,7 @@ class VerifyRuntimeInfrastructureDecisionTest {
             command,
             state = state,
             portResult = RuntimeInfrastructureVerification.Rejected(
+                agentInstallMode = "",
                 observedNodeCount = null,
                 failureReason = ""
             ),
@@ -80,5 +123,14 @@ class VerifyRuntimeInfrastructureDecisionTest {
         val event = events.filterIsInstance<RuntimeInfrastructureVerificationFailedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()), event.runtimeInfrastructureId)
         assertEquals(command.runtimeInstallationPlanId, event.runtimeInstallationPlanId)
+        assertEquals(command.organizationId, event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
+        assertEquals(command.runtimeInfrastructurePackageId, event.runtimeInfrastructurePackageId)
+        assertEquals(command.runtimeInfrastructurePackageName, event.runtimeInfrastructurePackageName)
+        assertEquals(command.runtimeInfrastructurePackageVersion, event.runtimeInfrastructurePackageVersion)
+        assertEquals(command.runtimeEnvironmentType, event.runtimeEnvironmentType)
+        assertEquals(command.runtimeName, event.runtimeName)
+        assertEquals(command.runtimeAgentId, event.runtimeAgentId)
+        assertEquals(command.expectedNodeCount, event.expectedNodeCount)
     }
 }

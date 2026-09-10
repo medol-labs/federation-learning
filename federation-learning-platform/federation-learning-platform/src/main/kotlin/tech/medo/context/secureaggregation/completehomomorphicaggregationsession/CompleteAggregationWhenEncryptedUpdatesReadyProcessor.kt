@@ -13,7 +13,7 @@ class CompleteAggregationWhenEncryptedUpdatesReadyProcessor(private val commandG
     @EventHandler
     fun on(event: EncryptedModelUpdateReceivedEvent): java.util.concurrent.CompletableFuture<*> =
         if (event.receivedEncryptedUpdateCount >= event.selectedParticipantCount) {
-            commandGateway.send(CompleteHomomorphicAggregationSessionCommand(secureAggregationSessionId = event.secureAggregationSessionId, trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber, maxRounds = event.maxRounds, minimumAccuracy = event.minimumAccuracy, encryptedUpdateArtifactRefs = event.receivedEncryptedUpdateArtifactRefs)).resultMessage
+            commandGateway.send(CompleteHomomorphicAggregationSessionCommand(secureAggregationSessionId = event.secureAggregationSessionId, trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, trainingJobObjective = event.trainingJobObjective, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber, maxRounds = event.maxRounds, minimumAccuracy = event.minimumAccuracy, encryptedUpdateArtifactRefs = event.receivedEncryptedUpdateArtifactRefs)).resultMessage
         } else {
             java.util.concurrent.CompletableFuture.completedFuture(null)
         }

@@ -22,7 +22,12 @@ class RuntimeDatasetBindingCatalogReadModelEntity : MetadataProjection {
     var datasetId: UUID? = null
     var organizationId: UUID? = null
     var runtimeId: UUID? = null
+    var organizationName: String? = null
+    var featureSchemaId: UUID? = null
+    var featureDomain: String? = null
+    var featureSchemaVersion: String? = null
     var datasetName: String? = null
+    var runtimeName: String? = null
     var dataSourceType: String? = null
     var host: String? = null
     var port: Int? = null

@@ -101,7 +101,9 @@ export const ModelCatalogPromoteModelToProduction = () => {
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.model_catalog.commands.promoteModelToProduction.fields.releaseChannel.placeholder", "Select Release Channel")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_RELEASE_CHANNEL"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
@@ -132,7 +134,9 @@ export const ModelCatalogPromoteModelToProduction = () => {
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.model_catalog.commands.promoteModelToProduction.fields.productionStage.placeholder", "Select Production Stage")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_PRODUCTION_STAGE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}

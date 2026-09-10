@@ -228,8 +228,6 @@ export const RuntimeAgentEndpointCatalogList = () => {
                     size="sm"
                     query={{
                       runtimeAgentId: row.original.runtimeAgentId,
-                      organizationId: row.original.organizationId,
-                      runtimeName: row.original.runtimeName,
                       runtimeAgentEndpoint: row.original.runtimeAgentEndpoint,
                       endpointScope: row.original.endpointScope,
                       runtimeInfrastructureId: row.original.runtimeInfrastructureId,

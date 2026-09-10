@@ -60,23 +60,23 @@ export const RuntimeDatasetMetadataCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_metadata_catalog.fields.organizationName.label", "Organization Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.organizationName, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_metadata_catalog.fields.runtimeId.label", "Runtime Id")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeId, t)}</p>
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_metadata_catalog.fields.runtimeName.label", "Runtime Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeName, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_metadata_catalog.fields.featureSchemaId.label", "Feature Schema Id")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.featureSchemaId, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_metadata_catalog.fields.datasetName.label", "Dataset Name")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.datasetName, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_metadata_catalog.fields.organizationName.label", "Organization Name")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.organizationName, t)}</p>
             </div>
             <Separator />
             <div>
@@ -87,6 +87,11 @@ export const RuntimeDatasetMetadataCatalogShow = () => {
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_metadata_catalog.fields.featureSchemaVersion.label", "Feature Schema Version")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.featureSchemaVersion, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_metadata_catalog.fields.datasetName.label", "Dataset Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.datasetName, t)}</p>
             </div>
             <Separator />
             <div>

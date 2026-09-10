@@ -13,9 +13,13 @@ data class RuntimeDatasetBindingConfiguredEvent(
     val datasetId: UUID,
     val organizationId: UUID,
     val featureSchemaId: UUID,
+    val organizationName: String?,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
     val datasetName: String,
     @EventTag(key = "runtimeId")
     val runtimeId: UUID,
+    val runtimeName: String?,
     val dataSourceType: String,
     val host: String?,
     val port: Int?,

@@ -41,6 +41,9 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
             entity.initialModelId = event.initialModelId
             entity.initialModelName = event.initialModelName
             entity.initialModelVersion = event.initialModelVersion
+            entity.federationName = event.federationName
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.initialModelArtifactUri = event.initialModelArtifactUri
             entity.initialModelRegistryRef = event.initialModelRegistryRef
             entity.initialModelFormat = event.initialModelFormat
@@ -82,6 +85,9 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
             entity.initialModelId = event.initialModelId
             entity.initialModelName = event.initialModelName
             entity.initialModelVersion = event.initialModelVersion
+            entity.federationName = event.federationName
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.initialModelArtifactUri = event.initialModelArtifactUri
             entity.initialModelRegistryRef = event.initialModelRegistryRef
             entity.initialModelFormat = event.initialModelFormat

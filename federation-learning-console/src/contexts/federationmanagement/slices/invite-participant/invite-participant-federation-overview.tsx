@@ -37,6 +37,7 @@ export const FederationOverviewInviteParticipant = () => {
   const { id } = useParsed();
   const defaultValues = {
     federationId: searchParams.get("federationId") ?? undefined,
+    federationName: searchParams.get("federationName") ?? undefined,
   } as unknown as Partial<InviteParticipantCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<InviteParticipantCommandInput, InviteParticipantCommandInput>({
@@ -85,6 +86,10 @@ export const FederationOverviewInviteParticipant = () => {
           {defaultValues.federationId !== undefined && defaultValues.federationId !== null ? (
             <input type="hidden" {...form.register("federationId" as never)} />
           ) : null}
+          {defaultValues.federationName !== undefined && defaultValues.federationName !== null ? (
+            <input type="hidden" {...form.register("federationName" as never)} />
+          ) : null}
+          <input type="hidden" {...form.register("organizationName" as never)} />
           <FormField
             control={form.control}
             name="organizationId"
@@ -99,7 +104,14 @@ export const FederationOverviewInviteParticipant = () => {
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "organizationName" as never,
+                      String(option?.record?.["organizationName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.federation_overview.commands.inviteParticipant.fields.organizationId.placeholder", "Select Organization Id")}
                   meta={{
                     idField: "organizationId",

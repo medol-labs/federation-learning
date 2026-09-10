@@ -15,6 +15,7 @@ class RegisterCandidateModelDecisionTest {
             RegisterCandidateModelCommand(
             modelId = java.util.UUID.randomUUID(),
             trainingJobId = java.util.UUID.randomUUID(),
+            trainingJobObjective = "",
             finalRoundId = java.util.UUID.randomUUID(),
             modelArtifactId = java.util.UUID.randomUUID(),
             modelArtifactDigest = "",

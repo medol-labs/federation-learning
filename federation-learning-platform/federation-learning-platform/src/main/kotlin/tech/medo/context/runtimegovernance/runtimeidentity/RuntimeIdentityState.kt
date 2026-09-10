@@ -21,6 +21,7 @@ class RuntimeIdentityState @EntityCreator constructor() {
     var runtimeInfrastructureId: UUID? = null
     var runtimeAgentId: UUID? = null
     var organizationId: UUID? = null
+    var organizationName: String? = null
     var runtimeName: String? = null
     var revocationReason: String? = null
 
@@ -31,6 +32,7 @@ class RuntimeIdentityState @EntityCreator constructor() {
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeAgentId = event.runtimeAgentId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         runtimeName = event.runtimeName
     }
 

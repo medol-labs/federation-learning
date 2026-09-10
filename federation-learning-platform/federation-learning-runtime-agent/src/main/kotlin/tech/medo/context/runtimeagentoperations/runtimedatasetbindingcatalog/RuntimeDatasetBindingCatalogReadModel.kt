@@ -20,7 +20,12 @@ class RuntimeDatasetBindingCatalogReadModelCriteria {
     var datasetId: StringFilter? = null
     var organizationId: StringFilter? = null
     var runtimeId: StringFilter? = null
+    var organizationName: StringFilter? = null
+    var featureSchemaId: StringFilter? = null
+    var featureDomain: StringFilter? = null
+    var featureSchemaVersion: StringFilter? = null
     var datasetName: StringFilter? = null
+    var runtimeName: StringFilter? = null
     var dataSourceType: StringFilter? = null
     var host: StringFilter? = null
     var port: IntegerFilter? = null
@@ -42,7 +47,12 @@ class RuntimeDatasetBindingCatalogReadModelProjection : MetadataProjection {
     var datasetId: UUID? = null
     var organizationId: UUID? = null
     var runtimeId: UUID? = null
+    var organizationName: String? = null
+    var featureSchemaId: UUID? = null
+    var featureDomain: String? = null
+    var featureSchemaVersion: String? = null
     var datasetName: String? = null
+    var runtimeName: String? = null
     var dataSourceType: String? = null
     var host: String? = null
     var port: Int? = null
@@ -70,7 +80,12 @@ fun RuntimeDatasetBindingCatalogReadModelProjection.toReadModel(): RuntimeDatase
     datasetId = datasetId,
     organizationId = organizationId,
     runtimeId = runtimeId,
+    organizationName = organizationName,
+    featureSchemaId = featureSchemaId,
+    featureDomain = featureDomain,
+    featureSchemaVersion = featureSchemaVersion,
     datasetName = datasetName,
+    runtimeName = runtimeName,
     dataSourceType = dataSourceType,
     host = host,
     port = port,
@@ -105,7 +120,12 @@ data class RuntimeDatasetBindingCatalogReadModel(
     val datasetId: UUID?,
     val organizationId: UUID?,
     val runtimeId: UUID?,
+    val organizationName: String?,
+    val featureSchemaId: UUID?,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
     val datasetName: String?,
+    val runtimeName: String?,
     val dataSourceType: String?,
     val host: String?,
     val port: Int?,

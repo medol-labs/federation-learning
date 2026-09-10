@@ -9,7 +9,9 @@ import java.util.UUID;
 @Command
 data class RevokeParticipantInvitationCommand(
     val federationId: UUID,
+    val federationName: String?,
     val organizationId: UUID,
+    val organizationName: String?,
     val revokeReason: String
 ) {
     @TargetEntityId

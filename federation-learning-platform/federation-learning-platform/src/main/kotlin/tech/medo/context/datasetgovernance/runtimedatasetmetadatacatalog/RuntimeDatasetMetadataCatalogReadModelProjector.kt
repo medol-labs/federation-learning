@@ -37,8 +37,12 @@ class RuntimeDatasetMetadataCatalogReadModelProjector(private val repository: Ru
             entity.metadataReportId = event.metadataReportId
             entity.datasetId = event.datasetId
             entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
             entity.runtimeId = event.runtimeId
+            entity.runtimeName = event.runtimeName
             entity.featureSchemaId = event.featureSchemaId
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.datasetName = event.datasetName
             entity.sampleCount = event.sampleCount
             entity.featureCount = event.featureCount
@@ -67,8 +71,12 @@ class RuntimeDatasetMetadataCatalogReadModelProjector(private val repository: Ru
             entity.metadataReportId = event.metadataReportId
             entity.datasetId = event.datasetId
             entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
             entity.runtimeId = event.runtimeId
+            entity.runtimeName = event.runtimeName
             entity.featureSchemaId = event.featureSchemaId
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.datasetName = event.datasetName
             entity.sampleCount = event.sampleCount
             entity.featureCount = event.featureCount

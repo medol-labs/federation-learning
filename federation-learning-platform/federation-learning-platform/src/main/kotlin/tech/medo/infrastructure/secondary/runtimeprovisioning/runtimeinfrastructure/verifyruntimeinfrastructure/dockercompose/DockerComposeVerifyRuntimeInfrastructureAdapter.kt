@@ -75,6 +75,7 @@ class DockerComposeVerifyRuntimeInfrastructureAdapter(
     private fun rejected(failureReason: String): RuntimeInfrastructureVerification.Rejected {
         log.debug("Docker Compose verification rejected: {}", failureReason)
         return RuntimeInfrastructureVerification.Rejected(
+            agentInstallMode = "UNKNOWN",
             observedNodeCount = null,
             failureReason = failureReason
         )

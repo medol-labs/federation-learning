@@ -27,6 +27,9 @@ class EvaluateModelUpdateSubmissionDecisionComponent : EvaluateModelUpdateSubmis
                 executionPlanId = command.executionPlanId,
                 trainingJobId = command.trainingJobId,
                 trainingRunConfigurationId = command.trainingRunConfigurationId,
+                trainingJobObjective = requireNotNull(state.trainingJobObjective) {
+                    "trainingJobObjective is required from state."
+                },
                 roundId = command.roundId,
                 roundNumber = requireNotNull(state.roundNumber) {
                     "roundNumber is required from state."

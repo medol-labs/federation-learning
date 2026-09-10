@@ -13,7 +13,16 @@ class PlanRuntimeInfrastructureDecisionTest {
         val events = (object : PlanRuntimeInfrastructureDecision {}).decide(
             PlanRuntimeInfrastructureCommand(
             runtimeInfrastructureId = java.util.UUID.randomUUID(),
-            runtimeInstallationPlanId = java.util.UUID.randomUUID()
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            agentInstallMode = "",
+            expectedNodeCount = 0
             )
         )
 

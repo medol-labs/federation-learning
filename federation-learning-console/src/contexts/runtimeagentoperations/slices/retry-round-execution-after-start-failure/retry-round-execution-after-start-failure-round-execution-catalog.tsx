@@ -147,7 +147,9 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
                   optionLabel="federationName"
                   optionValue="trainingJobId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.trainingJobId.placeholder", "Select Training Job Id")}
                   meta={{
                     idField: "trainingJobId",
@@ -174,7 +176,9 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
                   optionLabel="configurationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.trainingRunConfigurationId.placeholder", "Select Training Run Configuration Id")}
                   meta={{
                     idField: "trainingRunConfigurationId",
@@ -238,7 +242,9 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
                   optionLabel="runtimeName"
                   optionValue="runtimeId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.runtimeId.placeholder", "Select Runtime Id")}
                   meta={{
                     idField: "runtimeId",
@@ -265,7 +271,9 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.organizationId.placeholder", "Select Organization Id")}
                   meta={{
                     idField: "organizationId",
@@ -292,7 +300,9 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
                   optionLabel="featureDomain"
                   optionValue="featureSchemaId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
                   meta={{
                     idField: "featureSchemaId",

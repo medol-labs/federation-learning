@@ -34,9 +34,13 @@ class AgentDatasetAccessValidationCatalogReadModelQueryService(
             criteria.runtimeDatasetBindingId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeDatasetBindingId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.datasetId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("datasetId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.organizationId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("organizationId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.organizationName?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<String>> { root -> root.get("organizationName") })) }
             criteria.featureSchemaId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("featureSchemaId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.featureDomain?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<String>> { root -> root.get("featureDomain") })) }
+            criteria.featureSchemaVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<String>> { root -> root.get("featureSchemaVersion") })) }
             criteria.runtimeId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.datasetName?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<String>> { root -> root.get("datasetName") })) }
+            criteria.runtimeName?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeName") })) }
             criteria.readable?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("readable") })) }
             criteria.schemaReadable?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("schemaReadable") })) }
             criteria.sampleBatchReadable?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("sampleBatchReadable") })) }
@@ -104,9 +108,13 @@ class AgentDatasetAccessValidationCatalogReadModelQueryService(
             it.runtimeDatasetBindingId = this@toProjection.runtimeDatasetBindingId
             it.datasetId = this@toProjection.datasetId
             it.organizationId = this@toProjection.organizationId
+            it.organizationName = this@toProjection.organizationName
             it.featureSchemaId = this@toProjection.featureSchemaId
+            it.featureDomain = this@toProjection.featureDomain
+            it.featureSchemaVersion = this@toProjection.featureSchemaVersion
             it.runtimeId = this@toProjection.runtimeId
             it.datasetName = this@toProjection.datasetName
+            it.runtimeName = this@toProjection.runtimeName
             it.readable = this@toProjection.readable
             it.schemaReadable = this@toProjection.schemaReadable
             it.sampleBatchReadable = this@toProjection.sampleBatchReadable

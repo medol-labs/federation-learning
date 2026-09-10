@@ -18,8 +18,14 @@ class RetryTrainingRoundParticipantSelectionDecisionTest {
         state.evolve(
             TrainingRoundParticipantSelectionFailedEvent(
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            federationId = java.util.UUID.randomUUID(),
+            federationName = null,
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
+            configurationName = null,
             featureSchemaId = java.util.UUID.randomUUID(),
+            featureDomain = null,
+            featureSchemaVersion = null,
+            trainingJobObjective = "",
             roundId = java.util.UUID.randomUUID(),
             roundNumber = 0,
             maxRounds = 0,

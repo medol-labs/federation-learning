@@ -96,7 +96,9 @@ export const RuntimeDatasetMetadataCatalogReprofileAgentDataset = () => {
                   optionLabel="datasetName"
                   optionValue="runtimeDatasetBindingId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.runtime_dataset_metadata_catalog.commands.reprofileAgentDataset.fields.runtimeDatasetBindingId.placeholder", "Select Runtime Dataset Binding Id")}
                   meta={{
                     idField: "runtimeDatasetBindingId",

@@ -380,6 +380,15 @@ export const RuntimeInstallationGuideList = () => {
                     recordItemId={row.original.runtimeInstallationPlanId}
                     size="sm"
                     query={{
+                      organizationId: row.original.organizationId,
+                      organizationName: row.original.organizationName,
+                      runtimeInfrastructurePackageId: row.original.runtimeInfrastructurePackageId,
+                      runtimeInfrastructurePackageName: row.original.runtimeInfrastructurePackageName,
+                      runtimeInfrastructurePackageVersion: row.original.runtimeInfrastructurePackageVersion,
+                      runtimeEnvironmentType: row.original.runtimeEnvironmentType,
+                      runtimeName: row.original.runtimeName,
+                      agentInstallMode: row.original.agentInstallMode,
+                      expectedNodeCount: row.original.expectedNodeCount,
                       runtimeInfrastructureId: row.original.runtimeInfrastructureId,
                       runtimeInstallationPlanId: row.original.runtimeInstallationPlanId,
                       runtimeAgentId: row.original.runtimeAgentId,
@@ -393,6 +402,15 @@ export const RuntimeInstallationGuideList = () => {
                     recordItemId={row.original.runtimeInstallationPlanId}
                     size="sm"
                     query={{
+                      organizationId: row.original.organizationId,
+                      organizationName: row.original.organizationName,
+                      runtimeInfrastructurePackageId: row.original.runtimeInfrastructurePackageId,
+                      runtimeInfrastructurePackageName: row.original.runtimeInfrastructurePackageName,
+                      runtimeInfrastructurePackageVersion: row.original.runtimeInfrastructurePackageVersion,
+                      runtimeEnvironmentType: row.original.runtimeEnvironmentType,
+                      runtimeName: row.original.runtimeName,
+                      agentInstallMode: row.original.agentInstallMode,
+                      expectedNodeCount: row.original.expectedNodeCount,
                       runtimeInfrastructureId: row.original.runtimeInfrastructureId,
                       runtimeInstallationPlanId: row.original.runtimeInstallationPlanId,
                     }}

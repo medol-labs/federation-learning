@@ -11,7 +11,9 @@ import tech.medo.organizationmanagement.userorganizationmembership.UserOrganizat
 data class BindUserAccountToOrganizationCommand(
     val userOrganizationMembershipId: UUID = java.util.UUID.randomUUID(),
     val userAccountId: UUID,
+    val username: String?,
     val organizationId: UUID,
+    val organizationName: String?,
     val organizationUserRole: String?
 ) {
     @TargetEntityId

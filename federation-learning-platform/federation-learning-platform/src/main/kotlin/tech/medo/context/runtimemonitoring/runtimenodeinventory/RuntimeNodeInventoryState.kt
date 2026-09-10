@@ -19,8 +19,10 @@ class RuntimeNodeInventoryState @EntityCreator constructor() {
     var nodeId: UUID? = null
     var runtimeNodeInventoryReportId: UUID? = null
     var organizationId: UUID? = null
+    var organizationName: String? = null
     var runtimeInfrastructureId: UUID? = null
     var runtimeAgentId: UUID? = null
+    var runtimeName: String? = null
     var runtimeNodeName: String? = null
     var infrastructureNodeId: String? = null
     var runtimeNodeRole: String? = null
@@ -37,8 +39,10 @@ class RuntimeNodeInventoryState @EntityCreator constructor() {
         nodeId = event.nodeId
         runtimeNodeInventoryReportId = event.runtimeNodeInventoryReportId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeAgentId = event.runtimeAgentId
+        runtimeName = event.runtimeName
         runtimeNodeName = event.runtimeNodeName
         infrastructureNodeId = event.infrastructureNodeId
         runtimeNodeRole = event.runtimeNodeRole

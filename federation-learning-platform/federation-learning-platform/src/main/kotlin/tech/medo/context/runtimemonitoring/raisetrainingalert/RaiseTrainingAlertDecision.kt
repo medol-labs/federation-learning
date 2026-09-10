@@ -13,7 +13,7 @@ import tech.medo.runtimemonitoring.trainingalert.TrainingAlertState
 interface RaiseTrainingAlertDecision {
     fun decide(command: RaiseTrainingAlertCommand): List<Any> {
         return listOf(
-            TrainingAlertRaisedEvent(alertId = command.alertId, nodeId = command.nodeId, trainingJobId = command.trainingJobId, severity = command.severity, message = command.message)
+            TrainingAlertRaisedEvent(alertId = command.alertId, nodeId = command.nodeId, trainingJobId = command.trainingJobId, runtimeNodeName = command.runtimeNodeName, trainingJobObjective = command.trainingJobObjective, severity = command.severity, message = command.message)
         )
     }
 }

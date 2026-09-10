@@ -12,6 +12,7 @@ data class ModelCandidateRegisteredEvent(
     @EventTag(key = "modelId")
     val modelId: UUID,
     val trainingJobId: UUID,
+    val trainingJobObjective: String,
     val finalRoundId: UUID,
     val modelArtifactId: UUID,
     val modelArtifactDigest: String,

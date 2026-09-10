@@ -22,12 +22,13 @@ type RuntimeDatasetMetadataCatalogRecord = {
   metadataReportId: string;
   datasetId: string;
   organizationId: string;
-  runtimeId: string;
-  featureSchemaId: string;
-  datasetName?: string;
   organizationName?: string;
+  runtimeId: string;
+  runtimeName?: string;
+  featureSchemaId: string;
   featureDomain?: string;
   featureSchemaVersion?: string;
+  datasetName?: string;
   sampleCount: number;
   featureCount: number;
   schemaCompatible?: boolean;
@@ -140,6 +141,20 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("organizationName", {
+        id: "organizationName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.organizationName.label", "Organization Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.organizationName.label", "Organization Name"),
+          placeholder: "Enter Organization Name",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("runtimeId", {
         id: "runtimeId",
         header: ({ column }) => (
@@ -154,6 +169,20 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("runtimeName", {
+        id: "runtimeName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.runtimeName.label", "Runtime Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.runtimeName.label", "Runtime Name"),
+          placeholder: "Enter Runtime Name",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
         header: ({ column }) => (
@@ -164,34 +193,6 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         meta: {
           label: t("resources.runtime_dataset_metadata_catalog.fields.featureSchemaId.label", "Feature Schema Id"),
           placeholder: "Enter Feature Schema Id",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("datasetName", {
-        id: "datasetName",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.datasetName.label", "Dataset Name")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_metadata_catalog.fields.datasetName.label", "Dataset Name"),
-          placeholder: "Enter Dataset Name",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("organizationName", {
-        id: "organizationName",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.organizationName.label", "Organization Name")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_metadata_catalog.fields.organizationName.label", "Organization Name"),
-          placeholder: "Enter Organization Name",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -220,6 +221,20 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         meta: {
           label: t("resources.runtime_dataset_metadata_catalog.fields.featureSchemaVersion.label", "Feature Schema Version"),
           placeholder: "Enter Feature Schema Version",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("datasetName", {
+        id: "datasetName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_metadata_catalog.fields.datasetName.label", "Dataset Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_dataset_metadata_catalog.fields.datasetName.label", "Dataset Name"),
+          placeholder: "Enter Dataset Name",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -442,7 +457,7 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         tableName: "runtime_dataset_metadata_catalog_read_model_entity",
         idField: "runtimeDatasetBindingId",
         idFields: ["runtimeDatasetBindingId"],
-        queryFields: ["runtimeDatasetBindingId","metadataReportId","datasetId","organizationId","runtimeId","featureSchemaId","datasetName","organizationName","featureDomain","featureSchemaVersion","sampleCount","featureCount","schemaCompatible","labelCompatible","missingValueRate","duplicateRate","qualityScore","nonIidScore","classBalanceScore","profilingStatus","failureReason","profiledAt"],
+        queryFields: ["runtimeDatasetBindingId","metadataReportId","datasetId","organizationId","organizationName","runtimeId","runtimeName","featureSchemaId","featureDomain","featureSchemaVersion","datasetName","sampleCount","featureCount","schemaCompatible","labelCompatible","missingValueRate","duplicateRate","qualityScore","nonIidScore","classBalanceScore","profilingStatus","failureReason","profiledAt"],
         label: t("resources.runtime_dataset_metadata_catalog.label", "Runtime Dataset Metadata Catalog"),
         aggregateRoute: "runtimedatasetmetadata",
         queryRoute: "runtimedatasetmetadatacatalog",

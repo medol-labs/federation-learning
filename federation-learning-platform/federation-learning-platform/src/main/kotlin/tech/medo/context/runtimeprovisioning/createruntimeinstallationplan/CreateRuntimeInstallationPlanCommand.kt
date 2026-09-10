@@ -11,7 +11,11 @@ data class CreateRuntimeInstallationPlanCommand(
     val runtimeInstallationPlanId: UUID = java.util.UUID.randomUUID(),
     val runtimeInfrastructureId: UUID = java.util.UUID.randomUUID(),
     val organizationId: UUID,
+    val organizationName: String?,
     val runtimeInfrastructurePackageId: UUID,
+    val runtimeInfrastructurePackageName: String?,
+    val runtimeInfrastructurePackageVersion: String?,
+    val runtimeEnvironmentType: String?,
     val runtimeName: String,
     val agentInstallMode: String,
     val expectedNodeCount: Int

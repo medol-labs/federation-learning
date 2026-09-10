@@ -26,7 +26,16 @@ class PlanRuntimeInfrastructureIntegrationTest(
     fun PlanRuntimeInfrastructureintegration() {
         val command = PlanRuntimeInfrastructureCommand(
             runtimeInfrastructureId = java.util.UUID.randomUUID(),
-            runtimeInstallationPlanId = java.util.UUID.randomUUID()
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            agentInstallMode = "",
+            expectedNodeCount = 0
         )
 
         commandGateway.send(command).getResultMessage().join()

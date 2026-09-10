@@ -11,6 +11,8 @@ data class RaiseTrainingAlertCommand(
     val alertId: UUID = java.util.UUID.randomUUID(),
     val nodeId: UUID,
     val trainingJobId: UUID?,
+    val runtimeNodeName: String?,
+    val trainingJobObjective: String?,
     val severity: String,
     val message: String
 ) {

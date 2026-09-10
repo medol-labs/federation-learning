@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component
 class SelectTrainingRoundParticipantsWhenRetryRequestedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: TrainingRoundParticipantSelectionRetryRequestedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(SelectTrainingRoundParticipantsCommand(trainingJobId = event.trainingJobId)).resultMessage
+        commandGateway.send(SelectTrainingRoundParticipantsCommand(trainingJobId = event.trainingJobId, federationId = java.util.UUID.randomUUID() /* TODO: provide federationId */, federationName = null /* TODO: provide federationName */, trainingRunConfigurationId = java.util.UUID.randomUUID() /* TODO: provide trainingRunConfigurationId */, configurationName = null /* TODO: provide configurationName */, featureSchemaId = java.util.UUID.randomUUID() /* TODO: provide featureSchemaId */, featureDomain = null /* TODO: provide featureDomain */, featureSchemaVersion = null /* TODO: provide featureSchemaVersion */, trainingJobObjective = "" /* TODO: provide trainingJobObjective */)).resultMessage
 }

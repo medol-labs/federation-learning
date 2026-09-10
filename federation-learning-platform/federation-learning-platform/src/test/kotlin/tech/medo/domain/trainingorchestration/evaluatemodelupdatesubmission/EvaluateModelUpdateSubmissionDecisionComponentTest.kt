@@ -17,8 +17,14 @@ class EvaluateModelUpdateSubmissionDecisionComponentTest {
             evolve(
                 TrainingRoundStartedEvent(
                     trainingJobId = uuid("job-1"),
+                    federationId = uuid("federation-1"),
+                    federationName = "Test Federation",
                     trainingRunConfigurationId = uuid("config-1"),
+                    configurationName = "Default Training Configuration",
+                    trainingJobObjective = "Train fraud detection model",
                     featureSchemaId = uuid("schema-1"),
+                    featureDomain = "fraud",
+                    featureSchemaVersion = "v1",
                     roundId = uuid("round-1"),
                     roundNumber = 1,
                     maxRounds = 1,
@@ -76,8 +82,14 @@ class EvaluateModelUpdateSubmissionDecisionComponentTest {
             evolve(
                 TrainingRoundStartedEvent(
                     trainingJobId = uuid("plain-job"),
+                    federationId = uuid("plain-federation"),
+                    federationName = "Plain Federation",
                     trainingRunConfigurationId = uuid("plain-config"),
+                    configurationName = "Plain Training Configuration",
+                    trainingJobObjective = "Train churn model",
                     featureSchemaId = uuid("plain-schema"),
+                    featureDomain = "churn",
+                    featureSchemaVersion = "v1",
                     roundId = uuid("plain-round"),
                     roundNumber = 1,
                     selectedOrganizationIds = emptyList(),

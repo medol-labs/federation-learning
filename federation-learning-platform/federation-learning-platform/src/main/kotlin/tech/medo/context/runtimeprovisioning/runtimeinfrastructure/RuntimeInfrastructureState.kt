@@ -27,15 +27,21 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
     var currentState: RuntimeInfrastructureStateEnum? = null
     var runtimeInfrastructureId: UUID? = null
     var runtimeInstallationPlanId: UUID? = null
+    var organizationId: UUID? = null
+    var organizationName: String? = null
+    var runtimeInfrastructurePackageId: UUID? = null
+    var runtimeInfrastructurePackageName: String? = null
+    var runtimeInfrastructurePackageVersion: String? = null
+    var runtimeEnvironmentType: String? = null
+    var runtimeName: String? = null
+    var agentInstallMode: String? = null
+    var expectedNodeCount: Int? = null
     var runtimeAgentId: UUID? = null
     var preparedNodeCount: Int? = null
     var preparationNotes: String? = null
-    var agentInstallMode: String? = null
     var observedNodeCount: Int? = null
     var failureReason: String? = null
     var agentVersion: String? = null
-    var organizationId: UUID? = null
-    var runtimeName: String? = null
     var runtimeAgentEndpoint: String? = null
     var endpointScope: String? = null
 
@@ -44,6 +50,15 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
         currentState = RuntimeInfrastructureStateEnum.PLANNED
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        organizationId = event.organizationId
+        organizationName = event.organizationName
+        runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
+        runtimeName = event.runtimeName
+        agentInstallMode = event.agentInstallMode
+        expectedNodeCount = event.expectedNodeCount
     }
 
     @EventSourcingHandler
@@ -51,6 +66,15 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
         currentState = RuntimeInfrastructureStateEnum.REGISTERED
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        organizationId = event.organizationId
+        organizationName = event.organizationName
+        runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
+        runtimeName = event.runtimeName
+        agentInstallMode = event.agentInstallMode
+        expectedNodeCount = event.expectedNodeCount
         runtimeAgentId = event.runtimeAgentId
     }
 
@@ -59,6 +83,15 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
         currentState = RuntimeInfrastructureStateEnum.PREPARED
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        organizationId = event.organizationId
+        organizationName = event.organizationName
+        runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
+        runtimeName = event.runtimeName
+        agentInstallMode = event.agentInstallMode
+        expectedNodeCount = event.expectedNodeCount
         runtimeAgentId = event.runtimeAgentId
         preparedNodeCount = event.preparedNodeCount
         preparationNotes = event.preparationNotes
@@ -69,8 +102,16 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
         currentState = RuntimeInfrastructureStateEnum.VERIFIED
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        organizationId = event.organizationId
+        organizationName = event.organizationName
+        runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
+        runtimeName = event.runtimeName
         runtimeAgentId = event.runtimeAgentId
         agentInstallMode = event.agentInstallMode
+        expectedNodeCount = event.expectedNodeCount
         observedNodeCount = event.observedNodeCount
     }
 
@@ -79,6 +120,16 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
         currentState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        organizationId = event.organizationId
+        organizationName = event.organizationName
+        runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
+        runtimeName = event.runtimeName
+        runtimeAgentId = event.runtimeAgentId
+        agentInstallMode = event.agentInstallMode
+        expectedNodeCount = event.expectedNodeCount
         observedNodeCount = event.observedNodeCount
         failureReason = event.failureReason
     }
@@ -87,7 +138,17 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
     fun evolve(event: RuntimeAgentInstallationSucceededEvent): RuntimeInfrastructureState = apply {
         currentState = RuntimeInfrastructureStateEnum.AGENT_READY
         runtimeInfrastructureId = event.runtimeInfrastructureId
+        runtimeInstallationPlanId = event.runtimeInstallationPlanId
         runtimeAgentId = event.runtimeAgentId
+        organizationId = event.organizationId
+        organizationName = event.organizationName
+        runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
+        runtimeName = event.runtimeName
+        agentInstallMode = event.agentInstallMode
+        expectedNodeCount = event.expectedNodeCount
         agentVersion = event.agentVersion
     }
 
@@ -95,6 +156,17 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
     fun evolve(event: RuntimeAgentInstallationFailedEvent): RuntimeInfrastructureState = apply {
         currentState = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
         runtimeInfrastructureId = event.runtimeInfrastructureId
+        runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        runtimeAgentId = event.runtimeAgentId
+        organizationId = event.organizationId
+        organizationName = event.organizationName
+        runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
+        runtimeName = event.runtimeName
+        agentInstallMode = event.agentInstallMode
+        expectedNodeCount = event.expectedNodeCount
         failureReason = event.failureReason
     }
 
@@ -102,7 +174,17 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
     fun evolve(event: RuntimeAgentDeploymentRetrySucceededEvent): RuntimeInfrastructureState = apply {
         currentState = RuntimeInfrastructureStateEnum.AGENT_READY
         runtimeInfrastructureId = event.runtimeInfrastructureId
+        runtimeInstallationPlanId = event.runtimeInstallationPlanId
         runtimeAgentId = event.runtimeAgentId
+        organizationId = event.organizationId
+        organizationName = event.organizationName
+        runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
+        runtimeName = event.runtimeName
+        agentInstallMode = event.agentInstallMode
+        expectedNodeCount = event.expectedNodeCount
         agentVersion = event.agentVersion
     }
 
@@ -110,6 +192,17 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
     fun evolve(event: RuntimeAgentDeploymentRetryFailedEvent): RuntimeInfrastructureState = apply {
         currentState = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
         runtimeInfrastructureId = event.runtimeInfrastructureId
+        runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        runtimeAgentId = event.runtimeAgentId
+        organizationId = event.organizationId
+        organizationName = event.organizationName
+        runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
+        runtimeName = event.runtimeName
+        agentInstallMode = event.agentInstallMode
+        expectedNodeCount = event.expectedNodeCount
         failureReason = event.failureReason
     }
 
@@ -120,6 +213,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
         runtimeAgentId = event.runtimeAgentId
         agentInstallMode = event.agentInstallMode
         organizationId = event.organizationId
+        organizationName = event.organizationName
         runtimeName = event.runtimeName
         runtimeAgentEndpoint = event.runtimeAgentEndpoint
         endpointScope = event.endpointScope

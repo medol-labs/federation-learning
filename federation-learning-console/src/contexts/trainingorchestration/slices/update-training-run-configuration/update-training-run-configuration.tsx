@@ -57,6 +57,11 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
     minimumFairnessScore: (() => { const value = searchParams.get("minimumFairnessScore"); return value === null ? undefined : Number(value); })(),
     updateReason: searchParams.get("updateReason") ?? undefined,
     trainingRunConfigurationId: searchParams.get("trainingRunConfigurationId") ?? undefined,
+    federationName: searchParams.get("federationName") ?? undefined,
+    featureDomain: searchParams.get("featureDomain") ?? undefined,
+    featureSchemaVersion: searchParams.get("featureSchemaVersion") ?? undefined,
+    initialModelName: searchParams.get("initialModelName") ?? undefined,
+    initialModelVersion: searchParams.get("initialModelVersion") ?? undefined,
   } as unknown as Partial<UpdateTrainingRunConfigurationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<UpdateTrainingRunConfigurationCommandInput, UpdateTrainingRunConfigurationCommandInput>({
@@ -105,6 +110,21 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
           {defaultValues.trainingRunConfigurationId !== undefined && defaultValues.trainingRunConfigurationId !== null ? (
             <input type="hidden" {...form.register("trainingRunConfigurationId" as never)} />
           ) : null}
+          {defaultValues.federationName !== undefined && defaultValues.federationName !== null ? (
+            <input type="hidden" {...form.register("federationName" as never)} />
+          ) : null}
+          {defaultValues.featureDomain !== undefined && defaultValues.featureDomain !== null ? (
+            <input type="hidden" {...form.register("featureDomain" as never)} />
+          ) : null}
+          {defaultValues.featureSchemaVersion !== undefined && defaultValues.featureSchemaVersion !== null ? (
+            <input type="hidden" {...form.register("featureSchemaVersion" as never)} />
+          ) : null}
+          {defaultValues.initialModelName !== undefined && defaultValues.initialModelName !== null ? (
+            <input type="hidden" {...form.register("initialModelName" as never)} />
+          ) : null}
+          {defaultValues.initialModelVersion !== undefined && defaultValues.initialModelVersion !== null ? (
+            <input type="hidden" {...form.register("initialModelVersion" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="configurationName"
@@ -137,7 +157,14 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                   optionLabel="federationName"
                   optionValue="federationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "federationName" as never,
+                      String(option?.record?.["federationName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.federationId.placeholder", "Select Federation Id")}
                   meta={{
                     idField: "federationId",
@@ -164,7 +191,19 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                   optionLabel="featureDomain"
                   optionValue="featureSchemaId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "featureDomain" as never,
+                      String(option?.record?.["featureDomain"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "featureSchemaVersion" as never,
+                      String(option?.record?.["version"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
                   meta={{
                     idField: "featureSchemaId",
@@ -191,7 +230,19 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                   optionLabel="modelName"
                   optionValue="modelId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "initialModelName" as never,
+                      String(option?.record?.["modelName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "initialModelVersion" as never,
+                      String(option?.record?.["modelVersion"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.initialModelId.placeholder", "Select Initial Model Id")}
                   meta={{
                     idField: "modelId",
@@ -218,7 +269,9 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.strategyName.placeholder", "Select Strategy Name")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_STRATEGY"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
@@ -249,7 +302,9 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.aggregationAlgorithm.placeholder", "Select Aggregation Algorithm")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"AGGREGATION_ALGORITHM"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
@@ -412,7 +467,9 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.optimizer.placeholder", "Select Optimizer")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_OPTIMIZER"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
@@ -443,7 +500,9 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.lossFunction.placeholder", "Select Loss Function")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_LOSS_FUNCTION"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}

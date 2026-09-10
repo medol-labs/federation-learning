@@ -28,7 +28,9 @@ class UserOrganizationMembershipDirectoryReadModelProjector(private val reposito
         }
             entity.userOrganizationMembershipId = event.userOrganizationMembershipId
             entity.userAccountId = event.userAccountId
+            entity.username = event.username
             entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
             entity.organizationUserRole = event.organizationUserRole
             entity.state = UserOrganizationMembershipStateEnum.ACTIVE
             ProjectionMetadata.assign(entity, message)

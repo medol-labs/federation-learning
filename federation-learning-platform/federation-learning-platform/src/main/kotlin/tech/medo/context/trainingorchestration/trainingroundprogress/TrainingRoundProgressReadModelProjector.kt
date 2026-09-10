@@ -43,7 +43,9 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingJobId = event.trainingJobId
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
-            entity.trainingJobObjective = event.objective
+            entity.trainingJobObjective = event.trainingJobObjective
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             ProjectionMetadata.assign(entity, message)
             repository.save(entity)
         }
@@ -63,6 +65,9 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.roundNumber = event.roundNumber
             entity.selectedOrganizationIds = event.selectedOrganizationIds
             entity.selectedParticipants = event.selectedParticipants
@@ -89,6 +94,9 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.roundNumber = event.roundNumber
             entity.selectedOrganizationIds = event.selectedOrganizationIds
             entity.selectedParticipants = event.selectedParticipants
@@ -116,6 +124,9 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.roundNumber = event.roundNumber
             entity.selectedOrganizationIds = event.selectedOrganizationIds
             entity.selectedParticipants = event.selectedParticipants
@@ -142,6 +153,9 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.roundNumber = event.roundNumber
             entity.selectedOrganizationIds = event.selectedOrganizationIds
             entity.selectedParticipants = event.selectedParticipants
@@ -169,6 +183,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
             entity.roundNumber = event.roundNumber
             entity.secureAggregationRequired = event.secureAggregationRequired
             entity.baseModelId = event.baseModelId
@@ -231,6 +246,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
             entity.roundNumber = event.roundNumber
             entity.acceptedModelUpdateCount = event.acceptedModelUpdateCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
@@ -271,6 +287,9 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             entity.roundNumber = event.roundNumber
             entity.selectedOrganizationIds = event.selectedOrganizationIds
             entity.selectedOrganizationCount = event.selectedOrganizationCount
@@ -295,6 +314,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
             entity.roundNumber = event.roundNumber
             entity.aggregatedModelId = event.aggregatedModelId
             entity.state = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
@@ -316,6 +336,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
             entity.roundNumber = event.roundNumber
             entity.aggregatedModelId = event.aggregatedModelId
             entity.globalAccuracy = event.globalAccuracy
@@ -338,6 +359,7 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
             entity.featureSchemaId = event.featureSchemaId
             entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
             entity.roundNumber = event.roundNumber
             entity.aggregatedModelId = event.aggregatedModelId
             entity.globalAccuracy = event.globalAccuracy

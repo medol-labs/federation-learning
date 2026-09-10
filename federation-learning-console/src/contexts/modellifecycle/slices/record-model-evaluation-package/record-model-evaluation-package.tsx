@@ -106,7 +106,9 @@ export const ModelCatalogRecordModelEvaluationPackage = () => {
                   optionLabel="federationName"
                   optionValue="trainingJobId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.model_catalog.commands.recordModelEvaluationPackage.fields.trainingJobId.placeholder", "Select Training Job Id")}
                   meta={{
                     idField: "trainingJobId",

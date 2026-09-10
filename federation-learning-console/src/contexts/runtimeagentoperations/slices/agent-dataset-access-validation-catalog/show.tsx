@@ -60,8 +60,23 @@ export const AgentDatasetAccessValidationCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.organizationName.label", "Organization Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.organizationName, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.featureSchemaId.label", "Feature Schema Id")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.featureSchemaId, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.featureDomain.label", "Feature Domain")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.featureDomain, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.featureSchemaVersion.label", "Feature Schema Version")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.featureSchemaVersion, t)}</p>
             </div>
             <Separator />
             <div>
@@ -72,6 +87,11 @@ export const AgentDatasetAccessValidationCatalogShow = () => {
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.datasetName.label", "Dataset Name")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.datasetName, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.runtimeName.label", "Runtime Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeName, t)}</p>
             </div>
             <Separator />
             <div>

@@ -22,5 +22,6 @@ data class FederatedModelArtifactRegisteredEvent(
     val modelSignatureUri: String?,
     val modelSizeBytes: Int?,
     val trainingJobId: UUID,
+    val trainingJobObjective: String,
     val roundId: UUID
 )

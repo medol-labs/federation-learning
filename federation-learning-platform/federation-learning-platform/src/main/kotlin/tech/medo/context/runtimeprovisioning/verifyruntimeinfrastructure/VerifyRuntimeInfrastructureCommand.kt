@@ -10,6 +10,14 @@ import java.util.UUID;
 data class VerifyRuntimeInfrastructureCommand(
     val runtimeInfrastructureId: UUID,
     val runtimeInstallationPlanId: UUID,
+    val organizationId: UUID,
+    val organizationName: String?,
+    val runtimeInfrastructurePackageId: UUID,
+    val runtimeInfrastructurePackageName: String?,
+    val runtimeInfrastructurePackageVersion: String?,
+    val runtimeEnvironmentType: String?,
+    val runtimeName: String,
+    val expectedNodeCount: Int,
     val runtimeAgentId: UUID
 ) {
     @TargetEntityId

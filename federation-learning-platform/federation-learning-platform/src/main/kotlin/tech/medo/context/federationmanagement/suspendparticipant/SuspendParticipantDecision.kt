@@ -16,7 +16,7 @@ interface SuspendParticipantDecision {
             "SuspendParticipant requires FederationMembership to be Active."
         }
         return listOf(
-            ParticipantSuspendedEvent(federationId = command.federationId, organizationId = command.organizationId, suspensionReason = command.suspensionReason)
+            ParticipantSuspendedEvent(federationId = command.federationId, federationName = command.federationName, organizationId = command.organizationId, organizationName = command.organizationName, suspensionReason = command.suspensionReason)
         )
     }
 }

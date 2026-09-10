@@ -16,7 +16,7 @@ interface ApproveParticipantDecision {
             "ApproveParticipant requires FederationMembership to be Invited."
         }
         return listOf(
-            ParticipantJoinedEvent(federationId = command.federationId, organizationId = command.organizationId, approvalNote = command.approvalNote)
+            ParticipantJoinedEvent(federationId = command.federationId, federationName = command.federationName, organizationId = command.organizationId, organizationName = command.organizationName, approvalNote = command.approvalNote)
         )
     }
 }

@@ -28,6 +28,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ConfirmRuntimeInfrastructurePreparedCommandSchema, type ConfirmRuntimeInfrastructurePreparedCommandInput } from "@/contexts/domain/schemas";
+import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
 export const RuntimeInfrastructureAccessViewConfirmRuntimeInfrastructurePrepared = () => {
   const t = useTranslate();
@@ -35,6 +36,15 @@ export const RuntimeInfrastructureAccessViewConfirmRuntimeInfrastructurePrepared
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
+    organizationId: searchParams.get("organizationId") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
+    runtimeInfrastructurePackageId: searchParams.get("runtimeInfrastructurePackageId") ?? undefined,
+    runtimeInfrastructurePackageName: searchParams.get("runtimeInfrastructurePackageName") ?? undefined,
+    runtimeInfrastructurePackageVersion: searchParams.get("runtimeInfrastructurePackageVersion") ?? undefined,
+    runtimeEnvironmentType: searchParams.get("runtimeEnvironmentType") ?? undefined,
+    runtimeName: searchParams.get("runtimeName") ?? undefined,
+    agentInstallMode: searchParams.get("agentInstallMode") ?? undefined,
+    expectedNodeCount: (() => { const value = searchParams.get("expectedNodeCount"); return value === null ? undefined : Number(value); })(),
     preparedNodeCount: (() => { const value = searchParams.get("preparedNodeCount"); return value === null ? undefined : Number(value); })(),
     runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
     runtimeInstallationPlanId: searchParams.get("runtimeInstallationPlanId") ?? undefined,
@@ -93,6 +103,221 @@ export const RuntimeInfrastructureAccessViewConfirmRuntimeInfrastructurePrepared
           {defaultValues.runtimeAgentId !== undefined && defaultValues.runtimeAgentId !== null ? (
             <input type="hidden" {...form.register("runtimeAgentId" as never)} />
           ) : null}
+          <FormField
+            control={form.control}
+            name="organizationId"
+            rules={{ required: "Organization Id is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.organizationId.label", "Organization Id")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="organization_directory"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="organizationName"
+                  optionValue="organizationId"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.organizationId.placeholder", "Select Organization Id")}
+                  meta={{
+                    idField: "organizationId",
+                    label: t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.organizationId.label", "Organization Directory"),
+                    aggregateRoute: "organization",
+                    queryRoute: "organizationdirectory",
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="organizationName"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.organizationName.label", "Organization Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Organization Name"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="runtimeInfrastructurePackageId"
+            rules={{ required: "Runtime Infrastructure Package Id is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeInfrastructurePackageId.label", "Runtime Infrastructure Package Id")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="runtime_infrastructure_package_catalog"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="packageName"
+                  optionValue="runtimeInfrastructurePackageId"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeInfrastructurePackageId.placeholder", "Select Runtime Infrastructure Package Id")}
+                  meta={{
+                    idField: "runtimeInfrastructurePackageId",
+                    label: t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeInfrastructurePackageId.label", "Runtime Infrastructure Package Catalog"),
+                    aggregateRoute: "runtimeinfrastructurepackage",
+                    queryRoute: "runtimeinfrastructurepackagecatalog",
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="runtimeInfrastructurePackageName"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeInfrastructurePackageName.label", "Runtime Infrastructure Package Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Runtime Infrastructure Package Name"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="runtimeInfrastructurePackageVersion"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeInfrastructurePackageVersion.label", "Runtime Infrastructure Package Version")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Runtime Infrastructure Package Version"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="runtimeEnvironmentType"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeEnvironmentType.label", "Runtime Environment Type")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="dictionary_value_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="displayName"
+                  optionValue="valueCode"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeEnvironmentType.placeholder", "Select Runtime Environment Type")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_ENVIRONMENT_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeEnvironmentType.label", "Dictionary Value Catalog"),
+                    aggregateRoute: "dictionaryvalue",
+                    queryRoute: "dictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="runtimeName"
+            rules={{ required: "Runtime Name is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeName.label", "Runtime Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Runtime Name"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="agentInstallMode"
+            rules={{ required: "Agent Install Mode is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.agentInstallMode.label", "Agent Install Mode")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="dictionary_value_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="displayName"
+                  optionValue="valueCode"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.agentInstallMode.placeholder", "Select Agent Install Mode")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_INSTALL_MODE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.agentInstallMode.label", "Dictionary Value Catalog"),
+                    aggregateRoute: "dictionaryvalue",
+                    queryRoute: "dictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="expectedNodeCount"
+            rules={{ required: "Expected Node Count is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.expectedNodeCount.label", "Expected Node Count")}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Expected Node Count"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="preparedNodeCount"

@@ -25,7 +25,7 @@ class VerifyRuntimeInfrastructureCommandHandler(
         require(state.currentState == RuntimeInfrastructureStateEnum.PREPARED) {
             "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Prepared."
         }
-        val input = RuntimeInfrastructureVerificationInput(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, runtimeAgentId = command.runtimeAgentId)
+        val input = RuntimeInfrastructureVerificationInput(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, expectedNodeCount = command.expectedNodeCount, runtimeAgentId = command.runtimeAgentId)
         val portResult = verifyRuntimeInfrastructureService.verify(input)
         val now = java.time.LocalDateTime.now()
 

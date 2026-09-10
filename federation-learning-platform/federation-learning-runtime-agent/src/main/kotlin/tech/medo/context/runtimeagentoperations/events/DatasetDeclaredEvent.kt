@@ -13,8 +13,11 @@ data class DatasetDeclaredEvent(
     val datasetId: UUID,
     @EventTag(key = "organizationId")
     val organizationId: UUID,
+    val organizationName: String?,
     @EventTag(key = "featureSchemaId")
     val featureSchemaId: UUID,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
     @EventTag(key = "datasetName")
     val datasetName: String,
     val datasetUsage: String,

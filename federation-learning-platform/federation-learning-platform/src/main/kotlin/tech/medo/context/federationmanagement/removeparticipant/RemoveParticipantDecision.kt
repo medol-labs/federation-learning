@@ -16,7 +16,7 @@ interface RemoveParticipantDecision {
             "RemoveParticipant requires FederationMembership to be Suspended."
         }
         return listOf(
-            ParticipantRemovedEvent(federationId = command.federationId, organizationId = command.organizationId, removalReason = command.removalReason)
+            ParticipantRemovedEvent(federationId = command.federationId, federationName = command.federationName, organizationId = command.organizationId, organizationName = command.organizationName, removalReason = command.removalReason)
         )
     }
 }

@@ -20,7 +20,11 @@ class GenerateParticipantExecutionPlanDecisionTest {
             executionPlanId = java.util.UUID.randomUUID(),
             executionSessionId = java.util.UUID.randomUUID(),
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            federationId = java.util.UUID.randomUUID(),
+            federationName = null,
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
+            configurationName = null,
+            trainingJobObjective = "",
             featureSchemaId = java.util.UUID.randomUUID(),
             roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
             roundNumber = 1,
@@ -48,7 +52,11 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(command.executionPlanId, event.executionPlanId)
         assertEquals(command.executionSessionId, event.executionSessionId)
         assertEquals(UUID.nameUUIDFromBytes("job-1".toByteArray()), event.trainingJobId)
+        assertEquals(command.federationId, event.federationId)
+        assertEquals(command.federationName, event.federationName)
         assertEquals(command.trainingRunConfigurationId, event.trainingRunConfigurationId)
+        assertEquals(command.configurationName, event.configurationName)
+        assertEquals(command.trainingJobObjective, event.trainingJobObjective)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
         assertEquals(UUID.nameUUIDFromBytes("round-1".toByteArray()), event.roundId)
         assertEquals(1, event.roundNumber)
@@ -76,7 +84,11 @@ class GenerateParticipantExecutionPlanDecisionTest {
             executionPlanId = java.util.UUID.randomUUID(),
             executionSessionId = java.util.UUID.randomUUID(),
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            federationId = java.util.UUID.randomUUID(),
+            federationName = null,
             trainingRunConfigurationId = java.util.UUID.randomUUID(),
+            configurationName = null,
+            trainingJobObjective = "",
             featureSchemaId = java.util.UUID.randomUUID(),
             roundId = UUID.nameUUIDFromBytes("round-2".toByteArray()),
             roundNumber = 2,
@@ -104,7 +116,11 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(command.executionPlanId, event.executionPlanId)
         assertEquals(command.executionSessionId, event.executionSessionId)
         assertEquals(UUID.nameUUIDFromBytes("job-1".toByteArray()), event.trainingJobId)
+        assertEquals(command.federationId, event.federationId)
+        assertEquals(command.federationName, event.federationName)
         assertEquals(command.trainingRunConfigurationId, event.trainingRunConfigurationId)
+        assertEquals(command.configurationName, event.configurationName)
+        assertEquals(command.trainingJobObjective, event.trainingJobObjective)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
         assertEquals(UUID.nameUUIDFromBytes("round-2".toByteArray()), event.roundId)
         assertEquals(2, event.roundNumber)

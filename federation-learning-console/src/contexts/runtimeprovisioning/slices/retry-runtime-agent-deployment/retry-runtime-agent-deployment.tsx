@@ -28,7 +28,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RetryRuntimeAgentDeploymentCommandSchema, type RetryRuntimeAgentDeploymentCommandInput } from "@/contexts/domain/schemas";
-import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
 export const RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment = () => {
   const t = useTranslate();
@@ -38,6 +37,8 @@ export const RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment = () => {
   const defaultValues = {
     runtimeAgentId: searchParams.get("runtimeAgentId") ?? undefined,
     runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
+    organizationId: searchParams.get("organizationId") ?? undefined,
+    runtimeName: searchParams.get("runtimeName") ?? undefined,
   } as unknown as Partial<RetryRuntimeAgentDeploymentCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RetryRuntimeAgentDeploymentCommandInput, RetryRuntimeAgentDeploymentCommandInput>({
@@ -89,33 +90,20 @@ export const RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment = () => {
           {defaultValues.runtimeInfrastructureId !== undefined && defaultValues.runtimeInfrastructureId !== null ? (
             <input type="hidden" {...form.register("runtimeInfrastructureId" as never)} />
           ) : null}
-          <FormField
-            control={form.control}
-            name="currentRuntimeInfrastructureState"
-            rules={{ required: "Current Runtime Infrastructure State is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_agent_endpoint_catalog.commands.retryRuntimeAgentDeployment.fields.currentRuntimeInfrastructureState.label", "Current Runtime Infrastructure State")}</FormLabel>
-                <ResourceSelect
-                  withFormControl
-                  resource="runtime_infrastructure_access_view"
-                  dataProviderName="federation-learning-platform"
-                  optionLabel="runtimeName"
-                  optionValue="state"
-                  value={field.value || ""}
-                  onValueChange={field.onChange}
-                  placeholder={t("resources.runtime_agent_endpoint_catalog.commands.retryRuntimeAgentDeployment.fields.currentRuntimeInfrastructureState.placeholder", "Select Current Runtime Infrastructure State")}
-                  meta={{
-                    idField: "runtimeInfrastructureId",
-                    label: t("resources.runtime_agent_endpoint_catalog.commands.retryRuntimeAgentDeployment.fields.currentRuntimeInfrastructureState.label", "Runtime Infrastructure Access View"),
-                    aggregateRoute: "runtimeinfrastructure",
-                    queryRoute: "runtimeinfrastructureaccessview",
-                  }}
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {defaultValues.organizationId !== undefined && defaultValues.organizationId !== null ? (
+            <input type="hidden" {...form.register("organizationId" as never)} />
+          ) : null}
+          {defaultValues.runtimeName !== undefined && defaultValues.runtimeName !== null ? (
+            <input type="hidden" {...form.register("runtimeName" as never)} />
+          ) : null}
+          <input type="hidden" {...form.register("organizationName" as never)} />
+          <input type="hidden" {...form.register("runtimeInfrastructurePackageId" as never)} />
+          <input type="hidden" {...form.register("runtimeInfrastructurePackageName" as never)} />
+          <input type="hidden" {...form.register("runtimeInfrastructurePackageVersion" as never)} />
+          <input type="hidden" {...form.register("runtimeEnvironmentType" as never)} />
+          <input type="hidden" {...form.register("agentInstallMode" as never)} />
+          <input type="hidden" {...form.register("expectedNodeCount" as never)} />
+          <input type="hidden" {...form.register("currentRuntimeInfrastructureState" as never)} />
           <FormField
             control={form.control}
             name="retryReason"

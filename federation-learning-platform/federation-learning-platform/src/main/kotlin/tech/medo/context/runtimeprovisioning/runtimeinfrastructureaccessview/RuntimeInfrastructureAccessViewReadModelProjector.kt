@@ -48,7 +48,11 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
             entity.organizationId = event.organizationId
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
             entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
             entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
             entity.agentDeploymentFailedAt = null
@@ -67,7 +71,16 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.organizationId = event.organizationId
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.state = RuntimeInfrastructureStateEnum.PLANNED
             entity.infrastructureVerificationFailedAt = null
             entity.infrastructureVerificationFailureReason = null
@@ -85,7 +98,16 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.organizationId = event.organizationId
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.state = RuntimeInfrastructureStateEnum.REGISTERED
             entity.infrastructureVerificationFailedAt = null
@@ -104,7 +126,16 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.organizationId = event.organizationId
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.preparedNodeCount = event.preparedNodeCount
             entity.state = RuntimeInfrastructureStateEnum.PREPARED
@@ -125,8 +156,16 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.organizationId = event.organizationId
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.state = RuntimeInfrastructureStateEnum.VERIFIED
             entity.infrastructureVerifiedAt = eventTime(message)
@@ -146,7 +185,17 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.organizationId = event.organizationId
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
+            entity.runtimeAgentId = event.runtimeAgentId
             entity.infrastructureVerificationFailedAt = eventTime(message)
             entity.infrastructureVerificationFailureReason = event.failureReason
             entity.state = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
@@ -164,6 +213,16 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.organizationId = event.organizationId
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.state = RuntimeInfrastructureStateEnum.AGENT_READY
             entity.runtimeAgentVersion = event.agentVersion
@@ -186,6 +245,17 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.organizationId = event.organizationId
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
+            entity.runtimeAgentId = event.runtimeAgentId
             entity.agentDeploymentFailedAt = eventTime(message)
             entity.agentDeploymentFailureReason = event.failureReason
             entity.state = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
@@ -203,6 +273,16 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.organizationId = event.organizationId
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.state = RuntimeInfrastructureStateEnum.AGENT_READY
             entity.runtimeAgentVersion = event.agentVersion
@@ -225,6 +305,17 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
                 this.runtimeInfrastructureId = event.runtimeInfrastructureId
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.organizationId = event.organizationId
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
+            entity.runtimeAgentId = event.runtimeAgentId
             entity.agentDeploymentRetryFailedAt = eventTime(message)
             entity.agentDeploymentRetryFailureReason = event.failureReason
             entity.state = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
@@ -243,6 +334,7 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         }
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
             entity.runtimeName = event.runtimeName
             entity.agentInstallMode = event.agentInstallMode
             entity.runtimeAgentId = event.runtimeAgentId

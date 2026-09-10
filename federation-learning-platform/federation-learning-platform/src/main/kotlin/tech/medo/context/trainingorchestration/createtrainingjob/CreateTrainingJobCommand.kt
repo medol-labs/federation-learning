@@ -10,7 +10,11 @@ import java.util.UUID;
 data class CreateTrainingJobCommand(
     val trainingJobId: UUID = java.util.UUID.randomUUID(),
     val federationId: UUID,
+    val federationName: String?,
     val trainingRunConfigurationId: UUID,
+    val configurationName: String?,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
     val objective: String
 ) {
     @TargetEntityId

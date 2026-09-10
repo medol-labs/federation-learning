@@ -11,7 +11,12 @@ import java.math.BigDecimal;
 data class DetectRuntimeNodeResourcePressureCommand(
     val nodeId: UUID,
     val runtimeAgentId: UUID,
+    val federationId: UUID?,
+    val federationName: String?,
     val trainingJobId: UUID?,
+    val trainingJobObjective: String?,
+    val roundExecutionId: UUID?,
+    val runtimeNodeName: String?,
     val pressureType: String,
     val observedValue: BigDecimal,
     val thresholdValue: BigDecimal

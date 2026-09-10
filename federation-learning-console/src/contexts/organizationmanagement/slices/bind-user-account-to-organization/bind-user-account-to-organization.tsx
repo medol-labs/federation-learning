@@ -39,6 +39,8 @@ export const UserOrganizationMembershipDirectoryBindUserAccountToOrganization = 
     userAccountId: searchParams.get("userAccountId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
     organizationUserRole: searchParams.get("organizationUserRole") ?? undefined,
+    username: searchParams.get("username") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
   } as unknown as Partial<BindUserAccountToOrganizationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<BindUserAccountToOrganizationCommandInput, BindUserAccountToOrganizationCommandInput>({
@@ -84,6 +86,12 @@ export const UserOrganizationMembershipDirectoryBindUserAccountToOrganization = 
       <CreateViewHeader title={t("resources.user_organization_membership_directory.commands.bindUserAccountToOrganization.label", "Bind User Account To Organization")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("BindUserAccountToOrganization validation failed", errors))} className="space-y-8">
+          {defaultValues.username !== undefined && defaultValues.username !== null ? (
+            <input type="hidden" {...form.register("username" as never)} />
+          ) : null}
+          {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
+            <input type="hidden" {...form.register("organizationName" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="userAccountId"
@@ -98,7 +106,14 @@ export const UserOrganizationMembershipDirectoryBindUserAccountToOrganization = 
                   optionLabel="username"
                   optionValue="userAccountId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "username" as never,
+                      String(option?.record?.["username"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.user_organization_membership_directory.commands.bindUserAccountToOrganization.fields.userAccountId.placeholder", "Select User Account Id")}
                   meta={{
                     idField: "userAccountId",
@@ -125,7 +140,14 @@ export const UserOrganizationMembershipDirectoryBindUserAccountToOrganization = 
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "organizationName" as never,
+                      String(option?.record?.["organizationName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
                   placeholder={t("resources.user_organization_membership_directory.commands.bindUserAccountToOrganization.fields.organizationId.placeholder", "Select Organization Id")}
                   meta={{
                     idField: "organizationId",

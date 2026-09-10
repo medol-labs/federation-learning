@@ -31,7 +31,9 @@ class FederationMembershipState @EntityCreator constructor() {
 
     var currentState: FederationMembershipStateEnum? = null
     var federationId: UUID? = null
+    var federationName: String? = null
     var organizationId: UUID? = null
+    var organizationName: String? = null
     var invitationNote: String? = null
     var approvalNote: String? = null
     var rejectionReason: String? = null
@@ -43,7 +45,9 @@ class FederationMembershipState @EntityCreator constructor() {
     fun evolve(event: ParticipantInvitedEvent): FederationMembershipState = apply {
         currentState = FederationMembershipStateEnum.INVITED
         federationId = event.federationId
+        federationName = event.federationName
         organizationId = event.organizationId
+        organizationName = event.organizationName
         invitationNote = event.invitationNote
     }
 
@@ -51,7 +55,9 @@ class FederationMembershipState @EntityCreator constructor() {
     fun evolve(event: ParticipantJoinedEvent): FederationMembershipState = apply {
         currentState = FederationMembershipStateEnum.ACTIVE
         federationId = event.federationId
+        federationName = event.federationName
         organizationId = event.organizationId
+        organizationName = event.organizationName
         approvalNote = event.approvalNote
     }
 
@@ -59,7 +65,9 @@ class FederationMembershipState @EntityCreator constructor() {
     fun evolve(event: ParticipantRejectedEvent): FederationMembershipState = apply {
         currentState = FederationMembershipStateEnum.REJECTED
         federationId = event.federationId
+        federationName = event.federationName
         organizationId = event.organizationId
+        organizationName = event.organizationName
         rejectionReason = event.rejectionReason
     }
 
@@ -67,7 +75,9 @@ class FederationMembershipState @EntityCreator constructor() {
     fun evolve(event: ParticipantInvitationRevokedEvent): FederationMembershipState = apply {
         currentState = FederationMembershipStateEnum.INVITATION_REVOKED
         federationId = event.federationId
+        federationName = event.federationName
         organizationId = event.organizationId
+        organizationName = event.organizationName
         revokeReason = event.revokeReason
     }
 
@@ -75,7 +85,9 @@ class FederationMembershipState @EntityCreator constructor() {
     fun evolve(event: ParticipantSuspendedEvent): FederationMembershipState = apply {
         currentState = FederationMembershipStateEnum.SUSPENDED
         federationId = event.federationId
+        federationName = event.federationName
         organizationId = event.organizationId
+        organizationName = event.organizationName
         suspensionReason = event.suspensionReason
     }
 
@@ -83,7 +95,9 @@ class FederationMembershipState @EntityCreator constructor() {
     fun evolve(event: ParticipantRemovedEvent): FederationMembershipState = apply {
         currentState = FederationMembershipStateEnum.REMOVED
         federationId = event.federationId
+        federationName = event.federationName
         organizationId = event.organizationId
+        organizationName = event.organizationName
         removalReason = event.removalReason
     }
 }

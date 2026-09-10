@@ -36,8 +36,10 @@ export const FederationOverviewRevokeParticipantInvitation = () => {
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
+    federationName: searchParams.get("federationName") ?? undefined,
     federationId: searchParams.get("federationId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
   } as unknown as Partial<RevokeParticipantInvitationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RevokeParticipantInvitationCommandInput, RevokeParticipantInvitationCommandInput>({
@@ -88,6 +90,24 @@ export const FederationOverviewRevokeParticipantInvitation = () => {
           ) : null}
           <FormField
             control={form.control}
+            name="federationName"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.federation_overview.commands.revokeParticipantInvitation.fields.federationName.label", "Federation Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Federation Name"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="organizationId"
             rules={{ required: "Organization Id is required" }}
             render={({ field }) => (
@@ -100,7 +120,9 @@ export const FederationOverviewRevokeParticipantInvitation = () => {
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.federation_overview.commands.revokeParticipantInvitation.fields.organizationId.placeholder", "Select Organization Id")}
                   meta={{
                     idField: "organizationId",
@@ -109,6 +131,24 @@ export const FederationOverviewRevokeParticipantInvitation = () => {
                     queryRoute: "organizationdirectory",
                   }}
                 />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="organizationName"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.federation_overview.commands.revokeParticipantInvitation.fields.organizationName.label", "Organization Name")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Organization Name"}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

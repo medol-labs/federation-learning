@@ -27,7 +27,11 @@ class CreateRuntimeInstallationPlanIntegrationTest(
         val command = CreateRuntimeInstallationPlanCommand(
             runtimeInstallationPlanId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
+            organizationName = "Test Organization",
             runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = "Test Runtime Package",
+            runtimeInfrastructurePackageVersion = "1.0.0",
+            runtimeEnvironmentType = "K3S",
             runtimeName = "",
             agentInstallMode = "",
             expectedNodeCount = 0

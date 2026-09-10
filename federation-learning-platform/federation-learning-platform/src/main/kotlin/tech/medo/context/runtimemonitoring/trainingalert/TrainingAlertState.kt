@@ -21,6 +21,8 @@ class TrainingAlertState @EntityCreator constructor() {
     var alertId: UUID? = null
     var nodeId: UUID? = null
     var trainingJobId: UUID? = null
+    var runtimeNodeName: String? = null
+    var trainingJobObjective: String? = null
     var severity: String? = null
     var message: String? = null
     var acknowledgementNote: String? = null
@@ -32,6 +34,8 @@ class TrainingAlertState @EntityCreator constructor() {
         alertId = event.alertId
         nodeId = event.nodeId
         trainingJobId = event.trainingJobId
+        runtimeNodeName = event.runtimeNodeName
+        trainingJobObjective = event.trainingJobObjective
         severity = event.severity
         message = event.message
     }

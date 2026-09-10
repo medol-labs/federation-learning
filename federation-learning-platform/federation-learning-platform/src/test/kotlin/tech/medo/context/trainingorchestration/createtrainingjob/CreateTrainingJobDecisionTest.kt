@@ -19,10 +19,13 @@ class CreateTrainingJobDecisionTest {
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("config-1".toByteArray()),
             configurationName = "",
             federationId = java.util.UUID.randomUUID(),
+            federationName = null,
             featureSchemaId = java.util.UUID.randomUUID(),
+            featureDomain = null,
+            featureSchemaVersion = null,
             initialModelId = java.util.UUID.randomUUID(),
-            initialModelName = "",
-            initialModelVersion = "",
+            initialModelName = null,
+            initialModelVersion = null,
             initialModelArtifactUri = "",
             initialModelRegistryRef = "",
             initialModelFormat = "",
@@ -49,7 +52,11 @@ class CreateTrainingJobDecisionTest {
         val command = CreateTrainingJobCommand(
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
             federationId = java.util.UUID.randomUUID(),
+            federationName = null,
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("config-1".toByteArray()),
+            configurationName = null,
+            featureDomain = null,
+            featureSchemaVersion = null,
             objective = ""
         )
 
@@ -61,7 +68,11 @@ class CreateTrainingJobDecisionTest {
         val event = events.filterIsInstance<TrainingJobCreatedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("job-1".toByteArray()), event.trainingJobId)
         assertEquals(command.federationId, event.federationId)
+        assertEquals(command.federationName, event.federationName)
         assertEquals(UUID.nameUUIDFromBytes("config-1".toByteArray()), event.trainingRunConfigurationId)
+        assertEquals(command.configurationName, event.configurationName)
+        assertEquals(command.featureDomain, event.featureDomain)
+        assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
         assertEquals(command.objective, event.objective)
     }
 }

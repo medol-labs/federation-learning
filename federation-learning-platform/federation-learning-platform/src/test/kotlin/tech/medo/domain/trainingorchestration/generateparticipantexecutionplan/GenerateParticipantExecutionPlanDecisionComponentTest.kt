@@ -74,7 +74,11 @@ class GenerateParticipantExecutionPlanDecisionComponentTest {
     private fun command(roundNumber: Int = 1): GenerateParticipantExecutionPlanCommand =
         GenerateParticipantExecutionPlanCommand(
             trainingJobId = trainingJobId,
+            federationId = uuid("88888888-8888-4888-8888-888888888888"),
+            federationName = "Test Federation",
             trainingRunConfigurationId = trainingRunConfigurationId,
+            configurationName = "Default Training Configuration",
+            trainingJobObjective = "Train fraud detection model",
             featureSchemaId = featureSchemaId,
             roundId = roundId,
             roundNumber = roundNumber,

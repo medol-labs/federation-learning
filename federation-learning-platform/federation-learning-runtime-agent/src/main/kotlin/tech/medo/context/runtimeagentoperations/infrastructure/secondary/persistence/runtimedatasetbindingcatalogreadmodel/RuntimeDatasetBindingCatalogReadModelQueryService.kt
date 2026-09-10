@@ -34,7 +34,12 @@ class RuntimeDatasetBindingCatalogReadModelQueryService(
             criteria.datasetId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("datasetId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.organizationId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("organizationId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.organizationName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("organizationName") })) }
+            criteria.featureSchemaId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("featureSchemaId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.featureDomain?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("featureDomain") })) }
+            criteria.featureSchemaVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("featureSchemaVersion") })) }
             criteria.datasetName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("datasetName") })) }
+            criteria.runtimeName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeName") })) }
             criteria.dataSourceType?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("dataSourceType") })) }
             criteria.host?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("host") })) }
             criteria.port?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<Int>> { root -> root.get("port") })) }
@@ -109,7 +114,12 @@ class RuntimeDatasetBindingCatalogReadModelQueryService(
             it.datasetId = this@toProjection.datasetId
             it.organizationId = this@toProjection.organizationId
             it.runtimeId = this@toProjection.runtimeId
+            it.organizationName = this@toProjection.organizationName
+            it.featureSchemaId = this@toProjection.featureSchemaId
+            it.featureDomain = this@toProjection.featureDomain
+            it.featureSchemaVersion = this@toProjection.featureSchemaVersion
             it.datasetName = this@toProjection.datasetName
+            it.runtimeName = this@toProjection.runtimeName
             it.dataSourceType = this@toProjection.dataSourceType
             it.host = this@toProjection.host
             it.port = this@toProjection.port

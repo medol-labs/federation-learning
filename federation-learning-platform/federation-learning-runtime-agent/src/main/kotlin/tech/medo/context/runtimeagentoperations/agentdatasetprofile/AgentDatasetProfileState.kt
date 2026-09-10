@@ -24,8 +24,12 @@ class AgentDatasetProfileState @EntityCreator constructor() {
     var runtimeDatasetBindingId: UUID? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
+    var organizationName: String? = null
     var runtimeId: UUID? = null
+    var runtimeName: String? = null
     var featureSchemaId: UUID? = null
+    var featureDomain: String? = null
+    var featureSchemaVersion: String? = null
     var datasetName: String? = null
     var sampleCount: Int? = null
     var featureCount: Int? = null
@@ -45,8 +49,12 @@ class AgentDatasetProfileState @EntityCreator constructor() {
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         runtimeId = event.runtimeId
+        runtimeName = event.runtimeName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         datasetName = event.datasetName
         sampleCount = event.sampleCount
         featureCount = event.featureCount
@@ -65,9 +73,13 @@ class AgentDatasetProfileState @EntityCreator constructor() {
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         datasetName = event.datasetName
         runtimeId = event.runtimeId
+        runtimeName = event.runtimeName
         failureReason = event.failureReason
     }
 
@@ -77,8 +89,12 @@ class AgentDatasetProfileState @EntityCreator constructor() {
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         runtimeId = event.runtimeId
+        runtimeName = event.runtimeName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         datasetName = event.datasetName
         sampleCount = event.sampleCount
         featureCount = event.featureCount
@@ -97,9 +113,13 @@ class AgentDatasetProfileState @EntityCreator constructor() {
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         datasetName = event.datasetName
         runtimeId = event.runtimeId
+        runtimeName = event.runtimeName
         failureReason = event.failureReason
     }
 }

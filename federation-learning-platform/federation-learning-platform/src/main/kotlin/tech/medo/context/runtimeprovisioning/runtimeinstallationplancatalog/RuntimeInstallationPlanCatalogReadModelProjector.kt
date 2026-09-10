@@ -46,7 +46,10 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
         }
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
             entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
             entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
             entity.runtimeName = event.runtimeName
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
@@ -69,6 +72,14 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
                 this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
         }
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.runtimeName = event.runtimeName
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.plannedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
@@ -85,6 +96,14 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
                 this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
         }
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.runtimeName = event.runtimeName
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
             ProjectionMetadata.assign(entity, message)
@@ -101,6 +120,14 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
                 this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
         }
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.runtimeName = event.runtimeName
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.preparedNodeCount = event.preparedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
@@ -119,7 +146,14 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
                 this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
         }
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.runtimeName = event.runtimeName
             entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.observedNodeCount = event.observedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
@@ -138,8 +172,17 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
                 this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
         }
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.runtimeName = event.runtimeName
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.observedNodeCount = event.observedNodeCount
+            entity.runtimeAgentId = event.runtimeAgentId
             entity.verificationFailedAt = eventTime(message)
             entity.verificationFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
@@ -147,23 +190,115 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
     }
 
     @EventHandler
-    fun on(event: RuntimeAgentInstallationSucceededEvent) {
-        // Skipped: RuntimeAgentInstallationSucceededEvent does not provide enough key fields to locate RuntimeInstallationPlanCatalogReadModelProjection.
+    fun on(
+        event: RuntimeAgentInstallationSucceededEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeInstallationPlanId) ?: RuntimeInstallationPlanCatalogReadModelProjection().apply {
+                this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        }
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.runtimeName = event.runtimeName
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeAgentId = event.runtimeAgentId
+            entity.runtimeAgentVersion = event.agentVersion
+            entity.agentReadyAt = eventTime(message)
+            entity.agentDeploymentFailedAt = null
+            entity.agentDeploymentFailureReason = null
+            entity.agentDeploymentRetryFailedAt = null
+            entity.agentDeploymentRetryFailureReason = null
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
     }
 
     @EventHandler
-    fun on(event: RuntimeAgentInstallationFailedEvent) {
-        // Skipped: RuntimeAgentInstallationFailedEvent does not provide enough key fields to locate RuntimeInstallationPlanCatalogReadModelProjection.
+    fun on(
+        event: RuntimeAgentInstallationFailedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeInstallationPlanId) ?: RuntimeInstallationPlanCatalogReadModelProjection().apply {
+                this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        }
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.runtimeName = event.runtimeName
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeAgentId = event.runtimeAgentId
+            entity.agentDeploymentFailedAt = eventTime(message)
+            entity.agentDeploymentFailureReason = event.failureReason
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
     }
 
     @EventHandler
-    fun on(event: RuntimeAgentDeploymentRetrySucceededEvent) {
-        // Skipped: RuntimeAgentDeploymentRetrySucceededEvent does not provide enough key fields to locate RuntimeInstallationPlanCatalogReadModelProjection.
+    fun on(
+        event: RuntimeAgentDeploymentRetrySucceededEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeInstallationPlanId) ?: RuntimeInstallationPlanCatalogReadModelProjection().apply {
+                this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        }
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.runtimeName = event.runtimeName
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeAgentId = event.runtimeAgentId
+            entity.runtimeAgentVersion = event.agentVersion
+            entity.agentReadyAt = eventTime(message)
+            entity.agentDeploymentFailedAt = null
+            entity.agentDeploymentFailureReason = null
+            entity.agentDeploymentRetryFailedAt = null
+            entity.agentDeploymentRetryFailureReason = null
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
     }
 
     @EventHandler
-    fun on(event: RuntimeAgentDeploymentRetryFailedEvent) {
-        // Skipped: RuntimeAgentDeploymentRetryFailedEvent does not provide enough key fields to locate RuntimeInstallationPlanCatalogReadModelProjection.
+    fun on(
+        event: RuntimeAgentDeploymentRetryFailedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeInstallationPlanId) ?: RuntimeInstallationPlanCatalogReadModelProjection().apply {
+                this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        }
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.runtimeName = event.runtimeName
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeAgentId = event.runtimeAgentId
+            entity.agentDeploymentRetryFailedAt = eventTime(message)
+            entity.agentDeploymentRetryFailureReason = event.failureReason
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
     }
 
     @EventHandler

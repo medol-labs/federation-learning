@@ -82,9 +82,13 @@ class CsvFileProfileAgentDatasetAdapterTest {
             runtimeDatasetBindingId = BINDING_ID,
             datasetId = DATASET_ID,
             organizationId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
+            organizationName = "Test Organization",
             featureSchemaId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
+            featureDomain = "credit-risk",
+            featureSchemaVersion = "v1",
             datasetName = "credit-risk",
-            runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666")
+            runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666"),
+            runtimeName = "local runtime"
         )
 
     private fun binding(filePath: String): RuntimeDatasetBindingCatalogReadModel =
@@ -93,7 +97,12 @@ class CsvFileProfileAgentDatasetAdapterTest {
             datasetId = DATASET_ID,
             organizationId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
             runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666"),
+            organizationName = "Test Organization",
+            featureSchemaId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
+            featureDomain = "credit-risk",
+            featureSchemaVersion = "v1",
             datasetName = "credit-risk",
+            runtimeName = "local runtime",
             dataSourceType = "file",
             host = null,
             port = null,

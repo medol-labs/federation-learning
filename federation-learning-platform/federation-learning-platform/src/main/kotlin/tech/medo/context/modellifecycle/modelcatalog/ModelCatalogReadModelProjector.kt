@@ -35,6 +35,7 @@ class ModelCatalogReadModelProjector(private val repository: ModelCatalogReadMod
             entity.trainingJobId = event.trainingJobId
             entity.finalRoundId = event.finalRoundId
             entity.modelArtifactId = event.modelArtifactId
+            entity.trainingJobObjective = event.trainingJobObjective
             entity.modelArtifactDigest = event.modelArtifactDigest
             entity.evaluationReportId = event.evaluationReportId
             entity.finalGlobalAccuracy = event.finalGlobalAccuracy

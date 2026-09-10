@@ -10,6 +10,16 @@ import java.util.UUID;
 data class RuntimeAgentDeploymentRetrySucceededEvent(
     @EventTag(key = "runtimeInfrastructureId")
     val runtimeInfrastructureId: UUID,
+    val runtimeInstallationPlanId: UUID,
     val runtimeAgentId: UUID,
+    val organizationId: UUID,
+    val organizationName: String?,
+    val runtimeInfrastructurePackageId: UUID,
+    val runtimeInfrastructurePackageName: String?,
+    val runtimeInfrastructurePackageVersion: String?,
+    val runtimeEnvironmentType: String?,
+    val runtimeName: String,
+    val agentInstallMode: String,
+    val expectedNodeCount: Int,
     val agentVersion: String
 )

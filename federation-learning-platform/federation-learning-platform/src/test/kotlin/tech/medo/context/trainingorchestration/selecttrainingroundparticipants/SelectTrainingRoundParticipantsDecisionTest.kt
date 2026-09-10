@@ -19,14 +19,20 @@ class SelectTrainingRoundParticipantsDecisionTest {
 
 
         val command = SelectTrainingRoundParticipantsCommand(
-            trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray())
+            trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            federationId = java.util.UUID.randomUUID(),
+            federationName = null,
+            trainingRunConfigurationId = java.util.UUID.randomUUID(),
+            configurationName = null,
+            featureSchemaId = java.util.UUID.randomUUID(),
+            featureDomain = null,
+            featureSchemaVersion = null,
+            trainingJobObjective = ""
         )
 
         val events = (object : SelectTrainingRoundParticipantsDecision {}).decide(
             command,
             portResult = SelectTrainingRoundParticipantsResult.Succeeded(
-                trainingRunConfigurationId = java.util.UUID.randomUUID(),
-                featureSchemaId = java.util.UUID.randomUUID(),
                 roundId = java.util.UUID.randomUUID(),
                 roundNumber = 0,
                 maxRounds = 0,
@@ -45,6 +51,14 @@ class SelectTrainingRoundParticipantsDecisionTest {
 
         val event = events.filterIsInstance<TrainingRoundParticipantsSelectedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("job-1".toByteArray()), event.trainingJobId)
+        assertEquals(command.federationId, event.federationId)
+        assertEquals(command.federationName, event.federationName)
+        assertEquals(command.trainingRunConfigurationId, event.trainingRunConfigurationId)
+        assertEquals(command.configurationName, event.configurationName)
+        assertEquals(command.featureSchemaId, event.featureSchemaId)
+        assertEquals(command.featureDomain, event.featureDomain)
+        assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
+        assertEquals(command.trainingJobObjective, event.trainingJobObjective)
     }
 
     @Test
@@ -52,14 +66,20 @@ class SelectTrainingRoundParticipantsDecisionTest {
 
 
         val command = SelectTrainingRoundParticipantsCommand(
-            trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray())
+            trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            federationId = java.util.UUID.randomUUID(),
+            federationName = null,
+            trainingRunConfigurationId = java.util.UUID.randomUUID(),
+            configurationName = null,
+            featureSchemaId = java.util.UUID.randomUUID(),
+            featureDomain = null,
+            featureSchemaVersion = null,
+            trainingJobObjective = ""
         )
 
         val events = (object : SelectTrainingRoundParticipantsDecision {}).decide(
             command,
             portResult = SelectTrainingRoundParticipantsResult.Rejected(
-                trainingRunConfigurationId = java.util.UUID.randomUUID(),
-                featureSchemaId = java.util.UUID.randomUUID(),
                 roundId = java.util.UUID.randomUUID(),
                 roundNumber = 0,
                 maxRounds = 0,
@@ -79,5 +99,13 @@ class SelectTrainingRoundParticipantsDecisionTest {
 
         val event = events.filterIsInstance<TrainingRoundParticipantSelectionFailedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("job-1".toByteArray()), event.trainingJobId)
+        assertEquals(command.federationId, event.federationId)
+        assertEquals(command.federationName, event.federationName)
+        assertEquals(command.trainingRunConfigurationId, event.trainingRunConfigurationId)
+        assertEquals(command.configurationName, event.configurationName)
+        assertEquals(command.featureSchemaId, event.featureSchemaId)
+        assertEquals(command.featureDomain, event.featureDomain)
+        assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
+        assertEquals(command.trainingJobObjective, event.trainingJobObjective)
     }
 }

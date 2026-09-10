@@ -26,7 +26,9 @@ class InviteParticipantIntegrationTest(
     fun InviteParticipantintegration() {
         val command = InviteParticipantCommand(
             federationId = java.util.UUID.randomUUID(),
+            federationName = null,
             organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
             invitationNote = ""
         )
 

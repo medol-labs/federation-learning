@@ -39,6 +39,11 @@ class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHe
         }
             entity.nodeId = event.nodeId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.federationId = event.federationId
+            entity.trainingJobId = event.trainingJobId
+            entity.roundExecutionId = event.roundExecutionId
+            entity.federationName = event.federationName
+            entity.trainingJobObjective = event.trainingJobObjective
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -54,6 +59,11 @@ class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHe
         }
             entity.nodeId = event.nodeId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.federationId = event.federationId
+            entity.trainingJobId = event.trainingJobId
+            entity.roundExecutionId = event.roundExecutionId
+            entity.federationName = event.federationName
+            entity.trainingJobObjective = event.trainingJobObjective
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -69,7 +79,11 @@ class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHe
         }
             entity.nodeId = event.nodeId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.federationId = event.federationId
             entity.trainingJobId = event.trainingJobId
+            entity.roundExecutionId = event.roundExecutionId
+            entity.federationName = event.federationName
+            entity.trainingJobObjective = event.trainingJobObjective
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -116,6 +130,7 @@ class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHe
         }
             entity.nodeId = event.nodeId
             entity.trainingJobId = event.trainingJobId
+            entity.trainingJobObjective = event.trainingJobObjective
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

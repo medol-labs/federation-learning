@@ -13,7 +13,7 @@ import tech.medo.runtimemonitoring.runtimenoderesourcepressure.RuntimeNodeResour
 interface DetectRuntimeNodeResourcePressureDecision {
     fun decide(command: DetectRuntimeNodeResourcePressureCommand): List<Any> {
         return listOf(
-            RuntimeNodeResourcePressureDetectedEvent(nodeId = command.nodeId, runtimeAgentId = command.runtimeAgentId, trainingJobId = command.trainingJobId, pressureType = command.pressureType, observedValue = command.observedValue, thresholdValue = command.thresholdValue)
+            RuntimeNodeResourcePressureDetectedEvent(nodeId = command.nodeId, runtimeAgentId = command.runtimeAgentId, federationId = command.federationId, federationName = command.federationName, trainingJobId = command.trainingJobId, trainingJobObjective = command.trainingJobObjective, roundExecutionId = command.roundExecutionId, runtimeNodeName = command.runtimeNodeName, pressureType = command.pressureType, observedValue = command.observedValue, thresholdValue = command.thresholdValue)
         )
     }
 }

@@ -41,6 +41,9 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
             entity.organizationId = event.organizationId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
             entity.runtimeName = event.runtimeName
             entity.bootstrapCommand = event.bootstrapCommand
             entity.nodeLabelCommand = event.nodeLabelCommand
@@ -48,6 +51,7 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
             entity.runtimeAgentNodeSelectorYaml = event.runtimeAgentNodeSelectorYaml
             entity.runtimeAgentTolerationsYaml = event.runtimeAgentTolerationsYaml
             entity.bootstrapConfigYaml = event.bootstrapConfigYaml
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
             ProjectionMetadata.assign(entity, message)
@@ -64,7 +68,16 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
                 this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
         }
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.PLANNED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -80,8 +93,17 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
                 this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
         }
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.REGISTERED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -97,8 +119,17 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
                 this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
         }
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.PREPARED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -114,9 +145,17 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
                 this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
         }
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFIED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -132,7 +171,17 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
                 this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
         }
             entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeAgentId = event.runtimeAgentId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

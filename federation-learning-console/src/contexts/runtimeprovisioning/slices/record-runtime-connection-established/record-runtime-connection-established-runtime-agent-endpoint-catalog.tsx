@@ -37,11 +37,11 @@ export const RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished = () 
   const { id } = useParsed();
   const defaultValues = {
     runtimeAgentId: searchParams.get("runtimeAgentId") ?? undefined,
-    organizationId: searchParams.get("organizationId") ?? undefined,
-    runtimeName: searchParams.get("runtimeName") ?? undefined,
     runtimeAgentEndpoint: searchParams.get("runtimeAgentEndpoint") ?? undefined,
     endpointScope: searchParams.get("endpointScope") ?? undefined,
     runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
+    organizationId: searchParams.get("organizationId") ?? undefined,
+    runtimeName: searchParams.get("runtimeName") ?? undefined,
   } as unknown as Partial<RecordRuntimeConnectionEstablishedCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RecordRuntimeConnectionEstablishedCommandInput, RecordRuntimeConnectionEstablishedCommandInput>({
@@ -90,6 +90,14 @@ export const RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished = () 
           {defaultValues.runtimeInfrastructureId !== undefined && defaultValues.runtimeInfrastructureId !== null ? (
             <input type="hidden" {...form.register("runtimeInfrastructureId" as never)} />
           ) : null}
+          {defaultValues.organizationId !== undefined && defaultValues.organizationId !== null ? (
+            <input type="hidden" {...form.register("organizationId" as never)} />
+          ) : null}
+          {defaultValues.runtimeName !== undefined && defaultValues.runtimeName !== null ? (
+            <input type="hidden" {...form.register("runtimeName" as never)} />
+          ) : null}
+          <input type="hidden" {...form.register("agentInstallMode" as never)} />
+          <input type="hidden" {...form.register("organizationName" as never)} />
           <FormField
             control={form.control}
             name="runtimeAgentId"
@@ -104,7 +112,9 @@ export const RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished = () 
                   optionLabel="runtimeName"
                   optionValue="runtimeAgentId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.runtime_agent_endpoint_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeAgentId.placeholder", "Select Runtime Agent Id")}
                   meta={{
                     idField: "runtimeAgentId",
@@ -113,82 +123,6 @@ export const RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished = () 
                     queryRoute: "runtimeagentendpointcatalog",
                   }}
                 />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="agentInstallMode"
-            rules={{ required: "Agent Install Mode is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_agent_endpoint_catalog.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.label", "Agent Install Mode")}</FormLabel>
-                <ResourceSelect
-                  withFormControl
-                  resource="dictionary_value_catalog"
-                  dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
-                  optionValue="valueCode"
-                  value={field.value || ""}
-                  onValueChange={field.onChange}
-                  placeholder={t("resources.runtime_agent_endpoint_catalog.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.placeholder", "Select Agent Install Mode")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_INSTALL_MODE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
-                  sorters={[{"field":"displayOrder","order":"asc"}]}
-                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
-                  meta={{
-                    idField: "dictionaryValueId",
-                    label: t("resources.runtime_agent_endpoint_catalog.commands.recordRuntimeConnectionEstablished.fields.agentInstallMode.label", "Dictionary Value Catalog"),
-                    aggregateRoute: "dictionaryvalue",
-                    queryRoute: "dictionaryvaluecatalog",
-                    queryFields: ["dictionaryCode","active","state"],
-                  }}
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="organizationId"
-            rules={{ required: "Organization Id is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_agent_endpoint_catalog.commands.recordRuntimeConnectionEstablished.fields.organizationId.label", "Organization Id")}</FormLabel>
-                <ResourceSelect
-                  withFormControl
-                  resource="organization_directory"
-                  dataProviderName="federation-learning-platform"
-                  optionLabel="organizationName"
-                  optionValue="organizationId"
-                  value={field.value || ""}
-                  onValueChange={field.onChange}
-                  placeholder={t("resources.runtime_agent_endpoint_catalog.commands.recordRuntimeConnectionEstablished.fields.organizationId.placeholder", "Select Organization Id")}
-                  meta={{
-                    idField: "organizationId",
-                    label: t("resources.runtime_agent_endpoint_catalog.commands.recordRuntimeConnectionEstablished.fields.organizationId.label", "Organization Directory"),
-                    aggregateRoute: "organization",
-                    queryRoute: "organizationdirectory",
-                  }}
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="runtimeName"
-            rules={{ required: "Runtime Name is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_agent_endpoint_catalog.commands.recordRuntimeConnectionEstablished.fields.runtimeName.label", "Runtime Name")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Runtime Name"}
-                  />
-                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -225,7 +159,9 @@ export const RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished = () 
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.runtime_agent_endpoint_catalog.commands.recordRuntimeConnectionEstablished.fields.endpointScope.placeholder", "Select Endpoint Scope")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_ENDPOINT_SCOPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}

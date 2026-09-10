@@ -18,6 +18,7 @@ class CompleteTrainingRoundDecisionTest {
             GlobalModelEvaluationSubmittedEvent(
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("config-1".toByteArray()),
+            trainingJobObjective = "",
             featureSchemaId = java.util.UUID.randomUUID(),
             roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
             roundNumber = 0,
@@ -37,6 +38,7 @@ class CompleteTrainingRoundDecisionTest {
         val command = CompleteTrainingRoundCommand(
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("config-1".toByteArray()),
+            trainingJobObjective = "",
             featureSchemaId = java.util.UUID.randomUUID(),
             roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
             roundNumber = 0,
@@ -59,6 +61,7 @@ class CompleteTrainingRoundDecisionTest {
         val event = events.filterIsInstance<TrainingRoundCompletedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("job-1".toByteArray()), event.trainingJobId)
         assertEquals(UUID.nameUUIDFromBytes("config-1".toByteArray()), event.trainingRunConfigurationId)
+        assertEquals(command.trainingJobObjective, event.trainingJobObjective)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
         assertEquals(UUID.nameUUIDFromBytes("round-1".toByteArray()), event.roundId)
         assertEquals(command.roundNumber, event.roundNumber)

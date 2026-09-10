@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component
 class VerifyInfrastructureWhenPreparedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: RuntimeInfrastructurePreparedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(VerifyRuntimeInfrastructureCommand(runtimeInfrastructureId = event.runtimeInfrastructureId, runtimeInstallationPlanId = event.runtimeInstallationPlanId, runtimeAgentId = event.runtimeAgentId)).resultMessage
+        commandGateway.send(VerifyRuntimeInfrastructureCommand(runtimeInfrastructureId = event.runtimeInfrastructureId, runtimeInstallationPlanId = event.runtimeInstallationPlanId, organizationId = event.organizationId, organizationName = event.organizationName, runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = event.runtimeEnvironmentType, runtimeName = event.runtimeName, expectedNodeCount = event.expectedNodeCount, runtimeAgentId = event.runtimeAgentId)).resultMessage
 }

@@ -23,9 +23,14 @@ class TrainingJobState @EntityCreator constructor() {
     var currentState: TrainingJobStateEnum? = null
     var trainingJobId: UUID? = null
     var federationId: UUID? = null
+    var federationName: String? = null
     var initialModelId: UUID? = null
     var featureSchemaId: UUID? = null
     var trainingRunConfigurationId: UUID? = null
+    var configurationName: String? = null
+    var featureDomain: String? = null
+    var featureSchemaVersion: String? = null
+    var trainingJobObjective: String? = null
     var objective: String? = null
     var pauseReason: String? = null
     var resumeReason: String? = null
@@ -39,9 +44,14 @@ class TrainingJobState @EntityCreator constructor() {
         currentState = TrainingJobStateEnum.DRAFT
         trainingJobId = event.trainingJobId
         federationId = event.federationId
+        federationName = event.federationName
         initialModelId = event.initialModelId
         featureSchemaId = event.featureSchemaId
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        configurationName = event.configurationName
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
+        trainingJobObjective = event.trainingJobObjective
         objective = event.objective
     }
 
@@ -50,6 +60,14 @@ class TrainingJobState @EntityCreator constructor() {
         currentState = TrainingJobStateEnum.SUBMITTED
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
+        federationId = event.federationId
+        federationName = event.federationName
+        configurationName = event.configurationName
+        featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
+        trainingJobObjective = event.trainingJobObjective
+        objective = event.objective
     }
 
     @EventSourcingHandler
@@ -79,6 +97,7 @@ class TrainingJobState @EntityCreator constructor() {
         trainingJobId = event.trainingJobId
         finalRoundId = event.finalRoundId
         finalModelId = event.finalModelId
+        trainingJobObjective = event.trainingJobObjective
         stopReason = event.stopReason
     }
 }

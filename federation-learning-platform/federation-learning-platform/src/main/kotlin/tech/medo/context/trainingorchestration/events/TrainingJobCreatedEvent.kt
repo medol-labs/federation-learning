@@ -11,8 +11,13 @@ data class TrainingJobCreatedEvent(
     @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
     val federationId: UUID,
+    val federationName: String?,
     val initialModelId: UUID,
     val featureSchemaId: UUID,
     val trainingRunConfigurationId: UUID,
+    val configurationName: String?,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
+    val trainingJobObjective: String,
     val objective: String
 )

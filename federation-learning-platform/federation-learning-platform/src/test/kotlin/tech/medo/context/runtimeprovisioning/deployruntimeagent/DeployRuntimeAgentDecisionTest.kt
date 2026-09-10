@@ -20,15 +20,33 @@ class DeployRuntimeAgentDecisionTest {
             RuntimeInfrastructureVerifiedEvent(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()),
             runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
             runtimeAgentId = java.util.UUID.randomUUID(),
             agentInstallMode = "",
+            expectedNodeCount = 0,
             observedNodeCount = 0
             )
         )
 
         val command = DeployRuntimeAgentCommand(
             runtimeAgentId = java.util.UUID.randomUUID(),
-            runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray())
+            runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()),
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            agentInstallMode = "",
+            expectedNodeCount = 0
         )
 
         val events = (object : DeployRuntimeAgentDecision {}).decide(
@@ -42,7 +60,17 @@ class DeployRuntimeAgentDecisionTest {
 
         val event = events.filterIsInstance<RuntimeAgentInstallationSucceededEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-1".toByteArray()), event.runtimeInfrastructureId)
+        assertEquals(command.runtimeInstallationPlanId, event.runtimeInstallationPlanId)
         assertEquals(command.runtimeAgentId, event.runtimeAgentId)
+        assertEquals(command.organizationId, event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
+        assertEquals(command.runtimeInfrastructurePackageId, event.runtimeInfrastructurePackageId)
+        assertEquals(command.runtimeInfrastructurePackageName, event.runtimeInfrastructurePackageName)
+        assertEquals(command.runtimeInfrastructurePackageVersion, event.runtimeInfrastructurePackageVersion)
+        assertEquals(command.runtimeEnvironmentType, event.runtimeEnvironmentType)
+        assertEquals(command.runtimeName, event.runtimeName)
+        assertEquals(command.agentInstallMode, event.agentInstallMode)
+        assertEquals(command.expectedNodeCount, event.expectedNodeCount)
     }
 
     @Test
@@ -52,15 +80,33 @@ class DeployRuntimeAgentDecisionTest {
             RuntimeInfrastructureVerifiedEvent(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
             runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
             runtimeAgentId = java.util.UUID.randomUUID(),
             agentInstallMode = "",
+            expectedNodeCount = 0,
             observedNodeCount = 0
             )
         )
 
         val command = DeployRuntimeAgentCommand(
             runtimeAgentId = java.util.UUID.randomUUID(),
-            runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray())
+            runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            agentInstallMode = "",
+            expectedNodeCount = 0
         )
 
         val events = (object : DeployRuntimeAgentDecision {}).decide(
@@ -74,5 +120,16 @@ class DeployRuntimeAgentDecisionTest {
 
         val event = events.filterIsInstance<RuntimeAgentInstallationFailedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()), event.runtimeInfrastructureId)
+        assertEquals(command.runtimeInstallationPlanId, event.runtimeInstallationPlanId)
+        assertEquals(command.runtimeAgentId, event.runtimeAgentId)
+        assertEquals(command.organizationId, event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
+        assertEquals(command.runtimeInfrastructurePackageId, event.runtimeInfrastructurePackageId)
+        assertEquals(command.runtimeInfrastructurePackageName, event.runtimeInfrastructurePackageName)
+        assertEquals(command.runtimeInfrastructurePackageVersion, event.runtimeInfrastructurePackageVersion)
+        assertEquals(command.runtimeEnvironmentType, event.runtimeEnvironmentType)
+        assertEquals(command.runtimeName, event.runtimeName)
+        assertEquals(command.agentInstallMode, event.agentInstallMode)
+        assertEquals(command.expectedNodeCount, event.expectedNodeCount)
     }
 }

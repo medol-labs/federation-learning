@@ -55,8 +55,14 @@ class RequestSecureAggregationDecisionComponent : RequestSecureAggregationDecisi
         return listOf(
             SecureAggregationRequestedEvent(
                 trainingJobId = command.trainingJobId,
+                federationId = command.federationId,
+                federationName = command.federationName,
                 trainingRunConfigurationId = state.trainingRunConfigurationId ?: command.trainingRunConfigurationId,
+                configurationName = state.configurationName ?: command.configurationName,
+                trainingJobObjective = state.trainingJobObjective ?: command.trainingJobObjective,
                 featureSchemaId = state.featureSchemaId ?: command.featureSchemaId,
+                featureDomain = state.featureDomain ?: command.featureDomain,
+                featureSchemaVersion = state.featureSchemaVersion ?: command.featureSchemaVersion,
                 roundId = command.roundId,
                 roundNumber = command.roundNumber,
                 requiredParticipantCount = command.requiredParticipantCount,

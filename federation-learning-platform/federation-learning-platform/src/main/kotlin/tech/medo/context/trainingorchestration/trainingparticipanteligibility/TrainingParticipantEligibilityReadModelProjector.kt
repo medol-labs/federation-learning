@@ -77,6 +77,9 @@ class TrainingParticipantEligibilityReadModelProjector(private val repository: T
             entity.trainingJobId = event.trainingJobId
             entity.federationId = event.federationId
             entity.featureSchemaId = event.featureSchemaId
+            entity.federationName = event.federationName
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
@@ -91,18 +94,47 @@ class TrainingParticipantEligibilityReadModelProjector(private val repository: T
                 this.trainingJobId = event.trainingJobId
         }
             entity.trainingJobId = event.trainingJobId
+            entity.federationId = event.federationId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.federationName = event.federationName
+            entity.featureDomain = event.featureDomain
+            entity.featureSchemaVersion = event.featureSchemaVersion
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }
 
     @EventHandler
-    fun on(event: RuntimeAgentOfflineDetectedEvent) {
-        // Skipped: RuntimeAgentOfflineDetectedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
+    fun on(
+        event: RuntimeAgentOfflineDetectedEvent,
+        message: EventMessage
+    ) {
+        val key = event.trainingJobId ?: return
+
+        val entity = repository.findProjectionById(key) ?: TrainingParticipantEligibilityReadModelProjection().apply {
+                this.trainingJobId = key
+        }
+            entity.trainingJobId = event.trainingJobId
+            entity.federationId = event.federationId
+            entity.federationName = event.federationName
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
     }
 
     @EventHandler
-    fun on(event: RuntimeAgentRecoveredEvent) {
-        // Skipped: RuntimeAgentRecoveredEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
+    fun on(
+        event: RuntimeAgentRecoveredEvent,
+        message: EventMessage
+    ) {
+        val key = event.trainingJobId ?: return
+
+        val entity = repository.findProjectionById(key) ?: TrainingParticipantEligibilityReadModelProjection().apply {
+                this.trainingJobId = key
+        }
+            entity.trainingJobId = event.trainingJobId
+            entity.federationId = event.federationId
+            entity.federationName = event.federationName
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
     }
 
     @EventHandler

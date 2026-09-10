@@ -27,9 +27,9 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         val trainingJob = trainingJobDashboard.findProjectionById(input.trainingJobId)
         val trainingRunConfiguration = trainingJob?.trainingRunConfigurationId
             ?.let { trainingRunConfigurationCatalog.findProjectionById(it) }
-        val trainingRunConfigurationId = trainingJob?.trainingRunConfigurationId
-        val federationId = trainingJob?.federationId ?: trainingRunConfiguration?.federationId
-        val featureSchemaId = trainingJob?.featureSchemaId ?: trainingRunConfiguration?.featureSchemaId
+        val trainingRunConfigurationId = input.trainingRunConfigurationId
+        val federationId = input.federationId
+        val featureSchemaId = input.featureSchemaId
         val maxRounds = trainingRunConfiguration?.maxRounds ?: trainingJob?.maxRounds
         val minimumAccuracy = trainingRunConfiguration?.minimumAccuracy
         val aggregationAlgorithm = trainingRunConfiguration?.aggregationAlgorithm
@@ -37,9 +37,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         val secureAggregationRequired = trainingRunConfiguration?.secureAggregationRequired ?: trainingJob?.secureAggregationRequired ?: false
 
         if (
-            trainingRunConfigurationId == null ||
-            federationId == null ||
-            featureSchemaId == null ||
             maxRounds == null ||
             maxRounds <= 0 ||
             minimumAccuracy == null ||
@@ -50,9 +47,9 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             log.warn(
                 "Skip training round participant selection because job context is incomplete. trainingJobId={}, trainingRunConfigurationIdPresent={}, federationIdPresent={}, featureSchemaIdPresent={}, maxRounds={}, minimumAccuracy={}, minimumNodesPerRound={}",
                 input.trainingJobId,
-                trainingRunConfigurationId != null,
-                federationId != null,
-                featureSchemaId != null,
+                true,
+                true,
+                true,
                 maxRounds,
                 minimumAccuracy,
                 minimumNodesPerRound
@@ -128,7 +125,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         val selectedOrganizationIds = selectedParticipants.map { it.organizationId }.distinct()
         val selectedRuntimeIds = selectedParticipants.map { it.runtimeId }.distinct()
         val roundId = UUID.randomUUID()
-        val roundNumber = (trainingJob?.currentRoundNumber ?: 0) + 1
+        val roundNumber = (trainingJob.currentRoundNumber ?: 0) + 1
 
         log.info(
             "Selected participant candidates from read models. trainingJobId={}, federationId={}, featureSchemaId={}, joinedOrganizationCount={}, activeRuntimeCount={}, matchingDatasetMetadataCount={}, selectedRuntimeCount={}, minimumNodesPerRound={}",
@@ -154,8 +151,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 failureReason
             )
             return SelectTrainingRoundParticipantsResult.Rejected(
-                trainingRunConfigurationId = trainingRunConfigurationId,
-                featureSchemaId = featureSchemaId,
                 roundId = roundId,
                 roundNumber = roundNumber,
                 maxRounds = maxRounds,
@@ -173,8 +168,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         }
 
         return SelectTrainingRoundParticipantsResult.Succeeded(
-            trainingRunConfigurationId = trainingRunConfigurationId,
-            featureSchemaId = featureSchemaId,
             roundId = roundId,
             roundNumber = roundNumber,
             maxRounds = maxRounds,

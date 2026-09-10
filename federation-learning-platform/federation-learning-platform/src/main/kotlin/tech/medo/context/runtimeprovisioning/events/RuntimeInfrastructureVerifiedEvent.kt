@@ -11,7 +11,15 @@ data class RuntimeInfrastructureVerifiedEvent(
     @EventTag(key = "runtimeInfrastructureId")
     val runtimeInfrastructureId: UUID,
     val runtimeInstallationPlanId: UUID,
+    val organizationId: UUID,
+    val organizationName: String?,
+    val runtimeInfrastructurePackageId: UUID,
+    val runtimeInfrastructurePackageName: String?,
+    val runtimeInfrastructurePackageVersion: String?,
+    val runtimeEnvironmentType: String?,
+    val runtimeName: String,
     val runtimeAgentId: UUID,
     val agentInstallMode: String,
+    val expectedNodeCount: Int,
     val observedNodeCount: Int
 )

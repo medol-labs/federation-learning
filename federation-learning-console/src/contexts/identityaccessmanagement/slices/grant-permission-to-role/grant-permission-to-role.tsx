@@ -242,7 +242,9 @@ export const RoleCatalogGrantPermissionToRole = () => {
                   optionLabel="roleName"
                   optionValue="roleCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.role_catalog.commands.grantPermissionToRole.fields.roleCode.placeholder", "Select Role Code")}
                   meta={{
                     idField: "roleId",

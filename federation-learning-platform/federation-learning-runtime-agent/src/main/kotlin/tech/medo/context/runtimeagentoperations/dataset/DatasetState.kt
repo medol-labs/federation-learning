@@ -38,7 +38,10 @@ class DatasetState @EntityCreator constructor() {
     var currentState: DatasetStateEnum? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
+    var organizationName: String? = null
     var featureSchemaId: UUID? = null
+    var featureDomain: String? = null
+    var featureSchemaVersion: String? = null
     var datasetName: String? = null
     var datasetUsage: String? = null
     var features: List<FeatureDefinition> = emptyList()
@@ -57,7 +60,10 @@ class DatasetState @EntityCreator constructor() {
         currentState = DatasetStateEnum.REGISTERED
         datasetId = event.datasetId
         organizationId = event.organizationId
+        organizationName = event.organizationName
         featureSchemaId = event.featureSchemaId
+        featureDomain = event.featureDomain
+        featureSchemaVersion = event.featureSchemaVersion
         datasetName = event.datasetName
         datasetUsage = event.datasetUsage
         features = event.features

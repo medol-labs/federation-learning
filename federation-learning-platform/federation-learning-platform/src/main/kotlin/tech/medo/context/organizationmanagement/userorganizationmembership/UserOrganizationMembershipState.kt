@@ -18,7 +18,9 @@ class UserOrganizationMembershipState @EntityCreator constructor() {
     var currentState: UserOrganizationMembershipStateEnum? = null
     var userOrganizationMembershipId: UUID? = null
     var userAccountId: UUID? = null
+    var username: String? = null
     var organizationId: UUID? = null
+    var organizationName: String? = null
     var organizationUserRole: String? = null
 
     @EventSourcingHandler
@@ -26,7 +28,9 @@ class UserOrganizationMembershipState @EntityCreator constructor() {
         currentState = UserOrganizationMembershipStateEnum.ACTIVE
         userOrganizationMembershipId = event.userOrganizationMembershipId
         userAccountId = event.userAccountId
+        username = event.username
         organizationId = event.organizationId
+        organizationName = event.organizationName
         organizationUserRole = event.organizationUserRole
     }
 }

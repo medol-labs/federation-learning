@@ -76,7 +76,7 @@ node scripts/import-images.mjs --output ./frontend-images.tar
 Push the image to a registry:
 
 ```bash
-DOCKER_IMAGE_PREFIX=192.168.50.2:5000/federation-learning-platform node scripts/push-images.mjs
+DOCKER_IMAGE_PREFIX=192.168.50.2:5000/<namespace> node scripts/push-images.mjs
 ```
 
 The image name defaults to `medol/federation-learning-platform-console:0.0.1-SNAPSHOT`. Override it with `--prefix`, `--image`, and `--version`.

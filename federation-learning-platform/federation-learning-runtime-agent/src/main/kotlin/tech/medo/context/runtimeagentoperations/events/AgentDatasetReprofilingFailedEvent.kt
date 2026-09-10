@@ -13,8 +13,12 @@ data class AgentDatasetReprofilingFailedEvent(
     val runtimeDatasetBindingId: UUID,
     val datasetId: UUID,
     val organizationId: UUID,
+    val organizationName: String?,
     val featureSchemaId: UUID,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
     val datasetName: String,
     val runtimeId: UUID,
+    val runtimeName: String?,
     val failureReason: String
 )

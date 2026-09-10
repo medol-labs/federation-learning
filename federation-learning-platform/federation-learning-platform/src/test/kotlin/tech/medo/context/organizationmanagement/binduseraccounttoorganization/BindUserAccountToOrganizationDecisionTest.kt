@@ -28,7 +28,9 @@ class BindUserAccountToOrganizationDecisionTest {
                         BindUserAccountToOrganizationCommand(
                         userOrganizationMembershipId = java.util.UUID.randomUUID(),
                         userAccountId = UUID.fromString("11111111-1111-4111-8111-111111111111"),
+                        username = null,
                         organizationId = UUID.fromString("22222222-2222-4222-8222-222222222222"),
+                        organizationName = null,
                         organizationUserRole = null
                         ),
                             userOrganizationMembershipUserAccountIdOrganizationIdReservation = userOrganizationMembershipUserAccountIdOrganizationIdReservation

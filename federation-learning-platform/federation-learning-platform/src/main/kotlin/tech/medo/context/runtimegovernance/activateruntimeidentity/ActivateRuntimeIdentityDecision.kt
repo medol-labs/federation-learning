@@ -13,7 +13,7 @@ import tech.medo.runtimegovernance.runtimeidentity.RuntimeIdentityState
 interface ActivateRuntimeIdentityDecision {
     fun decide(command: ActivateRuntimeIdentityCommand): List<Any> {
         return listOf(
-            RuntimeIdentityActivatedEvent(runtimeId = command.runtimeId, runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId, organizationId = command.organizationId, runtimeName = command.runtimeName)
+            RuntimeIdentityActivatedEvent(runtimeId = command.runtimeId, runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeAgentId = command.runtimeAgentId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeName = command.runtimeName)
         )
     }
 }

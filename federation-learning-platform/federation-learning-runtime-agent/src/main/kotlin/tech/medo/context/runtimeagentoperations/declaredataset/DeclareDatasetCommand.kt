@@ -10,7 +10,10 @@ import java.util.UUID;
 data class DeclareDatasetCommand(
     val datasetId: UUID = java.util.UUID.randomUUID(),
     val organizationId: UUID,
+    val organizationName: String?,
     val featureSchemaId: UUID,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
     val datasetName: String,
     val datasetUsage: String
 ) {

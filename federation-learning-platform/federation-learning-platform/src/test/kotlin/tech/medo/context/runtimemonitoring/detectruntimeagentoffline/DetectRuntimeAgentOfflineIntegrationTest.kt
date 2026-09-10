@@ -27,6 +27,12 @@ class DetectRuntimeAgentOfflineIntegrationTest(
         val command = DetectRuntimeAgentOfflineCommand(
             nodeId = java.util.UUID.randomUUID(),
             runtimeAgentId = java.util.UUID.randomUUID(),
+            federationId = null,
+            federationName = null,
+            trainingJobId = null,
+            trainingJobObjective = null,
+            roundExecutionId = null,
+            runtimeNodeName = null,
             offlineReason = ""
         )
 

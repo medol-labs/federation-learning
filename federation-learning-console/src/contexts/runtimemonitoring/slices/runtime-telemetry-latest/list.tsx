@@ -21,8 +21,11 @@ type RuntimeTelemetryLatestRecord = {
   nodeId: string;
   runtimeAgentId: string;
   federationId?: string;
+  federationName?: string;
   trainingJobId?: string;
+  trainingJobObjective?: string;
   roundExecutionId?: string;
+  runtimeNodeName?: string;
   cpuLoad?: string;
   gpuLoad?: string;
   memoryLoad?: string;
@@ -117,6 +120,20 @@ export const RuntimeTelemetryLatestList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("federationName", {
+        id: "federationName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.federationName.label", "Federation Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.federationName.label", "Federation Name"),
+          placeholder: "Enter Federation Name",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("trainingJobId", {
         id: "trainingJobId",
         header: ({ column }) => (
@@ -131,6 +148,20 @@ export const RuntimeTelemetryLatestList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("trainingJobObjective", {
+        id: "trainingJobObjective",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.trainingJobObjective.label", "Training Job Objective")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.trainingJobObjective.label", "Training Job Objective"),
+          placeholder: "Enter Training Job Objective",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("roundExecutionId", {
         id: "roundExecutionId",
         header: ({ column }) => (
@@ -141,6 +172,20 @@ export const RuntimeTelemetryLatestList = () => {
         meta: {
           label: t("resources.runtime_telemetry_latest.fields.roundExecutionId.label", "Round Execution Id"),
           placeholder: "Enter Round Execution Id",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeNodeName", {
+        id: "runtimeNodeName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.runtimeNodeName.label", "Runtime Node Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.runtimeNodeName.label", "Runtime Node Name"),
+          placeholder: "Enter Runtime Node Name",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -293,7 +338,7 @@ export const RuntimeTelemetryLatestList = () => {
         tableName: "runtime_telemetry_latest_read_model_entity",
         idField: "nodeId",
         idFields: ["nodeId"],
-        queryFields: ["nodeId","runtimeAgentId","federationId","trainingJobId","roundExecutionId","cpuLoad","gpuLoad","memoryLoad","lastHeartbeatAt","heartbeatMissingBeyondThreshold","heartbeatObservedAfterOffline","resourcePressureDetected","telemetryRetentionPolicy"],
+        queryFields: ["nodeId","runtimeAgentId","federationId","federationName","trainingJobId","trainingJobObjective","roundExecutionId","runtimeNodeName","cpuLoad","gpuLoad","memoryLoad","lastHeartbeatAt","heartbeatMissingBeyondThreshold","heartbeatObservedAfterOffline","resourcePressureDetected","telemetryRetentionPolicy"],
         label: t("resources.runtime_telemetry_latest.label", "Runtime Telemetry Latest"),
         aggregateRoute: "noderuntimehealth",
         queryRoute: "runtimetelemetrylatest",

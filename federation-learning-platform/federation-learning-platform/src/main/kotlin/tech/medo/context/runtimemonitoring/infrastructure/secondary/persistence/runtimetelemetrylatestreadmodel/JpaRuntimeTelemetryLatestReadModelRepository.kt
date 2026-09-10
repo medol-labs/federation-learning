@@ -42,8 +42,11 @@ class JpaRuntimeTelemetryLatestReadModelRepository(
             it.nodeId = this@toProjection.nodeId
             it.runtimeAgentId = this@toProjection.runtimeAgentId
             it.federationId = this@toProjection.federationId
+            it.federationName = this@toProjection.federationName
             it.trainingJobId = this@toProjection.trainingJobId
+            it.trainingJobObjective = this@toProjection.trainingJobObjective
             it.roundExecutionId = this@toProjection.roundExecutionId
+            it.runtimeNodeName = this@toProjection.runtimeNodeName
             it.cpuLoad = this@toProjection.cpuLoad
             it.gpuLoad = this@toProjection.gpuLoad
             it.memoryLoad = this@toProjection.memoryLoad
@@ -65,8 +68,11 @@ class JpaRuntimeTelemetryLatestReadModelRepository(
             it.nodeId = this@toEntity.nodeId
             it.runtimeAgentId = this@toEntity.runtimeAgentId
             it.federationId = this@toEntity.federationId
+            it.federationName = this@toEntity.federationName
             it.trainingJobId = this@toEntity.trainingJobId
+            it.trainingJobObjective = this@toEntity.trainingJobObjective
             it.roundExecutionId = this@toEntity.roundExecutionId
+            it.runtimeNodeName = this@toEntity.runtimeNodeName
             it.cpuLoad = this@toEntity.cpuLoad
             it.gpuLoad = this@toEntity.gpuLoad
             it.memoryLoad = this@toEntity.memoryLoad

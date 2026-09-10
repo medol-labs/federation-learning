@@ -146,7 +146,9 @@ export const TrainingRoundProgressRetryRoundExecutionAfterStartFailure = () => {
                   optionLabel="federationName"
                   optionValue="trainingJobId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.training_round_progress.commands.retryRoundExecutionAfterStartFailure.fields.trainingJobId.placeholder", "Select Training Job Id")}
                   meta={{
                     idField: "trainingJobId",
@@ -173,7 +175,9 @@ export const TrainingRoundProgressRetryRoundExecutionAfterStartFailure = () => {
                   optionLabel="configurationName"
                   optionValue="trainingRunConfigurationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.training_round_progress.commands.retryRoundExecutionAfterStartFailure.fields.trainingRunConfigurationId.placeholder", "Select Training Run Configuration Id")}
                   meta={{
                     idField: "trainingRunConfigurationId",
@@ -237,7 +241,9 @@ export const TrainingRoundProgressRetryRoundExecutionAfterStartFailure = () => {
                   optionLabel="runtimeName"
                   optionValue="runtimeId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.training_round_progress.commands.retryRoundExecutionAfterStartFailure.fields.runtimeId.placeholder", "Select Runtime Id")}
                   meta={{
                     idField: "runtimeId",
@@ -264,7 +270,9 @@ export const TrainingRoundProgressRetryRoundExecutionAfterStartFailure = () => {
                   optionLabel="organizationName"
                   optionValue="organizationId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.training_round_progress.commands.retryRoundExecutionAfterStartFailure.fields.organizationId.placeholder", "Select Organization Id")}
                   meta={{
                     idField: "organizationId",
@@ -291,7 +299,9 @@ export const TrainingRoundProgressRetryRoundExecutionAfterStartFailure = () => {
                   optionLabel="featureDomain"
                   optionValue="featureSchemaId"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.training_round_progress.commands.retryRoundExecutionAfterStartFailure.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
                   meta={{
                     idField: "featureSchemaId",

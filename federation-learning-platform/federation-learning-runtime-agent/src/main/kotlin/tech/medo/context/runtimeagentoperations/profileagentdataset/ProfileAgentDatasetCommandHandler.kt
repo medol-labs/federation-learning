@@ -20,7 +20,7 @@ class ProfileAgentDatasetCommandHandler(
         command: ProfileAgentDatasetCommand,
         eventAppender: EventAppender
     ) {
-        val input = ProfileAgentDatasetInput(metadataReportId = command.metadataReportId, runtimeDatasetBindingId = command.runtimeDatasetBindingId, datasetId = command.datasetId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName, runtimeId = command.runtimeId)
+        val input = ProfileAgentDatasetInput(metadataReportId = command.metadataReportId, runtimeDatasetBindingId = command.runtimeDatasetBindingId, datasetId = command.datasetId, organizationId = command.organizationId, organizationName = command.organizationName, featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, featureSchemaVersion = command.featureSchemaVersion, datasetName = command.datasetName, runtimeId = command.runtimeId, runtimeName = command.runtimeName)
         val portResult = profileAgentDatasetService.execute(input)
         val now = java.time.LocalDateTime.now()
 

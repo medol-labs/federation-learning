@@ -64,6 +64,7 @@ class ModelArtifactCatalogReadModelProjector(private val repository: ModelArtifa
             entity.modelSizeBytes = event.modelSizeBytes
             entity.trainingJobId = event.trainingJobId
             entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
             entity.state = ModelArtifactStateEnum.REGISTERED
             entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)

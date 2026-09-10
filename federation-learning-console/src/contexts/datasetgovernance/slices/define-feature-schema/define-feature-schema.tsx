@@ -241,7 +241,9 @@ export const CurrentRecommendedFeatureSchemaCatalogDefineFeatureSchema = () => {
                   optionLabel="displayName"
                   optionValue="valueCode"
                   value={field.value || ""}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                   placeholder={t("resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.fields.dataModality.placeholder", "Select Data Modality")}
                   filters={[{"field":"dictionaryCode","operator":"eq","value":"FEATURE_SCHEMA_DATA_MODALITY"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}

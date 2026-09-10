@@ -19,8 +19,14 @@ class EvaluateModelUpdateSubmissionDecisionTest {
         state.evolve(
             TrainingRoundStartedEvent(
             trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            federationId = java.util.UUID.randomUUID(),
+            federationName = null,
             trainingRunConfigurationId = UUID.nameUUIDFromBytes("config-1".toByteArray()),
+            configurationName = null,
+            trainingJobObjective = "",
             featureSchemaId = java.util.UUID.randomUUID(),
+            featureDomain = null,
+            featureSchemaVersion = null,
             roundId = UUID.nameUUIDFromBytes("round-1".toByteArray()),
             roundNumber = 0,
             selectedOrganizationIds = emptyList(),

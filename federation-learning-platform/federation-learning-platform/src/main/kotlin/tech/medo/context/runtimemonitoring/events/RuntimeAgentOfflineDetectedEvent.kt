@@ -11,5 +11,11 @@ data class RuntimeAgentOfflineDetectedEvent(
     @EventTag(key = "nodeId")
     val nodeId: UUID,
     val runtimeAgentId: UUID,
+    val federationId: UUID?,
+    val federationName: String?,
+    val trainingJobId: UUID?,
+    val trainingJobObjective: String?,
+    val roundExecutionId: UUID?,
+    val runtimeNodeName: String?,
     val offlineReason: String
 )

@@ -21,7 +21,7 @@ class MarkRecoveredRuntimeAgentFromTelemetryProcessor(
             .asSequence()
             .filter { todo -> todo.heartbeatObservedAfterOffline == true && todo.nodeId != null && todo.runtimeAgentId != null }
             .forEach { todo ->
-                commandGateway.send(MarkRuntimeAgentRecoveredCommand(nodeId = todo.nodeId!!, runtimeAgentId = todo.runtimeAgentId!!, recoveryReason = null /* TODO: provide recoveryReason */))
+                commandGateway.send(MarkRuntimeAgentRecoveredCommand(nodeId = todo.nodeId!!, runtimeAgentId = todo.runtimeAgentId!!, federationId = todo.federationId, federationName = todo.federationName, trainingJobId = todo.trainingJobId, trainingJobObjective = todo.trainingJobObjective, roundExecutionId = todo.roundExecutionId, runtimeNodeName = todo.runtimeNodeName, recoveryReason = null /* TODO: provide recoveryReason */))
             }
     }
 }

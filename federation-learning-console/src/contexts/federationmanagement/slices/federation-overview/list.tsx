@@ -204,6 +204,9 @@ export const FederationOverviewList = () => {
               command="removeParticipant"
               recordItemId={row.original.federationId}
               size="sm"
+              query={{
+                federationName: row.original.federationName,
+              }}
             />
             )}
             <RowActionMenu>
@@ -245,6 +248,9 @@ export const FederationOverviewList = () => {
                     command="approveParticipant"
                     recordItemId={row.original.federationId}
                     size="sm"
+                    query={{
+                      federationName: row.original.federationName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "state", ["Invited"]) && (
@@ -253,6 +259,9 @@ export const FederationOverviewList = () => {
                     command="rejectParticipant"
                     recordItemId={row.original.federationId}
                     size="sm"
+                    query={{
+                      federationName: row.original.federationName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "state", ["Invited"]) && (
@@ -261,6 +270,9 @@ export const FederationOverviewList = () => {
                     command="revokeParticipantInvitation"
                     recordItemId={row.original.federationId}
                     size="sm"
+                    query={{
+                      federationName: row.original.federationName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "state", ["Active"]) && (
@@ -269,6 +281,9 @@ export const FederationOverviewList = () => {
                     command="suspendParticipant"
                     recordItemId={row.original.federationId}
                     size="sm"
+                    query={{
+                      federationName: row.original.federationName,
+                    }}
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.federationId} size="sm" />

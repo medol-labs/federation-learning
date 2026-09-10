@@ -12,6 +12,8 @@ data class TrainingAlertRaisedEvent(
     val alertId: UUID,
     val nodeId: UUID,
     val trainingJobId: UUID?,
+    val runtimeNodeName: String?,
+    val trainingJobObjective: String?,
     val severity: String,
     val message: String
 )

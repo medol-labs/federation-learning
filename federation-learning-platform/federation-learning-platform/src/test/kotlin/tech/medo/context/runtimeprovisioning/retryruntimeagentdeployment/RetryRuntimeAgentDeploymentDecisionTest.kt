@@ -20,6 +20,17 @@ class RetryRuntimeAgentDeploymentDecisionTest {
         state.evolve(
             RuntimeAgentInstallationFailedEvent(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            runtimeAgentId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            agentInstallMode = "",
+            expectedNodeCount = 0,
             failureReason = ""
             )
         )
@@ -27,6 +38,16 @@ class RetryRuntimeAgentDeploymentDecisionTest {
         val command = RetryRuntimeAgentDeploymentCommand(
             runtimeAgentId = java.util.UUID.randomUUID(),
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()),
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            agentInstallMode = "",
+            expectedNodeCount = 0,
             currentRuntimeInfrastructureState = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED,
             retryReason = "Retry after fixing registry credentials."
         )
@@ -42,7 +63,17 @@ class RetryRuntimeAgentDeploymentDecisionTest {
 
         val event = events.filterIsInstance<RuntimeAgentDeploymentRetrySucceededEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-2".toByteArray()), event.runtimeInfrastructureId)
+        assertEquals(command.runtimeInstallationPlanId, event.runtimeInstallationPlanId)
         assertEquals(command.runtimeAgentId, event.runtimeAgentId)
+        assertEquals(command.organizationId, event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
+        assertEquals(command.runtimeInfrastructurePackageId, event.runtimeInfrastructurePackageId)
+        assertEquals(command.runtimeInfrastructurePackageName, event.runtimeInfrastructurePackageName)
+        assertEquals(command.runtimeInfrastructurePackageVersion, event.runtimeInfrastructurePackageVersion)
+        assertEquals(command.runtimeEnvironmentType, event.runtimeEnvironmentType)
+        assertEquals(command.runtimeName, event.runtimeName)
+        assertEquals(command.agentInstallMode, event.agentInstallMode)
+        assertEquals(command.expectedNodeCount, event.expectedNodeCount)
     }
 
     @Test
@@ -53,6 +84,16 @@ class RetryRuntimeAgentDeploymentDecisionTest {
         val command = RetryRuntimeAgentDeploymentCommand(
             runtimeAgentId = java.util.UUID.randomUUID(),
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-3".toByteArray()),
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            agentInstallMode = "",
+            expectedNodeCount = 0,
             currentRuntimeInfrastructureState = RuntimeInfrastructureStateEnum.OFFLINE,
             retryReason = "Reconnect runtime agent."
         )
@@ -68,7 +109,17 @@ class RetryRuntimeAgentDeploymentDecisionTest {
 
         val event = events.filterIsInstance<RuntimeAgentDeploymentRetrySucceededEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-3".toByteArray()), event.runtimeInfrastructureId)
+        assertEquals(command.runtimeInstallationPlanId, event.runtimeInstallationPlanId)
         assertEquals(command.runtimeAgentId, event.runtimeAgentId)
+        assertEquals(command.organizationId, event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
+        assertEquals(command.runtimeInfrastructurePackageId, event.runtimeInfrastructurePackageId)
+        assertEquals(command.runtimeInfrastructurePackageName, event.runtimeInfrastructurePackageName)
+        assertEquals(command.runtimeInfrastructurePackageVersion, event.runtimeInfrastructurePackageVersion)
+        assertEquals(command.runtimeEnvironmentType, event.runtimeEnvironmentType)
+        assertEquals(command.runtimeName, event.runtimeName)
+        assertEquals(command.agentInstallMode, event.agentInstallMode)
+        assertEquals(command.expectedNodeCount, event.expectedNodeCount)
     }
 
     @Test
@@ -77,6 +128,17 @@ class RetryRuntimeAgentDeploymentDecisionTest {
         state.evolve(
             RuntimeAgentInstallationFailedEvent(
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-4".toByteArray()),
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            runtimeAgentId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            agentInstallMode = "",
+            expectedNodeCount = 0,
             failureReason = ""
             )
         )
@@ -84,6 +146,16 @@ class RetryRuntimeAgentDeploymentDecisionTest {
         val command = RetryRuntimeAgentDeploymentCommand(
             runtimeAgentId = java.util.UUID.randomUUID(),
             runtimeInfrastructureId = UUID.nameUUIDFromBytes("runtime-infra-4".toByteArray()),
+            runtimeInstallationPlanId = java.util.UUID.randomUUID(),
+            organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
+            runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
+            runtimeName = "",
+            agentInstallMode = "",
+            expectedNodeCount = 0,
             currentRuntimeInfrastructureState = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED,
             retryReason = "Retry after transient failure."
         )
@@ -99,5 +171,16 @@ class RetryRuntimeAgentDeploymentDecisionTest {
 
         val event = events.filterIsInstance<RuntimeAgentDeploymentRetryFailedEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("runtime-infra-4".toByteArray()), event.runtimeInfrastructureId)
+        assertEquals(command.runtimeInstallationPlanId, event.runtimeInstallationPlanId)
+        assertEquals(command.runtimeAgentId, event.runtimeAgentId)
+        assertEquals(command.organizationId, event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
+        assertEquals(command.runtimeInfrastructurePackageId, event.runtimeInfrastructurePackageId)
+        assertEquals(command.runtimeInfrastructurePackageName, event.runtimeInfrastructurePackageName)
+        assertEquals(command.runtimeInfrastructurePackageVersion, event.runtimeInfrastructurePackageVersion)
+        assertEquals(command.runtimeEnvironmentType, event.runtimeEnvironmentType)
+        assertEquals(command.runtimeName, event.runtimeName)
+        assertEquals(command.agentInstallMode, event.agentInstallMode)
+        assertEquals(command.expectedNodeCount, event.expectedNodeCount)
     }
 }

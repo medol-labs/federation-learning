@@ -19,7 +19,11 @@ class RuntimeInstallationGuideTemplateAdapterTest {
                 runtimeInstallationPlanId = runtimeInstallationPlanId,
                 runtimeInfrastructureId = runtimeInfrastructureId,
                 organizationId = organizationId,
+                organizationName = "Hospital A",
                 runtimeInfrastructurePackageId = runtimeInfrastructurePackageId,
+                runtimeInfrastructurePackageName = "K3s Runtime Package",
+                runtimeInfrastructurePackageVersion = "1.0.0",
+                runtimeEnvironmentType = "K3S",
                 runtimeName = "hospital-a-runtime",
                 agentInstallMode = "PLATFORM_MANAGED",
                 expectedNodeCount = 1

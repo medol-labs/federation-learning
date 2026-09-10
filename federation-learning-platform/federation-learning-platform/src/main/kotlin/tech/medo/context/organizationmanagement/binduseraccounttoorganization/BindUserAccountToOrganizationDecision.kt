@@ -18,7 +18,7 @@ interface BindUserAccountToOrganizationDecision {
         }
         return listOf(
                         UserOrganizationMembershipUserAccountIdOrganizationIdReservedEvent(userOrganizationMembershipId = command.userOrganizationMembershipId, userAccountId = command.userAccountId, organizationId = command.organizationId, normalizedUserAccountId = command.userAccountId.toString().trim().lowercase(), normalizedOrganizationId = command.organizationId.toString().trim().lowercase()),
-            UserAccountBoundToOrganizationEvent(userOrganizationMembershipId = command.userOrganizationMembershipId, userAccountId = command.userAccountId, organizationId = command.organizationId, organizationUserRole = command.organizationUserRole)
+            UserAccountBoundToOrganizationEvent(userOrganizationMembershipId = command.userOrganizationMembershipId, userAccountId = command.userAccountId, username = command.username, organizationId = command.organizationId, organizationName = command.organizationName, organizationUserRole = command.organizationUserRole)
         )
     }
 }

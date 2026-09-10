@@ -16,7 +16,11 @@ class CreateRuntimeInstallationPlanDecisionTest {
             runtimeInstallationPlanId = java.util.UUID.randomUUID(),
             runtimeInfrastructureId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
+            organizationName = null,
             runtimeInfrastructurePackageId = java.util.UUID.randomUUID(),
+            runtimeInfrastructurePackageName = null,
+            runtimeInfrastructurePackageVersion = null,
+            runtimeEnvironmentType = null,
             runtimeName = "",
             agentInstallMode = "",
             expectedNodeCount = 0

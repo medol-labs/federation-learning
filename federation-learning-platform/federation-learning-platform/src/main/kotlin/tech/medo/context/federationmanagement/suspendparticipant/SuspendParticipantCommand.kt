@@ -9,7 +9,9 @@ import java.util.UUID;
 @Command
 data class SuspendParticipantCommand(
     val federationId: UUID,
+    val federationName: String?,
     val organizationId: UUID,
+    val organizationName: String?,
     val suspensionReason: String
 ) {
     @TargetEntityId

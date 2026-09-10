@@ -55,13 +55,28 @@ export const RuntimeTelemetryLatestShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.federationName.label", "Federation Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.federationName, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.trainingJobId.label", "Training Job Id")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.trainingJobId, t)}</p>
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.trainingJobObjective.label", "Training Job Objective")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.trainingJobObjective, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.roundExecutionId.label", "Round Execution Id")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.roundExecutionId, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.runtimeNodeName.label", "Runtime Node Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeNodeName, t)}</p>
             </div>
             <Separator />
             <div>

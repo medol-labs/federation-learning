@@ -22,8 +22,11 @@ class RuntimeTelemetryLatestReadModelEntity : MetadataProjection {
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
     var federationId: UUID? = null
+    var federationName: String? = null
     var trainingJobId: UUID? = null
+    var trainingJobObjective: String? = null
     var roundExecutionId: UUID? = null
+    var runtimeNodeName: String? = null
     var cpuLoad: BigDecimal? = null
     var gpuLoad: BigDecimal? = null
     var memoryLoad: BigDecimal? = null

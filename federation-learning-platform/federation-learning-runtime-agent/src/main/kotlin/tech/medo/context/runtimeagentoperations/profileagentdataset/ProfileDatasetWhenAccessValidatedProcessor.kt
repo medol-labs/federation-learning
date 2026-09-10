@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component
 class ProfileDatasetWhenAccessValidatedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: AgentDatasetAccessValidatedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(ProfileAgentDatasetCommand(runtimeDatasetBindingId = event.runtimeDatasetBindingId, datasetId = event.datasetId, organizationId = event.organizationId, featureSchemaId = event.featureSchemaId, datasetName = event.datasetName, runtimeId = event.runtimeId)).resultMessage
+        commandGateway.send(ProfileAgentDatasetCommand(runtimeDatasetBindingId = event.runtimeDatasetBindingId, datasetId = event.datasetId, organizationId = event.organizationId, organizationName = event.organizationName, featureSchemaId = event.featureSchemaId, featureDomain = event.featureDomain, featureSchemaVersion = event.featureSchemaVersion, datasetName = event.datasetName, runtimeId = event.runtimeId, runtimeName = event.runtimeName)).resultMessage
 }

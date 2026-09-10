@@ -21,9 +21,13 @@ class ProfileAgentDatasetDecisionTest {
             runtimeDatasetBindingId = UUID.fromString("22222222-2222-4222-8222-222222222222"),
             datasetId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
             organizationId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
+            organizationName = null,
             featureSchemaId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
+            featureDomain = null,
+            featureSchemaVersion = null,
             datasetName = "",
-            runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666")
+            runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666"),
+            runtimeName = null
         )
 
         val events = (object : ProfileAgentDatasetDecision {}).decide(
@@ -47,8 +51,12 @@ class ProfileAgentDatasetDecisionTest {
         assertEquals(UUID.fromString("22222222-2222-4222-8222-222222222222"), event.runtimeDatasetBindingId)
         assertEquals(UUID.fromString("33333333-3333-4333-8333-333333333333"), event.datasetId)
         assertEquals(UUID.fromString("44444444-4444-4444-8444-444444444444"), event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
         assertEquals(UUID.fromString("66666666-6666-4666-8666-666666666666"), event.runtimeId)
+        assertEquals(command.runtimeName, event.runtimeName)
         assertEquals(UUID.fromString("55555555-5555-4555-8555-555555555555"), event.featureSchemaId)
+        assertEquals(command.featureDomain, event.featureDomain)
+        assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
         assertEquals(command.datasetName, event.datasetName)
     }
 
@@ -61,9 +69,13 @@ class ProfileAgentDatasetDecisionTest {
             runtimeDatasetBindingId = UUID.fromString("88888888-8888-4888-8888-888888888888"),
             datasetId = UUID.fromString("99999999-9999-4999-8999-999999999999"),
             organizationId = UUID.fromString("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
+            organizationName = null,
             featureSchemaId = UUID.fromString("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"),
+            featureDomain = null,
+            featureSchemaVersion = null,
             datasetName = "",
-            runtimeId = UUID.fromString("cccccccc-cccc-4ccc-8ccc-cccccccccccc")
+            runtimeId = UUID.fromString("cccccccc-cccc-4ccc-8ccc-cccccccccccc"),
+            runtimeName = null
         )
 
         val events = (object : ProfileAgentDatasetDecision {}).decide(
@@ -79,8 +91,12 @@ class ProfileAgentDatasetDecisionTest {
         assertEquals(UUID.fromString("88888888-8888-4888-8888-888888888888"), event.runtimeDatasetBindingId)
         assertEquals(UUID.fromString("99999999-9999-4999-8999-999999999999"), event.datasetId)
         assertEquals(UUID.fromString("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"), event.organizationId)
+        assertEquals(command.organizationName, event.organizationName)
         assertEquals(UUID.fromString("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"), event.featureSchemaId)
+        assertEquals(command.featureDomain, event.featureDomain)
+        assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
         assertEquals(command.datasetName, event.datasetName)
         assertEquals(UUID.fromString("cccccccc-cccc-4ccc-8ccc-cccccccccccc"), event.runtimeId)
+        assertEquals(command.runtimeName, event.runtimeName)
     }
 }

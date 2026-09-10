@@ -10,5 +10,13 @@ import java.util.UUID;
 data class TrainingJobSubmittedEvent(
     @EventTag(key = "trainingJobId")
     val trainingJobId: UUID,
-    val trainingRunConfigurationId: UUID
+    val trainingRunConfigurationId: UUID,
+    val federationId: UUID,
+    val federationName: String?,
+    val configurationName: String?,
+    val featureSchemaId: UUID,
+    val featureDomain: String?,
+    val featureSchemaVersion: String?,
+    val trainingJobObjective: String,
+    val objective: String
 )

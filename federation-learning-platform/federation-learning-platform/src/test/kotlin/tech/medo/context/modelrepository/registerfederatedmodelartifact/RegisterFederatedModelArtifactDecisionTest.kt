@@ -27,6 +27,7 @@ class RegisterFederatedModelArtifactDecisionTest {
             modelSignatureUri = null,
             modelSizeBytes = null,
             trainingJobId = java.util.UUID.randomUUID(),
+            trainingJobObjective = "",
             roundId = java.util.UUID.randomUUID()
         )
 
@@ -48,6 +49,7 @@ class RegisterFederatedModelArtifactDecisionTest {
         assertEquals(command.modelSignatureUri, event.modelSignatureUri)
         assertEquals(command.modelSizeBytes, event.modelSizeBytes)
         assertEquals(command.trainingJobId, event.trainingJobId)
+        assertEquals(command.trainingJobObjective, event.trainingJobObjective)
         assertEquals(command.roundId, event.roundId)
     }
 }

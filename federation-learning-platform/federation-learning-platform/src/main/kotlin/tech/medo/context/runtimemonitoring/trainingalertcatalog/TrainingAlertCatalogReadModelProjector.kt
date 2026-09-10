@@ -39,6 +39,8 @@ class TrainingAlertCatalogReadModelProjector(private val repository: TrainingAle
             entity.alertId = event.alertId
             entity.nodeId = event.nodeId
             entity.trainingJobId = event.trainingJobId
+            entity.runtimeNodeName = event.runtimeNodeName
+            entity.trainingJobObjective = event.trainingJobObjective
             entity.severity = event.severity
             entity.message = event.message
             entity.state = TrainingAlertStateEnum.RAISED
