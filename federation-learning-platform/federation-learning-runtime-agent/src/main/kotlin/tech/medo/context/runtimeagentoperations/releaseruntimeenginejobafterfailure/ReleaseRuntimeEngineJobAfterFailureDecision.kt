@@ -16,7 +16,9 @@ interface ReleaseRuntimeEngineJobAfterFailureDecision {
             "ReleaseRuntimeEngineJobAfterFailure requires RoundExecution to be Failed."
         }
         return when (portResult) {
-                    is ReleaseRuntimeEngineJobAfterFailureResult.Succeeded -> listOf(RuntimeEngineJobReleaseFailedOrSkippedEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, runtimeEngineReleaseFailureReason = portResult.runtimeEngineReleaseFailureReason, executionPlanId = command.executionPlanId))
+                    is ReleaseRuntimeEngineJobAfterFailureResult.Succeeded -> listOf(
+            RuntimeEngineJobReleaseFailedOrSkippedEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, runtimeEngineReleaseFailureReason = portResult.runtimeEngineReleaseFailureReason, executionPlanId = command.executionPlanId)
+            )
                 }
     }
 }

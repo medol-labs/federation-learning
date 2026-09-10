@@ -16,7 +16,9 @@ interface ReleaseRuntimeEngineJobAfterCompletionDecision {
             "ReleaseRuntimeEngineJobAfterCompletion requires RoundExecution to be UpdateSubmitted."
         }
         return when (portResult) {
-                    is ReleaseRuntimeEngineJobAfterCompletionResult.Succeeded -> listOf(RuntimeEngineJobReleasedEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, executionPlanId = command.executionPlanId))
+                    is ReleaseRuntimeEngineJobAfterCompletionResult.Succeeded -> listOf(
+            RuntimeEngineJobReleasedEvent(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId, executionPlanId = command.executionPlanId)
+            )
                 }
     }
 }

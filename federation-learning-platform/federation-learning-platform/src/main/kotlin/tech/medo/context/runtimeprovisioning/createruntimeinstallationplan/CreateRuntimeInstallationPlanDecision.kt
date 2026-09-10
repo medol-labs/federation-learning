@@ -4,16 +4,23 @@ import tech.medo.runtimeprovisioning.createruntimeinstallationplan.CreateRuntime
 
 import tech.medo.runtimeprovisioning.createruntimeinstallationplan.CreateRuntimeInstallationPlanResult
 import tech.medo.runtimeprovisioning.events.RuntimeInstallationPlanCreatedEvent
+import tech.medo.runtimeprovisioning.events.RuntimeInstallationPlanOrganizationIdReservedEvent
 import tech.medo.runtimeprovisioning.runtimeinstallationplan.RuntimeInstallationPlanState
 
-
+import tech.medo.runtimeprovisioning.runtimeinstallationplan.RuntimeInstallationPlanOrganizationIdReservationState
 
 
 
 interface CreateRuntimeInstallationPlanDecision {
-    fun decide(command: CreateRuntimeInstallationPlanCommand, portResult: CreateRuntimeInstallationPlanResult): List<Any> {
+    fun decide(command: CreateRuntimeInstallationPlanCommand, runtimeInstallationPlanOrganizationIdReservation: RuntimeInstallationPlanOrganizationIdReservationState, portResult: CreateRuntimeInstallationPlanResult): List<Any> {
+        require(!runtimeInstallationPlanOrganizationIdReservation.reserved) {
+            "OrganizationId already exists."
+        }
         return when (portResult) {
-                    is CreateRuntimeInstallationPlanResult.Succeeded -> listOf(RuntimeInstallationPlanCreatedEvent(runtimeInstallationPlanId = command.runtimeInstallationPlanId, runtimeInfrastructureId = command.runtimeInfrastructureId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, bootstrapCommand = portResult.bootstrapCommand, nodeLabelCommand = portResult.nodeLabelCommand, nodeTaintCommand = portResult.nodeTaintCommand, runtimeAgentNodeSelectorYaml = portResult.runtimeAgentNodeSelectorYaml, runtimeAgentTolerationsYaml = portResult.runtimeAgentTolerationsYaml, bootstrapConfigYaml = portResult.bootstrapConfigYaml, agentInstallMode = command.agentInstallMode, expectedNodeCount = command.expectedNodeCount))
+                    is CreateRuntimeInstallationPlanResult.Succeeded -> listOf(
+            RuntimeInstallationPlanOrganizationIdReservedEvent(runtimeInstallationPlanId = command.runtimeInstallationPlanId, organizationId = command.organizationId, normalizedName = command.organizationId.toString().trim().lowercase()),
+            RuntimeInstallationPlanCreatedEvent(runtimeInstallationPlanId = command.runtimeInstallationPlanId, runtimeInfrastructureId = command.runtimeInfrastructureId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, bootstrapCommand = portResult.bootstrapCommand, nodeLabelCommand = portResult.nodeLabelCommand, nodeTaintCommand = portResult.nodeTaintCommand, runtimeAgentNodeSelectorYaml = portResult.runtimeAgentNodeSelectorYaml, runtimeAgentTolerationsYaml = portResult.runtimeAgentTolerationsYaml, bootstrapConfigYaml = portResult.bootstrapConfigYaml, agentInstallMode = command.agentInstallMode, expectedNodeCount = command.expectedNodeCount)
+            )
                 }
     }
 }

@@ -14,7 +14,9 @@ interface GenerateUserAccountLoginPasswordDecision {
     fun decide(command: GenerateUserAccountLoginPasswordCommand, state: UserAccountState, portResult: GenerateUserAccountLoginPasswordResult): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return when (portResult) {
-                    is GenerateUserAccountLoginPasswordResult.Succeeded -> listOf(UserAccountLoginPasswordGeneratedEvent(userAccountId = command.userAccountId, passwordHash = portResult.passwordHash, passwordResetRequired = command.passwordResetRequired))
+                    is GenerateUserAccountLoginPasswordResult.Succeeded -> listOf(
+            UserAccountLoginPasswordGeneratedEvent(userAccountId = command.userAccountId, passwordHash = portResult.passwordHash, passwordResetRequired = command.passwordResetRequired)
+            )
                 }
     }
 }

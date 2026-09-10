@@ -13,7 +13,9 @@ import tech.medo.runtimegovernance.runtimecapability.RuntimeCapabilityState
 interface DetectRuntimeCapabilitiesDecision {
     fun decide(command: DetectRuntimeCapabilitiesCommand, portResult: DetectRuntimeCapabilitiesResult): List<Any> {
         return when (portResult) {
-                    is DetectRuntimeCapabilitiesResult.Succeeded -> listOf(RuntimeCapabilitiesDetectedEvent(runtimeId = command.runtimeId, capabilityTypes = command.capabilityTypes))
+                    is DetectRuntimeCapabilitiesResult.Succeeded -> listOf(
+            RuntimeCapabilitiesDetectedEvent(runtimeId = command.runtimeId, capabilityTypes = command.capabilityTypes)
+            )
                 }
     }
 }

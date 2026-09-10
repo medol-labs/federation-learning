@@ -14,7 +14,9 @@ interface DownloadModelArtifactDecision {
     fun decide(command: DownloadModelArtifactCommand, state: ModelArtifactState, portResult: DownloadModelArtifactResult): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return when (portResult) {
-                    is DownloadModelArtifactResult.Succeeded -> listOf(ModelArtifactDownloadAuthorizedEvent(modelId = command.modelId, modelName = command.modelName, modelVersion = command.modelVersion, modelFormat = portResult.modelFormat, modelArtifactDigest = portResult.modelArtifactDigest, downloadUri = portResult.downloadUri))
+                    is DownloadModelArtifactResult.Succeeded -> listOf(
+            ModelArtifactDownloadAuthorizedEvent(modelId = command.modelId, modelName = command.modelName, modelVersion = command.modelVersion, modelFormat = portResult.modelFormat, modelArtifactDigest = portResult.modelArtifactDigest, downloadUri = portResult.downloadUri)
+            )
                 }
     }
 }

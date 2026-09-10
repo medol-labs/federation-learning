@@ -14,7 +14,9 @@ interface DownloadFileDecision {
     fun decide(command: DownloadFileCommand, state: UploadedFileState, portResult: DownloadFileResult): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return when (portResult) {
-                    is DownloadFileResult.Succeeded -> listOf(FileDownloadAuthorizedEvent(fileId = command.fileId, originalFileName = portResult.originalFileName, contentType = portResult.contentType, sizeBytes = portResult.sizeBytes, downloadUri = portResult.downloadUri))
+                    is DownloadFileResult.Succeeded -> listOf(
+            FileDownloadAuthorizedEvent(fileId = command.fileId, originalFileName = portResult.originalFileName, contentType = portResult.contentType, sizeBytes = portResult.sizeBytes, downloadUri = portResult.downloadUri)
+            )
                 }
     }
 }

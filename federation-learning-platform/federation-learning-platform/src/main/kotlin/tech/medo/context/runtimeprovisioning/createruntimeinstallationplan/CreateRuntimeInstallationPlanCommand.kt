@@ -5,6 +5,7 @@ import org.axonframework.modelling.annotation.TargetEntityId
 import tech.medo.runtimeprovisioning.runtimeinstallationplan.RuntimeInstallationPlanSelection
 import java.util.UUID;
 
+import tech.medo.runtimeprovisioning.runtimeinstallationplan.RuntimeInstallationPlanOrganizationIdSelection
 
 @Command
 data class CreateRuntimeInstallationPlanCommand(
@@ -23,4 +24,5 @@ data class CreateRuntimeInstallationPlanCommand(
     @TargetEntityId
     val selection: RuntimeInstallationPlanSelection = RuntimeInstallationPlanSelection(organizationId = organizationId)
 
+    val runtimeInstallationPlanOrganizationIdSelection: RuntimeInstallationPlanOrganizationIdSelection = RuntimeInstallationPlanOrganizationIdSelection(normalizedName = organizationId.toString().trim().lowercase())
 }

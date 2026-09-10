@@ -13,7 +13,9 @@ import tech.medo.identityaccessmanagement.serviceaccountapitoken.ServiceAccountA
 interface IssueServiceAccountApiTokenDecision {
     fun decide(command: IssueServiceAccountApiTokenCommand, portResult: IssueServiceAccountApiTokenResult): List<Any> {
         return when (portResult) {
-                    is IssueServiceAccountApiTokenResult.Succeeded -> listOf(ServiceAccountApiTokenIssuedEvent(apiTokenId = command.apiTokenId, userAccountId = command.userAccountId, username = portResult.username, tokenName = command.tokenName, tokenPrefix = portResult.tokenPrefix, tokenDigest = portResult.tokenDigest, issuedAt = portResult.issuedAt, roles = portResult.roles, permissions = portResult.permissions))
+                    is IssueServiceAccountApiTokenResult.Succeeded -> listOf(
+            ServiceAccountApiTokenIssuedEvent(apiTokenId = command.apiTokenId, userAccountId = command.userAccountId, username = portResult.username, tokenName = command.tokenName, tokenPrefix = portResult.tokenPrefix, tokenDigest = portResult.tokenDigest, issuedAt = portResult.issuedAt, roles = portResult.roles, permissions = portResult.permissions)
+            )
                 }
     }
 }
