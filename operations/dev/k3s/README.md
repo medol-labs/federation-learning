@@ -31,10 +31,11 @@ For local development with k3d, create the dev cluster from the generated config
 
 ```bash
 k3d cluster create --config cluster/k3d-dev.yaml --registry-config cluster/registries.yaml
-kubectl config use-context k3d-federation-learning-platform-dev
+k3d kubeconfig merge federation-learning-platform-dev --kubeconfig-switch-context
+kubectl config current-context
 ```
 
-The config maps host port `30080` to the k3d server node, disables the default Traefik addon, and leaves application manifests under `environments/dev`. The generated APISIX NodePort Service also uses `30080`, so APISIX is reachable at `http://localhost:30080/` after applying the manifests.
+The config creates one server and two agent nodes, disables the default Traefik addon, and maps host port `30080` to the k3d server node. The generated APISIX NodePort Service also uses `30080`, so APISIX is reachable at `http://localhost:30080/` after applying the manifests.
 
 ## Registry
 
