@@ -1,6 +1,0 @@
-resources:
-  - "../../environments/dev-registry"
-components:
-  - "../../components/runtime-scheduling"
-patches:
-  - path: "patches/runtime-registry-image-config.yaml"

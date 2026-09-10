@@ -8,12 +8,9 @@ The generated `base/` and `environments/` directories are generator-owned. Keep 
 
 - `base/` contains namespace, infrastructure, application Deployments, Services, and APISIX gateway manifests.
 - `environments/dev/` applies dev ConfigMaps, labels, and generated `envFrom` patches.
-- `environments/dev-registry/` extends `dev` and rewrites generated application images to the configured registry.
 - `cluster/k3d-dev.yaml` creates a disposable local k3d cluster.
-- `cluster/registries.yaml` configures k3d/K3s access to the configured HTTP registry.
 - `components/runtime-scheduling/` contains Federation Learning runtime scheduling RBAC, ServiceAccounts, ConfigMap patches, and runtime-agent volume patches.
 - `overlays/runtime-scheduling/` extends `environments/dev` with runtime scheduling.
-- `overlays/runtime-scheduling-registry/` extends `environments/dev-registry` with runtime scheduling and runtime-engine image references.
 
 ## 1. Create Cluster
 
@@ -22,7 +19,7 @@ Run from this directory:
 ```bash
 cd /Users/bryce/codes/medo/event-modeling/federation-learning/operations/dev/k3s
 
-k3d cluster create --config cluster/k3d-dev.yaml --registry-config cluster/registries.yaml
+k3d cluster create --config cluster/k3d-dev.yaml
 export KUBECONFIG="$(k3d kubeconfig write federation-learning-platform-dev)"
 
 kubectl config current-context
@@ -78,29 +75,33 @@ Default dev, no registry and no runtime scheduling:
 kubectl apply -k environments/dev
 ```
 
-Registry dev, generated application images pulled from `192.168.50.2:5000/fl`:
-
-```bash
-kubectl apply -k environments/dev-registry
-```
-
 Runtime scheduling, local images:
 
 ```bash
 kubectl apply -k overlays/runtime-scheduling
 ```
 
-Runtime scheduling with registry images:
-
-```bash
-kubectl apply -k overlays/runtime-scheduling-registry
-```
-
 For the current Federation Learning K3s flow, use:
 
 ```bash
-kubectl apply -k overlays/runtime-scheduling-registry
+kubectl apply -k overlays/runtime-scheduling
 ```
+
+Registry-backed overlays are local environment state. If a development machine
+or site needs a registry, run from the `federation-learning` repository root,
+copy `.medol/medol.yml` to an ignored local config, add that environment's
+registry settings there, then regenerate operations using that local config:
+
+```bash
+cd /Users/bryce/codes/medo/event-modeling/federation-learning
+cp .medol/medol.yml .medol/medol.local.yml
+# Edit .medol/medol.local.yml and add operations.registry for this environment.
+MEDOL_CONFIG_PATH=.medol/medol.local.yml gen /opt/codegen/.generator/app/ --generator operations --generator-type k3s --environment dev
+```
+
+The generated `cluster/registries.yaml`, `environments/*-registry/`, and
+`overlays/*-registry/` paths are ignored because registry addresses vary by
+machine and environment.
 
 ## 4. Validate
 
@@ -141,7 +142,7 @@ After the administrator is created, disable bootstrap:
 # Edit environments/dev/configmap.yaml or the active overlay source value:
 # MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED: "false"
 
-kubectl apply -k overlays/runtime-scheduling-registry
+kubectl apply -k overlays/runtime-scheduling
 kubectl -n federation-learning-platform rollout restart deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 ```
@@ -151,7 +152,7 @@ kubectl -n federation-learning-platform rollout status deploy/federation-learnin
 After ConfigMap, Secret, or image changes:
 
 ```bash
-kubectl apply -k overlays/runtime-scheduling-registry
+kubectl apply -k overlays/runtime-scheduling
 
 kubectl -n federation-learning-platform rollout restart \
   deploy/console \
@@ -176,7 +177,7 @@ kubectl -n federation-learning-platform scale \
 Delete the active deployment target:
 
 ```bash
-kubectl delete -k overlays/runtime-scheduling-registry
+kubectl delete -k overlays/runtime-scheduling
 ```
 
 If the namespace is stuck in `Terminating`, do not apply new Secrets into it. For disposable dev environments, reset the whole cluster:
@@ -208,5 +209,5 @@ kubectl -n federation-learning-platform get events --sort-by=.lastTimestamp
 - Apply Secrets before applying an environment or overlay.
 - Use `runtime-scheduling` overlay only when platform-managed runtime agents or runtime-engine scheduling are needed.
 - For runtime node labels, taints, and dataset hostPath setup, see `overlays/runtime-scheduling/README.md`.
-- For registry-specific runtime image references, see `overlays/runtime-scheduling-registry/README.md`.
+- Keep registry-specific overlays local unless the registry address is a stable team or site contract.
 - The generator does not provision storage classes, registry credentials, TLS certificates, or DNS.

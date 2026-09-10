@@ -9,11 +9,9 @@ generators:
     output: .
 
 operations:
-  registry:
-    host: 192.168.50.2:5000
-    scheme: http
-    namespace: fl
-    insecure: true
+  # Keep registry settings out of committed workspace config because
+  # development registry addresses vary by machine and environment.
+  # Generate registry overlays from local, untracked config when needed.
 
 workspaceFiles:
   overwrite: false
