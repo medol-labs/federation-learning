@@ -139,7 +139,6 @@ spec:
       labels:
         app: "federation-learning-platform"
     spec:
-      serviceAccountName: "federation-learning-platform-runtime-agent-scheduler"
       containers:
         - name: "federation-learning-platform"
           image: "medol/federation-learning-platform:0.0.1-SNAPSHOT"
@@ -208,7 +207,6 @@ spec:
       labels:
         app: "federation-learning-runtime-agent"
     spec:
-      serviceAccountName: "federation-learning-platform-runtime-engine-scheduler"
       containers:
         - name: "federation-learning-runtime-agent"
           image: "medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT"
@@ -241,21 +239,6 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 12
             initialDelaySeconds: 30
-          volumeMounts:
-            - name: "runtime-datasets"
-              mountPath: "/workspace/datasets"
-              readOnly: true
-            - name: "runtime-work"
-              mountPath: "/workspace/tmp/runtime-engine"
-      volumes:
-        - name: "runtime-datasets"
-          hostPath:
-            path: "/workspace/datasets"
-            type: "Directory"
-        - name: "runtime-work"
-          hostPath:
-            path: "/workspace/tmp/runtime-engine"
-            type: "DirectoryOrCreate"
 ---
 apiVersion: "v1"
 kind: "Service"
