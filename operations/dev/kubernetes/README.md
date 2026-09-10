@@ -58,7 +58,7 @@ kubectl -n federation-learning-platform get secret postgres-secret
 
 ## First Administrator
 
-Administrator bootstrap is disabled by default. Before creating the first administrator, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED` to `"true"` in the IAM application ConfigMap and set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN` in its environment-owned Secret file.
+Administrator bootstrap is enabled by default. Before creating the first administrator, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN` in its environment-owned Secret file.
 
 Apply both files and restart the IAM application before submitting `POST /api/auth/setup-admin`:
 
@@ -69,7 +69,7 @@ kubectl -n federation-learning-platform rollout restart deploy/federation-learni
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 ```
 
-After the administrator is created, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED` back to `"false"`, reapply the environment, and restart the IAM application.
+After the administrator is created, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED` to `"false"`, reapply the environment, and restart the IAM application.
 
 ## Environment Configuration
 

@@ -31,7 +31,7 @@ data:
   FEDERATION_LEARNING_PLATFORM_URL: "http://federation-learning-platform:8081"
   FEDERATION_LEARNING_RUNTIME_AGENT_URL: "http://federation-learning-runtime-agent:8082"
   MEDOL_AXON_EVENT_STORAGE: "umadb"
-  MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED: "false"
+  MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED: "true"
   MEDOL_SECURITY_ALLOWED_ORIGINS: "http://localhost:*,http://127.0.0.1:*,http://*:30080"
   SERVER_PORT: "8080"
   SPRING_DOCKER_COMPOSE_ENABLED: "false"
