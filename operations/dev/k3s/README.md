@@ -31,7 +31,7 @@ For local development with k3d, create the dev cluster from the generated config
 
 ```bash
 k3d cluster create --config cluster/k3d-dev.yaml --registry-config cluster/registries.yaml
-k3d kubeconfig merge federation-learning-platform-dev --kubeconfig-switch-context
+export KUBECONFIG="$(k3d kubeconfig write federation-learning-platform-dev)"
 kubectl config current-context
 ```
 
