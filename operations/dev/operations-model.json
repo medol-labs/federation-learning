@@ -2,22 +2,15 @@
   "version": "medol.operations/v1",
   "name": "federation-learning-platform",
   "title": "FederationLearningPlatform",
-  "imagePrefix": "192.168.50.2:5000/fl",
+  "imagePrefix": "medol",
   "imageTag": "0.0.1-SNAPSHOT",
-  "registry": {
-    "imagePrefix": "192.168.50.2:5000/fl",
-    "host": "192.168.50.2:5000",
-    "namespace": "fl",
-    "scheme": "http",
-    "insecure": true
-  },
   "applications": [
     {
       "kind": "frontend",
       "name": "console",
       "title": "Frontend Console",
       "artifactName": "federation-learning-platform-console",
-      "imageName": "192.168.50.2:5000/fl/federation-learning-platform-console",
+      "imageName": "medol/federation-learning-platform-console",
       "servicePort": 80,
       "exposeExternally": false,
       "environmentVariables": [
@@ -64,7 +57,7 @@
       "name": "federation-learning-support",
       "title": "Federation Learning Support",
       "artifactName": "federation-learning-support",
-      "imageName": "192.168.50.2:5000/fl/federation-learning-support",
+      "imageName": "medol/federation-learning-support",
       "servicePort": 8080,
       "exposeExternally": false,
       "contexts": [
@@ -165,7 +158,7 @@
       "name": "federation-learning-platform",
       "title": "Federation Learning Platform",
       "artifactName": "federation-learning-platform",
-      "imageName": "192.168.50.2:5000/fl/federation-learning-platform",
+      "imageName": "medol/federation-learning-platform",
       "servicePort": 8081,
       "exposeExternally": false,
       "contexts": [
@@ -273,7 +266,7 @@
       "name": "federation-learning-runtime-agent",
       "title": "Federation Learning Runtime Agent",
       "artifactName": "federation-learning-runtime-agent",
-      "imageName": "192.168.50.2:5000/fl/federation-learning-runtime-agent",
+      "imageName": "medol/federation-learning-runtime-agent",
       "servicePort": 8082,
       "exposeExternally": false,
       "contexts": [
