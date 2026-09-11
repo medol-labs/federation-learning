@@ -25,23 +25,54 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 - `environments/<environment>/configmap.yaml` contains non-sensitive application variables for the environment.
 - `environments/<environment>/secrets.example.yaml` documents required and optional secrets without being applied by Kustomize.
 - `environments/<environment>/patches/*-envfrom.yaml` attaches environment ConfigMaps and optional per-application Secrets to Deployments.
+- `environments/<environment>-registry/` may be generated from local `operations.registry` settings. It rewrites application images to a registry without changing the committed base overlay.
 - `cluster/k3d-dev.yaml` creates a disposable local K3s development cluster with k3d.
+- `scripts/k3d-dev.sh` is a local helper for repeated k3d create, apply, restart, and status commands.
+- `cluster/registries.yaml` may be generated from local `operations.registry` settings to configure K3s/containerd registry mirrors.
 
 ## Before Applying
 
 For local development with k3d, create the dev cluster from the generated config:
 
 ```bash
+scripts/federation-learning-dev.sh recreate
+eval "$(scripts/federation-learning-dev.sh kubeconfig)"
+scripts/federation-learning-dev.sh apply
+```
+
+`scripts/k3d-dev.sh` is the generated generic helper for local debugging. You can override paths and the cluster name with environment variables.
+`scripts/federation-learning-dev.sh` is the Federation Learning wrapper. It calls the generic helper with the runtime scheduling component, pre-applies `components/runtime-scheduling/runtime-scheduler-rbac.yaml`, and creates the k3d cluster with runtime data directories mounted into agent nodes.
+When `environments/dev-registry` and the runtime scheduling component both exist, the wrapper applies a temporary combined overlay so registry image overrides and extra runtime scheduling resources are applied together.
+The wrapper also syncs runtime-created workload image settings from `environments/dev-registry/kustomization.yaml` into the platform/runtime-agent ConfigMaps. Override these images explicitly with `FL_RUNTIME_AGENT_IMAGE` and `FL_RUNTIME_ENGINE_IMAGE` when needed.
+
+The wrapper mounts these host directories into k3d agent nodes:
+
+- `volumes/datasets` -> `/workspace/datasets`
+- `volumes/tmp/runtime-engine` -> `/workspace/tmp/runtime-engine`
+
+Override them with `FL_K3D_DATASETS_HOST_ROOT` and `FL_K3D_RUNTIME_ENGINE_HOST_ROOT` before `scripts/federation-learning-dev.sh create` or `recreate`. Existing k3d nodes do not pick up new volume mounts; recreate the cluster after changing these paths.
+
+```bash
 k3d cluster create --config cluster/k3d-dev.yaml
+# If cluster/registries.yaml was locally generated, use:
+# k3d cluster create --config cluster/k3d-dev.yaml --registry-config cluster/registries.yaml
 export KUBECONFIG="$(k3d kubeconfig write federation-learning-platform-dev)"
 kubectl config current-context
 ```
 
-The config creates one server and two agent nodes, disables the default Traefik addon, and maps host port `30080` to the k3d server node. The generated APISIX NodePort Service also uses `30080`, so APISIX is reachable at `http://localhost:30080/` after applying the manifests.
+The config creates one server and two agent nodes, disables the default Traefik addon, disables default registry endpoint fallback for configured registry mirrors, and maps host port `30080` to the k3d server node. The generated APISIX NodePort Service also uses `30080`, so APISIX is reachable at `http://localhost:30080/` after applying the manifests.
 
 ## Registry
 
-No registry is configured for this environment. Generated image names use the default `medol/<service>:<tag>` form. Build or import those images into each node, or configure `operations.registry` and regenerate the operations files.
+The committed `environments/dev` overlay keeps images in the `medol/<service>:<tag>` form.
+
+For machine-specific registry settings, keep `operations.registry` in `.medol/medol.local.yml` and regenerate operations files. Local registry overlays and `cluster/registries.yaml` are ignored by git.
+
+If `environments/dev-registry` was locally generated, use it in the Apply step after namespace and Secret objects are prepared.
+
+For native K3s, copy `cluster/registries.yaml` to `/etc/rancher/k3s/registries.yaml` before starting or restarting K3s.
+
+In offline environments, recreate the cluster after changing `cluster/registries.yaml`; K3s/containerd reads this configuration during node startup. If CoreDNS or the pause image is still pulled from Docker Hub, the cluster was created without the registry config or the required system image is missing from the local registry.
 
 Build, push, or import these images on every node that may run the workloads:
 
@@ -52,6 +83,12 @@ medol/federation-learning-platform:0.0.1-SNAPSHOT
 medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT
 postgres:16
 umadb/umadb:0.7.8
+apache/apisix:3.13.0-debian
+rancher/mirrored-pause:3.6
+rancher/local-path-provisioner:v0.0.31
+rancher/mirrored-library-busybox:1.36.1
+rancher/mirrored-coredns-coredns:1.12.3
+rancher/mirrored-metrics-server:v0.8.0
 ```
 
 For local k3s image testing, import image archives into containerd:
@@ -90,6 +127,8 @@ Apply both files and restart the IAM application before submitting `POST /api/au
 ```bash
 kubectl -n federation-learning-platform apply -f environments/<environment>/secrets.<environment>.yaml
 kubectl apply -k environments/<environment>
+# Or, when a local registry overlay was generated:
+# kubectl apply -k environments/<environment>-registry
 kubectl -n federation-learning-platform rollout restart deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 ```
@@ -106,8 +145,12 @@ Generated Deployments keep non-sensitive application settings in environment Con
 
 ## Apply
 
+Apply exactly one environment overlay after the namespace and real Secret objects exist:
+
 ```bash
 kubectl apply -k environments/<environment>
+# Or, when a local registry overlay was generated:
+# kubectl apply -k environments/<environment>-registry
 kubectl -n federation-learning-platform get pods,svc,pvc
 ```
 
@@ -190,11 +233,17 @@ k3d image import \
   medol/federation-learning-platform-console:0.0.1-SNAPSHOT \
   medol/federation-learning-support:0.0.1-SNAPSHOT \
   medol/federation-learning-platform:0.0.1-SNAPSHOT \
-  medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT
+  medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT \
   -c federation-learning-platform-dev
 k3d image import \
   postgres:16 \
-  umadb/umadb:0.7.8
+  umadb/umadb:0.7.8 \
+  apache/apisix:3.13.0-debian \
+  rancher/mirrored-pause:3.6 \
+  rancher/local-path-provisioner:v0.0.31 \
+  rancher/mirrored-library-busybox:1.36.1 \
+  rancher/mirrored-coredns-coredns:1.12.3 \
+  rancher/mirrored-metrics-server:v0.8.0 \
   -c federation-learning-platform-dev
 kubectl -n federation-learning-platform rollout restart deploy/console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent
 ```
@@ -206,13 +255,19 @@ docker save \
   medol/federation-learning-platform-console:0.0.1-SNAPSHOT \
   medol/federation-learning-support:0.0.1-SNAPSHOT \
   medol/federation-learning-platform:0.0.1-SNAPSHOT \
-  medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT
+  medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT \
   -o /tmp/federation-learning-platform-application-images.tar
 sudo k3s ctr images import /tmp/federation-learning-platform-application-images.tar
 
 docker save \
   postgres:16 \
-  umadb/umadb:0.7.8
+  umadb/umadb:0.7.8 \
+  apache/apisix:3.13.0-debian \
+  rancher/mirrored-pause:3.6 \
+  rancher/local-path-provisioner:v0.0.31 \
+  rancher/mirrored-library-busybox:1.36.1 \
+  rancher/mirrored-coredns-coredns:1.12.3 \
+  rancher/mirrored-metrics-server:v0.8.0 \
   -o /tmp/federation-learning-platform-dependency-images.tar
 sudo k3s ctr images import /tmp/federation-learning-platform-dependency-images.tar
 sudo k3s ctr images ls | grep federation-learning-platform
