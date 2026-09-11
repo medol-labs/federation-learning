@@ -25,6 +25,7 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 - `environments/<environment>/configmap.yaml` contains non-sensitive application variables for the environment.
 - `environments/<environment>/secrets.example.yaml` documents required and optional secrets without being applied by Kustomize.
 - `environments/<environment>/patches/*-envfrom.yaml` attaches environment ConfigMaps and optional per-application Secrets to Deployments.
+- `environments/<environment>-registry/` may be generated from local `operations.registry` settings. It rewrites application images to a registry without changing the committed base overlay.
 
 ## Before Applying
 
@@ -37,6 +38,7 @@ medol/federation-learning-platform:0.0.1-SNAPSHOT
 medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT
 postgres:16
 umadb/umadb:0.7.8
+apache/apisix:3.13.0-debian
 ```
 
 Create the namespace before applying environment-specific Secret objects:
@@ -66,6 +68,8 @@ Apply both files and restart the IAM application before submitting `POST /api/au
 ```bash
 kubectl -n federation-learning-platform apply -f environments/<environment>/secrets.<environment>.yaml
 kubectl apply -k environments/<environment>
+# Or, when a local registry overlay was generated:
+# kubectl apply -k environments/<environment>-registry
 kubectl -n federation-learning-platform rollout restart deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 ```
@@ -82,8 +86,12 @@ Generated Deployments keep non-sensitive application settings in environment Con
 
 ## Apply
 
+Apply exactly one environment overlay after the namespace and real Secret objects exist:
+
 ```bash
 kubectl apply -k environments/<environment>
+# Or, when a local registry overlay was generated:
+# kubectl apply -k environments/<environment>-registry
 kubectl -n federation-learning-platform get pods,svc,pvc
 ```
 

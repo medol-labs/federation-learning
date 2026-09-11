@@ -279,6 +279,24 @@ export const ConfirmRuntimeInfrastructurePreparedCommandSchema = z.object({
 });
 export type ConfirmRuntimeInfrastructurePreparedCommandInput = z.infer<typeof ConfirmRuntimeInfrastructurePreparedCommandSchema>;
 
+export const RetryRuntimeInfrastructureVerificationCommandSchema = z.object({
+  runtimeInfrastructureId: z.string().uuid(),
+  runtimeInstallationPlanId: z.string().uuid(),
+  organizationId: z.string().uuid(),
+  organizationName: z.string().optional().nullable(),
+  runtimeInfrastructurePackageId: z.string().uuid(),
+  runtimeInfrastructurePackageName: z.string().optional().nullable(),
+  runtimeInfrastructurePackageVersion: z.string().optional().nullable(),
+  runtimeEnvironmentType: z.string().optional().nullable(),
+  runtimeName: z.string(),
+  runtimeAgentId: z.string().uuid(),
+  agentInstallMode: z.string(),
+  expectedNodeCount: z.coerce.number().int(),
+  currentRuntimeInfrastructureState: z.string(),
+  retryReason: z.string(),
+});
+export type RetryRuntimeInfrastructureVerificationCommandInput = z.infer<typeof RetryRuntimeInfrastructureVerificationCommandSchema>;
+
 export const RetryRuntimeAgentDeploymentCommandSchema = z.object({
   runtimeAgentId: z.string().uuid(),
   runtimeInfrastructureId: z.string().uuid(),

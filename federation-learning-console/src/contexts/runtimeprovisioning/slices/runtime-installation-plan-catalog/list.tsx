@@ -469,6 +469,30 @@ export const RuntimeInstallationPlanCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+                {isCommandVisible(row.original, "", "", []) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="retryRuntimeInfrastructureVerification"
+                    recordItemId={row.original.runtimeInstallationPlanId}
+                    size="sm"
+                    query={{
+                      runtimeInstallationPlanId: row.original.runtimeInstallationPlanId,
+                      runtimeAgentId: row.original.runtimeAgentId,
+                    }}
+                  />
+                )}
+                {isCommandVisible(row.original, "", "", []) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="retryRuntimeAgentDeployment"
+                    recordItemId={row.original.runtimeInstallationPlanId}
+                    size="sm"
+                    query={{
+                      runtimeAgentId: row.original.runtimeAgentId,
+                      runtimeInstallationPlanId: row.original.runtimeInstallationPlanId,
+                    }}
+                  />
+                )}
                 {isCommandVisible(row.original, "", "planStatus", ["Planned"]) && (
                   <CommandButton
                     variant="ghost"

@@ -21,3 +21,9 @@ options:
       - arg: "--disable=traefik"
         nodeFilters:
           - "server:*"
+      - arg: "--disable-default-registry-endpoint"
+        nodeFilters:
+          - "server:*"
+      - arg: "--disable-default-registry-endpoint"
+        nodeFilters:
+          - "agent:*"

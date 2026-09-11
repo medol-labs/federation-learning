@@ -27,16 +27,16 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RetryRuntimeAgentDeploymentCommandSchema, type RetryRuntimeAgentDeploymentCommandInput } from "@/contexts/domain/schemas";
+import { RetryRuntimeInfrastructureVerificationCommandSchema, type RetryRuntimeInfrastructureVerificationCommandInput } from "@/contexts/domain/schemas";
 
-export const RuntimeInstallationPlanCatalogRetryRuntimeAgentDeployment = () => {
+export const RuntimeInstallationPlanCatalogRetryRuntimeInfrastructureVerification = () => {
   const t = useTranslate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
-    runtimeAgentId: searchParams.get("runtimeAgentId") ?? undefined,
     runtimeInstallationPlanId: searchParams.get("runtimeInstallationPlanId") ?? undefined,
+    runtimeAgentId: searchParams.get("runtimeAgentId") ?? undefined,
     runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
     organizationName: searchParams.get("organizationName") ?? undefined,
@@ -46,11 +46,11 @@ export const RuntimeInstallationPlanCatalogRetryRuntimeAgentDeployment = () => {
     runtimeName: searchParams.get("runtimeName") ?? undefined,
     agentInstallMode: searchParams.get("agentInstallMode") ?? undefined,
     expectedNodeCount: (() => { const value = searchParams.get("expectedNodeCount"); return value === null ? undefined : Number(value); })(),
-  } as unknown as Partial<RetryRuntimeAgentDeploymentCommandInput>;
+  } as unknown as Partial<RetryRuntimeInfrastructureVerificationCommandInput>;
 
-  const { refineCore: { onFinish }, ...form } = useCommandForm<RetryRuntimeAgentDeploymentCommandInput, RetryRuntimeAgentDeploymentCommandInput>({
+  const { refineCore: { onFinish }, ...form } = useCommandForm<RetryRuntimeInfrastructureVerificationCommandInput, RetryRuntimeInfrastructureVerificationCommandInput>({
     resource: "runtime_installation_plan_catalog",
-    command: "retryRuntimeAgentDeployment",
+    command: "retryRuntimeInfrastructureVerification",
     aggregateId: id?.toString(),
     redirect: "list",
     dataProviderName: "federation-learning-platform",
@@ -73,11 +73,11 @@ export const RuntimeInstallationPlanCatalogRetryRuntimeAgentDeployment = () => {
     },
     formProps: {
       defaultValues,
-      resolver: zodResolver(RetryRuntimeAgentDeploymentCommandSchema) as never,
+      resolver: zodResolver(RetryRuntimeInfrastructureVerificationCommandSchema) as never,
     },
   });
 
-  async function onSubmit(values: RetryRuntimeAgentDeploymentCommandInput) {
+  async function onSubmit(values: RetryRuntimeInfrastructureVerificationCommandInput) {
     const result = await onFinish({
       ...defaultValues,
       ...values,
@@ -88,14 +88,14 @@ export const RuntimeInstallationPlanCatalogRetryRuntimeAgentDeployment = () => {
 
   return (
     <CreateView>
-      <CreateViewHeader title={t("resources.runtime_installation_plan_catalog.commands.retryRuntimeAgentDeployment.label", "Retry Runtime Agent Deployment")} />
+      <CreateViewHeader title={t("resources.runtime_installation_plan_catalog.commands.retryRuntimeInfrastructureVerification.label", "Retry Runtime Infrastructure Verification")} />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RetryRuntimeAgentDeployment validation failed", errors))} className="space-y-8">
-          {defaultValues.runtimeAgentId !== undefined && defaultValues.runtimeAgentId !== null ? (
-            <input type="hidden" {...form.register("runtimeAgentId" as never)} />
-          ) : null}
+        <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RetryRuntimeInfrastructureVerification validation failed", errors))} className="space-y-8">
           {defaultValues.runtimeInstallationPlanId !== undefined && defaultValues.runtimeInstallationPlanId !== null ? (
             <input type="hidden" {...form.register("runtimeInstallationPlanId" as never)} />
+          ) : null}
+          {defaultValues.runtimeAgentId !== undefined && defaultValues.runtimeAgentId !== null ? (
+            <input type="hidden" {...form.register("runtimeAgentId" as never)} />
           ) : null}
           {defaultValues.runtimeInfrastructureId !== undefined && defaultValues.runtimeInfrastructureId !== null ? (
             <input type="hidden" {...form.register("runtimeInfrastructureId" as never)} />
@@ -132,7 +132,7 @@ export const RuntimeInstallationPlanCatalogRetryRuntimeAgentDeployment = () => {
             rules={{ required: "Retry Reason is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.runtime_installation_plan_catalog.commands.retryRuntimeAgentDeployment.fields.retryReason.label", "Retry Reason")}</FormLabel>
+                <FormLabel>{t("resources.runtime_installation_plan_catalog.commands.retryRuntimeInfrastructureVerification.fields.retryReason.label", "Retry Reason")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}

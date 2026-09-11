@@ -151,7 +151,6 @@ import {
   RuntimeAgentEndpointCatalogList,
   RuntimeAgentEndpointCatalogShow,
   RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished,
-  RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment,
 } from "./runtimeprovisioning/read-models/runtime-agent-endpoint-catalog";
 import {
   RuntimeAgentLifecycleCatalogList,
@@ -202,6 +201,8 @@ import {
   RuntimeInstallationPlanCatalogList,
   RuntimeInstallationPlanCatalogShow,
   RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan,
+  RuntimeInstallationPlanCatalogRetryRuntimeInfrastructureVerification,
+  RuntimeInstallationPlanCatalogRetryRuntimeAgentDeployment,
   RuntimeInstallationPlanCatalogRegisterRuntimeInfrastructure,
   RuntimeInstallationPlanCatalogConfirmRuntimeInfrastructurePrepared,
 } from "./runtimeprovisioning/read-models/runtime-installation-plan-catalog";
@@ -442,7 +443,6 @@ export const contextRoutes = (
       <Route index element={resolvePageOverride("runtime-agent-endpoint-catalog", "list", <RuntimeAgentEndpointCatalogList />)} />
       <Route path="show/:id" element={resolvePageOverride("runtime-agent-endpoint-catalog", "show", <RuntimeAgentEndpointCatalogShow />)} />
       <Route path=":id/command/record-runtime-connection-established" element={resolvePageOverride("runtime-agent-endpoint-catalog", "recordRuntimeConnectionEstablished", <RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished />)} />
-      <Route path=":id/command/retry-runtime-agent-deployment" element={resolvePageOverride("runtime-agent-endpoint-catalog", "retryRuntimeAgentDeployment", <RuntimeAgentEndpointCatalogRetryRuntimeAgentDeployment />)} />
     </Route>
     <Route path="/runtime-agent-lifecycle-catalog">
       <Route index element={resolvePageOverride("runtime-agent-lifecycle-catalog", "list", <RuntimeAgentLifecycleCatalogList />)} />
@@ -493,6 +493,8 @@ export const contextRoutes = (
       <Route index element={resolvePageOverride("runtime-installation-plan-catalog", "list", <RuntimeInstallationPlanCatalogList />)} />
       <Route path="command/create-runtime-installation-plan" element={resolvePageOverride("runtime-installation-plan-catalog", "createRuntimeInstallationPlan", <RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan />)} />
       <Route path="show/:id" element={resolvePageOverride("runtime-installation-plan-catalog", "show", <RuntimeInstallationPlanCatalogShow />)} />
+      <Route path=":id/command/retry-runtime-infrastructure-verification" element={resolvePageOverride("runtime-installation-plan-catalog", "retryRuntimeInfrastructureVerification", <RuntimeInstallationPlanCatalogRetryRuntimeInfrastructureVerification />)} />
+      <Route path=":id/command/retry-runtime-agent-deployment" element={resolvePageOverride("runtime-installation-plan-catalog", "retryRuntimeAgentDeployment", <RuntimeInstallationPlanCatalogRetryRuntimeAgentDeployment />)} />
       <Route path=":id/command/register-runtime-infrastructure" element={resolvePageOverride("runtime-installation-plan-catalog", "registerRuntimeInfrastructure", <RuntimeInstallationPlanCatalogRegisterRuntimeInfrastructure />)} />
       <Route path=":id/command/confirm-runtime-infrastructure-prepared" element={resolvePageOverride("runtime-installation-plan-catalog", "confirmRuntimeInfrastructurePrepared", <RuntimeInstallationPlanCatalogConfirmRuntimeInfrastructurePrepared />)} />
     </Route>

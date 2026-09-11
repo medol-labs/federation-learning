@@ -1,0 +1,15 @@
+resources:
+  - "../dev"
+images:
+  - name: "medol/federation-learning-platform-console"
+    newName: "192.168.50.2:5000/fl/federation-learning-platform-console"
+    newTag: "0.0.1-SNAPSHOT"
+  - name: "medol/federation-learning-support"
+    newName: "192.168.50.2:5000/fl/federation-learning-support"
+    newTag: "0.0.1-SNAPSHOT"
+  - name: "medol/federation-learning-platform"
+    newName: "192.168.50.2:5000/fl/federation-learning-platform"
+    newTag: "0.0.1-SNAPSHOT"
+  - name: "medol/federation-learning-runtime-agent"
+    newName: "192.168.50.2:5000/fl/federation-learning-runtime-agent"
+    newTag: "0.0.1-SNAPSHOT"

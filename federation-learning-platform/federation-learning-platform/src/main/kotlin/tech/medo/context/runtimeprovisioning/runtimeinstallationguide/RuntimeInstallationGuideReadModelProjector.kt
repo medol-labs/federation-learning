@@ -13,6 +13,8 @@ import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePreparedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerifiedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationFailedEvent
+import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationRetrySucceededEvent
+import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationRetryFailedEvent
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
 
@@ -164,6 +166,58 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
     @EventHandler
     fun on(
         event: RuntimeInfrastructureVerificationFailedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeInstallationPlanId) ?: RuntimeInstallationGuideReadModelProjection().apply {
+                this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        }
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeAgentId = event.runtimeAgentId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
+            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerificationRetrySucceededEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeInstallationPlanId) ?: RuntimeInstallationGuideReadModelProjection().apply {
+                this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        }
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.runtimeAgentId = event.runtimeAgentId
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.organizationName = event.organizationName
+            entity.runtimeName = event.runtimeName
+            entity.runtimeEnvironmentType = event.runtimeEnvironmentType
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
+            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFIED
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerificationRetryFailedEvent,
         message: EventMessage
     ) {
 

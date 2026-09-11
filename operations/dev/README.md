@@ -33,15 +33,21 @@ CodegenModel
 
 ## Image Bundle Command
 
-Use `images.mjs` to orchestrate generated backend, frontend, runtime-engine, and infrastructure images from this monorepo:
+Use `images.mjs` to orchestrate generated backend, frontend, and infrastructure images from this monorepo:
 
 ```bash
 node operations/<environment>/images.mjs list
 node operations/<environment>/images.mjs all --platform linux/amd64
+node operations/<environment>/images.mjs build --exclude-service <service>
+node operations/<environment>/images.mjs build --service <backend-module>
 node operations/<environment>/images.mjs push --prefix registry.example.com/team
 node operations/<environment>/images.mjs push-dependencies --prefix registry.example.com/team
 node operations/<environment>/images.mjs import
 ```
+
+Use `--service` to process only selected application services, or `--exclude-service` / `--skip-service` to skip selected services during development.
+
+When pushing dependency images for K3s registry mirrors, application images use `--prefix` as a registry namespace, while dependency images default to the registry root. For example, `--prefix registry.example.com/team` pushes `postgres:16` to `registry.example.com/library/postgres:16` so containerd mirror rewrites can resolve the original image path.
 
 ## Not Implemented
 

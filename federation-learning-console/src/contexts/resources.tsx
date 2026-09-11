@@ -769,7 +769,6 @@ export const resources: IResourceItem[] = [
       commandRoute: "/runtime-agent-endpoint-catalog/:id/command/:command",
       commands: {
         recordRuntimeConnectionEstablished: { label: "Record Runtime Connection Established", i18nKey: "resources.runtime_agent_endpoint_catalog.commands.recordRuntimeConnectionEstablished.label", route: "/runtime-agent-endpoint-catalog/:id/command/record-runtime-connection-established", dataProviderName: "federation-learning-platform" },
-        retryRuntimeAgentDeployment: { label: "Retry Runtime Agent Deployment", i18nKey: "resources.runtime_agent_endpoint_catalog.commands.retryRuntimeAgentDeployment.label", route: "/runtime-agent-endpoint-catalog/:id/command/retry-runtime-agent-deployment", dataProviderName: "federation-learning-platform" },
       },
       canDelete: false,
     },
@@ -1028,6 +1027,8 @@ export const resources: IResourceItem[] = [
       commandRoute: "/runtime-installation-plan-catalog/:id/command/:command",
       commands: {
         createRuntimeInstallationPlan: { label: "Create Runtime Installation Plan", i18nKey: "resources.runtime_installation_plan_catalog.commands.createRuntimeInstallationPlan.label", route: "/runtime-installation-plan-catalog/command/create-runtime-installation-plan", dataProviderName: "federation-learning-platform" },
+        retryRuntimeInfrastructureVerification: { label: "Retry Runtime Infrastructure Verification", i18nKey: "resources.runtime_installation_plan_catalog.commands.retryRuntimeInfrastructureVerification.label", route: "/runtime-installation-plan-catalog/:id/command/retry-runtime-infrastructure-verification", dataProviderName: "federation-learning-platform" },
+        retryRuntimeAgentDeployment: { label: "Retry Runtime Agent Deployment", i18nKey: "resources.runtime_installation_plan_catalog.commands.retryRuntimeAgentDeployment.label", route: "/runtime-installation-plan-catalog/:id/command/retry-runtime-agent-deployment", dataProviderName: "federation-learning-platform" },
         registerRuntimeInfrastructure: { label: "Register Runtime Infrastructure", i18nKey: "resources.runtime_installation_plan_catalog.commands.registerRuntimeInfrastructure.label", route: "/runtime-installation-plan-catalog/:id/command/register-runtime-infrastructure", dataProviderName: "federation-learning-platform", stateField: "planStatus", allowedStates: ["Planned"] },
         confirmRuntimeInfrastructurePrepared: { label: "Confirm Runtime Infrastructure Prepared", i18nKey: "resources.runtime_installation_plan_catalog.commands.confirmRuntimeInfrastructurePrepared.label", route: "/runtime-installation-plan-catalog/:id/command/confirm-runtime-infrastructure-prepared", dataProviderName: "federation-learning-platform", stateField: "planStatus", allowedStates: ["Registered"] },
       },

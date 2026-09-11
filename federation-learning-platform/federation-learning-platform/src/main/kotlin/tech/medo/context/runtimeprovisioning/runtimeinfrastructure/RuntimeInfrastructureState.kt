@@ -13,6 +13,8 @@ import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerifiedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationFailedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentInstallationSucceededEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentInstallationFailedEvent
+import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationRetrySucceededEvent
+import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationRetryFailedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentDeploymentRetrySucceededEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentDeploymentRetryFailedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeConnectionEstablishedEvent
@@ -42,6 +44,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
     var observedNodeCount: Int? = null
     var failureReason: String? = null
     var agentVersion: String? = null
+    var retryReason: String? = null
     var runtimeAgentEndpoint: String? = null
     var endpointScope: String? = null
 
@@ -167,6 +170,45 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
         runtimeName = event.runtimeName
         agentInstallMode = event.agentInstallMode
         expectedNodeCount = event.expectedNodeCount
+        failureReason = event.failureReason
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: RuntimeInfrastructureVerificationRetrySucceededEvent): RuntimeInfrastructureState = apply {
+        currentState = RuntimeInfrastructureStateEnum.VERIFIED
+        runtimeInfrastructureId = event.runtimeInfrastructureId
+        runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        organizationId = event.organizationId
+        organizationName = event.organizationName
+        runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
+        runtimeName = event.runtimeName
+        runtimeAgentId = event.runtimeAgentId
+        agentInstallMode = event.agentInstallMode
+        expectedNodeCount = event.expectedNodeCount
+        observedNodeCount = event.observedNodeCount
+        retryReason = event.retryReason
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: RuntimeInfrastructureVerificationRetryFailedEvent): RuntimeInfrastructureState = apply {
+        currentState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
+        runtimeInfrastructureId = event.runtimeInfrastructureId
+        runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        organizationId = event.organizationId
+        organizationName = event.organizationName
+        runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+        runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+        runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+        runtimeEnvironmentType = event.runtimeEnvironmentType
+        runtimeName = event.runtimeName
+        runtimeAgentId = event.runtimeAgentId
+        agentInstallMode = event.agentInstallMode
+        expectedNodeCount = event.expectedNodeCount
+        observedNodeCount = event.observedNodeCount
+        retryReason = event.retryReason
         failureReason = event.failureReason
     }
 

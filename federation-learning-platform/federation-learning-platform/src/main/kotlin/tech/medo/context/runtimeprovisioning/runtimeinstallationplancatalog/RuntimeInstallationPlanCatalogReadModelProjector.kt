@@ -15,6 +15,8 @@ import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerifiedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationFailedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentInstallationSucceededEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentInstallationFailedEvent
+import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationRetrySucceededEvent
+import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationRetryFailedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentDeploymentRetrySucceededEvent
 import tech.medo.runtimeprovisioning.events.RuntimeAgentDeploymentRetryFailedEvent
 import tech.medo.runtimeprovisioning.events.RuntimeConnectionEstablishedEvent
@@ -241,6 +243,61 @@ class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: R
             entity.runtimeAgentId = event.runtimeAgentId
             entity.agentDeploymentFailedAt = eventTime(message)
             entity.agentDeploymentFailureReason = event.failureReason
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerificationRetrySucceededEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeInstallationPlanId) ?: RuntimeInstallationPlanCatalogReadModelProjection().apply {
+                this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        }
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.runtimeName = event.runtimeName
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.observedNodeCount = event.observedNodeCount
+            entity.runtimeAgentId = event.runtimeAgentId
+            entity.verifiedAt = eventTime(message)
+            entity.verificationFailedAt = null
+            entity.verificationFailureReason = null
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerificationRetryFailedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.runtimeInstallationPlanId) ?: RuntimeInstallationPlanCatalogReadModelProjection().apply {
+                this.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+        }
+            entity.runtimeInstallationPlanId = event.runtimeInstallationPlanId
+            entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
+            entity.runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
+            entity.runtimeInfrastructurePackageName = event.runtimeInfrastructurePackageName
+            entity.runtimeInfrastructurePackageVersion = event.runtimeInfrastructurePackageVersion
+            entity.runtimeName = event.runtimeName
+            entity.agentInstallMode = event.agentInstallMode
+            entity.expectedNodeCount = event.expectedNodeCount
+            entity.runtimeInfrastructureId = event.runtimeInfrastructureId
+            entity.observedNodeCount = event.observedNodeCount
+            entity.runtimeAgentId = event.runtimeAgentId
+            entity.verificationFailedAt = eventTime(message)
+            entity.verificationFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
     }

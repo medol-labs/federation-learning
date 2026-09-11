@@ -234,17 +234,6 @@ export const RuntimeAgentEndpointCatalogList = () => {
                     }}
                   />
                 )}
-                {isCommandVisible(row.original, "", "", []) && (
-                  <CommandButton
-                    variant="ghost"
-                    command="retryRuntimeAgentDeployment"
-                    recordItemId={row.original.runtimeAgentId}
-                    size="sm"
-                    query={{
-                      runtimeAgentId: row.original.runtimeAgentId,
-                    }}
-                  />
-                )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeAgentId} size="sm" />
             </RowActionMenu>
           </div>
