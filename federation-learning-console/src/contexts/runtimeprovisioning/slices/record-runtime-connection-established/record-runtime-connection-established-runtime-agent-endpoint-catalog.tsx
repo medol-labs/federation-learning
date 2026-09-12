@@ -42,6 +42,8 @@ export const RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished = () 
     runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
     runtimeName: searchParams.get("runtimeName") ?? undefined,
+    agentInstallMode: searchParams.get("agentInstallMode") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
   } as unknown as Partial<RecordRuntimeConnectionEstablishedCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RecordRuntimeConnectionEstablishedCommandInput, RecordRuntimeConnectionEstablishedCommandInput>({
@@ -96,8 +98,12 @@ export const RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished = () 
           {defaultValues.runtimeName !== undefined && defaultValues.runtimeName !== null ? (
             <input type="hidden" {...form.register("runtimeName" as never)} />
           ) : null}
-          <input type="hidden" {...form.register("agentInstallMode" as never)} />
-          <input type="hidden" {...form.register("organizationName" as never)} />
+          {defaultValues.agentInstallMode !== undefined && defaultValues.agentInstallMode !== null ? (
+            <input type="hidden" {...form.register("agentInstallMode" as never)} />
+          ) : null}
+          {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
+            <input type="hidden" {...form.register("organizationName" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="runtimeAgentId"

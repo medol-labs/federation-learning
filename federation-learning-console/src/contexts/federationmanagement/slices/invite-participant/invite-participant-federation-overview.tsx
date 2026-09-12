@@ -38,6 +38,7 @@ export const FederationOverviewInviteParticipant = () => {
   const defaultValues = {
     federationId: searchParams.get("federationId") ?? undefined,
     federationName: searchParams.get("federationName") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
   } as unknown as Partial<InviteParticipantCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<InviteParticipantCommandInput, InviteParticipantCommandInput>({
@@ -89,7 +90,9 @@ export const FederationOverviewInviteParticipant = () => {
           {defaultValues.federationName !== undefined && defaultValues.federationName !== null ? (
             <input type="hidden" {...form.register("federationName" as never)} />
           ) : null}
-          <input type="hidden" {...form.register("organizationName" as never)} />
+          {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
+            <input type="hidden" {...form.register("organizationName" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="organizationId"

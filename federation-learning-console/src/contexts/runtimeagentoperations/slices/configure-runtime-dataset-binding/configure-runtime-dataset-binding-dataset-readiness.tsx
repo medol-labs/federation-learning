@@ -44,6 +44,7 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
     featureSchemaVersion: searchParams.get("featureSchemaVersion") ?? undefined,
     datasetName: searchParams.get("datasetName") ?? undefined,
     runtimeId: searchParams.get("runtimeId") ?? undefined,
+    runtimeName: searchParams.get("runtimeName") ?? undefined,
   } as unknown as Partial<ConfigureRuntimeDatasetBindingCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<ConfigureRuntimeDatasetBindingCommandInput, ConfigureRuntimeDatasetBindingCommandInput>({
@@ -89,7 +90,9 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
       <CreateViewHeader title={t("resources.dataset_readiness.commands.configureRuntimeDatasetBinding.label", "Configure Runtime Dataset Binding")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("ConfigureRuntimeDatasetBinding validation failed", errors))} className="space-y-8">
-          <input type="hidden" {...form.register("runtimeName" as never)} />
+          {defaultValues.runtimeName !== undefined && defaultValues.runtimeName !== null ? (
+            <input type="hidden" {...form.register("runtimeName" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="datasetId"

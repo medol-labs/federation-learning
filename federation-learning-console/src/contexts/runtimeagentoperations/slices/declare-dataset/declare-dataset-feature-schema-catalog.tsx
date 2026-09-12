@@ -38,6 +38,8 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
   const defaultValues = {
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
     featureDomain: searchParams.get("featureDomain") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
+    featureSchemaVersion: searchParams.get("featureSchemaVersion") ?? undefined,
   } as unknown as Partial<DeclareDatasetCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<DeclareDatasetCommandInput, DeclareDatasetCommandInput>({
@@ -86,8 +88,12 @@ export const FeatureSchemaCatalogDeclareDataset = () => {
           {defaultValues.featureDomain !== undefined && defaultValues.featureDomain !== null ? (
             <input type="hidden" {...form.register("featureDomain" as never)} />
           ) : null}
-          <input type="hidden" {...form.register("organizationName" as never)} />
-          <input type="hidden" {...form.register("featureSchemaVersion" as never)} />
+          {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
+            <input type="hidden" {...form.register("organizationName" as never)} />
+          ) : null}
+          {defaultValues.featureSchemaVersion !== undefined && defaultValues.featureSchemaVersion !== null ? (
+            <input type="hidden" {...form.register("featureSchemaVersion" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="organizationId"

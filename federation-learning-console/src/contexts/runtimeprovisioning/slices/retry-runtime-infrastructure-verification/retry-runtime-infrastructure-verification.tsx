@@ -46,6 +46,8 @@ export const RuntimeInstallationPlanCatalogRetryRuntimeInfrastructureVerificatio
     runtimeName: searchParams.get("runtimeName") ?? undefined,
     agentInstallMode: searchParams.get("agentInstallMode") ?? undefined,
     expectedNodeCount: (() => { const value = searchParams.get("expectedNodeCount"); return value === null ? undefined : Number(value); })(),
+    runtimeEnvironmentType: searchParams.get("runtimeEnvironmentType") ?? undefined,
+    currentRuntimeInfrastructureState: searchParams.get("currentRuntimeInfrastructureState") ?? undefined,
   } as unknown as Partial<RetryRuntimeInfrastructureVerificationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RetryRuntimeInfrastructureVerificationCommandInput, RetryRuntimeInfrastructureVerificationCommandInput>({
@@ -124,8 +126,12 @@ export const RuntimeInstallationPlanCatalogRetryRuntimeInfrastructureVerificatio
           {defaultValues.expectedNodeCount !== undefined && defaultValues.expectedNodeCount !== null ? (
             <input type="hidden" {...form.register("expectedNodeCount" as never)} />
           ) : null}
-          <input type="hidden" {...form.register("runtimeEnvironmentType" as never)} />
-          <input type="hidden" {...form.register("currentRuntimeInfrastructureState" as never)} />
+          {defaultValues.runtimeEnvironmentType !== undefined && defaultValues.runtimeEnvironmentType !== null ? (
+            <input type="hidden" {...form.register("runtimeEnvironmentType" as never)} />
+          ) : null}
+          {defaultValues.currentRuntimeInfrastructureState !== undefined && defaultValues.currentRuntimeInfrastructureState !== null ? (
+            <input type="hidden" {...form.register("currentRuntimeInfrastructureState" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="retryReason"

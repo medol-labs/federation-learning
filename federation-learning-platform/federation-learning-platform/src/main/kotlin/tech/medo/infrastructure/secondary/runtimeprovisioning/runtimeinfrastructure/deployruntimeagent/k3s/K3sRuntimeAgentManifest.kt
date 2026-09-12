@@ -8,7 +8,8 @@ import java.util.UUID
 
 data class K3sRuntimeAgentManifest(
     val manifestFile: String,
-    val deploymentName: String
+    val deploymentName: String,
+    val dependencyDeploymentNames: List<String> = emptyList()
 )
 
 fun prepareRuntimeAgentManifest(
@@ -26,14 +27,16 @@ fun prepareRuntimeAgentManifest(
     }
 
     val deploymentName = runtimeAgentDeploymentName(properties, runtimeAgentId)
-    val manifest = renderRuntimeAgentManifest(properties, runtimeAgentId, runtimeInfrastructureId, plan, deploymentName)
+    val dependencyNames = runtimeAgentDependencyNames(deploymentName)
+    val manifest = renderRuntimeAgentManifest(properties, runtimeAgentId, runtimeInfrastructureId, plan, deploymentName, dependencyNames)
     val directory = Paths.get(properties.renderedManifestDirectory)
     Files.createDirectories(directory)
     val manifestPath = directory.resolve("$deploymentName.yaml")
     Files.writeString(manifestPath, manifest)
     return K3sRuntimeAgentManifest(
         manifestFile = manifestPath.toString(),
-        deploymentName = deploymentName
+        deploymentName = deploymentName,
+        dependencyDeploymentNames = listOf(dependencyNames.postgres, dependencyNames.umadb)
     )
 }
 
@@ -47,13 +50,187 @@ private fun renderRuntimeAgentManifest(
     runtimeAgentId: UUID,
     runtimeInfrastructureId: UUID,
     plan: RuntimeInstallationPlanCatalogReadModel,
-    deploymentName: String
+    deploymentName: String,
+    dependencyNames: RuntimeAgentDependencyNames
 ): String {
     val runtimeName = plan.runtimeName ?: deploymentName
     val organizationId = plan.organizationId?.toString().orEmpty()
     val endpoint = "http://$deploymentName:${properties.agentContainerPort}"
     val replicas = properties.agentReplicas.coerceAtLeast(1)
+    val databaseUrl = "jdbc:postgresql://${dependencyNames.postgres}:5432/${properties.databaseName}"
+    val umadbTarget = "${dependencyNames.umadb}:50051"
     return """
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ${quote(dependencyNames.postgresData)}
+  labels:
+    app: ${quote(dependencyNames.postgres)}
+    app.kubernetes.io/name: ${quote(dependencyNames.postgres)}
+    app.kubernetes.io/component: "runtime-agent-postgres"
+    app.kubernetes.io/managed-by: "federation-learning-platform"
+    medol.dev/runtime-agent-id: ${quote(runtimeAgentId.toString())}
+    medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: ${quote(properties.databaseStorageSize)}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${quote(dependencyNames.postgres)}
+  labels:
+    app: ${quote(dependencyNames.postgres)}
+    app.kubernetes.io/name: ${quote(dependencyNames.postgres)}
+    app.kubernetes.io/component: "runtime-agent-postgres"
+    app.kubernetes.io/managed-by: "federation-learning-platform"
+    medol.dev/runtime-agent-id: ${quote(runtimeAgentId.toString())}
+    medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${quote(dependencyNames.postgres)}
+  template:
+    metadata:
+      labels:
+        app: ${quote(dependencyNames.postgres)}
+    spec:
+      nodeSelector:
+        medol.dev/node-role: "runtime"
+        medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+      tolerations:
+        - key: "medol.dev/runtime-only"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      containers:
+        - name: "postgres"
+          image: ${quote(properties.databaseImage)}
+          ports:
+            - containerPort: 5432
+          env:
+            - name: "POSTGRES_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: ${quote(properties.databaseSecretName)}
+                  key: "username"
+            - name: "POSTGRES_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: ${quote(properties.databaseSecretName)}
+                  key: "password"
+            - name: "POSTGRES_DB"
+              value: ${quote(properties.databaseName)}
+          volumeMounts:
+            - name: "postgres-data"
+              mountPath: "/var/lib/postgresql/data"
+      volumes:
+        - name: "postgres-data"
+          persistentVolumeClaim:
+            claimName: ${quote(dependencyNames.postgresData)}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${quote(dependencyNames.postgres)}
+  labels:
+    app.kubernetes.io/name: ${quote(dependencyNames.postgres)}
+    app.kubernetes.io/component: "runtime-agent-postgres-service"
+    app.kubernetes.io/managed-by: "federation-learning-platform"
+    medol.dev/runtime-agent-id: ${quote(runtimeAgentId.toString())}
+    medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+spec:
+  type: ClusterIP
+  selector:
+    app: ${quote(dependencyNames.postgres)}
+  ports:
+    - name: "postgres"
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ${quote(dependencyNames.umadbData)}
+  labels:
+    app: ${quote(dependencyNames.umadb)}
+    app.kubernetes.io/name: ${quote(dependencyNames.umadb)}
+    app.kubernetes.io/component: "runtime-agent-umadb"
+    app.kubernetes.io/managed-by: "federation-learning-platform"
+    medol.dev/runtime-agent-id: ${quote(runtimeAgentId.toString())}
+    medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: ${quote(properties.umadbStorageSize)}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${quote(dependencyNames.umadb)}
+  labels:
+    app: ${quote(dependencyNames.umadb)}
+    app.kubernetes.io/name: ${quote(dependencyNames.umadb)}
+    app.kubernetes.io/component: "runtime-agent-umadb"
+    app.kubernetes.io/managed-by: "federation-learning-platform"
+    medol.dev/runtime-agent-id: ${quote(runtimeAgentId.toString())}
+    medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${quote(dependencyNames.umadb)}
+  template:
+    metadata:
+      labels:
+        app: ${quote(dependencyNames.umadb)}
+    spec:
+      nodeSelector:
+        medol.dev/node-role: "runtime"
+        medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+      tolerations:
+        - key: "medol.dev/runtime-only"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      containers:
+        - name: "umadb"
+          image: ${quote(properties.umadbImage)}
+          ports:
+            - containerPort: 50051
+          volumeMounts:
+            - name: "umadb-data"
+              mountPath: "/data"
+      volumes:
+        - name: "umadb-data"
+          persistentVolumeClaim:
+            claimName: ${quote(dependencyNames.umadbData)}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${quote(dependencyNames.umadb)}
+  labels:
+    app.kubernetes.io/name: ${quote(dependencyNames.umadb)}
+    app.kubernetes.io/component: "runtime-agent-umadb-service"
+    app.kubernetes.io/managed-by: "federation-learning-platform"
+    medol.dev/runtime-agent-id: ${quote(runtimeAgentId.toString())}
+    medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+spec:
+  type: ClusterIP
+  selector:
+    app: ${quote(dependencyNames.umadb)}
+  ports:
+    - name: "grpc"
+      port: 50051
+      targetPort: 50051
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -101,7 +278,7 @@ spec:
             - name: "MEDOL_AXON_EVENT_STORAGE"
               value: "umadb"
             - name: "UMADB_TARGET"
-              value: ${quote(properties.umadbTarget)}
+              value: ${quote(umadbTarget)}
             - name: "UMADB_PLAINTEXT"
               value: "true"
             - name: "UMADB_API_KEY"
@@ -111,7 +288,7 @@ spec:
             - name: "UMADB_REQUEST_TIMEOUT"
               value: "PT10S"
             - name: "DB_URL"
-              value: ${quote(properties.databaseUrl)}
+              value: ${quote(databaseUrl)}
             - name: "DB_USERNAME"
               valueFrom:
                 secretKeyRef:
@@ -213,6 +390,36 @@ private fun kubernetesName(value: String): String {
         .trim('-')
         .ifBlank { "runtime-agent" }
     return sanitized.take(63).trimEnd('-')
+}
+
+private data class RuntimeAgentDependencyNames(
+    val postgres: String,
+    val postgresData: String,
+    val umadb: String,
+    val umadbData: String
+)
+
+private fun runtimeAgentDependencyNames(deploymentName: String): RuntimeAgentDependencyNames =
+    RuntimeAgentDependencyNames(
+        postgres = relatedKubernetesName(deploymentName, "postgres"),
+        postgresData = relatedKubernetesName(deploymentName, "postgres-data"),
+        umadb = relatedKubernetesName(deploymentName, "umadb"),
+        umadbData = relatedKubernetesName(deploymentName, "umadb-data")
+    )
+
+private fun relatedKubernetesName(base: String, suffix: String): String {
+    val sanitizedBase = kubernetesName(base)
+    val sanitizedSuffix = kubernetesName(suffix)
+    val direct = "$sanitizedBase-$sanitizedSuffix"
+    if (direct.length <= 63) return direct
+    val uniqueTail = sanitizedBase.takeLast(13).trim('-')
+    val prefixLimit = 63 - sanitizedSuffix.length - uniqueTail.length - 2
+    val prefix = sanitizedBase.take(prefixLimit.coerceAtLeast(1)).trim('-')
+    return listOf(prefix, uniqueTail, sanitizedSuffix)
+        .filter { it.isNotBlank() }
+        .joinToString("-")
+        .take(63)
+        .trimEnd('-')
 }
 
 private fun quote(value: String): String =

@@ -89,6 +89,8 @@ class K3sRuntimeInfrastructureAdapterTest {
     fun `deploy renders managed manifest and waits for runtime agent rollout`() {
         val runner = FakeK3sCommandRunner(
             K3sCommandResult(exitCode = 0, output = "configured", timedOut = false),
+            K3sCommandResult(exitCode = 0, output = "postgres successfully rolled out", timedOut = false),
+            K3sCommandResult(exitCode = 0, output = "umadb successfully rolled out", timedOut = false),
             K3sCommandResult(exitCode = 0, output = "deployment successfully rolled out", timedOut = false)
         )
         val adapter = K3sDeployRuntimeAgentAdapter(properties(), lookup(), runner)
@@ -103,11 +105,23 @@ class K3sRuntimeInfrastructureAdapterTest {
         assertEquals(
             listOf(
                 listOf("apply", "-n", "runtime-test", "-f", manifestPath),
+                listOf("rollout", "status", "deployment/runtime-agent-test-000000000000-postgres", "-n", "runtime-test"),
+                listOf("rollout", "status", "deployment/runtime-agent-test-000000000000-umadb", "-n", "runtime-test"),
                 listOf("rollout", "status", "deployment/runtime-agent-test-000000000000", "-n", "runtime-test")
             ),
             runner.calls
         )
         val manifest = Files.readString(tempDir.resolve("runtime-agent-test-000000000000.yaml"))
+        assertTrue(manifest.contains("name: \"runtime-agent-test-000000000000-postgres\""))
+        assertTrue(manifest.contains("image: \"postgres:16\""))
+        assertTrue(manifest.contains("POSTGRES_DB"))
+        assertTrue(manifest.contains("value: \"federation_learning_runtime_agent\""))
+        assertTrue(manifest.contains("name: \"runtime-agent-test-000000000000-umadb\""))
+        assertTrue(manifest.contains("image: \"umadb/umadb:0.7.8\""))
+        assertTrue(manifest.contains("name: \"DB_URL\""))
+        assertTrue(manifest.contains("value: \"jdbc:postgresql://runtime-agent-test-000000000000-postgres:5432/federation_learning_runtime_agent\""))
+        assertTrue(manifest.contains("name: \"UMADB_TARGET\""))
+        assertTrue(manifest.contains("value: \"runtime-agent-test-000000000000-umadb:50051\""))
         assertTrue(manifest.contains("name: \"runtime-agent-test-000000000000\""))
         assertTrue(manifest.contains("name: \"RUNTIME_AGENT_ID\""))
         assertTrue(manifest.contains("value: \"$runtimeAgentId\""))
@@ -129,6 +143,8 @@ class K3sRuntimeInfrastructureAdapterTest {
     fun `deploy is unavailable when rollout fails`() {
         val runner = FakeK3sCommandRunner(
             K3sCommandResult(exitCode = 0, output = "configured", timedOut = false),
+            K3sCommandResult(exitCode = 0, output = "postgres successfully rolled out", timedOut = false),
+            K3sCommandResult(exitCode = 0, output = "umadb successfully rolled out", timedOut = false),
             K3sCommandResult(exitCode = 1, output = "timed out waiting for rollout", timedOut = false)
         )
         val adapter = K3sDeployRuntimeAgentAdapter(properties(), lookup(), runner)

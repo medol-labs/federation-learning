@@ -44,6 +44,7 @@ export const RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan = () =>
     organizationName: searchParams.get("organizationName") ?? undefined,
     runtimeInfrastructurePackageName: searchParams.get("runtimeInfrastructurePackageName") ?? undefined,
     runtimeInfrastructurePackageVersion: searchParams.get("runtimeInfrastructurePackageVersion") ?? undefined,
+    runtimeEnvironmentType: searchParams.get("runtimeEnvironmentType") ?? undefined,
   } as unknown as Partial<CreateRuntimeInstallationPlanCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<CreateRuntimeInstallationPlanCommandInput, CreateRuntimeInstallationPlanCommandInput>({
@@ -98,7 +99,9 @@ export const RuntimeInstallationPlanCatalogCreateRuntimeInstallationPlan = () =>
           {defaultValues.runtimeInfrastructurePackageVersion !== undefined && defaultValues.runtimeInfrastructurePackageVersion !== null ? (
             <input type="hidden" {...form.register("runtimeInfrastructurePackageVersion" as never)} />
           ) : null}
-          <input type="hidden" {...form.register("runtimeEnvironmentType" as never)} />
+          {defaultValues.runtimeEnvironmentType !== undefined && defaultValues.runtimeEnvironmentType !== null ? (
+            <input type="hidden" {...form.register("runtimeEnvironmentType" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="organizationId"

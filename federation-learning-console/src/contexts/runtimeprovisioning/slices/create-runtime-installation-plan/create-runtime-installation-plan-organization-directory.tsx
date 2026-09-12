@@ -38,6 +38,9 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
   const defaultValues = {
     organizationId: searchParams.get("organizationId") ?? undefined,
     organizationName: searchParams.get("organizationName") ?? undefined,
+    runtimeInfrastructurePackageName: searchParams.get("runtimeInfrastructurePackageName") ?? undefined,
+    runtimeInfrastructurePackageVersion: searchParams.get("runtimeInfrastructurePackageVersion") ?? undefined,
+    runtimeEnvironmentType: searchParams.get("runtimeEnvironmentType") ?? undefined,
   } as unknown as Partial<CreateRuntimeInstallationPlanCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<CreateRuntimeInstallationPlanCommandInput, CreateRuntimeInstallationPlanCommandInput>({
@@ -86,9 +89,15 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
           {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
             <input type="hidden" {...form.register("organizationName" as never)} />
           ) : null}
-          <input type="hidden" {...form.register("runtimeInfrastructurePackageName" as never)} />
-          <input type="hidden" {...form.register("runtimeInfrastructurePackageVersion" as never)} />
-          <input type="hidden" {...form.register("runtimeEnvironmentType" as never)} />
+          {defaultValues.runtimeInfrastructurePackageName !== undefined && defaultValues.runtimeInfrastructurePackageName !== null ? (
+            <input type="hidden" {...form.register("runtimeInfrastructurePackageName" as never)} />
+          ) : null}
+          {defaultValues.runtimeInfrastructurePackageVersion !== undefined && defaultValues.runtimeInfrastructurePackageVersion !== null ? (
+            <input type="hidden" {...form.register("runtimeInfrastructurePackageVersion" as never)} />
+          ) : null}
+          {defaultValues.runtimeEnvironmentType !== undefined && defaultValues.runtimeEnvironmentType !== null ? (
+            <input type="hidden" {...form.register("runtimeEnvironmentType" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="organizationId"

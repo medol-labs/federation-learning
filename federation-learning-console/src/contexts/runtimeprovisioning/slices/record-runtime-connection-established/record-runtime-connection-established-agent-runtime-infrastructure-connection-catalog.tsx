@@ -40,6 +40,10 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
     runtimeInfrastructureId: searchParams.get("runtimeInfrastructureId") ?? undefined,
     runtimeAgentEndpoint: searchParams.get("runtimeAgentEndpoint") ?? undefined,
     endpointScope: searchParams.get("endpointScope") ?? undefined,
+    agentInstallMode: searchParams.get("agentInstallMode") ?? undefined,
+    organizationId: searchParams.get("organizationId") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
+    runtimeName: searchParams.get("runtimeName") ?? undefined,
   } as unknown as Partial<RecordRuntimeConnectionEstablishedCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RecordRuntimeConnectionEstablishedCommandInput, RecordRuntimeConnectionEstablishedCommandInput>({
@@ -88,10 +92,18 @@ export const AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionE
           {defaultValues.runtimeInfrastructureId !== undefined && defaultValues.runtimeInfrastructureId !== null ? (
             <input type="hidden" {...form.register("runtimeInfrastructureId" as never)} />
           ) : null}
-          <input type="hidden" {...form.register("agentInstallMode" as never)} />
-          <input type="hidden" {...form.register("organizationId" as never)} />
-          <input type="hidden" {...form.register("organizationName" as never)} />
-          <input type="hidden" {...form.register("runtimeName" as never)} />
+          {defaultValues.agentInstallMode !== undefined && defaultValues.agentInstallMode !== null ? (
+            <input type="hidden" {...form.register("agentInstallMode" as never)} />
+          ) : null}
+          {defaultValues.organizationId !== undefined && defaultValues.organizationId !== null ? (
+            <input type="hidden" {...form.register("organizationId" as never)} />
+          ) : null}
+          {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
+            <input type="hidden" {...form.register("organizationName" as never)} />
+          ) : null}
+          {defaultValues.runtimeName !== undefined && defaultValues.runtimeName !== null ? (
+            <input type="hidden" {...form.register("runtimeName" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="runtimeAgentId"

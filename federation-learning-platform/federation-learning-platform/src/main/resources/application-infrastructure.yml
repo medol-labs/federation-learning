@@ -22,7 +22,12 @@ platform:
       support-url: ${PLATFORM_RUNTIME_K3S_SUPPORT_URL:http://federation-learning-support:8080}
       database-url: ${PLATFORM_RUNTIME_K3S_DATABASE_URL:jdbc:postgresql://postgres:5432/federation_learning_runtime_agent}
       database-secret-name: ${PLATFORM_RUNTIME_K3S_DATABASE_SECRET_NAME:postgres-secret}
+      database-image: ${PLATFORM_RUNTIME_K3S_DATABASE_IMAGE:postgres:16}
+      database-name: ${PLATFORM_RUNTIME_K3S_DATABASE_NAME:federation_learning_runtime_agent}
+      database-storage-size: ${PLATFORM_RUNTIME_K3S_DATABASE_STORAGE_SIZE:1Gi}
       umadb-target: ${PLATFORM_RUNTIME_K3S_UMADB_TARGET:umadb:50051}
+      umadb-image: ${PLATFORM_RUNTIME_K3S_UMADB_IMAGE:umadb/umadb:0.7.8}
+      umadb-storage-size: ${PLATFORM_RUNTIME_K3S_UMADB_STORAGE_SIZE:1Gi}
       endpoint-scope: ${PLATFORM_RUNTIME_K3S_ENDPOINT_SCOPE:CLUSTER}
       agent-version: ${PLATFORM_RUNTIME_K3S_AGENT_VERSION:k3s}
       runtime-engine-service-account-name: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_SERVICE_ACCOUNT_NAME:federation-learning-runtime-engine-scheduler}

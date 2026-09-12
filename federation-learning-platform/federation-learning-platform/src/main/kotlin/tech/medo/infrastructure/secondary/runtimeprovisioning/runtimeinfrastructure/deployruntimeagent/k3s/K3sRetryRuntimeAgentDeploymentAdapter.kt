@@ -61,12 +61,24 @@ class K3sRetryRuntimeAgentDeploymentAdapter(
             return RetryRuntimeAgentDeploymentResult.Unavailable(failure)
         }
 
-        val rollout = runner.run(
+        for (dependencyDeploymentName in manifest.dependencyDeploymentNames) {
+            val rollout = runner.run(
+                properties,
+                listOf("rollout", "status", "deployment/$dependencyDeploymentName", "-n", properties.namespace)
+            )
+            if (!rollout.succeeded) {
+                val failure = k3sCommandFailure("Kubernetes API await Deployment $dependencyDeploymentName in ${properties.namespace}", rollout, properties)
+                log.debug("K3S runtime agent dependency deployment retry unavailable during rollout: {}", failure)
+                return RetryRuntimeAgentDeploymentResult.Unavailable(failure)
+            }
+        }
+
+        val agentRollout = runner.run(
             properties,
             listOf("rollout", "status", "deployment/${manifest.deploymentName}", "-n", properties.namespace)
         )
-        if (!rollout.succeeded) {
-            val failure = k3sCommandFailure("Kubernetes API await Deployment ${manifest.deploymentName} in ${properties.namespace}", rollout, properties)
+        if (!agentRollout.succeeded) {
+            val failure = k3sCommandFailure("Kubernetes API await Deployment ${manifest.deploymentName} in ${properties.namespace}", agentRollout, properties)
             log.debug("K3S runtime agent deployment retry unavailable during rollout: {}", failure)
             return RetryRuntimeAgentDeploymentResult.Unavailable(failure)
         }

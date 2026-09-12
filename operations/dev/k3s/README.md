@@ -35,22 +35,15 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 For local development with k3d, create the dev cluster from the generated config:
 
 ```bash
-scripts/federation-learning-dev.sh recreate
-eval "$(scripts/federation-learning-dev.sh kubeconfig)"
-scripts/federation-learning-dev.sh apply
+scripts/k3d-dev.sh recreate
+eval "$(scripts/k3d-dev.sh kubeconfig)"
+scripts/k3d-dev.sh apply
 ```
 
-`scripts/k3d-dev.sh` is the generated generic helper for local debugging. You can override paths and the cluster name with environment variables.
-`scripts/federation-learning-dev.sh` is the Federation Learning wrapper. It calls the generic helper with the runtime scheduling component, pre-applies `components/runtime-scheduling/runtime-scheduler-rbac.yaml`, and creates the k3d cluster with runtime data directories mounted into agent nodes.
-When `environments/dev-registry` and the runtime scheduling component both exist, the wrapper applies a temporary combined overlay so registry image overrides and extra runtime scheduling resources are applied together.
-The wrapper also syncs runtime-created workload image settings from `environments/dev-registry/kustomization.yaml` into the platform/runtime-agent ConfigMaps. Override these images explicitly with `FL_RUNTIME_AGENT_IMAGE` and `FL_RUNTIME_ENGINE_IMAGE` when needed.
-
-The wrapper mounts these host directories into k3d agent nodes:
-
-- `volumes/datasets` -> `/workspace/datasets`
-- `volumes/tmp/runtime-engine` -> `/workspace/tmp/runtime-engine`
-
-Override them with `FL_K3D_DATASETS_HOST_ROOT` and `FL_K3D_RUNTIME_ENGINE_HOST_ROOT` before `scripts/federation-learning-dev.sh create` or `recreate`. Existing k3d nodes do not pick up new volume mounts; recreate the cluster after changing these paths.
+The helper script is generated for local debugging. You can override paths and the cluster name with environment variables.
+`scripts/k3d-dev.sh apply` automatically applies `environments/dev/secrets.dev.yaml` first when the file exists.
+`PRE_APPLY_FILE` can point at a manifest that must exist before Deployments are applied, such as ServiceAccount and RBAC objects referenced by custom overlays.
+When `REGISTRY_OVERLAY` and `EXTRA_COMPONENT` are both configured, the helper applies a temporary combined overlay so registry image overrides and extra resources are applied together.
 
 ```bash
 k3d cluster create --config cluster/k3d-dev.yaml

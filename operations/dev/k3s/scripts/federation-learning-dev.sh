@@ -102,16 +102,24 @@ prepare_federation_learning_runtime_component() {
     runtime_engine_image="$(runtime_image FL_RUNTIME_ENGINE_IMAGE federation-learning-runtime-engine)"
 
     rm -rf "${FEDERATION_LEARNING_RUNTIME_COMPONENT}"
-    mkdir -p "${FEDERATION_LEARNING_RUNTIME_COMPONENT}"
+    mkdir -p "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches"
+    cp "${K3S_DIR}/components/runtime-scheduling/runtime-scheduler-rbac.yaml" \
+        "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/runtime-scheduler-rbac.yaml"
+    cp "${K3S_DIR}/components/runtime-scheduling/patches/platform-runtime-scheduler.yaml" \
+        "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches/platform-runtime-scheduler.yaml"
+    cp "${K3S_DIR}/components/runtime-scheduling/patches/runtime-agent-engine-scheduler.yaml" \
+        "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches/runtime-agent-engine-scheduler.yaml"
+    cp "${K3S_DIR}/components/runtime-scheduling/patches/runtime-scheduler-config.yaml" \
+        "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches/runtime-scheduler-config.yaml"
     cat > "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/kustomization.yaml" <<YAML
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 resources:
-  - "../../components/runtime-scheduling/runtime-scheduler-rbac.yaml"
+  - "runtime-scheduler-rbac.yaml"
 patches:
-  - path: "../../components/runtime-scheduling/patches/platform-runtime-scheduler.yaml"
-  - path: "../../components/runtime-scheduling/patches/runtime-agent-engine-scheduler.yaml"
-  - path: "../../components/runtime-scheduling/patches/runtime-scheduler-config.yaml"
+  - path: "patches/platform-runtime-scheduler.yaml"
+  - path: "patches/runtime-agent-engine-scheduler.yaml"
+  - path: "patches/runtime-scheduler-config.yaml"
   - path: "runtime-scheduler-images.yaml"
 YAML
     cat > "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/runtime-scheduler-images.yaml" <<YAML
