@@ -341,6 +341,22 @@
         {
           "name": "FEDERATION_LEARNING_PLATFORM_URL",
           "value": "http://federation-learning-platform:8081"
+        },
+        {
+          "name": "RUNTIME_AGENT_ORGANIZATION_ID",
+          "value": "${RUNTIME_AGENT_ORGANIZATION_ID:?Set RUNTIME_AGENT_ORGANIZATION_ID}"
+        },
+        {
+          "name": "RUNTIME_AGENT_RUNTIME_NAME",
+          "value": "${RUNTIME_AGENT_RUNTIME_NAME:-local-docker-compose-runtime-agent}"
+        },
+        {
+          "name": "RUNTIME_AGENT_ENDPOINT",
+          "value": "${RUNTIME_AGENT_ENDPOINT:-http://federation-learning-runtime-agent:8082}"
+        },
+        {
+          "name": "RUNTIME_AGENT_ENDPOINT_SCOPE",
+          "value": "${RUNTIME_AGENT_ENDPOINT_SCOPE:-LOCAL_DEV}"
         }
       ],
       "dependencies": [
