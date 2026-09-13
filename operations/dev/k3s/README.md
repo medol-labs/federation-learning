@@ -54,7 +54,17 @@ export KUBECONFIG="$(k3d kubeconfig write federation-learning-platform-dev)"
 kubectl config current-context
 ```
 
-The config creates one server and two agent nodes, disables the default Traefik addon, disables default registry endpoint fallback for configured registry mirrors, and maps host port `30080` to the k3d server node. The generated APISIX NodePort Service also uses `30080`, so APISIX is reachable at `http://localhost:30080/` after applying the manifests.
+The config creates one server and two agent nodes, disables the default Traefik addon, disables default registry endpoint fallback for configured registry mirrors, and maps host ports `30080` and `30082` to the k3d server node. The generated APISIX NodePort Service uses `30080`, so APISIX is reachable at `http://localhost:30080/` after applying the manifests.
+
+Platform-managed Runtime Agent deployments expose the participant-side console directly on NodePort `30082` by default. The runtime agent backend Service remains `ClusterIP`; the participant console proxies `/api/runtime-agent/` to that internal Service. After the platform deploys a Runtime Agent into the k3d runtime node, the participant console is reachable at `http://localhost:30082/`.
+
+Existing k3d clusters must be recreated for new host port mappings to take effect:
+
+```bash
+scripts/k3d-dev.sh recreate
+eval "$(scripts/k3d-dev.sh kubeconfig)"
+scripts/k3d-dev.sh apply
+```
 
 ## Registry
 

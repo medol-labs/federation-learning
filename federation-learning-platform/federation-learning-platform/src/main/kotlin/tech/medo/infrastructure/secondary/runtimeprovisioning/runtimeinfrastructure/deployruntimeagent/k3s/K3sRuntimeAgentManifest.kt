@@ -9,7 +9,8 @@ import java.util.UUID
 data class K3sRuntimeAgentManifest(
     val manifestFile: String,
     val deploymentName: String,
-    val dependencyDeploymentNames: List<String> = emptyList()
+    val dependencyDeploymentNames: List<String> = emptyList(),
+    val frontendDeploymentNames: List<String> = emptyList()
 )
 
 fun prepareRuntimeAgentManifest(
@@ -36,7 +37,8 @@ fun prepareRuntimeAgentManifest(
     return K3sRuntimeAgentManifest(
         manifestFile = manifestPath.toString(),
         deploymentName = deploymentName,
-        dependencyDeploymentNames = listOf(dependencyNames.postgres, dependencyNames.umadb)
+        dependencyDeploymentNames = listOf(dependencyNames.postgres, dependencyNames.umadb),
+        frontendDeploymentNames = listOfNotNull(dependencyNames.participantConsole.takeIf { properties.participantConsoleEnabled })
     )
 }
 
@@ -59,6 +61,13 @@ private fun renderRuntimeAgentManifest(
     val replicas = properties.agentReplicas.coerceAtLeast(1)
     val databaseUrl = "jdbc:postgresql://${dependencyNames.postgres}:5432/${properties.databaseName}"
     val umadbTarget = "${dependencyNames.umadb}:50051"
+    val participantConsoleManifest = renderParticipantConsoleManifest(
+        properties = properties,
+        runtimeAgentId = runtimeAgentId,
+        runtimeInfrastructureId = runtimeInfrastructureId,
+        deploymentName = deploymentName,
+        dependencyNames = dependencyNames
+    )
     return """
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -381,7 +390,164 @@ spec:
     - name: "http"
       port: ${properties.agentContainerPort}
       targetPort: ${properties.agentContainerPort}
+${participantConsoleManifest}
 """.trimStart()
+}
+
+private fun renderParticipantConsoleManifest(
+    properties: K3sRuntimeInfrastructureProperties,
+    runtimeAgentId: UUID,
+    runtimeInfrastructureId: UUID,
+    deploymentName: String,
+    dependencyNames: RuntimeAgentDependencyNames
+): String {
+    if (!properties.participantConsoleEnabled) return ""
+
+    val consoleReplicas = properties.participantConsoleReplicas.coerceAtLeast(1)
+    val apiPath = normalizePath(properties.participantConsoleApiPath)
+    val apiPathPrefix = "$apiPath/"
+    val serviceType = properties.participantConsoleServiceType.ifBlank { "NodePort" }
+    val nodePortLine = if (serviceType.equals("NodePort", ignoreCase = true) && properties.participantConsoleNodePort != null) {
+        "\n      nodePort: ${properties.participantConsoleNodePort}"
+    } else {
+        ""
+    }
+
+    return """
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ${quote(dependencyNames.participantConsoleNginx)}
+  labels:
+    app: ${quote(dependencyNames.participantConsole)}
+    app.kubernetes.io/name: ${quote(dependencyNames.participantConsole)}
+    app.kubernetes.io/component: "runtime-agent-console-nginx"
+    app.kubernetes.io/managed-by: "federation-learning-platform"
+    medol.dev/runtime-agent-id: ${quote(runtimeAgentId.toString())}
+    medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+data:
+  default.conf: |
+    server {
+        listen ${properties.participantConsoleContainerPort};
+        server_name _;
+
+        root /usr/share/nginx/html;
+        index index.html;
+
+        location = /health {
+            access_log off;
+            add_header Content-Type text/plain;
+            return 200 "ok\n";
+        }
+
+        location = $apiPath {
+            return 308 $apiPathPrefix;
+        }
+
+        location $apiPathPrefix {
+            proxy_pass http://$deploymentName:${properties.agentContainerPort}/;
+            proxy_http_version 1.1;
+            proxy_set_header Host ${'$'}host;
+            proxy_set_header X-Real-IP ${'$'}remote_addr;
+            proxy_set_header X-Forwarded-For ${'$'}proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto ${'$'}scheme;
+        }
+
+        location / {
+            try_files ${'$'}uri ${'$'}uri/ /index.html;
+        }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${quote(dependencyNames.participantConsole)}
+  labels:
+    app: ${quote(dependencyNames.participantConsole)}
+    app.kubernetes.io/name: ${quote(dependencyNames.participantConsole)}
+    app.kubernetes.io/component: "runtime-agent-console"
+    app.kubernetes.io/managed-by: "federation-learning-platform"
+    medol.dev/runtime-agent-id: ${quote(runtimeAgentId.toString())}
+    medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+spec:
+  replicas: $consoleReplicas
+  selector:
+    matchLabels:
+      app: ${quote(dependencyNames.participantConsole)}
+  template:
+    metadata:
+      labels:
+        app: ${quote(dependencyNames.participantConsole)}
+    spec:
+      nodeSelector:
+        medol.dev/node-role: "runtime"
+        medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+      tolerations:
+        - key: "medol.dev/runtime-only"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      containers:
+        - name: "participant-console"
+          image: ${quote(properties.participantConsoleImage)}
+          ports:
+            - containerPort: ${properties.participantConsoleContainerPort}
+          env:
+            - name: "VITE_AUTH_PROVIDER"
+              value: "local"
+            - name: "VITE_ACCESS_CONTROL_MODE"
+              value: "permissive"
+            - name: "VITE_AUTH_API_URL"
+              value: ${quote(apiPath)}
+            - name: "VITE_AXON_API_URL"
+              value: ${quote(apiPath)}
+            - name: "VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL"
+              value: ${quote(apiPath)}
+            - name: "VITE_FRONTEND_APP"
+              value: "FederationLearningParticipantConsole"
+          volumeMounts:
+            - name: "participant-console-nginx"
+              mountPath: "/etc/nginx/conf.d/default.conf"
+              subPath: "default.conf"
+          readinessProbe:
+            httpGet:
+              path: "/health"
+              port: ${properties.participantConsoleContainerPort}
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: ${properties.participantConsoleContainerPort}
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 5
+      volumes:
+        - name: "participant-console-nginx"
+          configMap:
+            name: ${quote(dependencyNames.participantConsoleNginx)}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${quote(dependencyNames.participantConsole)}
+  labels:
+    app.kubernetes.io/name: ${quote(dependencyNames.participantConsole)}
+    app.kubernetes.io/component: "runtime-agent-console-service"
+    app.kubernetes.io/managed-by: "federation-learning-platform"
+    medol.dev/runtime-agent-id: ${quote(runtimeAgentId.toString())}
+    medol.dev/runtime-infrastructure-id: ${quote(runtimeInfrastructureId.toString())}
+spec:
+  type: ${quote(serviceType)}
+  selector:
+    app: ${quote(dependencyNames.participantConsole)}
+  ports:
+    - name: "http"
+      port: ${properties.participantConsoleContainerPort}
+      targetPort: ${properties.participantConsoleContainerPort}$nodePortLine
+""".trimEnd()
 }
 
 private fun kubernetesName(value: String): String {
@@ -396,7 +562,9 @@ private data class RuntimeAgentDependencyNames(
     val postgres: String,
     val postgresData: String,
     val umadb: String,
-    val umadbData: String
+    val umadbData: String,
+    val participantConsole: String,
+    val participantConsoleNginx: String
 )
 
 private fun runtimeAgentDependencyNames(deploymentName: String): RuntimeAgentDependencyNames =
@@ -404,8 +572,15 @@ private fun runtimeAgentDependencyNames(deploymentName: String): RuntimeAgentDep
         postgres = relatedKubernetesName(deploymentName, "postgres"),
         postgresData = relatedKubernetesName(deploymentName, "postgres-data"),
         umadb = relatedKubernetesName(deploymentName, "umadb"),
-        umadbData = relatedKubernetesName(deploymentName, "umadb-data")
+        umadbData = relatedKubernetesName(deploymentName, "umadb-data"),
+        participantConsole = relatedKubernetesName(deploymentName, "console"),
+        participantConsoleNginx = relatedKubernetesName(deploymentName, "console-nginx")
     )
+
+private fun normalizePath(value: String): String {
+    val path = value.trim().ifBlank { "/api/runtime-agent" }
+    return if (path.startsWith("/")) path.trimEnd('/') else "/${path.trimEnd('/')}"
+}
 
 private fun relatedKubernetesName(base: String, suffix: String): String {
     val sanitizedBase = kubernetesName(base)

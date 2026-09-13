@@ -91,7 +91,8 @@ class K3sRuntimeInfrastructureAdapterTest {
             K3sCommandResult(exitCode = 0, output = "configured", timedOut = false),
             K3sCommandResult(exitCode = 0, output = "postgres successfully rolled out", timedOut = false),
             K3sCommandResult(exitCode = 0, output = "umadb successfully rolled out", timedOut = false),
-            K3sCommandResult(exitCode = 0, output = "deployment successfully rolled out", timedOut = false)
+            K3sCommandResult(exitCode = 0, output = "deployment successfully rolled out", timedOut = false),
+            K3sCommandResult(exitCode = 0, output = "console successfully rolled out", timedOut = false)
         )
         val adapter = K3sDeployRuntimeAgentAdapter(properties(), lookup(), runner)
 
@@ -107,7 +108,8 @@ class K3sRuntimeInfrastructureAdapterTest {
                 listOf("apply", "-n", "runtime-test", "-f", manifestPath),
                 listOf("rollout", "status", "deployment/runtime-agent-test-000000000000-postgres", "-n", "runtime-test"),
                 listOf("rollout", "status", "deployment/runtime-agent-test-000000000000-umadb", "-n", "runtime-test"),
-                listOf("rollout", "status", "deployment/runtime-agent-test-000000000000", "-n", "runtime-test")
+                listOf("rollout", "status", "deployment/runtime-agent-test-000000000000", "-n", "runtime-test"),
+                listOf("rollout", "status", "deployment/runtime-agent-test-000000000000-console", "-n", "runtime-test")
             ),
             runner.calls
         )
@@ -132,6 +134,12 @@ class K3sRuntimeInfrastructureAdapterTest {
         assertTrue(manifest.contains("name: \"RUNTIME_AGENT_ORGANIZATION_ID\""))
         assertTrue(manifest.contains("value: \"$organizationId\""))
         assertTrue(manifest.contains("value: \"http://runtime-agent-test-000000000000:8082\""))
+        assertTrue(manifest.contains("name: \"runtime-agent-test-000000000000-console-nginx\""))
+        assertTrue(manifest.contains("proxy_pass http://runtime-agent-test-000000000000:8082/;"))
+        assertTrue(manifest.contains("image: \"medol/federation-learning-participant-console:0.0.1-SNAPSHOT\""))
+        assertTrue(manifest.contains("value: \"/api/runtime-agent\""))
+        assertTrue(manifest.contains("type: \"NodePort\""))
+        assertTrue(manifest.contains("nodePort: 30082"))
         assertTrue(manifest.contains("nodeSelector:"))
         assertTrue(manifest.contains("medol.dev/node-role: \"runtime\""))
         assertTrue(manifest.contains("medol.dev/runtime-infrastructure-id: \"$runtimeInfrastructureId\""))

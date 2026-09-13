@@ -13,6 +13,13 @@ class K3sRuntimeInfrastructureProperties {
     var agentImage: String = "medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT"
     var agentReplicas: Int = 1
     var agentContainerPort: Int = 8082
+    var participantConsoleEnabled: Boolean = true
+    var participantConsoleImage: String = "medol/federation-learning-participant-console:0.0.1-SNAPSHOT"
+    var participantConsoleReplicas: Int = 1
+    var participantConsoleContainerPort: Int = 80
+    var participantConsoleServiceType: String = "NodePort"
+    var participantConsoleNodePort: Int? = 30082
+    var participantConsoleApiPath: String = "/api/runtime-agent"
     var platformUrl: String = "http://federation-learning-platform:8081"
     var supportUrl: String = "http://federation-learning-support:8080"
     var databaseUrl: String = "jdbc:postgresql://postgres:5432/federation_learning_runtime_agent"

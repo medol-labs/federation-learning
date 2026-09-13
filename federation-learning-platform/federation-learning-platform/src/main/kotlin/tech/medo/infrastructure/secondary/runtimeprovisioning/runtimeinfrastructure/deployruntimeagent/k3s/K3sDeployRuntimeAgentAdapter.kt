@@ -83,6 +83,18 @@ class K3sDeployRuntimeAgentAdapter(
             return DeployRuntimeAgentResult.Unavailable(failure)
         }
 
+        for (frontendDeploymentName in manifest.frontendDeploymentNames) {
+            val rollout = runner.run(
+                properties,
+                listOf("rollout", "status", "deployment/$frontendDeploymentName", "-n", properties.namespace)
+            )
+            if (!rollout.succeeded) {
+                val failure = k3sCommandFailure("Kubernetes API await Deployment $frontendDeploymentName in ${properties.namespace}", rollout, properties)
+                log.debug("K3S runtime agent frontend unavailable during rollout: {}", failure)
+                return DeployRuntimeAgentResult.Unavailable(failure)
+            }
+        }
+
         log.debug(
             "K3S runtime agent deployed runtimeInfrastructureId={}, runtimeAgentId={}, deployment={}, agentVersion={}",
             input.runtimeInfrastructureId,

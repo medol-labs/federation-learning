@@ -98,8 +98,10 @@ runtime_image() {
 prepare_federation_learning_runtime_component() {
     local runtime_agent_image
     local runtime_engine_image
+    local participant_console_image
     runtime_agent_image="$(runtime_image FL_RUNTIME_AGENT_IMAGE federation-learning-runtime-agent)"
     runtime_engine_image="$(runtime_image FL_RUNTIME_ENGINE_IMAGE federation-learning-runtime-engine)"
+    participant_console_image="$(runtime_image FL_PARTICIPANT_CONSOLE_IMAGE federation-learning-participant-console)"
 
     rm -rf "${FEDERATION_LEARNING_RUNTIME_COMPONENT}"
     mkdir -p "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches"
@@ -129,6 +131,7 @@ metadata:
   name: "federation-learning-platform-dev-config"
 data:
   PLATFORM_RUNTIME_K3S_AGENT_IMAGE: "${runtime_agent_image}"
+  PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_IMAGE: "${participant_console_image}"
   PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE: "${runtime_engine_image}"
 ---
 apiVersion: "v1"
@@ -155,6 +158,9 @@ kubeAPI:
   hostPort: "6550"
 ports:
   - port: "30080:30080"
+    nodeFilters:
+      - "server:0"
+  - port: "30082:30082"
     nodeFilters:
       - "server:0"
 volumes:
