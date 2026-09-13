@@ -292,7 +292,7 @@ export const RetryRuntimeInfrastructureVerificationCommandSchema = z.object({
   runtimeAgentId: z.string().uuid(),
   agentInstallMode: z.string(),
   expectedNodeCount: z.coerce.number().int(),
-  currentRuntimeInfrastructureState: z.string(),
+  currentRuntimeInfrastructureState: z.enum(["PLANNED", "REGISTERED", "PREPARED", "VERIFIED", "VERIFICATION_FAILED", "AGENT_READY", "RUNTIME_AGENT_FAILED", "OFFLINE", "CONNECTED"]),
   retryReason: z.string(),
 });
 export type RetryRuntimeInfrastructureVerificationCommandInput = z.infer<typeof RetryRuntimeInfrastructureVerificationCommandSchema>;
@@ -310,7 +310,7 @@ export const RetryRuntimeAgentDeploymentCommandSchema = z.object({
   runtimeName: z.string(),
   agentInstallMode: z.string(),
   expectedNodeCount: z.coerce.number().int(),
-  currentRuntimeInfrastructureState: z.string(),
+  currentRuntimeInfrastructureState: z.enum(["PLANNED", "REGISTERED", "PREPARED", "VERIFIED", "VERIFICATION_FAILED", "AGENT_READY", "RUNTIME_AGENT_FAILED", "OFFLINE", "CONNECTED"]),
   retryReason: z.string(),
 });
 export type RetryRuntimeAgentDeploymentCommandInput = z.infer<typeof RetryRuntimeAgentDeploymentCommandSchema>;

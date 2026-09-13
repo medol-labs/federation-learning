@@ -359,7 +359,7 @@ spec:
         - name: "runtime-datasets"
           hostPath:
             path: ${quote(properties.runtimeEngineDatasetHostPath)}
-            type: "Directory"
+            type: "DirectoryOrCreate"
         - name: "runtime-work"
           hostPath:
             path: ${quote(properties.runtimeEngineWorkHostPath)}

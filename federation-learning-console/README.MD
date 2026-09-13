@@ -79,7 +79,7 @@ Push the image to a registry:
 DOCKER_IMAGE_PREFIX=192.168.50.2:5000/<namespace> node scripts/push-images.mjs
 ```
 
-The image name defaults to `medol/federation-learning-platform-console:0.0.1-SNAPSHOT`. Override it with `--prefix`, `--image`, and `--version`.
+The image name defaults to `medol/federation-learning-platform:0.0.1-SNAPSHOT`. Override it with `--prefix`, `--image`, and `--version`.
 
 Run the built image with Docker Compose:
 

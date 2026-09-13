@@ -2,7 +2,6 @@ package tech.medo.iam.infrastructure.security
 
 import java.util.UUID
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
-import org.springframework.beans.factory.ObjectProvider
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 import tech.jhipster.service.filter.StringFilter
@@ -23,7 +22,6 @@ class BuiltinReadModelAuthIdentityRepository(
     private val userAccounts: UserAccountCatalogReadModelRepository,
     private val userRoleAssignments: UserRoleAssignmentCatalogReadModelRepository,
     private val rolePermissionGrants: RolePermissionGrantCatalogReadModelRepository,
-    private val organizationResolver: ObjectProvider<AuthOrganizationResolver>,
 ) : AuthIdentityRepository {
     override fun findByUsername(username: String): AuthIdentity? =
         findBest(UserAccountCatalogReadModelCriteria().apply {
@@ -63,7 +61,7 @@ class BuiltinReadModelAuthIdentityRepository(
             username = loginName,
             providerSubject = providerSubject,
             passwordHash = passwordHash,
-            organizationId = organizationResolver.ifAvailable?.resolveOrganizationId(id),
+            organizationId = null,
             active = active ?: false,
             roles = grantedRoles,
             permissions = grantedRoles

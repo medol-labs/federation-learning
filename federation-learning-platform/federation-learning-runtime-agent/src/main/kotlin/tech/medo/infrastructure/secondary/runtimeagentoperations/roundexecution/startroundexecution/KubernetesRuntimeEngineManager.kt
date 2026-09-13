@@ -55,7 +55,7 @@ class KubernetesRuntimeEngineManager(
                     .withName("datasets")
                     .withNewHostPath()
                     .withPath(properties.kubernetesDatasetHostPath)
-                    .withType("Directory")
+                    .withType("DirectoryOrCreate")
                     .endHostPath()
                     .build(),
                 VolumeBuilder()

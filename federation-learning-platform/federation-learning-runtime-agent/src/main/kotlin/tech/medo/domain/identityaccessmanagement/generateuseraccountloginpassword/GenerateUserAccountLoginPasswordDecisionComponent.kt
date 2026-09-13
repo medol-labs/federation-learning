@@ -1,0 +1,7 @@
+package tech.medo.domain.identityaccessmanagement.generateuseraccountloginpassword
+
+import org.springframework.stereotype.Component
+import tech.medo.identityaccessmanagement.generateuseraccountloginpassword.GenerateUserAccountLoginPasswordDecision
+
+@Component
+class GenerateUserAccountLoginPasswordDecisionComponent : GenerateUserAccountLoginPasswordDecision

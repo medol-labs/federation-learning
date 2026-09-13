@@ -9,7 +9,8 @@ This repository is a Medol generated system workspace.
 - `.medol/medol.yml` configures generator output directories and operations settings.
 - `.medol/medol.local.yml` may override local machine settings such as `operations.registry`; it is intentionally ignored by git.
 - `federation-learning-platform/` contains the generated Axon 5 / Spring Boot backend.
-- `federation-learning-console/` contains the generated Refine / React frontend.
+- `federation-learning-console/` contains the generated platform Refine / React frontend.
+- `federation-learning-participant-console/` contains the generated participant Refine / React frontend when the participant console is generated separately.
 - `federation-learning-runtime-engine/` contains the Python runtime engine for local training and aggregation.
 - `dictionary-init/` contains dictionary bootstrap and offline packaging scripts.
 - `operations/` contains generated deployment and operations assets when rendered.

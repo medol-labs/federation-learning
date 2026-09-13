@@ -1,7 +1,7 @@
 services:
   console:
-    image: ${CONSOLE_IMAGE:-medol/federation-learning-platform-console:0.0.1-SNAPSHOT}
-    container_name: ${CONSOLE_CONTAINER_NAME:-federation-learning-platform-console}
+    image: ${CONSOLE_IMAGE:-medol/federation-learning-platform:0.0.1-SNAPSHOT}
+    container_name: ${CONSOLE_CONTAINER_NAME:-federation-learning-platform}
     ports:
       - "${CONSOLE_PORT:-5173}:80"
     environment:

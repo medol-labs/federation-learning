@@ -1,0 +1,7 @@
+package tech.medo.domain.identityaccessmanagement.registeruseraccount
+
+import org.springframework.stereotype.Component
+import tech.medo.identityaccessmanagement.registeruseraccount.RegisterUserAccountDecision
+
+@Component
+class RegisterUserAccountDecisionComponent : RegisterUserAccountDecision

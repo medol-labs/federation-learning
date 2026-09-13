@@ -1,24 +1,24 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "console"
+  name: "federation-learning-console"
   labels:
-    "app.kubernetes.io/name": "console"
+    "app.kubernetes.io/name": "federation-learning-console"
     "app.kubernetes.io/component": "frontend"
     "app.kubernetes.io/managed-by": "medol-operations-generator"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "console"
+      app: "federation-learning-console"
   template:
     metadata:
       labels:
-        app: "console"
+        app: "federation-learning-console"
     spec:
       containers:
-        - name: "console"
-          image: "medol/federation-learning-platform-console:0.0.1-SNAPSHOT"
+        - name: "federation-learning-console"
+          image: "medol/federation-learning-console:0.0.1-SNAPSHOT"
           ports:
             - containerPort: 80
           readinessProbe:
@@ -39,15 +39,70 @@ spec:
 apiVersion: "v1"
 kind: "Service"
 metadata:
-  name: "console"
+  name: "federation-learning-console"
   labels:
-    "app.kubernetes.io/name": "console"
+    "app.kubernetes.io/name": "federation-learning-console"
     "app.kubernetes.io/component": "service"
     "app.kubernetes.io/managed-by": "medol-operations-generator"
 spec:
   type: "ClusterIP"
   selector:
-    app: "console"
+    app: "federation-learning-console"
+  ports:
+    - name: "http"
+      port: 80
+      targetPort: 80
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "federation-learning-participant-console"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-participant-console"
+    "app.kubernetes.io/component": "frontend"
+    "app.kubernetes.io/managed-by": "medol-operations-generator"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "federation-learning-participant-console"
+  template:
+    metadata:
+      labels:
+        app: "federation-learning-participant-console"
+    spec:
+      containers:
+        - name: "federation-learning-participant-console"
+          image: "medol/federation-learning-participant-console:0.0.1-SNAPSHOT"
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: "/health"
+              port: 80
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: 80
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 5
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "federation-learning-participant-console"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-participant-console"
+    "app.kubernetes.io/component": "service"
+    "app.kubernetes.io/managed-by": "medol-operations-generator"
+spec:
+  type: "ClusterIP"
+  selector:
+    app: "federation-learning-participant-console"
   ports:
     - name: "http"
       port: 80

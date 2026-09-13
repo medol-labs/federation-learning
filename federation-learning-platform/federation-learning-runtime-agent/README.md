@@ -121,6 +121,16 @@ cd ..
 docker compose -f federation-learning-runtime-agent/docker-compose.yml up -d federation-learning-runtime-agent
 ```
 
+This deployment also owns frontend application(s) that only target this backend. Start the backend and bundled frontend services together with:
+
+```bash
+cd ..
+docker compose -f federation-learning-runtime-agent/docker-compose.yml --profile application up -d
+```
+
+Bundled frontend services:
+- `federation-learning-participant-console` on `${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_PORT:-5175}`, using `${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8082}` for this backend API.
+
 The UmaDB adapter implements Axon Framework's `EventStorageEngine` boundary over UmaDB's official `umadb.v1.DCB` gRPC service: events are stored with DCB tags, Axon event criteria are mapped to UmaDB queries, conditional append uses UmaDB's DCB conflict condition, and source/stream tokens use Axon's global next-position semantics. Axon processor checkpoints still use the generated `token_entry` table; UmaDB's optional `TrackingInfo` API is not used as an Axon token store.
 
 ## Seed Development Data

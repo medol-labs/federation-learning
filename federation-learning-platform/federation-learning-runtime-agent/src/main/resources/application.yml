@@ -81,8 +81,6 @@ medol:
       request-timeout: ${UMADB_REQUEST_TIMEOUT:PT10S}
 
 integration:
-  federation-learning-support:
-    endpoint: ${FEDERATION_LEARNING_SUPPORT_URL:}
   federation-learning-platform:
     endpoint: ${FEDERATION_LEARNING_PLATFORM_URL:}
 

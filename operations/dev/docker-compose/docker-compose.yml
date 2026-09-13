@@ -10,7 +10,9 @@ services:
       - "../infrastructure/apisix/config.yaml:/usr/local/apisix/conf/config.yaml:ro"
       - "../infrastructure/apisix/apisix.yaml:/usr/local/apisix/conf/apisix.yaml:ro"
     depends_on:
-      console:
+      federation-learning-console:
+        condition: "service_healthy"
+      federation-learning-participant-console:
         condition: "service_healthy"
       federation-learning-support:
         condition: "service_healthy"
@@ -20,9 +22,9 @@ services:
         condition: "service_healthy"
     networks:
       - "medol-network"
-  console:
-    image: "${CONSOLE_IMAGE:-192.168.139.3:5000/fl/federation-learning-platform-console}"
-    container_name: "${CONSOLE_CONTAINER_NAME:-console}"
+  federation-learning-console:
+    image: "${FEDERATION_LEARNING_CONSOLE_IMAGE:-192.168.139.3:5000/fl/federation-learning-console}"
+    container_name: "${FEDERATION_LEARNING_CONSOLE_CONTAINER_NAME:-federation-learning-console}"
     restart: "unless-stopped"
     expose:
       - "80"
@@ -30,8 +32,29 @@ services:
       VITE_API_URL: "https://iwdfzvfqbtokqetmbmbp.supabase.co"
       VITE_AXON_API_URL: "/api/federation-learning-support"
       VITE_FEDERATION_LEARNING_PLATFORM_API_URL: "/api/federation-learning-platform"
-      VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL: "/api/federation-learning-runtime-agent"
       VITE_FEDERATION_LEARNING_SUPPORT_API_URL: "/api/federation-learning-support"
+      VITE_FRONTEND_APP: "FederationLearningConsole"
+      VITE_SUPABASE_API_KEY: "${VITE_SUPABASE_API_KEY:-}"
+    networks:
+      - "medol-network"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "wget -qO- http://127.0.0.1:80/health >/dev/null 2>&1 || exit 1"
+      interval: "10s"
+      timeout: "3s"
+      retries: 5
+  federation-learning-participant-console:
+    image: "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_IMAGE:-192.168.139.3:5000/fl/federation-learning-participant-console}"
+    container_name: "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_CONTAINER_NAME:-federation-learning-participant-console}"
+    restart: "unless-stopped"
+    expose:
+      - "80"
+    environment:
+      VITE_API_URL: "https://iwdfzvfqbtokqetmbmbp.supabase.co"
+      VITE_AXON_API_URL: "/api/federation-learning-runtime-agent"
+      VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL: "/api/federation-learning-runtime-agent"
+      VITE_FRONTEND_APP: "FederationLearningParticipantConsole"
       VITE_SUPABASE_API_KEY: "${VITE_SUPABASE_API_KEY:-}"
     networks:
       - "medol-network"
@@ -141,10 +164,6 @@ services:
       FEDERATION_LEARNING_PLATFORM_URL: "http://federation-learning-platform:8081"
       FEDERATION_LEARNING_SUPPORT_URL: "http://federation-learning-support:8080"
       MEDOL_AXON_EVENT_STORAGE: "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
-      RUNTIME_AGENT_ENDPOINT: "${RUNTIME_AGENT_ENDPOINT:-http://federation-learning-runtime-agent:8082}"
-      RUNTIME_AGENT_ENDPOINT_SCOPE: "${RUNTIME_AGENT_ENDPOINT_SCOPE:-LOCAL_DEV}"
-      RUNTIME_AGENT_ORGANIZATION_ID: "${RUNTIME_AGENT_ORGANIZATION_ID:?Set RUNTIME_AGENT_ORGANIZATION_ID}"
-      RUNTIME_AGENT_RUNTIME_NAME: "${RUNTIME_AGENT_RUNTIME_NAME:-local-docker-compose-runtime-agent}"
       SERVER_PORT: "8082"
       SPRING_DOCKER_COMPOSE_ENABLED: "false"
       UMADB_API_KEY: "${UMADB_API_KEY:-}"

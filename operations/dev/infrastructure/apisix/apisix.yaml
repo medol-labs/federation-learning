@@ -1,8 +1,17 @@
 routes:
-  - id: "console-root"
-    name: "Frontend Console Root"
+  - id: "federation-learning-console-root"
+    name: "Federation Learning Console Root"
     uri: "/*"
-    upstream_id: "console"
+    upstream_id: "federation-learning-console"
+  - id: "federation-learning-participant-console-root"
+    name: "Federation Learning Participant Console Root"
+    uri: "/federation-learning-participant-console/*"
+    upstream_id: "federation-learning-participant-console"
+    plugins:
+      proxy-rewrite:
+        regex_uri:
+          - "^/federation-learning-participant-console/(.*)"
+          - "/$1"
   - id: "federation-learning-support-api"
     name: "Federation Learning Support API"
     uri: "/api/federation-learning-support/*"
@@ -31,10 +40,14 @@ routes:
           - "^/api/federation-learning-runtime-agent/(.*)"
           - "/$1"
 upstreams:
-  - id: "console"
+  - id: "federation-learning-console"
     type: "roundrobin"
     nodes:
-      "console:80": 1
+      "federation-learning-console:80": 1
+  - id: "federation-learning-participant-console"
+    type: "roundrobin"
+    nodes:
+      "federation-learning-participant-console:80": 1
   - id: "federation-learning-support"
     type: "roundrobin"
     nodes:

@@ -83,8 +83,6 @@ medol:
 integration:
   federation-learning-platform:
     endpoint: ${FEDERATION_LEARNING_PLATFORM_URL:}
-  federation-learning-runtime-agent:
-    endpoint: ${FEDERATION_LEARNING_RUNTIME_AGENT_URL:}
 
 management:
   endpoints:

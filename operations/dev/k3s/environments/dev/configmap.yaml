@@ -1,17 +1,32 @@
 apiVersion: "v1"
 kind: "ConfigMap"
 metadata:
-  name: "console-dev-config"
+  name: "federation-learning-console-dev-config"
   labels:
-    "app.kubernetes.io/name": "console-dev-config"
+    "app.kubernetes.io/name": "federation-learning-console-dev-config"
     "app.kubernetes.io/component": "application-config"
     "app.kubernetes.io/managed-by": "medol-operations-generator"
 data:
   VITE_API_URL: "https://iwdfzvfqbtokqetmbmbp.supabase.co"
   VITE_AXON_API_URL: "/api/federation-learning-support"
   VITE_FEDERATION_LEARNING_PLATFORM_API_URL: "/api/federation-learning-platform"
-  VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL: "/api/federation-learning-runtime-agent"
   VITE_FEDERATION_LEARNING_SUPPORT_API_URL: "/api/federation-learning-support"
+  VITE_FRONTEND_APP: "FederationLearningConsole"
+  VITE_SUPABASE_API_KEY: ""
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "federation-learning-participant-console-dev-config"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-participant-console-dev-config"
+    "app.kubernetes.io/component": "application-config"
+    "app.kubernetes.io/managed-by": "medol-operations-generator"
+data:
+  VITE_API_URL: "https://iwdfzvfqbtokqetmbmbp.supabase.co"
+  VITE_AXON_API_URL: "/api/federation-learning-runtime-agent"
+  VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL: "/api/federation-learning-runtime-agent"
+  VITE_FRONTEND_APP: "FederationLearningParticipantConsole"
   VITE_SUPABASE_API_KEY: ""
 ---
 apiVersion: "v1"
@@ -82,10 +97,8 @@ data:
   FEDERATION_LEARNING_PLATFORM_URL: "http://federation-learning-platform:8081"
   FEDERATION_LEARNING_SUPPORT_URL: "http://federation-learning-support:8080"
   MEDOL_AXON_EVENT_STORAGE: "umadb"
+  MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED: "true"
   MEDOL_SECURITY_ALLOWED_ORIGINS: "http://localhost:*,http://127.0.0.1:*,http://*:30080"
-  RUNTIME_AGENT_ENDPOINT: "http://federation-learning-runtime-agent:8082"
-  RUNTIME_AGENT_ENDPOINT_SCOPE: "LOCAL_DEV"
-  RUNTIME_AGENT_RUNTIME_NAME: "local-k3s-runtime-agent"
   SERVER_PORT: "8082"
   SPRING_DOCKER_COMPOSE_ENABLED: "false"
   UMADB_BATCH_SIZE: "256"

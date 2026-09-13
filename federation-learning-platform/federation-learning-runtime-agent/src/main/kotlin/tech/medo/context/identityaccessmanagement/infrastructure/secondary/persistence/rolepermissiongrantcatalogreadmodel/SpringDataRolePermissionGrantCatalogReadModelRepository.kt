@@ -1,0 +1,12 @@
+package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.rolepermissiongrantcatalogreadmodel
+
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor
+import java.util.UUID;
+
+import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermissionGrantCatalogReadModelKey
+
+interface SpringDataRolePermissionGrantCatalogReadModelRepository : JpaRepository<RolePermissionGrantCatalogReadModelEntity, RolePermissionGrantCatalogReadModelKey>, JpaSpecificationExecutor<RolePermissionGrantCatalogReadModelEntity> {
+    fun findAllByRoleCode(roleCode: String): List<RolePermissionGrantCatalogReadModelEntity>
+    fun findAllByPermissionCode(permissionCode: String): List<RolePermissionGrantCatalogReadModelEntity>
+}

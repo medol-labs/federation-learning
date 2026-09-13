@@ -6,7 +6,8 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 
 ## Topology
 
-- `console` runs the generated frontend application.
+- `federation-learning-console` runs the generated frontend application.
+- `federation-learning-participant-console` runs the generated frontend application.
 - `federation-learning-support` runs the generated backend application.
 - `federation-learning-platform` runs the generated backend application.
 - `federation-learning-runtime-agent` runs the generated backend application.
@@ -32,7 +33,8 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 Build, push, or import these images on every node that may run the workloads:
 
 ```bash
-medol/federation-learning-platform-console:0.0.1-SNAPSHOT
+medol/federation-learning-console:0.0.1-SNAPSHOT
+medol/federation-learning-participant-console:0.0.1-SNAPSHOT
 medol/federation-learning-support:0.0.1-SNAPSHOT
 medol/federation-learning-platform:0.0.1-SNAPSHOT
 medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT
@@ -100,6 +102,7 @@ APISIX is exposed with a LoadBalancer service. Use the external address assigned
 Default routes:
 
 - `/*` -> `undefined`
+- `/federation-learning-participant-console/*` -> `undefined`
 - `/api/federation-learning-support/*` -> `undefined`
 - `/api/federation-learning-platform/*` -> `undefined`
 - `/api/federation-learning-runtime-agent/*` -> `undefined`
@@ -109,7 +112,8 @@ Default routes:
 ```bash
 kubectl -n federation-learning-platform rollout status deploy/postgres
 kubectl -n federation-learning-platform rollout status deploy/umadb
-kubectl -n federation-learning-platform rollout status deploy/console
+kubectl -n federation-learning-platform rollout status deploy/federation-learning-console
+kubectl -n federation-learning-platform rollout status deploy/federation-learning-participant-console
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-platform
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-runtime-agent
@@ -140,8 +144,9 @@ kubectl -n federation-learning-platform apply -f environments/<environment>/secr
 ConfigMap and Secret changes are read when a Pod starts. Restart the affected Deployments after changing them:
 
 ```bash
-kubectl -n federation-learning-platform rollout restart deploy/console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent
-kubectl -n federation-learning-platform rollout status deploy/console
+kubectl -n federation-learning-platform rollout restart deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform rollout status deploy/federation-learning-console
+kubectl -n federation-learning-platform rollout status deploy/federation-learning-participant-console
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-platform
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-runtime-agent
@@ -150,19 +155,19 @@ kubectl -n federation-learning-platform rollout status deploy/federation-learnin
 Stop only the business services while keeping the namespace, databases, PVCs, and gateway objects:
 
 ```bash
-kubectl -n federation-learning-platform scale deploy/console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent --replicas=0
+kubectl -n federation-learning-platform scale deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent --replicas=0
 ```
 
 Start the business services again:
 
 ```bash
-kubectl -n federation-learning-platform scale deploy/console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent --replicas=1
+kubectl -n federation-learning-platform scale deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent --replicas=1
 ```
 
 Delete only the business service Deployments:
 
 ```bash
-kubectl -n federation-learning-platform delete deploy/console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform delete deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent
 ```
 
 Inspect common failure details:

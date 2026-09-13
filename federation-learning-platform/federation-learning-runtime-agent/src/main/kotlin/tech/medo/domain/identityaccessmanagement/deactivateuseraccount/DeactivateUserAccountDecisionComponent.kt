@@ -1,0 +1,7 @@
+package tech.medo.domain.identityaccessmanagement.deactivateuseraccount
+
+import org.springframework.stereotype.Component
+import tech.medo.identityaccessmanagement.deactivateuseraccount.DeactivateUserAccountDecision
+
+@Component
+class DeactivateUserAccountDecisionComponent : DeactivateUserAccountDecision

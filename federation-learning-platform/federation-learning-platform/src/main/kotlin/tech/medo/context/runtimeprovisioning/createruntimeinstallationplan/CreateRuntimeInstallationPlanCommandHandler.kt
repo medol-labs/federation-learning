@@ -2,14 +2,13 @@ package tech.medo.runtimeprovisioning.createruntimeinstallationplan
 
 import org.axonframework.messaging.commandhandling.annotation.CommandHandler
 import org.axonframework.messaging.eventhandling.gateway.EventAppender
-import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.runtimeprovisioning.createruntimeinstallationplan.CreateRuntimeInstallationPlanCommand
 import tech.medo.runtimeprovisioning.createruntimeinstallationplan.CreateRuntimeInstallationPlanInput
 import tech.medo.runtimeprovisioning.createruntimeinstallationplan.CreateRuntimeInstallationPlanService
 
 
-import tech.medo.runtimeprovisioning.runtimeinstallationplan.RuntimeInstallationPlanOrganizationIdReservationState
+
 
 @Component
 class CreateRuntimeInstallationPlanCommandHandler(
@@ -19,12 +18,11 @@ class CreateRuntimeInstallationPlanCommandHandler(
     @CommandHandler
     fun handle(
         command: CreateRuntimeInstallationPlanCommand,
-        @InjectEntity(idProperty = "runtimeInstallationPlanOrganizationIdSelection") runtimeInstallationPlanOrganizationIdReservation: RuntimeInstallationPlanOrganizationIdReservationState,
         eventAppender: EventAppender
     ) {
         val input = CreateRuntimeInstallationPlanInput(runtimeInstallationPlanId = command.runtimeInstallationPlanId, runtimeInfrastructureId = command.runtimeInfrastructureId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, agentInstallMode = command.agentInstallMode, expectedNodeCount = command.expectedNodeCount)
         val portResult = createRuntimeInstallationPlanService.execute(input)
 
-        eventAppender.append(decision.decide(command, runtimeInstallationPlanOrganizationIdReservation, portResult))
+        eventAppender.append(decision.decide(command, portResult))
     }
 }

@@ -92,8 +92,33 @@ services:
       AXON_SERVER_ENABLED: "false"
       AXON_SERVER_EVENT_STORE_ENABLED: "false"
       AXON_UPDATE_CHECK_DISABLED: ${AXON_UPDATE_CHECK_DISABLED:-true}
-      FEDERATION_LEARNING_SUPPORT_URL: ${FEDERATION_LEARNING_SUPPORT_URL:-}
       FEDERATION_LEARNING_PLATFORM_URL: ${FEDERATION_LEARNING_PLATFORM_URL:-}
+
+  federation-learning-participant-console:
+    image: ${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_IMAGE:-medol/federation-learning-participant-console:0.0.1-SNAPSHOT}
+    platform: ${DOCKER_PLATFORM:-}
+    restart: unless-stopped
+    profiles:
+      - application
+      - frontend
+    depends_on:
+      federation-learning-runtime-agent:
+        condition: service_started
+    ports:
+      - "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_PORT:-5175}:80"
+    environment:
+      VITE_AUTH_PROVIDER: ${VITE_AUTH_PROVIDER:-local}
+      VITE_ACCESS_CONTROL_MODE: ${VITE_ACCESS_CONTROL_MODE:-permissive}
+      VITE_AUTH_API_URL: ${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8082}
+      VITE_AXON_API_URL: ${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8082}
+      VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL: ${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8082}
+      VITE_FRONTEND_APP: FederationLearningParticipantConsole
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/health >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
 
 volumes:
   postgres_data:

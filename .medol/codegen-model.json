@@ -179,6 +179,119 @@
           "id": "context-89cfb7d8",
           "name": "RuntimeAgentOperations",
           "title": "Runtime Agent Operations"
+        },
+        {
+          "id": "context-90939a75",
+          "name": "IdentityAccessManagement",
+          "title": "Identity Access Management"
+        }
+      ]
+    }
+  ],
+  "frontendApplications": [
+    {
+      "id": "frontend-87e55575",
+      "name": "FederationLearningConsole",
+      "title": "Federation Learning Console",
+      "domain": "FederationLearningPlatform",
+      "contexts": [
+        {
+          "id": "context-2ba11f6f",
+          "name": "OrganizationManagement",
+          "title": "Organization Management",
+          "backend": "FederationLearningPlatform"
+        },
+        {
+          "id": "context-2b629579",
+          "name": "FederationManagement",
+          "title": "Federation Management",
+          "backend": "FederationLearningPlatform"
+        },
+        {
+          "id": "context-9b431962",
+          "name": "DictionaryMaintenance",
+          "title": "Dictionary Maintenance",
+          "backend": "FederationLearningSupport"
+        },
+        {
+          "id": "context-99c60f04",
+          "name": "FileUpload",
+          "title": "File Upload",
+          "backend": "FederationLearningSupport"
+        },
+        {
+          "id": "context-dec3aef8",
+          "name": "RuntimeProvisioning",
+          "title": "Runtime Provisioning",
+          "backend": "FederationLearningPlatform"
+        },
+        {
+          "id": "context-31248395",
+          "name": "DatasetGovernance",
+          "title": "Dataset Governance",
+          "backend": "FederationLearningPlatform"
+        },
+        {
+          "id": "context-25138624",
+          "name": "ModelRepository",
+          "title": "Model Repository",
+          "backend": "FederationLearningPlatform"
+        },
+        {
+          "id": "context-43411002",
+          "name": "TrainingOrchestration",
+          "title": "Training Orchestration",
+          "backend": "FederationLearningPlatform"
+        },
+        {
+          "id": "context-2054f8dc",
+          "name": "ModelLifecycle",
+          "title": "Model Lifecycle",
+          "backend": "FederationLearningPlatform"
+        },
+        {
+          "id": "context-ce56a8f7",
+          "name": "RuntimeMonitoring",
+          "title": "Runtime Monitoring",
+          "backend": "FederationLearningPlatform"
+        },
+        {
+          "id": "context-a12abe49",
+          "name": "RuntimeGovernance",
+          "title": "Runtime Governance",
+          "backend": "FederationLearningPlatform"
+        },
+        {
+          "id": "context-2b443b10",
+          "name": "SecureAggregation",
+          "title": "Secure Aggregation",
+          "backend": "FederationLearningPlatform"
+        },
+        {
+          "id": "context-90939a75",
+          "name": "IdentityAccessManagement",
+          "title": "Identity Access Management",
+          "backend": "FederationLearningSupport"
+        }
+      ]
+    },
+    {
+      "id": "frontend-2248bc3e",
+      "name": "FederationLearningParticipantConsole",
+      "title": "Federation Learning Participant Console",
+      "domain": "FederationLearningPlatform",
+      "contexts": [
+        {
+          "id": "context-89cfb7d8",
+          "name": "RuntimeAgentOperations",
+          "title": "Runtime Agent Operations",
+          "backend": "FederationLearningRuntimeAgent"
+        },
+        {
+          "id": "context-90939a75",
+          "name": "IdentityAccessManagement",
+          "title": "Identity Access Management",
+          "backend": "FederationLearningRuntimeAgent"
         }
       ]
     }
@@ -17282,132 +17395,7 @@
         }
       ],
       "processors": [],
-      "specifications": [
-        {
-          "id": "gwt-ff5aafb5",
-          "chapter": "RuntimeProvisioning",
-          "sliceName": "Create Runtime Installation Plan",
-          "title": "Reject Duplicate Runtime Installation Plan Organization",
-          "specification": "Runtime Installation Plan Organization Unique",
-          "rule": "A business organization can have only one runtime installation plan.",
-          "expressions": [
-            "unique RuntimeInstallationPlan.organizationId"
-          ],
-          "validates": [
-            "unique RuntimeInstallationPlan.organizationId"
-          ],
-          "given": [
-            {
-              "title": "Runtime Installation Plan Created",
-              "id": "event-88fc2922",
-              "type": "EVENT",
-              "fields": [
-                {
-                  "name": "runtimeInstallationPlanId"
-                },
-                {
-                  "name": "runtimeInfrastructureId"
-                },
-                {
-                  "name": "organizationId",
-                  "example": "11111111-1111-4111-8111-111111111111"
-                },
-                {
-                  "name": "organizationName"
-                },
-                {
-                  "name": "runtimeInfrastructurePackageId"
-                },
-                {
-                  "name": "runtimeInfrastructurePackageName"
-                },
-                {
-                  "name": "runtimeInfrastructurePackageVersion"
-                },
-                {
-                  "name": "runtimeEnvironmentType"
-                },
-                {
-                  "name": "runtimeName"
-                },
-                {
-                  "name": "bootstrapCommand"
-                },
-                {
-                  "name": "nodeLabelCommand"
-                },
-                {
-                  "name": "nodeTaintCommand"
-                },
-                {
-                  "name": "runtimeAgentNodeSelectorYaml"
-                },
-                {
-                  "name": "runtimeAgentTolerationsYaml"
-                },
-                {
-                  "name": "bootstrapConfigYaml"
-                },
-                {
-                  "name": "agentInstallMode"
-                },
-                {
-                  "name": "expectedNodeCount"
-                }
-              ]
-            }
-          ],
-          "when": [
-            {
-              "title": "Create Runtime Installation Plan",
-              "id": "command-4abdd87b",
-              "type": "COMMAND",
-              "fields": [
-                {
-                  "name": "runtimeInstallationPlanId"
-                },
-                {
-                  "name": "runtimeInfrastructureId"
-                },
-                {
-                  "name": "organizationId",
-                  "example": "11111111-1111-4111-8111-111111111111"
-                },
-                {
-                  "name": "organizationName"
-                },
-                {
-                  "name": "runtimeInfrastructurePackageId"
-                },
-                {
-                  "name": "runtimeInfrastructurePackageName"
-                },
-                {
-                  "name": "runtimeInfrastructurePackageVersion"
-                },
-                {
-                  "name": "runtimeEnvironmentType"
-                },
-                {
-                  "name": "runtimeName"
-                },
-                {
-                  "name": "agentInstallMode"
-                },
-                {
-                  "name": "expectedNodeCount"
-                }
-              ]
-            }
-          ],
-          "then": {
-            "title": "Rejected",
-            "id": "spec-reject-ff5aafb5",
-            "description": "Runtime Installation Plan Organization Already Exists",
-            "outcome": "REJECT"
-          }
-        }
-      ],
+      "specifications": [],
       "actors": [
         {
           "id": "actor-ea699d05",
@@ -92709,11 +92697,6 @@
       "Dictionary Name": "字典名称",
       "Dictionary Name is required": "字典名称为必填项",
       "Dictionary Registered": "字典已注册",
-      "Dictionary maintenance owns dynamic option dictionaries used by platform contexts. Business contexts store valueCode and query DictionaryValueCatalog by dictionaryCode for display and selection.": "字典维护负责管理平台上下文使用的动态选项字典。业务上下文存储 valueCode 并通过 dictionaryCode 查询 DictionaryValueCatalog 以进行显示和选择。",
-      "agentRuntimeJobFailureRate": "agentRuntimeJobFailureRate",
-      "agentRuntimeJobStartupLatency": "agentRuntimeJobStartupLatency",
-      "auditTrailCompleteness": "auditTrailCompleteness",
-      "datasetContractValidationFailureRate": "datasetContractValidationFailureRate",
       "Dictionary Updated": "字典已更新",
       "Dictionary Value": "字典值",
       "Dictionary Value Added": "字典值已添加",
@@ -92724,6 +92707,7 @@
       "Dictionary Value Enabled": "字典值已启用",
       "Dictionary Value Id": "字典值 ID",
       "Dictionary Value Id is required": "字典值 ID 为必填项",
+      "Dictionary maintenance owns dynamic option dictionaries used by platform contexts. Business contexts store valueCode and query DictionaryValueCatalog by dictionaryCode for display and selection.": "字典维护负责管理平台上下文使用的动态选项字典。业务上下文存储 valueCode 并通过 dictionaryCode 查询 DictionaryValueCatalog 以进行显示和选择。",
       "DictionaryMaintenance": "字典维护",
       "Disable Dictionary Value": "停用字典值",
       "Disabled": "已停用",
@@ -93212,7 +93196,6 @@
       "Enter Runtime Engine Job Id": "输入运行时引擎作业 ID",
       "Enter Runtime Engine Observation At": "输入运行时引擎观察时间",
       "Enter Runtime Engine Observed Status": "输入运行时引擎观察状态",
-      "dictionaryValueActivationLatency": "dictionaryValueActivationLatency",
       "Enter Runtime Engine Release Failure Reason": "输入运行时引擎发布失败原因",
       "Enter Runtime Engine Released": "输入运行时引擎已发布",
       "Enter Runtime Engine Version": "输入运行时引擎版本",
@@ -93699,14 +93682,6 @@
       "Object Bucket": "对象存储桶",
       "Object Bucket is required": "对象存储桶为必填项",
       "Object Prefix": "对象前缀",
-      "federationActivationLeadTime": "federationActivationLeadTime",
-      "fileUploadFailureRate": "fileUploadFailureRate",
-      "fileUploadLatency": "fileUploadLatency",
-      "globalAccuracyGap": "globalAccuracyGap",
-      "modelApprovalLeadTime": "modelApprovalLeadTime",
-      "modelArtifactPullFailureRate": "modelArtifactPullFailureRate",
-      "modelArtifactRegistrationLatency": "modelArtifactRegistrationLatency",
-      "nodeDropoutRate": "nodeDropoutRate",
       "Object Prefix is required": "对象前缀为必填项",
       "Objective": "目标",
       "Objective is required": "目标为必填项",
@@ -94187,15 +94162,6 @@
       "Runtime Agent Version": "运行时代理版本",
       "Runtime Agent Version is required": "运行时代理版本为必填项",
       "Runtime Capabilities Detected": "运行时能力已检测",
-      "Runtime agent deployment runs automatically after the runtime infrastructure is verified when the selected installation mode is platform managed. The deployment service deploys the agent workload to the target infrastructure and records exactly one outcome: RuntimeAgentInstallationSucceeded when the agent starts and passes its readiness checks, or RuntimeAgentInstallationFailed when deployment or readiness fails.": "当所选安装模式为平台管理时，运行时基础设施验证通过后，运行时代理部署将自动运行。部署服务将代理工作负载部署到目标基础设施，并准确记录一项结果：代理启动并通过就绪性检查时为 RuntimeAgentInstallationSucceeded，部署或就绪性失败时为 RuntimeAgentInstallationFailed。",
-      "Runtime agent operations is a separate deployable that runs inside participant infrastructure and executes dispatched training jobs with local data and local secrets.": "运行时代理操作是一个独立的可部署组件，在参与者基础设施内运行，并使用本地数据和本地机密执行分派的训练作业。",
-      "Runtime agent startup begins by loading bootstrap configuration from environment variables, mounted files, or platform-issued startup material. The configuration must provide the stable runtimeAgentId generated when RuntimeInfrastructure was registered, the matching runtimeInfrastructureId, and the agent version. A successful load starts the runtime-agent lifecycle; a missing or invalid configuration records a bootstrap failure and must not create a new random runtimeAgentId.": "运行时代理启动通过从环境变量、已挂载文件或平台颁发的启动材料加载引导配置来开始。该配置必须提供在 RuntimeInfrastructure 注册时生成的稳定 runtimeAgentId、与之匹配的 runtimeInfrastructureId，以及代理版本。成功加载将启动运行时代理生命周期；缺失或无效的配置会记录引导失败，并且不得创建新的随机 runtimeAgentId。",
-      "Runtime agents can pull stale or tampered models if artifact URI, digest, registry, format, and signature are not snapshotted with the training run.": "如果未将制品 URI、摘要、注册表、格式及签名与训练运行一同快照，运行时代理可能会拉取到过时或被篡改的模型。",
-      "Runtime bootstrap and agent installation material is support configuration, not domain state: the platform backend adapter reads platform.runtime.bootstrap.publicBaseAddress, platform.runtime.agent.platformApiBaseAddress, platform.runtime.agent.controlApiBaseAddress, platform.runtime.agent.containerRegistry, platform.runtime.agent.trustBundleSecretName, and platform.runtime.agent.accessGrantSecretPrefix from deployment config or a secret store. Commands, events, and read models keep only runtimeInstallationPlanId, runtimeInfrastructurePackageId, and generated access grant IDs.": "运行时引导和代理安装材料是支持配置，而非领域状态：平台后端适配器从部署配置或密钥存储中读取 platform.runtime.bootstrap.publicBaseAddress、platform.runtime.agent.platformApiBaseAddress、platform.runtime.agent.controlApiBaseAddress、platform.runtime.agent.containerRegistry、platform.runtime.agent.trustBundleSecretName 和 platform.runtime.agent.accessGrantSecretPrefix。命令、事件和读模型仅保留 runtimeInstallationPlanId、runtimeInfrastructurePackageId 以及生成的访问授权 ID。",
-      "organizationActivationLeadTime": "organizationActivationLeadTime",
-      "participantApprovalLeadTime": "participantApprovalLeadTime",
-      "productionRollbackRate": "productionRollbackRate",
-      "roundCompletionLatency": "roundCompletionLatency",
       "Runtime Capability": "运行时能力",
       "Runtime Capability Catalog": "运行时能力目录",
       "Runtime Capability Satisfied": "运行时能力已满足",
@@ -94315,6 +94281,11 @@
       "Runtime Status": "运行时状态",
       "Runtime Status is required": "运行时状态为必填项",
       "Runtime Telemetry Latest": "运行时最新遥测",
+      "Runtime agent deployment runs automatically after the runtime infrastructure is verified when the selected installation mode is platform managed. The deployment service deploys the agent workload to the target infrastructure and records exactly one outcome: RuntimeAgentInstallationSucceeded when the agent starts and passes its readiness checks, or RuntimeAgentInstallationFailed when deployment or readiness fails.": "当所选安装模式为平台管理时，运行时基础设施验证通过后，运行时代理部署将自动运行。部署服务将代理工作负载部署到目标基础设施，并准确记录一项结果：代理启动并通过就绪性检查时为 RuntimeAgentInstallationSucceeded，部署或就绪性失败时为 RuntimeAgentInstallationFailed。",
+      "Runtime agent operations is a separate deployable that runs inside participant infrastructure and executes dispatched training jobs with local data and local secrets.": "运行时代理操作是一个独立的可部署组件，在参与者基础设施内运行，并使用本地数据和本地机密执行分派的训练作业。",
+      "Runtime agent startup begins by loading bootstrap configuration from environment variables, mounted files, or platform-issued startup material. The configuration must provide the stable runtimeAgentId generated when RuntimeInfrastructure was registered, the matching runtimeInfrastructureId, and the agent version. A successful load starts the runtime-agent lifecycle; a missing or invalid configuration records a bootstrap failure and must not create a new random runtimeAgentId.": "运行时代理启动通过从环境变量、已挂载文件或平台颁发的启动材料加载引导配置来开始。该配置必须提供在 RuntimeInfrastructure 注册时生成的稳定 runtimeAgentId、与之匹配的 runtimeInfrastructureId，以及代理版本。成功加载将启动运行时代理生命周期；缺失或无效的配置会记录引导失败，并且不得创建新的随机 runtimeAgentId。",
+      "Runtime agents can pull stale or tampered models if artifact URI, digest, registry, format, and signature are not snapshotted with the training run.": "如果未将制品 URI、摘要、注册表、格式及签名与训练运行一同快照，运行时代理可能会拉取到过时或被篡改的模型。",
+      "Runtime bootstrap and agent installation material is support configuration, not domain state: the platform backend adapter reads platform.runtime.bootstrap.publicBaseAddress, platform.runtime.agent.platformApiBaseAddress, platform.runtime.agent.controlApiBaseAddress, platform.runtime.agent.containerRegistry, platform.runtime.agent.trustBundleSecretName, and platform.runtime.agent.accessGrantSecretPrefix from deployment config or a secret store. Commands, events, and read models keep only runtimeInstallationPlanId, runtimeInfrastructurePackageId, and generated access grant IDs.": "运行时引导和代理安装材料是支持配置，而非领域状态：平台后端适配器从部署配置或密钥存储中读取 platform.runtime.bootstrap.publicBaseAddress、platform.runtime.agent.platformApiBaseAddress、platform.runtime.agent.controlApiBaseAddress、platform.runtime.agent.containerRegistry、platform.runtime.agent.trustBundleSecretName 和 platform.runtime.agent.accessGrantSecretPrefix。命令、事件和读模型仅保留 runtimeInstallationPlanId、runtimeInfrastructurePackageId 以及生成的访问授权 ID。",
       "Runtime engine jobs can remain running after platform cancellation unless local job lifecycle is tracked explicitly.": "运行时引擎作业在平台取消后可能仍保持运行，除非明确跟踪本地作业生命周期。",
       "Runtime governance owns stable RuntimeIdentity activation, capability detection, and revocation. Runtime private keys, local paths, credentials, node scheduling, and data-plane connectivity stay inside participant runtime infrastructure.": "运行时治理负责稳定的 RuntimeIdentity 激活、能力检测和撤销。运行时私钥、本地路径、凭据、节点调度和数据平面连接保留在参与者运行时基础设施内部。",
       "Runtime infrastructure registration records the planned participant infrastructure only. Verification and platform-managed runtime agent deployment must wait until the runtime installer confirms that the K3s agent node has joined the target cluster and the generated labels and taints have been applied.": "运行时基础设施注册仅记录计划的参与者基础设施。验证和平台管理的运行时代理部署必须等待运行时安装程序确认 K3s 代理节点已加入目标集群，并且已应用生成的标签和污点。",
@@ -94676,14 +94647,6 @@
       "Select Password Hash": "选择密码哈希",
       "Select Password Reset Required": "选择是否需要重置密码",
       "Select Pause Reason": "选择暂停原因",
-      "Select all": "全选",
-      "runtimeActivationLeadTime": "runtimeActivationLeadTime",
-      "runtimeAlertMeanTimeToAcknowledge": "runtimeAlertMeanTimeToAcknowledge",
-      "runtimeBootstrapSuccessRate": "runtimeBootstrapSuccessRate",
-      "runtimeDatasetAccessValidationLatency": "runtimeDatasetAccessValidationLatency",
-      "runtimeIdentityCoverage": "runtimeIdentityCoverage",
-      "runtimeInfrastructureConnectionLatency": "runtimeInfrastructureConnectionLatency",
-      "secureAggregationCompletionLatency": "secureAggregationCompletionLatency",
       "Select Payload Hash": "选择载荷哈希",
       "Select Pending Invitation Count": "选择待处理邀请数量",
       "Select Pending Update Count": "选择待定更新数量",
@@ -94888,6 +94851,7 @@
       "Select Workflow Step": "选择工作流步骤",
       "Select Working Directory Writable": "选择工作目录可写",
       "Select Workload Capacity": "选择工作负载容量",
+      "Select all": "全选",
       "Select row": "选择行",
       "Selected At": "选择时间",
       "Selected At is required": "选择时间为必填项",
@@ -95130,6 +95094,30 @@
       "Working Directory Writable is required": "工作目录可写为必填项",
       "Workload Capacity": "工作负载容量",
       "Workload Capacity is required": "工作负载容量为必填项",
+      "agentRuntimeJobFailureRate": "agentRuntimeJobFailureRate",
+      "agentRuntimeJobStartupLatency": "agentRuntimeJobStartupLatency",
+      "auditTrailCompleteness": "auditTrailCompleteness",
+      "datasetContractValidationFailureRate": "datasetContractValidationFailureRate",
+      "dictionaryValueActivationLatency": "dictionaryValueActivationLatency",
+      "federationActivationLeadTime": "federationActivationLeadTime",
+      "fileUploadFailureRate": "fileUploadFailureRate",
+      "fileUploadLatency": "fileUploadLatency",
+      "globalAccuracyGap": "globalAccuracyGap",
+      "modelApprovalLeadTime": "modelApprovalLeadTime",
+      "modelArtifactPullFailureRate": "modelArtifactPullFailureRate",
+      "modelArtifactRegistrationLatency": "modelArtifactRegistrationLatency",
+      "nodeDropoutRate": "nodeDropoutRate",
+      "organizationActivationLeadTime": "organizationActivationLeadTime",
+      "participantApprovalLeadTime": "participantApprovalLeadTime",
+      "productionRollbackRate": "productionRollbackRate",
+      "roundCompletionLatency": "roundCompletionLatency",
+      "runtimeActivationLeadTime": "runtimeActivationLeadTime",
+      "runtimeAlertMeanTimeToAcknowledge": "runtimeAlertMeanTimeToAcknowledge",
+      "runtimeBootstrapSuccessRate": "runtimeBootstrapSuccessRate",
+      "runtimeDatasetAccessValidationLatency": "runtimeDatasetAccessValidationLatency",
+      "runtimeIdentityCoverage": "runtimeIdentityCoverage",
+      "runtimeInfrastructureConnectionLatency": "runtimeInfrastructureConnectionLatency",
+      "secureAggregationCompletionLatency": "secureAggregationCompletionLatency",
       "unique (FeatureSchema.featureDomain, FeatureSchema.version)": "唯一 (FeatureSchema.featureDomain, FeatureSchema.version)",
       "unique Dictionary.dictionaryCode": "Dictionary.dictionaryCode 不能重复",
       "unique Federation.federationName": "Federation.federationName 必须唯一",

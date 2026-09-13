@@ -135,7 +135,8 @@ apply_manifests() {
 
 restart_apps() {
     kubectl -n "${NAMESPACE}" rollout restart \
-        deploy/console \
+        deploy/federation-learning-console \
+        deploy/federation-learning-participant-console \
         deploy/federation-learning-support \
         deploy/federation-learning-platform \
         deploy/federation-learning-runtime-agent \

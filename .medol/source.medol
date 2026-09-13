@@ -1,4 +1,5 @@
-import identity-access-management as Iam deploy FederationLearningSupport
+import identity-access-management as PlatformIam deploy FederationLearningSupport
+import identity-access-management as ParticipantIam deploy FederationLearningRuntimeAgent
 
 domain FederationLearningPlatform {
 context OrganizationManagement {
@@ -1230,26 +1231,6 @@ context RuntimeProvisioning {
     }
 
     state Planned
-
-    specification "Runtime Installation Plan Organization Unique" {
-      rule """
-        A business organization can have only one runtime installation plan.
-      """
-
-      expression {
-        unique RuntimeInstallationPlan.organizationId
-      }
-
-      scenario "Reject Duplicate Runtime Installation Plan Organization" {
-        given RuntimeInstallationPlanCreated {
-          organizationId = "11111111-1111-4111-8111-111111111111"
-        }
-        when CreateRuntimeInstallationPlan {
-          organizationId = "11111111-1111-4111-8111-111111111111"
-        }
-        then reject "Runtime Installation Plan Organization Already Exists"
-      }
-    }
   }
 
   slice RuntimeInstallationPlanCatalog {
@@ -8330,5 +8311,26 @@ context RuntimeAgentOperations {
 
   deployment FederationLearningRuntimeAgent {
     includes RuntimeAgentOperations
+  }
+
+  frontend FederationLearningConsole {
+    includes OrganizationManagement from FederationLearningPlatform
+    includes FederationManagement from FederationLearningPlatform
+    includes DictionaryMaintenance from FederationLearningSupport
+    includes FileUpload from FederationLearningSupport
+    includes RuntimeProvisioning from FederationLearningPlatform
+    includes DatasetGovernance from FederationLearningPlatform
+    includes ModelRepository from FederationLearningPlatform
+    includes TrainingOrchestration from FederationLearningPlatform
+    includes ModelLifecycle from FederationLearningPlatform
+    includes RuntimeMonitoring from FederationLearningPlatform
+    includes RuntimeGovernance from FederationLearningPlatform
+    includes SecureAggregation from FederationLearningPlatform
+    includes IdentityAccessManagement from FederationLearningSupport
+  }
+
+  frontend FederationLearningParticipantConsole {
+    includes RuntimeAgentOperations from FederationLearningRuntimeAgent
+    includes IdentityAccessManagement from FederationLearningRuntimeAgent
   }
 }
