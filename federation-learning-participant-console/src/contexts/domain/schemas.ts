@@ -87,23 +87,35 @@ export type ReprofileAgentDatasetCommandInput = z.infer<typeof ReprofileAgentDat
 
 export const RetryDatasetContractValidationCommandSchema = z.object({
   datasetId: z.string().uuid(),
+  organizationId: z.string().uuid(),
+  featureSchemaId: z.string().uuid(),
+  datasetName: z.string(),
 });
 export type RetryDatasetContractValidationCommandInput = z.infer<typeof RetryDatasetContractValidationCommandSchema>;
 
 export const RejectDatasetForTrainingCommandSchema = z.object({
   datasetId: z.string().uuid(),
   rejectionReason: z.string(),
+  organizationId: z.string().uuid(),
+  featureSchemaId: z.string().uuid(),
+  datasetName: z.string(),
 });
 export type RejectDatasetForTrainingCommandInput = z.infer<typeof RejectDatasetForTrainingCommandSchema>;
 
 export const ApproveDatasetForTrainingCommandSchema = z.object({
   datasetId: z.string().uuid(),
+  organizationId: z.string().uuid(),
+  featureSchemaId: z.string().uuid(),
+  datasetName: z.string(),
 });
 export type ApproveDatasetForTrainingCommandInput = z.infer<typeof ApproveDatasetForTrainingCommandSchema>;
 
 export const RevokeDatasetTrainingApprovalCommandSchema = z.object({
   datasetId: z.string().uuid(),
   revokeReason: z.string(),
+  organizationId: z.string().uuid(),
+  featureSchemaId: z.string().uuid(),
+  datasetName: z.string(),
 });
 export type RevokeDatasetTrainingApprovalCommandInput = z.infer<typeof RevokeDatasetTrainingApprovalCommandSchema>;
 

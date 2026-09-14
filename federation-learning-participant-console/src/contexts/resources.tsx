@@ -31,7 +31,7 @@ export const backendModules = [
 ];
 
 export const authBackendModule =
-  backendModules.find((module) => module.name === "federation-learning-support")
+  backendModules.find((module) => module.name === "federation-learning-runtime-agent")
   ?? backendModules[0];
 
 export const fileUploadCapability = null;

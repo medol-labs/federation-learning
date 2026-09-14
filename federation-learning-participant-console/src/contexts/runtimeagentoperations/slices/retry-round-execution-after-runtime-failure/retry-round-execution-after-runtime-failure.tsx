@@ -40,14 +40,14 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure = () =>
     trainingJobId: searchParams.get("trainingJobId") ?? undefined,
     trainingRunConfigurationId: searchParams.get("trainingRunConfigurationId") ?? undefined,
     roundId: searchParams.get("roundId") ?? undefined,
-    roundNumber: (() => { const value = searchParams.get("roundNumber"); return value === null ? undefined : Number(value); })(),
     runtimeId: searchParams.get("runtimeId") ?? undefined,
-    organizationId: searchParams.get("organizationId") ?? undefined,
-    featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-    baseModelId: searchParams.get("baseModelId") ?? undefined,
     runtimeEngineJobId: searchParams.get("runtimeEngineJobId") ?? undefined,
     retryReason: searchParams.get("retryReason") ?? undefined,
     roundExecutionId: searchParams.get("roundExecutionId") ?? undefined,
+    roundNumber: (() => { const value = searchParams.get("roundNumber"); return value === null ? undefined : Number(value); })(),
+    organizationId: searchParams.get("organizationId") ?? undefined,
+    featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
+    baseModelId: searchParams.get("baseModelId") ?? undefined,
   } as unknown as Partial<RetryRoundExecutionAfterRuntimeFailureCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RetryRoundExecutionAfterRuntimeFailureCommandInput, RetryRoundExecutionAfterRuntimeFailureCommandInput>({
@@ -95,6 +95,18 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure = () =>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("RetryRoundExecutionAfterRuntimeFailure validation failed", errors))} className="space-y-8">
           {defaultValues.roundExecutionId !== undefined && defaultValues.roundExecutionId !== null ? (
             <input type="hidden" {...form.register("roundExecutionId" as never)} />
+          ) : null}
+          {defaultValues.roundNumber !== undefined && defaultValues.roundNumber !== null ? (
+            <input type="hidden" {...form.register("roundNumber" as never)} />
+          ) : null}
+          {defaultValues.organizationId !== undefined && defaultValues.organizationId !== null ? (
+            <input type="hidden" {...form.register("organizationId" as never)} />
+          ) : null}
+          {defaultValues.featureSchemaId !== undefined && defaultValues.featureSchemaId !== null ? (
+            <input type="hidden" {...form.register("featureSchemaId" as never)} />
+          ) : null}
+          {defaultValues.baseModelId !== undefined && defaultValues.baseModelId !== null ? (
+            <input type="hidden" {...form.register("baseModelId" as never)} />
           ) : null}
           <FormField
             control={form.control}
@@ -188,25 +200,6 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure = () =>
           />
           <FormField
             control={form.control}
-            name="roundNumber"
-            rules={{ required: "Round Number is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.retryRoundExecutionAfterRuntimeFailure.fields.roundNumber.label", "Round Number")}</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Round Number"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="runtimeId"
             rules={{ required: "Runtime Id is required" }}
             render={({ field }) => (
@@ -217,60 +210,6 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure = () =>
                     {...field}
                     value={field.value || ""}
                     placeholder={"Enter Runtime Id"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="organizationId"
-            rules={{ required: "Organization Id is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.retryRoundExecutionAfterRuntimeFailure.fields.organizationId.label", "Organization Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Organization Id"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="featureSchemaId"
-            rules={{ required: "Feature Schema Id is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.retryRoundExecutionAfterRuntimeFailure.fields.featureSchemaId.label", "Feature Schema Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Feature Schema Id"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="baseModelId"
-            rules={{ required: "Base Model Id is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.round_execution_catalog.commands.retryRoundExecutionAfterRuntimeFailure.fields.baseModelId.label", "Base Model Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Base Model Id"}
                   />
                 </FormControl>
                 <FormMessage />

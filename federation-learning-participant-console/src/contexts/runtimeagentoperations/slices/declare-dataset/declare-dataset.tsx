@@ -36,12 +36,12 @@ export const DatasetCapabilityDeclareDataset = () => {
   const { id } = useParsed();
   const defaultValues = {
     organizationId: searchParams.get("organizationId") ?? undefined,
-    organizationName: searchParams.get("organizationName") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-    featureDomain: searchParams.get("featureDomain") ?? undefined,
-    featureSchemaVersion: searchParams.get("featureSchemaVersion") ?? undefined,
     datasetName: searchParams.get("datasetName") ?? undefined,
     datasetUsage: searchParams.get("datasetUsage") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
+    featureDomain: searchParams.get("featureDomain") ?? undefined,
+    featureSchemaVersion: searchParams.get("featureSchemaVersion") ?? undefined,
   } as unknown as Partial<DeclareDatasetCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<DeclareDatasetCommandInput, DeclareDatasetCommandInput>({
@@ -87,6 +87,15 @@ export const DatasetCapabilityDeclareDataset = () => {
       <CreateViewHeader title={t("resources.dataset_capability.commands.declareDataset.label", "Declare Dataset")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DeclareDataset validation failed", errors))} className="space-y-8">
+          {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
+            <input type="hidden" {...form.register("organizationName" as never)} />
+          ) : null}
+          {defaultValues.featureDomain !== undefined && defaultValues.featureDomain !== null ? (
+            <input type="hidden" {...form.register("featureDomain" as never)} />
+          ) : null}
+          {defaultValues.featureSchemaVersion !== undefined && defaultValues.featureSchemaVersion !== null ? (
+            <input type="hidden" {...form.register("featureSchemaVersion" as never)} />
+          ) : null}
           <FormField
             control={form.control}
             name="organizationId"
@@ -107,24 +116,6 @@ export const DatasetCapabilityDeclareDataset = () => {
           />
           <FormField
             control={form.control}
-            name="organizationName"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.declareDataset.fields.organizationName.label", "Organization Name")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Organization Name"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="featureSchemaId"
             rules={{ required: "Feature Schema Id is required" }}
             render={({ field }) => (
@@ -135,42 +126,6 @@ export const DatasetCapabilityDeclareDataset = () => {
                     {...field}
                     value={field.value || ""}
                     placeholder={"Enter Feature Schema Id"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="featureDomain"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.declareDataset.fields.featureDomain.label", "Feature Domain")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Feature Domain"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="featureSchemaVersion"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.declareDataset.fields.featureSchemaVersion.label", "Feature Schema Version")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Feature Schema Version"}
                   />
                 </FormControl>
                 <FormMessage />

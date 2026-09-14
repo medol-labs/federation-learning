@@ -428,6 +428,11 @@ export const DatasetCapabilityList = () => {
                     command="retryDatasetContractValidation"
                     recordItemId={row.original.datasetId}
                     size="sm"
+                    query={{
+                      organizationId: row.original.organizationId,
+                      featureSchemaId: row.original.featureSchemaId,
+                      datasetName: row.original.datasetName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
@@ -436,6 +441,11 @@ export const DatasetCapabilityList = () => {
                     command="rejectDatasetForTraining"
                     recordItemId={row.original.datasetId}
                     size="sm"
+                    query={{
+                      organizationId: row.original.organizationId,
+                      featureSchemaId: row.original.featureSchemaId,
+                      datasetName: row.original.datasetName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
@@ -444,6 +454,11 @@ export const DatasetCapabilityList = () => {
                     command="approveDatasetForTraining"
                     recordItemId={row.original.datasetId}
                     size="sm"
+                    query={{
+                      organizationId: row.original.organizationId,
+                      featureSchemaId: row.original.featureSchemaId,
+                      datasetName: row.original.datasetName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "approvalStatus", ["Approved"]) && (
@@ -452,6 +467,11 @@ export const DatasetCapabilityList = () => {
                     command="revokeDatasetTrainingApproval"
                     recordItemId={row.original.datasetId}
                     size="sm"
+                    query={{
+                      organizationId: row.original.organizationId,
+                      featureSchemaId: row.original.featureSchemaId,
+                      datasetName: row.original.datasetName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "", []) && (
@@ -462,12 +482,6 @@ export const DatasetCapabilityList = () => {
                     size="sm"
                     query={{
                       datasetId: row.original.datasetId,
-                      organizationId: row.original.organizationId,
-                      featureSchemaId: row.original.featureSchemaId,
-                      organizationName: row.original.organizationName,
-                      featureDomain: row.original.featureDomain,
-                      featureSchemaVersion: row.original.featureSchemaVersion,
-                      datasetName: row.original.datasetName,
                       runtimeId: row.original.runtimeId,
                     }}
                   />

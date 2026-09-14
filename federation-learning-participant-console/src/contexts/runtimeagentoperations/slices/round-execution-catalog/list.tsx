@@ -750,11 +750,7 @@ export const RoundExecutionCatalogList = () => {
                       trainingJobId: row.original.trainingJobId,
                       trainingRunConfigurationId: row.original.trainingRunConfigurationId,
                       roundId: row.original.roundId,
-                      roundNumber: row.original.roundNumber,
                       runtimeId: row.original.runtimeId,
-                      organizationId: row.original.organizationId,
-                      featureSchemaId: row.original.featureSchemaId,
-                      baseModelId: row.original.baseModelId,
                       runtimeEngineJobId: row.original.runtimeEngineJobId,
                       retryReason: row.original.retryReason,
                     }}

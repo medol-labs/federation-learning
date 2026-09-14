@@ -35,6 +35,9 @@ export const DatasetCapabilityApproveDatasetForTraining = () => {
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
+    organizationId: searchParams.get("organizationId") ?? undefined,
+    featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
+    datasetName: searchParams.get("datasetName") ?? undefined,
     datasetId: searchParams.get("datasetId") ?? undefined,
   } as unknown as Partial<ApproveDatasetForTrainingCommandInput>;
 
@@ -81,6 +84,15 @@ export const DatasetCapabilityApproveDatasetForTraining = () => {
       <CreateViewHeader title={t("resources.dataset_capability.commands.approveDatasetForTraining.label", "Approve Dataset For Training")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("ApproveDatasetForTraining validation failed", errors))} className="space-y-8">
+          {defaultValues.organizationId !== undefined && defaultValues.organizationId !== null ? (
+            <input type="hidden" {...form.register("organizationId" as never)} />
+          ) : null}
+          {defaultValues.featureSchemaId !== undefined && defaultValues.featureSchemaId !== null ? (
+            <input type="hidden" {...form.register("featureSchemaId" as never)} />
+          ) : null}
+          {defaultValues.datasetName !== undefined && defaultValues.datasetName !== null ? (
+            <input type="hidden" {...form.register("datasetName" as never)} />
+          ) : null}
           {defaultValues.datasetId !== undefined && defaultValues.datasetId !== null ? (
             <input type="hidden" {...form.register("datasetId" as never)} />
           ) : null}
