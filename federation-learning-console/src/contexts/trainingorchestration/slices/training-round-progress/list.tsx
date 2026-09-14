@@ -881,14 +881,6 @@ export const TrainingRoundProgressList = () => {
                     }}
                   />
                 )}
-                {isCommandVisible(row.original, "", "", []) && (
-                  <CommandButton
-                    variant="ghost"
-                    command="retryTrainingRoundParticipantSelection"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                  />
-                )}
                 {isCommandVisible(row.original, "", "state", ["Draft"]) && (
                   <CommandButton
                     variant="ghost"
@@ -900,41 +892,17 @@ export const TrainingRoundProgressList = () => {
                 {isCommandVisible(row.original, "", "", []) && (
                   <CommandButton
                     variant="ghost"
+                    command="retryTrainingRoundParticipantSelection"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                  />
+                )}
+                {isCommandVisible(row.original, "", "", []) && (
+                  <CommandButton
+                    variant="ghost"
                     command="pauseTrainingJob"
                     recordItemId={row.original.trainingJobId}
                     size="sm"
-                  />
-                )}
-                {isCommandVisible(row.original, "", "state", ["StartFailed"]) && (
-                  <CommandButton
-                    variant="ghost"
-                    command="retryRoundExecutionAfterStartFailure"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                    query={{
-                      trainingJobId: row.original.trainingJobId,
-                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
-                      roundId: row.original.roundId,
-                      roundNumber: row.original.roundNumber,
-                      featureSchemaId: row.original.featureSchemaId,
-                      baseModelId: row.original.baseModelId,
-                    }}
-                  />
-                )}
-                {isCommandVisible(row.original, "", "state", ["Failed"]) && (
-                  <CommandButton
-                    variant="ghost"
-                    command="retryRoundExecutionAfterRuntimeFailure"
-                    recordItemId={row.original.trainingJobId}
-                    size="sm"
-                    query={{
-                      trainingJobId: row.original.trainingJobId,
-                      trainingRunConfigurationId: row.original.trainingRunConfigurationId,
-                      roundId: row.original.roundId,
-                      roundNumber: row.original.roundNumber,
-                      featureSchemaId: row.original.featureSchemaId,
-                      baseModelId: row.original.baseModelId,
-                    }}
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.trainingJobId} size="sm" />

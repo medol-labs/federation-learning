@@ -35,6 +35,7 @@ export const FederationOverviewActivateFederation = () => {
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
+    federationName: searchParams.get("federationName") ?? undefined,
     federationId: searchParams.get("federationId") ?? undefined,
   } as unknown as Partial<ActivateFederationCommandInput>;
 
@@ -81,6 +82,9 @@ export const FederationOverviewActivateFederation = () => {
       <CreateViewHeader title={t("resources.federation_overview.commands.activateFederation.label", "Activate Federation")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("ActivateFederation validation failed", errors))} className="space-y-8">
+          {defaultValues.federationName !== undefined && defaultValues.federationName !== null ? (
+            <input type="hidden" {...form.register("federationName" as never)} />
+          ) : null}
           {defaultValues.federationId !== undefined && defaultValues.federationId !== null ? (
             <input type="hidden" {...form.register("federationId" as never)} />
           ) : null}

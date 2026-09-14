@@ -216,6 +216,9 @@ export const FederationOverviewList = () => {
                     command="activateFederation"
                     recordItemId={row.original.federationId}
                     size="sm"
+                    query={{
+                      federationName: row.original.federationName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "state", ["Active"]) && (
@@ -224,6 +227,9 @@ export const FederationOverviewList = () => {
                     command="suspendFederation"
                     recordItemId={row.original.federationId}
                     size="sm"
+                    query={{
+                      federationName: row.original.federationName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "state", ["Suspended"]) && (
@@ -232,6 +238,9 @@ export const FederationOverviewList = () => {
                     command="reactivateFederation"
                     recordItemId={row.original.federationId}
                     size="sm"
+                    query={{
+                      federationName: row.original.federationName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "", []) && (

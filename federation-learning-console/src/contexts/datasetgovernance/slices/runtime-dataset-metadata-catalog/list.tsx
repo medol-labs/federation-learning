@@ -423,17 +423,6 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
-                {isCommandVisible(row.original, "", "profilingStatus", ["Reported"]) && (
-                  <CommandButton
-                    variant="ghost"
-                    command="reprofileAgentDataset"
-                    recordItemId={row.original.runtimeDatasetBindingId}
-                    size="sm"
-                    query={{
-                      runtimeDatasetBindingId: row.original.runtimeDatasetBindingId,
-                    }}
-                  />
-                )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeDatasetBindingId} size="sm" />
             </RowActionMenu>
           </div>

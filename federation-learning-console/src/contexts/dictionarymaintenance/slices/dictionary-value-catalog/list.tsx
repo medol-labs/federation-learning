@@ -298,6 +298,8 @@ export const DictionaryValueCatalogList = () => {
                     size="sm"
                     query={{
                       disabledReason: row.original.disabledReason,
+                      dictionaryCode: row.original.dictionaryCode,
+                      valueCode: row.original.valueCode,
                     }}
                   />
                 )}
@@ -307,6 +309,10 @@ export const DictionaryValueCatalogList = () => {
                     command="enableDictionaryValue"
                     recordItemId={row.original.dictionaryValueId}
                     size="sm"
+                    query={{
+                      dictionaryCode: row.original.dictionaryCode,
+                      valueCode: row.original.valueCode,
+                    }}
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.dictionaryValueId} size="sm" />

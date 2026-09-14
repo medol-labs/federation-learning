@@ -122,7 +122,16 @@ patches:
   - path: "patches/platform-runtime-scheduler.yaml"
   - path: "patches/runtime-agent-engine-scheduler.yaml"
   - path: "patches/runtime-scheduler-config.yaml"
+  - path: "runtime-agent-disabled.yaml"
   - path: "runtime-scheduler-images.yaml"
+YAML
+    cat > "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/runtime-agent-disabled.yaml" <<YAML
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "federation-learning-runtime-agent"
+spec:
+  replicas: 0
 YAML
     cat > "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/runtime-scheduler-images.yaml" <<YAML
 apiVersion: "v1"

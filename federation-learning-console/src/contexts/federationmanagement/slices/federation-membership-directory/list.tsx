@@ -245,6 +245,9 @@ export const FederationMembershipDirectoryList = () => {
                     command="activateFederation"
                     recordItemId={row.original.federationId}
                     size="sm"
+                    query={{
+                      federationName: row.original.federationName,
+                    }}
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.federationId} size="sm" />

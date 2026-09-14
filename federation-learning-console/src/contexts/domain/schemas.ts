@@ -49,18 +49,21 @@ export type RegisterOrganizationCommandInput = z.infer<typeof RegisterOrganizati
 export const ActivateOrganizationCommandSchema = z.object({
   organizationId: z.string().uuid(),
   activationNote: z.string().optional().nullable(),
+  organizationName: z.string(),
 });
 export type ActivateOrganizationCommandInput = z.infer<typeof ActivateOrganizationCommandSchema>;
 
 export const DeactivateOrganizationCommandSchema = z.object({
   organizationId: z.string().uuid(),
   deactivationReason: z.string(),
+  organizationName: z.string(),
 });
 export type DeactivateOrganizationCommandInput = z.infer<typeof DeactivateOrganizationCommandSchema>;
 
 export const ReactivateOrganizationCommandSchema = z.object({
   organizationId: z.string().uuid(),
   reactivationReason: z.string(),
+  organizationName: z.string(),
 });
 export type ReactivateOrganizationCommandInput = z.infer<typeof ReactivateOrganizationCommandSchema>;
 
@@ -83,18 +86,21 @@ export type CreateFederationCommandInput = z.infer<typeof CreateFederationComman
 export const ActivateFederationCommandSchema = z.object({
   federationId: z.string().uuid(),
   activationNote: z.string().optional().nullable(),
+  federationName: z.string(),
 });
 export type ActivateFederationCommandInput = z.infer<typeof ActivateFederationCommandSchema>;
 
 export const SuspendFederationCommandSchema = z.object({
   federationId: z.string().uuid(),
   suspensionReason: z.string(),
+  federationName: z.string(),
 });
 export type SuspendFederationCommandInput = z.infer<typeof SuspendFederationCommandSchema>;
 
 export const ReactivateFederationCommandSchema = z.object({
   federationId: z.string().uuid(),
   reactivationReason: z.string(),
+  federationName: z.string(),
 });
 export type ReactivateFederationCommandInput = z.infer<typeof ReactivateFederationCommandSchema>;
 
@@ -163,12 +169,14 @@ export const UpdateDictionaryCommandSchema = z.object({
   dictionaryId: z.string().uuid(),
   dictionaryName: z.string(),
   description: z.string().optional().nullable(),
+  dictionaryCode: DictionaryCodeSchema,
 });
 export type UpdateDictionaryCommandInput = z.infer<typeof UpdateDictionaryCommandSchema>;
 
 export const ArchiveDictionaryCommandSchema = z.object({
   dictionaryId: z.string().uuid(),
   archiveReason: z.string(),
+  dictionaryCode: DictionaryCodeSchema,
 });
 export type ArchiveDictionaryCommandInput = z.infer<typeof ArchiveDictionaryCommandSchema>;
 
@@ -186,12 +194,16 @@ export type AddDictionaryValueCommandInput = z.infer<typeof AddDictionaryValueCo
 export const DisableDictionaryValueCommandSchema = z.object({
   dictionaryValueId: z.string().uuid(),
   disabledReason: z.string(),
+  dictionaryCode: DictionaryCodeSchema,
+  valueCode: DictionaryValueCodeSchema,
 });
 export type DisableDictionaryValueCommandInput = z.infer<typeof DisableDictionaryValueCommandSchema>;
 
 export const EnableDictionaryValueCommandSchema = z.object({
   dictionaryValueId: z.string().uuid(),
   enableReason: z.string(),
+  dictionaryCode: DictionaryCodeSchema,
+  valueCode: DictionaryValueCodeSchema,
 });
 export type EnableDictionaryValueCommandInput = z.infer<typeof EnableDictionaryValueCommandSchema>;
 
@@ -310,7 +322,6 @@ export const RetryRuntimeAgentDeploymentCommandSchema = z.object({
   runtimeName: z.string(),
   agentInstallMode: z.string(),
   expectedNodeCount: z.coerce.number().int(),
-  currentRuntimeInfrastructureState: z.enum(["PLANNED", "REGISTERED", "PREPARED", "VERIFIED", "VERIFICATION_FAILED", "AGENT_READY", "RUNTIME_AGENT_FAILED", "OFFLINE", "CONNECTED"]),
   retryReason: z.string(),
 });
 export type RetryRuntimeAgentDeploymentCommandInput = z.infer<typeof RetryRuntimeAgentDeploymentCommandSchema>;
@@ -329,6 +340,7 @@ export type RecordRuntimeConnectionEstablishedCommandInput = z.infer<typeof Reco
 
 export const DefineFeatureSchemaCommandSchema = z.object({
   featureDomain: z.string(),
+  version: z.string(),
   dataModality: z.string(),
   features: z.preprocess((value) => {
     if (typeof value !== "string") return value;
@@ -354,18 +366,24 @@ export type DefineFeatureSchemaCommandInput = z.infer<typeof DefineFeatureSchema
 export const PublishFeatureSchemaCommandSchema = z.object({
   featureSchemaId: z.string().uuid(),
   publishNote: z.string().optional().nullable(),
+  featureDomain: z.string(),
+  version: z.string(),
 });
 export type PublishFeatureSchemaCommandInput = z.infer<typeof PublishFeatureSchemaCommandSchema>;
 
 export const DeprecateFeatureSchemaCommandSchema = z.object({
   featureSchemaId: z.string().uuid(),
   deprecationReason: z.string(),
+  featureDomain: z.string(),
+  version: z.string(),
 });
 export type DeprecateFeatureSchemaCommandInput = z.infer<typeof DeprecateFeatureSchemaCommandSchema>;
 
 export const RetireFeatureSchemaCommandSchema = z.object({
   featureSchemaId: z.string().uuid(),
   retirementReason: z.string(),
+  featureDomain: z.string(),
+  version: z.string(),
 });
 export type RetireFeatureSchemaCommandInput = z.infer<typeof RetireFeatureSchemaCommandSchema>;
 
@@ -373,12 +391,16 @@ export const SupersedeFeatureSchemaVersionCommandSchema = z.object({
   featureSchemaId: z.string().uuid(),
   supersededByFeatureSchemaId: z.string().uuid(),
   supersessionReason: z.string().optional().nullable(),
+  featureDomain: z.string(),
+  version: z.string(),
 });
 export type SupersedeFeatureSchemaVersionCommandInput = z.infer<typeof SupersedeFeatureSchemaVersionCommandSchema>;
 
 export const MarkCurrentRecommendedFeatureSchemaVersionCommandSchema = z.object({
   featureSchemaId: z.string().uuid(),
   recommendationNote: z.string().optional().nullable(),
+  featureDomain: z.string(),
+  version: z.string(),
 });
 export type MarkCurrentRecommendedFeatureSchemaVersionCommandInput = z.infer<typeof MarkCurrentRecommendedFeatureSchemaVersionCommandSchema>;
 
@@ -394,6 +416,8 @@ export type RegisterModelArtifactCommandInput = z.infer<typeof RegisterModelArti
 
 export const DownloadModelArtifactCommandSchema = z.object({
   modelId: z.string().uuid(),
+  modelName: z.string(),
+  modelVersion: z.string(),
 });
 export type DownloadModelArtifactCommandInput = z.infer<typeof DownloadModelArtifactCommandSchema>;
 
@@ -577,112 +601,6 @@ export const FailSecureAggregationSessionCommandSchema = z.object({
   failureReason: z.string(),
 });
 export type FailSecureAggregationSessionCommandInput = z.infer<typeof FailSecureAggregationSessionCommandSchema>;
-
-export const DeclareDatasetCommandSchema = z.object({
-  organizationId: z.string().uuid(),
-  organizationName: z.string().optional().nullable(),
-  featureSchemaId: z.string().uuid(),
-  featureDomain: z.string().optional().nullable(),
-  featureSchemaVersion: z.string().optional().nullable(),
-  datasetName: z.string(),
-  datasetUsage: z.string(),
-});
-export type DeclareDatasetCommandInput = z.infer<typeof DeclareDatasetCommandSchema>;
-
-export const ConfigureRuntimeDatasetBindingCommandSchema = z.object({
-  datasetId: z.string().uuid(),
-  organizationId: z.string().uuid(),
-  featureSchemaId: z.string().uuid(),
-  organizationName: z.string().optional().nullable(),
-  featureDomain: z.string().optional().nullable(),
-  featureSchemaVersion: z.string().optional().nullable(),
-  datasetName: z.string(),
-  runtimeId: z.string().uuid(),
-  runtimeName: z.string().optional().nullable(),
-  dataSourceType: z.string(),
-  host: z.string().optional().nullable(),
-  port: z.coerce.number().int().optional().nullable(),
-  url: z.string().optional().nullable(),
-  databaseName: z.string().optional().nullable(),
-  schemaName: z.string().optional().nullable(),
-  tableName: z.string().optional().nullable(),
-  filePath: z.string().optional().nullable(),
-  objectBucket: z.string().optional().nullable(),
-  objectPrefix: z.string().optional().nullable(),
-  dataFormat: z.string(),
-  credentialSecretName: z.string().optional().nullable(),
-});
-export type ConfigureRuntimeDatasetBindingCommandInput = z.infer<typeof ConfigureRuntimeDatasetBindingCommandSchema>;
-
-export const RevalidateAgentDatasetAccessCommandSchema = z.object({
-  runtimeDatasetBindingId: z.string().uuid(),
-});
-export type RevalidateAgentDatasetAccessCommandInput = z.infer<typeof RevalidateAgentDatasetAccessCommandSchema>;
-
-export const ReprofileAgentDatasetCommandSchema = z.object({
-  runtimeDatasetBindingId: z.string().uuid(),
-});
-export type ReprofileAgentDatasetCommandInput = z.infer<typeof ReprofileAgentDatasetCommandSchema>;
-
-export const RetryDatasetContractValidationCommandSchema = z.object({
-  datasetId: z.string().uuid(),
-});
-export type RetryDatasetContractValidationCommandInput = z.infer<typeof RetryDatasetContractValidationCommandSchema>;
-
-export const RejectDatasetForTrainingCommandSchema = z.object({
-  datasetId: z.string().uuid(),
-  rejectionReason: z.string(),
-});
-export type RejectDatasetForTrainingCommandInput = z.infer<typeof RejectDatasetForTrainingCommandSchema>;
-
-export const ApproveDatasetForTrainingCommandSchema = z.object({
-  datasetId: z.string().uuid(),
-});
-export type ApproveDatasetForTrainingCommandInput = z.infer<typeof ApproveDatasetForTrainingCommandSchema>;
-
-export const RevokeDatasetTrainingApprovalCommandSchema = z.object({
-  datasetId: z.string().uuid(),
-  revokeReason: z.string(),
-});
-export type RevokeDatasetTrainingApprovalCommandInput = z.infer<typeof RevokeDatasetTrainingApprovalCommandSchema>;
-
-export const RetryRoundExecutionAfterStartFailureCommandSchema = z.object({
-  roundExecutionId: z.string().uuid(),
-  executionSessionId: z.string().uuid(),
-  executionPlanId: z.string().uuid(),
-  trainingJobId: z.string().uuid(),
-  trainingRunConfigurationId: z.string().uuid(),
-  roundId: z.string().uuid(),
-  roundNumber: z.coerce.number().int(),
-  runtimeId: z.string().uuid(),
-  organizationId: z.string().uuid(),
-  featureSchemaId: z.string().uuid(),
-  baseModelId: z.string().uuid(),
-  runtimeEngineJobId: z.string(),
-  retryReason: z.string(),
-});
-export type RetryRoundExecutionAfterStartFailureCommandInput = z.infer<typeof RetryRoundExecutionAfterStartFailureCommandSchema>;
-
-export const RetryRoundExecutionAfterRuntimeFailureCommandSchema = z.object({
-  roundExecutionId: z.string().uuid(),
-  executionSessionId: z.string().uuid(),
-  executionPlanId: z.string().uuid(),
-  trainingJobId: z.string().uuid(),
-  trainingRunConfigurationId: z.string().uuid(),
-  roundId: z.string().uuid(),
-  roundNumber: z.coerce.number().int(),
-  runtimeId: z.string().uuid(),
-  organizationId: z.string().uuid(),
-  featureSchemaId: z.string().uuid(),
-  baseModelId: z.string().uuid(),
-  runtimeEngineJobId: z.string(),
-  retryReason: z.string(),
-});
-export type RetryRoundExecutionAfterRuntimeFailureCommandInput = z.infer<typeof RetryRoundExecutionAfterRuntimeFailureCommandSchema>;
-
-export const LoadRuntimeAgentBootstrapConfigurationCommandSchema = z.object({
-});
-export type LoadRuntimeAgentBootstrapConfigurationCommandInput = z.infer<typeof LoadRuntimeAgentBootstrapConfigurationCommandSchema>;
 
 export const RegisterUserAccountCommandSchema = z.object({
   username: z.string(),

@@ -36,6 +36,8 @@ export const DictionaryValueCatalogDisableDictionaryValue = () => {
   const { id } = useParsed();
   const defaultValues = {
     disabledReason: searchParams.get("disabledReason") ?? undefined,
+    dictionaryCode: searchParams.get("dictionaryCode") ?? undefined,
+    valueCode: searchParams.get("valueCode") ?? undefined,
     dictionaryValueId: searchParams.get("dictionaryValueId") ?? undefined,
   } as unknown as Partial<DisableDictionaryValueCommandInput>;
 
@@ -82,6 +84,12 @@ export const DictionaryValueCatalogDisableDictionaryValue = () => {
       <CreateViewHeader title={t("resources.dictionary_value_catalog.commands.disableDictionaryValue.label", "Disable Dictionary Value")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DisableDictionaryValue validation failed", errors))} className="space-y-8">
+          {defaultValues.dictionaryCode !== undefined && defaultValues.dictionaryCode !== null ? (
+            <input type="hidden" {...form.register("dictionaryCode" as never)} />
+          ) : null}
+          {defaultValues.valueCode !== undefined && defaultValues.valueCode !== null ? (
+            <input type="hidden" {...form.register("valueCode" as never)} />
+          ) : null}
           {defaultValues.dictionaryValueId !== undefined && defaultValues.dictionaryValueId !== null ? (
             <input type="hidden" {...form.register("dictionaryValueId" as never)} />
           ) : null}

@@ -35,6 +35,7 @@ export const OrganizationDirectoryActivateOrganization = () => {
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
+    organizationName: searchParams.get("organizationName") ?? undefined,
     organizationId: searchParams.get("organizationId") ?? undefined,
   } as unknown as Partial<ActivateOrganizationCommandInput>;
 
@@ -81,6 +82,9 @@ export const OrganizationDirectoryActivateOrganization = () => {
       <CreateViewHeader title={t("resources.organization_directory.commands.activateOrganization.label", "Activate Organization")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("ActivateOrganization validation failed", errors))} className="space-y-8">
+          {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
+            <input type="hidden" {...form.register("organizationName" as never)} />
+          ) : null}
           {defaultValues.organizationId !== undefined && defaultValues.organizationId !== null ? (
             <input type="hidden" {...form.register("organizationId" as never)} />
           ) : null}

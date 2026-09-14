@@ -284,6 +284,27 @@ spec:
               value: "false"
             - name: "AXON_UPDATE_CHECK_DISABLED"
               value: "true"
+            - name: "MEDOL_SECURITY_PROVIDER"
+              value: ${quote(properties.agentSecurityProvider)}
+            - name: "MEDOL_SECURITY_JWT_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: ${quote(properties.agentSecuritySecretName)}
+                  key: ${quote(properties.agentJwtSecretKey)}
+            - name: "MEDOL_SECURITY_INTERNAL_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: ${quote(properties.agentSecuritySecretName)}
+                  key: ${quote(properties.agentInternalTokenKey)}
+            - name: "MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED"
+              value: ${quote(properties.agentAdminBootstrapEnabled.toString())}
+            - name: "MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: ${quote(properties.agentSecuritySecretName)}
+                  key: ${quote(properties.agentAdminBootstrapSetupTokenKey)}
+            - name: "MEDOL_SECURITY_ALLOWED_ORIGINS"
+              value: ${quote(properties.agentAllowedOrigins)}
             - name: "MEDOL_AXON_EVENT_STORAGE"
               value: "umadb"
             - name: "UMADB_TARGET"

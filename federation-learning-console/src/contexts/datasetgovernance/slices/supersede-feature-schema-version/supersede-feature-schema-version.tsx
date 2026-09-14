@@ -36,6 +36,8 @@ export const FeatureSchemaCatalogSupersedeFeatureSchemaVersion = () => {
   const { id } = useParsed();
   const defaultValues = {
     supersededByFeatureSchemaId: searchParams.get("supersededByFeatureSchemaId") ?? undefined,
+    featureDomain: searchParams.get("featureDomain") ?? undefined,
+    version: searchParams.get("version") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
   } as unknown as Partial<SupersedeFeatureSchemaVersionCommandInput>;
 
@@ -82,6 +84,12 @@ export const FeatureSchemaCatalogSupersedeFeatureSchemaVersion = () => {
       <CreateViewHeader title={t("resources.feature_schema_catalog.commands.supersedeFeatureSchemaVersion.label", "Supersede Feature Schema Version")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("SupersedeFeatureSchemaVersion validation failed", errors))} className="space-y-8">
+          {defaultValues.featureDomain !== undefined && defaultValues.featureDomain !== null ? (
+            <input type="hidden" {...form.register("featureDomain" as never)} />
+          ) : null}
+          {defaultValues.version !== undefined && defaultValues.version !== null ? (
+            <input type="hidden" {...form.register("version" as never)} />
+          ) : null}
           {defaultValues.featureSchemaId !== undefined && defaultValues.featureSchemaId !== null ? (
             <input type="hidden" {...form.register("featureSchemaId" as never)} />
           ) : null}

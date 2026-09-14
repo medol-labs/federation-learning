@@ -13,6 +13,13 @@ class K3sRuntimeInfrastructureProperties {
     var agentImage: String = "medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT"
     var agentReplicas: Int = 1
     var agentContainerPort: Int = 8082
+    var agentAllowedOrigins: String = "http://localhost:*,http://127.0.0.1:*,http://*:30082"
+    var agentSecurityProvider: String = "local"
+    var agentAdminBootstrapEnabled: Boolean = true
+    var agentSecuritySecretName: String = "federation-learning-runtime-agent-dev-secret"
+    var agentJwtSecretKey: String = "MEDOL_SECURITY_JWT_SECRET"
+    var agentInternalTokenKey: String = "MEDOL_SECURITY_INTERNAL_TOKEN"
+    var agentAdminBootstrapSetupTokenKey: String = "MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN"
     var participantConsoleEnabled: Boolean = true
     var participantConsoleImage: String = "medol/federation-learning-participant-console:0.0.1-SNAPSHOT"
     var participantConsoleReplicas: Int = 1

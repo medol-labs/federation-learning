@@ -47,7 +47,6 @@ export const RuntimeInstallationPlanCatalogRetryRuntimeAgentDeployment = () => {
     agentInstallMode: searchParams.get("agentInstallMode") ?? undefined,
     expectedNodeCount: (() => { const value = searchParams.get("expectedNodeCount"); return value === null ? undefined : Number(value); })(),
     runtimeEnvironmentType: searchParams.get("runtimeEnvironmentType") ?? undefined,
-    currentRuntimeInfrastructureState: searchParams.get("currentRuntimeInfrastructureState") ?? undefined,
   } as unknown as Partial<RetryRuntimeAgentDeploymentCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<RetryRuntimeAgentDeploymentCommandInput, RetryRuntimeAgentDeploymentCommandInput>({
@@ -128,9 +127,6 @@ export const RuntimeInstallationPlanCatalogRetryRuntimeAgentDeployment = () => {
           ) : null}
           {defaultValues.runtimeEnvironmentType !== undefined && defaultValues.runtimeEnvironmentType !== null ? (
             <input type="hidden" {...form.register("runtimeEnvironmentType" as never)} />
-          ) : null}
-          {defaultValues.currentRuntimeInfrastructureState !== undefined && defaultValues.currentRuntimeInfrastructureState !== null ? (
-            <input type="hidden" {...form.register("currentRuntimeInfrastructureState" as never)} />
           ) : null}
           <FormField
             control={form.control}

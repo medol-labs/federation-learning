@@ -227,6 +227,10 @@ export const FeatureSchemaCatalogList = () => {
                     command="publishFeatureSchema"
                     recordItemId={row.original.featureSchemaId}
                     size="sm"
+                    query={{
+                      featureDomain: row.original.featureDomain,
+                      version: row.original.version,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "schemaStatus", ["Published"]) && (
@@ -235,6 +239,22 @@ export const FeatureSchemaCatalogList = () => {
                     command="deprecateFeatureSchema"
                     recordItemId={row.original.featureSchemaId}
                     size="sm"
+                    query={{
+                      featureDomain: row.original.featureDomain,
+                      version: row.original.version,
+                    }}
+                  />
+                )}
+                {isCommandVisible(row.original, "", "schemaStatus", ["Deprecated"]) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="retireFeatureSchema"
+                    recordItemId={row.original.featureSchemaId}
+                    size="sm"
+                    query={{
+                      featureDomain: row.original.featureDomain,
+                      version: row.original.version,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "", []) && (
@@ -245,6 +265,8 @@ export const FeatureSchemaCatalogList = () => {
                     size="sm"
                     query={{
                       supersededByFeatureSchemaId: row.original.supersededByFeatureSchemaId,
+                      featureDomain: row.original.featureDomain,
+                      version: row.original.version,
                     }}
                   />
                 )}
@@ -254,25 +276,10 @@ export const FeatureSchemaCatalogList = () => {
                     command="markCurrentRecommendedFeatureSchemaVersion"
                     recordItemId={row.original.featureSchemaId}
                     size="sm"
-                  />
-                )}
-                {isCommandVisible(row.original, "", "", []) && (
-                  <CommandButton
-                    variant="ghost"
-                    command="declareDataset"
-                    recordItemId={row.original.featureSchemaId}
-                    size="sm"
                     query={{
-                      featureSchemaId: row.original.featureSchemaId,
+                      featureDomain: row.original.featureDomain,
+                      version: row.original.version,
                     }}
-                  />
-                )}
-                {isCommandVisible(row.original, "", "schemaStatus", ["Deprecated"]) && (
-                  <CommandButton
-                    variant="ghost"
-                    command="retireFeatureSchema"
-                    recordItemId={row.original.featureSchemaId}
-                    size="sm"
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.featureSchemaId} size="sm" />
@@ -310,6 +317,7 @@ export const FeatureSchemaCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        <CommandButton variant="default" command="defineFeatureSchema" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

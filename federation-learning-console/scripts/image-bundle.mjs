@@ -4,8 +4,8 @@ import {existsSync, readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
 
-const defaultImageName = 'federation-learning-platform';
-const defaultTar = 'federation-learning-platform-images.tar';
+const defaultImageName = 'federation-learning-console';
+const defaultTar = 'federation-learning-console-images.tar';
 const args = parseArgs(process.argv.slice(2));
 const command = args._[0] ?? 'help';
 const root = resolve(process.cwd(), args.root ?? '.');

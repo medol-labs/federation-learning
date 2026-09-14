@@ -35,6 +35,8 @@ export const ModelArtifactCatalogDownloadModelArtifact = () => {
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
+    modelName: searchParams.get("modelName") ?? undefined,
+    modelVersion: searchParams.get("modelVersion") ?? undefined,
     modelId: searchParams.get("modelId") ?? undefined,
   } as unknown as Partial<DownloadModelArtifactCommandInput>;
 
@@ -81,6 +83,12 @@ export const ModelArtifactCatalogDownloadModelArtifact = () => {
       <CreateViewHeader title={t("resources.model_artifact_catalog.commands.downloadModelArtifact.label", "Download Model Artifact")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("DownloadModelArtifact validation failed", errors))} className="space-y-8">
+          {defaultValues.modelName !== undefined && defaultValues.modelName !== null ? (
+            <input type="hidden" {...form.register("modelName" as never)} />
+          ) : null}
+          {defaultValues.modelVersion !== undefined && defaultValues.modelVersion !== null ? (
+            <input type="hidden" {...form.register("modelVersion" as never)} />
+          ) : null}
           {defaultValues.modelId !== undefined && defaultValues.modelId !== null ? (
             <input type="hidden" {...form.register("modelId" as never)} />
           ) : null}

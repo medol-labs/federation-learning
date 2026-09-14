@@ -1,7 +1,6 @@
 package tech.medo.runtimeprovisioning.retryruntimeagentdeployment
 
 import java.util.UUID;
-import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
 
 interface RetryRuntimeAgentDeploymentService {
     fun supports(input: RetryRuntimeAgentDeploymentInput): Boolean = true
@@ -21,7 +20,6 @@ data class RetryRuntimeAgentDeploymentInput(
     val runtimeName: String,
     val agentInstallMode: String,
     val expectedNodeCount: Int,
-    val currentRuntimeInfrastructureState: RuntimeInfrastructureStateEnum,
     val retryReason: String
 )
 

@@ -15,6 +15,16 @@ import {
   runtimeAgentModuleName,
   useRuntimeAgentAccess,
 } from "./runtime-agent-access";
+import { getAppConfig } from "@/providers/app-config";
+
+const PARTICIPANT_FRONTEND_APP = "FederationLearningParticipantConsole";
+const PLATFORM_FRONTEND_APP = "FederationLearningConsole";
+const SUPPORT_MODULE_NAME = "federation-learning-support";
+const PLATFORM_MODULE_NAME = "federation-learning-platform";
+
+function frontendAppName() {
+  return getAppConfig("VITE_FRONTEND_APP", PLATFORM_FRONTEND_APP);
+}
 
 export function AppExtensionProvider({ children }: PropsWithChildren) {
   return <RuntimeAgentAccessProvider>{children}</RuntimeAgentAccessProvider>;
@@ -29,21 +39,47 @@ export function useAppExtensions(): AppExtensionState {
 
   return {
     dataProviderKey: selectedEndpoint?.runtimeAgentId ?? "no-runtime-agent",
-    filterBackendModules: (modules: BackendModule[]) => modules.filter((module) =>
-      module.name !== runtimeAgentModuleName ||
-      (runtimeAgentAccessAllowed && selectedEndpoint !== null),
-    ),
-    filterResources: (resources: IResourceItem[]) => currentUser?.organizationId
-      ? resources
-      : resources.filter((resource) => !isRuntimeAgentResource(resource.name)),
-    resolveBackendBaseUrl: (module: BackendModule) => module.name === runtimeAgentModuleName
-      ? selectedEndpoint?.runtimeAgentEndpoint.replace(/\/+$/u, "") ??
-        "http://runtime-agent-not-selected.invalid"
-      : module.apiUrl,
+    filterBackendModules: (modules: BackendModule[]) => {
+      if (frontendAppName() === PARTICIPANT_FRONTEND_APP) {
+        return modules.filter((module) =>
+          module.name === runtimeAgentModuleName,
+        );
+      }
+
+      return modules.filter((module) =>
+        module.name === SUPPORT_MODULE_NAME ||
+        module.name === PLATFORM_MODULE_NAME,
+      );
+    },
+    filterResources: (resources: IResourceItem[]) => {
+      if (frontendAppName() === PARTICIPANT_FRONTEND_APP) {
+        return resources.filter((resource) =>
+          resource.name === "dashboard" || isRuntimeAgentResource(resource.name),
+        );
+      }
+
+      return resources.filter((resource) => !isRuntimeAgentResource(resource.name));
+    },
+    resolveBackendBaseUrl: (module: BackendModule) => {
+      if (module.name !== runtimeAgentModuleName) {
+        return module.apiUrl;
+      }
+
+      if (frontendAppName() === PARTICIPANT_FRONTEND_APP) {
+        return module.apiUrl;
+      }
+
+      return selectedEndpoint?.runtimeAgentEndpoint.replace(/\/+$/u, "") ??
+        "http://runtime-agent-not-selected.invalid";
+    },
   };
 }
 
 export function HeaderExtensionActions({ compact = false }: { compact?: boolean }) {
+  if (frontendAppName() === PARTICIPANT_FRONTEND_APP) {
+    return null;
+  }
+
   return <RuntimeAgentSwitcher compact={compact} />;
 }
 

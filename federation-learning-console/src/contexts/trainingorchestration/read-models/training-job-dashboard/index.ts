@@ -6,3 +6,4 @@ export * from "../../slices/cancel-training-job/cancel-training-job-training-job
 export * from "../../slices/submit-training-job/submit-training-job-training-job-dashboard";
 export * from "../../slices/pause-training-job/pause-training-job-training-job-dashboard";
 export * from "../../slices/resume-training-job/resume-training-job";
+export * from "../../slices/retry-training-round-participant-selection/retry-training-round-participant-selection-training-job-dashboard";

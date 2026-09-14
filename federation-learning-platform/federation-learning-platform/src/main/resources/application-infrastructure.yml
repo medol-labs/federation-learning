@@ -18,6 +18,13 @@ platform:
       agent-image: ${PLATFORM_RUNTIME_K3S_AGENT_IMAGE:medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT}
       agent-replicas: ${PLATFORM_RUNTIME_K3S_AGENT_REPLICAS:1}
       agent-container-port: ${PLATFORM_RUNTIME_K3S_AGENT_CONTAINER_PORT:8082}
+      agent-allowed-origins: ${PLATFORM_RUNTIME_K3S_AGENT_ALLOWED_ORIGINS:http://localhost:*,http://127.0.0.1:*,http://*:30082}
+      agent-security-provider: ${PLATFORM_RUNTIME_K3S_AGENT_SECURITY_PROVIDER:local}
+      agent-admin-bootstrap-enabled: ${PLATFORM_RUNTIME_K3S_AGENT_ADMIN_BOOTSTRAP_ENABLED:true}
+      agent-security-secret-name: ${PLATFORM_RUNTIME_K3S_AGENT_SECURITY_SECRET_NAME:federation-learning-runtime-agent-dev-secret}
+      agent-jwt-secret-key: ${PLATFORM_RUNTIME_K3S_AGENT_JWT_SECRET_KEY:MEDOL_SECURITY_JWT_SECRET}
+      agent-internal-token-key: ${PLATFORM_RUNTIME_K3S_AGENT_INTERNAL_TOKEN_KEY:MEDOL_SECURITY_INTERNAL_TOKEN}
+      agent-admin-bootstrap-setup-token-key: ${PLATFORM_RUNTIME_K3S_AGENT_ADMIN_BOOTSTRAP_SETUP_TOKEN_KEY:MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN}
       participant-console-enabled: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_ENABLED:true}
       participant-console-image: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_IMAGE:medol/federation-learning-participant-console:0.0.1-SNAPSHOT}
       participant-console-replicas: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_REPLICAS:1}

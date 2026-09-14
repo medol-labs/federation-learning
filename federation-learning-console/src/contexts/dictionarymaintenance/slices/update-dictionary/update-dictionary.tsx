@@ -37,6 +37,7 @@ export const DictionaryCatalogUpdateDictionary = () => {
   const defaultValues = {
     dictionaryName: searchParams.get("dictionaryName") ?? undefined,
     description: searchParams.get("description") ?? undefined,
+    dictionaryCode: searchParams.get("dictionaryCode") ?? undefined,
     dictionaryId: searchParams.get("dictionaryId") ?? undefined,
   } as unknown as Partial<UpdateDictionaryCommandInput>;
 
@@ -83,6 +84,9 @@ export const DictionaryCatalogUpdateDictionary = () => {
       <CreateViewHeader title={t("resources.dictionary_catalog.commands.updateDictionary.label", "Update Dictionary")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("UpdateDictionary validation failed", errors))} className="space-y-8">
+          {defaultValues.dictionaryCode !== undefined && defaultValues.dictionaryCode !== null ? (
+            <input type="hidden" {...form.register("dictionaryCode" as never)} />
+          ) : null}
           {defaultValues.dictionaryId !== undefined && defaultValues.dictionaryId !== null ? (
             <input type="hidden" {...form.register("dictionaryId" as never)} />
           ) : null}

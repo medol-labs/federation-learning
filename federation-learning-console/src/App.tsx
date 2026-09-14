@@ -91,11 +91,11 @@ function RefineApplication() {
                 syncWithLocation: true,
                 warnWhenUnsavedChanges: true,
                 title: {
-                  text: "Federation Learning Platform",
+                  text: "Federation Learning Console",
                   icon: (
                     <img
                       src={`${import.meta.env.BASE_URL}medol-logo.png`}
-                      alt="Federation Learning Platform logo"
+                      alt="Federation Learning Console logo"
                       className="block h-full w-full shrink-0 object-contain"
                     />
                   ),

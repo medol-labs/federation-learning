@@ -4,7 +4,6 @@ import org.axonframework.messaging.commandhandling.annotation.Command
 import org.axonframework.modelling.annotation.TargetEntityId
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureSelection
 import java.util.UUID;
-import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
 
 
 @Command
@@ -21,7 +20,6 @@ data class RetryRuntimeAgentDeploymentCommand(
     val runtimeName: String,
     val agentInstallMode: String,
     val expectedNodeCount: Int,
-    val currentRuntimeInfrastructureState: RuntimeInfrastructureStateEnum,
     val retryReason: String
 ) {
     @TargetEntityId

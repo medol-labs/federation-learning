@@ -588,6 +588,14 @@ export const TrainingJobDashboardList = () => {
                     size="sm"
                   />
                 )}
+                {isCommandVisible(row.original, "", "", []) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="retryTrainingRoundParticipantSelection"
+                    recordItemId={row.original.trainingJobId}
+                    size="sm"
+                  />
+                )}
               <ShowButton variant="ghost" recordItemId={row.original.trainingJobId} size="sm" />
             </RowActionMenu>
           </div>

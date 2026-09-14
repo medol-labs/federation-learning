@@ -3,54 +3,13 @@ import { Route } from "react-router";
 
 import { resolvePageOverride } from "@/domain/page-overrides";
 import {
-  AgentDatasetAccessValidationCatalogList,
-  AgentDatasetAccessValidationCatalogShow,
-} from "./runtimeagentoperations/read-models/agent-dataset-access-validation-catalog";
-import {
-  AgentRuntimeInfrastructureConnectionCatalogList,
-  AgentRuntimeInfrastructureConnectionCatalogShow,
-  AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionEstablished,
-} from "./runtimeagentoperations/read-models/agent-runtime-infrastructure-connection-catalog";
-import {
-  AgentRuntimeNodeInventoryCatalogList,
-  AgentRuntimeNodeInventoryCatalogShow,
-} from "./runtimeagentoperations/read-models/agent-runtime-node-inventory-catalog";
-import {
-  AgentRuntimeNodeResourceLatestList,
-  AgentRuntimeNodeResourceLatestShow,
-} from "./runtimeagentoperations/read-models/agent-runtime-node-resource-latest";
-import {
-  AgentRuntimeTelemetryLatestList,
-  AgentRuntimeTelemetryLatestShow,
-} from "./runtimeagentoperations/read-models/agent-runtime-telemetry-latest";
-import {
   AuditRecordLogList,
   AuditRecordLogShow,
 } from "./runtimemonitoring/read-models/audit-record-log";
 import {
   CurrentRecommendedFeatureSchemaCatalogList,
   CurrentRecommendedFeatureSchemaCatalogShow,
-  CurrentRecommendedFeatureSchemaCatalogDefineFeatureSchema,
 } from "./datasetgovernance/read-models/current-recommended-feature-schema-catalog";
-import {
-  DatasetCapabilityList,
-  DatasetCapabilityShow,
-  DatasetCapabilityDeclareDataset,
-  DatasetCapabilityRetryDatasetContractValidation,
-  DatasetCapabilityRejectDatasetForTraining,
-  DatasetCapabilityApproveDatasetForTraining,
-  DatasetCapabilityRevokeDatasetTrainingApproval,
-  DatasetCapabilityConfigureRuntimeDatasetBinding,
-} from "./runtimeagentoperations/read-models/dataset-capability";
-import {
-  DatasetReadinessList,
-  DatasetReadinessShow,
-  DatasetReadinessConfigureRuntimeDatasetBinding,
-  DatasetReadinessRejectDatasetForTraining,
-  DatasetReadinessApproveDatasetForTraining,
-  DatasetReadinessRetryDatasetContractValidation,
-  DatasetReadinessRevokeDatasetTrainingApproval,
-} from "./runtimeagentoperations/read-models/dataset-readiness";
 import {
   DictionaryCatalogList,
   DictionaryCatalogShow,
@@ -69,12 +28,12 @@ import {
 import {
   FeatureSchemaCatalogList,
   FeatureSchemaCatalogShow,
+  FeatureSchemaCatalogDefineFeatureSchema,
   FeatureSchemaCatalogPublishFeatureSchema,
   FeatureSchemaCatalogDeprecateFeatureSchema,
+  FeatureSchemaCatalogRetireFeatureSchema,
   FeatureSchemaCatalogSupersedeFeatureSchemaVersion,
   FeatureSchemaCatalogMarkCurrentRecommendedFeatureSchemaVersion,
-  FeatureSchemaCatalogDeclareDataset,
-  FeatureSchemaCatalogRetireFeatureSchema,
 } from "./datasetgovernance/read-models/feature-schema-catalog";
 import {
   FederationMembershipDirectoryList,
@@ -141,35 +100,17 @@ import {
   RolePermissionGrantCatalogShow,
 } from "./identityaccessmanagement/read-models/role-permission-grant-catalog";
 import {
-  RoundExecutionCatalogList,
-  RoundExecutionCatalogShow,
-  RoundExecutionCatalogRetryRoundExecutionAfterStartFailure,
-  RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure,
-  RoundExecutionCatalogSubmitModelUpdateSubmission,
-} from "./runtimeagentoperations/read-models/round-execution-catalog";
-import {
   RuntimeAgentEndpointCatalogList,
   RuntimeAgentEndpointCatalogShow,
   RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished,
 } from "./runtimeprovisioning/read-models/runtime-agent-endpoint-catalog";
 import {
-  RuntimeAgentLifecycleCatalogList,
-  RuntimeAgentLifecycleCatalogShow,
-  RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration,
-} from "./runtimeagentoperations/read-models/runtime-agent-lifecycle-catalog";
-import {
   RuntimeCapabilityCatalogList,
   RuntimeCapabilityCatalogShow,
 } from "./runtimegovernance/read-models/runtime-capability-catalog";
 import {
-  RuntimeDatasetBindingCatalogList,
-  RuntimeDatasetBindingCatalogShow,
-  RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding,
-} from "./runtimeagentoperations/read-models/runtime-dataset-binding-catalog";
-import {
   RuntimeDatasetMetadataCatalogList,
   RuntimeDatasetMetadataCatalogShow,
-  RuntimeDatasetMetadataCatalogReprofileAgentDataset,
 } from "./datasetgovernance/read-models/runtime-dataset-metadata-catalog";
 import {
   RuntimeHealthDashboardList,
@@ -242,6 +183,7 @@ import {
   TrainingJobDashboardSubmitTrainingJob,
   TrainingJobDashboardPauseTrainingJob,
   TrainingJobDashboardResumeTrainingJob,
+  TrainingJobDashboardRetryTrainingRoundParticipantSelection,
 } from "./trainingorchestration/read-models/training-job-dashboard";
 import {
   TrainingParticipantEligibilityList,
@@ -253,11 +195,9 @@ import {
   TrainingRoundProgressShow,
   TrainingRoundProgressCancelTrainingJob,
   TrainingRoundProgressSubmitModelUpdateSubmission,
-  TrainingRoundProgressRetryTrainingRoundParticipantSelection,
   TrainingRoundProgressSubmitTrainingJob,
+  TrainingRoundProgressRetryTrainingRoundParticipantSelection,
   TrainingRoundProgressPauseTrainingJob,
-  TrainingRoundProgressRetryRoundExecutionAfterStartFailure,
-  TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure,
 } from "./trainingorchestration/read-models/training-round-progress";
 import {
   TrainingRunConfigurationCatalogList,
@@ -294,54 +234,13 @@ import {
 
 export const contextRoutes = (
   <>
-    <Route path="/agent-dataset-access-validation-catalog">
-      <Route index element={resolvePageOverride("agent-dataset-access-validation-catalog", "list", <AgentDatasetAccessValidationCatalogList />)} />
-      <Route path="show/:id" element={resolvePageOverride("agent-dataset-access-validation-catalog", "show", <AgentDatasetAccessValidationCatalogShow />)} />
-    </Route>
-    <Route path="/agent-runtime-infrastructure-connection-catalog">
-      <Route index element={resolvePageOverride("agent-runtime-infrastructure-connection-catalog", "list", <AgentRuntimeInfrastructureConnectionCatalogList />)} />
-      <Route path="show/:id" element={resolvePageOverride("agent-runtime-infrastructure-connection-catalog", "show", <AgentRuntimeInfrastructureConnectionCatalogShow />)} />
-      <Route path=":id/command/record-runtime-connection-established" element={resolvePageOverride("agent-runtime-infrastructure-connection-catalog", "recordRuntimeConnectionEstablished", <AgentRuntimeInfrastructureConnectionCatalogRecordRuntimeConnectionEstablished />)} />
-    </Route>
-    <Route path="/agent-runtime-node-inventory-catalog">
-      <Route index element={resolvePageOverride("agent-runtime-node-inventory-catalog", "list", <AgentRuntimeNodeInventoryCatalogList />)} />
-      <Route path="show/:id" element={resolvePageOverride("agent-runtime-node-inventory-catalog", "show", <AgentRuntimeNodeInventoryCatalogShow />)} />
-    </Route>
-    <Route path="/agent-runtime-node-resource-latest">
-      <Route index element={resolvePageOverride("agent-runtime-node-resource-latest", "list", <AgentRuntimeNodeResourceLatestList />)} />
-      <Route path="show/:id" element={resolvePageOverride("agent-runtime-node-resource-latest", "show", <AgentRuntimeNodeResourceLatestShow />)} />
-    </Route>
-    <Route path="/agent-runtime-telemetry-latest">
-      <Route index element={resolvePageOverride("agent-runtime-telemetry-latest", "list", <AgentRuntimeTelemetryLatestList />)} />
-      <Route path="show/:id" element={resolvePageOverride("agent-runtime-telemetry-latest", "show", <AgentRuntimeTelemetryLatestShow />)} />
-    </Route>
     <Route path="/audit-record-log">
       <Route index element={resolvePageOverride("audit-record-log", "list", <AuditRecordLogList />)} />
       <Route path="show/:id" element={resolvePageOverride("audit-record-log", "show", <AuditRecordLogShow />)} />
     </Route>
     <Route path="/current-recommended-feature-schema-catalog">
       <Route index element={resolvePageOverride("current-recommended-feature-schema-catalog", "list", <CurrentRecommendedFeatureSchemaCatalogList />)} />
-      <Route path="command/define-feature-schema" element={resolvePageOverride("current-recommended-feature-schema-catalog", "defineFeatureSchema", <CurrentRecommendedFeatureSchemaCatalogDefineFeatureSchema />)} />
       <Route path="show/:id" element={resolvePageOverride("current-recommended-feature-schema-catalog", "show", <CurrentRecommendedFeatureSchemaCatalogShow />)} />
-    </Route>
-    <Route path="/dataset-capability">
-      <Route index element={resolvePageOverride("dataset-capability", "list", <DatasetCapabilityList />)} />
-      <Route path="command/declare-dataset" element={resolvePageOverride("dataset-capability", "declareDataset", <DatasetCapabilityDeclareDataset />)} />
-      <Route path="show/:id" element={resolvePageOverride("dataset-capability", "show", <DatasetCapabilityShow />)} />
-      <Route path=":id/command/retry-dataset-contract-validation" element={resolvePageOverride("dataset-capability", "retryDatasetContractValidation", <DatasetCapabilityRetryDatasetContractValidation />)} />
-      <Route path=":id/command/reject-dataset-for-training" element={resolvePageOverride("dataset-capability", "rejectDatasetForTraining", <DatasetCapabilityRejectDatasetForTraining />)} />
-      <Route path=":id/command/approve-dataset-for-training" element={resolvePageOverride("dataset-capability", "approveDatasetForTraining", <DatasetCapabilityApproveDatasetForTraining />)} />
-      <Route path=":id/command/revoke-dataset-training-approval" element={resolvePageOverride("dataset-capability", "revokeDatasetTrainingApproval", <DatasetCapabilityRevokeDatasetTrainingApproval />)} />
-      <Route path=":id/command/configure-runtime-dataset-binding" element={resolvePageOverride("dataset-capability", "configureRuntimeDatasetBinding", <DatasetCapabilityConfigureRuntimeDatasetBinding />)} />
-    </Route>
-    <Route path="/dataset-readiness">
-      <Route index element={resolvePageOverride("dataset-readiness", "list", <DatasetReadinessList />)} />
-      <Route path="show/:id" element={resolvePageOverride("dataset-readiness", "show", <DatasetReadinessShow />)} />
-      <Route path=":id/command/configure-runtime-dataset-binding" element={resolvePageOverride("dataset-readiness", "configureRuntimeDatasetBinding", <DatasetReadinessConfigureRuntimeDatasetBinding />)} />
-      <Route path=":id/command/reject-dataset-for-training" element={resolvePageOverride("dataset-readiness", "rejectDatasetForTraining", <DatasetReadinessRejectDatasetForTraining />)} />
-      <Route path=":id/command/approve-dataset-for-training" element={resolvePageOverride("dataset-readiness", "approveDatasetForTraining", <DatasetReadinessApproveDatasetForTraining />)} />
-      <Route path=":id/command/retry-dataset-contract-validation" element={resolvePageOverride("dataset-readiness", "retryDatasetContractValidation", <DatasetReadinessRetryDatasetContractValidation />)} />
-      <Route path=":id/command/revoke-dataset-training-approval" element={resolvePageOverride("dataset-readiness", "revokeDatasetTrainingApproval", <DatasetReadinessRevokeDatasetTrainingApproval />)} />
     </Route>
     <Route path="/dictionary-catalog">
       <Route index element={resolvePageOverride("dictionary-catalog", "list", <DictionaryCatalogList />)} />
@@ -360,13 +259,13 @@ export const contextRoutes = (
     </Route>
     <Route path="/feature-schema-catalog">
       <Route index element={resolvePageOverride("feature-schema-catalog", "list", <FeatureSchemaCatalogList />)} />
+      <Route path="command/define-feature-schema" element={resolvePageOverride("feature-schema-catalog", "defineFeatureSchema", <FeatureSchemaCatalogDefineFeatureSchema />)} />
       <Route path="show/:id" element={resolvePageOverride("feature-schema-catalog", "show", <FeatureSchemaCatalogShow />)} />
       <Route path=":id/command/publish-feature-schema" element={resolvePageOverride("feature-schema-catalog", "publishFeatureSchema", <FeatureSchemaCatalogPublishFeatureSchema />)} />
       <Route path=":id/command/deprecate-feature-schema" element={resolvePageOverride("feature-schema-catalog", "deprecateFeatureSchema", <FeatureSchemaCatalogDeprecateFeatureSchema />)} />
+      <Route path=":id/command/retire-feature-schema" element={resolvePageOverride("feature-schema-catalog", "retireFeatureSchema", <FeatureSchemaCatalogRetireFeatureSchema />)} />
       <Route path=":id/command/supersede-feature-schema-version" element={resolvePageOverride("feature-schema-catalog", "supersedeFeatureSchemaVersion", <FeatureSchemaCatalogSupersedeFeatureSchemaVersion />)} />
       <Route path=":id/command/mark-current-recommended-feature-schema-version" element={resolvePageOverride("feature-schema-catalog", "markCurrentRecommendedFeatureSchemaVersion", <FeatureSchemaCatalogMarkCurrentRecommendedFeatureSchemaVersion />)} />
-      <Route path=":id/command/declare-dataset" element={resolvePageOverride("feature-schema-catalog", "declareDataset", <FeatureSchemaCatalogDeclareDataset />)} />
-      <Route path=":id/command/retire-feature-schema" element={resolvePageOverride("feature-schema-catalog", "retireFeatureSchema", <FeatureSchemaCatalogRetireFeatureSchema />)} />
     </Route>
     <Route path="/federation-membership-directory">
       <Route index element={resolvePageOverride("federation-membership-directory", "list", <FederationMembershipDirectoryList />)} />
@@ -432,36 +331,18 @@ export const contextRoutes = (
       <Route index element={resolvePageOverride("role-permission-grant-catalog", "list", <RolePermissionGrantCatalogList />)} />
       <Route path="show/:id" element={resolvePageOverride("role-permission-grant-catalog", "show", <RolePermissionGrantCatalogShow />)} />
     </Route>
-    <Route path="/round-execution-catalog">
-      <Route index element={resolvePageOverride("round-execution-catalog", "list", <RoundExecutionCatalogList />)} />
-      <Route path="show/:id" element={resolvePageOverride("round-execution-catalog", "show", <RoundExecutionCatalogShow />)} />
-      <Route path=":id/command/retry-round-execution-after-start-failure" element={resolvePageOverride("round-execution-catalog", "retryRoundExecutionAfterStartFailure", <RoundExecutionCatalogRetryRoundExecutionAfterStartFailure />)} />
-      <Route path=":id/command/retry-round-execution-after-runtime-failure" element={resolvePageOverride("round-execution-catalog", "retryRoundExecutionAfterRuntimeFailure", <RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure />)} />
-      <Route path=":id/command/submit-model-update-submission" element={resolvePageOverride("round-execution-catalog", "submitModelUpdateSubmission", <RoundExecutionCatalogSubmitModelUpdateSubmission />)} />
-    </Route>
     <Route path="/runtime-agent-endpoint-catalog">
       <Route index element={resolvePageOverride("runtime-agent-endpoint-catalog", "list", <RuntimeAgentEndpointCatalogList />)} />
       <Route path="show/:id" element={resolvePageOverride("runtime-agent-endpoint-catalog", "show", <RuntimeAgentEndpointCatalogShow />)} />
       <Route path=":id/command/record-runtime-connection-established" element={resolvePageOverride("runtime-agent-endpoint-catalog", "recordRuntimeConnectionEstablished", <RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished />)} />
     </Route>
-    <Route path="/runtime-agent-lifecycle-catalog">
-      <Route index element={resolvePageOverride("runtime-agent-lifecycle-catalog", "list", <RuntimeAgentLifecycleCatalogList />)} />
-      <Route path="command/load-runtime-agent-bootstrap-configuration" element={resolvePageOverride("runtime-agent-lifecycle-catalog", "loadRuntimeAgentBootstrapConfiguration", <RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration />)} />
-      <Route path="show/:id" element={resolvePageOverride("runtime-agent-lifecycle-catalog", "show", <RuntimeAgentLifecycleCatalogShow />)} />
-    </Route>
     <Route path="/runtime-capability-catalog">
       <Route index element={resolvePageOverride("runtime-capability-catalog", "list", <RuntimeCapabilityCatalogList />)} />
       <Route path="show/:id" element={resolvePageOverride("runtime-capability-catalog", "show", <RuntimeCapabilityCatalogShow />)} />
     </Route>
-    <Route path="/runtime-dataset-binding-catalog">
-      <Route index element={resolvePageOverride("runtime-dataset-binding-catalog", "list", <RuntimeDatasetBindingCatalogList />)} />
-      <Route path="command/configure-runtime-dataset-binding" element={resolvePageOverride("runtime-dataset-binding-catalog", "configureRuntimeDatasetBinding", <RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding />)} />
-      <Route path="show/:id" element={resolvePageOverride("runtime-dataset-binding-catalog", "show", <RuntimeDatasetBindingCatalogShow />)} />
-    </Route>
     <Route path="/runtime-dataset-metadata-catalog">
       <Route index element={resolvePageOverride("runtime-dataset-metadata-catalog", "list", <RuntimeDatasetMetadataCatalogList />)} />
       <Route path="show/:id" element={resolvePageOverride("runtime-dataset-metadata-catalog", "show", <RuntimeDatasetMetadataCatalogShow />)} />
-      <Route path=":id/command/reprofile-agent-dataset" element={resolvePageOverride("runtime-dataset-metadata-catalog", "reprofileAgentDataset", <RuntimeDatasetMetadataCatalogReprofileAgentDataset />)} />
     </Route>
     <Route path="/runtime-health-dashboard">
       <Route index element={resolvePageOverride("runtime-health-dashboard", "list", <RuntimeHealthDashboardList />)} />
@@ -534,6 +415,7 @@ export const contextRoutes = (
       <Route path=":id/command/submit-training-job" element={resolvePageOverride("training-job-dashboard", "submitTrainingJob", <TrainingJobDashboardSubmitTrainingJob />)} />
       <Route path=":id/command/pause-training-job" element={resolvePageOverride("training-job-dashboard", "pauseTrainingJob", <TrainingJobDashboardPauseTrainingJob />)} />
       <Route path=":id/command/resume-training-job" element={resolvePageOverride("training-job-dashboard", "resumeTrainingJob", <TrainingJobDashboardResumeTrainingJob />)} />
+      <Route path=":id/command/retry-training-round-participant-selection" element={resolvePageOverride("training-job-dashboard", "retryTrainingRoundParticipantSelection", <TrainingJobDashboardRetryTrainingRoundParticipantSelection />)} />
     </Route>
     <Route path="/training-participant-eligibility">
       <Route index element={resolvePageOverride("training-participant-eligibility", "list", <TrainingParticipantEligibilityList />)} />
@@ -545,11 +427,9 @@ export const contextRoutes = (
       <Route path="show/:id" element={resolvePageOverride("training-round-progress", "show", <TrainingRoundProgressShow />)} />
       <Route path=":id/command/cancel-training-job" element={resolvePageOverride("training-round-progress", "cancelTrainingJob", <TrainingRoundProgressCancelTrainingJob />)} />
       <Route path=":id/command/submit-model-update-submission" element={resolvePageOverride("training-round-progress", "submitModelUpdateSubmission", <TrainingRoundProgressSubmitModelUpdateSubmission />)} />
-      <Route path=":id/command/retry-training-round-participant-selection" element={resolvePageOverride("training-round-progress", "retryTrainingRoundParticipantSelection", <TrainingRoundProgressRetryTrainingRoundParticipantSelection />)} />
       <Route path=":id/command/submit-training-job" element={resolvePageOverride("training-round-progress", "submitTrainingJob", <TrainingRoundProgressSubmitTrainingJob />)} />
+      <Route path=":id/command/retry-training-round-participant-selection" element={resolvePageOverride("training-round-progress", "retryTrainingRoundParticipantSelection", <TrainingRoundProgressRetryTrainingRoundParticipantSelection />)} />
       <Route path=":id/command/pause-training-job" element={resolvePageOverride("training-round-progress", "pauseTrainingJob", <TrainingRoundProgressPauseTrainingJob />)} />
-      <Route path=":id/command/retry-round-execution-after-start-failure" element={resolvePageOverride("training-round-progress", "retryRoundExecutionAfterStartFailure", <TrainingRoundProgressRetryRoundExecutionAfterStartFailure />)} />
-      <Route path=":id/command/retry-round-execution-after-runtime-failure" element={resolvePageOverride("training-round-progress", "retryRoundExecutionAfterRuntimeFailure", <TrainingRoundProgressRetryRoundExecutionAfterRuntimeFailure />)} />
     </Route>
     <Route path="/training-run-configuration-catalog">
       <Route index element={resolvePageOverride("training-run-configuration-catalog", "list", <TrainingRunConfigurationCatalogList />)} />

@@ -81,6 +81,7 @@ deployment-compose-files/
 # Local Kubernetes/K3s environment overlays
 operations/**/secrets.*.yaml
 !operations/**/secrets.example.yaml
+operations/**/managed-*-secret.dev.yaml
 operations/**/k3s/cluster/registries.yaml
 operations/**/k3s/environments/*-registry/**
 operations/**/k3s/overlays/*-registry/**

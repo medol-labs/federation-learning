@@ -320,6 +320,10 @@ export const ModelArtifactCatalogList = () => {
                     command="downloadModelArtifact"
                     recordItemId={row.original.modelId}
                     size="sm"
+                    query={{
+                      modelName: row.original.modelName,
+                      modelVersion: row.original.modelVersion,
+                    }}
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.modelId} size="sm" />

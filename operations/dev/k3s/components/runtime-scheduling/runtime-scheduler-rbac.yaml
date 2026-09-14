@@ -33,6 +33,7 @@ rules:
     resources:
       - "services"
       - "pods"
+      - "configmaps"
       - "persistentvolumeclaims"
     verbs:
       - "get"

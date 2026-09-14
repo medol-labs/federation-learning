@@ -36,6 +36,7 @@ export const DictionaryCatalogArchiveDictionary = () => {
   const { id } = useParsed();
   const defaultValues = {
     archiveReason: searchParams.get("archiveReason") ?? undefined,
+    dictionaryCode: searchParams.get("dictionaryCode") ?? undefined,
     dictionaryId: searchParams.get("dictionaryId") ?? undefined,
   } as unknown as Partial<ArchiveDictionaryCommandInput>;
 
@@ -82,6 +83,9 @@ export const DictionaryCatalogArchiveDictionary = () => {
       <CreateViewHeader title={t("resources.dictionary_catalog.commands.archiveDictionary.label", "Archive Dictionary")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("ArchiveDictionary validation failed", errors))} className="space-y-8">
+          {defaultValues.dictionaryCode !== undefined && defaultValues.dictionaryCode !== null ? (
+            <input type="hidden" {...form.register("dictionaryCode" as never)} />
+          ) : null}
           {defaultValues.dictionaryId !== undefined && defaultValues.dictionaryId !== null ? (
             <input type="hidden" {...form.register("dictionaryId" as never)} />
           ) : null}

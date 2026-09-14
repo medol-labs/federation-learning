@@ -1,0 +1,3 @@
+-- Embedded IAM uses the read models generated from the IdentityAccessManagement model.
+-- Default users, roles, and permissions should be initialized through IAM commands
+-- so the event stream and projections stay consistent.

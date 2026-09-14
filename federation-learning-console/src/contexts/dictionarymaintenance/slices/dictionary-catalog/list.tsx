@@ -219,6 +219,7 @@ export const DictionaryCatalogList = () => {
               size="sm"
               query={{
                 archiveReason: row.original.archiveReason,
+                dictionaryCode: row.original.dictionaryCode,
               }}
             />
             )}

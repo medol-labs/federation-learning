@@ -165,6 +165,9 @@ export const OrganizationDirectoryList = () => {
                     command="activateOrganization"
                     recordItemId={row.original.organizationId}
                     size="sm"
+                    query={{
+                      organizationName: row.original.organizationName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "state", ["Active"]) && (
@@ -173,6 +176,9 @@ export const OrganizationDirectoryList = () => {
                     command="deactivateOrganization"
                     recordItemId={row.original.organizationId}
                     size="sm"
+                    query={{
+                      organizationName: row.original.organizationName,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "", []) && (
@@ -192,6 +198,9 @@ export const OrganizationDirectoryList = () => {
                     command="reactivateOrganization"
                     recordItemId={row.original.organizationId}
                     size="sm"
+                    query={{
+                      organizationName: row.original.organizationName,
+                    }}
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.organizationId} size="sm" />

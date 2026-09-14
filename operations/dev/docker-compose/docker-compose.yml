@@ -23,7 +23,7 @@ services:
     networks:
       - "medol-network"
   federation-learning-console:
-    image: "${FEDERATION_LEARNING_CONSOLE_IMAGE:-192.168.139.3:5000/fl/federation-learning-console}"
+    image: "${FEDERATION_LEARNING_CONSOLE_IMAGE:-192.168.50.2:5000/fl/federation-learning-console}"
     container_name: "${FEDERATION_LEARNING_CONSOLE_CONTAINER_NAME:-federation-learning-console}"
     restart: "unless-stopped"
     expose:
@@ -45,7 +45,7 @@ services:
       timeout: "3s"
       retries: 5
   federation-learning-participant-console:
-    image: "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_IMAGE:-192.168.139.3:5000/fl/federation-learning-participant-console}"
+    image: "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_IMAGE:-192.168.50.2:5000/fl/federation-learning-participant-console}"
     container_name: "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_CONTAINER_NAME:-federation-learning-participant-console}"
     restart: "unless-stopped"
     expose:
@@ -66,7 +66,7 @@ services:
       timeout: "3s"
       retries: 5
   federation-learning-support:
-    image: "${FEDERATION_LEARNING_SUPPORT_IMAGE:-192.168.139.3:5000/fl/federation-learning-support}"
+    image: "${FEDERATION_LEARNING_SUPPORT_IMAGE:-192.168.50.2:5000/fl/federation-learning-support}"
     container_name: "${FEDERATION_LEARNING_SUPPORT_CONTAINER_NAME:-federation-learning-support}"
     restart: "unless-stopped"
     expose:
@@ -107,7 +107,7 @@ services:
     ports:
       - "${FEDERATION_LEARNING_SUPPORT_PORT:-8080}:8080"
   federation-learning-platform:
-    image: "${FEDERATION_LEARNING_PLATFORM_IMAGE:-192.168.139.3:5000/fl/federation-learning-platform}"
+    image: "${FEDERATION_LEARNING_PLATFORM_IMAGE:-192.168.50.2:5000/fl/federation-learning-platform}"
     container_name: "${FEDERATION_LEARNING_PLATFORM_CONTAINER_NAME:-federation-learning-platform}"
     restart: "unless-stopped"
     expose:
@@ -148,7 +148,7 @@ services:
     ports:
       - "${FEDERATION_LEARNING_PLATFORM_PORT:-8081}:8081"
   federation-learning-runtime-agent:
-    image: "${FEDERATION_LEARNING_RUNTIME_AGENT_IMAGE:-192.168.139.3:5000/fl/federation-learning-runtime-agent}"
+    image: "${FEDERATION_LEARNING_RUNTIME_AGENT_IMAGE:-192.168.50.2:5000/fl/federation-learning-runtime-agent}"
     container_name: "${FEDERATION_LEARNING_RUNTIME_AGENT_CONTAINER_NAME:-federation-learning-runtime-agent}"
     restart: "unless-stopped"
     expose:

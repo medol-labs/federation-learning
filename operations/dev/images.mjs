@@ -10,7 +10,7 @@ const args = parseArgs(process.argv.slice(2));
 const command = args._[0] ?? 'help';
 const monorepoRoot = resolve(scriptDir, args.root ?? process.env.MONOREPO_ROOT ?? '../..');
 const platform = String(args.platform ?? process.env.DOCKER_DEFAULT_PLATFORM ?? 'linux/amd64');
-const imagePrefix = String(args.prefix ?? process.env.DOCKER_IMAGE_PREFIX ?? '192.168.139.3:5000/fl').replace(/\/+$/g, '');
+const imagePrefix = String(args.prefix ?? process.env.DOCKER_IMAGE_PREFIX ?? '192.168.50.2:5000/fl').replace(/\/+$/g, '');
 const dependencyImagePrefix = String(args['dependency-prefix'] ?? process.env.DEPENDENCY_IMAGE_PREFIX ?? defaultDependencyImagePrefix(imagePrefix)).replace(/\/+$/g, '');
 const imageVersion = String(args.version ?? process.env.IMAGE_VERSION ?? '0.0.1-SNAPSHOT');
 const outputRoot = resolve(scriptDir, args.output ?? process.env.IMAGE_BUNDLE_OUTPUT ?? '.work/image-bundle');
@@ -601,7 +601,7 @@ Commands:
   package, all         Build, pull dependencies, export images, collect compose files, and tar the bundle.
 
 Options:
-  --prefix <name>                 Image prefix or registry namespace. Defaults to DOCKER_IMAGE_PREFIX or 192.168.139.3:5000/fl.
+  --prefix <name>                 Image prefix or registry namespace. Defaults to DOCKER_IMAGE_PREFIX or 192.168.50.2:5000/fl.
   --dependency-prefix <name>      Registry root for dependency mirrors. Defaults to DEPENDENCY_IMAGE_PREFIX, or the registry host from --prefix.
   --dependency-image <image[,..]> Add extra dependency images to pull/export/push.
   --version <tag>                 Image tag. Defaults to IMAGE_VERSION or 0.0.1-SNAPSHOT.
