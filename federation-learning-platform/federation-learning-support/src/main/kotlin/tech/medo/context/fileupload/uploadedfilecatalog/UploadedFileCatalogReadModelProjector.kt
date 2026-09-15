@@ -1,6 +1,7 @@
 package tech.medo.fileupload.uploadedfilecatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -14,6 +15,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
+@Namespace("readmodel-uploaded-file-catalog")
 @Component
 class UploadedFileCatalogReadModelProjector(private val repository: UploadedFileCatalogReadModelRepository) {
     @EventHandler

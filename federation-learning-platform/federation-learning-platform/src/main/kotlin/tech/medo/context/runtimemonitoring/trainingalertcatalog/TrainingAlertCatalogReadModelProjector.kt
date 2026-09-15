@@ -1,6 +1,7 @@
 package tech.medo.runtimemonitoring.trainingalertcatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -15,6 +16,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
+@Namespace("readmodel-training-alert-catalog")
 @Component
 class TrainingAlertCatalogReadModelProjector(private val repository: TrainingAlertCatalogReadModelRepository) {
     @EventHandler

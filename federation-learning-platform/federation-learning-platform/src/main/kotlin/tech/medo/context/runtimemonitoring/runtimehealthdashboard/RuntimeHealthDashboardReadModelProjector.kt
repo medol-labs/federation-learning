@@ -1,6 +1,7 @@
 package tech.medo.runtimemonitoring.runtimehealthdashboard
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -16,6 +17,7 @@ import tech.medo.runtimemonitoring.events.TrainingAlertRaisedEvent
 
 
 
+@Namespace("readmodel-runtime-health-dashboard")
 @Component
 class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHealthDashboardReadModelRepository) {
     @EventHandler

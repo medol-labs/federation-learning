@@ -13,7 +13,7 @@ import tech.medo.datasetgovernance.featureschema.FeatureSchemaFeatureDomainVersi
 data class DefineFeatureSchemaCommand(
     val featureSchemaId: UUID = java.util.UUID.randomUUID(),
     val featureDomain: String,
-    val version: String = "",
+    val version: String,
     val dataModality: String,
     val features: List<FeatureDefinition>,
     val labels: List<LabelDefinition>

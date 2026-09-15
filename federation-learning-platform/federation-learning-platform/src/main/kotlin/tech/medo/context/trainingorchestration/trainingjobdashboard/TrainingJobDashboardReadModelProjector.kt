@@ -1,6 +1,7 @@
 package tech.medo.trainingorchestration.trainingjobdashboard
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -18,6 +19,7 @@ import tech.medo.trainingorchestration.events.TrainingRoundCompletedEvent
 import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
 
 
+@Namespace("readmodel-training-job-dashboard")
 @Component
 class TrainingJobDashboardReadModelProjector(private val repository: TrainingJobDashboardReadModelRepository) {
     @EventHandler

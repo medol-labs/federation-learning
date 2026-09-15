@@ -1,6 +1,7 @@
 package tech.medo.trainingorchestration.trainingrunconfigurationcatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -13,6 +14,7 @@ import tech.medo.trainingorchestration.events.TrainingRunConfigurationLockedEven
 import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum
 
 
+@Namespace("readmodel-training-run-configuration-catalog")
 @Component
 class TrainingRunConfigurationCatalogReadModelProjector(private val repository: TrainingRunConfigurationCatalogReadModelRepository) {
     @EventHandler

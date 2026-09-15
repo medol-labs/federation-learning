@@ -3,8 +3,10 @@ package tech.medo.shared.application.metadata
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("audit-trail")
 @Component
 class AuditTrailProjection(
     private val repository: AuditLogRepository,

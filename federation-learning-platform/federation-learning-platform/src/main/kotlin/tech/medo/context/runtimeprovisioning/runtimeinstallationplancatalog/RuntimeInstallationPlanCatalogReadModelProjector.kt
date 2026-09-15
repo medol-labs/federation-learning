@@ -1,6 +1,7 @@
 package tech.medo.runtimeprovisioning.runtimeinstallationplancatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -25,6 +26,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
+@Namespace("readmodel-runtime-installation-plan-catalog")
 @Component
 class RuntimeInstallationPlanCatalogReadModelProjector(private val repository: RuntimeInstallationPlanCatalogReadModelRepository) {
     @EventHandler

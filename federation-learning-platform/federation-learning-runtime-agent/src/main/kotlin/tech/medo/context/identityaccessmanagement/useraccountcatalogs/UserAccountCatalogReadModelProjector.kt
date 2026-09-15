@@ -1,6 +1,7 @@
 package tech.medo.identityaccessmanagement.useraccountcatalogs
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -11,6 +12,7 @@ import tech.medo.identityaccessmanagement.events.UserAccountLoginPasswordGenerat
 
 
 
+@Namespace("readmodel-user-account-catalog")
 @Component
 class UserAccountCatalogReadModelProjector(private val repository: UserAccountCatalogReadModelRepository) {
     @EventHandler

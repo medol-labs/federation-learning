@@ -1,6 +1,7 @@
 package tech.medo.trainingorchestration.trainingparticipanteligibility
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -23,6 +24,7 @@ import tech.medo.runtimegovernance.events.RuntimeCapabilitiesDetectedEvent
 
 
 
+@Namespace("readmodel-training-participant-eligibility")
 @Component
 class TrainingParticipantEligibilityReadModelProjector(private val repository: TrainingParticipantEligibilityReadModelRepository) {
     @EventHandler

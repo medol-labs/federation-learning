@@ -7,7 +7,7 @@ js_escape() {
 
 auth_api_url="${VITE_AUTH_API_URL:-}"
 if [ -z "$auth_api_url" ]; then
-  auth_api_url="${VITE_FEDERATION_LEARNING_SUPPORT_API_URL:-${VITE_AXON_API_URL:-}}"
+  auth_api_url="${VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL:-${VITE_AXON_API_URL:-}}"
 fi
 
 cat >/usr/share/nginx/html/runtime-config.js <<EOF

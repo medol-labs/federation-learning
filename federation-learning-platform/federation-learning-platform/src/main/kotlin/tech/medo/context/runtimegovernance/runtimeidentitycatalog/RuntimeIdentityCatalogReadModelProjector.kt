@@ -1,6 +1,7 @@
 package tech.medo.runtimegovernance.runtimeidentitycatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -13,6 +14,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
+@Namespace("readmodel-runtime-identity-catalog")
 @Component
 class RuntimeIdentityCatalogReadModelProjector(private val repository: RuntimeIdentityCatalogReadModelRepository) {
     @EventHandler

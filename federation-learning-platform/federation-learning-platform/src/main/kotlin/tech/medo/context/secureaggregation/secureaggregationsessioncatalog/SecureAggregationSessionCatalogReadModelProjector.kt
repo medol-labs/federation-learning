@@ -1,6 +1,7 @@
 package tech.medo.secureaggregation.secureaggregationsessioncatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -16,6 +17,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
+@Namespace("readmodel-secure-aggregation-session-catalog")
 @Component
 class SecureAggregationSessionCatalogReadModelProjector(private val repository: SecureAggregationSessionCatalogReadModelRepository) {
     @EventHandler

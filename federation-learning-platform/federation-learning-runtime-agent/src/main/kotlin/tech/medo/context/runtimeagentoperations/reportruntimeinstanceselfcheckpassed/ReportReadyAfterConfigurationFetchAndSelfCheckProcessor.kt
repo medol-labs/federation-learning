@@ -5,8 +5,10 @@ import tech.medo.runtimeagentoperations.reportruntimeinstanceselfcheckpassed.Rep
 import java.util.UUID;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("automation-runtime-agent-operations-report-runtime-instance-self-check-passed")
 @Component
 class ReportReadyAfterConfigurationFetchAndSelfCheckProcessor(private val commandGateway: CommandGateway) {
     @EventHandler

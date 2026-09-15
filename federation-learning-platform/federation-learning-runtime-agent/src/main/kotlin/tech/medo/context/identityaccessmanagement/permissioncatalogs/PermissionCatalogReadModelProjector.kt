@@ -1,6 +1,7 @@
 package tech.medo.identityaccessmanagement.permissioncatalogs
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -9,6 +10,7 @@ import tech.medo.identityaccessmanagement.events.PermissionRegisteredEvent
 
 
 
+@Namespace("readmodel-permission-catalog")
 @Component
 class PermissionCatalogReadModelProjector(private val repository: PermissionCatalogReadModelRepository) {
     @EventHandler

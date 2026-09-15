@@ -1,6 +1,7 @@
 package tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -13,6 +14,7 @@ import tech.medo.runtimeagentoperations.events.AgentDatasetAccessRevalidationFai
 
 
 
+@Namespace("readmodel-agent-dataset-access-validation-catalog")
 @Component
 class AgentDatasetAccessValidationCatalogReadModelProjector(private val repository: AgentDatasetAccessValidationCatalogReadModelRepository) {
     @EventHandler

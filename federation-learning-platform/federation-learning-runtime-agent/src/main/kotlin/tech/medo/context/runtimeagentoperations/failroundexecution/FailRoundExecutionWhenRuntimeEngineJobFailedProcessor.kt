@@ -5,8 +5,10 @@ import tech.medo.runtimeagentoperations.failroundexecution.FailRoundExecutionCom
 import java.util.UUID;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("automation-runtime-agent-operations-fail-round-execution")
 @Component
 class FailRoundExecutionWhenRuntimeEngineJobFailedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler

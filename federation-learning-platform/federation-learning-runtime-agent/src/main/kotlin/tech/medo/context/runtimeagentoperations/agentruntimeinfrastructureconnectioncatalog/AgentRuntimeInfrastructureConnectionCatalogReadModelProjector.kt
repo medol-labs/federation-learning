@@ -1,6 +1,7 @@
 package tech.medo.runtimeagentoperations.agentruntimeinfrastructureconnectioncatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -12,6 +13,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
+@Namespace("readmodel-agent-runtime-infrastructure-connection-catalog")
 @Component
 class AgentRuntimeInfrastructureConnectionCatalogReadModelProjector(private val repository: AgentRuntimeInfrastructureConnectionCatalogReadModelRepository) {
     @EventHandler

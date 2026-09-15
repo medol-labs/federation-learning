@@ -1,6 +1,7 @@
 package tech.medo.runtimemonitoring.runtimenodeinventoryview
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -12,6 +13,7 @@ import tech.medo.runtimemonitoring.events.RuntimeNodeInventoryReportedEvent
 
 
 
+@Namespace("readmodel-runtime-node-inventory-view")
 @Component
 class RuntimeNodeInventoryViewReadModelProjector(private val repository: RuntimeNodeInventoryViewReadModelRepository) {
     @EventHandler

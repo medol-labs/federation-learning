@@ -8,8 +8,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("automation-file-upload-expire-file")
 @Component
 class ExpireFileWhenRetentionElapsedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler

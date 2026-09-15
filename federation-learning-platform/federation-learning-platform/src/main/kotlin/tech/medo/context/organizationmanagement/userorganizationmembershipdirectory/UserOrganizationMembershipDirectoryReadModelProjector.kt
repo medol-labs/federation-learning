@@ -1,6 +1,7 @@
 package tech.medo.organizationmanagement.userorganizationmembershipdirectory
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -10,6 +11,7 @@ import tech.medo.organizationmanagement.events.UserAccountBoundToOrganizationEve
 import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum
 
 
+@Namespace("readmodel-user-organization-membership-directory")
 @Component
 class UserOrganizationMembershipDirectoryReadModelProjector(private val repository: UserOrganizationMembershipDirectoryReadModelRepository) {
     @EventHandler

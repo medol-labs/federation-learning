@@ -1,6 +1,7 @@
 package tech.medo.runtimeagentoperations.datasetcapability
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -20,6 +21,7 @@ import tech.medo.runtimeagentoperations.events.DatasetTrainingApprovalRevokedEve
 
 
 
+@Namespace("readmodel-dataset-capability")
 @Component
 class DatasetCapabilityReadModelProjector(private val repository: DatasetCapabilityReadModelRepository) {
     @EventHandler

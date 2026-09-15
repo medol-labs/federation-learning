@@ -1,6 +1,7 @@
 package tech.medo.organizationmanagement.organizationdirectory
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -12,6 +13,7 @@ import tech.medo.organizationmanagement.events.OrganizationReactivatedEvent
 import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
 
 
+@Namespace("readmodel-organization-directory")
 @Component
 class OrganizationDirectoryReadModelProjector(private val repository: OrganizationDirectoryReadModelRepository) {
     @EventHandler

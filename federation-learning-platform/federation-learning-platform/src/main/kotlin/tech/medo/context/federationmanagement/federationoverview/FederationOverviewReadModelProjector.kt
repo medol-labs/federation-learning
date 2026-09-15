@@ -1,6 +1,7 @@
 package tech.medo.federationmanagement.federationoverview
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -21,6 +22,7 @@ import tech.medo.runtimegovernance.events.RuntimeIdentityRevokedEvent
 import tech.medo.federationmanagement.domain.states.FederationStateEnum
 
 
+@Namespace("readmodel-federation-overview")
 @Component
 class FederationOverviewReadModelProjector(private val repository: FederationOverviewReadModelRepository) {
     @EventHandler

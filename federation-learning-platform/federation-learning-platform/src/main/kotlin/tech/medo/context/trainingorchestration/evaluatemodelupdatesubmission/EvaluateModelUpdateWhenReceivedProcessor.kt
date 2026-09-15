@@ -6,8 +6,10 @@ import java.util.UUID;
 import java.math.BigDecimal;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("automation-training-orchestration-evaluate-model-update-submission")
 @Component
 class EvaluateModelUpdateWhenReceivedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler

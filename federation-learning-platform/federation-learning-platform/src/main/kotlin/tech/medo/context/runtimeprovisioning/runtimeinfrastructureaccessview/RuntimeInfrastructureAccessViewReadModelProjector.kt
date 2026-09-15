@@ -1,6 +1,7 @@
 package tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -25,6 +26,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
+@Namespace("readmodel-runtime-infrastructure-access-view")
 @Component
 class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: RuntimeInfrastructureAccessViewReadModelRepository) {
     @EventHandler

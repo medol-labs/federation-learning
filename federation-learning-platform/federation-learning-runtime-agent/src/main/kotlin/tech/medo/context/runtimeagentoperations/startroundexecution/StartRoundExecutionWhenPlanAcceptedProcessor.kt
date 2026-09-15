@@ -5,8 +5,10 @@ import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionC
 import java.util.UUID;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("automation-runtime-agent-operations-start-round-execution")
 @Component
 class StartRoundExecutionWhenPlanAcceptedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler

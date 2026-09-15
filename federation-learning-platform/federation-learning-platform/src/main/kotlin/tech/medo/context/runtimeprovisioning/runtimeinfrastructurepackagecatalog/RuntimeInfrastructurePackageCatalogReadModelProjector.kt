@@ -1,6 +1,7 @@
 package tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -9,6 +10,7 @@ import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegister
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum
 
 
+@Namespace("readmodel-runtime-infrastructure-package-catalog")
 @Component
 class RuntimeInfrastructurePackageCatalogReadModelProjector(private val repository: RuntimeInfrastructurePackageCatalogReadModelRepository) {
     @EventHandler

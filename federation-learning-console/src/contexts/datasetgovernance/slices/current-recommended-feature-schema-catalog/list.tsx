@@ -179,6 +179,7 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        <CommandButton variant="default" command="defineFeatureSchema" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

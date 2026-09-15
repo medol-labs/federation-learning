@@ -5,8 +5,10 @@ import tech.medo.trainingorchestration.generateparticipantexecutionplan.Generate
 import java.util.UUID;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("automation-training-orchestration-generate-participant-execution-plan")
 @Component
 class GeneratePlanForSelectedRuntimeProcessor(private val commandGateway: CommandGateway) {
     @EventHandler

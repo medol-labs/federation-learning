@@ -1,6 +1,7 @@
 package tech.medo.datasetgovernance.featureschemacatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -14,6 +15,7 @@ import tech.medo.datasetgovernance.events.CurrentRecommendedFeatureSchemaVersion
 
 
 
+@Namespace("readmodel-feature-schema-catalog")
 @Component
 class FeatureSchemaCatalogReadModelProjector(private val repository: FeatureSchemaCatalogReadModelRepository) {
     @EventHandler

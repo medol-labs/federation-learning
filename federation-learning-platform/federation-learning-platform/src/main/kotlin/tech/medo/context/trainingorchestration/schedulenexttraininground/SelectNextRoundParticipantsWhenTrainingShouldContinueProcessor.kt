@@ -5,8 +5,10 @@ import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTra
 import java.util.UUID;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("automation-training-orchestration-schedule-next-training-round")
 @Component
 class SelectNextRoundParticipantsWhenTrainingShouldContinueProcessor(private val commandGateway: CommandGateway) {
     @EventHandler

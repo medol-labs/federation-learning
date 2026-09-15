@@ -1,6 +1,7 @@
 package tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -9,6 +10,7 @@ import tech.medo.runtimeagentoperations.events.AgentRuntimeNodeInventoryReported
 
 
 
+@Namespace("readmodel-agent-runtime-node-inventory-catalog")
 @Component
 class AgentRuntimeNodeInventoryCatalogReadModelProjector(private val repository: AgentRuntimeNodeInventoryCatalogReadModelRepository) {
     @EventHandler

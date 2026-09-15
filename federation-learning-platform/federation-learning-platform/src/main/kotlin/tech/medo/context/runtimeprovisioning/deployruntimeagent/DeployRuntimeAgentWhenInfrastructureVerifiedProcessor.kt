@@ -5,8 +5,10 @@ import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentComman
 import java.util.UUID;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("automation-runtime-provisioning-deploy-runtime-agent")
 @Component
 class DeployRuntimeAgentWhenInfrastructureVerifiedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
