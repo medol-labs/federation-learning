@@ -245,6 +245,18 @@ export const FeatureSchemaCatalogList = () => {
                     }}
                   />
                 )}
+                {isCommandVisible(row.original, "", "schemaStatus", ["Deprecated"]) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="retireFeatureSchema"
+                    recordItemId={row.original.featureSchemaId}
+                    size="sm"
+                    query={{
+                      featureDomain: row.original.featureDomain,
+                      version: row.original.version,
+                    }}
+                  />
+                )}
                 {isCommandVisible(row.original, "", "", []) && (
                   <CommandButton
                     variant="ghost"
@@ -262,18 +274,6 @@ export const FeatureSchemaCatalogList = () => {
                   <CommandButton
                     variant="ghost"
                     command="markCurrentRecommendedFeatureSchemaVersion"
-                    recordItemId={row.original.featureSchemaId}
-                    size="sm"
-                    query={{
-                      featureDomain: row.original.featureDomain,
-                      version: row.original.version,
-                    }}
-                  />
-                )}
-                {isCommandVisible(row.original, "", "schemaStatus", ["Deprecated"]) && (
-                  <CommandButton
-                    variant="ghost"
-                    command="retireFeatureSchema"
                     recordItemId={row.original.featureSchemaId}
                     size="sm"
                     query={{
@@ -317,6 +317,7 @@ export const FeatureSchemaCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        <CommandButton variant="default" command="defineFeatureSchema" />
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null

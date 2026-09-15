@@ -186,7 +186,6 @@ export const resources: IResourceItem[] = [
   {
     name: "current_recommended_feature_schema_catalog",
     list: "/current-recommended-feature-schema-catalog",
-    create: "/current-recommended-feature-schema-catalog/command/define-feature-schema",
     show: "/current-recommended-feature-schema-catalog/show/:id",
     meta: {
       parent: "datasetgovernance",
@@ -203,10 +202,6 @@ export const resources: IResourceItem[] = [
       dataProviderName: "federation-learning-platform",
       moduleName: "federation-learning-platform",
       moduleLabel: "Federation Learning Platform",
-      commandRoute: "/current-recommended-feature-schema-catalog/:id/command/:command",
-      commands: {
-        defineFeatureSchema: { label: "Define Feature Schema", i18nKey: "resources.current_recommended_feature_schema_catalog.commands.defineFeatureSchema.label", route: "/current-recommended-feature-schema-catalog/command/define-feature-schema", dataProviderName: "federation-learning-platform" },
-      },
       canDelete: false,
     },
   },
@@ -272,6 +267,7 @@ export const resources: IResourceItem[] = [
   {
     name: "feature_schema_catalog",
     list: "/feature-schema-catalog",
+    create: "/feature-schema-catalog/command/define-feature-schema",
     show: "/feature-schema-catalog/show/:id",
     meta: {
       parent: "datasetgovernance",
@@ -290,11 +286,12 @@ export const resources: IResourceItem[] = [
       moduleLabel: "Federation Learning Platform",
       commandRoute: "/feature-schema-catalog/:id/command/:command",
       commands: {
+        defineFeatureSchema: { label: "Define Feature Schema", i18nKey: "resources.feature_schema_catalog.commands.defineFeatureSchema.label", route: "/feature-schema-catalog/command/define-feature-schema", dataProviderName: "federation-learning-platform" },
         publishFeatureSchema: { label: "Publish Feature Schema", i18nKey: "resources.feature_schema_catalog.commands.publishFeatureSchema.label", route: "/feature-schema-catalog/:id/command/publish-feature-schema", dataProviderName: "federation-learning-platform", stateField: "schemaStatus", allowedStates: ["Draft"] },
         deprecateFeatureSchema: { label: "Deprecate Feature Schema", i18nKey: "resources.feature_schema_catalog.commands.deprecateFeatureSchema.label", route: "/feature-schema-catalog/:id/command/deprecate-feature-schema", dataProviderName: "federation-learning-platform", stateField: "schemaStatus", allowedStates: ["Published"] },
+        retireFeatureSchema: { label: "Retire Feature Schema", i18nKey: "resources.feature_schema_catalog.commands.retireFeatureSchema.label", route: "/feature-schema-catalog/:id/command/retire-feature-schema", dataProviderName: "federation-learning-platform", stateField: "schemaStatus", allowedStates: ["Deprecated"] },
         supersedeFeatureSchemaVersion: { label: "Supersede Feature Schema Version", i18nKey: "resources.feature_schema_catalog.commands.supersedeFeatureSchemaVersion.label", route: "/feature-schema-catalog/:id/command/supersede-feature-schema-version", dataProviderName: "federation-learning-platform" },
         markCurrentRecommendedFeatureSchemaVersion: { label: "Mark Current Recommended Feature Schema Version", i18nKey: "resources.feature_schema_catalog.commands.markCurrentRecommendedFeatureSchemaVersion.label", route: "/feature-schema-catalog/:id/command/mark-current-recommended-feature-schema-version", dataProviderName: "federation-learning-platform" },
-        retireFeatureSchema: { label: "Retire Feature Schema", i18nKey: "resources.feature_schema_catalog.commands.retireFeatureSchema.label", route: "/feature-schema-catalog/:id/command/retire-feature-schema", dataProviderName: "federation-learning-platform", stateField: "schemaStatus", allowedStates: ["Deprecated"] },
       },
       canDelete: false,
     },

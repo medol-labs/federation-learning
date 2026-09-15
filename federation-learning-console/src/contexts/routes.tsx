@@ -9,7 +9,6 @@ import {
 import {
   CurrentRecommendedFeatureSchemaCatalogList,
   CurrentRecommendedFeatureSchemaCatalogShow,
-  CurrentRecommendedFeatureSchemaCatalogDefineFeatureSchema,
 } from "./datasetgovernance/read-models/current-recommended-feature-schema-catalog";
 import {
   DictionaryCatalogList,
@@ -29,11 +28,12 @@ import {
 import {
   FeatureSchemaCatalogList,
   FeatureSchemaCatalogShow,
+  FeatureSchemaCatalogDefineFeatureSchema,
   FeatureSchemaCatalogPublishFeatureSchema,
   FeatureSchemaCatalogDeprecateFeatureSchema,
+  FeatureSchemaCatalogRetireFeatureSchema,
   FeatureSchemaCatalogSupersedeFeatureSchemaVersion,
   FeatureSchemaCatalogMarkCurrentRecommendedFeatureSchemaVersion,
-  FeatureSchemaCatalogRetireFeatureSchema,
 } from "./datasetgovernance/read-models/feature-schema-catalog";
 import {
   FederationMembershipDirectoryList,
@@ -240,7 +240,6 @@ export const contextRoutes = (
     </Route>
     <Route path="/current-recommended-feature-schema-catalog">
       <Route index element={resolvePageOverride("current-recommended-feature-schema-catalog", "list", <CurrentRecommendedFeatureSchemaCatalogList />)} />
-      <Route path="command/define-feature-schema" element={resolvePageOverride("current-recommended-feature-schema-catalog", "defineFeatureSchema", <CurrentRecommendedFeatureSchemaCatalogDefineFeatureSchema />)} />
       <Route path="show/:id" element={resolvePageOverride("current-recommended-feature-schema-catalog", "show", <CurrentRecommendedFeatureSchemaCatalogShow />)} />
     </Route>
     <Route path="/dictionary-catalog">
@@ -260,12 +259,13 @@ export const contextRoutes = (
     </Route>
     <Route path="/feature-schema-catalog">
       <Route index element={resolvePageOverride("feature-schema-catalog", "list", <FeatureSchemaCatalogList />)} />
+      <Route path="command/define-feature-schema" element={resolvePageOverride("feature-schema-catalog", "defineFeatureSchema", <FeatureSchemaCatalogDefineFeatureSchema />)} />
       <Route path="show/:id" element={resolvePageOverride("feature-schema-catalog", "show", <FeatureSchemaCatalogShow />)} />
       <Route path=":id/command/publish-feature-schema" element={resolvePageOverride("feature-schema-catalog", "publishFeatureSchema", <FeatureSchemaCatalogPublishFeatureSchema />)} />
       <Route path=":id/command/deprecate-feature-schema" element={resolvePageOverride("feature-schema-catalog", "deprecateFeatureSchema", <FeatureSchemaCatalogDeprecateFeatureSchema />)} />
+      <Route path=":id/command/retire-feature-schema" element={resolvePageOverride("feature-schema-catalog", "retireFeatureSchema", <FeatureSchemaCatalogRetireFeatureSchema />)} />
       <Route path=":id/command/supersede-feature-schema-version" element={resolvePageOverride("feature-schema-catalog", "supersedeFeatureSchemaVersion", <FeatureSchemaCatalogSupersedeFeatureSchemaVersion />)} />
       <Route path=":id/command/mark-current-recommended-feature-schema-version" element={resolvePageOverride("feature-schema-catalog", "markCurrentRecommendedFeatureSchemaVersion", <FeatureSchemaCatalogMarkCurrentRecommendedFeatureSchemaVersion />)} />
-      <Route path=":id/command/retire-feature-schema" element={resolvePageOverride("feature-schema-catalog", "retireFeatureSchema", <FeatureSchemaCatalogRetireFeatureSchema />)} />
     </Route>
     <Route path="/federation-membership-directory">
       <Route index element={resolvePageOverride("federation-membership-directory", "list", <FederationMembershipDirectoryList />)} />

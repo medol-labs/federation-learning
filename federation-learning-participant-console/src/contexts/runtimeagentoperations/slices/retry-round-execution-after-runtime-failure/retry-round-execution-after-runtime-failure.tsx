@@ -28,6 +28,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RetryRoundExecutionAfterRuntimeFailureCommandSchema, type RetryRoundExecutionAfterRuntimeFailureCommandInput } from "@/contexts/domain/schemas";
+import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
 export const RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure = () => {
   const t = useTranslate();
@@ -205,13 +206,24 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure = () =>
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.round_execution_catalog.commands.retryRoundExecutionAfterRuntimeFailure.fields.runtimeId.label", "Runtime Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Runtime Id"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="agent_runtime_identity_catalog"
+                  dataProviderName="federation-learning-runtime-agent"
+                  optionLabel="runtimeName"
+                  optionValue="runtimeId"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.round_execution_catalog.commands.retryRoundExecutionAfterRuntimeFailure.fields.runtimeId.placeholder", "Select Runtime Id")}
+                  meta={{
+                    idField: "runtimeId",
+                    label: t("resources.round_execution_catalog.commands.retryRoundExecutionAfterRuntimeFailure.fields.runtimeId.label", "Agent Runtime Identity Catalog"),
+                    aggregateRoute: "agentruntimeidentitycatalog",
+                    queryRoute: "agentruntimeidentitycatalog",
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

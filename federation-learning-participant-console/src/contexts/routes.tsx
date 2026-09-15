@@ -7,6 +7,18 @@ import {
   AgentDatasetAccessValidationCatalogShow,
 } from "./runtimeagentoperations/read-models/agent-dataset-access-validation-catalog";
 import {
+  AgentFeatureSchemaCatalogList,
+  AgentFeatureSchemaCatalogShow,
+} from "./runtimeagentoperations/read-models/agent-feature-schema-catalog";
+import {
+  AgentOrganizationDirectoryList,
+  AgentOrganizationDirectoryShow,
+} from "./runtimeagentoperations/read-models/agent-organization-directory";
+import {
+  AgentRuntimeIdentityCatalogList,
+  AgentRuntimeIdentityCatalogShow,
+} from "./runtimeagentoperations/read-models/agent-runtime-identity-catalog";
+import {
   AgentRuntimeInfrastructureConnectionCatalogList,
   AgentRuntimeInfrastructureConnectionCatalogShow,
 } from "./runtimeagentoperations/read-models/agent-runtime-infrastructure-connection-catalog";
@@ -95,6 +107,18 @@ export const contextRoutes = (
     <Route path="/agent-dataset-access-validation-catalog">
       <Route index element={resolvePageOverride("agent-dataset-access-validation-catalog", "list", <AgentDatasetAccessValidationCatalogList />)} />
       <Route path="show/:id" element={resolvePageOverride("agent-dataset-access-validation-catalog", "show", <AgentDatasetAccessValidationCatalogShow />)} />
+    </Route>
+    <Route path="/agent-feature-schema-catalog">
+      <Route index element={resolvePageOverride("agent-feature-schema-catalog", "list", <AgentFeatureSchemaCatalogList />)} />
+      <Route path="show/:id" element={resolvePageOverride("agent-feature-schema-catalog", "show", <AgentFeatureSchemaCatalogShow />)} />
+    </Route>
+    <Route path="/agent-organization-directory">
+      <Route index element={resolvePageOverride("agent-organization-directory", "list", <AgentOrganizationDirectoryList />)} />
+      <Route path="show/:id" element={resolvePageOverride("agent-organization-directory", "show", <AgentOrganizationDirectoryShow />)} />
+    </Route>
+    <Route path="/agent-runtime-identity-catalog">
+      <Route index element={resolvePageOverride("agent-runtime-identity-catalog", "list", <AgentRuntimeIdentityCatalogList />)} />
+      <Route path="show/:id" element={resolvePageOverride("agent-runtime-identity-catalog", "show", <AgentRuntimeIdentityCatalogShow />)} />
     </Route>
     <Route path="/agent-runtime-infrastructure-connection-catalog">
       <Route index element={resolvePageOverride("agent-runtime-infrastructure-connection-catalog", "list", <AgentRuntimeInfrastructureConnectionCatalogList />)} />

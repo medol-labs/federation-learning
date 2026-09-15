@@ -33,9 +33,9 @@ This repo is the generated Axon 5 / Spring Boot backend for the Federation Learn
 From this repo root:
 
 ```bash
-./mvnw -q -pl federation-learning-platform -DskipTests test
-./mvnw -q -pl federation-learning-runtime-agent -DskipTests test
-./mvnw -q -pl federation-learning-support -DskipTests test
+./mvnw -q -pl federation-learning-platform -am -DskipTests test
+./mvnw -q -pl federation-learning-runtime-agent -am -DskipTests test
+./mvnw -q -pl federation-learning-support -am -DskipTests test
 ```
 
 Run the narrowest module validation that covers the changed code. If Kotlin daemon issues block validation, report that explicitly and include the command that was attempted.

@@ -28,6 +28,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RetryRoundExecutionAfterStartFailureCommandSchema, type RetryRoundExecutionAfterStartFailureCommandInput } from "@/contexts/domain/schemas";
+import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
 export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
   const t = useTranslate();
@@ -212,13 +213,24 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.runtimeId.label", "Runtime Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Runtime Id"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="agent_runtime_identity_catalog"
+                  dataProviderName="federation-learning-runtime-agent"
+                  optionLabel="runtimeName"
+                  optionValue="runtimeId"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.runtimeId.placeholder", "Select Runtime Id")}
+                  meta={{
+                    idField: "runtimeId",
+                    label: t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.runtimeId.label", "Agent Runtime Identity Catalog"),
+                    aggregateRoute: "agentruntimeidentitycatalog",
+                    queryRoute: "agentruntimeidentitycatalog",
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}
@@ -230,13 +242,24 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.organizationId.label", "Organization Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Organization Id"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="agent_organization_directory"
+                  dataProviderName="federation-learning-runtime-agent"
+                  optionLabel="organizationName"
+                  optionValue="organizationId"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.organizationId.placeholder", "Select Organization Id")}
+                  meta={{
+                    idField: "organizationId",
+                    label: t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.organizationId.label", "Agent Organization Directory"),
+                    aggregateRoute: "agentorganizationdirectory",
+                    queryRoute: "agentorganizationdirectory",
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}
@@ -248,13 +271,24 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterStartFailure = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.featureSchemaId.label", "Feature Schema Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Feature Schema Id"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="agent_feature_schema_catalog"
+                  dataProviderName="federation-learning-runtime-agent"
+                  optionLabel="featureDomain"
+                  optionValue="featureSchemaId"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
+                  meta={{
+                    idField: "featureSchemaId",
+                    label: t("resources.round_execution_catalog.commands.retryRoundExecutionAfterStartFailure.fields.featureSchemaId.label", "Agent Feature Schema Catalog"),
+                    aggregateRoute: "agentfeatureschemacatalog",
+                    queryRoute: "agentfeatureschemacatalog",
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

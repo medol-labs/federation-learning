@@ -1673,6 +1673,21 @@
       "externalSystems": [],
       "slices": [
         {
+          "id": "slice-33df9783",
+          "name": "AgentOrganizationDirectory",
+          "title": "Agent Organization Directory"
+        },
+        {
+          "id": "slice-f3bd320b",
+          "name": "AgentFeatureSchemaCatalog",
+          "title": "Agent Feature Schema Catalog"
+        },
+        {
+          "id": "slice-06111262",
+          "name": "AgentRuntimeIdentityCatalog",
+          "title": "Agent Runtime Identity Catalog"
+        },
+        {
           "id": "slice-725195cc",
           "name": "DeclareDataset",
           "title": "Declare Dataset"
@@ -26352,9 +26367,9 @@
           ],
           "dependencies": [
             {
-              "id": "screen-46e578ff",
+              "id": "screen-ce46fb21",
               "direction": "INBOUND",
-              "title": "Feature Schema Editor",
+              "title": "Feature Schema Catalog Screen",
               "elementType": "SCREEN"
             },
             {
@@ -26550,9 +26565,9 @@
       "readmodels": [],
       "screens": [
         {
-          "id": "screen-46e578ff",
-          "name": "FeatureSchemaEditor",
-          "title": "Feature Schema Editor",
+          "id": "screen-ce46fb21",
+          "name": "FeatureSchemaCatalogScreen",
+          "title": "Feature Schema Catalog Screen",
           "type": "SCREEN",
           "modelContext": "DatasetGovernance",
           "slice": "Define Feature Schema",
@@ -26722,9 +26737,9 @@
               "elementType": "EVENT"
             },
             {
-              "id": "screen-1cb55e5d",
+              "id": "screen-bd13f907",
               "direction": "INBOUND",
-              "title": "Feature Schema Editor",
+              "title": "Feature Schema Catalog Screen",
               "elementType": "SCREEN"
             },
             {
@@ -26820,9 +26835,9 @@
       "readmodels": [],
       "screens": [
         {
-          "id": "screen-1cb55e5d",
-          "name": "FeatureSchemaEditor",
-          "title": "Feature Schema Editor",
+          "id": "screen-bd13f907",
+          "name": "FeatureSchemaCatalogScreen",
+          "title": "Feature Schema Catalog Screen",
           "type": "SCREEN",
           "modelContext": "DatasetGovernance",
           "slice": "Publish Feature Schema",
@@ -26987,9 +27002,9 @@
               "elementType": "EVENT"
             },
             {
-              "id": "screen-5f4201e5",
+              "id": "screen-a73d3faf",
               "direction": "INBOUND",
-              "title": "Feature Schema Editor",
+              "title": "Feature Schema Catalog Screen",
               "elementType": "SCREEN"
             },
             {
@@ -27067,9 +27082,9 @@
       "readmodels": [],
       "screens": [
         {
-          "id": "screen-5f4201e5",
-          "name": "FeatureSchemaEditor",
-          "title": "Feature Schema Editor",
+          "id": "screen-a73d3faf",
+          "name": "FeatureSchemaCatalogScreen",
+          "title": "Feature Schema Catalog Screen",
           "type": "SCREEN",
           "modelContext": "DatasetGovernance",
           "slice": "Deprecate Feature Schema",
@@ -27160,9 +27175,9 @@
               "elementType": "EVENT"
             },
             {
-              "id": "screen-47fa713b",
+              "id": "screen-dafa268d",
               "direction": "INBOUND",
-              "title": "Feature Schema Editor",
+              "title": "Feature Schema Catalog Screen",
               "elementType": "SCREEN"
             },
             {
@@ -27234,9 +27249,9 @@
       "readmodels": [],
       "screens": [
         {
-          "id": "screen-47fa713b",
-          "name": "FeatureSchemaEditor",
-          "title": "Feature Schema Editor",
+          "id": "screen-dafa268d",
+          "name": "FeatureSchemaCatalogScreen",
+          "title": "Feature Schema Catalog Screen",
           "type": "SCREEN",
           "modelContext": "DatasetGovernance",
           "slice": "Retire Feature Schema",
@@ -27341,9 +27356,9 @@
               "elementType": "EVENT"
             },
             {
-              "id": "screen-2b58058a",
+              "id": "screen-258a0356",
               "direction": "INBOUND",
-              "title": "Feature Schema Editor",
+              "title": "Feature Schema Catalog Screen",
               "elementType": "SCREEN"
             },
             {
@@ -27457,9 +27472,9 @@
       "readmodels": [],
       "screens": [
         {
-          "id": "screen-2b58058a",
-          "name": "FeatureSchemaEditor",
-          "title": "Feature Schema Editor",
+          "id": "screen-258a0356",
+          "name": "FeatureSchemaCatalogScreen",
+          "title": "Feature Schema Catalog Screen",
           "type": "SCREEN",
           "modelContext": "DatasetGovernance",
           "slice": "Supersede Feature Schema Version",
@@ -27666,9 +27681,9 @@
               "elementType": "EVENT"
             },
             {
-              "id": "screen-b6f2d7d7",
+              "id": "screen-572515b9",
               "direction": "INBOUND",
-              "title": "Feature Schema Editor",
+              "title": "Feature Schema Catalog Screen",
               "elementType": "SCREEN"
             },
             {
@@ -27788,9 +27803,9 @@
       "readmodels": [],
       "screens": [
         {
-          "id": "screen-b6f2d7d7",
-          "name": "FeatureSchemaEditor",
-          "title": "Feature Schema Editor",
+          "id": "screen-572515b9",
+          "name": "FeatureSchemaCatalogScreen",
+          "title": "Feature Schema Catalog Screen",
           "type": "SCREEN",
           "modelContext": "DatasetGovernance",
           "slice": "Mark Current Recommended Feature Schema Version",
@@ -64767,8 +64782,447 @@
       "hotspots": []
     },
     {
-      "id": "slice-725195cc",
+      "id": "slice-33df9783",
       "index": 124,
+      "name": "AgentOrganizationDirectory",
+      "title": "Agent Organization Directory",
+      "chapter": "RuntimeAgentOperations",
+      "context": "RuntimeAgentOperations",
+      "tags": [],
+      "concepts": [],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-0083c7b7",
+          "name": "AgentOrganizationDirectory",
+          "title": "Agent Organization Directory",
+          "type": "READMODEL",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Agent Organization Directory",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "organizationId"
+                ]
+              }
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "organizationName"
+                ]
+              }
+            },
+            {
+              "name": "organizationType",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "organizationType"
+                ]
+              }
+            },
+            {
+              "name": "state",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "state"
+                ]
+              }
+            },
+            {
+              "name": "syncedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [],
+          "listElement": true,
+          "sync": true,
+          "syncSource": "OrganizationManagement.OrganizationDirectory",
+          "syncFilters": [
+            {
+              "target": "organizationId",
+              "source": "sync.organizationId"
+            }
+          ]
+        }
+      ],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [],
+      "hotspots": []
+    },
+    {
+      "id": "slice-f3bd320b",
+      "index": 125,
+      "name": "AgentFeatureSchemaCatalog",
+      "title": "Agent Feature Schema Catalog",
+      "chapter": "RuntimeAgentOperations",
+      "context": "RuntimeAgentOperations",
+      "tags": [],
+      "concepts": [],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-273d5747",
+          "name": "AgentFeatureSchemaCatalog",
+          "title": "Agent Feature Schema Catalog",
+          "type": "READMODEL",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Agent Feature Schema Catalog",
+          "fields": [
+            {
+              "name": "featureSchemaId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "featureSchemaId"
+                ]
+              }
+            },
+            {
+              "name": "featureDomain",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "featureDomain"
+                ]
+              }
+            },
+            {
+              "name": "featureSchemaVersion",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "version"
+                ]
+              }
+            },
+            {
+              "name": "schemaStatus",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "schemaStatus"
+                ]
+              }
+            },
+            {
+              "name": "syncedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [],
+          "listElement": true,
+          "sync": true,
+          "syncSource": "DatasetGovernance.FeatureSchemaCatalog"
+        }
+      ],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [],
+      "hotspots": []
+    },
+    {
+      "id": "slice-06111262",
+      "index": 126,
+      "name": "AgentRuntimeIdentityCatalog",
+      "title": "Agent Runtime Identity Catalog",
+      "chapter": "RuntimeAgentOperations",
+      "context": "RuntimeAgentOperations",
+      "tags": [],
+      "concepts": [],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-a21858a3",
+          "name": "AgentRuntimeIdentityCatalog",
+          "title": "Agent Runtime Identity Catalog",
+          "type": "READMODEL",
+          "modelContext": "RuntimeAgentOperations",
+          "slice": "Agent Runtime Identity Catalog",
+          "fields": [
+            {
+              "name": "runtimeId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "runtimeInfrastructureId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "runtimeAgentId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "runtimeName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "identityStatus",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "activatedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "revokedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "syncedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [],
+          "listElement": true,
+          "sync": true,
+          "syncSource": "RuntimeProvisioning.RuntimeIdentityCatalog",
+          "syncFilters": [
+            {
+              "target": "runtimeAgentId",
+              "source": "sync.runtimeAgentId"
+            }
+          ]
+        }
+      ],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [],
+      "hotspots": []
+    },
+    {
+      "id": "slice-725195cc",
+      "index": 127,
       "name": "DeclareDataset",
       "title": "Declare Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -64823,7 +65277,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentOrganizationDirectory.organizationId"
+                ]
+              }
             },
             {
               "name": "organizationName",
@@ -64841,11 +65301,11 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "OrganizationDirectory.organizationName"
+                  "AgentOrganizationDirectory.organizationName"
                 ],
                 "lookup": {
                   "key": "organizationId",
-                  "cacheProjection": "OrganizationDirectory",
+                  "cacheProjection": "AgentOrganizationDirectory",
                   "sourceField": "organizationName",
                   "targetField": "organizationName",
                   "missingValuePolicy": "keep"
@@ -64864,7 +65324,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentFeatureSchemaCatalog.featureSchemaId"
+                ]
+              }
             },
             {
               "name": "featureDomain",
@@ -64882,11 +65348,11 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "FeatureSchemaCatalog.featureDomain"
+                  "AgentFeatureSchemaCatalog.featureDomain"
                 ],
                 "lookup": {
                   "key": "featureSchemaId",
-                  "cacheProjection": "FeatureSchemaCatalog",
+                  "cacheProjection": "AgentFeatureSchemaCatalog",
                   "sourceField": "featureDomain",
                   "targetField": "featureDomain",
                   "missingValuePolicy": "keep"
@@ -64909,12 +65375,12 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "FeatureSchemaCatalog.version"
+                  "AgentFeatureSchemaCatalog.featureSchemaVersion"
                 ],
                 "lookup": {
                   "key": "featureSchemaId",
-                  "cacheProjection": "FeatureSchemaCatalog",
-                  "sourceField": "version",
+                  "cacheProjection": "AgentFeatureSchemaCatalog",
+                  "sourceField": "featureSchemaVersion",
                   "targetField": "featureSchemaVersion",
                   "missingValuePolicy": "keep"
                 }
@@ -65356,7 +65822,7 @@
     },
     {
       "id": "slice-5a2194a7",
-      "index": 125,
+      "index": 128,
       "name": "ConfigureRuntimeDatasetBinding",
       "title": "Configure Runtime Dataset Binding",
       "chapter": "RuntimeAgentOperations",
@@ -65411,7 +65877,7 @@
               "source": {
                 "kind": "direct",
                 "from": [
-                  "DatasetDeclared.datasetId"
+                  "DatasetCapability.datasetId"
                 ]
               }
             },
@@ -65429,10 +65895,17 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "DatasetDeclared.organizationId"
-                ]
+                  "DatasetCapability.organizationId"
+                ],
+                "lookup": {
+                  "key": "datasetId",
+                  "cacheProjection": "DatasetCapability",
+                  "sourceField": "organizationId",
+                  "targetField": "organizationId",
+                  "missingValuePolicy": "keep"
+                }
               }
             },
             {
@@ -65449,10 +65922,17 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "DatasetDeclared.featureSchemaId"
-                ]
+                  "DatasetCapability.featureSchemaId"
+                ],
+                "lookup": {
+                  "key": "datasetId",
+                  "cacheProjection": "DatasetCapability",
+                  "sourceField": "featureSchemaId",
+                  "targetField": "featureSchemaId",
+                  "missingValuePolicy": "keep"
+                }
               }
             },
             {
@@ -65469,10 +65949,17 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "DatasetDeclared.organizationName"
-                ]
+                  "DatasetCapability.organizationName"
+                ],
+                "lookup": {
+                  "key": "datasetId",
+                  "cacheProjection": "DatasetCapability",
+                  "sourceField": "organizationName",
+                  "targetField": "organizationName",
+                  "missingValuePolicy": "keep"
+                }
               }
             },
             {
@@ -65489,10 +65976,17 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "DatasetDeclared.featureDomain"
-                ]
+                  "DatasetCapability.featureDomain"
+                ],
+                "lookup": {
+                  "key": "datasetId",
+                  "cacheProjection": "DatasetCapability",
+                  "sourceField": "featureDomain",
+                  "targetField": "featureDomain",
+                  "missingValuePolicy": "keep"
+                }
               }
             },
             {
@@ -65509,10 +66003,17 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "DatasetDeclared.featureSchemaVersion"
-                ]
+                  "DatasetCapability.featureSchemaVersion"
+                ],
+                "lookup": {
+                  "key": "datasetId",
+                  "cacheProjection": "DatasetCapability",
+                  "sourceField": "featureSchemaVersion",
+                  "targetField": "featureSchemaVersion",
+                  "missingValuePolicy": "keep"
+                }
               }
             },
             {
@@ -65529,10 +66030,17 @@
               "file": false,
               "portOutput": false,
               "source": {
-                "kind": "direct",
+                "kind": "derived",
                 "from": [
-                  "DatasetDeclared.datasetName"
-                ]
+                  "DatasetCapability.datasetName"
+                ],
+                "lookup": {
+                  "key": "datasetId",
+                  "cacheProjection": "DatasetCapability",
+                  "sourceField": "datasetName",
+                  "targetField": "datasetName",
+                  "missingValuePolicy": "keep"
+                }
               }
             },
             {
@@ -65547,7 +66055,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "AgentRuntimeIdentityCatalog.runtimeId"
+                ]
+              }
             },
             {
               "name": "runtimeName",
@@ -65565,11 +66079,11 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "RuntimeIdentityCatalog.runtimeName"
+                  "AgentRuntimeIdentityCatalog.runtimeName"
                 ],
                 "lookup": {
                   "key": "runtimeId",
-                  "cacheProjection": "RuntimeIdentityCatalog",
+                  "cacheProjection": "AgentRuntimeIdentityCatalog",
                   "sourceField": "runtimeName",
                   "targetField": "runtimeName",
                   "missingValuePolicy": "keep"
@@ -66325,7 +66839,7 @@
     },
     {
       "id": "slice-358d4122",
-      "index": 126,
+      "index": 129,
       "name": "RuntimeDatasetBindingCatalog",
       "title": "Runtime Dataset Binding Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -66695,7 +67209,7 @@
     },
     {
       "id": "slice-c31ba9a1",
-      "index": 127,
+      "index": 130,
       "name": "ValidateAgentDatasetAccess",
       "title": "Validate Agent Dataset Access",
       "chapter": "RuntimeAgentOperations",
@@ -68099,7 +68613,7 @@
     },
     {
       "id": "slice-aa47e014",
-      "index": 128,
+      "index": 131,
       "name": "RevalidateAgentDatasetAccess",
       "title": "Revalidate Agent Dataset Access",
       "chapter": "RuntimeAgentOperations",
@@ -68917,7 +69431,7 @@
     },
     {
       "id": "slice-ba3dc29b",
-      "index": 129,
+      "index": 132,
       "name": "AgentDatasetAccessValidationCatalog",
       "title": "Agent Dataset Access Validation Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -69219,7 +69733,7 @@
     },
     {
       "id": "slice-f44b66bc",
-      "index": 130,
+      "index": 133,
       "name": "ProfileAgentDataset",
       "title": "Profile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -70451,7 +70965,7 @@
     },
     {
       "id": "slice-d6f2a3cf",
-      "index": 131,
+      "index": 134,
       "name": "ReprofileAgentDataset",
       "title": "Reprofile Agent Dataset",
       "chapter": "RuntimeAgentOperations",
@@ -71479,7 +71993,7 @@
     },
     {
       "id": "slice-2529cf36",
-      "index": 132,
+      "index": 135,
       "name": "ValidateDatasetContract",
       "title": "Validate Dataset Contract",
       "chapter": "RuntimeAgentOperations",
@@ -72055,7 +72569,7 @@
     },
     {
       "id": "slice-2e18bcb1",
-      "index": 133,
+      "index": 136,
       "name": "RetryDatasetContractValidation",
       "title": "Retry Dataset Contract Validation",
       "chapter": "RuntimeAgentOperations",
@@ -72694,7 +73208,7 @@
     },
     {
       "id": "slice-d28aff88",
-      "index": 134,
+      "index": 137,
       "name": "RejectDatasetForTraining",
       "title": "Reject Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -72861,7 +73375,7 @@
     },
     {
       "id": "slice-284a72da",
-      "index": 135,
+      "index": 138,
       "name": "ApproveDatasetForTraining",
       "title": "Approve Dataset For Training",
       "chapter": "RuntimeAgentOperations",
@@ -73149,7 +73663,7 @@
     },
     {
       "id": "slice-847c2855",
-      "index": 136,
+      "index": 139,
       "name": "RevokeDatasetTrainingApproval",
       "title": "Revoke Dataset Training Approval",
       "chapter": "RuntimeAgentOperations",
@@ -73328,7 +73842,7 @@
     },
     {
       "id": "slice-30869f70",
-      "index": 137,
+      "index": 140,
       "name": "DatasetCapability",
       "title": "Dataset Capability",
       "chapter": "RuntimeAgentOperations",
@@ -73768,7 +74282,7 @@
     },
     {
       "id": "slice-ff9e2f26",
-      "index": 138,
+      "index": 141,
       "name": "DatasetReadiness",
       "title": "Dataset Readiness",
       "chapter": "RuntimeAgentOperations",
@@ -74446,7 +74960,7 @@
     },
     {
       "id": "slice-5bf739cd",
-      "index": 139,
+      "index": 142,
       "name": "ReceiveParticipantExecutionPlan",
       "title": "Receive Participant Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -75306,7 +75820,7 @@
     },
     {
       "id": "slice-64faaa9b",
-      "index": 140,
+      "index": 143,
       "name": "AcceptExecutionPlan",
       "title": "Accept Execution Plan",
       "chapter": "RuntimeAgentOperations",
@@ -77272,7 +77786,7 @@
     },
     {
       "id": "slice-4d4016d0",
-      "index": 141,
+      "index": 144,
       "name": "StartRoundExecution",
       "title": "Start Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -79078,7 +79592,7 @@
     },
     {
       "id": "slice-0cecfd3f",
-      "index": 142,
+      "index": 145,
       "name": "ObserveRuntimeEngineJob",
       "title": "Observe Runtime Engine Job",
       "chapter": "RuntimeAgentOperations",
@@ -80531,7 +81045,7 @@
     },
     {
       "id": "slice-b1a48287",
-      "index": 143,
+      "index": 146,
       "name": "CompleteRoundExecution",
       "title": "Complete Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -81432,7 +81946,7 @@
     },
     {
       "id": "slice-45c663e8",
-      "index": 144,
+      "index": 147,
       "name": "FailRoundExecution",
       "title": "Fail Round Execution",
       "chapter": "RuntimeAgentOperations",
@@ -81969,7 +82483,7 @@
     },
     {
       "id": "slice-ff352882",
-      "index": 145,
+      "index": 148,
       "name": "RetryRoundExecutionAfterStartFailure",
       "title": "Retry Round Execution After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -82738,7 +83252,7 @@
     },
     {
       "id": "slice-2cb34062",
-      "index": 146,
+      "index": 149,
       "name": "RetryRoundExecutionAfterRuntimeFailure",
       "title": "Retry Round Execution After Runtime Failure",
       "chapter": "RuntimeAgentOperations",
@@ -83535,7 +84049,7 @@
     },
     {
       "id": "slice-d54dcc12",
-      "index": 147,
+      "index": 150,
       "name": "SubmitAgentLocalModelUpdate",
       "title": "Submit Agent Local Model Update",
       "chapter": "RuntimeAgentOperations",
@@ -84317,7 +84831,7 @@
     },
     {
       "id": "slice-6485fdce",
-      "index": 148,
+      "index": 151,
       "name": "ReleaseRuntimeEngineJobAfterCompletion",
       "title": "Release Runtime Engine Job After Completion",
       "chapter": "RuntimeAgentOperations",
@@ -84491,7 +85005,7 @@
     },
     {
       "id": "slice-ef8420f2",
-      "index": 149,
+      "index": 152,
       "name": "ReleaseRuntimeEngineJobAfterFailure",
       "title": "Release Runtime Engine Job After Failure",
       "chapter": "RuntimeAgentOperations",
@@ -84679,7 +85193,7 @@
     },
     {
       "id": "slice-30156076",
-      "index": 150,
+      "index": 153,
       "name": "ReleaseRuntimeEngineJobAfterStartFailure",
       "title": "Release Runtime Engine Job After Start Failure",
       "chapter": "RuntimeAgentOperations",
@@ -84867,7 +85381,7 @@
     },
     {
       "id": "slice-5d7a0380",
-      "index": 151,
+      "index": 154,
       "name": "ReleaseRuntimeEngineJobAfterRetryFailure",
       "title": "Release Runtime Engine Job After Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -85055,7 +85569,7 @@
     },
     {
       "id": "slice-bc1eac14",
-      "index": 152,
+      "index": 155,
       "name": "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure",
       "title": "Release Runtime Engine Job After Runtime Retry Failure",
       "chapter": "RuntimeAgentOperations",
@@ -85243,7 +85757,7 @@
     },
     {
       "id": "slice-eb00f5f7",
-      "index": 153,
+      "index": 156,
       "name": "RoundExecutionCatalog",
       "title": "Round Execution Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -85965,7 +86479,7 @@
     },
     {
       "id": "slice-d248addb",
-      "index": 154,
+      "index": 157,
       "name": "LoadRuntimeAgentBootstrapConfiguration",
       "title": "Load Runtime Agent Bootstrap Configuration",
       "chapter": "RuntimeAgentOperations",
@@ -86290,7 +86804,7 @@
     },
     {
       "id": "slice-c7d2df46",
-      "index": 155,
+      "index": 158,
       "name": "ReportRuntimeAgentStarted",
       "title": "Report Runtime Agent Started",
       "chapter": "RuntimeAgentOperations",
@@ -86508,7 +87022,7 @@
     },
     {
       "id": "slice-75635ed7",
-      "index": 156,
+      "index": 159,
       "name": "ReportRuntimeInstanceSelfCheckPassed",
       "title": "Report Runtime Instance Self Check Passed",
       "chapter": "RuntimeAgentOperations",
@@ -86923,7 +87437,7 @@
     },
     {
       "id": "slice-574f1d44",
-      "index": 157,
+      "index": 160,
       "name": "RuntimeAgentLifecycleCatalog",
       "title": "Runtime Agent Lifecycle Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -87219,7 +87733,7 @@
     },
     {
       "id": "slice-e5b0caa2",
-      "index": 158,
+      "index": 161,
       "name": "ReportRuntimeInstanceConnected",
       "title": "Report Runtime Instance Connected",
       "chapter": "RuntimeAgentOperations",
@@ -88035,7 +88549,7 @@
     },
     {
       "id": "slice-8d5d066d",
-      "index": 159,
+      "index": 162,
       "name": "AgentRuntimeInfrastructureConnectionCatalog",
       "title": "Agent Runtime Infrastructure Connection Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -88235,7 +88749,7 @@
     },
     {
       "id": "slice-ff0c55e7",
-      "index": 160,
+      "index": 163,
       "name": "AgentRuntimeTelemetryLatest",
       "title": "Agent Runtime Telemetry Latest",
       "chapter": "RuntimeAgentOperations",
@@ -88408,7 +88922,7 @@
     },
     {
       "id": "slice-d8eaacb9",
-      "index": 161,
+      "index": 164,
       "name": "ReportAgentRuntimeNodeInventory",
       "title": "Report Agent Runtime Node Inventory",
       "chapter": "RuntimeAgentOperations",
@@ -88932,7 +89446,7 @@
     },
     {
       "id": "slice-6a815e36",
-      "index": 162,
+      "index": 165,
       "name": "AgentRuntimeNodeInventoryCatalog",
       "title": "Agent Runtime Node Inventory Catalog",
       "chapter": "RuntimeAgentOperations",
@@ -89188,7 +89702,7 @@
     },
     {
       "id": "slice-a56419ba",
-      "index": 163,
+      "index": 166,
       "name": "AgentRuntimeNodeResourceLatest",
       "title": "Agent Runtime Node Resource Latest",
       "chapter": "RuntimeAgentOperations",
@@ -89473,7 +89987,7 @@
     },
     {
       "id": "slice-4fcce762",
-      "index": 164,
+      "index": 167,
       "name": "RegisterUserAccount",
       "title": "Register User Account",
       "chapter": "IdentityAccessManagement",
@@ -89768,7 +90282,7 @@
     },
     {
       "id": "slice-2f4abaeb",
-      "index": 165,
+      "index": 168,
       "name": "DeactivateUserAccount",
       "title": "Deactivate User Account",
       "chapter": "IdentityAccessManagement",
@@ -89899,7 +90413,7 @@
     },
     {
       "id": "slice-5da5f728",
-      "index": 166,
+      "index": 169,
       "name": "GenerateUserAccountLoginPassword",
       "title": "Generate User Account Login Password",
       "chapter": "IdentityAccessManagement",
@@ -90063,7 +90577,7 @@
     },
     {
       "id": "slice-7b54b84c",
-      "index": 167,
+      "index": 170,
       "name": "RegisterRole",
       "title": "Register Role",
       "chapter": "IdentityAccessManagement",
@@ -90228,7 +90742,7 @@
     },
     {
       "id": "slice-1bda8ebb",
-      "index": 168,
+      "index": 171,
       "name": "RegisterPermission",
       "title": "Register Permission",
       "chapter": "IdentityAccessManagement",
@@ -90421,7 +90935,7 @@
     },
     {
       "id": "slice-1d773a87",
-      "index": 169,
+      "index": 172,
       "name": "GrantPermissionToRole",
       "title": "Grant Permission To Role",
       "chapter": "IdentityAccessManagement",
@@ -90651,7 +91165,7 @@
     },
     {
       "id": "slice-0766b926",
-      "index": 170,
+      "index": 173,
       "name": "AssignRoleToUser",
       "title": "Assign Role To User",
       "chapter": "IdentityAccessManagement",
@@ -90833,7 +91347,7 @@
     },
     {
       "id": "slice-b263007b",
-      "index": 171,
+      "index": 174,
       "name": "IssueServiceAccountApiToken",
       "title": "Issue Service Account Api Token",
       "chapter": "IdentityAccessManagement",
@@ -91367,7 +91881,7 @@
     },
     {
       "id": "slice-425842d5",
-      "index": 172,
+      "index": 175,
       "name": "UserAccountCatalogs",
       "title": "User Account Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -91509,7 +92023,7 @@
     },
     {
       "id": "slice-10714181",
-      "index": 173,
+      "index": 176,
       "name": "RoleCatalogs",
       "title": "Role Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -91597,7 +92111,7 @@
     },
     {
       "id": "slice-9f1bec7a",
-      "index": 174,
+      "index": 177,
       "name": "PermissionCatalogs",
       "title": "Permission Catalogs",
       "chapter": "IdentityAccessManagement",
@@ -91699,7 +92213,7 @@
     },
     {
       "id": "slice-33855446",
-      "index": 175,
+      "index": 178,
       "name": "UserRoleAssignmentCatalog",
       "title": "User Role Assignment Catalog",
       "chapter": "IdentityAccessManagement",
@@ -91827,7 +92341,7 @@
     },
     {
       "id": "slice-4d6e3a7f",
-      "index": 176,
+      "index": 179,
       "name": "RolePermissionGrantCatalog",
       "title": "Role Permission Grant Catalog",
       "chapter": "IdentityAccessManagement",
@@ -91982,7 +92496,7 @@
     },
     {
       "id": "slice-6047e82e",
-      "index": 177,
+      "index": 180,
       "name": "ServiceAccountApiTokenCatalogs",
       "title": "Service Account Api Token Catalogs",
       "chapter": "IdentityAccessManagement",

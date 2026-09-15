@@ -28,6 +28,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DeclareDatasetCommandSchema, type DeclareDatasetCommandInput } from "@/contexts/domain/schemas";
+import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
 
 export const DatasetCapabilityDeclareDataset = () => {
   const t = useTranslate();
@@ -103,13 +104,29 @@ export const DatasetCapabilityDeclareDataset = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.dataset_capability.commands.declareDataset.fields.organizationId.label", "Organization Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Organization Id"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="agent_organization_directory"
+                  dataProviderName="federation-learning-runtime-agent"
+                  optionLabel="organizationName"
+                  optionValue="organizationId"
+                  value={field.value || ""}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "organizationName" as never,
+                      String(option?.record?.["organizationName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
+                  placeholder={t("resources.dataset_capability.commands.declareDataset.fields.organizationId.placeholder", "Select Organization Id")}
+                  meta={{
+                    idField: "organizationId",
+                    label: t("resources.dataset_capability.commands.declareDataset.fields.organizationId.label", "Agent Organization Directory"),
+                    aggregateRoute: "agentorganizationdirectory",
+                    queryRoute: "agentorganizationdirectory",
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}
@@ -121,13 +138,34 @@ export const DatasetCapabilityDeclareDataset = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.dataset_capability.commands.declareDataset.fields.featureSchemaId.label", "Feature Schema Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Feature Schema Id"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="agent_feature_schema_catalog"
+                  dataProviderName="federation-learning-runtime-agent"
+                  optionLabel="featureDomain"
+                  optionValue="featureSchemaId"
+                  value={field.value || ""}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "featureDomain" as never,
+                      String(option?.record?.["featureDomain"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "featureSchemaVersion" as never,
+                      String(option?.record?.["featureSchemaVersion"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
+                  placeholder={t("resources.dataset_capability.commands.declareDataset.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
+                  meta={{
+                    idField: "featureSchemaId",
+                    label: t("resources.dataset_capability.commands.declareDataset.fields.featureSchemaId.label", "Agent Feature Schema Catalog"),
+                    aggregateRoute: "agentfeatureschemacatalog",
+                    queryRoute: "agentfeatureschemacatalog",
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

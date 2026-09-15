@@ -331,6 +331,8 @@ spec:
                   key: "password"
             - name: "FEDERATION_LEARNING_PLATFORM_URL"
               value: ${quote(properties.platformUrl)}
+            - name: "MEDOL_SYNC_SOURCE_BASE_URL"
+              value: ${quote(properties.platformUrl)}
             - name: "FEDERATION_LEARNING_SUPPORT_URL"
               value: ${quote(properties.supportUrl)}
             - name: "RUNTIME_AGENT_ID"

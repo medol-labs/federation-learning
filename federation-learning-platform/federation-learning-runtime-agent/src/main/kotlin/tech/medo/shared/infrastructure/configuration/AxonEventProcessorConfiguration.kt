@@ -159,6 +159,18 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("readmodel-agent-dataset-access-validation-catalog").notCustomized()
 
     @Bean
+    fun readmodelAgentFeatureSchemaCatalogEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("readmodel-agent-feature-schema-catalog").notCustomized()
+
+    @Bean
+    fun readmodelAgentOrganizationDirectoryEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("readmodel-agent-organization-directory").notCustomized()
+
+    @Bean
+    fun readmodelAgentRuntimeIdentityCatalogEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("readmodel-agent-runtime-identity-catalog").notCustomized()
+
+    @Bean
     fun readmodelAgentRuntimeInfrastructureConnectionCatalogEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("readmodel-agent-runtime-infrastructure-connection-catalog").notCustomized()
 

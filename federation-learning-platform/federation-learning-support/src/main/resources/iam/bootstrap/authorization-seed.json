@@ -1,0 +1,423 @@
+{
+  "actors": [
+    {
+      "name": "IdentityAdministrator",
+      "title": "Identity Administrator",
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR"
+    },
+    {
+      "name": "PlatformAdmin",
+      "title": "Platform Admin",
+      "roleCode": "ACTOR_PLATFORM_ADMIN"
+    },
+    {
+      "name": "PlatformService",
+      "title": "Platform Service",
+      "roleCode": "ACTOR_PLATFORM_SERVICE"
+    },
+    {
+      "name": "PlatformUser",
+      "title": "Platform User",
+      "roleCode": "ACTOR_PLATFORM_USER"
+    },
+    {
+      "name": "SuperAdministrator",
+      "title": "Super Administrator",
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR"
+    },
+    {
+      "name": "ServiceAccount",
+      "title": "Service Account",
+      "roleCode": "SERVICE_ACCOUNT"
+    }
+  ],
+  "permissions": [
+    {
+      "code": "*:*",
+      "name": "All Permissions",
+      "description": "All permissions"
+    },
+    {
+      "code": "add_dictionary_value:execute",
+      "name": "Add Dictionary Value Execute",
+      "description": "add_dictionary_value:execute"
+    },
+    {
+      "code": "archive_dictionary:execute",
+      "name": "Archive Dictionary Execute",
+      "description": "archive_dictionary:execute"
+    },
+    {
+      "code": "assign_role_to_user:execute",
+      "name": "Assign Role To User Execute",
+      "description": "assign_role_to_user:execute"
+    },
+    {
+      "code": "deactivate_user_account:execute",
+      "name": "Deactivate User Account Execute",
+      "description": "deactivate_user_account:execute"
+    },
+    {
+      "code": "dictionary_catalog:list",
+      "name": "Dictionary Catalog List",
+      "description": "dictionary_catalog:list"
+    },
+    {
+      "code": "dictionary_catalog:read",
+      "name": "Dictionary Catalog Read",
+      "description": "dictionary_catalog:read"
+    },
+    {
+      "code": "dictionary_value_catalog:list",
+      "name": "Dictionary Value Catalog List",
+      "description": "dictionary_value_catalog:list"
+    },
+    {
+      "code": "dictionary_value_catalog:read",
+      "name": "Dictionary Value Catalog Read",
+      "description": "dictionary_value_catalog:read"
+    },
+    {
+      "code": "disable_dictionary_value:execute",
+      "name": "Disable Dictionary Value Execute",
+      "description": "disable_dictionary_value:execute"
+    },
+    {
+      "code": "discard_file:execute",
+      "name": "Discard File Execute",
+      "description": "discard_file:execute"
+    },
+    {
+      "code": "download_file:execute",
+      "name": "Download File Execute",
+      "description": "download_file:execute"
+    },
+    {
+      "code": "enable_dictionary_value:execute",
+      "name": "Enable Dictionary Value Execute",
+      "description": "enable_dictionary_value:execute"
+    },
+    {
+      "code": "generate_user_account_login_password:execute",
+      "name": "Generate User Account Login Password Execute",
+      "description": "generate_user_account_login_password:execute"
+    },
+    {
+      "code": "grant_permission_to_role:execute",
+      "name": "Grant Permission To Role Execute",
+      "description": "grant_permission_to_role:execute"
+    },
+    {
+      "code": "issue_service_account_api_token:execute",
+      "name": "Issue Service Account Api Token Execute",
+      "description": "issue_service_account_api_token:execute"
+    },
+    {
+      "code": "mark_file_referenced:execute",
+      "name": "Mark File Referenced Execute",
+      "description": "mark_file_referenced:execute"
+    },
+    {
+      "code": "permission_catalog:list",
+      "name": "Permission Catalog List",
+      "description": "permission_catalog:list"
+    },
+    {
+      "code": "permission_catalog:read",
+      "name": "Permission Catalog Read",
+      "description": "permission_catalog:read"
+    },
+    {
+      "code": "register_dictionary:execute",
+      "name": "Register Dictionary Execute",
+      "description": "register_dictionary:execute"
+    },
+    {
+      "code": "register_permission:execute",
+      "name": "Register Permission Execute",
+      "description": "register_permission:execute"
+    },
+    {
+      "code": "register_role:execute",
+      "name": "Register Role Execute",
+      "description": "register_role:execute"
+    },
+    {
+      "code": "register_user_account:execute",
+      "name": "Register User Account Execute",
+      "description": "register_user_account:execute"
+    },
+    {
+      "code": "role_catalog:list",
+      "name": "Role Catalog List",
+      "description": "role_catalog:list"
+    },
+    {
+      "code": "role_catalog:read",
+      "name": "Role Catalog Read",
+      "description": "role_catalog:read"
+    },
+    {
+      "code": "role_permission_grant_catalog:list",
+      "name": "Role Permission Grant Catalog List",
+      "description": "role_permission_grant_catalog:list"
+    },
+    {
+      "code": "role_permission_grant_catalog:read",
+      "name": "Role Permission Grant Catalog Read",
+      "description": "role_permission_grant_catalog:read"
+    },
+    {
+      "code": "service_account_api_token_catalog:list",
+      "name": "Service Account Api Token Catalog List",
+      "description": "service_account_api_token_catalog:list"
+    },
+    {
+      "code": "service_account_api_token_catalog:read",
+      "name": "Service Account Api Token Catalog Read",
+      "description": "service_account_api_token_catalog:read"
+    },
+    {
+      "code": "update_dictionary:execute",
+      "name": "Update Dictionary Execute",
+      "description": "update_dictionary:execute"
+    },
+    {
+      "code": "upload_file:execute",
+      "name": "Upload File Execute",
+      "description": "upload_file:execute"
+    },
+    {
+      "code": "uploaded_file_catalog:list",
+      "name": "Uploaded File Catalog List",
+      "description": "uploaded_file_catalog:list"
+    },
+    {
+      "code": "uploaded_file_catalog:read",
+      "name": "Uploaded File Catalog Read",
+      "description": "uploaded_file_catalog:read"
+    },
+    {
+      "code": "user_account_catalog:list",
+      "name": "User Account Catalog List",
+      "description": "user_account_catalog:list"
+    },
+    {
+      "code": "user_account_catalog:read",
+      "name": "User Account Catalog Read",
+      "description": "user_account_catalog:read"
+    },
+    {
+      "code": "user_role_assignment_catalog:list",
+      "name": "User Role Assignment Catalog List",
+      "description": "user_role_assignment_catalog:list"
+    },
+    {
+      "code": "user_role_assignment_catalog:read",
+      "name": "User Role Assignment Catalog Read",
+      "description": "user_role_assignment_catalog:read"
+    }
+  ],
+  "grants": [
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "assign_role_to_user:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "deactivate_user_account:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "generate_user_account_login_password:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "grant_permission_to_role:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "permission_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "permission_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "register_permission:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "register_role:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "register_user_account:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "role_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "role_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "role_permission_grant_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "role_permission_grant_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "service_account_api_token_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "service_account_api_token_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "user_account_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "user_account_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "user_role_assignment_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "user_role_assignment_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_ADMIN",
+      "permissionCode": "add_dictionary_value:execute"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_ADMIN",
+      "permissionCode": "archive_dictionary:execute"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_ADMIN",
+      "permissionCode": "dictionary_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_ADMIN",
+      "permissionCode": "dictionary_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_ADMIN",
+      "permissionCode": "dictionary_value_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_ADMIN",
+      "permissionCode": "dictionary_value_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_ADMIN",
+      "permissionCode": "disable_dictionary_value:execute"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_ADMIN",
+      "permissionCode": "enable_dictionary_value:execute"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_ADMIN",
+      "permissionCode": "register_dictionary:execute"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_ADMIN",
+      "permissionCode": "update_dictionary:execute"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_SERVICE",
+      "permissionCode": "mark_file_referenced:execute"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_SERVICE",
+      "permissionCode": "uploaded_file_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_SERVICE",
+      "permissionCode": "uploaded_file_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_USER",
+      "permissionCode": "discard_file:execute"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_USER",
+      "permissionCode": "download_file:execute"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_USER",
+      "permissionCode": "upload_file:execute"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_USER",
+      "permissionCode": "uploaded_file_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_USER",
+      "permissionCode": "uploaded_file_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "issue_service_account_api_token:execute"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "permission_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "permission_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "role_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "role_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "role_permission_grant_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "role_permission_grant_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "service_account_api_token_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "service_account_api_token_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "user_account_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "user_account_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "user_role_assignment_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "user_role_assignment_catalog:read"
+    }
+  ]
+}

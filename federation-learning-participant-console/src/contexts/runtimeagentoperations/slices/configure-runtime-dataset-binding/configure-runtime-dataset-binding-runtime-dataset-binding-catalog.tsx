@@ -37,12 +37,6 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
   const { id } = useParsed();
   const defaultValues = {
     datasetId: searchParams.get("datasetId") ?? undefined,
-    organizationId: searchParams.get("organizationId") ?? undefined,
-    featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
-    organizationName: searchParams.get("organizationName") ?? undefined,
-    featureDomain: searchParams.get("featureDomain") ?? undefined,
-    featureSchemaVersion: searchParams.get("featureSchemaVersion") ?? undefined,
-    datasetName: searchParams.get("datasetName") ?? undefined,
     runtimeId: searchParams.get("runtimeId") ?? undefined,
     dataSourceType: searchParams.get("dataSourceType") ?? undefined,
     host: searchParams.get("host") ?? undefined,
@@ -56,6 +50,12 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
     objectPrefix: searchParams.get("objectPrefix") ?? undefined,
     dataFormat: searchParams.get("dataFormat") ?? undefined,
     credentialSecretName: searchParams.get("credentialSecretName") ?? undefined,
+    organizationId: searchParams.get("organizationId") ?? undefined,
+    featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
+    organizationName: searchParams.get("organizationName") ?? undefined,
+    featureDomain: searchParams.get("featureDomain") ?? undefined,
+    featureSchemaVersion: searchParams.get("featureSchemaVersion") ?? undefined,
+    datasetName: searchParams.get("datasetName") ?? undefined,
     runtimeName: searchParams.get("runtimeName") ?? undefined,
   } as unknown as Partial<ConfigureRuntimeDatasetBindingCommandInput>;
 
@@ -102,6 +102,24 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
       <CreateViewHeader title={t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.label", "Configure Runtime Dataset Binding")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("ConfigureRuntimeDatasetBinding validation failed", errors))} className="space-y-8">
+          {defaultValues.organizationId !== undefined && defaultValues.organizationId !== null ? (
+            <input type="hidden" {...form.register("organizationId" as never)} />
+          ) : null}
+          {defaultValues.featureSchemaId !== undefined && defaultValues.featureSchemaId !== null ? (
+            <input type="hidden" {...form.register("featureSchemaId" as never)} />
+          ) : null}
+          {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
+            <input type="hidden" {...form.register("organizationName" as never)} />
+          ) : null}
+          {defaultValues.featureDomain !== undefined && defaultValues.featureDomain !== null ? (
+            <input type="hidden" {...form.register("featureDomain" as never)} />
+          ) : null}
+          {defaultValues.featureSchemaVersion !== undefined && defaultValues.featureSchemaVersion !== null ? (
+            <input type="hidden" {...form.register("featureSchemaVersion" as never)} />
+          ) : null}
+          {defaultValues.datasetName !== undefined && defaultValues.datasetName !== null ? (
+            <input type="hidden" {...form.register("datasetName" as never)} />
+          ) : null}
           {defaultValues.runtimeName !== undefined && defaultValues.runtimeName !== null ? (
             <input type="hidden" {...form.register("runtimeName" as never)} />
           ) : null}
@@ -119,8 +137,38 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
                   optionLabel="datasetName"
                   optionValue="datasetId"
                   value={field.value || ""}
-                  onValueChange={(value) => {
+                  onValueChange={(value, option) => {
                     field.onChange(value);
+                    form.setValue(
+                      "organizationId" as never,
+                      String(option?.record?.["organizationId"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "featureSchemaId" as never,
+                      String(option?.record?.["featureSchemaId"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "organizationName" as never,
+                      String(option?.record?.["organizationName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "featureDomain" as never,
+                      String(option?.record?.["featureDomain"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "featureSchemaVersion" as never,
+                      String(option?.record?.["featureSchemaVersion"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "datasetName" as never,
+                      String(option?.record?.["datasetName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
                   }}
                   placeholder={t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.datasetId.placeholder", "Select Dataset Id")}
                   meta={{
@@ -136,126 +184,34 @@ export const RuntimeDatasetBindingCatalogConfigureRuntimeDatasetBinding = () => 
           />
           <FormField
             control={form.control}
-            name="organizationId"
-            rules={{ required: "Organization Id is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.organizationId.label", "Organization Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Organization Id"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="featureSchemaId"
-            rules={{ required: "Feature Schema Id is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.featureSchemaId.label", "Feature Schema Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Feature Schema Id"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="organizationName"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.organizationName.label", "Organization Name")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Organization Name"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="featureDomain"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.featureDomain.label", "Feature Domain")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Feature Domain"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="featureSchemaVersion"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.featureSchemaVersion.label", "Feature Schema Version")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Feature Schema Version"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="datasetName"
-            rules={{ required: "Dataset Name is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.datasetName.label", "Dataset Name")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Dataset Name"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="runtimeId"
             rules={{ required: "Runtime Id is required" }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.runtimeId.label", "Runtime Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Runtime Id"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="agent_runtime_identity_catalog"
+                  dataProviderName="federation-learning-runtime-agent"
+                  optionLabel="runtimeName"
+                  optionValue="runtimeId"
+                  value={field.value || ""}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "runtimeName" as never,
+                      String(option?.record?.["runtimeName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
+                  placeholder={t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.runtimeId.placeholder", "Select Runtime Id")}
+                  meta={{
+                    idField: "runtimeId",
+                    label: t("resources.runtime_dataset_binding_catalog.commands.configureRuntimeDatasetBinding.fields.runtimeId.label", "Agent Runtime Identity Catalog"),
+                    aggregateRoute: "agentruntimeidentitycatalog",
+                    queryRoute: "agentruntimeidentitycatalog",
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

@@ -1,0 +1,957 @@
+{
+  "actors": [
+    {
+      "name": "ComplianceOfficer",
+      "title": "Compliance Officer",
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER"
+    },
+    {
+      "name": "DataOwner",
+      "title": "Data Owner",
+      "roleCode": "ACTOR_DATA_OWNER"
+    },
+    {
+      "name": "IdentityAdministrator",
+      "title": "Identity Administrator",
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR"
+    },
+    {
+      "name": "NodeOperator",
+      "title": "Node Operator",
+      "roleCode": "ACTOR_NODE_OPERATOR"
+    },
+    {
+      "name": "RuntimeAgent",
+      "title": "Runtime Agent",
+      "roleCode": "ACTOR_RUNTIME_AGENT"
+    },
+    {
+      "name": "SuperAdministrator",
+      "title": "Super Administrator",
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR"
+    },
+    {
+      "name": "ServiceAccount",
+      "title": "Service Account",
+      "roleCode": "SERVICE_ACCOUNT"
+    }
+  ],
+  "permissions": [
+    {
+      "code": "*:*",
+      "name": "All Permissions",
+      "description": "All permissions"
+    },
+    {
+      "code": "agent_dataset_access_validation_catalog:list",
+      "name": "Agent Dataset Access Validation Catalog List",
+      "description": "agent_dataset_access_validation_catalog:list"
+    },
+    {
+      "code": "agent_dataset_access_validation_catalog:read",
+      "name": "Agent Dataset Access Validation Catalog Read",
+      "description": "agent_dataset_access_validation_catalog:read"
+    },
+    {
+      "code": "agent_feature_schema_catalog:list",
+      "name": "Agent Feature Schema Catalog List",
+      "description": "agent_feature_schema_catalog:list"
+    },
+    {
+      "code": "agent_feature_schema_catalog:read",
+      "name": "Agent Feature Schema Catalog Read",
+      "description": "agent_feature_schema_catalog:read"
+    },
+    {
+      "code": "agent_organization_directory:list",
+      "name": "Agent Organization Directory List",
+      "description": "agent_organization_directory:list"
+    },
+    {
+      "code": "agent_organization_directory:read",
+      "name": "Agent Organization Directory Read",
+      "description": "agent_organization_directory:read"
+    },
+    {
+      "code": "agent_runtime_identity_catalog:list",
+      "name": "Agent Runtime Identity Catalog List",
+      "description": "agent_runtime_identity_catalog:list"
+    },
+    {
+      "code": "agent_runtime_identity_catalog:read",
+      "name": "Agent Runtime Identity Catalog Read",
+      "description": "agent_runtime_identity_catalog:read"
+    },
+    {
+      "code": "agent_runtime_infrastructure_connection_catalog:list",
+      "name": "Agent Runtime Infrastructure Connection Catalog List",
+      "description": "agent_runtime_infrastructure_connection_catalog:list"
+    },
+    {
+      "code": "agent_runtime_infrastructure_connection_catalog:read",
+      "name": "Agent Runtime Infrastructure Connection Catalog Read",
+      "description": "agent_runtime_infrastructure_connection_catalog:read"
+    },
+    {
+      "code": "agent_runtime_node_inventory_catalog:list",
+      "name": "Agent Runtime Node Inventory Catalog List",
+      "description": "agent_runtime_node_inventory_catalog:list"
+    },
+    {
+      "code": "agent_runtime_node_inventory_catalog:read",
+      "name": "Agent Runtime Node Inventory Catalog Read",
+      "description": "agent_runtime_node_inventory_catalog:read"
+    },
+    {
+      "code": "agent_runtime_node_resource_latest:list",
+      "name": "Agent Runtime Node Resource Latest List",
+      "description": "agent_runtime_node_resource_latest:list"
+    },
+    {
+      "code": "agent_runtime_node_resource_latest:read",
+      "name": "Agent Runtime Node Resource Latest Read",
+      "description": "agent_runtime_node_resource_latest:read"
+    },
+    {
+      "code": "agent_runtime_telemetry_latest:list",
+      "name": "Agent Runtime Telemetry Latest List",
+      "description": "agent_runtime_telemetry_latest:list"
+    },
+    {
+      "code": "agent_runtime_telemetry_latest:read",
+      "name": "Agent Runtime Telemetry Latest Read",
+      "description": "agent_runtime_telemetry_latest:read"
+    },
+    {
+      "code": "approve_dataset_for_training:execute",
+      "name": "Approve Dataset For Training Execute",
+      "description": "approve_dataset_for_training:execute"
+    },
+    {
+      "code": "assign_role_to_user:execute",
+      "name": "Assign Role To User Execute",
+      "description": "assign_role_to_user:execute"
+    },
+    {
+      "code": "configure_runtime_dataset_binding:execute",
+      "name": "Configure Runtime Dataset Binding Execute",
+      "description": "configure_runtime_dataset_binding:execute"
+    },
+    {
+      "code": "dataset_capability:list",
+      "name": "Dataset Capability List",
+      "description": "dataset_capability:list"
+    },
+    {
+      "code": "dataset_capability:read",
+      "name": "Dataset Capability Read",
+      "description": "dataset_capability:read"
+    },
+    {
+      "code": "dataset_readiness:list",
+      "name": "Dataset Readiness List",
+      "description": "dataset_readiness:list"
+    },
+    {
+      "code": "dataset_readiness:read",
+      "name": "Dataset Readiness Read",
+      "description": "dataset_readiness:read"
+    },
+    {
+      "code": "deactivate_user_account:execute",
+      "name": "Deactivate User Account Execute",
+      "description": "deactivate_user_account:execute"
+    },
+    {
+      "code": "declare_dataset:execute",
+      "name": "Declare Dataset Execute",
+      "description": "declare_dataset:execute"
+    },
+    {
+      "code": "generate_user_account_login_password:execute",
+      "name": "Generate User Account Login Password Execute",
+      "description": "generate_user_account_login_password:execute"
+    },
+    {
+      "code": "grant_permission_to_role:execute",
+      "name": "Grant Permission To Role Execute",
+      "description": "grant_permission_to_role:execute"
+    },
+    {
+      "code": "issue_service_account_api_token:execute",
+      "name": "Issue Service Account Api Token Execute",
+      "description": "issue_service_account_api_token:execute"
+    },
+    {
+      "code": "load_runtime_agent_bootstrap_configuration:execute",
+      "name": "Load Runtime Agent Bootstrap Configuration Execute",
+      "description": "load_runtime_agent_bootstrap_configuration:execute"
+    },
+    {
+      "code": "permission_catalog:list",
+      "name": "Permission Catalog List",
+      "description": "permission_catalog:list"
+    },
+    {
+      "code": "permission_catalog:read",
+      "name": "Permission Catalog Read",
+      "description": "permission_catalog:read"
+    },
+    {
+      "code": "profile_agent_dataset:execute",
+      "name": "Profile Agent Dataset Execute",
+      "description": "profile_agent_dataset:execute"
+    },
+    {
+      "code": "register_permission:execute",
+      "name": "Register Permission Execute",
+      "description": "register_permission:execute"
+    },
+    {
+      "code": "register_role:execute",
+      "name": "Register Role Execute",
+      "description": "register_role:execute"
+    },
+    {
+      "code": "register_user_account:execute",
+      "name": "Register User Account Execute",
+      "description": "register_user_account:execute"
+    },
+    {
+      "code": "reject_dataset_for_training:execute",
+      "name": "Reject Dataset For Training Execute",
+      "description": "reject_dataset_for_training:execute"
+    },
+    {
+      "code": "report_runtime_agent_started:execute",
+      "name": "Report Runtime Agent Started Execute",
+      "description": "report_runtime_agent_started:execute"
+    },
+    {
+      "code": "report_runtime_instance_self_check_passed:execute",
+      "name": "Report Runtime Instance Self Check Passed Execute",
+      "description": "report_runtime_instance_self_check_passed:execute"
+    },
+    {
+      "code": "reprofile_agent_dataset:execute",
+      "name": "Reprofile Agent Dataset Execute",
+      "description": "reprofile_agent_dataset:execute"
+    },
+    {
+      "code": "retry_dataset_contract_validation:execute",
+      "name": "Retry Dataset Contract Validation Execute",
+      "description": "retry_dataset_contract_validation:execute"
+    },
+    {
+      "code": "retry_round_execution_after_runtime_failure:execute",
+      "name": "Retry Round Execution After Runtime Failure Execute",
+      "description": "retry_round_execution_after_runtime_failure:execute"
+    },
+    {
+      "code": "retry_round_execution_after_start_failure:execute",
+      "name": "Retry Round Execution After Start Failure Execute",
+      "description": "retry_round_execution_after_start_failure:execute"
+    },
+    {
+      "code": "revalidate_agent_dataset_access:execute",
+      "name": "Revalidate Agent Dataset Access Execute",
+      "description": "revalidate_agent_dataset_access:execute"
+    },
+    {
+      "code": "revoke_dataset_training_approval:execute",
+      "name": "Revoke Dataset Training Approval Execute",
+      "description": "revoke_dataset_training_approval:execute"
+    },
+    {
+      "code": "role_catalog:list",
+      "name": "Role Catalog List",
+      "description": "role_catalog:list"
+    },
+    {
+      "code": "role_catalog:read",
+      "name": "Role Catalog Read",
+      "description": "role_catalog:read"
+    },
+    {
+      "code": "role_permission_grant_catalog:list",
+      "name": "Role Permission Grant Catalog List",
+      "description": "role_permission_grant_catalog:list"
+    },
+    {
+      "code": "role_permission_grant_catalog:read",
+      "name": "Role Permission Grant Catalog Read",
+      "description": "role_permission_grant_catalog:read"
+    },
+    {
+      "code": "round_execution_catalog:list",
+      "name": "Round Execution Catalog List",
+      "description": "round_execution_catalog:list"
+    },
+    {
+      "code": "round_execution_catalog:read",
+      "name": "Round Execution Catalog Read",
+      "description": "round_execution_catalog:read"
+    },
+    {
+      "code": "runtime_agent_lifecycle_catalog:list",
+      "name": "Runtime Agent Lifecycle Catalog List",
+      "description": "runtime_agent_lifecycle_catalog:list"
+    },
+    {
+      "code": "runtime_agent_lifecycle_catalog:read",
+      "name": "Runtime Agent Lifecycle Catalog Read",
+      "description": "runtime_agent_lifecycle_catalog:read"
+    },
+    {
+      "code": "runtime_dataset_binding_catalog:list",
+      "name": "Runtime Dataset Binding Catalog List",
+      "description": "runtime_dataset_binding_catalog:list"
+    },
+    {
+      "code": "runtime_dataset_binding_catalog:read",
+      "name": "Runtime Dataset Binding Catalog Read",
+      "description": "runtime_dataset_binding_catalog:read"
+    },
+    {
+      "code": "service_account_api_token_catalog:list",
+      "name": "Service Account Api Token Catalog List",
+      "description": "service_account_api_token_catalog:list"
+    },
+    {
+      "code": "service_account_api_token_catalog:read",
+      "name": "Service Account Api Token Catalog Read",
+      "description": "service_account_api_token_catalog:read"
+    },
+    {
+      "code": "user_account_catalog:list",
+      "name": "User Account Catalog List",
+      "description": "user_account_catalog:list"
+    },
+    {
+      "code": "user_account_catalog:read",
+      "name": "User Account Catalog Read",
+      "description": "user_account_catalog:read"
+    },
+    {
+      "code": "user_role_assignment_catalog:list",
+      "name": "User Role Assignment Catalog List",
+      "description": "user_role_assignment_catalog:list"
+    },
+    {
+      "code": "user_role_assignment_catalog:read",
+      "name": "User Role Assignment Catalog Read",
+      "description": "user_role_assignment_catalog:read"
+    },
+    {
+      "code": "validate_agent_dataset_access:execute",
+      "name": "Validate Agent Dataset Access Execute",
+      "description": "validate_agent_dataset_access:execute"
+    }
+  ],
+  "grants": [
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_dataset_access_validation_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_dataset_access_validation_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_feature_schema_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_feature_schema_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_organization_directory:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_organization_directory:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_runtime_identity_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_runtime_identity_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_runtime_infrastructure_connection_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_runtime_infrastructure_connection_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_runtime_node_inventory_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_runtime_node_inventory_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_runtime_node_resource_latest:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_runtime_node_resource_latest:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_runtime_telemetry_latest:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_runtime_telemetry_latest:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "approve_dataset_for_training:execute"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "dataset_capability:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "dataset_capability:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "dataset_readiness:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "dataset_readiness:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "reject_dataset_for_training:execute"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "revoke_dataset_training_approval:execute"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "round_execution_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "round_execution_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "runtime_agent_lifecycle_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "runtime_agent_lifecycle_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "runtime_dataset_binding_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "runtime_dataset_binding_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_dataset_access_validation_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_dataset_access_validation_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_feature_schema_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_feature_schema_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_organization_directory:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_organization_directory:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_runtime_identity_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_runtime_identity_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_runtime_infrastructure_connection_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_runtime_infrastructure_connection_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_runtime_node_inventory_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_runtime_node_inventory_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_runtime_node_resource_latest:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_runtime_node_resource_latest:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_runtime_telemetry_latest:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_runtime_telemetry_latest:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "dataset_capability:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "dataset_capability:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "dataset_readiness:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "dataset_readiness:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "declare_dataset:execute"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "retry_dataset_contract_validation:execute"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "round_execution_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "round_execution_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "runtime_agent_lifecycle_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "runtime_agent_lifecycle_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "runtime_dataset_binding_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "runtime_dataset_binding_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "assign_role_to_user:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "deactivate_user_account:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "generate_user_account_login_password:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "grant_permission_to_role:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "permission_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "permission_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "register_permission:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "register_role:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "register_user_account:execute"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "role_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "role_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "role_permission_grant_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "role_permission_grant_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "service_account_api_token_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "service_account_api_token_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "user_account_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "user_account_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "user_role_assignment_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
+      "permissionCode": "user_role_assignment_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_dataset_access_validation_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_dataset_access_validation_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_feature_schema_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_feature_schema_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_organization_directory:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_organization_directory:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_runtime_identity_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_runtime_identity_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_runtime_infrastructure_connection_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_runtime_infrastructure_connection_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_runtime_node_inventory_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_runtime_node_inventory_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_runtime_node_resource_latest:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_runtime_node_resource_latest:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_runtime_telemetry_latest:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_runtime_telemetry_latest:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "configure_runtime_dataset_binding:execute"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "dataset_capability:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "dataset_capability:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "dataset_readiness:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "dataset_readiness:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "reprofile_agent_dataset:execute"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "retry_round_execution_after_runtime_failure:execute"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "retry_round_execution_after_start_failure:execute"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "revalidate_agent_dataset_access:execute"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "round_execution_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "round_execution_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "runtime_agent_lifecycle_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "runtime_agent_lifecycle_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "runtime_dataset_binding_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "runtime_dataset_binding_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_dataset_access_validation_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_dataset_access_validation_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_feature_schema_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_feature_schema_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_organization_directory:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_organization_directory:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_runtime_identity_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_runtime_identity_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_runtime_infrastructure_connection_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_runtime_infrastructure_connection_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_runtime_node_inventory_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_runtime_node_inventory_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_runtime_node_resource_latest:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_runtime_node_resource_latest:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_runtime_telemetry_latest:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_runtime_telemetry_latest:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "dataset_capability:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "dataset_capability:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "dataset_readiness:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "dataset_readiness:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "load_runtime_agent_bootstrap_configuration:execute"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "profile_agent_dataset:execute"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "report_runtime_agent_started:execute"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "report_runtime_instance_self_check_passed:execute"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "round_execution_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "round_execution_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "runtime_agent_lifecycle_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "runtime_agent_lifecycle_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "runtime_dataset_binding_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "runtime_dataset_binding_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "validate_agent_dataset_access:execute"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "issue_service_account_api_token:execute"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "permission_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "permission_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "role_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "role_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "role_permission_grant_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "role_permission_grant_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "service_account_api_token_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "service_account_api_token_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "user_account_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "user_account_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "user_role_assignment_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_SUPER_ADMINISTRATOR",
+      "permissionCode": "user_role_assignment_catalog:read"
+    }
+  ]
+}
