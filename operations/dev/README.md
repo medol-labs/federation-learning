@@ -39,13 +39,15 @@ Use `images.mjs` to orchestrate generated backend, frontend, and infrastructure 
 
 ```bash
 node operations/<environment>/images.mjs list
-node operations/<environment>/images.mjs all --platform linux/amd64
+node operations/<environment>/images.mjs all
 node operations/<environment>/images.mjs build --exclude-service <service>
 node operations/<environment>/images.mjs build --service <backend-module>
 node operations/<environment>/images.mjs push --prefix registry.example.com/team
 node operations/<environment>/images.mjs push-dependencies --prefix registry.example.com/team
 node operations/<environment>/images.mjs import
 ```
+
+Application image builds use the native Docker platform by default. Pass `--platform linux/amd64` or `--platform linux/arm64` only when you intentionally need a fixed target architecture; cross-architecture frontend builds can be much slower.
 
 Use `--service` to process only selected application services, or `--exclude-service` / `--skip-service` to skip selected services during development.
 

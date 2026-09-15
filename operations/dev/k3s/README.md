@@ -36,23 +36,15 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 For local development with k3d, create the dev cluster from the generated config:
 
 ```bash
-scripts/federation-learning-dev.sh recreate
-eval "$(scripts/federation-learning-dev.sh kubeconfig)"
-scripts/federation-learning-dev.sh apply
+scripts/k3d-dev.sh recreate
+eval "$(scripts/k3d-dev.sh kubeconfig)"
+scripts/k3d-dev.sh apply
 ```
 
-`scripts/k3d-dev.sh` is the generated generic helper for local debugging. You can override paths and the cluster name with environment variables.
-`scripts/federation-learning-dev.sh` is the Federation Learning wrapper. It calls the generic helper with the runtime scheduling component, pre-applies `components/runtime-scheduling/runtime-scheduler-rbac.yaml`, scales the generated static runtime-agent Deployment to 0, and creates the k3d cluster with runtime data directories mounted into agent nodes.
-Runtime agents are expected to be created later by the platform-managed runtime infrastructure flow.
-When `environments/dev-registry` and the runtime scheduling component both exist, the wrapper applies a temporary combined overlay so registry image overrides and extra runtime scheduling resources are applied together.
-The wrapper also syncs runtime-created workload image settings from `environments/dev-registry/kustomization.yaml` into the platform/runtime-agent ConfigMaps. Override these images explicitly with `FL_RUNTIME_AGENT_IMAGE` and `FL_RUNTIME_ENGINE_IMAGE` when needed.
-
-The wrapper mounts these host directories into k3d agent nodes:
-
-- `volumes/datasets` -> `/workspace/datasets`
-- `volumes/tmp/runtime-engine` -> `/workspace/tmp/runtime-engine`
-
-Override them with `FL_K3D_DATASETS_HOST_ROOT` and `FL_K3D_RUNTIME_ENGINE_HOST_ROOT` before `scripts/federation-learning-dev.sh create` or `recreate`. Existing k3d nodes do not pick up new volume mounts; recreate the cluster after changing these paths.
+The helper script is generated for local debugging. You can override paths and the cluster name with environment variables.
+`scripts/k3d-dev.sh apply` automatically applies `environments/dev/secrets.dev.yaml` first when the file exists.
+`PRE_APPLY_FILE` can point at a manifest that must exist before Deployments are applied, such as ServiceAccount and RBAC objects referenced by custom overlays.
+When `REGISTRY_OVERLAY` and `EXTRA_COMPONENT` are both configured, the helper applies a temporary combined overlay so registry image overrides and extra resources are applied together.
 
 ```bash
 k3d cluster create --config cluster/k3d-dev.yaml
@@ -122,6 +114,7 @@ kubectl -n federation-learning-platform get secret postgres-secret
 
 Administrator bootstrap is enabled by default for `federation-learning-support`. Before creating the first administrator, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN` in that application's environment-owned Secret file.
 
+
 The dev K3s ConfigMap allows browser origins reaching APISIX on NodePort `30080`. For another gateway port, protocol, or production hostname, replace `MEDOL_SECURITY_ALLOWED_ORIGINS` with the exact comma-separated browser origins.
 
 Apply both files and restart the IAM application before submitting `POST /api/auth/setup-admin`:
@@ -136,32 +129,6 @@ kubectl -n federation-learning-platform rollout status deploy/federation-learnin
 ```
 
 After the administrator is created, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED` to `"false"`, reapply the environment, and restart the IAM application.
-
-## Managed Runtime Agent Secrets
-
-Platform-managed runtime agents do not receive security secret values from the platform configuration. The platform only references an existing Secret by name and key when it renders a managed runtime-agent manifest.
-
-Default platform references:
-
-```bash
-PLATFORM_RUNTIME_K3S_AGENT_SECURITY_SECRET_NAME=federation-learning-runtime-agent-dev-secret
-PLATFORM_RUNTIME_K3S_AGENT_JWT_SECRET_KEY=MEDOL_SECURITY_JWT_SECRET
-PLATFORM_RUNTIME_K3S_AGENT_INTERNAL_TOKEN_KEY=MEDOL_SECURITY_INTERNAL_TOKEN
-PLATFORM_RUNTIME_K3S_AGENT_ADMIN_BOOTSTRAP_SETUP_TOKEN_KEY=MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN
-```
-
-Create the Secret in the runtime-agent namespace before triggering platform-managed deployment:
-
-```bash
-cp environments/dev/managed-runtime-agent-secret.example.yaml \
-  environments/dev/managed-runtime-agent-secret.dev.yaml
-# Edit managed-runtime-agent-secret.dev.yaml and replace every example value.
-kubectl -n federation-learning-platform apply -f environments/dev/managed-runtime-agent-secret.dev.yaml
-```
-
-`MEDOL_SECURITY_JWT_SECRET` must be at least 256 bits. Use at least 32 ASCII characters. The admin setup token is the one entered on the runtime-agent admin setup page; the admin user's password is entered on that page and is not stored in this Secret.
-
-For local development, `environments/dev/secrets.example.yaml` already contains a `federation-learning-runtime-agent-dev-secret` entry for the generated static runtime-agent deployment. The dedicated `managed-runtime-agent-secret.example.yaml` documents the same keys for platform-managed runtime agents and can be used when the static runtime-agent deployment is disabled.
 
 ## Environment Configuration
 

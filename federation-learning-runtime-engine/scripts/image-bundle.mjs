@@ -51,7 +51,18 @@ switch (command) {
 
 function buildImage() {
     ensureDockerfile();
-    run('docker', ['build', '--platform', platform, '-f', dockerfile, ...buildArgs(), '-t', fullImageName, '.']);
+    run('docker', [
+        'build',
+        '--platform',
+        platform,
+        ...cacheArgs(),
+        '-f',
+        dockerfile,
+        ...buildArgs(),
+        '-t',
+        fullImageName,
+        '.'
+    ], {env: {...process.env, DOCKER_BUILDKIT: process.env.DOCKER_BUILDKIT ?? '1'}});
 }
 
 function exportImage() {
@@ -84,12 +95,32 @@ function buildArgs() {
     return valuesOf(args['build-arg']).flatMap((value) => ['--build-arg', String(value)]);
 }
 
-function run(commandName, commandArgs) {
+function cacheArgs() {
+    if (flagEnabled(args['no-cache']) || flagEnabled(args['no-cache-from'])) {
+        return flagEnabled(args['no-cache']) ? ['--no-cache'] : [];
+    }
+    if (dryRun || imageExists(fullImageName)) {
+        return ['--cache-from', fullImageName];
+    }
+    return [];
+}
+
+function imageExists(name) {
+    const result = spawnSync('docker', ['image', 'inspect', name], {
+        cwd: root,
+        stdio: 'ignore',
+        shell: process.platform === 'win32'
+    });
+    return result.status === 0;
+}
+
+function run(commandName, commandArgs, options = {}) {
     console.log(`[images] ${commandName} ${commandArgs.join(' ')}`);
     if (dryRun) return;
     const result = spawnSync(commandName, commandArgs, {
         cwd: root,
         stdio: 'inherit',
+        env: options.env ?? process.env,
         shell: process.platform === 'win32'
     });
     if (result.status !== 0) {
@@ -125,6 +156,17 @@ function loadDotEnv(path) {
 
 function firstNonEmpty(...values) {
     return values.find((value) => value != null && String(value).trim().length > 0);
+}
+
+function truthy(value) {
+    return ['1', 'true', 'yes', 'on'].includes(String(value ?? '').trim().toLowerCase());
+}
+
+function flagEnabled(argValue, envValue) {
+    if (argValue !== undefined) {
+        return argValue === true || truthy(argValue);
+    }
+    return truthy(envValue);
 }
 
 function hostDockerPlatform() {
@@ -178,6 +220,8 @@ Options:
   --platform <os/arch>       Target CPU architecture. Defaults to RUNTIME_ENGINE_IMAGE_PLATFORM, DOCKER_DEFAULT_PLATFORM, or host architecture.
   --dockerfile <file>        Dockerfile path. Defaults to ${defaultDockerfile}.
   --build-arg <key=value>    Forward a Docker build argument, for example BASE_IMAGE.
+  --no-cache                 Disable Docker layer cache.
+  --no-cache-from            Do not seed the build cache from the existing local image.
   --output <file>            Image archive path. Defaults to IMAGE_TAR or ${defaultTar}.
   --root <dir>               Runtime engine root. Defaults to current directory.
   --dry-run                  Print commands without running them.`);

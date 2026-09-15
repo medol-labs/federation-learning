@@ -507,6 +507,10 @@ Build the runtime image:
 node scripts/build-images.mjs
 ```
 
+The image script enables Docker BuildKit, seeds the build from the existing local
+image when available, and the Dockerfile uses a persistent pip download cache so
+unchanged Python and PyTorch dependencies are not downloaded again.
+
 The default `docker-compose.yml` is intentionally runtime-only and does not
 contain a `build` section. This keeps `docker compose up` usable in offline or
 unstable-network environments when the image already exists locally.

@@ -19,6 +19,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import type { DictionaryCode, DictionaryValueCode, DisplayOrder } from "@/contexts/domain/value-types";
 
 type DictionaryValueCatalogRecord = {
+
+
   dictionaryValueId: string;
   dictionaryId: string;
   dictionaryCode: DictionaryCode;
@@ -65,6 +67,7 @@ export const DictionaryValueCatalogList = () => {
             onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
             aria-label={t("table.selectAll", "Select all")}
           />
+
         ),
         cell: ({ row }) => (
           <Checkbox

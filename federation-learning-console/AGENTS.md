@@ -21,7 +21,7 @@ This repo is the generated Refine / React frontend for the Federation Learning p
 ## Validation
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Use the browser only when visual behavior or form submission must be verified interactively.
