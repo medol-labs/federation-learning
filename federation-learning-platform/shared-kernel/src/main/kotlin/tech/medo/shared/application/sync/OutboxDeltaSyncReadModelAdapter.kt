@@ -27,26 +27,34 @@ class OutboxDeltaSyncReadModelAdapter(
 
         var count = 0
         val context = SyncReadModelContext(properties, checkpoint)
+        var bootstrapHighWatermark: Long? = null
         if (checkpoint?.bootstrapCompleted != true) {
-            val snapshotUriBuilder = UriComponentsBuilder
-                .fromHttpUrl(properties.sourceBaseUrl)
-                .path(target.sourcePath)
-                .queryParam("size", properties.pageSize)
-            target.queryParameters(context).forEach { (name, value) -> snapshotUriBuilder.queryParam(name, value) }
+            var cursor: String? = null
+            do {
+                val snapshotUriBuilder = UriComponentsBuilder
+                    .fromHttpUrl(properties.sourceBaseUrl)
+                    .path(target.sourcePath)
+                    .queryParam("size", properties.pageSize)
+                cursor?.takeIf { it.isNotBlank() }?.let { snapshotUriBuilder.queryParam("cursor", it) }
+                target.queryParameters(context).forEach { (name, value) -> snapshotUriBuilder.queryParam(name, value) }
 
-            val snapshotResponse = restClient.get()
-                .uri(snapshotUriBuilder.toUriString())
-                .retrieve()
-                .body(JsonNode::class.java)
+                val snapshotResponse = restClient.get()
+                    .uri(snapshotUriBuilder.toUriString())
+                    .retrieve()
+                    .body(JsonNode::class.java)
 
-            val snapshotSyncedAt = LocalDateTime.now()
-            snapshotResponse.itemsNode().forEach { item ->
-                target.upsert(objectMapper.convertValue(item, mapType), snapshotSyncedAt)
-                count += 1
-            }
+                val snapshotSyncedAt = LocalDateTime.now()
+                snapshotResponse.itemsNode().forEach { item ->
+                    target.upsert(objectMapper.convertValue(item, mapType), snapshotSyncedAt)
+                    count += 1
+                }
+                bootstrapHighWatermark = snapshotResponse?.get("highWatermarkSequence")?.takeIf { !it.isNull }?.asLong()
+                    ?: bootstrapHighWatermark
+                cursor = snapshotResponse?.get("nextCursor")?.takeIf { !it.isNull }?.asText()
+            } while (!cursor.isNullOrBlank())
         }
 
-        val afterSequence = checkpoint?.lastSequence ?: 0
+        val afterSequence = bootstrapHighWatermark ?: checkpoint?.lastSequence ?: 0
         val uriBuilder = UriComponentsBuilder
             .fromHttpUrl(properties.sourceBaseUrl)
             .path(target.deltaPath)

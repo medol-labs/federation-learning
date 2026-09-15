@@ -80,6 +80,11 @@ interface SyncReadModelOutboxRepository : JpaRepository<SyncReadModelOutbox, Lon
         eventId: String,
         operation: String
     ): Boolean
+
+    fun findFirstBySourceContextAndSourceReadModelOrderBySequenceDesc(
+        sourceContext: String,
+        sourceReadModel: String
+    ): SyncReadModelOutbox?
 }
 
 @Component

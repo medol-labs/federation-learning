@@ -25,11 +25,16 @@ class RuntimeIdentityCatalogReadModelSyncReadModelResource(
     @GetMapping
     fun findAllForSync(
         @RequestParam(defaultValue = "200") size: Int,
+        @RequestParam(required = false) cursor: String?,
         @RequestParam parameters: Map<String, String>
     ): Map<String, Any?> {
         val reserved = setOf("afterSequence", "size", "cursor")
         val filters = parameters.filterKeys { it !in reserved }
-        val page = repository.findAll(PageRequest.of(0, size.coerceIn(1, 1000)))
+        val pageNumber = cursor?.toIntOrNull()?.coerceAtLeast(0) ?: 0
+        val page = repository.findAll(PageRequest.of(pageNumber, size.coerceIn(1, 1000)))
+        val highWatermark = outboxRepository
+            .findFirstBySourceContextAndSourceReadModelOrderBySequenceDesc("RuntimeProvisioning", "RuntimeIdentityCatalog")
+            ?.sequence ?: 0
         val items = page.content.mapNotNull { item ->
             val payload = objectMapper.convertValue(item, mapType)
             if (filters.any { (name, value) -> payload[name]?.toString() != value }) {
@@ -40,7 +45,8 @@ class RuntimeIdentityCatalogReadModelSyncReadModelResource(
         }
         return mapOf(
             "items" to items,
-            "nextCursor" to null
+            "nextCursor" to if (page.hasNext()) (pageNumber + 1).toString() else null,
+            "highWatermarkSequence" to highWatermark
         )
     }
 
