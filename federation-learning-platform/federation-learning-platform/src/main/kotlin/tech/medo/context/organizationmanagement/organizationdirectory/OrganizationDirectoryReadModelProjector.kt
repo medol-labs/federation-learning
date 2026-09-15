@@ -4,7 +4,9 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
+import tech.medo.shared.application.sync.SyncReadModelOutboxAppender
 
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.organizationmanagement.events.OrganizationActivatedEvent
@@ -15,7 +17,11 @@ import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
 
 @Namespace("readmodel-organization-directory")
 @Component
-class OrganizationDirectoryReadModelProjector(private val repository: OrganizationDirectoryReadModelRepository) {
+class OrganizationDirectoryReadModelProjector(
+    private val repository: OrganizationDirectoryReadModelRepository,
+    private val outbox: SyncReadModelOutboxAppender
+) {
+    @Transactional
     @EventHandler
     fun on(
         event: OrganizationRegisteredEvent,
@@ -31,8 +37,17 @@ class OrganizationDirectoryReadModelProjector(private val repository: Organizati
             entity.state = OrganizationStateEnum.REGISTERED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+        outbox.append(
+            sourceContext = "OrganizationManagement",
+            sourceReadModel = "OrganizationDirectory",
+            readModelKey = event.organizationId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
+    @Transactional
     @EventHandler
     fun on(
         event: OrganizationActivatedEvent,
@@ -46,8 +61,17 @@ class OrganizationDirectoryReadModelProjector(private val repository: Organizati
             entity.state = OrganizationStateEnum.ACTIVE
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+        outbox.append(
+            sourceContext = "OrganizationManagement",
+            sourceReadModel = "OrganizationDirectory",
+            readModelKey = event.organizationId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
+    @Transactional
     @EventHandler
     fun on(
         event: OrganizationDeactivatedEvent,
@@ -61,8 +85,17 @@ class OrganizationDirectoryReadModelProjector(private val repository: Organizati
             entity.state = OrganizationStateEnum.DEACTIVATED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+        outbox.append(
+            sourceContext = "OrganizationManagement",
+            sourceReadModel = "OrganizationDirectory",
+            readModelKey = event.organizationId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
+    @Transactional
     @EventHandler
     fun on(
         event: OrganizationReactivatedEvent,
@@ -76,6 +109,14 @@ class OrganizationDirectoryReadModelProjector(private val repository: Organizati
             entity.state = OrganizationStateEnum.ACTIVE
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+        outbox.append(
+            sourceContext = "OrganizationManagement",
+            sourceReadModel = "OrganizationDirectory",
+            readModelKey = event.organizationId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
 }

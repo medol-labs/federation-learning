@@ -77,7 +77,7 @@ medol:
     event-storage: ${MEDOL_AXON_EVENT_STORAGE:umadb}
   sync:
     enabled: ${MEDOL_SYNC_ENABLED:true}
-    mode: ${MEDOL_SYNC_MODE:pull-http}
+    mode: ${MEDOL_SYNC_MODE:outbox-delta}
     source-base-url: ${MEDOL_SYNC_SOURCE_BASE_URL:}
     page-size: ${MEDOL_SYNC_PAGE_SIZE:200}
     fixed-delay-ms: ${MEDOL_SYNC_FIXED_DELAY_MS:30000}

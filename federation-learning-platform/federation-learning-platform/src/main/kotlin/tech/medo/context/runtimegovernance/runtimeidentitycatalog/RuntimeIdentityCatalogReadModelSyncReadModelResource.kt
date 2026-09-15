@@ -1,4 +1,4 @@
-package tech.medo.datasetgovernance.featureschemacatalog
+package tech.medo.runtimegovernance.runtimeidentitycatalog
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -13,15 +13,15 @@ import tech.medo.shared.application.sync.SyncReadModelOutboxRepository
 
 @CrossOrigin
 @RestController
-@RequestMapping("/sync/read-models/dataset-governance/feature-schema-catalog")
-class FeatureSchemaCatalogReadModelSyncReadModelResource(
-    private val repository: FeatureSchemaCatalogReadModelRepository,
+@RequestMapping("/sync/read-models/runtime-provisioning/runtime-identity-catalog")
+class RuntimeIdentityCatalogReadModelSyncReadModelResource(
+    private val repository: RuntimeIdentityCatalogReadModelRepository,
     private val outboxRepository: SyncReadModelOutboxRepository,
     private val objectMapper: ObjectMapper
 ) {
     private val mapType = object : TypeReference<Map<String, Any?>>() {}
 
-    @PreAuthorize("hasAuthority('*:*') or hasAuthority('feature_schema_catalog:list') or hasAuthority('feature_schema_catalog:read')")
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_identity_catalog:list') or hasAuthority('runtime_identity_catalog:read')")
     @GetMapping
     fun findAllForSync(
         @RequestParam(defaultValue = "200") size: Int,
@@ -44,7 +44,7 @@ class FeatureSchemaCatalogReadModelSyncReadModelResource(
         )
     }
 
-    @PreAuthorize("hasAuthority('*:*') or hasAuthority('feature_schema_catalog:list') or hasAuthority('feature_schema_catalog:read')")
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_identity_catalog:list') or hasAuthority('runtime_identity_catalog:read')")
     @GetMapping("/deltas")
     fun findDeltasForSync(
         @RequestParam(defaultValue = "0") afterSequence: Long,
@@ -55,8 +55,8 @@ class FeatureSchemaCatalogReadModelSyncReadModelResource(
         val filters = parameters.filterKeys { it !in reserved }
         val rows = outboxRepository
             .findBySourceContextAndSourceReadModelAndSequenceGreaterThanOrderBySequenceAsc(
-                "DatasetGovernance",
-                "FeatureSchemaCatalog",
+                "RuntimeProvisioning",
+                "RuntimeIdentityCatalog",
                 afterSequence,
                 PageRequest.of(0, size.coerceIn(1, 1000))
             )

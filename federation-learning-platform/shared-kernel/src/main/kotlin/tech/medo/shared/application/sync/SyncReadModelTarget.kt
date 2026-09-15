@@ -8,6 +8,7 @@ data class SyncReadModelTarget(
     val sourceContext: String,
     val sourceReadModel: String,
     val sourcePath: String,
+    val deltaPath: String = "$sourcePath/deltas",
     val fieldMappings: Map<String, String>,
     val queryParameters: (SyncReadModelContext) -> Map<String, String> = { emptyMap() },
     val upsert: (Map<String, Any?>, LocalDateTime) -> Unit
@@ -25,5 +26,6 @@ data class SyncReadModelContext(
 data class SyncReadModelResult(
     val target: String,
     val itemCount: Int,
-    val nextCursor: String? = null
+    val nextCursor: String? = null,
+    val nextSequence: Long? = null
 )

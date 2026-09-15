@@ -17,7 +17,15 @@ class AgentRuntimeIdentityCatalogReadModelSyncRegistration {
             sourceReadModel = "RuntimeIdentityCatalog",
             sourcePath = "/sync/read-models/runtime-provisioning/runtime-identity-catalog",
             fieldMappings = mapOf(
-
+            "runtimeId" to "runtimeId",
+            "runtimeInfrastructureId" to "runtimeInfrastructureId",
+            "runtimeAgentId" to "runtimeAgentId",
+            "organizationId" to "organizationId",
+            "organizationName" to "organizationName",
+            "runtimeName" to "runtimeName",
+            "identityStatus" to "identityStatus",
+            "activatedAt" to "activatedAt",
+            "revokedAt" to "revokedAt"
             ),
             queryParameters = { context ->
                 mapOf(
@@ -25,9 +33,17 @@ class AgentRuntimeIdentityCatalogReadModelSyncRegistration {
                 )
             },
             upsert = { row, syncedAt ->
-                val id = SyncValueConverters.required(SyncValueConverters.uuid(row["undefined"]), targetName, "runtimeId")
+                val id = SyncValueConverters.required(SyncValueConverters.uuid(row["runtimeId"]), targetName, "runtimeId")
                 val projection = repository.findProjectionById(id) ?: AgentRuntimeIdentityCatalogReadModelProjection()
                 projection.runtimeId = id
+                projection.runtimeInfrastructureId = SyncValueConverters.required(SyncValueConverters.uuid(row["runtimeInfrastructureId"]), targetName, "runtimeInfrastructureId")
+                projection.runtimeAgentId = SyncValueConverters.required(SyncValueConverters.uuid(row["runtimeAgentId"]), targetName, "runtimeAgentId")
+                projection.organizationId = SyncValueConverters.required(SyncValueConverters.uuid(row["organizationId"]), targetName, "organizationId")
+                projection.organizationName = SyncValueConverters.string(row["organizationName"])
+                projection.runtimeName = SyncValueConverters.required(SyncValueConverters.string(row["runtimeName"]), targetName, "runtimeName")
+                projection.identityStatus = SyncValueConverters.required(SyncValueConverters.string(row["identityStatus"]), targetName, "identityStatus")
+                projection.activatedAt = SyncValueConverters.localDateTime(row["activatedAt"])
+                projection.revokedAt = SyncValueConverters.localDateTime(row["revokedAt"])
                 projection.syncedAt = syncedAt
                 repository.save(projection)
             }

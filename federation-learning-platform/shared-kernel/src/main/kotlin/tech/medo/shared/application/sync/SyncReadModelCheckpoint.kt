@@ -17,6 +17,9 @@ class SyncReadModelCheckpoint {
     var lastStatus: String = "NEVER_SYNCED"
     var lastError: String? = null
     var syncedItemCount: Int = 0
+    var lastCursor: String? = null
+    var lastSequence: Long = 0
+    var bootstrapCompleted: Boolean = false
 }
 
 interface SyncReadModelCheckpointRepository : JpaRepository<SyncReadModelCheckpoint, String>
