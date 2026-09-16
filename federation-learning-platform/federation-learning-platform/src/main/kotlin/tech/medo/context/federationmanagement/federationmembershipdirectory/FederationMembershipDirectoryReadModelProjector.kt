@@ -1,9 +1,11 @@
 package tech.medo.federationmanagement.federationmembershipdirectory
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
@@ -18,11 +20,60 @@ import tech.medo.federationmanagement.events.ParticipantRemovedEvent
 
 
 
-@Namespace("readmodel-federation-membership-directory")
+interface FederationMembershipDirectoryReadModelProjectionUpdater {
+    fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: OrganizationActivatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ParticipantInvitedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ParticipantJoinedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ParticipantRejectedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ParticipantInvitationRevokedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ParticipantSuspendedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ParticipantRemovedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class FederationMembershipDirectoryReadModelProjector(private val repository: FederationMembershipDirectoryReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(FederationMembershipDirectoryReadModelProjectionUpdater::class)
+class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
+    private val repository: FederationMembershipDirectoryReadModelRepository
+) : FederationMembershipDirectoryReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
@@ -35,8 +86,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: OrganizationActivatedEvent,
         message: EventMessage
     ) {
@@ -48,8 +99,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: FederationCreatedEvent,
         message: EventMessage
     ) {
@@ -62,8 +113,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         }
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ParticipantInvitedEvent,
         message: EventMessage
     ) {
@@ -81,8 +132,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ParticipantJoinedEvent,
         message: EventMessage
     ) {
@@ -100,8 +151,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ParticipantRejectedEvent,
         message: EventMessage
     ) {
@@ -118,8 +169,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ParticipantInvitationRevokedEvent,
         message: EventMessage
     ) {
@@ -136,8 +187,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ParticipantSuspendedEvent,
         message: EventMessage
     ) {
@@ -154,8 +205,8 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ParticipantRemovedEvent,
         message: EventMessage
     ) {
@@ -172,4 +223,82 @@ class FederationMembershipDirectoryReadModelProjector(private val repository: Fe
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-federation-membership-directory")
+@Component
+class FederationMembershipDirectoryReadModelProjector(
+    private val updater: FederationMembershipDirectoryReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: OrganizationActivatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ParticipantInvitedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ParticipantJoinedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ParticipantRejectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ParticipantInvitationRevokedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ParticipantSuspendedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ParticipantRemovedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

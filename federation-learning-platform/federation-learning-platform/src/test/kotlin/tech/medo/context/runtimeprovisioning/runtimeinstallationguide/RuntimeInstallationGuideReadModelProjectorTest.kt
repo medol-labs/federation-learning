@@ -21,7 +21,9 @@ class RuntimeInstallationGuideReadModelProjectorTest {
     @Test
     fun `renders participant node bootstrap scheduling configuration`() {
         val repository = FakeRuntimeInstallationGuideRepository()
-        val projector = RuntimeInstallationGuideReadModelProjector(repository)
+        val projector = RuntimeInstallationGuideReadModelProjector(
+            DefaultRuntimeInstallationGuideReadModelProjectionUpdater(repository)
+        )
         val event = RuntimeInstallationPlanCreatedEvent(
             runtimeInstallationPlanId = runtimeInstallationPlanId,
             runtimeInfrastructureId = runtimeInfrastructureId,

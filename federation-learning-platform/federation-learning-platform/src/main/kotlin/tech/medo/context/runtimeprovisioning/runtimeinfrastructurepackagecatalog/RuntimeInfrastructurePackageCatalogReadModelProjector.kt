@@ -1,20 +1,31 @@
 package tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegisteredEvent
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum
 
 
-@Namespace("readmodel-runtime-infrastructure-package-catalog")
+interface RuntimeInfrastructurePackageCatalogReadModelProjectionUpdater {
+    fun update(
+        event: RuntimeInfrastructurePackageRegisteredEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class RuntimeInfrastructurePackageCatalogReadModelProjector(private val repository: RuntimeInfrastructurePackageCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(RuntimeInfrastructurePackageCatalogReadModelProjectionUpdater::class)
+class DefaultRuntimeInfrastructurePackageCatalogReadModelProjectionUpdater(
+    private val repository: RuntimeInfrastructurePackageCatalogReadModelRepository
+) : RuntimeInfrastructurePackageCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructurePackageRegisteredEvent,
         message: EventMessage
     ) {
@@ -31,4 +42,18 @@ class RuntimeInfrastructurePackageCatalogReadModelProjector(private val reposito
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-runtime-infrastructure-package-catalog")
+@Component
+class RuntimeInfrastructurePackageCatalogReadModelProjector(
+    private val updater: RuntimeInfrastructurePackageCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructurePackageRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

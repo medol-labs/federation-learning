@@ -1,12 +1,12 @@
 package tech.medo.organizationmanagement.organizationdirectory
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
-import tech.medo.shared.application.sync.SyncReadModelOutboxAppender
 
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.organizationmanagement.events.OrganizationActivatedEvent
@@ -15,15 +15,35 @@ import tech.medo.organizationmanagement.events.OrganizationReactivatedEvent
 import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
 
 
-@Namespace("readmodel-organization-directory")
+interface OrganizationDirectoryReadModelProjectionUpdater {
+    fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: OrganizationActivatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: OrganizationDeactivatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: OrganizationReactivatedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class OrganizationDirectoryReadModelProjector(
-    private val repository: OrganizationDirectoryReadModelRepository,
-    private val outbox: SyncReadModelOutboxAppender
-) {
+@ConditionalOnMissingBean(OrganizationDirectoryReadModelProjectionUpdater::class)
+class DefaultOrganizationDirectoryReadModelProjectionUpdater(
+    private val repository: OrganizationDirectoryReadModelRepository
+) : OrganizationDirectoryReadModelProjectionUpdater {
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
@@ -37,19 +57,10 @@ class OrganizationDirectoryReadModelProjector(
             entity.state = OrganizationStateEnum.REGISTERED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "OrganizationManagement",
-            sourceReadModel = "OrganizationDirectory",
-            readModelKey = event.organizationId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: OrganizationActivatedEvent,
         message: EventMessage
     ) {
@@ -61,19 +72,10 @@ class OrganizationDirectoryReadModelProjector(
             entity.state = OrganizationStateEnum.ACTIVE
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "OrganizationManagement",
-            sourceReadModel = "OrganizationDirectory",
-            readModelKey = event.organizationId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: OrganizationDeactivatedEvent,
         message: EventMessage
     ) {
@@ -85,19 +87,10 @@ class OrganizationDirectoryReadModelProjector(
             entity.state = OrganizationStateEnum.DEACTIVATED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "OrganizationManagement",
-            sourceReadModel = "OrganizationDirectory",
-            readModelKey = event.organizationId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: OrganizationReactivatedEvent,
         message: EventMessage
     ) {
@@ -109,14 +102,44 @@ class OrganizationDirectoryReadModelProjector(
             entity.state = OrganizationStateEnum.ACTIVE
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "OrganizationManagement",
-            sourceReadModel = "OrganizationDirectory",
-            readModelKey = event.organizationId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
+}
+
+@Namespace("readmodel-organization-directory")
+@Component
+class OrganizationDirectoryReadModelProjector(
+    private val updater: OrganizationDirectoryReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: OrganizationActivatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: OrganizationDeactivatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: OrganizationReactivatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

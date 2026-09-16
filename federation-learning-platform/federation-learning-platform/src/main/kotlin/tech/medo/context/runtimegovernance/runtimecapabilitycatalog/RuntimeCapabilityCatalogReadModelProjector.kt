@@ -1,9 +1,11 @@
 package tech.medo.runtimegovernance.runtimecapabilitycatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimegovernance.events.RuntimeCapabilitiesDetectedEvent
@@ -12,11 +14,20 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-runtime-capability-catalog")
+interface RuntimeCapabilityCatalogReadModelProjectionUpdater {
+    fun update(
+        event: RuntimeCapabilitiesDetectedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class RuntimeCapabilityCatalogReadModelProjector(private val repository: RuntimeCapabilityCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(RuntimeCapabilityCatalogReadModelProjectionUpdater::class)
+class DefaultRuntimeCapabilityCatalogReadModelProjectionUpdater(
+    private val repository: RuntimeCapabilityCatalogReadModelRepository
+) : RuntimeCapabilityCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: RuntimeCapabilitiesDetectedEvent,
         message: EventMessage
     ) {
@@ -34,4 +45,18 @@ class RuntimeCapabilityCatalogReadModelProjector(private val repository: Runtime
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-runtime-capability-catalog")
+@Component
+class RuntimeCapabilityCatalogReadModelProjector(
+    private val updater: RuntimeCapabilityCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: RuntimeCapabilitiesDetectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

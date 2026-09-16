@@ -1,9 +1,11 @@
 package tech.medo.trainingorchestration.trainingjobdashboard
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.federationmanagement.events.FederationCreatedEvent
@@ -19,21 +21,79 @@ import tech.medo.trainingorchestration.events.TrainingRoundCompletedEvent
 import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
 
 
-@Namespace("readmodel-training-job-dashboard")
+interface TrainingJobDashboardReadModelProjectionUpdater {
+    fun update(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingJobSubmittedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingJobPausedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingJobResumedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingJobCanceledEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingJobCompletedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingRoundStartedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingRoundCompletedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class TrainingJobDashboardReadModelProjector(private val repository: TrainingJobDashboardReadModelRepository) {
-    @EventHandler
-    fun on(event: FederationCreatedEvent) {
+@ConditionalOnMissingBean(TrainingJobDashboardReadModelProjectionUpdater::class)
+class DefaultTrainingJobDashboardReadModelProjectionUpdater(
+    private val repository: TrainingJobDashboardReadModelRepository
+) : TrainingJobDashboardReadModelProjectionUpdater {
+    override fun update(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    ) {
         // Skipped: FederationCreatedEvent does not provide enough key fields to locate TrainingJobDashboardReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: FeatureSchemaDefinedEvent) {
+    override fun update(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    ) {
         // Skipped: FeatureSchemaDefinedEvent does not provide enough key fields to locate TrainingJobDashboardReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingJobCreatedEvent,
         message: EventMessage
     ) {
@@ -54,8 +114,8 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingJobSubmittedEvent,
         message: EventMessage
     ) {
@@ -76,8 +136,8 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingJobPausedEvent,
         message: EventMessage
     ) {
@@ -91,8 +151,8 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingJobResumedEvent,
         message: EventMessage
     ) {
@@ -106,8 +166,8 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingJobCanceledEvent,
         message: EventMessage
     ) {
@@ -121,8 +181,8 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingJobCompletedEvent,
         message: EventMessage
     ) {
@@ -138,8 +198,8 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingRoundStartedEvent,
         message: EventMessage
     ) {
@@ -163,8 +223,8 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingRoundCompletedEvent,
         message: EventMessage
     ) {
@@ -182,4 +242,90 @@ class TrainingJobDashboardReadModelProjector(private val repository: TrainingJob
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-training-job-dashboard")
+@Component
+class TrainingJobDashboardReadModelProjector(
+    private val updater: TrainingJobDashboardReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingJobSubmittedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingJobPausedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingJobResumedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingJobCanceledEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingJobCompletedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRoundStartedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRoundCompletedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

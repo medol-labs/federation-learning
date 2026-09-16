@@ -1,12 +1,12 @@
 package tech.medo.datasetgovernance.featureschemacatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
-import tech.medo.shared.application.sync.SyncReadModelOutboxAppender
 
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.datasetgovernance.events.FeatureSchemaPublishedEvent
@@ -17,15 +17,45 @@ import tech.medo.datasetgovernance.events.CurrentRecommendedFeatureSchemaVersion
 
 
 
-@Namespace("readmodel-feature-schema-catalog")
+interface FeatureSchemaCatalogReadModelProjectionUpdater {
+    fun update(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FeatureSchemaPublishedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FeatureSchemaDeprecatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FeatureSchemaRetiredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FeatureSchemaVersionSupersededEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: CurrentRecommendedFeatureSchemaVersionMarkedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class FeatureSchemaCatalogReadModelProjector(
-    private val repository: FeatureSchemaCatalogReadModelRepository,
-    private val outbox: SyncReadModelOutboxAppender
-) {
+@ConditionalOnMissingBean(FeatureSchemaCatalogReadModelProjectionUpdater::class)
+class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
+    private val repository: FeatureSchemaCatalogReadModelRepository
+) : FeatureSchemaCatalogReadModelProjectionUpdater {
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: FeatureSchemaDefinedEvent,
         message: EventMessage
     ) {
@@ -44,19 +74,10 @@ class FeatureSchemaCatalogReadModelProjector(
             entity.schemaStatus = "Draft"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "DatasetGovernance",
-            sourceReadModel = "FeatureSchemaCatalog",
-            readModelKey = event.featureSchemaId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: FeatureSchemaPublishedEvent,
         message: EventMessage
     ) {
@@ -69,19 +90,10 @@ class FeatureSchemaCatalogReadModelProjector(
             entity.schemaStatus = "Published"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "DatasetGovernance",
-            sourceReadModel = "FeatureSchemaCatalog",
-            readModelKey = event.featureSchemaId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: FeatureSchemaDeprecatedEvent,
         message: EventMessage
     ) {
@@ -94,19 +106,10 @@ class FeatureSchemaCatalogReadModelProjector(
             entity.schemaStatus = "Deprecated"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "DatasetGovernance",
-            sourceReadModel = "FeatureSchemaCatalog",
-            readModelKey = event.featureSchemaId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: FeatureSchemaRetiredEvent,
         message: EventMessage
     ) {
@@ -119,19 +122,10 @@ class FeatureSchemaCatalogReadModelProjector(
             entity.schemaStatus = "Retired"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "DatasetGovernance",
-            sourceReadModel = "FeatureSchemaCatalog",
-            readModelKey = event.featureSchemaId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: FeatureSchemaVersionSupersededEvent,
         message: EventMessage
     ) {
@@ -144,19 +138,10 @@ class FeatureSchemaCatalogReadModelProjector(
             entity.supersededByFeatureSchemaId = event.supersededByFeatureSchemaId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "DatasetGovernance",
-            sourceReadModel = "FeatureSchemaCatalog",
-            readModelKey = event.featureSchemaId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: CurrentRecommendedFeatureSchemaVersionMarkedEvent,
         message: EventMessage
     ) {
@@ -169,14 +154,60 @@ class FeatureSchemaCatalogReadModelProjector(
             entity.supersededByFeatureSchemaId = event.featureSchemaId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "DatasetGovernance",
-            sourceReadModel = "FeatureSchemaCatalog",
-            readModelKey = event.featureSchemaId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
+}
+
+@Namespace("readmodel-feature-schema-catalog")
+@Component
+class FeatureSchemaCatalogReadModelProjector(
+    private val updater: FeatureSchemaCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FeatureSchemaPublishedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FeatureSchemaDeprecatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FeatureSchemaRetiredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FeatureSchemaVersionSupersededEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: CurrentRecommendedFeatureSchemaVersionMarkedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

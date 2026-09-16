@@ -1,20 +1,31 @@
 package tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimeagentoperations.events.AgentRuntimeNodeInventoryReportedEvent
 
 
 
-@Namespace("readmodel-agent-runtime-node-inventory-catalog")
+interface AgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater {
+    fun update(
+        event: AgentRuntimeNodeInventoryReportedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class AgentRuntimeNodeInventoryCatalogReadModelProjector(private val repository: AgentRuntimeNodeInventoryCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(AgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater::class)
+class DefaultAgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater(
+    private val repository: AgentRuntimeNodeInventoryCatalogReadModelRepository
+) : AgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: AgentRuntimeNodeInventoryReportedEvent,
         message: EventMessage
     ) {
@@ -40,4 +51,18 @@ class AgentRuntimeNodeInventoryCatalogReadModelProjector(private val repository:
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-agent-runtime-node-inventory-catalog")
+@Component
+class AgentRuntimeNodeInventoryCatalogReadModelProjector(
+    private val updater: AgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: AgentRuntimeNodeInventoryReportedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

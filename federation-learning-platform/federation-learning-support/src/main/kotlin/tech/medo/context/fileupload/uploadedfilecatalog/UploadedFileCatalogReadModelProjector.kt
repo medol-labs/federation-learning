@@ -1,9 +1,11 @@
 package tech.medo.fileupload.uploadedfilecatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.fileupload.events.FileUploadedEvent
@@ -15,11 +17,35 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-uploaded-file-catalog")
+interface UploadedFileCatalogReadModelProjectionUpdater {
+    fun update(
+        event: FileUploadedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FileReferencedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FileDiscardedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FileExpiredEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class UploadedFileCatalogReadModelProjector(private val repository: UploadedFileCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(UploadedFileCatalogReadModelProjectionUpdater::class)
+class DefaultUploadedFileCatalogReadModelProjectionUpdater(
+    private val repository: UploadedFileCatalogReadModelRepository
+) : UploadedFileCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: FileUploadedEvent,
         message: EventMessage
     ) {
@@ -40,8 +66,8 @@ class UploadedFileCatalogReadModelProjector(private val repository: UploadedFile
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: FileReferencedEvent,
         message: EventMessage
     ) {
@@ -59,8 +85,8 @@ class UploadedFileCatalogReadModelProjector(private val repository: UploadedFile
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: FileDiscardedEvent,
         message: EventMessage
     ) {
@@ -76,8 +102,8 @@ class UploadedFileCatalogReadModelProjector(private val repository: UploadedFile
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: FileExpiredEvent,
         message: EventMessage
     ) {
@@ -96,4 +122,42 @@ class UploadedFileCatalogReadModelProjector(private val repository: UploadedFile
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-uploaded-file-catalog")
+@Component
+class UploadedFileCatalogReadModelProjector(
+    private val updater: UploadedFileCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: FileUploadedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FileReferencedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FileDiscardedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FileExpiredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

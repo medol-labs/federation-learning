@@ -1,9 +1,11 @@
 package tech.medo.trainingorchestration.trainingroundprogress
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
@@ -27,16 +29,102 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-training-round-progress")
+interface TrainingRoundProgressReadModelProjectionUpdater {
+    fun update(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingRoundParticipantsSelectedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingRoundParticipantSelectionFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingRoundStartedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingRoundStartFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ParticipantExecutionPlanGeneratedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ParticipantExecutionPlanDispatchedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ModelUpdateSubmissionReceivedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ModelUpdateSubmissionAcceptedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ModelUpdateSubmissionRejectedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: SecureAggregationRequestedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: GlobalModelUpdatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: GlobalModelEvaluationSubmittedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingRoundCompletedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingRoundFailedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class TrainingRoundProgressReadModelProjector(private val repository: TrainingRoundProgressReadModelRepository) {
-    @EventHandler
-    fun on(event: FeatureSchemaDefinedEvent) {
+@ConditionalOnMissingBean(TrainingRoundProgressReadModelProjectionUpdater::class)
+class DefaultTrainingRoundProgressReadModelProjectionUpdater(
+    private val repository: TrainingRoundProgressReadModelRepository
+) : TrainingRoundProgressReadModelProjectionUpdater {
+    override fun update(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    ) {
         // Skipped: FeatureSchemaDefinedEvent does not provide enough key fields to locate TrainingRoundProgressReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingJobCreatedEvent,
         message: EventMessage
     ) {
@@ -53,8 +141,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         }
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingRoundParticipantsSelectedEvent,
         message: EventMessage
     ) {
@@ -82,8 +170,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingRoundParticipantSelectionFailedEvent,
         message: EventMessage
     ) {
@@ -112,8 +200,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingRoundStartedEvent,
         message: EventMessage
     ) {
@@ -141,8 +229,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingRoundStartFailedEvent,
         message: EventMessage
     ) {
@@ -171,8 +259,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ParticipantExecutionPlanGeneratedEvent,
         message: EventMessage
     ) {
@@ -193,8 +281,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ParticipantExecutionPlanDispatchedEvent,
         message: EventMessage
     ) {
@@ -214,8 +302,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ModelUpdateSubmissionReceivedEvent,
         message: EventMessage
     ) {
@@ -234,8 +322,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ModelUpdateSubmissionAcceptedEvent,
         message: EventMessage
     ) {
@@ -258,8 +346,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ModelUpdateSubmissionRejectedEvent,
         message: EventMessage
     ) {
@@ -275,8 +363,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: SecureAggregationRequestedEvent,
         message: EventMessage
     ) {
@@ -302,8 +390,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: GlobalModelUpdatedEvent,
         message: EventMessage
     ) {
@@ -324,8 +412,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: GlobalModelEvaluationSubmittedEvent,
         message: EventMessage
     ) {
@@ -347,8 +435,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingRoundCompletedEvent,
         message: EventMessage
     ) {
@@ -371,8 +459,8 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingRoundFailedEvent,
         message: EventMessage
     ) {
@@ -397,4 +485,138 @@ class TrainingRoundProgressReadModelProjector(private val repository: TrainingRo
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-training-round-progress")
+@Component
+class TrainingRoundProgressReadModelProjector(
+    private val updater: TrainingRoundProgressReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRoundParticipantsSelectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRoundParticipantSelectionFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRoundStartedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRoundStartFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ParticipantExecutionPlanGeneratedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ParticipantExecutionPlanDispatchedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ModelUpdateSubmissionReceivedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ModelUpdateSubmissionAcceptedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ModelUpdateSubmissionRejectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: SecureAggregationRequestedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: GlobalModelUpdatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: GlobalModelEvaluationSubmittedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRoundCompletedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRoundFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

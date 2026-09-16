@@ -1,9 +1,11 @@
 package tech.medo.runtimemonitoring.runtimenodeinventoryview
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
@@ -13,26 +15,56 @@ import tech.medo.runtimemonitoring.events.RuntimeNodeInventoryReportedEvent
 
 
 
-@Namespace("readmodel-runtime-node-inventory-view")
+interface RuntimeNodeInventoryViewReadModelProjectionUpdater {
+    fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInstallationPlanCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructureRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeNodeInventoryReportedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class RuntimeNodeInventoryViewReadModelProjector(private val repository: RuntimeNodeInventoryViewReadModelRepository) {
-    @EventHandler
-    fun on(event: OrganizationRegisteredEvent) {
+@ConditionalOnMissingBean(RuntimeNodeInventoryViewReadModelProjectionUpdater::class)
+class DefaultRuntimeNodeInventoryViewReadModelProjectionUpdater(
+    private val repository: RuntimeNodeInventoryViewReadModelRepository
+) : RuntimeNodeInventoryViewReadModelProjectionUpdater {
+    override fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate RuntimeNodeInventoryViewReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: RuntimeInstallationPlanCreatedEvent) {
+    override fun update(
+        event: RuntimeInstallationPlanCreatedEvent,
+        message: EventMessage
+    ) {
         // Skipped: RuntimeInstallationPlanCreatedEvent does not provide enough key fields to locate RuntimeNodeInventoryViewReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: RuntimeInfrastructureRegisteredEvent) {
+    override fun update(
+        event: RuntimeInfrastructureRegisteredEvent,
+        message: EventMessage
+    ) {
         // Skipped: RuntimeInfrastructureRegisteredEvent does not provide enough key fields to locate RuntimeNodeInventoryViewReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeNodeInventoryReportedEvent,
         message: EventMessage
     ) {
@@ -60,4 +92,42 @@ class RuntimeNodeInventoryViewReadModelProjector(private val repository: Runtime
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-runtime-node-inventory-view")
+@Component
+class RuntimeNodeInventoryViewReadModelProjector(
+    private val updater: RuntimeNodeInventoryViewReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInstallationPlanCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeNodeInventoryReportedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

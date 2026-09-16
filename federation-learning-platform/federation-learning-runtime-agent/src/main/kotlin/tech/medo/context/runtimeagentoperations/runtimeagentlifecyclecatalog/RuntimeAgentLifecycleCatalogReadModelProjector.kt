@@ -1,9 +1,11 @@
 package tech.medo.runtimeagentoperations.runtimeagentlifecyclecatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimeagentoperations.events.RuntimeAgentBootstrapConfigurationLoadedEvent
@@ -15,11 +17,35 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-runtime-agent-lifecycle-catalog")
+interface RuntimeAgentLifecycleCatalogReadModelProjectionUpdater {
+    fun update(
+        event: RuntimeAgentBootstrapConfigurationLoadedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentBootstrapConfigurationLoadFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentStartedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInstanceSelfCheckPassedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class RuntimeAgentLifecycleCatalogReadModelProjector(private val repository: RuntimeAgentLifecycleCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(RuntimeAgentLifecycleCatalogReadModelProjectionUpdater::class)
+class DefaultRuntimeAgentLifecycleCatalogReadModelProjectionUpdater(
+    private val repository: RuntimeAgentLifecycleCatalogReadModelRepository
+) : RuntimeAgentLifecycleCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: RuntimeAgentBootstrapConfigurationLoadedEvent,
         message: EventMessage
     ) {
@@ -37,13 +63,15 @@ class RuntimeAgentLifecycleCatalogReadModelProjector(private val repository: Run
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(event: RuntimeAgentBootstrapConfigurationLoadFailedEvent) {
+    override fun update(
+        event: RuntimeAgentBootstrapConfigurationLoadFailedEvent,
+        message: EventMessage
+    ) {
         // Skipped: RuntimeAgentBootstrapConfigurationLoadFailedEvent does not provide enough key fields to locate RuntimeAgentLifecycleCatalogReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeAgentStartedEvent,
         message: EventMessage
     ) {
@@ -59,8 +87,8 @@ class RuntimeAgentLifecycleCatalogReadModelProjector(private val repository: Run
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInstanceSelfCheckPassedEvent,
         message: EventMessage
     ) {
@@ -87,4 +115,42 @@ class RuntimeAgentLifecycleCatalogReadModelProjector(private val repository: Run
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-runtime-agent-lifecycle-catalog")
+@Component
+class RuntimeAgentLifecycleCatalogReadModelProjector(
+    private val updater: RuntimeAgentLifecycleCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: RuntimeAgentBootstrapConfigurationLoadedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentBootstrapConfigurationLoadFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentStartedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInstanceSelfCheckPassedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

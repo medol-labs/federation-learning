@@ -1,9 +1,11 @@
 package tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent
@@ -13,16 +15,32 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-runtime-dataset-binding-catalog")
+interface RuntimeDatasetBindingCatalogReadModelProjectionUpdater {
+    fun update(
+        event: DatasetDeclaredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeDatasetBindingConfiguredEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class RuntimeDatasetBindingCatalogReadModelProjector(private val repository: RuntimeDatasetBindingCatalogReadModelRepository) {
-    @EventHandler
-    fun on(event: DatasetDeclaredEvent) {
+@ConditionalOnMissingBean(RuntimeDatasetBindingCatalogReadModelProjectionUpdater::class)
+class DefaultRuntimeDatasetBindingCatalogReadModelProjectionUpdater(
+    private val repository: RuntimeDatasetBindingCatalogReadModelRepository
+) : RuntimeDatasetBindingCatalogReadModelProjectionUpdater {
+    override fun update(
+        event: DatasetDeclaredEvent,
+        message: EventMessage
+    ) {
         // Skipped: DatasetDeclaredEvent does not provide enough key fields to locate RuntimeDatasetBindingCatalogReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeDatasetBindingConfiguredEvent,
         message: EventMessage
     ) {
@@ -60,4 +78,26 @@ class RuntimeDatasetBindingCatalogReadModelProjector(private val repository: Run
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-runtime-dataset-binding-catalog")
+@Component
+class RuntimeDatasetBindingCatalogReadModelProjector(
+    private val updater: RuntimeDatasetBindingCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: DatasetDeclaredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeDatasetBindingConfiguredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

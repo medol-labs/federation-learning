@@ -1,9 +1,11 @@
 package tech.medo.trainingorchestration.trainingrunconfigurationcatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.federationmanagement.events.FederationCreatedEvent
@@ -14,21 +16,54 @@ import tech.medo.trainingorchestration.events.TrainingRunConfigurationLockedEven
 import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum
 
 
-@Namespace("readmodel-training-run-configuration-catalog")
+interface TrainingRunConfigurationCatalogReadModelProjectionUpdater {
+    fun update(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingRunConfigurationDefinedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingRunConfigurationUpdatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingRunConfigurationLockedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class TrainingRunConfigurationCatalogReadModelProjector(private val repository: TrainingRunConfigurationCatalogReadModelRepository) {
-    @EventHandler
-    fun on(event: FederationCreatedEvent) {
+@ConditionalOnMissingBean(TrainingRunConfigurationCatalogReadModelProjectionUpdater::class)
+class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
+    private val repository: TrainingRunConfigurationCatalogReadModelRepository
+) : TrainingRunConfigurationCatalogReadModelProjectionUpdater {
+    override fun update(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    ) {
         // Skipped: FederationCreatedEvent does not provide enough key fields to locate TrainingRunConfigurationCatalogReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: FeatureSchemaDefinedEvent) {
+    override fun update(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    ) {
         // Skipped: FeatureSchemaDefinedEvent does not provide enough key fields to locate TrainingRunConfigurationCatalogReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingRunConfigurationDefinedEvent,
         message: EventMessage
     ) {
@@ -71,8 +106,8 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingRunConfigurationUpdatedEvent,
         message: EventMessage
     ) {
@@ -115,8 +150,8 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingRunConfigurationLockedEvent,
         message: EventMessage
     ) {
@@ -131,4 +166,50 @@ class TrainingRunConfigurationCatalogReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-training-run-configuration-catalog")
+@Component
+class TrainingRunConfigurationCatalogReadModelProjector(
+    private val updater: TrainingRunConfigurationCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRunConfigurationDefinedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRunConfigurationUpdatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingRunConfigurationLockedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

@@ -1,9 +1,11 @@
 package tech.medo.modelrepository.modelartifactcatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.modelrepository.events.ModelArtifactRegisteredEvent
@@ -15,11 +17,35 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-model-artifact-catalog")
+interface ModelArtifactCatalogReadModelProjectionUpdater {
+    fun update(
+        event: ModelArtifactRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FederatedModelArtifactRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: GlobalModelUpdatedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class ModelArtifactCatalogReadModelProjector(private val repository: ModelArtifactCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(ModelArtifactCatalogReadModelProjectionUpdater::class)
+class DefaultModelArtifactCatalogReadModelProjectionUpdater(
+    private val repository: ModelArtifactCatalogReadModelRepository
+) : ModelArtifactCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: ModelArtifactRegisteredEvent,
         message: EventMessage
     ) {
@@ -44,8 +70,8 @@ class ModelArtifactCatalogReadModelProjector(private val repository: ModelArtifa
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: FederatedModelArtifactRegisteredEvent,
         message: EventMessage
     ) {
@@ -73,17 +99,59 @@ class ModelArtifactCatalogReadModelProjector(private val repository: ModelArtifa
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(event: TrainingJobCreatedEvent) {
+    override fun update(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    ) {
         // Skipped: TrainingJobCreatedEvent does not provide enough key fields to locate ModelArtifactCatalogReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: GlobalModelUpdatedEvent) {
+    override fun update(
+        event: GlobalModelUpdatedEvent,
+        message: EventMessage
+    ) {
         // Skipped: GlobalModelUpdatedEvent does not provide enough key fields to locate ModelArtifactCatalogReadModelProjection.
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-model-artifact-catalog")
+@Component
+class ModelArtifactCatalogReadModelProjector(
+    private val updater: ModelArtifactCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: ModelArtifactRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FederatedModelArtifactRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: GlobalModelUpdatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

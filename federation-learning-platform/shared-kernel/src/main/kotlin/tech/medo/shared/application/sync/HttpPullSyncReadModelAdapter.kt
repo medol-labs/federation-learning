@@ -21,7 +21,7 @@ class HttpPullSyncReadModelAdapter(
 
     override fun syncOnce(target: SyncReadModelTarget, checkpoint: SyncReadModelCheckpoint?): SyncReadModelResult {
         if (properties.sourceBaseUrl.isBlank()) {
-            return SyncReadModelResult(target.name, 0)
+            throw IllegalStateException("Sync target ${target.name} requires medol.sync.source-base-url")
         }
 
         var cursor: String? = null

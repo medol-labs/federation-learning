@@ -1,20 +1,31 @@
 package tech.medo.datasetgovernance.currentrecommendedfeatureschemacatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.datasetgovernance.events.CurrentRecommendedFeatureSchemaVersionMarkedEvent
 
 
 
-@Namespace("readmodel-current-recommended-feature-schema-catalog")
+interface CurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater {
+    fun update(
+        event: CurrentRecommendedFeatureSchemaVersionMarkedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class CurrentRecommendedFeatureSchemaCatalogReadModelProjector(private val repository: CurrentRecommendedFeatureSchemaCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(CurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater::class)
+class DefaultCurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater(
+    private val repository: CurrentRecommendedFeatureSchemaCatalogReadModelRepository
+) : CurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: CurrentRecommendedFeatureSchemaVersionMarkedEvent,
         message: EventMessage
     ) {
@@ -30,4 +41,18 @@ class CurrentRecommendedFeatureSchemaCatalogReadModelProjector(private val repos
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-current-recommended-feature-schema-catalog")
+@Component
+class CurrentRecommendedFeatureSchemaCatalogReadModelProjector(
+    private val updater: CurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: CurrentRecommendedFeatureSchemaVersionMarkedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

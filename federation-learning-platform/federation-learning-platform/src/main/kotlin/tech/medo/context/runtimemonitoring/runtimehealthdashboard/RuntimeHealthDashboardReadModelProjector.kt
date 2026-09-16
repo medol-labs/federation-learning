@@ -1,9 +1,11 @@
 package tech.medo.runtimemonitoring.runtimehealthdashboard
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.federationmanagement.events.FederationCreatedEvent
@@ -17,21 +19,69 @@ import tech.medo.runtimemonitoring.events.TrainingAlertRaisedEvent
 
 
 
-@Namespace("readmodel-runtime-health-dashboard")
+interface RuntimeHealthDashboardReadModelProjectionUpdater {
+    fun update(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentOfflineDetectedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentRecoveredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeNodeResourcePressureDetectedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeNodeInventoryReportedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeNodeCapacityChangedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingAlertRaisedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHealthDashboardReadModelRepository) {
-    @EventHandler
-    fun on(event: FederationCreatedEvent) {
+@ConditionalOnMissingBean(RuntimeHealthDashboardReadModelProjectionUpdater::class)
+class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
+    private val repository: RuntimeHealthDashboardReadModelRepository
+) : RuntimeHealthDashboardReadModelProjectionUpdater {
+    override fun update(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    ) {
         // Skipped: FederationCreatedEvent does not provide enough key fields to locate RuntimeHealthDashboardReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: TrainingJobCreatedEvent) {
+    override fun update(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    ) {
         // Skipped: TrainingJobCreatedEvent does not provide enough key fields to locate RuntimeHealthDashboardReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeAgentOfflineDetectedEvent,
         message: EventMessage
     ) {
@@ -50,8 +100,8 @@ class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHe
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeAgentRecoveredEvent,
         message: EventMessage
     ) {
@@ -70,8 +120,8 @@ class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHe
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeNodeResourcePressureDetectedEvent,
         message: EventMessage
     ) {
@@ -90,8 +140,8 @@ class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHe
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeNodeInventoryReportedEvent,
         message: EventMessage
     ) {
@@ -106,8 +156,8 @@ class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHe
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeNodeCapacityChangedEvent,
         message: EventMessage
     ) {
@@ -121,8 +171,8 @@ class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHe
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingAlertRaisedEvent,
         message: EventMessage
     ) {
@@ -137,4 +187,74 @@ class RuntimeHealthDashboardReadModelProjector(private val repository: RuntimeHe
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-runtime-health-dashboard")
+@Component
+class RuntimeHealthDashboardReadModelProjector(
+    private val updater: RuntimeHealthDashboardReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentOfflineDetectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentRecoveredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeNodeResourcePressureDetectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeNodeInventoryReportedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeNodeCapacityChangedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingAlertRaisedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

@@ -1,9 +1,11 @@
 package tech.medo.runtimeagentoperations.roundexecutioncatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimeagentoperations.events.ExecutionPlanReceivedEvent
@@ -29,11 +31,105 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-round-execution-catalog")
+interface RoundExecutionCatalogReadModelProjectionUpdater {
+    fun update(
+        event: ExecutionPlanReceivedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ExecutionPlanAcceptedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ExecutionPlanRejectedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RoundExecutionStartedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RoundExecutionStartFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeEngineJobObservedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RoundExecutionCompletedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RoundExecutionFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RoundExecutionStartRetryStartedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RoundExecutionStartRetryFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RoundExecutionRuntimeRetryStartedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RoundExecutionRuntimeRetryFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentLocalModelUpdateSubmittedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeEngineJobReleasedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeEngineJobReleaseFailedOrSkippedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeEngineJobReleaseFailedOrSkippedAfterStartFailureEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeEngineJobReleaseFailedOrSkippedAfterRetryEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeEngineJobReleaseFailedOrSkippedAfterRuntimeRetryEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecutionCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(RoundExecutionCatalogReadModelProjectionUpdater::class)
+class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
+    private val repository: RoundExecutionCatalogReadModelRepository
+) : RoundExecutionCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: ExecutionPlanReceivedEvent,
         message: EventMessage
     ) {
@@ -57,8 +153,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ExecutionPlanAcceptedEvent,
         message: EventMessage
     ) {
@@ -90,8 +186,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ExecutionPlanRejectedEvent,
         message: EventMessage
     ) {
@@ -123,8 +219,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RoundExecutionStartedEvent,
         message: EventMessage
     ) {
@@ -149,8 +245,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RoundExecutionStartFailedEvent,
         message: EventMessage
     ) {
@@ -177,8 +273,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeEngineJobObservedEvent,
         message: EventMessage
     ) {
@@ -206,8 +302,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RoundExecutionCompletedEvent,
         message: EventMessage
     ) {
@@ -235,8 +331,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RoundExecutionFailedEvent,
         message: EventMessage
     ) {
@@ -263,8 +359,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RoundExecutionStartRetryStartedEvent,
         message: EventMessage
     ) {
@@ -290,8 +386,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RoundExecutionStartRetryFailedEvent,
         message: EventMessage
     ) {
@@ -319,8 +415,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RoundExecutionRuntimeRetryStartedEvent,
         message: EventMessage
     ) {
@@ -346,8 +442,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RoundExecutionRuntimeRetryFailedEvent,
         message: EventMessage
     ) {
@@ -375,8 +471,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentLocalModelUpdateSubmittedEvent,
         message: EventMessage
     ) {
@@ -403,8 +499,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeEngineJobReleasedEvent,
         message: EventMessage
     ) {
@@ -422,8 +518,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeEngineJobReleaseFailedOrSkippedEvent,
         message: EventMessage
     ) {
@@ -440,8 +536,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeEngineJobReleaseFailedOrSkippedAfterStartFailureEvent,
         message: EventMessage
     ) {
@@ -458,8 +554,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeEngineJobReleaseFailedOrSkippedAfterRetryEvent,
         message: EventMessage
     ) {
@@ -476,8 +572,8 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeEngineJobReleaseFailedOrSkippedAfterRuntimeRetryEvent,
         message: EventMessage
     ) {
@@ -497,4 +593,154 @@ class RoundExecutionCatalogReadModelProjector(private val repository: RoundExecu
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-round-execution-catalog")
+@Component
+class RoundExecutionCatalogReadModelProjector(
+    private val updater: RoundExecutionCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: ExecutionPlanReceivedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ExecutionPlanAcceptedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ExecutionPlanRejectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RoundExecutionStartedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RoundExecutionStartFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeEngineJobObservedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RoundExecutionCompletedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RoundExecutionFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RoundExecutionStartRetryStartedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RoundExecutionStartRetryFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RoundExecutionRuntimeRetryStartedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RoundExecutionRuntimeRetryFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentLocalModelUpdateSubmittedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeEngineJobReleasedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeEngineJobReleaseFailedOrSkippedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeEngineJobReleaseFailedOrSkippedAfterStartFailureEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeEngineJobReleaseFailedOrSkippedAfterRetryEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeEngineJobReleaseFailedOrSkippedAfterRuntimeRetryEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

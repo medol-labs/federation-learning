@@ -1,9 +1,11 @@
 package tech.medo.runtimeagentoperations.datasetreadiness
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent
@@ -25,11 +27,95 @@ import tech.medo.runtimeagentoperations.events.DatasetTrainingApprovalRevokedEve
 
 
 
-@Namespace("readmodel-dataset-readiness")
+interface DatasetReadinessReadModelProjectionUpdater {
+    fun update(
+        event: DatasetDeclaredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetAccessValidatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetAccessValidationFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetAccessRevalidatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetAccessRevalidationFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetMetadataReportedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetProfilingFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetReprofiledEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetReprofilingFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: DatasetContractValidatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: DatasetContractValidationFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: DatasetContractRevalidatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: DatasetContractRevalidationFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: DatasetRejectedForTrainingEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: DatasetApprovedForTrainingEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: DatasetTrainingApprovalRevokedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class DatasetReadinessReadModelProjector(private val repository: DatasetReadinessReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(DatasetReadinessReadModelProjectionUpdater::class)
+class DefaultDatasetReadinessReadModelProjectionUpdater(
+    private val repository: DatasetReadinessReadModelRepository
+) : DatasetReadinessReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: DatasetDeclaredEvent,
         message: EventMessage
     ) {
@@ -49,8 +135,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetAccessValidatedEvent,
         message: EventMessage
     ) {
@@ -75,8 +161,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetAccessValidationFailedEvent,
         message: EventMessage
     ) {
@@ -98,8 +184,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetAccessRevalidatedEvent,
         message: EventMessage
     ) {
@@ -123,8 +209,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetAccessRevalidationFailedEvent,
         message: EventMessage
     ) {
@@ -146,8 +232,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetMetadataReportedEvent,
         message: EventMessage
     ) {
@@ -176,8 +262,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetProfilingFailedEvent,
         message: EventMessage
     ) {
@@ -199,8 +285,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetReprofiledEvent,
         message: EventMessage
     ) {
@@ -228,8 +314,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetReprofilingFailedEvent,
         message: EventMessage
     ) {
@@ -251,8 +337,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: DatasetContractValidatedEvent,
         message: EventMessage
     ) {
@@ -272,8 +358,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: DatasetContractValidationFailedEvent,
         message: EventMessage
     ) {
@@ -293,8 +379,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: DatasetContractRevalidatedEvent,
         message: EventMessage
     ) {
@@ -313,8 +399,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: DatasetContractRevalidationFailedEvent,
         message: EventMessage
     ) {
@@ -334,8 +420,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: DatasetRejectedForTrainingEvent,
         message: EventMessage
     ) {
@@ -348,8 +434,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: DatasetApprovedForTrainingEvent,
         message: EventMessage
     ) {
@@ -363,8 +449,8 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: DatasetTrainingApprovalRevokedEvent,
         message: EventMessage
     ) {
@@ -378,4 +464,138 @@ class DatasetReadinessReadModelProjector(private val repository: DatasetReadines
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-dataset-readiness")
+@Component
+class DatasetReadinessReadModelProjector(
+    private val updater: DatasetReadinessReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: DatasetDeclaredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetAccessValidatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetAccessValidationFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetAccessRevalidatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetAccessRevalidationFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetMetadataReportedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetProfilingFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetReprofiledEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetReprofilingFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: DatasetContractValidatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: DatasetContractValidationFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: DatasetContractRevalidatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: DatasetContractRevalidationFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: DatasetRejectedForTrainingEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: DatasetApprovedForTrainingEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: DatasetTrainingApprovalRevokedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

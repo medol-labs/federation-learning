@@ -1,9 +1,11 @@
 package tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
@@ -26,21 +28,104 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-runtime-infrastructure-access-view")
+interface RuntimeInfrastructureAccessViewReadModelProjectionUpdater {
+    fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructurePackageRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInstallationPlanCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructurePlannedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructureRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructurePreparedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructureVerifiedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructureVerificationFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentInstallationSucceededEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentInstallationFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructureVerificationRetrySucceededEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructureVerificationRetryFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentDeploymentRetrySucceededEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentDeploymentRetryFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeConnectionEstablishedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: RuntimeInfrastructureAccessViewReadModelRepository) {
-    @EventHandler
-    fun on(event: OrganizationRegisteredEvent) {
+@ConditionalOnMissingBean(RuntimeInfrastructureAccessViewReadModelProjectionUpdater::class)
+class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
+    private val repository: RuntimeInfrastructureAccessViewReadModelRepository
+) : RuntimeInfrastructureAccessViewReadModelProjectionUpdater {
+    override fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate RuntimeInfrastructureAccessViewReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: RuntimeInfrastructurePackageRegisteredEvent) {
+    override fun update(
+        event: RuntimeInfrastructurePackageRegisteredEvent,
+        message: EventMessage
+    ) {
         // Skipped: RuntimeInfrastructurePackageRegisteredEvent does not provide enough key fields to locate RuntimeInfrastructureAccessViewReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInstallationPlanCreatedEvent,
         message: EventMessage
     ) {
@@ -65,8 +150,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructurePlannedEvent,
         message: EventMessage
     ) {
@@ -92,8 +177,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructureRegisteredEvent,
         message: EventMessage
     ) {
@@ -120,8 +205,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructurePreparedEvent,
         message: EventMessage
     ) {
@@ -150,8 +235,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructureVerifiedEvent,
         message: EventMessage
     ) {
@@ -179,8 +264,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructureVerificationFailedEvent,
         message: EventMessage
     ) {
@@ -207,8 +292,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeAgentInstallationSucceededEvent,
         message: EventMessage
     ) {
@@ -239,8 +324,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeAgentInstallationFailedEvent,
         message: EventMessage
     ) {
@@ -267,8 +352,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructureVerificationRetrySucceededEvent,
         message: EventMessage
     ) {
@@ -296,8 +381,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructureVerificationRetryFailedEvent,
         message: EventMessage
     ) {
@@ -324,8 +409,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeAgentDeploymentRetrySucceededEvent,
         message: EventMessage
     ) {
@@ -356,8 +441,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeAgentDeploymentRetryFailedEvent,
         message: EventMessage
     ) {
@@ -384,8 +469,8 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeConnectionEstablishedEvent,
         message: EventMessage
     ) {
@@ -408,4 +493,130 @@ class RuntimeInfrastructureAccessViewReadModelProjector(private val repository: 
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-runtime-infrastructure-access-view")
+@Component
+class RuntimeInfrastructureAccessViewReadModelProjector(
+    private val updater: RuntimeInfrastructureAccessViewReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructurePackageRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInstallationPlanCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructurePlannedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructurePreparedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerifiedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerificationFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentInstallationSucceededEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentInstallationFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerificationRetrySucceededEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerificationRetryFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentDeploymentRetrySucceededEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentDeploymentRetryFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeConnectionEstablishedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

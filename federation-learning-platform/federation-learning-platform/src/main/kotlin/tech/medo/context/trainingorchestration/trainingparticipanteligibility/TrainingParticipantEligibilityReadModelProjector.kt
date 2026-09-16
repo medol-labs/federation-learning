@@ -1,9 +1,11 @@
 package tech.medo.trainingorchestration.trainingparticipanteligibility
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
@@ -24,51 +26,146 @@ import tech.medo.runtimegovernance.events.RuntimeCapabilitiesDetectedEvent
 
 
 
-@Namespace("readmodel-training-participant-eligibility")
+interface TrainingParticipantEligibilityReadModelProjectionUpdater {
+    fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ParticipantJoinedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ParticipantSuspendedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ParticipantRemovedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeConnectionEstablishedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: DatasetMetadataReportedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: TrainingJobSubmittedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentOfflineDetectedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentRecoveredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeIdentityActivatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeIdentityRevokedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeCapabilitiesDetectedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class TrainingParticipantEligibilityReadModelProjector(private val repository: TrainingParticipantEligibilityReadModelRepository) {
-    @EventHandler
-    fun on(event: OrganizationRegisteredEvent) {
+@ConditionalOnMissingBean(TrainingParticipantEligibilityReadModelProjectionUpdater::class)
+class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
+    private val repository: TrainingParticipantEligibilityReadModelRepository
+) : TrainingParticipantEligibilityReadModelProjectionUpdater {
+    override fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: FederationCreatedEvent) {
+    override fun update(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    ) {
         // Skipped: FederationCreatedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: ParticipantJoinedEvent) {
+    override fun update(
+        event: ParticipantJoinedEvent,
+        message: EventMessage
+    ) {
         // Skipped: ParticipantJoinedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: ParticipantSuspendedEvent) {
+    override fun update(
+        event: ParticipantSuspendedEvent,
+        message: EventMessage
+    ) {
         // Skipped: ParticipantSuspendedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: ParticipantRemovedEvent) {
+    override fun update(
+        event: ParticipantRemovedEvent,
+        message: EventMessage
+    ) {
         // Skipped: ParticipantRemovedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: RuntimeConnectionEstablishedEvent) {
+    override fun update(
+        event: RuntimeConnectionEstablishedEvent,
+        message: EventMessage
+    ) {
         // Skipped: RuntimeConnectionEstablishedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: FeatureSchemaDefinedEvent) {
+    override fun update(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    ) {
         // Skipped: FeatureSchemaDefinedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: DatasetMetadataReportedEvent) {
+    override fun update(
+        event: DatasetMetadataReportedEvent,
+        message: EventMessage
+    ) {
         // Skipped: DatasetMetadataReportedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingJobCreatedEvent,
         message: EventMessage
     ) {
@@ -86,8 +183,8 @@ class TrainingParticipantEligibilityReadModelProjector(private val repository: T
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: TrainingJobSubmittedEvent,
         message: EventMessage
     ) {
@@ -105,8 +202,8 @@ class TrainingParticipantEligibilityReadModelProjector(private val repository: T
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeAgentOfflineDetectedEvent,
         message: EventMessage
     ) {
@@ -122,8 +219,8 @@ class TrainingParticipantEligibilityReadModelProjector(private val repository: T
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeAgentRecoveredEvent,
         message: EventMessage
     ) {
@@ -139,19 +236,151 @@ class TrainingParticipantEligibilityReadModelProjector(private val repository: T
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(event: RuntimeIdentityActivatedEvent) {
+    override fun update(
+        event: RuntimeIdentityActivatedEvent,
+        message: EventMessage
+    ) {
         // Skipped: RuntimeIdentityActivatedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: RuntimeIdentityRevokedEvent) {
+    override fun update(
+        event: RuntimeIdentityRevokedEvent,
+        message: EventMessage
+    ) {
         // Skipped: RuntimeIdentityRevokedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: RuntimeCapabilitiesDetectedEvent) {
+    override fun update(
+        event: RuntimeCapabilitiesDetectedEvent,
+        message: EventMessage
+    ) {
         // Skipped: RuntimeCapabilitiesDetectedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
+}
+
+@Namespace("readmodel-training-participant-eligibility")
+@Component
+class TrainingParticipantEligibilityReadModelProjector(
+    private val updater: TrainingParticipantEligibilityReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FederationCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ParticipantJoinedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ParticipantSuspendedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ParticipantRemovedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeConnectionEstablishedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: FeatureSchemaDefinedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: DatasetMetadataReportedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: TrainingJobSubmittedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentOfflineDetectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentRecoveredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeIdentityActivatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeIdentityRevokedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeCapabilitiesDetectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

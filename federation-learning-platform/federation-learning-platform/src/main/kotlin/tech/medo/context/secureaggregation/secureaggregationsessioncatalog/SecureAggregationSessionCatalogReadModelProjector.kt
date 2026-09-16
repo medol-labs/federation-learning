@@ -1,9 +1,11 @@
 package tech.medo.secureaggregation.secureaggregationsessioncatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.secureaggregation.events.SecureAggregationSessionCreatedEvent
@@ -17,11 +19,45 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-secure-aggregation-session-catalog")
+interface SecureAggregationSessionCatalogReadModelProjectionUpdater {
+    fun update(
+        event: SecureAggregationSessionCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: SecureAggregationParticipantsSelectedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: HomomorphicEncryptionContextPreparedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: EncryptedModelUpdateReceivedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: SecureAggregationCompletedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: SecureAggregationFailedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class SecureAggregationSessionCatalogReadModelProjector(private val repository: SecureAggregationSessionCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(SecureAggregationSessionCatalogReadModelProjectionUpdater::class)
+class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
+    private val repository: SecureAggregationSessionCatalogReadModelRepository
+) : SecureAggregationSessionCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: SecureAggregationSessionCreatedEvent,
         message: EventMessage
     ) {
@@ -45,8 +81,8 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: SecureAggregationParticipantsSelectedEvent,
         message: EventMessage
     ) {
@@ -69,8 +105,8 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: HomomorphicEncryptionContextPreparedEvent,
         message: EventMessage
     ) {
@@ -99,8 +135,8 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: EncryptedModelUpdateReceivedEvent,
         message: EventMessage
     ) {
@@ -122,8 +158,8 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: SecureAggregationCompletedEvent,
         message: EventMessage
     ) {
@@ -146,8 +182,8 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: SecureAggregationFailedEvent,
         message: EventMessage
     ) {
@@ -166,4 +202,58 @@ class SecureAggregationSessionCatalogReadModelProjector(private val repository: 
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-secure-aggregation-session-catalog")
+@Component
+class SecureAggregationSessionCatalogReadModelProjector(
+    private val updater: SecureAggregationSessionCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: SecureAggregationSessionCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: SecureAggregationParticipantsSelectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: HomomorphicEncryptionContextPreparedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: EncryptedModelUpdateReceivedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: SecureAggregationCompletedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: SecureAggregationFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

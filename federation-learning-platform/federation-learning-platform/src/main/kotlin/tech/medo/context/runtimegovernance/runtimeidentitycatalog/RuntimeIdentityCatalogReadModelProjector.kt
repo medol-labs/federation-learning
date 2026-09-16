@@ -1,12 +1,12 @@
 package tech.medo.runtimegovernance.runtimeidentitycatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
-import tech.medo.shared.application.sync.SyncReadModelOutboxAppender
 
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.runtimegovernance.events.RuntimeIdentityActivatedEvent
@@ -16,20 +16,37 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-runtime-identity-catalog")
+interface RuntimeIdentityCatalogReadModelProjectionUpdater {
+    fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeIdentityActivatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeIdentityRevokedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class RuntimeIdentityCatalogReadModelProjector(
-    private val repository: RuntimeIdentityCatalogReadModelRepository,
-    private val outbox: SyncReadModelOutboxAppender
-) {
-    @EventHandler
-    fun on(event: OrganizationRegisteredEvent) {
+@ConditionalOnMissingBean(RuntimeIdentityCatalogReadModelProjectionUpdater::class)
+class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
+    private val repository: RuntimeIdentityCatalogReadModelRepository
+) : RuntimeIdentityCatalogReadModelProjectionUpdater {
+    override fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate RuntimeIdentityCatalogReadModelProjection.
     }
 
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: RuntimeIdentityActivatedEvent,
         message: EventMessage
     ) {
@@ -46,19 +63,10 @@ class RuntimeIdentityCatalogReadModelProjector(
             entity.identityStatus = "Active"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "RuntimeProvisioning",
-            sourceReadModel = "RuntimeIdentityCatalog",
-            readModelKey = event.runtimeId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
     @Transactional
-    @EventHandler
-    fun on(
+    override fun update(
         event: RuntimeIdentityRevokedEvent,
         message: EventMessage
     ) {
@@ -71,17 +79,39 @@ class RuntimeIdentityCatalogReadModelProjector(
             entity.revokedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
-        outbox.append(
-            sourceContext = "RuntimeProvisioning",
-            sourceReadModel = "RuntimeIdentityCatalog",
-            readModelKey = event.runtimeId.toString(),
-            operation = "UPSERT",
-            payload = entity.toReadModel(),
-            message = message
-        )
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-runtime-identity-catalog")
+@Component
+class RuntimeIdentityCatalogReadModelProjector(
+    private val updater: RuntimeIdentityCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeIdentityActivatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeIdentityRevokedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

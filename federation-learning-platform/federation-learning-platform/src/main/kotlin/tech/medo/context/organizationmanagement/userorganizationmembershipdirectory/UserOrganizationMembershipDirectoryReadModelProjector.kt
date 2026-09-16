@@ -1,9 +1,11 @@
 package tech.medo.organizationmanagement.userorganizationmembershipdirectory
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
@@ -11,16 +13,32 @@ import tech.medo.organizationmanagement.events.UserAccountBoundToOrganizationEve
 import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum
 
 
-@Namespace("readmodel-user-organization-membership-directory")
+interface UserOrganizationMembershipDirectoryReadModelProjectionUpdater {
+    fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: UserAccountBoundToOrganizationEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class UserOrganizationMembershipDirectoryReadModelProjector(private val repository: UserOrganizationMembershipDirectoryReadModelRepository) {
-    @EventHandler
-    fun on(event: OrganizationRegisteredEvent) {
+@ConditionalOnMissingBean(UserOrganizationMembershipDirectoryReadModelProjectionUpdater::class)
+class DefaultUserOrganizationMembershipDirectoryReadModelProjectionUpdater(
+    private val repository: UserOrganizationMembershipDirectoryReadModelRepository
+) : UserOrganizationMembershipDirectoryReadModelProjectionUpdater {
+    override fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate UserOrganizationMembershipDirectoryReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: UserAccountBoundToOrganizationEvent,
         message: EventMessage
     ) {
@@ -39,4 +57,26 @@ class UserOrganizationMembershipDirectoryReadModelProjector(private val reposito
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-user-organization-membership-directory")
+@Component
+class UserOrganizationMembershipDirectoryReadModelProjector(
+    private val updater: UserOrganizationMembershipDirectoryReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: UserAccountBoundToOrganizationEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

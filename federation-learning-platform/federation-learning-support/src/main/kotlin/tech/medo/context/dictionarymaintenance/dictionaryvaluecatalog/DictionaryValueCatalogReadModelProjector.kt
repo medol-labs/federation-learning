@@ -1,9 +1,11 @@
 package tech.medo.dictionarymaintenance.dictionaryvaluecatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.dictionarymaintenance.events.DictionaryValueAddedEvent
@@ -14,11 +16,30 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-dictionary-value-catalog")
+interface DictionaryValueCatalogReadModelProjectionUpdater {
+    fun update(
+        event: DictionaryValueAddedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: DictionaryValueDisabledEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: DictionaryValueEnabledEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class DictionaryValueCatalogReadModelProjector(private val repository: DictionaryValueCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(DictionaryValueCatalogReadModelProjectionUpdater::class)
+class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
+    private val repository: DictionaryValueCatalogReadModelRepository
+) : DictionaryValueCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: DictionaryValueAddedEvent,
         message: EventMessage
     ) {
@@ -39,8 +60,8 @@ class DictionaryValueCatalogReadModelProjector(private val repository: Dictionar
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: DictionaryValueDisabledEvent,
         message: EventMessage
     ) {
@@ -57,8 +78,8 @@ class DictionaryValueCatalogReadModelProjector(private val repository: Dictionar
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: DictionaryValueEnabledEvent,
         message: EventMessage
     ) {
@@ -76,4 +97,34 @@ class DictionaryValueCatalogReadModelProjector(private val repository: Dictionar
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-dictionary-value-catalog")
+@Component
+class DictionaryValueCatalogReadModelProjector(
+    private val updater: DictionaryValueCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: DictionaryValueAddedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: DictionaryValueDisabledEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: DictionaryValueEnabledEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

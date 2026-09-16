@@ -1,9 +1,11 @@
 package tech.medo.runtimeprovisioning.runtimeagentendpointcatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimeprovisioning.events.RuntimeConnectionEstablishedEvent
@@ -16,11 +18,40 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-@Namespace("readmodel-runtime-agent-endpoint-catalog")
+interface RuntimeAgentEndpointCatalogReadModelProjectionUpdater {
+    fun update(
+        event: RuntimeConnectionEstablishedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentOfflineDetectedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeAgentRecoveredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeIdentityActivatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeIdentityRevokedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class RuntimeAgentEndpointCatalogReadModelProjector(private val repository: RuntimeAgentEndpointCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(RuntimeAgentEndpointCatalogReadModelProjectionUpdater::class)
+class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
+    private val repository: RuntimeAgentEndpointCatalogReadModelRepository
+) : RuntimeAgentEndpointCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: RuntimeConnectionEstablishedEvent,
         message: EventMessage
     ) {
@@ -40,8 +71,8 @@ class RuntimeAgentEndpointCatalogReadModelProjector(private val repository: Runt
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeAgentOfflineDetectedEvent,
         message: EventMessage
     ) {
@@ -54,8 +85,8 @@ class RuntimeAgentEndpointCatalogReadModelProjector(private val repository: Runt
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeAgentRecoveredEvent,
         message: EventMessage
     ) {
@@ -68,8 +99,8 @@ class RuntimeAgentEndpointCatalogReadModelProjector(private val repository: Runt
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeIdentityActivatedEvent,
         message: EventMessage
     ) {
@@ -86,12 +117,60 @@ class RuntimeAgentEndpointCatalogReadModelProjector(private val repository: Runt
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(event: RuntimeIdentityRevokedEvent) {
+    override fun update(
+        event: RuntimeIdentityRevokedEvent,
+        message: EventMessage
+    ) {
         // Skipped: RuntimeIdentityRevokedEvent does not provide enough key fields to locate RuntimeAgentEndpointCatalogReadModelProjection.
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Namespace("readmodel-runtime-agent-endpoint-catalog")
+@Component
+class RuntimeAgentEndpointCatalogReadModelProjector(
+    private val updater: RuntimeAgentEndpointCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: RuntimeConnectionEstablishedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentOfflineDetectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeAgentRecoveredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeIdentityActivatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeIdentityRevokedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

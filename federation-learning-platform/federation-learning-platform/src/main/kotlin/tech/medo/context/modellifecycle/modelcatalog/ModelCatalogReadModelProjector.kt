@@ -1,9 +1,11 @@
 package tech.medo.modellifecycle.modelcatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
@@ -16,16 +18,57 @@ import tech.medo.modellifecycle.events.ModelRetiredEvent
 import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 
-@Namespace("readmodel-model-catalog")
+interface ModelCatalogReadModelProjectionUpdater {
+    fun update(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ModelCandidateRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ModelEvaluationPackageRecordedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ModelApprovedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ModelPromotedToProductionEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ModelRolledBackEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: ModelRetiredEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class ModelCatalogReadModelProjector(private val repository: ModelCatalogReadModelRepository) {
-    @EventHandler
-    fun on(event: TrainingJobCreatedEvent) {
+@ConditionalOnMissingBean(ModelCatalogReadModelProjectionUpdater::class)
+class DefaultModelCatalogReadModelProjectionUpdater(
+    private val repository: ModelCatalogReadModelRepository
+) : ModelCatalogReadModelProjectionUpdater {
+    override fun update(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    ) {
         // Skipped: TrainingJobCreatedEvent does not provide enough key fields to locate ModelCatalogReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ModelCandidateRegisteredEvent,
         message: EventMessage
     ) {
@@ -47,8 +90,8 @@ class ModelCatalogReadModelProjector(private val repository: ModelCatalogReadMod
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ModelEvaluationPackageRecordedEvent,
         message: EventMessage
     ) {
@@ -70,8 +113,8 @@ class ModelCatalogReadModelProjector(private val repository: ModelCatalogReadMod
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ModelApprovedEvent,
         message: EventMessage
     ) {
@@ -86,8 +129,8 @@ class ModelCatalogReadModelProjector(private val repository: ModelCatalogReadMod
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ModelPromotedToProductionEvent,
         message: EventMessage
     ) {
@@ -104,8 +147,8 @@ class ModelCatalogReadModelProjector(private val repository: ModelCatalogReadMod
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ModelRolledBackEvent,
         message: EventMessage
     ) {
@@ -121,8 +164,8 @@ class ModelCatalogReadModelProjector(private val repository: ModelCatalogReadMod
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: ModelRetiredEvent,
         message: EventMessage
     ) {
@@ -137,4 +180,66 @@ class ModelCatalogReadModelProjector(private val repository: ModelCatalogReadMod
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-model-catalog")
+@Component
+class ModelCatalogReadModelProjector(
+    private val updater: ModelCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: TrainingJobCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ModelCandidateRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ModelEvaluationPackageRecordedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ModelApprovedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ModelPromotedToProductionEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ModelRolledBackEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: ModelRetiredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

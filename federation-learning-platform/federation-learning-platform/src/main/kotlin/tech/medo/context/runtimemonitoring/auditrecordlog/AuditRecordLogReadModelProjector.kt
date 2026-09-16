@@ -1,20 +1,31 @@
 package tech.medo.runtimemonitoring.auditrecordlog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimemonitoring.events.AuditTrailAppendedEvent
 
 
 
-@Namespace("readmodel-audit-record-log")
+interface AuditRecordLogReadModelProjectionUpdater {
+    fun update(
+        event: AuditTrailAppendedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class AuditRecordLogReadModelProjector(private val repository: AuditRecordLogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(AuditRecordLogReadModelProjectionUpdater::class)
+class DefaultAuditRecordLogReadModelProjectionUpdater(
+    private val repository: AuditRecordLogReadModelRepository
+) : AuditRecordLogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: AuditTrailAppendedEvent,
         message: EventMessage
     ) {
@@ -31,4 +42,18 @@ class AuditRecordLogReadModelProjector(private val repository: AuditRecordLogRea
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-audit-record-log")
+@Component
+class AuditRecordLogReadModelProjector(
+    private val updater: AuditRecordLogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: AuditTrailAppendedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

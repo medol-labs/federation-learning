@@ -1,9 +1,11 @@
 package tech.medo.identityaccessmanagement.useraccountcatalogs
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.identityaccessmanagement.events.UserAccountRegisteredEvent
@@ -12,11 +14,30 @@ import tech.medo.identityaccessmanagement.events.UserAccountLoginPasswordGenerat
 
 
 
-@Namespace("readmodel-user-account-catalog")
+interface UserAccountCatalogReadModelProjectionUpdater {
+    fun update(
+        event: UserAccountRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: UserAccountDeactivatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: UserAccountLoginPasswordGeneratedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class UserAccountCatalogReadModelProjector(private val repository: UserAccountCatalogReadModelRepository) {
-    @EventHandler
-    fun on(
+@ConditionalOnMissingBean(UserAccountCatalogReadModelProjectionUpdater::class)
+class DefaultUserAccountCatalogReadModelProjectionUpdater(
+    private val repository: UserAccountCatalogReadModelRepository
+) : UserAccountCatalogReadModelProjectionUpdater {
+    @Transactional
+    override fun update(
         event: UserAccountRegisteredEvent,
         message: EventMessage
     ) {
@@ -34,8 +55,8 @@ class UserAccountCatalogReadModelProjector(private val repository: UserAccountCa
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: UserAccountDeactivatedEvent,
         message: EventMessage
     ) {
@@ -49,8 +70,8 @@ class UserAccountCatalogReadModelProjector(private val repository: UserAccountCa
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: UserAccountLoginPasswordGeneratedEvent,
         message: EventMessage
     ) {
@@ -64,4 +85,34 @@ class UserAccountCatalogReadModelProjector(private val repository: UserAccountCa
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-user-account-catalog")
+@Component
+class UserAccountCatalogReadModelProjector(
+    private val updater: UserAccountCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: UserAccountRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: UserAccountDeactivatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: UserAccountLoginPasswordGeneratedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

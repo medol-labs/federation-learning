@@ -1,9 +1,11 @@
 package tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent
@@ -14,16 +16,47 @@ import tech.medo.runtimeagentoperations.events.AgentDatasetAccessRevalidationFai
 
 
 
-@Namespace("readmodel-agent-dataset-access-validation-catalog")
+interface AgentDatasetAccessValidationCatalogReadModelProjectionUpdater {
+    fun update(
+        event: DatasetDeclaredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetAccessValidatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetAccessValidationFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetAccessRevalidatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: AgentDatasetAccessRevalidationFailedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class AgentDatasetAccessValidationCatalogReadModelProjector(private val repository: AgentDatasetAccessValidationCatalogReadModelRepository) {
-    @EventHandler
-    fun on(event: DatasetDeclaredEvent) {
+@ConditionalOnMissingBean(AgentDatasetAccessValidationCatalogReadModelProjectionUpdater::class)
+class DefaultAgentDatasetAccessValidationCatalogReadModelProjectionUpdater(
+    private val repository: AgentDatasetAccessValidationCatalogReadModelRepository
+) : AgentDatasetAccessValidationCatalogReadModelProjectionUpdater {
+    override fun update(
+        event: DatasetDeclaredEvent,
+        message: EventMessage
+    ) {
         // Skipped: DatasetDeclaredEvent does not provide enough key fields to locate AgentDatasetAccessValidationCatalogReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetAccessValidatedEvent,
         message: EventMessage
     ) {
@@ -50,8 +83,8 @@ class AgentDatasetAccessValidationCatalogReadModelProjector(private val reposito
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetAccessValidationFailedEvent,
         message: EventMessage
     ) {
@@ -76,8 +109,8 @@ class AgentDatasetAccessValidationCatalogReadModelProjector(private val reposito
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetAccessRevalidatedEvent,
         message: EventMessage
     ) {
@@ -103,8 +136,8 @@ class AgentDatasetAccessValidationCatalogReadModelProjector(private val reposito
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: AgentDatasetAccessRevalidationFailedEvent,
         message: EventMessage
     ) {
@@ -129,4 +162,50 @@ class AgentDatasetAccessValidationCatalogReadModelProjector(private val reposito
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-agent-dataset-access-validation-catalog")
+@Component
+class AgentDatasetAccessValidationCatalogReadModelProjector(
+    private val updater: AgentDatasetAccessValidationCatalogReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: DatasetDeclaredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetAccessValidatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetAccessValidationFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetAccessRevalidatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: AgentDatasetAccessRevalidationFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }

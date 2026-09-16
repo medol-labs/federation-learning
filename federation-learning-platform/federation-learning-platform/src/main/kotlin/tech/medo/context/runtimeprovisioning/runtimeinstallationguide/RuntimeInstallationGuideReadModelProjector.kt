@@ -1,9 +1,11 @@
 package tech.medo.runtimeprovisioning.runtimeinstallationguide
 
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
-import org.axonframework.messaging.core.annotation.Namespace
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.axonframework.messaging.core.annotation.Namespace
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
@@ -19,21 +21,79 @@ import tech.medo.runtimeprovisioning.events.RuntimeInfrastructureVerificationRet
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
 
-@Namespace("readmodel-runtime-installation-guide")
+interface RuntimeInstallationGuideReadModelProjectionUpdater {
+    fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructurePackageRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInstallationPlanCreatedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructurePlannedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructureRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructurePreparedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructureVerifiedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructureVerificationFailedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructureVerificationRetrySucceededEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: RuntimeInfrastructureVerificationRetryFailedEvent,
+        message: EventMessage
+    )
+}
+
 @Component
-class RuntimeInstallationGuideReadModelProjector(private val repository: RuntimeInstallationGuideReadModelRepository) {
-    @EventHandler
-    fun on(event: OrganizationRegisteredEvent) {
+@ConditionalOnMissingBean(RuntimeInstallationGuideReadModelProjectionUpdater::class)
+class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
+    private val repository: RuntimeInstallationGuideReadModelRepository
+) : RuntimeInstallationGuideReadModelProjectionUpdater {
+    override fun update(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate RuntimeInstallationGuideReadModelProjection.
     }
 
-    @EventHandler
-    fun on(event: RuntimeInfrastructurePackageRegisteredEvent) {
+    override fun update(
+        event: RuntimeInfrastructurePackageRegisteredEvent,
+        message: EventMessage
+    ) {
         // Skipped: RuntimeInfrastructurePackageRegisteredEvent does not provide enough key fields to locate RuntimeInstallationGuideReadModelProjection.
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInstallationPlanCreatedEvent,
         message: EventMessage
     ) {
@@ -62,8 +122,8 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructurePlannedEvent,
         message: EventMessage
     ) {
@@ -87,8 +147,8 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructureRegisteredEvent,
         message: EventMessage
     ) {
@@ -113,8 +173,8 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructurePreparedEvent,
         message: EventMessage
     ) {
@@ -139,8 +199,8 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructureVerifiedEvent,
         message: EventMessage
     ) {
@@ -165,8 +225,8 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructureVerificationFailedEvent,
         message: EventMessage
     ) {
@@ -191,8 +251,8 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructureVerificationRetrySucceededEvent,
         message: EventMessage
     ) {
@@ -217,8 +277,8 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
         repository.save(entity)
     }
 
-    @EventHandler
-    fun on(
+    @Transactional
+    override fun update(
         event: RuntimeInfrastructureVerificationRetryFailedEvent,
         message: EventMessage
     ) {
@@ -243,4 +303,90 @@ class RuntimeInstallationGuideReadModelProjector(private val repository: Runtime
         repository.save(entity)
     }
 
+}
+
+@Namespace("readmodel-runtime-installation-guide")
+@Component
+class RuntimeInstallationGuideReadModelProjector(
+    private val updater: RuntimeInstallationGuideReadModelProjectionUpdater
+) {
+    @EventHandler
+    fun on(
+        event: OrganizationRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructurePackageRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInstallationPlanCreatedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructurePlannedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructurePreparedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerifiedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerificationFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerificationRetrySucceededEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: RuntimeInfrastructureVerificationRetryFailedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
 }
