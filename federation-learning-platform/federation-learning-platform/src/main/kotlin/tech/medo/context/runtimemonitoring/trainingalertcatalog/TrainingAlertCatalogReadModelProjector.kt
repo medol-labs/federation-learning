@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
 import tech.medo.runtimemonitoring.events.RuntimeNodeInventoryReportedEvent
 import tech.medo.runtimemonitoring.events.TrainingAlertRaisedEvent
@@ -83,6 +84,7 @@ class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
             entity.state = TrainingAlertStateEnum.RAISED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -99,6 +101,7 @@ class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
             entity.acknowledgedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -116,6 +119,7 @@ class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
             entity.resolvedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

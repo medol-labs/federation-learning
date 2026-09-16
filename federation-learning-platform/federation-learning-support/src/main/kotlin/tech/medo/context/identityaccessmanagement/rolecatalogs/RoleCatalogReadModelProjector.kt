@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.identityaccessmanagement.events.RoleRegisteredEvent
 
 
@@ -38,6 +39,7 @@ class DefaultRoleCatalogReadModelProjectionUpdater(
             entity.roleName = event.roleName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

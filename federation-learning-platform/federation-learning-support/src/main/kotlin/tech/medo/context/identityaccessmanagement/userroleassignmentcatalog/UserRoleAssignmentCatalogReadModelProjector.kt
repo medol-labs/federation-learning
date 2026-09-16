@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.identityaccessmanagement.events.RoleAssignedToUserEvent
 
 
@@ -38,6 +39,7 @@ class DefaultUserRoleAssignmentCatalogReadModelProjectionUpdater(
             entity.roleCode = event.roleCode
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

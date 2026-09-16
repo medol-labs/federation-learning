@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.federationmanagement.events.FederationCreatedEvent
 import tech.medo.federationmanagement.events.ParticipantJoinedEvent
@@ -181,6 +182,7 @@ class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
             entity.featureSchemaVersion = event.featureSchemaVersion
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -200,6 +202,7 @@ class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
             entity.featureSchemaVersion = event.featureSchemaVersion
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -217,6 +220,7 @@ class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
             entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -234,6 +238,7 @@ class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
             entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     override fun update(

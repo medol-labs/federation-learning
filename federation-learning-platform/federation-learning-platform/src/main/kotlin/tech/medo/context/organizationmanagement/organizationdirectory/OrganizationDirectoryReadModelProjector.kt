@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+import tech.medo.shared.application.sync.SyncOutboxAppender
+
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.organizationmanagement.events.OrganizationActivatedEvent
 import tech.medo.organizationmanagement.events.OrganizationDeactivatedEvent
@@ -40,7 +42,8 @@ interface OrganizationDirectoryReadModelProjectionUpdater {
 @Component
 @ConditionalOnMissingBean(OrganizationDirectoryReadModelProjectionUpdater::class)
 class DefaultOrganizationDirectoryReadModelProjectionUpdater(
-    private val repository: OrganizationDirectoryReadModelRepository
+    private val repository: OrganizationDirectoryReadModelRepository,
+    private val outbox: SyncOutboxAppender
 ) : OrganizationDirectoryReadModelProjectionUpdater {
     @Transactional
     override fun update(
@@ -57,6 +60,15 @@ class DefaultOrganizationDirectoryReadModelProjectionUpdater(
             entity.state = OrganizationStateEnum.REGISTERED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "OrganizationManagement",
+            sourceReadModel = "OrganizationDirectory",
+            readModelKey = event.organizationId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     @Transactional
@@ -72,6 +84,15 @@ class DefaultOrganizationDirectoryReadModelProjectionUpdater(
             entity.state = OrganizationStateEnum.ACTIVE
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "OrganizationManagement",
+            sourceReadModel = "OrganizationDirectory",
+            readModelKey = event.organizationId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     @Transactional
@@ -87,6 +108,15 @@ class DefaultOrganizationDirectoryReadModelProjectionUpdater(
             entity.state = OrganizationStateEnum.DEACTIVATED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "OrganizationManagement",
+            sourceReadModel = "OrganizationDirectory",
+            readModelKey = event.organizationId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     @Transactional
@@ -102,6 +132,15 @@ class DefaultOrganizationDirectoryReadModelProjectionUpdater(
             entity.state = OrganizationStateEnum.ACTIVE
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "OrganizationManagement",
+            sourceReadModel = "OrganizationDirectory",
+            readModelKey = event.organizationId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
 }

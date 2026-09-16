@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundParticipantsSelectedEvent
@@ -138,6 +139,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.featureSchemaVersion = event.featureSchemaVersion
             ProjectionMetadata.assign(entity, message)
             repository.save(entity)
+
         }
     }
 
@@ -168,6 +170,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.state = TrainingRoundStateEnum.PARTICIPANTS_SELECTED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -198,6 +201,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.state = TrainingRoundStateEnum.FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -227,6 +231,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.state = TrainingRoundStateEnum.RUNNING
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -257,6 +262,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.state = TrainingRoundStateEnum.FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -279,6 +285,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.baseModelId = event.baseModelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -300,6 +307,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.baseModelId = event.baseModelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -320,6 +328,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.artifactRefs = (entity.artifactRefs + event.artifactRef).distinct()
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -344,6 +353,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.artifactRefs = (entity.artifactRefs + event.artifactRef).distinct()
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -361,6 +371,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.roundId = event.roundId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -388,6 +399,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.secureAggregationRequired = event.secureAggregationRequired
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -410,6 +422,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.state = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -433,6 +446,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.globalFairnessScore = event.globalFairnessScore
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -457,6 +471,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.completedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -480,6 +495,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.failedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

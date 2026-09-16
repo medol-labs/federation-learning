@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.modelrepository.events.ModelArtifactRegisteredEvent
 import tech.medo.modelrepository.events.FederatedModelArtifactRegisteredEvent
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
@@ -68,6 +69,7 @@ class DefaultModelArtifactCatalogReadModelProjectionUpdater(
             entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -97,6 +99,7 @@ class DefaultModelArtifactCatalogReadModelProjectionUpdater(
             entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     override fun update(

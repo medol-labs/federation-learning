@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.identityaccessmanagement.events.PermissionGrantedToRoleEvent
 
 
@@ -39,6 +40,7 @@ class DefaultRolePermissionGrantCatalogReadModelProjectionUpdater(
             entity.permissionCode = event.permissionCode
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.runtimeagentoperations.events.ExecutionPlanReceivedEvent
 import tech.medo.runtimeagentoperations.events.ExecutionPlanAcceptedEvent
 import tech.medo.runtimeagentoperations.events.ExecutionPlanRejectedEvent
@@ -151,6 +152,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.state = RoundExecutionStateEnum.PLAN_RECEIVED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -184,6 +186,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.state = RoundExecutionStateEnum.PLAN_ACCEPTED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -217,6 +220,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.rejectionReasons = event.rejectionReasons
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -243,6 +247,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.state = RoundExecutionStateEnum.RUNNING
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -271,6 +276,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.state = RoundExecutionStateEnum.START_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -300,6 +306,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeEngineObservedStatus = event.observedStatus
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -329,6 +336,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.completedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -357,6 +365,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeEngineReleaseFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -384,6 +393,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.state = RoundExecutionStateEnum.RETRIED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -413,6 +423,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.state = RoundExecutionStateEnum.START_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -440,6 +451,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.state = RoundExecutionStateEnum.RETRIED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -469,6 +481,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.state = RoundExecutionStateEnum.FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -497,6 +510,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.localUpdateArtifactRef = event.artifactRef
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -516,6 +530,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeEngineReleaseFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -534,6 +549,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeEngineObservedStatus = "RuntimeEngineReleaseHandled"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -552,6 +568,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeEngineObservedStatus = "RuntimeEngineReleaseHandled"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -570,6 +587,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeEngineObservedStatus = "RuntimeEngineReleaseHandled"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -588,6 +606,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeEngineObservedStatus = "RuntimeEngineReleaseHandled"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

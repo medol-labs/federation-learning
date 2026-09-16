@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.organizationmanagement.events.OrganizationActivatedEvent
 import tech.medo.federationmanagement.events.FederationCreatedEvent
@@ -83,6 +84,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
             entity.organizationName = event.organizationName
             ProjectionMetadata.assign(entity, message)
             repository.save(entity)
+
         }
     }
 
@@ -96,6 +98,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
             entity.organizationId = event.organizationId
             ProjectionMetadata.assign(entity, message)
             repository.save(entity)
+
         }
     }
 
@@ -110,6 +113,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
             entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
             repository.save(entity)
+
         }
     }
 
@@ -130,6 +134,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
             entity.invitationNote = event.invitationNote
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -149,6 +154,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
             entity.approvalNote = event.approvalNote
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -167,6 +173,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
             entity.organizationName = event.organizationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -185,6 +192,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
             entity.organizationName = event.organizationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -203,6 +211,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
             entity.organizationName = event.organizationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -221,6 +230,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
             entity.organizationName = event.organizationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

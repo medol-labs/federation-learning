@@ -63,7 +63,6 @@ class SyncOutboxMessage {
 
     @Column(name = "read_model_key")
     var messageKey: String = ""
-
     var operation: String = "UPSERT"
 
     @Column(name = "event_id")

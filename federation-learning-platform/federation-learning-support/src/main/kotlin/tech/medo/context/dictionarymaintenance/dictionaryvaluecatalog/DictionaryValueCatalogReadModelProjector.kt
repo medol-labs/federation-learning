@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.dictionarymaintenance.events.DictionaryValueAddedEvent
 import tech.medo.dictionarymaintenance.events.DictionaryValueDisabledEvent
 import tech.medo.dictionarymaintenance.events.DictionaryValueEnabledEvent
@@ -58,6 +59,7 @@ class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
             entity.state = DictionaryValueStateEnum.ACTIVE
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -76,6 +78,7 @@ class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
             entity.disabledAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -92,6 +95,7 @@ class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
             entity.active = true
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+import tech.medo.shared.application.sync.SyncOutboxAppender
+
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.runtimegovernance.events.RuntimeIdentityActivatedEvent
 import tech.medo.runtimegovernance.events.RuntimeIdentityRevokedEvent
@@ -36,7 +38,8 @@ interface RuntimeIdentityCatalogReadModelProjectionUpdater {
 @Component
 @ConditionalOnMissingBean(RuntimeIdentityCatalogReadModelProjectionUpdater::class)
 class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
-    private val repository: RuntimeIdentityCatalogReadModelRepository
+    private val repository: RuntimeIdentityCatalogReadModelRepository,
+    private val outbox: SyncOutboxAppender
 ) : RuntimeIdentityCatalogReadModelProjectionUpdater {
     override fun update(
         event: OrganizationRegisteredEvent,
@@ -63,6 +66,15 @@ class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
             entity.identityStatus = "Active"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "RuntimeProvisioning",
+            sourceReadModel = "RuntimeIdentityCatalog",
+            readModelKey = event.runtimeId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     @Transactional
@@ -79,6 +91,15 @@ class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
             entity.revokedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "RuntimeProvisioning",
+            sourceReadModel = "RuntimeIdentityCatalog",
+            readModelKey = event.runtimeId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

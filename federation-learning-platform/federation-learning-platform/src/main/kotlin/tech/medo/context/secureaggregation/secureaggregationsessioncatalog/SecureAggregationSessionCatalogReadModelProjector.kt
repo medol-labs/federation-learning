@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.secureaggregation.events.SecureAggregationSessionCreatedEvent
 import tech.medo.secureaggregation.events.SecureAggregationParticipantsSelectedEvent
 import tech.medo.secureaggregation.events.HomomorphicEncryptionContextPreparedEvent
@@ -79,6 +80,7 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
             entity.state = SecureAggregationSessionStateEnum.PLANNED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -103,6 +105,7 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
             entity.state = SecureAggregationSessionStateEnum.PARTICIPANTS_SELECTED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -133,6 +136,7 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
             entity.encryptionContextPreparedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -156,6 +160,7 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
             entity.publicKeyVersion = event.publicKeyVersion
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -180,6 +185,7 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
             entity.completedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -197,6 +203,7 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
             entity.failedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

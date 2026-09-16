@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.fileupload.events.FileUploadedEvent
 import tech.medo.fileupload.events.FileReferencedEvent
 import tech.medo.fileupload.events.FileDiscardedEvent
@@ -64,6 +65,7 @@ class DefaultUploadedFileCatalogReadModelProjectionUpdater(
             entity.state = UploadedFileStateEnum.AVAILABLE
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -83,6 +85,7 @@ class DefaultUploadedFileCatalogReadModelProjectionUpdater(
             entity.referencedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -100,6 +103,7 @@ class DefaultUploadedFileCatalogReadModelProjectionUpdater(
             entity.discardedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -117,6 +121,7 @@ class DefaultUploadedFileCatalogReadModelProjectionUpdater(
             entity.state = UploadedFileStateEnum.EXPIRED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

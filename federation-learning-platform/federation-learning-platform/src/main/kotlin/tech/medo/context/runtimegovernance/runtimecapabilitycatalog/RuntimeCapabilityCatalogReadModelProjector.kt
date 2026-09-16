@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.runtimegovernance.events.RuntimeCapabilitiesDetectedEvent
 
 import java.time.LocalDateTime
@@ -40,6 +41,7 @@ class DefaultRuntimeCapabilityCatalogReadModelProjectionUpdater(
             entity.detectedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

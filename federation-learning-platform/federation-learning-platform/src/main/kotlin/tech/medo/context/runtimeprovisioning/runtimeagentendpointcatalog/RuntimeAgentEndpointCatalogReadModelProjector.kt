@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.runtimeprovisioning.events.RuntimeConnectionEstablishedEvent
 import tech.medo.runtimemonitoring.events.RuntimeAgentOfflineDetectedEvent
 import tech.medo.runtimemonitoring.events.RuntimeAgentRecoveredEvent
@@ -69,6 +70,7 @@ class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
             entity.connectedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -83,6 +85,7 @@ class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
             entity.runtimeAgentId = event.runtimeAgentId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -97,6 +100,7 @@ class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
             entity.runtimeAgentId = event.runtimeAgentId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -115,6 +119,7 @@ class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
             entity.runtimeName = event.runtimeName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     override fun update(

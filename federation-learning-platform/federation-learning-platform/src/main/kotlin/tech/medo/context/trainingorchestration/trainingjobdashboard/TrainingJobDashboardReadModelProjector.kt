@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.federationmanagement.events.FederationCreatedEvent
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
@@ -112,6 +113,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.state = TrainingJobStateEnum.DRAFT
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -134,6 +136,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.state = TrainingJobStateEnum.SUBMITTED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -149,6 +152,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.state = TrainingJobStateEnum.PAUSED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -164,6 +168,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.state = TrainingJobStateEnum.RUNNING
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -179,6 +184,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.state = TrainingJobStateEnum.CANCELED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -196,6 +202,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.state = TrainingJobStateEnum.COMPLETED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -221,6 +228,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.currentRoundNumber = event.roundNumber
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -240,6 +248,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.currentRoundNumber = event.roundNumber
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

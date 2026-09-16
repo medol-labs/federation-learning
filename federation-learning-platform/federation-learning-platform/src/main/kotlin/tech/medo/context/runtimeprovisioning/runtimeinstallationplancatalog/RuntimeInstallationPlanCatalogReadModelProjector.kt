@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInstallationPlanCreatedEvent
@@ -149,6 +150,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.agentDeploymentFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -173,6 +175,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.plannedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -197,6 +200,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.runtimeAgentId = event.runtimeAgentId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -223,6 +227,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.preparedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -249,6 +254,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.verifiedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -276,6 +282,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.verificationFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -306,6 +313,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.agentDeploymentRetryFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -332,6 +340,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.agentDeploymentFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -360,6 +369,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.verificationFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -387,6 +397,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.verificationFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -417,6 +428,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.agentDeploymentRetryFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -443,6 +455,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.agentDeploymentRetryFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     override fun update(

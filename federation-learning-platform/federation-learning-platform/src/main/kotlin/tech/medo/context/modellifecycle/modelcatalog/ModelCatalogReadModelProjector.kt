@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
 import tech.medo.modellifecycle.events.ModelCandidateRegisteredEvent
 import tech.medo.modellifecycle.events.ModelEvaluationPackageRecordedEvent
@@ -88,6 +89,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
             entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -111,6 +113,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
             entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -127,6 +130,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
             entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -145,6 +149,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
             entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -162,6 +167,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
             entity.baselineModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -178,6 +184,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
             entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

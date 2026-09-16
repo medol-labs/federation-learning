@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.dictionarymaintenance.events.DictionaryRegisteredEvent
 import tech.medo.dictionarymaintenance.events.DictionaryUpdatedEvent
 import tech.medo.dictionarymaintenance.events.DictionaryArchivedEvent
@@ -55,6 +56,7 @@ class DefaultDictionaryCatalogReadModelProjectionUpdater(
             entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -71,6 +73,7 @@ class DefaultDictionaryCatalogReadModelProjectionUpdater(
             entity.description = event.description
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -88,6 +91,7 @@ class DefaultDictionaryCatalogReadModelProjectionUpdater(
             entity.archivedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

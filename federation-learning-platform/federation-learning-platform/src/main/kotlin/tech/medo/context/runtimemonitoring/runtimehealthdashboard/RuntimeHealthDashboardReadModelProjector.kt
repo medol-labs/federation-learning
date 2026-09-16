@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.federationmanagement.events.FederationCreatedEvent
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
 import tech.medo.runtimemonitoring.events.RuntimeAgentOfflineDetectedEvent
@@ -98,6 +99,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
             entity.trainingJobObjective = event.trainingJobObjective
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -118,6 +120,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
             entity.trainingJobObjective = event.trainingJobObjective
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -138,6 +141,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
             entity.trainingJobObjective = event.trainingJobObjective
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -154,6 +158,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
             entity.nodeReady = event.nodeReady
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -169,6 +174,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
             entity.runtimeAgentId = event.runtimeAgentId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -185,6 +191,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
             entity.trainingJobObjective = event.trainingJobObjective
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

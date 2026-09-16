@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.runtimeagentoperations.events.DatasetDeclaredEvent
 import tech.medo.runtimeagentoperations.events.AgentDatasetMetadataReportedEvent
 import tech.medo.runtimeagentoperations.events.AgentDatasetProfilingFailedEvent
@@ -111,6 +112,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.datasetUsage = event.datasetUsage
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -140,6 +142,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.metadataStatus = "Reported"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -163,6 +166,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.metadataStatus = "Failed"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -191,6 +195,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.metadataReportId = event.metadataReportId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -214,6 +219,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.metadataStatus = "Failed"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -235,6 +241,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.contractStatus = "ContractValidationCompleted"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -256,6 +263,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.contractStatus = "Failed"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -276,6 +284,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.metadataReportId = event.metadataReportId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -297,6 +306,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.contractStatus = "Failed"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -311,6 +321,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.datasetId = event.datasetId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -327,6 +338,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.approved = true
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -342,6 +354,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
             entity.approvalStatus = "ApprovalRevoked"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

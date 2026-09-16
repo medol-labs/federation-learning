@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.organizationmanagement.events.UserAccountBoundToOrganizationEvent
 import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum
@@ -55,6 +56,7 @@ class DefaultUserOrganizationMembershipDirectoryReadModelProjectionUpdater(
             entity.state = UserOrganizationMembershipStateEnum.ACTIVE
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

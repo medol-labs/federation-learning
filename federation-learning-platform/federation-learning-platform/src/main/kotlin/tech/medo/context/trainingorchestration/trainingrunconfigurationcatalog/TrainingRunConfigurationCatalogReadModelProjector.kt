@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.federationmanagement.events.FederationCreatedEvent
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.trainingorchestration.events.TrainingRunConfigurationDefinedEvent
@@ -104,6 +105,7 @@ class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
             entity.state = TrainingRunConfigurationStateEnum.DRAFT
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -148,6 +150,7 @@ class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
             entity.updateReason = event.updateReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -164,6 +167,7 @@ class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
             entity.lockedByTrainingJobId = event.trainingJobId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

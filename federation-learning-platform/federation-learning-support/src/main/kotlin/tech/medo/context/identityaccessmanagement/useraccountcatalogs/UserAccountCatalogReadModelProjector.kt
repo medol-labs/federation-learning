@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.identityaccessmanagement.events.UserAccountRegisteredEvent
 import tech.medo.identityaccessmanagement.events.UserAccountDeactivatedEvent
 import tech.medo.identityaccessmanagement.events.UserAccountLoginPasswordGeneratedEvent
@@ -53,6 +54,7 @@ class DefaultUserAccountCatalogReadModelProjectionUpdater(
             entity.active = true
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -68,6 +70,7 @@ class DefaultUserAccountCatalogReadModelProjectionUpdater(
             entity.active = false
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -83,6 +86,7 @@ class DefaultUserAccountCatalogReadModelProjectionUpdater(
             entity.passwordHash = event.passwordHash
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

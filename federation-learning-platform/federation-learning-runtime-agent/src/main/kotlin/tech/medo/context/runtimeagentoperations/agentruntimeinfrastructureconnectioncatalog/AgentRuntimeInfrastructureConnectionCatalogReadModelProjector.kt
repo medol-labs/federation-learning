@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.runtimeagentoperations.events.AgentRuntimeConnectionReportFailedEvent
 import tech.medo.runtimeagentoperations.events.AgentRuntimeConnectionEstablishedEvent
 
@@ -54,6 +55,7 @@ class DefaultAgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdat
             entity.connectionReportFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -74,6 +76,7 @@ class DefaultAgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdat
             entity.heartbeatAccepted = event.heartbeatAccepted
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.identityaccessmanagement.events.ServiceAccountApiTokenIssuedEvent
 
 
@@ -43,6 +44,7 @@ class DefaultServiceAccountApiTokenCatalogReadModelProjectionUpdater(
             entity.permissions = event.permissions
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

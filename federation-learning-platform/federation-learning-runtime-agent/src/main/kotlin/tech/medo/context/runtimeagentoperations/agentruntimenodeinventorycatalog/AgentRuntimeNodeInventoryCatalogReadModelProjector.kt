@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.runtimeagentoperations.events.AgentRuntimeNodeInventoryReportedEvent
 
 
@@ -49,6 +50,7 @@ class DefaultAgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater(
             entity.inventoryHash = event.inventoryHash
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

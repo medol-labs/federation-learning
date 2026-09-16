@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.datasetgovernance.events.CurrentRecommendedFeatureSchemaVersionMarkedEvent
 
 
@@ -39,6 +40,7 @@ class DefaultCurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater(
             entity.recommendedFeatureSchemaId = event.featureSchemaId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

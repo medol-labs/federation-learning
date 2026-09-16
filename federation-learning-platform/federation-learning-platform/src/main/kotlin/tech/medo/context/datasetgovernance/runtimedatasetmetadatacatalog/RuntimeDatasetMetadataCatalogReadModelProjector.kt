@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.datasetgovernance.events.DatasetMetadataReportedEvent
@@ -88,6 +89,7 @@ class DefaultRuntimeDatasetMetadataCatalogReadModelProjectionUpdater(
             entity.profilingStatus = "MetadataReported"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -122,6 +124,7 @@ class DefaultRuntimeDatasetMetadataCatalogReadModelProjectionUpdater(
             entity.profilingStatus = "MetadataReported"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

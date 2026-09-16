@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInstallationPlanCreatedEvent
@@ -120,6 +121,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.expectedNodeCount = event.expectedNodeCount
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -145,6 +147,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.PLANNED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -171,6 +174,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.REGISTERED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -197,6 +201,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.PREPARED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -223,6 +228,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFIED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -249,6 +255,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -275,6 +282,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFIED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -301,6 +309,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.federationmanagement.events.FederationCreatedEvent
 import tech.medo.federationmanagement.events.FederationActivatedEvent
 import tech.medo.federationmanagement.events.FederationSuspendedEvent
@@ -111,6 +112,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.state = FederationStateEnum.DRAFT
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -126,6 +128,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.state = FederationStateEnum.ACTIVE
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -141,6 +144,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.state = FederationStateEnum.SUSPENDED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -156,6 +160,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.state = FederationStateEnum.ACTIVE
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -171,6 +176,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -186,6 +192,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -201,6 +208,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -216,6 +224,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -231,6 +240,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -246,6 +256,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -261,6 +272,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.federationName = event.federationName
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     override fun update(

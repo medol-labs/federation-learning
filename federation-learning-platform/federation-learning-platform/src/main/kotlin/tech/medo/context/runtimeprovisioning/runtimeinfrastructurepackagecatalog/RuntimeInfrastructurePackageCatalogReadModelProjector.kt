@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegisteredEvent
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum
 
@@ -40,6 +41,7 @@ class DefaultRuntimeInfrastructurePackageCatalogReadModelProjectionUpdater(
             entity.state = RuntimeInfrastructurePackageStateEnum.REGISTERED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

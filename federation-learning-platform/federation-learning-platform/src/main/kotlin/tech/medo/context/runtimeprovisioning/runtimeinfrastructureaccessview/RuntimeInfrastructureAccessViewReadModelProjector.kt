@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInfrastructurePackageRegisteredEvent
 import tech.medo.runtimeprovisioning.events.RuntimeInstallationPlanCreatedEvent
@@ -148,6 +149,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.agentDeploymentFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -175,6 +177,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.infrastructureVerificationFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -203,6 +206,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.infrastructureVerificationFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -233,6 +237,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.infrastructureVerificationFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -262,6 +267,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.infrastructureVerificationFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -290,6 +296,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.state = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -322,6 +329,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.agentDeploymentRetryFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -350,6 +358,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.state = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -379,6 +388,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.infrastructureVerificationFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -407,6 +417,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.state = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -439,6 +450,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.agentDeploymentRetryFailureReason = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -467,6 +479,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.state = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -488,6 +501,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.connectedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

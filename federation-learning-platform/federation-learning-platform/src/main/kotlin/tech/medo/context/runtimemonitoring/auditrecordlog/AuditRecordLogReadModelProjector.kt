@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.runtimemonitoring.events.AuditTrailAppendedEvent
 
 
@@ -40,6 +41,7 @@ class DefaultAuditRecordLogReadModelProjectionUpdater(
             entity.payloadHash = event.payloadHash
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
 }

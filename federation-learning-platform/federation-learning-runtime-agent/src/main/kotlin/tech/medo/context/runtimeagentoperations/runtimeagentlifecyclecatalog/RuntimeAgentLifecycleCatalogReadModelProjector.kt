@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+
 import tech.medo.runtimeagentoperations.events.RuntimeAgentBootstrapConfigurationLoadedEvent
 import tech.medo.runtimeagentoperations.events.RuntimeAgentBootstrapConfigurationLoadFailedEvent
 import tech.medo.runtimeagentoperations.events.RuntimeAgentStartedEvent
@@ -61,6 +62,7 @@ class DefaultRuntimeAgentLifecycleCatalogReadModelProjectionUpdater(
             entity.bootstrapFailedAt = null
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     override fun update(
@@ -85,6 +87,7 @@ class DefaultRuntimeAgentLifecycleCatalogReadModelProjectionUpdater(
             entity.startedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     @Transactional
@@ -110,6 +113,7 @@ class DefaultRuntimeAgentLifecycleCatalogReadModelProjectionUpdater(
             entity.readyAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =

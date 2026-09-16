@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+import tech.medo.shared.application.sync.SyncOutboxAppender
+
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.datasetgovernance.events.FeatureSchemaPublishedEvent
 import tech.medo.datasetgovernance.events.FeatureSchemaDeprecatedEvent
@@ -52,7 +54,8 @@ interface FeatureSchemaCatalogReadModelProjectionUpdater {
 @Component
 @ConditionalOnMissingBean(FeatureSchemaCatalogReadModelProjectionUpdater::class)
 class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
-    private val repository: FeatureSchemaCatalogReadModelRepository
+    private val repository: FeatureSchemaCatalogReadModelRepository,
+    private val outbox: SyncOutboxAppender
 ) : FeatureSchemaCatalogReadModelProjectionUpdater {
     @Transactional
     override fun update(
@@ -74,6 +77,15 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
             entity.schemaStatus = "Draft"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "DatasetGovernance",
+            sourceReadModel = "FeatureSchemaCatalog",
+            readModelKey = event.featureSchemaId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     @Transactional
@@ -90,6 +102,15 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
             entity.schemaStatus = "Published"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "DatasetGovernance",
+            sourceReadModel = "FeatureSchemaCatalog",
+            readModelKey = event.featureSchemaId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     @Transactional
@@ -106,6 +127,15 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
             entity.schemaStatus = "Deprecated"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "DatasetGovernance",
+            sourceReadModel = "FeatureSchemaCatalog",
+            readModelKey = event.featureSchemaId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     @Transactional
@@ -122,6 +152,15 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
             entity.schemaStatus = "Retired"
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "DatasetGovernance",
+            sourceReadModel = "FeatureSchemaCatalog",
+            readModelKey = event.featureSchemaId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     @Transactional
@@ -138,6 +177,15 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
             entity.supersededByFeatureSchemaId = event.supersededByFeatureSchemaId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "DatasetGovernance",
+            sourceReadModel = "FeatureSchemaCatalog",
+            readModelKey = event.featureSchemaId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     @Transactional
@@ -154,6 +202,15 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
             entity.supersededByFeatureSchemaId = event.featureSchemaId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
+
+        outbox.appendReadModel(
+            sourceContext = "DatasetGovernance",
+            sourceReadModel = "FeatureSchemaCatalog",
+            readModelKey = event.featureSchemaId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
 }
