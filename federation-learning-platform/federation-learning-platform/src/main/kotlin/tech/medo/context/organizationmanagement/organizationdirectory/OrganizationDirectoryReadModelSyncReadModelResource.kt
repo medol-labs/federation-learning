@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import tech.medo.shared.application.sync.SyncReadModelOutboxRepository
+import tech.medo.shared.application.sync.SyncOutboxRepository
 
 @CrossOrigin
 @RestController
 @RequestMapping("/sync/read-models/organization-management/organization-directory")
 class OrganizationDirectoryReadModelSyncReadModelResource(
     private val repository: OrganizationDirectoryReadModelRepository,
-    private val outboxRepository: SyncReadModelOutboxRepository,
+    private val outboxRepository: SyncOutboxRepository,
     private val objectMapper: ObjectMapper
 ) {
     private val mapType = object : TypeReference<Map<String, Any?>>() {}
@@ -74,9 +74,10 @@ class OrganizationDirectoryReadModelSyncReadModelResource(
                 mapOf(
                     "sequence" to row.sequence,
                     "operation" to row.operation,
+                    "channel" to row.channel,
                     "sourceContext" to row.sourceContext,
                     "sourceReadModel" to row.sourceReadModel,
-                    "readModelKey" to row.readModelKey,
+                    "readModelKey" to row.messageKey,
                     "eventId" to row.eventId,
                     "eventType" to row.eventType,
                     "occurredAt" to row.occurredAt,
