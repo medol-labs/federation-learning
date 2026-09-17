@@ -229,7 +229,7 @@ node scripts/image-bundle.mjs all
 The build script uses Maven/Jib under the hood:
 
 ```bash
-./mvnw -pl <module-name> -am -DskipTests install
+./mvnw -pl <module-name> -am -DskipTests clean install
 ./mvnw -pl <module-name> -DskipTests -Djib.container.platform.os=linux -Djib.container.platform.architecture=amd64 com.google.cloud.tools:jib-maven-plugin:3.4.5:dockerBuild
 ```
 

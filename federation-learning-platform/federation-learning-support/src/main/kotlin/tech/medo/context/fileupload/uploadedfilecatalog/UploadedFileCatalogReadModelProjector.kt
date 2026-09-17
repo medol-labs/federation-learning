@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -40,13 +42,11 @@ interface UploadedFileCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(UploadedFileCatalogReadModelProjectionUpdater::class)
-class DefaultUploadedFileCatalogReadModelProjectionUpdater(
+open class DefaultUploadedFileCatalogReadModelProjectionUpdater(
     private val repository: UploadedFileCatalogReadModelRepository
 ) : UploadedFileCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: FileUploadedEvent,
         message: EventMessage
     ) {
@@ -69,7 +69,7 @@ class DefaultUploadedFileCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FileReferencedEvent,
         message: EventMessage
     ) {
@@ -89,7 +89,7 @@ class DefaultUploadedFileCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FileDiscardedEvent,
         message: EventMessage
     ) {
@@ -107,7 +107,7 @@ class DefaultUploadedFileCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FileExpiredEvent,
         message: EventMessage
     ) {
@@ -127,6 +127,16 @@ class DefaultUploadedFileCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class UploadedFileCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(UploadedFileCatalogReadModelProjectionUpdater::class)
+    fun defaultUploadedFileCatalogReadModelProjectionUpdater(
+        repository: UploadedFileCatalogReadModelRepository
+    ): UploadedFileCatalogReadModelProjectionUpdater =
+        DefaultUploadedFileCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-uploaded-file-catalog")

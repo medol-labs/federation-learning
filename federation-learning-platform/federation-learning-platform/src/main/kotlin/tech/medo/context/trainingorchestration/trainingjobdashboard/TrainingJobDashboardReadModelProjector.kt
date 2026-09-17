@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -74,19 +76,17 @@ interface TrainingJobDashboardReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(TrainingJobDashboardReadModelProjectionUpdater::class)
-class DefaultTrainingJobDashboardReadModelProjectionUpdater(
+open class DefaultTrainingJobDashboardReadModelProjectionUpdater(
     private val repository: TrainingJobDashboardReadModelRepository
 ) : TrainingJobDashboardReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: FederationCreatedEvent,
         message: EventMessage
     ) {
         // Skipped: FederationCreatedEvent does not provide enough key fields to locate TrainingJobDashboardReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: FeatureSchemaDefinedEvent,
         message: EventMessage
     ) {
@@ -94,7 +94,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingJobCreatedEvent,
         message: EventMessage
     ) {
@@ -117,7 +117,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingJobSubmittedEvent,
         message: EventMessage
     ) {
@@ -140,7 +140,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingJobPausedEvent,
         message: EventMessage
     ) {
@@ -156,7 +156,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingJobResumedEvent,
         message: EventMessage
     ) {
@@ -172,7 +172,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingJobCanceledEvent,
         message: EventMessage
     ) {
@@ -188,7 +188,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingJobCompletedEvent,
         message: EventMessage
     ) {
@@ -206,7 +206,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingRoundStartedEvent,
         message: EventMessage
     ) {
@@ -232,7 +232,7 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingRoundCompletedEvent,
         message: EventMessage
     ) {
@@ -251,6 +251,16 @@ class DefaultTrainingJobDashboardReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class TrainingJobDashboardReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(TrainingJobDashboardReadModelProjectionUpdater::class)
+    fun defaultTrainingJobDashboardReadModelProjectionUpdater(
+        repository: TrainingJobDashboardReadModelRepository
+    ): TrainingJobDashboardReadModelProjectionUpdater =
+        DefaultTrainingJobDashboardReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-training-job-dashboard")

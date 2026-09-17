@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -68,13 +70,11 @@ interface FederationMembershipDirectoryReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(FederationMembershipDirectoryReadModelProjectionUpdater::class)
-class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
+open class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
     private val repository: FederationMembershipDirectoryReadModelRepository
 ) : FederationMembershipDirectoryReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
@@ -89,7 +89,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: OrganizationActivatedEvent,
         message: EventMessage
     ) {
@@ -103,7 +103,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FederationCreatedEvent,
         message: EventMessage
     ) {
@@ -118,7 +118,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantInvitedEvent,
         message: EventMessage
     ) {
@@ -138,7 +138,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantJoinedEvent,
         message: EventMessage
     ) {
@@ -158,7 +158,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantRejectedEvent,
         message: EventMessage
     ) {
@@ -177,7 +177,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantInvitationRevokedEvent,
         message: EventMessage
     ) {
@@ -196,7 +196,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantSuspendedEvent,
         message: EventMessage
     ) {
@@ -215,7 +215,7 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantRemovedEvent,
         message: EventMessage
     ) {
@@ -233,6 +233,16 @@ class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class FederationMembershipDirectoryReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(FederationMembershipDirectoryReadModelProjectionUpdater::class)
+    fun defaultFederationMembershipDirectoryReadModelProjectionUpdater(
+        repository: FederationMembershipDirectoryReadModelRepository
+    ): FederationMembershipDirectoryReadModelProjectionUpdater =
+        DefaultFederationMembershipDirectoryReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-federation-membership-directory")

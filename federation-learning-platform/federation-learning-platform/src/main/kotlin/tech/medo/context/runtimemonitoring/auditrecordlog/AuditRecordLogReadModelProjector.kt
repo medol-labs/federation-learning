@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -20,13 +22,11 @@ interface AuditRecordLogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(AuditRecordLogReadModelProjectionUpdater::class)
-class DefaultAuditRecordLogReadModelProjectionUpdater(
+open class DefaultAuditRecordLogReadModelProjectionUpdater(
     private val repository: AuditRecordLogReadModelRepository
 ) : AuditRecordLogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: AuditTrailAppendedEvent,
         message: EventMessage
     ) {
@@ -44,6 +44,16 @@ class DefaultAuditRecordLogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class AuditRecordLogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(AuditRecordLogReadModelProjectionUpdater::class)
+    fun defaultAuditRecordLogReadModelProjectionUpdater(
+        repository: AuditRecordLogReadModelRepository
+    ): AuditRecordLogReadModelProjectionUpdater =
+        DefaultAuditRecordLogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-audit-record-log")

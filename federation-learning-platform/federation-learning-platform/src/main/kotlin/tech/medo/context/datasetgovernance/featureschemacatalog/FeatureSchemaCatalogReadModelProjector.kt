@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -51,14 +53,12 @@ interface FeatureSchemaCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(FeatureSchemaCatalogReadModelProjectionUpdater::class)
-class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
+open class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
     private val repository: FeatureSchemaCatalogReadModelRepository,
     private val outbox: SyncOutboxAppender
 ) : FeatureSchemaCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: FeatureSchemaDefinedEvent,
         message: EventMessage
     ) {
@@ -89,7 +89,7 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FeatureSchemaPublishedEvent,
         message: EventMessage
     ) {
@@ -114,7 +114,7 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FeatureSchemaDeprecatedEvent,
         message: EventMessage
     ) {
@@ -139,7 +139,7 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FeatureSchemaRetiredEvent,
         message: EventMessage
     ) {
@@ -164,7 +164,7 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FeatureSchemaVersionSupersededEvent,
         message: EventMessage
     ) {
@@ -189,7 +189,7 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: CurrentRecommendedFeatureSchemaVersionMarkedEvent,
         message: EventMessage
     ) {
@@ -213,6 +213,17 @@ class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
         )
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class FeatureSchemaCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(FeatureSchemaCatalogReadModelProjectionUpdater::class)
+    fun defaultFeatureSchemaCatalogReadModelProjectionUpdater(
+        repository: FeatureSchemaCatalogReadModelRepository,
+        outbox: SyncOutboxAppender
+    ): FeatureSchemaCatalogReadModelProjectionUpdater =
+        DefaultFeatureSchemaCatalogReadModelProjectionUpdater(repository, outbox)
 }
 
 @Namespace("readmodel-feature-schema-catalog")

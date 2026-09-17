@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -22,13 +24,11 @@ interface RuntimeCapabilityCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RuntimeCapabilityCatalogReadModelProjectionUpdater::class)
-class DefaultRuntimeCapabilityCatalogReadModelProjectionUpdater(
+open class DefaultRuntimeCapabilityCatalogReadModelProjectionUpdater(
     private val repository: RuntimeCapabilityCatalogReadModelRepository
 ) : RuntimeCapabilityCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeCapabilitiesDetectedEvent,
         message: EventMessage
     ) {
@@ -47,6 +47,16 @@ class DefaultRuntimeCapabilityCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RuntimeCapabilityCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RuntimeCapabilityCatalogReadModelProjectionUpdater::class)
+    fun defaultRuntimeCapabilityCatalogReadModelProjectionUpdater(
+        repository: RuntimeCapabilityCatalogReadModelRepository
+    ): RuntimeCapabilityCatalogReadModelProjectionUpdater =
+        DefaultRuntimeCapabilityCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-runtime-capability-catalog")

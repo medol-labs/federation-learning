@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -28,13 +30,11 @@ interface AgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdater 
     )
 }
 
-@Component
-@ConditionalOnMissingBean(AgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdater::class)
-class DefaultAgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdater(
+open class DefaultAgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdater(
     private val repository: AgentRuntimeInfrastructureConnectionCatalogReadModelRepository
 ) : AgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentRuntimeConnectionReportFailedEvent,
         message: EventMessage
     ) {
@@ -59,7 +59,7 @@ class DefaultAgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdat
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentRuntimeConnectionEstablishedEvent,
         message: EventMessage
     ) {
@@ -82,6 +82,16 @@ class DefaultAgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdat
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class AgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(AgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdater::class)
+    fun defaultAgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdater(
+        repository: AgentRuntimeInfrastructureConnectionCatalogReadModelRepository
+    ): AgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdater =
+        DefaultAgentRuntimeInfrastructureConnectionCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-agent-runtime-infrastructure-connection-catalog")

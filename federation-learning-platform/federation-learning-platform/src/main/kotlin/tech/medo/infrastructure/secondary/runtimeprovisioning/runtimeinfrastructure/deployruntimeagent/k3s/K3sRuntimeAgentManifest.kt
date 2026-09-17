@@ -331,6 +331,12 @@ spec:
                   key: "password"
             - name: "FEDERATION_LEARNING_PLATFORM_URL"
               value: ${quote(properties.platformUrl)}
+            - name: "MEDOL_SYNC_ENABLED"
+              value: "true"
+            - name: "MEDOL_SYNC_MODE"
+              value: "outbox-delta"
+            - name: "MEDOL_SYNC_FIXED_DELAY_MS"
+              value: "5000"
             - name: "MEDOL_SYNC_SOURCE_BASE_URL"
               value: ${quote(properties.platformUrl)}
             - name: "FEDERATION_LEARNING_SUPPORT_URL"

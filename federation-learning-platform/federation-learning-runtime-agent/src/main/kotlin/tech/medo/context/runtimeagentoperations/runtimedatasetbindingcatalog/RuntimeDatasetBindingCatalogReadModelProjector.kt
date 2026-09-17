@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -28,12 +30,10 @@ interface RuntimeDatasetBindingCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RuntimeDatasetBindingCatalogReadModelProjectionUpdater::class)
-class DefaultRuntimeDatasetBindingCatalogReadModelProjectionUpdater(
+open class DefaultRuntimeDatasetBindingCatalogReadModelProjectionUpdater(
     private val repository: RuntimeDatasetBindingCatalogReadModelRepository
 ) : RuntimeDatasetBindingCatalogReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: DatasetDeclaredEvent,
         message: EventMessage
     ) {
@@ -41,7 +41,7 @@ class DefaultRuntimeDatasetBindingCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeDatasetBindingConfiguredEvent,
         message: EventMessage
     ) {
@@ -80,6 +80,16 @@ class DefaultRuntimeDatasetBindingCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RuntimeDatasetBindingCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RuntimeDatasetBindingCatalogReadModelProjectionUpdater::class)
+    fun defaultRuntimeDatasetBindingCatalogReadModelProjectionUpdater(
+        repository: RuntimeDatasetBindingCatalogReadModelRepository
+    ): RuntimeDatasetBindingCatalogReadModelProjectionUpdater =
+        DefaultRuntimeDatasetBindingCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-runtime-dataset-binding-catalog")

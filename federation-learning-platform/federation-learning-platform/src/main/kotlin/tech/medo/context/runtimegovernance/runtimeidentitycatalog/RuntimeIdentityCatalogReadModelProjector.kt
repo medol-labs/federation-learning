@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -35,13 +37,11 @@ interface RuntimeIdentityCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RuntimeIdentityCatalogReadModelProjectionUpdater::class)
-class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
+open class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
     private val repository: RuntimeIdentityCatalogReadModelRepository,
     private val outbox: SyncOutboxAppender
 ) : RuntimeIdentityCatalogReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
@@ -49,7 +49,7 @@ class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeIdentityActivatedEvent,
         message: EventMessage
     ) {
@@ -78,7 +78,7 @@ class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeIdentityRevokedEvent,
         message: EventMessage
     ) {
@@ -105,6 +105,17 @@ class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RuntimeIdentityCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RuntimeIdentityCatalogReadModelProjectionUpdater::class)
+    fun defaultRuntimeIdentityCatalogReadModelProjectionUpdater(
+        repository: RuntimeIdentityCatalogReadModelRepository,
+        outbox: SyncOutboxAppender
+    ): RuntimeIdentityCatalogReadModelProjectionUpdater =
+        DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(repository, outbox)
 }
 
 @Namespace("readmodel-runtime-identity-catalog")

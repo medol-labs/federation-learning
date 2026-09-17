@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -44,19 +46,17 @@ interface TrainingRunConfigurationCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(TrainingRunConfigurationCatalogReadModelProjectionUpdater::class)
-class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
+open class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
     private val repository: TrainingRunConfigurationCatalogReadModelRepository
 ) : TrainingRunConfigurationCatalogReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: FederationCreatedEvent,
         message: EventMessage
     ) {
         // Skipped: FederationCreatedEvent does not provide enough key fields to locate TrainingRunConfigurationCatalogReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: FeatureSchemaDefinedEvent,
         message: EventMessage
     ) {
@@ -64,7 +64,7 @@ class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingRunConfigurationDefinedEvent,
         message: EventMessage
     ) {
@@ -109,7 +109,7 @@ class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingRunConfigurationUpdatedEvent,
         message: EventMessage
     ) {
@@ -154,7 +154,7 @@ class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingRunConfigurationLockedEvent,
         message: EventMessage
     ) {
@@ -170,6 +170,16 @@ class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class TrainingRunConfigurationCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(TrainingRunConfigurationCatalogReadModelProjectionUpdater::class)
+    fun defaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
+        repository: TrainingRunConfigurationCatalogReadModelRepository
+    ): TrainingRunConfigurationCatalogReadModelProjectionUpdater =
+        DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-training-run-configuration-catalog")

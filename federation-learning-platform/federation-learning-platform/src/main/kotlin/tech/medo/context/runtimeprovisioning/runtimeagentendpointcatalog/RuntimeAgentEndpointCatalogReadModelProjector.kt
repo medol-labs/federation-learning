@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -46,13 +48,11 @@ interface RuntimeAgentEndpointCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RuntimeAgentEndpointCatalogReadModelProjectionUpdater::class)
-class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
+open class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
     private val repository: RuntimeAgentEndpointCatalogReadModelRepository
 ) : RuntimeAgentEndpointCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeConnectionEstablishedEvent,
         message: EventMessage
     ) {
@@ -74,7 +74,7 @@ class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentOfflineDetectedEvent,
         message: EventMessage
     ) {
@@ -89,7 +89,7 @@ class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentRecoveredEvent,
         message: EventMessage
     ) {
@@ -104,7 +104,7 @@ class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeIdentityActivatedEvent,
         message: EventMessage
     ) {
@@ -122,7 +122,7 @@ class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
 
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeIdentityRevokedEvent,
         message: EventMessage
     ) {
@@ -132,6 +132,16 @@ class DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RuntimeAgentEndpointCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RuntimeAgentEndpointCatalogReadModelProjectionUpdater::class)
+    fun defaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(
+        repository: RuntimeAgentEndpointCatalogReadModelRepository
+    ): RuntimeAgentEndpointCatalogReadModelProjectionUpdater =
+        DefaultRuntimeAgentEndpointCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-runtime-agent-endpoint-catalog")

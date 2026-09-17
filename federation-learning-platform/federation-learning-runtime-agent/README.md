@@ -249,7 +249,7 @@ The build script uses Maven/Jib under the hood:
 
 ```bash
 cd ..
-./mvnw -pl federation-learning-runtime-agent -am -DskipTests install
+./mvnw -pl federation-learning-runtime-agent -am -DskipTests clean install
 ./mvnw -pl federation-learning-runtime-agent -DskipTests -Djib.container.platform.os=linux -Djib.container.platform.architecture=amd64 com.google.cloud.tools:jib-maven-plugin:3.4.5:dockerBuild
 ```
 

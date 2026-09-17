@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -112,12 +114,10 @@ interface TrainingRoundProgressReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(TrainingRoundProgressReadModelProjectionUpdater::class)
-class DefaultTrainingRoundProgressReadModelProjectionUpdater(
+open class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     private val repository: TrainingRoundProgressReadModelRepository
 ) : TrainingRoundProgressReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: FeatureSchemaDefinedEvent,
         message: EventMessage
     ) {
@@ -125,7 +125,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingJobCreatedEvent,
         message: EventMessage
     ) {
@@ -144,7 +144,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingRoundParticipantsSelectedEvent,
         message: EventMessage
     ) {
@@ -174,7 +174,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingRoundParticipantSelectionFailedEvent,
         message: EventMessage
     ) {
@@ -205,7 +205,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingRoundStartedEvent,
         message: EventMessage
     ) {
@@ -235,7 +235,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingRoundStartFailedEvent,
         message: EventMessage
     ) {
@@ -266,7 +266,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantExecutionPlanGeneratedEvent,
         message: EventMessage
     ) {
@@ -289,7 +289,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantExecutionPlanDispatchedEvent,
         message: EventMessage
     ) {
@@ -311,7 +311,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ModelUpdateSubmissionReceivedEvent,
         message: EventMessage
     ) {
@@ -332,7 +332,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ModelUpdateSubmissionAcceptedEvent,
         message: EventMessage
     ) {
@@ -357,7 +357,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ModelUpdateSubmissionRejectedEvent,
         message: EventMessage
     ) {
@@ -375,7 +375,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: SecureAggregationRequestedEvent,
         message: EventMessage
     ) {
@@ -403,7 +403,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: GlobalModelUpdatedEvent,
         message: EventMessage
     ) {
@@ -426,7 +426,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: GlobalModelEvaluationSubmittedEvent,
         message: EventMessage
     ) {
@@ -450,7 +450,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingRoundCompletedEvent,
         message: EventMessage
     ) {
@@ -475,7 +475,7 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingRoundFailedEvent,
         message: EventMessage
     ) {
@@ -501,6 +501,16 @@ class DefaultTrainingRoundProgressReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class TrainingRoundProgressReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(TrainingRoundProgressReadModelProjectionUpdater::class)
+    fun defaultTrainingRoundProgressReadModelProjectionUpdater(
+        repository: TrainingRoundProgressReadModelRepository
+    ): TrainingRoundProgressReadModelProjectionUpdater =
+        DefaultTrainingRoundProgressReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-training-round-progress")

@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -32,13 +34,11 @@ interface UserAccountCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(UserAccountCatalogReadModelProjectionUpdater::class)
-class DefaultUserAccountCatalogReadModelProjectionUpdater(
+open class DefaultUserAccountCatalogReadModelProjectionUpdater(
     private val repository: UserAccountCatalogReadModelRepository
 ) : UserAccountCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: UserAccountRegisteredEvent,
         message: EventMessage
     ) {
@@ -58,7 +58,7 @@ class DefaultUserAccountCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: UserAccountDeactivatedEvent,
         message: EventMessage
     ) {
@@ -74,7 +74,7 @@ class DefaultUserAccountCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: UserAccountLoginPasswordGeneratedEvent,
         message: EventMessage
     ) {
@@ -89,6 +89,16 @@ class DefaultUserAccountCatalogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class UserAccountCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(UserAccountCatalogReadModelProjectionUpdater::class)
+    fun defaultUserAccountCatalogReadModelProjectionUpdater(
+        repository: UserAccountCatalogReadModelRepository
+    ): UserAccountCatalogReadModelProjectionUpdater =
+        DefaultUserAccountCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-user-account-catalog")

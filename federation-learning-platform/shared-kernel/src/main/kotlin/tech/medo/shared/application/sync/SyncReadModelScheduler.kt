@@ -42,6 +42,14 @@ class SyncReadModelScheduler(
             }
         }
         checkpoint.lastAttemptedAt = LocalDateTime.now()
+        log.debug(
+            "SYNC READMODEL target start target={} source={} mode={} bootstrapCompleted={} lastSequence={}",
+            target.name,
+            target.source,
+            properties.mode,
+            checkpoint.bootstrapCompleted,
+            checkpoint.lastSequence
+        )
         try {
             val result = adapter.syncOnce(target, checkpoint)
             checkpoint.lastSuccessfulSyncedAt = LocalDateTime.now()
@@ -57,5 +65,13 @@ class SyncReadModelScheduler(
             log.warn("Sync read model target={} failed", target.name, ex)
         }
         checkpoints.save(checkpoint)
+        log.debug(
+            "SYNC READMODEL checkpoint stored target={} status={} itemCount={} lastSequence={} bootstrapCompleted={}",
+            target.name,
+            checkpoint.lastStatus,
+            checkpoint.syncedItemCount,
+            checkpoint.lastSequence,
+            checkpoint.bootstrapCompleted
+        )
     }
 }

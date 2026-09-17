@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -20,13 +22,11 @@ interface PermissionCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(PermissionCatalogReadModelProjectionUpdater::class)
-class DefaultPermissionCatalogReadModelProjectionUpdater(
+open class DefaultPermissionCatalogReadModelProjectionUpdater(
     private val repository: PermissionCatalogReadModelRepository
 ) : PermissionCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: PermissionRegisteredEvent,
         message: EventMessage
     ) {
@@ -43,6 +43,16 @@ class DefaultPermissionCatalogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class PermissionCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(PermissionCatalogReadModelProjectionUpdater::class)
+    fun defaultPermissionCatalogReadModelProjectionUpdater(
+        repository: PermissionCatalogReadModelRepository
+    ): PermissionCatalogReadModelProjectionUpdater =
+        DefaultPermissionCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-permission-catalog")

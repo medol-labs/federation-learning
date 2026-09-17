@@ -7,11 +7,13 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Index
-import jakarta.persistence.Lob
 import jakarta.persistence.LockModeType
 import jakarta.persistence.Table
 import jakarta.persistence.UniqueConstraint
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
 import org.axonframework.messaging.eventhandling.EventMessage
+import org.slf4j.LoggerFactory
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -77,11 +79,11 @@ class SyncOutboxMessage {
     @Column(name = "created_at")
     var createdAt: LocalDateTime = LocalDateTime.now()
 
-    @Lob
+    @JdbcTypeCode(SqlTypes.LONGVARCHAR)
     @Column(columnDefinition = "text")
     var payloadJson: String = "{}"
 
-    @Lob
+    @JdbcTypeCode(SqlTypes.LONGVARCHAR)
     @Column(columnDefinition = "text")
     var headersJson: String = "{}"
 
@@ -191,6 +193,8 @@ class SyncOutboxAppender(
     private val repository: SyncOutboxRepository,
     private val objectMapper: ObjectMapper
 ) {
+    private val log = LoggerFactory.getLogger(javaClass)
+
     fun appendReadModel(
         sourceContext: String,
         sourceReadModel: String,
@@ -208,6 +212,14 @@ class SyncOutboxAppender(
                 operation
             )
         ) {
+            log.debug(
+                "SYNC OUTBOX skip duplicate source={}.{} key={} operation={} eventId={}",
+                sourceContext,
+                sourceReadModel,
+                readModelKey,
+                operation,
+                eventId
+            )
             return
         }
         append(
@@ -240,9 +252,16 @@ class SyncOutboxAppender(
                 operation
             )
         ) {
+            log.debug(
+                "SYNC OUTBOX skip duplicate channel={} key={} operation={} eventId={}",
+                channel,
+                messageKey,
+                operation,
+                eventId
+            )
             return
         }
-        repository.save(SyncOutboxMessage().also {
+        val saved = repository.save(SyncOutboxMessage().also {
             it.channel = channel
             it.sourceContext = sourceContext
             it.sourceReadModel = sourceReadModel
@@ -254,6 +273,17 @@ class SyncOutboxAppender(
             it.payloadJson = objectMapper.writeValueAsString(payload)
             it.headersJson = objectMapper.writeValueAsString(headers)
         })
+        log.info(
+            "SYNC OUTBOX stored sequence={} channel={} source={}.{} key={} operation={} eventId={} eventType={}",
+            saved.sequence,
+            saved.channel,
+            saved.sourceContext,
+            saved.sourceReadModel,
+            saved.messageKey,
+            saved.operation,
+            saved.eventId,
+            saved.eventType
+        )
     }
 }
 

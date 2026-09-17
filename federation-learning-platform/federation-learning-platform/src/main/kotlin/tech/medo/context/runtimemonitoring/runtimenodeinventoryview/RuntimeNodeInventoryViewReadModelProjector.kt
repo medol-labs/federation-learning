@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -38,26 +40,24 @@ interface RuntimeNodeInventoryViewReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RuntimeNodeInventoryViewReadModelProjectionUpdater::class)
-class DefaultRuntimeNodeInventoryViewReadModelProjectionUpdater(
+open class DefaultRuntimeNodeInventoryViewReadModelProjectionUpdater(
     private val repository: RuntimeNodeInventoryViewReadModelRepository
 ) : RuntimeNodeInventoryViewReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate RuntimeNodeInventoryViewReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeInstallationPlanCreatedEvent,
         message: EventMessage
     ) {
         // Skipped: RuntimeInstallationPlanCreatedEvent does not provide enough key fields to locate RuntimeNodeInventoryViewReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureRegisteredEvent,
         message: EventMessage
     ) {
@@ -65,7 +65,7 @@ class DefaultRuntimeNodeInventoryViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeNodeInventoryReportedEvent,
         message: EventMessage
     ) {
@@ -94,6 +94,16 @@ class DefaultRuntimeNodeInventoryViewReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RuntimeNodeInventoryViewReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RuntimeNodeInventoryViewReadModelProjectionUpdater::class)
+    fun defaultRuntimeNodeInventoryViewReadModelProjectionUpdater(
+        repository: RuntimeNodeInventoryViewReadModelRepository
+    ): RuntimeNodeInventoryViewReadModelProjectionUpdater =
+        DefaultRuntimeNodeInventoryViewReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-runtime-node-inventory-view")

@@ -20,7 +20,11 @@ data class SyncReadModelContext(
 ) {
     fun requiredParameter(name: String, target: String): String =
         properties.parameters[name]
+            ?: properties.parameters.entries.firstOrNull { (key, _) -> relaxedKey(key) == relaxedKey(name) }?.value
             ?: throw IllegalArgumentException("Sync target $target requires medol.sync.parameters.$name")
+
+    private fun relaxedKey(value: String): String =
+        value.filter { it.isLetterOrDigit() }.lowercase()
 }
 
 data class SyncReadModelResult(

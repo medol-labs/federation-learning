@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -34,13 +36,11 @@ interface DictionaryValueCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(DictionaryValueCatalogReadModelProjectionUpdater::class)
-class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
+open class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
     private val repository: DictionaryValueCatalogReadModelRepository
 ) : DictionaryValueCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: DictionaryValueAddedEvent,
         message: EventMessage
     ) {
@@ -63,7 +63,7 @@ class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DictionaryValueDisabledEvent,
         message: EventMessage
     ) {
@@ -82,7 +82,7 @@ class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DictionaryValueEnabledEvent,
         message: EventMessage
     ) {
@@ -101,6 +101,16 @@ class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class DictionaryValueCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(DictionaryValueCatalogReadModelProjectionUpdater::class)
+    fun defaultDictionaryValueCatalogReadModelProjectionUpdater(
+        repository: DictionaryValueCatalogReadModelRepository
+    ): DictionaryValueCatalogReadModelProjectionUpdater =
+        DefaultDictionaryValueCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-dictionary-value-catalog")

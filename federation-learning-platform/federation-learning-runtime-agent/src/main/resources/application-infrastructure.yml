@@ -54,3 +54,9 @@ runtime-agent:
     kubernetes-runtime-infrastructure-id: ${RUNTIME_INFRASTRUCTURE_ID:}
     kubernetes-dataset-host-path: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_DATASET_HOST_PATH:/workspace/datasets}
     kubernetes-runtime-host-path: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_RUNTIME_HOST_PATH:/workspace/tmp/runtime-engine}
+
+medol:
+  sync:
+    parameters:
+      organizationId: ${RUNTIME_AGENT_ORGANIZATION_ID:}
+      runtimeAgentId: ${RUNTIME_AGENT_ID:}

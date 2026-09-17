@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -38,19 +40,17 @@ interface RuntimeDatasetMetadataCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RuntimeDatasetMetadataCatalogReadModelProjectionUpdater::class)
-class DefaultRuntimeDatasetMetadataCatalogReadModelProjectionUpdater(
+open class DefaultRuntimeDatasetMetadataCatalogReadModelProjectionUpdater(
     private val repository: RuntimeDatasetMetadataCatalogReadModelRepository
 ) : RuntimeDatasetMetadataCatalogReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate RuntimeDatasetMetadataCatalogReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: FeatureSchemaDefinedEvent,
         message: EventMessage
     ) {
@@ -58,7 +58,7 @@ class DefaultRuntimeDatasetMetadataCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DatasetMetadataReportedEvent,
         message: EventMessage
     ) {
@@ -93,7 +93,7 @@ class DefaultRuntimeDatasetMetadataCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DatasetMetadataReprofiledEvent,
         message: EventMessage
     ) {
@@ -127,6 +127,16 @@ class DefaultRuntimeDatasetMetadataCatalogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RuntimeDatasetMetadataCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RuntimeDatasetMetadataCatalogReadModelProjectionUpdater::class)
+    fun defaultRuntimeDatasetMetadataCatalogReadModelProjectionUpdater(
+        repository: RuntimeDatasetMetadataCatalogReadModelRepository
+    ): RuntimeDatasetMetadataCatalogReadModelProjectionUpdater =
+        DefaultRuntimeDatasetMetadataCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-runtime-dataset-metadata-catalog")

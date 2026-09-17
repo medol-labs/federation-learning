@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -34,13 +36,11 @@ interface DictionaryCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(DictionaryCatalogReadModelProjectionUpdater::class)
-class DefaultDictionaryCatalogReadModelProjectionUpdater(
+open class DefaultDictionaryCatalogReadModelProjectionUpdater(
     private val repository: DictionaryCatalogReadModelRepository
 ) : DictionaryCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: DictionaryRegisteredEvent,
         message: EventMessage
     ) {
@@ -60,7 +60,7 @@ class DefaultDictionaryCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DictionaryUpdatedEvent,
         message: EventMessage
     ) {
@@ -77,7 +77,7 @@ class DefaultDictionaryCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DictionaryArchivedEvent,
         message: EventMessage
     ) {
@@ -97,6 +97,16 @@ class DefaultDictionaryCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class DictionaryCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(DictionaryCatalogReadModelProjectionUpdater::class)
+    fun defaultDictionaryCatalogReadModelProjectionUpdater(
+        repository: DictionaryCatalogReadModelRepository
+    ): DictionaryCatalogReadModelProjectionUpdater =
+        DefaultDictionaryCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-dictionary-catalog")

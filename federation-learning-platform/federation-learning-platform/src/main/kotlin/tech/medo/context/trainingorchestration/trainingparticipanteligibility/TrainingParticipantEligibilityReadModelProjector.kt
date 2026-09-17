@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -104,61 +106,59 @@ interface TrainingParticipantEligibilityReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(TrainingParticipantEligibilityReadModelProjectionUpdater::class)
-class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
+open class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
     private val repository: TrainingParticipantEligibilityReadModelRepository
 ) : TrainingParticipantEligibilityReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: FederationCreatedEvent,
         message: EventMessage
     ) {
         // Skipped: FederationCreatedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: ParticipantJoinedEvent,
         message: EventMessage
     ) {
         // Skipped: ParticipantJoinedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: ParticipantSuspendedEvent,
         message: EventMessage
     ) {
         // Skipped: ParticipantSuspendedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: ParticipantRemovedEvent,
         message: EventMessage
     ) {
         // Skipped: ParticipantRemovedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeConnectionEstablishedEvent,
         message: EventMessage
     ) {
         // Skipped: RuntimeConnectionEstablishedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: FeatureSchemaDefinedEvent,
         message: EventMessage
     ) {
         // Skipped: FeatureSchemaDefinedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: DatasetMetadataReportedEvent,
         message: EventMessage
     ) {
@@ -166,7 +166,7 @@ class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingJobCreatedEvent,
         message: EventMessage
     ) {
@@ -186,7 +186,7 @@ class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingJobSubmittedEvent,
         message: EventMessage
     ) {
@@ -206,7 +206,7 @@ class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentOfflineDetectedEvent,
         message: EventMessage
     ) {
@@ -224,7 +224,7 @@ class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentRecoveredEvent,
         message: EventMessage
     ) {
@@ -241,27 +241,37 @@ class DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(
 
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeIdentityActivatedEvent,
         message: EventMessage
     ) {
         // Skipped: RuntimeIdentityActivatedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeIdentityRevokedEvent,
         message: EventMessage
     ) {
         // Skipped: RuntimeIdentityRevokedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeCapabilitiesDetectedEvent,
         message: EventMessage
     ) {
         // Skipped: RuntimeCapabilitiesDetectedEvent does not provide enough key fields to locate TrainingParticipantEligibilityReadModelProjection.
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class TrainingParticipantEligibilityReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(TrainingParticipantEligibilityReadModelProjectionUpdater::class)
+    fun defaultTrainingParticipantEligibilityReadModelProjectionUpdater(
+        repository: TrainingParticipantEligibilityReadModelRepository
+    ): TrainingParticipantEligibilityReadModelProjectionUpdater =
+        DefaultTrainingParticipantEligibilityReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-training-participant-eligibility")

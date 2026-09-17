@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -106,19 +108,17 @@ interface RuntimeInstallationPlanCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RuntimeInstallationPlanCatalogReadModelProjectionUpdater::class)
-class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
+open class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     private val repository: RuntimeInstallationPlanCatalogReadModelRepository
 ) : RuntimeInstallationPlanCatalogReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate RuntimeInstallationPlanCatalogReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructurePackageRegisteredEvent,
         message: EventMessage
     ) {
@@ -126,7 +126,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInstallationPlanCreatedEvent,
         message: EventMessage
     ) {
@@ -154,7 +154,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructurePlannedEvent,
         message: EventMessage
     ) {
@@ -179,7 +179,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureRegisteredEvent,
         message: EventMessage
     ) {
@@ -204,7 +204,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructurePreparedEvent,
         message: EventMessage
     ) {
@@ -231,7 +231,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerifiedEvent,
         message: EventMessage
     ) {
@@ -258,7 +258,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerificationFailedEvent,
         message: EventMessage
     ) {
@@ -286,7 +286,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentInstallationSucceededEvent,
         message: EventMessage
     ) {
@@ -317,7 +317,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentInstallationFailedEvent,
         message: EventMessage
     ) {
@@ -344,7 +344,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerificationRetrySucceededEvent,
         message: EventMessage
     ) {
@@ -373,7 +373,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerificationRetryFailedEvent,
         message: EventMessage
     ) {
@@ -401,7 +401,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentDeploymentRetrySucceededEvent,
         message: EventMessage
     ) {
@@ -432,7 +432,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentDeploymentRetryFailedEvent,
         message: EventMessage
     ) {
@@ -458,7 +458,7 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
 
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeConnectionEstablishedEvent,
         message: EventMessage
     ) {
@@ -468,6 +468,16 @@ class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RuntimeInstallationPlanCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RuntimeInstallationPlanCatalogReadModelProjectionUpdater::class)
+    fun defaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
+        repository: RuntimeInstallationPlanCatalogReadModelRepository
+    ): RuntimeInstallationPlanCatalogReadModelProjectionUpdater =
+        DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-runtime-installation-plan-catalog")

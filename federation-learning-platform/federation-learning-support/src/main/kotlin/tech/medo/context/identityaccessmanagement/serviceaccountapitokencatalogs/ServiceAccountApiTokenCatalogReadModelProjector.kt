@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -20,13 +22,11 @@ interface ServiceAccountApiTokenCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(ServiceAccountApiTokenCatalogReadModelProjectionUpdater::class)
-class DefaultServiceAccountApiTokenCatalogReadModelProjectionUpdater(
+open class DefaultServiceAccountApiTokenCatalogReadModelProjectionUpdater(
     private val repository: ServiceAccountApiTokenCatalogReadModelRepository
 ) : ServiceAccountApiTokenCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: ServiceAccountApiTokenIssuedEvent,
         message: EventMessage
     ) {
@@ -47,6 +47,16 @@ class DefaultServiceAccountApiTokenCatalogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class ServiceAccountApiTokenCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(ServiceAccountApiTokenCatalogReadModelProjectionUpdater::class)
+    fun defaultServiceAccountApiTokenCatalogReadModelProjectionUpdater(
+        repository: ServiceAccountApiTokenCatalogReadModelRepository
+    ): ServiceAccountApiTokenCatalogReadModelProjectionUpdater =
+        DefaultServiceAccountApiTokenCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-service-account-api-token-catalog")

@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -86,13 +88,11 @@ interface DatasetCapabilityReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(DatasetCapabilityReadModelProjectionUpdater::class)
-class DefaultDatasetCapabilityReadModelProjectionUpdater(
+open class DefaultDatasetCapabilityReadModelProjectionUpdater(
     private val repository: DatasetCapabilityReadModelRepository
 ) : DatasetCapabilityReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: DatasetDeclaredEvent,
         message: EventMessage
     ) {
@@ -116,7 +116,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentDatasetMetadataReportedEvent,
         message: EventMessage
     ) {
@@ -146,7 +146,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentDatasetProfilingFailedEvent,
         message: EventMessage
     ) {
@@ -170,7 +170,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentDatasetReprofiledEvent,
         message: EventMessage
     ) {
@@ -199,7 +199,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentDatasetReprofilingFailedEvent,
         message: EventMessage
     ) {
@@ -223,7 +223,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DatasetContractValidatedEvent,
         message: EventMessage
     ) {
@@ -245,7 +245,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DatasetContractValidationFailedEvent,
         message: EventMessage
     ) {
@@ -267,7 +267,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DatasetContractRevalidatedEvent,
         message: EventMessage
     ) {
@@ -288,7 +288,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DatasetContractRevalidationFailedEvent,
         message: EventMessage
     ) {
@@ -310,7 +310,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DatasetRejectedForTrainingEvent,
         message: EventMessage
     ) {
@@ -325,7 +325,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DatasetApprovedForTrainingEvent,
         message: EventMessage
     ) {
@@ -342,7 +342,7 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: DatasetTrainingApprovalRevokedEvent,
         message: EventMessage
     ) {
@@ -357,6 +357,16 @@ class DefaultDatasetCapabilityReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class DatasetCapabilityReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(DatasetCapabilityReadModelProjectionUpdater::class)
+    fun defaultDatasetCapabilityReadModelProjectionUpdater(
+        repository: DatasetCapabilityReadModelRepository
+    ): DatasetCapabilityReadModelProjectionUpdater =
+        DefaultDatasetCapabilityReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-dataset-capability")

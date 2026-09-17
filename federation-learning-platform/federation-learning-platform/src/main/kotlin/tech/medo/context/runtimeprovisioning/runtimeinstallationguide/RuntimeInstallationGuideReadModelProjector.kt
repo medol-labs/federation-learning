@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -74,19 +76,17 @@ interface RuntimeInstallationGuideReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RuntimeInstallationGuideReadModelProjectionUpdater::class)
-class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
+open class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
     private val repository: RuntimeInstallationGuideReadModelRepository
 ) : RuntimeInstallationGuideReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate RuntimeInstallationGuideReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructurePackageRegisteredEvent,
         message: EventMessage
     ) {
@@ -94,7 +94,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInstallationPlanCreatedEvent,
         message: EventMessage
     ) {
@@ -125,7 +125,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructurePlannedEvent,
         message: EventMessage
     ) {
@@ -151,7 +151,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureRegisteredEvent,
         message: EventMessage
     ) {
@@ -178,7 +178,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructurePreparedEvent,
         message: EventMessage
     ) {
@@ -205,7 +205,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerifiedEvent,
         message: EventMessage
     ) {
@@ -232,7 +232,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerificationFailedEvent,
         message: EventMessage
     ) {
@@ -259,7 +259,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerificationRetrySucceededEvent,
         message: EventMessage
     ) {
@@ -286,7 +286,7 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerificationRetryFailedEvent,
         message: EventMessage
     ) {
@@ -312,6 +312,16 @@ class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RuntimeInstallationGuideReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RuntimeInstallationGuideReadModelProjectionUpdater::class)
+    fun defaultRuntimeInstallationGuideReadModelProjectionUpdater(
+        repository: RuntimeInstallationGuideReadModelRepository
+    ): RuntimeInstallationGuideReadModelProjectionUpdater =
+        DefaultRuntimeInstallationGuideReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-runtime-installation-guide")

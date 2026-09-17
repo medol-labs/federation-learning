@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -20,13 +22,11 @@ interface RoleCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RoleCatalogReadModelProjectionUpdater::class)
-class DefaultRoleCatalogReadModelProjectionUpdater(
+open class DefaultRoleCatalogReadModelProjectionUpdater(
     private val repository: RoleCatalogReadModelRepository
 ) : RoleCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: RoleRegisteredEvent,
         message: EventMessage
     ) {
@@ -42,6 +42,16 @@ class DefaultRoleCatalogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RoleCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RoleCatalogReadModelProjectionUpdater::class)
+    fun defaultRoleCatalogReadModelProjectionUpdater(
+        repository: RoleCatalogReadModelRepository
+    ): RoleCatalogReadModelProjectionUpdater =
+        DefaultRoleCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-role-catalog")

@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -56,12 +58,10 @@ interface ModelCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(ModelCatalogReadModelProjectionUpdater::class)
-class DefaultModelCatalogReadModelProjectionUpdater(
+open class DefaultModelCatalogReadModelProjectionUpdater(
     private val repository: ModelCatalogReadModelRepository
 ) : ModelCatalogReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: TrainingJobCreatedEvent,
         message: EventMessage
     ) {
@@ -69,7 +69,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ModelCandidateRegisteredEvent,
         message: EventMessage
     ) {
@@ -93,7 +93,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ModelEvaluationPackageRecordedEvent,
         message: EventMessage
     ) {
@@ -117,7 +117,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ModelApprovedEvent,
         message: EventMessage
     ) {
@@ -134,7 +134,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ModelPromotedToProductionEvent,
         message: EventMessage
     ) {
@@ -153,7 +153,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ModelRolledBackEvent,
         message: EventMessage
     ) {
@@ -171,7 +171,7 @@ class DefaultModelCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ModelRetiredEvent,
         message: EventMessage
     ) {
@@ -187,6 +187,16 @@ class DefaultModelCatalogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class ModelCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(ModelCatalogReadModelProjectionUpdater::class)
+    fun defaultModelCatalogReadModelProjectionUpdater(
+        repository: ModelCatalogReadModelRepository
+    ): ModelCatalogReadModelProjectionUpdater =
+        DefaultModelCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-model-catalog")

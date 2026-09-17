@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -124,13 +126,11 @@ interface RoundExecutionCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RoundExecutionCatalogReadModelProjectionUpdater::class)
-class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
+open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     private val repository: RoundExecutionCatalogReadModelRepository
 ) : RoundExecutionCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: ExecutionPlanReceivedEvent,
         message: EventMessage
     ) {
@@ -156,7 +156,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ExecutionPlanAcceptedEvent,
         message: EventMessage
     ) {
@@ -190,7 +190,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ExecutionPlanRejectedEvent,
         message: EventMessage
     ) {
@@ -224,7 +224,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RoundExecutionStartedEvent,
         message: EventMessage
     ) {
@@ -251,7 +251,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RoundExecutionStartFailedEvent,
         message: EventMessage
     ) {
@@ -280,7 +280,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeEngineJobObservedEvent,
         message: EventMessage
     ) {
@@ -310,7 +310,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RoundExecutionCompletedEvent,
         message: EventMessage
     ) {
@@ -340,7 +340,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RoundExecutionFailedEvent,
         message: EventMessage
     ) {
@@ -369,7 +369,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RoundExecutionStartRetryStartedEvent,
         message: EventMessage
     ) {
@@ -397,7 +397,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RoundExecutionStartRetryFailedEvent,
         message: EventMessage
     ) {
@@ -427,7 +427,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RoundExecutionRuntimeRetryStartedEvent,
         message: EventMessage
     ) {
@@ -455,7 +455,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RoundExecutionRuntimeRetryFailedEvent,
         message: EventMessage
     ) {
@@ -485,7 +485,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentLocalModelUpdateSubmittedEvent,
         message: EventMessage
     ) {
@@ -514,7 +514,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeEngineJobReleasedEvent,
         message: EventMessage
     ) {
@@ -534,7 +534,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeEngineJobReleaseFailedOrSkippedEvent,
         message: EventMessage
     ) {
@@ -553,7 +553,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeEngineJobReleaseFailedOrSkippedAfterStartFailureEvent,
         message: EventMessage
     ) {
@@ -572,7 +572,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeEngineJobReleaseFailedOrSkippedAfterRetryEvent,
         message: EventMessage
     ) {
@@ -591,7 +591,7 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeEngineJobReleaseFailedOrSkippedAfterRuntimeRetryEvent,
         message: EventMessage
     ) {
@@ -612,6 +612,16 @@ class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RoundExecutionCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RoundExecutionCatalogReadModelProjectionUpdater::class)
+    fun defaultRoundExecutionCatalogReadModelProjectionUpdater(
+        repository: RoundExecutionCatalogReadModelRepository
+    ): RoundExecutionCatalogReadModelProjectionUpdater =
+        DefaultRoundExecutionCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-round-execution-catalog")

@@ -148,6 +148,10 @@ kind: "ConfigMap"
 metadata:
   name: "federation-learning-runtime-agent-dev-config"
 data:
+  MEDOL_SYNC_ENABLED: "true"
+  MEDOL_SYNC_FIXED_DELAY_MS: "5000"
+  MEDOL_SYNC_MODE: "outbox-delta"
+  MEDOL_SYNC_SOURCE_BASE_URL: "http://federation-learning-platform:8081"
   RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE: "${runtime_engine_image}"
 YAML
 }

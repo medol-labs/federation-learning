@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -62,19 +64,17 @@ interface RuntimeHealthDashboardReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RuntimeHealthDashboardReadModelProjectionUpdater::class)
-class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
+open class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
     private val repository: RuntimeHealthDashboardReadModelRepository
 ) : RuntimeHealthDashboardReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: FederationCreatedEvent,
         message: EventMessage
     ) {
         // Skipped: FederationCreatedEvent does not provide enough key fields to locate RuntimeHealthDashboardReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: TrainingJobCreatedEvent,
         message: EventMessage
     ) {
@@ -82,7 +82,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentOfflineDetectedEvent,
         message: EventMessage
     ) {
@@ -103,7 +103,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentRecoveredEvent,
         message: EventMessage
     ) {
@@ -124,7 +124,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeNodeResourcePressureDetectedEvent,
         message: EventMessage
     ) {
@@ -145,7 +145,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeNodeInventoryReportedEvent,
         message: EventMessage
     ) {
@@ -162,7 +162,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeNodeCapacityChangedEvent,
         message: EventMessage
     ) {
@@ -178,7 +178,7 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingAlertRaisedEvent,
         message: EventMessage
     ) {
@@ -194,6 +194,16 @@ class DefaultRuntimeHealthDashboardReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RuntimeHealthDashboardReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RuntimeHealthDashboardReadModelProjectionUpdater::class)
+    fun defaultRuntimeHealthDashboardReadModelProjectionUpdater(
+        repository: RuntimeHealthDashboardReadModelRepository
+    ): RuntimeHealthDashboardReadModelProjectionUpdater =
+        DefaultRuntimeHealthDashboardReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-runtime-health-dashboard")

@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -20,13 +22,11 @@ interface RolePermissionGrantCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RolePermissionGrantCatalogReadModelProjectionUpdater::class)
-class DefaultRolePermissionGrantCatalogReadModelProjectionUpdater(
+open class DefaultRolePermissionGrantCatalogReadModelProjectionUpdater(
     private val repository: RolePermissionGrantCatalogReadModelRepository
 ) : RolePermissionGrantCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: PermissionGrantedToRoleEvent,
         message: EventMessage
     ) {
@@ -43,6 +43,16 @@ class DefaultRolePermissionGrantCatalogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RolePermissionGrantCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RolePermissionGrantCatalogReadModelProjectionUpdater::class)
+    fun defaultRolePermissionGrantCatalogReadModelProjectionUpdater(
+        repository: RolePermissionGrantCatalogReadModelRepository
+    ): RolePermissionGrantCatalogReadModelProjectionUpdater =
+        DefaultRolePermissionGrantCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-role-permission-grant-catalog")

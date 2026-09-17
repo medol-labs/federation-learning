@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -44,12 +46,10 @@ interface AgentDatasetAccessValidationCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(AgentDatasetAccessValidationCatalogReadModelProjectionUpdater::class)
-class DefaultAgentDatasetAccessValidationCatalogReadModelProjectionUpdater(
+open class DefaultAgentDatasetAccessValidationCatalogReadModelProjectionUpdater(
     private val repository: AgentDatasetAccessValidationCatalogReadModelRepository
 ) : AgentDatasetAccessValidationCatalogReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: DatasetDeclaredEvent,
         message: EventMessage
     ) {
@@ -57,7 +57,7 @@ class DefaultAgentDatasetAccessValidationCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentDatasetAccessValidatedEvent,
         message: EventMessage
     ) {
@@ -86,7 +86,7 @@ class DefaultAgentDatasetAccessValidationCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentDatasetAccessValidationFailedEvent,
         message: EventMessage
     ) {
@@ -113,7 +113,7 @@ class DefaultAgentDatasetAccessValidationCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentDatasetAccessRevalidatedEvent,
         message: EventMessage
     ) {
@@ -141,7 +141,7 @@ class DefaultAgentDatasetAccessValidationCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentDatasetAccessRevalidationFailedEvent,
         message: EventMessage
     ) {
@@ -167,6 +167,16 @@ class DefaultAgentDatasetAccessValidationCatalogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class AgentDatasetAccessValidationCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(AgentDatasetAccessValidationCatalogReadModelProjectionUpdater::class)
+    fun defaultAgentDatasetAccessValidationCatalogReadModelProjectionUpdater(
+        repository: AgentDatasetAccessValidationCatalogReadModelRepository
+    ): AgentDatasetAccessValidationCatalogReadModelProjectionUpdater =
+        DefaultAgentDatasetAccessValidationCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-agent-dataset-access-validation-catalog")

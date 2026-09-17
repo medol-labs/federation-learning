@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -46,19 +48,17 @@ interface TrainingAlertCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(TrainingAlertCatalogReadModelProjectionUpdater::class)
-class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
+open class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
     private val repository: TrainingAlertCatalogReadModelRepository
 ) : TrainingAlertCatalogReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: TrainingJobCreatedEvent,
         message: EventMessage
     ) {
         // Skipped: TrainingJobCreatedEvent does not provide enough key fields to locate TrainingAlertCatalogReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeNodeInventoryReportedEvent,
         message: EventMessage
     ) {
@@ -66,7 +66,7 @@ class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingAlertRaisedEvent,
         message: EventMessage
     ) {
@@ -88,7 +88,7 @@ class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingAlertAcknowledgedEvent,
         message: EventMessage
     ) {
@@ -105,7 +105,7 @@ class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingAlertResolvedEvent,
         message: EventMessage
     ) {
@@ -125,6 +125,16 @@ class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class TrainingAlertCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(TrainingAlertCatalogReadModelProjectionUpdater::class)
+    fun defaultTrainingAlertCatalogReadModelProjectionUpdater(
+        repository: TrainingAlertCatalogReadModelRepository
+    ): TrainingAlertCatalogReadModelProjectionUpdater =
+        DefaultTrainingAlertCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-training-alert-catalog")

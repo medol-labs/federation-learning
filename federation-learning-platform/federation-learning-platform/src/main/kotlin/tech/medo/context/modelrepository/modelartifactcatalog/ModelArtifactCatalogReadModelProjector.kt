@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -40,13 +42,11 @@ interface ModelArtifactCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(ModelArtifactCatalogReadModelProjectionUpdater::class)
-class DefaultModelArtifactCatalogReadModelProjectionUpdater(
+open class DefaultModelArtifactCatalogReadModelProjectionUpdater(
     private val repository: ModelArtifactCatalogReadModelRepository
 ) : ModelArtifactCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: ModelArtifactRegisteredEvent,
         message: EventMessage
     ) {
@@ -73,7 +73,7 @@ class DefaultModelArtifactCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FederatedModelArtifactRegisteredEvent,
         message: EventMessage
     ) {
@@ -102,14 +102,14 @@ class DefaultModelArtifactCatalogReadModelProjectionUpdater(
 
     }
 
-    override fun update(
+    open override fun update(
         event: TrainingJobCreatedEvent,
         message: EventMessage
     ) {
         // Skipped: TrainingJobCreatedEvent does not provide enough key fields to locate ModelArtifactCatalogReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: GlobalModelUpdatedEvent,
         message: EventMessage
     ) {
@@ -119,6 +119,16 @@ class DefaultModelArtifactCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class ModelArtifactCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(ModelArtifactCatalogReadModelProjectionUpdater::class)
+    fun defaultModelArtifactCatalogReadModelProjectionUpdater(
+        repository: ModelArtifactCatalogReadModelRepository
+    ): ModelArtifactCatalogReadModelProjectionUpdater =
+        DefaultModelArtifactCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-model-artifact-catalog")

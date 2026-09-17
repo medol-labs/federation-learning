@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -92,13 +94,11 @@ interface FederationOverviewReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(FederationOverviewReadModelProjectionUpdater::class)
-class DefaultFederationOverviewReadModelProjectionUpdater(
+open class DefaultFederationOverviewReadModelProjectionUpdater(
     private val repository: FederationOverviewReadModelRepository
 ) : FederationOverviewReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: FederationCreatedEvent,
         message: EventMessage
     ) {
@@ -116,7 +116,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FederationActivatedEvent,
         message: EventMessage
     ) {
@@ -132,7 +132,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FederationSuspendedEvent,
         message: EventMessage
     ) {
@@ -148,7 +148,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: FederationReactivatedEvent,
         message: EventMessage
     ) {
@@ -164,7 +164,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantInvitedEvent,
         message: EventMessage
     ) {
@@ -180,7 +180,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantJoinedEvent,
         message: EventMessage
     ) {
@@ -196,7 +196,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantRejectedEvent,
         message: EventMessage
     ) {
@@ -212,7 +212,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantInvitationRevokedEvent,
         message: EventMessage
     ) {
@@ -228,7 +228,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantSuspendedEvent,
         message: EventMessage
     ) {
@@ -244,7 +244,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: ParticipantRemovedEvent,
         message: EventMessage
     ) {
@@ -260,7 +260,7 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: TrainingJobSubmittedEvent,
         message: EventMessage
     ) {
@@ -275,20 +275,30 @@ class DefaultFederationOverviewReadModelProjectionUpdater(
 
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeIdentityActivatedEvent,
         message: EventMessage
     ) {
         // Skipped: RuntimeIdentityActivatedEvent does not provide enough key fields to locate FederationOverviewReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeIdentityRevokedEvent,
         message: EventMessage
     ) {
         // Skipped: RuntimeIdentityRevokedEvent does not provide enough key fields to locate FederationOverviewReadModelProjection.
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class FederationOverviewReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(FederationOverviewReadModelProjectionUpdater::class)
+    fun defaultFederationOverviewReadModelProjectionUpdater(
+        repository: FederationOverviewReadModelRepository
+    ): FederationOverviewReadModelProjectionUpdater =
+        DefaultFederationOverviewReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-federation-overview")

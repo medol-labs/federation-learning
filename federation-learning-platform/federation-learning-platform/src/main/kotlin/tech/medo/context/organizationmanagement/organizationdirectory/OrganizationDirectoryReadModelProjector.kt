@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -39,14 +41,12 @@ interface OrganizationDirectoryReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(OrganizationDirectoryReadModelProjectionUpdater::class)
-class DefaultOrganizationDirectoryReadModelProjectionUpdater(
+open class DefaultOrganizationDirectoryReadModelProjectionUpdater(
     private val repository: OrganizationDirectoryReadModelRepository,
     private val outbox: SyncOutboxAppender
 ) : OrganizationDirectoryReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
@@ -72,7 +72,7 @@ class DefaultOrganizationDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: OrganizationActivatedEvent,
         message: EventMessage
     ) {
@@ -96,7 +96,7 @@ class DefaultOrganizationDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: OrganizationDeactivatedEvent,
         message: EventMessage
     ) {
@@ -120,7 +120,7 @@ class DefaultOrganizationDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: OrganizationReactivatedEvent,
         message: EventMessage
     ) {
@@ -143,6 +143,17 @@ class DefaultOrganizationDirectoryReadModelProjectionUpdater(
         )
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class OrganizationDirectoryReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(OrganizationDirectoryReadModelProjectionUpdater::class)
+    fun defaultOrganizationDirectoryReadModelProjectionUpdater(
+        repository: OrganizationDirectoryReadModelRepository,
+        outbox: SyncOutboxAppender
+    ): OrganizationDirectoryReadModelProjectionUpdater =
+        DefaultOrganizationDirectoryReadModelProjectionUpdater(repository, outbox)
 }
 
 @Namespace("readmodel-organization-directory")

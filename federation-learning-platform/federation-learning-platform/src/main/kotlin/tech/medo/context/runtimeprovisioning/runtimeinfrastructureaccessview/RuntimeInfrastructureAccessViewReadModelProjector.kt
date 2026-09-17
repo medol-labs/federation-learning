@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -106,19 +108,17 @@ interface RuntimeInfrastructureAccessViewReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(RuntimeInfrastructureAccessViewReadModelProjectionUpdater::class)
-class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
+open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     private val repository: RuntimeInfrastructureAccessViewReadModelRepository
 ) : RuntimeInfrastructureAccessViewReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
         // Skipped: OrganizationRegisteredEvent does not provide enough key fields to locate RuntimeInfrastructureAccessViewReadModelProjection.
     }
 
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructurePackageRegisteredEvent,
         message: EventMessage
     ) {
@@ -126,7 +126,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInstallationPlanCreatedEvent,
         message: EventMessage
     ) {
@@ -153,7 +153,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructurePlannedEvent,
         message: EventMessage
     ) {
@@ -181,7 +181,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureRegisteredEvent,
         message: EventMessage
     ) {
@@ -210,7 +210,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructurePreparedEvent,
         message: EventMessage
     ) {
@@ -241,7 +241,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerifiedEvent,
         message: EventMessage
     ) {
@@ -271,7 +271,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerificationFailedEvent,
         message: EventMessage
     ) {
@@ -300,7 +300,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentInstallationSucceededEvent,
         message: EventMessage
     ) {
@@ -333,7 +333,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentInstallationFailedEvent,
         message: EventMessage
     ) {
@@ -362,7 +362,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerificationRetrySucceededEvent,
         message: EventMessage
     ) {
@@ -392,7 +392,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeInfrastructureVerificationRetryFailedEvent,
         message: EventMessage
     ) {
@@ -421,7 +421,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentDeploymentRetrySucceededEvent,
         message: EventMessage
     ) {
@@ -454,7 +454,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeAgentDeploymentRetryFailedEvent,
         message: EventMessage
     ) {
@@ -483,7 +483,7 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: RuntimeConnectionEstablishedEvent,
         message: EventMessage
     ) {
@@ -507,6 +507,16 @@ class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class RuntimeInfrastructureAccessViewReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(RuntimeInfrastructureAccessViewReadModelProjectionUpdater::class)
+    fun defaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
+        repository: RuntimeInfrastructureAccessViewReadModelRepository
+    ): RuntimeInfrastructureAccessViewReadModelProjectionUpdater =
+        DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-runtime-infrastructure-access-view")

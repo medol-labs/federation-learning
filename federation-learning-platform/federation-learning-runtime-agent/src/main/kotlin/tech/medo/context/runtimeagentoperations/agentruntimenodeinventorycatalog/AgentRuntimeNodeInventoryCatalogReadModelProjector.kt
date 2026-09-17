@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -20,13 +22,11 @@ interface AgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(AgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater::class)
-class DefaultAgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater(
+open class DefaultAgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater(
     private val repository: AgentRuntimeNodeInventoryCatalogReadModelRepository
 ) : AgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: AgentRuntimeNodeInventoryReportedEvent,
         message: EventMessage
     ) {
@@ -53,6 +53,16 @@ class DefaultAgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class AgentRuntimeNodeInventoryCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(AgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater::class)
+    fun defaultAgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater(
+        repository: AgentRuntimeNodeInventoryCatalogReadModelRepository
+    ): AgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater =
+        DefaultAgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-agent-runtime-node-inventory-catalog")

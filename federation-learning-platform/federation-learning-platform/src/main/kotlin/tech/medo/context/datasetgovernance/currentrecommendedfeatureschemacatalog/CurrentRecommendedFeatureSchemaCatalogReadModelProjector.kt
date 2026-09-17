@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -20,13 +22,11 @@ interface CurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(CurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater::class)
-class DefaultCurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater(
+open class DefaultCurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater(
     private val repository: CurrentRecommendedFeatureSchemaCatalogReadModelRepository
 ) : CurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: CurrentRecommendedFeatureSchemaVersionMarkedEvent,
         message: EventMessage
     ) {
@@ -43,6 +43,16 @@ class DefaultCurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class CurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(CurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater::class)
+    fun defaultCurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater(
+        repository: CurrentRecommendedFeatureSchemaCatalogReadModelRepository
+    ): CurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater =
+        DefaultCurrentRecommendedFeatureSchemaCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-current-recommended-feature-schema-catalog")

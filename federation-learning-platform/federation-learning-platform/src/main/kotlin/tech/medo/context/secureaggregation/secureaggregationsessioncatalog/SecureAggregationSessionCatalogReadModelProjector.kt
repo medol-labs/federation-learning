@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -52,13 +54,11 @@ interface SecureAggregationSessionCatalogReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(SecureAggregationSessionCatalogReadModelProjectionUpdater::class)
-class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
+open class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
     private val repository: SecureAggregationSessionCatalogReadModelRepository
 ) : SecureAggregationSessionCatalogReadModelProjectionUpdater {
     @Transactional
-    override fun update(
+    open override fun update(
         event: SecureAggregationSessionCreatedEvent,
         message: EventMessage
     ) {
@@ -84,7 +84,7 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: SecureAggregationParticipantsSelectedEvent,
         message: EventMessage
     ) {
@@ -109,7 +109,7 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: HomomorphicEncryptionContextPreparedEvent,
         message: EventMessage
     ) {
@@ -140,7 +140,7 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: EncryptedModelUpdateReceivedEvent,
         message: EventMessage
     ) {
@@ -164,7 +164,7 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: SecureAggregationCompletedEvent,
         message: EventMessage
     ) {
@@ -189,7 +189,7 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: SecureAggregationFailedEvent,
         message: EventMessage
     ) {
@@ -209,6 +209,16 @@ class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
     private fun eventTime(message: EventMessage): LocalDateTime =
         LocalDateTime.ofInstant(message.timestamp(), ZoneOffset.UTC)
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class SecureAggregationSessionCatalogReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(SecureAggregationSessionCatalogReadModelProjectionUpdater::class)
+    fun defaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
+        repository: SecureAggregationSessionCatalogReadModelRepository
+    ): SecureAggregationSessionCatalogReadModelProjectionUpdater =
+        DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-secure-aggregation-session-catalog")

@@ -4,6 +4,8 @@ import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
@@ -26,12 +28,10 @@ interface UserOrganizationMembershipDirectoryReadModelProjectionUpdater {
     )
 }
 
-@Component
-@ConditionalOnMissingBean(UserOrganizationMembershipDirectoryReadModelProjectionUpdater::class)
-class DefaultUserOrganizationMembershipDirectoryReadModelProjectionUpdater(
+open class DefaultUserOrganizationMembershipDirectoryReadModelProjectionUpdater(
     private val repository: UserOrganizationMembershipDirectoryReadModelRepository
 ) : UserOrganizationMembershipDirectoryReadModelProjectionUpdater {
-    override fun update(
+    open override fun update(
         event: OrganizationRegisteredEvent,
         message: EventMessage
     ) {
@@ -39,7 +39,7 @@ class DefaultUserOrganizationMembershipDirectoryReadModelProjectionUpdater(
     }
 
     @Transactional
-    override fun update(
+    open override fun update(
         event: UserAccountBoundToOrganizationEvent,
         message: EventMessage
     ) {
@@ -59,6 +59,16 @@ class DefaultUserOrganizationMembershipDirectoryReadModelProjectionUpdater(
 
     }
 
+}
+
+@Configuration(proxyBeanMethods = false)
+class UserOrganizationMembershipDirectoryReadModelProjectionUpdaterConfiguration {
+    @Bean
+    @ConditionalOnMissingBean(UserOrganizationMembershipDirectoryReadModelProjectionUpdater::class)
+    fun defaultUserOrganizationMembershipDirectoryReadModelProjectionUpdater(
+        repository: UserOrganizationMembershipDirectoryReadModelRepository
+    ): UserOrganizationMembershipDirectoryReadModelProjectionUpdater =
+        DefaultUserOrganizationMembershipDirectoryReadModelProjectionUpdater(repository)
 }
 
 @Namespace("readmodel-user-organization-membership-directory")
