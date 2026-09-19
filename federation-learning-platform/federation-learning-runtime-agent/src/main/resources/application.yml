@@ -85,6 +85,11 @@ medol:
     enabled: ${MEDOL_SYNC_ENABLED:true}
     mode: ${MEDOL_SYNC_MODE:outbox-delta}
     source-base-url: ${MEDOL_SYNC_SOURCE_BASE_URL:}
+    source-base-urls:
+      dataset-governance: ${MEDOL_SYNC_SOURCE_BASE_URLS_DATASETGOVERNANCE:}
+      dictionary-maintenance: ${MEDOL_SYNC_SOURCE_BASE_URLS_DICTIONARYMAINTENANCE:}
+      organization-management: ${MEDOL_SYNC_SOURCE_BASE_URLS_ORGANIZATIONMANAGEMENT:}
+      runtime-provisioning: ${MEDOL_SYNC_SOURCE_BASE_URLS_RUNTIMEPROVISIONING:}
     page-size: ${MEDOL_SYNC_PAGE_SIZE:200}
     fixed-delay-ms: ${MEDOL_SYNC_FIXED_DELAY_MS:30000}
 

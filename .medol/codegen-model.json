@@ -33098,6 +33098,87 @@
               }
             },
             {
+              "name": "runtimeEnginePluginProfile",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeEngineProfileCatalog.pluginProfile"
+                ],
+                "lookup": {
+                  "key": "runtimeEngineProfileId",
+                  "cacheProjection": "RuntimeEngineProfileCatalog",
+                  "sourceField": "pluginProfile",
+                  "targetField": "runtimeEnginePluginProfile",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
+              "name": "runtimeEngineImage",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeEngineProfileCatalog.runtimeEngineImage"
+                ],
+                "lookup": {
+                  "key": "runtimeEngineProfileId",
+                  "cacheProjection": "RuntimeEngineProfileCatalog",
+                  "sourceField": "runtimeEngineImage",
+                  "targetField": "runtimeEngineImage",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
+              "name": "runtimeEngineImageDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeEngineProfileCatalog.imageDigest"
+                ],
+                "lookup": {
+                  "key": "runtimeEngineProfileId",
+                  "cacheProjection": "RuntimeEngineProfileCatalog",
+                  "sourceField": "imageDigest",
+                  "targetField": "runtimeEngineImageDigest",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
               "name": "strategyName",
               "type": "String",
               "dictionary": "TRAINING_STRATEGY",
@@ -33634,7 +33715,7 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "RuntimeEngineProfile.profileName"
+                  "DefineTrainingRunConfiguration.runtimeEngineProfileName"
                 ],
                 "rule": "Snapshot the selected runtime engine profile display name for audit and execution planning."
               }
@@ -33655,7 +33736,7 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "RuntimeEngineProfile.pluginProfile"
+                  "DefineTrainingRunConfiguration.runtimeEnginePluginProfile"
                 ],
                 "rule": "Snapshot the runtime-engine plugin profile that must support the selected model and aggregation plugins."
               }
@@ -33676,7 +33757,7 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "RuntimeEngineProfile.runtimeEngineImage"
+                  "DefineTrainingRunConfiguration.runtimeEngineImage"
                 ],
                 "rule": "Snapshot the exact container image runtime agents must pull when starting per-round runtime-engine workloads."
               }
@@ -33697,7 +33778,7 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "RuntimeEngineProfile.imageDigest"
+                  "DefineTrainingRunConfiguration.runtimeEngineImageDigest"
                 ],
                 "rule": "Snapshot the optional immutable image digest used for provenance and deployment verification."
               }
@@ -34029,6 +34110,15 @@
                   "name": "runtimeEngineProfileName"
                 },
                 {
+                  "name": "runtimeEnginePluginProfile"
+                },
+                {
+                  "name": "runtimeEngineImage"
+                },
+                {
+                  "name": "runtimeEngineImageDigest"
+                },
+                {
                   "name": "strategyName",
                   "example": "FED_AVG"
                 },
@@ -34286,6 +34376,15 @@
                 },
                 {
                   "name": "runtimeEngineProfileName"
+                },
+                {
+                  "name": "runtimeEnginePluginProfile"
+                },
+                {
+                  "name": "runtimeEngineImage"
+                },
+                {
+                  "name": "runtimeEngineImageDigest"
                 },
                 {
                   "name": "strategyName",
@@ -34671,6 +34770,87 @@
                   "cacheProjection": "RuntimeEngineProfileCatalog",
                   "sourceField": "profileName",
                   "targetField": "runtimeEngineProfileName",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
+              "name": "runtimeEnginePluginProfile",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeEngineProfileCatalog.pluginProfile"
+                ],
+                "lookup": {
+                  "key": "runtimeEngineProfileId",
+                  "cacheProjection": "RuntimeEngineProfileCatalog",
+                  "sourceField": "pluginProfile",
+                  "targetField": "runtimeEnginePluginProfile",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
+              "name": "runtimeEngineImage",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeEngineProfileCatalog.runtimeEngineImage"
+                ],
+                "lookup": {
+                  "key": "runtimeEngineProfileId",
+                  "cacheProjection": "RuntimeEngineProfileCatalog",
+                  "sourceField": "runtimeEngineImage",
+                  "targetField": "runtimeEngineImage",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
+              "name": "runtimeEngineImageDigest",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "RuntimeEngineProfileCatalog.imageDigest"
+                ],
+                "lookup": {
+                  "key": "runtimeEngineProfileId",
+                  "cacheProjection": "RuntimeEngineProfileCatalog",
+                  "sourceField": "imageDigest",
+                  "targetField": "runtimeEngineImageDigest",
                   "missingValuePolicy": "keep"
                 }
               }
@@ -35231,7 +35411,7 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "RuntimeEngineProfile.profileName"
+                  "UpdateTrainingRunConfiguration.runtimeEngineProfileName"
                 ],
                 "rule": "Snapshot the updated runtime engine profile display name."
               }
@@ -35252,7 +35432,7 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "RuntimeEngineProfile.pluginProfile"
+                  "UpdateTrainingRunConfiguration.runtimeEnginePluginProfile"
                 ],
                 "rule": "Snapshot the updated runtime-engine plugin profile."
               }
@@ -35273,7 +35453,7 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "RuntimeEngineProfile.runtimeEngineImage"
+                  "UpdateTrainingRunConfiguration.runtimeEngineImage"
                 ],
                 "rule": "Snapshot the updated container image runtime agents must pull."
               }
@@ -35294,7 +35474,7 @@
               "source": {
                 "kind": "derived",
                 "from": [
-                  "RuntimeEngineProfile.imageDigest"
+                  "UpdateTrainingRunConfiguration.runtimeEngineImageDigest"
                 ],
                 "rule": "Snapshot the updated optional immutable image digest."
               }
@@ -35744,6 +35924,15 @@
                   "name": "runtimeEngineProfileName"
                 },
                 {
+                  "name": "runtimeEnginePluginProfile"
+                },
+                {
+                  "name": "runtimeEngineImage"
+                },
+                {
+                  "name": "runtimeEngineImageDigest"
+                },
+                {
                   "name": "strategyName",
                   "example": "FED_AVG"
                 },
@@ -36022,6 +36211,15 @@
                 },
                 {
                   "name": "runtimeEngineProfileName"
+                },
+                {
+                  "name": "runtimeEnginePluginProfile"
+                },
+                {
+                  "name": "runtimeEngineImage"
+                },
+                {
+                  "name": "runtimeEngineImageDigest"
                 },
                 {
                   "name": "strategyName",
@@ -95448,7 +95646,7 @@
       "Agent Deployment Retry Failure Reason": "代理部署重试失败原因",
       "Agent Deployment Retry Failure Reason is required": "代理部署重试失败原因为必填项",
       "Agent Dictionary Value Catalog": "代理字典值目录",
-      "Agent Feature Schema Catalog": "代理功能架构目录",
+      "Agent Feature Schema Catalog": "运行时代理特征架构目录",
       "Agent Install Mode": "代理安装模式",
       "Agent Install Mode is required": "代理安装模式为必填项",
       "Agent Local Model Update Submitted": "代理本地模型更新已提交",

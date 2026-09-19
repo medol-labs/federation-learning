@@ -3,6 +3,7 @@ package tech.medo.shared.application.sync
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
 import org.springframework.web.util.UriComponentsBuilder
@@ -10,10 +11,9 @@ import org.springframework.web.util.UriComponentsBuilder
 @Component
 class HttpPullSyncReadModelAdapter(
     private val properties: SyncReadModelProperties,
-    restClientBuilder: RestClient.Builder,
+    @param:Qualifier("medolInternalRestClient") private val restClient: RestClient,
     private val objectMapper: ObjectMapper
 ) : SyncReadModelAdapter {
-    private val restClient: RestClient = restClientBuilder.build()
     private val mapType = object : TypeReference<Map<String, Any?>>() {}
 
     override fun supports(mode: String): Boolean =

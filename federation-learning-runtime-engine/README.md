@@ -375,8 +375,8 @@ python - <<'PY'
 from pathlib import Path
 import shutil
 
-source = Path("/tmp/fl-demo-data/tiny-imagenet-200")
-target = Path("/tmp/fl-demo-data/tiny-imagenet-densenet-demo")
+source = Path("/Users/bryce/codes/medo/event-modeling/federation-learning/volumes/datasets/tiny-imagenet-200")
+target = Path("/Users/bryce/codes/medo/event-modeling/federation-learning/volumes/datasets/tiny-imagenet-densenet-dev")
 classes = ["n01443537", "n01629819"]
 
 for split in ["train", "val"]:

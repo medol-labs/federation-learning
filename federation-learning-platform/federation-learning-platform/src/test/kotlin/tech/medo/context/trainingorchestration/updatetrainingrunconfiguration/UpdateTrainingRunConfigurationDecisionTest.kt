@@ -69,6 +69,9 @@ class UpdateTrainingRunConfigurationDecisionTest {
             initialModelVersion = null,
             runtimeEngineProfileId = java.util.UUID.randomUUID(),
             runtimeEngineProfileName = null,
+            runtimeEnginePluginProfile = "",
+            runtimeEngineImage = "",
+            runtimeEngineImageDigest = null,
             strategyName = "FED_AVG",
             aggregationAlgorithm = "FEDERATED_AVERAGING",
             maxRounds = 20,
@@ -106,6 +109,9 @@ class UpdateTrainingRunConfigurationDecisionTest {
         assertEquals(command.initialModelVersion, event.initialModelVersion)
         assertEquals(command.runtimeEngineProfileId, event.runtimeEngineProfileId)
         assertEquals(command.runtimeEngineProfileName, event.runtimeEngineProfileName)
+        assertEquals(command.runtimeEnginePluginProfile, event.runtimeEnginePluginProfile)
+        assertEquals(command.runtimeEngineImage, event.runtimeEngineImage)
+        assertEquals(command.runtimeEngineImageDigest, event.runtimeEngineImageDigest)
         assertEquals("FED_AVG", event.strategyName)
         assertEquals("FEDERATED_AVERAGING", event.aggregationAlgorithm)
         assertEquals(20, event.maxRounds)

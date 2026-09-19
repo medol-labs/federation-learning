@@ -65,6 +65,9 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
     initialModelPlugin: searchParams.get("initialModelPlugin") ?? undefined,
     initialModelVersion: searchParams.get("initialModelVersion") ?? undefined,
     runtimeEngineProfileName: searchParams.get("runtimeEngineProfileName") ?? undefined,
+    runtimeEnginePluginProfile: searchParams.get("runtimeEnginePluginProfile") ?? undefined,
+    runtimeEngineImage: searchParams.get("runtimeEngineImage") ?? undefined,
+    runtimeEngineImageDigest: searchParams.get("runtimeEngineImageDigest") ?? undefined,
   } as unknown as Partial<UpdateTrainingRunConfigurationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<UpdateTrainingRunConfigurationCommandInput, UpdateTrainingRunConfigurationCommandInput>({
@@ -133,6 +136,15 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
           ) : null}
           {defaultValues.runtimeEngineProfileName !== undefined && defaultValues.runtimeEngineProfileName !== null ? (
             <input type="hidden" {...form.register("runtimeEngineProfileName" as never)} />
+          ) : null}
+          {defaultValues.runtimeEnginePluginProfile !== undefined && defaultValues.runtimeEnginePluginProfile !== null ? (
+            <input type="hidden" {...form.register("runtimeEnginePluginProfile" as never)} />
+          ) : null}
+          {defaultValues.runtimeEngineImage !== undefined && defaultValues.runtimeEngineImage !== null ? (
+            <input type="hidden" {...form.register("runtimeEngineImage" as never)} />
+          ) : null}
+          {defaultValues.runtimeEngineImageDigest !== undefined && defaultValues.runtimeEngineImageDigest !== null ? (
+            <input type="hidden" {...form.register("runtimeEngineImageDigest" as never)} />
           ) : null}
           <FormField
             control={form.control}
@@ -288,6 +300,21 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                     form.setValue(
                       "runtimeEngineProfileName" as never,
                       String(option?.record?.["profileName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "runtimeEnginePluginProfile" as never,
+                      String(option?.record?.["pluginProfile"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "runtimeEngineImage" as never,
+                      String(option?.record?.["runtimeEngineImage"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
+                      "runtimeEngineImageDigest" as never,
+                      String(option?.record?.["imageDigest"] ?? option?.label ?? "") as never,
                       { shouldDirty: true, shouldValidate: true },
                     );
                   }}

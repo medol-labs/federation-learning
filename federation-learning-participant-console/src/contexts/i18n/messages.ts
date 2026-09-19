@@ -563,7 +563,7 @@ export const messages = {
     "resources.agent_feature_schema_catalog.fields.featureSchemaVersion.label": "特征架构版本",
     "resources.agent_feature_schema_catalog.fields.schemaStatus.label": "架构状态",
     "resources.agent_feature_schema_catalog.fields.syncedAt.label": "同步时间",
-    "resources.agent_feature_schema_catalog.label": "代理功能架构目录",
+    "resources.agent_feature_schema_catalog.label": "运行时代理特征架构目录",
     "resources.agent_organization_directory.fields.organizationId.label": "组织 ID",
     "resources.agent_organization_directory.fields.organizationName.label": "组织名称",
     "resources.agent_organization_directory.fields.organizationType.label": "组织类型",

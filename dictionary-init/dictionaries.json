@@ -62,7 +62,7 @@
     },
     {
       "dictionaryCode": "FEATURE_SCHEMA_DATA_MODALITY",
-      "dictionaryName": "特征模式数据模态",
+      "dictionaryName": "特征架构数据模态",
       "ownerContext": "FeatureSchemaManagement",
       "description": "Shape of data described by a feature schema.",
       "multiTenant": false,
