@@ -2,6 +2,7 @@
 import { useShow, useTranslate } from "@refinedev/core";
 
 import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
+import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 import {
   Card,
   CardContent,
@@ -136,7 +137,7 @@ export const RuntimeInstallationPlanCatalogShow = () => {
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_plan_catalog.fields.verificationFailureReason.label", "Verification Failure Reason")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.verificationFailureReason, t)}</p>
+              <CopyableText value={record?.verificationFailureReason} />
             </div>
             <Separator />
             <div>
@@ -151,7 +152,7 @@ export const RuntimeInstallationPlanCatalogShow = () => {
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_plan_catalog.fields.agentDeploymentFailureReason.label", "Agent Deployment Failure Reason")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.agentDeploymentFailureReason, t)}</p>
+              <CopyableText value={record?.agentDeploymentFailureReason} />
             </div>
             <Separator />
             <div>
@@ -161,7 +162,7 @@ export const RuntimeInstallationPlanCatalogShow = () => {
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_plan_catalog.fields.agentDeploymentRetryFailureReason.label", "Agent Deployment Retry Failure Reason")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.agentDeploymentRetryFailureReason, t)}</p>
+              <CopyableText value={record?.agentDeploymentRetryFailureReason} />
             </div>
             <Separator />
             <div>

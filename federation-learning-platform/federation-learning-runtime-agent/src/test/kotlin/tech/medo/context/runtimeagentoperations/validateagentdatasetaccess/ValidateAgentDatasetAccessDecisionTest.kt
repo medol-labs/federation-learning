@@ -27,18 +27,8 @@ class ValidateAgentDatasetAccessDecisionTest {
             datasetName = "",
             runtimeId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
             runtimeName = null,
-            dataSourceType = "FILE",
-            host = null,
-            port = null,
-            url = null,
-            databaseName = null,
-            schemaName = null,
-            tableName = null,
             filePath = "/data/credit-risk.csv",
-            objectBucket = null,
-            objectPrefix = null,
-            dataFormat = "CSV",
-            credentialSecretName = null
+            dataFormat = "CSV"
         )
 
         val events = (object : ValidateAgentDatasetAccessDecision {}).decide(
@@ -81,18 +71,8 @@ class ValidateAgentDatasetAccessDecisionTest {
             datasetName = "",
             runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666"),
             runtimeName = null,
-            dataSourceType = "FILE",
-            host = null,
-            port = null,
-            url = null,
-            databaseName = null,
-            schemaName = null,
-            tableName = null,
             filePath = "/data/missing.csv",
-            objectBucket = null,
-            objectPrefix = null,
-            dataFormat = "CSV",
-            credentialSecretName = null
+            dataFormat = "CSV"
         )
 
         val events = (object : ValidateAgentDatasetAccessDecision {}).decide(

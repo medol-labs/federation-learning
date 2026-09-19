@@ -30,6 +30,11 @@ type RoundExecutionCatalogRecord = {
   state: "PLAN_RECEIVED" | "PLAN_ACCEPTED" | "PLAN_REJECTED" | "RUNNING" | "START_FAILED" | "RETRIED" | "COMPLETED" | "FAILED" | "UPDATE_SUBMITTED" | "RUNTIME_ENGINE_RELEASED" | "RUNTIME_ENGINE_RELEASE_HANDLED";
   featureSchemaId?: string;
   baseModelId?: string;
+  runtimeEngineProfileId?: string;
+  runtimeEngineProfileName?: string;
+  runtimeEnginePluginProfile?: string;
+  runtimeEngineImage?: string;
+  runtimeEngineImageDigest?: string;
   runtimeEngineJobId?: string;
   runtimeEngineObservedStatus?: string;
   runtimeEngineObservationAt?: string;
@@ -282,6 +287,76 @@ export const RoundExecutionCatalogList = () => {
         meta: {
           label: t("resources.round_execution_catalog.fields.baseModelId.label", "Base Model Id"),
           placeholder: "Enter Base Model Id",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEngineProfileId", {
+        id: "runtimeEngineProfileId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeEngineProfileId.label", "Runtime Engine Profile Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeEngineProfileId.label", "Runtime Engine Profile Id"),
+          placeholder: "Enter Runtime Engine Profile Id",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEngineProfileName", {
+        id: "runtimeEngineProfileName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeEngineProfileName.label", "Runtime Engine Profile Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeEngineProfileName.label", "Runtime Engine Profile Name"),
+          placeholder: "Enter Runtime Engine Profile Name",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEnginePluginProfile", {
+        id: "runtimeEnginePluginProfile",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeEnginePluginProfile.label", "Runtime Engine Plugin Profile")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeEnginePluginProfile.label", "Runtime Engine Plugin Profile"),
+          placeholder: "Enter Runtime Engine Plugin Profile",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEngineImage", {
+        id: "runtimeEngineImage",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeEngineImage.label", "Runtime Engine Image")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeEngineImage.label", "Runtime Engine Image"),
+          placeholder: "Enter Runtime Engine Image",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEngineImageDigest", {
+        id: "runtimeEngineImageDigest",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.round_execution_catalog.fields.runtimeEngineImageDigest.label", "Runtime Engine Image Digest")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.round_execution_catalog.fields.runtimeEngineImageDigest.label", "Runtime Engine Image Digest"),
+          placeholder: "Enter Runtime Engine Image Digest",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -779,7 +854,7 @@ export const RoundExecutionCatalogList = () => {
         tableName: "round_execution_catalog_read_model_entity",
         idField: "roundExecutionId",
         idFields: ["roundExecutionId"],
-        queryFields: ["roundExecutionId","executionSessionId","executionPlanId","trainingJobId","trainingRunConfigurationId","roundId","roundNumber","organizationId","runtimeId","state","featureSchemaId","baseModelId","runtimeEngineJobId","runtimeEngineObservedStatus","runtimeEngineObservationAt","localUpdateArtifactRef","metricsArtifactRef","localExecutionRequirementsSatisfied","runtimeIdentityMatched","runtimeDatasetBindingAvailable","datasetAccessValidated","baseModelAvailable","trainingConfigurationSupported","runtimeResourceAvailable","runtimeAgentIdle","updateArtifactId","artifactRef","artifactDigest","trainingLoss","receivedAt","acceptedAt","rejectedAt","startedAt","completedAt","failedAt","submittedAt","failureReason","retryReason","runtimeEngineReleased","runtimeEngineReleaseFailureReason"],
+        queryFields: ["roundExecutionId","executionSessionId","executionPlanId","trainingJobId","trainingRunConfigurationId","roundId","roundNumber","organizationId","runtimeId","state","featureSchemaId","baseModelId","runtimeEngineProfileId","runtimeEngineProfileName","runtimeEnginePluginProfile","runtimeEngineImage","runtimeEngineImageDigest","runtimeEngineJobId","runtimeEngineObservedStatus","runtimeEngineObservationAt","localUpdateArtifactRef","metricsArtifactRef","localExecutionRequirementsSatisfied","runtimeIdentityMatched","runtimeDatasetBindingAvailable","datasetAccessValidated","baseModelAvailable","trainingConfigurationSupported","runtimeResourceAvailable","runtimeAgentIdle","updateArtifactId","artifactRef","artifactDigest","trainingLoss","receivedAt","acceptedAt","rejectedAt","startedAt","completedAt","failedAt","submittedAt","failureReason","retryReason","runtimeEngineReleased","runtimeEngineReleaseFailureReason"],
         label: t("resources.round_execution_catalog.label", "Round Execution Catalog"),
         aggregateRoute: "roundexecution",
         queryRoute: "roundexecutioncatalog",

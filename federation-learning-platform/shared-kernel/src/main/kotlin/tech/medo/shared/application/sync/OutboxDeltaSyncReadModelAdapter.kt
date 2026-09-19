@@ -23,7 +23,8 @@ class OutboxDeltaSyncReadModelAdapter(
         mode.equals("outbox-delta", ignoreCase = true)
 
     override fun syncOnce(target: SyncReadModelTarget, checkpoint: SyncReadModelCheckpoint?): SyncReadModelResult {
-        if (properties.sourceBaseUrl.isBlank()) {
+        val sourceBaseUrl = properties.sourceBaseUrlFor(target)
+        if (sourceBaseUrl.isBlank()) {
             throw IllegalStateException("Sync target ${target.name} requires medol.sync.source-base-url")
         }
 
@@ -35,7 +36,7 @@ class OutboxDeltaSyncReadModelAdapter(
             var cursor: String? = null
             do {
                 val snapshotUriBuilder = UriComponentsBuilder
-                    .fromHttpUrl(properties.sourceBaseUrl)
+                    .fromHttpUrl(sourceBaseUrl)
                     .path(target.sourcePath)
                     .queryParam("size", properties.pageSize)
                 cursor?.takeIf { it.isNotBlank() }?.let { snapshotUriBuilder.queryParam("cursor", it) }
@@ -84,7 +85,7 @@ class OutboxDeltaSyncReadModelAdapter(
 
         val afterSequence = bootstrapHighWatermark ?: checkpoint?.lastSequence ?: 0
         val uriBuilder = UriComponentsBuilder
-            .fromHttpUrl(properties.sourceBaseUrl)
+            .fromHttpUrl(sourceBaseUrl)
             .path(target.deltaPath)
             .queryParam("afterSequence", afterSequence)
             .queryParam("size", properties.pageSize)

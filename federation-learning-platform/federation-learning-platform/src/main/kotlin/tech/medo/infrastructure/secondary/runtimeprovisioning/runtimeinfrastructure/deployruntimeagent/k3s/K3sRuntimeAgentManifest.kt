@@ -339,6 +339,8 @@ spec:
               value: "5000"
             - name: "MEDOL_SYNC_SOURCE_BASE_URL"
               value: ${quote(properties.platformUrl)}
+            - name: "MEDOL_SYNC_SOURCE_BASE_URLS_DICTIONARYMAINTENANCE"
+              value: ${quote(properties.supportUrl)}
             - name: "FEDERATION_LEARNING_SUPPORT_URL"
               value: ${quote(properties.supportUrl)}
             - name: "RUNTIME_AGENT_ID"
@@ -436,11 +438,8 @@ private fun renderParticipantConsoleManifest(
     val apiPath = normalizePath(properties.participantConsoleApiPath)
     val apiPathPrefix = "$apiPath/"
     val serviceType = properties.participantConsoleServiceType.ifBlank { "NodePort" }
-    val nodePortLine = if (serviceType.equals("NodePort", ignoreCase = true) && properties.participantConsoleNodePort != null) {
-        "\n      nodePort: ${properties.participantConsoleNodePort}"
-    } else {
-        ""
-    }
+    val nodePort = participantConsoleNodePort(properties, runtimeAgentId, serviceType)
+    val nodePortLine = nodePort?.let { "\n      nodePort: $it" } ?: ""
 
     return """
 ---
@@ -605,6 +604,22 @@ private fun runtimeAgentDependencyNames(deploymentName: String): RuntimeAgentDep
         participantConsole = relatedKubernetesName(deploymentName, "console"),
         participantConsoleNginx = relatedKubernetesName(deploymentName, "console-nginx")
     )
+
+private fun participantConsoleNodePort(
+    properties: K3sRuntimeInfrastructureProperties,
+    runtimeAgentId: UUID,
+    serviceType: String
+): Int? {
+    if (!serviceType.equals("NodePort", ignoreCase = true)) return null
+    val base = properties.participantConsoleNodePort ?: return null
+    val range = properties.participantConsoleNodePortAllocationRange.coerceAtLeast(1)
+    val offset = if (range == 1) 0 else Math.floorMod(runtimeAgentId.hashCode(), range)
+    val port = base + offset
+    require(port in 30000..32767) {
+        "participant console NodePort $port is outside Kubernetes NodePort range 30000..32767"
+    }
+    return port
+}
 
 private fun normalizePath(value: String): String {
     val path = value.trim().ifBlank { "/api/runtime-agent" }

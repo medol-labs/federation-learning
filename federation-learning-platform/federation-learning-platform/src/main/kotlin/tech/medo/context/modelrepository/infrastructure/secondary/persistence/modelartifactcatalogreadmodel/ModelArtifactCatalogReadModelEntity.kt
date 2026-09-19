@@ -21,6 +21,7 @@ class ModelArtifactCatalogReadModelEntity : MetadataProjection {
     @Id
     var modelId: UUID? = null
     var modelName: String? = null
+    var modelPlugin: String? = null
     var modelVersion: String? = null
     @Column(columnDefinition = "text")
     var modelDescription: String? = null

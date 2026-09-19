@@ -18,6 +18,7 @@ class DownloadModelArtifactDecisionTest {
             ModelArtifactRegisteredEvent(
             modelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             modelName = "credit-risk",
+            modelPlugin = "",
             modelVersion = "v1",
             modelDescription = null,
             sourceType = "",

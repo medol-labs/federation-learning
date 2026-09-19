@@ -16,6 +16,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 import type { DictionaryCode } from "@/contexts/domain/value-types";
 
 type DictionaryCatalogRecord = {
@@ -125,8 +126,9 @@ export const DictionaryCatalogList = () => {
           label: t("resources.dictionary_catalog.fields.description.label", "Description"),
           placeholder: "Enter Description",
           variant: "text",
+          filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("state", {
         id: "state",

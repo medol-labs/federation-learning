@@ -18,6 +18,7 @@ data class CompleteModelAggregationCommand(
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
     val secureAggregationSessionId: UUID?,
+    val modelPlugin: String,
     val aggregatedModelId: UUID,
     val aggregatedModelName: String,
     val aggregatedModelVersion: String,

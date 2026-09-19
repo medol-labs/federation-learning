@@ -70,6 +70,11 @@ export const TrainingRunConfigurationCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.initialModelPlugin.label", "Initial Model Plugin")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.initialModelPlugin, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.initialModelVersion.label", "Initial Model Version")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.initialModelVersion, t)}</p>
             </div>
@@ -112,6 +117,31 @@ export const TrainingRunConfigurationCatalogShow = () => {
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.initialModelSignatureUri.label", "Initial Model Signature Uri")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.initialModelSignatureUri, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.runtimeEngineProfileId.label", "Runtime Engine Profile Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEngineProfileId, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.runtimeEngineProfileName.label", "Runtime Engine Profile Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEngineProfileName, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.runtimeEnginePluginProfile.label", "Runtime Engine Plugin Profile")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEnginePluginProfile, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.runtimeEngineImage.label", "Runtime Engine Image")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEngineImage, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.runtimeEngineImageDigest.label", "Runtime Engine Image Digest")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEngineImageDigest, t)}</p>
             </div>
             <Separator />
             <div>

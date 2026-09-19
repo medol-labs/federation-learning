@@ -23,6 +23,7 @@ class TrainingRunConfigurationCatalogReadModelCriteria {
     var featureSchemaId: StringFilter? = null
     var initialModelId: StringFilter? = null
     var initialModelName: StringFilter? = null
+    var initialModelPlugin: StringFilter? = null
     var initialModelVersion: StringFilter? = null
     var federationName: StringFilter? = null
     var featureDomain: StringFilter? = null
@@ -32,6 +33,11 @@ class TrainingRunConfigurationCatalogReadModelCriteria {
     var initialModelFormat: StringFilter? = null
     var initialModelArtifactDigest: StringFilter? = null
     var initialModelSignatureUri: StringFilter? = null
+    var runtimeEngineProfileId: StringFilter? = null
+    var runtimeEngineProfileName: StringFilter? = null
+    var runtimeEnginePluginProfile: StringFilter? = null
+    var runtimeEngineImage: StringFilter? = null
+    var runtimeEngineImageDigest: StringFilter? = null
     var strategyName: StringFilter? = null
     var aggregationAlgorithm: StringFilter? = null
     var maxRounds: IntegerFilter? = null
@@ -60,6 +66,7 @@ class TrainingRunConfigurationCatalogReadModelProjection : MetadataProjection {
     var featureSchemaId: UUID? = null
     var initialModelId: UUID? = null
     var initialModelName: String? = null
+    var initialModelPlugin: String? = null
     var initialModelVersion: String? = null
     var federationName: String? = null
     var featureDomain: String? = null
@@ -69,6 +76,11 @@ class TrainingRunConfigurationCatalogReadModelProjection : MetadataProjection {
     var initialModelFormat: String? = null
     var initialModelArtifactDigest: String? = null
     var initialModelSignatureUri: String? = null
+    var runtimeEngineProfileId: UUID? = null
+    var runtimeEngineProfileName: String? = null
+    var runtimeEnginePluginProfile: String? = null
+    var runtimeEngineImage: String? = null
+    var runtimeEngineImageDigest: String? = null
     var strategyName: String? = null
     var aggregationAlgorithm: String? = null
     var maxRounds: Int? = null
@@ -103,6 +115,7 @@ fun TrainingRunConfigurationCatalogReadModelProjection.toReadModel(): TrainingRu
     featureSchemaId = featureSchemaId,
     initialModelId = initialModelId,
     initialModelName = initialModelName,
+    initialModelPlugin = initialModelPlugin,
     initialModelVersion = initialModelVersion,
     federationName = federationName,
     featureDomain = featureDomain,
@@ -112,6 +125,11 @@ fun TrainingRunConfigurationCatalogReadModelProjection.toReadModel(): TrainingRu
     initialModelFormat = initialModelFormat,
     initialModelArtifactDigest = initialModelArtifactDigest,
     initialModelSignatureUri = initialModelSignatureUri,
+    runtimeEngineProfileId = runtimeEngineProfileId,
+    runtimeEngineProfileName = runtimeEngineProfileName,
+    runtimeEnginePluginProfile = runtimeEnginePluginProfile,
+    runtimeEngineImage = runtimeEngineImage,
+    runtimeEngineImageDigest = runtimeEngineImageDigest,
     strategyName = strategyName,
     aggregationAlgorithm = aggregationAlgorithm,
     maxRounds = maxRounds,
@@ -153,6 +171,7 @@ data class TrainingRunConfigurationCatalogReadModel(
     val featureSchemaId: UUID?,
     val initialModelId: UUID?,
     val initialModelName: String?,
+    val initialModelPlugin: String?,
     val initialModelVersion: String?,
     val federationName: String?,
     val featureDomain: String?,
@@ -162,6 +181,11 @@ data class TrainingRunConfigurationCatalogReadModel(
     val initialModelFormat: String?,
     val initialModelArtifactDigest: String?,
     val initialModelSignatureUri: String?,
+    val runtimeEngineProfileId: UUID?,
+    val runtimeEngineProfileName: String?,
+    val runtimeEnginePluginProfile: String?,
+    val runtimeEngineImage: String?,
+    val runtimeEngineImageDigest: String?,
     val strategyName: String?,
     val aggregationAlgorithm: String?,
     val maxRounds: Int?,

@@ -292,7 +292,6 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.infrastructureVerificationFailedAt = eventTime(message)
-            entity.infrastructureVerificationFailureReason = event.failureReason
             entity.state = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -354,7 +353,6 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.agentDeploymentFailedAt = eventTime(message)
-            entity.agentDeploymentFailureReason = event.failureReason
             entity.state = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -413,7 +411,6 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.infrastructureVerificationFailedAt = eventTime(message)
-            entity.infrastructureVerificationFailureReason = event.failureReason
             entity.state = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -475,7 +472,6 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.agentDeploymentRetryFailedAt = eventTime(message)
-            entity.agentDeploymentRetryFailureReason = event.failureReason
             entity.state = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

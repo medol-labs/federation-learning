@@ -26,6 +26,7 @@ class K3sRuntimeInfrastructureProperties {
     var participantConsoleContainerPort: Int = 80
     var participantConsoleServiceType: String = "NodePort"
     var participantConsoleNodePort: Int? = 30082
+    var participantConsoleNodePortAllocationRange: Int = 1
     var participantConsoleApiPath: String = "/api/runtime-agent"
     var platformUrl: String = "http://federation-learning-platform:8081"
     var supportUrl: String = "http://federation-learning-support:8080"

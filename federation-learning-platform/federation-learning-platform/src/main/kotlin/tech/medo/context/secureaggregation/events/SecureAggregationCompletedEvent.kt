@@ -19,6 +19,7 @@ data class SecureAggregationCompletedEvent(
     val roundNumber: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
+    val modelPlugin: String,
     val aggregatedModelId: UUID,
     val aggregatedModelName: String,
     val aggregatedModelVersion: String,

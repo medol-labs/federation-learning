@@ -7,6 +7,10 @@ import {
   AgentDatasetAccessValidationCatalogShow,
 } from "./runtimeagentoperations/read-models/agent-dataset-access-validation-catalog";
 import {
+  AgentDictionaryValueCatalogList,
+  AgentDictionaryValueCatalogShow,
+} from "./runtimeagentoperations/read-models/agent-dictionary-value-catalog";
+import {
   AgentFeatureSchemaCatalogList,
   AgentFeatureSchemaCatalogShow,
 } from "./runtimeagentoperations/read-models/agent-feature-schema-catalog";
@@ -107,6 +111,10 @@ export const contextRoutes = (
     <Route path="/agent-dataset-access-validation-catalog">
       <Route index element={resolvePageOverride("agent-dataset-access-validation-catalog", "list", <AgentDatasetAccessValidationCatalogList />)} />
       <Route path="show/:id" element={resolvePageOverride("agent-dataset-access-validation-catalog", "show", <AgentDatasetAccessValidationCatalogShow />)} />
+    </Route>
+    <Route path="/agent-dictionary-value-catalog">
+      <Route index element={resolvePageOverride("agent-dictionary-value-catalog", "list", <AgentDictionaryValueCatalogList />)} />
+      <Route path="show/:id" element={resolvePageOverride("agent-dictionary-value-catalog", "show", <AgentDictionaryValueCatalogShow />)} />
     </Route>
     <Route path="/agent-feature-schema-catalog">
       <Route index element={resolvePageOverride("agent-feature-schema-catalog", "list", <AgentFeatureSchemaCatalogList />)} />

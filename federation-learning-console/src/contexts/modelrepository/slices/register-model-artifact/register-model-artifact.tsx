@@ -42,6 +42,7 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
   const [pendingFileUploads, setPendingFileUploads] = useState<Record<string, PendingFileUpload | undefined>>({});
   const defaultValues = {
     modelName: searchParams.get("modelName") ?? undefined,
+    modelPlugin: searchParams.get("modelPlugin") ?? undefined,
     modelVersion: searchParams.get("modelVersion") ?? undefined,
     modelDescription: searchParams.get("modelDescription") ?? undefined,
     sourceType: searchParams.get("sourceType") ?? undefined,
@@ -137,6 +138,39 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
                     placeholder={"Enter Model Name"}
                   />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="modelPlugin"
+            rules={{ required: "Model Plugin is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelPlugin.label", "Model Plugin")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="dictionary_value_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="displayName"
+                  optionValue="valueCode"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelPlugin.placeholder", "Select Model Plugin")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_PLUGIN"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelPlugin.label", "Dictionary Value Catalog"),
+                    aggregateRoute: "dictionaryvalue",
+                    queryRoute: "dictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

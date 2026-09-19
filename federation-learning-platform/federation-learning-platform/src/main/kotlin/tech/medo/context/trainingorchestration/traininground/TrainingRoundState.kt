@@ -76,6 +76,7 @@ class TrainingRoundState @EntityCreator constructor() {
     var requiredModelUpdateCount: Int? = null
     var plainAggregationReady: Boolean? = null
     var rejectionReason: String? = null
+    var modelPlugin: String? = null
     var aggregatedModelId: UUID? = null
     var aggregatedModelName: String? = null
     var aggregatedModelVersion: String? = null
@@ -290,6 +291,7 @@ class TrainingRoundState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
+        modelPlugin = event.modelPlugin
         aggregatedModelId = event.aggregatedModelId
         aggregatedModelName = event.aggregatedModelName
         aggregatedModelVersion = event.aggregatedModelVersion
@@ -339,6 +341,7 @@ class TrainingRoundState @EntityCreator constructor() {
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
         secureAggregationSessionId = event.secureAggregationSessionId
+        modelPlugin = event.modelPlugin
         aggregatedModelId = event.aggregatedModelId
         aggregatedModelName = event.aggregatedModelName
         aggregatedModelVersion = event.aggregatedModelVersion
@@ -364,6 +367,7 @@ class TrainingRoundState @EntityCreator constructor() {
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
         aggregatedModelId = event.aggregatedModelId
+        modelPlugin = event.modelPlugin
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
         aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
         modelFormat = event.modelFormat
@@ -385,6 +389,7 @@ class TrainingRoundState @EntityCreator constructor() {
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
         aggregatedModelId = event.aggregatedModelId
+        modelPlugin = event.modelPlugin
         aggregatedModelArtifactUri = event.aggregatedModelArtifactUri
         aggregatedModelRegistryRef = event.aggregatedModelRegistryRef
         modelFormat = event.modelFormat

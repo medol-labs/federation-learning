@@ -33,6 +33,16 @@ const runtimePackageVersion = String(args['runtime-package-version'] ?? process.
 const runtimeAgentInstallMode = String(args['agent-install-mode'] ?? process.env.FL_RUNTIME_AGENT_INSTALL_MODE ?? 'MANUAL').trim().toUpperCase();
 const runtimeEndpointScope = String(args['endpoint-scope'] ?? process.env.FL_RUNTIME_ENDPOINT_SCOPE ?? 'LOCAL_DEV').trim().toUpperCase();
 const expectedNodeCount = positiveInt(args['expected-node-count'] ?? process.env.FL_RUNTIME_EXPECTED_NODE_COUNT, 1);
+const runtimeEngineImage = String(
+    args['runtime-engine-image'] ??
+    process.env.FL_RUNTIME_ENGINE_IMAGE ??
+    process.env.RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE ??
+    'medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT'
+).trim();
+const runtimeEngineImageDigest = nullableString(
+    args['runtime-engine-image-digest'] ??
+    process.env.FL_RUNTIME_ENGINE_IMAGE_DIGEST
+);
 const registerRuntimeInfrastructure = booleanOption(
     args['register-runtime-infrastructure'] ?? process.env.FL_REGISTER_RUNTIME_INFRASTRUCTURE,
     false
@@ -55,7 +65,9 @@ const seed = buildSeed(trainingScenario, runtimeDatasetPath, runtimeAgentUrl, ru
     runtimePackageVersion,
     runtimeAgentInstallMode,
     runtimeEndpointScope,
-    expectedNodeCount
+    expectedNodeCount,
+    runtimeEngineImage,
+    runtimeEngineImageDigest
 });
 
 console.log(`[init-training] platformUrl=${platformUrl}`);
@@ -63,6 +75,7 @@ console.log(`[init-training] runtimeAgentUrl=${runtimeAgentUrl}`);
 console.log(`[init-training] runtimeEngineUrl=${runtimeEngineUrl}`);
 console.log(`[init-training] runtimeEnvironmentType=${runtimeEnvironmentType}`);
 console.log(`[init-training] runtimePackage=${runtimePackageName}:${runtimePackageVersion}`);
+console.log(`[init-training] runtimeEngineImage=${runtimeEngineImage}`);
 console.log(`[init-training] runtimeAgentInstallMode=${runtimeAgentInstallMode}`);
 console.log(`[init-training] registerRuntimeInfrastructure=${registerRuntimeInfrastructure}`);
 console.log(`[init-training] createAndSubmitTrainingJob=${createJob}`);
@@ -89,6 +102,7 @@ console.log(JSON.stringify({
     runtimeAgentId: seed.runtime.runtimeAgentId,
     datasetId: seed.dataset.datasetId,
     modelId: seed.model.modelId,
+    runtimeEngineProfileId: seed.runtimeEngineProfile.runtimeEngineProfileId,
     trainingRunConfigurationId: seed.trainingRunConfiguration.trainingRunConfigurationId,
     trainingJobId: createJob ? seed.trainingJob.trainingJobId : undefined
 }, null, 2));
@@ -210,6 +224,17 @@ async function ensurePlatformData() {
     await ensureRuntimeProvisioningData();
 
     await ensureOne({
+        label: 'runtime engine profile',
+        baseUrl: platformUrl,
+        queryPath: '/runtimeengineprofile/runtimeengineprofilecatalog',
+        query: {
+            'profileName.equals': seed.runtimeEngineProfile.profileName
+        },
+        createPath: '/runtimeengineprofile/registerruntimeengineprofile',
+        createPayload: seed.runtimeEngineProfile
+    });
+
+    await ensureOne({
         label: 'runtime identity',
         baseUrl: platformUrl,
         queryPath: '/runtimeidentity/runtimeidentitycatalog',
@@ -235,6 +260,7 @@ async function ensurePlatformData() {
             runtimeAgentId: seed.runtime.runtimeAgentId,
             agentInstallMode: seed.runtimeInstallationPlan.agentInstallMode,
             organizationId: seed.organization.organizationId,
+            organizationName: seed.organization.organizationName,
             runtimeName: seed.runtime.runtimeName,
             runtimeAgentEndpoint: runtimeAgentUrl,
             endpointScope: seed.runtimeEndpointScope
@@ -330,7 +356,16 @@ async function ensureRuntimeInfrastructurePlanned(runtimeInfrastructureId, runti
 
     await postCommand(platformUrl, '/runtimeinfrastructure/planruntimeinfrastructure', {
         runtimeInfrastructureId,
-        runtimeInstallationPlanId
+        runtimeInstallationPlanId,
+        organizationId: seed.organization.organizationId,
+        organizationName: seed.organization.organizationName,
+        runtimeInfrastructurePackageId: seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId,
+        runtimeInfrastructurePackageName: seed.runtimeInfrastructurePackage.packageName,
+        runtimeInfrastructurePackageVersion: seed.runtimeInfrastructurePackage.packageVersion,
+        runtimeEnvironmentType: seed.runtimeInfrastructurePackage.runtimeEnvironmentType,
+        runtimeName: seed.runtime.runtimeName,
+        agentInstallMode: seed.runtimeInstallationPlan.agentInstallMode,
+        expectedNodeCount: seed.runtimeInstallationPlan.expectedNodeCount
     }, 'runtime infrastructure plan');
     return waitForOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
         'runtimeInfrastructureId.equals': runtimeInfrastructureId
@@ -570,6 +605,7 @@ async function postCommand(baseUrl, path, payload, label) {
 
 function applyRuntimeInfrastructureId(runtimeInfrastructureId) {
     seed.runtime.runtimeInfrastructureId = runtimeInfrastructureId;
+    seed.runtimeInstallationPlan.runtimeInfrastructureId = runtimeInfrastructureId;
     seed.node.runtimeInfrastructureId = runtimeInfrastructureId;
     seed.node.runtimeNodeInventoryReportId = stableUuid(
         `fl-dev:node-inventory:${runtimeInfrastructureId}:${seed.runtime.runtimeAgentId}`
@@ -688,6 +724,15 @@ function buildSeed(scenario, datasetPathValue, runtimeAgentEndpoint, runtimeEngi
 function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions) {
     const runtimeName = 'local-vision-runtime';
     const datasetName = 'Tiny ImageNet DenseNet ImageFolder';
+    const organizationName = 'FL Dev Vision Lab';
+    const federationName = 'Tiny ImageNet DenseNet Federation';
+    const featureDomain = 'tiny-imagenet-image-classification';
+    const featureSchemaVersion = 'v1';
+    const modelName = 'Tiny ImageNet DenseNet121 Baseline';
+    const modelPlugin = 'PYTORCH_TORCHVISION_DENSENET121_CLASSIFIER';
+    const modelVersion = 'v1';
+    const configurationName = 'Tiny ImageNet DenseNet Local Dev';
+    const runtimeEngineProfileId = stableUuid('fl-dev:runtime-engine-profile:pytorch-vision:v1');
     const organizationId = stableUuid('fl-dev:organization:local-vision-lab');
     const federationId = stableUuid('fl-dev:federation:tiny-imagenet-densenet');
     const featureSchemaId = stableUuid('fl-dev:feature-schema:tiny-imagenet-image-classification:v1');
@@ -712,20 +757,20 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
         requiresCsvRuntimeAgentDatasetAdapters: false,
         organization: {
             organizationId,
-            organizationName: 'FL Dev Vision Lab',
+            organizationName,
             organizationType: 'LABORATORY',
             contactEmail: 'fl-dev@example.com'
         },
         federation: {
             federationId,
-            federationName: 'Tiny ImageNet DenseNet Federation',
+            federationName,
             description: 'Local development federation for DenseNet image classification smoke testing',
             minimumParticipantCount: 1
         },
         featureSchema: {
             featureSchemaId,
-            featureDomain: 'tiny-imagenet-image-classification',
-            version: 'v1',
+            featureDomain,
+            version: featureSchemaVersion,
             dataModality: 'IMAGE',
             features: [
                 feature('image', 'FILE', true, false, 'Image sample file in ImageFolder layout'),
@@ -749,6 +794,7 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
             runtimeInfrastructureId,
             runtimeAgentId,
             organizationId,
+            organizationName,
             runtimeName
         },
         runtimeInfrastructurePackage: {
@@ -759,8 +805,13 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
         },
         runtimeInstallationPlan: {
             runtimeInstallationPlanId,
+            runtimeInfrastructureId,
             organizationId,
+            organizationName,
             runtimeInfrastructurePackageId,
+            runtimeInfrastructurePackageName: runtimeOptions.runtimePackageName,
+            runtimeInfrastructurePackageVersion: runtimeOptions.runtimePackageVersion,
+            runtimeEnvironmentType: runtimeOptions.runtimeEnvironmentType,
             runtimeName,
             agentInstallMode: runtimeOptions.runtimeAgentInstallMode,
             expectedNodeCount: runtimeOptions.expectedNodeCount
@@ -769,8 +820,10 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
         node: {
             runtimeNodeInventoryReportId: stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeAgentId}`),
             organizationId,
+            organizationName,
             runtimeInfrastructureId,
             runtimeAgentId,
+            runtimeName,
             runtimeNodeName: runtimeName,
             infrastructureNodeId: 'local-dev-node',
             runtimeNodeRole: 'TRAINER',
@@ -784,7 +837,10 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
         dataset: {
             datasetId,
             organizationId,
+            organizationName,
             featureSchemaId,
+            featureDomain,
+            featureSchemaVersion,
             datasetName,
             datasetUsage: 'TRAINING'
         },
@@ -792,50 +848,42 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
             runtimeDatasetBindingId,
             datasetId,
             organizationId,
+            organizationName,
             featureSchemaId,
+            featureDomain,
+            featureSchemaVersion,
             datasetName,
             runtimeId,
-            dataSourceType: 'FILE',
-            host: null,
-            port: null,
-            url: null,
-            databaseName: null,
-            schemaName: null,
-            tableName: null,
+            runtimeName,
             filePath: datasetPathValue,
-            objectBucket: null,
-            objectPrefix: null,
-            dataFormat: 'IMAGE_FOLDER',
-            credentialSecretName: null
+            dataFormat: 'IMAGE_FOLDER'
         },
         accessValidation: {
             datasetAccessValidationId,
             runtimeDatasetBindingId,
             datasetId,
             organizationId,
+            organizationName,
             featureSchemaId,
+            featureDomain,
+            featureSchemaVersion,
             datasetName,
             runtimeId,
-            dataSourceType: 'FILE',
-            host: null,
-            port: null,
-            url: null,
-            databaseName: null,
-            schemaName: null,
-            tableName: null,
+            runtimeName,
             filePath: datasetPathValue,
-            objectBucket: null,
-            objectPrefix: null,
-            dataFormat: 'IMAGE_FOLDER',
-            credentialSecretName: null
+            dataFormat: 'IMAGE_FOLDER'
         },
         platformMetadata: {
             runtimeDatasetBindingId,
             metadataReportId: stableUuid('fl-dev:platform-metadata:tiny-imagenet-densenet-local-runtime-compatible'),
             datasetId,
             organizationId,
+            organizationName,
             runtimeId,
+            runtimeName,
             featureSchemaId,
+            featureDomain,
+            featureSchemaVersion,
             datasetName,
             sampleCount: 40,
             featureCount: 2,
@@ -849,19 +897,38 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
         },
         model: {
             modelId,
-            modelName: 'PYTORCH_TORCHVISION_DENSENET121_CLASSIFIER',
-            modelVersion: 'v1',
+            modelName,
+            modelPlugin,
+            modelVersion,
             modelDescription: 'Development DenseNet121 classifier for Tiny ImageNet ImageFolder smoke testing.',
             sourceType: 'BUILT_IN',
             fileId: null,
             modelFormat: 'PYTORCH_STATE_DICT'
         },
+        runtimeEngineProfile: {
+            runtimeEngineProfileId,
+            profileName: 'PyTorch Vision Runtime Engine',
+            pluginProfile: 'pytorch-vision',
+            runtimeEngineImage: runtimeOptions.runtimeEngineImage,
+            imageDigest: runtimeOptions.runtimeEngineImageDigest,
+            supportedModelPluginsDescription: 'DenseNet, TorchVision DenseNet121, ResNet, UNet image plugins.',
+            supportedAggregationAlgorithmsDescription: 'FED_AVG_PYTORCH_STATE_DICT',
+            active: true
+        },
         trainingRunConfiguration: {
             trainingRunConfigurationId,
-            configurationName: 'Tiny ImageNet DenseNet Local Dev',
+            configurationName,
             federationId,
+            federationName,
             featureSchemaId,
+            featureDomain,
+            featureSchemaVersion,
             initialModelId: modelId,
+            initialModelName: modelName,
+            initialModelPlugin: modelPlugin,
+            initialModelVersion: modelVersion,
+            runtimeEngineProfileId,
+            runtimeEngineProfileName: 'PyTorch Vision Runtime Engine',
             strategyName: 'LOCAL_DEV_DENSENET',
             aggregationAlgorithm: 'FED_AVG_PYTORCH_STATE_DICT',
             maxRounds: 1,
@@ -881,7 +948,11 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
         trainingJob: {
             trainingJobId,
             federationId,
+            federationName,
             trainingRunConfigurationId,
+            configurationName,
+            featureDomain,
+            featureSchemaVersion,
             objective: 'Local Tiny ImageNet DenseNet smoke training'
         },
         runtimeAgentEndpoint
@@ -892,6 +963,15 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
     const runtimeName = 'local-medical-runtime';
     const datasetName = 'Hospital Readmission Risk CSV';
     const labelColumn = 'readmission_risk';
+    const organizationName = 'FL Dev Hospital';
+    const federationName = 'Medical Readmission Risk Federation';
+    const featureDomain = 'hospital-readmission-risk';
+    const featureSchemaVersion = 'v1';
+    const modelName = 'Hospital Readmission Logistic Regression Baseline';
+    const modelPlugin = 'SKLEARN_LOGISTIC_REGRESSION';
+    const modelVersion = 'v1';
+    const configurationName = 'Hospital Readmission Risk Local Dev';
+    const runtimeEngineProfileId = stableUuid('fl-dev:runtime-engine-profile:sklearn:v1');
     const organizationId = stableUuid('fl-dev:organization:local-hospital');
     const federationId = stableUuid('fl-dev:federation:medical-readmission-risk');
     const featureSchemaId = stableUuid('fl-dev:feature-schema:hospital-readmission-risk:v1');
@@ -916,20 +996,20 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
         requiresCsvRuntimeAgentDatasetAdapters: true,
         organization: {
             organizationId,
-            organizationName: 'FL Dev Hospital',
+            organizationName,
             organizationType: 'HOSPITAL',
             contactEmail: 'fl-dev@example.com'
         },
         federation: {
             federationId,
-            federationName: 'Medical Readmission Risk Federation',
+            federationName,
             description: 'Local development federation for hospital readmission risk modeling',
             minimumParticipantCount: 1
         },
         featureSchema: {
             featureSchemaId,
-            featureDomain: 'hospital-readmission-risk',
-            version: 'v1',
+            featureDomain,
+            version: featureSchemaVersion,
             dataModality: 'TABULAR',
             features: [
                 feature('id', 'STRING', true, false, 'Synthetic patient identifier', [], null, true),
@@ -955,6 +1035,7 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
             runtimeInfrastructureId,
             runtimeAgentId,
             organizationId,
+            organizationName,
             runtimeName
         },
         runtimeInfrastructurePackage: {
@@ -965,8 +1046,13 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
         },
         runtimeInstallationPlan: {
             runtimeInstallationPlanId,
+            runtimeInfrastructureId,
             organizationId,
+            organizationName,
             runtimeInfrastructurePackageId,
+            runtimeInfrastructurePackageName: runtimeOptions.runtimePackageName,
+            runtimeInfrastructurePackageVersion: runtimeOptions.runtimePackageVersion,
+            runtimeEnvironmentType: runtimeOptions.runtimeEnvironmentType,
             runtimeName,
             agentInstallMode: runtimeOptions.runtimeAgentInstallMode,
             expectedNodeCount: runtimeOptions.expectedNodeCount
@@ -975,8 +1061,10 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
         node: {
             runtimeNodeInventoryReportId: stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeAgentId}`),
             organizationId,
+            organizationName,
             runtimeInfrastructureId,
             runtimeAgentId,
+            runtimeName,
             runtimeNodeName: runtimeName,
             infrastructureNodeId: 'local-dev-node',
             runtimeNodeRole: 'TRAINER',
@@ -990,7 +1078,10 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
         dataset: {
             datasetId,
             organizationId,
+            organizationName,
             featureSchemaId,
+            featureDomain,
+            featureSchemaVersion,
             datasetName,
             datasetUsage: 'TRAINING'
         },
@@ -998,50 +1089,42 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
             runtimeDatasetBindingId,
             datasetId,
             organizationId,
+            organizationName,
             featureSchemaId,
+            featureDomain,
+            featureSchemaVersion,
             datasetName,
             runtimeId,
-            dataSourceType: 'FILE',
-            host: null,
-            port: null,
-            url: null,
-            databaseName: null,
-            schemaName: null,
-            tableName: null,
+            runtimeName,
             filePath: datasetPathValue,
-            objectBucket: null,
-            objectPrefix: null,
-            dataFormat: 'CSV',
-            credentialSecretName: null
+            dataFormat: 'CSV'
         },
         accessValidation: {
             datasetAccessValidationId,
             runtimeDatasetBindingId,
             datasetId,
             organizationId,
+            organizationName,
             featureSchemaId,
+            featureDomain,
+            featureSchemaVersion,
             datasetName,
             runtimeId,
-            dataSourceType: 'FILE',
-            host: null,
-            port: null,
-            url: null,
-            databaseName: null,
-            schemaName: null,
-            tableName: null,
+            runtimeName,
             filePath: datasetPathValue,
-            objectBucket: null,
-            objectPrefix: null,
-            dataFormat: 'CSV',
-            credentialSecretName: null
+            dataFormat: 'CSV'
         },
         platformMetadata: {
             runtimeDatasetBindingId,
             metadataReportId: stableUuid('fl-dev:platform-metadata:hospital-readmission-risk-local-runtime-compatible'),
             datasetId,
             organizationId,
+            organizationName,
             runtimeId,
+            runtimeName,
             featureSchemaId,
+            featureDomain,
+            featureSchemaVersion,
             datasetName,
             sampleCount: 6,
             featureCount: 5,
@@ -1055,19 +1138,38 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
         },
         model: {
             modelId,
-            modelName: 'linear.LogisticRegression',
-            modelVersion: 'v1',
+            modelName,
+            modelPlugin,
+            modelVersion,
             modelDescription: 'Development baseline logistic regression model for synthetic hospital readmission risk training.',
             sourceType: 'BUILT_IN',
             fileId: null,
             modelFormat: 'JSON'
         },
+        runtimeEngineProfile: {
+            runtimeEngineProfileId,
+            profileName: 'Scikit-learn Runtime Engine',
+            pluginProfile: 'sklearn',
+            runtimeEngineImage: runtimeOptions.runtimeEngineImage,
+            imageDigest: runtimeOptions.runtimeEngineImageDigest,
+            supportedModelPluginsDescription: 'Scikit-learn logistic regression plugin.',
+            supportedAggregationAlgorithmsDescription: 'FED_AVG_JSON',
+            active: true
+        },
         trainingRunConfiguration: {
             trainingRunConfigurationId,
-            configurationName: 'Hospital Readmission Risk Local Dev',
+            configurationName,
             federationId,
+            federationName,
             featureSchemaId,
+            featureDomain,
+            featureSchemaVersion,
             initialModelId: modelId,
+            initialModelName: modelName,
+            initialModelPlugin: modelPlugin,
+            initialModelVersion: modelVersion,
+            runtimeEngineProfileId,
+            runtimeEngineProfileName: 'Scikit-learn Runtime Engine',
             strategyName: 'LOCAL_DEV',
             aggregationAlgorithm: 'FED_AVG_JSON',
             maxRounds: 1,
@@ -1087,7 +1189,11 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
         trainingJob: {
             trainingJobId,
             federationId,
+            federationName,
             trainingRunConfigurationId,
+            configurationName,
+            featureDomain,
+            featureSchemaVersion,
             objective: 'Local hospital readmission risk smoke training'
         },
         runtimeAgentEndpoint
@@ -1343,6 +1449,11 @@ function canonicalRuntimeEnvironmentType(value) {
 function positiveInt(value, fallback) {
     const parsed = Number.parseInt(value, 10);
     return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
+function nullableString(value) {
+    const text = String(value ?? '').trim();
+    return text.length > 0 ? text : null;
 }
 
 function trimSlash(value) {

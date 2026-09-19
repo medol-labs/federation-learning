@@ -60,18 +60,8 @@ export const ConfigureRuntimeDatasetBindingCommandSchema = z.object({
   datasetName: z.string(),
   runtimeId: z.string().uuid(),
   runtimeName: z.string().optional().nullable(),
-  dataSourceType: z.string(),
-  host: z.string().optional().nullable(),
-  port: z.coerce.number().int().optional().nullable(),
-  url: z.string().optional().nullable(),
-  databaseName: z.string().optional().nullable(),
-  schemaName: z.string().optional().nullable(),
-  tableName: z.string().optional().nullable(),
-  filePath: z.string().optional().nullable(),
-  objectBucket: z.string().optional().nullable(),
-  objectPrefix: z.string().optional().nullable(),
+  filePath: z.string(),
   dataFormat: z.string(),
-  credentialSecretName: z.string().optional().nullable(),
 });
 export type ConfigureRuntimeDatasetBindingCommandInput = z.infer<typeof ConfigureRuntimeDatasetBindingCommandSchema>;
 

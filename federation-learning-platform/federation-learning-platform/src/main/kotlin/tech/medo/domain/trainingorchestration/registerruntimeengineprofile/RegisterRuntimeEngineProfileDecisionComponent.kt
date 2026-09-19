@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.registerruntimeengineprofile
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.registerruntimeengineprofile.RegisterRuntimeEngineProfileDecision
+
+@Component
+class RegisterRuntimeEngineProfileDecisionComponent : RegisterRuntimeEngineProfileDecision

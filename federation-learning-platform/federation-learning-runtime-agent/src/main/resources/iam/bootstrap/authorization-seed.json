@@ -53,6 +53,16 @@
       "description": "agent_dataset_access_validation_catalog:read"
     },
     {
+      "code": "agent_dictionary_value_catalog:list",
+      "name": "Agent Dictionary Value Catalog List",
+      "description": "agent_dictionary_value_catalog:list"
+    },
+    {
+      "code": "agent_dictionary_value_catalog:read",
+      "name": "Agent Dictionary Value Catalog Read",
+      "description": "agent_dictionary_value_catalog:read"
+    },
+    {
       "code": "agent_feature_schema_catalog:list",
       "name": "Agent Feature Schema Catalog List",
       "description": "agent_feature_schema_catalog:list"
@@ -359,6 +369,14 @@
     },
     {
       "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_dictionary_value_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
+      "permissionCode": "agent_dictionary_value_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_COMPLIANCE_OFFICER",
       "permissionCode": "agent_feature_schema_catalog:list"
     },
     {
@@ -472,6 +490,14 @@
     {
       "roleCode": "ACTOR_DATA_OWNER",
       "permissionCode": "agent_dataset_access_validation_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_dictionary_value_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DATA_OWNER",
+      "permissionCode": "agent_dictionary_value_catalog:read"
     },
     {
       "roleCode": "ACTOR_DATA_OWNER",
@@ -663,6 +689,14 @@
     },
     {
       "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_dictionary_value_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
+      "permissionCode": "agent_dictionary_value_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_NODE_OPERATOR",
       "permissionCode": "agent_feature_schema_catalog:list"
     },
     {
@@ -784,6 +818,14 @@
     {
       "roleCode": "ACTOR_RUNTIME_AGENT",
       "permissionCode": "agent_dataset_access_validation_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_dictionary_value_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_RUNTIME_AGENT",
+      "permissionCode": "agent_dictionary_value_catalog:read"
     },
     {
       "roleCode": "ACTOR_RUNTIME_AGENT",

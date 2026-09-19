@@ -35,18 +35,8 @@ class ConfigureRuntimeDatasetBindingIntegrationTest(
             datasetName = "",
             runtimeId = java.util.UUID.randomUUID(),
             runtimeName = null,
-            dataSourceType = "",
-            host = null,
-            port = null,
-            url = null,
-            databaseName = null,
-            schemaName = null,
-            tableName = null,
-            filePath = null,
-            objectBucket = null,
-            objectPrefix = null,
-            dataFormat = "",
-            credentialSecretName = null
+            filePath = "",
+            dataFormat = ""
         )
 
         commandGateway.send(command).getResultMessage().join()

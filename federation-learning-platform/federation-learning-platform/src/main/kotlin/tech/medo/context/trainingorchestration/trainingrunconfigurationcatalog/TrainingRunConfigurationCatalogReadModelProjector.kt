@@ -78,6 +78,7 @@ open class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
             entity.featureSchemaId = event.featureSchemaId
             entity.initialModelId = event.initialModelId
             entity.initialModelName = event.initialModelName
+            entity.initialModelPlugin = event.initialModelPlugin
             entity.initialModelVersion = event.initialModelVersion
             entity.federationName = event.federationName
             entity.featureDomain = event.featureDomain
@@ -87,6 +88,11 @@ open class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
             entity.initialModelFormat = event.initialModelFormat
             entity.initialModelArtifactDigest = event.initialModelArtifactDigest
             entity.initialModelSignatureUri = event.initialModelSignatureUri
+            entity.runtimeEngineProfileId = event.runtimeEngineProfileId
+            entity.runtimeEngineProfileName = event.runtimeEngineProfileName
+            entity.runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
+            entity.runtimeEngineImage = event.runtimeEngineImage
+            entity.runtimeEngineImageDigest = event.runtimeEngineImageDigest
             entity.strategyName = event.strategyName
             entity.aggregationAlgorithm = event.aggregationAlgorithm
             entity.maxRounds = event.maxRounds
@@ -123,6 +129,7 @@ open class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
             entity.featureSchemaId = event.featureSchemaId
             entity.initialModelId = event.initialModelId
             entity.initialModelName = event.initialModelName
+            entity.initialModelPlugin = event.initialModelPlugin
             entity.initialModelVersion = event.initialModelVersion
             entity.federationName = event.federationName
             entity.featureDomain = event.featureDomain
@@ -132,6 +139,11 @@ open class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
             entity.initialModelFormat = event.initialModelFormat
             entity.initialModelArtifactDigest = event.initialModelArtifactDigest
             entity.initialModelSignatureUri = event.initialModelSignatureUri
+            entity.runtimeEngineProfileId = event.runtimeEngineProfileId
+            entity.runtimeEngineProfileName = event.runtimeEngineProfileName
+            entity.runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
+            entity.runtimeEngineImage = event.runtimeEngineImage
+            entity.runtimeEngineImageDigest = event.runtimeEngineImageDigest
             entity.strategyName = event.strategyName
             entity.aggregationAlgorithm = event.aggregationAlgorithm
             entity.maxRounds = event.maxRounds

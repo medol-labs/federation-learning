@@ -25,6 +25,7 @@ class CompleteTrainingRoundDecisionTest {
             maxRounds = 0,
             minimumAccuracy = java.math.BigDecimal.ZERO,
             aggregatedModelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
+            modelPlugin = "",
             aggregatedModelArtifactUri = "",
             aggregatedModelRegistryRef = "",
             modelFormat = "",
@@ -45,6 +46,7 @@ class CompleteTrainingRoundDecisionTest {
             maxRounds = 0,
             minimumAccuracy = java.math.BigDecimal.ZERO,
             aggregatedModelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
+            modelPlugin = "",
             aggregatedModelArtifactUri = "",
             aggregatedModelRegistryRef = "",
             modelFormat = "",
@@ -68,6 +70,7 @@ class CompleteTrainingRoundDecisionTest {
         assertEquals(command.maxRounds, event.maxRounds)
         assertEquals(command.minimumAccuracy, event.minimumAccuracy)
         assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.aggregatedModelId)
+        assertEquals(command.modelPlugin, event.modelPlugin)
         assertEquals(command.aggregatedModelArtifactUri, event.aggregatedModelArtifactUri)
         assertEquals(command.aggregatedModelRegistryRef, event.aggregatedModelRegistryRef)
         assertEquals(command.modelFormat, event.modelFormat)

@@ -70,9 +70,8 @@ class CsvFileProfileAgentDatasetAdapter(
         ProfileAgentDatasetResult.Rejected(failureReason = reason)
 
     private fun RuntimeDatasetBindingCatalogReadModel.isCsvFileBinding(): Boolean {
-        val source = dataSourceType.normalized()
         val format = dataFormat.normalized()
-        return format == "csv" || source == "csv" || source == "file_csv" || (source == "file" && format == "csv")
+        return format == "csv"
     }
 
     private fun readCsvProfile(path: Path, expectedLabelColumns: Set<String>): CsvProfile? {

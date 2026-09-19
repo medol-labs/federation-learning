@@ -954,30 +954,67 @@
       ]
     },
     {
-      "dictionaryCode": "MODEL_ARTIFACT_FORMAT",
+      "dictionaryCode": "MODEL_ARTIFACT_SOURCE_TYPE",
+      "dictionaryName": "模型制品来源类型",
+      "ownerContext": "ModelRepository",
+      "description": "Source categories for model artifacts registered in the model repository.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "BUILT_IN",
+          "displayName": "内置模型",
+          "displayOrder": 5,
+          "description": "Model artifact provided by the runtime engine as a built-in model plugin.",
+          "active": true
+        },
+        {
+          "valueCode": "EXTERNAL",
+          "displayName": "外部上传",
+          "displayOrder": 10,
+          "description": "Model artifact uploaded from an external source through FileUpload.",
+          "active": true
+        },
+        {
+          "valueCode": "FEDERATED_TRAINING",
+          "displayName": "联邦训练产物",
+          "displayOrder": 20,
+          "description": "Model artifact produced by a federated training workflow.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "MODEL_FORMAT",
       "dictionaryName": "模型制品格式",
       "ownerContext": "ModelRepository",
       "description": "Model artifact formats supported by runtime engine model plugins.",
       "multiTenant": false,
       "values": [
         {
+          "valueCode": "ONNX",
+          "displayName": "ONNX",
+          "displayOrder": 10,
+          "description": "Open Neural Network Exchange model artifact.",
+          "active": true
+        },
+        {
           "valueCode": "JSON",
           "displayName": "JSON 权重",
-          "displayOrder": 10,
+          "displayOrder": 20,
           "description": "JSON model parameters or update artifact.",
           "active": true
         },
         {
           "valueCode": "PYTORCH_STATE_DICT",
           "displayName": "PyTorch State Dict",
-          "displayOrder": 20,
+          "displayOrder": 30,
           "description": "PyTorch state_dict artifact.",
           "active": true
         },
         {
           "valueCode": "PICKLE",
           "displayName": "Pickle 制品",
-          "displayOrder": 30,
+          "displayOrder": 40,
           "description": "Python pickle artifact used by selected PyTorch plugins.",
           "active": true
         }

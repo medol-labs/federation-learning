@@ -55,6 +55,11 @@ class JpaRoundExecutionCatalogReadModelRepository(
             it.state = this@toProjection.state
             it.featureSchemaId = this@toProjection.featureSchemaId
             it.baseModelId = this@toProjection.baseModelId
+            it.runtimeEngineProfileId = this@toProjection.runtimeEngineProfileId
+            it.runtimeEngineProfileName = this@toProjection.runtimeEngineProfileName
+            it.runtimeEnginePluginProfile = this@toProjection.runtimeEnginePluginProfile
+            it.runtimeEngineImage = this@toProjection.runtimeEngineImage
+            it.runtimeEngineImageDigest = this@toProjection.runtimeEngineImageDigest
             it.runtimeEngineJobId = this@toProjection.runtimeEngineJobId
             it.runtimeEngineObservedStatus = this@toProjection.runtimeEngineObservedStatus
             it.runtimeEngineObservationAt = this@toProjection.runtimeEngineObservationAt
@@ -106,6 +111,11 @@ class JpaRoundExecutionCatalogReadModelRepository(
             it.state = this@toEntity.state
             it.featureSchemaId = this@toEntity.featureSchemaId
             it.baseModelId = this@toEntity.baseModelId
+            it.runtimeEngineProfileId = this@toEntity.runtimeEngineProfileId
+            it.runtimeEngineProfileName = this@toEntity.runtimeEngineProfileName
+            it.runtimeEnginePluginProfile = this@toEntity.runtimeEnginePluginProfile
+            it.runtimeEngineImage = this@toEntity.runtimeEngineImage
+            it.runtimeEngineImageDigest = this@toEntity.runtimeEngineImageDigest
             it.runtimeEngineJobId = this@toEntity.runtimeEngineJobId
             it.runtimeEngineObservedStatus = this@toEntity.runtimeEngineObservedStatus
             it.runtimeEngineObservationAt = this@toEntity.runtimeEngineObservationAt

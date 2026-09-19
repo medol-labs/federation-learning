@@ -26,8 +26,8 @@ class CsvFileValidateAgentDatasetAccessAdapter(
             return rejected("Only CSV file dataset access validation is supported.")
         }
 
-        val filePath = input.filePath?.trim()
-        if (filePath.isNullOrEmpty()) {
+        val filePath = input.filePath.trim()
+        if (filePath.isEmpty()) {
             return rejected("CSV dataset binding filePath is required.")
         }
 
@@ -52,9 +52,8 @@ class CsvFileValidateAgentDatasetAccessAdapter(
     }
 
     private fun ValidateAgentDatasetAccessInput.isCsvFileBinding(): Boolean {
-        val source = dataSourceType.normalized()
         val format = dataFormat.normalized()
-        return format == "csv" || source == "csv" || source == "file_csv" || (source == "file" && format == "csv")
+        return format == "csv"
     }
 
     private fun readCsvShape(path: Path): CsvShapeReadResult {

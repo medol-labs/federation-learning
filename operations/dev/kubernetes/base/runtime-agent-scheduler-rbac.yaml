@@ -33,6 +33,20 @@ rules:
     resources:
       - "services"
       - "pods"
+      - "configmaps"
+      - "persistentvolumeclaims"
+    verbs:
+      - "get"
+      - "list"
+      - "watch"
+      - "create"
+      - "patch"
+      - "update"
+      - "delete"
+  - apiGroups:
+      - "networking.k8s.io"
+    resources:
+      - "ingresses"
     verbs:
       - "get"
       - "list"

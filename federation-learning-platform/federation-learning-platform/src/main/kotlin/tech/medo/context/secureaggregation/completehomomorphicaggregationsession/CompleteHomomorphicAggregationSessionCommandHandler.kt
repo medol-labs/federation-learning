@@ -22,7 +22,7 @@ class CompleteHomomorphicAggregationSessionCommandHandler(
         @InjectEntity(idProperty = "secureAggregationSessionId") state: SecureAggregationSessionState,
         eventAppender: EventAppender
     ) {
-        val input = CompleteHomomorphicAggregationSessionInput(secureAggregationSessionId = command.secureAggregationSessionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, trainingJobObjective = command.trainingJobObjective, featureSchemaId = command.featureSchemaId, roundId = command.roundId, roundNumber = command.roundNumber, maxRounds = command.maxRounds, minimumAccuracy = command.minimumAccuracy, aggregatedModelId = command.aggregatedModelId, encryptedUpdateArtifactRefs = command.encryptedUpdateArtifactRefs)
+        val input = CompleteHomomorphicAggregationSessionInput(secureAggregationSessionId = command.secureAggregationSessionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, trainingJobObjective = command.trainingJobObjective, featureSchemaId = command.featureSchemaId, roundId = command.roundId, roundNumber = command.roundNumber, maxRounds = command.maxRounds, minimumAccuracy = command.minimumAccuracy, modelPlugin = command.modelPlugin, aggregatedModelId = command.aggregatedModelId, encryptedUpdateArtifactRefs = command.encryptedUpdateArtifactRefs)
         val portResult = completeHomomorphicAggregationSessionService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))

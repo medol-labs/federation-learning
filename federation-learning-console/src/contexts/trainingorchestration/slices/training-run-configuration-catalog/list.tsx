@@ -24,6 +24,7 @@ type TrainingRunConfigurationCatalogRecord = {
   featureSchemaId: string;
   initialModelId: string;
   initialModelName: string;
+  initialModelPlugin: string;
   initialModelVersion: string;
   federationName?: string;
   featureDomain?: string;
@@ -33,6 +34,11 @@ type TrainingRunConfigurationCatalogRecord = {
   initialModelFormat: string;
   initialModelArtifactDigest: string;
   initialModelSignatureUri?: string;
+  runtimeEngineProfileId: string;
+  runtimeEngineProfileName?: string;
+  runtimeEnginePluginProfile: string;
+  runtimeEngineImage: string;
+  runtimeEngineImageDigest?: string;
   strategyName: string;
   aggregationAlgorithm: string;
   maxRounds: number;
@@ -179,6 +185,20 @@ export const TrainingRunConfigurationCatalogList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("initialModelPlugin", {
+        id: "initialModelPlugin",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.initialModelPlugin.label", "Initial Model Plugin")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.initialModelPlugin.label", "Initial Model Plugin"),
+          placeholder: "Enter Initial Model Plugin",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("initialModelVersion", {
         id: "initialModelVersion",
         header: ({ column }) => (
@@ -301,6 +321,76 @@ export const TrainingRunConfigurationCatalogList = () => {
         meta: {
           label: t("resources.training_run_configuration_catalog.fields.initialModelSignatureUri.label", "Initial Model Signature Uri"),
           placeholder: "Enter Initial Model Signature Uri",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEngineProfileId", {
+        id: "runtimeEngineProfileId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.runtimeEngineProfileId.label", "Runtime Engine Profile Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.runtimeEngineProfileId.label", "Runtime Engine Profile Id"),
+          placeholder: "Enter Runtime Engine Profile Id",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEngineProfileName", {
+        id: "runtimeEngineProfileName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.runtimeEngineProfileName.label", "Runtime Engine Profile Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.runtimeEngineProfileName.label", "Runtime Engine Profile Name"),
+          placeholder: "Enter Runtime Engine Profile Name",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEnginePluginProfile", {
+        id: "runtimeEnginePluginProfile",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.runtimeEnginePluginProfile.label", "Runtime Engine Plugin Profile")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.runtimeEnginePluginProfile.label", "Runtime Engine Plugin Profile"),
+          placeholder: "Enter Runtime Engine Plugin Profile",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEngineImage", {
+        id: "runtimeEngineImage",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.runtimeEngineImage.label", "Runtime Engine Image")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.runtimeEngineImage.label", "Runtime Engine Image"),
+          placeholder: "Enter Runtime Engine Image",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeEngineImageDigest", {
+        id: "runtimeEngineImageDigest",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.runtimeEngineImageDigest.label", "Runtime Engine Image Digest")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.runtimeEngineImageDigest.label", "Runtime Engine Image Digest"),
+          placeholder: "Enter Runtime Engine Image Digest",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -617,7 +707,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         tableName: "training_run_configuration_catalog_read_model_entity",
         idField: "trainingRunConfigurationId",
         idFields: ["trainingRunConfigurationId"],
-        queryFields: ["trainingRunConfigurationId","configurationName","federationId","featureSchemaId","initialModelId","initialModelName","initialModelVersion","federationName","featureDomain","featureSchemaVersion","initialModelArtifactUri","initialModelRegistryRef","initialModelFormat","initialModelArtifactDigest","initialModelSignatureUri","strategyName","aggregationAlgorithm","maxRounds","minimumNodesPerRound","roundTimeoutSeconds","nodeResponseTimeoutSeconds","localEpochs","batchSize","learningRate","optimizer","lossFunction","gradientClippingNorm","secureAggregationRequired","minimumAccuracy","minimumFairnessScore","updateReason","lockedByTrainingJobId","state"],
+        queryFields: ["trainingRunConfigurationId","configurationName","federationId","featureSchemaId","initialModelId","initialModelName","initialModelPlugin","initialModelVersion","federationName","featureDomain","featureSchemaVersion","initialModelArtifactUri","initialModelRegistryRef","initialModelFormat","initialModelArtifactDigest","initialModelSignatureUri","runtimeEngineProfileId","runtimeEngineProfileName","runtimeEnginePluginProfile","runtimeEngineImage","runtimeEngineImageDigest","strategyName","aggregationAlgorithm","maxRounds","minimumNodesPerRound","roundTimeoutSeconds","nodeResponseTimeoutSeconds","localEpochs","batchSize","learningRate","optimizer","lossFunction","gradientClippingNorm","secureAggregationRequired","minimumAccuracy","minimumFairnessScore","updateReason","lockedByTrainingJobId","state"],
         label: t("resources.training_run_configuration_catalog.label", "Training Run Configuration Catalog"),
         aggregateRoute: "trainingrunconfiguration",
         queryRoute: "trainingrunconfigurationcatalog",

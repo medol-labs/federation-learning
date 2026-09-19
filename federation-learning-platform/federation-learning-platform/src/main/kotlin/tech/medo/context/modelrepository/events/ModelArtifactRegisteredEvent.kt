@@ -11,6 +11,7 @@ data class ModelArtifactRegisteredEvent(
     val modelId: UUID,
     @EventTag(key = "modelName")
     val modelName: String,
+    val modelPlugin: String,
     @EventTag(key = "modelVersion")
     val modelVersion: String,
     val modelDescription: String?,

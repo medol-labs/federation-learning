@@ -40,18 +40,8 @@ class RuntimeDatasetBindingCatalogReadModelQueryService(
             criteria.featureSchemaVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("featureSchemaVersion") })) }
             criteria.datasetName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("datasetName") })) }
             criteria.runtimeName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeName") })) }
-            criteria.dataSourceType?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("dataSourceType") })) }
-            criteria.host?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("host") })) }
-            criteria.port?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<Int>> { root -> root.get("port") })) }
-            criteria.url?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("url") })) }
-            criteria.databaseName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("databaseName") })) }
-            criteria.schemaName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("schemaName") })) }
-            criteria.tableName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("tableName") })) }
             criteria.filePath?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("filePath") })) }
-            criteria.objectBucket?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("objectBucket") })) }
-            criteria.objectPrefix?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("objectPrefix") })) }
             criteria.dataFormat?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("dataFormat") })) }
-            criteria.credentialSecretName?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> root.get("credentialSecretName") })) }
             criteria.configuredAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("configuredAt") })) }
         }
         return specification
@@ -120,18 +110,8 @@ class RuntimeDatasetBindingCatalogReadModelQueryService(
             it.featureSchemaVersion = this@toProjection.featureSchemaVersion
             it.datasetName = this@toProjection.datasetName
             it.runtimeName = this@toProjection.runtimeName
-            it.dataSourceType = this@toProjection.dataSourceType
-            it.host = this@toProjection.host
-            it.port = this@toProjection.port
-            it.url = this@toProjection.url
-            it.databaseName = this@toProjection.databaseName
-            it.schemaName = this@toProjection.schemaName
-            it.tableName = this@toProjection.tableName
             it.filePath = this@toProjection.filePath
-            it.objectBucket = this@toProjection.objectBucket
-            it.objectPrefix = this@toProjection.objectPrefix
             it.dataFormat = this@toProjection.dataFormat
-            it.credentialSecretName = this@toProjection.credentialSecretName
             it.configuredAt = this@toProjection.configuredAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId

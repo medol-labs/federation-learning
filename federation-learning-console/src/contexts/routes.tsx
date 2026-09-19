@@ -113,6 +113,11 @@ import {
   RuntimeDatasetMetadataCatalogShow,
 } from "./datasetgovernance/read-models/runtime-dataset-metadata-catalog";
 import {
+  RuntimeEngineProfileCatalogList,
+  RuntimeEngineProfileCatalogShow,
+  RuntimeEngineProfileCatalogRegisterRuntimeEngineProfile,
+} from "./trainingorchestration/read-models/runtime-engine-profile-catalog";
+import {
   RuntimeHealthDashboardList,
   RuntimeHealthDashboardShow,
 } from "./runtimemonitoring/read-models/runtime-health-dashboard";
@@ -343,6 +348,11 @@ export const contextRoutes = (
     <Route path="/runtime-dataset-metadata-catalog">
       <Route index element={resolvePageOverride("runtime-dataset-metadata-catalog", "list", <RuntimeDatasetMetadataCatalogList />)} />
       <Route path="show/:id" element={resolvePageOverride("runtime-dataset-metadata-catalog", "show", <RuntimeDatasetMetadataCatalogShow />)} />
+    </Route>
+    <Route path="/runtime-engine-profile-catalog">
+      <Route index element={resolvePageOverride("runtime-engine-profile-catalog", "list", <RuntimeEngineProfileCatalogList />)} />
+      <Route path="command/register-runtime-engine-profile" element={resolvePageOverride("runtime-engine-profile-catalog", "registerRuntimeEngineProfile", <RuntimeEngineProfileCatalogRegisterRuntimeEngineProfile />)} />
+      <Route path="show/:id" element={resolvePageOverride("runtime-engine-profile-catalog", "show", <RuntimeEngineProfileCatalogShow />)} />
     </Route>
     <Route path="/runtime-health-dashboard">
       <Route index element={resolvePageOverride("runtime-health-dashboard", "list", <RuntimeHealthDashboardList />)} />

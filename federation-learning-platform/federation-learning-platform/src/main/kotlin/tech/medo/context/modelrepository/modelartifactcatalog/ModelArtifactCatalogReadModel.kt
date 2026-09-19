@@ -20,6 +20,7 @@ class ModelArtifactCatalogReadModelQuery
 class ModelArtifactCatalogReadModelCriteria {
     var modelId: StringFilter? = null
     var modelName: StringFilter? = null
+    var modelPlugin: StringFilter? = null
     var modelVersion: StringFilter? = null
     var modelDescription: StringFilter? = null
     var sourceType: StringFilter? = null
@@ -40,6 +41,7 @@ class ModelArtifactCatalogReadModelCriteria {
 class ModelArtifactCatalogReadModelProjection : MetadataProjection {
     var modelId: UUID? = null
     var modelName: String? = null
+    var modelPlugin: String? = null
     var modelVersion: String? = null
     var modelDescription: String? = null
     var sourceType: String? = null
@@ -66,6 +68,7 @@ fun ModelArtifactCatalogReadModelProjection.toReadModel(): ModelArtifactCatalogR
     ModelArtifactCatalogReadModel(
     modelId = modelId,
     modelName = modelName,
+    modelPlugin = modelPlugin,
     modelVersion = modelVersion,
     modelDescription = modelDescription,
     sourceType = sourceType,
@@ -99,6 +102,7 @@ interface ModelArtifactCatalogReadModelRepository {
 data class ModelArtifactCatalogReadModel(
     val modelId: UUID?,
     val modelName: String?,
+    val modelPlugin: String?,
     val modelVersion: String?,
     val modelDescription: String?,
     val sourceType: String?,

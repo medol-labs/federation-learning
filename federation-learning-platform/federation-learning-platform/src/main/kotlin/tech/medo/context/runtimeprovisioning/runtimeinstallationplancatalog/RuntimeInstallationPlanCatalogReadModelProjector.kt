@@ -279,7 +279,6 @@ open class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.observedNodeCount = event.observedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.verificationFailedAt = eventTime(message)
-            entity.verificationFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -337,7 +336,6 @@ open class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
             entity.agentDeploymentFailedAt = eventTime(message)
-            entity.agentDeploymentFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -394,7 +392,6 @@ open class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.observedNodeCount = event.observedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.verificationFailedAt = eventTime(message)
-            entity.verificationFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -452,7 +449,6 @@ open class DefaultRuntimeInstallationPlanCatalogReadModelProjectionUpdater(
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.runtimeAgentId = event.runtimeAgentId
             entity.agentDeploymentRetryFailedAt = eventTime(message)
-            entity.agentDeploymentRetryFailureReason = event.failureReason
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 

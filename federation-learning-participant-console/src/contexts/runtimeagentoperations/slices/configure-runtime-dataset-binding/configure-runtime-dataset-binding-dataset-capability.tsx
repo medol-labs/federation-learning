@@ -206,135 +206,8 @@ export const DatasetCapabilityConfigureRuntimeDatasetBinding = () => {
           />
           <FormField
             control={form.control}
-            name="dataSourceType"
-            rules={{ required: "Data Source Type is required" }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.dataSourceType.label", "Data Source Type")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Data Source Type"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="host"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.host.label", "Host")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Host"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="port"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.port.label", "Port")}</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Port"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="url"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.url.label", "Url")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Url"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="databaseName"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.databaseName.label", "Database Name")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Database Name"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="schemaName"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.schemaName.label", "Schema Name")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Schema Name"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="tableName"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.tableName.label", "Table Name")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Table Name"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="filePath"
-            rules={{}}
+            rules={{ required: "File Path is required" }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.filePath.label", "File Path")}</FormLabel>
@@ -351,72 +224,33 @@ export const DatasetCapabilityConfigureRuntimeDatasetBinding = () => {
           />
           <FormField
             control={form.control}
-            name="objectBucket"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.objectBucket.label", "Object Bucket")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Object Bucket"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="objectPrefix"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.objectPrefix.label", "Object Prefix")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Object Prefix"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="dataFormat"
             rules={{ required: "Data Format is required" }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.dataFormat.label", "Data Format")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Data Format"}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="credentialSecretName"
-            rules={{}}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.credentialSecretName.label", "Credential Secret Name")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Credential Secret Name"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="agent_dictionary_value_catalog"
+                  dataProviderName="federation-learning-runtime-agent"
+                  optionLabel="displayName"
+                  optionValue="valueCode"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.dataFormat.placeholder", "Select Data Format")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"DATA_FORMAT"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.dataset_capability.commands.configureRuntimeDatasetBinding.fields.dataFormat.label", "Agent Dictionary Value Catalog"),
+                    aggregateRoute: "agentdictionaryvaluecatalog",
+                    queryRoute: "agentdictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

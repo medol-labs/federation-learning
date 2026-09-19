@@ -35,18 +35,8 @@ class RuntimeDatasetBindingState @EntityCreator constructor() {
     var datasetName: String? = null
     var runtimeId: UUID? = null
     var runtimeName: String? = null
-    var dataSourceType: String? = null
-    var host: String? = null
-    var port: Int? = null
-    var url: String? = null
-    var databaseName: String? = null
-    var schemaName: String? = null
-    var tableName: String? = null
     var filePath: String? = null
-    var objectBucket: String? = null
-    var objectPrefix: String? = null
     var dataFormat: String? = null
-    var credentialSecretName: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeDatasetBindingConfiguredEvent): RuntimeDatasetBindingState = apply {
@@ -61,17 +51,7 @@ class RuntimeDatasetBindingState @EntityCreator constructor() {
         datasetName = event.datasetName
         runtimeId = event.runtimeId
         runtimeName = event.runtimeName
-        dataSourceType = event.dataSourceType
-        host = event.host
-        port = event.port
-        url = event.url
-        databaseName = event.databaseName
-        schemaName = event.schemaName
-        tableName = event.tableName
         filePath = event.filePath
-        objectBucket = event.objectBucket
-        objectPrefix = event.objectPrefix
         dataFormat = event.dataFormat
-        credentialSecretName = event.credentialSecretName
     }
 }

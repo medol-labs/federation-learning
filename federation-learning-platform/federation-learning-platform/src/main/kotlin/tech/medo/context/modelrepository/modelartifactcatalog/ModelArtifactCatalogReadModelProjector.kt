@@ -56,6 +56,7 @@ open class DefaultModelArtifactCatalogReadModelProjectionUpdater(
         }
             entity.modelId = event.modelId
             entity.modelName = event.modelName
+            entity.modelPlugin = event.modelPlugin
             entity.modelVersion = event.modelVersion
             entity.modelDescription = event.modelDescription
             entity.sourceType = event.sourceType
@@ -83,6 +84,7 @@ open class DefaultModelArtifactCatalogReadModelProjectionUpdater(
         }
             entity.modelId = event.modelId
             entity.modelName = event.modelName
+            entity.modelPlugin = event.modelPlugin
             entity.modelVersion = event.modelVersion
             entity.modelDescription = event.modelDescription
             entity.sourceType = event.sourceType

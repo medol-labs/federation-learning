@@ -33,9 +33,15 @@ class GenerateParticipantExecutionPlanDecisionTest {
             baseModelId = java.util.UUID.randomUUID(),
             baseModelArtifactUri = "",
             baseModelRegistryRef = "",
+            baseModelPlugin = "",
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            runtimeEngineProfileId = java.util.UUID.randomUUID(),
+            runtimeEngineProfileName = null,
+            runtimeEnginePluginProfile = "",
+            runtimeEngineImage = "",
+            runtimeEngineImageDigest = null,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,
@@ -65,9 +71,15 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(command.baseModelId, event.baseModelId)
         assertEquals(command.baseModelArtifactUri, event.baseModelArtifactUri)
         assertEquals(command.baseModelRegistryRef, event.baseModelRegistryRef)
+        assertEquals(command.baseModelPlugin, event.baseModelPlugin)
         assertEquals(command.baseModelFormat, event.baseModelFormat)
         assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
         assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
+        assertEquals(command.runtimeEngineProfileId, event.runtimeEngineProfileId)
+        assertEquals(command.runtimeEngineProfileName, event.runtimeEngineProfileName)
+        assertEquals(command.runtimeEnginePluginProfile, event.runtimeEnginePluginProfile)
+        assertEquals(command.runtimeEngineImage, event.runtimeEngineImage)
+        assertEquals(command.runtimeEngineImageDigest, event.runtimeEngineImageDigest)
         assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
         assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
         assertEquals(command.encryptionScheme, event.encryptionScheme)
@@ -97,9 +109,15 @@ class GenerateParticipantExecutionPlanDecisionTest {
             baseModelId = java.util.UUID.randomUUID(),
             baseModelArtifactUri = "",
             baseModelRegistryRef = "",
+            baseModelPlugin = "",
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            runtimeEngineProfileId = java.util.UUID.randomUUID(),
+            runtimeEngineProfileName = null,
+            runtimeEnginePluginProfile = "",
+            runtimeEngineImage = "",
+            runtimeEngineImageDigest = null,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,
@@ -129,9 +147,15 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(command.baseModelId, event.baseModelId)
         assertEquals(command.baseModelArtifactUri, event.baseModelArtifactUri)
         assertEquals(command.baseModelRegistryRef, event.baseModelRegistryRef)
+        assertEquals(command.baseModelPlugin, event.baseModelPlugin)
         assertEquals(command.baseModelFormat, event.baseModelFormat)
         assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
         assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
+        assertEquals(command.runtimeEngineProfileId, event.runtimeEngineProfileId)
+        assertEquals(command.runtimeEngineProfileName, event.runtimeEngineProfileName)
+        assertEquals(command.runtimeEnginePluginProfile, event.runtimeEnginePluginProfile)
+        assertEquals(command.runtimeEngineImage, event.runtimeEngineImage)
+        assertEquals(command.runtimeEngineImageDigest, event.runtimeEngineImageDigest)
         assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
         assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
         assertEquals(command.encryptionScheme, event.encryptionScheme)

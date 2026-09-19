@@ -17,6 +17,7 @@ data class AggregatePlainModelUpdatesCommand(
     val roundNumber: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
+    val modelPlugin: String,
     val aggregationAlgorithm: String,
     val aggregatedModelId: UUID = java.util.UUID.randomUUID(),
     val modelUpdateArtifactRefs: List<String>

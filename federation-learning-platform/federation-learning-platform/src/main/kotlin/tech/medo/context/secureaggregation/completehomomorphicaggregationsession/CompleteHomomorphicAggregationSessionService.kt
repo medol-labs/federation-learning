@@ -18,6 +18,7 @@ data class CompleteHomomorphicAggregationSessionInput(
     val roundNumber: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
+    val modelPlugin: String,
     val aggregatedModelId: UUID,
     val encryptedUpdateArtifactRefs: List<String>
 )

@@ -149,6 +149,11 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
+            entity.runtimeEngineProfileId = event.runtimeEngineProfileId
+            entity.runtimeEngineProfileName = event.runtimeEngineProfileName
+            entity.runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
+            entity.runtimeEngineImage = event.runtimeEngineImage
+            entity.runtimeEngineImageDigest = event.runtimeEngineImageDigest
             entity.state = RoundExecutionStateEnum.PLAN_RECEIVED
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -175,6 +180,11 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
+            entity.runtimeEngineProfileId = event.runtimeEngineProfileId
+            entity.runtimeEngineProfileName = event.runtimeEngineProfileName
+            entity.runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
+            entity.runtimeEngineImage = event.runtimeEngineImage
+            entity.runtimeEngineImageDigest = event.runtimeEngineImageDigest
             entity.localExecutionRequirementsSatisfied = event.localExecutionRequirementsSatisfied
             entity.runtimeIdentityMatched = event.runtimeIdentityMatched
             entity.runtimeDatasetBindingAvailable = event.runtimeDatasetBindingAvailable
@@ -209,6 +219,11 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
+            entity.runtimeEngineProfileId = event.runtimeEngineProfileId
+            entity.runtimeEngineProfileName = event.runtimeEngineProfileName
+            entity.runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
+            entity.runtimeEngineImage = event.runtimeEngineImage
+            entity.runtimeEngineImageDigest = event.runtimeEngineImageDigest
             entity.localExecutionRequirementsSatisfied = event.localExecutionRequirementsSatisfied
             entity.runtimeIdentityMatched = event.runtimeIdentityMatched
             entity.runtimeDatasetBindingAvailable = event.runtimeDatasetBindingAvailable
@@ -243,6 +258,11 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
+            entity.runtimeEngineProfileId = event.runtimeEngineProfileId
+            entity.runtimeEngineProfileName = event.runtimeEngineProfileName
+            entity.runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
+            entity.runtimeEngineImage = event.runtimeEngineImage
+            entity.runtimeEngineImageDigest = event.runtimeEngineImageDigest
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.state = RoundExecutionStateEnum.RUNNING
             ProjectionMetadata.assign(entity, message)
@@ -270,6 +290,11 @@ open class DefaultRoundExecutionCatalogReadModelProjectionUpdater(
             entity.runtimeId = event.runtimeId
             entity.featureSchemaId = event.featureSchemaId
             entity.baseModelId = event.baseModelId
+            entity.runtimeEngineProfileId = event.runtimeEngineProfileId
+            entity.runtimeEngineProfileName = event.runtimeEngineProfileName
+            entity.runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
+            entity.runtimeEngineImage = event.runtimeEngineImage
+            entity.runtimeEngineImageDigest = event.runtimeEngineImageDigest
             entity.runtimeEngineJobId = event.runtimeEngineJobId
             entity.failureReason = event.failureReason
             entity.runtimeEngineReleaseFailureReason = event.failureReason

@@ -2,6 +2,7 @@
 import { useShow, useTranslate } from "@refinedev/core";
 
 import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
+import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 import {
   Card,
   CardContent,
@@ -56,7 +57,7 @@ export const DictionaryCatalogShow = () => {
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.dictionary_catalog.fields.description.label", "Description")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.description, t)}</p>
+              <CopyableText value={record?.description} />
             </div>
             <Separator />
             <div>

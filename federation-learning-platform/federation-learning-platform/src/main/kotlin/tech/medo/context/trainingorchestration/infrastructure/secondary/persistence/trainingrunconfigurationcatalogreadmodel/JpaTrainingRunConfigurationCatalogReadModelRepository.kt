@@ -43,6 +43,7 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
             it.featureSchemaId = this@toProjection.featureSchemaId
             it.initialModelId = this@toProjection.initialModelId
             it.initialModelName = this@toProjection.initialModelName
+            it.initialModelPlugin = this@toProjection.initialModelPlugin
             it.initialModelVersion = this@toProjection.initialModelVersion
             it.federationName = this@toProjection.federationName
             it.featureDomain = this@toProjection.featureDomain
@@ -52,6 +53,11 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
             it.initialModelFormat = this@toProjection.initialModelFormat
             it.initialModelArtifactDigest = this@toProjection.initialModelArtifactDigest
             it.initialModelSignatureUri = this@toProjection.initialModelSignatureUri
+            it.runtimeEngineProfileId = this@toProjection.runtimeEngineProfileId
+            it.runtimeEngineProfileName = this@toProjection.runtimeEngineProfileName
+            it.runtimeEnginePluginProfile = this@toProjection.runtimeEnginePluginProfile
+            it.runtimeEngineImage = this@toProjection.runtimeEngineImage
+            it.runtimeEngineImageDigest = this@toProjection.runtimeEngineImageDigest
             it.strategyName = this@toProjection.strategyName
             it.aggregationAlgorithm = this@toProjection.aggregationAlgorithm
             it.maxRounds = this@toProjection.maxRounds
@@ -86,6 +92,7 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
             it.featureSchemaId = this@toEntity.featureSchemaId
             it.initialModelId = this@toEntity.initialModelId
             it.initialModelName = this@toEntity.initialModelName
+            it.initialModelPlugin = this@toEntity.initialModelPlugin
             it.initialModelVersion = this@toEntity.initialModelVersion
             it.federationName = this@toEntity.federationName
             it.featureDomain = this@toEntity.featureDomain
@@ -95,6 +102,11 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
             it.initialModelFormat = this@toEntity.initialModelFormat
             it.initialModelArtifactDigest = this@toEntity.initialModelArtifactDigest
             it.initialModelSignatureUri = this@toEntity.initialModelSignatureUri
+            it.runtimeEngineProfileId = this@toEntity.runtimeEngineProfileId
+            it.runtimeEngineProfileName = this@toEntity.runtimeEngineProfileName
+            it.runtimeEnginePluginProfile = this@toEntity.runtimeEnginePluginProfile
+            it.runtimeEngineImage = this@toEntity.runtimeEngineImage
+            it.runtimeEngineImageDigest = this@toEntity.runtimeEngineImageDigest
             it.strategyName = this@toEntity.strategyName
             it.aggregationAlgorithm = this@toEntity.aggregationAlgorithm
             it.maxRounds = this@toEntity.maxRounds

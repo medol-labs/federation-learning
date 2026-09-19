@@ -1,6 +1,12 @@
 package tech.medo.trainingorchestration.domain
 
 object Concepts {
+    data object RuntimeEngineProfile {
+        const val NAME = "RuntimeEngineProfile"
+        val slices = listOf("RegisterRuntimeEngineProfile", "RuntimeEngineProfileCatalog")
+        val states = listOf("Registered")
+    }
+
     data object TrainingRunConfiguration {
         const val NAME = "TrainingRunConfiguration"
         val slices = listOf("DefineTrainingRunConfiguration", "UpdateTrainingRunConfiguration", "LockTrainingRunConfiguration", "TrainingRunConfigurationCatalog")

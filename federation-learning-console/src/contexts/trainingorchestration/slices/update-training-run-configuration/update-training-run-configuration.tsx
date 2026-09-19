@@ -40,6 +40,7 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
     federationId: searchParams.get("federationId") ?? undefined,
     featureSchemaId: searchParams.get("featureSchemaId") ?? undefined,
     initialModelId: searchParams.get("initialModelId") ?? undefined,
+    runtimeEngineProfileId: searchParams.get("runtimeEngineProfileId") ?? undefined,
     strategyName: searchParams.get("strategyName") ?? undefined,
     aggregationAlgorithm: searchParams.get("aggregationAlgorithm") ?? undefined,
     maxRounds: (() => { const value = searchParams.get("maxRounds"); return value === null ? undefined : Number(value); })(),
@@ -61,7 +62,9 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
     featureDomain: searchParams.get("featureDomain") ?? undefined,
     featureSchemaVersion: searchParams.get("featureSchemaVersion") ?? undefined,
     initialModelName: searchParams.get("initialModelName") ?? undefined,
+    initialModelPlugin: searchParams.get("initialModelPlugin") ?? undefined,
     initialModelVersion: searchParams.get("initialModelVersion") ?? undefined,
+    runtimeEngineProfileName: searchParams.get("runtimeEngineProfileName") ?? undefined,
   } as unknown as Partial<UpdateTrainingRunConfigurationCommandInput>;
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<UpdateTrainingRunConfigurationCommandInput, UpdateTrainingRunConfigurationCommandInput>({
@@ -122,8 +125,14 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
           {defaultValues.initialModelName !== undefined && defaultValues.initialModelName !== null ? (
             <input type="hidden" {...form.register("initialModelName" as never)} />
           ) : null}
+          {defaultValues.initialModelPlugin !== undefined && defaultValues.initialModelPlugin !== null ? (
+            <input type="hidden" {...form.register("initialModelPlugin" as never)} />
+          ) : null}
           {defaultValues.initialModelVersion !== undefined && defaultValues.initialModelVersion !== null ? (
             <input type="hidden" {...form.register("initialModelVersion" as never)} />
+          ) : null}
+          {defaultValues.runtimeEngineProfileName !== undefined && defaultValues.runtimeEngineProfileName !== null ? (
+            <input type="hidden" {...form.register("runtimeEngineProfileName" as never)} />
           ) : null}
           <FormField
             control={form.control}
@@ -238,6 +247,11 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                       { shouldDirty: true, shouldValidate: true },
                     );
                     form.setValue(
+                      "initialModelPlugin" as never,
+                      String(option?.record?.["modelPlugin"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                    form.setValue(
                       "initialModelVersion" as never,
                       String(option?.record?.["modelVersion"] ?? option?.label ?? "") as never,
                       { shouldDirty: true, shouldValidate: true },
@@ -249,6 +263,40 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                     label: t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.initialModelId.label", "Model Artifact Catalog"),
                     aggregateRoute: "modelartifact",
                     queryRoute: "modelartifactcatalog",
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="runtimeEngineProfileId"
+            rules={{ required: "Runtime Engine Profile Id is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.runtimeEngineProfileId.label", "Runtime Engine Profile Id")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="runtime_engine_profile_catalog"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="profileName"
+                  optionValue="runtimeEngineProfileId"
+                  value={field.value || ""}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "runtimeEngineProfileName" as never,
+                      String(option?.record?.["profileName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
+                  placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.runtimeEngineProfileId.placeholder", "Select Runtime Engine Profile Id")}
+                  meta={{
+                    idField: "runtimeEngineProfileId",
+                    label: t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.runtimeEngineProfileId.label", "Runtime Engine Profile Catalog"),
+                    aggregateRoute: "runtimeengineprofile",
+                    queryRoute: "runtimeengineprofilecatalog",
                   }}
                 />
                 <FormMessage />

@@ -92,7 +92,29 @@ function printPlan() {
 }
 
 function buildArgs() {
-    return valuesOf(args['build-arg']).flatMap((value) => ['--build-arg', String(value)]);
+    const explicitBuildArgs = valuesOf(args['build-arg']).map(String);
+    const explicitKeys = new Set(explicitBuildArgs.map((value) => value.split('=', 1)[0]).filter(Boolean));
+    const defaultBuildArgs = [
+        buildArgFromEnv('BASE_IMAGE', [
+            args['base-image'],
+            process.env.RUNTIME_ENGINE_BASE_IMAGE,
+            process.env.BASE_IMAGE
+        ], explicitKeys),
+        buildArgFromEnv('PLUGIN_PROFILE', [
+            args['plugin-profile'],
+            args.profile,
+            process.env.RUNTIME_ENGINE_PLUGIN_PROFILE,
+            process.env.PLUGIN_PROFILE
+        ], explicitKeys)
+    ].filter(Boolean);
+    return [...defaultBuildArgs, ...explicitBuildArgs].flatMap((value) => ['--build-arg', value]);
+}
+
+function buildArgFromEnv(name, values, explicitKeys) {
+    if (explicitKeys.has(name)) return undefined;
+    const value = firstNonEmpty(...values);
+    if (value == null) return undefined;
+    return `${name}=${value}`;
 }
 
 function cacheArgs() {
@@ -220,6 +242,8 @@ Options:
   --platform <os/arch>       Target CPU architecture. Defaults to RUNTIME_ENGINE_IMAGE_PLATFORM, DOCKER_DEFAULT_PLATFORM, or host architecture.
   --dockerfile <file>        Dockerfile path. Defaults to ${defaultDockerfile}.
   --build-arg <key=value>    Forward a Docker build argument, for example BASE_IMAGE.
+  --base-image <image>       Build arg BASE_IMAGE. Defaults to RUNTIME_ENGINE_BASE_IMAGE or BASE_IMAGE.
+  --plugin-profile <profile> Build arg PLUGIN_PROFILE. Defaults to RUNTIME_ENGINE_PLUGIN_PROFILE or PLUGIN_PROFILE.
   --no-cache                 Disable Docker layer cache.
   --no-cache-from            Do not seed the build cache from the existing local image.
   --output <file>            Image archive path. Defaults to IMAGE_TAR or ${defaultTar}.

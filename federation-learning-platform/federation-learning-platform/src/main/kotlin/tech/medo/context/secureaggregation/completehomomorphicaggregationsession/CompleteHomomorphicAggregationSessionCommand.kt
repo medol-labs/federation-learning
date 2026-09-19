@@ -18,6 +18,7 @@ data class CompleteHomomorphicAggregationSessionCommand(
     val roundNumber: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
+    val modelPlugin: String,
     val aggregatedModelId: UUID = java.util.UUID.randomUUID(),
     val encryptedUpdateArtifactRefs: List<String>
 ) {

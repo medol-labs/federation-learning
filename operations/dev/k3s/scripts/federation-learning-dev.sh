@@ -152,6 +152,7 @@ data:
   MEDOL_SYNC_FIXED_DELAY_MS: "5000"
   MEDOL_SYNC_MODE: "outbox-delta"
   MEDOL_SYNC_SOURCE_BASE_URL: "http://federation-learning-platform:8081"
+  MEDOL_SYNC_SOURCE_BASE_URLS_DICTIONARYMAINTENANCE: "http://federation-learning-support:8080"
   RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE: "${runtime_engine_image}"
 YAML
 }
@@ -173,7 +174,7 @@ ports:
   - port: "30080:30080"
     nodeFilters:
       - "server:0"
-  - port: "30082:30082"
+  - port: "30082-30181:30082-30181"
     nodeFilters:
       - "server:0"
 volumes:

@@ -33,6 +33,11 @@ class RoundExecutionCatalogReadModelEntity : MetadataProjection {
     var state: RoundExecutionStateEnum? = null
     var featureSchemaId: UUID? = null
     var baseModelId: UUID? = null
+    var runtimeEngineProfileId: UUID? = null
+    var runtimeEngineProfileName: String? = null
+    var runtimeEnginePluginProfile: String? = null
+    var runtimeEngineImage: String? = null
+    var runtimeEngineImageDigest: String? = null
     var runtimeEngineJobId: String? = null
     var runtimeEngineObservedStatus: String? = null
     var runtimeEngineObservationAt: LocalDateTime? = null

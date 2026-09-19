@@ -28,18 +28,8 @@ type RuntimeDatasetBindingCatalogRecord = {
   featureSchemaVersion?: string;
   datasetName?: string;
   runtimeName?: string;
-  dataSourceType: string;
-  host?: string;
-  port?: number;
-  url?: string;
-  databaseName?: string;
-  schemaName?: string;
-  tableName?: string;
-  filePath?: string;
-  objectBucket?: string;
-  objectPrefix?: string;
+  filePath: string;
   dataFormat: string;
-  credentialSecretName?: string;
   configuredAt: string;
 };
 
@@ -225,105 +215,6 @@ export const RuntimeDatasetBindingCatalogList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("dataSourceType", {
-        id: "dataSourceType",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.dataSourceType.label", "Data Source Type")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_binding_catalog.fields.dataSourceType.label", "Data Source Type"),
-          placeholder: "Enter Data Source Type",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("host", {
-        id: "host",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.host.label", "Host")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_binding_catalog.fields.host.label", "Host"),
-          placeholder: "Enter Host",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("port", {
-        id: "port",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.port.label", "Port")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_binding_catalog.fields.port.label", "Port"),
-          placeholder: "Enter Port",
-          variant: "number",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("url", {
-        id: "url",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.url.label", "Url")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_binding_catalog.fields.url.label", "Url"),
-          placeholder: "Enter Url",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("databaseName", {
-        id: "databaseName",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.databaseName.label", "Database Name")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_binding_catalog.fields.databaseName.label", "Database Name"),
-          placeholder: "Enter Database Name",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("schemaName", {
-        id: "schemaName",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.schemaName.label", "Schema Name")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_binding_catalog.fields.schemaName.label", "Schema Name"),
-          placeholder: "Enter Schema Name",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("tableName", {
-        id: "tableName",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.tableName.label", "Table Name")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_binding_catalog.fields.tableName.label", "Table Name"),
-          placeholder: "Enter Table Name",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
       columnHelper.accessor("filePath", {
         id: "filePath",
         header: ({ column }) => (
@@ -338,34 +229,6 @@ export const RuntimeDatasetBindingCatalogList = () => {
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("objectBucket", {
-        id: "objectBucket",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.objectBucket.label", "Object Bucket")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_binding_catalog.fields.objectBucket.label", "Object Bucket"),
-          placeholder: "Enter Object Bucket",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("objectPrefix", {
-        id: "objectPrefix",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.objectPrefix.label", "Object Prefix")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_binding_catalog.fields.objectPrefix.label", "Object Prefix"),
-          placeholder: "Enter Object Prefix",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
       columnHelper.accessor("dataFormat", {
         id: "dataFormat",
         header: ({ column }) => (
@@ -376,20 +239,6 @@ export const RuntimeDatasetBindingCatalogList = () => {
         meta: {
           label: t("resources.runtime_dataset_binding_catalog.fields.dataFormat.label", "Data Format"),
           placeholder: "Enter Data Format",
-          variant: "text",
-        },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("credentialSecretName", {
-        id: "credentialSecretName",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_dataset_binding_catalog.fields.credentialSecretName.label", "Credential Secret Name")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.runtime_dataset_binding_catalog.fields.credentialSecretName.label", "Credential Secret Name"),
-          placeholder: "Enter Credential Secret Name",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -438,7 +287,7 @@ export const RuntimeDatasetBindingCatalogList = () => {
         tableName: "runtime_dataset_binding_catalog_read_model_entity",
         idField: "runtimeDatasetBindingId",
         idFields: ["runtimeDatasetBindingId"],
-        queryFields: ["runtimeDatasetBindingId","datasetId","organizationId","runtimeId","organizationName","featureSchemaId","featureDomain","featureSchemaVersion","datasetName","runtimeName","dataSourceType","host","port","url","databaseName","schemaName","tableName","filePath","objectBucket","objectPrefix","dataFormat","credentialSecretName","configuredAt"],
+        queryFields: ["runtimeDatasetBindingId","datasetId","organizationId","runtimeId","organizationName","featureSchemaId","featureDomain","featureSchemaVersion","datasetName","runtimeName","filePath","dataFormat","configuredAt"],
         label: t("resources.runtime_dataset_binding_catalog.label", "Runtime Dataset Binding Catalog"),
         aggregateRoute: "runtimedatasetbinding",
         queryRoute: "runtimedatasetbindingcatalog",

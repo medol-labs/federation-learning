@@ -57,6 +57,7 @@ class AggregatePlainModelUpdatesDecisionTest {
             roundNumber = 0,
             maxRounds = 0,
             minimumAccuracy = java.math.BigDecimal.ZERO,
+            modelPlugin = "",
             aggregationAlgorithm = "",
             aggregatedModelId = java.util.UUID.randomUUID(),
             modelUpdateArtifactRefs = emptyList()
@@ -88,6 +89,7 @@ class AggregatePlainModelUpdatesDecisionTest {
         assertEquals(command.roundNumber, event.roundNumber)
         assertEquals(command.maxRounds, event.maxRounds)
         assertEquals(command.minimumAccuracy, event.minimumAccuracy)
+        assertEquals(command.modelPlugin, event.modelPlugin)
         assertEquals(command.aggregatedModelId, event.aggregatedModelId)
     }
 }

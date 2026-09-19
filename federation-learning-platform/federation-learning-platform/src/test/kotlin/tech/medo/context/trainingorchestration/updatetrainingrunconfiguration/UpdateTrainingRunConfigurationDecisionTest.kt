@@ -25,12 +25,18 @@ class UpdateTrainingRunConfigurationDecisionTest {
             featureSchemaVersion = null,
             initialModelId = java.util.UUID.randomUUID(),
             initialModelName = null,
+            initialModelPlugin = null,
             initialModelVersion = null,
             initialModelArtifactUri = "",
             initialModelRegistryRef = "",
             initialModelFormat = "",
             initialModelArtifactDigest = "",
             initialModelSignatureUri = null,
+            runtimeEngineProfileId = java.util.UUID.randomUUID(),
+            runtimeEngineProfileName = null,
+            runtimeEnginePluginProfile = "",
+            runtimeEngineImage = "",
+            runtimeEngineImageDigest = null,
             strategyName = "",
             aggregationAlgorithm = "",
             maxRounds = 0,
@@ -59,7 +65,10 @@ class UpdateTrainingRunConfigurationDecisionTest {
             featureSchemaVersion = null,
             initialModelId = UUID.nameUUIDFromBytes("model-2".toByteArray()),
             initialModelName = null,
+            initialModelPlugin = null,
             initialModelVersion = null,
+            runtimeEngineProfileId = java.util.UUID.randomUUID(),
+            runtimeEngineProfileName = null,
             strategyName = "FED_AVG",
             aggregationAlgorithm = "FEDERATED_AVERAGING",
             maxRounds = 20,
@@ -93,7 +102,10 @@ class UpdateTrainingRunConfigurationDecisionTest {
         assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
         assertEquals(UUID.nameUUIDFromBytes("model-2".toByteArray()), event.initialModelId)
         assertEquals(command.initialModelName, event.initialModelName)
+        assertEquals(command.initialModelPlugin, event.initialModelPlugin)
         assertEquals(command.initialModelVersion, event.initialModelVersion)
+        assertEquals(command.runtimeEngineProfileId, event.runtimeEngineProfileId)
+        assertEquals(command.runtimeEngineProfileName, event.runtimeEngineProfileName)
         assertEquals("FED_AVG", event.strategyName)
         assertEquals("FEDERATED_AVERAGING", event.aggregationAlgorithm)
         assertEquals(20, event.maxRounds)

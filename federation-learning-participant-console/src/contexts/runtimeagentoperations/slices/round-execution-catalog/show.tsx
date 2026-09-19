@@ -100,6 +100,31 @@ export const RoundExecutionCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.runtimeEngineProfileId.label", "Runtime Engine Profile Id")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEngineProfileId, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.runtimeEngineProfileName.label", "Runtime Engine Profile Name")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEngineProfileName, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.runtimeEnginePluginProfile.label", "Runtime Engine Plugin Profile")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEnginePluginProfile, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.runtimeEngineImage.label", "Runtime Engine Image")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEngineImage, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.runtimeEngineImageDigest.label", "Runtime Engine Image Digest")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEngineImageDigest, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.round_execution_catalog.fields.runtimeEngineJobId.label", "Runtime Engine Job Id")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEngineJobId, t)}</p>
             </div>

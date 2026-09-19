@@ -16,6 +16,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 
 type RuntimeInfrastructureAccessViewRecord = {
   runtimeInfrastructureId: string;
@@ -341,8 +342,9 @@ export const RuntimeInfrastructureAccessViewList = () => {
           label: t("resources.runtime_infrastructure_access_view.fields.infrastructureVerificationFailureReason.label", "Infrastructure Verification Failure Reason"),
           placeholder: "Enter Infrastructure Verification Failure Reason",
           variant: "text",
+          filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("agentReadyAt", {
         id: "agentReadyAt",
@@ -385,8 +387,9 @@ export const RuntimeInfrastructureAccessViewList = () => {
           label: t("resources.runtime_infrastructure_access_view.fields.agentDeploymentFailureReason.label", "Agent Deployment Failure Reason"),
           placeholder: "Enter Agent Deployment Failure Reason",
           variant: "text",
+          filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("agentDeploymentRetryFailedAt", {
         id: "agentDeploymentRetryFailedAt",
@@ -414,8 +417,9 @@ export const RuntimeInfrastructureAccessViewList = () => {
           label: t("resources.runtime_infrastructure_access_view.fields.agentDeploymentRetryFailureReason.label", "Agent Deployment Retry Failure Reason"),
           placeholder: "Enter Agent Deployment Retry Failure Reason",
           variant: "text",
+          filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("connectedAt", {
         id: "connectedAt",

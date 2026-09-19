@@ -16,6 +16,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 
 type RuntimeInstallationPlanCatalogRecord = {
   runtimeInstallationPlanId: string;
@@ -372,8 +373,9 @@ export const RuntimeInstallationPlanCatalogList = () => {
           label: t("resources.runtime_installation_plan_catalog.fields.verificationFailureReason.label", "Verification Failure Reason"),
           placeholder: "Enter Verification Failure Reason",
           variant: "text",
+          filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("agentReadyAt", {
         id: "agentReadyAt",
@@ -416,8 +418,9 @@ export const RuntimeInstallationPlanCatalogList = () => {
           label: t("resources.runtime_installation_plan_catalog.fields.agentDeploymentFailureReason.label", "Agent Deployment Failure Reason"),
           placeholder: "Enter Agent Deployment Failure Reason",
           variant: "text",
+          filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("agentDeploymentRetryFailedAt", {
         id: "agentDeploymentRetryFailedAt",
@@ -445,8 +448,9 @@ export const RuntimeInstallationPlanCatalogList = () => {
           label: t("resources.runtime_installation_plan_catalog.fields.agentDeploymentRetryFailureReason.label", "Agent Deployment Retry Failure Reason"),
           placeholder: "Enter Agent Deployment Retry Failure Reason",
           variant: "text",
+          filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("lastConnectedAt", {
         id: "lastConnectedAt",

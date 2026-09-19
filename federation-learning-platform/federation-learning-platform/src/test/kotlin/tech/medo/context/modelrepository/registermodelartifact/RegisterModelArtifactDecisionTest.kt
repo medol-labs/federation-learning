@@ -15,6 +15,7 @@ class RegisterModelArtifactDecisionTest {
         val command = RegisterModelArtifactCommand(
             modelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             modelName = "credit-risk",
+            modelPlugin = "SKLEARN_LOGISTIC_REGRESSION",
             modelVersion = "v1",
             modelDescription = "Baseline credit risk classifier for federated training",
             sourceType = "EXTERNAL",
@@ -29,6 +30,7 @@ class RegisterModelArtifactDecisionTest {
         val event = events.filterIsInstance<ModelArtifactRegisteredEvent>().single()
         assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.modelId)
         assertEquals("credit-risk", event.modelName)
+        assertEquals("SKLEARN_LOGISTIC_REGRESSION", event.modelPlugin)
         assertEquals("v1", event.modelVersion)
         assertEquals("Baseline credit risk classifier for federated training", event.modelDescription)
         assertEquals("EXTERNAL", event.sourceType)

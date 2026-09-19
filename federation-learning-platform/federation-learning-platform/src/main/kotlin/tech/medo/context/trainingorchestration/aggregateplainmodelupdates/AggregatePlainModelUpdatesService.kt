@@ -17,6 +17,7 @@ data class AggregatePlainModelUpdatesInput(
     val roundNumber: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
+    val modelPlugin: String,
     val aggregationAlgorithm: String,
     val aggregatedModelId: UUID,
     val modelUpdateArtifactRefs: List<String>

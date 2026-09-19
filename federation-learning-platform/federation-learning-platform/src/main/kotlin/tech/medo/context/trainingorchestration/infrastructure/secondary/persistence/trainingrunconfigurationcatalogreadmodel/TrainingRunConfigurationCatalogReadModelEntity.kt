@@ -23,6 +23,7 @@ class TrainingRunConfigurationCatalogReadModelEntity : MetadataProjection {
     var featureSchemaId: UUID? = null
     var initialModelId: UUID? = null
     var initialModelName: String? = null
+    var initialModelPlugin: String? = null
     var initialModelVersion: String? = null
     var federationName: String? = null
     var featureDomain: String? = null
@@ -32,6 +33,11 @@ class TrainingRunConfigurationCatalogReadModelEntity : MetadataProjection {
     var initialModelFormat: String? = null
     var initialModelArtifactDigest: String? = null
     var initialModelSignatureUri: String? = null
+    var runtimeEngineProfileId: UUID? = null
+    var runtimeEngineProfileName: String? = null
+    var runtimeEnginePluginProfile: String? = null
+    var runtimeEngineImage: String? = null
+    var runtimeEngineImageDigest: String? = null
     var strategyName: String? = null
     var aggregationAlgorithm: String? = null
     var maxRounds: Int? = null

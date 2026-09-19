@@ -18,6 +18,7 @@ data class SubmitGlobalModelEvaluationCommand(
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
     val aggregatedModelId: UUID,
+    val modelPlugin: String,
     val aggregatedModelArtifactUri: String,
     val aggregatedModelRegistryRef: String,
     val modelFormat: String,

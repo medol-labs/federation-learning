@@ -5,12 +5,14 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.trainingorchestration.definetrainingrunconfiguration.DefineTrainingRunConfigurationCommand
 import tech.medo.trainingorchestration.events.TrainingRunConfigurationDefinedEvent
+import tech.medo.trainingorchestration.runtimeengineprofile.RuntimeEngineProfileState
 import java.util.UUID
 import java.math.BigDecimal
 
 class DefineTrainingRunConfigurationDecisionTest {
     @Test
     fun DefineRunnableConfiguration() {
+        val state = RuntimeEngineProfileState()
 
 
         val command = DefineTrainingRunConfigurationCommand(
@@ -23,7 +25,10 @@ class DefineTrainingRunConfigurationDecisionTest {
             featureSchemaVersion = null,
             initialModelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             initialModelName = null,
+            initialModelPlugin = null,
             initialModelVersion = null,
+            runtimeEngineProfileId = UUID.nameUUIDFromBytes("engine-profile-1".toByteArray()),
+            runtimeEngineProfileName = null,
             strategyName = "FED_AVG",
             aggregationAlgorithm = "FEDERATED_AVERAGING",
             maxRounds = 10,
@@ -42,7 +47,8 @@ class DefineTrainingRunConfigurationDecisionTest {
         )
 
         val events = (object : DefineTrainingRunConfigurationDecision {}).decide(
-            command
+            command,
+            state = state
         )
 
         val event = events.filterIsInstance<TrainingRunConfigurationDefinedEvent>().single()
@@ -55,7 +61,10 @@ class DefineTrainingRunConfigurationDecisionTest {
         assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
         assertEquals(UUID.nameUUIDFromBytes("model-1".toByteArray()), event.initialModelId)
         assertEquals(command.initialModelName, event.initialModelName)
+        assertEquals(command.initialModelPlugin, event.initialModelPlugin)
         assertEquals(command.initialModelVersion, event.initialModelVersion)
+        assertEquals(UUID.nameUUIDFromBytes("engine-profile-1".toByteArray()), event.runtimeEngineProfileId)
+        assertEquals(command.runtimeEngineProfileName, event.runtimeEngineProfileName)
         assertEquals("FED_AVG", event.strategyName)
         assertEquals("FEDERATED_AVERAGING", event.aggregationAlgorithm)
         assertEquals(10, event.maxRounds)

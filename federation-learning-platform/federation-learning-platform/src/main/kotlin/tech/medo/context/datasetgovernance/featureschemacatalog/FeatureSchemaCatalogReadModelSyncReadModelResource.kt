@@ -31,7 +31,7 @@ class FeatureSchemaCatalogReadModelSyncReadModelResource(
         val reserved = setOf("afterSequence", "size", "cursor")
         val filters = parameters.filterKeys { it !in reserved }
         val pageNumber = cursor?.toIntOrNull()?.coerceAtLeast(0) ?: 0
-        val page = repository.findAll(PageRequest.of(pageNumber, size.coerceIn(1, 1000)))
+        val page = repository.findAllByCriteria(null, PageRequest.of(pageNumber, size.coerceIn(1, 1000)))
         val highWatermark = outboxRepository
             .findFirstBySourceContextAndSourceReadModelOrderBySequenceDesc("DatasetGovernance", "FeatureSchemaCatalog")
             ?.sequence ?: 0

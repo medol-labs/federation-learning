@@ -15,7 +15,7 @@ class AggregatePlainUpdatesWhenQuorumReachedProcessor(private val commandGateway
     @EventHandler
     fun on(event: ModelUpdateSubmissionAcceptedEvent): java.util.concurrent.CompletableFuture<*> =
         if (event.plainAggregationReady == true) {
-            commandGateway.send(AggregatePlainModelUpdatesCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, trainingJobObjective = event.trainingJobObjective, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber, maxRounds = event.maxRounds, minimumAccuracy = event.minimumAccuracy, aggregationAlgorithm = event.aggregationAlgorithm!!, modelUpdateArtifactRefs = event.acceptedModelUpdateArtifactRefs)).resultMessage
+            commandGateway.send(AggregatePlainModelUpdatesCommand(trainingJobId = event.trainingJobId, trainingRunConfigurationId = event.trainingRunConfigurationId, trainingJobObjective = event.trainingJobObjective, featureSchemaId = event.featureSchemaId, roundId = event.roundId, roundNumber = event.roundNumber, maxRounds = event.maxRounds, minimumAccuracy = event.minimumAccuracy, modelPlugin = "" /* TODO: provide modelPlugin */, aggregationAlgorithm = event.aggregationAlgorithm!!, modelUpdateArtifactRefs = event.acceptedModelUpdateArtifactRefs)).resultMessage
         } else {
             java.util.concurrent.CompletableFuture.completedFuture(null)
         }

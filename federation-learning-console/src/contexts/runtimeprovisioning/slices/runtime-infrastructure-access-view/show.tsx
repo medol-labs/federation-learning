@@ -2,6 +2,7 @@
 import { useShow, useTranslate } from "@refinedev/core";
 
 import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
+import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 import {
   Card,
   CardContent,
@@ -126,7 +127,7 @@ export const RuntimeInfrastructureAccessViewShow = () => {
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_access_view.fields.infrastructureVerificationFailureReason.label", "Infrastructure Verification Failure Reason")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.infrastructureVerificationFailureReason, t)}</p>
+              <CopyableText value={record?.infrastructureVerificationFailureReason} />
             </div>
             <Separator />
             <div>
@@ -141,7 +142,7 @@ export const RuntimeInfrastructureAccessViewShow = () => {
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_access_view.fields.agentDeploymentFailureReason.label", "Agent Deployment Failure Reason")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.agentDeploymentFailureReason, t)}</p>
+              <CopyableText value={record?.agentDeploymentFailureReason} />
             </div>
             <Separator />
             <div>
@@ -151,7 +152,7 @@ export const RuntimeInfrastructureAccessViewShow = () => {
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_infrastructure_access_view.fields.agentDeploymentRetryFailureReason.label", "Agent Deployment Retry Failure Reason")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.agentDeploymentRetryFailureReason, t)}</p>
+              <CopyableText value={record?.agentDeploymentRetryFailureReason} />
             </div>
             <Separator />
             <div>

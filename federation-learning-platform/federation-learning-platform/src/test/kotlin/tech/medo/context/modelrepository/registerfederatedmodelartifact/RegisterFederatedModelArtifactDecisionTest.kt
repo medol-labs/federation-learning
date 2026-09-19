@@ -17,6 +17,7 @@ class RegisterFederatedModelArtifactDecisionTest {
         val command = RegisterFederatedModelArtifactCommand(
             modelId = java.util.UUID.randomUUID(),
             modelName = "",
+            modelPlugin = "",
             modelVersion = "",
             modelDescription = null,
             sourceType = "",
@@ -39,6 +40,7 @@ class RegisterFederatedModelArtifactDecisionTest {
         val event = events.filterIsInstance<FederatedModelArtifactRegisteredEvent>().single()
         assertEquals(command.modelId, event.modelId)
         assertEquals(command.modelName, event.modelName)
+        assertEquals(command.modelPlugin, event.modelPlugin)
         assertEquals(command.modelVersion, event.modelVersion)
         assertEquals(command.modelDescription, event.modelDescription)
         assertEquals(command.sourceType, event.sourceType)

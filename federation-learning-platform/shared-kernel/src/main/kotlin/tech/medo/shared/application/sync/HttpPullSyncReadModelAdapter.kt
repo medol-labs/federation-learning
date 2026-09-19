@@ -20,7 +20,8 @@ class HttpPullSyncReadModelAdapter(
         mode.equals("pull-http", ignoreCase = true)
 
     override fun syncOnce(target: SyncReadModelTarget, checkpoint: SyncReadModelCheckpoint?): SyncReadModelResult {
-        if (properties.sourceBaseUrl.isBlank()) {
+        val sourceBaseUrl = properties.sourceBaseUrlFor(target)
+        if (sourceBaseUrl.isBlank()) {
             throw IllegalStateException("Sync target ${target.name} requires medol.sync.source-base-url")
         }
 
@@ -30,7 +31,7 @@ class HttpPullSyncReadModelAdapter(
 
         do {
             val uriBuilder = UriComponentsBuilder
-                .fromHttpUrl(properties.sourceBaseUrl)
+                .fromHttpUrl(sourceBaseUrl)
                 .path(target.sourcePath)
                 .queryParam("size", properties.pageSize)
             val context = SyncReadModelContext(properties, checkpoint)

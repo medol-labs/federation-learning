@@ -29,6 +29,7 @@ class ModelArtifactState @EntityCreator constructor() {
     var currentState: ModelArtifactStateEnum? = null
     var modelId: UUID? = null
     var modelName: String? = null
+    var modelPlugin: String? = null
     var modelVersion: String? = null
     var modelDescription: String? = null
     var sourceType: String? = null
@@ -48,6 +49,7 @@ class ModelArtifactState @EntityCreator constructor() {
         currentState = ModelArtifactStateEnum.REGISTERED
         modelId = event.modelId
         modelName = event.modelName
+        modelPlugin = event.modelPlugin
         modelVersion = event.modelVersion
         modelDescription = event.modelDescription
         sourceType = event.sourceType
@@ -74,6 +76,7 @@ class ModelArtifactState @EntityCreator constructor() {
         currentState = ModelArtifactStateEnum.REGISTERED
         modelId = event.modelId
         modelName = event.modelName
+        modelPlugin = event.modelPlugin
         modelVersion = event.modelVersion
         modelDescription = event.modelDescription
         sourceType = event.sourceType

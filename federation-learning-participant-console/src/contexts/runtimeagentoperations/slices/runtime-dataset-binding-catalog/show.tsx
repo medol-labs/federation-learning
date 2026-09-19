@@ -90,63 +90,13 @@ export const RuntimeDatasetBindingCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.dataSourceType.label", "Data Source Type")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.dataSourceType, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.host.label", "Host")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.host, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.port.label", "Port")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.port, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.url.label", "Url")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.url, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.databaseName.label", "Database Name")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.databaseName, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.schemaName.label", "Schema Name")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.schemaName, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.tableName.label", "Table Name")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.tableName, t)}</p>
-            </div>
-            <Separator />
-            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.filePath.label", "File Path")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.filePath, t)}</p>
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.objectBucket.label", "Object Bucket")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.objectBucket, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.objectPrefix.label", "Object Prefix")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.objectPrefix, t)}</p>
-            </div>
-            <Separator />
-            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.dataFormat.label", "Data Format")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.dataFormat, t)}</p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_dataset_binding_catalog.fields.credentialSecretName.label", "Credential Secret Name")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.credentialSecretName, t)}</p>
             </div>
             <Separator />
             <div>

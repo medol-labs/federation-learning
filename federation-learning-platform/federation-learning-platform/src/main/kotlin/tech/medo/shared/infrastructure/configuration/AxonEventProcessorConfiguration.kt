@@ -311,6 +311,10 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("readmodel-runtime-dataset-metadata-catalog").notCustomized()
 
     @Bean
+    fun readmodelRuntimeEngineProfileCatalogEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("readmodel-runtime-engine-profile-catalog").notCustomized()
+
+    @Bean
     fun readmodelRuntimeHealthDashboardEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("readmodel-runtime-health-dashboard").notCustomized()
 

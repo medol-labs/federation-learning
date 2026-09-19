@@ -10,6 +10,7 @@ import java.util.UUID;
 data class RegisterFederatedModelArtifactCommand(
     val modelId: UUID,
     val modelName: String,
+    val modelPlugin: String,
     val modelVersion: String,
     val modelDescription: String?,
     val sourceType: String,

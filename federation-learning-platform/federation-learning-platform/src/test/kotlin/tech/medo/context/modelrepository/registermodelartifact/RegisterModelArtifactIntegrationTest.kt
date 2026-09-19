@@ -27,6 +27,7 @@ class RegisterModelArtifactIntegrationTest(
         val command = RegisterModelArtifactCommand(
             modelId = UUID.nameUUIDFromBytes("model-1".toByteArray()),
             modelName = "credit-risk",
+            modelPlugin = "SKLEARN_LOGISTIC_REGRESSION",
             modelVersion = "v1",
             modelDescription = "Baseline credit risk classifier for federated training",
             sourceType = "EXTERNAL",

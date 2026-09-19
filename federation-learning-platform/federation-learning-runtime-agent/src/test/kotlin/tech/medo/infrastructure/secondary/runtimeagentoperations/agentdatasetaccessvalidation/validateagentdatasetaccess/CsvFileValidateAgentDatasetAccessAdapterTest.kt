@@ -60,7 +60,7 @@ class CsvFileValidateAgentDatasetAccessAdapterTest {
 
     @Test
     fun rejectsNonCsvBinding() {
-        val input = input(dataSourceType = "postgres", dataFormat = "table", filePath = null)
+        val input = input(dataFormat = "table", filePath = tempDir.resolve("dataset.table").toString())
         val adapter = CsvFileValidateAgentDatasetAccessAdapter()
 
         val result = adapter.execute(input)
@@ -71,9 +71,8 @@ class CsvFileValidateAgentDatasetAccessAdapterTest {
     }
 
     private fun input(
-        dataSourceType: String = "file",
         dataFormat: String = "csv",
-        filePath: String?
+        filePath: String
     ): ValidateAgentDatasetAccessInput =
         ValidateAgentDatasetAccessInput(
             datasetAccessValidationId = UUID.fromString("11111111-1111-4111-8111-111111111111"),
@@ -87,17 +86,7 @@ class CsvFileValidateAgentDatasetAccessAdapterTest {
             datasetName = "credit-risk",
             runtimeId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
             runtimeName = "local runtime",
-            dataSourceType = dataSourceType,
-            host = null,
-            port = null,
-            url = null,
-            databaseName = null,
-            schemaName = null,
-            tableName = null,
             filePath = filePath,
-            objectBucket = null,
-            objectPrefix = null,
-            dataFormat = dataFormat,
-            credentialSecretName = null
+            dataFormat = dataFormat
         )
 }

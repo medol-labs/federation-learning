@@ -406,6 +406,7 @@ export type MarkCurrentRecommendedFeatureSchemaVersionCommandInput = z.infer<typ
 
 export const RegisterModelArtifactCommandSchema = z.object({
   modelName: z.string(),
+  modelPlugin: z.string(),
   modelVersion: z.string(),
   modelDescription: z.string().optional().nullable(),
   sourceType: z.string(),
@@ -421,6 +422,17 @@ export const DownloadModelArtifactCommandSchema = z.object({
 });
 export type DownloadModelArtifactCommandInput = z.infer<typeof DownloadModelArtifactCommandSchema>;
 
+export const RegisterRuntimeEngineProfileCommandSchema = z.object({
+  profileName: z.string(),
+  pluginProfile: z.string(),
+  runtimeEngineImage: z.string(),
+  imageDigest: z.string().optional().nullable(),
+  supportedModelPluginsDescription: z.string().optional().nullable(),
+  supportedAggregationAlgorithmsDescription: z.string().optional().nullable(),
+  active: z.boolean(),
+});
+export type RegisterRuntimeEngineProfileCommandInput = z.infer<typeof RegisterRuntimeEngineProfileCommandSchema>;
+
 export const DefineTrainingRunConfigurationCommandSchema = z.object({
   configurationName: z.string(),
   federationId: z.string().uuid(),
@@ -430,7 +442,10 @@ export const DefineTrainingRunConfigurationCommandSchema = z.object({
   featureSchemaVersion: z.string().optional().nullable(),
   initialModelId: z.string().uuid(),
   initialModelName: z.string().optional().nullable(),
+  initialModelPlugin: z.string().optional().nullable(),
   initialModelVersion: z.string().optional().nullable(),
+  runtimeEngineProfileId: z.string().uuid(),
+  runtimeEngineProfileName: z.string().optional().nullable(),
   strategyName: z.string(),
   aggregationAlgorithm: z.string(),
   maxRounds: z.coerce.number().int(),
@@ -459,7 +474,10 @@ export const UpdateTrainingRunConfigurationCommandSchema = z.object({
   featureSchemaVersion: z.string().optional().nullable(),
   initialModelId: z.string().uuid(),
   initialModelName: z.string().optional().nullable(),
+  initialModelPlugin: z.string().optional().nullable(),
   initialModelVersion: z.string().optional().nullable(),
+  runtimeEngineProfileId: z.string().uuid(),
+  runtimeEngineProfileName: z.string().optional().nullable(),
   strategyName: z.string(),
   aggregationAlgorithm: z.string(),
   maxRounds: z.coerce.number().int(),

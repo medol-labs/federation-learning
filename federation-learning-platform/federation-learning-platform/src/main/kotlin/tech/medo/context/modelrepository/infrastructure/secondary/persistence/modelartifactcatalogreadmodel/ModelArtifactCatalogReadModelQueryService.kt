@@ -33,6 +33,7 @@ class ModelArtifactCatalogReadModelQueryService(
         if (criteria != null) {
             criteria.modelId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("modelId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.modelName?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelName") })) }
+            criteria.modelPlugin?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelPlugin") })) }
             criteria.modelVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelVersion") })) }
             criteria.modelDescription?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelDescription") })) }
             criteria.sourceType?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("sourceType") })) }
@@ -106,6 +107,7 @@ class ModelArtifactCatalogReadModelQueryService(
         ModelArtifactCatalogReadModelProjection().also {
             it.modelId = this@toProjection.modelId
             it.modelName = this@toProjection.modelName
+            it.modelPlugin = this@toProjection.modelPlugin
             it.modelVersion = this@toProjection.modelVersion
             it.modelDescription = this@toProjection.modelDescription
             it.sourceType = this@toProjection.sourceType

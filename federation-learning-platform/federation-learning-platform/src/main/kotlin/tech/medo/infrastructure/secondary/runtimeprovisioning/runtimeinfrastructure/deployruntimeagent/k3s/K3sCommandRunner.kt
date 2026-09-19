@@ -1,7 +1,10 @@
 package tech.medo.infrastructure.secondary.runtimeprovisioning.runtimeinfrastructure.deployruntimeagent.k3s
 
+import io.fabric8.kubernetes.api.model.APIResource
+import io.fabric8.kubernetes.api.model.GenericKubernetesResource
 import io.fabric8.kubernetes.api.model.Node
 import io.fabric8.kubernetes.client.KubernetesClient
+import io.fabric8.kubernetes.client.dsl.base.ResourceDefinitionContext
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.nio.file.Files
@@ -39,10 +42,22 @@ class Fabric8K3sCommandRunner(private val client: KubernetesClient) : K3sCommand
     private fun applyManifest(properties: K3sRuntimeInfrastructureProperties, arguments: List<String>): K3sCommandResult {
         val namespace = argumentAfter(arguments, "-n") ?: properties.namespace
         val manifest = argumentAfter(arguments, "-f") ?: return failure("Manifest file is required.")
-        Files.newInputStream(Path.of(manifest)).use { input ->
-            client.load(input).inNamespace(namespace).createOrReplace()
+        val items = Files.newInputStream(Path.of(manifest)).use { input ->
+            client.load(input).items()
         }
-        return success("Applied $manifest in namespace $namespace")
+        items.forEach { item ->
+            if (item is GenericKubernetesResource) {
+                client.genericKubernetesResources(resourceDefinitionContext(item))
+                    .inNamespace(namespace)
+                    .resource(item)
+                    .createOrReplace()
+            } else {
+                client.resource(item)
+                    .inNamespace(namespace)
+                    .createOrReplace()
+            }
+        }
+        return success("Applied ${items.size} resources from $manifest in namespace $namespace")
     }
 
     private fun awaitDeployment(properties: K3sRuntimeInfrastructureProperties, arguments: List<String>): K3sCommandResult {
@@ -60,6 +75,34 @@ class Fabric8K3sCommandRunner(private val client: KubernetesClient) : K3sCommand
             Thread.sleep(500)
         }
         return K3sCommandResult(-1, "Deployment $name did not become ready within $timeout.", true)
+    }
+
+    private fun resourceDefinitionContext(item: GenericKubernetesResource): ResourceDefinitionContext {
+        val (group, version) = apiGroupAndVersion(item.apiVersion)
+        val kind = item.kind
+        val resource = APIResource().apply {
+            this.group = group
+            this.version = version
+            this.kind = kind
+            this.name = pluralResourceName(kind)
+            this.singularName = kind.replaceFirstChar { it.lowercase() }
+            this.namespaced = true
+        }
+        return ResourceDefinitionContext.fromApiResource(item.apiVersion, resource)
+    }
+
+    private fun apiGroupAndVersion(apiVersion: String): Pair<String, String> {
+        val parts = apiVersion.split("/", limit = 2)
+        return if (parts.size == 1) "" to parts[0] else parts[0] to parts[1]
+    }
+
+    private fun pluralResourceName(kind: String): String {
+        val lower = kind.replaceFirstChar { it.lowercase() }
+        return when {
+            lower.endsWith("s") || lower.endsWith("x") || lower.endsWith("ch") || lower.endsWith("sh") -> "${lower}es"
+            lower.endsWith("y") -> "${lower.dropLast(1)}ies"
+            else -> "${lower}s"
+        }
     }
 
     private fun isReady(node: Node): Boolean = node.status?.conditions.orEmpty().any {

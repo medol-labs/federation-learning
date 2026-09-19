@@ -36,18 +36,8 @@ class ConfigureRuntimeDatasetBindingDecisionTest {
                         datasetName = "",
                         runtimeId = UUID.nameUUIDFromBytes("runtime-1".toByteArray()),
                         runtimeName = null,
-                        dataSourceType = "",
-                        host = null,
-                        port = null,
-                        url = null,
-                        databaseName = null,
-                        schemaName = null,
-                        tableName = null,
-                        filePath = null,
-                        objectBucket = null,
-                        objectPrefix = null,
-                        dataFormat = "",
-                        credentialSecretName = null
+                        filePath = "",
+                        dataFormat = ""
                         ),
                             runtimeDatasetBindingRuntimeIdDatasetIdReservation = runtimeDatasetBindingRuntimeIdDatasetIdReservation
                     )

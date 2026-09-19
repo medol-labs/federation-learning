@@ -23,7 +23,7 @@ class AggregatePlainModelUpdatesCommandHandler(
         eventAppender: EventAppender
     ) {
         // TODO: validate child/member state before appending events.
-        val input = AggregatePlainModelUpdatesInput(trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, trainingJobObjective = command.trainingJobObjective, featureSchemaId = command.featureSchemaId, roundId = command.roundId, roundNumber = command.roundNumber, maxRounds = command.maxRounds, minimumAccuracy = command.minimumAccuracy, aggregationAlgorithm = command.aggregationAlgorithm, aggregatedModelId = command.aggregatedModelId, modelUpdateArtifactRefs = command.modelUpdateArtifactRefs)
+        val input = AggregatePlainModelUpdatesInput(trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, trainingJobObjective = command.trainingJobObjective, featureSchemaId = command.featureSchemaId, roundId = command.roundId, roundNumber = command.roundNumber, maxRounds = command.maxRounds, minimumAccuracy = command.minimumAccuracy, modelPlugin = command.modelPlugin, aggregationAlgorithm = command.aggregationAlgorithm, aggregatedModelId = command.aggregatedModelId, modelUpdateArtifactRefs = command.modelUpdateArtifactRefs)
         val portResult = aggregatePlainModelUpdatesService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))

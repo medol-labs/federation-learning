@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import tech.jhipster.service.filter.IntegerFilter
 import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
 
@@ -26,18 +25,8 @@ class RuntimeDatasetBindingCatalogReadModelCriteria {
     var featureSchemaVersion: StringFilter? = null
     var datasetName: StringFilter? = null
     var runtimeName: StringFilter? = null
-    var dataSourceType: StringFilter? = null
-    var host: StringFilter? = null
-    var port: IntegerFilter? = null
-    var url: StringFilter? = null
-    var databaseName: StringFilter? = null
-    var schemaName: StringFilter? = null
-    var tableName: StringFilter? = null
     var filePath: StringFilter? = null
-    var objectBucket: StringFilter? = null
-    var objectPrefix: StringFilter? = null
     var dataFormat: StringFilter? = null
-    var credentialSecretName: StringFilter? = null
     var configuredAt: RangeFilter<LocalDateTime>? = null
 }
 
@@ -53,18 +42,8 @@ class RuntimeDatasetBindingCatalogReadModelProjection : MetadataProjection {
     var featureSchemaVersion: String? = null
     var datasetName: String? = null
     var runtimeName: String? = null
-    var dataSourceType: String? = null
-    var host: String? = null
-    var port: Int? = null
-    var url: String? = null
-    var databaseName: String? = null
-    var schemaName: String? = null
-    var tableName: String? = null
     var filePath: String? = null
-    var objectBucket: String? = null
-    var objectPrefix: String? = null
     var dataFormat: String? = null
-    var credentialSecretName: String? = null
     var configuredAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
@@ -86,18 +65,8 @@ fun RuntimeDatasetBindingCatalogReadModelProjection.toReadModel(): RuntimeDatase
     featureSchemaVersion = featureSchemaVersion,
     datasetName = datasetName,
     runtimeName = runtimeName,
-    dataSourceType = dataSourceType,
-    host = host,
-    port = port,
-    url = url,
-    databaseName = databaseName,
-    schemaName = schemaName,
-    tableName = tableName,
     filePath = filePath,
-    objectBucket = objectBucket,
-    objectPrefix = objectPrefix,
     dataFormat = dataFormat,
-    credentialSecretName = credentialSecretName,
     configuredAt = configuredAt,
     userId = userId,
     sessionId = sessionId,
@@ -126,18 +95,8 @@ data class RuntimeDatasetBindingCatalogReadModel(
     val featureSchemaVersion: String?,
     val datasetName: String?,
     val runtimeName: String?,
-    val dataSourceType: String?,
-    val host: String?,
-    val port: Int?,
-    val url: String?,
-    val databaseName: String?,
-    val schemaName: String?,
-    val tableName: String?,
     val filePath: String?,
-    val objectBucket: String?,
-    val objectPrefix: String?,
     val dataFormat: String?,
-    val credentialSecretName: String?,
     val configuredAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,

@@ -29,9 +29,12 @@ platform:
       participant-console-image: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_IMAGE:medol/federation-learning-participant-console:0.0.1-SNAPSHOT}
       participant-console-replicas: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_REPLICAS:1}
       participant-console-container-port: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_CONTAINER_PORT:80}
-      participant-console-service-type: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_SERVICE_TYPE:NodePort}
-      participant-console-node-port: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_NODE_PORT:30082}
+      participant-console-service-type: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_SERVICE_TYPE:ClusterIP}
+      participant-console-node-port: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_NODE_PORT:}
       participant-console-api-path: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_API_PATH:/api/runtime-agent}
+      participant-console-ingress-enabled: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_INGRESS_ENABLED:true}
+      participant-console-ingress-class-name: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_INGRESS_CLASS_NAME:traefik}
+      participant-console-ingress-path-prefix: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_INGRESS_PATH_PREFIX:/runtime-agents}
       platform-url: ${PLATFORM_RUNTIME_K3S_PLATFORM_URL:http://federation-learning-platform:8081}
       support-url: ${PLATFORM_RUNTIME_K3S_SUPPORT_URL:http://federation-learning-support:8080}
       database-url: ${PLATFORM_RUNTIME_K3S_DATABASE_URL:jdbc:postgresql://postgres:5432/federation_learning_runtime_agent}

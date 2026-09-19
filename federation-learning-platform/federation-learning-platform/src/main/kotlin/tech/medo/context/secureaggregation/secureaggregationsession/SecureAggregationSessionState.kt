@@ -56,6 +56,7 @@ class SecureAggregationSessionState @EntityCreator constructor() {
     var receivedEncryptedUpdateCount: Int? = null
     var receivedRuntimeIds: List<UUID> = emptyList()
     var receivedEncryptedUpdateArtifactRefs: List<String> = emptyList()
+    var modelPlugin: String? = null
     var aggregatedModelId: UUID? = null
     var aggregatedModelName: String? = null
     var aggregatedModelVersion: String? = null
@@ -185,6 +186,7 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
+        modelPlugin = event.modelPlugin
         aggregatedModelId = event.aggregatedModelId
         aggregatedModelName = event.aggregatedModelName
         aggregatedModelVersion = event.aggregatedModelVersion

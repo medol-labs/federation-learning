@@ -33,6 +33,11 @@ class RoundExecutionCatalogReadModelCriteria {
     var state: Filter<RoundExecutionStateEnum>? = null
     var featureSchemaId: StringFilter? = null
     var baseModelId: StringFilter? = null
+    var runtimeEngineProfileId: StringFilter? = null
+    var runtimeEngineProfileName: StringFilter? = null
+    var runtimeEnginePluginProfile: StringFilter? = null
+    var runtimeEngineImage: StringFilter? = null
+    var runtimeEngineImageDigest: StringFilter? = null
     var runtimeEngineJobId: StringFilter? = null
     var runtimeEngineObservedStatus: StringFilter? = null
     var runtimeEngineObservationAt: RangeFilter<LocalDateTime>? = null
@@ -77,6 +82,11 @@ class RoundExecutionCatalogReadModelProjection : MetadataProjection {
     var state: RoundExecutionStateEnum? = null
     var featureSchemaId: UUID? = null
     var baseModelId: UUID? = null
+    var runtimeEngineProfileId: UUID? = null
+    var runtimeEngineProfileName: String? = null
+    var runtimeEnginePluginProfile: String? = null
+    var runtimeEngineImage: String? = null
+    var runtimeEngineImageDigest: String? = null
     var runtimeEngineJobId: String? = null
     var runtimeEngineObservedStatus: String? = null
     var runtimeEngineObservationAt: LocalDateTime? = null
@@ -128,6 +138,11 @@ fun RoundExecutionCatalogReadModelProjection.toReadModel(): RoundExecutionCatalo
     state = state,
     featureSchemaId = featureSchemaId,
     baseModelId = baseModelId,
+    runtimeEngineProfileId = runtimeEngineProfileId,
+    runtimeEngineProfileName = runtimeEngineProfileName,
+    runtimeEnginePluginProfile = runtimeEnginePluginProfile,
+    runtimeEngineImage = runtimeEngineImage,
+    runtimeEngineImageDigest = runtimeEngineImageDigest,
     runtimeEngineJobId = runtimeEngineJobId,
     runtimeEngineObservedStatus = runtimeEngineObservedStatus,
     runtimeEngineObservationAt = runtimeEngineObservationAt,
@@ -186,6 +201,11 @@ data class RoundExecutionCatalogReadModel(
     val state: RoundExecutionStateEnum?,
     val featureSchemaId: UUID?,
     val baseModelId: UUID?,
+    val runtimeEngineProfileId: UUID?,
+    val runtimeEngineProfileName: String?,
+    val runtimeEnginePluginProfile: String?,
+    val runtimeEngineImage: String?,
+    val runtimeEngineImageDigest: String?,
     val runtimeEngineJobId: String?,
     val runtimeEngineObservedStatus: String?,
     val runtimeEngineObservationAt: LocalDateTime?,

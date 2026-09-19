@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
+import tech.medo.shared.application.sync.SyncOutboxAppender
 
 import tech.medo.dictionarymaintenance.events.DictionaryValueAddedEvent
 import tech.medo.dictionarymaintenance.events.DictionaryValueDisabledEvent
@@ -37,7 +38,8 @@ interface DictionaryValueCatalogReadModelProjectionUpdater {
 }
 
 open class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
-    private val repository: DictionaryValueCatalogReadModelRepository
+    private val repository: DictionaryValueCatalogReadModelRepository,
+    private val outbox: SyncOutboxAppender
 ) : DictionaryValueCatalogReadModelProjectionUpdater {
     @Transactional
     open override fun update(
@@ -60,6 +62,14 @@ open class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
+        outbox.appendReadModel(
+            sourceContext = "DictionaryMaintenance",
+            sourceReadModel = "DictionaryValueCatalog",
+            readModelKey = event.dictionaryValueId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     @Transactional
@@ -79,6 +89,14 @@ open class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
+        outbox.appendReadModel(
+            sourceContext = "DictionaryMaintenance",
+            sourceReadModel = "DictionaryValueCatalog",
+            readModelKey = event.dictionaryValueId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     @Transactional
@@ -96,6 +114,14 @@ open class DefaultDictionaryValueCatalogReadModelProjectionUpdater(
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
+        outbox.appendReadModel(
+            sourceContext = "DictionaryMaintenance",
+            sourceReadModel = "DictionaryValueCatalog",
+            readModelKey = event.dictionaryValueId.toString(),
+            operation = "UPSERT",
+            payload = entity.toReadModel(),
+            message = message
+        )
     }
 
     private fun eventTime(message: EventMessage): LocalDateTime =
@@ -108,9 +134,10 @@ class DictionaryValueCatalogReadModelProjectionUpdaterConfiguration {
     @Bean
     @ConditionalOnMissingBean(DictionaryValueCatalogReadModelProjectionUpdater::class)
     fun defaultDictionaryValueCatalogReadModelProjectionUpdater(
-        repository: DictionaryValueCatalogReadModelRepository
+        repository: DictionaryValueCatalogReadModelRepository,
+        outbox: SyncOutboxAppender
     ): DictionaryValueCatalogReadModelProjectionUpdater =
-        DefaultDictionaryValueCatalogReadModelProjectionUpdater(repository)
+        DefaultDictionaryValueCatalogReadModelProjectionUpdater(repository, outbox)
 }
 
 @Namespace("readmodel-dictionary-value-catalog")

@@ -35,6 +35,7 @@ class TrainingRunConfigurationCatalogReadModelQueryService(
             criteria.featureSchemaId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("featureSchemaId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.initialModelId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("initialModelId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.initialModelName?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("initialModelName") })) }
+            criteria.initialModelPlugin?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("initialModelPlugin") })) }
             criteria.initialModelVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("initialModelVersion") })) }
             criteria.federationName?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("federationName") })) }
             criteria.featureDomain?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("featureDomain") })) }
@@ -44,6 +45,11 @@ class TrainingRunConfigurationCatalogReadModelQueryService(
             criteria.initialModelFormat?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("initialModelFormat") })) }
             criteria.initialModelArtifactDigest?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("initialModelArtifactDigest") })) }
             criteria.initialModelSignatureUri?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("initialModelSignatureUri") })) }
+            criteria.runtimeEngineProfileId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeEngineProfileId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.runtimeEngineProfileName?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEngineProfileName") })) }
+            criteria.runtimeEnginePluginProfile?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEnginePluginProfile") })) }
+            criteria.runtimeEngineImage?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEngineImage") })) }
+            criteria.runtimeEngineImageDigest?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEngineImageDigest") })) }
             criteria.strategyName?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("strategyName") })) }
             criteria.aggregationAlgorithm?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("aggregationAlgorithm") })) }
             criteria.maxRounds?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<Int>> { root -> root.get("maxRounds") })) }
@@ -93,6 +99,7 @@ class TrainingRunConfigurationCatalogReadModelQueryService(
             it.featureSchemaId = this@toProjection.featureSchemaId
             it.initialModelId = this@toProjection.initialModelId
             it.initialModelName = this@toProjection.initialModelName
+            it.initialModelPlugin = this@toProjection.initialModelPlugin
             it.initialModelVersion = this@toProjection.initialModelVersion
             it.federationName = this@toProjection.federationName
             it.featureDomain = this@toProjection.featureDomain
@@ -102,6 +109,11 @@ class TrainingRunConfigurationCatalogReadModelQueryService(
             it.initialModelFormat = this@toProjection.initialModelFormat
             it.initialModelArtifactDigest = this@toProjection.initialModelArtifactDigest
             it.initialModelSignatureUri = this@toProjection.initialModelSignatureUri
+            it.runtimeEngineProfileId = this@toProjection.runtimeEngineProfileId
+            it.runtimeEngineProfileName = this@toProjection.runtimeEngineProfileName
+            it.runtimeEnginePluginProfile = this@toProjection.runtimeEnginePluginProfile
+            it.runtimeEngineImage = this@toProjection.runtimeEngineImage
+            it.runtimeEngineImageDigest = this@toProjection.runtimeEngineImageDigest
             it.strategyName = this@toProjection.strategyName
             it.aggregationAlgorithm = this@toProjection.aggregationAlgorithm
             it.maxRounds = this@toProjection.maxRounds

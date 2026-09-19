@@ -45,6 +45,11 @@ class RoundExecutionCatalogReadModelQueryService(
             criteria.state?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<RoundExecutionStateEnum>> { root -> root.get("state") })) }
             criteria.featureSchemaId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("featureSchemaId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.baseModelId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("baseModelId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.runtimeEngineProfileId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeEngineProfileId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.runtimeEngineProfileName?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEngineProfileName") })) }
+            criteria.runtimeEnginePluginProfile?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEnginePluginProfile") })) }
+            criteria.runtimeEngineImage?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEngineImage") })) }
+            criteria.runtimeEngineImageDigest?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEngineImageDigest") })) }
             criteria.runtimeEngineJobId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEngineJobId") })) }
             criteria.runtimeEngineObservedStatus?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEngineObservedStatus") })) }
             criteria.runtimeEngineObservationAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("runtimeEngineObservationAt") })) }
@@ -142,6 +147,11 @@ class RoundExecutionCatalogReadModelQueryService(
             it.state = this@toProjection.state
             it.featureSchemaId = this@toProjection.featureSchemaId
             it.baseModelId = this@toProjection.baseModelId
+            it.runtimeEngineProfileId = this@toProjection.runtimeEngineProfileId
+            it.runtimeEngineProfileName = this@toProjection.runtimeEngineProfileName
+            it.runtimeEnginePluginProfile = this@toProjection.runtimeEnginePluginProfile
+            it.runtimeEngineImage = this@toProjection.runtimeEngineImage
+            it.runtimeEngineImageDigest = this@toProjection.runtimeEngineImageDigest
             it.runtimeEngineJobId = this@toProjection.runtimeEngineJobId
             it.runtimeEngineObservedStatus = this@toProjection.runtimeEngineObservedStatus
             it.runtimeEngineObservationAt = this@toProjection.runtimeEngineObservationAt

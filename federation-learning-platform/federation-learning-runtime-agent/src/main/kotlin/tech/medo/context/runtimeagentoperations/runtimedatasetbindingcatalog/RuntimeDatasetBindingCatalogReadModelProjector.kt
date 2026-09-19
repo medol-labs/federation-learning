@@ -59,18 +59,8 @@ open class DefaultRuntimeDatasetBindingCatalogReadModelProjectionUpdater(
             entity.featureSchemaVersion = event.featureSchemaVersion
             entity.datasetName = event.datasetName
             entity.runtimeName = event.runtimeName
-            entity.dataSourceType = event.dataSourceType
-            entity.host = event.host
-            entity.port = event.port
-            entity.url = event.url
-            entity.databaseName = event.databaseName
-            entity.schemaName = event.schemaName
-            entity.tableName = event.tableName
             entity.filePath = event.filePath
-            entity.objectBucket = event.objectBucket
-            entity.objectPrefix = event.objectPrefix
             entity.dataFormat = event.dataFormat
-            entity.credentialSecretName = event.credentialSecretName
             entity.configuredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
