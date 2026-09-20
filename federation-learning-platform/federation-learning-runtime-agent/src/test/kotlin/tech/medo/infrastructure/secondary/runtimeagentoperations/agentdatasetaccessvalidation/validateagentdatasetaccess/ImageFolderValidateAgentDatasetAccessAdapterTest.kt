@@ -1,6 +1,5 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.agentdatasetaccessvalidation.validateagentdatasetaccess
 
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -11,18 +10,16 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.util.UUID
 
-class CsvFileValidateAgentDatasetAccessAdapterTest {
+class ImageFolderValidateAgentDatasetAccessAdapterTest {
     @TempDir
     lateinit var tempDir: Path
 
     @Test
-    fun validatesReadableCsvFile() {
-        val csv = tempDir.resolve("dataset.csv")
-        Files.writeString(csv, "age,label\n42,yes\n")
-        val input = input(filePath = csv.toString())
-        val adapter = CsvFileValidateAgentDatasetAccessAdapter()
+    fun validatesReadableImageFolderDataset() {
+        createImageFolderDataset(tempDir)
+        val adapter = ImageFolderValidateAgentDatasetAccessAdapter()
 
-        val result = adapter.execute(input)
+        val result = adapter.execute(input(filePath = tempDir.toString()))
 
         assertTrue(result is ValidateAgentDatasetAccessResult.Succeeded)
         result as ValidateAgentDatasetAccessResult.Succeeded
@@ -34,53 +31,61 @@ class CsvFileValidateAgentDatasetAccessAdapterTest {
     @Test
     fun mapsContainerDatasetPathToHostDatasetRoot() {
         val hostRoot = tempDir.resolve("datasets")
-        Files.createDirectories(hostRoot)
-        Files.writeString(hostRoot.resolve("dataset.csv"), "age,label\n42,yes\n")
-        val input = input(filePath = "/workspace/datasets/dataset.csv")
-        val adapter = CsvFileValidateAgentDatasetAccessAdapter(
+        val dataset = hostRoot.resolve("tiny-imagenet")
+        createImageFolderDataset(dataset)
+        val adapter = ImageFolderValidateAgentDatasetAccessAdapter(
             datasetHostRoot = hostRoot.toString(),
             datasetContainerRoot = "/workspace/datasets"
         )
 
-        val result = adapter.execute(input)
+        val result = adapter.execute(input(filePath = "/workspace/datasets/tiny-imagenet"))
 
         assertTrue(result is ValidateAgentDatasetAccessResult.Succeeded)
     }
 
     @Test
-    fun rejectsMissingCsvFile() {
-        val input = input(filePath = tempDir.resolve("missing.csv").toString())
-        val adapter = CsvFileValidateAgentDatasetAccessAdapter()
+    fun rejectsMissingTrainDirectory() {
+        val adapter = ImageFolderValidateAgentDatasetAccessAdapter()
 
-        val result = adapter.execute(input)
-
-        assertTrue(result is ValidateAgentDatasetAccessResult.Rejected)
-        result as ValidateAgentDatasetAccessResult.Rejected
-        assertTrue(result.failureReason.contains("does not exist"))
-    }
-
-    @Test
-    fun rejectsNonCsvBinding() {
-        val input = input(dataFormat = "table", filePath = tempDir.resolve("dataset.table").toString())
-        val adapter = CsvFileValidateAgentDatasetAccessAdapter()
-
-        val result = adapter.execute(input)
+        val result = adapter.execute(input(filePath = tempDir.toString()))
 
         assertTrue(result is ValidateAgentDatasetAccessResult.Rejected)
         result as ValidateAgentDatasetAccessResult.Rejected
-        assertEquals("Only CSV file dataset access validation is supported.", result.failureReason)
+        assertTrue(result.failureReason.contains("train directory does not exist"))
     }
 
     @Test
-    fun supportsOnlyCsvFormats() {
-        val adapter = CsvFileValidateAgentDatasetAccessAdapter()
+    fun rejectsClassDirectoriesWithoutSamples() {
+        Files.createDirectories(tempDir.resolve("train/n01443537"))
+        val adapter = ImageFolderValidateAgentDatasetAccessAdapter()
 
-        assertTrue(adapter.supports(input(dataFormat = "csv", filePath = tempDir.resolve("dataset.csv").toString())))
-        assertFalse(adapter.supports(input(dataFormat = "IMAGE_FOLDER", filePath = tempDir.toString())))
+        val result = adapter.execute(input(filePath = tempDir.toString()))
+
+        assertTrue(result is ValidateAgentDatasetAccessResult.Rejected)
+        result as ValidateAgentDatasetAccessResult.Rejected
+        assertTrue(result.failureReason.contains("no readable sample files"))
+    }
+
+    @Test
+    fun supportsOnlyImageFolderFormats() {
+        val adapter = ImageFolderValidateAgentDatasetAccessAdapter()
+
+        assertTrue(adapter.supports(input(dataFormat = "IMAGE_FOLDER", filePath = tempDir.toString())))
+        assertTrue(adapter.supports(input(dataFormat = "image-folder", filePath = tempDir.toString())))
+        assertFalse(adapter.supports(input(dataFormat = "csv", filePath = tempDir.toString())))
+    }
+
+    private fun createImageFolderDataset(root: Path) {
+        Files.createDirectories(root.resolve("train/n01443537"))
+        Files.createDirectories(root.resolve("train/n01629819"))
+        Files.createDirectories(root.resolve("val/n01443537"))
+        Files.writeString(root.resolve("train/n01443537/sample.JPEG"), "image")
+        Files.writeString(root.resolve("train/n01629819/sample.JPEG"), "image")
+        Files.writeString(root.resolve("val/n01443537/sample.JPEG"), "image")
     }
 
     private fun input(
-        dataFormat: String = "csv",
+        dataFormat: String = "IMAGE_FOLDER",
         filePath: String
     ): ValidateAgentDatasetAccessInput =
         ValidateAgentDatasetAccessInput(
@@ -90,9 +95,9 @@ class CsvFileValidateAgentDatasetAccessAdapterTest {
             organizationId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
             organizationName = "Test Organization",
             featureSchemaId = UUID.fromString("66666666-6666-4666-8666-666666666666"),
-            featureDomain = "credit-risk",
+            featureDomain = "tiny-imagenet",
             featureSchemaVersion = "v1",
-            datasetName = "credit-risk",
+            datasetName = "tiny-imagenet",
             runtimeId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
             runtimeName = "local runtime",
             filePath = filePath,

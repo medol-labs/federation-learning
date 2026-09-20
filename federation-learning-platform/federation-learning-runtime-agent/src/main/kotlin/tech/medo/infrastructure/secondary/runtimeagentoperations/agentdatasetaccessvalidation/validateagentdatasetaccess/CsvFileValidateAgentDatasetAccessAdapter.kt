@@ -16,6 +16,9 @@ class CsvFileValidateAgentDatasetAccessAdapter(
     @Value("\${runtime-agent.local-runtime-engine.dataset-container-root:/workspace/datasets}")
     private val datasetContainerRoot: String = "/workspace/datasets"
 ) : ValidateAgentDatasetAccessService {
+    override fun supports(input: ValidateAgentDatasetAccessInput): Boolean =
+        input.isCsvFileBinding()
+
     override fun execute(input: ValidateAgentDatasetAccessInput): ValidateAgentDatasetAccessResult {
         fun rejected(reason: String): ValidateAgentDatasetAccessResult.Rejected =
             ValidateAgentDatasetAccessResult.Rejected(

@@ -442,7 +442,7 @@ async function ensureRuntimeAgentData() {
     }
 
     let capability = datasetCapability;
-    if (seed.requiresCsvRuntimeAgentDatasetAdapters) {
+    if (seed.requiresRuntimeAgentDatasetAccessValidation) {
         const accessValidation = await ensureAgentDatasetAccessValidation();
         if (!isAccessValidated(accessValidation?.validationStatus)) {
             fail(
@@ -450,7 +450,9 @@ async function ensureRuntimeAgentData() {
                 `runtimeDatasetPath=${seed.binding.filePath}`
             );
         }
+    }
 
+    if (seed.requiresRuntimeAgentDatasetCapabilityReadiness) {
         capability = await waitForOne(runtimeAgentUrl, '/dataset/datasetcapability', {
             'datasetId.equals': seed.dataset.datasetId
         }, 'reported dataset capability', isDatasetCapabilityReadyOrFailed);
@@ -459,8 +461,8 @@ async function ensureRuntimeAgentData() {
         }
     } else {
         console.log(
-            `[init-training] skip runtime-agent CSV dataset access/profile/contract checks for ${seed.trainingScenario}; ` +
-            'ImageFolder adapters are not available yet.'
+            `[init-training] skip runtime-agent dataset profile/contract readiness wait for ${seed.trainingScenario}; ` +
+            'platform runtime dataset metadata is seeded separately.'
         );
     }
 
@@ -634,16 +636,24 @@ function assertLocalDatasetMatchesSeed(scenario, localDatasetPath, expectedSchem
 
 function assertImageFolderDataset(localDatasetPath) {
     const root = resolve(localDatasetPath);
-    const entries = safeReadDir(root);
+    assertImageFolderSplit(resolve(root, 'train'), 'train');
+    const valPath = resolve(root, 'val');
+    if (existsSync(valPath)) {
+        assertImageFolderSplit(valPath, 'val');
+    }
+}
+
+function assertImageFolderSplit(splitPath, splitName) {
+    const entries = safeReadDir(splitPath);
     const classDirs = entries.filter((entry) => entry.isDirectory());
     if (classDirs.length < 2) {
-        fail(`ImageFolder dataset requires at least two class directories: ${root}`);
+        fail(`ImageFolder dataset ${splitName} split requires at least two class directories: ${splitPath}`);
     }
     const emptyClasses = classDirs
-        .filter((entry) => !directoryContainsImage(resolve(root, entry.name)))
+        .filter((entry) => !directoryContainsImage(resolve(splitPath, entry.name)))
         .map((entry) => entry.name);
     if (emptyClasses.length > 0) {
-        fail(`ImageFolder dataset classes have no image files: ${emptyClasses.join(', ')}`);
+        fail(`ImageFolder dataset ${splitName} classes have no image files: ${emptyClasses.join(', ')}`);
     }
 }
 
@@ -765,7 +775,8 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
 
     return {
         trainingScenario: 'densenet',
-        requiresCsvRuntimeAgentDatasetAdapters: false,
+        requiresRuntimeAgentDatasetAccessValidation: true,
+        requiresRuntimeAgentDatasetCapabilityReadiness: false,
         organization: {
             organizationId,
             organizationName,
@@ -1004,7 +1015,8 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
 
     return {
         trainingScenario: 'csv',
-        requiresCsvRuntimeAgentDatasetAdapters: true,
+        requiresRuntimeAgentDatasetAccessValidation: true,
+        requiresRuntimeAgentDatasetCapabilityReadiness: true,
         organization: {
             organizationId,
             organizationName,
@@ -1282,14 +1294,14 @@ function defaultDatasetPathForScenario(scenario, root) {
     if (scenario === 'csv') {
         return resolve(root, 'volumes/datasets/test.csv');
     }
-    return resolve(root, 'volumes/datasets/tiny-imagenet-densenet-dev/train');
+    return resolve(root, 'volumes/datasets/tiny-imagenet-densenet-dev');
 }
 
 function defaultRuntimeDatasetPath(scenario, localDatasetPath) {
     if (scenario === 'csv') {
         return `/workspace/datasets/${basename(localDatasetPath)}`;
     }
-    return '/workspace/datasets/tiny-imagenet-densenet-dev/train';
+    return '/workspace/datasets/tiny-imagenet-densenet-dev';
 }
 
 function warnIfRuntimeAgentConfigurationLikelyMismatches(scenario) {
