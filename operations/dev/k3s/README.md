@@ -273,6 +273,41 @@ sudo k3s ctr images import /tmp/federation-learning-platform-dependency-images.t
 sudo k3s ctr images ls | grep federation-learning-platform
 ```
 
+## Initialize Training Prerequisites
+
+K3d/K3s runtime nodes are prepared manually, so the training seed script is split by side. Run the platform phase first, create or label the runtime node, wait for the runtime agent to become reachable, then run the runtime-agent and training-job phases:
+
+```bash
+cd ../../federation-learning-platform
+
+# 1. Platform-owned setup: organization, federation, feature schema, model,
+# runtime infrastructure plan, runtime identity, endpoint, and training config.
+node scripts/init-training-prerequisites.mjs \
+  --target platform \
+  --scenario csv \
+  --runtime-environment-type K3S \
+  --agent-install-mode PLATFORM_MANAGED
+
+# 2. Manually create/label the k3d/K3s runtime node, then let the platform deploy
+# the runtime agent and verify that the runtime-agent API is reachable.
+
+# 3. Runtime-agent-owned setup: node inventory, dataset declaration, runtime
+# dataset binding, dataset access validation/profile, and platform metadata.
+node scripts/init-training-prerequisites.mjs \
+  --target runtime-agent \
+  --scenario csv \
+  --platform-url http://<platform-api> \
+  --runtime-agent-url http://<runtime-agent-api>
+
+# 4. Submit the training job only after both sides are ready.
+node scripts/init-training-prerequisites.mjs \
+  --target training-job \
+  --scenario csv \
+  --platform-url http://<platform-api>
+```
+
+Use `--target all` only for local single-process development where platform and runtime-agent APIs are already available.
+
 Check the local k3d cluster:
 
 ```bash

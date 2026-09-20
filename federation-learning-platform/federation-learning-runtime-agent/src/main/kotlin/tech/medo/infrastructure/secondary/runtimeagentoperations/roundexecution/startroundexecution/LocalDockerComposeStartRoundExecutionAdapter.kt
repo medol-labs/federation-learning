@@ -37,7 +37,7 @@ class LocalDockerComposeStartRoundExecutionAdapter(
                 failureReason = "Runtime dataset binding ${binding.runtimeDatasetBindingId} does not provide a filePath."
             )
         val runtimeEngineJobId = defaultRuntimeEngineJobId(input)
-        val modelPlugin = input.baseModelRegistryRef.takeIf { it.isNotBlank() }
+        val modelPlugin = input.baseModelPlugin.takeIf { it.isNotBlank() }
             ?: return StartRoundExecutionResult.Rejected(
                 runtimeEngineJobId = runtimeEngineJobId,
                 failureReason = "Execution plan ${input.executionPlanId} does not provide a runtime engine model plugin.",

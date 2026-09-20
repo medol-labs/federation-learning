@@ -40,6 +40,7 @@ class GenerateParticipantExecutionPlanDecisionComponentTest {
         assertEquals(initialModelId, event.baseModelId)
         assertEquals("file:///models/initial.json", event.baseModelArtifactUri)
         assertEquals("local", event.baseModelRegistryRef)
+        assertEquals("SKLEARN_LOGISTIC_REGRESSION", event.baseModelPlugin)
         assertEquals("json", event.baseModelFormat)
         assertEquals("sha256:initial", event.baseModelArtifactDigest)
         assertEquals("file:///models/initial.sig", event.baseModelSignatureUri)
@@ -87,9 +88,15 @@ class GenerateParticipantExecutionPlanDecisionComponentTest {
             baseModelId = uuid("99999999-9999-4999-8999-999999999999"),
             baseModelArtifactUri = "",
             baseModelRegistryRef = "",
+            baseModelPlugin = "SKLEARN_LOGISTIC_REGRESSION",
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            runtimeEngineProfileId = uuid("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"),
+            runtimeEngineProfileName = "Python Linear Runtime",
+            runtimeEnginePluginProfile = "python-linear",
+            runtimeEngineImage = "registry.example.com/runtime-engine:1.0.0",
+            runtimeEngineImageDigest = "sha256:runtime-engine",
             secureAggregationRequired = true,
             secureAggregationSessionId = uuid("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
             encryptionScheme = "PAILLIER",
@@ -105,6 +112,7 @@ class GenerateParticipantExecutionPlanDecisionComponentTest {
             initialModelId = this@GenerateParticipantExecutionPlanDecisionComponentTest.initialModelId
             initialModelArtifactUri = "file:///models/initial.json"
             initialModelRegistryRef = "local"
+            initialModelPlugin = "SKLEARN_LOGISTIC_REGRESSION"
             initialModelFormat = "json"
             initialModelArtifactDigest = "sha256:initial"
             initialModelSignatureUri = "file:///models/initial.sig"

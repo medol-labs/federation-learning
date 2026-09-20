@@ -24,6 +24,7 @@ class RegisterModelArtifactDecisionComponent : RegisterModelArtifactDecision {
             ModelArtifactRegisteredEvent(
                 modelId = command.modelId,
                 modelName = command.modelName,
+                modelPlugin = command.modelPlugin,
                 modelVersion = command.modelVersion,
                 modelDescription = command.modelDescription,
                 sourceType = command.sourceType,

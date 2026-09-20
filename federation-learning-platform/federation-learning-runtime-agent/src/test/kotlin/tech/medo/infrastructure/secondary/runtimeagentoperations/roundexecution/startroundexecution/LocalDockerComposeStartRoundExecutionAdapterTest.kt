@@ -43,6 +43,7 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
         assertEquals("/workspace/datasets/alice.csv", (request.input["dataset"] as Map<*, *>)["path"])
         assertEquals("readmission_risk", (request.input["dataset"] as Map<*, *>)["labelColumn"])
         assertEquals("/workspace/tmp/runtime-engine/round-1-55555555-5555-4555-8555-555555555555/local-runtime/local_update.json", request.output["localUpdate"])
+        assertEquals("SKLEARN_LOGISTIC_REGRESSION", request.modelParameter["modelPlugin"])
         assertEquals(0.1, request.modelParameter["learningRate"])
         assertEquals("plain", request.jobParameter["encryptMethod"])
     }
@@ -137,9 +138,15 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
             baseModelId = UUID.fromString("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
             baseModelArtifactUri = "file:///workspace/inputs/global_model.json",
             baseModelRegistryRef = "local",
+            baseModelPlugin = "SKLEARN_LOGISTIC_REGRESSION",
             baseModelFormat = "json",
             baseModelArtifactDigest = "sha256:abc",
             baseModelSignatureUri = null,
+            runtimeEngineProfileId = UUID.fromString("eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee"),
+            runtimeEngineProfileName = "Python Linear Runtime",
+            runtimeEnginePluginProfile = "python-linear",
+            runtimeEngineImage = "registry.example.com/runtime-engine:python-linear",
+            runtimeEngineImageDigest = "sha256:runtime-engine",
             secureAggregationRequired = true,
             secureAggregationSessionId = UUID.fromString("dddddddd-dddd-4ddd-8ddd-dddddddddddd"),
             encryptionScheme = "PAILLIER",

@@ -61,6 +61,13 @@ private fun renderRuntimeAgentManifest(
     val replicas = properties.agentReplicas.coerceAtLeast(1)
     val databaseUrl = "jdbc:postgresql://${dependencyNames.postgres}:5432/${properties.databaseName}"
     val umadbTarget = "${dependencyNames.umadb}:50051"
+    val participantConsoleServiceType = properties.participantConsoleServiceType.ifBlank { "NodePort" }
+    val participantConsoleNodePort = participantConsoleNodePort(
+        properties,
+        runtimeAgentId,
+        participantConsoleServiceType,
+    )
+    val agentAllowedOrigins = managedRuntimeAgentAllowedOrigins(properties, participantConsoleNodePort)
     val participantConsoleManifest = renderParticipantConsoleManifest(
         properties = properties,
         runtimeAgentId = runtimeAgentId,
@@ -304,7 +311,7 @@ spec:
                   name: ${quote(properties.agentSecuritySecretName)}
                   key: ${quote(properties.agentAdminBootstrapSetupTokenKey)}
             - name: "MEDOL_SECURITY_ALLOWED_ORIGINS"
-              value: ${quote(properties.agentAllowedOrigins)}
+              value: ${quote(agentAllowedOrigins)}
             - name: "MEDOL_AXON_EVENT_STORAGE"
               value: "umadb"
             - name: "UMADB_TARGET"
@@ -619,6 +626,20 @@ private fun participantConsoleNodePort(
         "participant console NodePort $port is outside Kubernetes NodePort range 30000..32767"
     }
     return port
+}
+
+private fun managedRuntimeAgentAllowedOrigins(
+    properties: K3sRuntimeInfrastructureProperties,
+    participantConsoleNodePort: Int?,
+): String {
+    val configuredOrigins = properties.agentAllowedOrigins
+        .split(',')
+        .map(String::trim)
+        .filter(String::isNotBlank)
+    val participantConsoleOrigins = participantConsoleNodePort?.let { port ->
+        listOf("http://*:$port", "https://*:$port")
+    }.orEmpty()
+    return (configuredOrigins + participantConsoleOrigins).distinct().joinToString(",")
 }
 
 private fun normalizePath(value: String): String {

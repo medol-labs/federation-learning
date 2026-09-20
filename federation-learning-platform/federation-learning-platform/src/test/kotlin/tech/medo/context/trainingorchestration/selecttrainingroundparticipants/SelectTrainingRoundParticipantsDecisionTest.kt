@@ -108,4 +108,100 @@ class SelectTrainingRoundParticipantsDecisionTest {
         assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
         assertEquals(command.trainingJobObjective, event.trainingJobObjective)
     }
+
+    @Test
+    fun RejectSelectionWithoutJoinedFederationMembers() {
+
+
+        val command = SelectTrainingRoundParticipantsCommand(
+            trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            federationId = java.util.UUID.randomUUID(),
+            federationName = null,
+            trainingRunConfigurationId = java.util.UUID.randomUUID(),
+            configurationName = null,
+            featureSchemaId = java.util.UUID.randomUUID(),
+            featureDomain = null,
+            featureSchemaVersion = null,
+            trainingJobObjective = ""
+        )
+
+        val events = (object : SelectTrainingRoundParticipantsDecision {}).decide(
+            command,
+            portResult = SelectTrainingRoundParticipantsResult.Rejected(
+                roundId = java.util.UUID.randomUUID(),
+                roundNumber = 0,
+                maxRounds = 0,
+                minimumAccuracy = java.math.BigDecimal.ZERO,
+                aggregationAlgorithm = "",
+                minimumNodesPerRound = 0,
+                secureAggregationRequired = false,
+                selectedOrganizationIds = emptyList(),
+                selectedRuntimeIds = emptyList(),
+                selectedParticipants = emptyList(),
+                selectedOrganizationCount = 0,
+                selectedRuntimeCount = 0,
+                failureReason = ""
+            ),
+            now = LocalDateTime.parse("2026-01-01T00:00:00")
+        )
+
+        val event = events.filterIsInstance<TrainingRoundParticipantSelectionFailedEvent>().single()
+        assertEquals(UUID.nameUUIDFromBytes("job-1".toByteArray()), event.trainingJobId)
+        assertEquals(command.federationId, event.federationId)
+        assertEquals(command.federationName, event.federationName)
+        assertEquals(command.trainingRunConfigurationId, event.trainingRunConfigurationId)
+        assertEquals(command.configurationName, event.configurationName)
+        assertEquals(command.featureSchemaId, event.featureSchemaId)
+        assertEquals(command.featureDomain, event.featureDomain)
+        assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
+        assertEquals(command.trainingJobObjective, event.trainingJobObjective)
+    }
+
+    @Test
+    fun RejectSelectionWithoutCompatibleDatasetEvidence() {
+
+
+        val command = SelectTrainingRoundParticipantsCommand(
+            trainingJobId = UUID.nameUUIDFromBytes("job-1".toByteArray()),
+            federationId = java.util.UUID.randomUUID(),
+            federationName = null,
+            trainingRunConfigurationId = java.util.UUID.randomUUID(),
+            configurationName = null,
+            featureSchemaId = java.util.UUID.randomUUID(),
+            featureDomain = null,
+            featureSchemaVersion = null,
+            trainingJobObjective = ""
+        )
+
+        val events = (object : SelectTrainingRoundParticipantsDecision {}).decide(
+            command,
+            portResult = SelectTrainingRoundParticipantsResult.Rejected(
+                roundId = java.util.UUID.randomUUID(),
+                roundNumber = 0,
+                maxRounds = 0,
+                minimumAccuracy = java.math.BigDecimal.ZERO,
+                aggregationAlgorithm = "",
+                minimumNodesPerRound = 0,
+                secureAggregationRequired = false,
+                selectedOrganizationIds = emptyList(),
+                selectedRuntimeIds = emptyList(),
+                selectedParticipants = emptyList(),
+                selectedOrganizationCount = 0,
+                selectedRuntimeCount = 0,
+                failureReason = ""
+            ),
+            now = LocalDateTime.parse("2026-01-01T00:00:00")
+        )
+
+        val event = events.filterIsInstance<TrainingRoundParticipantSelectionFailedEvent>().single()
+        assertEquals(UUID.nameUUIDFromBytes("job-1".toByteArray()), event.trainingJobId)
+        assertEquals(command.federationId, event.federationId)
+        assertEquals(command.federationName, event.federationName)
+        assertEquals(command.trainingRunConfigurationId, event.trainingRunConfigurationId)
+        assertEquals(command.configurationName, event.configurationName)
+        assertEquals(command.featureSchemaId, event.featureSchemaId)
+        assertEquals(command.featureDomain, event.featureDomain)
+        assertEquals(command.featureSchemaVersion, event.featureSchemaVersion)
+        assertEquals(command.trainingJobObjective, event.trainingJobObjective)
+    }
 }

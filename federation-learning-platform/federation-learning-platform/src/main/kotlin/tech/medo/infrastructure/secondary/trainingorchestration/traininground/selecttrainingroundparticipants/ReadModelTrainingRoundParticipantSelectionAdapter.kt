@@ -12,6 +12,8 @@ import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTra
 import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTrainingRoundParticipantsService
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelRepository
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelRepository
+import java.math.BigDecimal
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Component
@@ -57,42 +59,86 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             error("Training job context is incomplete for participant selection.")
         }
 
-        val joinedOrganizationIds = membershipDirectory.findProjectionsByFederationId(federationId)
+        val roundId = UUID.randomUUID()
+        val roundNumber = (trainingJob.currentRoundNumber ?: 0) + 1
+
+        val contextMismatches = buildList {
+            if (trainingJob.federationId != null && trainingJob.federationId != federationId) {
+                add("training job federationId=${trainingJob.federationId}")
+            }
+            if (trainingRunConfiguration?.federationId != null && trainingRunConfiguration.federationId != federationId) {
+                add("training configuration federationId=${trainingRunConfiguration.federationId}")
+            }
+            if (trainingJob.featureSchemaId != null && trainingJob.featureSchemaId != featureSchemaId) {
+                add("training job featureSchemaId=${trainingJob.featureSchemaId}")
+            }
+            if (trainingRunConfiguration?.featureSchemaId != null && trainingRunConfiguration.featureSchemaId != featureSchemaId) {
+                add("training configuration featureSchemaId=${trainingRunConfiguration.featureSchemaId}")
+            }
+        }
+        if (contextMismatches.isNotEmpty()) {
+            val failureReason =
+                "Training selection context does not match the submitted federation and feature schema: " +
+                    contextMismatches.joinToString()
+            log.warn(
+                "Training round participant selection failed context validation. trainingJobId={}, federationId={}, featureSchemaId={}, mismatches={}",
+                input.trainingJobId,
+                federationId,
+                featureSchemaId,
+                contextMismatches
+            )
+            return rejected(
+                roundId = roundId,
+                roundNumber = roundNumber,
+                maxRounds = maxRounds,
+                minimumAccuracy = minimumAccuracy,
+                aggregationAlgorithm = aggregationAlgorithm,
+                minimumNodesPerRound = minimumNodesPerRound,
+                secureAggregationRequired = secureAggregationRequired,
+                failureReason = failureReason
+            )
+        }
+
+        val federationMemberships = membershipDirectory.findProjectionsByFederationId(federationId)
+        val joinedOrganizationIds = federationMemberships
             .filter { it.organizationId != null }
             .filter { it.membershipStatus.isJoinedLike() }
             .mapNotNull { it.organizationId }
             .toSet()
 
         if (joinedOrganizationIds.isEmpty()) {
-            log.info(
-                "No joined federation members found for participant selection. trainingJobId={}, federationId={}",
+            val failureReason =
+                "Federation $federationId has no joined organizations available for participant selection."
+            log.warn(
+                "Training round participant selection failed federation validation. trainingJobId={}, federationId={}, membershipCount={}, membershipStatuses={}, failureReason={}",
                 input.trainingJobId,
-                federationId
+                federationId,
+                federationMemberships.size,
+                federationMemberships.map { it.membershipStatus },
+                failureReason
+            )
+            return rejected(
+                roundId = roundId,
+                roundNumber = roundNumber,
+                maxRounds = maxRounds,
+                minimumAccuracy = minimumAccuracy,
+                aggregationAlgorithm = aggregationAlgorithm,
+                minimumNodesPerRound = minimumNodesPerRound,
+                secureAggregationRequired = secureAggregationRequired,
+                failureReason = failureReason
             )
         }
 
-        val activeRuntimes = if (joinedOrganizationIds.isEmpty()) {
-            emptyMap()
-        } else {
-            findActiveRuntimeIdentities(joinedOrganizationIds)
-            .associateBy { it.runtimeId!! }
-        }
-
-        val activeRuntimeByOrganization = activeRuntimes.values
-            .groupBy { it.organizationId!! }
-            .mapValues { (_, runtimes) -> runtimes.first() }
-
-        val matchingDatasetMetadata = if (joinedOrganizationIds.isEmpty()) {
-            emptyList()
-        } else {
-            findMatchingDatasetMetadata(featureSchemaId, joinedOrganizationIds)
-        }
+        val matchingDatasetMetadata = findMatchingDatasetMetadata(featureSchemaId, joinedOrganizationIds)
         log.info(
-            "Matching runtime dataset metadata for participant selection. trainingJobId={}, featureSchemaId={}, metadata={}",
+            "Compatible runtime dataset metadata for participant selection. trainingJobId={}, federationId={}, featureSchemaId={}, joinedOrganizationIds={}, metadata={}",
             input.trainingJobId,
+            federationId,
             featureSchemaId,
+            joinedOrganizationIds,
             matchingDatasetMetadata.map {
                 mapOf(
+                    "runtimeDatasetBindingId" to it.runtimeDatasetBindingId,
                     "metadataReportId" to it.metadataReportId,
                     "organizationId" to it.organizationId,
                     "runtimeId" to it.runtimeId,
@@ -103,10 +149,61 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 )
             }
         )
+
+        if (matchingDatasetMetadata.isEmpty()) {
+            val failureReason =
+                "No schema-compatible and label-compatible dataset metadata was found for feature schema " +
+                    "$featureSchemaId in joined federation organizations."
+            log.warn(
+                "Training round participant selection failed dataset validation. trainingJobId={}, federationId={}, featureSchemaId={}, joinedOrganizationIds={}, failureReason={}",
+                input.trainingJobId,
+                federationId,
+                featureSchemaId,
+                joinedOrganizationIds,
+                failureReason
+            )
+            return rejected(
+                roundId = roundId,
+                roundNumber = roundNumber,
+                maxRounds = maxRounds,
+                minimumAccuracy = minimumAccuracy,
+                aggregationAlgorithm = aggregationAlgorithm,
+                minimumNodesPerRound = minimumNodesPerRound,
+                secureAggregationRequired = secureAggregationRequired,
+                failureReason = failureReason
+            )
+        }
+
+        val organizationsWithCompatibleDatasets = matchingDatasetMetadata.mapNotNull { it.organizationId }.toSet()
+        val activeRuntimes = findActiveRuntimeIdentities(organizationsWithCompatibleDatasets)
+            .associateBy { it.runtimeId!! }
+
+        if (activeRuntimes.isEmpty()) {
+            val failureReason =
+                "No active runtime identity was found for organizations with compatible datasets."
+            log.warn(
+                "Training round participant selection failed runtime validation. trainingJobId={}, federationId={}, featureSchemaId={}, organizationIds={}, failureReason={}",
+                input.trainingJobId,
+                federationId,
+                featureSchemaId,
+                organizationsWithCompatibleDatasets,
+                failureReason
+            )
+            return rejected(
+                roundId = roundId,
+                roundNumber = roundNumber,
+                maxRounds = maxRounds,
+                minimumAccuracy = minimumAccuracy,
+                aggregationAlgorithm = aggregationAlgorithm,
+                minimumNodesPerRound = minimumNodesPerRound,
+                secureAggregationRequired = secureAggregationRequired,
+                failureReason = failureReason
+            )
+        }
+
         val selectedParticipants = matchingDatasetMetadata
             .mapNotNull { metadata ->
                 val runtime = activeRuntimes[metadata.runtimeId]
-                    ?: metadata.organizationId?.let { activeRuntimeByOrganization[it] }
                 val organizationId = runtime?.organizationId
                 val runtimeId = runtime?.runtimeId
                 val datasetId = metadata.datasetId
@@ -124,8 +221,6 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         log.info("Selected training round participants. trainingJobId={}, selectedParticipants={}", input.trainingJobId, selectedParticipants)
         val selectedOrganizationIds = selectedParticipants.map { it.organizationId }.distinct()
         val selectedRuntimeIds = selectedParticipants.map { it.runtimeId }.distinct()
-        val roundId = UUID.randomUUID()
-        val roundNumber = (trainingJob.currentRoundNumber ?: 0) + 1
 
         log.info(
             "Selected participant candidates from read models. trainingJobId={}, federationId={}, featureSchemaId={}, joinedOrganizationCount={}, activeRuntimeCount={}, matchingDatasetMetadataCount={}, selectedRuntimeCount={}, minimumNodesPerRound={}",
@@ -140,7 +235,13 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         )
 
         if (selectedRuntimeIds.size < minimumNodesPerRound) {
-            val failureReason = "Selected runtime count ${selectedRuntimeIds.size} is below minimum nodes per round $minimumNodesPerRound."
+            val unmatchedDatasetRuntimeIds = matchingDatasetMetadata.mapNotNull { it.runtimeId }
+                .filterNot(activeRuntimes::containsKey)
+                .distinct()
+            val failureReason =
+                "Selected runtime count ${selectedRuntimeIds.size} is below minimum nodes per round " +
+                    "$minimumNodesPerRound after exact runtime-to-dataset matching. " +
+                    "Unmatched dataset runtime IDs: $unmatchedDatasetRuntimeIds."
             log.warn(
                 "Training round participant selection failed below quorum. trainingJobId={}, federationId={}, featureSchemaId={}, selectedRuntimeCount={}, minimumNodesPerRound={}, failureReason={}",
                 input.trainingJobId,
@@ -150,7 +251,7 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                 minimumNodesPerRound,
                 failureReason
             )
-            return SelectTrainingRoundParticipantsResult.Rejected(
+            return rejected(
                 roundId = roundId,
                 roundNumber = roundNumber,
                 maxRounds = maxRounds,
@@ -213,12 +314,50 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             val root = query.from(RuntimeDatasetMetadataCatalogReadModelEntity::class.java)
             query.select(root).where(
                 cb.and(
-                    // cb.equal(root.get<UUID>("featureSchemaId"), featureSchemaId), // TODO 解决 feature schema id 来源问题
+                    cb.equal(root.get<UUID>("featureSchemaId"), featureSchemaId),
                     root.get<UUID>("organizationId").`in`(organizationIds),
-                    cb.isNotNull(root.get<UUID>("datasetId"))
+                    cb.isNotNull(root.get<UUID>("runtimeId")),
+                    cb.isNotNull(root.get<UUID>("datasetId")),
+                    cb.isTrue(root.get("schemaCompatible")),
+                    cb.isTrue(root.get("labelCompatible"))
                 )
+            )
+            query.orderBy(
+                cb.desc(root.get<LocalDateTime>("profiledAt")),
+                cb.asc(root.get<UUID>("runtimeDatasetBindingId"))
             )
             entityManager.createQuery(query).resultList
         }
+
+    private fun rejected(
+        roundId: UUID,
+        roundNumber: Int,
+        maxRounds: Int,
+        minimumAccuracy: BigDecimal,
+        aggregationAlgorithm: String,
+        minimumNodesPerRound: Int,
+        secureAggregationRequired: Boolean,
+        selectedOrganizationIds: List<UUID> = emptyList(),
+        selectedRuntimeIds: List<UUID> = emptyList(),
+        selectedParticipants: List<TrainingRoundParticipant> = emptyList(),
+        selectedOrganizationCount: Int = selectedOrganizationIds.size,
+        selectedRuntimeCount: Int = selectedRuntimeIds.size,
+        failureReason: String
+    ): SelectTrainingRoundParticipantsResult.Rejected =
+        SelectTrainingRoundParticipantsResult.Rejected(
+            roundId = roundId,
+            roundNumber = roundNumber,
+            maxRounds = maxRounds,
+            minimumAccuracy = minimumAccuracy,
+            aggregationAlgorithm = aggregationAlgorithm,
+            minimumNodesPerRound = minimumNodesPerRound,
+            secureAggregationRequired = secureAggregationRequired,
+            selectedOrganizationIds = selectedOrganizationIds,
+            selectedRuntimeIds = selectedRuntimeIds,
+            selectedParticipants = selectedParticipants,
+            selectedOrganizationCount = selectedOrganizationCount,
+            selectedRuntimeCount = selectedRuntimeCount,
+            failureReason = failureReason
+        )
 
 }

@@ -42,6 +42,7 @@ class ReadModelDownloadModelArtifactAdapterTest {
     private fun artifact(modelArtifactUri: String? = DOWNLOAD_URI) = ModelArtifactCatalogReadModel(
         modelId = MODEL_ID,
         modelName = "credit-risk",
+        modelPlugin = "SKLEARN_LOGISTIC_REGRESSION",
         modelVersion = "v1",
         modelDescription = null,
         sourceType = "FEDERATED",

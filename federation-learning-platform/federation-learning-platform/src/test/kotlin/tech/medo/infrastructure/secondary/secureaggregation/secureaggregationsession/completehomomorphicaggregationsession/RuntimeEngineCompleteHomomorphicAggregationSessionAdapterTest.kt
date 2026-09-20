@@ -35,6 +35,7 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapterTest {
                 roundNumber = 1,
                 maxRounds = 3,
                 minimumAccuracy = BigDecimal("0.90"),
+                modelPlugin = "SKLEARN_LOGISTIC_REGRESSION",
                 aggregatedModelId = aggregatedModelId,
                 encryptedUpdateArtifactRefs = listOf(
                     "http://support/api/files/update-a/content",

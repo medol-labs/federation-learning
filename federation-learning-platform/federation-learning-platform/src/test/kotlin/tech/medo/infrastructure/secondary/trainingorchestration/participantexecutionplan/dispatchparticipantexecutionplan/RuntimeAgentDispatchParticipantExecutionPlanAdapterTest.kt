@@ -34,9 +34,15 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapterTest {
         assertEquals(input.baseModelId, client.request?.baseModelId)
         assertEquals(input.baseModelArtifactUri, client.request?.baseModelArtifactUri)
         assertEquals(input.baseModelRegistryRef, client.request?.baseModelRegistryRef)
+        assertEquals(input.baseModelPlugin, client.request?.baseModelPlugin)
         assertEquals(input.baseModelFormat, client.request?.baseModelFormat)
         assertEquals(input.baseModelArtifactDigest, client.request?.baseModelArtifactDigest)
         assertEquals(input.baseModelSignatureUri, client.request?.baseModelSignatureUri)
+        assertEquals(input.runtimeEngineProfileId, client.request?.runtimeEngineProfileId)
+        assertEquals(input.runtimeEngineProfileName, client.request?.runtimeEngineProfileName)
+        assertEquals(input.runtimeEnginePluginProfile, client.request?.runtimeEnginePluginProfile)
+        assertEquals(input.runtimeEngineImage, client.request?.runtimeEngineImage)
+        assertEquals(input.runtimeEngineImageDigest, client.request?.runtimeEngineImageDigest)
         assertEquals(input.secureAggregationRequired, client.request?.secureAggregationRequired)
         assertEquals(input.secureAggregationSessionId, client.request?.secureAggregationSessionId)
         assertEquals(input.encryptionScheme, client.request?.encryptionScheme)
@@ -79,9 +85,15 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapterTest {
             baseModelId = uuid("99999999-9999-4999-8999-999999999999"),
             baseModelArtifactUri = "oci://registry.example.com/fl/model@sha256:abc",
             baseModelRegistryRef = "oci://registry.example.com/fl",
+            baseModelPlugin = "PYTORCH_RESNET_CLASSIFIER",
             baseModelFormat = "ONNX",
             baseModelArtifactDigest = "sha256:abc",
             baseModelSignatureUri = "oci://registry.example.com/fl/model.sig",
+            runtimeEngineProfileId = uuid("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"),
+            runtimeEngineProfileName = "PyTorch Vision Runtime",
+            runtimeEnginePluginProfile = "pytorch-vision",
+            runtimeEngineImage = "registry.example.com/runtime-engine:pytorch-vision",
+            runtimeEngineImageDigest = "sha256:runtime-engine",
             secureAggregationRequired = true,
             secureAggregationSessionId = uuid("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
             encryptionScheme = "PAILLIER",

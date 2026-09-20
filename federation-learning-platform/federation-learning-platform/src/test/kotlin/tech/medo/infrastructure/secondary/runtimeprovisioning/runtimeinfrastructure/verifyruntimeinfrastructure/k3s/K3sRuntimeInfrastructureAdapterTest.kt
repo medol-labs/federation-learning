@@ -152,7 +152,12 @@ class K3sRuntimeInfrastructureAdapterTest {
         assertFalse(manifest.contains("kind: Ingress"))
         assertFalse(manifest.contains("name: \"VITE_BASE_PATH\""))
         assertTrue(manifest.contains("value: \"/api/runtime-agent\""))
-        assertTrue(manifest.contains("nodePort: 30082"))
+        val participantConsoleNodePort = checkNotNull(
+            Regex("nodePort: (\\d+)").find(manifest)?.groupValues?.get(1),
+        )
+        assertTrue(manifest.contains("name: \"MEDOL_SECURITY_ALLOWED_ORIGINS\""))
+        assertTrue(manifest.contains("http://*:$participantConsoleNodePort"))
+        assertTrue(manifest.contains("https://*:$participantConsoleNodePort"))
         assertTrue(manifest.contains("nodeSelector:"))
         assertTrue(manifest.contains("medol.dev/node-role: \"runtime\""))
         assertTrue(manifest.contains("medol.dev/runtime-infrastructure-id: \"$runtimeInfrastructureId\""))
@@ -204,6 +209,7 @@ class K3sRuntimeInfrastructureAdapterTest {
             renderedManifestDirectory = tempDir.toString()
             agentDeploymentName = "runtime-agent-test"
             agentVersion = "test-k3s-agent-version"
+            participantConsoleNodePortAllocationRange = 100
             commandTimeout = Duration.ofSeconds(5)
         }
 

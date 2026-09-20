@@ -41,6 +41,7 @@ class RuntimeEngineAggregatePlainModelUpdatesAdapterTest {
                 maxRounds = 1,
                 minimumAccuracy = BigDecimal("0.90"),
                 aggregationAlgorithm = "FED_AVG_PYTORCH_STATE_DICT",
+                modelPlugin = "PYTORCH_RESNET_CLASSIFIER",
                 aggregatedModelId = aggregatedModelId,
                 modelUpdateArtifactRefs = listOf("/workspace/updates/local-update.json")
             )

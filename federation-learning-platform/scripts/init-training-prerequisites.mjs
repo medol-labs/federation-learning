@@ -17,6 +17,7 @@ const activateLifecycle = Boolean(args.activate);
 const timeoutMs = positiveInt(args.timeout, 30000);
 const pollIntervalMs = positiveInt(args['poll-interval'], 800);
 const trainingScenario = normalizeScenario(args.scenario ?? args['training-scenario'] ?? process.env.FL_TRAINING_SCENARIO ?? 'densenet');
+const initTarget = normalizeInitTarget(args.target ?? args['init-target'] ?? process.env.FL_INIT_TRAINING_TARGET ?? 'all');
 
 const platformUrl = trimSlash(args['platform-url'] ?? process.env.FL_PLATFORM_URL ?? 'http://localhost:8081');
 const runtimeAgentUrl = trimSlash(args['runtime-agent-url'] ?? process.env.FL_RUNTIME_AGENT_URL ?? 'http://localhost:8082');
@@ -55,10 +56,6 @@ const runtimeDatasetPath = args['runtime-dataset-path'] ??
     process.env.FL_RUNTIME_DATASET_PATH ??
     defaultRuntimeDatasetPath(trainingScenario, datasetPath);
 
-if (!existsSync(datasetPath)) {
-    fail(`Dataset file does not exist: ${datasetPath}`);
-}
-
 const seed = buildSeed(trainingScenario, runtimeDatasetPath, runtimeAgentUrl, runtimeEngineUrl, {
     runtimeEnvironmentType,
     runtimePackageName,
@@ -79,16 +76,30 @@ console.log(`[init-training] runtimeEngineImage=${runtimeEngineImage}`);
 console.log(`[init-training] runtimeAgentInstallMode=${runtimeAgentInstallMode}`);
 console.log(`[init-training] registerRuntimeInfrastructure=${registerRuntimeInfrastructure}`);
 console.log(`[init-training] createAndSubmitTrainingJob=${createJob}`);
+console.log(`[init-training] target=${initTarget}`);
 console.log(`[init-training] trainingScenario=${trainingScenario}`);
 console.log(`[init-training] datasetPath=${datasetPath}`);
 console.log(`[init-training] runtimeDatasetPath=${runtimeDatasetPath}`);
 
-assertLocalDatasetMatchesSeed(trainingScenario, datasetPath, seed.featureSchema);
-warnIfRuntimeAgentConfigurationLikelyMismatches(trainingScenario);
+if (shouldRunRuntimeAgentData(initTarget)) {
+    if (!dryRun && !existsSync(datasetPath)) {
+        fail(`Dataset file does not exist: ${datasetPath}`);
+    }
+    if (!dryRun) {
+        assertLocalDatasetMatchesSeed(trainingScenario, datasetPath, seed.featureSchema);
+    }
+    warnIfRuntimeAgentConfigurationLikelyMismatches(trainingScenario);
+}
 
-await ensurePlatformData();
-await ensureRuntimeAgentData();
-await ensureTrainingJob();
+if (shouldRunPlatformData(initTarget)) {
+    await ensurePlatformData();
+}
+if (shouldRunRuntimeAgentData(initTarget)) {
+    await ensureRuntimeAgentData();
+}
+if (shouldRunTrainingJob(initTarget)) {
+    await ensureTrainingJob();
+}
 
 console.log('[init-training] ready');
 console.log(JSON.stringify({
@@ -1242,6 +1253,29 @@ function normalizeScenario(value) {
         return 'densenet';
     }
     fail(`Unsupported training scenario: ${value}. Supported scenarios: densenet, csv`);
+}
+
+function normalizeInitTarget(value) {
+    const normalized = String(value ?? '').trim().toLowerCase().replace(/[_\s]/g, '-');
+    if (['all', 'full'].includes(normalized)) return 'all';
+    if (['platform', 'platform-only'].includes(normalized)) return 'platform';
+    if (['runtime-agent', 'runtime', 'agent', 'participant', 'participant-runtime'].includes(normalized)) {
+        return 'runtime-agent';
+    }
+    if (['training-job', 'job', 'submit-job'].includes(normalized)) return 'training-job';
+    fail(`Unsupported init target: ${value}. Supported targets: all, platform, runtime-agent, training-job`);
+}
+
+function shouldRunPlatformData(target) {
+    return target === 'all' || target === 'platform';
+}
+
+function shouldRunRuntimeAgentData(target) {
+    return target === 'all' || target === 'runtime-agent';
+}
+
+function shouldRunTrainingJob(target) {
+    return target === 'all' || target === 'training-job';
 }
 
 function defaultDatasetPathForScenario(scenario, root) {

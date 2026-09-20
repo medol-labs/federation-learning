@@ -22,6 +22,7 @@ class LocalSubmitGlobalModelEvaluationAdapterTest {
             maxRounds = 1,
             minimumAccuracy = BigDecimal("0.90"),
             aggregatedModelId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
+            modelPlugin = "SKLEARN_LOGISTIC_REGRESSION",
             aggregatedModelArtifactUri = "file:///tmp/global_model.json",
             aggregatedModelRegistryRef = "local://federation-learning/global-models",
             modelFormat = "JSON",
