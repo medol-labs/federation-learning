@@ -117,6 +117,7 @@ console.log(JSON.stringify({
     trainingRunConfigurationId: seed.trainingRunConfiguration.trainingRunConfigurationId,
     trainingJobId: createJob ? seed.trainingJob.trainingJobId : undefined
 }, null, 2));
+printNextSteps();
 
 async function ensurePlatformData() {
     const organization = await ensureOne({
@@ -246,39 +247,6 @@ async function ensurePlatformData() {
     });
 
     await ensureOne({
-        label: 'runtime identity',
-        baseUrl: platformUrl,
-        queryPath: '/runtimeidentity/runtimeidentitycatalog',
-        query: {
-            'runtimeId.equals': seed.runtime.runtimeId,
-            'runtimeInfrastructureId.equals': seed.runtime.runtimeInfrastructureId
-        },
-        createPath: '/runtimeidentity/activateruntimeidentity',
-        createPayload: seed.runtime
-    });
-
-    await ensureOne({
-        label: 'runtime agent endpoint',
-        baseUrl: platformUrl,
-        queryPath: '/runtimeinfrastructure/runtimeagentendpointcatalog',
-        query: {
-            'runtimeAgentId.equals': seed.runtime.runtimeAgentId,
-            'runtimeInfrastructureId.equals': seed.runtime.runtimeInfrastructureId
-        },
-        createPath: '/runtimeinfrastructure/recordruntimeconnectionestablished',
-        createPayload: {
-            runtimeInfrastructureId: seed.runtime.runtimeInfrastructureId,
-            runtimeAgentId: seed.runtime.runtimeAgentId,
-            agentInstallMode: seed.runtimeInstallationPlan.agentInstallMode,
-            organizationId: seed.organization.organizationId,
-            organizationName: seed.organization.organizationName,
-            runtimeName: seed.runtime.runtimeName,
-            runtimeAgentEndpoint: runtimeAgentUrl,
-            endpointScope: seed.runtimeEndpointScope
-        }
-    });
-
-    await ensureOne({
         label: 'training run configuration',
         baseUrl: platformUrl,
         queryPath: '/trainingrunconfiguration/trainingrunconfigurationcatalog',
@@ -402,6 +370,8 @@ async function ensureRuntimeInfrastructureRegistered(runtimeInfrastructureId) {
 }
 
 async function ensureRuntimeAgentData() {
+    await ensureRuntimeAgentPlatformRegistration();
+
     await ensureOne({
         label: 'runtime node inventory',
         baseUrl: runtimeAgentUrl,
@@ -491,6 +461,41 @@ async function ensureRuntimeAgentData() {
         },
         createPath: '/runtimedatasetmetadata/recordruntimedatasetmetadata',
         createPayload: seed.platformMetadata
+    });
+}
+
+async function ensureRuntimeAgentPlatformRegistration() {
+    await ensureOne({
+        label: 'runtime identity',
+        baseUrl: platformUrl,
+        queryPath: '/runtimeidentity/runtimeidentitycatalog',
+        query: {
+            'runtimeId.equals': seed.runtime.runtimeId,
+            'runtimeInfrastructureId.equals': seed.runtime.runtimeInfrastructureId
+        },
+        createPath: '/runtimeidentity/activateruntimeidentity',
+        createPayload: seed.runtime
+    });
+
+    await ensureOne({
+        label: 'runtime agent endpoint',
+        baseUrl: platformUrl,
+        queryPath: '/runtimeinfrastructure/runtimeagentendpointcatalog',
+        query: {
+            'runtimeAgentId.equals': seed.runtime.runtimeAgentId,
+            'runtimeInfrastructureId.equals': seed.runtime.runtimeInfrastructureId
+        },
+        createPath: '/runtimeinfrastructure/recordruntimeconnectionestablished',
+        createPayload: {
+            runtimeInfrastructureId: seed.runtime.runtimeInfrastructureId,
+            runtimeAgentId: seed.runtime.runtimeAgentId,
+            agentInstallMode: seed.runtimeInstallationPlan.agentInstallMode,
+            organizationId: seed.organization.organizationId,
+            organizationName: seed.organization.organizationName,
+            runtimeName: seed.runtime.runtimeName,
+            runtimeAgentEndpoint: runtimeAgentUrl,
+            endpointScope: seed.runtimeEndpointScope
+        }
     });
 }
 
@@ -624,6 +629,27 @@ function applyRuntimeInfrastructureId(runtimeInfrastructureId) {
         `fl-dev:node-inventory:${runtimeInfrastructureId}:${seed.runtime.runtimeAgentId}`
     );
     seed.node.inventoryHash = stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeEngineUrl}`);
+}
+
+function printNextSteps() {
+    if (initTarget === 'platform') {
+        console.log([
+            '[init-training] next:',
+            '  1. Manually install or expose the k3s runtime-agent for this runtime infrastructure.',
+            `  2. Ensure the runtime-agent API is reachable, then run:`,
+            `     node scripts/init-training-prerequisites.mjs --target runtime-agent --scenario ${trainingScenario}`,
+            '  3. After runtime-agent data is ready, submit the job:',
+            `     node scripts/init-training-prerequisites.mjs --target training-job --scenario ${trainingScenario}`
+        ].join('\n'));
+        return;
+    }
+    if (initTarget === 'runtime-agent') {
+        console.log([
+            '[init-training] next:',
+            '  Runtime-agent side is initialized. Submit the training job when ready:',
+            `  node scripts/init-training-prerequisites.mjs --target training-job --scenario ${trainingScenario}`
+        ].join('\n'));
+    }
 }
 
 function assertLocalDatasetMatchesSeed(scenario, localDatasetPath, expectedSchema) {

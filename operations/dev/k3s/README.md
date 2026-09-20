@@ -281,17 +281,19 @@ K3d/K3s runtime nodes are prepared manually, so the training seed script is spli
 cd ../../federation-learning-platform
 
 # 1. Platform-owned setup: organization, federation, feature schema, model,
-# runtime infrastructure plan, runtime identity, endpoint, and training config.
+# runtime infrastructure package/installation plan, runtime engine profile, and
+# training config. This does not deploy or mark the runtime agent connected.
 node scripts/init-training-prerequisites.mjs \
   --target platform \
   --scenario csv \
-  --runtime-environment-type K3S \
-  --agent-install-mode PLATFORM_MANAGED
+  --runtime-environment-type K3S
 
-# 2. Manually create/label the k3d/K3s runtime node, then let the platform deploy
-# the runtime agent and verify that the runtime-agent API is reachable.
+# 2. Manually install/configure the k3d/K3s runtime agent and verify that the
+# runtime-agent API is reachable. The platform does not control this bootstrap
+# step in local dev.
 
-# 3. Runtime-agent-owned setup: node inventory, dataset declaration, runtime
+# 3. Runtime-agent-owned setup plus platform connection registration: runtime
+# identity, runtime-agent endpoint, node inventory, dataset declaration, runtime
 # dataset binding, dataset access validation/profile, and platform metadata.
 node scripts/init-training-prerequisites.mjs \
   --target runtime-agent \
