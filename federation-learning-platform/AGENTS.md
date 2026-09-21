@@ -5,7 +5,7 @@ This repo is the generated Axon 5 / Spring Boot backend for the Federation Learn
 ## Source Of Truth
 
 - The domain source is `/Users/bryce/codes/medo/event-modeling/medol/examples/fl/federation-learning.medol`.
-- Generated backend code is produced by `/Users/bryce/codes/medo/event-modeling/es-code-generator`.
+- Generated backend code is produced by the `medol-codegen` project.
 - Do not hand-edit generated `context/...` code unless the user explicitly asks for a temporary local fix.
 - If a generated behavior is wrong for all future generations, fix the MEDOL model or the generator first.
 
