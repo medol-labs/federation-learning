@@ -21,6 +21,8 @@ class RuntimeAgentLifecycleCatalogReadModelEntity : MetadataProjection {
     var runtimeAgentId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
     var agentVersion: String? = null
+    var runtimeAgentEndpoint: String? = null
+    var endpointScope: String? = null
     var lifecycleStatus: String? = null
     var bootstrapConfigurationLoaded: Boolean? = null
     @Column(columnDefinition = "text")

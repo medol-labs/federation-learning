@@ -25,6 +25,8 @@ class LoadRuntimeAgentBootstrapConfigurationDecisionTest {
                 runtimeAgentId = java.util.UUID.randomUUID(),
                 runtimeInfrastructureId = java.util.UUID.randomUUID(),
                 agentVersion = "",
+                runtimeAgentEndpoint = "",
+                endpointScope = "",
                 bootstrapConfigurationLoaded = false
             ),
             now = LocalDateTime.parse("2026-01-01T00:00:00")

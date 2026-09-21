@@ -11,6 +11,8 @@ data class RuntimeInstanceSelfCheckPassedEvent(
     val runtimeAgentId: UUID,
     val runtimeInfrastructureId: UUID,
     val agentVersion: String,
+    val runtimeAgentEndpoint: String,
+    val endpointScope: String,
     val runtimeAgentSelfCheckPassed: Boolean,
     val configurationLoaded: Boolean,
     val secretStoreAccessible: Boolean,

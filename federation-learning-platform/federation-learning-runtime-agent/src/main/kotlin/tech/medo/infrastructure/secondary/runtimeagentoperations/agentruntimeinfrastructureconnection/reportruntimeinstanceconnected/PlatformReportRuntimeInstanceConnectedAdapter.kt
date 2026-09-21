@@ -41,6 +41,7 @@ class PlatformReportRuntimeInstanceConnectedAdapter(
             runtimeAgentId = input.runtimeAgentId,
             agentInstallMode = properties.agentInstallMode.trim(),
             organizationId = organizationId!!,
+            organizationName = null,
             runtimeName = runtimeName,
             runtimeAgentEndpoint = runtimeAgentEndpoint,
             endpointScope = endpointScope

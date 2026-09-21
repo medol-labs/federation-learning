@@ -11,6 +11,8 @@ data class RuntimeAgentBootstrapConfigurationLoadedEvent(
     val runtimeAgentId: UUID,
     val runtimeInfrastructureId: UUID,
     val agentVersion: String,
+    val runtimeAgentEndpoint: String,
+    val endpointScope: String,
     val bootstrapConfigurationLoaded: Boolean,
     @EventTag(key = "bootstrapRequestId")
     val bootstrapRequestId: UUID

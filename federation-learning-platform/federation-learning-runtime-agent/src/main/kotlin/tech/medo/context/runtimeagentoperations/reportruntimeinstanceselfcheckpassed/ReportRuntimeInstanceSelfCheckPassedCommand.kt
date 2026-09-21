@@ -11,13 +11,8 @@ data class ReportRuntimeInstanceSelfCheckPassedCommand(
     val runtimeAgentId: UUID,
     val runtimeInfrastructureId: UUID,
     val agentVersion: String,
-    val runtimeAgentSelfCheckPassed: Boolean,
-    val configurationLoaded: Boolean,
-    val secretStoreAccessible: Boolean,
-    val runtimeEngineAdapterReady: Boolean,
-    val modelRepositoryClientReady: Boolean,
-    val localDatasetBindingStoreReady: Boolean,
-    val workingDirectoryWritable: Boolean,
+    val runtimeAgentEndpoint: String,
+    val endpointScope: String,
     val bootstrapRequestId: UUID
 ) {
     @TargetEntityId

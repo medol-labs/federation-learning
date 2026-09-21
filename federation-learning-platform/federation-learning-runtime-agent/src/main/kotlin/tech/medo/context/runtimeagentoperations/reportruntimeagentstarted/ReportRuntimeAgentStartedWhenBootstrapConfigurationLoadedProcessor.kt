@@ -13,5 +13,5 @@ import org.springframework.stereotype.Component
 class ReportRuntimeAgentStartedWhenBootstrapConfigurationLoadedProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: RuntimeAgentBootstrapConfigurationLoadedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(ReportRuntimeAgentStartedCommand(runtimeAgentId = event.runtimeAgentId, runtimeInfrastructureId = event.runtimeInfrastructureId, agentVersion = event.agentVersion, bootstrapRequestId = event.bootstrapRequestId)).resultMessage
+        commandGateway.send(ReportRuntimeAgentStartedCommand(runtimeAgentId = event.runtimeAgentId, runtimeInfrastructureId = event.runtimeInfrastructureId, agentVersion = event.agentVersion, runtimeAgentEndpoint = event.runtimeAgentEndpoint, endpointScope = event.endpointScope, bootstrapRequestId = event.bootstrapRequestId)).resultMessage
 }

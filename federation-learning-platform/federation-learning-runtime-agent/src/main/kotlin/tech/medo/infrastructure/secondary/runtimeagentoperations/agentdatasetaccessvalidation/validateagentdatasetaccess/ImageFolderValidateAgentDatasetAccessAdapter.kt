@@ -77,8 +77,8 @@ class ImageFolderValidateAgentDatasetAccessAdapter(
         }
 
         val hasSampleFile = classDirectories.any { classDirectory ->
-            Files.list(classDirectory).use { stream ->
-                stream.anyMatch { Files.isRegularFile(it) && Files.isReadable(it) }
+            Files.walk(classDirectory).use { stream ->
+                stream.anyMatch { Files.isRegularFile(it) && Files.isReadable(it) && it.isSupportedImageFile() }
             }
         }
         if (!hasSampleFile) {
@@ -88,6 +88,24 @@ class ImageFolderValidateAgentDatasetAccessAdapter(
         return null
     }
 
+    private fun Path.isSupportedImageFile(): Boolean =
+        fileName?.toString()
+            ?.substringAfterLast('.', missingDelimiterValue = "")
+            ?.lowercase() in SUPPORTED_IMAGE_EXTENSIONS
+
     private fun String?.normalized(): String =
         this?.trim()?.lowercase()?.replace("-", "_") ?: ""
+
+    private companion object {
+        private val SUPPORTED_IMAGE_EXTENSIONS = setOf(
+            "jpg",
+            "jpeg",
+            "png",
+            "bmp",
+            "gif",
+            "webp",
+            "tif",
+            "tiff"
+        )
+    }
 }

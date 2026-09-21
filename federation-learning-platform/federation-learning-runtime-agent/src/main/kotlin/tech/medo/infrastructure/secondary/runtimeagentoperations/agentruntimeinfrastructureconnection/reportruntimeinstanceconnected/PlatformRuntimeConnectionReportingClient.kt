@@ -23,6 +23,7 @@ data class RecordRuntimeConnectionEstablishedRequest(
     val runtimeAgentId: UUID,
     val agentInstallMode: String,
     val organizationId: UUID,
+    val organizationName: String?,
     val runtimeName: String,
     val runtimeAgentEndpoint: String,
     val endpointScope: String
@@ -33,6 +34,7 @@ data class RecordRuntimeConnectionEstablishedResponse(
     val runtimeAgentId: UUID? = null,
     val agentInstallMode: String? = null,
     val organizationId: UUID? = null,
+    val organizationName: String? = null,
     val runtimeName: String? = null,
     val runtimeAgentEndpoint: String? = null,
     val endpointScope: String? = null

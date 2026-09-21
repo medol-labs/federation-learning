@@ -57,6 +57,8 @@ open class DefaultRuntimeAgentLifecycleCatalogReadModelProjectionUpdater(
             entity.runtimeAgentId = event.runtimeAgentId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.agentVersion = event.agentVersion
+            entity.runtimeAgentEndpoint = event.runtimeAgentEndpoint
+            entity.endpointScope = event.endpointScope
             entity.bootstrapConfigurationLoaded = event.bootstrapConfigurationLoaded
             entity.bootstrapFailureReason = null
             entity.bootstrapFailedAt = null
@@ -84,6 +86,8 @@ open class DefaultRuntimeAgentLifecycleCatalogReadModelProjectionUpdater(
             entity.runtimeAgentId = event.runtimeAgentId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.agentVersion = event.agentVersion
+            entity.runtimeAgentEndpoint = event.runtimeAgentEndpoint
+            entity.endpointScope = event.endpointScope
             entity.startedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -102,6 +106,8 @@ open class DefaultRuntimeAgentLifecycleCatalogReadModelProjectionUpdater(
             entity.runtimeAgentId = event.runtimeAgentId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId
             entity.agentVersion = event.agentVersion
+            entity.runtimeAgentEndpoint = event.runtimeAgentEndpoint
+            entity.endpointScope = event.endpointScope
             entity.runtimeAgentSelfCheckPassed = event.runtimeAgentSelfCheckPassed
             entity.configurationLoaded = event.configurationLoaded
             entity.secretStoreAccessible = event.secretStoreAccessible

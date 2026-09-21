@@ -1,7 +1,7 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.agentdatasetprofile.profileagentdataset
 
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 import tech.medo.infrastructure.secondary.runtimeagentoperations.dataset.CsvDatasetProperties
 import tech.medo.infrastructure.secondary.runtimeagentoperations.dataset.resolveRuntimeDatasetPath
@@ -9,7 +9,9 @@ import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetI
 import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetResult
 import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetService
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
+import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
+import tech.jhipster.service.filter.StringFilter
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.nio.file.Files
@@ -24,12 +26,11 @@ class CsvFileProfileAgentDatasetAdapter(
     @Value("\${runtime-agent.local-runtime-engine.dataset-container-root:/workspace/datasets}")
     private val datasetContainerRoot: String = "/workspace/datasets"
 ) : ProfileAgentDatasetService {
+    override fun supports(input: ProfileAgentDatasetInput): Boolean =
+        findCsvBinding(input) != null
+
     override fun execute(input: ProfileAgentDatasetInput): ProfileAgentDatasetResult {
-        val binding = bindingRepository.findAll(Pageable.unpaged())
-            .content
-            .filter { it.runtimeDatasetBindingId == input.runtimeDatasetBindingId || it.datasetId == input.datasetId }
-            .filter { it.isCsvFileBinding() }
-            .maxByOrNull { it.configuredAt ?: java.time.LocalDateTime.MIN }
+        val binding = findCsvBinding(input)
             ?: return rejected("CSV runtime dataset binding was not found for binding ${input.runtimeDatasetBindingId}.")
 
         val filePath = binding.filePath?.trim()
@@ -73,6 +74,24 @@ class CsvFileProfileAgentDatasetAdapter(
         val format = dataFormat.normalized()
         return format == "csv"
     }
+
+    private fun findCsvBinding(input: ProfileAgentDatasetInput): RuntimeDatasetBindingCatalogReadModel? =
+        bindingRepository.findAllByCriteria(
+            RuntimeDatasetBindingCatalogReadModelCriteria().apply {
+                runtimeDatasetBindingId = StringFilter().apply { equals = input.runtimeDatasetBindingId.toString() }
+            },
+            PageRequest.of(0, 20)
+        ).content
+            .ifEmpty {
+                bindingRepository.findAllByCriteria(
+                    RuntimeDatasetBindingCatalogReadModelCriteria().apply {
+                        datasetId = StringFilter().apply { equals = input.datasetId.toString() }
+                    },
+                    PageRequest.of(0, 20)
+                ).content
+            }
+            .filter { it.isCsvFileBinding() }
+            .maxByOrNull { it.configuredAt ?: java.time.LocalDateTime.MIN }
 
     private fun readCsvProfile(path: Path, expectedLabelColumns: Set<String>): CsvProfile? {
         Files.newBufferedReader(path).useLines { lines ->

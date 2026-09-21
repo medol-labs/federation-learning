@@ -41,6 +41,8 @@ class JpaRuntimeAgentLifecycleCatalogReadModelRepository(
             it.runtimeAgentId = this@toProjection.runtimeAgentId
             it.runtimeInfrastructureId = this@toProjection.runtimeInfrastructureId
             it.agentVersion = this@toProjection.agentVersion
+            it.runtimeAgentEndpoint = this@toProjection.runtimeAgentEndpoint
+            it.endpointScope = this@toProjection.endpointScope
             it.lifecycleStatus = this@toProjection.lifecycleStatus
             it.bootstrapConfigurationLoaded = this@toProjection.bootstrapConfigurationLoaded
             it.bootstrapFailureReason = this@toProjection.bootstrapFailureReason
@@ -68,6 +70,8 @@ class JpaRuntimeAgentLifecycleCatalogReadModelRepository(
             it.runtimeAgentId = this@toEntity.runtimeAgentId
             it.runtimeInfrastructureId = this@toEntity.runtimeInfrastructureId
             it.agentVersion = this@toEntity.agentVersion
+            it.runtimeAgentEndpoint = this@toEntity.runtimeAgentEndpoint
+            it.endpointScope = this@toEntity.endpointScope
             it.lifecycleStatus = this@toEntity.lifecycleStatus
             it.bootstrapConfigurationLoaded = this@toEntity.bootstrapConfigurationLoaded
             it.bootstrapFailureReason = this@toEntity.bootstrapFailureReason

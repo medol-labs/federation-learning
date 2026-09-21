@@ -55,6 +55,16 @@ export const RuntimeAgentLifecycleCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_lifecycle_catalog.fields.runtimeAgentEndpoint.label", "Runtime Agent Endpoint")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentEndpoint, t)}</p>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_lifecycle_catalog.fields.endpointScope.label", "Endpoint Scope")}</h4>
+              <p className="text-sm text-muted-foreground">{formatValue(record?.endpointScope, t)}</p>
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_lifecycle_catalog.fields.lifecycleStatus.label", "Lifecycle Status")}</h4>
               <p className="text-sm text-muted-foreground">{formatValue(record?.lifecycleStatus, t)}</p>
             </div>

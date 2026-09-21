@@ -89765,6 +89765,35 @@
               "portOutput": false
             },
             {
+              "name": "runtimeAgentEndpoint",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "endpointScope",
+              "type": "String",
+              "dictionary": "RUNTIME_AGENT_ENDPOINT_SCOPE",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
               "name": "bootstrapConfigurationLoaded",
               "type": "Boolean",
               "cardinality": "Single",
@@ -89884,7 +89913,7 @@
           "sliceName": "Load Runtime Agent Bootstrap Configuration",
           "title": "Load Runtime Agent Bootstrap Configuration",
           "specification": "Runtime Agent Startup Bootstrap Configuration",
-          "rule": "Runtime agent startup begins by loading bootstrap configuration from environment variables, mounted files, or platform-issued startup material. The configuration must provide the stable runtimeAgentId generated when RuntimeInfrastructure was registered, the matching runtimeInfrastructureId, and the agent version. A successful load starts the runtime-agent lifecycle; a missing or invalid configuration records a bootstrap failure and must not create a new random runtimeAgentId.",
+          "rule": "Runtime agent startup begins by loading bootstrap configuration from environment variables, mounted files, or platform-issued startup material. The configuration must provide the stable runtimeAgentId generated when RuntimeInfrastructure was registered, the matching runtimeInfrastructureId, the agent version, and the endpoint the platform can use to call this runtime agent. A successful load starts the runtime-agent lifecycle; a missing or invalid configuration records a bootstrap failure and must not create a new random runtimeAgentId.",
           "expressions": [],
           "validates": [],
           "given": [],
@@ -89916,6 +89945,12 @@
                   "name": "agentVersion"
                 },
                 {
+                  "name": "runtimeAgentEndpoint"
+                },
+                {
+                  "name": "endpointScope"
+                },
+                {
                   "name": "bootstrapConfigurationLoaded"
                 }
               ]
@@ -89928,7 +89963,7 @@
           "sliceName": "Load Runtime Agent Bootstrap Configuration",
           "title": "Reject Missing Runtime Agent Bootstrap Configuration",
           "specification": "Runtime Agent Startup Bootstrap Configuration",
-          "rule": "Runtime agent startup begins by loading bootstrap configuration from environment variables, mounted files, or platform-issued startup material. The configuration must provide the stable runtimeAgentId generated when RuntimeInfrastructure was registered, the matching runtimeInfrastructureId, and the agent version. A successful load starts the runtime-agent lifecycle; a missing or invalid configuration records a bootstrap failure and must not create a new random runtimeAgentId.",
+          "rule": "Runtime agent startup begins by loading bootstrap configuration from environment variables, mounted files, or platform-issued startup material. The configuration must provide the stable runtimeAgentId generated when RuntimeInfrastructure was registered, the matching runtimeInfrastructureId, the agent version, and the endpoint the platform can use to call this runtime agent. A successful load starts the runtime-agent lifecycle; a missing or invalid configuration records a bootstrap failure and must not create a new random runtimeAgentId.",
           "expressions": [],
           "validates": [],
           "given": [],
@@ -90054,6 +90089,47 @@
                   "RuntimeAgentBootstrapConfigurationLoaded.agentVersion"
                 ]
               }
+            },
+            {
+              "name": "runtimeAgentEndpoint",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeAgentBootstrapConfigurationLoaded.runtimeAgentEndpoint"
+                ]
+              }
+            },
+            {
+              "name": "endpointScope",
+              "type": "String",
+              "dictionary": "RUNTIME_AGENT_ENDPOINT_SCOPE",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeAgentBootstrapConfigurationLoaded.endpointScope"
+                ]
+              }
             }
           ],
           "dependencies": [
@@ -90112,6 +90188,35 @@
             {
               "name": "agentVersion",
               "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "runtimeAgentEndpoint",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "endpointScope",
+              "type": "String",
+              "dictionary": "RUNTIME_AGENT_ENDPOINT_SCOPE",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -90201,6 +90306,7 @@
       "chapter": "RuntimeAgentOperations",
       "context": "RuntimeAgentOperations",
       "tags": [],
+      "port": true,
       "concepts": [
         "RuntimeAgentLifecycle"
       ],
@@ -90274,8 +90380,8 @@
               }
             },
             {
-              "name": "runtimeAgentSelfCheckPassed",
-              "type": "Boolean",
+              "name": "runtimeAgentEndpoint",
+              "type": "String",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -90285,11 +90391,18 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeAgentStarted.runtimeAgentEndpoint"
+                ]
+              }
             },
             {
-              "name": "configurationLoaded",
-              "type": "Boolean",
+              "name": "endpointScope",
+              "type": "String",
+              "dictionary": "RUNTIME_AGENT_ENDPOINT_SCOPE",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -90299,77 +90412,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "secretStoreAccessible",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "runtimeEngineAdapterReady",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "modelRepositoryClientReady",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "localDatasetBindingStoreReady",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
-            },
-            {
-              "name": "workingDirectoryWritable",
-              "type": "Boolean",
-              "cardinality": "Single",
-              "optional": false,
-              "idAttribute": false,
-              "generated": false,
-              "technicalAttribute": false,
-              "query": false,
-              "display": false,
-              "uploadFile": false,
-              "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeAgentStarted.endpointScope"
+                ]
+              }
             }
           ],
           "dependencies": [
@@ -90385,7 +90434,8 @@
               "title": "Runtime Instance Self Check Passed",
               "elementType": "EVENT"
             }
-          ]
+          ],
+          "port": true
         }
       ],
       "events": [
@@ -90428,6 +90478,35 @@
             {
               "name": "agentVersion",
               "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "runtimeAgentEndpoint",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "endpointScope",
+              "type": "String",
+              "dictionary": "RUNTIME_AGENT_ENDPOINT_SCOPE",
               "cardinality": "Single",
               "optional": false,
               "idAttribute": false,
@@ -90588,12 +90667,130 @@
           "metadata": {
             "on": "RuntimeAgentStarted",
             "onKind": "event",
-            "condition": "runtimeAgentSelfCheckPassed == true",
             "emits": "ReportRuntimeInstanceSelfCheckPassed"
           }
         }
       ],
-      "specifications": [],
+      "specifications": [
+        {
+          "id": "gwt-903a80c3",
+          "chapter": "RuntimeAgentOperations",
+          "sliceName": "Report Runtime Instance Self Check Passed",
+          "title": "Report Runtime Instance Self Check Passed",
+          "specification": "Runtime Agent Instance Self Check",
+          "rule": "After the runtime agent reports it has started, it performs a local self-check through an adapter. The adapter verifies that bootstrap configuration was loaded, required local stores and working directories are accessible, the runtime-engine adapter can be initialized, and platform/support clients are configured. The RuntimeInstanceSelfCheckPassed event must carry the runtime-agent endpoint from startup configuration so the platform can dispatch future execution plans to this agent.",
+          "expressions": [],
+          "validates": [],
+          "given": [
+            {
+              "title": "Runtime Agent Started",
+              "id": "event-cf6dad0c",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "runtimeAgentId",
+                  "example": "runtime-agent-1"
+                },
+                {
+                  "name": "runtimeInfrastructureId",
+                  "example": "runtime-infra-1"
+                },
+                {
+                  "name": "agentVersion",
+                  "example": "local-dev"
+                },
+                {
+                  "name": "runtimeAgentEndpoint",
+                  "example": "http://runtime-agent:8082"
+                },
+                {
+                  "name": "endpointScope",
+                  "example": "CLUSTER"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Report Runtime Instance Self Check Passed",
+              "id": "command-09b97457",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "runtimeAgentId",
+                  "example": "runtime-agent-1"
+                },
+                {
+                  "name": "runtimeInfrastructureId",
+                  "example": "runtime-infra-1"
+                },
+                {
+                  "name": "agentVersion",
+                  "example": "local-dev"
+                },
+                {
+                  "name": "runtimeAgentEndpoint",
+                  "example": "http://runtime-agent:8082"
+                },
+                {
+                  "name": "endpointScope",
+                  "example": "CLUSTER"
+                }
+              ]
+            }
+          ],
+          "then": [
+            {
+              "title": "Runtime Instance Self Check Passed",
+              "id": "event-0591eeaa",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "runtimeAgentId",
+                  "example": "runtime-agent-1"
+                },
+                {
+                  "name": "runtimeInfrastructureId",
+                  "example": "runtime-infra-1"
+                },
+                {
+                  "name": "agentVersion",
+                  "example": "local-dev"
+                },
+                {
+                  "name": "runtimeAgentEndpoint",
+                  "example": "http://runtime-agent:8082"
+                },
+                {
+                  "name": "endpointScope",
+                  "example": "CLUSTER"
+                },
+                {
+                  "name": "runtimeAgentSelfCheckPassed"
+                },
+                {
+                  "name": "configurationLoaded"
+                },
+                {
+                  "name": "secretStoreAccessible"
+                },
+                {
+                  "name": "runtimeEngineAdapterReady"
+                },
+                {
+                  "name": "modelRepositoryClientReady"
+                },
+                {
+                  "name": "localDatasetBindingStoreReady"
+                },
+                {
+                  "name": "workingDirectoryWritable"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "actors": [
         {
           "id": "actor-a0cd7014",
@@ -90663,6 +90860,35 @@
               "type": "String",
               "cardinality": "Single",
               "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "runtimeAgentEndpoint",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "endpointScope",
+              "type": "String",
+              "dictionary": "RUNTIME_AGENT_ENDPOINT_SCOPE",
+              "cardinality": "Single",
+              "optional": true,
               "idAttribute": false,
               "generated": false,
               "technicalAttribute": false,
@@ -90977,7 +91203,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeInstanceSelfCheckPassed.runtimeAgentEndpoint"
+                ]
+              }
             },
             {
               "name": "endpointScope",
@@ -90992,7 +91224,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeInstanceSelfCheckPassed.endpointScope"
+                ]
+              }
             },
             {
               "name": "runtimePlatformConnectionReady",
@@ -91458,6 +91696,12 @@
                   "name": "agentVersion"
                 },
                 {
+                  "name": "runtimeAgentEndpoint"
+                },
+                {
+                  "name": "endpointScope"
+                },
+                {
                   "name": "runtimeAgentSelfCheckPassed"
                 },
                 {
@@ -91597,6 +91841,12 @@
                 },
                 {
                   "name": "agentVersion"
+                },
+                {
+                  "name": "runtimeAgentEndpoint"
+                },
+                {
+                  "name": "endpointScope"
                 },
                 {
                   "name": "runtimeAgentSelfCheckPassed"

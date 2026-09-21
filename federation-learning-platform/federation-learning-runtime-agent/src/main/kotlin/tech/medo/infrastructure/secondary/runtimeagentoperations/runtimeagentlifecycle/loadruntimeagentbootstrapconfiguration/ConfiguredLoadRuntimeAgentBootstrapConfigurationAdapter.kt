@@ -22,6 +22,8 @@ class ConfiguredLoadRuntimeAgentBootstrapConfigurationAdapter(
             runtimeAgentId = configuredUuid(properties.runtimeAgentId)!!,
             runtimeInfrastructureId = configuredUuid(properties.runtimeInfrastructureId)!!,
             agentVersion = properties.agentVersion.trim(),
+            runtimeAgentEndpoint = properties.runtimeAgentEndpoint!!.trim(),
+            endpointScope = properties.endpointScope.trim(),
             bootstrapConfigurationLoaded = true
         )
     }
@@ -32,6 +34,8 @@ class ConfiguredLoadRuntimeAgentBootstrapConfigurationAdapter(
         if (configuredUuid(properties.runtimeAgentId) == null) missing += "runtime-agent.bootstrap.runtime-agent-id"
         if (configuredUuid(properties.runtimeInfrastructureId) == null) missing += "runtime-agent.bootstrap.runtime-infrastructure-id"
         if (properties.agentVersion.isBlank()) missing += "runtime-agent.bootstrap.agent-version"
+        if (properties.runtimeAgentEndpoint.isNullOrBlank()) missing += "runtime-agent.bootstrap.runtime-agent-endpoint"
+        if (properties.endpointScope.isBlank()) missing += "runtime-agent.bootstrap.endpoint-scope"
         return missing
     }
 

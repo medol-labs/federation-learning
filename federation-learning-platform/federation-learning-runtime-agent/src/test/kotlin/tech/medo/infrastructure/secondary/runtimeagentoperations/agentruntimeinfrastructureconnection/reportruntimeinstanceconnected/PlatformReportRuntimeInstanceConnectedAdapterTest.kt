@@ -2,6 +2,7 @@ package tech.medo.infrastructure.secondary.runtimeagentoperations.agentruntimein
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tech.medo.runtimeagentoperations.reportruntimeinstanceconnected.ReportRuntimeInstanceConnectedInput
@@ -37,6 +38,7 @@ class PlatformReportRuntimeInstanceConnectedAdapterTest {
         assertEquals(runtimeAgentId, request.runtimeAgentId)
         assertEquals("MANUAL_GUIDED", request.agentInstallMode)
         assertEquals(organizationId, request.organizationId)
+        assertNull(request.organizationName)
         assertEquals("local-runtime", request.runtimeName)
         assertEquals("http://localhost:8082", request.runtimeAgentEndpoint)
         assertEquals("LOCAL", request.endpointScope)
@@ -91,6 +93,7 @@ class PlatformReportRuntimeInstanceConnectedAdapterTest {
                 runtimeAgentId = request.runtimeAgentId,
                 agentInstallMode = request.agentInstallMode,
                 organizationId = request.organizationId,
+                organizationName = request.organizationName,
                 runtimeName = request.runtimeName,
                 runtimeAgentEndpoint = request.runtimeAgentEndpoint,
                 endpointScope = request.endpointScope

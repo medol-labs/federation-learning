@@ -44,6 +44,19 @@ class ImageFolderValidateAgentDatasetAccessAdapterTest {
     }
 
     @Test
+    fun validatesTinyImageNetNestedImagesDirectory() {
+        Files.createDirectories(tempDir.resolve("train/n01443537/images"))
+        Files.createDirectories(tempDir.resolve("train/n01629819/images"))
+        Files.writeString(tempDir.resolve("train/n01443537/images/n01443537_0.JPEG"), "image")
+        Files.writeString(tempDir.resolve("train/n01629819/images/n01629819_0.JPEG"), "image")
+        val adapter = ImageFolderValidateAgentDatasetAccessAdapter()
+
+        val result = adapter.execute(input(filePath = tempDir.toString()))
+
+        assertTrue(result is ValidateAgentDatasetAccessResult.Succeeded)
+    }
+
+    @Test
     fun rejectsMissingTrainDirectory() {
         val adapter = ImageFolderValidateAgentDatasetAccessAdapter()
 

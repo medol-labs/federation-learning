@@ -8,7 +8,6 @@ import org.junit.jupiter.api.io.TempDir
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
-import tech.medo.infrastructure.secondary.runtimeagentoperations.dataset.CsvDatasetProperties
 import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetInput
 import tech.medo.runtimeagentoperations.profileagentdataset.ProfileAgentDatasetResult
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
@@ -21,17 +20,19 @@ import java.nio.file.Path
 import java.time.LocalDateTime
 import java.util.UUID
 
-class CsvFileProfileAgentDatasetAdapterTest {
+class ImageFolderProfileAgentDatasetAdapterTest {
     @TempDir
     lateinit var tempDir: Path
 
     @Test
-    fun profilesReadableCsvFile() {
-        val csv = tempDir.resolve("dataset.csv")
-        Files.writeString(csv, "age,income,label\n42,1000,yes\n36,900,no\n42,1000,yes\n")
-        val adapter = CsvFileProfileAgentDatasetAdapter(
-            repository(binding(filePath = csv.toString())),
-            csvDatasetProperties()
+    fun profilesTinyImageNetNestedImagesDirectory() {
+        Files.createDirectories(tempDir.resolve("train/n01443537/images"))
+        Files.createDirectories(tempDir.resolve("train/n01629819/images"))
+        Files.writeString(tempDir.resolve("train/n01443537/images/n01443537_0.JPEG"), "image")
+        Files.writeString(tempDir.resolve("train/n01443537/images/n01443537_1.JPEG"), "image")
+        Files.writeString(tempDir.resolve("train/n01629819/images/n01629819_0.JPEG"), "image")
+        val adapter = ImageFolderProfileAgentDatasetAdapter(
+            repository(binding(filePath = tempDir.toString()))
         )
 
         val result = adapter.execute(input())
@@ -39,57 +40,23 @@ class CsvFileProfileAgentDatasetAdapterTest {
         assertTrue(result is ProfileAgentDatasetResult.Succeeded)
         result as ProfileAgentDatasetResult.Succeeded
         assertEquals(3, result.sampleCount)
-        assertEquals(3, result.featureCount)
+        assertEquals(2, result.featureCount)
         assertEquals(true, result.schemaCompatible)
         assertEquals(true, result.labelCompatible)
-        assertEquals(BigDecimal("0.0000"), result.missingValueRate)
-        assertEquals(BigDecimal("0.3333"), result.duplicateRate)
-        assertEquals(BigDecimal("0.6667"), result.qualityScore)
-        assertEquals(BigDecimal("0.6666"), result.classBalanceScore)
+        assertEquals(BigDecimal("0.5000"), result.classBalanceScore)
     }
 
     @Test
-    fun profilesCsvWithoutLabelAsLabelIncompatible() {
-        val csv = tempDir.resolve("dataset.csv")
-        Files.writeString(csv, "age,income\n42,1000\n36,\n")
-        val adapter = CsvFileProfileAgentDatasetAdapter(
-            repository(binding(filePath = csv.toString())),
-            csvDatasetProperties()
+    fun supportsOnlyImageFolderBindings() {
+        val imageFolderAdapter = ImageFolderProfileAgentDatasetAdapter(
+            repository(binding(filePath = tempDir.toString(), dataFormat = "IMAGE_FOLDER"))
+        )
+        val csvAdapter = ImageFolderProfileAgentDatasetAdapter(
+            repository(binding(filePath = tempDir.toString(), dataFormat = "csv"))
         )
 
-        val result = adapter.execute(input())
-
-        assertTrue(result is ProfileAgentDatasetResult.Succeeded)
-        result as ProfileAgentDatasetResult.Succeeded
-        assertEquals(false, result.labelCompatible)
-        assertEquals(BigDecimal("0.2500"), result.missingValueRate)
-        assertEquals(null, result.classBalanceScore)
-    }
-
-    @Test
-    fun rejectsWhenCsvBindingCannotBeFound() {
-        val adapter = CsvFileProfileAgentDatasetAdapter(repository(), csvDatasetProperties())
-
-        val result = adapter.execute(input())
-
-        assertTrue(result is ProfileAgentDatasetResult.Rejected)
-        result as ProfileAgentDatasetResult.Rejected
-        assertTrue(result.failureReason.contains("binding"))
-    }
-
-    @Test
-    fun supportsOnlyCsvBindings() {
-        val csvAdapter = CsvFileProfileAgentDatasetAdapter(
-            repository(binding(filePath = tempDir.resolve("dataset.csv").toString())),
-            csvDatasetProperties()
-        )
-        val imageFolderAdapter = CsvFileProfileAgentDatasetAdapter(
-            repository(binding(filePath = tempDir.toString(), dataFormat = "IMAGE_FOLDER")),
-            csvDatasetProperties()
-        )
-
-        assertTrue(csvAdapter.supports(input()))
-        assertFalse(imageFolderAdapter.supports(input()))
+        assertTrue(imageFolderAdapter.supports(input()))
+        assertFalse(csvAdapter.supports(input()))
     }
 
     private fun input(): ProfileAgentDatasetInput =
@@ -100,16 +67,16 @@ class CsvFileProfileAgentDatasetAdapterTest {
             organizationId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
             organizationName = "Test Organization",
             featureSchemaId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
-            featureDomain = "credit-risk",
+            featureDomain = "tiny-imagenet",
             featureSchemaVersion = "v1",
-            datasetName = "credit-risk",
+            datasetName = "tiny-imagenet",
             runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666"),
             runtimeName = "local runtime"
         )
 
     private fun binding(
         filePath: String,
-        dataFormat: String = "csv"
+        dataFormat: String = "IMAGE_FOLDER"
     ): RuntimeDatasetBindingCatalogReadModel =
         RuntimeDatasetBindingCatalogReadModel(
             runtimeDatasetBindingId = BINDING_ID,
@@ -118,9 +85,9 @@ class CsvFileProfileAgentDatasetAdapterTest {
             runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666"),
             organizationName = "Test Organization",
             featureSchemaId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
-            featureDomain = "credit-risk",
+            featureDomain = "tiny-imagenet",
             featureSchemaVersion = "v1",
-            datasetName = "credit-risk",
+            datasetName = "tiny-imagenet",
             runtimeName = "local runtime",
             filePath = filePath,
             dataFormat = dataFormat,
@@ -154,9 +121,6 @@ class CsvFileProfileAgentDatasetAdapterTest {
                 error("save is not used by this test repository")
             }
         }
-
-    private fun csvDatasetProperties(): CsvDatasetProperties =
-        CsvDatasetProperties(labelColumns = listOf("label"))
 
     private companion object {
         val BINDING_ID: UUID = UUID.fromString("22222222-2222-4222-8222-222222222222")

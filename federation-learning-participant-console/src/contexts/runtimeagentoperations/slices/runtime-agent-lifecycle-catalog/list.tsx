@@ -21,6 +21,8 @@ type RuntimeAgentLifecycleCatalogRecord = {
   runtimeAgentId: string;
   runtimeInfrastructureId: string;
   agentVersion: string;
+  runtimeAgentEndpoint?: string;
+  endpointScope?: string;
   lifecycleStatus: string;
   bootstrapConfigurationLoaded?: boolean;
   bootstrapFailureReason?: string;
@@ -117,6 +119,34 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         meta: {
           label: t("resources.runtime_agent_lifecycle_catalog.fields.agentVersion.label", "Agent Version"),
           placeholder: "Enter Agent Version",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("runtimeAgentEndpoint", {
+        id: "runtimeAgentEndpoint",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.runtimeAgentEndpoint.label", "Runtime Agent Endpoint")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.runtimeAgentEndpoint.label", "Runtime Agent Endpoint"),
+          placeholder: "Enter Runtime Agent Endpoint",
+          variant: "text",
+        },
+        cell: ({ getValue }) => String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("endpointScope", {
+        id: "endpointScope",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_agent_lifecycle_catalog.fields.endpointScope.label", "Endpoint Scope")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_agent_lifecycle_catalog.fields.endpointScope.label", "Endpoint Scope"),
+          placeholder: "Enter Endpoint Scope",
           variant: "text",
         },
         cell: ({ getValue }) => String(getValue() ?? "-"),
@@ -358,7 +388,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         tableName: "runtime_agent_lifecycle_catalog_read_model_entity",
         idField: "runtimeAgentId",
         idFields: ["runtimeAgentId"],
-        queryFields: ["runtimeAgentId","runtimeInfrastructureId","agentVersion","lifecycleStatus","bootstrapConfigurationLoaded","bootstrapFailureReason","runtimeAgentSelfCheckPassed","configurationLoaded","secretStoreAccessible","runtimeEngineAdapterReady","modelRepositoryClientReady","localDatasetBindingStoreReady","workingDirectoryWritable","bootstrappedAt","bootstrapFailedAt","startedAt","readyAt"],
+        queryFields: ["runtimeAgentId","runtimeInfrastructureId","agentVersion","runtimeAgentEndpoint","endpointScope","lifecycleStatus","bootstrapConfigurationLoaded","bootstrapFailureReason","runtimeAgentSelfCheckPassed","configurationLoaded","secretStoreAccessible","runtimeEngineAdapterReady","modelRepositoryClientReady","localDatasetBindingStoreReady","workingDirectoryWritable","bootstrappedAt","bootstrapFailedAt","startedAt","readyAt"],
         label: t("resources.runtime_agent_lifecycle_catalog.label", "Runtime Agent Lifecycle Catalog"),
         aggregateRoute: "runtimeagentlifecycle",
         queryRoute: "runtimeagentlifecyclecatalog",

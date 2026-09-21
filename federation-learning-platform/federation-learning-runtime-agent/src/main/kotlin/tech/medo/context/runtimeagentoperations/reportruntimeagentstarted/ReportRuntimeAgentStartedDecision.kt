@@ -16,7 +16,7 @@ interface ReportRuntimeAgentStartedDecision {
             "ReportRuntimeAgentStarted requires RuntimeAgentLifecycle to be BootstrapLoaded."
         }
         return listOf(
-            RuntimeAgentStartedEvent(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId, agentVersion = command.agentVersion, bootstrapRequestId = command.bootstrapRequestId)
+            RuntimeAgentStartedEvent(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId, agentVersion = command.agentVersion, runtimeAgentEndpoint = command.runtimeAgentEndpoint, endpointScope = command.endpointScope, bootstrapRequestId = command.bootstrapRequestId)
         )
     }
 }

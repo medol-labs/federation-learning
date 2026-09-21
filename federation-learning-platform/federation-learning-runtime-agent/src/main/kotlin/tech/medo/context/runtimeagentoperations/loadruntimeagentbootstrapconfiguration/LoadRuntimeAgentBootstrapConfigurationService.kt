@@ -16,6 +16,8 @@ sealed interface LoadRuntimeAgentBootstrapConfigurationResult {
         val runtimeAgentId: UUID,
         val runtimeInfrastructureId: UUID,
         val agentVersion: String,
+        val runtimeAgentEndpoint: String,
+        val endpointScope: String,
         val bootstrapConfigurationLoaded: Boolean
     ) : LoadRuntimeAgentBootstrapConfigurationResult
 

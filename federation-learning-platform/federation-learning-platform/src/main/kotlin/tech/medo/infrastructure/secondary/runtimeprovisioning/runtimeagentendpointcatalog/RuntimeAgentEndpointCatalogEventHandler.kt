@@ -21,9 +21,11 @@ class RuntimeAgentEndpointCatalogEventHandler(
         message: EventMessage
     ) {
         val entity = repository.findByRuntimeAgentId(event.runtimeAgentId)
+            ?: repository.findByRuntimeInfrastructureId(event.runtimeInfrastructureId)
             ?: RuntimeAgentEndpointCatalogEntity().apply {
                 runtimeAgentId = event.runtimeAgentId
             }
+        entity.runtimeAgentId = event.runtimeAgentId
         entity.runtimeInfrastructureId = event.runtimeInfrastructureId
         entity.organizationId = event.organizationId
         entity.runtimeName = event.runtimeName

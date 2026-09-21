@@ -33,6 +33,8 @@ class RuntimeAgentLifecycleCatalogReadModelQueryService(
             criteria.runtimeAgentId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeAgentLifecycleCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeAgentId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeInfrastructureId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeAgentLifecycleCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInfrastructureId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.agentVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeAgentLifecycleCatalogReadModelEntity>, Expression<String>> { root -> root.get("agentVersion") })) }
+            criteria.runtimeAgentEndpoint?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeAgentLifecycleCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeAgentEndpoint") })) }
+            criteria.endpointScope?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeAgentLifecycleCatalogReadModelEntity>, Expression<String>> { root -> root.get("endpointScope") })) }
             criteria.lifecycleStatus?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeAgentLifecycleCatalogReadModelEntity>, Expression<String>> { root -> root.get("lifecycleStatus") })) }
             criteria.bootstrapConfigurationLoaded?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeAgentLifecycleCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("bootstrapConfigurationLoaded") })) }
             criteria.bootstrapFailureReason?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeAgentLifecycleCatalogReadModelEntity>, Expression<String>> { root -> root.get("bootstrapFailureReason") })) }
@@ -107,6 +109,8 @@ class RuntimeAgentLifecycleCatalogReadModelQueryService(
             it.runtimeAgentId = this@toProjection.runtimeAgentId
             it.runtimeInfrastructureId = this@toProjection.runtimeInfrastructureId
             it.agentVersion = this@toProjection.agentVersion
+            it.runtimeAgentEndpoint = this@toProjection.runtimeAgentEndpoint
+            it.endpointScope = this@toProjection.endpointScope
             it.lifecycleStatus = this@toProjection.lifecycleStatus
             it.bootstrapConfigurationLoaded = this@toProjection.bootstrapConfigurationLoaded
             it.bootstrapFailureReason = this@toProjection.bootstrapFailureReason

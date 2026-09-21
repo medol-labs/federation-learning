@@ -22,6 +22,8 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
     var runtimeAgentId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
     var agentVersion: String? = null
+    var runtimeAgentEndpoint: String? = null
+    var endpointScope: String? = null
     var bootstrapConfigurationLoaded: Boolean? = null
     var bootstrapRequestId: UUID? = null
     var failureReason: String? = null
@@ -39,6 +41,8 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
         runtimeAgentId = event.runtimeAgentId
         runtimeInfrastructureId = event.runtimeInfrastructureId
         agentVersion = event.agentVersion
+        runtimeAgentEndpoint = event.runtimeAgentEndpoint
+        endpointScope = event.endpointScope
         bootstrapConfigurationLoaded = event.bootstrapConfigurationLoaded
     }
 
@@ -55,6 +59,8 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
         runtimeAgentId = event.runtimeAgentId
         runtimeInfrastructureId = event.runtimeInfrastructureId
         agentVersion = event.agentVersion
+        runtimeAgentEndpoint = event.runtimeAgentEndpoint
+        endpointScope = event.endpointScope
     }
 
     @EventSourcingHandler
@@ -63,6 +69,8 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
         runtimeAgentId = event.runtimeAgentId
         runtimeInfrastructureId = event.runtimeInfrastructureId
         agentVersion = event.agentVersion
+        runtimeAgentEndpoint = event.runtimeAgentEndpoint
+        endpointScope = event.endpointScope
         runtimeAgentSelfCheckPassed = event.runtimeAgentSelfCheckPassed
         configurationLoaded = event.configurationLoaded
         secretStoreAccessible = event.secretStoreAccessible

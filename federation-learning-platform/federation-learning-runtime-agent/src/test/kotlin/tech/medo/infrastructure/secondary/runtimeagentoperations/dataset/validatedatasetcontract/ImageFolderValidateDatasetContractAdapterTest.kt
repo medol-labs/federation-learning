@@ -1,7 +1,7 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.dataset.validatedatasetcontract
 
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import org.springframework.data.domain.Page
@@ -21,18 +21,18 @@ import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetC
 import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractResult
 import java.nio.file.Files
 import java.nio.file.Path
+import java.time.LocalDateTime
 import java.util.UUID
 
-class CsvFileValidateDatasetContractAdapterTest {
+class ImageFolderValidateDatasetContractAdapterTest {
     @TempDir
     lateinit var tempDir: Path
 
     @Test
-    fun validatesCsvDatasetContract() {
-        val csv = tempDir.resolve("dataset.csv")
-        Files.writeString(csv, "age,income,label\n42,1000,yes\n36,900,no\n")
-        val adapter = CsvFileValidateDatasetContractAdapter(
-            repository(binding(filePath = csv.toString())),
+    fun validatesImageFolderDatasetContract() {
+        createImageFolderDataset(tempDir)
+        val adapter = ImageFolderValidateDatasetContractAdapter(
+            repository(binding(filePath = tempDir.toString())),
             datasetCapabilityRepository(datasetCapability())
         )
 
@@ -42,11 +42,11 @@ class CsvFileValidateDatasetContractAdapterTest {
     }
 
     @Test
-    fun rejectsCsvWithoutLabelColumn() {
-        val csv = tempDir.resolve("dataset.csv")
-        Files.writeString(csv, "age,income\n42,1000\n")
-        val adapter = CsvFileValidateDatasetContractAdapter(
-            repository(binding(filePath = csv.toString())),
+    fun rejectsImageFolderWhenExpectedClassIsMissing() {
+        Files.createDirectories(tempDir.resolve("train/n01443537/images"))
+        Files.writeString(tempDir.resolve("train/n01443537/images/sample.JPEG"), "image")
+        val adapter = ImageFolderValidateDatasetContractAdapter(
+            repository(binding(filePath = tempDir.toString())),
             datasetCapabilityRepository(datasetCapability())
         )
 
@@ -54,61 +54,41 @@ class CsvFileValidateDatasetContractAdapterTest {
 
         assertTrue(result is ValidateDatasetContractResult.Rejected)
         result as ValidateDatasetContractResult.Rejected
-        assertTrue(result.failureReason.contains("missing label columns"))
+        assertTrue(result.failureReason.contains("missing class directories"))
     }
 
     @Test
-    fun rejectsCsvWithoutFeatureColumn() {
-        val csv = tempDir.resolve("dataset.csv")
-        Files.writeString(csv, "age,label\n42,yes\n")
-        val adapter = CsvFileValidateDatasetContractAdapter(
-            repository(binding(filePath = csv.toString())),
-            datasetCapabilityRepository(datasetCapability())
-        )
-
-        val result = adapter.execute(input())
-
-        assertTrue(result is ValidateDatasetContractResult.Rejected)
-        result as ValidateDatasetContractResult.Rejected
-        assertTrue(result.failureReason.contains("missing feature columns"))
-    }
-
-    @Test
-    fun rejectsWhenCsvBindingCannotBeFound() {
-        val adapter = CsvFileValidateDatasetContractAdapter(repository(), datasetCapabilityRepository(datasetCapability()))
-
-        val result = adapter.execute(input())
-
-        assertTrue(result is ValidateDatasetContractResult.Rejected)
-        result as ValidateDatasetContractResult.Rejected
-        assertTrue(result.failureReason.contains("binding was not found"))
-    }
-
-    @Test
-    fun supportsOnlyCsvBindings() {
-        val csvAdapter = CsvFileValidateDatasetContractAdapter(
-            repository(binding(filePath = tempDir.resolve("dataset.csv").toString())),
-            datasetCapabilityRepository(datasetCapability())
-        )
-        val imageFolderAdapter = CsvFileValidateDatasetContractAdapter(
+    fun supportsOnlyImageFolderBindings() {
+        val imageFolderAdapter = ImageFolderValidateDatasetContractAdapter(
             repository(binding(filePath = tempDir.toString(), dataFormat = "IMAGE_FOLDER")),
             datasetCapabilityRepository(datasetCapability())
         )
+        val csvAdapter = ImageFolderValidateDatasetContractAdapter(
+            repository(binding(filePath = tempDir.toString(), dataFormat = "csv")),
+            datasetCapabilityRepository(datasetCapability())
+        )
 
-        assertTrue(csvAdapter.supports(input()))
-        assertFalse(imageFolderAdapter.supports(input()))
+        assertTrue(imageFolderAdapter.supports(input()))
+        assertFalse(csvAdapter.supports(input()))
+    }
+
+    private fun createImageFolderDataset(root: Path) {
+        Files.createDirectories(root.resolve("train/n01443537/images"))
+        Files.createDirectories(root.resolve("train/n01629819/images"))
+        Files.writeString(root.resolve("train/n01443537/images/n01443537_0.JPEG"), "image")
+        Files.writeString(root.resolve("train/n01629819/images/n01629819_0.JPEG"), "image")
     }
 
     private fun input(): ValidateDatasetContractInput =
         ValidateDatasetContractInput(
             datasetId = DATASET_ID,
             metadataReportId = UUID.fromString("22222222-2222-4222-8222-222222222222"),
-            featureSchemaId = UUID.fromString("33333333-3333-4333-8333-333333333333")
+            featureSchemaId = FEATURE_SCHEMA_ID
         )
 
     private fun binding(
         filePath: String,
-        dataFormat: String = "csv"
+        dataFormat: String = "IMAGE_FOLDER"
     ): RuntimeDatasetBindingCatalogReadModel =
         RuntimeDatasetBindingCatalogReadModel(
             runtimeDatasetBindingId = UUID.fromString("44444444-4444-4444-8444-444444444444"),
@@ -116,14 +96,14 @@ class CsvFileValidateDatasetContractAdapterTest {
             organizationId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
             runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666"),
             organizationName = "Test Organization",
-            featureSchemaId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
-            featureDomain = "credit-risk",
+            featureSchemaId = FEATURE_SCHEMA_ID,
+            featureDomain = "tiny-imagenet",
             featureSchemaVersion = "v1",
-            datasetName = "credit-risk",
+            datasetName = "tiny-imagenet",
             runtimeName = "local runtime",
             filePath = filePath,
             dataFormat = dataFormat,
-            configuredAt = java.time.LocalDateTime.now(),
+            configuredAt = LocalDateTime.now(),
             userId = null,
             sessionId = null,
             correlationId = null,
@@ -183,11 +163,11 @@ class CsvFileValidateDatasetContractAdapterTest {
             datasetId = DATASET_ID,
             organizationId = UUID.fromString("55555555-5555-4555-8555-555555555555"),
             runtimeId = UUID.fromString("66666666-6666-4666-8666-666666666666"),
-            featureSchemaId = UUID.fromString("33333333-3333-4333-8333-333333333333"),
+            featureSchemaId = FEATURE_SCHEMA_ID,
             features = listOf(
                 FeatureDefinition(
-                    featureName = "age",
-                    dataType = "INTEGER",
+                    featureName = "image",
+                    dataType = "FILE",
                     required = true,
                     nullable = false,
                     description = null,
@@ -197,27 +177,14 @@ class CsvFileValidateDatasetContractAdapterTest {
                     isSensitive = false,
                     encodingStrategy = null,
                     featureTags = emptyList()
-                ),
-                FeatureDefinition(
-                    featureName = "income",
-                    dataType = "DECIMAL",
-                    required = true,
-                    nullable = false,
-                    description = null,
-                    validationRules = emptyList(),
-                    defaultValue = null,
-                    isIdentifier = false,
-                    isSensitive = true,
-                    encodingStrategy = null,
-                    featureTags = emptyList()
                 )
             ),
             labels = listOf(
                 LabelDefinition(
-                    labelName = "label",
+                    labelName = "class",
                     dataType = "STRING",
                     cardinality = 2,
-                    classLabels = listOf("yes", "no"),
+                    classLabels = listOf("n01443537", "n01629819"),
                     isMultilabel = false,
                     description = null,
                     validationRules = emptyList(),
@@ -227,7 +194,7 @@ class CsvFileValidateDatasetContractAdapterTest {
             organizationName = null,
             featureDomain = null,
             featureSchemaVersion = null,
-            datasetName = "credit-risk",
+            datasetName = "tiny-imagenet",
             datasetUsage = "TRAINING",
             sampleCount = null,
             featureCount = null,
@@ -251,5 +218,6 @@ class CsvFileValidateDatasetContractAdapterTest {
 
     private companion object {
         val DATASET_ID: UUID = UUID.fromString("11111111-1111-4111-8111-111111111111")
+        val FEATURE_SCHEMA_ID: UUID = UUID.fromString("33333333-3333-4333-8333-333333333333")
     }
 }

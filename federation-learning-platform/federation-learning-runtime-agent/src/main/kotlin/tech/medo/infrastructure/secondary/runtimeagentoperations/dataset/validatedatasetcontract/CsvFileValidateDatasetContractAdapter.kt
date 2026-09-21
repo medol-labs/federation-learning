@@ -1,16 +1,18 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.dataset.validatedatasetcontract
 
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 import tech.medo.infrastructure.secondary.runtimeagentoperations.dataset.resolveRuntimeDatasetPath
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModel
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModelRepository
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
+import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractInput
 import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractResult
 import tech.medo.runtimeagentoperations.validatedatasetcontract.ValidateDatasetContractService
+import tech.jhipster.service.filter.StringFilter
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.nio.file.Files
@@ -25,6 +27,9 @@ class CsvFileValidateDatasetContractAdapter(
     @Value("\${runtime-agent.local-runtime-engine.dataset-container-root:/workspace/datasets}")
     private val datasetContainerRoot: String = "/workspace/datasets"
 ) : ValidateDatasetContractService {
+    override fun supports(input: ValidateDatasetContractInput): Boolean =
+        findCsvBinding(input) != null
+
     override fun execute(input: ValidateDatasetContractInput): ValidateDatasetContractResult {
         val datasetCapability = datasetCapabilityRepository.findById(input.datasetId)
             ?: return rejected("Dataset feature schema snapshot was not found for dataset ${input.datasetId}.")
@@ -37,11 +42,7 @@ class CsvFileValidateDatasetContractAdapter(
             return rejected("Dataset feature schema snapshot has no features for dataset ${input.datasetId}.")
         }
 
-        val binding = bindingRepository.findAll(Pageable.unpaged())
-            .content
-            .filter { it.datasetId == input.datasetId }
-            .filter { it.isCsvFileBinding() }
-            .maxByOrNull { it.configuredAt ?: java.time.LocalDateTime.MIN }
+        val binding = findCsvBinding(input)
             ?: return rejected("CSV runtime dataset binding was not found for dataset ${input.datasetId}.")
 
         val filePath = binding.filePath?.trim()
@@ -101,6 +102,16 @@ class CsvFileValidateDatasetContractAdapter(
         val format = dataFormat.normalized()
         return format == "csv"
     }
+
+    private fun findCsvBinding(input: ValidateDatasetContractInput): RuntimeDatasetBindingCatalogReadModel? =
+        bindingRepository.findAllByCriteria(
+            RuntimeDatasetBindingCatalogReadModelCriteria().apply {
+                datasetId = StringFilter().apply { equals = input.datasetId.toString() }
+            },
+            PageRequest.of(0, 20)
+        ).content
+            .filter { it.isCsvFileBinding() }
+            .maxByOrNull { it.configuredAt ?: java.time.LocalDateTime.MIN }
 
     private fun readCsvProfile(path: Path): CsvProfile? {
         Files.newBufferedReader(path).useLines { lines ->

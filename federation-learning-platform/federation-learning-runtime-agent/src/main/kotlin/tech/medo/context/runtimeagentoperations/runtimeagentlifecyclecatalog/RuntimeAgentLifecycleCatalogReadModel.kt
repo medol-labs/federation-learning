@@ -19,6 +19,8 @@ class RuntimeAgentLifecycleCatalogReadModelCriteria {
     var runtimeAgentId: StringFilter? = null
     var runtimeInfrastructureId: StringFilter? = null
     var agentVersion: StringFilter? = null
+    var runtimeAgentEndpoint: StringFilter? = null
+    var endpointScope: StringFilter? = null
     var lifecycleStatus: StringFilter? = null
     var bootstrapConfigurationLoaded: BooleanFilter? = null
     var bootstrapFailureReason: StringFilter? = null
@@ -40,6 +42,8 @@ class RuntimeAgentLifecycleCatalogReadModelProjection : MetadataProjection {
     var runtimeAgentId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
     var agentVersion: String? = null
+    var runtimeAgentEndpoint: String? = null
+    var endpointScope: String? = null
     var lifecycleStatus: String? = null
     var bootstrapConfigurationLoaded: Boolean? = null
     var bootstrapFailureReason: String? = null
@@ -67,6 +71,8 @@ fun RuntimeAgentLifecycleCatalogReadModelProjection.toReadModel(): RuntimeAgentL
     runtimeAgentId = runtimeAgentId,
     runtimeInfrastructureId = runtimeInfrastructureId,
     agentVersion = agentVersion,
+    runtimeAgentEndpoint = runtimeAgentEndpoint,
+    endpointScope = endpointScope,
     lifecycleStatus = lifecycleStatus,
     bootstrapConfigurationLoaded = bootstrapConfigurationLoaded,
     bootstrapFailureReason = bootstrapFailureReason,
@@ -101,6 +107,8 @@ data class RuntimeAgentLifecycleCatalogReadModel(
     val runtimeAgentId: UUID?,
     val runtimeInfrastructureId: UUID?,
     val agentVersion: String?,
+    val runtimeAgentEndpoint: String?,
+    val endpointScope: String?,
     val lifecycleStatus: String?,
     val bootstrapConfigurationLoaded: Boolean?,
     val bootstrapFailureReason: String?,

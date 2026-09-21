@@ -18,6 +18,8 @@ class ConfiguredLoadRuntimeAgentBootstrapConfigurationAdapterTest {
                 runtimeAgentId = runtimeAgentId.toString(),
                 runtimeInfrastructureId = runtimeInfrastructureId.toString(),
                 agentVersion = "test-agent",
+                runtimeAgentEndpoint = " http://runtime-agent:8082 ",
+                endpointScope = "CLUSTER",
                 enabled = true
             )
         )
@@ -29,6 +31,8 @@ class ConfiguredLoadRuntimeAgentBootstrapConfigurationAdapterTest {
         assertEquals(runtimeAgentId, result.runtimeAgentId)
         assertEquals(runtimeInfrastructureId, result.runtimeInfrastructureId)
         assertEquals("test-agent", result.agentVersion)
+        assertEquals("http://runtime-agent:8082", result.runtimeAgentEndpoint)
+        assertEquals("CLUSTER", result.endpointScope)
         assertTrue(result.bootstrapConfigurationLoaded)
     }
 
@@ -39,6 +43,7 @@ class ConfiguredLoadRuntimeAgentBootstrapConfigurationAdapterTest {
                 runtimeAgentId = runtimeAgentId.toString(),
                 runtimeInfrastructureId = null,
                 agentVersion = "test-agent",
+                runtimeAgentEndpoint = null,
                 enabled = true
             )
         )
@@ -48,6 +53,7 @@ class ConfiguredLoadRuntimeAgentBootstrapConfigurationAdapterTest {
         assertTrue(result is LoadRuntimeAgentBootstrapConfigurationResult.Rejected)
         result as LoadRuntimeAgentBootstrapConfigurationResult.Rejected
         assertTrue(result.failureReason.contains("runtime-agent.bootstrap.runtime-infrastructure-id"))
+        assertTrue(result.failureReason.contains("runtime-agent.bootstrap.runtime-agent-endpoint"))
     }
 
     private fun input(): LoadRuntimeAgentBootstrapConfigurationInput =

@@ -24,11 +24,16 @@ class ReportAgentDatasetMetadataToPlatformProcessor(
         }
 
         val request = RecordRuntimeDatasetMetadataRequest(
+            runtimeDatasetBindingId = event.runtimeDatasetBindingId,
             metadataReportId = event.metadataReportId,
             datasetId = event.datasetId,
             organizationId = event.organizationId,
+            organizationName = event.organizationName,
             runtimeId = event.runtimeId,
+            runtimeName = event.runtimeName,
             featureSchemaId = event.featureSchemaId,
+            featureDomain = event.featureDomain,
+            featureSchemaVersion = event.featureSchemaVersion,
             datasetName = event.datasetName,
             sampleCount = event.sampleCount,
             featureCount = event.featureCount,

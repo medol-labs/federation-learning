@@ -4,6 +4,8 @@ runtime-agent:
     runtime-agent-id: ${RUNTIME_AGENT_ID:}
     runtime-infrastructure-id: ${RUNTIME_INFRASTRUCTURE_ID:}
     agent-version: ${RUNTIME_AGENT_VERSION:local-dev}
+    runtime-agent-endpoint: ${RUNTIME_AGENT_ENDPOINT:http://localhost:8082}
+    endpoint-scope: ${RUNTIME_AGENT_ENDPOINT_SCOPE:LOCAL}
   platform-connection-reporting:
     enabled: ${RUNTIME_AGENT_PLATFORM_CONNECTION_REPORTING_ENABLED:true}
     platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
