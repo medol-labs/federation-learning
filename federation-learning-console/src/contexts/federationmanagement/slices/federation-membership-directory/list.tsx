@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type FederationMembershipDirectoryRecord = {
   federationId: string;
@@ -81,7 +83,19 @@ export const FederationMembershipDirectoryList = () => {
           placeholder: "Enter Federation Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:federation-membership-directory:display:federationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-membership-directory",
+              field: "federationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -95,7 +109,19 @@ export const FederationMembershipDirectoryList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:federation-membership-directory:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-membership-directory",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
         id: "federationName",
@@ -109,7 +135,19 @@ export const FederationMembershipDirectoryList = () => {
           placeholder: "Enter Federation Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:federation-membership-directory:display:federationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-membership-directory",
+              field: "federationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -123,7 +161,19 @@ export const FederationMembershipDirectoryList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:federation-membership-directory:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-membership-directory",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("membershipStatus", {
         id: "membershipStatus",
@@ -137,7 +187,19 @@ export const FederationMembershipDirectoryList = () => {
           placeholder: "Enter Membership Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:federation-membership-directory:display:membershipStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-membership-directory",
+              field: "membershipStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("invitationNote", {
         id: "invitationNote",
@@ -151,7 +213,19 @@ export const FederationMembershipDirectoryList = () => {
           placeholder: "Enter Invitation Note",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:federation-membership-directory:display:invitationNote",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-membership-directory",
+              field: "invitationNote",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("approvalNote", {
         id: "approvalNote",
@@ -165,7 +239,19 @@ export const FederationMembershipDirectoryList = () => {
           placeholder: "Enter Approval Note",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:federation-membership-directory:display:approvalNote",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-membership-directory",
+              field: "approvalNote",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -186,6 +272,12 @@ export const FederationMembershipDirectoryList = () => {
             />
             )}
             <RowActionMenu>
+              {renderSlotExtensions<FederationMembershipDirectoryRecord>(
+                frontendComposition,
+                "row-actions:federation-membership-directory:list",
+                "rowActions.before",
+                { resource: "federation-membership-directory", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "membershipStatus", ["Invited"]) && (
                   <CommandButton
                     variant="ghost"
@@ -251,6 +343,12 @@ export const FederationMembershipDirectoryList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.federationId} size="sm" />
+              {renderSlotExtensions<FederationMembershipDirectoryRecord>(
+                frontendComposition,
+                "row-actions:federation-membership-directory:list",
+                "rowActions.after",
+                { resource: "federation-membership-directory", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -285,7 +383,9 @@ export const FederationMembershipDirectoryList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:federation-membership-directory:list", "toolbar.before", { resource: "federation-membership-directory", table })}
         <CommandButton variant="default" command="inviteParticipant" />
+        {renderSlotExtensions(frontendComposition, "toolbar:federation-membership-directory:list", "toolbar.actions", { resource: "federation-membership-directory", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         <CommandButton variant="destructive" command="removeParticipant" size="sm" />
@@ -295,6 +395,7 @@ export const FederationMembershipDirectoryList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:federation-membership-directory:list", "toolbar.after", { resource: "federation-membership-directory", table })}
       </RefineDataTable>
     </ListView>
   );

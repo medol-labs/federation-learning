@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RuntimeCapabilityCatalogRecord = {
   runtimeId: string;
@@ -78,7 +80,19 @@ export const RuntimeCapabilityCatalogList = () => {
           placeholder: "Enter Runtime Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeCapabilityCatalogRecord>(
+            frontendComposition,
+            "field:runtime-capability-catalog:display:runtimeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-capability-catalog",
+              field: "runtimeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("capabilityTypes", {
         id: "capabilityTypes",
@@ -92,7 +106,19 @@ export const RuntimeCapabilityCatalogList = () => {
           placeholder: "Enter Capability Types",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeCapabilityCatalogRecord>(
+            frontendComposition,
+            "field:runtime-capability-catalog:display:capabilityTypes",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-capability-catalog",
+              field: "capabilityTypes",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("capabilityStatus", {
         id: "capabilityStatus",
@@ -106,7 +132,19 @@ export const RuntimeCapabilityCatalogList = () => {
           placeholder: "Enter Capability Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeCapabilityCatalogRecord>(
+            frontendComposition,
+            "field:runtime-capability-catalog:display:capabilityStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-capability-catalog",
+              field: "capabilityStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("detectedAt", {
         id: "detectedAt",
@@ -121,7 +159,19 @@ export const RuntimeCapabilityCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeCapabilityCatalogRecord>(
+            frontendComposition,
+            "field:runtime-capability-catalog:display:detectedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-capability-catalog",
+              field: "detectedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -129,7 +179,19 @@ export const RuntimeCapabilityCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RuntimeCapabilityCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-capability-catalog:list",
+                "rowActions.before",
+                { resource: "runtime-capability-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeId} size="sm" />
+              {renderSlotExtensions<RuntimeCapabilityCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-capability-catalog:list",
+                "rowActions.after",
+                { resource: "runtime-capability-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -164,6 +226,8 @@ export const RuntimeCapabilityCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-capability-catalog:list", "toolbar.before", { resource: "runtime-capability-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-capability-catalog:list", "toolbar.actions", { resource: "runtime-capability-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -173,6 +237,7 @@ export const RuntimeCapabilityCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-capability-catalog:list", "toolbar.after", { resource: "runtime-capability-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

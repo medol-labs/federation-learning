@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RolePermissionGrantCatalogRecord = {
   roleId: string;
@@ -79,7 +81,19 @@ export const RolePermissionGrantCatalogList = () => {
           placeholder: "Enter Role Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RolePermissionGrantCatalogRecord>(
+            frontendComposition,
+            "field:role-permission-grant-catalog:display:roleId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "role-permission-grant-catalog",
+              field: "roleId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roleCode", {
         id: "roleCode",
@@ -93,7 +107,19 @@ export const RolePermissionGrantCatalogList = () => {
           placeholder: "Enter Role Code",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RolePermissionGrantCatalogRecord>(
+            frontendComposition,
+            "field:role-permission-grant-catalog:display:roleCode",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "role-permission-grant-catalog",
+              field: "roleCode",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roleName", {
         id: "roleName",
@@ -107,7 +133,19 @@ export const RolePermissionGrantCatalogList = () => {
           placeholder: "Enter Role Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RolePermissionGrantCatalogRecord>(
+            frontendComposition,
+            "field:role-permission-grant-catalog:display:roleName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "role-permission-grant-catalog",
+              field: "roleName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("permissionCode", {
         id: "permissionCode",
@@ -121,7 +159,19 @@ export const RolePermissionGrantCatalogList = () => {
           placeholder: "Enter Permission Code",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RolePermissionGrantCatalogRecord>(
+            frontendComposition,
+            "field:role-permission-grant-catalog:display:permissionCode",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "role-permission-grant-catalog",
+              field: "permissionCode",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("permissionName", {
         id: "permissionName",
@@ -135,7 +185,19 @@ export const RolePermissionGrantCatalogList = () => {
           placeholder: "Enter Permission Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RolePermissionGrantCatalogRecord>(
+            frontendComposition,
+            "field:role-permission-grant-catalog:display:permissionName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "role-permission-grant-catalog",
+              field: "permissionName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -143,7 +205,19 @@ export const RolePermissionGrantCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RolePermissionGrantCatalogRecord>(
+                frontendComposition,
+                "row-actions:role-permission-grant-catalog:list",
+                "rowActions.before",
+                { resource: "role-permission-grant-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.roleCode} size="sm" />
+              {renderSlotExtensions<RolePermissionGrantCatalogRecord>(
+                frontendComposition,
+                "row-actions:role-permission-grant-catalog:list",
+                "rowActions.after",
+                { resource: "role-permission-grant-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -178,6 +252,8 @@ export const RolePermissionGrantCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:role-permission-grant-catalog:list", "toolbar.before", { resource: "role-permission-grant-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:role-permission-grant-catalog:list", "toolbar.actions", { resource: "role-permission-grant-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -187,6 +263,7 @@ export const RolePermissionGrantCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:role-permission-grant-catalog:list", "toolbar.after", { resource: "role-permission-grant-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

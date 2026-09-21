@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 import type { OrganizationType } from "@/contexts/domain/value-types";
 
 type OrganizationDirectoryRecord = {
@@ -80,7 +82,19 @@ export const OrganizationDirectoryList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<OrganizationDirectoryRecord>(
+            frontendComposition,
+            "field:organization-directory:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "organization-directory",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -94,7 +108,19 @@ export const OrganizationDirectoryList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<OrganizationDirectoryRecord>(
+            frontendComposition,
+            "field:organization-directory:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "organization-directory",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationType", {
         id: "organizationType",
@@ -116,7 +142,19 @@ export const OrganizationDirectoryList = () => {
             { label: "Rehabilitation Center", value: "REHABILITATION_CENTER" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<OrganizationDirectoryRecord>(
+            frontendComposition,
+            "field:organization-directory:display:organizationType",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "organization-directory",
+              field: "organizationType",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -136,7 +174,19 @@ export const OrganizationDirectoryList = () => {
             { label: "Deactivated", value: "DEACTIVATED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<OrganizationDirectoryRecord>(
+            frontendComposition,
+            "field:organization-directory:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "organization-directory",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("approvedDatasetCount", {
         id: "approvedDatasetCount",
@@ -151,7 +201,19 @@ export const OrganizationDirectoryList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<OrganizationDirectoryRecord>(
+            frontendComposition,
+            "field:organization-directory:display:approvedDatasetCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "organization-directory",
+              field: "approvedDatasetCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -159,6 +221,12 @@ export const OrganizationDirectoryList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<OrganizationDirectoryRecord>(
+                frontendComposition,
+                "row-actions:organization-directory:list",
+                "rowActions.before",
+                { resource: "organization-directory", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "state", ["Registered"]) && (
                   <CommandButton
                     variant="ghost"
@@ -204,6 +272,12 @@ export const OrganizationDirectoryList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.organizationId} size="sm" />
+              {renderSlotExtensions<OrganizationDirectoryRecord>(
+                frontendComposition,
+                "row-actions:organization-directory:list",
+                "rowActions.after",
+                { resource: "organization-directory", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -238,7 +312,9 @@ export const OrganizationDirectoryList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:organization-directory:list", "toolbar.before", { resource: "organization-directory", table })}
         <CommandButton variant="default" command="registerOrganization" />
+        {renderSlotExtensions(frontendComposition, "toolbar:organization-directory:list", "toolbar.actions", { resource: "organization-directory", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -248,6 +324,7 @@ export const OrganizationDirectoryList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:organization-directory:list", "toolbar.after", { resource: "organization-directory", table })}
       </RefineDataTable>
     </ListView>
   );

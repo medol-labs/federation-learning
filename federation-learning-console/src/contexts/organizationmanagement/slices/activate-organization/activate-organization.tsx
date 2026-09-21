@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ActivateOrganizationCommandSchema, type ActivateOrganizationCommandInput } from "@/contexts/domain/schemas";
 
@@ -69,10 +71,15 @@ export const OrganizationDirectoryActivateOrganization = () => {
   });
 
   async function onSubmit(values: ActivateOrganizationCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<ActivateOrganizationCommandInput>(
+      frontendComposition,
+      "behavior:organization-directory:activateOrganization",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as ActivateOrganizationCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/organization-directory");
     return result;
   }

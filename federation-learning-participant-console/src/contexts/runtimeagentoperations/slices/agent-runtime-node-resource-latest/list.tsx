@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type AgentRuntimeNodeResourceLatestRecord = {
   nodeId: string;
@@ -92,7 +94,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           placeholder: "Enter Node Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:nodeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "nodeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
         id: "runtimeAgentId",
@@ -106,7 +120,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           placeholder: "Enter Runtime Agent Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:runtimeAgentId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "runtimeAgentId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
         id: "runtimeInfrastructureId",
@@ -120,7 +146,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           placeholder: "Enter Runtime Infrastructure Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:runtimeInfrastructureId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "runtimeInfrastructureId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeNodeName", {
         id: "runtimeNodeName",
@@ -134,7 +172,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           placeholder: "Enter Runtime Node Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:runtimeNodeName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "runtimeNodeName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nodeReady", {
         id: "nodeReady",
@@ -149,7 +199,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:nodeReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "nodeReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("allocatableCpuCores", {
         id: "allocatableCpuCores",
@@ -164,7 +226,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:allocatableCpuCores",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "allocatableCpuCores",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("allocatableMemoryGb", {
         id: "allocatableMemoryGb",
@@ -179,7 +253,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:allocatableMemoryGb",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "allocatableMemoryGb",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("allocatableGpuCount", {
         id: "allocatableGpuCount",
@@ -194,7 +280,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:allocatableGpuCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "allocatableGpuCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("allocatedCpuCores", {
         id: "allocatedCpuCores",
@@ -209,7 +307,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:allocatedCpuCores",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "allocatedCpuCores",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("allocatedMemoryGb", {
         id: "allocatedMemoryGb",
@@ -224,7 +334,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:allocatedMemoryGb",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "allocatedMemoryGb",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("allocatedGpuCount", {
         id: "allocatedGpuCount",
@@ -239,7 +361,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:allocatedGpuCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "allocatedGpuCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableCpuCores", {
         id: "availableCpuCores",
@@ -254,7 +388,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:availableCpuCores",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "availableCpuCores",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableMemoryGb", {
         id: "availableMemoryGb",
@@ -269,7 +415,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:availableMemoryGb",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "availableMemoryGb",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableGpuCount", {
         id: "availableGpuCount",
@@ -284,7 +442,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:availableGpuCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "availableGpuCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runningWorkloadCount", {
         id: "runningWorkloadCount",
@@ -299,7 +469,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:runningWorkloadCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "runningWorkloadCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("workloadCapacity", {
         id: "workloadCapacity",
@@ -314,7 +496,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:workloadCapacity",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "workloadCapacity",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("observedAt", {
         id: "observedAt",
@@ -329,7 +523,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:observedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "observedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("telemetryRetentionPolicy", {
         id: "telemetryRetentionPolicy",
@@ -343,7 +549,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           placeholder: "Enter Telemetry Retention Policy",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeResourceLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-resource-latest:display:telemetryRetentionPolicy",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-resource-latest",
+              field: "telemetryRetentionPolicy",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -351,7 +569,19 @@ export const AgentRuntimeNodeResourceLatestList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<AgentRuntimeNodeResourceLatestRecord>(
+                frontendComposition,
+                "row-actions:agent-runtime-node-resource-latest:list",
+                "rowActions.before",
+                { resource: "agent-runtime-node-resource-latest", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.nodeId} size="sm" />
+              {renderSlotExtensions<AgentRuntimeNodeResourceLatestRecord>(
+                frontendComposition,
+                "row-actions:agent-runtime-node-resource-latest:list",
+                "rowActions.after",
+                { resource: "agent-runtime-node-resource-latest", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -386,6 +616,8 @@ export const AgentRuntimeNodeResourceLatestList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-node-resource-latest:list", "toolbar.before", { resource: "agent-runtime-node-resource-latest", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-node-resource-latest:list", "toolbar.actions", { resource: "agent-runtime-node-resource-latest", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -395,6 +627,7 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-node-resource-latest:list", "toolbar.after", { resource: "agent-runtime-node-resource-latest", table })}
       </RefineDataTable>
     </ListView>
   );

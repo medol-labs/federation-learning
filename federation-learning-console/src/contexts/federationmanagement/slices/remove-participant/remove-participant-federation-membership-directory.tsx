@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RemoveParticipantCommandSchema, type RemoveParticipantCommandInput } from "@/contexts/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
@@ -72,10 +74,15 @@ export const FederationMembershipDirectoryRemoveParticipant = () => {
   });
 
   async function onSubmit(values: RemoveParticipantCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<RemoveParticipantCommandInput>(
+      frontendComposition,
+      "behavior:federation-membership-directory:removeParticipant",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as RemoveParticipantCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/federation-membership-directory");
     return result;
   }

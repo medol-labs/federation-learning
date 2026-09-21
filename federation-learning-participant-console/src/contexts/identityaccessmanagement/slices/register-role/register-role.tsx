@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterRoleCommandSchema, type RegisterRoleCommandInput } from "@/contexts/domain/schemas";
 
@@ -69,10 +71,15 @@ export const RoleCatalogRegisterRole = () => {
   });
 
   async function onSubmit(values: RegisterRoleCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<RegisterRoleCommandInput>(
+      frontendComposition,
+      "behavior:role-catalog:registerRole",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as RegisterRoleCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/role-catalog");
     return result;
   }

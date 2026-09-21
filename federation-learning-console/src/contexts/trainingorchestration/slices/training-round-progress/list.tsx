@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 import type { TrainingRoundParticipant } from "@/contexts/domain/value-types";
 
 type TrainingRoundProgressRecord = {
@@ -125,7 +127,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Training Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:trainingJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "trainingJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingRunConfigurationId", {
         id: "trainingRunConfigurationId",
@@ -139,7 +153,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Training Run Configuration Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:trainingRunConfigurationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "trainingRunConfigurationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -153,7 +179,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundId", {
         id: "roundId",
@@ -167,7 +205,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Round Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:roundId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "roundId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobObjective", {
         id: "trainingJobObjective",
@@ -181,7 +231,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Training Job Objective",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:trainingJobObjective",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "trainingJobObjective",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
         id: "featureDomain",
@@ -195,7 +257,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
         id: "featureSchemaVersion",
@@ -209,7 +283,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Feature Schema Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:featureSchemaVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "featureSchemaVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundNumber", {
         id: "roundNumber",
@@ -224,7 +310,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:roundNumber",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "roundNumber",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -248,7 +346,19 @@ export const TrainingRoundProgressList = () => {
             { label: "Failed", value: "FAILED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectedOrganizationIds", {
         id: "selectedOrganizationIds",
@@ -262,7 +372,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Selected Organization Ids",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:selectedOrganizationIds",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "selectedOrganizationIds",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectedParticipants", {
         id: "selectedParticipants",
@@ -276,7 +398,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "[\n  {\n    \"organizationId\": \"\",\n    \"runtimeId\": \"\",\n    \"datasetId\": \"\"\n  }\n]",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:selectedParticipants",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "selectedParticipants",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectedOrganizationCount", {
         id: "selectedOrganizationCount",
@@ -291,7 +425,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:selectedOrganizationCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "selectedOrganizationCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectedRuntimeCount", {
         id: "selectedRuntimeCount",
@@ -306,7 +452,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:selectedRuntimeCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "selectedRuntimeCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("targetRuntimeCount", {
         id: "targetRuntimeCount",
@@ -321,7 +479,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:targetRuntimeCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "targetRuntimeCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("executionPlanDispatchedCount", {
         id: "executionPlanDispatchedCount",
@@ -336,7 +506,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:executionPlanDispatchedCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "executionPlanDispatchedCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundExecutionStartedCount", {
         id: "roundExecutionStartedCount",
@@ -351,7 +533,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:roundExecutionStartedCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "roundExecutionStartedCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("submittedModelUpdateCount", {
         id: "submittedModelUpdateCount",
@@ -366,7 +560,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:submittedModelUpdateCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "submittedModelUpdateCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("rejectedUpdateCount", {
         id: "rejectedUpdateCount",
@@ -381,7 +587,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:rejectedUpdateCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "rejectedUpdateCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("acceptedModelUpdateCount", {
         id: "acceptedModelUpdateCount",
@@ -396,7 +614,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:acceptedModelUpdateCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "acceptedModelUpdateCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("acceptedUpdateCount", {
         id: "acceptedUpdateCount",
@@ -411,7 +641,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:acceptedUpdateCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "acceptedUpdateCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("pendingUpdateCount", {
         id: "pendingUpdateCount",
@@ -426,7 +668,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:pendingUpdateCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "pendingUpdateCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("failedRoundExecutionCount", {
         id: "failedRoundExecutionCount",
@@ -441,7 +695,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:failedRoundExecutionCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "failedRoundExecutionCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("completedRoundExecutionCount", {
         id: "completedRoundExecutionCount",
@@ -456,7 +722,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:completedRoundExecutionCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "completedRoundExecutionCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("retriedRoundExecutionCount", {
         id: "retriedRoundExecutionCount",
@@ -471,7 +749,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:retriedRoundExecutionCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "retriedRoundExecutionCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("failedRoundExecutionRetryCount", {
         id: "failedRoundExecutionRetryCount",
@@ -486,7 +776,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:failedRoundExecutionRetryCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "failedRoundExecutionRetryCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("quorumMet", {
         id: "quorumMet",
@@ -501,7 +803,19 @@ export const TrainingRoundProgressList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:quorumMet",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "quorumMet",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("quorumStatus", {
         id: "quorumStatus",
@@ -515,7 +829,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Quorum Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:quorumStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "quorumStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumNodesPerRound", {
         id: "minimumNodesPerRound",
@@ -530,7 +856,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:minimumNodesPerRound",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "minimumNodesPerRound",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("aggregationReady", {
         id: "aggregationReady",
@@ -545,7 +883,19 @@ export const TrainingRoundProgressList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:aggregationReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "aggregationReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("secureAggregationRequired", {
         id: "secureAggregationRequired",
@@ -560,7 +910,19 @@ export const TrainingRoundProgressList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:secureAggregationRequired",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "secureAggregationRequired",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("secureAggregationStatus", {
         id: "secureAggregationStatus",
@@ -574,7 +936,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Secure Aggregation Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:secureAggregationStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "secureAggregationStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("evaluationComplete", {
         id: "evaluationComplete",
@@ -589,7 +963,19 @@ export const TrainingRoundProgressList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:evaluationComplete",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "evaluationComplete",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("progressPercent", {
         id: "progressPercent",
@@ -604,7 +990,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:progressPercent",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "progressPercent",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("currentPhase", {
         id: "currentPhase",
@@ -618,7 +1016,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Current Phase",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:currentPhase",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "currentPhase",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nextAction", {
         id: "nextAction",
@@ -632,7 +1042,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Next Action",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:nextAction",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "nextAction",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("blockedReason", {
         id: "blockedReason",
@@ -646,7 +1068,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Blocked Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:blockedReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "blockedReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("delayedReason", {
         id: "delayedReason",
@@ -660,7 +1094,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Delayed Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:delayedReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "delayedReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundStartedAt", {
         id: "roundStartedAt",
@@ -675,7 +1121,19 @@ export const TrainingRoundProgressList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:roundStartedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "roundStartedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("contributionDeadlineAt", {
         id: "contributionDeadlineAt",
@@ -690,7 +1148,19 @@ export const TrainingRoundProgressList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:contributionDeadlineAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "contributionDeadlineAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("aggregationStartedAt", {
         id: "aggregationStartedAt",
@@ -705,7 +1175,19 @@ export const TrainingRoundProgressList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:aggregationStartedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "aggregationStartedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("evaluationSubmittedAt", {
         id: "evaluationSubmittedAt",
@@ -720,7 +1202,19 @@ export const TrainingRoundProgressList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:evaluationSubmittedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "evaluationSubmittedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("completedAt", {
         id: "completedAt",
@@ -735,7 +1229,19 @@ export const TrainingRoundProgressList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:completedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "completedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("failedAt", {
         id: "failedAt",
@@ -750,7 +1256,19 @@ export const TrainingRoundProgressList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:failedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "failedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("baseModelId", {
         id: "baseModelId",
@@ -764,7 +1282,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Base Model Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:baseModelId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "baseModelId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("artifactRefs", {
         id: "artifactRefs",
@@ -778,7 +1308,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Artifact Refs",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:artifactRefs",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "artifactRefs",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("rejectedUpdateReasons", {
         id: "rejectedUpdateReasons",
@@ -792,7 +1334,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Rejected Update Reasons",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:rejectedUpdateReasons",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "rejectedUpdateReasons",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("aggregatedModelId", {
         id: "aggregatedModelId",
@@ -806,7 +1360,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Aggregated Model Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:aggregatedModelId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "aggregatedModelId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("globalAccuracy", {
         id: "globalAccuracy",
@@ -821,7 +1387,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:globalAccuracy",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "globalAccuracy",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("globalFairnessScore", {
         id: "globalFairnessScore",
@@ -836,7 +1414,19 @@ export const TrainingRoundProgressList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:globalFairnessScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "globalFairnessScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("failureReason", {
         id: "failureReason",
@@ -850,7 +1440,19 @@ export const TrainingRoundProgressList = () => {
           placeholder: "Enter Failure Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRoundProgressRecord>(
+            frontendComposition,
+            "field:training-round-progress:display:failureReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-round-progress",
+              field: "failureReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -866,6 +1468,12 @@ export const TrainingRoundProgressList = () => {
             />
             )}
             <RowActionMenu>
+              {renderSlotExtensions<TrainingRoundProgressRecord>(
+                frontendComposition,
+                "row-actions:training-round-progress:list",
+                "rowActions.before",
+                { resource: "training-round-progress", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "", []) && (
                   <CommandButton
                     variant="ghost"
@@ -906,6 +1514,12 @@ export const TrainingRoundProgressList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.trainingJobId} size="sm" />
+              {renderSlotExtensions<TrainingRoundProgressRecord>(
+                frontendComposition,
+                "row-actions:training-round-progress:list",
+                "rowActions.after",
+                { resource: "training-round-progress", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -940,6 +1554,8 @@ export const TrainingRoundProgressList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:training-round-progress:list", "toolbar.before", { resource: "training-round-progress", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:training-round-progress:list", "toolbar.actions", { resource: "training-round-progress", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         <CommandButton variant="destructive" command="cancelTrainingJob" size="sm" />
@@ -949,6 +1565,7 @@ export const TrainingRoundProgressList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:training-round-progress:list", "toolbar.after", { resource: "training-round-progress", table })}
       </RefineDataTable>
     </ListView>
   );

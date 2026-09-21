@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 
 type RuntimeInfrastructureAccessViewRecord = {
@@ -100,7 +102,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Runtime Infrastructure Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:runtimeInfrastructureId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "runtimeInfrastructureId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -114,7 +128,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInstallationPlanId", {
         id: "runtimeInstallationPlanId",
@@ -128,7 +154,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Runtime Installation Plan Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:runtimeInstallationPlanId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "runtimeInstallationPlanId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageId", {
         id: "runtimeInfrastructurePackageId",
@@ -142,7 +180,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Runtime Infrastructure Package Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:runtimeInfrastructurePackageId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "runtimeInfrastructurePackageId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageName", {
         id: "runtimeInfrastructurePackageName",
@@ -156,7 +206,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Runtime Infrastructure Package Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:runtimeInfrastructurePackageName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "runtimeInfrastructurePackageName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageVersion", {
         id: "runtimeInfrastructurePackageVersion",
@@ -170,7 +232,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Runtime Infrastructure Package Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:runtimeInfrastructurePackageVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "runtimeInfrastructurePackageVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -184,7 +258,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
         id: "runtimeName",
@@ -198,7 +284,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Runtime Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:runtimeName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "runtimeName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEnvironmentType", {
         id: "runtimeEnvironmentType",
@@ -212,7 +310,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Runtime Environment Type",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:runtimeEnvironmentType",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "runtimeEnvironmentType",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("agentInstallMode", {
         id: "agentInstallMode",
@@ -226,7 +336,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Agent Install Mode",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:agentInstallMode",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "agentInstallMode",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("expectedNodeCount", {
         id: "expectedNodeCount",
@@ -241,7 +363,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:expectedNodeCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "expectedNodeCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
         id: "runtimeAgentId",
@@ -255,7 +389,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Runtime Agent Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:runtimeAgentId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "runtimeAgentId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentVersion", {
         id: "runtimeAgentVersion",
@@ -269,7 +415,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           placeholder: "Enter Runtime Agent Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:runtimeAgentVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "runtimeAgentVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("infrastructurePreparedAt", {
         id: "infrastructurePreparedAt",
@@ -284,7 +442,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:infrastructurePreparedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "infrastructurePreparedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("preparedNodeCount", {
         id: "preparedNodeCount",
@@ -299,7 +469,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:preparedNodeCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "preparedNodeCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("infrastructureVerifiedAt", {
         id: "infrastructureVerifiedAt",
@@ -314,7 +496,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:infrastructureVerifiedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "infrastructureVerifiedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("infrastructureVerificationFailedAt", {
         id: "infrastructureVerificationFailedAt",
@@ -329,7 +523,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:infrastructureVerificationFailedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "infrastructureVerificationFailedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("infrastructureVerificationFailureReason", {
         id: "infrastructureVerificationFailureReason",
@@ -344,7 +550,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:infrastructureVerificationFailureReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "infrastructureVerificationFailureReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("agentReadyAt", {
         id: "agentReadyAt",
@@ -359,7 +577,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:agentReadyAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "agentReadyAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("agentDeploymentFailedAt", {
         id: "agentDeploymentFailedAt",
@@ -374,7 +604,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:agentDeploymentFailedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "agentDeploymentFailedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("agentDeploymentFailureReason", {
         id: "agentDeploymentFailureReason",
@@ -389,7 +631,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:agentDeploymentFailureReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "agentDeploymentFailureReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("agentDeploymentRetryFailedAt", {
         id: "agentDeploymentRetryFailedAt",
@@ -404,7 +658,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:agentDeploymentRetryFailedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "agentDeploymentRetryFailedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("agentDeploymentRetryFailureReason", {
         id: "agentDeploymentRetryFailureReason",
@@ -419,7 +685,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:agentDeploymentRetryFailureReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "agentDeploymentRetryFailureReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("connectedAt", {
         id: "connectedAt",
@@ -434,7 +712,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:connectedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "connectedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -460,7 +750,19 @@ export const RuntimeInfrastructureAccessViewList = () => {
             { label: "Connected", value: "CONNECTED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructureAccessViewRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-access-view:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-access-view",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -468,6 +770,12 @@ export const RuntimeInfrastructureAccessViewList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RuntimeInfrastructureAccessViewRecord>(
+                frontendComposition,
+                "row-actions:runtime-infrastructure-access-view:list",
+                "rowActions.before",
+                { resource: "runtime-infrastructure-access-view", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "state", ["Planned"]) && (
                   <CommandButton
                     variant="ghost"
@@ -513,6 +821,12 @@ export const RuntimeInfrastructureAccessViewList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeInfrastructureId} size="sm" />
+              {renderSlotExtensions<RuntimeInfrastructureAccessViewRecord>(
+                frontendComposition,
+                "row-actions:runtime-infrastructure-access-view:list",
+                "rowActions.after",
+                { resource: "runtime-infrastructure-access-view", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -547,6 +861,8 @@ export const RuntimeInfrastructureAccessViewList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-infrastructure-access-view:list", "toolbar.before", { resource: "runtime-infrastructure-access-view", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-infrastructure-access-view:list", "toolbar.actions", { resource: "runtime-infrastructure-access-view", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -556,6 +872,7 @@ export const RuntimeInfrastructureAccessViewList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-infrastructure-access-view:list", "toolbar.after", { resource: "runtime-infrastructure-access-view", table })}
       </RefineDataTable>
     </ListView>
   );

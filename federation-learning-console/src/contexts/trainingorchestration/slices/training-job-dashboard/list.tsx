@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type TrainingJobDashboardRecord = {
   trainingJobId: string;
@@ -105,7 +107,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Training Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:trainingJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "trainingJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationId", {
         id: "federationId",
@@ -119,7 +133,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Federation Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:federationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "federationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingRunConfigurationId", {
         id: "trainingRunConfigurationId",
@@ -133,7 +159,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Training Run Configuration Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:trainingRunConfigurationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "trainingRunConfigurationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -147,7 +185,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
         id: "federationName",
@@ -161,7 +211,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Federation Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:federationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "federationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
         id: "featureDomain",
@@ -175,7 +237,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
         id: "featureSchemaVersion",
@@ -189,7 +263,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Feature Schema Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:featureSchemaVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "featureSchemaVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("objective", {
         id: "objective",
@@ -203,7 +289,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Objective",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:objective",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "objective",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("strategyName", {
         id: "strategyName",
@@ -217,7 +315,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Strategy Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:strategyName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "strategyName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("aggregationAlgorithm", {
         id: "aggregationAlgorithm",
@@ -231,7 +341,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Aggregation Algorithm",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:aggregationAlgorithm",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "aggregationAlgorithm",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("secureAggregationRequired", {
         id: "secureAggregationRequired",
@@ -246,7 +368,19 @@ export const TrainingJobDashboardList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:secureAggregationRequired",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "secureAggregationRequired",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -269,7 +403,19 @@ export const TrainingJobDashboardList = () => {
             { label: "Completed", value: "COMPLETED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("workflowStage", {
         id: "workflowStage",
@@ -283,7 +429,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Workflow Stage",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:workflowStage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "workflowStage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("workflowStep", {
         id: "workflowStep",
@@ -298,7 +456,19 @@ export const TrainingJobDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:workflowStep",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "workflowStep",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nextAction", {
         id: "nextAction",
@@ -312,7 +482,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Next Action",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:nextAction",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "nextAction",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableActions", {
         id: "availableActions",
@@ -326,7 +508,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Available Actions",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:availableActions",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "availableActions",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("blockedReason", {
         id: "blockedReason",
@@ -340,7 +534,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Blocked Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:blockedReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "blockedReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("canSubmit", {
         id: "canSubmit",
@@ -355,7 +561,19 @@ export const TrainingJobDashboardList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:canSubmit",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "canSubmit",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canStartRound", {
         id: "canStartRound",
@@ -370,7 +588,19 @@ export const TrainingJobDashboardList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:canStartRound",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "canStartRound",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canPause", {
         id: "canPause",
@@ -385,7 +615,19 @@ export const TrainingJobDashboardList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:canPause",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "canPause",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canResume", {
         id: "canResume",
@@ -400,7 +642,19 @@ export const TrainingJobDashboardList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:canResume",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "canResume",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canCancel", {
         id: "canCancel",
@@ -415,7 +669,19 @@ export const TrainingJobDashboardList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:canCancel",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "canCancel",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canComplete", {
         id: "canComplete",
@@ -430,7 +696,19 @@ export const TrainingJobDashboardList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:canComplete",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "canComplete",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("currentRoundNumber", {
         id: "currentRoundNumber",
@@ -445,7 +723,19 @@ export const TrainingJobDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:currentRoundNumber",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "currentRoundNumber",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("startedRuntimeCount", {
         id: "startedRuntimeCount",
@@ -460,7 +750,19 @@ export const TrainingJobDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:startedRuntimeCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "startedRuntimeCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumNodesPerRound", {
         id: "minimumNodesPerRound",
@@ -475,7 +777,19 @@ export const TrainingJobDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:minimumNodesPerRound",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "minimumNodesPerRound",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("maxRounds", {
         id: "maxRounds",
@@ -490,7 +804,19 @@ export const TrainingJobDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:maxRounds",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "maxRounds",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundProgressPercent", {
         id: "roundProgressPercent",
@@ -505,7 +831,19 @@ export const TrainingJobDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:roundProgressPercent",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "roundProgressPercent",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("globalAccuracy", {
         id: "globalAccuracy",
@@ -520,7 +858,19 @@ export const TrainingJobDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:globalAccuracy",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "globalAccuracy",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("finalModelId", {
         id: "finalModelId",
@@ -534,7 +884,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Final Model Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:finalModelId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "finalModelId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("stopReason", {
         id: "stopReason",
@@ -548,7 +910,19 @@ export const TrainingJobDashboardList = () => {
           placeholder: "Enter Stop Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:stopReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "stopReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -564,6 +938,12 @@ export const TrainingJobDashboardList = () => {
             />
             )}
             <RowActionMenu>
+              {renderSlotExtensions<TrainingJobDashboardRecord>(
+                frontendComposition,
+                "row-actions:training-job-dashboard:list",
+                "rowActions.before",
+                { resource: "training-job-dashboard", record: row.original },
+              )}
                 {isCommandVisible(row.original, "canSubmit", "state", ["Draft"]) && (
                   <CommandButton
                     variant="ghost"
@@ -597,6 +977,12 @@ export const TrainingJobDashboardList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.trainingJobId} size="sm" />
+              {renderSlotExtensions<TrainingJobDashboardRecord>(
+                frontendComposition,
+                "row-actions:training-job-dashboard:list",
+                "rowActions.after",
+                { resource: "training-job-dashboard", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -631,7 +1017,9 @@ export const TrainingJobDashboardList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:training-job-dashboard:list", "toolbar.before", { resource: "training-job-dashboard", table })}
         <CommandButton variant="default" command="createTrainingJob" />
+        {renderSlotExtensions(frontendComposition, "toolbar:training-job-dashboard:list", "toolbar.actions", { resource: "training-job-dashboard", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         <CommandButton variant="destructive" command="cancelTrainingJob" size="sm" />
@@ -641,6 +1029,7 @@ export const TrainingJobDashboardList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:training-job-dashboard:list", "toolbar.after", { resource: "training-job-dashboard", table })}
       </RefineDataTable>
     </ListView>
   );

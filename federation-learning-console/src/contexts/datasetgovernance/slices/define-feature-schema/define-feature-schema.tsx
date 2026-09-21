@@ -10,6 +10,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -29,6 +30,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DefineFeatureSchemaCommandSchema, type DefineFeatureSchemaCommandInput } from "@/contexts/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
@@ -177,10 +179,15 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
   });
 
   async function onSubmit(values: DefineFeatureSchemaCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<DefineFeatureSchemaCommandInput>(
+      frontendComposition,
+      "behavior:feature-schema-catalog:defineFeatureSchema",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as DefineFeatureSchemaCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/feature-schema-catalog");
     return result;
   }

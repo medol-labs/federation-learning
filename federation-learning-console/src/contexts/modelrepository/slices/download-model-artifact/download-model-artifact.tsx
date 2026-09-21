@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DownloadModelArtifactCommandSchema, type DownloadModelArtifactCommandInput } from "@/contexts/domain/schemas";
 
@@ -70,10 +72,15 @@ export const ModelArtifactCatalogDownloadModelArtifact = () => {
   });
 
   async function onSubmit(values: DownloadModelArtifactCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<DownloadModelArtifactCommandInput>(
+      frontendComposition,
+      "behavior:model-artifact-catalog:downloadModelArtifact",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as DownloadModelArtifactCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/model-artifact-catalog");
     return result;
   }

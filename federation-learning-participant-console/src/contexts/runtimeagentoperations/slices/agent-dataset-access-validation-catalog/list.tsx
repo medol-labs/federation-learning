@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type AgentDatasetAccessValidationCatalogRecord = {
   datasetAccessValidationId: string;
@@ -91,7 +93,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Dataset Access Validation Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:datasetAccessValidationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "datasetAccessValidationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeDatasetBindingId", {
         id: "runtimeDatasetBindingId",
@@ -105,7 +119,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Runtime Dataset Binding Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:runtimeDatasetBindingId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "runtimeDatasetBindingId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetId", {
         id: "datasetId",
@@ -119,7 +145,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Dataset Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:datasetId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "datasetId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -133,7 +171,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -147,7 +197,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -161,7 +223,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
         id: "featureDomain",
@@ -175,7 +249,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
         id: "featureSchemaVersion",
@@ -189,7 +275,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Feature Schema Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:featureSchemaVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "featureSchemaVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
         id: "runtimeId",
@@ -203,7 +301,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Runtime Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:runtimeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "runtimeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetName", {
         id: "datasetName",
@@ -217,7 +327,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Dataset Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:datasetName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "datasetName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
         id: "runtimeName",
@@ -231,7 +353,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Runtime Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:runtimeName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "runtimeName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("readable", {
         id: "readable",
@@ -246,7 +380,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:readable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "readable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("schemaReadable", {
         id: "schemaReadable",
@@ -261,7 +407,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:schemaReadable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "schemaReadable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("sampleBatchReadable", {
         id: "sampleBatchReadable",
@@ -276,7 +434,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:sampleBatchReadable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "sampleBatchReadable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("validationStatus", {
         id: "validationStatus",
@@ -290,7 +460,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Validation Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:validationStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "validationStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("failureReason", {
         id: "failureReason",
@@ -304,7 +486,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           placeholder: "Enter Failure Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:failureReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "failureReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("validatedAt", {
         id: "validatedAt",
@@ -319,7 +513,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentDatasetAccessValidationCatalogRecord>(
+            frontendComposition,
+            "field:agent-dataset-access-validation-catalog:display:validatedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-dataset-access-validation-catalog",
+              field: "validatedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -327,7 +533,19 @@ export const AgentDatasetAccessValidationCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<AgentDatasetAccessValidationCatalogRecord>(
+                frontendComposition,
+                "row-actions:agent-dataset-access-validation-catalog:list",
+                "rowActions.before",
+                { resource: "agent-dataset-access-validation-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.datasetAccessValidationId} size="sm" />
+              {renderSlotExtensions<AgentDatasetAccessValidationCatalogRecord>(
+                frontendComposition,
+                "row-actions:agent-dataset-access-validation-catalog:list",
+                "rowActions.after",
+                { resource: "agent-dataset-access-validation-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -362,6 +580,8 @@ export const AgentDatasetAccessValidationCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-dataset-access-validation-catalog:list", "toolbar.before", { resource: "agent-dataset-access-validation-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-dataset-access-validation-catalog:list", "toolbar.actions", { resource: "agent-dataset-access-validation-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -371,6 +591,7 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-dataset-access-validation-catalog:list", "toolbar.after", { resource: "agent-dataset-access-validation-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

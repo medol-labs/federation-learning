@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ConfirmRuntimeInfrastructurePreparedCommandSchema, type ConfirmRuntimeInfrastructurePreparedCommandInput } from "@/contexts/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
@@ -80,10 +82,15 @@ export const RuntimeInstallationGuideConfirmRuntimeInfrastructurePrepared = () =
   });
 
   async function onSubmit(values: ConfirmRuntimeInfrastructurePreparedCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<ConfirmRuntimeInfrastructurePreparedCommandInput>(
+      frontendComposition,
+      "behavior:runtime-installation-guide:confirmRuntimeInfrastructurePrepared",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as ConfirmRuntimeInfrastructurePreparedCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/runtime-installation-guide");
     return result;
   }

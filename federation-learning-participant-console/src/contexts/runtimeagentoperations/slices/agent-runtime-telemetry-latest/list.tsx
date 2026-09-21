@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type AgentRuntimeTelemetryLatestRecord = {
   nodeId: string;
@@ -84,7 +86,19 @@ export const AgentRuntimeTelemetryLatestList = () => {
           placeholder: "Enter Node Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-telemetry-latest:display:nodeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-telemetry-latest",
+              field: "nodeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
         id: "runtimeAgentId",
@@ -98,7 +112,19 @@ export const AgentRuntimeTelemetryLatestList = () => {
           placeholder: "Enter Runtime Agent Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-telemetry-latest:display:runtimeAgentId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-telemetry-latest",
+              field: "runtimeAgentId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationId", {
         id: "federationId",
@@ -112,7 +138,19 @@ export const AgentRuntimeTelemetryLatestList = () => {
           placeholder: "Enter Federation Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-telemetry-latest:display:federationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-telemetry-latest",
+              field: "federationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
         id: "trainingJobId",
@@ -126,7 +164,19 @@ export const AgentRuntimeTelemetryLatestList = () => {
           placeholder: "Enter Training Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-telemetry-latest:display:trainingJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-telemetry-latest",
+              field: "trainingJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundExecutionId", {
         id: "roundExecutionId",
@@ -140,7 +190,19 @@ export const AgentRuntimeTelemetryLatestList = () => {
           placeholder: "Enter Round Execution Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-telemetry-latest:display:roundExecutionId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-telemetry-latest",
+              field: "roundExecutionId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("cpuLoad", {
         id: "cpuLoad",
@@ -155,7 +217,19 @@ export const AgentRuntimeTelemetryLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-telemetry-latest:display:cpuLoad",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-telemetry-latest",
+              field: "cpuLoad",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("gpuLoad", {
         id: "gpuLoad",
@@ -170,7 +244,19 @@ export const AgentRuntimeTelemetryLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-telemetry-latest:display:gpuLoad",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-telemetry-latest",
+              field: "gpuLoad",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("memoryLoad", {
         id: "memoryLoad",
@@ -185,7 +271,19 @@ export const AgentRuntimeTelemetryLatestList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-telemetry-latest:display:memoryLoad",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-telemetry-latest",
+              field: "memoryLoad",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lastHeartbeatAt", {
         id: "lastHeartbeatAt",
@@ -200,7 +298,19 @@ export const AgentRuntimeTelemetryLatestList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-telemetry-latest:display:lastHeartbeatAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-telemetry-latest",
+              field: "lastHeartbeatAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("telemetryRetentionPolicy", {
         id: "telemetryRetentionPolicy",
@@ -214,7 +324,19 @@ export const AgentRuntimeTelemetryLatestList = () => {
           placeholder: "Enter Telemetry Retention Policy",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:agent-runtime-telemetry-latest:display:telemetryRetentionPolicy",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-telemetry-latest",
+              field: "telemetryRetentionPolicy",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -222,7 +344,19 @@ export const AgentRuntimeTelemetryLatestList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<AgentRuntimeTelemetryLatestRecord>(
+                frontendComposition,
+                "row-actions:agent-runtime-telemetry-latest:list",
+                "rowActions.before",
+                { resource: "agent-runtime-telemetry-latest", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.nodeId} size="sm" />
+              {renderSlotExtensions<AgentRuntimeTelemetryLatestRecord>(
+                frontendComposition,
+                "row-actions:agent-runtime-telemetry-latest:list",
+                "rowActions.after",
+                { resource: "agent-runtime-telemetry-latest", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -257,6 +391,8 @@ export const AgentRuntimeTelemetryLatestList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-telemetry-latest:list", "toolbar.before", { resource: "agent-runtime-telemetry-latest", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-telemetry-latest:list", "toolbar.actions", { resource: "agent-runtime-telemetry-latest", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -266,6 +402,7 @@ export const AgentRuntimeTelemetryLatestList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-telemetry-latest:list", "toolbar.after", { resource: "agent-runtime-telemetry-latest", table })}
       </RefineDataTable>
     </ListView>
   );

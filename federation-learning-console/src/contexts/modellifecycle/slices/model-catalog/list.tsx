@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type ModelCatalogRecord = {
   modelId: string;
@@ -101,7 +103,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Model Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:modelId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "modelId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
         id: "trainingJobId",
@@ -115,7 +129,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Training Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:trainingJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "trainingJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("finalRoundId", {
         id: "finalRoundId",
@@ -129,7 +155,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Final Round Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:finalRoundId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "finalRoundId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelArtifactId", {
         id: "modelArtifactId",
@@ -143,7 +181,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Model Artifact Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:modelArtifactId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "modelArtifactId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobObjective", {
         id: "trainingJobObjective",
@@ -157,7 +207,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Training Job Objective",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:trainingJobObjective",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "trainingJobObjective",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelArtifactDigest", {
         id: "modelArtifactDigest",
@@ -171,7 +233,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Model Artifact Digest",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:modelArtifactDigest",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "modelArtifactDigest",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("evaluationReportId", {
         id: "evaluationReportId",
@@ -185,7 +259,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Evaluation Report Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:evaluationReportId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "evaluationReportId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("finalGlobalAccuracy", {
         id: "finalGlobalAccuracy",
@@ -200,7 +286,19 @@ export const ModelCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:finalGlobalAccuracy",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "finalGlobalAccuracy",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -223,7 +321,19 @@ export const ModelCatalogList = () => {
             { label: "Retired", value: "RETIRED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("releaseChannel", {
         id: "releaseChannel",
@@ -237,7 +347,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Release Channel",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:releaseChannel",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "releaseChannel",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("productionStage", {
         id: "productionStage",
@@ -251,7 +373,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Production Stage",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:productionStage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "productionStage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("previousModelId", {
         id: "previousModelId",
@@ -265,7 +399,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Previous Model Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:previousModelId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "previousModelId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("experimentId", {
         id: "experimentId",
@@ -279,7 +425,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Experiment Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:experimentId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "experimentId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("hyperparameterSnapshotId", {
         id: "hyperparameterSnapshotId",
@@ -293,7 +451,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Hyperparameter Snapshot Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:hyperparameterSnapshotId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "hyperparameterSnapshotId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("reproducibilityManifestId", {
         id: "reproducibilityManifestId",
@@ -307,7 +477,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Reproducibility Manifest Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:reproducibilityManifestId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "reproducibilityManifestId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelCardId", {
         id: "modelCardId",
@@ -321,7 +503,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Model Card Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:modelCardId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "modelCardId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("baselineModelId", {
         id: "baselineModelId",
@@ -335,7 +529,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Baseline Model Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:baselineModelId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "baselineModelId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("hasEvaluationPackage", {
         id: "hasEvaluationPackage",
@@ -350,7 +556,19 @@ export const ModelCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:hasEvaluationPackage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "hasEvaluationPackage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("approvalStatus", {
         id: "approvalStatus",
@@ -364,7 +582,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Approval Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:approvalStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "approvalStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("releaseStatus", {
         id: "releaseStatus",
@@ -378,7 +608,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Release Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:releaseStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "releaseStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("isProduction", {
         id: "isProduction",
@@ -393,7 +635,19 @@ export const ModelCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:isProduction",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "isProduction",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canRecordEvaluationPackage", {
         id: "canRecordEvaluationPackage",
@@ -408,7 +662,19 @@ export const ModelCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:canRecordEvaluationPackage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "canRecordEvaluationPackage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canApprove", {
         id: "canApprove",
@@ -423,7 +689,19 @@ export const ModelCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:canApprove",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "canApprove",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canPromoteToProduction", {
         id: "canPromoteToProduction",
@@ -438,7 +716,19 @@ export const ModelCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:canPromoteToProduction",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "canPromoteToProduction",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canRollback", {
         id: "canRollback",
@@ -453,7 +743,19 @@ export const ModelCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:canRollback",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "canRollback",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canRetire", {
         id: "canRetire",
@@ -468,7 +770,19 @@ export const ModelCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:canRetire",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "canRetire",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("blockedReason", {
         id: "blockedReason",
@@ -482,7 +796,19 @@ export const ModelCatalogList = () => {
           placeholder: "Enter Blocked Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelCatalogRecord>(
+            frontendComposition,
+            "field:model-catalog:display:blockedReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-catalog",
+              field: "blockedReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -490,6 +816,12 @@ export const ModelCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<ModelCatalogRecord>(
+                frontendComposition,
+                "row-actions:model-catalog:list",
+                "rowActions.before",
+                { resource: "model-catalog", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "state", ["Candidate"]) && (
                   <CommandButton
                     variant="ghost"
@@ -547,6 +879,12 @@ export const ModelCatalogList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.modelId} size="sm" />
+              {renderSlotExtensions<ModelCatalogRecord>(
+                frontendComposition,
+                "row-actions:model-catalog:list",
+                "rowActions.after",
+                { resource: "model-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -581,6 +919,8 @@ export const ModelCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:model-catalog:list", "toolbar.before", { resource: "model-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:model-catalog:list", "toolbar.actions", { resource: "model-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -590,6 +930,7 @@ export const ModelCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:model-catalog:list", "toolbar.after", { resource: "model-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

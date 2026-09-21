@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 import type { DictionaryCode } from "@/contexts/domain/value-types";
 
@@ -85,7 +87,19 @@ export const DictionaryCatalogList = () => {
           placeholder: "Enter Dictionary Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DictionaryCatalogRecord>(
+            frontendComposition,
+            "field:dictionary-catalog:display:dictionaryId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dictionary-catalog",
+              field: "dictionaryId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("dictionaryCode", {
         id: "dictionaryCode",
@@ -99,7 +113,19 @@ export const DictionaryCatalogList = () => {
           placeholder: "Enter Dictionary Code",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DictionaryCatalogRecord>(
+            frontendComposition,
+            "field:dictionary-catalog:display:dictionaryCode",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dictionary-catalog",
+              field: "dictionaryCode",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("dictionaryName", {
         id: "dictionaryName",
@@ -113,7 +139,19 @@ export const DictionaryCatalogList = () => {
           placeholder: "Enter Dictionary Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DictionaryCatalogRecord>(
+            frontendComposition,
+            "field:dictionary-catalog:display:dictionaryName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dictionary-catalog",
+              field: "dictionaryName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("description", {
         id: "description",
@@ -128,7 +166,19 @@ export const DictionaryCatalogList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DictionaryCatalogRecord>(
+            frontendComposition,
+            "field:dictionary-catalog:display:description",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dictionary-catalog",
+              field: "description",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -147,7 +197,19 @@ export const DictionaryCatalogList = () => {
             { label: "Archived", value: "ARCHIVED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DictionaryCatalogRecord>(
+            frontendComposition,
+            "field:dictionary-catalog:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dictionary-catalog",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("registeredAt", {
         id: "registeredAt",
@@ -162,7 +224,19 @@ export const DictionaryCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DictionaryCatalogRecord>(
+            frontendComposition,
+            "field:dictionary-catalog:display:registeredAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dictionary-catalog",
+              field: "registeredAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("updatedAt", {
         id: "updatedAt",
@@ -177,7 +251,19 @@ export const DictionaryCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DictionaryCatalogRecord>(
+            frontendComposition,
+            "field:dictionary-catalog:display:updatedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dictionary-catalog",
+              field: "updatedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("archivedAt", {
         id: "archivedAt",
@@ -192,7 +278,19 @@ export const DictionaryCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DictionaryCatalogRecord>(
+            frontendComposition,
+            "field:dictionary-catalog:display:archivedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dictionary-catalog",
+              field: "archivedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("archiveReason", {
         id: "archiveReason",
@@ -206,7 +304,19 @@ export const DictionaryCatalogList = () => {
           placeholder: "Enter Archive Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DictionaryCatalogRecord>(
+            frontendComposition,
+            "field:dictionary-catalog:display:archiveReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dictionary-catalog",
+              field: "archiveReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -226,6 +336,12 @@ export const DictionaryCatalogList = () => {
             />
             )}
             <RowActionMenu>
+              {renderSlotExtensions<DictionaryCatalogRecord>(
+                frontendComposition,
+                "row-actions:dictionary-catalog:list",
+                "rowActions.before",
+                { resource: "dictionary-catalog", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "", []) && (
                   <EditButton variant="ghost" recordItemId={row.original.dictionaryId} size="sm" />
                 )}
@@ -243,6 +359,12 @@ export const DictionaryCatalogList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.dictionaryId} size="sm" />
+              {renderSlotExtensions<DictionaryCatalogRecord>(
+                frontendComposition,
+                "row-actions:dictionary-catalog:list",
+                "rowActions.after",
+                { resource: "dictionary-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -277,7 +399,9 @@ export const DictionaryCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:dictionary-catalog:list", "toolbar.before", { resource: "dictionary-catalog", table })}
         <CommandButton variant="default" command="registerDictionary" />
+        {renderSlotExtensions(frontendComposition, "toolbar:dictionary-catalog:list", "toolbar.actions", { resource: "dictionary-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         <CommandButton variant="destructive" command="archiveDictionary" size="sm" />
@@ -287,6 +411,7 @@ export const DictionaryCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:dictionary-catalog:list", "toolbar.after", { resource: "dictionary-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type FederationOverviewRecord = {
   federationId: string;
@@ -82,7 +84,19 @@ export const FederationOverviewList = () => {
           placeholder: "Enter Federation Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationOverviewRecord>(
+            frontendComposition,
+            "field:federation-overview:display:federationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-overview",
+              field: "federationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
         id: "federationName",
@@ -96,7 +110,19 @@ export const FederationOverviewList = () => {
           placeholder: "Enter Federation Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationOverviewRecord>(
+            frontendComposition,
+            "field:federation-overview:display:federationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-overview",
+              field: "federationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -116,7 +142,19 @@ export const FederationOverviewList = () => {
             { label: "Suspended", value: "SUSPENDED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationOverviewRecord>(
+            frontendComposition,
+            "field:federation-overview:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-overview",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumParticipantCount", {
         id: "minimumParticipantCount",
@@ -131,7 +169,19 @@ export const FederationOverviewList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationOverviewRecord>(
+            frontendComposition,
+            "field:federation-overview:display:minimumParticipantCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-overview",
+              field: "minimumParticipantCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("activeMemberCount", {
         id: "activeMemberCount",
@@ -146,7 +196,19 @@ export const FederationOverviewList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationOverviewRecord>(
+            frontendComposition,
+            "field:federation-overview:display:activeMemberCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-overview",
+              field: "activeMemberCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("pendingInvitationCount", {
         id: "pendingInvitationCount",
@@ -161,7 +223,19 @@ export const FederationOverviewList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationOverviewRecord>(
+            frontendComposition,
+            "field:federation-overview:display:pendingInvitationCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-overview",
+              field: "pendingInvitationCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("activeRuntimeCount", {
         id: "activeRuntimeCount",
@@ -176,7 +250,19 @@ export const FederationOverviewList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationOverviewRecord>(
+            frontendComposition,
+            "field:federation-overview:display:activeRuntimeCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-overview",
+              field: "activeRuntimeCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("activeTrainingJobCount", {
         id: "activeTrainingJobCount",
@@ -191,7 +277,19 @@ export const FederationOverviewList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FederationOverviewRecord>(
+            frontendComposition,
+            "field:federation-overview:display:activeTrainingJobCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "federation-overview",
+              field: "activeTrainingJobCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -210,6 +308,12 @@ export const FederationOverviewList = () => {
             />
             )}
             <RowActionMenu>
+              {renderSlotExtensions<FederationOverviewRecord>(
+                frontendComposition,
+                "row-actions:federation-overview:list",
+                "rowActions.before",
+                { resource: "federation-overview", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "state", ["Draft"]) && (
                   <CommandButton
                     variant="ghost"
@@ -296,6 +400,12 @@ export const FederationOverviewList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.federationId} size="sm" />
+              {renderSlotExtensions<FederationOverviewRecord>(
+                frontendComposition,
+                "row-actions:federation-overview:list",
+                "rowActions.after",
+                { resource: "federation-overview", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -330,7 +440,9 @@ export const FederationOverviewList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:federation-overview:list", "toolbar.before", { resource: "federation-overview", table })}
         <CommandButton variant="default" command="createFederation" />
+        {renderSlotExtensions(frontendComposition, "toolbar:federation-overview:list", "toolbar.actions", { resource: "federation-overview", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         <CommandButton variant="destructive" command="removeParticipant" size="sm" />
@@ -340,6 +452,7 @@ export const FederationOverviewList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:federation-overview:list", "toolbar.after", { resource: "federation-overview", table })}
       </RefineDataTable>
     </ListView>
   );

@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ResolveTrainingAlertCommandSchema, type ResolveTrainingAlertCommandInput } from "@/contexts/domain/schemas";
 
@@ -69,10 +71,15 @@ export const TrainingAlertCatalogResolveTrainingAlert = () => {
   });
 
   async function onSubmit(values: ResolveTrainingAlertCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<ResolveTrainingAlertCommandInput>(
+      frontendComposition,
+      "behavior:training-alert-catalog:resolveTrainingAlert",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as ResolveTrainingAlertCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/training-alert-catalog");
     return result;
   }

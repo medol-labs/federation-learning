@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTrainingJobCommandSchema, type CreateTrainingJobCommandInput } from "@/contexts/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
@@ -74,10 +76,15 @@ export const TrainingRunConfigurationCatalogCreateTrainingJob = () => {
   });
 
   async function onSubmit(values: CreateTrainingJobCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<CreateTrainingJobCommandInput>(
+      frontendComposition,
+      "behavior:training-run-configuration-catalog:createTrainingJob",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as CreateTrainingJobCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/training-run-configuration-catalog");
     return result;
   }

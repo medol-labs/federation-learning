@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RoleCatalogRecord = {
   roleId: string;
@@ -77,7 +79,19 @@ export const RoleCatalogList = () => {
           placeholder: "Enter Role Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoleCatalogRecord>(
+            frontendComposition,
+            "field:role-catalog:display:roleId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "role-catalog",
+              field: "roleId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roleCode", {
         id: "roleCode",
@@ -91,7 +105,19 @@ export const RoleCatalogList = () => {
           placeholder: "Enter Role Code",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoleCatalogRecord>(
+            frontendComposition,
+            "field:role-catalog:display:roleCode",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "role-catalog",
+              field: "roleCode",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roleName", {
         id: "roleName",
@@ -105,7 +131,19 @@ export const RoleCatalogList = () => {
           placeholder: "Enter Role Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoleCatalogRecord>(
+            frontendComposition,
+            "field:role-catalog:display:roleName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "role-catalog",
+              field: "roleName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -113,6 +151,12 @@ export const RoleCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RoleCatalogRecord>(
+                frontendComposition,
+                "row-actions:role-catalog:list",
+                "rowActions.before",
+                { resource: "role-catalog", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "", []) && (
                   <CommandButton
                     variant="ghost"
@@ -126,6 +170,12 @@ export const RoleCatalogList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.roleId} size="sm" />
+              {renderSlotExtensions<RoleCatalogRecord>(
+                frontendComposition,
+                "row-actions:role-catalog:list",
+                "rowActions.after",
+                { resource: "role-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -160,7 +210,9 @@ export const RoleCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:role-catalog:list", "toolbar.before", { resource: "role-catalog", table })}
         <CommandButton variant="default" command="registerRole" />
+        {renderSlotExtensions(frontendComposition, "toolbar:role-catalog:list", "toolbar.actions", { resource: "role-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -170,6 +222,7 @@ export const RoleCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:role-catalog:list", "toolbar.after", { resource: "role-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

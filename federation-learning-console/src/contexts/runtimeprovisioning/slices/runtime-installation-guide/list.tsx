@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 
 type RuntimeInstallationGuideRecord = {
@@ -94,7 +96,19 @@ export const RuntimeInstallationGuideList = () => {
           placeholder: "Enter Runtime Installation Plan Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:runtimeInstallationPlanId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "runtimeInstallationPlanId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -108,7 +122,19 @@ export const RuntimeInstallationGuideList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
         id: "runtimeInfrastructureId",
@@ -122,7 +148,19 @@ export const RuntimeInstallationGuideList = () => {
           placeholder: "Enter Runtime Infrastructure Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:runtimeInfrastructureId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "runtimeInfrastructureId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
         id: "runtimeAgentId",
@@ -136,7 +174,19 @@ export const RuntimeInstallationGuideList = () => {
           placeholder: "Enter Runtime Agent Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:runtimeAgentId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "runtimeAgentId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureState", {
         id: "runtimeInfrastructureState",
@@ -162,7 +212,19 @@ export const RuntimeInstallationGuideList = () => {
             { label: "Connected", value: "CONNECTED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:runtimeInfrastructureState",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "runtimeInfrastructureState",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageId", {
         id: "runtimeInfrastructurePackageId",
@@ -176,7 +238,19 @@ export const RuntimeInstallationGuideList = () => {
           placeholder: "Enter Runtime Infrastructure Package Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:runtimeInfrastructurePackageId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "runtimeInfrastructurePackageId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageName", {
         id: "runtimeInfrastructurePackageName",
@@ -190,7 +264,19 @@ export const RuntimeInstallationGuideList = () => {
           placeholder: "Enter Runtime Infrastructure Package Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:runtimeInfrastructurePackageName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "runtimeInfrastructurePackageName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageVersion", {
         id: "runtimeInfrastructurePackageVersion",
@@ -204,7 +290,19 @@ export const RuntimeInstallationGuideList = () => {
           placeholder: "Enter Runtime Infrastructure Package Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:runtimeInfrastructurePackageVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "runtimeInfrastructurePackageVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -218,7 +316,19 @@ export const RuntimeInstallationGuideList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
         id: "runtimeName",
@@ -232,7 +342,19 @@ export const RuntimeInstallationGuideList = () => {
           placeholder: "Enter Runtime Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:runtimeName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "runtimeName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("bootstrapCommand", {
         id: "bootstrapCommand",
@@ -247,7 +369,19 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:bootstrapCommand",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "bootstrapCommand",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("nodeLabelCommand", {
         id: "nodeLabelCommand",
@@ -262,7 +396,19 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:nodeLabelCommand",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "nodeLabelCommand",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("nodeTaintCommand", {
         id: "nodeTaintCommand",
@@ -277,7 +423,19 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:nodeTaintCommand",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "nodeTaintCommand",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("runtimeAgentNodeSelectorYaml", {
         id: "runtimeAgentNodeSelectorYaml",
@@ -292,7 +450,19 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:runtimeAgentNodeSelectorYaml",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "runtimeAgentNodeSelectorYaml",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("runtimeAgentTolerationsYaml", {
         id: "runtimeAgentTolerationsYaml",
@@ -307,7 +477,19 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:runtimeAgentTolerationsYaml",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "runtimeAgentTolerationsYaml",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("bootstrapConfigYaml", {
         id: "bootstrapConfigYaml",
@@ -322,7 +504,19 @@ export const RuntimeInstallationGuideList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:bootstrapConfigYaml",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "bootstrapConfigYaml",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("runtimeEnvironmentType", {
         id: "runtimeEnvironmentType",
@@ -336,7 +530,19 @@ export const RuntimeInstallationGuideList = () => {
           placeholder: "Enter Runtime Environment Type",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:runtimeEnvironmentType",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "runtimeEnvironmentType",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("agentInstallMode", {
         id: "agentInstallMode",
@@ -350,7 +556,19 @@ export const RuntimeInstallationGuideList = () => {
           placeholder: "Enter Agent Install Mode",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:agentInstallMode",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "agentInstallMode",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("expectedNodeCount", {
         id: "expectedNodeCount",
@@ -365,7 +583,19 @@ export const RuntimeInstallationGuideList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInstallationGuideRecord>(
+            frontendComposition,
+            "field:runtime-installation-guide:display:expectedNodeCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-installation-guide",
+              field: "expectedNodeCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -373,6 +603,12 @@ export const RuntimeInstallationGuideList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RuntimeInstallationGuideRecord>(
+                frontendComposition,
+                "row-actions:runtime-installation-guide:list",
+                "rowActions.before",
+                { resource: "runtime-installation-guide", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "runtimeInfrastructureState", ["Registered"]) && (
                   <CommandButton
                     variant="ghost"
@@ -417,6 +653,12 @@ export const RuntimeInstallationGuideList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeInstallationPlanId} size="sm" />
+              {renderSlotExtensions<RuntimeInstallationGuideRecord>(
+                frontendComposition,
+                "row-actions:runtime-installation-guide:list",
+                "rowActions.after",
+                { resource: "runtime-installation-guide", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -451,6 +693,8 @@ export const RuntimeInstallationGuideList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-installation-guide:list", "toolbar.before", { resource: "runtime-installation-guide", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-installation-guide:list", "toolbar.actions", { resource: "runtime-installation-guide", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -460,6 +704,7 @@ export const RuntimeInstallationGuideList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-installation-guide:list", "toolbar.after", { resource: "runtime-installation-guide", table })}
       </RefineDataTable>
     </ListView>
   );

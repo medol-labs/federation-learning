@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RuntimeInfrastructurePackageCatalogRecord = {
   runtimeInfrastructurePackageId: string;
@@ -79,7 +81,19 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
           placeholder: "Enter Runtime Infrastructure Package Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructurePackageCatalogRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-package-catalog:display:runtimeInfrastructurePackageId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-package-catalog",
+              field: "runtimeInfrastructurePackageId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("packageName", {
         id: "packageName",
@@ -93,7 +107,19 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
           placeholder: "Enter Package Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructurePackageCatalogRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-package-catalog:display:packageName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-package-catalog",
+              field: "packageName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("packageVersion", {
         id: "packageVersion",
@@ -107,7 +133,19 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
           placeholder: "Enter Package Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructurePackageCatalogRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-package-catalog:display:packageVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-package-catalog",
+              field: "packageVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEnvironmentType", {
         id: "runtimeEnvironmentType",
@@ -121,7 +159,19 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
           placeholder: "Enter Runtime Environment Type",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructurePackageCatalogRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-package-catalog:display:runtimeEnvironmentType",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-package-catalog",
+              field: "runtimeEnvironmentType",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -139,7 +189,19 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
             { label: "Registered", value: "REGISTERED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeInfrastructurePackageCatalogRecord>(
+            frontendComposition,
+            "field:runtime-infrastructure-package-catalog:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-infrastructure-package-catalog",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -147,7 +209,19 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RuntimeInfrastructurePackageCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-infrastructure-package-catalog:list",
+                "rowActions.before",
+                { resource: "runtime-infrastructure-package-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeInfrastructurePackageId} size="sm" />
+              {renderSlotExtensions<RuntimeInfrastructurePackageCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-infrastructure-package-catalog:list",
+                "rowActions.after",
+                { resource: "runtime-infrastructure-package-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -182,7 +256,9 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-infrastructure-package-catalog:list", "toolbar.before", { resource: "runtime-infrastructure-package-catalog", table })}
         <CommandButton variant="default" command="registerRuntimeInfrastructurePackage" />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-infrastructure-package-catalog:list", "toolbar.actions", { resource: "runtime-infrastructure-package-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -192,6 +268,7 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-infrastructure-package-catalog:list", "toolbar.after", { resource: "runtime-infrastructure-package-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RuntimeHealthDashboardRecord = {
   nodeId: string;
@@ -93,7 +95,19 @@ export const RuntimeHealthDashboardList = () => {
           placeholder: "Enter Node Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:nodeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "nodeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
         id: "runtimeAgentId",
@@ -107,7 +121,19 @@ export const RuntimeHealthDashboardList = () => {
           placeholder: "Enter Runtime Agent Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:runtimeAgentId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "runtimeAgentId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationId", {
         id: "federationId",
@@ -121,7 +147,19 @@ export const RuntimeHealthDashboardList = () => {
           placeholder: "Enter Federation Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:federationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "federationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
         id: "trainingJobId",
@@ -135,7 +173,19 @@ export const RuntimeHealthDashboardList = () => {
           placeholder: "Enter Training Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:trainingJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "trainingJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundExecutionId", {
         id: "roundExecutionId",
@@ -149,7 +199,19 @@ export const RuntimeHealthDashboardList = () => {
           placeholder: "Enter Round Execution Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:roundExecutionId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "roundExecutionId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
         id: "federationName",
@@ -163,7 +225,19 @@ export const RuntimeHealthDashboardList = () => {
           placeholder: "Enter Federation Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:federationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "federationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobObjective", {
         id: "trainingJobObjective",
@@ -177,7 +251,19 @@ export const RuntimeHealthDashboardList = () => {
           placeholder: "Enter Training Job Objective",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:trainingJobObjective",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "trainingJobObjective",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("cpuLoad", {
         id: "cpuLoad",
@@ -192,7 +278,19 @@ export const RuntimeHealthDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:cpuLoad",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "cpuLoad",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("gpuLoad", {
         id: "gpuLoad",
@@ -207,7 +305,19 @@ export const RuntimeHealthDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:gpuLoad",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "gpuLoad",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("memoryLoad", {
         id: "memoryLoad",
@@ -222,7 +332,19 @@ export const RuntimeHealthDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:memoryLoad",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "memoryLoad",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nodeReady", {
         id: "nodeReady",
@@ -237,7 +359,19 @@ export const RuntimeHealthDashboardList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:nodeReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "nodeReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("availableCpuCores", {
         id: "availableCpuCores",
@@ -252,7 +386,19 @@ export const RuntimeHealthDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:availableCpuCores",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "availableCpuCores",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableMemoryGb", {
         id: "availableMemoryGb",
@@ -267,7 +413,19 @@ export const RuntimeHealthDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:availableMemoryGb",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "availableMemoryGb",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("availableGpuCount", {
         id: "availableGpuCount",
@@ -282,7 +440,19 @@ export const RuntimeHealthDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:availableGpuCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "availableGpuCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runningWorkloadCount", {
         id: "runningWorkloadCount",
@@ -297,7 +467,19 @@ export const RuntimeHealthDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:runningWorkloadCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "runningWorkloadCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("workloadCapacity", {
         id: "workloadCapacity",
@@ -312,7 +494,19 @@ export const RuntimeHealthDashboardList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:workloadCapacity",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "workloadCapacity",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("healthStatus", {
         id: "healthStatus",
@@ -326,7 +520,19 @@ export const RuntimeHealthDashboardList = () => {
           placeholder: "Enter Health Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:healthStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "healthStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lastHeartbeatAt", {
         id: "lastHeartbeatAt",
@@ -341,7 +547,19 @@ export const RuntimeHealthDashboardList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:lastHeartbeatAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "lastHeartbeatAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("lastResourceSnapshotAt", {
         id: "lastResourceSnapshotAt",
@@ -356,7 +574,19 @@ export const RuntimeHealthDashboardList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeHealthDashboardRecord>(
+            frontendComposition,
+            "field:runtime-health-dashboard:display:lastResourceSnapshotAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-health-dashboard",
+              field: "lastResourceSnapshotAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -364,7 +594,19 @@ export const RuntimeHealthDashboardList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RuntimeHealthDashboardRecord>(
+                frontendComposition,
+                "row-actions:runtime-health-dashboard:list",
+                "rowActions.before",
+                { resource: "runtime-health-dashboard", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.nodeId} size="sm" />
+              {renderSlotExtensions<RuntimeHealthDashboardRecord>(
+                frontendComposition,
+                "row-actions:runtime-health-dashboard:list",
+                "rowActions.after",
+                { resource: "runtime-health-dashboard", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -399,6 +641,8 @@ export const RuntimeHealthDashboardList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-health-dashboard:list", "toolbar.before", { resource: "runtime-health-dashboard", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-health-dashboard:list", "toolbar.actions", { resource: "runtime-health-dashboard", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -408,6 +652,7 @@ export const RuntimeHealthDashboardList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-health-dashboard:list", "toolbar.after", { resource: "runtime-health-dashboard", table })}
       </RefineDataTable>
     </ListView>
   );

@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RuntimeNodeInventoryViewRecord = {
   nodeId: string;
@@ -92,7 +94,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Node Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:nodeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "nodeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeNodeInventoryReportId", {
         id: "runtimeNodeInventoryReportId",
@@ -106,7 +120,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Runtime Node Inventory Report Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:runtimeNodeInventoryReportId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "runtimeNodeInventoryReportId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -120,7 +146,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
         id: "runtimeInfrastructureId",
@@ -134,7 +172,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Runtime Infrastructure Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:runtimeInfrastructureId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "runtimeInfrastructureId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
         id: "runtimeAgentId",
@@ -148,7 +198,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Runtime Agent Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:runtimeAgentId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "runtimeAgentId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -162,7 +224,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
         id: "runtimeName",
@@ -176,7 +250,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Runtime Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:runtimeName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "runtimeName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeNodeName", {
         id: "runtimeNodeName",
@@ -190,7 +276,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Runtime Node Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:runtimeNodeName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "runtimeNodeName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("infrastructureNodeId", {
         id: "infrastructureNodeId",
@@ -204,7 +302,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Infrastructure Node Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:infrastructureNodeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "infrastructureNodeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeNodeRole", {
         id: "runtimeNodeRole",
@@ -218,7 +328,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Runtime Node Role",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:runtimeNodeRole",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "runtimeNodeRole",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nodeReady", {
         id: "nodeReady",
@@ -233,7 +355,19 @@ export const RuntimeNodeInventoryViewList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:nodeReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "nodeReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeEngineVersion", {
         id: "runtimeEngineVersion",
@@ -247,7 +381,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Runtime Engine Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:runtimeEngineVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "runtimeEngineVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("containerEngineVersion", {
         id: "containerEngineVersion",
@@ -261,7 +407,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Container Engine Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:containerEngineVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "containerEngineVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("operatingSystem", {
         id: "operatingSystem",
@@ -275,7 +433,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Operating System",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:operatingSystem",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "operatingSystem",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("architecture", {
         id: "architecture",
@@ -289,7 +459,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Architecture",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:architecture",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "architecture",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("inventoryHash", {
         id: "inventoryHash",
@@ -303,7 +485,19 @@ export const RuntimeNodeInventoryViewList = () => {
           placeholder: "Enter Inventory Hash",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:inventoryHash",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "inventoryHash",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("discoveredAt", {
         id: "discoveredAt",
@@ -318,7 +512,19 @@ export const RuntimeNodeInventoryViewList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:discoveredAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "discoveredAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("recordedAt", {
         id: "recordedAt",
@@ -333,7 +539,19 @@ export const RuntimeNodeInventoryViewList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeNodeInventoryViewRecord>(
+            frontendComposition,
+            "field:runtime-node-inventory-view:display:recordedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-node-inventory-view",
+              field: "recordedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -341,7 +559,19 @@ export const RuntimeNodeInventoryViewList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RuntimeNodeInventoryViewRecord>(
+                frontendComposition,
+                "row-actions:runtime-node-inventory-view:list",
+                "rowActions.before",
+                { resource: "runtime-node-inventory-view", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.nodeId} size="sm" />
+              {renderSlotExtensions<RuntimeNodeInventoryViewRecord>(
+                frontendComposition,
+                "row-actions:runtime-node-inventory-view:list",
+                "rowActions.after",
+                { resource: "runtime-node-inventory-view", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -376,6 +606,8 @@ export const RuntimeNodeInventoryViewList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-node-inventory-view:list", "toolbar.before", { resource: "runtime-node-inventory-view", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-node-inventory-view:list", "toolbar.actions", { resource: "runtime-node-inventory-view", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -385,6 +617,7 @@ export const RuntimeNodeInventoryViewList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-node-inventory-view:list", "toolbar.after", { resource: "runtime-node-inventory-view", table })}
       </RefineDataTable>
     </ListView>
   );

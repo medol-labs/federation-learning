@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RuntimeDatasetMetadataCatalogRecord = {
   runtimeDatasetBindingId: string;
@@ -97,7 +99,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Runtime Dataset Binding Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:runtimeDatasetBindingId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "runtimeDatasetBindingId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("metadataReportId", {
         id: "metadataReportId",
@@ -111,7 +125,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Metadata Report Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:metadataReportId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "metadataReportId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetId", {
         id: "datasetId",
@@ -125,7 +151,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Dataset Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:datasetId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "datasetId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -139,7 +177,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -153,7 +203,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
         id: "runtimeId",
@@ -167,7 +229,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Runtime Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:runtimeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "runtimeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
         id: "runtimeName",
@@ -181,7 +255,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Runtime Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:runtimeName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "runtimeName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -195,7 +281,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
         id: "featureDomain",
@@ -209,7 +307,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
         id: "featureSchemaVersion",
@@ -223,7 +333,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Feature Schema Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:featureSchemaVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "featureSchemaVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetName", {
         id: "datasetName",
@@ -237,7 +359,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Dataset Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:datasetName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "datasetName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sampleCount", {
         id: "sampleCount",
@@ -252,7 +386,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:sampleCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "sampleCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureCount", {
         id: "featureCount",
@@ -267,7 +413,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:featureCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "featureCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("schemaCompatible", {
         id: "schemaCompatible",
@@ -282,7 +440,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:schemaCompatible",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "schemaCompatible",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("labelCompatible", {
         id: "labelCompatible",
@@ -297,7 +467,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:labelCompatible",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "labelCompatible",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("missingValueRate", {
         id: "missingValueRate",
@@ -312,7 +494,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:missingValueRate",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "missingValueRate",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("duplicateRate", {
         id: "duplicateRate",
@@ -327,7 +521,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:duplicateRate",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "duplicateRate",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("qualityScore", {
         id: "qualityScore",
@@ -342,7 +548,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:qualityScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "qualityScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nonIidScore", {
         id: "nonIidScore",
@@ -357,7 +575,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:nonIidScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "nonIidScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("classBalanceScore", {
         id: "classBalanceScore",
@@ -372,7 +602,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:classBalanceScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "classBalanceScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("profilingStatus", {
         id: "profilingStatus",
@@ -386,7 +628,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Profiling Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:profilingStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "profilingStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("failureReason", {
         id: "failureReason",
@@ -400,7 +654,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           placeholder: "Enter Failure Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:failureReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "failureReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("profiledAt", {
         id: "profiledAt",
@@ -415,7 +681,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetMetadataCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-metadata-catalog:display:profiledAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-metadata-catalog",
+              field: "profiledAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -423,7 +701,19 @@ export const RuntimeDatasetMetadataCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RuntimeDatasetMetadataCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-dataset-metadata-catalog:list",
+                "rowActions.before",
+                { resource: "runtime-dataset-metadata-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeDatasetBindingId} size="sm" />
+              {renderSlotExtensions<RuntimeDatasetMetadataCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-dataset-metadata-catalog:list",
+                "rowActions.after",
+                { resource: "runtime-dataset-metadata-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -458,6 +748,8 @@ export const RuntimeDatasetMetadataCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-dataset-metadata-catalog:list", "toolbar.before", { resource: "runtime-dataset-metadata-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-dataset-metadata-catalog:list", "toolbar.actions", { resource: "runtime-dataset-metadata-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -467,6 +759,7 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-dataset-metadata-catalog:list", "toolbar.after", { resource: "runtime-dataset-metadata-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

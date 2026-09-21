@@ -1,6 +1,7 @@
 // Generated from config.json by the refine generator.
 import { useShow, useTranslate } from "@refinedev/core";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 import {
   Card,
@@ -9,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { renderFieldOverride } from "@/platform/composition";
 
 const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
   if (value === null || value === undefined || value === "") return "-";
@@ -41,42 +43,42 @@ export const FederationOverviewShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.federation_overview.fields.federationId.label", "Federation Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.federationId, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:federation-overview:display:federationId", { value: record?.federationId, record, resource: "federation-overview", field: "federationId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.federationId, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.federation_overview.fields.federationName.label", "Federation Name")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.federationName, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:federation-overview:display:federationName", { value: record?.federationName, record, resource: "federation-overview", field: "federationName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.federationName, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.federation_overview.fields.state.label", "State")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.state, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:federation-overview:display:state", { value: record?.state, record, resource: "federation-overview", field: "state", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.state, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.federation_overview.fields.minimumParticipantCount.label", "Minimum Participant Count")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.minimumParticipantCount, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:federation-overview:display:minimumParticipantCount", { value: record?.minimumParticipantCount, record, resource: "federation-overview", field: "minimumParticipantCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.minimumParticipantCount, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.federation_overview.fields.activeMemberCount.label", "Active Member Count")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.activeMemberCount, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:federation-overview:display:activeMemberCount", { value: record?.activeMemberCount, record, resource: "federation-overview", field: "activeMemberCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.activeMemberCount, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.federation_overview.fields.pendingInvitationCount.label", "Pending Invitation Count")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.pendingInvitationCount, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:federation-overview:display:pendingInvitationCount", { value: record?.pendingInvitationCount, record, resource: "federation-overview", field: "pendingInvitationCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.pendingInvitationCount, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.federation_overview.fields.activeRuntimeCount.label", "Active Runtime Count")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.activeRuntimeCount, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:federation-overview:display:activeRuntimeCount", { value: record?.activeRuntimeCount, record, resource: "federation-overview", field: "activeRuntimeCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.activeRuntimeCount, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.federation_overview.fields.activeTrainingJobCount.label", "Active Training Job Count")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.activeTrainingJobCount, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:federation-overview:display:activeTrainingJobCount", { value: record?.activeTrainingJobCount, record, resource: "federation-overview", field: "activeTrainingJobCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.activeTrainingJobCount, t)}</p>}
             </div>
             <Separator />
           </CardContent>

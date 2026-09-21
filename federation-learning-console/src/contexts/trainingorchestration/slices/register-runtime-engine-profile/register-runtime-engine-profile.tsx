@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterRuntimeEngineProfileCommandSchema, type RegisterRuntimeEngineProfileCommandInput } from "@/contexts/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
@@ -75,10 +77,15 @@ export const RuntimeEngineProfileCatalogRegisterRuntimeEngineProfile = () => {
   });
 
   async function onSubmit(values: RegisterRuntimeEngineProfileCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<RegisterRuntimeEngineProfileCommandInput>(
+      frontendComposition,
+      "behavior:runtime-engine-profile-catalog:registerRuntimeEngineProfile",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as RegisterRuntimeEngineProfileCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/runtime-engine-profile-catalog");
     return result;
   }

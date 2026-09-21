@@ -8,6 +8,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -35,6 +36,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GenerateUserAccountLoginPasswordCommandSchema, type GenerateUserAccountLoginPasswordCommandInput } from "@/contexts/domain/schemas";
 
@@ -78,10 +80,15 @@ export const UserAccountCatalogGenerateUserAccountLoginPassword = () => {
   });
 
   async function onSubmit(values: GenerateUserAccountLoginPasswordCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<GenerateUserAccountLoginPasswordCommandInput>(
+      frontendComposition,
+      "behavior:user-account-catalog:generateUserAccountLoginPassword",
+      {
       ...defaultValues,
       ...values,
-    }) as { data?: Record<string, unknown> } | Record<string, unknown> | void;
+      } as GenerateUserAccountLoginPasswordCommandInput,
+      (payload) => onFinish(payload),
+    ) as { data?: Record<string, unknown> } | Record<string, unknown> | void;
     const data = result && typeof result === "object" && "data" in result
       ? result.data
       : result;

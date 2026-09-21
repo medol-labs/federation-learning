@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddDictionaryValueCommandSchema, type AddDictionaryValueCommandInput } from "@/contexts/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
@@ -75,10 +77,15 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
   });
 
   async function onSubmit(values: AddDictionaryValueCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<AddDictionaryValueCommandInput>(
+      frontendComposition,
+      "behavior:dictionary-value-catalog:addDictionaryValue",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as AddDictionaryValueCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/dictionary-value-catalog");
     return result;
   }

@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RuntimeAgentEndpointCatalogRecord = {
   runtimeAgentId: string;
@@ -84,7 +86,19 @@ export const RuntimeAgentEndpointCatalogList = () => {
           placeholder: "Enter Runtime Agent Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentEndpointCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-endpoint-catalog:display:runtimeAgentId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-endpoint-catalog",
+              field: "runtimeAgentId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
         id: "runtimeId",
@@ -98,7 +112,19 @@ export const RuntimeAgentEndpointCatalogList = () => {
           placeholder: "Enter Runtime Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentEndpointCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-endpoint-catalog:display:runtimeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-endpoint-catalog",
+              field: "runtimeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
         id: "runtimeInfrastructureId",
@@ -112,7 +138,19 @@ export const RuntimeAgentEndpointCatalogList = () => {
           placeholder: "Enter Runtime Infrastructure Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentEndpointCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-endpoint-catalog:display:runtimeInfrastructureId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-endpoint-catalog",
+              field: "runtimeInfrastructureId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -126,7 +164,19 @@ export const RuntimeAgentEndpointCatalogList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentEndpointCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-endpoint-catalog:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-endpoint-catalog",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
         id: "runtimeName",
@@ -140,7 +190,19 @@ export const RuntimeAgentEndpointCatalogList = () => {
           placeholder: "Enter Runtime Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentEndpointCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-endpoint-catalog:display:runtimeName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-endpoint-catalog",
+              field: "runtimeName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentEndpoint", {
         id: "runtimeAgentEndpoint",
@@ -154,7 +216,19 @@ export const RuntimeAgentEndpointCatalogList = () => {
           placeholder: "Enter Runtime Agent Endpoint",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentEndpointCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-endpoint-catalog:display:runtimeAgentEndpoint",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-endpoint-catalog",
+              field: "runtimeAgentEndpoint",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("endpointScope", {
         id: "endpointScope",
@@ -168,7 +242,19 @@ export const RuntimeAgentEndpointCatalogList = () => {
           placeholder: "Enter Endpoint Scope",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentEndpointCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-endpoint-catalog:display:endpointScope",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-endpoint-catalog",
+              field: "endpointScope",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("connectionStatus", {
         id: "connectionStatus",
@@ -182,7 +268,19 @@ export const RuntimeAgentEndpointCatalogList = () => {
           placeholder: "Enter Connection Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentEndpointCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-endpoint-catalog:display:connectionStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-endpoint-catalog",
+              field: "connectionStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("connectedAt", {
         id: "connectedAt",
@@ -197,7 +295,19 @@ export const RuntimeAgentEndpointCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentEndpointCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-endpoint-catalog:display:connectedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-endpoint-catalog",
+              field: "connectedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("activatedAt", {
         id: "activatedAt",
@@ -212,7 +322,19 @@ export const RuntimeAgentEndpointCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentEndpointCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-endpoint-catalog:display:activatedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-endpoint-catalog",
+              field: "activatedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -220,6 +342,12 @@ export const RuntimeAgentEndpointCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RuntimeAgentEndpointCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-agent-endpoint-catalog:list",
+                "rowActions.before",
+                { resource: "runtime-agent-endpoint-catalog", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "", []) && (
                   <CommandButton
                     variant="ghost"
@@ -235,6 +363,12 @@ export const RuntimeAgentEndpointCatalogList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeAgentId} size="sm" />
+              {renderSlotExtensions<RuntimeAgentEndpointCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-agent-endpoint-catalog:list",
+                "rowActions.after",
+                { resource: "runtime-agent-endpoint-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -269,6 +403,8 @@ export const RuntimeAgentEndpointCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-agent-endpoint-catalog:list", "toolbar.before", { resource: "runtime-agent-endpoint-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-agent-endpoint-catalog:list", "toolbar.actions", { resource: "runtime-agent-endpoint-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -278,6 +414,7 @@ export const RuntimeAgentEndpointCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-agent-endpoint-catalog:list", "toolbar.after", { resource: "runtime-agent-endpoint-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

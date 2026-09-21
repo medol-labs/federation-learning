@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type CurrentRecommendedFeatureSchemaCatalogRecord = {
   featureDomain: string;
@@ -79,7 +81,19 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<CurrentRecommendedFeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:current-recommended-feature-schema-catalog:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "current-recommended-feature-schema-catalog",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("recommendedFeatureSchemaId", {
         id: "recommendedFeatureSchemaId",
@@ -93,7 +107,19 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
           placeholder: "Enter Recommended Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<CurrentRecommendedFeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:current-recommended-feature-schema-catalog:display:recommendedFeatureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "current-recommended-feature-schema-catalog",
+              field: "recommendedFeatureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("recommendedVersion", {
         id: "recommendedVersion",
@@ -107,7 +133,19 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
           placeholder: "Enter Recommended Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<CurrentRecommendedFeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:current-recommended-feature-schema-catalog:display:recommendedVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "current-recommended-feature-schema-catalog",
+              field: "recommendedVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("recommendedAt", {
         id: "recommendedAt",
@@ -122,7 +160,19 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<CurrentRecommendedFeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:current-recommended-feature-schema-catalog:display:recommendedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "current-recommended-feature-schema-catalog",
+              field: "recommendedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("recommendationNote", {
         id: "recommendationNote",
@@ -136,7 +186,19 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
           placeholder: "Enter Recommendation Note",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<CurrentRecommendedFeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:current-recommended-feature-schema-catalog:display:recommendationNote",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "current-recommended-feature-schema-catalog",
+              field: "recommendationNote",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -144,7 +206,19 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<CurrentRecommendedFeatureSchemaCatalogRecord>(
+                frontendComposition,
+                "row-actions:current-recommended-feature-schema-catalog:list",
+                "rowActions.before",
+                { resource: "current-recommended-feature-schema-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.featureDomain} size="sm" />
+              {renderSlotExtensions<CurrentRecommendedFeatureSchemaCatalogRecord>(
+                frontendComposition,
+                "row-actions:current-recommended-feature-schema-catalog:list",
+                "rowActions.after",
+                { resource: "current-recommended-feature-schema-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -179,6 +253,8 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:current-recommended-feature-schema-catalog:list", "toolbar.before", { resource: "current-recommended-feature-schema-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:current-recommended-feature-schema-catalog:list", "toolbar.actions", { resource: "current-recommended-feature-schema-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -188,6 +264,7 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:current-recommended-feature-schema-catalog:list", "toolbar.after", { resource: "current-recommended-feature-schema-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

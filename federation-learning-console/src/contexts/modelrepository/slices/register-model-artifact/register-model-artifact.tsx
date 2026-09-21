@@ -9,6 +9,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -28,6 +29,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterModelArtifactCommandSchema, type RegisterModelArtifactCommandInput } from "@/contexts/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
@@ -114,7 +116,12 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
       }
       nextValues.fileId = uploadedId as never;
     }
-    const result = await onFinish(nextValues);
+    const result = await runFormBehavior<RegisterModelArtifactCommandInput>(
+      frontendComposition,
+      "behavior:model-artifact-catalog:registerModelArtifact",
+      nextValues,
+      (payload) => onFinish(payload),
+    );
     navigate("/model-artifact-catalog");
     return result;
   }

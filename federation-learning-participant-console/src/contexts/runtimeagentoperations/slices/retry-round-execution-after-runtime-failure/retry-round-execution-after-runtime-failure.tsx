@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RetryRoundExecutionAfterRuntimeFailureCommandSchema, type RetryRoundExecutionAfterRuntimeFailureCommandInput } from "@/contexts/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
@@ -81,10 +83,15 @@ export const RoundExecutionCatalogRetryRoundExecutionAfterRuntimeFailure = () =>
   });
 
   async function onSubmit(values: RetryRoundExecutionAfterRuntimeFailureCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<RetryRoundExecutionAfterRuntimeFailureCommandInput>(
+      frontendComposition,
+      "behavior:round-execution-catalog:retryRoundExecutionAfterRuntimeFailure",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as RetryRoundExecutionAfterRuntimeFailureCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/round-execution-catalog");
     return result;
   }

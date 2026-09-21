@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type TrainingParticipantEligibilityRecord = {
   trainingJobId: string;
@@ -110,7 +112,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Training Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:trainingJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "trainingJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationId", {
         id: "federationId",
@@ -124,7 +138,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Federation Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:federationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "federationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -138,7 +164,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
         id: "runtimeId",
@@ -152,7 +190,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Runtime Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:runtimeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "runtimeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -166,7 +216,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
         id: "federationName",
@@ -180,7 +242,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Federation Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:federationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "federationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -194,7 +268,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
         id: "featureDomain",
@@ -208,7 +294,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
         id: "featureSchemaVersion",
@@ -222,7 +320,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Feature Schema Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:featureSchemaVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "featureSchemaVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("participantStatus", {
         id: "participantStatus",
@@ -236,7 +346,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Participant Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:participantStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "participantStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("readinessStatus", {
         id: "readinessStatus",
@@ -250,7 +372,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Readiness Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:readinessStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "readinessStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("readinessStage", {
         id: "readinessStage",
@@ -264,7 +398,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Readiness Stage",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:readinessStage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "readinessStage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("eligibilityScore", {
         id: "eligibilityScore",
@@ -279,7 +425,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:eligibilityScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "eligibilityScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeIdentityActive", {
         id: "runtimeIdentityActive",
@@ -294,7 +452,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:runtimeIdentityActive",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "runtimeIdentityActive",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeCapabilitySatisfied", {
         id: "runtimeCapabilitySatisfied",
@@ -309,7 +479,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:runtimeCapabilitySatisfied",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "runtimeCapabilitySatisfied",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeConnectionEstablished", {
         id: "runtimeConnectionEstablished",
@@ -324,7 +506,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:runtimeConnectionEstablished",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "runtimeConnectionEstablished",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeHealthy", {
         id: "runtimeHealthy",
@@ -339,7 +533,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:runtimeHealthy",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "runtimeHealthy",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("datasetId", {
         id: "datasetId",
@@ -353,7 +559,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Dataset Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:datasetId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "datasetId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetName", {
         id: "datasetName",
@@ -367,7 +585,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Dataset Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:datasetName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "datasetName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetReady", {
         id: "datasetReady",
@@ -382,7 +612,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:datasetReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "datasetReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("datasetReadinessStatus", {
         id: "datasetReadinessStatus",
@@ -396,7 +638,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Dataset Readiness Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:datasetReadinessStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "datasetReadinessStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("matchedDatasetMetadataReady", {
         id: "matchedDatasetMetadataReady",
@@ -411,7 +665,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:matchedDatasetMetadataReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "matchedDatasetMetadataReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("datasetAccessValidated", {
         id: "datasetAccessValidated",
@@ -426,7 +692,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:datasetAccessValidated",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "datasetAccessValidated",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("datasetApprovedForTraining", {
         id: "datasetApprovedForTraining",
@@ -441,7 +719,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:datasetApprovedForTraining",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "datasetApprovedForTraining",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("schemaCompatible", {
         id: "schemaCompatible",
@@ -456,7 +746,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:schemaCompatible",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "schemaCompatible",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("labelCompatible", {
         id: "labelCompatible",
@@ -471,7 +773,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:labelCompatible",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "labelCompatible",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("qualityScore", {
         id: "qualityScore",
@@ -486,7 +800,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:qualityScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "qualityScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("securityReady", {
         id: "securityReady",
@@ -501,7 +827,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:securityReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "securityReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("eligible", {
         id: "eligible",
@@ -516,7 +854,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:eligible",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "eligible",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("eligibleRuntimeCount", {
         id: "eligibleRuntimeCount",
@@ -531,7 +881,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:eligibleRuntimeCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "eligibleRuntimeCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumNodesPerRound", {
         id: "minimumNodesPerRound",
@@ -546,7 +908,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:minimumNodesPerRound",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "minimumNodesPerRound",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectionReady", {
         id: "selectionReady",
@@ -561,7 +935,19 @@ export const TrainingParticipantEligibilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:selectionReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "selectionReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("eligibilityReason", {
         id: "eligibilityReason",
@@ -575,7 +961,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Eligibility Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:eligibilityReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "eligibilityReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("ineligibleReasons", {
         id: "ineligibleReasons",
@@ -589,7 +987,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Ineligible Reasons",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:ineligibleReasons",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "ineligibleReasons",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("warningReasons", {
         id: "warningReasons",
@@ -603,7 +1013,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Warning Reasons",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:warningReasons",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "warningReasons",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nextRequiredAction", {
         id: "nextRequiredAction",
@@ -617,7 +1039,19 @@ export const TrainingParticipantEligibilityList = () => {
           placeholder: "Enter Next Required Action",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingParticipantEligibilityRecord>(
+            frontendComposition,
+            "field:training-participant-eligibility:display:nextRequiredAction",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-participant-eligibility",
+              field: "nextRequiredAction",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -625,6 +1059,12 @@ export const TrainingParticipantEligibilityList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<TrainingParticipantEligibilityRecord>(
+                frontendComposition,
+                "row-actions:training-participant-eligibility:list",
+                "rowActions.before",
+                { resource: "training-participant-eligibility", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "participantStatus", ["Draft"]) && (
                   <CommandButton
                     variant="ghost"
@@ -634,6 +1074,12 @@ export const TrainingParticipantEligibilityList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.trainingJobId} size="sm" />
+              {renderSlotExtensions<TrainingParticipantEligibilityRecord>(
+                frontendComposition,
+                "row-actions:training-participant-eligibility:list",
+                "rowActions.after",
+                { resource: "training-participant-eligibility", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -668,6 +1114,8 @@ export const TrainingParticipantEligibilityList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:training-participant-eligibility:list", "toolbar.before", { resource: "training-participant-eligibility", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:training-participant-eligibility:list", "toolbar.actions", { resource: "training-participant-eligibility", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -677,6 +1125,7 @@ export const TrainingParticipantEligibilityList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:training-participant-eligibility:list", "toolbar.after", { resource: "training-participant-eligibility", table })}
       </RefineDataTable>
     </ListView>
   );

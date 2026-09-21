@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type UserOrganizationMembershipDirectoryRecord = {
   userOrganizationMembershipId: string;
@@ -81,7 +83,19 @@ export const UserOrganizationMembershipDirectoryList = () => {
           placeholder: "Enter User Organization Membership Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserOrganizationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:user-organization-membership-directory:display:userOrganizationMembershipId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-organization-membership-directory",
+              field: "userOrganizationMembershipId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("userAccountId", {
         id: "userAccountId",
@@ -95,7 +109,19 @@ export const UserOrganizationMembershipDirectoryList = () => {
           placeholder: "Enter User Account Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserOrganizationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:user-organization-membership-directory:display:userAccountId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-organization-membership-directory",
+              field: "userAccountId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("username", {
         id: "username",
@@ -109,7 +135,19 @@ export const UserOrganizationMembershipDirectoryList = () => {
           placeholder: "Enter Username",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserOrganizationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:user-organization-membership-directory:display:username",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-organization-membership-directory",
+              field: "username",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -123,7 +161,19 @@ export const UserOrganizationMembershipDirectoryList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserOrganizationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:user-organization-membership-directory:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-organization-membership-directory",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -137,7 +187,19 @@ export const UserOrganizationMembershipDirectoryList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserOrganizationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:user-organization-membership-directory:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-organization-membership-directory",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationUserRole", {
         id: "organizationUserRole",
@@ -151,7 +213,19 @@ export const UserOrganizationMembershipDirectoryList = () => {
           placeholder: "Enter Organization User Role",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserOrganizationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:user-organization-membership-directory:display:organizationUserRole",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-organization-membership-directory",
+              field: "organizationUserRole",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -169,7 +243,19 @@ export const UserOrganizationMembershipDirectoryList = () => {
             { label: "Active", value: "ACTIVE" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserOrganizationMembershipDirectoryRecord>(
+            frontendComposition,
+            "field:user-organization-membership-directory:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-organization-membership-directory",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -177,7 +263,19 @@ export const UserOrganizationMembershipDirectoryList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<UserOrganizationMembershipDirectoryRecord>(
+                frontendComposition,
+                "row-actions:user-organization-membership-directory:list",
+                "rowActions.before",
+                { resource: "user-organization-membership-directory", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.userOrganizationMembershipId} size="sm" />
+              {renderSlotExtensions<UserOrganizationMembershipDirectoryRecord>(
+                frontendComposition,
+                "row-actions:user-organization-membership-directory:list",
+                "rowActions.after",
+                { resource: "user-organization-membership-directory", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -212,7 +310,9 @@ export const UserOrganizationMembershipDirectoryList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:user-organization-membership-directory:list", "toolbar.before", { resource: "user-organization-membership-directory", table })}
         <CommandButton variant="default" command="bindUserAccountToOrganization" />
+        {renderSlotExtensions(frontendComposition, "toolbar:user-organization-membership-directory:list", "toolbar.actions", { resource: "user-organization-membership-directory", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -222,6 +322,7 @@ export const UserOrganizationMembershipDirectoryList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:user-organization-membership-directory:list", "toolbar.after", { resource: "user-organization-membership-directory", table })}
       </RefineDataTable>
     </ListView>
   );

@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type AgentRuntimeInfrastructureConnectionCatalogRecord = {
   runtimeInfrastructureId: string;
@@ -85,7 +87,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           placeholder: "Enter Runtime Infrastructure Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-infrastructure-connection-catalog:display:runtimeInfrastructureId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-infrastructure-connection-catalog",
+              field: "runtimeInfrastructureId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
         id: "runtimeAgentId",
@@ -99,7 +113,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           placeholder: "Enter Runtime Agent Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-infrastructure-connection-catalog:display:runtimeAgentId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-infrastructure-connection-catalog",
+              field: "runtimeAgentId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimePlatformConnectionReady", {
         id: "runtimePlatformConnectionReady",
@@ -114,7 +140,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-infrastructure-connection-catalog:display:runtimePlatformConnectionReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-infrastructure-connection-catalog",
+              field: "runtimePlatformConnectionReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("platformApiReachable", {
         id: "platformApiReachable",
@@ -129,7 +167,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-infrastructure-connection-catalog:display:platformApiReachable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-infrastructure-connection-catalog",
+              field: "platformApiReachable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("agentAuthenticationSucceeded", {
         id: "agentAuthenticationSucceeded",
@@ -144,7 +194,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-infrastructure-connection-catalog:display:agentAuthenticationSucceeded",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-infrastructure-connection-catalog",
+              field: "agentAuthenticationSucceeded",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("controlChannelEstablished", {
         id: "controlChannelEstablished",
@@ -159,7 +221,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-infrastructure-connection-catalog:display:controlChannelEstablished",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-infrastructure-connection-catalog",
+              field: "controlChannelEstablished",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("heartbeatAccepted", {
         id: "heartbeatAccepted",
@@ -174,7 +248,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-infrastructure-connection-catalog:display:heartbeatAccepted",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-infrastructure-connection-catalog",
+              field: "heartbeatAccepted",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("connectedAt", {
         id: "connectedAt",
@@ -189,7 +275,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-infrastructure-connection-catalog:display:connectedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-infrastructure-connection-catalog",
+              field: "connectedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("connectionReportFailedAt", {
         id: "connectionReportFailedAt",
@@ -204,7 +302,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-infrastructure-connection-catalog:display:connectionReportFailedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-infrastructure-connection-catalog",
+              field: "connectionReportFailedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("connectionReportFailureReason", {
         id: "connectionReportFailureReason",
@@ -218,7 +328,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           placeholder: "Enter Connection Report Failure Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-infrastructure-connection-catalog:display:connectionReportFailureReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-infrastructure-connection-catalog",
+              field: "connectionReportFailureReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("connectionReportRetryable", {
         id: "connectionReportRetryable",
@@ -233,7 +355,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-infrastructure-connection-catalog:display:connectionReportRetryable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-infrastructure-connection-catalog",
+              field: "connectionReportRetryable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.display({
         id: "actions",
@@ -241,7 +375,19 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+                frontendComposition,
+                "row-actions:agent-runtime-infrastructure-connection-catalog:list",
+                "rowActions.before",
+                { resource: "agent-runtime-infrastructure-connection-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeInfrastructureId} size="sm" />
+              {renderSlotExtensions<AgentRuntimeInfrastructureConnectionCatalogRecord>(
+                frontendComposition,
+                "row-actions:agent-runtime-infrastructure-connection-catalog:list",
+                "rowActions.after",
+                { resource: "agent-runtime-infrastructure-connection-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -276,6 +422,8 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-infrastructure-connection-catalog:list", "toolbar.before", { resource: "agent-runtime-infrastructure-connection-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-infrastructure-connection-catalog:list", "toolbar.actions", { resource: "agent-runtime-infrastructure-connection-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -285,6 +433,7 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-infrastructure-connection-catalog:list", "toolbar.after", { resource: "agent-runtime-infrastructure-connection-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

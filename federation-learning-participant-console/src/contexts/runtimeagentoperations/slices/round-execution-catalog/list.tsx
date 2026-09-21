@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RoundExecutionCatalogRecord = {
   roundExecutionId: string;
@@ -120,7 +122,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Round Execution Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:roundExecutionId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "roundExecutionId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("executionSessionId", {
         id: "executionSessionId",
@@ -134,7 +148,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Execution Session Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:executionSessionId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "executionSessionId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("executionPlanId", {
         id: "executionPlanId",
@@ -148,7 +174,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Execution Plan Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:executionPlanId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "executionPlanId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
         id: "trainingJobId",
@@ -162,7 +200,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Training Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:trainingJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "trainingJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingRunConfigurationId", {
         id: "trainingRunConfigurationId",
@@ -176,7 +226,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Training Run Configuration Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:trainingRunConfigurationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "trainingRunConfigurationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundId", {
         id: "roundId",
@@ -190,7 +252,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Round Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:roundId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "roundId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundNumber", {
         id: "roundNumber",
@@ -205,7 +279,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:roundNumber",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "roundNumber",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -219,7 +305,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
         id: "runtimeId",
@@ -233,7 +331,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Runtime Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -261,7 +371,19 @@ export const RoundExecutionCatalogList = () => {
             { label: "Runtime Engine Release Handled", value: "RUNTIME_ENGINE_RELEASE_HANDLED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -275,7 +397,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("baseModelId", {
         id: "baseModelId",
@@ -289,7 +423,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Base Model Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:baseModelId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "baseModelId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineProfileId", {
         id: "runtimeEngineProfileId",
@@ -303,7 +449,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Runtime Engine Profile Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeEngineProfileId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeEngineProfileId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineProfileName", {
         id: "runtimeEngineProfileName",
@@ -317,7 +475,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Runtime Engine Profile Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeEngineProfileName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeEngineProfileName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEnginePluginProfile", {
         id: "runtimeEnginePluginProfile",
@@ -331,7 +501,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Runtime Engine Plugin Profile",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeEnginePluginProfile",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeEnginePluginProfile",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineImage", {
         id: "runtimeEngineImage",
@@ -345,7 +527,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Runtime Engine Image",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeEngineImage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeEngineImage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineImageDigest", {
         id: "runtimeEngineImageDigest",
@@ -359,7 +553,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Runtime Engine Image Digest",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeEngineImageDigest",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeEngineImageDigest",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineJobId", {
         id: "runtimeEngineJobId",
@@ -373,7 +579,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Runtime Engine Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeEngineJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeEngineJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineObservedStatus", {
         id: "runtimeEngineObservedStatus",
@@ -387,7 +605,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Runtime Engine Observed Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeEngineObservedStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeEngineObservedStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineObservationAt", {
         id: "runtimeEngineObservationAt",
@@ -402,7 +632,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeEngineObservationAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeEngineObservationAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("localUpdateArtifactRef", {
         id: "localUpdateArtifactRef",
@@ -416,7 +658,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Local Update Artifact Ref",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:localUpdateArtifactRef",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "localUpdateArtifactRef",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("metricsArtifactRef", {
         id: "metricsArtifactRef",
@@ -430,7 +684,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Metrics Artifact Ref",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:metricsArtifactRef",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "metricsArtifactRef",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("localExecutionRequirementsSatisfied", {
         id: "localExecutionRequirementsSatisfied",
@@ -445,7 +711,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:localExecutionRequirementsSatisfied",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "localExecutionRequirementsSatisfied",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeIdentityMatched", {
         id: "runtimeIdentityMatched",
@@ -460,7 +738,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeIdentityMatched",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeIdentityMatched",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeDatasetBindingAvailable", {
         id: "runtimeDatasetBindingAvailable",
@@ -475,7 +765,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeDatasetBindingAvailable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeDatasetBindingAvailable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("datasetAccessValidated", {
         id: "datasetAccessValidated",
@@ -490,7 +792,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:datasetAccessValidated",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "datasetAccessValidated",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("baseModelAvailable", {
         id: "baseModelAvailable",
@@ -505,7 +819,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:baseModelAvailable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "baseModelAvailable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("trainingConfigurationSupported", {
         id: "trainingConfigurationSupported",
@@ -520,7 +846,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:trainingConfigurationSupported",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "trainingConfigurationSupported",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeResourceAvailable", {
         id: "runtimeResourceAvailable",
@@ -535,7 +873,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeResourceAvailable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeResourceAvailable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeAgentIdle", {
         id: "runtimeAgentIdle",
@@ -550,7 +900,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeAgentIdle",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeAgentIdle",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("updateArtifactId", {
         id: "updateArtifactId",
@@ -564,7 +926,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Update Artifact Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:updateArtifactId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "updateArtifactId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("artifactRef", {
         id: "artifactRef",
@@ -578,7 +952,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Artifact Ref",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:artifactRef",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "artifactRef",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("artifactDigest", {
         id: "artifactDigest",
@@ -592,7 +978,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Artifact Digest",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:artifactDigest",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "artifactDigest",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingLoss", {
         id: "trainingLoss",
@@ -607,7 +1005,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:trainingLoss",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "trainingLoss",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("receivedAt", {
         id: "receivedAt",
@@ -622,7 +1032,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:receivedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "receivedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("acceptedAt", {
         id: "acceptedAt",
@@ -637,7 +1059,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:acceptedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "acceptedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("rejectedAt", {
         id: "rejectedAt",
@@ -652,7 +1086,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:rejectedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "rejectedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("startedAt", {
         id: "startedAt",
@@ -667,7 +1113,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:startedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "startedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("completedAt", {
         id: "completedAt",
@@ -682,7 +1140,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:completedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "completedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("failedAt", {
         id: "failedAt",
@@ -697,7 +1167,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:failedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "failedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("submittedAt", {
         id: "submittedAt",
@@ -712,7 +1194,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:submittedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "submittedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("failureReason", {
         id: "failureReason",
@@ -726,7 +1220,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Failure Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:failureReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "failureReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("retryReason", {
         id: "retryReason",
@@ -740,7 +1246,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Retry Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:retryReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "retryReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineReleased", {
         id: "runtimeEngineReleased",
@@ -755,7 +1273,19 @@ export const RoundExecutionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeEngineReleased",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeEngineReleased",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeEngineReleaseFailureReason", {
         id: "runtimeEngineReleaseFailureReason",
@@ -769,7 +1299,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Runtime Engine Release Failure Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:runtimeEngineReleaseFailureReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "runtimeEngineReleaseFailureReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("rejectionReasons", {
         id: "rejectionReasons",
@@ -783,7 +1325,19 @@ export const RoundExecutionCatalogList = () => {
           placeholder: "Enter Rejection Reasons",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RoundExecutionCatalogRecord>(
+            frontendComposition,
+            "field:round-execution-catalog:display:rejectionReasons",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "round-execution-catalog",
+              field: "rejectionReasons",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -791,6 +1345,12 @@ export const RoundExecutionCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RoundExecutionCatalogRecord>(
+                frontendComposition,
+                "row-actions:round-execution-catalog:list",
+                "rowActions.before",
+                { resource: "round-execution-catalog", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "state", ["StartFailed"]) && (
                   <CommandButton
                     variant="ghost"
@@ -832,6 +1392,12 @@ export const RoundExecutionCatalogList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.roundExecutionId} size="sm" />
+              {renderSlotExtensions<RoundExecutionCatalogRecord>(
+                frontendComposition,
+                "row-actions:round-execution-catalog:list",
+                "rowActions.after",
+                { resource: "round-execution-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -866,6 +1432,8 @@ export const RoundExecutionCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:round-execution-catalog:list", "toolbar.before", { resource: "round-execution-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:round-execution-catalog:list", "toolbar.actions", { resource: "round-execution-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -875,6 +1443,7 @@ export const RoundExecutionCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:round-execution-catalog:list", "toolbar.after", { resource: "round-execution-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

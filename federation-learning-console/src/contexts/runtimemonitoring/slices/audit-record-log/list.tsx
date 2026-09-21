@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type AuditRecordLogRecord = {
   auditRecordId: string;
@@ -79,7 +81,19 @@ export const AuditRecordLogList = () => {
           placeholder: "Enter Audit Record Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AuditRecordLogRecord>(
+            frontendComposition,
+            "field:audit-record-log:display:auditRecordId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "audit-record-log",
+              field: "auditRecordId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sourceEventName", {
         id: "sourceEventName",
@@ -93,7 +107,19 @@ export const AuditRecordLogList = () => {
           placeholder: "Enter Source Event Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AuditRecordLogRecord>(
+            frontendComposition,
+            "field:audit-record-log:display:sourceEventName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "audit-record-log",
+              field: "sourceEventName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sourceEntityId", {
         id: "sourceEntityId",
@@ -107,7 +133,19 @@ export const AuditRecordLogList = () => {
           placeholder: "Enter Source Entity Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AuditRecordLogRecord>(
+            frontendComposition,
+            "field:audit-record-log:display:sourceEntityId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "audit-record-log",
+              field: "sourceEntityId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("severity", {
         id: "severity",
@@ -121,7 +159,19 @@ export const AuditRecordLogList = () => {
           placeholder: "Enter Severity",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AuditRecordLogRecord>(
+            frontendComposition,
+            "field:audit-record-log:display:severity",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "audit-record-log",
+              field: "severity",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("payloadHash", {
         id: "payloadHash",
@@ -135,7 +185,19 @@ export const AuditRecordLogList = () => {
           placeholder: "Enter Payload Hash",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AuditRecordLogRecord>(
+            frontendComposition,
+            "field:audit-record-log:display:payloadHash",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "audit-record-log",
+              field: "payloadHash",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -143,7 +205,19 @@ export const AuditRecordLogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<AuditRecordLogRecord>(
+                frontendComposition,
+                "row-actions:audit-record-log:list",
+                "rowActions.before",
+                { resource: "audit-record-log", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.auditRecordId} size="sm" />
+              {renderSlotExtensions<AuditRecordLogRecord>(
+                frontendComposition,
+                "row-actions:audit-record-log:list",
+                "rowActions.after",
+                { resource: "audit-record-log", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -178,6 +252,8 @@ export const AuditRecordLogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:audit-record-log:list", "toolbar.before", { resource: "audit-record-log", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:audit-record-log:list", "toolbar.actions", { resource: "audit-record-log", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -187,6 +263,7 @@ export const AuditRecordLogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:audit-record-log:list", "toolbar.after", { resource: "audit-record-log", table })}
       </RefineDataTable>
     </ListView>
   );

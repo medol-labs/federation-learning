@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type AgentOrganizationDirectoryRecord = {
   organizationId: string;
@@ -79,7 +81,19 @@ export const AgentOrganizationDirectoryList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentOrganizationDirectoryRecord>(
+            frontendComposition,
+            "field:agent-organization-directory:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-organization-directory",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -93,7 +107,19 @@ export const AgentOrganizationDirectoryList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentOrganizationDirectoryRecord>(
+            frontendComposition,
+            "field:agent-organization-directory:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-organization-directory",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationType", {
         id: "organizationType",
@@ -107,7 +133,19 @@ export const AgentOrganizationDirectoryList = () => {
           placeholder: "Enter Organization Type",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentOrganizationDirectoryRecord>(
+            frontendComposition,
+            "field:agent-organization-directory:display:organizationType",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-organization-directory",
+              field: "organizationType",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -121,7 +159,19 @@ export const AgentOrganizationDirectoryList = () => {
           placeholder: "Enter State",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentOrganizationDirectoryRecord>(
+            frontendComposition,
+            "field:agent-organization-directory:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-organization-directory",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("syncedAt", {
         id: "syncedAt",
@@ -136,7 +186,19 @@ export const AgentOrganizationDirectoryList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentOrganizationDirectoryRecord>(
+            frontendComposition,
+            "field:agent-organization-directory:display:syncedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-organization-directory",
+              field: "syncedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -144,7 +206,19 @@ export const AgentOrganizationDirectoryList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<AgentOrganizationDirectoryRecord>(
+                frontendComposition,
+                "row-actions:agent-organization-directory:list",
+                "rowActions.before",
+                { resource: "agent-organization-directory", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.organizationId} size="sm" />
+              {renderSlotExtensions<AgentOrganizationDirectoryRecord>(
+                frontendComposition,
+                "row-actions:agent-organization-directory:list",
+                "rowActions.after",
+                { resource: "agent-organization-directory", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -179,6 +253,8 @@ export const AgentOrganizationDirectoryList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-organization-directory:list", "toolbar.before", { resource: "agent-organization-directory", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-organization-directory:list", "toolbar.actions", { resource: "agent-organization-directory", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -188,6 +264,7 @@ export const AgentOrganizationDirectoryList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-organization-directory:list", "toolbar.after", { resource: "agent-organization-directory", table })}
       </RefineDataTable>
     </ListView>
   );

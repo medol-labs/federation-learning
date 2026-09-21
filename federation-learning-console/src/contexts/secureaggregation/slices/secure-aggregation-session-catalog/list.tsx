@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type SecureAggregationSessionCatalogRecord = {
   secureAggregationSessionId: string;
@@ -103,7 +105,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Secure Aggregation Session Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:secureAggregationSessionId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "secureAggregationSessionId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
         id: "trainingJobId",
@@ -117,7 +131,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Training Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:trainingJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "trainingJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingRunConfigurationId", {
         id: "trainingRunConfigurationId",
@@ -131,7 +157,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Training Run Configuration Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:trainingRunConfigurationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "trainingRunConfigurationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -145,7 +183,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundId", {
         id: "roundId",
@@ -159,7 +209,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Round Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:roundId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "roundId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundNumber", {
         id: "roundNumber",
@@ -174,7 +236,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:roundNumber",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "roundNumber",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("requiredParticipantCount", {
         id: "requiredParticipantCount",
@@ -189,7 +263,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:requiredParticipantCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "requiredParticipantCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectedOrganizationIds", {
         id: "selectedOrganizationIds",
@@ -203,7 +289,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Selected Organization Ids",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:selectedOrganizationIds",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "selectedOrganizationIds",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectedRuntimeIds", {
         id: "selectedRuntimeIds",
@@ -217,7 +315,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Selected Runtime Ids",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:selectedRuntimeIds",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "selectedRuntimeIds",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectedOrganizationCount", {
         id: "selectedOrganizationCount",
@@ -232,7 +342,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:selectedOrganizationCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "selectedOrganizationCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectedRuntimeCount", {
         id: "selectedRuntimeCount",
@@ -247,7 +369,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:selectedRuntimeCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "selectedRuntimeCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("selectedParticipantCount", {
         id: "selectedParticipantCount",
@@ -262,7 +396,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:selectedParticipantCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "selectedParticipantCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("encryptionContextPrepared", {
         id: "encryptionContextPrepared",
@@ -277,7 +423,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:encryptionContextPrepared",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "encryptionContextPrepared",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("receivedEncryptedUpdateCount", {
         id: "receivedEncryptedUpdateCount",
@@ -292,7 +450,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:receivedEncryptedUpdateCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "receivedEncryptedUpdateCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("encryptionScheme", {
         id: "encryptionScheme",
@@ -306,7 +476,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Encryption Scheme",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:encryptionScheme",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "encryptionScheme",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("publicKeyVersion", {
         id: "publicKeyVersion",
@@ -320,7 +502,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Public Key Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:publicKeyVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "publicKeyVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("publicKeyRef", {
         id: "publicKeyRef",
@@ -334,7 +528,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Public Key Ref",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:publicKeyRef",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "publicKeyRef",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("encryptedParameterScale", {
         id: "encryptedParameterScale",
@@ -349,7 +555,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:encryptedParameterScale",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "encryptedParameterScale",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("aggregatedModelId", {
         id: "aggregatedModelId",
@@ -363,7 +581,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Aggregated Model Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:aggregatedModelId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "aggregatedModelId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelFormat", {
         id: "modelFormat",
@@ -377,7 +607,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Model Format",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:modelFormat",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "modelFormat",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelArtifactDigest", {
         id: "modelArtifactDigest",
@@ -391,7 +633,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Model Artifact Digest",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:modelArtifactDigest",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "modelArtifactDigest",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -413,7 +667,19 @@ export const SecureAggregationSessionCatalogList = () => {
             { label: "Failed", value: "FAILED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("failureReason", {
         id: "failureReason",
@@ -427,7 +693,19 @@ export const SecureAggregationSessionCatalogList = () => {
           placeholder: "Enter Failure Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:failureReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "failureReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("createdAt", {
         id: "createdAt",
@@ -442,7 +720,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:createdAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "createdAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("selectedAt", {
         id: "selectedAt",
@@ -457,7 +747,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:selectedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "selectedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("encryptionContextPreparedAt", {
         id: "encryptionContextPreparedAt",
@@ -472,7 +774,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:encryptionContextPreparedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "encryptionContextPreparedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("decryptedAt", {
         id: "decryptedAt",
@@ -487,7 +801,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:decryptedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "decryptedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("completedAt", {
         id: "completedAt",
@@ -502,7 +828,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:completedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "completedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("failedAt", {
         id: "failedAt",
@@ -517,7 +855,19 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<SecureAggregationSessionCatalogRecord>(
+            frontendComposition,
+            "field:secure-aggregation-session-catalog:display:failedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "secure-aggregation-session-catalog",
+              field: "failedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -525,6 +875,12 @@ export const SecureAggregationSessionCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<SecureAggregationSessionCatalogRecord>(
+                frontendComposition,
+                "row-actions:secure-aggregation-session-catalog:list",
+                "rowActions.before",
+                { resource: "secure-aggregation-session-catalog", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "state", ["Planned"]) && (
                   <CommandButton
                     variant="ghost"
@@ -537,6 +893,12 @@ export const SecureAggregationSessionCatalogList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.secureAggregationSessionId} size="sm" />
+              {renderSlotExtensions<SecureAggregationSessionCatalogRecord>(
+                frontendComposition,
+                "row-actions:secure-aggregation-session-catalog:list",
+                "rowActions.after",
+                { resource: "secure-aggregation-session-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -571,6 +933,8 @@ export const SecureAggregationSessionCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:secure-aggregation-session-catalog:list", "toolbar.before", { resource: "secure-aggregation-session-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:secure-aggregation-session-catalog:list", "toolbar.actions", { resource: "secure-aggregation-session-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -580,6 +944,7 @@ export const SecureAggregationSessionCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:secure-aggregation-session-catalog:list", "toolbar.after", { resource: "secure-aggregation-session-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

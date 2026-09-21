@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type ModelArtifactCatalogRecord = {
   modelId: string;
@@ -91,7 +93,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Model Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelName", {
         id: "modelName",
@@ -105,7 +119,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Model Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelPlugin", {
         id: "modelPlugin",
@@ -119,7 +145,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Model Plugin",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelPlugin",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelPlugin",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelVersion", {
         id: "modelVersion",
@@ -133,7 +171,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Model Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelDescription", {
         id: "modelDescription",
@@ -147,7 +197,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Model Description",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelDescription",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelDescription",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sourceType", {
         id: "sourceType",
@@ -161,7 +223,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Source Type",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:sourceType",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "sourceType",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelArtifactUri", {
         id: "modelArtifactUri",
@@ -175,7 +249,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Model Artifact Uri",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelArtifactUri",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelArtifactUri",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelRegistryRef", {
         id: "modelRegistryRef",
@@ -189,7 +275,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Model Registry Ref",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelRegistryRef",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelRegistryRef",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelFormat", {
         id: "modelFormat",
@@ -203,7 +301,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Model Format",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelFormat",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelFormat",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelArtifactDigest", {
         id: "modelArtifactDigest",
@@ -217,7 +327,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Model Artifact Digest",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelArtifactDigest",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelArtifactDigest",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelSignatureUri", {
         id: "modelSignatureUri",
@@ -231,7 +353,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Model Signature Uri",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelSignatureUri",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelSignatureUri",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("modelSizeBytes", {
         id: "modelSizeBytes",
@@ -246,7 +380,19 @@ export const ModelArtifactCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelSizeBytes",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelSizeBytes",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
         id: "trainingJobId",
@@ -260,7 +406,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Training Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:trainingJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "trainingJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundId", {
         id: "roundId",
@@ -274,7 +432,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Round Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:roundId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "roundId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobObjective", {
         id: "trainingJobObjective",
@@ -288,7 +458,19 @@ export const ModelArtifactCatalogList = () => {
           placeholder: "Enter Training Job Objective",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:trainingJobObjective",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "trainingJobObjective",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -306,7 +488,19 @@ export const ModelArtifactCatalogList = () => {
             { label: "Registered", value: "REGISTERED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("registeredAt", {
         id: "registeredAt",
@@ -321,7 +515,19 @@ export const ModelArtifactCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:registeredAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "registeredAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -329,6 +535,12 @@ export const ModelArtifactCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<ModelArtifactCatalogRecord>(
+                frontendComposition,
+                "row-actions:model-artifact-catalog:list",
+                "rowActions.before",
+                { resource: "model-artifact-catalog", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "", []) && (
                   <CommandButton
                     variant="ghost"
@@ -342,6 +554,12 @@ export const ModelArtifactCatalogList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.modelId} size="sm" />
+              {renderSlotExtensions<ModelArtifactCatalogRecord>(
+                frontendComposition,
+                "row-actions:model-artifact-catalog:list",
+                "rowActions.after",
+                { resource: "model-artifact-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -376,7 +594,9 @@ export const ModelArtifactCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:model-artifact-catalog:list", "toolbar.before", { resource: "model-artifact-catalog", table })}
         <CommandButton variant="default" command="registerModelArtifact" />
+        {renderSlotExtensions(frontendComposition, "toolbar:model-artifact-catalog:list", "toolbar.actions", { resource: "model-artifact-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -386,6 +606,7 @@ export const ModelArtifactCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:model-artifact-catalog:list", "toolbar.after", { resource: "model-artifact-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

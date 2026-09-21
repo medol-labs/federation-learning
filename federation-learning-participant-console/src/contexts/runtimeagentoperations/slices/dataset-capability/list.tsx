@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 import type { FeatureDefinition, LabelDefinition } from "@/contexts/domain/value-types";
 
 type DatasetCapabilityRecord = {
@@ -98,7 +100,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Dataset Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:datasetId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "datasetId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -112,7 +126,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
         id: "runtimeId",
@@ -126,7 +152,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Runtime Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:runtimeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "runtimeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -140,7 +178,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("features", {
         id: "features",
@@ -154,7 +204,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "[\n  {\n    \"featureName\": \"\",\n    \"dataType\": \"\",\n    \"required\": false,\n    \"nullable\": false,\n    \"description\": \"\",\n    \"validationRules\": [],\n    \"defaultValue\": \"\",\n    \"isIdentifier\": false,\n    \"isSensitive\": false,\n    \"encodingStrategy\": \"\",\n    \"featureTags\": []\n  }\n]",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:features",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "features",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("labels", {
         id: "labels",
@@ -168,7 +230,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "[\n  {\n    \"labelName\": \"\",\n    \"dataType\": \"\",\n    \"cardinality\": 0,\n    \"classLabels\": [],\n    \"isMultilabel\": false,\n    \"description\": \"\",\n    \"validationRules\": [],\n    \"defaultValue\": \"\"\n  }\n]",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:labels",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "labels",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -182,7 +256,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
         id: "featureDomain",
@@ -196,7 +282,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
         id: "featureSchemaVersion",
@@ -210,7 +308,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Feature Schema Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:featureSchemaVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "featureSchemaVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetName", {
         id: "datasetName",
@@ -224,7 +334,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Dataset Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:datasetName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "datasetName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetUsage", {
         id: "datasetUsage",
@@ -238,7 +360,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Dataset Usage",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:datasetUsage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "datasetUsage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sampleCount", {
         id: "sampleCount",
@@ -253,7 +387,19 @@ export const DatasetCapabilityList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:sampleCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "sampleCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureCount", {
         id: "featureCount",
@@ -268,7 +414,19 @@ export const DatasetCapabilityList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:featureCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "featureCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("schemaCompatible", {
         id: "schemaCompatible",
@@ -283,7 +441,19 @@ export const DatasetCapabilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:schemaCompatible",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "schemaCompatible",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("labelCompatible", {
         id: "labelCompatible",
@@ -298,7 +468,19 @@ export const DatasetCapabilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:labelCompatible",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "labelCompatible",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("qualityScore", {
         id: "qualityScore",
@@ -313,7 +495,19 @@ export const DatasetCapabilityList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:qualityScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "qualityScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nonIidScore", {
         id: "nonIidScore",
@@ -328,7 +522,19 @@ export const DatasetCapabilityList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:nonIidScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "nonIidScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("metadataReportId", {
         id: "metadataReportId",
@@ -342,7 +548,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Metadata Report Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:metadataReportId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "metadataReportId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("metadataStatus", {
         id: "metadataStatus",
@@ -356,7 +574,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Metadata Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:metadataStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "metadataStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("contractStatus", {
         id: "contractStatus",
@@ -370,7 +600,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Contract Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:contractStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "contractStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("approvalStatus", {
         id: "approvalStatus",
@@ -384,7 +626,19 @@ export const DatasetCapabilityList = () => {
           placeholder: "Enter Approval Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:approvalStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "approvalStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("approved", {
         id: "approved",
@@ -399,7 +653,19 @@ export const DatasetCapabilityList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:approved",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "approved",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("lastProfiledAt", {
         id: "lastProfiledAt",
@@ -414,7 +680,19 @@ export const DatasetCapabilityList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetCapabilityRecord>(
+            frontendComposition,
+            "field:dataset-capability:display:lastProfiledAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-capability",
+              field: "lastProfiledAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -422,6 +700,12 @@ export const DatasetCapabilityList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<DatasetCapabilityRecord>(
+                frontendComposition,
+                "row-actions:dataset-capability:list",
+                "rowActions.before",
+                { resource: "dataset-capability", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "contractStatus", ["ContractValidationCompleted"]) && (
                   <CommandButton
                     variant="ghost"
@@ -487,6 +771,12 @@ export const DatasetCapabilityList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.datasetId} size="sm" />
+              {renderSlotExtensions<DatasetCapabilityRecord>(
+                frontendComposition,
+                "row-actions:dataset-capability:list",
+                "rowActions.after",
+                { resource: "dataset-capability", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -521,7 +811,9 @@ export const DatasetCapabilityList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:dataset-capability:list", "toolbar.before", { resource: "dataset-capability", table })}
         <CommandButton variant="default" command="declareDataset" />
+        {renderSlotExtensions(frontendComposition, "toolbar:dataset-capability:list", "toolbar.actions", { resource: "dataset-capability", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -531,6 +823,7 @@ export const DatasetCapabilityList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:dataset-capability:list", "toolbar.after", { resource: "dataset-capability", table })}
       </RefineDataTable>
     </ListView>
   );

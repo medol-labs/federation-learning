@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type TrainingRunConfigurationCatalogRecord = {
   trainingRunConfigurationId: string;
@@ -113,7 +115,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Training Run Configuration Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:trainingRunConfigurationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "trainingRunConfigurationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("configurationName", {
         id: "configurationName",
@@ -127,7 +141,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Configuration Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:configurationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "configurationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationId", {
         id: "federationId",
@@ -141,7 +167,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Federation Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:federationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "federationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -155,7 +193,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelId", {
         id: "initialModelId",
@@ -169,7 +219,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Initial Model Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:initialModelId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "initialModelId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelName", {
         id: "initialModelName",
@@ -183,7 +245,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Initial Model Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:initialModelName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "initialModelName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelPlugin", {
         id: "initialModelPlugin",
@@ -197,7 +271,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Initial Model Plugin",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:initialModelPlugin",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "initialModelPlugin",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelVersion", {
         id: "initialModelVersion",
@@ -211,7 +297,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Initial Model Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:initialModelVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "initialModelVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("federationName", {
         id: "federationName",
@@ -225,7 +323,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Federation Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:federationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "federationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
         id: "featureDomain",
@@ -239,7 +349,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
         id: "featureSchemaVersion",
@@ -253,7 +375,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Feature Schema Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:featureSchemaVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "featureSchemaVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelArtifactUri", {
         id: "initialModelArtifactUri",
@@ -267,7 +401,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Initial Model Artifact Uri",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:initialModelArtifactUri",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "initialModelArtifactUri",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelRegistryRef", {
         id: "initialModelRegistryRef",
@@ -281,7 +427,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Initial Model Registry Ref",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:initialModelRegistryRef",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "initialModelRegistryRef",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelFormat", {
         id: "initialModelFormat",
@@ -295,7 +453,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Initial Model Format",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:initialModelFormat",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "initialModelFormat",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelArtifactDigest", {
         id: "initialModelArtifactDigest",
@@ -309,7 +479,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Initial Model Artifact Digest",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:initialModelArtifactDigest",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "initialModelArtifactDigest",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("initialModelSignatureUri", {
         id: "initialModelSignatureUri",
@@ -323,7 +505,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Initial Model Signature Uri",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:initialModelSignatureUri",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "initialModelSignatureUri",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineProfileId", {
         id: "runtimeEngineProfileId",
@@ -337,7 +531,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Runtime Engine Profile Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:runtimeEngineProfileId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "runtimeEngineProfileId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineProfileName", {
         id: "runtimeEngineProfileName",
@@ -351,7 +557,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Runtime Engine Profile Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:runtimeEngineProfileName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "runtimeEngineProfileName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEnginePluginProfile", {
         id: "runtimeEnginePluginProfile",
@@ -365,7 +583,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Runtime Engine Plugin Profile",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:runtimeEnginePluginProfile",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "runtimeEnginePluginProfile",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineImage", {
         id: "runtimeEngineImage",
@@ -379,7 +609,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Runtime Engine Image",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:runtimeEngineImage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "runtimeEngineImage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineImageDigest", {
         id: "runtimeEngineImageDigest",
@@ -393,7 +635,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Runtime Engine Image Digest",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:runtimeEngineImageDigest",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "runtimeEngineImageDigest",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("strategyName", {
         id: "strategyName",
@@ -407,7 +661,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Strategy Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:strategyName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "strategyName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("aggregationAlgorithm", {
         id: "aggregationAlgorithm",
@@ -421,7 +687,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Aggregation Algorithm",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:aggregationAlgorithm",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "aggregationAlgorithm",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("maxRounds", {
         id: "maxRounds",
@@ -436,7 +714,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:maxRounds",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "maxRounds",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumNodesPerRound", {
         id: "minimumNodesPerRound",
@@ -451,7 +741,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:minimumNodesPerRound",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "minimumNodesPerRound",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roundTimeoutSeconds", {
         id: "roundTimeoutSeconds",
@@ -466,7 +768,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:roundTimeoutSeconds",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "roundTimeoutSeconds",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nodeResponseTimeoutSeconds", {
         id: "nodeResponseTimeoutSeconds",
@@ -481,7 +795,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:nodeResponseTimeoutSeconds",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "nodeResponseTimeoutSeconds",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("localEpochs", {
         id: "localEpochs",
@@ -496,7 +822,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:localEpochs",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "localEpochs",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("batchSize", {
         id: "batchSize",
@@ -511,7 +849,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:batchSize",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "batchSize",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("learningRate", {
         id: "learningRate",
@@ -526,7 +876,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:learningRate",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "learningRate",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("optimizer", {
         id: "optimizer",
@@ -540,7 +902,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Optimizer",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:optimizer",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "optimizer",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lossFunction", {
         id: "lossFunction",
@@ -554,7 +928,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Loss Function",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:lossFunction",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "lossFunction",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("gradientClippingNorm", {
         id: "gradientClippingNorm",
@@ -569,7 +955,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:gradientClippingNorm",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "gradientClippingNorm",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("secureAggregationRequired", {
         id: "secureAggregationRequired",
@@ -584,7 +982,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:secureAggregationRequired",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "secureAggregationRequired",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("minimumAccuracy", {
         id: "minimumAccuracy",
@@ -599,7 +1009,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:minimumAccuracy",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "minimumAccuracy",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("minimumFairnessScore", {
         id: "minimumFairnessScore",
@@ -614,7 +1036,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:minimumFairnessScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "minimumFairnessScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("updateReason", {
         id: "updateReason",
@@ -628,7 +1062,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Update Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:updateReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "updateReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lockedByTrainingJobId", {
         id: "lockedByTrainingJobId",
@@ -642,7 +1088,19 @@ export const TrainingRunConfigurationCatalogList = () => {
           placeholder: "Enter Locked By Training Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:lockedByTrainingJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "lockedByTrainingJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -661,7 +1119,19 @@ export const TrainingRunConfigurationCatalogList = () => {
             { label: "Locked", value: "LOCKED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -669,6 +1139,12 @@ export const TrainingRunConfigurationCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<TrainingRunConfigurationCatalogRecord>(
+                frontendComposition,
+                "row-actions:training-run-configuration-catalog:list",
+                "rowActions.before",
+                { resource: "training-run-configuration-catalog", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "state", ["Draft"]) && (
                   <EditButton variant="ghost" recordItemId={row.original.trainingRunConfigurationId} size="sm" />
                 )}
@@ -685,6 +1161,12 @@ export const TrainingRunConfigurationCatalogList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.trainingRunConfigurationId} size="sm" />
+              {renderSlotExtensions<TrainingRunConfigurationCatalogRecord>(
+                frontendComposition,
+                "row-actions:training-run-configuration-catalog:list",
+                "rowActions.after",
+                { resource: "training-run-configuration-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -719,7 +1201,9 @@ export const TrainingRunConfigurationCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:training-run-configuration-catalog:list", "toolbar.before", { resource: "training-run-configuration-catalog", table })}
         <CommandButton variant="default" command="defineTrainingRunConfiguration" />
+        {renderSlotExtensions(frontendComposition, "toolbar:training-run-configuration-catalog:list", "toolbar.actions", { resource: "training-run-configuration-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -729,6 +1213,7 @@ export const TrainingRunConfigurationCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:training-run-configuration-catalog:list", "toolbar.after", { resource: "training-run-configuration-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

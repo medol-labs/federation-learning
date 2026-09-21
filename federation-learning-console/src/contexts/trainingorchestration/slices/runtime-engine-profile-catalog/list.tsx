@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 
 type RuntimeEngineProfileCatalogRecord = {
@@ -85,7 +87,19 @@ export const RuntimeEngineProfileCatalogList = () => {
           placeholder: "Enter Runtime Engine Profile Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeEngineProfileCatalogRecord>(
+            frontendComposition,
+            "field:runtime-engine-profile-catalog:display:runtimeEngineProfileId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-engine-profile-catalog",
+              field: "runtimeEngineProfileId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("profileName", {
         id: "profileName",
@@ -99,7 +113,19 @@ export const RuntimeEngineProfileCatalogList = () => {
           placeholder: "Enter Profile Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeEngineProfileCatalogRecord>(
+            frontendComposition,
+            "field:runtime-engine-profile-catalog:display:profileName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-engine-profile-catalog",
+              field: "profileName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("pluginProfile", {
         id: "pluginProfile",
@@ -113,7 +139,19 @@ export const RuntimeEngineProfileCatalogList = () => {
           placeholder: "Enter Plugin Profile",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeEngineProfileCatalogRecord>(
+            frontendComposition,
+            "field:runtime-engine-profile-catalog:display:pluginProfile",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-engine-profile-catalog",
+              field: "pluginProfile",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeEngineImage", {
         id: "runtimeEngineImage",
@@ -127,7 +165,19 @@ export const RuntimeEngineProfileCatalogList = () => {
           placeholder: "Enter Runtime Engine Image",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeEngineProfileCatalogRecord>(
+            frontendComposition,
+            "field:runtime-engine-profile-catalog:display:runtimeEngineImage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-engine-profile-catalog",
+              field: "runtimeEngineImage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("imageDigest", {
         id: "imageDigest",
@@ -141,7 +191,19 @@ export const RuntimeEngineProfileCatalogList = () => {
           placeholder: "Enter Image Digest",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeEngineProfileCatalogRecord>(
+            frontendComposition,
+            "field:runtime-engine-profile-catalog:display:imageDigest",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-engine-profile-catalog",
+              field: "imageDigest",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("supportedModelPluginsDescription", {
         id: "supportedModelPluginsDescription",
@@ -156,7 +218,19 @@ export const RuntimeEngineProfileCatalogList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeEngineProfileCatalogRecord>(
+            frontendComposition,
+            "field:runtime-engine-profile-catalog:display:supportedModelPluginsDescription",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-engine-profile-catalog",
+              field: "supportedModelPluginsDescription",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("supportedAggregationAlgorithmsDescription", {
         id: "supportedAggregationAlgorithmsDescription",
@@ -171,7 +245,19 @@ export const RuntimeEngineProfileCatalogList = () => {
           variant: "text",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => <CopyableText value={getValue()} compact />,
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeEngineProfileCatalogRecord>(
+            frontendComposition,
+            "field:runtime-engine-profile-catalog:display:supportedAggregationAlgorithmsDescription",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-engine-profile-catalog",
+              field: "supportedAggregationAlgorithmsDescription",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.accessor("active", {
         id: "active",
@@ -186,7 +272,19 @@ export const RuntimeEngineProfileCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeEngineProfileCatalogRecord>(
+            frontendComposition,
+            "field:runtime-engine-profile-catalog:display:active",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-engine-profile-catalog",
+              field: "active",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -204,7 +302,19 @@ export const RuntimeEngineProfileCatalogList = () => {
             { label: "Registered", value: "REGISTERED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeEngineProfileCatalogRecord>(
+            frontendComposition,
+            "field:runtime-engine-profile-catalog:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-engine-profile-catalog",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("registeredAt", {
         id: "registeredAt",
@@ -219,7 +329,19 @@ export const RuntimeEngineProfileCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeEngineProfileCatalogRecord>(
+            frontendComposition,
+            "field:runtime-engine-profile-catalog:display:registeredAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-engine-profile-catalog",
+              field: "registeredAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -227,7 +349,19 @@ export const RuntimeEngineProfileCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RuntimeEngineProfileCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-engine-profile-catalog:list",
+                "rowActions.before",
+                { resource: "runtime-engine-profile-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeEngineProfileId} size="sm" />
+              {renderSlotExtensions<RuntimeEngineProfileCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-engine-profile-catalog:list",
+                "rowActions.after",
+                { resource: "runtime-engine-profile-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -262,7 +396,9 @@ export const RuntimeEngineProfileCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-engine-profile-catalog:list", "toolbar.before", { resource: "runtime-engine-profile-catalog", table })}
         <CommandButton variant="default" command="registerRuntimeEngineProfile" />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-engine-profile-catalog:list", "toolbar.actions", { resource: "runtime-engine-profile-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -272,6 +408,7 @@ export const RuntimeEngineProfileCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-engine-profile-catalog:list", "toolbar.after", { resource: "runtime-engine-profile-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

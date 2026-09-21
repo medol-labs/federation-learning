@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RuntimeAgentLifecycleCatalogRecord = {
   runtimeAgentId: string;
@@ -93,7 +95,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           placeholder: "Enter Runtime Agent Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:runtimeAgentId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "runtimeAgentId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
         id: "runtimeInfrastructureId",
@@ -107,7 +121,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           placeholder: "Enter Runtime Infrastructure Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:runtimeInfrastructureId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "runtimeInfrastructureId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("agentVersion", {
         id: "agentVersion",
@@ -121,7 +147,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           placeholder: "Enter Agent Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:agentVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "agentVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentEndpoint", {
         id: "runtimeAgentEndpoint",
@@ -135,7 +173,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           placeholder: "Enter Runtime Agent Endpoint",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:runtimeAgentEndpoint",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "runtimeAgentEndpoint",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("endpointScope", {
         id: "endpointScope",
@@ -149,7 +199,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           placeholder: "Enter Endpoint Scope",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:endpointScope",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "endpointScope",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("lifecycleStatus", {
         id: "lifecycleStatus",
@@ -163,7 +225,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           placeholder: "Enter Lifecycle Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:lifecycleStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "lifecycleStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("bootstrapConfigurationLoaded", {
         id: "bootstrapConfigurationLoaded",
@@ -178,7 +252,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:bootstrapConfigurationLoaded",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "bootstrapConfigurationLoaded",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("bootstrapFailureReason", {
         id: "bootstrapFailureReason",
@@ -192,7 +278,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           placeholder: "Enter Bootstrap Failure Reason",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:bootstrapFailureReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "bootstrapFailureReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentSelfCheckPassed", {
         id: "runtimeAgentSelfCheckPassed",
@@ -207,7 +305,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:runtimeAgentSelfCheckPassed",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "runtimeAgentSelfCheckPassed",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("configurationLoaded", {
         id: "configurationLoaded",
@@ -222,7 +332,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:configurationLoaded",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "configurationLoaded",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("secretStoreAccessible", {
         id: "secretStoreAccessible",
@@ -237,7 +359,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:secretStoreAccessible",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "secretStoreAccessible",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("runtimeEngineAdapterReady", {
         id: "runtimeEngineAdapterReady",
@@ -252,7 +386,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:runtimeEngineAdapterReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "runtimeEngineAdapterReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("modelRepositoryClientReady", {
         id: "modelRepositoryClientReady",
@@ -267,7 +413,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:modelRepositoryClientReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "modelRepositoryClientReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("localDatasetBindingStoreReady", {
         id: "localDatasetBindingStoreReady",
@@ -282,7 +440,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:localDatasetBindingStoreReady",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "localDatasetBindingStoreReady",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("workingDirectoryWritable", {
         id: "workingDirectoryWritable",
@@ -297,7 +467,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:workingDirectoryWritable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "workingDirectoryWritable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("bootstrappedAt", {
         id: "bootstrappedAt",
@@ -312,7 +494,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:bootstrappedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "bootstrappedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("bootstrapFailedAt", {
         id: "bootstrapFailedAt",
@@ -327,7 +521,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:bootstrapFailedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "bootstrapFailedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("startedAt", {
         id: "startedAt",
@@ -342,7 +548,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:startedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "startedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("readyAt", {
         id: "readyAt",
@@ -357,7 +575,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeAgentLifecycleCatalogRecord>(
+            frontendComposition,
+            "field:runtime-agent-lifecycle-catalog:display:readyAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-agent-lifecycle-catalog",
+              field: "readyAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -365,7 +595,19 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RuntimeAgentLifecycleCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-agent-lifecycle-catalog:list",
+                "rowActions.before",
+                { resource: "runtime-agent-lifecycle-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeAgentId} size="sm" />
+              {renderSlotExtensions<RuntimeAgentLifecycleCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-agent-lifecycle-catalog:list",
+                "rowActions.after",
+                { resource: "runtime-agent-lifecycle-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -400,7 +642,9 @@ export const RuntimeAgentLifecycleCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-agent-lifecycle-catalog:list", "toolbar.before", { resource: "runtime-agent-lifecycle-catalog", table })}
         <CommandButton variant="default" command="loadRuntimeAgentBootstrapConfiguration" />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-agent-lifecycle-catalog:list", "toolbar.actions", { resource: "runtime-agent-lifecycle-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -410,6 +654,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-agent-lifecycle-catalog:list", "toolbar.after", { resource: "runtime-agent-lifecycle-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type TrainingAlertCatalogRecord = {
   alertId: string;
@@ -87,7 +89,19 @@ export const TrainingAlertCatalogList = () => {
           placeholder: "Enter Alert Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:alertId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "alertId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nodeId", {
         id: "nodeId",
@@ -101,7 +115,19 @@ export const TrainingAlertCatalogList = () => {
           placeholder: "Enter Node Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:nodeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "nodeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobId", {
         id: "trainingJobId",
@@ -115,7 +141,19 @@ export const TrainingAlertCatalogList = () => {
           placeholder: "Enter Training Job Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:trainingJobId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "trainingJobId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeNodeName", {
         id: "runtimeNodeName",
@@ -129,7 +167,19 @@ export const TrainingAlertCatalogList = () => {
           placeholder: "Enter Runtime Node Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:runtimeNodeName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "runtimeNodeName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("trainingJobObjective", {
         id: "trainingJobObjective",
@@ -143,7 +193,19 @@ export const TrainingAlertCatalogList = () => {
           placeholder: "Enter Training Job Objective",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:trainingJobObjective",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "trainingJobObjective",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("severity", {
         id: "severity",
@@ -157,7 +219,19 @@ export const TrainingAlertCatalogList = () => {
           placeholder: "Enter Severity",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:severity",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "severity",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("message", {
         id: "message",
@@ -171,7 +245,19 @@ export const TrainingAlertCatalogList = () => {
           placeholder: "Enter Message",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:message",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "message",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -191,7 +277,19 @@ export const TrainingAlertCatalogList = () => {
             { label: "Resolved", value: "RESOLVED" },
           ],
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:state",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "state",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("acknowledgedAt", {
         id: "acknowledgedAt",
@@ -206,7 +304,19 @@ export const TrainingAlertCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:acknowledgedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "acknowledgedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("resolvedAt", {
         id: "resolvedAt",
@@ -221,7 +331,19 @@ export const TrainingAlertCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:resolvedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "resolvedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("resolutionSummary", {
         id: "resolutionSummary",
@@ -235,7 +357,19 @@ export const TrainingAlertCatalogList = () => {
           placeholder: "Enter Resolution Summary",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:resolutionSummary",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "resolutionSummary",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("canAcknowledge", {
         id: "canAcknowledge",
@@ -250,7 +384,19 @@ export const TrainingAlertCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:canAcknowledge",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "canAcknowledge",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canResolve", {
         id: "canResolve",
@@ -265,7 +411,19 @@ export const TrainingAlertCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingAlertCatalogRecord>(
+            frontendComposition,
+            "field:training-alert-catalog:display:canResolve",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-alert-catalog",
+              field: "canResolve",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.display({
         id: "actions",
@@ -273,6 +431,12 @@ export const TrainingAlertCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<TrainingAlertCatalogRecord>(
+                frontendComposition,
+                "row-actions:training-alert-catalog:list",
+                "rowActions.before",
+                { resource: "training-alert-catalog", record: row.original },
+              )}
                 {isCommandVisible(row.original, "canAcknowledge", "state", ["Raised"]) && (
                   <CommandButton
                     variant="ghost"
@@ -293,6 +457,12 @@ export const TrainingAlertCatalogList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.alertId} size="sm" />
+              {renderSlotExtensions<TrainingAlertCatalogRecord>(
+                frontendComposition,
+                "row-actions:training-alert-catalog:list",
+                "rowActions.after",
+                { resource: "training-alert-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -327,6 +497,8 @@ export const TrainingAlertCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:training-alert-catalog:list", "toolbar.before", { resource: "training-alert-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:training-alert-catalog:list", "toolbar.actions", { resource: "training-alert-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -336,6 +508,7 @@ export const TrainingAlertCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:training-alert-catalog:list", "toolbar.after", { resource: "training-alert-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

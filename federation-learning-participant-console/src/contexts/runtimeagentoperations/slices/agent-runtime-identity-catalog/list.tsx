@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type AgentRuntimeIdentityCatalogRecord = {
   runtimeId: string;
@@ -84,7 +86,19 @@ export const AgentRuntimeIdentityCatalogList = () => {
           placeholder: "Enter Runtime Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeIdentityCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-identity-catalog:display:runtimeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-identity-catalog",
+              field: "runtimeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeInfrastructureId", {
         id: "runtimeInfrastructureId",
@@ -98,7 +112,19 @@ export const AgentRuntimeIdentityCatalogList = () => {
           placeholder: "Enter Runtime Infrastructure Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeIdentityCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-identity-catalog:display:runtimeInfrastructureId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-identity-catalog",
+              field: "runtimeInfrastructureId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeAgentId", {
         id: "runtimeAgentId",
@@ -112,7 +138,19 @@ export const AgentRuntimeIdentityCatalogList = () => {
           placeholder: "Enter Runtime Agent Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeIdentityCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-identity-catalog:display:runtimeAgentId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-identity-catalog",
+              field: "runtimeAgentId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -126,7 +164,19 @@ export const AgentRuntimeIdentityCatalogList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeIdentityCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-identity-catalog:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-identity-catalog",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -140,7 +190,19 @@ export const AgentRuntimeIdentityCatalogList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeIdentityCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-identity-catalog:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-identity-catalog",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
         id: "runtimeName",
@@ -154,7 +216,19 @@ export const AgentRuntimeIdentityCatalogList = () => {
           placeholder: "Enter Runtime Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeIdentityCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-identity-catalog:display:runtimeName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-identity-catalog",
+              field: "runtimeName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("identityStatus", {
         id: "identityStatus",
@@ -168,7 +242,19 @@ export const AgentRuntimeIdentityCatalogList = () => {
           placeholder: "Enter Identity Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeIdentityCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-identity-catalog:display:identityStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-identity-catalog",
+              field: "identityStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("activatedAt", {
         id: "activatedAt",
@@ -183,7 +269,19 @@ export const AgentRuntimeIdentityCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeIdentityCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-identity-catalog:display:activatedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-identity-catalog",
+              field: "activatedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("revokedAt", {
         id: "revokedAt",
@@ -198,7 +296,19 @@ export const AgentRuntimeIdentityCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeIdentityCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-identity-catalog:display:revokedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-identity-catalog",
+              field: "revokedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("syncedAt", {
         id: "syncedAt",
@@ -213,7 +323,19 @@ export const AgentRuntimeIdentityCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeIdentityCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-identity-catalog:display:syncedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-identity-catalog",
+              field: "syncedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -221,7 +343,19 @@ export const AgentRuntimeIdentityCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<AgentRuntimeIdentityCatalogRecord>(
+                frontendComposition,
+                "row-actions:agent-runtime-identity-catalog:list",
+                "rowActions.before",
+                { resource: "agent-runtime-identity-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeId} size="sm" />
+              {renderSlotExtensions<AgentRuntimeIdentityCatalogRecord>(
+                frontendComposition,
+                "row-actions:agent-runtime-identity-catalog:list",
+                "rowActions.after",
+                { resource: "agent-runtime-identity-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -256,6 +390,8 @@ export const AgentRuntimeIdentityCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-identity-catalog:list", "toolbar.before", { resource: "agent-runtime-identity-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-identity-catalog:list", "toolbar.actions", { resource: "agent-runtime-identity-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -265,6 +401,7 @@ export const AgentRuntimeIdentityCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-identity-catalog:list", "toolbar.after", { resource: "agent-runtime-identity-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

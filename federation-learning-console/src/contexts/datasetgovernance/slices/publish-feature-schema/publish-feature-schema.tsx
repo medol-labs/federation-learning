@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PublishFeatureSchemaCommandSchema, type PublishFeatureSchemaCommandInput } from "@/contexts/domain/schemas";
 
@@ -70,10 +72,15 @@ export const FeatureSchemaCatalogPublishFeatureSchema = () => {
   });
 
   async function onSubmit(values: PublishFeatureSchemaCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<PublishFeatureSchemaCommandInput>(
+      frontendComposition,
+      "behavior:feature-schema-catalog:publishFeatureSchema",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as PublishFeatureSchemaCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/feature-schema-catalog");
     return result;
   }

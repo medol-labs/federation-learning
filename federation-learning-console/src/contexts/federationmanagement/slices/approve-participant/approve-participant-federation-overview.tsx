@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApproveParticipantCommandSchema, type ApproveParticipantCommandInput } from "@/contexts/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
@@ -72,10 +74,15 @@ export const FederationOverviewApproveParticipant = () => {
   });
 
   async function onSubmit(values: ApproveParticipantCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<ApproveParticipantCommandInput>(
+      frontendComposition,
+      "behavior:federation-overview:approveParticipant",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as ApproveParticipantCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/federation-overview");
     return result;
   }

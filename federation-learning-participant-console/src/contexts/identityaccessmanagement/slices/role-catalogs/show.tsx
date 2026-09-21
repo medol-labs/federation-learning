@@ -1,6 +1,7 @@
 // Generated from config.json by the refine generator.
 import { useShow, useTranslate } from "@refinedev/core";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 import {
   Card,
@@ -9,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { renderFieldOverride } from "@/platform/composition";
 
 const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
   if (value === null || value === undefined || value === "") return "-";
@@ -41,17 +43,17 @@ export const RoleCatalogShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.role_catalog.fields.roleId.label", "Role Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.roleId, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:role-catalog:display:roleId", { value: record?.roleId, record, resource: "role-catalog", field: "roleId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleId, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.role_catalog.fields.roleCode.label", "Role Code")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.roleCode, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:role-catalog:display:roleCode", { value: record?.roleCode, record, resource: "role-catalog", field: "roleCode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleCode, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.role_catalog.fields.roleName.label", "Role Name")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.roleName, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:role-catalog:display:roleName", { value: record?.roleName, record, resource: "role-catalog", field: "roleName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleName, t)}</p>}
             </div>
             <Separator />
           </CardContent>

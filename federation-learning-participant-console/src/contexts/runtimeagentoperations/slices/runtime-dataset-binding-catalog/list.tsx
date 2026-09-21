@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RuntimeDatasetBindingCatalogRecord = {
   runtimeDatasetBindingId: string;
@@ -87,7 +89,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter Runtime Dataset Binding Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:runtimeDatasetBindingId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "runtimeDatasetBindingId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetId", {
         id: "datasetId",
@@ -101,7 +115,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter Dataset Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:datasetId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "datasetId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -115,7 +141,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
         id: "runtimeId",
@@ -129,7 +167,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter Runtime Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:runtimeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "runtimeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -143,7 +193,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -157,7 +219,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
         id: "featureDomain",
@@ -171,7 +245,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
         id: "featureSchemaVersion",
@@ -185,7 +271,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter Feature Schema Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:featureSchemaVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "featureSchemaVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetName", {
         id: "datasetName",
@@ -199,7 +297,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter Dataset Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:datasetName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "datasetName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeName", {
         id: "runtimeName",
@@ -213,7 +323,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter Runtime Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:runtimeName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "runtimeName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("filePath", {
         id: "filePath",
@@ -227,7 +349,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter File Path",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:filePath",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "filePath",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("dataFormat", {
         id: "dataFormat",
@@ -241,7 +375,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           placeholder: "Enter Data Format",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:dataFormat",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "dataFormat",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("configuredAt", {
         id: "configuredAt",
@@ -256,7 +402,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeDatasetBindingCatalogRecord>(
+            frontendComposition,
+            "field:runtime-dataset-binding-catalog:display:configuredAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-dataset-binding-catalog",
+              field: "configuredAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -264,7 +422,19 @@ export const RuntimeDatasetBindingCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<RuntimeDatasetBindingCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-dataset-binding-catalog:list",
+                "rowActions.before",
+                { resource: "runtime-dataset-binding-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.runtimeDatasetBindingId} size="sm" />
+              {renderSlotExtensions<RuntimeDatasetBindingCatalogRecord>(
+                frontendComposition,
+                "row-actions:runtime-dataset-binding-catalog:list",
+                "rowActions.after",
+                { resource: "runtime-dataset-binding-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -299,7 +469,9 @@ export const RuntimeDatasetBindingCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-dataset-binding-catalog:list", "toolbar.before", { resource: "runtime-dataset-binding-catalog", table })}
         <CommandButton variant="default" command="configureRuntimeDatasetBinding" />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-dataset-binding-catalog:list", "toolbar.actions", { resource: "runtime-dataset-binding-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -309,6 +481,7 @@ export const RuntimeDatasetBindingCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:runtime-dataset-binding-catalog:list", "toolbar.after", { resource: "runtime-dataset-binding-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

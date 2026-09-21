@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type UserRoleAssignmentCatalogRecord = {
   userAccountId: string;
@@ -78,7 +80,19 @@ export const UserRoleAssignmentCatalogList = () => {
           placeholder: "Enter User Account Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserRoleAssignmentCatalogRecord>(
+            frontendComposition,
+            "field:user-role-assignment-catalog:display:userAccountId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-role-assignment-catalog",
+              field: "userAccountId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("username", {
         id: "username",
@@ -92,7 +106,19 @@ export const UserRoleAssignmentCatalogList = () => {
           placeholder: "Enter Username",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserRoleAssignmentCatalogRecord>(
+            frontendComposition,
+            "field:user-role-assignment-catalog:display:username",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-role-assignment-catalog",
+              field: "username",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roleCode", {
         id: "roleCode",
@@ -106,7 +132,19 @@ export const UserRoleAssignmentCatalogList = () => {
           placeholder: "Enter Role Code",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserRoleAssignmentCatalogRecord>(
+            frontendComposition,
+            "field:user-role-assignment-catalog:display:roleCode",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-role-assignment-catalog",
+              field: "roleCode",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roleName", {
         id: "roleName",
@@ -120,7 +158,19 @@ export const UserRoleAssignmentCatalogList = () => {
           placeholder: "Enter Role Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserRoleAssignmentCatalogRecord>(
+            frontendComposition,
+            "field:user-role-assignment-catalog:display:roleName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-role-assignment-catalog",
+              field: "roleName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -128,7 +178,19 @@ export const UserRoleAssignmentCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<UserRoleAssignmentCatalogRecord>(
+                frontendComposition,
+                "row-actions:user-role-assignment-catalog:list",
+                "rowActions.before",
+                { resource: "user-role-assignment-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.userAccountId} size="sm" />
+              {renderSlotExtensions<UserRoleAssignmentCatalogRecord>(
+                frontendComposition,
+                "row-actions:user-role-assignment-catalog:list",
+                "rowActions.after",
+                { resource: "user-role-assignment-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -163,6 +225,8 @@ export const UserRoleAssignmentCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:user-role-assignment-catalog:list", "toolbar.before", { resource: "user-role-assignment-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:user-role-assignment-catalog:list", "toolbar.actions", { resource: "user-role-assignment-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -172,6 +236,7 @@ export const UserRoleAssignmentCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:user-role-assignment-catalog:list", "toolbar.after", { resource: "user-role-assignment-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

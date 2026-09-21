@@ -1,6 +1,7 @@
 // Generated from config.json by the refine generator.
 import { useShow, useTranslate } from "@refinedev/core";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 import {
   Card,
@@ -9,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { renderFieldOverride } from "@/platform/composition";
 
 const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
   if (value === null || value === undefined || value === "") return "-";
@@ -41,22 +43,22 @@ export const PermissionCatalogShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.permission_catalog.fields.permissionId.label", "Permission Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.permissionId, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:permission-catalog:display:permissionId", { value: record?.permissionId, record, resource: "permission-catalog", field: "permissionId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.permissionId, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.permission_catalog.fields.permissionCode.label", "Permission Code")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.permissionCode, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:permission-catalog:display:permissionCode", { value: record?.permissionCode, record, resource: "permission-catalog", field: "permissionCode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.permissionCode, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.permission_catalog.fields.permissionName.label", "Permission Name")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.permissionName, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:permission-catalog:display:permissionName", { value: record?.permissionName, record, resource: "permission-catalog", field: "permissionName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.permissionName, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.permission_catalog.fields.description.label", "Description")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.description, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:permission-catalog:display:description", { value: record?.description, record, resource: "permission-catalog", field: "description", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.description, t)}</p>}
             </div>
             <Separator />
           </CardContent>

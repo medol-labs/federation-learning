@@ -1,6 +1,7 @@
 // Generated from config.json by the refine generator.
 import { useShow, useTranslate } from "@refinedev/core";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 import {
   Card,
@@ -9,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { renderFieldOverride } from "@/platform/composition";
 
 const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
   if (value === null || value === undefined || value === "") return "-";
@@ -41,22 +43,22 @@ export const RuntimeCapabilityCatalogShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_capability_catalog.fields.runtimeId.label", "Runtime Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeId, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:runtime-capability-catalog:display:runtimeId", { value: record?.runtimeId, record, resource: "runtime-capability-catalog", field: "runtimeId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeId, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_capability_catalog.fields.capabilityTypes.label", "Capability Types")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.capabilityTypes, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:runtime-capability-catalog:display:capabilityTypes", { value: record?.capabilityTypes, record, resource: "runtime-capability-catalog", field: "capabilityTypes", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.capabilityTypes, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_capability_catalog.fields.capabilityStatus.label", "Capability Status")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.capabilityStatus, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:runtime-capability-catalog:display:capabilityStatus", { value: record?.capabilityStatus, record, resource: "runtime-capability-catalog", field: "capabilityStatus", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.capabilityStatus, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_capability_catalog.fields.detectedAt.label", "Detected At")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.detectedAt, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:runtime-capability-catalog:display:detectedAt", { value: record?.detectedAt, record, resource: "runtime-capability-catalog", field: "detectedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.detectedAt, t)}</p>}
             </div>
             <Separator />
           </CardContent>

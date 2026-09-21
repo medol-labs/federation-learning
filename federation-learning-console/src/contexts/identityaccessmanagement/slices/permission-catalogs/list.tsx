@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type PermissionCatalogRecord = {
   permissionId: string;
@@ -78,7 +80,19 @@ export const PermissionCatalogList = () => {
           placeholder: "Enter Permission Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<PermissionCatalogRecord>(
+            frontendComposition,
+            "field:permission-catalog:display:permissionId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "permission-catalog",
+              field: "permissionId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("permissionCode", {
         id: "permissionCode",
@@ -92,7 +106,19 @@ export const PermissionCatalogList = () => {
           placeholder: "Enter Permission Code",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<PermissionCatalogRecord>(
+            frontendComposition,
+            "field:permission-catalog:display:permissionCode",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "permission-catalog",
+              field: "permissionCode",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("permissionName", {
         id: "permissionName",
@@ -106,7 +132,19 @@ export const PermissionCatalogList = () => {
           placeholder: "Enter Permission Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<PermissionCatalogRecord>(
+            frontendComposition,
+            "field:permission-catalog:display:permissionName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "permission-catalog",
+              field: "permissionName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("description", {
         id: "description",
@@ -120,7 +158,19 @@ export const PermissionCatalogList = () => {
           placeholder: "Enter Description",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<PermissionCatalogRecord>(
+            frontendComposition,
+            "field:permission-catalog:display:description",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "permission-catalog",
+              field: "description",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -128,7 +178,19 @@ export const PermissionCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<PermissionCatalogRecord>(
+                frontendComposition,
+                "row-actions:permission-catalog:list",
+                "rowActions.before",
+                { resource: "permission-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.permissionId} size="sm" />
+              {renderSlotExtensions<PermissionCatalogRecord>(
+                frontendComposition,
+                "row-actions:permission-catalog:list",
+                "rowActions.after",
+                { resource: "permission-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -163,7 +225,9 @@ export const PermissionCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:permission-catalog:list", "toolbar.before", { resource: "permission-catalog", table })}
         <CommandButton variant="default" command="registerPermission" />
+        {renderSlotExtensions(frontendComposition, "toolbar:permission-catalog:list", "toolbar.actions", { resource: "permission-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -173,6 +237,7 @@ export const PermissionCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:permission-catalog:list", "toolbar.after", { resource: "permission-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

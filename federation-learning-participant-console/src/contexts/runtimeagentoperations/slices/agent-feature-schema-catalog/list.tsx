@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type AgentFeatureSchemaCatalogRecord = {
   featureSchemaId: string;
@@ -79,7 +81,19 @@ export const AgentFeatureSchemaCatalogList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentFeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:agent-feature-schema-catalog:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-feature-schema-catalog",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
         id: "featureDomain",
@@ -93,7 +107,19 @@ export const AgentFeatureSchemaCatalogList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentFeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:agent-feature-schema-catalog:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-feature-schema-catalog",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
         id: "featureSchemaVersion",
@@ -107,7 +133,19 @@ export const AgentFeatureSchemaCatalogList = () => {
           placeholder: "Enter Feature Schema Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentFeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:agent-feature-schema-catalog:display:featureSchemaVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-feature-schema-catalog",
+              field: "featureSchemaVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("schemaStatus", {
         id: "schemaStatus",
@@ -121,7 +159,19 @@ export const AgentFeatureSchemaCatalogList = () => {
           placeholder: "Enter Schema Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentFeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:agent-feature-schema-catalog:display:schemaStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-feature-schema-catalog",
+              field: "schemaStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("syncedAt", {
         id: "syncedAt",
@@ -136,7 +186,19 @@ export const AgentFeatureSchemaCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentFeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:agent-feature-schema-catalog:display:syncedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-feature-schema-catalog",
+              field: "syncedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -144,7 +206,19 @@ export const AgentFeatureSchemaCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<AgentFeatureSchemaCatalogRecord>(
+                frontendComposition,
+                "row-actions:agent-feature-schema-catalog:list",
+                "rowActions.before",
+                { resource: "agent-feature-schema-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.featureSchemaId} size="sm" />
+              {renderSlotExtensions<AgentFeatureSchemaCatalogRecord>(
+                frontendComposition,
+                "row-actions:agent-feature-schema-catalog:list",
+                "rowActions.after",
+                { resource: "agent-feature-schema-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -179,6 +253,8 @@ export const AgentFeatureSchemaCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-feature-schema-catalog:list", "toolbar.before", { resource: "agent-feature-schema-catalog", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-feature-schema-catalog:list", "toolbar.actions", { resource: "agent-feature-schema-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -188,6 +264,7 @@ export const AgentFeatureSchemaCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:agent-feature-schema-catalog:list", "toolbar.after", { resource: "agent-feature-schema-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

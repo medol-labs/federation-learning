@@ -1,6 +1,7 @@
 // Generated from config.json by the refine generator.
 import { useShow, useTranslate } from "@refinedev/core";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
 import {
   Card,
@@ -9,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { renderFieldOverride } from "@/platform/composition";
 
 const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
   if (value === null || value === undefined || value === "") return "-";
@@ -41,27 +43,27 @@ export const CurrentRecommendedFeatureSchemaCatalogShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.current_recommended_feature_schema_catalog.fields.featureDomain.label", "Feature Domain")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.featureDomain, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:current-recommended-feature-schema-catalog:display:featureDomain", { value: record?.featureDomain, record, resource: "current-recommended-feature-schema-catalog", field: "featureDomain", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.featureDomain, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.current_recommended_feature_schema_catalog.fields.recommendedFeatureSchemaId.label", "Recommended Feature Schema Id")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.recommendedFeatureSchemaId, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:current-recommended-feature-schema-catalog:display:recommendedFeatureSchemaId", { value: record?.recommendedFeatureSchemaId, record, resource: "current-recommended-feature-schema-catalog", field: "recommendedFeatureSchemaId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.recommendedFeatureSchemaId, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.current_recommended_feature_schema_catalog.fields.recommendedVersion.label", "Recommended Version")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.recommendedVersion, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:current-recommended-feature-schema-catalog:display:recommendedVersion", { value: record?.recommendedVersion, record, resource: "current-recommended-feature-schema-catalog", field: "recommendedVersion", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.recommendedVersion, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.current_recommended_feature_schema_catalog.fields.recommendedAt.label", "Recommended At")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.recommendedAt, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:current-recommended-feature-schema-catalog:display:recommendedAt", { value: record?.recommendedAt, record, resource: "current-recommended-feature-schema-catalog", field: "recommendedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.recommendedAt, t)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.current_recommended_feature_schema_catalog.fields.recommendationNote.label", "Recommendation Note")}</h4>
-              <p className="text-sm text-muted-foreground">{formatValue(record?.recommendationNote, t)}</p>
+              {renderFieldOverride(frontendComposition, "field:current-recommended-feature-schema-catalog:display:recommendationNote", { value: record?.recommendationNote, record, resource: "current-recommended-feature-schema-catalog", field: "recommendationNote", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.recommendationNote, t)}</p>}
             </div>
             <Separator />
           </CardContent>

@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RetireFeatureSchemaCommandSchema, type RetireFeatureSchemaCommandInput } from "@/contexts/domain/schemas";
 
@@ -70,10 +72,15 @@ export const FeatureSchemaCatalogRetireFeatureSchema = () => {
   });
 
   async function onSubmit(values: RetireFeatureSchemaCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<RetireFeatureSchemaCommandInput>(
+      frontendComposition,
+      "behavior:feature-schema-catalog:retireFeatureSchema",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as RetireFeatureSchemaCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/feature-schema-catalog");
     return result;
   }

@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type DatasetReadinessRecord = {
   datasetId: string;
@@ -111,7 +113,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Dataset Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:datasetId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "datasetId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationId", {
         id: "organizationId",
@@ -125,7 +139,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Organization Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:organizationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "organizationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeId", {
         id: "runtimeId",
@@ -139,7 +165,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Runtime Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:runtimeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "runtimeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -153,7 +191,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetName", {
         id: "datasetName",
@@ -167,7 +217,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Dataset Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:datasetName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "datasetName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("organizationName", {
         id: "organizationName",
@@ -181,7 +243,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Organization Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:organizationName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "organizationName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
         id: "featureDomain",
@@ -195,7 +269,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureSchemaVersion", {
         id: "featureSchemaVersion",
@@ -209,7 +295,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Feature Schema Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:featureSchemaVersion",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "featureSchemaVersion",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetUsage", {
         id: "datasetUsage",
@@ -223,7 +321,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Dataset Usage",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:datasetUsage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "datasetUsage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("metadataStatus", {
         id: "metadataStatus",
@@ -237,7 +347,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Metadata Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:metadataStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "metadataStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("contractStatus", {
         id: "contractStatus",
@@ -251,7 +373,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Contract Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:contractStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "contractStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("approvalStatus", {
         id: "approvalStatus",
@@ -265,7 +399,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Approval Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:approvalStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "approvalStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("accessStatus", {
         id: "accessStatus",
@@ -279,7 +425,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Access Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:accessStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "accessStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeStatus", {
         id: "runtimeStatus",
@@ -293,7 +451,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Runtime Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:runtimeStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "runtimeStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("overallReadiness", {
         id: "overallReadiness",
@@ -307,7 +477,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Overall Readiness",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:overallReadiness",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "overallReadiness",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("readyForTraining", {
         id: "readyForTraining",
@@ -322,7 +504,19 @@ export const DatasetReadinessList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:readyForTraining",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "readyForTraining",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("canBeSelectedForTraining", {
         id: "canBeSelectedForTraining",
@@ -337,7 +531,19 @@ export const DatasetReadinessList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:canBeSelectedForTraining",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "canBeSelectedForTraining",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("readinessScore", {
         id: "readinessScore",
@@ -352,7 +558,19 @@ export const DatasetReadinessList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:readinessScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "readinessScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("missingRequirements", {
         id: "missingRequirements",
@@ -366,7 +584,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Missing Requirements",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:missingRequirements",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "missingRequirements",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("blockingReasons", {
         id: "blockingReasons",
@@ -380,7 +610,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Blocking Reasons",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:blockingReasons",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "blockingReasons",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("warnings", {
         id: "warnings",
@@ -394,7 +636,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Warnings",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:warnings",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "warnings",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("sampleCount", {
         id: "sampleCount",
@@ -409,7 +663,19 @@ export const DatasetReadinessList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:sampleCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "sampleCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureCount", {
         id: "featureCount",
@@ -424,7 +690,19 @@ export const DatasetReadinessList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:featureCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "featureCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("schemaCompatible", {
         id: "schemaCompatible",
@@ -439,7 +717,19 @@ export const DatasetReadinessList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:schemaCompatible",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "schemaCompatible",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("labelCompatible", {
         id: "labelCompatible",
@@ -454,7 +744,19 @@ export const DatasetReadinessList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:labelCompatible",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "labelCompatible",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("qualityScore", {
         id: "qualityScore",
@@ -469,7 +771,19 @@ export const DatasetReadinessList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:qualityScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "qualityScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("nonIidScore", {
         id: "nonIidScore",
@@ -484,7 +798,19 @@ export const DatasetReadinessList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:nonIidScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "nonIidScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("classBalanceScore", {
         id: "classBalanceScore",
@@ -499,7 +825,19 @@ export const DatasetReadinessList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:classBalanceScore",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "classBalanceScore",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("metadataReportId", {
         id: "metadataReportId",
@@ -513,7 +851,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Metadata Report Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:metadataReportId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "metadataReportId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("datasetAccessValidationId", {
         id: "datasetAccessValidationId",
@@ -527,7 +877,19 @@ export const DatasetReadinessList = () => {
           placeholder: "Enter Dataset Access Validation Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:datasetAccessValidationId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "datasetAccessValidationId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("readable", {
         id: "readable",
@@ -542,7 +904,19 @@ export const DatasetReadinessList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:readable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "readable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("schemaReadable", {
         id: "schemaReadable",
@@ -557,7 +931,19 @@ export const DatasetReadinessList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:schemaReadable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "schemaReadable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("sampleBatchReadable", {
         id: "sampleBatchReadable",
@@ -572,7 +958,19 @@ export const DatasetReadinessList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:sampleBatchReadable",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "sampleBatchReadable",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.accessor("lastProfiledAt", {
         id: "lastProfiledAt",
@@ -587,7 +985,19 @@ export const DatasetReadinessList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:lastProfiledAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "lastProfiledAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("lastAccessValidatedAt", {
         id: "lastAccessValidatedAt",
@@ -602,7 +1012,19 @@ export const DatasetReadinessList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:lastAccessValidatedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "lastAccessValidatedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("lastRuntimeHeartbeatAt", {
         id: "lastRuntimeHeartbeatAt",
@@ -617,7 +1039,19 @@ export const DatasetReadinessList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:lastRuntimeHeartbeatAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "lastRuntimeHeartbeatAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("lastUpdatedAt", {
         id: "lastUpdatedAt",
@@ -632,7 +1066,19 @@ export const DatasetReadinessList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DatasetReadinessRecord>(
+            frontendComposition,
+            "field:dataset-readiness:display:lastUpdatedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "dataset-readiness",
+              field: "lastUpdatedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.display({
         id: "actions",
@@ -640,6 +1086,12 @@ export const DatasetReadinessList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<DatasetReadinessRecord>(
+                frontendComposition,
+                "row-actions:dataset-readiness:list",
+                "rowActions.before",
+                { resource: "dataset-readiness", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "", []) && (
                   <CommandButton
                     variant="ghost"
@@ -705,6 +1157,12 @@ export const DatasetReadinessList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.datasetId} size="sm" />
+              {renderSlotExtensions<DatasetReadinessRecord>(
+                frontendComposition,
+                "row-actions:dataset-readiness:list",
+                "rowActions.after",
+                { resource: "dataset-readiness", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -739,6 +1197,8 @@ export const DatasetReadinessList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:dataset-readiness:list", "toolbar.before", { resource: "dataset-readiness", table })}
+        {renderSlotExtensions(frontendComposition, "toolbar:dataset-readiness:list", "toolbar.actions", { resource: "dataset-readiness", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -748,6 +1208,7 @@ export const DatasetReadinessList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:dataset-readiness:list", "toolbar.after", { resource: "dataset-readiness", table })}
       </RefineDataTable>
     </ListView>
   );

@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type UserAccountCatalogRecord = {
   userAccountId: string;
@@ -80,7 +82,19 @@ export const UserAccountCatalogList = () => {
           placeholder: "Enter User Account Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserAccountCatalogRecord>(
+            frontendComposition,
+            "field:user-account-catalog:display:userAccountId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-account-catalog",
+              field: "userAccountId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("username", {
         id: "username",
@@ -94,7 +108,19 @@ export const UserAccountCatalogList = () => {
           placeholder: "Enter Username",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserAccountCatalogRecord>(
+            frontendComposition,
+            "field:user-account-catalog:display:username",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-account-catalog",
+              field: "username",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("providerSubject", {
         id: "providerSubject",
@@ -108,7 +134,19 @@ export const UserAccountCatalogList = () => {
           placeholder: "Enter Provider Subject",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserAccountCatalogRecord>(
+            frontendComposition,
+            "field:user-account-catalog:display:providerSubject",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-account-catalog",
+              field: "providerSubject",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("userSource", {
         id: "userSource",
@@ -122,7 +160,19 @@ export const UserAccountCatalogList = () => {
           placeholder: "Enter User Source",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserAccountCatalogRecord>(
+            frontendComposition,
+            "field:user-account-catalog:display:userSource",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-account-catalog",
+              field: "userSource",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("passwordHash", {
         id: "passwordHash",
@@ -136,7 +186,19 @@ export const UserAccountCatalogList = () => {
           placeholder: "Enter Password Hash",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserAccountCatalogRecord>(
+            frontendComposition,
+            "field:user-account-catalog:display:passwordHash",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-account-catalog",
+              field: "passwordHash",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("active", {
         id: "active",
@@ -151,7 +213,19 @@ export const UserAccountCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<UserAccountCatalogRecord>(
+            frontendComposition,
+            "field:user-account-catalog:display:active",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "user-account-catalog",
+              field: "active",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.display({
         id: "actions",
@@ -159,6 +233,12 @@ export const UserAccountCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<UserAccountCatalogRecord>(
+                frontendComposition,
+                "row-actions:user-account-catalog:list",
+                "rowActions.before",
+                { resource: "user-account-catalog", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "", []) && (
                   <CommandButton
                     variant="ghost"
@@ -187,6 +267,12 @@ export const UserAccountCatalogList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.userAccountId} size="sm" />
+              {renderSlotExtensions<UserAccountCatalogRecord>(
+                frontendComposition,
+                "row-actions:user-account-catalog:list",
+                "rowActions.after",
+                { resource: "user-account-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -221,7 +307,9 @@ export const UserAccountCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:user-account-catalog:list", "toolbar.before", { resource: "user-account-catalog", table })}
         <CommandButton variant="default" command="registerUserAccount" />
+        {renderSlotExtensions(frontendComposition, "toolbar:user-account-catalog:list", "toolbar.actions", { resource: "user-account-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -231,6 +319,7 @@ export const UserAccountCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:user-account-catalog:list", "toolbar.after", { resource: "user-account-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

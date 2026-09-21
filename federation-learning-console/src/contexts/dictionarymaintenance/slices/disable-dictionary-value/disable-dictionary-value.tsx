@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DisableDictionaryValueCommandSchema, type DisableDictionaryValueCommandInput } from "@/contexts/domain/schemas";
 
@@ -71,10 +73,15 @@ export const DictionaryValueCatalogDisableDictionaryValue = () => {
   });
 
   async function onSubmit(values: DisableDictionaryValueCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<DisableDictionaryValueCommandInput>(
+      frontendComposition,
+      "behavior:dictionary-value-catalog:disableDictionaryValue",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as DisableDictionaryValueCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/dictionary-value-catalog");
     return result;
   }

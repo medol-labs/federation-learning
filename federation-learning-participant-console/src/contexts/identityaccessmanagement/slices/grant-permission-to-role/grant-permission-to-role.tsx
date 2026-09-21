@@ -11,6 +11,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -30,6 +31,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GrantPermissionToRoleCommandSchema, type GrantPermissionToRoleCommandInput } from "@/contexts/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
@@ -197,10 +199,15 @@ export const RoleCatalogGrantPermissionToRole = () => {
   }, [permissionCodesHistory.result.data, form]);
 
   async function onSubmit(values: GrantPermissionToRoleCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<GrantPermissionToRoleCommandInput>(
+      frontendComposition,
+      "behavior:role-catalog:grantPermissionToRole",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as GrantPermissionToRoleCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/role-catalog");
     return result;
   }

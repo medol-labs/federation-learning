@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type ServiceAccountApiTokenCatalogRecord = {
   apiTokenId: string;
@@ -82,7 +84,19 @@ export const ServiceAccountApiTokenCatalogList = () => {
           placeholder: "Enter Api Token Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ServiceAccountApiTokenCatalogRecord>(
+            frontendComposition,
+            "field:service-account-api-token-catalog:display:apiTokenId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "service-account-api-token-catalog",
+              field: "apiTokenId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("userAccountId", {
         id: "userAccountId",
@@ -96,7 +110,19 @@ export const ServiceAccountApiTokenCatalogList = () => {
           placeholder: "Enter User Account Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ServiceAccountApiTokenCatalogRecord>(
+            frontendComposition,
+            "field:service-account-api-token-catalog:display:userAccountId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "service-account-api-token-catalog",
+              field: "userAccountId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("username", {
         id: "username",
@@ -110,7 +136,19 @@ export const ServiceAccountApiTokenCatalogList = () => {
           placeholder: "Enter Username",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ServiceAccountApiTokenCatalogRecord>(
+            frontendComposition,
+            "field:service-account-api-token-catalog:display:username",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "service-account-api-token-catalog",
+              field: "username",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("tokenName", {
         id: "tokenName",
@@ -124,7 +162,19 @@ export const ServiceAccountApiTokenCatalogList = () => {
           placeholder: "Enter Token Name",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ServiceAccountApiTokenCatalogRecord>(
+            frontendComposition,
+            "field:service-account-api-token-catalog:display:tokenName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "service-account-api-token-catalog",
+              field: "tokenName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("tokenPrefix", {
         id: "tokenPrefix",
@@ -138,7 +188,19 @@ export const ServiceAccountApiTokenCatalogList = () => {
           placeholder: "Enter Token Prefix",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ServiceAccountApiTokenCatalogRecord>(
+            frontendComposition,
+            "field:service-account-api-token-catalog:display:tokenPrefix",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "service-account-api-token-catalog",
+              field: "tokenPrefix",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("issuedAt", {
         id: "issuedAt",
@@ -153,7 +215,19 @@ export const ServiceAccountApiTokenCatalogList = () => {
           variant: "date",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ServiceAccountApiTokenCatalogRecord>(
+            frontendComposition,
+            "field:service-account-api-token-catalog:display:issuedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "service-account-api-token-catalog",
+              field: "issuedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("roles", {
         id: "roles",
@@ -167,7 +241,19 @@ export const ServiceAccountApiTokenCatalogList = () => {
           placeholder: "Enter Roles",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ServiceAccountApiTokenCatalogRecord>(
+            frontendComposition,
+            "field:service-account-api-token-catalog:display:roles",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "service-account-api-token-catalog",
+              field: "roles",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("permissions", {
         id: "permissions",
@@ -181,7 +267,19 @@ export const ServiceAccountApiTokenCatalogList = () => {
           placeholder: "Enter Permissions",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ServiceAccountApiTokenCatalogRecord>(
+            frontendComposition,
+            "field:service-account-api-token-catalog:display:permissions",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "service-account-api-token-catalog",
+              field: "permissions",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.display({
         id: "actions",
@@ -189,7 +287,19 @@ export const ServiceAccountApiTokenCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<ServiceAccountApiTokenCatalogRecord>(
+                frontendComposition,
+                "row-actions:service-account-api-token-catalog:list",
+                "rowActions.before",
+                { resource: "service-account-api-token-catalog", record: row.original },
+              )}
               <ShowButton variant="ghost" recordItemId={row.original.apiTokenId} size="sm" />
+              {renderSlotExtensions<ServiceAccountApiTokenCatalogRecord>(
+                frontendComposition,
+                "row-actions:service-account-api-token-catalog:list",
+                "rowActions.after",
+                { resource: "service-account-api-token-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -224,7 +334,9 @@ export const ServiceAccountApiTokenCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:service-account-api-token-catalog:list", "toolbar.before", { resource: "service-account-api-token-catalog", table })}
         <CommandButton variant="default" command="issueServiceAccountApiToken" />
+        {renderSlotExtensions(frontendComposition, "toolbar:service-account-api-token-catalog:list", "toolbar.actions", { resource: "service-account-api-token-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -234,6 +346,7 @@ export const ServiceAccountApiTokenCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:service-account-api-token-catalog:list", "toolbar.after", { resource: "service-account-api-token-catalog", table })}
       </RefineDataTable>
     </ListView>
   );

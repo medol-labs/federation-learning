@@ -7,6 +7,7 @@ import {
   CreateView,
   CreateViewHeader,
 } from "@/components/refine-ui/views/create-view";
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCommandForm } from "@/hooks/command/useCommandForm";
+import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RecordModelEvaluationPackageCommandSchema, type RecordModelEvaluationPackageCommandInput } from "@/contexts/domain/schemas";
 import { ResourceMultiSelect, ResourceSelect } from "@/components/refine-ui/form/resource-select";
@@ -76,10 +78,15 @@ export const ModelCatalogRecordModelEvaluationPackage = () => {
   });
 
   async function onSubmit(values: RecordModelEvaluationPackageCommandInput) {
-    const result = await onFinish({
+    const result = await runFormBehavior<RecordModelEvaluationPackageCommandInput>(
+      frontendComposition,
+      "behavior:model-catalog:recordModelEvaluationPackage",
+      {
       ...defaultValues,
       ...values,
-    });
+      } as RecordModelEvaluationPackageCommandInput,
+      (payload) => onFinish(payload),
+    );
     navigate("/model-catalog");
     return result;
   }

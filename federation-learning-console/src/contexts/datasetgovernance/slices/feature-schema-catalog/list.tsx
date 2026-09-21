@@ -4,6 +4,7 @@ import { useTranslate } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 
+import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
 import { EditButton } from "@/components/refine-ui/buttons/edit";
@@ -16,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 import type { FeatureDefinition, LabelDefinition } from "@/contexts/domain/value-types";
 
 type FeatureSchemaCatalogRecord = {
@@ -85,7 +87,19 @@ export const FeatureSchemaCatalogList = () => {
           placeholder: "Enter Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:feature-schema-catalog:display:featureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "feature-schema-catalog",
+              field: "featureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureDomain", {
         id: "featureDomain",
@@ -99,7 +113,19 @@ export const FeatureSchemaCatalogList = () => {
           placeholder: "Enter Feature Domain",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:feature-schema-catalog:display:featureDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "feature-schema-catalog",
+              field: "featureDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("version", {
         id: "version",
@@ -113,7 +139,19 @@ export const FeatureSchemaCatalogList = () => {
           placeholder: "Enter Version",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:feature-schema-catalog:display:version",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "feature-schema-catalog",
+              field: "version",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("dataModality", {
         id: "dataModality",
@@ -127,7 +165,19 @@ export const FeatureSchemaCatalogList = () => {
           placeholder: "Enter Data Modality",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:feature-schema-catalog:display:dataModality",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "feature-schema-catalog",
+              field: "dataModality",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("features", {
         id: "features",
@@ -141,7 +191,19 @@ export const FeatureSchemaCatalogList = () => {
           placeholder: "[\n  {\n    \"featureName\": \"\",\n    \"dataType\": \"\",\n    \"required\": false,\n    \"nullable\": false,\n    \"description\": \"\",\n    \"validationRules\": [],\n    \"defaultValue\": \"\",\n    \"isIdentifier\": false,\n    \"isSensitive\": false,\n    \"encodingStrategy\": \"\",\n    \"featureTags\": []\n  }\n]",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:feature-schema-catalog:display:features",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "feature-schema-catalog",
+              field: "features",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("labels", {
         id: "labels",
@@ -155,7 +217,19 @@ export const FeatureSchemaCatalogList = () => {
           placeholder: "[\n  {\n    \"labelName\": \"\",\n    \"dataType\": \"\",\n    \"cardinality\": 0,\n    \"classLabels\": [],\n    \"isMultilabel\": false,\n    \"description\": \"\",\n    \"validationRules\": [],\n    \"defaultValue\": \"\"\n  }\n]",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:feature-schema-catalog:display:labels",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "feature-schema-catalog",
+              field: "labels",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("featureCount", {
         id: "featureCount",
@@ -170,7 +244,19 @@ export const FeatureSchemaCatalogList = () => {
           variant: "number",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:feature-schema-catalog:display:featureCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "feature-schema-catalog",
+              field: "featureCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("schemaStatus", {
         id: "schemaStatus",
@@ -184,7 +270,19 @@ export const FeatureSchemaCatalogList = () => {
           placeholder: "Enter Schema Status",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:feature-schema-catalog:display:schemaStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "feature-schema-catalog",
+              field: "schemaStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("supersededByFeatureSchemaId", {
         id: "supersededByFeatureSchemaId",
@@ -198,7 +296,19 @@ export const FeatureSchemaCatalogList = () => {
           placeholder: "Enter Superseded By Feature Schema Id",
           variant: "text",
         },
-        cell: ({ getValue }) => String(getValue() ?? "-"),
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:feature-schema-catalog:display:supersededByFeatureSchemaId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "feature-schema-catalog",
+              field: "supersededByFeatureSchemaId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("recommendedForDomain", {
         id: "recommendedForDomain",
@@ -213,7 +323,19 @@ export const FeatureSchemaCatalogList = () => {
           variant: "boolean",
           filterOperator: "eq",
         },
-        cell: ({ getValue }) => getValue() ? "Yes" : "No",
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<FeatureSchemaCatalogRecord>(
+            frontendComposition,
+            "field:feature-schema-catalog:display:recommendedForDomain",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "feature-schema-catalog",
+              field: "recommendedForDomain",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? "Yes" : "No",
       }),
       columnHelper.display({
         id: "actions",
@@ -221,6 +343,12 @@ export const FeatureSchemaCatalogList = () => {
         cell: ({ row }) => (
           <div className="flex gap-2">
             <RowActionMenu>
+              {renderSlotExtensions<FeatureSchemaCatalogRecord>(
+                frontendComposition,
+                "row-actions:feature-schema-catalog:list",
+                "rowActions.before",
+                { resource: "feature-schema-catalog", record: row.original },
+              )}
                 {isCommandVisible(row.original, "", "schemaStatus", ["Draft"]) && (
                   <CommandButton
                     variant="ghost"
@@ -283,6 +411,12 @@ export const FeatureSchemaCatalogList = () => {
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.featureSchemaId} size="sm" />
+              {renderSlotExtensions<FeatureSchemaCatalogRecord>(
+                frontendComposition,
+                "row-actions:feature-schema-catalog:list",
+                "rowActions.after",
+                { resource: "feature-schema-catalog", record: row.original },
+              )}
             </RowActionMenu>
           </div>
         ),
@@ -317,7 +451,9 @@ export const FeatureSchemaCatalogList = () => {
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
+        {renderSlotExtensions(frontendComposition, "toolbar:feature-schema-catalog:list", "toolbar.before", { resource: "feature-schema-catalog", table })}
         <CommandButton variant="default" command="defineFeatureSchema" />
+        {renderSlotExtensions(frontendComposition, "toolbar:feature-schema-catalog:list", "toolbar.actions", { resource: "feature-schema-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
         null
@@ -327,6 +463,7 @@ export const FeatureSchemaCatalogList = () => {
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
         />
+        {renderSlotExtensions(frontendComposition, "toolbar:feature-schema-catalog:list", "toolbar.after", { resource: "feature-schema-catalog", table })}
       </RefineDataTable>
     </ListView>
   );
