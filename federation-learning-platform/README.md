@@ -137,6 +137,36 @@ node scripts/seed-dev-data.mjs --deployment MyBackend
 node scripts/seed-dev-data.mjs --dry-run
 ```
 
+## K3D Training Flow
+
+For local K3D integration testing, use the dedicated flow script instead of
+manually combining cluster setup, runtime provisioning, participant data, and
+training job submission:
+
+```bash
+node scripts/k3d-training-flow.mjs
+```
+
+The script creates the K3D cluster when missing, applies the generated K3S
+manifests, initializes dictionaries, seeds platform data, registers and prepares
+the runtime infrastructure, labels K3D agent nodes, waits for platform-managed
+runtime-agent deployment, initializes runtime-agent dataset data through the
+participant console NodePort, and submits the training job.
+
+Useful options:
+
+```bash
+node scripts/k3d-training-flow.mjs --recreate
+node scripts/k3d-training-flow.mjs --scenario csv
+node scripts/k3d-training-flow.mjs --skip-cluster --skip-apply
+node scripts/k3d-training-flow.mjs --runtime-engine-image medol/federation-learning-runtime-engine:pytorch-vision
+```
+
+Defaults assume the generated dev gateway is available at
+`http://localhost:30080`, platform APIs are under
+`/api/federation-learning-platform`, and the managed participant console exposes
+runtime-agent APIs at `http://localhost:30082/api/runtime-agent`.
+
 ## Clean Development Docker Data
 
 To reset local Docker Compose databases and event-store volumes for generated deployment modules:
