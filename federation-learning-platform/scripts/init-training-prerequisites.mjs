@@ -362,6 +362,19 @@ async function ensureRuntimeInfrastructureRegistered(runtimeInfrastructureId) {
 
     await postCommand(platformUrl, '/runtimeinfrastructure/registerruntimeinfrastructure', {
         runtimeInfrastructureId,
+        runtimeInstallationPlanId: existing?.runtimeInstallationPlanId ?? seed.runtimeInstallationPlan.runtimeInstallationPlanId,
+        organizationId: existing?.organizationId ?? seed.organization.organizationId,
+        organizationName: existing?.organizationName ?? seed.organization.organizationName,
+        runtimeInfrastructurePackageId:
+            existing?.runtimeInfrastructurePackageId ?? seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId,
+        runtimeInfrastructurePackageName:
+            existing?.runtimeInfrastructurePackageName ?? seed.runtimeInfrastructurePackage.packageName,
+        runtimeInfrastructurePackageVersion:
+            existing?.runtimeInfrastructurePackageVersion ?? seed.runtimeInfrastructurePackage.packageVersion,
+        runtimeEnvironmentType: existing?.runtimeEnvironmentType ?? seed.runtimeInfrastructurePackage.runtimeEnvironmentType,
+        runtimeName: existing?.runtimeName ?? seed.runtime.runtimeName,
+        agentInstallMode: existing?.agentInstallMode ?? seed.runtimeInstallationPlan.agentInstallMode,
+        expectedNodeCount: existing?.expectedNodeCount ?? seed.runtimeInstallationPlan.expectedNodeCount,
         runtimeAgentId: seed.runtime.runtimeAgentId
     }, 'runtime infrastructure registration');
     return waitForOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
@@ -614,7 +627,7 @@ async function postCommand(baseUrl, path, payload, label) {
     });
     const body = await response.text();
     if (!response.ok) {
-        const message = `POST ${label} failed: ${response.status} ${compact(body)}`;
+        const message = `POST ${label} failed: ${response.status} ${compact(body)} payload=${compact(JSON.stringify(payload))}`;
         if (strict) fail(message);
         throw new Error(message);
     }
@@ -977,6 +990,9 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
             initialModelVersion: modelVersion,
             runtimeEngineProfileId,
             runtimeEngineProfileName: 'PyTorch Vision Runtime Engine',
+            runtimeEnginePluginProfile: 'pytorch-vision',
+            runtimeEngineImage: runtimeOptions.runtimeEngineImage,
+            runtimeEngineImageDigest: runtimeOptions.runtimeEngineImageDigest,
             strategyName: 'LOCAL_DEV_DENSENET',
             aggregationAlgorithm: 'FED_AVG_PYTORCH_STATE_DICT',
             maxRounds: 1,
@@ -1219,6 +1235,9 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
             initialModelVersion: modelVersion,
             runtimeEngineProfileId,
             runtimeEngineProfileName: 'Scikit-learn Runtime Engine',
+            runtimeEnginePluginProfile: 'sklearn',
+            runtimeEngineImage: runtimeOptions.runtimeEngineImage,
+            runtimeEngineImageDigest: runtimeOptions.runtimeEngineImageDigest,
             strategyName: 'LOCAL_DEV',
             aggregationAlgorithm: 'FED_AVG_JSON',
             maxRounds: 1,

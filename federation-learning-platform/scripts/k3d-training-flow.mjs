@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {existsSync, readFileSync} from 'node:fs';
+import {existsSync, readFileSync, writeFileSync} from 'node:fs';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
@@ -13,6 +13,11 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const platformRoot = resolve(scriptDir, '..');
 const repoRoot = resolve(platformRoot, '..');
 const args = parseArgs(process.argv.slice(2));
+
+if (args.help || args.h) {
+    printUsage();
+    process.exit(0);
+}
 
 loadEnvFiles([
     resolve(repoRoot, '.env'),
@@ -27,6 +32,17 @@ const platformUrl = trimSlash(stringArg('platform-url', 'FL_PLATFORM_URL', `${ga
 const supportUrl = trimSlash(stringArg('support-url', 'FL_SUPPORT_URL', `${gatewayUrl}/api/federation-learning-support`));
 const runtimeAgentUrl = trimSlash(stringArg('runtime-agent-url', 'FL_RUNTIME_AGENT_URL', 'http://localhost:30082/api/runtime-agent'));
 const scenario = stringArg('scenario', 'FL_TRAINING_SCENARIO', 'densenet');
+const k3sDevEnvironmentDir = resolve(repoRoot, 'operations/dev/k3s/environments/dev');
+const k3sDevSecretsFile = resolve(k3sDevEnvironmentDir, 'secrets.dev.yaml');
+const k3sDevSecretsExampleFile = resolve(k3sDevEnvironmentDir, 'secrets.example.yaml');
+const adminUsername = stringArg('admin-username', 'FL_K3D_ADMIN_USERNAME', 'admin');
+const adminPassword = stringArg('admin-password', 'FL_K3D_ADMIN_PASSWORD', 'admin');
+const adminSetupToken = stringArg(
+    'admin-setup-token',
+    'FL_K3D_ADMIN_SETUP_TOKEN',
+    readYamlStringDataValue(k3sDevSecretsFile, 'MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN') ?? 'local-dev-admin-setup-token'
+);
+const jwtSecret = stringArg('jwt-secret', 'FL_K3D_JWT_SECRET', 'local-dev-jwt-secret-local-dev-jwt-secret');
 const timeoutMs = positiveInt(args.timeout ?? process.env.FL_K3D_FLOW_TIMEOUT_MS, 240000);
 const pollIntervalMs = positiveInt(args['poll-interval'] ?? process.env.FL_K3D_FLOW_POLL_INTERVAL_MS, 3000);
 const preparedNodeCount = positiveInt(args['prepared-node-count'] ?? process.env.FL_K3D_PREPARED_NODE_COUNT, 1);
@@ -84,13 +100,20 @@ if (!skipCluster) {
     await ensureCluster();
 }
 if (!skipApply) {
+    await waitForKubernetesApi();
+    await waitForKubernetesNodesReady();
+    ensureDevSecrets();
     runK3d('apply');
     await waitForDeployment('postgres');
     await waitForDeployment('umadb');
     await waitForDeployment('federation-learning-support');
     await waitForDeployment('federation-learning-platform');
     await waitForHttp(`${supportUrl}/actuator/health`, 'support health');
+    await ensureAdminToken();
     await waitForHttp(`${platformUrl}/actuator/health`, 'platform health');
+}
+if (skipApply) {
+    await ensureAdminToken();
 }
 if (!skipDictionary) {
     await initDictionaries();
@@ -122,13 +145,14 @@ if (isFailureState(verifiedInfrastructure?.state)) {
     fail(`Runtime infrastructure failed before agent deployment: ${JSON.stringify(verifiedInfrastructure)}`);
 }
 
+await waitForManagedRuntimeAgent(runtimeAgentId);
+await waitForHttp(`${runtimeAgentUrl}/actuator/health`, 'managed runtime-agent health');
+await loadRuntimeAgentBootstrapConfiguration();
+
 const endpoint = await waitForRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructureId);
 console.log(`[k3d-flow] platform runtime agent endpoint=${endpoint.runtimeAgentEndpoint ?? endpoint.endpoint ?? ''}`);
 
-await waitForManagedRuntimeAgent(runtimeAgentId);
-
 if (!skipRuntimeAgentData) {
-    await waitForHttp(`${runtimeAgentUrl}/actuator/health`, 'managed runtime-agent health');
     await runInitTraining('runtime-agent', {
         createJob: false,
         registerRuntimeInfrastructure: false,
@@ -163,11 +187,47 @@ async function ensureCluster() {
     runK3d(exists ? 'kubeconfig' : 'create');
 }
 
+async function waitForKubernetesApi() {
+    await waitForCondition('kubernetes API readiness', () =>
+        commandOk('kubectl', ['get', '--raw=/readyz'], kubeEnv())
+    );
+}
+
+async function waitForKubernetesNodesReady() {
+    let lastSummary = '';
+    await waitForCondition('kubernetes nodes ready', () => {
+        const output = commandOutputOrNull('kubectl', ['get', 'nodes', '-o', 'json'], kubeEnv());
+        if (!output) {
+            lastSummary = 'kubectl get nodes did not return successfully';
+            return false;
+        }
+        let nodes = [];
+        try {
+            nodes = JSON.parse(output).items ?? [];
+        } catch (error) {
+            lastSummary = `kubectl get nodes returned invalid JSON: ${errorSummary(error)}`;
+            return false;
+        }
+        if (nodes.length === 0) {
+            lastSummary = 'no nodes were returned';
+            return false;
+        }
+        const notReady = nodes
+            .filter((node) => !nodeReady(node))
+            .map((node) => node.metadata?.name ?? '<unknown>');
+        lastSummary = notReady.length > 0
+            ? `not ready nodes: ${notReady.join(', ')}`
+            : `${nodes.length} node(s) ready`;
+        return notReady.length === 0;
+    }, () => lastSummary);
+}
+
 function runK3d(command) {
     run(k3dScript, [command], {
         CLUSTER_NAME: clusterName,
         NAMESPACE: namespace,
         KUBECONFIG_FILE: kubeconfigFile,
+        KUBECONFIG: kubeconfigFile,
         IMAGE_VERSION: imageVersion,
         FL_RUNTIME_ENGINE_IMAGE: runtimeEngineImage,
         ...(runtimeAgentImage ? {FL_RUNTIME_AGENT_IMAGE: runtimeAgentImage} : {}),
@@ -182,6 +242,60 @@ async function initDictionaries() {
         return;
     }
     run('node', [dictionaryScript, '--base-url', supportUrl], {});
+}
+
+function ensureDevSecrets() {
+    if (existsSync(k3sDevSecretsFile)) {
+        return;
+    }
+    if (!existsSync(k3sDevSecretsExampleFile)) {
+        console.log(`[k3d-flow] skip dev secret generation; missing ${k3sDevSecretsExampleFile}`);
+        return;
+    }
+    const content = readFileSync(k3sDevSecretsExampleFile, 'utf8')
+        .replaceAll('MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN: "change-me"', `MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN: "${adminSetupToken}"`)
+        .replaceAll('MEDOL_SECURITY_JWT_SECRET: "change-me-change-me-change-me-change-me"', `MEDOL_SECURITY_JWT_SECRET: "${jwtSecret}"`);
+    writeFileSync(k3sDevSecretsFile, content);
+    console.log(`[k3d-flow] generated local dev secrets: ${k3sDevSecretsFile}`);
+}
+
+async function ensureAdminToken() {
+    if (process.env.FL_API_TOKEN?.trim()) {
+        console.log('[k3d-flow] use existing FL_API_TOKEN');
+        return process.env.FL_API_TOKEN.trim();
+    }
+
+    await setupAdmin();
+    const token = await loginAdmin();
+    process.env.FL_API_TOKEN = token;
+    console.log(`[k3d-flow] authenticated ${adminUsername}; FL_API_TOKEN is available for this run`);
+    return token;
+}
+
+async function setupAdmin() {
+    const response = await postJson(`${supportUrl}/api/auth/setup-admin`, {
+        setupToken: adminSetupToken,
+        username: adminUsername,
+        password: adminPassword
+    }, 'setup admin', {allowStatuses: [200, 409]});
+
+    if (response.status === 409) {
+        console.log('[k3d-flow] admin account already initialized');
+    } else {
+        console.log(`[k3d-flow] admin account initialized: ${adminUsername}`);
+    }
+}
+
+async function loginAdmin() {
+    const response = await postJson(`${supportUrl}/api/auth/login`, {
+        username: adminUsername,
+        password: adminPassword
+    }, 'login admin');
+    const token = response.body?.accessToken;
+    if (!token) {
+        fail(`Admin login did not return accessToken. Response: ${JSON.stringify(response.body)}`);
+    }
+    return token;
 }
 
 async function runInitTraining(target, options) {
@@ -253,6 +367,15 @@ async function confirmRuntimeInfrastructurePrepared(runtimeInfrastructure) {
     }, 'confirm runtime infrastructure prepared');
 }
 
+async function loadRuntimeAgentBootstrapConfiguration() {
+    await postCommand(
+        runtimeAgentUrl,
+        '/runtimeagentlifecycle/loadruntimeagentbootstrapconfiguration',
+        {},
+        'runtime agent bootstrap configuration load'
+    );
+}
+
 async function waitForRuntimeInfrastructure(runtimeInfrastructureId, predicate, label = 'runtime infrastructure') {
     return waitForOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
         'runtimeInfrastructureId.equals': runtimeInfrastructureId,
@@ -265,16 +388,22 @@ async function waitForRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructure
         'runtimeAgentId.equals': runtimeAgentId,
         'runtimeInfrastructureId.equals': runtimeInfrastructureId,
         size: '20'
-    }, 'runtime agent endpoint', (item) => Boolean(item?.runtimeAgentEndpoint ?? item?.endpoint));
+    }, 'runtime agent endpoint', (item) => Boolean(item?.runtimeAgentEndpoint ?? item?.endpoint), () =>
+        runtimeAgentDiagnostics(runtimeAgentId)
+    );
 }
 
 async function waitForManagedRuntimeAgent(runtimeAgentId) {
-    const deploymentName = `federation-learning-runtime-agent-managed-${String(runtimeAgentId).replaceAll('-', '').slice(0, 12)}`;
+    const deploymentName = managedRuntimeAgentDeploymentName(runtimeAgentId);
     await waitForDeployment(deploymentName, 'managed runtime-agent');
     const consoleDeploymentName = `${deploymentName}-console`;
     if (commandOk('kubectl', ['-n', namespace, 'get', 'deploy', consoleDeploymentName], kubeEnv())) {
         await waitForDeployment(consoleDeploymentName, 'managed runtime-agent participant console');
     }
+}
+
+function managedRuntimeAgentDeploymentName(runtimeAgentId) {
+    return `federation-learning-runtime-agent-managed-${String(runtimeAgentId).replaceAll('-', '').slice(0, 12)}`;
 }
 
 async function waitForDeployment(name, label = name) {
@@ -297,13 +426,16 @@ async function waitForHttp(url, label) {
     });
 }
 
-async function waitForOne(baseUrl, path, query, label, predicate) {
+async function waitForOne(baseUrl, path, query, label, predicate, timeoutDetails = () => '') {
     let lastItem = null;
     const item = await waitForCondition(label, async () => {
         const page = await getPage(baseUrl, path, query);
         lastItem = (page.content ?? [])[0] ?? lastItem;
         return (page.content ?? []).find(predicate) ?? false;
-    }, () => `Last item: ${JSON.stringify(lastItem)}`);
+    }, () => [
+        `Last item: ${JSON.stringify(lastItem)}`,
+        timeoutDetails()
+    ].filter(Boolean).join('\n'));
     return item;
 }
 
@@ -346,6 +478,29 @@ async function postCommand(baseUrl, path, payload, label) {
     console.log(`[k3d-flow] posted ${label}`);
 }
 
+async function postJson(url, payload, label, options = {}) {
+    const allowStatuses = new Set(options.allowStatuses ?? [200]);
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(payload)
+    });
+    const text = await response.text();
+    const body = text ? parseJsonOrText(text) : null;
+    if (!allowStatuses.has(response.status)) {
+        fail(`POST ${label} failed: ${response.status} ${compact(text)}`);
+    }
+    return {status: response.status, body};
+}
+
+function parseJsonOrText(text) {
+    try {
+        return JSON.parse(text);
+    } catch {
+        return text;
+    }
+}
+
 function run(command, commandArgs, extraEnv) {
     if (dryRun) {
         console.log(`[k3d-flow] DRY RUN ${command} ${commandArgs.join(' ')}`);
@@ -357,7 +512,7 @@ function run(command, commandArgs, extraEnv) {
         stdio: 'inherit'
     });
     if (result.status !== 0) {
-        fail(`Command failed: ${command} ${commandArgs.join(' ')}`);
+        fail(`Command failed with exitCode=${result.status}: ${command} ${commandArgs.join(' ')}`);
     }
 }
 
@@ -374,7 +529,11 @@ function runCapture(command, commandArgs, extraEnv) {
     if (result.stderr) process.stderr.write(result.stderr);
     if (result.status !== 0) {
         if (result.stdout) process.stdout.write(result.stdout);
-        fail(`Command failed: ${command} ${commandArgs.join(' ')}`);
+        fail([
+            `Command failed with exitCode=${result.status}: ${command} ${commandArgs.join(' ')}`,
+            result.stdout ? `stdout tail: ${compactTail(result.stdout)}` : '',
+            result.stderr ? `stderr tail: ${compactTail(result.stderr)}` : ''
+        ].filter(Boolean).join('\n'));
     }
     return result.stdout ?? '';
 }
@@ -388,9 +547,61 @@ function commandOk(command, commandArgs, extraEnv = {}) {
     return result.status === 0;
 }
 
+function commandOutputOrNull(command, commandArgs, extraEnv = {}) {
+    const result = spawnSync(command, commandArgs, {
+        cwd: repoRoot,
+        env: {...process.env, ...extraEnv},
+        encoding: 'utf8'
+    });
+    if (result.status !== 0) {
+        return null;
+    }
+    return result.stdout ?? '';
+}
+
+function runtimeAgentDiagnostics(runtimeAgentId) {
+    const deploymentName = managedRuntimeAgentDeploymentName(runtimeAgentId);
+    const podSelector = `app=${deploymentName}`;
+    const serviceSelector = `app.kubernetes.io/name=${deploymentName}`;
+    const parts = [
+        diagnosticCommand('deployments', ['kubectl', ['-n', namespace, 'get', 'deploy', deploymentName, '-o', 'wide']]),
+        diagnosticCommand('deployment description', ['kubectl', ['-n', namespace, 'describe', 'deploy', deploymentName]]),
+        diagnosticCommand('pods', ['kubectl', ['-n', namespace, 'get', 'pods', '-l', podSelector, '-o', 'wide']]),
+        diagnosticCommand('service', ['kubectl', ['-n', namespace, 'get', 'svc', deploymentName, '-o', 'wide']]),
+        diagnosticCommand('services by label', ['kubectl', ['-n', namespace, 'get', 'svc', '-l', serviceSelector, '-o', 'wide']]),
+        diagnosticCommand('recent runtime-agent logs', [
+            'kubectl',
+            ['-n', namespace, 'logs', `deploy/${deploymentName}`, '--tail=200']
+        ])
+    ];
+    const consoleDeploymentName = `${deploymentName}-console`;
+    if (commandOk('kubectl', ['-n', namespace, 'get', 'deploy', consoleDeploymentName], kubeEnv())) {
+        parts.push(
+            diagnosticCommand('participant console deployment', [
+                'kubectl',
+                ['-n', namespace, 'get', 'deploy', consoleDeploymentName, '-o', 'wide']
+            ]),
+            diagnosticCommand('recent participant console logs', [
+                'kubectl',
+                ['-n', namespace, 'logs', `deploy/${consoleDeploymentName}`, '--tail=100']
+            ])
+        );
+    }
+    return parts.filter(Boolean).join('\n');
+}
+
+function diagnosticCommand(label, commandSpec) {
+    const [command, commandArgs] = commandSpec;
+    const output = commandOutputOrNull(command, commandArgs, kubeEnv());
+    if (!output) {
+        return `${label}: unavailable`;
+    }
+    return `${label}:\n${compactLongTail(output)}`;
+}
+
 function kubeEnv() {
     return {
-        KUBECONFIG: process.env.KUBECONFIG || kubeconfigFile
+        KUBECONFIG: kubeconfigFile
     };
 }
 
@@ -424,6 +635,12 @@ function isControlPlaneNode(node) {
         Object.hasOwn(labels, 'node-role.kubernetes.io/master');
 }
 
+function nodeReady(node) {
+    return (node.status?.conditions ?? []).some((condition) =>
+        condition.type === 'Ready' && condition.status === 'True'
+    );
+}
+
 function isRegisteredOrBeyond(item) {
     return isStateAtLeast(item?.state, ['REGISTERED', 'PREPARED', 'VERIFIED', 'AGENTREADY', 'CONNECTED']);
 }
@@ -453,6 +670,44 @@ function parseArgs(argv) {
     return result;
 }
 
+function printUsage() {
+    console.log(`Usage:
+  node scripts/k3d-training-flow.mjs [options]
+
+Runs the local K3D federation-learning smoke flow: cluster readiness wait,
+manifest apply, local admin bootstrap/login, dictionary init, platform seed,
+runtime-agent deployment wait, runtime-agent seed, and training job submission.
+
+Options:
+  --recreate                         Recreate the K3D cluster before running.
+  --scenario <densenet|csv>           Select training seed scenario.
+  --skip-cluster                      Skip cluster create/kubeconfig.
+  --skip-apply                        Skip manifest apply and deployment waits.
+  --skip-dictionary                   Skip dictionary bootstrap.
+  --skip-runtime-agent-data           Skip runtime-agent dataset bootstrap.
+  --skip-training-job                 Skip training job submission.
+  --runtime-engine-image <image>      Runtime engine image used by managed agents.
+  --admin-username <username>         Local admin username. Default: admin.
+  --admin-password <password>         Local admin password. Default: admin.
+  --admin-setup-token <token>         Local admin setup token.
+  --dry-run                           Print configuration and exit before side effects.
+
+Environment:
+  FL_API_TOKEN                        Existing bearer token. When set, login is skipped.
+  FL_K3D_ADMIN_USERNAME               Local admin username override.
+  FL_K3D_ADMIN_PASSWORD               Local admin password override.
+  FL_K3D_ADMIN_SETUP_TOKEN            Local admin setup token override.
+  FL_K3D_CLUSTER_NAME                 K3D cluster name.
+  FL_K3D_NAMESPACE                    Kubernetes namespace.
+  FL_K3D_GATEWAY_URL                  Gateway URL. Default: http://localhost:30080.
+
+The flow creates operations/dev/k3s/environments/dev/secrets.dev.yaml from
+secrets.example.yaml when it is missing. For manual kubectl inspection, use the
+same kubeconfig printed by the flow helper, for example:
+  export KUBECONFIG=operations/dev/k3s/.work/kubeconfig-federation-learning-platform-dev.yaml
+`);
+}
+
 function loadEnvFiles(paths) {
     const loaded = new Set();
     for (const path of paths) {
@@ -477,6 +732,17 @@ function unquoteEnvValue(value) {
         return value.slice(1, -1);
     }
     return value;
+}
+
+function readYamlStringDataValue(file, key) {
+    if (!existsSync(file)) return null;
+    const text = readFileSync(file, 'utf8');
+    const pattern = new RegExp(`^\\s*${escapeRegExp(key)}:\\s*["']?([^"'\\n]+)["']?\\s*$`, 'm');
+    return text.match(pattern)?.[1]?.trim() || null;
+}
+
+function escapeRegExp(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function stringArg(name, envName, fallback) {
@@ -512,6 +778,14 @@ function trimSlash(value) {
 
 function compact(value) {
     return String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, 1000);
+}
+
+function compactTail(value) {
+    return String(value ?? '').split(/\r?\n/).slice(-20).join('\n').trim();
+}
+
+function compactLongTail(value) {
+    return String(value ?? '').split(/\r?\n/).slice(-200).join('\n').trim().slice(-12000);
 }
 
 function sleep(ms) {

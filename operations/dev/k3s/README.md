@@ -45,6 +45,7 @@ The helper script is generated for local debugging. You can override paths and t
 `scripts/k3d-dev.sh apply` automatically applies `environments/dev/secrets.dev.yaml` first when the file exists.
 `PRE_APPLY_FILE` can point at a manifest that must exist before Deployments are applied, such as ServiceAccount and RBAC objects referenced by custom overlays.
 When `REGISTRY_OVERLAY` and `EXTRA_COMPONENT` are both configured, the helper applies a temporary combined overlay so registry image overrides and extra resources are applied together.
+`KUBECTL_APPLY_VALIDATE` defaults to `false` so offline or freshly started K3s clusters do not fail while `kubectl` tries to download OpenAPI schemas. Set `KUBECTL_APPLY_VALIDATE=true` when you want strict client-side validation.
 
 ```bash
 k3d cluster create --config cluster/k3d-dev.yaml
