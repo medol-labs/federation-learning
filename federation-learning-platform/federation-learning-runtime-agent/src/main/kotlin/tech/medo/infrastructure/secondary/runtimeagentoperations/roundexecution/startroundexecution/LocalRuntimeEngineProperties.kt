@@ -29,7 +29,7 @@ data class LocalRuntimeEngineProperties(
     val kubernetesServiceAccountName: String = "federation-learning-runtime-engine-scheduler",
     val kubernetesImage: String = "medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT",
     val kubernetesImagePullPolicy: String = "IfNotPresent",
-    val kubernetesContainerPort: Int = 18080,
+    val kubernetesContainerPort: Int = 8080,
     val kubernetesRuntimeInfrastructureId: String = "",
     val kubernetesDatasetHostPath: String = "/workspace/datasets",
     val kubernetesRuntimeHostPath: String = "/workspace/tmp/runtime-engine"

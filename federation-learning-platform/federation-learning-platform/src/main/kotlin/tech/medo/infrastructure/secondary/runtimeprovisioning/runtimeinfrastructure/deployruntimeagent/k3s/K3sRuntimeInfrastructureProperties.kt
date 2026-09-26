@@ -43,8 +43,11 @@ class K3sRuntimeInfrastructureProperties {
     var runtimeEngineServiceAccountName: String = "federation-learning-runtime-engine-scheduler"
     var runtimeEngineImage: String = "medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT"
     var runtimeEngineImagePullPolicy: String = "IfNotPresent"
+    var runtimeEngineContainerPort: Int = 8080
     var runtimeEngineDatasetHostPath: String = "/workspace/datasets"
     var runtimeEngineWorkHostPath: String = "/workspace/tmp/runtime-engine"
+    var runtimeEngineHealthTimeout: Duration = Duration.ofMinutes(2)
+    var runtimeEngineJobObservationTimeout: Duration = Duration.ofMinutes(10)
     var commandTimeout: Duration = Duration.ofSeconds(60)
     var supportedEnvironmentTypes: List<String> = listOf("K3S", "KUBERNETES")
 }

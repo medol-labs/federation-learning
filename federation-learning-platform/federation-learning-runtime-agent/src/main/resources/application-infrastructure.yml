@@ -52,7 +52,7 @@ runtime-agent:
     kubernetes-service-account-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_SERVICE_ACCOUNT_NAME:federation-learning-runtime-engine-scheduler}
     kubernetes-image: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE:medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
     kubernetes-image-pull-policy: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE_PULL_POLICY:IfNotPresent}
-    kubernetes-container-port: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_CONTAINER_PORT:18080}
+    kubernetes-container-port: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_CONTAINER_PORT:8080}
     kubernetes-runtime-infrastructure-id: ${RUNTIME_INFRASTRUCTURE_ID:}
     kubernetes-dataset-host-path: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_DATASET_HOST_PATH:/workspace/datasets}
     kubernetes-runtime-host-path: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_RUNTIME_HOST_PATH:/workspace/tmp/runtime-engine}

@@ -1,5 +1,6 @@
 package tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -17,7 +18,14 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapterTest {
         val adapter = RuntimeEngineCompleteHomomorphicAggregationSessionAdapter(
             runtimeEngineClient = runtimeClient,
             fileUploadClient = fileUploadClient,
+            embeddedAggregationService = EmbeddedAggregationService(
+                artifactClient = FakeAggregatedModelUpdateArtifactClient(),
+                fileUploadClient = fileUploadClient,
+                objectMapper = ObjectMapper(),
+                properties = AggregationRuntimeProperties(supportEndpoint = "http://support")
+            ),
             properties = AggregationRuntimeProperties(
+                mode = "runtime-engine",
                 runtimeEngineEndpoint = "http://runtime-engine",
                 supportEndpoint = "http://support",
                 pollInterval = Duration.ZERO
@@ -54,6 +62,11 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapterTest {
         assertEquals("FEDERATED_TRAINING", result.modelSourceType)
         assertEquals("round-1", result.aggregatedModelVersion)
     }
+}
+
+private class FakeAggregatedModelUpdateArtifactClient : AggregatedModelUpdateArtifactClient {
+    override fun download(supportEndpoint: String, artifactRef: String): ByteArray =
+        "{\"update\":\"$artifactRef\"}".toByteArray()
 }
 
 private class FakeAggregationRuntimeEngineClient : AggregationRuntimeEngineClient {

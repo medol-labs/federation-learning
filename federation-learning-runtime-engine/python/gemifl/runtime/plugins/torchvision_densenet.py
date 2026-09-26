@@ -220,6 +220,9 @@ class TorchvisionDenseNet121ClassifierPlugin:
             return self._artifact_path(artifact.get("weightArtifact") or artifact.get("modelArtifact"))
         if not isinstance(artifact, str) or not artifact:
             return None
+        if artifact.startswith("builtin://"):
+            log.info("Skipping built-in DenseNet121 initial model reference artifact=%s", artifact)
+            return None
         if artifact.startswith("file://"):
             return artifact.removeprefix("file://")
         return artifact

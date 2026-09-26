@@ -6,6 +6,7 @@ K3S_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 PROJECT_ROOT="$(cd "${K3S_DIR}/../../.." && pwd)"
 WORK_DIR="${K3S_DIR}/.work"
 COMMAND="${1:-help}"
+NAMESPACE="${NAMESPACE:-federation-learning-platform}"
 
 CLUSTER_NAME="${CLUSTER_NAME:-federation-learning-platform-dev}"
 DATASETS_HOST_ROOT="${FL_K3D_DATASETS_HOST_ROOT:-${PROJECT_ROOT}/volumes/datasets}"
@@ -78,6 +79,30 @@ default_image() {
     fi
 }
 
+b64() {
+    printf '%s' "$1" | base64 | tr -d '\n'
+}
+
+apply_managed_runtime_agent_secret_patch() {
+    local runtime_agent_db_username="${RUNTIME_AGENT_DB_USERNAME:-medol}"
+    local runtime_agent_db_password="${RUNTIME_AGENT_DB_PASSWORD:-medol}"
+    local runtime_agent_jwt_secret="${MEDOL_SECURITY_JWT_SECRET:-medol-medol-medol-medoldol-medol-medol-medol}"
+    local runtime_agent_internal_token="${MEDOL_SECURITY_INTERNAL_TOKEN:-local-dev-internal-token}"
+    local runtime_agent_admin_bootstrap_setup_token="${MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN:-medol}"
+    local patched_secret="${WORK_DIR}/runtime-agent-managed-secret.yaml"
+
+    kubectl -n "${NAMESPACE}" create secret generic federation-learning-runtime-agent-dev-secret \
+        --from-literal=DB_PASSWORD="${runtime_agent_db_password}" \
+        --from-literal=DB_USERNAME="${runtime_agent_db_username}" \
+        --from-literal=MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN="${runtime_agent_admin_bootstrap_setup_token}" \
+        --from-literal=MEDOL_SECURITY_INTERNAL_TOKEN="${runtime_agent_internal_token}" \
+        --from-literal=MEDOL_SECURITY_JWT_SECRET="${runtime_agent_jwt_secret}" \
+        --from-literal=UMADB_API_KEY="" \
+        --dry-run=client -o yaml > "${patched_secret}"
+    echo "[federation-learning-dev] kubectl -n ${NAMESPACE} apply managed runtime-agent secret patch"
+    kubectl -n "${NAMESPACE}" apply -f "${patched_secret}"
+}
+
 runtime_image() {
     local env_name="$1"
     local image_name="$2"
@@ -99,9 +124,29 @@ prepare_federation_learning_runtime_component() {
     local runtime_agent_image
     local runtime_engine_image
     local participant_console_image
+    local runtime_agent_db_username
+    local runtime_agent_db_password
+    local runtime_agent_jwt_secret
+    local runtime_agent_internal_token
+    local runtime_agent_admin_bootstrap_setup_token
+    local runtime_agent_db_username_b64
+    local runtime_agent_db_password_b64
+    local runtime_agent_jwt_secret_b64
+    local runtime_agent_internal_token_b64
+    local runtime_agent_admin_bootstrap_setup_token_b64
     runtime_agent_image="$(runtime_image FL_RUNTIME_AGENT_IMAGE federation-learning-runtime-agent)"
     runtime_engine_image="$(runtime_image FL_RUNTIME_ENGINE_IMAGE federation-learning-runtime-engine)"
     participant_console_image="$(runtime_image FL_PARTICIPANT_CONSOLE_IMAGE federation-learning-participant-console)"
+    runtime_agent_db_username="${RUNTIME_AGENT_DB_USERNAME:-medol}"
+    runtime_agent_db_password="${RUNTIME_AGENT_DB_PASSWORD:-medol}"
+    runtime_agent_jwt_secret="${MEDOL_SECURITY_JWT_SECRET:-medol-medol-medol-medoldol-medol-medol-medol}"
+    runtime_agent_internal_token="${MEDOL_SECURITY_INTERNAL_TOKEN:-local-dev-internal-token}"
+    runtime_agent_admin_bootstrap_setup_token="${MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN:-medol}"
+    runtime_agent_db_username_b64="$(b64 "${runtime_agent_db_username}")"
+    runtime_agent_db_password_b64="$(b64 "${runtime_agent_db_password}")"
+    runtime_agent_jwt_secret_b64="$(b64 "${runtime_agent_jwt_secret}")"
+    runtime_agent_internal_token_b64="$(b64 "${runtime_agent_internal_token}")"
+    runtime_agent_admin_bootstrap_setup_token_b64="$(b64 "${runtime_agent_admin_bootstrap_setup_token}")"
 
     rm -rf "${FEDERATION_LEARNING_RUNTIME_COMPONENT}"
     mkdir -p "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches"
@@ -118,6 +163,7 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 resources:
   - "runtime-scheduler-rbac.yaml"
+  - "runtime-agent-managed-secret.yaml"
 patches:
   - path: "patches/platform-runtime-scheduler.yaml"
   - path: "patches/runtime-agent-engine-scheduler.yaml"
@@ -132,6 +178,20 @@ metadata:
   name: "federation-learning-runtime-agent"
 spec:
   replicas: 0
+YAML
+    cat > "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/runtime-agent-managed-secret.yaml" <<YAML
+apiVersion: "v1"
+kind: "Secret"
+metadata:
+  name: "federation-learning-runtime-agent-dev-secret"
+type: "Opaque"
+data:
+  DB_PASSWORD: "${runtime_agent_db_password_b64}"
+  DB_USERNAME: "${runtime_agent_db_username_b64}"
+  MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN: "${runtime_agent_admin_bootstrap_setup_token_b64}"
+  MEDOL_SECURITY_INTERNAL_TOKEN: "${runtime_agent_internal_token_b64}"
+  MEDOL_SECURITY_JWT_SECRET: "${runtime_agent_jwt_secret_b64}"
+  UMADB_API_KEY: ""
 YAML
     cat > "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/runtime-scheduler-images.yaml" <<YAML
 apiVersion: "v1"
@@ -216,5 +276,11 @@ case "${COMMAND}" in
         export EXTRA_COMPONENT="${EXTRA_COMPONENT:-${FEDERATION_LEARNING_RUNTIME_COMPONENT}}"
         ;;
 esac
+
+if [[ "${COMMAND}" == "apply" ]]; then
+    "${SCRIPT_DIR}/k3d-dev.sh" "$@"
+    apply_managed_runtime_agent_secret_patch
+    exit
+fi
 
 exec "${SCRIPT_DIR}/k3d-dev.sh" "$@"

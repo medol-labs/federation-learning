@@ -9,6 +9,7 @@ import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeData
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionInput
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionResult
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionService
+import java.nio.file.Path
 import java.time.Duration
 import java.time.Instant
 
@@ -35,7 +36,7 @@ class KubernetesStartRoundExecutionAdapter(
                 null,
                 "Runtime dataset binding ${binding.runtimeDatasetBindingId} does not provide a filePath."
             )
-        val modelPlugin = input.baseModelRegistryRef.takeIf(String::isNotBlank)
+        val modelPlugin = input.baseModelPlugin.takeIf(String::isNotBlank)
             ?: return StartRoundExecutionResult.Rejected(
                 null,
                 "Execution plan ${input.executionPlanId} does not provide a runtime engine model plugin."
@@ -91,8 +92,10 @@ class KubernetesStartRoundExecutionAdapter(
             role = "trainer",
             operation = "train",
             input = buildMap {
-                put("dataset", mapOf("path" to datasetPath, "labelColumn" to properties.labelColumn, "id" to properties.idColumn))
-                input.baseModelArtifactUri.takeIf { it.isNotBlank() }?.let { put("globalModel", it.removePrefix("file://")) }
+                put("dataset", datasetInput(datasetPath))
+                input.baseModelArtifactUri
+                    .takeIf { it.startsWith("/") || it.startsWith("file://") }
+                    ?.let { put("globalModel", it.removePrefix("file://")) }
             },
             output = mapOf(
                 "localUpdate" to "$outputRoot/local_update.json",
@@ -111,6 +114,22 @@ class KubernetesStartRoundExecutionAdapter(
             jobParameter = mapOf("encryptMethod" to "plain", "loggerLevel" to "INFO"),
             runtimeRoot = properties.runtimeRoot
         )
+    }
+
+    private fun datasetInput(datasetPath: String): Map<String, Any> {
+        val base = Path.of(datasetPath)
+        val dataset = mutableMapOf<String, Any>(
+            "path" to datasetPath,
+            "labelColumn" to properties.labelColumn,
+            "id" to properties.idColumn
+        )
+        if (base.resolve("train").toFile().isDirectory) {
+            dataset["train"] = "$datasetPath/train"
+        }
+        if (base.resolve("val").toFile().isDirectory) {
+            dataset["val"] = "$datasetPath/val"
+        }
+        return dataset
     }
 
     companion object {

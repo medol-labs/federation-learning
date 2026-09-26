@@ -50,14 +50,18 @@ platform:
       runtime-engine-service-account-name: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_SERVICE_ACCOUNT_NAME:federation-learning-runtime-engine-scheduler}
       runtime-engine-image: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE:medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
       runtime-engine-image-pull-policy: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE_PULL_POLICY:IfNotPresent}
+      runtime-engine-container-port: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_CONTAINER_PORT:8080}
       runtime-engine-dataset-host-path: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_DATASET_HOST_PATH:/workspace/datasets}
       runtime-engine-work-host-path: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_WORK_HOST_PATH:/workspace/tmp/runtime-engine}
+      runtime-engine-health-timeout: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_HEALTH_TIMEOUT:PT2M}
+      runtime-engine-job-observation-timeout: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_JOB_OBSERVATION_TIMEOUT:PT10M}
       command-timeout: ${PLATFORM_RUNTIME_K3S_COMMAND_TIMEOUT:PT60S}
       supported-environment-types: ${PLATFORM_RUNTIME_K3S_SUPPORTED_ENVIRONMENT_TYPES:K3S,KUBERNETES}
 
 federation-learning:
   aggregation:
     enabled: ${FL_AGGREGATION_ENABLED:true}
+    mode: ${FL_AGGREGATION_MODE:embedded}
     runtime-engine-endpoint: ${FL_AGGREGATION_RUNTIME_ENGINE_ENDPOINT:http://localhost:18080}
     support-endpoint: ${FEDERATION_LEARNING_SUPPORT_URL:http://localhost:8080}
     internal-token: ${MEDOL_SECURITY_INTERNAL_TOKEN:local-dev-internal-token}

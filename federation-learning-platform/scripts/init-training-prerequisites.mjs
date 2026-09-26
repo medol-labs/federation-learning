@@ -20,8 +20,13 @@ const trainingScenario = normalizeScenario(args.scenario ?? args['training-scena
 const initTarget = normalizeInitTarget(args.target ?? args['init-target'] ?? process.env.FL_INIT_TRAINING_TARGET ?? 'all');
 
 const platformUrl = trimSlash(args['platform-url'] ?? process.env.FL_PLATFORM_URL ?? 'http://localhost:8081');
+const supportUrl = trimSlash(args['support-url'] ?? process.env.FL_SUPPORT_URL ?? 'http://localhost:8080');
 const runtimeAgentUrl = trimSlash(args['runtime-agent-url'] ?? process.env.FL_RUNTIME_AGENT_URL ?? 'http://localhost:8082');
 const runtimeEngineUrl = trimSlash(args['runtime-engine-url'] ?? process.env.FL_RUNTIME_ENGINE_URL ?? 'http://localhost:18080');
+const adminUsername = String(args['admin-username'] ?? process.env.FL_ADMIN_USERNAME ?? 'admin').trim();
+const adminPassword = String(args['admin-password'] ?? process.env.FL_ADMIN_PASSWORD ?? 'admin');
+const adminSetupToken = String(args['admin-setup-token'] ?? process.env.MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN ?? 'medol');
+const skipAdminSetup = booleanOption(args['skip-admin-setup'] ?? process.env.FL_SKIP_ADMIN_SETUP, false);
 const runtimeEnvironmentType = canonicalRuntimeEnvironmentType(
     args['runtime-environment-type'] ?? process.env.FL_RUNTIME_ENVIRONMENT_TYPE ?? 'DOCKER_COMPOSE'
 );
@@ -66,10 +71,14 @@ const seed = buildSeed(trainingScenario, runtimeDatasetPath, runtimeAgentUrl, ru
     runtimeEngineImage,
     runtimeEngineImageDigest
 });
+const authTokensByBaseUrl = new Map();
 
 console.log(`[init-training] platformUrl=${platformUrl}`);
+console.log(`[init-training] supportUrl=${supportUrl}`);
 console.log(`[init-training] runtimeAgentUrl=${runtimeAgentUrl}`);
 console.log(`[init-training] runtimeEngineUrl=${runtimeEngineUrl}`);
+console.log(`[init-training] adminUsername=${adminUsername}`);
+console.log(`[init-training] adminSetupEnabled=${!skipAdminSetup}`);
 console.log(`[init-training] runtimeEnvironmentType=${runtimeEnvironmentType}`);
 console.log(`[init-training] runtimePackage=${runtimePackageName}:${runtimePackageVersion}`);
 console.log(`[init-training] runtimeEngineImage=${runtimeEngineImage}`);
@@ -92,9 +101,15 @@ if (shouldRunRuntimeAgentData(initTarget)) {
 }
 
 if (shouldRunPlatformData(initTarget)) {
+    if (!skipAdminSetup) {
+        await ensureAdminUser(supportUrl, 'support');
+    }
     await ensurePlatformData();
 }
 if (shouldRunRuntimeAgentData(initTarget)) {
+    if (!skipAdminSetup) {
+        await ensureAdminUser(runtimeAgentUrl, 'runtime-agent');
+    }
     await ensureRuntimeAgentData();
 }
 if (shouldRunTrainingJob(initTarget)) {
@@ -124,7 +139,7 @@ async function ensurePlatformData() {
         label: 'organization',
         baseUrl: platformUrl,
         queryPath: '/organization/organizationdirectory',
-        query: {'organizationName.equals': seed.organization.organizationName},
+        query: {'organizationId.equals': seed.organization.organizationId},
         createPath: '/organization/registerorganization',
         createPayload: seed.organization
     });
@@ -147,7 +162,7 @@ async function ensurePlatformData() {
         label: 'federation',
         baseUrl: platformUrl,
         queryPath: '/federation/federationoverview',
-        query: {'federationName.equals': seed.federation.federationName},
+        query: {'federationId.equals': seed.federation.federationId},
         createPath: '/federation/createfederation',
         createPayload: seed.federation
     });
@@ -201,10 +216,7 @@ async function ensurePlatformData() {
         label: 'feature schema',
         baseUrl: platformUrl,
         queryPath: '/featureschema/featureschemacatalog',
-        query: {
-            'featureDomain.equals': seed.featureSchema.featureDomain,
-            'version.equals': seed.featureSchema.version
-        },
+        query: {'featureSchemaId.equals': seed.featureSchema.featureSchemaId},
         createPath: '/featureschema/definefeatureschema',
         createPayload: seed.featureSchema
     });
@@ -225,10 +237,7 @@ async function ensurePlatformData() {
         label: 'model artifact',
         baseUrl: platformUrl,
         queryPath: '/modelartifact/modelartifactcatalog',
-        query: {
-            'modelName.equals': seed.model.modelName,
-            'modelVersion.equals': seed.model.modelVersion
-        },
+        query: {'modelId.equals': seed.model.modelId},
         createPath: '/modelartifact/registermodelartifact',
         createPayload: seed.model
     });
@@ -239,9 +248,7 @@ async function ensurePlatformData() {
         label: 'runtime engine profile',
         baseUrl: platformUrl,
         queryPath: '/runtimeengineprofile/runtimeengineprofilecatalog',
-        query: {
-            'profileName.equals': seed.runtimeEngineProfile.profileName
-        },
+        query: {'runtimeEngineProfileId.equals': seed.runtimeEngineProfile.runtimeEngineProfileId},
         createPath: '/runtimeengineprofile/registerruntimeengineprofile',
         createPayload: seed.runtimeEngineProfile
     });
@@ -287,10 +294,7 @@ async function ensureRuntimeProvisioningData() {
         label: 'runtime infrastructure package catalog',
         baseUrl: platformUrl,
         queryPath: '/runtimeinfrastructurepackage/runtimeinfrastructurepackagecatalog',
-        query: {
-            'packageName.equals': seed.runtimeInfrastructurePackage.packageName,
-            'packageVersion.equals': seed.runtimeInfrastructurePackage.packageVersion
-        },
+        query: {'runtimeInfrastructurePackageId.equals': seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId},
         createPath: '/runtimeinfrastructurepackage/registerruntimeinfrastructurepackage',
         createPayload: seed.runtimeInfrastructurePackage
     });
@@ -303,11 +307,7 @@ async function ensureRuntimeProvisioningData() {
         label: 'runtime installation plan',
         baseUrl: platformUrl,
         queryPath: '/runtimeinstallationplan/runtimeinstallationplancatalog',
-        query: {
-            'organizationId.equals': seed.organization.organizationId,
-            'runtimeInfrastructurePackageId.equals': runtimeInfrastructurePackageId,
-            'runtimeName.equals': seed.runtime.runtimeName
-        },
+        query: {'runtimeInstallationPlanId.equals': seed.runtimeInstallationPlan.runtimeInstallationPlanId},
         createPath: '/runtimeinstallationplan/createruntimeinstallationplan',
         createPayload: seed.runtimeInstallationPlan
     });
@@ -320,7 +320,7 @@ async function ensureRuntimeProvisioningData() {
 
     await ensureRuntimeInfrastructurePlanned(runtimeInfrastructureId, runtimeInstallationPlanId);
     if (registerRuntimeInfrastructure) {
-        await ensureRuntimeInfrastructureRegistered(runtimeInfrastructureId);
+        await ensureRuntimeInfrastructureRegistered(runtimeInfrastructureId, runtimeInstallationPlanId);
     }
 }
 
@@ -351,7 +351,7 @@ async function ensureRuntimeInfrastructurePlanned(runtimeInfrastructureId, runti
     }, 'planned runtime infrastructure', (item) => isRuntimeInfrastructurePlannedOrBeyond(item.state));
 }
 
-async function ensureRuntimeInfrastructureRegistered(runtimeInfrastructureId) {
+async function ensureRuntimeInfrastructureRegistered(runtimeInfrastructureId, runtimeInstallationPlanId) {
     const existing = await findOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
         'runtimeInfrastructureId.equals': runtimeInfrastructureId
     });
@@ -600,11 +600,69 @@ async function waitForOne(baseUrl, path, query, label, predicate = () => true) {
     fail(`Timed out waiting for ${label}. Last item: ${JSON.stringify(lastItem)}`);
 }
 
+async function ensureAdminUser(baseUrl, label) {
+    const url = `${baseUrl}/api/auth/setup-admin`;
+    if (dryRun) {
+        console.log(`[init-training] DRY POST ${label} admin setup -> ${url}`);
+        console.log(JSON.stringify({
+            setupToken: adminSetupToken,
+            username: adminUsername,
+            password: adminPassword
+        }, null, 2));
+        return;
+    }
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: requestHeaders({'content-type': 'application/json'}, url),
+        body: JSON.stringify({
+            setupToken: adminSetupToken,
+            username: adminUsername,
+            password: adminPassword
+        })
+    });
+    const body = await response.text();
+    if (response.ok) {
+        authTokensByBaseUrl.set(trimSlash(baseUrl), await loginAdmin(baseUrl, label));
+        console.log(`[init-training] initialized ${label} admin user ${adminUsername}`);
+        return;
+    }
+    if (response.status === 409) {
+        authTokensByBaseUrl.set(trimSlash(baseUrl), await loginAdmin(baseUrl, label));
+        console.log(`[init-training] ${label} admin user ${adminUsername} already exists`);
+        return;
+    }
+    fail(`Initialize ${label} admin user failed: ${response.status} ${compact(body)}`);
+}
+
+async function loginAdmin(baseUrl, label) {
+    const response = await fetch(`${baseUrl}/api/auth/login`, {
+        method: 'POST',
+        headers: requestHeaders({'content-type': 'application/json'}, baseUrl),
+        body: JSON.stringify({
+            username: adminUsername,
+            password: adminPassword
+        })
+    });
+    const body = await response.text();
+    if (!response.ok) {
+        fail(
+            `${label} admin is already initialized, but ${adminUsername}/${adminPassword} login failed: ` +
+            `${response.status} ${compact(body)}`
+        );
+    }
+    const payload = body ? JSON.parse(body) : {};
+    if (!payload.accessToken) {
+        fail(`${label} admin login response did not include an access token.`);
+    }
+    return payload.accessToken;
+}
+
 async function getPage(baseUrl, path, query) {
     const url = `${baseUrl}${path}?${new URLSearchParams(query).toString()}`;
     if (dryRun) return {content: []};
     const response = await fetch(url, {
-        headers: requestHeaders()
+        headers: requestHeaders({}, url)
     });
     const body = await response.text();
     if (!response.ok) {
@@ -622,7 +680,7 @@ async function postCommand(baseUrl, path, payload, label) {
     }
     const response = await fetch(url, {
         method: 'POST',
-        headers: requestHeaders({'content-type': 'application/json'}),
+        headers: requestHeaders({'content-type': 'application/json'}, url),
         body: JSON.stringify(payload)
     });
     const body = await response.text();
@@ -1386,8 +1444,12 @@ function unquoteEnvValue(value) {
     return value;
 }
 
-function requestHeaders(baseHeaders = {}) {
+function requestHeaders(baseHeaders = {}, url = '') {
     const result = {...baseHeaders};
+    const authToken = authTokenForUrl(url);
+    if (authToken && !Object.hasOwn(result, 'Authorization')) {
+        result.Authorization = `Bearer ${authToken}`;
+    }
     const apiToken = process.env.FL_API_TOKEN?.trim();
     if (apiToken && !Object.hasOwn(result, 'Authorization')) {
         result.Authorization = apiToken.startsWith('Bearer ') ? apiToken : `Bearer ${apiToken}`;
@@ -1398,6 +1460,13 @@ function requestHeaders(baseHeaders = {}) {
         result['X-MEDOL-INTERNAL-TOKEN'] = String(internalToken).trim();
     }
     return result;
+}
+
+function authTokenForUrl(url) {
+    const text = String(url ?? '');
+    return [...authTokensByBaseUrl.entries()]
+        .sort(([left], [right]) => right.length - left.length)
+        .find(([baseUrl]) => text === baseUrl || text.startsWith(`${baseUrl}/`))?.[1];
 }
 
 function stableUuid(value) {

@@ -368,6 +368,10 @@ spec:
               value: ${quote(properties.endpointScope)}
             - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODE"
               value: "kubernetes"
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT"
+              value: ${quote(properties.runtimeEngineWorkHostPath)}
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_RUNTIME_ROOT_HOST_ROOT"
+              value: ${quote(properties.runtimeEngineWorkHostPath)}
             - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_NAMESPACE"
               value: ${quote(properties.namespace)}
             - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_SERVICE_ACCOUNT_NAME"
@@ -376,10 +380,16 @@ spec:
               value: ${quote(properties.runtimeEngineImage)}
             - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE_PULL_POLICY"
               value: ${quote(properties.runtimeEngineImagePullPolicy)}
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_CONTAINER_PORT"
+              value: ${quote(properties.runtimeEngineContainerPort.toString())}
             - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_DATASET_HOST_PATH"
               value: ${quote(properties.runtimeEngineDatasetHostPath)}
             - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_RUNTIME_HOST_PATH"
               value: ${quote(properties.runtimeEngineWorkHostPath)}
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_HEALTH_TIMEOUT"
+              value: ${quote(properties.runtimeEngineHealthTimeout.toString())}
+            - name: "RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_JOB_OBSERVATION_TIMEOUT"
+              value: ${quote(properties.runtimeEngineJobObservationTimeout.toString())}
           volumeMounts:
             - name: "runtime-datasets"
               mountPath: "/workspace/datasets"

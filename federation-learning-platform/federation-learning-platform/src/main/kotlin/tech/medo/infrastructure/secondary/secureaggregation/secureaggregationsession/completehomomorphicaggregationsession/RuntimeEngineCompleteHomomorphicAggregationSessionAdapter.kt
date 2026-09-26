@@ -11,6 +11,7 @@ import java.time.Instant
 class RuntimeEngineCompleteHomomorphicAggregationSessionAdapter(
     private val runtimeEngineClient: AggregationRuntimeEngineClient,
     private val fileUploadClient: AggregatedModelFileUploadClient,
+    private val embeddedAggregationService: EmbeddedAggregationService,
     private val properties: AggregationRuntimeProperties
 ) : CompleteHomomorphicAggregationSessionService {
     private val log = LoggerFactory.getLogger(javaClass)
@@ -22,6 +23,28 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapter(
     ): CompleteHomomorphicAggregationSessionResult {
         require(input.encryptedUpdateArtifactRefs.isNotEmpty()) {
             "At least one managed model update artifact is required for aggregation."
+        }
+        if (properties.mode.equals("embedded", ignoreCase = true)) {
+            val aggregated = embeddedAggregationService.aggregate(
+                aggregatedModelId = input.aggregatedModelId,
+                trainingJobId = input.trainingJobId,
+                roundNumber = input.roundNumber,
+                artifactRefs = input.encryptedUpdateArtifactRefs,
+                aggregationAlgorithm = properties.aggregationAlgorithm,
+                secureAggregation = true
+            )
+            return CompleteHomomorphicAggregationSessionResult.Succeeded(
+                aggregatedModelName = "training-${input.trainingJobId}",
+                aggregatedModelVersion = "round-${input.roundNumber}",
+                aggregatedModelDescription = "Federated global model produced by training job ${input.trainingJobId}, round ${input.roundNumber}.",
+                modelSourceType = "FEDERATED_TRAINING",
+                aggregatedModelArtifactUri = aggregated.artifactUri,
+                aggregatedModelRegistryRef = aggregated.registryRef,
+                modelFormat = modelFormat(properties.aggregationAlgorithm),
+                modelArtifactDigest = aggregated.digest,
+                aggregatedModelSignatureUri = null,
+                aggregatedModelSizeBytes = aggregated.sizeBytes
+            )
         }
         val jobId = "aggregate-${input.trainingJobId}-round-${input.roundNumber}"
         val request = AggregationRuntimeJobRequest(
@@ -102,4 +125,11 @@ class RuntimeEngineCompleteHomomorphicAggregationSessionAdapter(
     private companion object {
         private const val GLOBAL_MODEL_OUTPUT = "globalModel"
     }
+
+    private fun modelFormat(aggregationAlgorithm: String): String =
+        if (aggregationAlgorithm.contains("PYTORCH", ignoreCase = true)) {
+            "PYTORCH_STATE_DICT"
+        } else {
+            "JSON"
+        }
 }

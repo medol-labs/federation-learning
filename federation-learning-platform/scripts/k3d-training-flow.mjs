@@ -3,7 +3,7 @@
 import {existsSync, readFileSync, writeFileSync} from 'node:fs';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {spawnSync} from 'node:child_process';
+import {spawn, spawnSync} from 'node:child_process';
 
 if (typeof fetch !== 'function') {
     fail('This script requires Node.js 18 or newer because it uses global fetch.');
@@ -30,7 +30,9 @@ const namespace = stringArg('namespace', 'FL_K3D_NAMESPACE', 'federation-learnin
 const gatewayUrl = trimSlash(stringArg('gateway-url', 'FL_K3D_GATEWAY_URL', 'http://localhost:30080'));
 const platformUrl = trimSlash(stringArg('platform-url', 'FL_PLATFORM_URL', `${gatewayUrl}/api/federation-learning-platform`));
 const supportUrl = trimSlash(stringArg('support-url', 'FL_SUPPORT_URL', `${gatewayUrl}/api/federation-learning-support`));
-const runtimeAgentUrl = trimSlash(stringArg('runtime-agent-url', 'FL_RUNTIME_AGENT_URL', 'http://localhost:30082/api/runtime-agent'));
+const configuredRuntimeAgentUrl = optionalString(args['runtime-agent-url'] ?? process.env.FL_RUNTIME_AGENT_URL);
+const runtimeAgentPortForwardPort = positiveInt(args['runtime-agent-port-forward-port'] ?? process.env.FL_RUNTIME_AGENT_PORT_FORWARD_PORT, 30082);
+let runtimeAgentUrl = trimSlash(configuredRuntimeAgentUrl ?? `http://localhost:${runtimeAgentPortForwardPort}`);
 const scenario = stringArg('scenario', 'FL_TRAINING_SCENARIO', 'densenet');
 const k3sDevEnvironmentDir = resolve(repoRoot, 'operations/dev/k3s/environments/dev');
 const k3sDevSecretsFile = resolve(k3sDevEnvironmentDir, 'secrets.dev.yaml');
@@ -46,24 +48,39 @@ const jwtSecret = stringArg('jwt-secret', 'FL_K3D_JWT_SECRET', 'local-dev-jwt-se
 const timeoutMs = positiveInt(args.timeout ?? process.env.FL_K3D_FLOW_TIMEOUT_MS, 240000);
 const pollIntervalMs = positiveInt(args['poll-interval'] ?? process.env.FL_K3D_FLOW_POLL_INTERVAL_MS, 3000);
 const preparedNodeCount = positiveInt(args['prepared-node-count'] ?? process.env.FL_K3D_PREPARED_NODE_COUNT, 1);
+const imageVersion = stringArg('image-version', 'IMAGE_VERSION', '0.0.1-SNAPSHOT');
+const defaultRuntimeEngineImage = `192.168.139.3:5000/fl/federation-learning-runtime-engine:${imageVersion}`;
 const runtimeEngineImage = stringArg(
     'runtime-engine-image',
     'FL_RUNTIME_ENGINE_IMAGE',
-    'medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT'
+    defaultRuntimeEngineImage
 );
+const internalToken = optionalString(args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN) ?? 'local-dev-internal-token';
 const runtimeAgentImage = optionalString(args['runtime-agent-image'] ?? process.env.FL_RUNTIME_AGENT_IMAGE);
 const participantConsoleImage = optionalString(args['participant-console-image'] ?? process.env.FL_PARTICIPANT_CONSOLE_IMAGE);
-const imageVersion = stringArg('image-version', 'IMAGE_VERSION', '0.0.1-SNAPSHOT');
 const k3dScript = resolve(repoRoot, 'operations/dev/k3s/scripts/federation-learning-dev.sh');
 const kubeconfigFile = resolve(
     repoRoot,
     `operations/dev/k3s/.work/kubeconfig-${clusterName}.yaml`
 );
+const portForwardProcesses = [];
+const authTokensByBaseUrl = new Map();
+
+process.on('exit', cleanupPortForwards);
+process.on('SIGINT', () => {
+    cleanupPortForwards();
+    process.exit(130);
+});
+process.on('SIGTERM', () => {
+    cleanupPortForwards();
+    process.exit(143);
+});
 
 const recreateCluster = booleanOption(args.recreate ?? process.env.FL_K3D_RECREATE, false);
 const skipCluster = booleanOption(args['skip-cluster'] ?? process.env.FL_K3D_SKIP_CLUSTER, false);
 const skipApply = booleanOption(args['skip-apply'] ?? process.env.FL_K3D_SKIP_APPLY, false);
 const skipDictionary = booleanOption(args['skip-dictionary'] ?? process.env.FL_K3D_SKIP_DICTIONARY, false);
+const skipAdminSetup = booleanOption(args['skip-admin-setup'] ?? process.env.FL_K3D_SKIP_ADMIN_SETUP, false);
 const skipRuntimeAgentData = booleanOption(args['skip-runtime-agent-data'] ?? process.env.FL_K3D_SKIP_RUNTIME_AGENT_DATA, false);
 const skipTrainingJob = booleanOption(args['skip-training-job'] ?? process.env.FL_K3D_SKIP_TRAINING_JOB, false);
 const dryRun = booleanOption(args['dry-run'], false);
@@ -76,8 +93,12 @@ console.log(JSON.stringify({
     platformUrl,
     supportUrl,
     runtimeAgentUrl,
+    runtimeAgentPortForwardPort,
+    adminUsername,
+    adminSetupEnabled: !skipAdminSetup,
     scenario,
     runtimeEngineImage,
+    internalTokenConfigured: Boolean(internalToken),
     imageVersion,
     skipCluster,
     skipApply,
@@ -99,6 +120,7 @@ if (dryRun) {
 if (!skipCluster) {
     await ensureCluster();
 }
+ensureRuntimeEngineImageAvailable();
 if (!skipApply) {
     await waitForKubernetesApi();
     await waitForKubernetesNodesReady();
@@ -118,6 +140,9 @@ if (skipApply) {
 if (!skipDictionary) {
     await initDictionaries();
 }
+if (!skipAdminSetup) {
+    await ensureAdminUser(supportUrl, 'support');
+}
 
 const platformSeed = await runInitTraining('platform', {
     createJob: false,
@@ -132,23 +157,51 @@ console.log(`[k3d-flow] organizationId=${organizationId}`);
 console.log(`[k3d-flow] runtimeInfrastructureId=${runtimeInfrastructureId}`);
 console.log(`[k3d-flow] runtimeAgentId=${runtimeAgentId}`);
 
+let deploymentRetried = false;
 await labelRuntimeNodes(runtimeInfrastructureId);
-const runtimeInfrastructure = await waitForRuntimeInfrastructure(runtimeInfrastructureId, isRegisteredOrBeyond);
-await confirmRuntimeInfrastructurePrepared(runtimeInfrastructure);
+const runtimeInfrastructure = await waitForRuntimeInfrastructure(
+    runtimeInfrastructureId,
+    (item) => isRegisteredOrBeyond(item) || isRuntimeAgentFailureState(item?.state)
+);
+if (isRuntimeAgentFailureState(runtimeInfrastructure?.state)) {
+    await retryRuntimeAgentDeployment(runtimeInfrastructure);
+    deploymentRetried = true;
+} else {
+    await confirmRuntimeInfrastructurePrepared(runtimeInfrastructure);
+}
 
 const verifiedInfrastructure = await waitForRuntimeInfrastructure(
     runtimeInfrastructureId,
-    (item) => isStateAtLeast(item?.state, ['VERIFIED', 'AGENTREADY', 'CONNECTED']) || isFailureState(item?.state),
+    (item) => isStateAtLeast(item?.state, ['VERIFIED', 'AGENTREADY', 'CONNECTED']) ||
+        (!deploymentRetried && isFailureState(item?.state)),
     'verified runtime infrastructure'
 );
 if (isFailureState(verifiedInfrastructure?.state)) {
-    fail(`Runtime infrastructure failed before agent deployment: ${JSON.stringify(verifiedInfrastructure)}`);
+    if (!isRuntimeAgentFailureState(verifiedInfrastructure?.state)) {
+        fail(`Runtime infrastructure failed before agent deployment: ${JSON.stringify(verifiedInfrastructure)}`);
+    }
+    await retryRuntimeAgentDeployment(verifiedInfrastructure);
+    deploymentRetried = true;
+}
+
+const deployedInfrastructure = await waitForRuntimeInfrastructure(
+    runtimeInfrastructureId,
+    (item) => isStateAtLeast(item?.state, ['AGENTREADY', 'CONNECTED']) ||
+        (!deploymentRetried && isFailureState(item?.state)),
+    'runtime agent deployment'
+);
+if (isFailureState(deployedInfrastructure?.state)) {
+    fail(`Runtime agent deployment failed: ${JSON.stringify(deployedInfrastructure)}`);
 }
 
 await waitForManagedRuntimeAgent(runtimeAgentId);
+await ensureManagedRuntimeAgentAccess(runtimeAgentId);
 await waitForHttp(`${runtimeAgentUrl}/actuator/health`, 'managed runtime-agent health');
+if (!skipAdminSetup) {
+    await ensureAdminUser(runtimeAgentUrl, 'runtime-agent');
+}
 await loadRuntimeAgentBootstrapConfiguration();
-
+await recordManagedRuntimeAgentConnection(deployedInfrastructure);
 const endpoint = await waitForRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructureId);
 console.log(`[k3d-flow] platform runtime agent endpoint=${endpoint.runtimeAgentEndpoint ?? endpoint.endpoint ?? ''}`);
 
@@ -177,6 +230,7 @@ console.log(JSON.stringify({
     runtimeAgentUrl,
     trainingJobId: trainingSeed?.trainingJobId
 }, null, 2));
+cleanupPortForwards();
 
 async function ensureCluster() {
     if (recreateCluster) {
@@ -235,13 +289,95 @@ function runK3d(command) {
     });
 }
 
+function ensureRuntimeEngineImageAvailable() {
+    const pushImage = dockerPushImage(runtimeEngineImage);
+    const fallbackImages = [
+        pushImage,
+        runtimeEngineImage,
+        runtimeEngineImage.replace(/^192\.168\.\d+\.\d+:5000\/fl\//, 'medol/')
+    ];
+    const sourceImage = fallbackImages.find((image) => commandOk('docker', ['image', 'inspect', image]));
+    if (!sourceImage) {
+        fail(
+            `Runtime engine image was not found locally: ${runtimeEngineImage}. ` +
+            `Build or push it first, for example from federation-learning-runtime-engine: ` +
+            `DOCKER_IMAGE_PREFIX=localhost:5000/fl node scripts/build-images.mjs`
+        );
+    }
+    if (sourceImage !== pushImage) {
+        run('docker', ['tag', sourceImage, pushImage], {});
+    }
+    if (isRegistryImage(runtimeEngineImage)) {
+        run('docker', ['push', pushImage], {});
+    }
+}
+
+function isRegistryImage(image) {
+    return /^[^/]+:\d+\//.test(image);
+}
+
+function dockerPushImage(image) {
+    return image.replace(/^192\.168\.\d+\.\d+:5000\/fl\//, 'localhost:5000/fl/');
+}
+
 async function initDictionaries() {
     const dictionaryScript = resolve(repoRoot, 'dictionary-init/init-dictionaries.mjs');
     if (!existsSync(dictionaryScript)) {
         console.log(`[k3d-flow] skip missing dictionary init script: ${dictionaryScript}`);
         return;
     }
-    run('node', [dictionaryScript, '--base-url', supportUrl], {});
+    run('node', [
+        dictionaryScript,
+        '--base-url', supportUrl,
+        ...(internalToken ? ['--internal-token', internalToken] : [])
+    ], {});
+}
+
+async function ensureAdminUser(baseUrl, label) {
+    const response = await fetch(`${baseUrl}/api/auth/setup-admin`, {
+        method: 'POST',
+        headers: requestHeaders({'content-type': 'application/json'}, baseUrl),
+        body: JSON.stringify({
+            setupToken: adminSetupToken,
+            username: adminUsername,
+            password: adminPassword
+        })
+    });
+    const body = await response.text();
+    if (response.ok) {
+        authTokensByBaseUrl.set(trimSlash(baseUrl), await loginAdmin(baseUrl, label));
+        console.log(`[k3d-flow] initialized ${label} admin user ${adminUsername}`);
+        return;
+    }
+    if (response.status === 409) {
+        authTokensByBaseUrl.set(trimSlash(baseUrl), await loginAdmin(baseUrl, label));
+        console.log(`[k3d-flow] ${label} admin user ${adminUsername} already exists`);
+        return;
+    }
+    fail(`Initialize ${label} admin user failed: ${response.status} ${compact(body)}`);
+}
+
+async function loginAdmin(baseUrl, label) {
+    const response = await fetch(`${baseUrl}/api/auth/login`, {
+        method: 'POST',
+        headers: requestHeaders({'content-type': 'application/json'}, baseUrl),
+        body: JSON.stringify({
+            username: adminUsername,
+            password: adminPassword
+        })
+    });
+    const body = await response.text();
+    if (!response.ok) {
+        fail(
+            `${label} admin is already initialized, but ${adminUsername}/${adminPassword} login failed: ` +
+            `${response.status} ${compact(body)}`
+        );
+    }
+    const payload = body ? JSON.parse(body) : {};
+    if (!payload.accessToken) {
+        fail(`${label} admin login response did not include an access token.`);
+    }
+    return payload.accessToken;
 }
 
 function ensureDevSecrets() {
@@ -265,36 +401,13 @@ async function ensureAdminToken() {
         return process.env.FL_API_TOKEN.trim();
     }
 
-    await setupAdmin();
-    const token = await loginAdmin();
+    await ensureAdminUser(supportUrl, 'support');
+    const token = authTokensByBaseUrl.get(trimSlash(supportUrl));
+    if (!token) {
+        fail('Support admin login did not provide an access token.');
+    }
     process.env.FL_API_TOKEN = token;
     console.log(`[k3d-flow] authenticated ${adminUsername}; FL_API_TOKEN is available for this run`);
-    return token;
-}
-
-async function setupAdmin() {
-    const response = await postJson(`${supportUrl}/api/auth/setup-admin`, {
-        setupToken: adminSetupToken,
-        username: adminUsername,
-        password: adminPassword
-    }, 'setup admin', {allowStatuses: [200, 409]});
-
-    if (response.status === 409) {
-        console.log('[k3d-flow] admin account already initialized');
-    } else {
-        console.log(`[k3d-flow] admin account initialized: ${adminUsername}`);
-    }
-}
-
-async function loginAdmin() {
-    const response = await postJson(`${supportUrl}/api/auth/login`, {
-        username: adminUsername,
-        password: adminPassword
-    }, 'login admin');
-    const token = response.body?.accessToken;
-    if (!token) {
-        fail(`Admin login did not return accessToken. Response: ${JSON.stringify(response.body)}`);
-    }
     return token;
 }
 
@@ -305,7 +418,9 @@ async function runInitTraining(target, options) {
         '--target', target,
         '--scenario', scenario,
         '--platform-url', platformUrl,
+        '--support-url', supportUrl,
         '--runtime-agent-url', options.runtimeAgentUrl,
+        '--skip-admin-setup',
         '--runtime-environment-type', 'K3S',
         '--agent-install-mode', 'PLATFORM_MANAGED',
         '--endpoint-scope', 'CLUSTER',
@@ -314,6 +429,7 @@ async function runInitTraining(target, options) {
         '--create-job', String(options.createJob),
         '--timeout', String(timeoutMs),
         '--poll-interval', String(Math.min(pollIntervalMs, 1000)),
+        ...(internalToken ? ['--internal-token', internalToken] : []),
         ...(dryRun ? ['--dry-run'] : [])
     ], {});
     process.stdout.write(output);
@@ -376,6 +492,25 @@ async function loadRuntimeAgentBootstrapConfiguration() {
     );
 }
 
+async function retryRuntimeAgentDeployment(runtimeInfrastructure) {
+    console.log('[k3d-flow] runtime agent deployment previously failed; retrying managed deployment');
+    await postCommand(platformUrl, '/runtimeinfrastructure/retryruntimeagentdeployment', {
+        runtimeInfrastructureId: runtimeInfrastructure.runtimeInfrastructureId,
+        runtimeInstallationPlanId: runtimeInfrastructure.runtimeInstallationPlanId,
+        runtimeAgentId: runtimeInfrastructure.runtimeAgentId,
+        organizationId: runtimeInfrastructure.organizationId,
+        organizationName: runtimeInfrastructure.organizationName ?? null,
+        runtimeInfrastructurePackageId: runtimeInfrastructure.runtimeInfrastructurePackageId,
+        runtimeInfrastructurePackageName: runtimeInfrastructure.runtimeInfrastructurePackageName ?? null,
+        runtimeInfrastructurePackageVersion: runtimeInfrastructure.runtimeInfrastructurePackageVersion ?? null,
+        runtimeEnvironmentType: runtimeInfrastructure.runtimeEnvironmentType ?? 'K3S',
+        runtimeName: runtimeInfrastructure.runtimeName,
+        agentInstallMode: runtimeInfrastructure.agentInstallMode ?? 'PLATFORM_MANAGED',
+        expectedNodeCount: runtimeInfrastructure.expectedNodeCount ?? preparedNodeCount,
+        retryReason: 'k3d-training-flow retry after applying managed runtime-agent prerequisites.'
+    }, 'retry runtime agent deployment');
+}
+
 async function waitForRuntimeInfrastructure(runtimeInfrastructureId, predicate, label = 'runtime infrastructure') {
     return waitForOne(platformUrl, '/runtimeinfrastructure/runtimeinfrastructureaccessview', {
         'runtimeInfrastructureId.equals': runtimeInfrastructureId,
@@ -394,7 +529,7 @@ async function waitForRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructure
 }
 
 async function waitForManagedRuntimeAgent(runtimeAgentId) {
-    const deploymentName = managedRuntimeAgentDeploymentName(runtimeAgentId);
+    const deploymentName = managedRuntimeAgentName(runtimeAgentId);
     await waitForDeployment(deploymentName, 'managed runtime-agent');
     const consoleDeploymentName = `${deploymentName}-console`;
     if (commandOk('kubectl', ['-n', namespace, 'get', 'deploy', consoleDeploymentName], kubeEnv())) {
@@ -402,7 +537,68 @@ async function waitForManagedRuntimeAgent(runtimeAgentId) {
     }
 }
 
-function managedRuntimeAgentDeploymentName(runtimeAgentId) {
+async function ensureManagedRuntimeAgentAccess(runtimeAgentId) {
+    if (configuredRuntimeAgentUrl) {
+        return;
+    }
+    const serviceName = managedRuntimeAgentName(runtimeAgentId);
+    await startPortForward(
+        serviceName,
+        runtimeAgentPortForwardPort,
+        8082,
+        'managed runtime-agent'
+    );
+    runtimeAgentUrl = trimSlash(`http://localhost:${runtimeAgentPortForwardPort}`);
+}
+
+async function recordManagedRuntimeAgentConnection(runtimeInfrastructure) {
+    const serviceName = managedRuntimeAgentName(runtimeInfrastructure.runtimeAgentId);
+    await postCommand(platformUrl, '/runtimeinfrastructure/recordruntimeconnectionestablished', {
+        runtimeInfrastructureId: runtimeInfrastructure.runtimeInfrastructureId,
+        runtimeAgentId: runtimeInfrastructure.runtimeAgentId,
+        agentInstallMode: runtimeInfrastructure.agentInstallMode ?? 'PLATFORM_MANAGED',
+        organizationId: runtimeInfrastructure.organizationId,
+        organizationName: runtimeInfrastructure.organizationName ?? null,
+        runtimeName: runtimeInfrastructure.runtimeName,
+        runtimeAgentEndpoint: `http://${serviceName}:8082`,
+        endpointScope: 'CLUSTER'
+    }, 'managed runtime agent connection');
+}
+
+async function startPortForward(serviceName, localPort, remotePort, label) {
+    if (await isHttpReachable(`http://localhost:${localPort}/actuator/health`)) {
+        return;
+    }
+    const child = spawn('kubectl', [
+        '-n', namespace,
+        'port-forward',
+        `svc/${serviceName}`,
+        `${localPort}:${remotePort}`
+    ], {
+        env: {...process.env, ...kubeEnv()},
+        stdio: ['ignore', 'pipe', 'pipe']
+    });
+    child.stdout.on('data', (chunk) => process.stdout.write(`[k3d-flow] ${label} port-forward: ${chunk}`));
+    child.stderr.on('data', (chunk) => process.stderr.write(`[k3d-flow] ${label} port-forward: ${chunk}`));
+    portForwardProcesses.push(child);
+    await waitForCondition(`${label} port-forward`, async () => {
+        if (child.exitCode !== null) {
+            fail(`${label} port-forward exited with code ${child.exitCode}`);
+        }
+        return isHttpReachable(`http://localhost:${localPort}/actuator/health`);
+    });
+}
+
+async function isHttpReachable(url) {
+    try {
+        const response = await fetch(url, {headers: requestHeaders({}, url)});
+        return response.ok;
+    } catch {
+        return false;
+    }
+}
+
+function managedRuntimeAgentName(runtimeAgentId) {
     return `federation-learning-runtime-agent-managed-${String(runtimeAgentId).replaceAll('-', '').slice(0, 12)}`;
 }
 
@@ -418,7 +614,7 @@ async function waitForDeployment(name, label = name) {
 async function waitForHttp(url, label) {
     await waitForCondition(label, async () => {
         try {
-            const response = await fetch(url, {headers: requestHeaders()});
+            const response = await fetch(url, {headers: requestHeaders({}, url)});
             return response.ok;
         } catch {
             return false;
@@ -449,9 +645,17 @@ async function waitForCondition(label, probe, timeoutDetails = () => '') {
     fail(`Timed out waiting for ${label}. ${timeoutDetails()}`.trim());
 }
 
+function cleanupPortForwards() {
+    for (const child of portForwardProcesses) {
+        if (child.exitCode === null && !child.killed) {
+            child.kill('SIGTERM');
+        }
+    }
+}
+
 async function getPage(baseUrl, path, query) {
     const url = `${baseUrl}${path}?${new URLSearchParams(query).toString()}`;
-    const response = await fetch(url, {headers: requestHeaders()});
+    const response = await fetch(url, {headers: requestHeaders({}, url)});
     const body = await response.text();
     if (!response.ok) {
         fail(`GET ${url} failed: ${response.status} ${compact(body)}`);
@@ -468,7 +672,7 @@ async function postCommand(baseUrl, path, payload, label) {
     const url = `${baseUrl}${path}`;
     const response = await fetch(url, {
         method: 'POST',
-        headers: requestHeaders({'content-type': 'application/json'}),
+        headers: requestHeaders({'content-type': 'application/json'}, url),
         body: JSON.stringify(payload)
     });
     const body = await response.text();
@@ -560,7 +764,7 @@ function commandOutputOrNull(command, commandArgs, extraEnv = {}) {
 }
 
 function runtimeAgentDiagnostics(runtimeAgentId) {
-    const deploymentName = managedRuntimeAgentDeploymentName(runtimeAgentId);
+    const deploymentName = managedRuntimeAgentName(runtimeAgentId);
     const podSelector = `app=${deploymentName}`;
     const serviceSelector = `app.kubernetes.io/name=${deploymentName}`;
     const parts = [
@@ -605,17 +809,27 @@ function kubeEnv() {
     };
 }
 
-function requestHeaders(baseHeaders = {}) {
+function requestHeaders(baseHeaders = {}, url = '') {
     const result = {...baseHeaders};
+    const authToken = authTokenForUrl(url);
+    if (authToken && !Object.hasOwn(result, 'Authorization')) {
+        result.Authorization = `Bearer ${authToken}`;
+    }
     const apiToken = process.env.FL_API_TOKEN?.trim();
     if (apiToken && !Object.hasOwn(result, 'Authorization')) {
         result.Authorization = apiToken.startsWith('Bearer ') ? apiToken : `Bearer ${apiToken}`;
     }
-    const internalToken = args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN;
     if (internalToken && !Object.hasOwn(result, 'X-MEDOL-INTERNAL-TOKEN')) {
-        result['X-MEDOL-INTERNAL-TOKEN'] = String(internalToken).trim();
+        result['X-MEDOL-INTERNAL-TOKEN'] = internalToken;
     }
     return result;
+}
+
+function authTokenForUrl(url) {
+    const text = String(url ?? '');
+    return [...authTokensByBaseUrl.entries()]
+        .sort(([left], [right]) => right.length - left.length)
+        .find(([baseUrl]) => text === baseUrl || text.startsWith(`${baseUrl}/`))?.[1];
 }
 
 function extractLastJsonObject(output) {
@@ -651,6 +865,10 @@ function isStateAtLeast(value, states) {
 
 function isFailureState(value) {
     return ['VERIFICATIONFAILED', 'RUNTIMEAGENTFAILED'].includes(normalize(value));
+}
+
+function isRuntimeAgentFailureState(value) {
+    return normalize(value) === 'RUNTIMEAGENTFAILED';
 }
 
 function parseArgs(argv) {

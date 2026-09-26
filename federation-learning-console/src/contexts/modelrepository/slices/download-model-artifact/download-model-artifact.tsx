@@ -1,5 +1,5 @@
 // Generated from config.json by the refine generator.
-import { useParsed } from "@refinedev/core";
+import { useParsed, useShow } from "@refinedev/core";
 import { useTranslate } from "@refinedev/core";
 import { useNavigate, useSearchParams } from "react-router";
 
@@ -30,6 +30,16 @@ import { useCommandForm } from "@/hooks/command/useCommandForm";
 import { runFormBehavior } from "@/platform/composition";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DownloadModelArtifactCommandSchema, type DownloadModelArtifactCommandInput } from "@/contexts/domain/schemas";
+import { useFileDownload } from "@/components/download/file-download";
+import { modelArtifactFilename } from "@/domain/overrides/model-artifact-catalog/ModelArtifactUriFieldRenderer";
+
+type ModelArtifactCatalogRecord = {
+  modelId: string;
+  modelName: string;
+  modelVersion: string;
+  modelArtifactUri?: string | null;
+  modelFormat?: string | null;
+};
 
 export const ModelArtifactCatalogDownloadModelArtifact = () => {
   const t = useTranslate();
@@ -39,8 +49,20 @@ export const ModelArtifactCatalogDownloadModelArtifact = () => {
   const defaultValues = {
     modelName: searchParams.get("modelName") ?? undefined,
     modelVersion: searchParams.get("modelVersion") ?? undefined,
-    modelId: searchParams.get("modelId") ?? undefined,
+    modelId: searchParams.get("modelId") ?? id?.toString() ?? undefined,
   } as unknown as Partial<DownloadModelArtifactCommandInput>;
+  const { download } = useFileDownload();
+  const { result: record } = useShow<ModelArtifactCatalogRecord>({
+    dataProviderName: "federation-learning-platform",
+    meta: {
+      tableName: "model_artifact_catalog_read_model_entity",
+      idField: "modelId",
+      label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
+      aggregateRoute: "modelartifact",
+      queryRoute: "modelartifactcatalog",
+      dataProviderName: "federation-learning-platform",
+    },
+  });
 
   const { refineCore: { onFinish }, ...form } = useCommandForm<DownloadModelArtifactCommandInput, DownloadModelArtifactCommandInput>({
     resource: "model_artifact_catalog",
@@ -81,6 +103,14 @@ export const ModelArtifactCatalogDownloadModelArtifact = () => {
       } as DownloadModelArtifactCommandInput,
       (payload) => onFinish(payload),
     );
+    await download({
+      uri: record?.modelArtifactUri ?? searchParams.get("modelArtifactUri"),
+      filename: modelArtifactFilename({
+        modelName: record?.modelName ?? values.modelName,
+        modelVersion: record?.modelVersion ?? values.modelVersion,
+        modelFormat: record?.modelFormat ?? searchParams.get("modelFormat"),
+      }),
+    });
     navigate("/model-artifact-catalog");
     return result;
   }

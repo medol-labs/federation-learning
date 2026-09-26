@@ -6,6 +6,7 @@ import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationses
 import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.AggregationRuntimeEngineClient
 import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.AggregationRuntimeJobRequest
 import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.AggregationRuntimeProperties
+import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.EmbeddedAggregationService
 import tech.medo.trainingorchestration.aggregateplainmodelupdates.AggregatePlainModelUpdatesInput
 import tech.medo.trainingorchestration.aggregateplainmodelupdates.AggregatePlainModelUpdatesResult
 import tech.medo.trainingorchestration.aggregateplainmodelupdates.AggregatePlainModelUpdatesService
@@ -15,6 +16,7 @@ import java.time.Instant
 class RuntimeEngineAggregatePlainModelUpdatesAdapter(
     private val runtimeEngineClient: AggregationRuntimeEngineClient,
     private val fileUploadClient: AggregatedModelFileUploadClient,
+    private val embeddedAggregationService: EmbeddedAggregationService,
     private val properties: AggregationRuntimeProperties
 ) : AggregatePlainModelUpdatesService {
     private val log = LoggerFactory.getLogger(javaClass)
@@ -24,6 +26,29 @@ class RuntimeEngineAggregatePlainModelUpdatesAdapter(
     override fun execute(input: AggregatePlainModelUpdatesInput): AggregatePlainModelUpdatesResult {
         require(input.modelUpdateArtifactRefs.isNotEmpty()) {
             "At least one plaintext model update artifact is required for aggregation."
+        }
+        if (properties.mode.equals("embedded", ignoreCase = true)) {
+            val aggregated = embeddedAggregationService.aggregate(
+                aggregatedModelId = input.aggregatedModelId,
+                trainingJobId = input.trainingJobId,
+                roundNumber = input.roundNumber,
+                artifactRefs = input.modelUpdateArtifactRefs,
+                aggregationAlgorithm = input.aggregationAlgorithm,
+                secureAggregation = false
+            )
+            return AggregatePlainModelUpdatesResult.Succeeded(
+                aggregatedModelName = "training-${input.trainingJobId}",
+                aggregatedModelVersion = "round-${input.roundNumber}",
+                aggregatedModelDescription =
+                    "Federated global model produced by training job ${input.trainingJobId}, round ${input.roundNumber}.",
+                modelSourceType = "FEDERATED_TRAINING",
+                aggregatedModelArtifactUri = aggregated.artifactUri,
+                aggregatedModelRegistryRef = aggregated.registryRef,
+                modelFormat = modelFormat(input.aggregationAlgorithm),
+                modelArtifactDigest = aggregated.digest,
+                aggregatedModelSignatureUri = null,
+                aggregatedModelSizeBytes = aggregated.sizeBytes
+            )
         }
 
         val jobId = "aggregate-plain-${input.trainingJobId}-round-${input.roundNumber}"

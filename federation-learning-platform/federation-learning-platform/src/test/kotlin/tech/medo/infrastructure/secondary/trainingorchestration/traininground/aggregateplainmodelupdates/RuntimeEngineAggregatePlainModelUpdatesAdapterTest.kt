@@ -1,12 +1,15 @@
 package tech.medo.infrastructure.secondary.trainingorchestration.traininground.aggregateplainmodelupdates
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.AggregatedModelFileUploadClient
+import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.AggregatedModelUpdateArtifactClient
 import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.AggregationRuntimeEngineClient
 import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.AggregationRuntimeJobRequest
 import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.AggregationRuntimeJobResponse
 import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.AggregationRuntimeProperties
+import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.EmbeddedAggregationService
 import tech.medo.infrastructure.secondary.secureaggregation.secureaggregationsession.completehomomorphicaggregationsession.UploadedAggregatedModelFile
 import tech.medo.trainingorchestration.aggregateplainmodelupdates.AggregatePlainModelUpdatesInput
 import tech.medo.trainingorchestration.aggregateplainmodelupdates.AggregatePlainModelUpdatesResult
@@ -22,7 +25,14 @@ class RuntimeEngineAggregatePlainModelUpdatesAdapterTest {
         val adapter = RuntimeEngineAggregatePlainModelUpdatesAdapter(
             runtimeEngineClient = runtimeClient,
             fileUploadClient = uploadClient,
+            embeddedAggregationService = EmbeddedAggregationService(
+                artifactClient = PlainAggregatedModelUpdateArtifactClient(),
+                fileUploadClient = uploadClient,
+                objectMapper = ObjectMapper(),
+                properties = AggregationRuntimeProperties(supportEndpoint = "http://support")
+            ),
             properties = AggregationRuntimeProperties(
+                mode = "runtime-engine",
                 runtimeEngineEndpoint = "http://runtime-engine",
                 supportEndpoint = "http://support",
                 pollInterval = Duration.ZERO
@@ -59,6 +69,11 @@ class RuntimeEngineAggregatePlainModelUpdatesAdapterTest {
         assertEquals("PYTORCH_STATE_DICT", result.modelFormat)
         assertEquals("http://support/api/files/$aggregatedModelId/content", result.aggregatedModelArtifactUri)
     }
+}
+
+private class PlainAggregatedModelUpdateArtifactClient : AggregatedModelUpdateArtifactClient {
+    override fun download(supportEndpoint: String, artifactRef: String): ByteArray =
+        "{\"update\":\"$artifactRef\"}".toByteArray()
 }
 
 private class PlainAggregationRuntimeClient : AggregationRuntimeEngineClient {

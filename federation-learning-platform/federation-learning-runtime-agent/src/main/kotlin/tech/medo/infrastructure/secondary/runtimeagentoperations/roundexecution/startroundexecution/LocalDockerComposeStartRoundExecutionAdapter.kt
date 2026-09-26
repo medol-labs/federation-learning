@@ -132,16 +132,13 @@ class LocalDockerComposeStartRoundExecutionAdapter(
         val metricsPath = "${properties.runtimeRoot}/$runtimeEngineJobId/${properties.nodeName}/metrics.json"
         val weightArtifactPath = "${properties.runtimeRoot}/$runtimeEngineJobId/${properties.nodeName}/model_state_dict.pt"
         val modelArtifactPath = "${properties.runtimeRoot}/$runtimeEngineJobId/${properties.nodeName}/model.pt"
+        val containerDatasetPath = toContainerDatasetPath(datasetPath)
         val globalModelPath = input.baseModelArtifactUri
             .takeIf { it.startsWith("/") || it.startsWith("file://") }
             ?.removePrefix("file://")
 
         val runtimeInput = mutableMapOf<String, Any?>(
-            "dataset" to mapOf(
-                "path" to toContainerDatasetPath(datasetPath),
-                "labelColumn" to properties.labelColumn,
-                "id" to properties.idColumn
-            )
+            "dataset" to datasetInput(datasetPath, containerDatasetPath)
         )
         if (!globalModelPath.isNullOrBlank()) {
             runtimeInput["globalModel"] = globalModelPath
@@ -174,6 +171,22 @@ class LocalDockerComposeStartRoundExecutionAdapter(
             ),
             runtimeRoot = properties.runtimeRoot
         )
+    }
+
+    private fun datasetInput(hostDatasetPath: String, containerDatasetPath: String): Map<String, Any> {
+        val base = Path.of(hostDatasetPath)
+        val dataset = mutableMapOf<String, Any>(
+            "path" to containerDatasetPath,
+            "labelColumn" to properties.labelColumn,
+            "id" to properties.idColumn
+        )
+        if (base.resolve("train").toFile().isDirectory) {
+            dataset["train"] = "${containerDatasetPath.trimEnd('/')}/train"
+        }
+        if (base.resolve("val").toFile().isDirectory) {
+            dataset["val"] = "${containerDatasetPath.trimEnd('/')}/val"
+        }
+        return dataset
     }
 
     private fun toContainerDatasetPath(datasetPath: String): String {
