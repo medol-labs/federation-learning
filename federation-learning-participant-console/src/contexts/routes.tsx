@@ -42,9 +42,7 @@ import {
   DatasetCapabilityList,
   DatasetCapabilityShow,
   DatasetCapabilityDeclareDataset,
-  DatasetCapabilityRetryDatasetContractValidation,
   DatasetCapabilityRejectDatasetForTraining,
-  DatasetCapabilityApproveDatasetForTraining,
   DatasetCapabilityRevokeDatasetTrainingApproval,
   DatasetCapabilityConfigureRuntimeDatasetBinding,
 } from "./runtimeagentoperations/read-models/dataset-capability";
@@ -53,8 +51,6 @@ import {
   DatasetReadinessShow,
   DatasetReadinessConfigureRuntimeDatasetBinding,
   DatasetReadinessRejectDatasetForTraining,
-  DatasetReadinessApproveDatasetForTraining,
-  DatasetReadinessRetryDatasetContractValidation,
   DatasetReadinessRevokeDatasetTrainingApproval,
 } from "./runtimeagentoperations/read-models/dataset-readiness";
 import {
@@ -81,7 +77,6 @@ import {
 import {
   RuntimeAgentLifecycleCatalogList,
   RuntimeAgentLifecycleCatalogShow,
-  RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration,
 } from "./runtimeagentoperations/read-models/runtime-agent-lifecycle-catalog";
 import {
   RuntimeDatasetBindingCatalogList,
@@ -148,9 +143,7 @@ export const contextRoutes = (
       <Route index element={resolvePageOverride("dataset-capability", "list", <DatasetCapabilityList />)} />
       <Route path="command/declare-dataset" element={resolvePageOverride("dataset-capability", "declareDataset", <DatasetCapabilityDeclareDataset />)} />
       <Route path="show/:id" element={resolvePageOverride("dataset-capability", "show", <DatasetCapabilityShow />)} />
-      <Route path=":id/command/retry-dataset-contract-validation" element={resolvePageOverride("dataset-capability", "retryDatasetContractValidation", <DatasetCapabilityRetryDatasetContractValidation />)} />
       <Route path=":id/command/reject-dataset-for-training" element={resolvePageOverride("dataset-capability", "rejectDatasetForTraining", <DatasetCapabilityRejectDatasetForTraining />)} />
-      <Route path=":id/command/approve-dataset-for-training" element={resolvePageOverride("dataset-capability", "approveDatasetForTraining", <DatasetCapabilityApproveDatasetForTraining />)} />
       <Route path=":id/command/revoke-dataset-training-approval" element={resolvePageOverride("dataset-capability", "revokeDatasetTrainingApproval", <DatasetCapabilityRevokeDatasetTrainingApproval />)} />
       <Route path=":id/command/configure-runtime-dataset-binding" element={resolvePageOverride("dataset-capability", "configureRuntimeDatasetBinding", <DatasetCapabilityConfigureRuntimeDatasetBinding />)} />
     </Route>
@@ -159,8 +152,6 @@ export const contextRoutes = (
       <Route path="show/:id" element={resolvePageOverride("dataset-readiness", "show", <DatasetReadinessShow />)} />
       <Route path=":id/command/configure-runtime-dataset-binding" element={resolvePageOverride("dataset-readiness", "configureRuntimeDatasetBinding", <DatasetReadinessConfigureRuntimeDatasetBinding />)} />
       <Route path=":id/command/reject-dataset-for-training" element={resolvePageOverride("dataset-readiness", "rejectDatasetForTraining", <DatasetReadinessRejectDatasetForTraining />)} />
-      <Route path=":id/command/approve-dataset-for-training" element={resolvePageOverride("dataset-readiness", "approveDatasetForTraining", <DatasetReadinessApproveDatasetForTraining />)} />
-      <Route path=":id/command/retry-dataset-contract-validation" element={resolvePageOverride("dataset-readiness", "retryDatasetContractValidation", <DatasetReadinessRetryDatasetContractValidation />)} />
       <Route path=":id/command/revoke-dataset-training-approval" element={resolvePageOverride("dataset-readiness", "revokeDatasetTrainingApproval", <DatasetReadinessRevokeDatasetTrainingApproval />)} />
     </Route>
     <Route path="/permission-catalog">
@@ -186,7 +177,6 @@ export const contextRoutes = (
     </Route>
     <Route path="/runtime-agent-lifecycle-catalog">
       <Route index element={resolvePageOverride("runtime-agent-lifecycle-catalog", "list", <RuntimeAgentLifecycleCatalogList />)} />
-      <Route path="command/load-runtime-agent-bootstrap-configuration" element={resolvePageOverride("runtime-agent-lifecycle-catalog", "loadRuntimeAgentBootstrapConfiguration", <RuntimeAgentLifecycleCatalogLoadRuntimeAgentBootstrapConfiguration />)} />
       <Route path="show/:id" element={resolvePageOverride("runtime-agent-lifecycle-catalog", "show", <RuntimeAgentLifecycleCatalogShow />)} />
     </Route>
     <Route path="/runtime-dataset-binding-catalog">

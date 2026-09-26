@@ -64,7 +64,6 @@ import {
   ModelArtifactCatalogList,
   ModelArtifactCatalogShow,
   ModelArtifactCatalogRegisterModelArtifact,
-  ModelArtifactCatalogDownloadModelArtifact,
 } from "./modelrepository/read-models/model-artifact-catalog";
 import {
   ModelCatalogList,
@@ -185,23 +184,18 @@ import {
   TrainingJobDashboardShow,
   TrainingJobDashboardCreateTrainingJob,
   TrainingJobDashboardCancelTrainingJob,
-  TrainingJobDashboardSubmitTrainingJob,
   TrainingJobDashboardPauseTrainingJob,
   TrainingJobDashboardResumeTrainingJob,
-  TrainingJobDashboardRetryTrainingRoundParticipantSelection,
 } from "./trainingorchestration/read-models/training-job-dashboard";
 import {
   TrainingParticipantEligibilityList,
   TrainingParticipantEligibilityShow,
-  TrainingParticipantEligibilitySubmitTrainingJob,
 } from "./trainingorchestration/read-models/training-participant-eligibility";
 import {
   TrainingRoundProgressList,
   TrainingRoundProgressShow,
   TrainingRoundProgressCancelTrainingJob,
   TrainingRoundProgressSubmitModelUpdateSubmission,
-  TrainingRoundProgressSubmitTrainingJob,
-  TrainingRoundProgressRetryTrainingRoundParticipantSelection,
   TrainingRoundProgressPauseTrainingJob,
 } from "./trainingorchestration/read-models/training-round-progress";
 import {
@@ -217,7 +211,6 @@ import {
   UploadedFileCatalogUploadFile,
   UploadedFileCatalogMarkFileReferenced,
   UploadedFileCatalogDiscardFile,
-  UploadedFileCatalogDownloadFile,
 } from "./fileupload/read-models/uploaded-file-catalog";
 import {
   UserAccountCatalogList,
@@ -301,7 +294,6 @@ export const contextRoutes = (
       <Route index element={resolvePageOverride("model-artifact-catalog", "list", <ModelArtifactCatalogList />)} />
       <Route path="command/register-model-artifact" element={resolvePageOverride("model-artifact-catalog", "registerModelArtifact", <ModelArtifactCatalogRegisterModelArtifact />)} />
       <Route path="show/:id" element={resolvePageOverride("model-artifact-catalog", "show", <ModelArtifactCatalogShow />)} />
-      <Route path=":id/command/download-model-artifact" element={resolvePageOverride("model-artifact-catalog", "downloadModelArtifact", <ModelArtifactCatalogDownloadModelArtifact />)} />
     </Route>
     <Route path="/model-catalog">
       <Route index element={resolvePageOverride("model-catalog", "list", <ModelCatalogList />)} />
@@ -422,23 +414,18 @@ export const contextRoutes = (
       <Route path="command/create-training-job" element={resolvePageOverride("training-job-dashboard", "createTrainingJob", <TrainingJobDashboardCreateTrainingJob />)} />
       <Route path="show/:id" element={resolvePageOverride("training-job-dashboard", "show", <TrainingJobDashboardShow />)} />
       <Route path=":id/command/cancel-training-job" element={resolvePageOverride("training-job-dashboard", "cancelTrainingJob", <TrainingJobDashboardCancelTrainingJob />)} />
-      <Route path=":id/command/submit-training-job" element={resolvePageOverride("training-job-dashboard", "submitTrainingJob", <TrainingJobDashboardSubmitTrainingJob />)} />
       <Route path=":id/command/pause-training-job" element={resolvePageOverride("training-job-dashboard", "pauseTrainingJob", <TrainingJobDashboardPauseTrainingJob />)} />
       <Route path=":id/command/resume-training-job" element={resolvePageOverride("training-job-dashboard", "resumeTrainingJob", <TrainingJobDashboardResumeTrainingJob />)} />
-      <Route path=":id/command/retry-training-round-participant-selection" element={resolvePageOverride("training-job-dashboard", "retryTrainingRoundParticipantSelection", <TrainingJobDashboardRetryTrainingRoundParticipantSelection />)} />
     </Route>
     <Route path="/training-participant-eligibility">
       <Route index element={resolvePageOverride("training-participant-eligibility", "list", <TrainingParticipantEligibilityList />)} />
       <Route path="show/:id" element={resolvePageOverride("training-participant-eligibility", "show", <TrainingParticipantEligibilityShow />)} />
-      <Route path=":id/command/submit-training-job" element={resolvePageOverride("training-participant-eligibility", "submitTrainingJob", <TrainingParticipantEligibilitySubmitTrainingJob />)} />
     </Route>
     <Route path="/training-round-progress">
       <Route index element={resolvePageOverride("training-round-progress", "list", <TrainingRoundProgressList />)} />
       <Route path="show/:id" element={resolvePageOverride("training-round-progress", "show", <TrainingRoundProgressShow />)} />
       <Route path=":id/command/cancel-training-job" element={resolvePageOverride("training-round-progress", "cancelTrainingJob", <TrainingRoundProgressCancelTrainingJob />)} />
       <Route path=":id/command/submit-model-update-submission" element={resolvePageOverride("training-round-progress", "submitModelUpdateSubmission", <TrainingRoundProgressSubmitModelUpdateSubmission />)} />
-      <Route path=":id/command/submit-training-job" element={resolvePageOverride("training-round-progress", "submitTrainingJob", <TrainingRoundProgressSubmitTrainingJob />)} />
-      <Route path=":id/command/retry-training-round-participant-selection" element={resolvePageOverride("training-round-progress", "retryTrainingRoundParticipantSelection", <TrainingRoundProgressRetryTrainingRoundParticipantSelection />)} />
       <Route path=":id/command/pause-training-job" element={resolvePageOverride("training-round-progress", "pauseTrainingJob", <TrainingRoundProgressPauseTrainingJob />)} />
     </Route>
     <Route path="/training-run-configuration-catalog">
@@ -454,7 +441,6 @@ export const contextRoutes = (
       <Route path="show/:id" element={resolvePageOverride("uploaded-file-catalog", "show", <UploadedFileCatalogShow />)} />
       <Route path=":id/command/mark-file-referenced" element={resolvePageOverride("uploaded-file-catalog", "markFileReferenced", <UploadedFileCatalogMarkFileReferenced />)} />
       <Route path=":id/command/discard-file" element={resolvePageOverride("uploaded-file-catalog", "discardFile", <UploadedFileCatalogDiscardFile />)} />
-      <Route path=":id/command/download-file" element={resolvePageOverride("uploaded-file-catalog", "downloadFile", <UploadedFileCatalogDownloadFile />)} />
     </Route>
     <Route path="/user-account-catalog">
       <Route index element={resolvePageOverride("user-account-catalog", "list", <UserAccountCatalogList />)} />

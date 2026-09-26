@@ -605,6 +605,11 @@ export const UploadedFileCatalogList = () => {
                     command="downloadFile"
                     recordItemId={row.original.fileId}
                     size="sm"
+                    query={{
+                      fileId: row.original.fileId,
+                      originalFileName: row.original.originalFileName,
+                      referencedByCommandId: row.original.referencedByCommandId,
+                    }}
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.fileId} size="sm" />

@@ -548,11 +548,14 @@ export const ModelArtifactCatalogList = () => {
                     recordItemId={row.original.modelId}
                     size="sm"
                     query={{
-                      modelId: row.original.modelId,
                       modelName: row.original.modelName,
                       modelVersion: row.original.modelVersion,
+                      modelId: row.original.modelId,
                       modelArtifactUri: row.original.modelArtifactUri,
                       modelFormat: row.original.modelFormat,
+                      modelSignatureUri: row.original.modelSignatureUri,
+                      trainingJobId: row.original.trainingJobId,
+                      roundId: row.original.roundId,
                     }}
                   />
                 )}
