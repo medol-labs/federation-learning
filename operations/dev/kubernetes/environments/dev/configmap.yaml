@@ -74,6 +74,8 @@ data:
   DB_URL: "jdbc:postgresql://postgres:5432/federation_learning_platform"
   FEDERATION_LEARNING_RUNTIME_AGENT_URL: "http://federation-learning-runtime-agent:8082"
   FEDERATION_LEARNING_SUPPORT_URL: "http://federation-learning-support:8080"
+  FL_AGGREGATION_MODE: "embedded"
+  FL_AGGREGATION_RUNTIME_ENGINE_ENDPOINT: ""
   MEDOL_AXON_EVENT_STORAGE: "umadb"
   MEDOL_SYNC_ENABLED: "true"
   MEDOL_SYNC_FIXED_DELAY_MS: "30000"

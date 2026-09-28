@@ -62,7 +62,7 @@ federation-learning:
   aggregation:
     enabled: ${FL_AGGREGATION_ENABLED:true}
     mode: ${FL_AGGREGATION_MODE:embedded}
-    runtime-engine-endpoint: ${FL_AGGREGATION_RUNTIME_ENGINE_ENDPOINT:http://localhost:18080}
+    runtime-engine-endpoint: ${FL_AGGREGATION_RUNTIME_ENGINE_ENDPOINT:}
     support-endpoint: ${FEDERATION_LEARNING_SUPPORT_URL:http://localhost:8080}
     internal-token: ${MEDOL_SECURITY_INTERNAL_TOKEN:local-dev-internal-token}
     node-name: ${FL_AGGREGATION_NODE_NAME:platform-aggregator}

@@ -30,13 +30,19 @@ class RestClientAggregationRuntimeEngineClient(restClientBuilder: RestClient.Bui
                 .body(AggregationRuntimeJobResponse::class.java)
         ) { "Aggregation runtime returned an empty job response for $jobId." }
 
-    override fun downloadArtifact(endpoint: String, jobId: String, artifactName: String): ByteArray =
-        requireNotNull(
-            restClient.get()
-                .uri("${endpoint.trimEnd('/')}/jobs/{jobId}/artifacts/{artifactName}", jobId, artifactName)
-                .retrieve()
-                .body(ByteArray::class.java)
-        ) { "Aggregation runtime returned an empty artifact for $jobId/$artifactName." }
+    override fun downloadArtifact(endpoint: String, jobId: String, artifactName: String): ByteArray {
+        val response = restClient.get()
+            .uri("${endpoint.trimEnd('/')}/jobs/{jobId}/artifacts/{artifactName}", jobId, artifactName)
+            .retrieve()
+            .toEntity(ByteArray::class.java)
+        val body = requireNotNull(response.body) {
+            "Aggregation runtime returned an empty artifact for $jobId/$artifactName."
+        }
+        require(body.isNotEmpty()) {
+            "Aggregation runtime returned an empty artifact for $jobId/$artifactName."
+        }
+        return body
+    }
 }
 
 data class AggregationRuntimeJobRequest(

@@ -27,7 +27,7 @@ class RuntimeEngineAggregatePlainModelUpdatesAdapter(
         require(input.modelUpdateArtifactRefs.isNotEmpty()) {
             "At least one plaintext model update artifact is required for aggregation."
         }
-        if (properties.mode.equals("embedded", ignoreCase = true)) {
+        if (properties.usesEmbedded()) {
             val aggregated = embeddedAggregationService.aggregate(
                 aggregatedModelId = input.aggregatedModelId,
                 trainingJobId = input.trainingJobId,
@@ -52,6 +52,7 @@ class RuntimeEngineAggregatePlainModelUpdatesAdapter(
         }
 
         val jobId = "aggregate-plain-${input.trainingJobId}-round-${input.roundNumber}"
+        val runtimeEngineEndpoint = properties.requireRuntimeEngineEndpoint()
         log.info(
             "Submitting plaintext aggregation runtime job. jobId={}, roundId={}, updateCount={}, algorithm={}",
             jobId,
@@ -60,7 +61,7 @@ class RuntimeEngineAggregatePlainModelUpdatesAdapter(
             input.aggregationAlgorithm
         )
         runtimeEngineClient.submit(
-            properties.runtimeEngineEndpoint,
+            runtimeEngineEndpoint,
             AggregationRuntimeJobRequest(
                 jobId = jobId,
                 roundId = input.roundNumber,
@@ -74,10 +75,10 @@ class RuntimeEngineAggregatePlainModelUpdatesAdapter(
                 )
             )
         )
-        awaitCompletion(jobId)
+        awaitCompletion(jobId, runtimeEngineEndpoint)
 
         val modelBytes = runtimeEngineClient.downloadArtifact(
-            properties.runtimeEngineEndpoint,
+            runtimeEngineEndpoint,
             jobId,
             GLOBAL_MODEL_OUTPUT
         )
@@ -113,10 +114,10 @@ class RuntimeEngineAggregatePlainModelUpdatesAdapter(
         )
     }
 
-    private fun awaitCompletion(jobId: String) {
+    private fun awaitCompletion(jobId: String, runtimeEngineEndpoint: String) {
         val deadline = Instant.now().plus(properties.jobTimeout)
         while (Instant.now().isBefore(deadline)) {
-            val job = runtimeEngineClient.getJob(properties.runtimeEngineEndpoint, jobId)
+            val job = runtimeEngineClient.getJob(runtimeEngineEndpoint, jobId)
             when (job.status.trim().uppercase()) {
                 "COMPLETED", "SUCCEEDED", "SUCCESS" -> return
                 "FAILED", "ERROR", "CANCELLED", "CANCELED" ->

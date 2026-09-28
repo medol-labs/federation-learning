@@ -608,6 +608,7 @@ export const UploadedFileCatalogList = () => {
                     query={{
                       fileId: row.original.fileId,
                       originalFileName: row.original.originalFileName,
+                      fileLocation: row.original.fileLocation,
                       referencedByCommandId: row.original.referencedByCommandId,
                     }}
                   />

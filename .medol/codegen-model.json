@@ -15350,6 +15350,14 @@
               "portOutput": false
             }
           ],
+          "clientEffect": {
+            "type": "download",
+            "options": {
+              "uriField": "downloadUri",
+              "filenameField": "originalFileName",
+              "extensionFrom": "contentType"
+            }
+          },
           "dependencies": [
             {
               "id": "event-911bc681",
@@ -15370,7 +15378,10 @@
               "elementType": "EVENT"
             }
           ],
-          "port": true
+          "port": true,
+          "ui": {
+            "type": "confirm"
+          }
         }
       ],
       "events": [
@@ -15480,7 +15491,10 @@
               "title": "Download File",
               "elementType": "COMMAND"
             }
-          ]
+          ],
+          "ui": {
+            "type": "confirm"
+          }
         }
       ],
       "processors": [],
@@ -31119,6 +31133,14 @@
               "portOutput": false
             }
           ],
+          "clientEffect": {
+            "type": "download",
+            "options": {
+              "uriField": "downloadUri",
+              "filenameField": "modelName",
+              "extensionFrom": "modelFormat"
+            }
+          },
           "dependencies": [
             {
               "id": "event-41a35505",
@@ -31139,7 +31161,10 @@
               "elementType": "EVENT"
             }
           ],
-          "port": true
+          "port": true,
+          "ui": {
+            "type": "confirm"
+          }
         }
       ],
       "events": [
@@ -31263,7 +31288,10 @@
               "title": "Download Model Artifact",
               "elementType": "COMMAND"
             }
-          ]
+          ],
+          "ui": {
+            "type": "confirm"
+          }
         }
       ],
       "processors": [],
