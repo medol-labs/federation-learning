@@ -66,6 +66,22 @@ gen /opt/codegen/.generator/app/ --generator operations --generator-type all --e
 Generated code may be overwritten during regeneration. Keep custom behavior in
 the extension locations documented by each generated module.
 
+## Project Documents
+
+The project-specific documentation pack lives in
+`docs/document-pack/federation-learning/`. It uses the MEDOL model as the
+source of facts and formats the content to match the project Word documents in
+the workspace-level `项目文档/` directory.
+
+```bash
+node scripts/generate-project-docs.mjs
+```
+
+The generated Markdown and Word files are written to `docs/generated/` and are
+intentionally ignored by git. The output contains both standalone subsystem
+documents and merged drafts that can be folded into the platform-level
+documents.
+
 ## Local Development
 
 Use the generated module README files and scripts for concrete commands. Common

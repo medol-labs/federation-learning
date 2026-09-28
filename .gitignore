@@ -70,6 +70,7 @@ venv/
 # Runtime data and generated local artifacts
 tmp/
 **/tmp/
+docs/generated/
 volumes/
 **/volumes/
 .medol/*.local.yml

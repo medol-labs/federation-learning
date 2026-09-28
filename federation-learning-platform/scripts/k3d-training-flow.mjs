@@ -4,6 +4,7 @@ import {existsSync, readFileSync, writeFileSync} from 'node:fs';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {spawn, spawnSync} from 'node:child_process';
+import {createServer} from 'node:net';
 
 if (typeof fetch !== 'function') {
     fail('This script requires Node.js 18 or newer because it uses global fetch.');
@@ -31,8 +32,8 @@ const gatewayUrl = trimSlash(stringArg('gateway-url', 'FL_K3D_GATEWAY_URL', 'htt
 const platformUrl = trimSlash(stringArg('platform-url', 'FL_PLATFORM_URL', `${gatewayUrl}/api/federation-learning-platform`));
 const supportUrl = trimSlash(stringArg('support-url', 'FL_SUPPORT_URL', `${gatewayUrl}/api/federation-learning-support`));
 const configuredRuntimeAgentUrl = optionalString(args['runtime-agent-url'] ?? process.env.FL_RUNTIME_AGENT_URL);
-const runtimeAgentPortForwardPort = positiveInt(args['runtime-agent-port-forward-port'] ?? process.env.FL_RUNTIME_AGENT_PORT_FORWARD_PORT, 30082);
-let runtimeAgentUrl = trimSlash(configuredRuntimeAgentUrl ?? `http://localhost:${runtimeAgentPortForwardPort}`);
+const runtimeAgentPortForwardPort = positiveInt(args['runtime-agent-port-forward-port'] ?? process.env.FL_RUNTIME_AGENT_PORT_FORWARD_PORT, 18082);
+let runtimeAgentUrl = trimSlash(configuredRuntimeAgentUrl ?? `http://127.0.0.1:${runtimeAgentPortForwardPort}`);
 const scenario = stringArg('scenario', 'FL_TRAINING_SCENARIO', 'densenet');
 const k3sDevEnvironmentDir = resolve(repoRoot, 'operations/dev/k3s/environments/dev');
 const k3sDevSecretsFile = resolve(k3sDevEnvironmentDir, 'secrets.dev.yaml');
@@ -334,9 +335,9 @@ async function initDictionaries() {
 }
 
 async function ensureAdminUser(baseUrl, label) {
-    const response = await fetch(`${baseUrl}/api/auth/setup-admin`, {
+    const response = await httpRequest(`${baseUrl}/api/auth/setup-admin`, {
         method: 'POST',
-        headers: requestHeaders({'content-type': 'application/json'}, baseUrl),
+        headers: {'content-type': 'application/json'},
         body: JSON.stringify({
             setupToken: adminSetupToken,
             username: adminUsername,
@@ -358,9 +359,9 @@ async function ensureAdminUser(baseUrl, label) {
 }
 
 async function loginAdmin(baseUrl, label) {
-    const response = await fetch(`${baseUrl}/api/auth/login`, {
+    const response = await httpRequest(`${baseUrl}/api/auth/login`, {
         method: 'POST',
-        headers: requestHeaders({'content-type': 'application/json'}, baseUrl),
+        headers: {'content-type': 'application/json'},
         body: JSON.stringify({
             username: adminUsername,
             password: adminPassword
@@ -413,6 +414,7 @@ async function ensureAdminToken() {
 
 async function runInitTraining(target, options) {
     const initScript = resolve(scriptDir, 'init-training-prerequisites.mjs');
+    const extraEnv = initTrainingEnvironment(target, options.runtimeAgentUrl);
     const output = runCapture('node', [
         initScript,
         '--target', target,
@@ -431,9 +433,25 @@ async function runInitTraining(target, options) {
         '--poll-interval', String(Math.min(pollIntervalMs, 1000)),
         ...(internalToken ? ['--internal-token', internalToken] : []),
         ...(dryRun ? ['--dry-run'] : [])
-    ], {});
+    ], extraEnv);
     process.stdout.write(output);
     return extractLastJsonObject(output);
+}
+
+function initTrainingEnvironment(target, runtimeAgentBaseUrl) {
+    const token = initTrainingApiToken(target, runtimeAgentBaseUrl);
+    return token ? {FL_API_TOKEN: token} : {};
+}
+
+function initTrainingApiToken(target, runtimeAgentBaseUrl) {
+    if (target === 'runtime-agent') {
+        return process.env.FL_RUNTIME_AGENT_API_TOKEN?.trim()
+            ?? authTokensByBaseUrl.get(trimSlash(runtimeAgentBaseUrl))
+            ?? process.env.FL_API_TOKEN?.trim();
+    }
+    return process.env.FL_PLATFORM_API_TOKEN?.trim()
+        ?? authTokensByBaseUrl.get(trimSlash(supportUrl))
+        ?? process.env.FL_API_TOKEN?.trim();
 }
 
 async function labelRuntimeNodes(runtimeInfrastructureId) {
@@ -542,13 +560,13 @@ async function ensureManagedRuntimeAgentAccess(runtimeAgentId) {
         return;
     }
     const serviceName = managedRuntimeAgentName(runtimeAgentId);
-    await startPortForward(
+    const localPort = await startPortForward(
         serviceName,
         runtimeAgentPortForwardPort,
         8082,
         'managed runtime-agent'
     );
-    runtimeAgentUrl = trimSlash(`http://localhost:${runtimeAgentPortForwardPort}`);
+    runtimeAgentUrl = trimSlash(`http://127.0.0.1:${localPort}`);
 }
 
 async function recordManagedRuntimeAgentConnection(runtimeInfrastructure) {
@@ -566,14 +584,18 @@ async function recordManagedRuntimeAgentConnection(runtimeInfrastructure) {
 }
 
 async function startPortForward(serviceName, localPort, remotePort, label) {
-    if (await isHttpReachable(`http://localhost:${localPort}/actuator/health`)) {
-        return;
+    if (await isHttpReachable(`http://127.0.0.1:${localPort}/actuator/health`)) {
+        return localPort;
+    }
+    const availableLocalPort = await findAvailableLocalPort(localPort);
+    if (availableLocalPort !== localPort) {
+        console.log(`[k3d-flow] local port ${localPort} is not available; using ${availableLocalPort} for ${label}`);
     }
     const child = spawn('kubectl', [
         '-n', namespace,
         'port-forward',
         `svc/${serviceName}`,
-        `${localPort}:${remotePort}`
+        `${availableLocalPort}:${remotePort}`
     ], {
         env: {...process.env, ...kubeEnv()},
         stdio: ['ignore', 'pipe', 'pipe']
@@ -585,17 +607,50 @@ async function startPortForward(serviceName, localPort, remotePort, label) {
         if (child.exitCode !== null) {
             fail(`${label} port-forward exited with code ${child.exitCode}`);
         }
-        return isHttpReachable(`http://localhost:${localPort}/actuator/health`);
+        return isHttpReachable(`http://127.0.0.1:${availableLocalPort}/actuator/health`);
     });
+    return availableLocalPort;
 }
 
 async function isHttpReachable(url) {
     try {
-        const response = await fetch(url, {headers: requestHeaders({}, url)});
+        const response = await httpRequest(url);
+        debugHttp(`${url} -> ${response.status}`);
         return response.ok;
-    } catch {
+    } catch (error) {
+        debugHttp(`${url} -> ${error?.message ?? String(error)}`);
         return false;
     }
+}
+
+function debugHttp(message) {
+    if (booleanOption(process.env.FL_K3D_FLOW_DEBUG_HTTP, false)) {
+        console.log(`[k3d-flow] http ${message}`);
+    }
+}
+
+async function findAvailableLocalPort(preferredPort) {
+    for (let port = preferredPort; port < preferredPort + 100; port += 1) {
+        if (!hasLocalTcpListener(port) && await isLocalPortAvailable(port)) {
+            return port;
+        }
+    }
+    fail(`No available local port found for runtime-agent port-forward starting at ${preferredPort}.`);
+}
+
+function hasLocalTcpListener(port) {
+    return commandOk('lsof', ['-nP', `-iTCP:${port}`, '-sTCP:LISTEN']);
+}
+
+function isLocalPortAvailable(port) {
+    return new Promise((resolve) => {
+        const server = createServer();
+        server.once('error', () => resolve(false));
+        server.once('listening', () => {
+            server.close(() => resolve(true));
+        });
+        server.listen({port, host: '127.0.0.1', exclusive: true});
+    });
 }
 
 function managedRuntimeAgentName(runtimeAgentId) {
@@ -614,7 +669,7 @@ async function waitForDeployment(name, label = name) {
 async function waitForHttp(url, label) {
     await waitForCondition(label, async () => {
         try {
-            const response = await fetch(url, {headers: requestHeaders({}, url)});
+            const response = await httpRequest(url);
             return response.ok;
         } catch {
             return false;
@@ -655,7 +710,7 @@ function cleanupPortForwards() {
 
 async function getPage(baseUrl, path, query) {
     const url = `${baseUrl}${path}?${new URLSearchParams(query).toString()}`;
-    const response = await fetch(url, {headers: requestHeaders({}, url)});
+    const response = await httpRequest(url, {headers: requestHeaders({}, url)});
     const body = await response.text();
     if (!response.ok) {
         fail(`GET ${url} failed: ${response.status} ${compact(body)}`);
@@ -670,7 +725,7 @@ async function postCommand(baseUrl, path, payload, label) {
         return;
     }
     const url = `${baseUrl}${path}`;
-    const response = await fetch(url, {
+    const response = await httpRequest(url, {
         method: 'POST',
         headers: requestHeaders({'content-type': 'application/json'}, url),
         body: JSON.stringify(payload)
@@ -684,7 +739,7 @@ async function postCommand(baseUrl, path, payload, label) {
 
 async function postJson(url, payload, label, options = {}) {
     const allowStatuses = new Set(options.allowStatuses ?? [200]);
-    const response = await fetch(url, {
+    const response = await httpRequest(url, {
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify(payload)
@@ -695,6 +750,82 @@ async function postJson(url, payload, label, options = {}) {
         fail(`POST ${label} failed: ${response.status} ${compact(text)}`);
     }
     return {status: response.status, body};
+}
+
+async function httpRequest(url, options = {}) {
+    if (isLocalHttpUrl(url)) {
+        return curlHttpRequest(url, options);
+    }
+    try {
+        return await fetch(url, options);
+    } catch (error) {
+        if (!shouldFallbackToCurl(error, url)) {
+            throw error;
+        }
+        return curlHttpRequest(url, options);
+    }
+}
+
+function isLocalHttpUrl(url) {
+    const host = safeUrl(url)?.hostname;
+    return ['localhost', '127.0.0.1', '::1'].includes(host);
+}
+
+function shouldFallbackToCurl(error, url) {
+    if (!isLocalHttpUrl(url)) {
+        return false;
+    }
+    const code = error?.cause?.code ?? error?.code;
+    if (code === 'EPERM' || code === 'EACCES') {
+        return true;
+    }
+    return String(error?.message ?? '').includes('fetch failed');
+}
+
+function curlHttpRequest(url, options = {}) {
+    const method = String(options.method ?? 'GET').toUpperCase();
+    const headers = options.headers ?? {};
+    const body = options.body == null ? null : String(options.body);
+    const marker = '__MEDOL_HTTP_STATUS__:';
+    const commandArgs = [
+        '-sS',
+        '--max-time', '30',
+        '-X', method
+    ];
+    for (const [name, value] of Object.entries(headers)) {
+        commandArgs.push('-H', `${name}: ${value}`);
+    }
+    if (body !== null) {
+        commandArgs.push('--data-binary', '@-');
+    }
+    commandArgs.push('-w', `\n${marker}%{http_code}`, url);
+    const result = spawnSync('curl', commandArgs, {
+        input: body ?? undefined,
+        encoding: 'utf8'
+    });
+    if (result.status !== 0) {
+        throw new Error(`curl HTTP request failed: ${compact(result.stderr || result.stdout)}`);
+    }
+    const output = result.stdout ?? '';
+    const markerIndex = output.lastIndexOf(`\n${marker}`);
+    if (markerIndex < 0) {
+        throw new Error(`curl HTTP response missing status marker: ${compact(output)}`);
+    }
+    const text = output.slice(0, markerIndex);
+    const status = Number.parseInt(output.slice(markerIndex + marker.length + 1).trim(), 10);
+    return {
+        status,
+        ok: status >= 200 && status < 300,
+        text: async () => text
+    };
+}
+
+function safeUrl(url) {
+    try {
+        return new URL(url);
+    } catch {
+        return null;
+    }
 }
 
 function parseJsonOrText(text) {
