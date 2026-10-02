@@ -1,5 +1,6 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.submitagentlocalmodelupdate
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -62,6 +63,41 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
         assertEquals("sha256:stored", client.requests.single().artifactDigest)
     }
 
+    @Test
+    fun uploadsWeightArtifactForPlainModelUpdatesWhenEnabled(@TempDir tempDir: Path) {
+        val descriptorPath = tempDir.resolve("job-1/local-runtime/local_update.json")
+        val weightArtifactPath = tempDir.resolve("job-1/local-runtime/model_state_dict.pt")
+        Files.createDirectories(descriptorPath.parent)
+        Files.writeString(
+            descriptorPath,
+            """{"weightArtifact":"/workspace/tmp/runtime-engine/job-1/local-runtime/model_state_dict.pt","format":"PYTORCH_STATE_DICT"}"""
+        )
+        Files.writeString(weightArtifactPath, "pt-state-dict")
+        val fileUploadClient = RecordingFileUploadClient()
+        val adapter = adapter(
+            client = RecordingClient(),
+            fileUploadClient = fileUploadClient,
+            properties = LocalModelUpdateSubmissionProperties(preferWeightArtifactForPlainUpdates = true),
+            runtimeEngineProperties = LocalRuntimeEngineProperties(
+                runtimeRoot = "/workspace/tmp/runtime-engine",
+                runtimeRootHostRoot = tempDir.toString()
+            )
+        )
+
+        adapter.execute(
+            input(
+                artifactRef = "/workspace/tmp/runtime-engine/job-1/local-runtime/local_update.json",
+                secureAggregationRequired = false,
+                secureAggregationSessionId = null,
+                encryptionScheme = null,
+                publicKeyVersion = null,
+                updateProtectionType = "PLAIN"
+            )
+        )
+
+        assertEquals(weightArtifactPath, fileUploadClient.paths.single())
+    }
+
     private fun adapter(
         client: PlatformModelUpdateSubmissionClient,
         fileUploadClient: SupportFileUploadClient,
@@ -72,12 +108,18 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
             client = client,
             properties = properties,
             runtimeEngineProperties = runtimeEngineProperties,
-            fileUploadClient = fileUploadClient
+            fileUploadClient = fileUploadClient,
+            objectMapper = ObjectMapper()
         )
 
     private fun input(
         artifactRef: String = "/tmp/local_update.json",
-        artifactDigest: String = ""
+        artifactDigest: String = "",
+        secureAggregationRequired: Boolean = true,
+        secureAggregationSessionId: UUID? = UUID.fromString("cccccccc-cccc-4ccc-8ccc-cccccccccccc"),
+        encryptionScheme: String? = "PAILLIER",
+        publicKeyVersion: String? = "local-dev-v1",
+        updateProtectionType: String = "HOMOMORPHIC_ENCRYPTED"
     ): SubmitAgentLocalModelUpdateInput =
         SubmitAgentLocalModelUpdateInput(
             modelUpdateSubmissionId = UUID.fromString("11111111-1111-4111-8111-111111111111"),
@@ -89,16 +131,16 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
             roundId = UUID.fromString("77777777-7777-4777-8777-777777777777"),
             runtimeId = UUID.fromString("88888888-8888-4888-8888-888888888888"),
             featureSchemaId = UUID.fromString("99999999-9999-4999-8999-999999999999"),
-            secureAggregationRequired = true,
-            secureAggregationSessionId = UUID.fromString("cccccccc-cccc-4ccc-8ccc-cccccccccccc"),
-            encryptionScheme = "PAILLIER",
-            publicKeyVersion = "local-dev-v1",
+            secureAggregationRequired = secureAggregationRequired,
+            secureAggregationSessionId = secureAggregationSessionId,
+            encryptionScheme = encryptionScheme,
+            publicKeyVersion = publicKeyVersion,
             runtimeEngineJobId = "runtime-engine-job-1",
             localModelId = UUID.fromString("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
             updateArtifactId = UUID.fromString("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"),
             artifactRef = artifactRef,
             artifactDigest = artifactDigest,
-            updateProtectionType = "HOMOMORPHIC_ENCRYPTED",
+            updateProtectionType = updateProtectionType,
             trainingLoss = BigDecimal("0.125")
         )
 

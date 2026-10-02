@@ -11,8 +11,8 @@ if (typeof fetch !== 'function') {
 }
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
-const platformRoot = resolve(scriptDir, '..');
-const repoRoot = resolve(platformRoot, '..');
+const repoRoot = resolve(scriptDir, '..');
+const platformRoot = resolve(repoRoot, 'federation-learning-platform');
 const args = parseArgs(process.argv.slice(2));
 
 if (args.help || args.h) {

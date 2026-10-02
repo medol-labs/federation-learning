@@ -77,17 +77,19 @@ class RuntimeEngineAggregatePlainModelUpdatesAdapter(
         )
         awaitCompletion(jobId, runtimeEngineEndpoint)
 
+        val artifactName = aggregatedArtifactOutputName(input.aggregationAlgorithm)
         val modelBytes = runtimeEngineClient.downloadArtifact(
             runtimeEngineEndpoint,
             jobId,
-            GLOBAL_MODEL_OUTPUT
+            artifactName
         )
+        val fileName = aggregatedArtifactFileName(input.aggregatedModelId.toString(), input.aggregationAlgorithm)
         val uploadedFile = fileUploadClient.upload(
             supportEndpoint = properties.supportEndpoint,
             internalToken = properties.internalToken,
             fileId = input.aggregatedModelId,
-            fileName = "${input.aggregatedModelId}.global_model.json",
-            contentType = "application/json",
+            fileName = fileName,
+            contentType = aggregatedArtifactContentType(input.aggregationAlgorithm),
             content = modelBytes
         )
 
@@ -135,7 +137,33 @@ class RuntimeEngineAggregatePlainModelUpdatesAdapter(
             "JSON"
         }
 
+    private fun aggregatedArtifactOutputName(aggregationAlgorithm: String): String =
+        if (isPytorchStateDictAggregation(aggregationAlgorithm)) {
+            WEIGHT_ARTIFACT_OUTPUT
+        } else {
+            GLOBAL_MODEL_OUTPUT
+        }
+
+    private fun aggregatedArtifactFileName(modelId: String, aggregationAlgorithm: String): String =
+        if (isPytorchStateDictAggregation(aggregationAlgorithm)) {
+            "$modelId.global_model_state_dict.pt"
+        } else {
+            "$modelId.global_model.json"
+        }
+
+    private fun aggregatedArtifactContentType(aggregationAlgorithm: String): String =
+        if (isPytorchStateDictAggregation(aggregationAlgorithm)) {
+            "application/octet-stream"
+        } else {
+            "application/json"
+        }
+
+    private fun isPytorchStateDictAggregation(aggregationAlgorithm: String): Boolean =
+        aggregationAlgorithm.contains("PYTORCH", ignoreCase = true) ||
+            aggregationAlgorithm.contains("TORCH", ignoreCase = true)
+
     private companion object {
         private const val GLOBAL_MODEL_OUTPUT = "globalModel"
+        private const val WEIGHT_ARTIFACT_OUTPUT = "weightArtifact"
     }
 }

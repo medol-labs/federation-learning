@@ -279,7 +279,7 @@ sudo k3s ctr images ls | grep federation-learning-platform
 K3d/K3s runtime nodes are prepared manually, so the training seed script is split by side. Run the platform phase first, create or label the runtime node, wait for the runtime agent to become reachable, then run the runtime-agent and training-job phases:
 
 ```bash
-cd ../../federation-learning-platform
+cd ../../..
 
 # 1. Platform-owned setup: organization, federation, feature schema, model,
 # runtime infrastructure package/installation plan, runtime engine profile, and

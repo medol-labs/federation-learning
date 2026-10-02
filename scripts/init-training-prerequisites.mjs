@@ -54,7 +54,7 @@ const registerRuntimeInfrastructure = booleanOption(
     false
 );
 
-const workspaceRoot = resolve(import.meta.dirname, '../..');
+const workspaceRoot = resolve(import.meta.dirname, '..');
 const defaultDatasetPath = defaultDatasetPathForScenario(trainingScenario, workspaceRoot);
 const datasetPath = resolve(args['dataset-path'] ?? process.env.FL_DEV_DATASET_PATH ?? defaultDatasetPath);
 const runtimeDatasetPath = args['runtime-dataset-path'] ??
@@ -1063,7 +1063,7 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
             optimizer: 'ADAM',
             lossFunction: 'CROSS_ENTROPY',
             gradientClippingNorm: null,
-            secureAggregationRequired: true,
+            secureAggregationRequired: false,
             minimumAccuracy: 0.0,
             minimumFairnessScore: null
         },

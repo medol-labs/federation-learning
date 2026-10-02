@@ -1,6 +1,7 @@
 package tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.submitagentlocalmodelupdate
 
 import feign.FeignException
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution.startroundexecution.LocalRuntimeEngineProperties
@@ -15,14 +16,15 @@ class PlatformSubmitAgentLocalModelUpdateAdapter(
     private val client: PlatformModelUpdateSubmissionClient,
     private val properties: LocalModelUpdateSubmissionProperties,
     private val runtimeEngineProperties: LocalRuntimeEngineProperties,
-    private val fileUploadClient: SupportFileUploadClient
+    private val fileUploadClient: SupportFileUploadClient,
+    private val objectMapper: ObjectMapper
 ) : SubmitAgentLocalModelUpdateService {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun supports(input: SubmitAgentLocalModelUpdateInput): Boolean = properties.enabled
 
     override fun execute(input: SubmitAgentLocalModelUpdateInput): SubmitAgentLocalModelUpdateResult {
-        val localArtifactPath = toReadablePath(input.artifactRef)
+        val localArtifactPath = modelUpdateUploadPath(input)
         require(Files.isRegularFile(localArtifactPath)) {
             "Local model update artifact is not readable: $localArtifactPath"
         }
@@ -80,6 +82,40 @@ class PlatformSubmitAgentLocalModelUpdateAdapter(
         } else {
             Path.of(normalizedRef)
         }
+    }
+
+    private fun modelUpdateUploadPath(input: SubmitAgentLocalModelUpdateInput): Path {
+        val descriptorPath = toReadablePath(input.artifactRef)
+        if (!shouldUploadWeightArtifact(input, descriptorPath)) {
+            return descriptorPath
+        }
+        val descriptor = runCatching {
+            objectMapper.readTree(descriptorPath.toFile())
+        }.getOrNull() ?: return descriptorPath
+        val weightArtifact = descriptor.get("weightArtifact")?.asText()
+            ?.takeIf { it.isNotBlank() }
+            ?: return descriptorPath
+        val weightArtifactPath = toReadablePath(weightArtifact)
+        return if (Files.isRegularFile(weightArtifactPath)) {
+            weightArtifactPath
+        } else {
+            log.info(
+                "Plain model update weight artifact is not readable; uploading descriptor instead. descriptorPath={}, weightArtifactPath={}",
+                descriptorPath,
+                weightArtifactPath
+            )
+            descriptorPath
+        }
+    }
+
+    private fun shouldUploadWeightArtifact(input: SubmitAgentLocalModelUpdateInput, descriptorPath: Path): Boolean =
+        properties.preferWeightArtifactForPlainUpdates &&
+            !input.secureAggregationRequired &&
+            input.updateProtectionType.equals(PROTECTION_PLAIN, ignoreCase = true) &&
+            descriptorPath.fileName.toString().endsWith(".json", ignoreCase = true)
+
+    private companion object {
+        private const val PROTECTION_PLAIN = "PLAIN"
     }
 
 }

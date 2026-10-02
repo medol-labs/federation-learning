@@ -27,6 +27,7 @@ runtime-agent:
     platform-url: ${FEDERATION_LEARNING_PLATFORM_URL:http://localhost:8081}
     support-url: ${FEDERATION_LEARNING_SUPPORT_URL:http://localhost:8080}
     internal-token: ${MEDOL_SECURITY_INTERNAL_TOKEN:local-dev-internal-token}
+    prefer-weight-artifact-for-plain-updates: ${RUNTIME_AGENT_LOCAL_MODEL_UPDATE_SUBMISSION_PREFER_WEIGHT_ARTIFACT_FOR_PLAIN_UPDATES:false}
   local-runtime-engine:
     enabled: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_ENABLED:true}
     mode: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_MODE:docker-compose}

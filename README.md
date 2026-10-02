@@ -99,6 +99,33 @@ npm run dev
 Not every generated workspace contains every stack. Follow the directories
 present in this repository.
 
+### K3D Training Flow
+
+The local K3D smoke flow is a repository-level workflow because it coordinates
+operations manifests, platform APIs, managed runtime-agent deployment,
+runtime-agent dataset bootstrap, and runtime-engine images.
+
+```bash
+node scripts/k3d-training-flow.mjs
+```
+
+Useful options:
+
+```bash
+node scripts/k3d-training-flow.mjs --recreate
+node scripts/k3d-training-flow.mjs --scenario csv
+node scripts/k3d-training-flow.mjs --skip-cluster --skip-apply
+node scripts/k3d-training-flow.mjs --runtime-engine-image medol/federation-learning-runtime-engine:pytorch-vision
+```
+
+To run the phases manually, use:
+
+```bash
+node scripts/init-training-prerequisites.mjs --target platform --scenario densenet
+node scripts/init-training-prerequisites.mjs --target runtime-agent --scenario densenet
+node scripts/init-training-prerequisites.mjs --target training-job --scenario densenet
+```
+
 ## Local Registry
 
 Keep machine-specific registry settings in `.medol/medol.local.yml` and

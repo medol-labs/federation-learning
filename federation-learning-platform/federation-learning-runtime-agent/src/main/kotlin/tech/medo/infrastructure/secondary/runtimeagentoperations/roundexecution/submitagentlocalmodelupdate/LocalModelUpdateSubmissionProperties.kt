@@ -7,5 +7,6 @@ data class LocalModelUpdateSubmissionProperties(
     val enabled: Boolean = true,
     val platformUrl: String = "http://localhost:8081",
     val supportUrl: String = "http://localhost:8080",
-    val internalToken: String = "local-dev-internal-token"
+    val internalToken: String = "local-dev-internal-token",
+    val preferWeightArtifactForPlainUpdates: Boolean = false
 )

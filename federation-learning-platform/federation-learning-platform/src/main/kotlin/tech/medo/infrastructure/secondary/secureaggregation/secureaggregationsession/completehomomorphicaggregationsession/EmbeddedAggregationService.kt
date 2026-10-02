@@ -29,6 +29,11 @@ class EmbeddedAggregationService(
         val updates = artifactRefs.map { ref ->
             ref to artifactClient.download(properties.supportEndpoint, ref)
         }
+        val pytorchStateDictAggregation = isPytorchStateDictAggregation(aggregationAlgorithm)
+        require(!pytorchStateDictAggregation || updates.size == 1) {
+            "Embedded PyTorch state_dict aggregation supports a single local update only. " +
+                "Use runtime-engine aggregation for multiple PyTorch updates."
+        }
         val modelBytes = if (updates.size == 1) {
             updates.single().second
         } else {
@@ -46,12 +51,15 @@ class EmbeddedAggregationService(
                 )
             )
         }
+        require(!pytorchStateDictAggregation || !looksLikeJson(modelBytes)) {
+            "Embedded PyTorch state_dict aggregation expected a .pt model update artifact, but received JSON content."
+        }
         val uploadedFile = fileUploadClient.upload(
             supportEndpoint = properties.supportEndpoint,
             internalToken = properties.internalToken,
             fileId = aggregatedModelId,
-            fileName = "${aggregatedModelId}.global_model.json",
-            contentType = "application/json",
+            fileName = aggregatedModelFileName(aggregatedModelId, pytorchStateDictAggregation),
+            contentType = aggregatedModelContentType(pytorchStateDictAggregation),
             content = modelBytes
         )
 
@@ -73,6 +81,27 @@ class EmbeddedAggregationService(
             sizeBytes = uploadedFile.sizeBytes?.let(Math::toIntExact)
         )
     }
+
+    private fun aggregatedModelFileName(aggregatedModelId: UUID, pytorchStateDictAggregation: Boolean): String =
+        if (pytorchStateDictAggregation) {
+            "$aggregatedModelId.global_model_state_dict.pt"
+        } else {
+            "$aggregatedModelId.global_model.json"
+        }
+
+    private fun aggregatedModelContentType(pytorchStateDictAggregation: Boolean): String =
+        if (pytorchStateDictAggregation) {
+            "application/octet-stream"
+        } else {
+            "application/json"
+        }
+
+    private fun isPytorchStateDictAggregation(aggregationAlgorithm: String): Boolean =
+        aggregationAlgorithm.contains("PYTORCH", ignoreCase = true) ||
+            aggregationAlgorithm.contains("TORCH", ignoreCase = true)
+
+    private fun looksLikeJson(bytes: ByteArray): Boolean =
+        bytes.firstOrNull { !it.toInt().toChar().isWhitespace() } == '{'.code.toByte()
 }
 
 data class EmbeddedAggregationResult(

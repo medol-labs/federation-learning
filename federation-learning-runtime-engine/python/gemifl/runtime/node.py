@@ -36,6 +36,10 @@ class RuntimeState:
                 "globalModel",
                 str(job_dir / "global_model.json"),
             )
+            payload.setdefault("output", {}).setdefault(
+                "weightArtifact",
+                str(job_dir / "global_model_state_dict.pt"),
+            )
         config_path = job_dir / "config.json"
         log.info(
             "Starting runtime job jobId=%s nodeName=%s operation=%s role=%s runtimeRoot=%s jobDir=%s",
