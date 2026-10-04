@@ -41,7 +41,7 @@ type SecureAggregationSessionCatalogRecord = {
   aggregatedModelId?: string;
   modelFormat?: string;
   modelArtifactDigest?: string;
-  state: "PLANNED" | "PARTICIPANTS_SELECTED" | "ENCRYPTION_CONTEXT_PREPARED" | "COMPLETED" | "FAILED";
+  state: "Planned" | "ParticipantsSelected" | "EncryptionContextPrepared" | "Completed" | "Failed";
   failureReason?: string;
   createdAt: string;
   selectedAt?: string;
@@ -660,11 +660,11 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Planned", value: "PLANNED" },
-            { label: "Participants Selected", value: "PARTICIPANTS_SELECTED" },
-            { label: "Encryption Context Prepared", value: "ENCRYPTION_CONTEXT_PREPARED" },
-            { label: "Completed", value: "COMPLETED" },
-            { label: "Failed", value: "FAILED" },
+            { label: "Planned", value: "Planned" },
+            { label: "Participants Selected", value: "ParticipantsSelected" },
+            { label: "Encryption Context Prepared", value: "EncryptionContextPrepared" },
+            { label: "Completed", value: "Completed" },
+            { label: "Failed", value: "Failed" },
           ],
         },
         cell: ({ getValue, row }) =>

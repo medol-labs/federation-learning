@@ -9,6 +9,8 @@ import tech.medo.identityaccessmanagement.registerrole.RegisterRoleCommand
 
 
 
+
+
 @Component
 class RegisterRoleCommandHandler(
     private val decision: RegisterRoleDecision

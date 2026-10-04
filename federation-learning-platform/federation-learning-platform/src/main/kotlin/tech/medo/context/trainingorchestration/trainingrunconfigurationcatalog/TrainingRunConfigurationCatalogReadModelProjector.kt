@@ -108,7 +108,7 @@ open class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
             entity.secureAggregationRequired = event.secureAggregationRequired
             entity.minimumAccuracy = event.minimumAccuracy
             entity.minimumFairnessScore = event.minimumFairnessScore
-            entity.state = TrainingRunConfigurationStateEnum.DRAFT
+            entity.state = TrainingRunConfigurationStateEnum.Draft
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -175,7 +175,7 @@ open class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
                 this.trainingRunConfigurationId = event.trainingRunConfigurationId
         }
             entity.trainingRunConfigurationId = event.trainingRunConfigurationId
-            entity.state = TrainingRunConfigurationStateEnum.LOCKED
+            entity.state = TrainingRunConfigurationStateEnum.Locked
             entity.lockedByTrainingJobId = event.trainingJobId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

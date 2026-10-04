@@ -27,7 +27,7 @@ class RuntimeEngineProfileState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeEngineProfileRegisteredEvent): RuntimeEngineProfileState = apply {
-        currentState = RuntimeEngineProfileStateEnum.REGISTERED
+        currentState = RuntimeEngineProfileStateEnum.Registered
         runtimeEngineProfileId = event.runtimeEngineProfileId
         profileName = event.profileName
         pluginProfile = event.pluginProfile

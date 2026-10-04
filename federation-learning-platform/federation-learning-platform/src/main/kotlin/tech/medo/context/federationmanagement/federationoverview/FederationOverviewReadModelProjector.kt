@@ -109,7 +109,7 @@ open class DefaultFederationOverviewReadModelProjectionUpdater(
             entity.federationId = event.federationId
             entity.federationName = event.federationName
             entity.minimumParticipantCount = event.minimumParticipantCount
-            entity.state = FederationStateEnum.DRAFT
+            entity.state = FederationStateEnum.Draft
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -125,7 +125,7 @@ open class DefaultFederationOverviewReadModelProjectionUpdater(
                 this.federationId = event.federationId
         }
             entity.federationId = event.federationId
-            entity.state = FederationStateEnum.ACTIVE
+            entity.state = FederationStateEnum.Active
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -141,7 +141,7 @@ open class DefaultFederationOverviewReadModelProjectionUpdater(
                 this.federationId = event.federationId
         }
             entity.federationId = event.federationId
-            entity.state = FederationStateEnum.SUSPENDED
+            entity.state = FederationStateEnum.Suspended
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -157,7 +157,7 @@ open class DefaultFederationOverviewReadModelProjectionUpdater(
                 this.federationId = event.federationId
         }
             entity.federationId = event.federationId
-            entity.state = FederationStateEnum.ACTIVE
+            entity.state = FederationStateEnum.Active
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 

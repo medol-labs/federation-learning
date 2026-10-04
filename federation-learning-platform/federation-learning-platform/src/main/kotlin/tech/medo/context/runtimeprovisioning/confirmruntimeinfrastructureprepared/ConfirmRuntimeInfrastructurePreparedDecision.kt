@@ -12,7 +12,7 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 
 interface ConfirmRuntimeInfrastructurePreparedDecision {
     fun decide(command: ConfirmRuntimeInfrastructurePreparedCommand, state: RuntimeInfrastructureState): List<Any> {
-        require(state.currentState == RuntimeInfrastructureStateEnum.REGISTERED) {
+        require(state.currentState == RuntimeInfrastructureStateEnum.Registered) {
             "ConfirmRuntimeInfrastructurePrepared requires RuntimeInfrastructure to be Registered."
         }
         return listOf(

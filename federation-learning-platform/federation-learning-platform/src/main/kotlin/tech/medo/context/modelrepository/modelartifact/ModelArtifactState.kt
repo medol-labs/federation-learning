@@ -46,7 +46,7 @@ class ModelArtifactState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ModelArtifactRegisteredEvent): ModelArtifactState = apply {
-        currentState = ModelArtifactStateEnum.REGISTERED
+        currentState = ModelArtifactStateEnum.Registered
         modelId = event.modelId
         modelName = event.modelName
         modelPlugin = event.modelPlugin
@@ -73,7 +73,7 @@ class ModelArtifactState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: FederatedModelArtifactRegisteredEvent): ModelArtifactState = apply {
-        currentState = ModelArtifactStateEnum.REGISTERED
+        currentState = ModelArtifactStateEnum.Registered
         modelId = event.modelId
         modelName = event.modelName
         modelPlugin = event.modelPlugin

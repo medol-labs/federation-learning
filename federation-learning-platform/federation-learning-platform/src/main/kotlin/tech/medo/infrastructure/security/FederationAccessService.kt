@@ -24,10 +24,12 @@ class FederationAccessService(
         val membership = membershipDirectory
             .findById(FederationMembershipDirectoryReadModelKey(federationId, organizationId))
 
-        return membership?.membershipStatus in setOf(
-            "Active",
-            "ACTIVE",
-            "JOINED",
-        )
+        return membership?.membershipStatus
+            ?.let { status -> ACTIVE_MEMBERSHIP_STATUSES.any { it.equals(status, ignoreCase = true) } }
+            ?: false
+    }
+
+    private companion object {
+        private val ACTIVE_MEMBERSHIP_STATUSES = setOf("Active", "Joined")
     }
 }

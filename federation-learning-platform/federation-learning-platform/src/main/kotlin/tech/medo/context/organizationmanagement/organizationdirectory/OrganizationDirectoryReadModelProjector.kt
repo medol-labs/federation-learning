@@ -57,7 +57,7 @@ open class DefaultOrganizationDirectoryReadModelProjectionUpdater(
             entity.organizationId = event.organizationId
             entity.organizationName = event.organizationName
             entity.organizationType = event.organizationType
-            entity.state = OrganizationStateEnum.REGISTERED
+            entity.state = OrganizationStateEnum.Registered
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -81,7 +81,8 @@ open class DefaultOrganizationDirectoryReadModelProjectionUpdater(
                 this.organizationId = event.organizationId
         }
             entity.organizationId = event.organizationId
-            entity.state = OrganizationStateEnum.ACTIVE
+            entity.organizationName = event.organizationName
+            entity.state = OrganizationStateEnum.Active
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -105,7 +106,8 @@ open class DefaultOrganizationDirectoryReadModelProjectionUpdater(
                 this.organizationId = event.organizationId
         }
             entity.organizationId = event.organizationId
-            entity.state = OrganizationStateEnum.DEACTIVATED
+            entity.organizationName = event.organizationName
+            entity.state = OrganizationStateEnum.Deactivated
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -129,7 +131,8 @@ open class DefaultOrganizationDirectoryReadModelProjectionUpdater(
                 this.organizationId = event.organizationId
         }
             entity.organizationId = event.organizationId
-            entity.state = OrganizationStateEnum.ACTIVE
+            entity.organizationName = event.organizationName
+            entity.state = OrganizationStateEnum.Active
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 

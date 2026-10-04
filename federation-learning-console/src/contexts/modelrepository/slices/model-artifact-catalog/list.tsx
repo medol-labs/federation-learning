@@ -35,7 +35,7 @@ type ModelArtifactCatalogRecord = {
   trainingJobId?: string;
   roundId?: string;
   trainingJobObjective?: string;
-  state: "REGISTERED";
+  state: "Registered";
   registeredAt?: string;
 };
 
@@ -485,7 +485,7 @@ export const ModelArtifactCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Registered", value: "REGISTERED" },
+            { label: "Registered", value: "Registered" },
           ],
         },
         cell: ({ getValue, row }) =>

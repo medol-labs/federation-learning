@@ -916,7 +916,7 @@ export const pageOverrides = {
 | `roundNumber` | `number` | `round-execution-catalog:field:roundNumber` | `formatValue/display text` |
 | `organizationId` | `string` | `round-execution-catalog:field:organizationId` | `formatValue/display text` |
 | `runtimeId` | `string` | `round-execution-catalog:field:runtimeId` | `formatValue/display text` |
-| `state` | `&#34;PLAN_RECEIVED&#34; | &#34;PLAN_ACCEPTED&#34; | &#34;PLAN_REJECTED&#34; | &#34;RUNNING&#34; | &#34;START_FAILED&#34; | &#34;RETRIED&#34; | &#34;COMPLETED&#34; | &#34;FAILED&#34; | &#34;UPDATE_SUBMITTED&#34; | &#34;RUNTIME_ENGINE_RELEASED&#34; | &#34;RUNTIME_ENGINE_RELEASE_HANDLED&#34;` | `round-execution-catalog:field:state` | `Select/display text` |
+| `state` | `&#34;PlanReceived&#34; | &#34;PlanAccepted&#34; | &#34;PlanRejected&#34; | &#34;Running&#34; | &#34;StartFailed&#34; | &#34;Retried&#34; | &#34;Completed&#34; | &#34;Failed&#34; | &#34;UpdateSubmitted&#34; | &#34;RuntimeEngineReleased&#34; | &#34;RuntimeEngineReleaseHandled&#34;` | `round-execution-catalog:field:state` | `Select/display text` |
 | `featureSchemaId` | `string` | `round-execution-catalog:field:featureSchemaId` | `formatValue/display text` |
 | `baseModelId` | `string` | `round-execution-catalog:field:baseModelId` | `formatValue/display text` |
 | `runtimeEngineProfileId` | `string` | `round-execution-catalog:field:runtimeEngineProfileId` | `formatValue/display text` |

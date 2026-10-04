@@ -14,4 +14,5 @@ data class LockTrainingRunConfigurationCommand(
     @TargetEntityId
     val selection: TrainingRunConfigurationSelection = TrainingRunConfigurationSelection(trainingRunConfigurationId = trainingRunConfigurationId)
 
+
 }

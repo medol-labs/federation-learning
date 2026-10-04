@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.ReleaseRuntimeEngineJobAfterCompletionCommand
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.ReleaseRuntimeEngineJobAfterCompletionInput
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobaftercompletion.ReleaseRuntimeEngineJobAfterCompletionService
+
+
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
@@ -22,7 +24,7 @@ class ReleaseRuntimeEngineJobAfterCompletionCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RoundExecutionStateEnum.UPDATE_SUBMITTED) {
+        require(state.currentState == RoundExecutionStateEnum.UpdateSubmitted) {
             "ReleaseRuntimeEngineJobAfterCompletion requires RoundExecution to be UpdateSubmitted."
         }
         val input = ReleaseRuntimeEngineJobAfterCompletionInput(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId)

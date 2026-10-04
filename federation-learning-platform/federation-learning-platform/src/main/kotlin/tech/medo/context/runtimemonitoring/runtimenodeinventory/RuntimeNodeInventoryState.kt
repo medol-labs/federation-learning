@@ -35,7 +35,7 @@ class RuntimeNodeInventoryState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeNodeInventoryReportedEvent): RuntimeNodeInventoryState = apply {
-        currentState = RuntimeNodeInventoryStateEnum.REPORTED
+        currentState = RuntimeNodeInventoryStateEnum.Reported
         nodeId = event.nodeId
         runtimeNodeInventoryReportId = event.runtimeNodeInventoryReportId
         organizationId = event.organizationId

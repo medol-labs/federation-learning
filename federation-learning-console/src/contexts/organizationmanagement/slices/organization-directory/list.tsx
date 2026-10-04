@@ -24,7 +24,7 @@ type OrganizationDirectoryRecord = {
   organizationId: string;
   organizationName: string;
   organizationType: OrganizationType;
-  state: "REGISTERED" | "ACTIVE" | "DEACTIVATED";
+  state: "Registered" | "Active" | "Deactivated";
   approvedDatasetCount: number;
 };
 
@@ -169,9 +169,9 @@ export const OrganizationDirectoryList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Registered", value: "REGISTERED" },
-            { label: "Active", value: "ACTIVE" },
-            { label: "Deactivated", value: "DEACTIVATED" },
+            { label: "Registered", value: "Registered" },
+            { label: "Active", value: "Active" },
+            { label: "Deactivated", value: "Deactivated" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -233,9 +233,6 @@ export const OrganizationDirectoryList = () => {
                     command="activateOrganization"
                     recordItemId={row.original.organizationId}
                     size="sm"
-                    query={{
-                      organizationName: row.original.organizationName,
-                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "state", ["Active"]) && (
@@ -244,9 +241,6 @@ export const OrganizationDirectoryList = () => {
                     command="deactivateOrganization"
                     recordItemId={row.original.organizationId}
                     size="sm"
-                    query={{
-                      organizationName: row.original.organizationName,
-                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "", []) && (
@@ -266,9 +260,6 @@ export const OrganizationDirectoryList = () => {
                     command="reactivateOrganization"
                     recordItemId={row.original.organizationId}
                     size="sm"
-                    query={{
-                      organizationName: row.original.organizationName,
-                    }}
                   />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.organizationId} size="sm" />

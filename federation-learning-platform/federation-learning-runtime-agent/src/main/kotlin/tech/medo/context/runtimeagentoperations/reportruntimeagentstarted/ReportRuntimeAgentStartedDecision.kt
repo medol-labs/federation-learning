@@ -12,7 +12,7 @@ import tech.medo.runtimeagentoperations.domain.states.RuntimeAgentLifecycleState
 
 interface ReportRuntimeAgentStartedDecision {
     fun decide(command: ReportRuntimeAgentStartedCommand, state: RuntimeAgentLifecycleState): List<Any> {
-        require(state.currentState == RuntimeAgentLifecycleStateEnum.BOOTSTRAP_LOADED) {
+        require(state.currentState == RuntimeAgentLifecycleStateEnum.BootstrapLoaded) {
             "ReportRuntimeAgentStarted requires RuntimeAgentLifecycle to be BootstrapLoaded."
         }
         return listOf(

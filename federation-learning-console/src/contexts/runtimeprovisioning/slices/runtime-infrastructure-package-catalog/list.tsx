@@ -24,7 +24,7 @@ type RuntimeInfrastructurePackageCatalogRecord = {
   packageName: string;
   packageVersion: string;
   runtimeEnvironmentType: string;
-  state: "REGISTERED";
+  state: "Registered";
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -186,7 +186,7 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Registered", value: "REGISTERED" },
+            { label: "Registered", value: "Registered" },
           ],
         },
         cell: ({ getValue, row }) =>

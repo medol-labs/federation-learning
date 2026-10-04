@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterretryfailure.ReleaseRuntimeEngineJobAfterRetryFailureCommand
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterretryfailure.ReleaseRuntimeEngineJobAfterRetryFailureInput
 import tech.medo.runtimeagentoperations.releaseruntimeenginejobafterretryfailure.ReleaseRuntimeEngineJobAfterRetryFailureService
+
+
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
@@ -22,7 +24,7 @@ class ReleaseRuntimeEngineJobAfterRetryFailureCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RoundExecutionStateEnum.FAILED) {
+        require(state.currentState == RoundExecutionStateEnum.Failed) {
             "ReleaseRuntimeEngineJobAfterRetryFailure requires RoundExecution to be Failed."
         }
         val input = ReleaseRuntimeEngineJobAfterRetryFailureInput(roundExecutionId = command.roundExecutionId, runtimeEngineJobId = command.runtimeEngineJobId)

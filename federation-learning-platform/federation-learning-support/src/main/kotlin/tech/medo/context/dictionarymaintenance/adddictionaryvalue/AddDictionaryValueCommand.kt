@@ -23,4 +23,5 @@ data class AddDictionaryValueCommand(
     @TargetEntityId
     val selection: DictionaryValueSelection = DictionaryValueSelection(dictionaryCode = dictionaryCode, valueCode = valueCode)
 
+
 }

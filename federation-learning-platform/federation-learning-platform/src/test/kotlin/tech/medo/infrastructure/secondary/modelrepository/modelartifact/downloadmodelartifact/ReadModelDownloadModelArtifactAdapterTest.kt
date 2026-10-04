@@ -55,7 +55,7 @@ class ReadModelDownloadModelArtifactAdapterTest {
         trainingJobId = null,
         roundId = null,
         trainingJobObjective = null,
-        state = ModelArtifactStateEnum.REGISTERED,
+        state = ModelArtifactStateEnum.Registered,
         registeredAt = null,
         userId = null,
         sessionId = null,

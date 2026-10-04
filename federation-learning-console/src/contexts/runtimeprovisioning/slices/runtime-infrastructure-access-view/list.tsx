@@ -45,7 +45,7 @@ type RuntimeInfrastructureAccessViewRecord = {
   agentDeploymentRetryFailedAt?: string;
   agentDeploymentRetryFailureReason?: string;
   connectedAt?: string;
-  state: "PLANNED" | "REGISTERED" | "PREPARED" | "VERIFIED" | "VERIFICATION_FAILED" | "AGENT_READY" | "RUNTIME_AGENT_FAILED" | "OFFLINE" | "CONNECTED";
+  state: "Planned" | "Registered" | "Prepared" | "Verified" | "VerificationFailed" | "AgentReady" | "RuntimeAgentFailed" | "Offline" | "Connected";
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -739,15 +739,15 @@ export const RuntimeInfrastructureAccessViewList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Planned", value: "PLANNED" },
-            { label: "Registered", value: "REGISTERED" },
-            { label: "Prepared", value: "PREPARED" },
-            { label: "Verified", value: "VERIFIED" },
-            { label: "Verification Failed", value: "VERIFICATION_FAILED" },
-            { label: "Agent Ready", value: "AGENT_READY" },
-            { label: "Runtime Agent Failed", value: "RUNTIME_AGENT_FAILED" },
-            { label: "Offline", value: "OFFLINE" },
-            { label: "Connected", value: "CONNECTED" },
+            { label: "Planned", value: "Planned" },
+            { label: "Registered", value: "Registered" },
+            { label: "Prepared", value: "Prepared" },
+            { label: "Verified", value: "Verified" },
+            { label: "Verification Failed", value: "VerificationFailed" },
+            { label: "Agent Ready", value: "AgentReady" },
+            { label: "Runtime Agent Failed", value: "RuntimeAgentFailed" },
+            { label: "Offline", value: "Offline" },
+            { label: "Connected", value: "Connected" },
           ],
         },
         cell: ({ getValue, row }) =>

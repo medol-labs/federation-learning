@@ -24,7 +24,7 @@ class AuditRecordState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AuditTrailAppendedEvent): AuditRecordState = apply {
-        currentState = AuditRecordStateEnum.APPENDED
+        currentState = AuditRecordStateEnum.Appended
         auditRecordId = event.auditRecordId
         sourceEventName = event.sourceEventName
         sourceEntityId = event.sourceEntityId

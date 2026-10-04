@@ -48,22 +48,22 @@ export type RegisterOrganizationCommandInput = z.infer<typeof RegisterOrganizati
 
 export const ActivateOrganizationCommandSchema = z.object({
   organizationId: z.string().uuid(),
-  activationNote: z.string().optional().nullable(),
   organizationName: z.string(),
+  activationNote: z.string().optional().nullable(),
 });
 export type ActivateOrganizationCommandInput = z.infer<typeof ActivateOrganizationCommandSchema>;
 
 export const DeactivateOrganizationCommandSchema = z.object({
   organizationId: z.string().uuid(),
-  deactivationReason: z.string(),
   organizationName: z.string(),
+  deactivationReason: z.string(),
 });
 export type DeactivateOrganizationCommandInput = z.infer<typeof DeactivateOrganizationCommandSchema>;
 
 export const ReactivateOrganizationCommandSchema = z.object({
   organizationId: z.string().uuid(),
-  reactivationReason: z.string(),
   organizationName: z.string(),
+  reactivationReason: z.string(),
 });
 export type ReactivateOrganizationCommandInput = z.infer<typeof ReactivateOrganizationCommandSchema>;
 
@@ -304,7 +304,7 @@ export const RetryRuntimeInfrastructureVerificationCommandSchema = z.object({
   runtimeAgentId: z.string().uuid(),
   agentInstallMode: z.string(),
   expectedNodeCount: z.coerce.number().int(),
-  currentRuntimeInfrastructureState: z.enum(["PLANNED", "REGISTERED", "PREPARED", "VERIFIED", "VERIFICATION_FAILED", "AGENT_READY", "RUNTIME_AGENT_FAILED", "OFFLINE", "CONNECTED"]),
+  currentRuntimeInfrastructureState: z.enum(["Planned", "Registered", "Prepared", "Verified", "VerificationFailed", "AgentReady", "RuntimeAgentFailed", "Offline", "Connected"]),
   retryReason: z.string(),
 });
 export type RetryRuntimeInfrastructureVerificationCommandInput = z.infer<typeof RetryRuntimeInfrastructureVerificationCommandSchema>;

@@ -1,10 +1,10 @@
 package tech.medo.federationmanagement.domain.states
 
 enum class FederationMembershipStateEnum {
-    INVITED,
-    ACTIVE,
-    REJECTED,
-    INVITATION_REVOKED,
-    SUSPENDED,
-    REMOVED
+    Invited,
+    Active,
+    Rejected,
+    InvitationRevoked,
+    Suspended,
+    Removed
 }

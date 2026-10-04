@@ -16,4 +16,5 @@ data class ArchiveDictionaryCommand(
     @TargetEntityId
     val selection: DictionarySelection = DictionarySelection(dictionaryCode = dictionaryCode)
 
+
 }

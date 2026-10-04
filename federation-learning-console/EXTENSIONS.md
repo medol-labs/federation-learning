@@ -225,7 +225,7 @@ export const pageOverrides = {
 | `dictionaryCode` | `DictionaryCode` | `dictionary-catalog:field:dictionaryCode` | `formatValue/display text` |
 | `dictionaryName` | `string` | `dictionary-catalog:field:dictionaryName` | `formatValue/display text` |
 | `description` | `string` | `dictionary-catalog:field:description` | `CopyableText` |
-| `state` | `&#34;REGISTERED&#34; | &#34;ARCHIVED&#34;` | `dictionary-catalog:field:state` | `Select/display text` |
+| `state` | `&#34;Registered&#34; | &#34;Archived&#34;` | `dictionary-catalog:field:state` | `Select/display text` |
 | `registeredAt` | `string` | `dictionary-catalog:field:registeredAt` | `formatValue/display text` |
 | `updatedAt` | `string` | `dictionary-catalog:field:updatedAt` | `formatValue/display text` |
 | `archivedAt` | `string` | `dictionary-catalog:field:archivedAt` | `formatValue/display text` |
@@ -285,7 +285,7 @@ export const pageOverrides = {
 | `displayOrder` | `DisplayOrder` | `dictionary-value-catalog:field:displayOrder` | `formatValue/display text` |
 | `description` | `string` | `dictionary-value-catalog:field:description` | `CopyableText` |
 | `active` | `boolean` | `dictionary-value-catalog:field:active` | `formatValue/display text` |
-| `state` | `&#34;ACTIVE&#34; | &#34;DISABLED&#34;` | `dictionary-value-catalog:field:state` | `Select/display text` |
+| `state` | `&#34;Active&#34; | &#34;Disabled&#34;` | `dictionary-value-catalog:field:state` | `Select/display text` |
 | `addedAt` | `string` | `dictionary-value-catalog:field:addedAt` | `formatValue/display text` |
 | `updatedAt` | `string` | `dictionary-value-catalog:field:updatedAt` | `formatValue/display text` |
 | `disabledAt` | `string` | `dictionary-value-catalog:field:disabledAt` | `formatValue/display text` |
@@ -479,7 +479,7 @@ export const pageOverrides = {
 | --- | --- | --- | --- |
 | `federationId` | `string` | `federation-overview:field:federationId` | `formatValue/display text` |
 | `federationName` | `string` | `federation-overview:field:federationName` | `formatValue/display text` |
-| `state` | `&#34;DRAFT&#34; | &#34;ACTIVE&#34; | &#34;SUSPENDED&#34;` | `federation-overview:field:state` | `Select/display text` |
+| `state` | `&#34;Draft&#34; | &#34;Active&#34; | &#34;Suspended&#34;` | `federation-overview:field:state` | `Select/display text` |
 | `minimumParticipantCount` | `number` | `federation-overview:field:minimumParticipantCount` | `formatValue/display text` |
 | `activeMemberCount` | `number` | `federation-overview:field:activeMemberCount` | `formatValue/display text` |
 | `pendingInvitationCount` | `number` | `federation-overview:field:pendingInvitationCount` | `formatValue/display text` |
@@ -545,7 +545,7 @@ export const pageOverrides = {
 | `trainingJobId` | `string` | `model-artifact-catalog:field:trainingJobId` | `formatValue/display text` |
 | `roundId` | `string` | `model-artifact-catalog:field:roundId` | `formatValue/display text` |
 | `trainingJobObjective` | `string` | `model-artifact-catalog:field:trainingJobObjective` | `formatValue/display text` |
-| `state` | `&#34;REGISTERED&#34;` | `model-artifact-catalog:field:state` | `Select/display text` |
+| `state` | `&#34;Registered&#34;` | `model-artifact-catalog:field:state` | `Select/display text` |
 | `registeredAt` | `string` | `model-artifact-catalog:field:registeredAt` | `formatValue/display text` |
 
 ### Model Catalog
@@ -606,7 +606,7 @@ export const pageOverrides = {
 | `modelArtifactDigest` | `string` | `model-catalog:field:modelArtifactDigest` | `formatValue/display text` |
 | `evaluationReportId` | `string` | `model-catalog:field:evaluationReportId` | `formatValue/display text` |
 | `finalGlobalAccuracy` | `string` | `model-catalog:field:finalGlobalAccuracy` | `formatValue/display text` |
-| `state` | `&#34;CANDIDATE&#34; | &#34;EVALUATION_PACKAGED&#34; | &#34;APPROVED&#34; | &#34;PRODUCTION&#34; | &#34;ROLLED_BACK&#34; | &#34;RETIRED&#34;` | `model-catalog:field:state` | `Select/display text` |
+| `state` | `&#34;Candidate&#34; | &#34;EvaluationPackaged&#34; | &#34;Approved&#34; | &#34;Production&#34; | &#34;RolledBack&#34; | &#34;Retired&#34;` | `model-catalog:field:state` | `Select/display text` |
 | `releaseChannel` | `string` | `model-catalog:field:releaseChannel` | `formatValue/display text` |
 | `productionStage` | `string` | `model-catalog:field:productionStage` | `formatValue/display text` |
 | `previousModelId` | `string` | `model-catalog:field:previousModelId` | `formatValue/display text` |
@@ -679,7 +679,7 @@ export const pageOverrides = {
 | `organizationId` | `string` | `organization-directory:field:organizationId` | `formatValue/display text` |
 | `organizationName` | `string` | `organization-directory:field:organizationName` | `formatValue/display text` |
 | `organizationType` | `OrganizationType` | `organization-directory:field:organizationType` | `Select/display text` |
-| `state` | `&#34;REGISTERED&#34; | &#34;ACTIVE&#34; | &#34;DEACTIVATED&#34;` | `organization-directory:field:state` | `Select/display text` |
+| `state` | `&#34;Registered&#34; | &#34;Active&#34; | &#34;Deactivated&#34;` | `organization-directory:field:state` | `Select/display text` |
 | `approvedDatasetCount` | `number` | `organization-directory:field:approvedDatasetCount` | `formatValue/display text` |
 
 ### Permission Catalog
@@ -1038,7 +1038,7 @@ export const pageOverrides = {
 | `supportedModelPluginsDescription` | `string` | `runtime-engine-profile-catalog:field:supportedModelPluginsDescription` | `CopyableText` |
 | `supportedAggregationAlgorithmsDescription` | `string` | `runtime-engine-profile-catalog:field:supportedAggregationAlgorithmsDescription` | `CopyableText` |
 | `active` | `boolean` | `runtime-engine-profile-catalog:field:active` | `formatValue/display text` |
-| `state` | `&#34;REGISTERED&#34;` | `runtime-engine-profile-catalog:field:state` | `Select/display text` |
+| `state` | `&#34;Registered&#34;` | `runtime-engine-profile-catalog:field:state` | `Select/display text` |
 | `registeredAt` | `string` | `runtime-engine-profile-catalog:field:registeredAt` | `formatValue/display text` |
 
 ### Runtime Health Dashboard
@@ -1222,7 +1222,7 @@ export const pageOverrides = {
 | `agentDeploymentRetryFailedAt` | `string` | `runtime-infrastructure-access-view:field:agentDeploymentRetryFailedAt` | `formatValue/display text` |
 | `agentDeploymentRetryFailureReason` | `string` | `runtime-infrastructure-access-view:field:agentDeploymentRetryFailureReason` | `CopyableText` |
 | `connectedAt` | `string` | `runtime-infrastructure-access-view:field:connectedAt` | `formatValue/display text` |
-| `state` | `&#34;PLANNED&#34; | &#34;REGISTERED&#34; | &#34;PREPARED&#34; | &#34;VERIFIED&#34; | &#34;VERIFICATION_FAILED&#34; | &#34;AGENT_READY&#34; | &#34;RUNTIME_AGENT_FAILED&#34; | &#34;OFFLINE&#34; | &#34;CONNECTED&#34;` | `runtime-infrastructure-access-view:field:state` | `Select/display text` |
+| `state` | `&#34;Planned&#34; | &#34;Registered&#34; | &#34;Prepared&#34; | &#34;Verified&#34; | &#34;VerificationFailed&#34; | &#34;AgentReady&#34; | &#34;RuntimeAgentFailed&#34; | &#34;Offline&#34; | &#34;Connected&#34;` | `runtime-infrastructure-access-view:field:state` | `Select/display text` |
 
 ### Runtime Infrastructure Package Catalog
 
@@ -1270,7 +1270,7 @@ export const pageOverrides = {
 | `packageName` | `string` | `runtime-infrastructure-package-catalog:field:packageName` | `formatValue/display text` |
 | `packageVersion` | `string` | `runtime-infrastructure-package-catalog:field:packageVersion` | `formatValue/display text` |
 | `runtimeEnvironmentType` | `string` | `runtime-infrastructure-package-catalog:field:runtimeEnvironmentType` | `formatValue/display text` |
-| `state` | `&#34;REGISTERED&#34;` | `runtime-infrastructure-package-catalog:field:state` | `Select/display text` |
+| `state` | `&#34;Registered&#34;` | `runtime-infrastructure-package-catalog:field:state` | `Select/display text` |
 
 ### Runtime Installation Guide
 
@@ -1320,7 +1320,7 @@ export const pageOverrides = {
 | `organizationId` | `string` | `runtime-installation-guide:field:organizationId` | `formatValue/display text` |
 | `runtimeInfrastructureId` | `string` | `runtime-installation-guide:field:runtimeInfrastructureId` | `formatValue/display text` |
 | `runtimeAgentId` | `string` | `runtime-installation-guide:field:runtimeAgentId` | `formatValue/display text` |
-| `runtimeInfrastructureState` | `&#34;PLANNED&#34; | &#34;REGISTERED&#34; | &#34;PREPARED&#34; | &#34;VERIFIED&#34; | &#34;VERIFICATION_FAILED&#34; | &#34;AGENT_READY&#34; | &#34;RUNTIME_AGENT_FAILED&#34; | &#34;OFFLINE&#34; | &#34;CONNECTED&#34;` | `runtime-installation-guide:field:runtimeInfrastructureState` | `Select/display text` |
+| `runtimeInfrastructureState` | `&#34;Planned&#34; | &#34;Registered&#34; | &#34;Prepared&#34; | &#34;Verified&#34; | &#34;VerificationFailed&#34; | &#34;AgentReady&#34; | &#34;RuntimeAgentFailed&#34; | &#34;Offline&#34; | &#34;Connected&#34;` | `runtime-installation-guide:field:runtimeInfrastructureState` | `Select/display text` |
 | `runtimeInfrastructurePackageId` | `string` | `runtime-installation-guide:field:runtimeInfrastructurePackageId` | `formatValue/display text` |
 | `runtimeInfrastructurePackageName` | `string` | `runtime-installation-guide:field:runtimeInfrastructurePackageName` | `formatValue/display text` |
 | `runtimeInfrastructurePackageVersion` | `string` | `runtime-installation-guide:field:runtimeInfrastructurePackageVersion` | `formatValue/display text` |
@@ -1655,7 +1655,7 @@ export const pageOverrides = {
 | `aggregatedModelId` | `string` | `secure-aggregation-session-catalog:field:aggregatedModelId` | `formatValue/display text` |
 | `modelFormat` | `string` | `secure-aggregation-session-catalog:field:modelFormat` | `formatValue/display text` |
 | `modelArtifactDigest` | `string` | `secure-aggregation-session-catalog:field:modelArtifactDigest` | `formatValue/display text` |
-| `state` | `&#34;PLANNED&#34; | &#34;PARTICIPANTS_SELECTED&#34; | &#34;ENCRYPTION_CONTEXT_PREPARED&#34; | &#34;COMPLETED&#34; | &#34;FAILED&#34;` | `secure-aggregation-session-catalog:field:state` | `Select/display text` |
+| `state` | `&#34;Planned&#34; | &#34;ParticipantsSelected&#34; | &#34;EncryptionContextPrepared&#34; | &#34;Completed&#34; | &#34;Failed&#34;` | `secure-aggregation-session-catalog:field:state` | `Select/display text` |
 | `failureReason` | `string` | `secure-aggregation-session-catalog:field:failureReason` | `formatValue/display text` |
 | `createdAt` | `string` | `secure-aggregation-session-catalog:field:createdAt` | `formatValue/display text` |
 | `selectedAt` | `string` | `secure-aggregation-session-catalog:field:selectedAt` | `formatValue/display text` |
@@ -1766,7 +1766,7 @@ export const pageOverrides = {
 | `trainingJobObjective` | `string` | `training-alert-catalog:field:trainingJobObjective` | `formatValue/display text` |
 | `severity` | `string` | `training-alert-catalog:field:severity` | `formatValue/display text` |
 | `message` | `string` | `training-alert-catalog:field:message` | `formatValue/display text` |
-| `state` | `&#34;RAISED&#34; | &#34;ACKNOWLEDGED&#34; | &#34;RESOLVED&#34;` | `training-alert-catalog:field:state` | `Select/display text` |
+| `state` | `&#34;Raised&#34; | &#34;Acknowledged&#34; | &#34;Resolved&#34;` | `training-alert-catalog:field:state` | `Select/display text` |
 | `acknowledgedAt` | `string` | `training-alert-catalog:field:acknowledgedAt` | `formatValue/display text` |
 | `resolvedAt` | `string` | `training-alert-catalog:field:resolvedAt` | `formatValue/display text` |
 | `resolutionSummary` | `string` | `training-alert-catalog:field:resolutionSummary` | `formatValue/display text` |
@@ -1836,7 +1836,7 @@ export const pageOverrides = {
 | `strategyName` | `string` | `training-job-dashboard:field:strategyName` | `formatValue/display text` |
 | `aggregationAlgorithm` | `string` | `training-job-dashboard:field:aggregationAlgorithm` | `formatValue/display text` |
 | `secureAggregationRequired` | `boolean` | `training-job-dashboard:field:secureAggregationRequired` | `formatValue/display text` |
-| `state` | `&#34;DRAFT&#34; | &#34;SUBMITTED&#34; | &#34;RUNNING&#34; | &#34;PAUSED&#34; | &#34;CANCELED&#34; | &#34;COMPLETED&#34;` | `training-job-dashboard:field:state` | `Select/display text` |
+| `state` | `&#34;Draft&#34; | &#34;Submitted&#34; | &#34;Running&#34; | &#34;Paused&#34; | &#34;Canceled&#34; | &#34;Completed&#34;` | `training-job-dashboard:field:state` | `Select/display text` |
 | `workflowStage` | `string` | `training-job-dashboard:field:workflowStage` | `formatValue/display text` |
 | `workflowStep` | `number` | `training-job-dashboard:field:workflowStep` | `formatValue/display text` |
 | `nextAction` | `string` | `training-job-dashboard:field:nextAction` | `formatValue/display text` |
@@ -1994,7 +1994,7 @@ export const pageOverrides = {
 | `featureDomain` | `string` | `training-round-progress:field:featureDomain` | `formatValue/display text` |
 | `featureSchemaVersion` | `string` | `training-round-progress:field:featureSchemaVersion` | `formatValue/display text` |
 | `roundNumber` | `number` | `training-round-progress:field:roundNumber` | `formatValue/display text` |
-| `state` | `&#34;PARTICIPANTS_SELECTED&#34; | &#34;RUNNING&#34; | &#34;COLLECTING_UPDATES&#34; | &#34;AGGREGATING&#34; | &#34;EVALUATING_GLOBAL_MODEL&#34; | &#34;COMPLETED&#34; | &#34;FAILED&#34;` | `training-round-progress:field:state` | `Select/display text` |
+| `state` | `&#34;ParticipantsSelected&#34; | &#34;Running&#34; | &#34;CollectingUpdates&#34; | &#34;Aggregating&#34; | &#34;EvaluatingGlobalModel&#34; | &#34;Completed&#34; | &#34;Failed&#34;` | `training-round-progress:field:state` | `Select/display text` |
 | `selectedOrganizationIds` | `string[]` | `training-round-progress:field:selectedOrganizationIds` | `formatValue/display text` |
 | `selectedParticipants` | `TrainingRoundParticipant[]` | `training-round-progress:field:selectedParticipants` | `formatValue/display text` |
 | `selectedOrganizationCount` | `number` | `training-round-progress:field:selectedOrganizationCount` | `formatValue/display text` |
@@ -2121,7 +2121,7 @@ export const pageOverrides = {
 | `minimumFairnessScore` | `string` | `training-run-configuration-catalog:field:minimumFairnessScore` | `formatValue/display text` |
 | `updateReason` | `string` | `training-run-configuration-catalog:field:updateReason` | `formatValue/display text` |
 | `lockedByTrainingJobId` | `string` | `training-run-configuration-catalog:field:lockedByTrainingJobId` | `formatValue/display text` |
-| `state` | `&#34;DRAFT&#34; | &#34;LOCKED&#34;` | `training-run-configuration-catalog:field:state` | `Select/display text` |
+| `state` | `&#34;Draft&#34; | &#34;Locked&#34;` | `training-run-configuration-catalog:field:state` | `Select/display text` |
 
 ### Uploaded File Catalog
 
@@ -2178,7 +2178,7 @@ export const pageOverrides = {
 | `purpose` | `string` | `uploaded-file-catalog:field:purpose` | `formatValue/display text` |
 | `fileLocation` | `string` | `uploaded-file-catalog:field:fileLocation` | `formatValue/display text` |
 | `checksum` | `string` | `uploaded-file-catalog:field:checksum` | `formatValue/display text` |
-| `state` | `&#34;AVAILABLE&#34; | &#34;REFERENCED&#34; | &#34;DISCARDED&#34; | &#34;EXPIRED&#34;` | `uploaded-file-catalog:field:state` | `Select/display text` |
+| `state` | `&#34;Available&#34; | &#34;Referenced&#34; | &#34;Discarded&#34; | &#34;Expired&#34;` | `uploaded-file-catalog:field:state` | `Select/display text` |
 | `uploadedAt` | `string` | `uploaded-file-catalog:field:uploadedAt` | `formatValue/display text` |
 | `referencedAt` | `string` | `uploaded-file-catalog:field:referencedAt` | `formatValue/display text` |
 | `referencedByContext` | `string` | `uploaded-file-catalog:field:referencedByContext` | `formatValue/display text` |
@@ -2293,7 +2293,7 @@ export const pageOverrides = {
 | `organizationId` | `string` | `user-organization-membership-directory:field:organizationId` | `formatValue/display text` |
 | `organizationName` | `string` | `user-organization-membership-directory:field:organizationName` | `formatValue/display text` |
 | `organizationUserRole` | `string` | `user-organization-membership-directory:field:organizationUserRole` | `formatValue/display text` |
-| `state` | `&#34;ACTIVE&#34;` | `user-organization-membership-directory:field:state` | `Select/display text` |
+| `state` | `&#34;Active&#34;` | `user-organization-membership-directory:field:state` | `Select/display text` |
 
 ### User Role Assignment Catalog
 

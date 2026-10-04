@@ -6,6 +6,8 @@ import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.runtimegovernance.revokeruntimeidentity.RevokeRuntimeIdentityCommand
 
+
+
 import tech.medo.runtimegovernance.runtimeidentity.RuntimeIdentityState
 
 

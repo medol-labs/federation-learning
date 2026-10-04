@@ -12,7 +12,7 @@ import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
 
 interface ResumeTrainingJobDecision {
     fun decide(command: ResumeTrainingJobCommand, state: TrainingJobState): List<Any> {
-        require(state.currentState == TrainingJobStateEnum.PAUSED) {
+        require(state.currentState == TrainingJobStateEnum.Paused) {
             "ResumeTrainingJob requires TrainingJob to be Paused."
         }
         return listOf(

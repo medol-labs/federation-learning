@@ -34,4 +34,5 @@ data class CompleteModelAggregationCommand(
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
 
+
 }

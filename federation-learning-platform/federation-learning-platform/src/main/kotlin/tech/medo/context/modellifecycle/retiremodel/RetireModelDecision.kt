@@ -12,7 +12,7 @@ import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 interface RetireModelDecision {
     fun decide(command: RetireModelCommand, state: ModelState): List<Any> {
-        require(state.currentState == ModelStateEnum.PRODUCTION) {
+        require(state.currentState == ModelStateEnum.Production) {
             "RetireModel requires Model to be Production."
         }
         return listOf(

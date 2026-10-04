@@ -25,4 +25,5 @@ data class RetryRoundExecutionAfterRuntimeFailureCommand(
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
 
+
 }

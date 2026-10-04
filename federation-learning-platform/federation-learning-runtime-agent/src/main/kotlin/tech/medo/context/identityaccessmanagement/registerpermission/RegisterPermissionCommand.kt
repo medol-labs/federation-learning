@@ -16,4 +16,6 @@ data class RegisterPermissionCommand(
     @TargetEntityId
     val selection: PermissionSelection = PermissionSelection(permissionCode = permissionCode.trim().lowercase())
 
+    val permissionCodeEntityId: String = permissionCode.trim().lowercase()
+
 }

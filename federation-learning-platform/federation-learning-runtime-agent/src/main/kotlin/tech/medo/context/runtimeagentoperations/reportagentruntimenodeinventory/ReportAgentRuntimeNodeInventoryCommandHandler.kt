@@ -9,6 +9,8 @@ import tech.medo.runtimeagentoperations.reportagentruntimenodeinventory.ReportAg
 
 
 
+
+
 @Component
 class ReportAgentRuntimeNodeInventoryCommandHandler(
     private val decision: ReportAgentRuntimeNodeInventoryDecision

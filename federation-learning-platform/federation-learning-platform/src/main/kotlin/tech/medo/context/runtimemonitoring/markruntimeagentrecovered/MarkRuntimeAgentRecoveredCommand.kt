@@ -21,4 +21,5 @@ data class MarkRuntimeAgentRecoveredCommand(
     @TargetEntityId
     val selection: NodeRuntimeHealthSelection = NodeRuntimeHealthSelection(nodeId = nodeId)
 
+
 }

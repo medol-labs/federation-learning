@@ -21,7 +21,7 @@ class RuntimeCapabilityState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeCapabilitiesDetectedEvent): RuntimeCapabilityState = apply {
-        currentState = RuntimeCapabilityStateEnum.DETECTED
+        currentState = RuntimeCapabilityStateEnum.Detected
         runtimeId = event.runtimeId
         capabilityTypes = event.capabilityTypes
     }

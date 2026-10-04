@@ -22,7 +22,7 @@ import { renderFieldOverride, renderSlotExtensions } from "@/platform/compositio
 type FederationOverviewRecord = {
   federationId: string;
   federationName: string;
-  state: "DRAFT" | "ACTIVE" | "SUSPENDED";
+  state: "Draft" | "Active" | "Suspended";
   minimumParticipantCount: number;
   activeMemberCount: number;
   pendingInvitationCount: number;
@@ -137,9 +137,9 @@ export const FederationOverviewList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Draft", value: "DRAFT" },
-            { label: "Active", value: "ACTIVE" },
-            { label: "Suspended", value: "SUSPENDED" },
+            { label: "Draft", value: "Draft" },
+            { label: "Active", value: "Active" },
+            { label: "Suspended", value: "Suspended" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -353,6 +353,9 @@ export const FederationOverviewList = () => {
                     command="inviteParticipant"
                     recordItemId={row.original.federationId}
                     size="sm"
+                    query={{
+                      federationId: row.original.federationId,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "state", ["Invited"]) && (

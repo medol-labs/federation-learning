@@ -12,7 +12,7 @@ import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationSta
 
 interface UpdateTrainingRunConfigurationDecision {
     fun decide(command: UpdateTrainingRunConfigurationCommand, state: TrainingRunConfigurationState): List<Any> {
-        require(state.currentState == TrainingRunConfigurationStateEnum.DRAFT) {
+        require(state.currentState == TrainingRunConfigurationStateEnum.Draft) {
             "UpdateTrainingRunConfiguration requires TrainingRunConfiguration to be Draft."
         }
         return listOf(

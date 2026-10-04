@@ -14,4 +14,5 @@ data class RevokeRuntimeIdentityCommand(
     @TargetEntityId
     val selection: RuntimeIdentitySelection = RuntimeIdentitySelection(runtimeId = runtimeId)
 
+
 }

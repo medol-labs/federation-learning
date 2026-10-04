@@ -15,7 +15,7 @@ class ReadModelDownloadModelArtifactAdapter(
         val artifact = checkNotNull(repository.findById(input.modelId)) {
             "Model artifact ${input.modelId} was not found."
         }
-        check(artifact.state == ModelArtifactStateEnum.REGISTERED) {
+        check(artifact.state == ModelArtifactStateEnum.Registered) {
             "Model artifact ${input.modelId} is not registered."
         }
         return DownloadModelArtifactResult.Succeeded(

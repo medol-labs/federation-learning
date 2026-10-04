@@ -51,7 +51,7 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ParticipantExecutionPlanGeneratedEvent): ParticipantExecutionPlanState = apply {
-        currentState = ParticipantExecutionPlanStateEnum.PLAN_GENERATED
+        currentState = ParticipantExecutionPlanStateEnum.PlanGenerated
         executionPlanId = event.executionPlanId
         executionSessionId = event.executionSessionId
         trainingJobId = event.trainingJobId
@@ -87,7 +87,7 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ParticipantExecutionPlanDispatchedEvent): ParticipantExecutionPlanState = apply {
-        currentState = ParticipantExecutionPlanStateEnum.PLAN_DISPATCHED
+        currentState = ParticipantExecutionPlanStateEnum.PlanDispatched
         executionPlanId = event.executionPlanId
         executionSessionId = event.executionSessionId
         trainingJobId = event.trainingJobId

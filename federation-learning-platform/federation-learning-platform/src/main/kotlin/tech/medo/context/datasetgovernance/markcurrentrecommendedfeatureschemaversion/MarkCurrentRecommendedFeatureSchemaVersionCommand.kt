@@ -16,4 +16,5 @@ data class MarkCurrentRecommendedFeatureSchemaVersionCommand(
     @TargetEntityId
     val selection: FeatureSchemaSelection = FeatureSchemaSelection(featureDomain = featureDomain, version = version)
 
+
 }

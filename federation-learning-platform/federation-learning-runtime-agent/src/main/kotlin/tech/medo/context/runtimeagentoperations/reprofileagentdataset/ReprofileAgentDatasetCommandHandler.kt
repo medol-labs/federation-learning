@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.reprofileagentdataset.ReprofileAgentDatasetCommand
 import tech.medo.runtimeagentoperations.reprofileagentdataset.ReprofileAgentDatasetInput
 import tech.medo.runtimeagentoperations.reprofileagentdataset.ReprofileAgentDatasetService
+
+
 import tech.medo.runtimeagentoperations.agentdatasetprofile.AgentDatasetProfileState
 import tech.medo.runtimeagentoperations.domain.states.AgentDatasetProfileStateEnum
 
@@ -22,7 +24,7 @@ class ReprofileAgentDatasetCommandHandler(
         @InjectEntity(idProperty = "runtimeDatasetBindingId") state: AgentDatasetProfileState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == AgentDatasetProfileStateEnum.REPORTED) {
+        require(state.currentState == AgentDatasetProfileStateEnum.Reported) {
             "ReprofileAgentDataset requires AgentDatasetProfile to be Reported."
         }
         val input = ReprofileAgentDatasetInput(metadataReportId = command.metadataReportId, runtimeDatasetBindingId = command.runtimeDatasetBindingId)

@@ -21,4 +21,5 @@ data class SelectTrainingRoundParticipantsCommand(
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
 
+
 }

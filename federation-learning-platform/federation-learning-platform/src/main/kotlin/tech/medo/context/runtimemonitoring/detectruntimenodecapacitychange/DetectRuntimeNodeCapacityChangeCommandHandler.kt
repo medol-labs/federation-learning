@@ -9,6 +9,8 @@ import tech.medo.runtimemonitoring.detectruntimenodecapacitychange.DetectRuntime
 
 
 
+
+
 @Component
 class DetectRuntimeNodeCapacityChangeCommandHandler(
     private val decision: DetectRuntimeNodeCapacityChangeDecision

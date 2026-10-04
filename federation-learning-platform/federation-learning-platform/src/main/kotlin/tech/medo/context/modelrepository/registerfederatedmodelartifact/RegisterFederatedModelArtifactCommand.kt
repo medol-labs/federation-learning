@@ -27,4 +27,5 @@ data class RegisterFederatedModelArtifactCommand(
     @TargetEntityId
     val selection: ModelArtifactSelection = ModelArtifactSelection(modelName = modelName, modelVersion = modelVersion)
 
+
 }

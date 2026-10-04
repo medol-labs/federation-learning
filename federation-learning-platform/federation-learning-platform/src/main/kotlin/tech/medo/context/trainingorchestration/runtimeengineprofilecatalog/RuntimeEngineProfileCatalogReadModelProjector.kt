@@ -44,7 +44,7 @@ open class DefaultRuntimeEngineProfileCatalogReadModelProjectionUpdater(
             entity.supportedModelPluginsDescription = event.supportedModelPluginsDescription
             entity.supportedAggregationAlgorithmsDescription = event.supportedAggregationAlgorithmsDescription
             entity.active = event.active
-            entity.state = RuntimeEngineProfileStateEnum.REGISTERED
+            entity.state = RuntimeEngineProfileStateEnum.Registered
             entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

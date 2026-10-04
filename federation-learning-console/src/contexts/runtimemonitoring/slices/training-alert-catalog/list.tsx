@@ -27,7 +27,7 @@ type TrainingAlertCatalogRecord = {
   trainingJobObjective?: string;
   severity: string;
   message: string;
-  state: "RAISED" | "ACKNOWLEDGED" | "RESOLVED";
+  state: "Raised" | "Acknowledged" | "Resolved";
   acknowledgedAt?: string;
   resolvedAt?: string;
   resolutionSummary?: string;
@@ -272,9 +272,9 @@ export const TrainingAlertCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Raised", value: "RAISED" },
-            { label: "Acknowledged", value: "ACKNOWLEDGED" },
-            { label: "Resolved", value: "RESOLVED" },
+            { label: "Raised", value: "Raised" },
+            { label: "Acknowledged", value: "Acknowledged" },
+            { label: "Resolved", value: "Resolved" },
           ],
         },
         cell: ({ getValue, row }) =>

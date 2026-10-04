@@ -60,7 +60,7 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRunConfigurationDefinedEvent): TrainingRunConfigurationState = apply {
-        currentState = TrainingRunConfigurationStateEnum.DRAFT
+        currentState = TrainingRunConfigurationStateEnum.Draft
         trainingRunConfigurationId = event.trainingRunConfigurationId
         configurationName = event.configurationName
         federationId = event.federationId
@@ -142,7 +142,7 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRunConfigurationLockedEvent): TrainingRunConfigurationState = apply {
-        currentState = TrainingRunConfigurationStateEnum.LOCKED
+        currentState = TrainingRunConfigurationStateEnum.Locked
         trainingRunConfigurationId = event.trainingRunConfigurationId
         trainingJobId = event.trainingJobId
     }

@@ -33,7 +33,7 @@ class PlatformUserOrganizationResolver(
         val uri = UriComponentsBuilder
             .fromUriString("$baseUrl/userorganizationmembership/userorganizationmembershipdirectory")
             .queryParam("userAccountId.equals", userAccountId.toString())
-            .queryParam("state.equals", "ACTIVE")
+            .queryParam("state.equals", STATE_ACTIVE)
             .queryParam("size", "20")
             .build()
             .toUri()
@@ -67,9 +67,10 @@ class PlatformUserOrganizationResolver(
     private fun isActive(state: String?): Boolean =
         state
             ?.replace(Regex("[^A-Za-z0-9]"), "")
-            ?.equals("ACTIVE", ignoreCase = true) == true
+            ?.equals(STATE_ACTIVE, ignoreCase = true) == true
 
     companion object {
+        private const val STATE_ACTIVE = "Active"
         private val log = LoggerFactory.getLogger(PlatformUserOrganizationResolver::class.java)
     }
 }

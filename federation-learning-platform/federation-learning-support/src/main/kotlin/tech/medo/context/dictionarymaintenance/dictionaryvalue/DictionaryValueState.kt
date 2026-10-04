@@ -43,7 +43,7 @@ class DictionaryValueState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DictionaryValueAddedEvent): DictionaryValueState = apply {
-        currentState = DictionaryValueStateEnum.ACTIVE
+        currentState = DictionaryValueStateEnum.Active
         dictionaryValueId = event.dictionaryValueId
         dictionaryId = event.dictionaryId
         dictionaryCode = event.dictionaryCode
@@ -56,14 +56,14 @@ class DictionaryValueState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DictionaryValueDisabledEvent): DictionaryValueState = apply {
-        currentState = DictionaryValueStateEnum.DISABLED
+        currentState = DictionaryValueStateEnum.Disabled
         dictionaryValueId = event.dictionaryValueId
         disabledReason = event.disabledReason
     }
 
     @EventSourcingHandler
     fun evolve(event: DictionaryValueEnabledEvent): DictionaryValueState = apply {
-        currentState = DictionaryValueStateEnum.ACTIVE
+        currentState = DictionaryValueStateEnum.Active
         dictionaryValueId = event.dictionaryValueId
         enableReason = event.enableReason
     }

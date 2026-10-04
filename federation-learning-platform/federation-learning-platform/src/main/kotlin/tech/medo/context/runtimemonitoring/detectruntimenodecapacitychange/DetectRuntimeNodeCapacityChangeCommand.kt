@@ -19,4 +19,5 @@ data class DetectRuntimeNodeCapacityChangeCommand(
     @TargetEntityId
     val selection: RuntimeNodeCapacitySelection = RuntimeNodeCapacitySelection(nodeId = nodeId)
 
+
 }

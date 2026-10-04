@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.VerifyRuntimeInfrastructureCommand
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.RuntimeInfrastructureVerificationInput
 import tech.medo.runtimeprovisioning.verifyruntimeinfrastructure.VerifyRuntimeInfrastructureService
+
+
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureState
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
@@ -22,7 +24,7 @@ class VerifyRuntimeInfrastructureCommandHandler(
         @InjectEntity(idProperty = "runtimeInfrastructureId") state: RuntimeInfrastructureState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RuntimeInfrastructureStateEnum.PREPARED) {
+        require(state.currentState == RuntimeInfrastructureStateEnum.Prepared) {
             "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Prepared."
         }
         val input = RuntimeInfrastructureVerificationInput(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, expectedNodeCount = command.expectedNodeCount, runtimeAgentId = command.runtimeAgentId)

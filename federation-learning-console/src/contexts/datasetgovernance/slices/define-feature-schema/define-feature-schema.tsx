@@ -251,7 +251,7 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                     field.onChange(value);
                   }}
                   placeholder={t("resources.feature_schema_catalog.commands.defineFeatureSchema.fields.dataModality.placeholder", "Select Data Modality")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"FEATURE_SCHEMA_DATA_MODALITY"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"FEATURE_SCHEMA_DATA_MODALITY"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{

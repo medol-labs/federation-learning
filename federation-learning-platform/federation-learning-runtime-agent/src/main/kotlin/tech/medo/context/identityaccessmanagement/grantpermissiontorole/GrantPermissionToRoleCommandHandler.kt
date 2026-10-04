@@ -6,6 +6,8 @@ import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.identityaccessmanagement.grantpermissiontorole.GrantPermissionToRoleCommand
 
+
+
 import tech.medo.identityaccessmanagement.role.RoleState
 
 
@@ -17,7 +19,7 @@ class GrantPermissionToRoleCommandHandler(
     @CommandHandler
     fun handle(
         command: GrantPermissionToRoleCommand,
-        @InjectEntity(idProperty = "roleCode") state: RoleState,
+        @InjectEntity(idProperty = "roleCodeEntityId") state: RoleState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))

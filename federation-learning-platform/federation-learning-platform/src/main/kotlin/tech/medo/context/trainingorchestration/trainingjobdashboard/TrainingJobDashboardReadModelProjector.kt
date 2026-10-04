@@ -110,7 +110,7 @@ open class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.featureDomain = event.featureDomain
             entity.featureSchemaVersion = event.featureSchemaVersion
             entity.objective = event.objective
-            entity.state = TrainingJobStateEnum.DRAFT
+            entity.state = TrainingJobStateEnum.Draft
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -133,7 +133,7 @@ open class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.featureDomain = event.featureDomain
             entity.featureSchemaVersion = event.featureSchemaVersion
             entity.objective = event.objective
-            entity.state = TrainingJobStateEnum.SUBMITTED
+            entity.state = TrainingJobStateEnum.Submitted
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -149,7 +149,7 @@ open class DefaultTrainingJobDashboardReadModelProjectionUpdater(
                 this.trainingJobId = event.trainingJobId
         }
             entity.trainingJobId = event.trainingJobId
-            entity.state = TrainingJobStateEnum.PAUSED
+            entity.state = TrainingJobStateEnum.Paused
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -165,7 +165,7 @@ open class DefaultTrainingJobDashboardReadModelProjectionUpdater(
                 this.trainingJobId = event.trainingJobId
         }
             entity.trainingJobId = event.trainingJobId
-            entity.state = TrainingJobStateEnum.RUNNING
+            entity.state = TrainingJobStateEnum.Running
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -181,7 +181,7 @@ open class DefaultTrainingJobDashboardReadModelProjectionUpdater(
                 this.trainingJobId = event.trainingJobId
         }
             entity.trainingJobId = event.trainingJobId
-            entity.state = TrainingJobStateEnum.CANCELED
+            entity.state = TrainingJobStateEnum.Canceled
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -199,7 +199,7 @@ open class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.trainingJobId = event.trainingJobId
             entity.finalModelId = event.finalModelId
             entity.stopReason = event.stopReason
-            entity.state = TrainingJobStateEnum.COMPLETED
+            entity.state = TrainingJobStateEnum.Completed
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 

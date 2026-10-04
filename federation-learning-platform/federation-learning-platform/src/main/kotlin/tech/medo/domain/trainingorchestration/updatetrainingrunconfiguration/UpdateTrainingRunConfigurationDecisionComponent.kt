@@ -13,7 +13,7 @@ class UpdateTrainingRunConfigurationDecisionComponent(
     private val modelArtifactCatalog: ModelArtifactCatalogReadModelRepository,
 ) : UpdateTrainingRunConfigurationDecision {
     override fun decide(command: UpdateTrainingRunConfigurationCommand, state: TrainingRunConfigurationState): List<Any> {
-        require(state.currentState == TrainingRunConfigurationStateEnum.DRAFT) {
+        require(state.currentState == TrainingRunConfigurationStateEnum.Draft) {
             "UpdateTrainingRunConfiguration requires TrainingRunConfiguration to be Draft."
         }
         val model = modelArtifactCatalog.findProjectionById(command.initialModelId)

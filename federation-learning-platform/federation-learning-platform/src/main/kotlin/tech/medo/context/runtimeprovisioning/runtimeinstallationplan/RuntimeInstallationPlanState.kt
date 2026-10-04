@@ -36,7 +36,7 @@ class RuntimeInstallationPlanState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInstallationPlanCreatedEvent): RuntimeInstallationPlanState = apply {
-        currentState = RuntimeInstallationPlanStateEnum.PLANNED
+        currentState = RuntimeInstallationPlanStateEnum.Planned
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         runtimeInfrastructureId = event.runtimeInfrastructureId
         organizationId = event.organizationId

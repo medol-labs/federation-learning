@@ -25,5 +25,6 @@ data class ConfigureRuntimeDatasetBindingCommand(
     @TargetEntityId
     val selection: RuntimeDatasetBindingSelection = RuntimeDatasetBindingSelection(datasetId = datasetId, runtimeId = runtimeId)
 
+
     val runtimeDatasetBindingRuntimeIdDatasetIdSelection: RuntimeDatasetBindingRuntimeIdDatasetIdSelection = RuntimeDatasetBindingRuntimeIdDatasetIdSelection(normalizedRuntimeId = runtimeId.toString().trim().lowercase(), normalizedDatasetId = datasetId.toString().trim().lowercase())
 }

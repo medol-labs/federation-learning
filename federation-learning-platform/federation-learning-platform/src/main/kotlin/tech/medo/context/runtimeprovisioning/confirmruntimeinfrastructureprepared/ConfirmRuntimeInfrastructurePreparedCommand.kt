@@ -26,4 +26,5 @@ data class ConfirmRuntimeInfrastructurePreparedCommand(
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
 
+
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundCommand
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundInput
 import tech.medo.trainingorchestration.starttraininground.StartTrainingRoundService
+
+
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
 import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
 
@@ -22,7 +24,7 @@ class StartTrainingRoundCommandHandler(
         @InjectEntity(idProperty = "trainingJobId") state: TrainingRoundState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == TrainingRoundStateEnum.PARTICIPANTS_SELECTED) {
+        require(state.currentState == TrainingRoundStateEnum.ParticipantsSelected) {
             "StartTrainingRound requires TrainingRound to be ParticipantsSelected."
         }
         val input = StartTrainingRoundInput(trainingJobId = command.trainingJobId, federationId = command.federationId, federationName = command.federationName, trainingRunConfigurationId = command.trainingRunConfigurationId, configurationName = command.configurationName, trainingJobObjective = command.trainingJobObjective, featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, featureSchemaVersion = command.featureSchemaVersion, roundId = command.roundId, roundNumber = command.roundNumber, selectedOrganizationIds = command.selectedOrganizationIds, selectedRuntimeIds = command.selectedRuntimeIds, selectedOrganizationCount = command.selectedOrganizationCount, selectedRuntimeCount = command.selectedRuntimeCount, minimumNodesPerRound = command.minimumNodesPerRound, maxRounds = command.maxRounds, minimumAccuracy = command.minimumAccuracy, aggregationAlgorithm = command.aggregationAlgorithm, secureAggregationRequired = command.secureAggregationRequired, secureAggregationSessionId = command.secureAggregationSessionId, encryptionScheme = command.encryptionScheme, publicKeyVersion = command.publicKeyVersion, publicKeyRef = command.publicKeyRef, encryptedParameterScale = command.encryptedParameterScale)

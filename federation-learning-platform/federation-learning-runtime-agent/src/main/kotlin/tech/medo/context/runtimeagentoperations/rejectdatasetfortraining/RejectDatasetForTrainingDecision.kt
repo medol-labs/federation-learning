@@ -12,7 +12,7 @@ import tech.medo.runtimeagentoperations.domain.states.DatasetStateEnum
 
 interface RejectDatasetForTrainingDecision {
     fun decide(command: RejectDatasetForTrainingCommand, state: DatasetState): List<Any> {
-        require(state.currentState == DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED) {
+        require(state.currentState == DatasetStateEnum.ContractValidationCompleted) {
             "RejectDatasetForTraining requires Dataset to be ContractValidationCompleted."
         }
         return listOf(

@@ -12,7 +12,7 @@ import tech.medo.fileupload.domain.states.UploadedFileStateEnum
 
 interface DiscardFileDecision {
     fun decide(command: DiscardFileCommand, state: UploadedFileState): List<Any> {
-        require(state.currentState == UploadedFileStateEnum.AVAILABLE) {
+        require(state.currentState == UploadedFileStateEnum.Available) {
             "DiscardFile requires UploadedFile to be Available."
         }
         return listOf(

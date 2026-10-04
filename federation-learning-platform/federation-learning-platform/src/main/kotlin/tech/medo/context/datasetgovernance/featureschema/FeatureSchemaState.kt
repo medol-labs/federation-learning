@@ -50,7 +50,7 @@ class FeatureSchemaState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: FeatureSchemaDefinedEvent): FeatureSchemaState = apply {
-        currentState = FeatureSchemaStateEnum.DRAFT
+        currentState = FeatureSchemaStateEnum.Draft
         featureSchemaId = event.featureSchemaId
         featureDomain = event.featureDomain
         version = event.version
@@ -62,21 +62,21 @@ class FeatureSchemaState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: FeatureSchemaPublishedEvent): FeatureSchemaState = apply {
-        currentState = FeatureSchemaStateEnum.PUBLISHED
+        currentState = FeatureSchemaStateEnum.Published
         featureSchemaId = event.featureSchemaId
         publishNote = event.publishNote
     }
 
     @EventSourcingHandler
     fun evolve(event: FeatureSchemaDeprecatedEvent): FeatureSchemaState = apply {
-        currentState = FeatureSchemaStateEnum.DEPRECATED
+        currentState = FeatureSchemaStateEnum.Deprecated
         featureSchemaId = event.featureSchemaId
         deprecationReason = event.deprecationReason
     }
 
     @EventSourcingHandler
     fun evolve(event: FeatureSchemaRetiredEvent): FeatureSchemaState = apply {
-        currentState = FeatureSchemaStateEnum.RETIRED
+        currentState = FeatureSchemaStateEnum.Retired
         featureSchemaId = event.featureSchemaId
         retirementReason = event.retirementReason
     }

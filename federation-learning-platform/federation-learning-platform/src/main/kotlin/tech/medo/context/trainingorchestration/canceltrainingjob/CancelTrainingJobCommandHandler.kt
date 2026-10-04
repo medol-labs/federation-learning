@@ -6,6 +6,8 @@ import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.canceltrainingjob.CancelTrainingJobCommand
 
+
+
 import tech.medo.trainingorchestration.trainingjob.TrainingJobState
 
 

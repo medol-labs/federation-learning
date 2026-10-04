@@ -50,7 +50,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructurePlannedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.PLANNED
+        currentState = RuntimeInfrastructureStateEnum.Planned
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         organizationId = event.organizationId
@@ -66,7 +66,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructureRegisteredEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.REGISTERED
+        currentState = RuntimeInfrastructureStateEnum.Registered
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         organizationId = event.organizationId
@@ -83,7 +83,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructurePreparedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.PREPARED
+        currentState = RuntimeInfrastructureStateEnum.Prepared
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         organizationId = event.organizationId
@@ -102,7 +102,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructureVerifiedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.VERIFIED
+        currentState = RuntimeInfrastructureStateEnum.Verified
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         organizationId = event.organizationId
@@ -120,7 +120,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructureVerificationFailedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
+        currentState = RuntimeInfrastructureStateEnum.VerificationFailed
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         organizationId = event.organizationId
@@ -139,7 +139,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentInstallationSucceededEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.AGENT_READY
+        currentState = RuntimeInfrastructureStateEnum.AgentReady
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         runtimeAgentId = event.runtimeAgentId
@@ -157,7 +157,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentInstallationFailedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
+        currentState = RuntimeInfrastructureStateEnum.RuntimeAgentFailed
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         runtimeAgentId = event.runtimeAgentId
@@ -175,7 +175,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructureVerificationRetrySucceededEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.VERIFIED
+        currentState = RuntimeInfrastructureStateEnum.Verified
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         organizationId = event.organizationId
@@ -194,7 +194,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructureVerificationRetryFailedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
+        currentState = RuntimeInfrastructureStateEnum.VerificationFailed
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         organizationId = event.organizationId
@@ -214,7 +214,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentDeploymentRetrySucceededEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.AGENT_READY
+        currentState = RuntimeInfrastructureStateEnum.AgentReady
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         runtimeAgentId = event.runtimeAgentId
@@ -232,7 +232,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentDeploymentRetryFailedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
+        currentState = RuntimeInfrastructureStateEnum.RuntimeAgentFailed
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeInstallationPlanId = event.runtimeInstallationPlanId
         runtimeAgentId = event.runtimeAgentId
@@ -250,7 +250,7 @@ class RuntimeInfrastructureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeConnectionEstablishedEvent): RuntimeInfrastructureState = apply {
-        currentState = RuntimeInfrastructureStateEnum.CONNECTED
+        currentState = RuntimeInfrastructureStateEnum.Connected
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeAgentId = event.runtimeAgentId
         agentInstallMode = event.agentInstallMode

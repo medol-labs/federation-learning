@@ -16,4 +16,5 @@ data class MarkFileReferencedCommand(
     @TargetEntityId
     val selection: UploadedFileSelection = UploadedFileSelection(fileId = fileId)
 
+
 }

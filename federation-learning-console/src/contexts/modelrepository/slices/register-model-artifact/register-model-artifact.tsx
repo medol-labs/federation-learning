@@ -167,7 +167,7 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
                     field.onChange(value);
                   }}
                   placeholder={t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelPlugin.placeholder", "Select Model Plugin")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_PLUGIN"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_PLUGIN"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
@@ -237,7 +237,7 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
                     field.onChange(value);
                   }}
                   placeholder={t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.sourceType.placeholder", "Select Source Type")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_ARTIFACT_SOURCE_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_ARTIFACT_SOURCE_TYPE"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
@@ -290,7 +290,7 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
                     field.onChange(value);
                   }}
                   placeholder={t("resources.model_artifact_catalog.commands.registerModelArtifact.fields.modelFormat.placeholder", "Select Model Format")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_FORMAT"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_FORMAT"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{

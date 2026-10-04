@@ -23,7 +23,7 @@ class PermissionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: PermissionRegisteredEvent): PermissionState = apply {
-        currentState = PermissionStateEnum.REGISTERED
+        currentState = PermissionStateEnum.Registered
         permissionId = event.permissionId
         permissionCode = event.permissionCode
         permissionName = event.permissionName

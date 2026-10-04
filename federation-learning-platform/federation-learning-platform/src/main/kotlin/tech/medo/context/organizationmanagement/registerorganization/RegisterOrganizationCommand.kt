@@ -18,5 +18,7 @@ data class RegisterOrganizationCommand(
     @TargetEntityId
     val selection: OrganizationSelection = OrganizationSelection(organizationName = organizationName.trim().lowercase())
 
+    val organizationNameEntityId: String = organizationName.trim().lowercase()
+
     val organizationNameSelection: OrganizationNameSelection = OrganizationNameSelection(normalizedName = organizationName.trim().lowercase())
 }

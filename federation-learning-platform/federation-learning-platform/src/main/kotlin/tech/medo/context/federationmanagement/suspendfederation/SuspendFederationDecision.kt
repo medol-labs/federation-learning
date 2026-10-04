@@ -12,7 +12,7 @@ import tech.medo.federationmanagement.domain.states.FederationStateEnum
 
 interface SuspendFederationDecision {
     fun decide(command: SuspendFederationCommand, state: FederationState): List<Any> {
-        require(state.currentState == FederationStateEnum.ACTIVE) {
+        require(state.currentState == FederationStateEnum.Active) {
             "SuspendFederation requires Federation to be Active."
         }
         return listOf(

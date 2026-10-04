@@ -26,7 +26,7 @@ type DictionaryCatalogRecord = {
   dictionaryCode: DictionaryCode;
   dictionaryName: string;
   description?: string;
-  state: "REGISTERED" | "ARCHIVED";
+  state: "Registered" | "Archived";
   registeredAt: string;
   updatedAt?: string;
   archivedAt?: string;
@@ -193,8 +193,8 @@ export const DictionaryCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Registered", value: "REGISTERED" },
-            { label: "Archived", value: "ARCHIVED" },
+            { label: "Registered", value: "Registered" },
+            { label: "Archived", value: "Archived" },
           ],
         },
         cell: ({ getValue, row }) =>

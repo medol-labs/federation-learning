@@ -28,4 +28,5 @@ data class SubmitGlobalModelEvaluationCommand(
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
 
+
 }

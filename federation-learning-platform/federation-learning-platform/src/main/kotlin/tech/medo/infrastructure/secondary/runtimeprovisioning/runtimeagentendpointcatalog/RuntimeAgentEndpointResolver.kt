@@ -18,7 +18,7 @@ class JpaRuntimeAgentEndpointResolver(
 ) : RuntimeAgentEndpointResolver {
     override fun resolveConnectedEndpoint(runtimeId: UUID): String? =
         repository
-            .findFirstByRuntimeIdAndConnectionStatusOrderByConnectedAtDesc(runtimeId, "CONNECTED")
+            .findFirstByRuntimeIdAndConnectionStatusOrderByConnectedAtDesc(runtimeId, STATUS_CONNECTED)
             ?.connectedEndpoint()
             ?: resolveByRuntimeIdentity(runtimeId)
 
@@ -33,7 +33,7 @@ class JpaRuntimeAgentEndpointResolver(
         val runtimeAgentId = identity?.runtimeAgentId ?: return null
         return repository
             .findByRuntimeAgentId(runtimeAgentId)
-            ?.takeIf { it.connectionStatus == "CONNECTED" }
+            ?.takeIf { it.connectionStatus == STATUS_CONNECTED }
             ?.connectedEndpoint()
     }
 
@@ -41,4 +41,8 @@ class JpaRuntimeAgentEndpointResolver(
         runtimeAgentEndpoint
             ?.trim()
             ?.takeIf { it.isNotBlank() }
+
+    private companion object {
+        private const val STATUS_CONNECTED = "Connected"
+    }
 }

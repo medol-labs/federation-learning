@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.retryroundexecutionafterruntimefailure.RetryRoundExecutionAfterRuntimeFailureCommand
 import tech.medo.runtimeagentoperations.retryroundexecutionafterruntimefailure.RetryRoundExecutionAfterRuntimeFailureInput
 import tech.medo.runtimeagentoperations.retryroundexecutionafterruntimefailure.RetryRoundExecutionAfterRuntimeFailureService
+
+
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
@@ -22,7 +24,7 @@ class RetryRoundExecutionAfterRuntimeFailureCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RoundExecutionStateEnum.FAILED) {
+        require(state.currentState == RoundExecutionStateEnum.Failed) {
             "RetryRoundExecutionAfterRuntimeFailure requires RoundExecution to be Failed."
         }
         val input = RetryRoundExecutionAfterRuntimeFailureInput(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, baseModelId = command.baseModelId, runtimeEngineJobId = command.runtimeEngineJobId, retryReason = command.retryReason)

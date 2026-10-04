@@ -33,4 +33,5 @@ data class PrepareHomomorphicEncryptionContextCommand(
     @TargetEntityId
     val selection: SecureAggregationSessionSelection = SecureAggregationSessionSelection(secureAggregationSessionId = secureAggregationSessionId)
 
+
 }

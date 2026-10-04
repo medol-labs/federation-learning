@@ -56,6 +56,11 @@ const runtimeEngineImage = stringArg(
     'FL_RUNTIME_ENGINE_IMAGE',
     defaultRuntimeEngineImage
 );
+const appImagePrefix = stringArg(
+    'app-image-prefix',
+    'FL_APP_IMAGE_PREFIX',
+    imagePrefixFromImage(runtimeEngineImage) ?? process.env.DOCKER_IMAGE_PREFIX ?? '192.168.139.3:5000/fl'
+);
 const internalToken = optionalString(args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN) ?? 'local-dev-internal-token';
 const runtimeAgentImage = optionalString(args['runtime-agent-image'] ?? process.env.FL_RUNTIME_AGENT_IMAGE);
 const participantConsoleImage = optionalString(args['participant-console-image'] ?? process.env.FL_PARTICIPANT_CONSOLE_IMAGE);
@@ -78,6 +83,7 @@ process.on('SIGTERM', () => {
 });
 
 const recreateCluster = booleanOption(args.recreate ?? process.env.FL_K3D_RECREATE, false);
+const rebuildAppImages = booleanOption(args['rebuild-app-images'] ?? process.env.FL_K3D_REBUILD_APP_IMAGES, false);
 const skipCluster = booleanOption(args['skip-cluster'] ?? process.env.FL_K3D_SKIP_CLUSTER, false);
 const skipApply = booleanOption(args['skip-apply'] ?? process.env.FL_K3D_SKIP_APPLY, false);
 const skipDictionary = booleanOption(args['skip-dictionary'] ?? process.env.FL_K3D_SKIP_DICTIONARY, false);
@@ -98,6 +104,8 @@ console.log(JSON.stringify({
     adminUsername,
     adminSetupEnabled: !skipAdminSetup,
     scenario,
+    rebuildAppImages,
+    appImagePrefix,
     runtimeEngineImage,
     internalTokenConfigured: Boolean(internalToken),
     imageVersion,
@@ -118,6 +126,9 @@ if (dryRun) {
     process.exit(0);
 }
 
+if (rebuildAppImages) {
+    rebuildApplicationImages();
+}
 if (!skipCluster) {
     await ensureCluster();
 }
@@ -283,11 +294,33 @@ function runK3d(command) {
         NAMESPACE: namespace,
         KUBECONFIG_FILE: kubeconfigFile,
         KUBECONFIG: kubeconfigFile,
+        DOCKER_IMAGE_PREFIX: appImagePrefix,
         IMAGE_VERSION: imageVersion,
         FL_RUNTIME_ENGINE_IMAGE: runtimeEngineImage,
         ...(runtimeAgentImage ? {FL_RUNTIME_AGENT_IMAGE: runtimeAgentImage} : {}),
         ...(participantConsoleImage ? {FL_PARTICIPANT_CONSOLE_IMAGE: participantConsoleImage} : {})
     });
+}
+
+function rebuildApplicationImages() {
+    const imagesScript = resolve(repoRoot, 'operations/dev/images.mjs');
+    if (!existsSync(imagesScript)) {
+        fail(`Application image helper was not found: ${imagesScript}`);
+    }
+    run('node', [
+        imagesScript,
+        'build',
+        '--prefix', appImagePrefix,
+        '--version', imageVersion,
+        '--skip-console'
+    ], {});
+    run('node', [
+        imagesScript,
+        'push',
+        '--prefix', appImagePrefix,
+        '--version', imageVersion,
+        '--skip-console'
+    ], {});
 }
 
 function ensureRuntimeEngineImageAvailable() {
@@ -321,6 +354,13 @@ function dockerPushImage(image) {
     return image.replace(/^192\.168\.\d+\.\d+:5000\/fl\//, 'localhost:5000/fl/');
 }
 
+function imagePrefixFromImage(image) {
+    const normalized = String(image ?? '').trim();
+    const index = normalized.lastIndexOf('/');
+    if (index <= 0) return null;
+    return normalized.slice(0, index);
+}
+
 async function initDictionaries() {
     const dictionaryScript = resolve(repoRoot, 'dictionary-init/init-dictionaries.mjs');
     if (!existsSync(dictionaryScript)) {
@@ -335,9 +375,10 @@ async function initDictionaries() {
 }
 
 async function ensureAdminUser(baseUrl, label) {
-    const response = await httpRequest(`${baseUrl}/api/auth/setup-admin`, {
+    const url = `${baseUrl}/api/auth/setup-admin`;
+    const response = await httpRequest(url, {
         method: 'POST',
-        headers: {'content-type': 'application/json'},
+        headers: internalRequestHeaders({'content-type': 'application/json'}),
         body: JSON.stringify({
             setupToken: adminSetupToken,
             username: adminUsername,
@@ -359,9 +400,10 @@ async function ensureAdminUser(baseUrl, label) {
 }
 
 async function loginAdmin(baseUrl, label) {
-    const response = await httpRequest(`${baseUrl}/api/auth/login`, {
+    const url = `${baseUrl}/api/auth/login`;
+    const response = await httpRequest(url, {
         method: 'POST',
-        headers: {'content-type': 'application/json'},
+        headers: internalRequestHeaders({'content-type': 'application/json'}),
         body: JSON.stringify({
             username: adminUsername,
             password: adminPassword
@@ -546,6 +588,15 @@ async function waitForRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructure
     );
 }
 
+async function findRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructureId) {
+    const page = await getPage(platformUrl, '/runtimeinfrastructure/runtimeagentendpointcatalog', {
+        'runtimeAgentId.equals': runtimeAgentId,
+        'runtimeInfrastructureId.equals': runtimeInfrastructureId,
+        size: '20'
+    });
+    return (page.content ?? []).find((item) => Boolean(item?.runtimeAgentEndpoint ?? item?.endpoint)) ?? null;
+}
+
 async function waitForManagedRuntimeAgent(runtimeAgentId) {
     const deploymentName = managedRuntimeAgentName(runtimeAgentId);
     await waitForDeployment(deploymentName, 'managed runtime-agent');
@@ -571,7 +622,16 @@ async function ensureManagedRuntimeAgentAccess(runtimeAgentId) {
 
 async function recordManagedRuntimeAgentConnection(runtimeInfrastructure) {
     const serviceName = managedRuntimeAgentName(runtimeInfrastructure.runtimeAgentId);
-    await postCommand(platformUrl, '/runtimeinfrastructure/recordruntimeconnectionestablished', {
+    const existingEndpoint = await findRuntimeAgentEndpoint(
+        runtimeInfrastructure.runtimeAgentId,
+        runtimeInfrastructure.runtimeInfrastructureId
+    );
+    if (existingEndpoint) {
+        console.log('[k3d-flow] managed runtime agent connection already recorded');
+        return;
+    }
+
+    const payload = {
         runtimeInfrastructureId: runtimeInfrastructure.runtimeInfrastructureId,
         runtimeAgentId: runtimeInfrastructure.runtimeAgentId,
         agentInstallMode: runtimeInfrastructure.agentInstallMode ?? 'PLATFORM_MANAGED',
@@ -580,7 +640,28 @@ async function recordManagedRuntimeAgentConnection(runtimeInfrastructure) {
         runtimeName: runtimeInfrastructure.runtimeName,
         runtimeAgentEndpoint: `http://${serviceName}:8082`,
         endpointScope: 'CLUSTER'
-    }, 'managed runtime agent connection');
+    };
+    const result = await postCommandResult(
+        platformUrl,
+        '/runtimeinfrastructure/recordruntimeconnectionestablished',
+        payload,
+        'managed runtime agent connection'
+    );
+    if (result.ok) {
+        console.log('[k3d-flow] posted managed runtime agent connection');
+        return;
+    }
+
+    const endpoint = await waitForRuntimeAgentEndpoint(
+        runtimeInfrastructure.runtimeAgentId,
+        runtimeInfrastructure.runtimeInfrastructureId
+    ).catch(() => null);
+    if (endpoint) {
+        console.log(`[k3d-flow] managed runtime agent connection was recorded by a concurrent report; ignoring POST ${result.status}`);
+        return;
+    }
+
+    fail(`POST managed runtime agent connection failed: ${result.status} ${compact(result.body)}`);
 }
 
 async function startPortForward(serviceName, localPort, remotePort, label) {
@@ -719,10 +800,18 @@ async function getPage(baseUrl, path, query) {
 }
 
 async function postCommand(baseUrl, path, payload, label) {
+    const result = await postCommandResult(baseUrl, path, payload, label);
+    if (!result.ok) {
+        fail(`POST ${label} failed: ${result.status} ${compact(result.body)}`);
+    }
+    console.log(`[k3d-flow] posted ${label}`);
+}
+
+async function postCommandResult(baseUrl, path, payload, label) {
     if (dryRun) {
         console.log(`[k3d-flow] DRY POST ${label}`);
         console.log(JSON.stringify(payload, null, 2));
-        return;
+        return {ok: true, status: 200, body: ''};
     }
     const url = `${baseUrl}${path}`;
     const response = await httpRequest(url, {
@@ -731,17 +820,14 @@ async function postCommand(baseUrl, path, payload, label) {
         body: JSON.stringify(payload)
     });
     const body = await response.text();
-    if (!response.ok) {
-        fail(`POST ${label} failed: ${response.status} ${compact(body)}`);
-    }
-    console.log(`[k3d-flow] posted ${label}`);
+    return {ok: response.ok, status: response.status, body};
 }
 
 async function postJson(url, payload, label, options = {}) {
     const allowStatuses = new Set(options.allowStatuses ?? [200]);
     const response = await httpRequest(url, {
         method: 'POST',
-        headers: {'content-type': 'application/json'},
+        headers: requestHeaders({'content-type': 'application/json'}, url),
         body: JSON.stringify(payload)
     });
     const text = await response.text();
@@ -956,6 +1042,14 @@ function requestHeaders(baseHeaders = {}, url = '') {
     return result;
 }
 
+function internalRequestHeaders(baseHeaders = {}) {
+    const result = {...baseHeaders};
+    if (internalToken && !Object.hasOwn(result, 'X-MEDOL-INTERNAL-TOKEN')) {
+        result['X-MEDOL-INTERNAL-TOKEN'] = internalToken;
+    }
+    return result;
+}
+
 function authTokenForUrl(url) {
     const text = String(url ?? '');
     return [...authTokensByBaseUrl.entries()]
@@ -1029,6 +1123,9 @@ runtime-agent deployment wait, runtime-agent seed, and training job submission.
 
 Options:
   --recreate                         Recreate the K3D cluster before running.
+                                     Use after lifecycle/tag model changes to clear stale event/projection data.
+  --rebuild-app-images               Rebuild and push backend application images before applying manifests.
+  --app-image-prefix <prefix>         Application image prefix. Default is inferred from runtime-engine image.
   --scenario <densenet|csv>           Select training seed scenario.
   --skip-cluster                      Skip cluster create/kubeconfig.
   --skip-apply                        Skip manifest apply and deployment waits.

@@ -29,7 +29,7 @@ type TrainingRoundProgressRecord = {
   featureDomain?: string;
   featureSchemaVersion?: string;
   roundNumber: number;
-  state: "PARTICIPANTS_SELECTED" | "RUNNING" | "COLLECTING_UPDATES" | "AGGREGATING" | "EVALUATING_GLOBAL_MODEL" | "COMPLETED" | "FAILED";
+  state: "ParticipantsSelected" | "Running" | "CollectingUpdates" | "Aggregating" | "EvaluatingGlobalModel" | "Completed" | "Failed";
   selectedOrganizationIds: string[];
   selectedParticipants: TrainingRoundParticipant[];
   selectedOrganizationCount: number;
@@ -337,13 +337,13 @@ export const TrainingRoundProgressList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Participants Selected", value: "PARTICIPANTS_SELECTED" },
-            { label: "Running", value: "RUNNING" },
-            { label: "Collecting Updates", value: "COLLECTING_UPDATES" },
-            { label: "Aggregating", value: "AGGREGATING" },
-            { label: "Evaluating Global Model", value: "EVALUATING_GLOBAL_MODEL" },
-            { label: "Completed", value: "COMPLETED" },
-            { label: "Failed", value: "FAILED" },
+            { label: "Participants Selected", value: "ParticipantsSelected" },
+            { label: "Running", value: "Running" },
+            { label: "Collecting Updates", value: "CollectingUpdates" },
+            { label: "Aggregating", value: "Aggregating" },
+            { label: "Evaluating Global Model", value: "EvaluatingGlobalModel" },
+            { label: "Completed", value: "Completed" },
+            { label: "Failed", value: "Failed" },
           ],
         },
         cell: ({ getValue, row }) =>

@@ -12,7 +12,7 @@ import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
 
 interface SubmitTrainingJobDecision {
     fun decide(command: SubmitTrainingJobCommand, state: TrainingJobState): List<Any> {
-        require(state.currentState == TrainingJobStateEnum.DRAFT) {
+        require(state.currentState == TrainingJobStateEnum.Draft) {
             "SubmitTrainingJob requires TrainingJob to be Draft."
         }
         return listOf(

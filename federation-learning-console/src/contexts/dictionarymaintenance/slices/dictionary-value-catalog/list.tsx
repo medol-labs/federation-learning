@@ -30,7 +30,7 @@ type DictionaryValueCatalogRecord = {
   displayOrder?: DisplayOrder;
   description?: string;
   active: boolean;
-  state: "ACTIVE" | "DISABLED";
+  state: "Active" | "Disabled";
   addedAt: string;
   updatedAt?: string;
   disabledAt?: string;
@@ -304,8 +304,8 @@ export const DictionaryValueCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Active", value: "ACTIVE" },
-            { label: "Disabled", value: "DISABLED" },
+            { label: "Active", value: "Active" },
+            { label: "Disabled", value: "Disabled" },
           ],
         },
         cell: ({ getValue, row }) =>

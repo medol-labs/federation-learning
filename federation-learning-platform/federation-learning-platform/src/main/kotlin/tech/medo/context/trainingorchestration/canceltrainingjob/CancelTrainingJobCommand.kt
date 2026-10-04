@@ -14,4 +14,5 @@ data class CancelTrainingJobCommand(
     @TargetEntityId
     val selection: TrainingJobSelection = TrainingJobSelection(trainingJobId = trainingJobId)
 
+
 }

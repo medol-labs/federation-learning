@@ -12,7 +12,7 @@ import tech.medo.fileupload.domain.states.UploadedFileStateEnum
 
 interface ExpireFileDecision {
     fun decide(command: ExpireFileCommand, state: UploadedFileState): List<Any> {
-        require(state.currentState == UploadedFileStateEnum.AVAILABLE) {
+        require(state.currentState == UploadedFileStateEnum.Available) {
             "ExpireFile requires UploadedFile to be Available."
         }
         return listOf(

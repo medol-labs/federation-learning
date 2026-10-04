@@ -14,4 +14,5 @@ data class PauseTrainingJobCommand(
     @TargetEntityId
     val selection: TrainingJobSelection = TrainingJobSelection(trainingJobId = trainingJobId)
 
+
 }

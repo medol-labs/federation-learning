@@ -96,6 +96,7 @@ open class DefaultFederationMembershipDirectoryReadModelProjectionUpdater(
 
         repository.findProjectionsByOrganizationId(event.organizationId).forEach { entity ->
             entity.organizationId = event.organizationId
+            entity.organizationName = event.organizationName
             ProjectionMetadata.assign(entity, message)
             repository.save(entity)
 

@@ -10,6 +10,8 @@ import tech.medo.runtimeagentoperations.reportruntimeinstanceconnected.ReportRun
 
 
 
+
+
 @Component
 class ReportRuntimeInstanceConnectedCommandHandler(
     private val decision: ReportRuntimeInstanceConnectedDecision,

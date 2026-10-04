@@ -12,7 +12,7 @@ import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 interface RollbackModelDecision {
     fun decide(command: RollbackModelCommand, state: ModelState): List<Any> {
-        require(state.currentState == ModelStateEnum.PRODUCTION) {
+        require(state.currentState == ModelStateEnum.Production) {
             "RollbackModel requires Model to be Production."
         }
         return listOf(

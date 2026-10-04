@@ -41,7 +41,7 @@ class TrainingJobState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingJobCreatedEvent): TrainingJobState = apply {
-        currentState = TrainingJobStateEnum.DRAFT
+        currentState = TrainingJobStateEnum.Draft
         trainingJobId = event.trainingJobId
         federationId = event.federationId
         federationName = event.federationName
@@ -57,7 +57,7 @@ class TrainingJobState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingJobSubmittedEvent): TrainingJobState = apply {
-        currentState = TrainingJobStateEnum.SUBMITTED
+        currentState = TrainingJobStateEnum.Submitted
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         federationId = event.federationId
@@ -72,28 +72,28 @@ class TrainingJobState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingJobPausedEvent): TrainingJobState = apply {
-        currentState = TrainingJobStateEnum.PAUSED
+        currentState = TrainingJobStateEnum.Paused
         trainingJobId = event.trainingJobId
         pauseReason = event.pauseReason
     }
 
     @EventSourcingHandler
     fun evolve(event: TrainingJobResumedEvent): TrainingJobState = apply {
-        currentState = TrainingJobStateEnum.RUNNING
+        currentState = TrainingJobStateEnum.Running
         trainingJobId = event.trainingJobId
         resumeReason = event.resumeReason
     }
 
     @EventSourcingHandler
     fun evolve(event: TrainingJobCanceledEvent): TrainingJobState = apply {
-        currentState = TrainingJobStateEnum.CANCELED
+        currentState = TrainingJobStateEnum.Canceled
         trainingJobId = event.trainingJobId
         cancelReason = event.cancelReason
     }
 
     @EventSourcingHandler
     fun evolve(event: TrainingJobCompletedEvent): TrainingJobState = apply {
-        currentState = TrainingJobStateEnum.COMPLETED
+        currentState = TrainingJobStateEnum.Completed
         trainingJobId = event.trainingJobId
         finalRoundId = event.finalRoundId
         finalModelId = event.finalModelId

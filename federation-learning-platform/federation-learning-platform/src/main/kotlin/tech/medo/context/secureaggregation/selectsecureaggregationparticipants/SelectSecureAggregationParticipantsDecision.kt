@@ -12,7 +12,7 @@ import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEn
 
 interface SelectSecureAggregationParticipantsDecision {
     fun decide(command: SelectSecureAggregationParticipantsCommand, state: SecureAggregationSessionState, portResult: SelectSecureAggregationParticipantsResult): List<Any> {
-        require(state.currentState == SecureAggregationSessionStateEnum.PLANNED) {
+        require(state.currentState == SecureAggregationSessionStateEnum.Planned) {
             "SelectSecureAggregationParticipants requires SecureAggregationSession to be Planned."
         }
         return when (portResult) {

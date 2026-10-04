@@ -145,7 +145,7 @@ export const RuntimeInfrastructurePackageCatalogRegisterRuntimeInfrastructurePac
                     field.onChange(value);
                   }}
                   placeholder={t("resources.runtime_infrastructure_package_catalog.commands.registerRuntimeInfrastructurePackage.fields.runtimeEnvironmentType.placeholder", "Select Runtime Environment Type")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_ENVIRONMENT_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_ENVIRONMENT_TYPE"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{

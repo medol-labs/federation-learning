@@ -20,4 +20,5 @@ data class RecordRuntimeConnectionEstablishedCommand(
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
 
+
 }

@@ -14,4 +14,5 @@ data class ApproveModelCommand(
     @TargetEntityId
     val selection: ModelSelection = ModelSelection(modelId = modelId)
 
+
 }

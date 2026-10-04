@@ -30,4 +30,5 @@ data class EvaluateModelUpdateSubmissionCommand(
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
 
+
 }

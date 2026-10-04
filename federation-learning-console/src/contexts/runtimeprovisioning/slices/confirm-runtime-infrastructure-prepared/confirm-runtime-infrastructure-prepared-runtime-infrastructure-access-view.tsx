@@ -240,7 +240,7 @@ export const RuntimeInfrastructureAccessViewConfirmRuntimeInfrastructurePrepared
                     field.onChange(value);
                   }}
                   placeholder={t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeEnvironmentType.placeholder", "Select Runtime Environment Type")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_ENVIRONMENT_TYPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_ENVIRONMENT_TYPE"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
@@ -291,7 +291,7 @@ export const RuntimeInfrastructureAccessViewConfirmRuntimeInfrastructurePrepared
                     field.onChange(value);
                   }}
                   placeholder={t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.agentInstallMode.placeholder", "Select Agent Install Mode")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_INSTALL_MODE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_INSTALL_MODE"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{

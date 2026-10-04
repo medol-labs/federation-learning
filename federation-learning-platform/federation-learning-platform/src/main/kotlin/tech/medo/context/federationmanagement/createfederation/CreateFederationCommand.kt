@@ -17,5 +17,6 @@ data class CreateFederationCommand(
     @TargetEntityId
     val selection: FederationSelection = FederationSelection(federationName = federationName)
 
+
     val federationNameSelection: FederationNameSelection = FederationNameSelection(normalizedName = federationName.trim().lowercase())
 }

@@ -31,7 +31,7 @@ class AgentRuntimeInfrastructureConnectionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AgentRuntimeConnectionReportFailedEvent): AgentRuntimeInfrastructureConnectionState = apply {
-        currentState = AgentRuntimeInfrastructureConnectionStateEnum.CONNECTED
+        currentState = AgentRuntimeInfrastructureConnectionStateEnum.Connected
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeAgentId = event.runtimeAgentId
         runtimePlatformConnectionReady = event.runtimePlatformConnectionReady
@@ -45,7 +45,7 @@ class AgentRuntimeInfrastructureConnectionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AgentRuntimeConnectionEstablishedEvent): AgentRuntimeInfrastructureConnectionState = apply {
-        currentState = AgentRuntimeInfrastructureConnectionStateEnum.CONNECTED
+        currentState = AgentRuntimeInfrastructureConnectionStateEnum.Connected
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeAgentId = event.runtimeAgentId
         runtimeAgentEndpoint = event.runtimeAgentEndpoint

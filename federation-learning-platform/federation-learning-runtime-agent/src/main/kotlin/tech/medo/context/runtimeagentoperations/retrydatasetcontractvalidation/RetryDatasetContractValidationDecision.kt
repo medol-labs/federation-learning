@@ -13,7 +13,7 @@ import tech.medo.runtimeagentoperations.domain.states.DatasetStateEnum
 
 interface RetryDatasetContractValidationDecision {
     fun decide(command: RetryDatasetContractValidationCommand, state: DatasetState, portResult: RetryDatasetContractValidationResult, now: java.time.LocalDateTime): List<Any> {
-        require(state.currentState == DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED) {
+        require(state.currentState == DatasetStateEnum.ContractValidationCompleted) {
             "RetryDatasetContractValidation requires Dataset to be ContractValidationCompleted."
         }
         return when (portResult) {

@@ -85,8 +85,8 @@ class RuntimeAgentEndpointCatalogEventHandler(
         message.timestamp().atOffset(ZoneOffset.UTC).toLocalDateTime()
 
     private companion object {
-        private const val STATUS_CONNECTED = "CONNECTED"
-        private const val STATUS_OFFLINE = "OFFLINE"
-        private const val STATUS_REVOKED = "REVOKED"
+        private const val STATUS_CONNECTED = "Connected"
+        private const val STATUS_OFFLINE = "Offline"
+        private const val STATUS_REVOKED = "Revoked"
     }
 }

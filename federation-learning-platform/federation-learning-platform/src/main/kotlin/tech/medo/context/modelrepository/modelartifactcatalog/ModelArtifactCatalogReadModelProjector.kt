@@ -66,7 +66,7 @@ open class DefaultModelArtifactCatalogReadModelProjectionUpdater(
             entity.modelArtifactDigest = event.modelArtifactDigest
             entity.modelSignatureUri = event.modelSignatureUri
             entity.modelSizeBytes = event.modelSizeBytes
-            entity.state = ModelArtifactStateEnum.REGISTERED
+            entity.state = ModelArtifactStateEnum.Registered
             entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -97,7 +97,7 @@ open class DefaultModelArtifactCatalogReadModelProjectionUpdater(
             entity.trainingJobId = event.trainingJobId
             entity.roundId = event.roundId
             entity.trainingJobObjective = event.trainingJobObjective
-            entity.state = ModelArtifactStateEnum.REGISTERED
+            entity.state = ModelArtifactStateEnum.Registered
             entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

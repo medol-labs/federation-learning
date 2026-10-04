@@ -29,7 +29,7 @@ class FederationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: FederationCreatedEvent): FederationState = apply {
-        currentState = FederationStateEnum.DRAFT
+        currentState = FederationStateEnum.Draft
         federationId = event.federationId
         federationName = event.federationName
         description = event.description
@@ -38,21 +38,21 @@ class FederationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: FederationActivatedEvent): FederationState = apply {
-        currentState = FederationStateEnum.ACTIVE
+        currentState = FederationStateEnum.Active
         federationId = event.federationId
         activationNote = event.activationNote
     }
 
     @EventSourcingHandler
     fun evolve(event: FederationSuspendedEvent): FederationState = apply {
-        currentState = FederationStateEnum.SUSPENDED
+        currentState = FederationStateEnum.Suspended
         federationId = event.federationId
         suspensionReason = event.suspensionReason
     }
 
     @EventSourcingHandler
     fun evolve(event: FederationReactivatedEvent): FederationState = apply {
-        currentState = FederationStateEnum.ACTIVE
+        currentState = FederationStateEnum.Active
         federationId = event.federationId
         reactivationReason = event.reactivationReason
     }

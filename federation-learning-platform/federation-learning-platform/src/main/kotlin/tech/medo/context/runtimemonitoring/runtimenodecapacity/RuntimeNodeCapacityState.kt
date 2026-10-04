@@ -26,7 +26,7 @@ class RuntimeNodeCapacityState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeNodeCapacityChangedEvent): RuntimeNodeCapacityState = apply {
-        currentState = RuntimeNodeCapacityStateEnum.CAPACITY_CHANGED
+        currentState = RuntimeNodeCapacityStateEnum.CapacityChanged
         nodeId = event.nodeId
         runtimeAgentId = event.runtimeAgentId
         previousCapacityHash = event.previousCapacityHash

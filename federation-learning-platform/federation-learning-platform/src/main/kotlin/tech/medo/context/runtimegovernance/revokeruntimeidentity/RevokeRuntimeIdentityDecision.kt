@@ -12,7 +12,7 @@ import tech.medo.runtimegovernance.domain.states.RuntimeIdentityStateEnum
 
 interface RevokeRuntimeIdentityDecision {
     fun decide(command: RevokeRuntimeIdentityCommand, state: RuntimeIdentityState): List<Any> {
-        require(state.currentState == RuntimeIdentityStateEnum.ACTIVE) {
+        require(state.currentState == RuntimeIdentityStateEnum.Active) {
             "RevokeRuntimeIdentity requires RuntimeIdentity to be Active."
         }
         return listOf(

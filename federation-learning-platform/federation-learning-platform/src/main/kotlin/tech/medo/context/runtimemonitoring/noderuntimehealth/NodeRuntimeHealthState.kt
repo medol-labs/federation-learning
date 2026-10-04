@@ -30,7 +30,7 @@ class NodeRuntimeHealthState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentOfflineDetectedEvent): NodeRuntimeHealthState = apply {
-        currentState = NodeRuntimeHealthStateEnum.OFFLINE
+        currentState = NodeRuntimeHealthStateEnum.Offline
         nodeId = event.nodeId
         runtimeAgentId = event.runtimeAgentId
         federationId = event.federationId
@@ -44,7 +44,7 @@ class NodeRuntimeHealthState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentRecoveredEvent): NodeRuntimeHealthState = apply {
-        currentState = NodeRuntimeHealthStateEnum.HEALTHY
+        currentState = NodeRuntimeHealthStateEnum.Healthy
         nodeId = event.nodeId
         runtimeAgentId = event.runtimeAgentId
         federationId = event.federationId

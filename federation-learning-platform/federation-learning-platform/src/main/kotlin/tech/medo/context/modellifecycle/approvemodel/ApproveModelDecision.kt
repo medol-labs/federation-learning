@@ -12,7 +12,7 @@ import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 interface ApproveModelDecision {
     fun decide(command: ApproveModelCommand, state: ModelState): List<Any> {
-        require(state.currentState == ModelStateEnum.EVALUATION_PACKAGED) {
+        require(state.currentState == ModelStateEnum.EvaluationPackaged) {
             "ApproveModel requires Model to be EvaluationPackaged."
         }
         return listOf(

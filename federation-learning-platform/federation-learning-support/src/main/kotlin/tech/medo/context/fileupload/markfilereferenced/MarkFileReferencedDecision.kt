@@ -12,7 +12,7 @@ import tech.medo.fileupload.domain.states.UploadedFileStateEnum
 
 interface MarkFileReferencedDecision {
     fun decide(command: MarkFileReferencedCommand, state: UploadedFileState): List<Any> {
-        require(state.currentState == UploadedFileStateEnum.AVAILABLE) {
+        require(state.currentState == UploadedFileStateEnum.Available) {
             "MarkFileReferenced requires UploadedFile to be Available."
         }
         return listOf(

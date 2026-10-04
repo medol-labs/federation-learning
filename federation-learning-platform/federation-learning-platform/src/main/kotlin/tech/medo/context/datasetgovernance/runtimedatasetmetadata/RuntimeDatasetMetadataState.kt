@@ -41,7 +41,7 @@ class RuntimeDatasetMetadataState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetMetadataReportedEvent): RuntimeDatasetMetadataState = apply {
-        currentState = RuntimeDatasetMetadataStateEnum.METADATA_REPORTED
+        currentState = RuntimeDatasetMetadataStateEnum.MetadataReported
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         metadataReportId = event.metadataReportId
         datasetId = event.datasetId
@@ -66,7 +66,7 @@ class RuntimeDatasetMetadataState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetMetadataReprofiledEvent): RuntimeDatasetMetadataState = apply {
-        currentState = RuntimeDatasetMetadataStateEnum.METADATA_REPORTED
+        currentState = RuntimeDatasetMetadataStateEnum.MetadataReported
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         metadataReportId = event.metadataReportId
         datasetId = event.datasetId

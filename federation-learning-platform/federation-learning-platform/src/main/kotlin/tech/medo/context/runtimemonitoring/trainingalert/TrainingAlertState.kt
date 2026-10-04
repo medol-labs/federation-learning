@@ -30,7 +30,7 @@ class TrainingAlertState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingAlertRaisedEvent): TrainingAlertState = apply {
-        currentState = TrainingAlertStateEnum.RAISED
+        currentState = TrainingAlertStateEnum.Raised
         alertId = event.alertId
         nodeId = event.nodeId
         trainingJobId = event.trainingJobId
@@ -42,14 +42,14 @@ class TrainingAlertState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingAlertAcknowledgedEvent): TrainingAlertState = apply {
-        currentState = TrainingAlertStateEnum.ACKNOWLEDGED
+        currentState = TrainingAlertStateEnum.Acknowledged
         alertId = event.alertId
         acknowledgementNote = event.acknowledgementNote
     }
 
     @EventSourcingHandler
     fun evolve(event: TrainingAlertResolvedEvent): TrainingAlertState = apply {
-        currentState = TrainingAlertStateEnum.RESOLVED
+        currentState = TrainingAlertStateEnum.Resolved
         alertId = event.alertId
         resolutionSummary = event.resolutionSummary
     }

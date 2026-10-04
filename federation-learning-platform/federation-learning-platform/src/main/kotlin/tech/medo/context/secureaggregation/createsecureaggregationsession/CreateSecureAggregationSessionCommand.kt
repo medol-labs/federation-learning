@@ -34,4 +34,5 @@ data class CreateSecureAggregationSessionCommand(
     @TargetEntityId
     val selection: SecureAggregationSessionSelection = SecureAggregationSessionSelection(secureAggregationSessionId = secureAggregationSessionId)
 
+
 }

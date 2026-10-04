@@ -41,7 +41,7 @@ class UploadedFileState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: FileUploadedEvent): UploadedFileState = apply {
-        currentState = UploadedFileStateEnum.AVAILABLE
+        currentState = UploadedFileStateEnum.Available
         fileId = event.fileId
         originalFileName = event.originalFileName
         contentType = event.contentType
@@ -54,7 +54,7 @@ class UploadedFileState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: FileReferencedEvent): UploadedFileState = apply {
-        currentState = UploadedFileStateEnum.REFERENCED
+        currentState = UploadedFileStateEnum.Referenced
         fileId = event.fileId
         referencedByContext = event.referencedByContext
         referencedByCommand = event.referencedByCommand
@@ -72,14 +72,14 @@ class UploadedFileState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: FileDiscardedEvent): UploadedFileState = apply {
-        currentState = UploadedFileStateEnum.DISCARDED
+        currentState = UploadedFileStateEnum.Discarded
         fileId = event.fileId
         discardReason = event.discardReason
     }
 
     @EventSourcingHandler
     fun evolve(event: FileExpiredEvent): UploadedFileState = apply {
-        currentState = UploadedFileStateEnum.EXPIRED
+        currentState = UploadedFileStateEnum.Expired
         fileId = event.fileId
         expiredAt = event.expiredAt
         expirationReason = event.expirationReason

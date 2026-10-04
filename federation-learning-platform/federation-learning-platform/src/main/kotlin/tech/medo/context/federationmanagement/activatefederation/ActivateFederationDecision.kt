@@ -12,7 +12,7 @@ import tech.medo.federationmanagement.domain.states.FederationStateEnum
 
 interface ActivateFederationDecision {
     fun decide(command: ActivateFederationCommand, state: FederationState): List<Any> {
-        require(state.currentState == FederationStateEnum.DRAFT) {
+        require(state.currentState == FederationStateEnum.Draft) {
             "ActivateFederation requires Federation to be Draft."
         }
         return listOf(

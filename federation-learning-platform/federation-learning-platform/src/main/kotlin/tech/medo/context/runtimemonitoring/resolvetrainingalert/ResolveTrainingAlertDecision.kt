@@ -12,7 +12,7 @@ import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum
 
 interface ResolveTrainingAlertDecision {
     fun decide(command: ResolveTrainingAlertCommand, state: TrainingAlertState): List<Any> {
-        require(state.currentState == TrainingAlertStateEnum.ACKNOWLEDGED) {
+        require(state.currentState == TrainingAlertStateEnum.Acknowledged) {
             "ResolveTrainingAlert requires TrainingAlert to be Acknowledged."
         }
         return listOf(

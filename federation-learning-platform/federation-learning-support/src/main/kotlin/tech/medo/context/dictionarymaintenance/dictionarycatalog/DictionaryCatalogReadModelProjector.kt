@@ -52,7 +52,7 @@ open class DefaultDictionaryCatalogReadModelProjectionUpdater(
             entity.dictionaryCode = event.dictionaryCode.value
             entity.dictionaryName = event.dictionaryName
             entity.description = event.description
-            entity.state = DictionaryStateEnum.REGISTERED
+            entity.state = DictionaryStateEnum.Registered
             entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -87,7 +87,7 @@ open class DefaultDictionaryCatalogReadModelProjectionUpdater(
         }
             entity.dictionaryId = event.dictionaryId
             entity.archiveReason = event.archiveReason
-            entity.state = DictionaryStateEnum.ARCHIVED
+            entity.state = DictionaryStateEnum.Archived
             entity.archivedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

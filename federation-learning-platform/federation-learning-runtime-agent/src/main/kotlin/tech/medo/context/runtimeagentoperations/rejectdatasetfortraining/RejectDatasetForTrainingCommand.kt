@@ -17,4 +17,5 @@ data class RejectDatasetForTrainingCommand(
     @TargetEntityId
     val selection: DatasetSelection = DatasetSelection(organizationId = organizationId, featureSchemaId = featureSchemaId, datasetName = datasetName)
 
+
 }

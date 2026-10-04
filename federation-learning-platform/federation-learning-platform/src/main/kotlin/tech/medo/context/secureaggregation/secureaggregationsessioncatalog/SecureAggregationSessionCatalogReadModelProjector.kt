@@ -77,7 +77,7 @@ open class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
             entity.selectedRuntimeIds = event.selectedRuntimeIds
             entity.selectedOrganizationCount = event.selectedOrganizationCount
             entity.selectedRuntimeCount = event.selectedRuntimeCount
-            entity.state = SecureAggregationSessionStateEnum.PLANNED
+            entity.state = SecureAggregationSessionStateEnum.Planned
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -102,7 +102,7 @@ open class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
             entity.selectedRuntimeIds = event.selectedRuntimeIds
             entity.selectedOrganizationCount = event.selectedOrganizationCount
             entity.selectedParticipantCount = event.selectedParticipantCount
-            entity.state = SecureAggregationSessionStateEnum.PARTICIPANTS_SELECTED
+            entity.state = SecureAggregationSessionStateEnum.ParticipantsSelected
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -131,7 +131,7 @@ open class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
             entity.publicKeyVersion = event.publicKeyVersion
             entity.publicKeyRef = event.publicKeyRef
             entity.encryptedParameterScale = event.encryptedParameterScale
-            entity.state = SecureAggregationSessionStateEnum.ENCRYPTION_CONTEXT_PREPARED
+            entity.state = SecureAggregationSessionStateEnum.EncryptionContextPrepared
             entity.encryptionContextPrepared = true
             entity.encryptionContextPreparedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
@@ -181,7 +181,7 @@ open class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
             entity.aggregatedModelId = event.aggregatedModelId
             entity.modelFormat = event.modelFormat
             entity.modelArtifactDigest = event.modelArtifactDigest
-            entity.state = SecureAggregationSessionStateEnum.COMPLETED
+            entity.state = SecureAggregationSessionStateEnum.Completed
             entity.completedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -199,7 +199,7 @@ open class DefaultSecureAggregationSessionCatalogReadModelProjectionUpdater(
         }
             entity.secureAggregationSessionId = event.secureAggregationSessionId
             entity.failureReason = event.failureReason
-            entity.state = SecureAggregationSessionStateEnum.FAILED
+            entity.state = SecureAggregationSessionStateEnum.Failed
             entity.failedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

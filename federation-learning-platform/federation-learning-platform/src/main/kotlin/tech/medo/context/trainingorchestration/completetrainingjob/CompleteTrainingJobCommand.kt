@@ -17,4 +17,5 @@ data class CompleteTrainingJobCommand(
     @TargetEntityId
     val selection: TrainingJobSelection = TrainingJobSelection(trainingJobId = trainingJobId)
 
+
 }

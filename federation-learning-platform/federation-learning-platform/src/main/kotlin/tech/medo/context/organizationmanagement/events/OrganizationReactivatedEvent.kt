@@ -5,10 +5,12 @@ import org.axonframework.messaging.eventhandling.annotation.Event
 import java.util.UUID;
 
 
-/* TODO: provide values for selection tags: organizationName = normalize(organizationName) */
 
 @Event
 data class OrganizationReactivatedEvent(
     val organizationId: UUID,
-    val reactivationReason: String
+    val organizationName: String,
+    val reactivationReason: String,
+    @EventTag(key = "organizationName")
+    val organizationNameEventTag: String = organizationName.trim().lowercase()
 )

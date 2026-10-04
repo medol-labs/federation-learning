@@ -94,7 +94,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRoundParticipantsSelectedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.PARTICIPANTS_SELECTED
+        currentState = TrainingRoundStateEnum.ParticipantsSelected
         trainingJobId = event.trainingJobId
         federationId = event.federationId
         federationName = event.federationName
@@ -120,7 +120,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRoundParticipantSelectionFailedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.FAILED
+        currentState = TrainingRoundStateEnum.Failed
         trainingJobId = event.trainingJobId
         federationId = event.federationId
         federationName = event.federationName
@@ -152,7 +152,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRoundStartedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.RUNNING
+        currentState = TrainingRoundStateEnum.Running
         trainingJobId = event.trainingJobId
         federationId = event.federationId
         federationName = event.federationName
@@ -183,7 +183,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRoundStartFailedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.FAILED
+        currentState = TrainingRoundStateEnum.Failed
         trainingJobId = event.trainingJobId
         federationId = event.federationId
         federationName = event.federationName
@@ -269,7 +269,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ModelUpdateSubmissionRejectedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
+        currentState = TrainingRoundStateEnum.EvaluatingGlobalModel
         modelUpdateSubmissionId = event.modelUpdateSubmissionId
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
@@ -282,7 +282,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: PlainModelAggregationCompletedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.COMPLETED
+        currentState = TrainingRoundStateEnum.Completed
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         trainingJobObjective = event.trainingJobObjective
@@ -331,7 +331,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: GlobalModelUpdatedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
+        currentState = TrainingRoundStateEnum.EvaluatingGlobalModel
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         trainingJobObjective = event.trainingJobObjective
@@ -357,7 +357,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: GlobalModelEvaluationSubmittedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
+        currentState = TrainingRoundStateEnum.EvaluatingGlobalModel
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         trainingJobObjective = event.trainingJobObjective
@@ -379,7 +379,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRoundCompletedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.COMPLETED
+        currentState = TrainingRoundStateEnum.Completed
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         trainingJobObjective = event.trainingJobObjective
@@ -400,7 +400,7 @@ class TrainingRoundState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: TrainingRoundFailedEvent): TrainingRoundState = apply {
-        currentState = TrainingRoundStateEnum.FAILED
+        currentState = TrainingRoundStateEnum.Failed
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
         featureSchemaId = event.featureSchemaId

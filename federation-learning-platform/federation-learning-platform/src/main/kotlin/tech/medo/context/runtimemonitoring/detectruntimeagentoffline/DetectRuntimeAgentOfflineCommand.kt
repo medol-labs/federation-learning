@@ -21,4 +21,5 @@ data class DetectRuntimeAgentOfflineCommand(
     @TargetEntityId
     val selection: NodeRuntimeHealthSelection = NodeRuntimeHealthSelection(nodeId = nodeId)
 
+
 }

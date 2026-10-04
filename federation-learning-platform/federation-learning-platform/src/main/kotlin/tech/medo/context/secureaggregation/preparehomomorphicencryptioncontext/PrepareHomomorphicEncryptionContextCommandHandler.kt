@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.secureaggregation.preparehomomorphicencryptioncontext.PrepareHomomorphicEncryptionContextCommand
 import tech.medo.secureaggregation.preparehomomorphicencryptioncontext.PrepareHomomorphicEncryptionContextInput
 import tech.medo.secureaggregation.preparehomomorphicencryptioncontext.PrepareHomomorphicEncryptionContextService
+
+
 import tech.medo.secureaggregation.secureaggregationsession.SecureAggregationSessionState
 import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
 
@@ -22,7 +24,7 @@ class PrepareHomomorphicEncryptionContextCommandHandler(
         @InjectEntity(idProperty = "secureAggregationSessionId") state: SecureAggregationSessionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == SecureAggregationSessionStateEnum.PARTICIPANTS_SELECTED) {
+        require(state.currentState == SecureAggregationSessionStateEnum.ParticipantsSelected) {
             "PrepareHomomorphicEncryptionContext requires SecureAggregationSession to be ParticipantsSelected."
         }
         val input = PrepareHomomorphicEncryptionContextInput(secureAggregationSessionId = command.secureAggregationSessionId, trainingJobId = command.trainingJobId, federationId = command.federationId, federationName = command.federationName, trainingRunConfigurationId = command.trainingRunConfigurationId, configurationName = command.configurationName, trainingJobObjective = command.trainingJobObjective, featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, featureSchemaVersion = command.featureSchemaVersion, roundId = command.roundId, roundNumber = command.roundNumber, selectedOrganizationIds = command.selectedOrganizationIds, selectedRuntimeIds = command.selectedRuntimeIds, selectedOrganizationCount = command.selectedOrganizationCount, selectedRuntimeCount = command.selectedRuntimeCount, minimumNodesPerRound = command.minimumNodesPerRound, maxRounds = command.maxRounds, minimumAccuracy = command.minimumAccuracy, secureAggregationRequired = command.secureAggregationRequired)

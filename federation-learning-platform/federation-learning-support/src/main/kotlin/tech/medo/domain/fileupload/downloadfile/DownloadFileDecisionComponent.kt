@@ -16,8 +16,8 @@ class DownloadFileDecisionComponent : DownloadFileDecision {
         portResult: DownloadFileResult
     ): List<Any> {
         require(
-            state.currentState == UploadedFileStateEnum.AVAILABLE ||
-                state.currentState == UploadedFileStateEnum.REFERENCED
+            state.currentState == UploadedFileStateEnum.Available ||
+                state.currentState == UploadedFileStateEnum.Referenced
         ) {
             "File is not available for download."
         }

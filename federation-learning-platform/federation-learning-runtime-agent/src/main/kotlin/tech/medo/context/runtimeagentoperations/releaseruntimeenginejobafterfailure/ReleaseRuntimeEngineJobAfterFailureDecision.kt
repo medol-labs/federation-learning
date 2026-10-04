@@ -12,7 +12,7 @@ import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 interface ReleaseRuntimeEngineJobAfterFailureDecision {
     fun decide(command: ReleaseRuntimeEngineJobAfterFailureCommand, state: RoundExecutionState, portResult: ReleaseRuntimeEngineJobAfterFailureResult): List<Any> {
-        require(state.currentState == RoundExecutionStateEnum.FAILED) {
+        require(state.currentState == RoundExecutionStateEnum.Failed) {
             "ReleaseRuntimeEngineJobAfterFailure requires RoundExecution to be Failed."
         }
         return when (portResult) {

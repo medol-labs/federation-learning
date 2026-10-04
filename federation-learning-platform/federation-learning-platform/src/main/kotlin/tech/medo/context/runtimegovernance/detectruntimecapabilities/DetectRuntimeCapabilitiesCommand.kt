@@ -14,4 +14,5 @@ data class DetectRuntimeCapabilitiesCommand(
     @TargetEntityId
     val selection: RuntimeCapabilitySelection = RuntimeCapabilitySelection(runtimeId = runtimeId)
 
+
 }

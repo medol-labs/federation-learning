@@ -9,6 +9,8 @@ import tech.medo.runtimegovernance.activateruntimeidentity.ActivateRuntimeIdenti
 
 
 
+
+
 @Component
 class ActivateRuntimeIdentityCommandHandler(
     private val decision: ActivateRuntimeIdentityDecision

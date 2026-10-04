@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.retrydatasetcontractvalidation.RetryDatasetContractValidationCommand
 import tech.medo.runtimeagentoperations.retrydatasetcontractvalidation.RetryDatasetContractValidationInput
 import tech.medo.runtimeagentoperations.retrydatasetcontractvalidation.RetryDatasetContractValidationService
+
+
 import tech.medo.runtimeagentoperations.dataset.DatasetState
 import tech.medo.runtimeagentoperations.domain.states.DatasetStateEnum
 
@@ -22,7 +24,7 @@ class RetryDatasetContractValidationCommandHandler(
         @InjectEntity(idProperty = "selection") state: DatasetState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED) {
+        require(state.currentState == DatasetStateEnum.ContractValidationCompleted) {
             "RetryDatasetContractValidation requires Dataset to be ContractValidationCompleted."
         }
         val input = RetryDatasetContractValidationInput(datasetId = command.datasetId)

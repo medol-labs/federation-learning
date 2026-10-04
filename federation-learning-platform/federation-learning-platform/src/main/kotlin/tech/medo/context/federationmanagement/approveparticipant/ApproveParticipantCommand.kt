@@ -17,4 +17,5 @@ data class ApproveParticipantCommand(
     @TargetEntityId
     val selection: FederationMembershipSelection = FederationMembershipSelection(federationId = federationId, organizationId = organizationId)
 
+
 }

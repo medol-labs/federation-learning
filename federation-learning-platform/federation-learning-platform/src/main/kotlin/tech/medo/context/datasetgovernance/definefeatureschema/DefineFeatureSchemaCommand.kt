@@ -21,5 +21,6 @@ data class DefineFeatureSchemaCommand(
     @TargetEntityId
     val selection: FeatureSchemaSelection = FeatureSchemaSelection(featureDomain = featureDomain, version = version)
 
+
     val featureSchemaFeatureDomainVersionSelection: FeatureSchemaFeatureDomainVersionSelection = FeatureSchemaFeatureDomainVersionSelection(normalizedFeatureDomain = featureDomain.trim().lowercase(), normalizedVersion = version.trim().lowercase())
 }

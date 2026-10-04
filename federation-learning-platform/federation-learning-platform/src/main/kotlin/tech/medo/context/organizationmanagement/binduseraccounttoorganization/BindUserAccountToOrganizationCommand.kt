@@ -19,5 +19,6 @@ data class BindUserAccountToOrganizationCommand(
     @TargetEntityId
     val selection: UserOrganizationMembershipSelection = UserOrganizationMembershipSelection(userOrganizationMembershipId = userOrganizationMembershipId)
 
+
     val userOrganizationMembershipUserAccountIdOrganizationIdSelection: UserOrganizationMembershipUserAccountIdOrganizationIdSelection = UserOrganizationMembershipUserAccountIdOrganizationIdSelection(normalizedUserAccountId = userAccountId.toString().trim().lowercase(), normalizedOrganizationId = organizationId.toString().trim().lowercase())
 }

@@ -49,7 +49,7 @@ class RetryRuntimeInfrastructureVerificationDecisionTest {
             runtimeAgentId = java.util.UUID.randomUUID(),
             agentInstallMode = "",
             expectedNodeCount = 0,
-            currentRuntimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED,
+            currentRuntimeInfrastructureState = RuntimeInfrastructureStateEnum.VerificationFailed,
             retryReason = "Retry after applying runtime scheduling labels and RBAC."
         )
 
@@ -113,7 +113,7 @@ class RetryRuntimeInfrastructureVerificationDecisionTest {
             runtimeAgentId = java.util.UUID.randomUUID(),
             agentInstallMode = "",
             expectedNodeCount = 0,
-            currentRuntimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED,
+            currentRuntimeInfrastructureState = RuntimeInfrastructureStateEnum.VerificationFailed,
             retryReason = "Retry after adding the participant node."
         )
 

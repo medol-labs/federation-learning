@@ -45,4 +45,5 @@ data class UpdateTrainingRunConfigurationCommand(
     @TargetEntityId
     val selection: TrainingRunConfigurationSelection = TrainingRunConfigurationSelection(trainingRunConfigurationId = trainingRunConfigurationId)
 
+
 }

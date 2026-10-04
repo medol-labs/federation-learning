@@ -6,6 +6,8 @@ import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.locktrainingrunconfiguration.LockTrainingRunConfigurationCommand
 
+
+
 import tech.medo.trainingorchestration.trainingrunconfiguration.TrainingRunConfigurationState
 
 

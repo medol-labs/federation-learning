@@ -72,7 +72,7 @@ class SecureAggregationSessionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: SecureAggregationSessionCreatedEvent): SecureAggregationSessionState = apply {
-        currentState = SecureAggregationSessionStateEnum.PLANNED
+        currentState = SecureAggregationSessionStateEnum.Planned
         secureAggregationSessionId = event.secureAggregationSessionId
         trainingJobId = event.trainingJobId
         federationId = event.federationId
@@ -98,7 +98,7 @@ class SecureAggregationSessionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: SecureAggregationParticipantsSelectedEvent): SecureAggregationSessionState = apply {
-        currentState = SecureAggregationSessionStateEnum.PARTICIPANTS_SELECTED
+        currentState = SecureAggregationSessionStateEnum.ParticipantsSelected
         secureAggregationSessionId = event.secureAggregationSessionId
         roundId = event.roundId
         trainingJobId = event.trainingJobId
@@ -123,7 +123,7 @@ class SecureAggregationSessionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: HomomorphicEncryptionContextPreparedEvent): SecureAggregationSessionState = apply {
-        currentState = SecureAggregationSessionStateEnum.ENCRYPTION_CONTEXT_PREPARED
+        currentState = SecureAggregationSessionStateEnum.EncryptionContextPrepared
         secureAggregationSessionId = event.secureAggregationSessionId
         trainingJobId = event.trainingJobId
         federationId = event.federationId
@@ -176,7 +176,7 @@ class SecureAggregationSessionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: SecureAggregationCompletedEvent): SecureAggregationSessionState = apply {
-        currentState = SecureAggregationSessionStateEnum.COMPLETED
+        currentState = SecureAggregationSessionStateEnum.Completed
         secureAggregationSessionId = event.secureAggregationSessionId
         trainingJobId = event.trainingJobId
         trainingRunConfigurationId = event.trainingRunConfigurationId
@@ -202,7 +202,7 @@ class SecureAggregationSessionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: SecureAggregationFailedEvent): SecureAggregationSessionState = apply {
-        currentState = SecureAggregationSessionStateEnum.FAILED
+        currentState = SecureAggregationSessionStateEnum.Failed
         secureAggregationSessionId = event.secureAggregationSessionId
         failureReason = event.failureReason
     }

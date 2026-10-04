@@ -13,7 +13,7 @@ class RequestSecureAggregationDecisionComponent : RequestSecureAggregationDecisi
     private val log = LoggerFactory.getLogger(RequestSecureAggregationDecisionComponent::class.java)
 
     override fun decide(command: RequestSecureAggregationCommand, state: TrainingRoundState): List<Any> {
-        if (state.currentState == TrainingRoundStateEnum.AGGREGATING) {
+        if (state.currentState == TrainingRoundStateEnum.Aggregating) {
             log.info(
                 "Skip secure aggregation request because round is already aggregating. trainingJobId={}, roundId={}",
                 command.trainingJobId,

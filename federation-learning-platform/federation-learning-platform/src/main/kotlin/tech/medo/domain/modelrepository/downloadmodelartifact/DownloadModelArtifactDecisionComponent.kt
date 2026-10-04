@@ -15,7 +15,7 @@ class DownloadModelArtifactDecisionComponent : DownloadModelArtifactDecision {
         state: ModelArtifactState,
         portResult: DownloadModelArtifactResult
     ): List<Any> {
-        require(state.currentState == ModelArtifactStateEnum.REGISTERED) {
+        require(state.currentState == ModelArtifactStateEnum.Registered) {
             "Model artifact is not available for download."
         }
         return when (portResult) {

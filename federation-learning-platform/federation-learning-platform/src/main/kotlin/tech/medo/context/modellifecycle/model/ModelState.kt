@@ -44,7 +44,7 @@ class ModelState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ModelCandidateRegisteredEvent): ModelState = apply {
-        currentState = ModelStateEnum.CANDIDATE
+        currentState = ModelStateEnum.Candidate
         modelId = event.modelId
         trainingJobId = event.trainingJobId
         trainingJobObjective = event.trainingJobObjective
@@ -57,7 +57,7 @@ class ModelState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ModelEvaluationPackageRecordedEvent): ModelState = apply {
-        currentState = ModelStateEnum.EVALUATION_PACKAGED
+        currentState = ModelStateEnum.EvaluationPackaged
         modelId = event.modelId
         trainingJobId = event.trainingJobId
         evaluationReportId = event.evaluationReportId
@@ -70,14 +70,14 @@ class ModelState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ModelApprovedEvent): ModelState = apply {
-        currentState = ModelStateEnum.APPROVED
+        currentState = ModelStateEnum.Approved
         modelId = event.modelId
         approvalNote = event.approvalNote
     }
 
     @EventSourcingHandler
     fun evolve(event: ModelPromotedToProductionEvent): ModelState = apply {
-        currentState = ModelStateEnum.PRODUCTION
+        currentState = ModelStateEnum.Production
         modelId = event.modelId
         releaseChannel = event.releaseChannel
         productionStage = event.productionStage
@@ -85,7 +85,7 @@ class ModelState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ModelRolledBackEvent): ModelState = apply {
-        currentState = ModelStateEnum.ROLLED_BACK
+        currentState = ModelStateEnum.RolledBack
         modelId = event.modelId
         previousModelId = event.previousModelId
         rollbackReason = event.rollbackReason
@@ -93,7 +93,7 @@ class ModelState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ModelRetiredEvent): ModelState = apply {
-        currentState = ModelStateEnum.RETIRED
+        currentState = ModelStateEnum.Retired
         modelId = event.modelId
         retirementReason = event.retirementReason
     }

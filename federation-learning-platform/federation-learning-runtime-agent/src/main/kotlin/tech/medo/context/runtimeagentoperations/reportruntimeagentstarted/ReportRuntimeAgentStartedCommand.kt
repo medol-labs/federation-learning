@@ -18,4 +18,5 @@ data class ReportRuntimeAgentStartedCommand(
     @TargetEntityId
     val selection: RuntimeAgentLifecycleSelection = RuntimeAgentLifecycleSelection(bootstrapRequestId = bootstrapRequestId)
 
+
 }

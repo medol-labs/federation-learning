@@ -31,7 +31,7 @@ class OrganizationDirectoryReadModelOutboxProjectionUpdater(
         entity.organizationId = event.organizationId
         entity.organizationName = event.organizationName
         entity.organizationType = event.organizationType
-        entity.state = OrganizationStateEnum.REGISTERED
+        entity.state = OrganizationStateEnum.Registered
         ProjectionMetadata.assign(entity, message)
         saveAndPublish(entity, event.organizationId.toString(), message)
     }
@@ -45,7 +45,7 @@ class OrganizationDirectoryReadModelOutboxProjectionUpdater(
             organizationId = event.organizationId
         }
         entity.organizationId = event.organizationId
-        entity.state = OrganizationStateEnum.ACTIVE
+        entity.state = OrganizationStateEnum.Active
         ProjectionMetadata.assign(entity, message)
         saveAndPublish(entity, event.organizationId.toString(), message)
     }
@@ -59,7 +59,7 @@ class OrganizationDirectoryReadModelOutboxProjectionUpdater(
             organizationId = event.organizationId
         }
         entity.organizationId = event.organizationId
-        entity.state = OrganizationStateEnum.DEACTIVATED
+        entity.state = OrganizationStateEnum.Deactivated
         ProjectionMetadata.assign(entity, message)
         saveAndPublish(entity, event.organizationId.toString(), message)
     }
@@ -73,7 +73,7 @@ class OrganizationDirectoryReadModelOutboxProjectionUpdater(
             organizationId = event.organizationId
         }
         entity.organizationId = event.organizationId
-        entity.state = OrganizationStateEnum.ACTIVE
+        entity.state = OrganizationStateEnum.Active
         ProjectionMetadata.assign(entity, message)
         saveAndPublish(entity, event.organizationId.toString(), message)
     }

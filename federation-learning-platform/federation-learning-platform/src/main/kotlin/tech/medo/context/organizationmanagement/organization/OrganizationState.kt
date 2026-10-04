@@ -30,7 +30,7 @@ class OrganizationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: OrganizationRegisteredEvent): OrganizationState = apply {
-        currentState = OrganizationStateEnum.REGISTERED
+        currentState = OrganizationStateEnum.Registered
         organizationId = event.organizationId
         organizationName = event.organizationName
         organizationType = event.organizationType
@@ -39,22 +39,25 @@ class OrganizationState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: OrganizationActivatedEvent): OrganizationState = apply {
-        currentState = OrganizationStateEnum.ACTIVE
+        currentState = OrganizationStateEnum.Active
         organizationId = event.organizationId
+        organizationName = event.organizationName
         activationNote = event.activationNote
     }
 
     @EventSourcingHandler
     fun evolve(event: OrganizationDeactivatedEvent): OrganizationState = apply {
-        currentState = OrganizationStateEnum.DEACTIVATED
+        currentState = OrganizationStateEnum.Deactivated
         organizationId = event.organizationId
+        organizationName = event.organizationName
         deactivationReason = event.deactivationReason
     }
 
     @EventSourcingHandler
     fun evolve(event: OrganizationReactivatedEvent): OrganizationState = apply {
-        currentState = OrganizationStateEnum.ACTIVE
+        currentState = OrganizationStateEnum.Active
         organizationId = event.organizationId
+        organizationName = event.organizationName
         reactivationReason = event.reactivationReason
     }
 }

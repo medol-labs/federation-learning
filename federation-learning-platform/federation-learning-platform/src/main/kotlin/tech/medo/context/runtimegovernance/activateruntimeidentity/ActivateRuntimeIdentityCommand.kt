@@ -18,4 +18,5 @@ data class ActivateRuntimeIdentityCommand(
     @TargetEntityId
     val selection: RuntimeIdentitySelection = RuntimeIdentitySelection(runtimeId = runtimeId)
 
+
 }

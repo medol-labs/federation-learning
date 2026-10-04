@@ -176,7 +176,7 @@ export const RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished = () 
                     field.onChange(value);
                   }}
                   placeholder={t("resources.runtime_agent_endpoint_catalog.commands.recordRuntimeConnectionEstablished.fields.endpointScope.placeholder", "Select Endpoint Scope")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_ENDPOINT_SCOPE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_ENDPOINT_SCOPE"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{

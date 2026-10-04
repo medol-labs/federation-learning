@@ -12,7 +12,7 @@ import tech.medo.runtimeagentoperations.domain.states.DatasetStateEnum
 
 interface RevokeDatasetTrainingApprovalDecision {
     fun decide(command: RevokeDatasetTrainingApprovalCommand, state: DatasetState): List<Any> {
-        require(state.currentState == DatasetStateEnum.APPROVED) {
+        require(state.currentState == DatasetStateEnum.Approved) {
             "RevokeDatasetTrainingApproval requires Dataset to be Approved."
         }
         return listOf(

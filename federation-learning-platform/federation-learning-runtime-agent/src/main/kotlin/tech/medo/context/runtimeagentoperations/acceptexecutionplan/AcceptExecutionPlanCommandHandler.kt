@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanCommand
 import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanInput
 import tech.medo.runtimeagentoperations.acceptexecutionplan.AcceptExecutionPlanService
+
+
 import tech.medo.runtimeagentoperations.roundexecution.RoundExecutionState
 import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
@@ -22,7 +24,7 @@ class AcceptExecutionPlanCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RoundExecutionStateEnum.PLAN_RECEIVED) {
+        require(state.currentState == RoundExecutionStateEnum.PlanReceived) {
             "AcceptExecutionPlan requires RoundExecution to be PlanReceived."
         }
         val input = AcceptExecutionPlanInput(executionPlanId = command.executionPlanId, roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, featureSchemaId = command.featureSchemaId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, baseModelId = command.baseModelId, baseModelArtifactUri = command.baseModelArtifactUri, baseModelRegistryRef = command.baseModelRegistryRef, baseModelPlugin = command.baseModelPlugin, baseModelFormat = command.baseModelFormat, baseModelArtifactDigest = command.baseModelArtifactDigest, baseModelSignatureUri = command.baseModelSignatureUri, runtimeEngineProfileId = command.runtimeEngineProfileId, runtimeEngineProfileName = command.runtimeEngineProfileName, runtimeEnginePluginProfile = command.runtimeEnginePluginProfile, runtimeEngineImage = command.runtimeEngineImage, runtimeEngineImageDigest = command.runtimeEngineImageDigest, secureAggregationRequired = command.secureAggregationRequired, secureAggregationSessionId = command.secureAggregationSessionId, encryptionScheme = command.encryptionScheme, publicKeyVersion = command.publicKeyVersion, publicKeyRef = command.publicKeyRef, encryptedParameterScale = command.encryptedParameterScale)

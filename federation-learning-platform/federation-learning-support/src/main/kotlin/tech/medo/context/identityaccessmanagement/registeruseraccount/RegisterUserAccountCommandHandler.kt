@@ -9,6 +9,8 @@ import tech.medo.identityaccessmanagement.registeruseraccount.RegisterUserAccoun
 
 
 
+
+
 @Component
 class RegisterUserAccountCommandHandler(
     private val decision: RegisterUserAccountDecision

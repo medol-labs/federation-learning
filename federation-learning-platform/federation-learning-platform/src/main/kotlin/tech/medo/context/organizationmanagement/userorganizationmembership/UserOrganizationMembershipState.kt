@@ -25,7 +25,7 @@ class UserOrganizationMembershipState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: UserAccountBoundToOrganizationEvent): UserOrganizationMembershipState = apply {
-        currentState = UserOrganizationMembershipStateEnum.ACTIVE
+        currentState = UserOrganizationMembershipStateEnum.Active
         userOrganizationMembershipId = event.userOrganizationMembershipId
         userAccountId = event.userAccountId
         username = event.username

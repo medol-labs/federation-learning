@@ -25,7 +25,7 @@ class RoleState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoleRegisteredEvent): RoleState = apply {
-        currentState = RoleStateEnum.REGISTERED
+        currentState = RoleStateEnum.Registered
         roleId = event.roleId
         roleCode = event.roleCode
         roleName = event.roleName
@@ -33,7 +33,7 @@ class RoleState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: PermissionGrantedToRoleEvent): RoleState = apply {
-        currentState = RoleStateEnum.REGISTERED
+        currentState = RoleStateEnum.Registered
         roleId = event.roleId
         roleCode = event.roleCode
         permissionCode = event.permissionCode

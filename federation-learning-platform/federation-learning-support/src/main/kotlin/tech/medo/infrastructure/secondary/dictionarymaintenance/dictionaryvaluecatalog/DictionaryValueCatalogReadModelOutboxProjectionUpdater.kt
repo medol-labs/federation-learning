@@ -37,7 +37,7 @@ class DictionaryValueCatalogReadModelOutboxProjectionUpdater(
         entity.displayOrder = event.displayOrder?.value
         entity.description = event.description
         entity.active = event.active
-        entity.state = DictionaryValueStateEnum.ACTIVE
+        entity.state = DictionaryValueStateEnum.Active
         ProjectionMetadata.assign(entity, message)
         saveAndPublish(entity, event.dictionaryValueId.toString(), message)
     }
@@ -52,7 +52,7 @@ class DictionaryValueCatalogReadModelOutboxProjectionUpdater(
         }
         entity.dictionaryValueId = event.dictionaryValueId
         entity.disabledReason = event.disabledReason
-        entity.state = DictionaryValueStateEnum.DISABLED
+        entity.state = DictionaryValueStateEnum.Disabled
         entity.active = false
         entity.disabledAt = eventTime(message)
         ProjectionMetadata.assign(entity, message)
@@ -68,7 +68,7 @@ class DictionaryValueCatalogReadModelOutboxProjectionUpdater(
             dictionaryValueId = event.dictionaryValueId
         }
         entity.dictionaryValueId = event.dictionaryValueId
-        entity.state = DictionaryValueStateEnum.ACTIVE
+        entity.state = DictionaryValueStateEnum.Active
         entity.active = true
         entity.enabledAt = eventTime(message)
         ProjectionMetadata.assign(entity, message)

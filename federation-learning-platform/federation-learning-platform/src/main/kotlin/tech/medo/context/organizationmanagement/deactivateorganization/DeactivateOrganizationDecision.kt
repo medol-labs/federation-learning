@@ -12,11 +12,11 @@ import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
 
 interface DeactivateOrganizationDecision {
     fun decide(command: DeactivateOrganizationCommand, state: OrganizationState): List<Any> {
-        require(state.currentState == OrganizationStateEnum.ACTIVE) {
+        require(state.currentState == OrganizationStateEnum.Active) {
             "DeactivateOrganization requires Organization to be Active."
         }
         return listOf(
-            OrganizationDeactivatedEvent(organizationId = command.organizationId, deactivationReason = command.deactivationReason)
+            OrganizationDeactivatedEvent(organizationId = command.organizationId, organizationName = command.organizationName, deactivationReason = command.deactivationReason)
         )
     }
 }

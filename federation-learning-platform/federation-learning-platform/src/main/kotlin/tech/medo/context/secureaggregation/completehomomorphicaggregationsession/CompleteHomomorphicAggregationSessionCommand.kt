@@ -25,4 +25,5 @@ data class CompleteHomomorphicAggregationSessionCommand(
     @TargetEntityId
     val selection: SecureAggregationSessionSelection = SecureAggregationSessionSelection(secureAggregationSessionId = secureAggregationSessionId)
 
+
 }

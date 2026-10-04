@@ -27,7 +27,7 @@ class RuntimeIdentityState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeIdentityActivatedEvent): RuntimeIdentityState = apply {
-        currentState = RuntimeIdentityStateEnum.ACTIVE
+        currentState = RuntimeIdentityStateEnum.Active
         runtimeId = event.runtimeId
         runtimeInfrastructureId = event.runtimeInfrastructureId
         runtimeAgentId = event.runtimeAgentId
@@ -38,7 +38,7 @@ class RuntimeIdentityState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeIdentityRevokedEvent): RuntimeIdentityState = apply {
-        currentState = RuntimeIdentityStateEnum.REVOKED
+        currentState = RuntimeIdentityStateEnum.Revoked
         runtimeId = event.runtimeId
         revocationReason = event.revocationReason
     }

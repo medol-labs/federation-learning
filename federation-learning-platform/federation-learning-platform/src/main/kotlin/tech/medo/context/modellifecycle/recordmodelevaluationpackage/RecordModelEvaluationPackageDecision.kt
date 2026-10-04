@@ -12,7 +12,7 @@ import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 interface RecordModelEvaluationPackageDecision {
     fun decide(command: RecordModelEvaluationPackageCommand, state: ModelState): List<Any> {
-        require(state.currentState == ModelStateEnum.CANDIDATE) {
+        require(state.currentState == ModelStateEnum.Candidate) {
             "RecordModelEvaluationPackage requires Model to be Candidate."
         }
         return listOf(

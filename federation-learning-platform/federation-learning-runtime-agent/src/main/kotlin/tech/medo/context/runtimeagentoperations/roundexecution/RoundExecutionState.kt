@@ -92,7 +92,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ExecutionPlanReceivedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.PLAN_RECEIVED
+        currentState = RoundExecutionStateEnum.PlanReceived
         executionPlanId = event.executionPlanId
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
@@ -125,7 +125,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ExecutionPlanAcceptedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.PLAN_ACCEPTED
+        currentState = RoundExecutionStateEnum.PlanAccepted
         executionPlanId = event.executionPlanId
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
@@ -166,7 +166,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ExecutionPlanRejectedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.PLAN_REJECTED
+        currentState = RoundExecutionStateEnum.PlanRejected
         executionPlanId = event.executionPlanId
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
@@ -208,7 +208,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoundExecutionStartedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.RUNNING
+        currentState = RoundExecutionStateEnum.Running
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId
@@ -242,7 +242,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoundExecutionStartFailedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.START_FAILED
+        currentState = RoundExecutionStateEnum.StartFailed
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId
@@ -277,7 +277,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeEngineJobObservedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASED
+        currentState = RoundExecutionStateEnum.RuntimeEngineReleased
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId
@@ -307,7 +307,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoundExecutionCompletedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.COMPLETED
+        currentState = RoundExecutionStateEnum.Completed
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId
@@ -335,7 +335,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoundExecutionFailedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.FAILED
+        currentState = RoundExecutionStateEnum.Failed
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId
@@ -352,7 +352,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoundExecutionStartRetryStartedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.RETRIED
+        currentState = RoundExecutionStateEnum.Retried
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId
@@ -370,7 +370,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoundExecutionStartRetryFailedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.FAILED
+        currentState = RoundExecutionStateEnum.Failed
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId
@@ -389,7 +389,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoundExecutionRuntimeRetryStartedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.RETRIED
+        currentState = RoundExecutionStateEnum.Retried
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId
@@ -407,7 +407,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoundExecutionRuntimeRetryFailedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.FAILED
+        currentState = RoundExecutionStateEnum.Failed
         roundExecutionId = event.roundExecutionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId
@@ -426,7 +426,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: AgentLocalModelUpdateSubmittedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.UPDATE_SUBMITTED
+        currentState = RoundExecutionStateEnum.UpdateSubmitted
         modelUpdateSubmissionId = event.modelUpdateSubmissionId
         executionSessionId = event.executionSessionId
         executionPlanId = event.executionPlanId
@@ -451,14 +451,14 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeEngineJobReleasedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASED
+        currentState = RoundExecutionStateEnum.RuntimeEngineReleased
         roundExecutionId = event.roundExecutionId
         runtimeEngineJobId = event.runtimeEngineJobId
     }
 
     @EventSourcingHandler
     fun evolve(event: RuntimeEngineJobReleaseFailedOrSkippedEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
+        currentState = RoundExecutionStateEnum.RuntimeEngineReleaseHandled
         roundExecutionId = event.roundExecutionId
         runtimeEngineJobId = event.runtimeEngineJobId
         runtimeEngineReleaseFailureReason = event.runtimeEngineReleaseFailureReason
@@ -466,7 +466,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeEngineJobReleaseFailedOrSkippedAfterStartFailureEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
+        currentState = RoundExecutionStateEnum.RuntimeEngineReleaseHandled
         roundExecutionId = event.roundExecutionId
         runtimeEngineJobId = event.runtimeEngineJobId
         runtimeEngineReleaseFailureReason = event.runtimeEngineReleaseFailureReason
@@ -474,7 +474,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeEngineJobReleaseFailedOrSkippedAfterRetryEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
+        currentState = RoundExecutionStateEnum.RuntimeEngineReleaseHandled
         roundExecutionId = event.roundExecutionId
         runtimeEngineJobId = event.runtimeEngineJobId
         runtimeEngineReleaseFailureReason = event.runtimeEngineReleaseFailureReason
@@ -482,7 +482,7 @@ class RoundExecutionState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeEngineJobReleaseFailedOrSkippedAfterRuntimeRetryEvent): RoundExecutionState = apply {
-        currentState = RoundExecutionStateEnum.RUNTIME_ENGINE_RELEASE_HANDLED
+        currentState = RoundExecutionStateEnum.RuntimeEngineReleaseHandled
         roundExecutionId = event.roundExecutionId
         runtimeEngineJobId = event.runtimeEngineJobId
         runtimeEngineReleaseFailureReason = event.runtimeEngineReleaseFailureReason

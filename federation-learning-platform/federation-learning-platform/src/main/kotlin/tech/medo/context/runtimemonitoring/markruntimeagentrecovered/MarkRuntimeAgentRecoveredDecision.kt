@@ -12,7 +12,7 @@ import tech.medo.runtimemonitoring.domain.states.NodeRuntimeHealthStateEnum
 
 interface MarkRuntimeAgentRecoveredDecision {
     fun decide(command: MarkRuntimeAgentRecoveredCommand, state: NodeRuntimeHealthState): List<Any> {
-        require(state.currentState == NodeRuntimeHealthStateEnum.OFFLINE) {
+        require(state.currentState == NodeRuntimeHealthStateEnum.Offline) {
             "MarkRuntimeAgentRecovered requires NodeRuntimeHealth to be Offline."
         }
         return listOf(

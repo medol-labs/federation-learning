@@ -12,11 +12,11 @@ import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
 
 interface ActivateOrganizationDecision {
     fun decide(command: ActivateOrganizationCommand, state: OrganizationState): List<Any> {
-        require(state.currentState == OrganizationStateEnum.REGISTERED) {
+        require(state.currentState == OrganizationStateEnum.Registered) {
             "ActivateOrganization requires Organization to be Registered."
         }
         return listOf(
-            OrganizationActivatedEvent(organizationId = command.organizationId, activationNote = command.activationNote)
+            OrganizationActivatedEvent(organizationId = command.organizationId, organizationName = command.organizationName, activationNote = command.activationNote)
         )
     }
 }

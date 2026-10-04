@@ -85,7 +85,7 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
             entity.modelArtifactDigest = event.modelArtifactDigest
             entity.evaluationReportId = event.evaluationReportId
             entity.finalGlobalAccuracy = event.finalGlobalAccuracy
-            entity.state = ModelStateEnum.CANDIDATE
+            entity.state = ModelStateEnum.Candidate
             entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -109,7 +109,7 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
             entity.reproducibilityManifestId = event.reproducibilityManifestId
             entity.modelCardId = event.modelCardId
             entity.baselineModelId = event.baselineModelId
-            entity.state = ModelStateEnum.EVALUATION_PACKAGED
+            entity.state = ModelStateEnum.EvaluationPackaged
             entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -126,7 +126,7 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
                 this.modelId = event.modelId
         }
             entity.modelId = event.modelId
-            entity.state = ModelStateEnum.APPROVED
+            entity.state = ModelStateEnum.Approved
             entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -145,7 +145,7 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
             entity.modelId = event.modelId
             entity.releaseChannel = event.releaseChannel
             entity.productionStage = event.productionStage
-            entity.state = ModelStateEnum.PRODUCTION
+            entity.state = ModelStateEnum.Production
             entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -163,7 +163,7 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
         }
             entity.modelId = event.modelId
             entity.previousModelId = event.previousModelId
-            entity.state = ModelStateEnum.ROLLED_BACK
+            entity.state = ModelStateEnum.RolledBack
             entity.baselineModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -180,7 +180,7 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
                 this.modelId = event.modelId
         }
             entity.modelId = event.modelId
-            entity.state = ModelStateEnum.RETIRED
+            entity.state = ModelStateEnum.Retired
             entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

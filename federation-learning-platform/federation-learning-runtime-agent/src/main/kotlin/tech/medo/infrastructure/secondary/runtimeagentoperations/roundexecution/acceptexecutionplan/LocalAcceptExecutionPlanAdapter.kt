@@ -103,9 +103,9 @@ class LocalAcceptExecutionPlanAdapter(
 
     private companion object {
         private val busyStates = setOf(
-            RoundExecutionStateEnum.PLAN_ACCEPTED,
-            RoundExecutionStateEnum.RUNNING,
-            RoundExecutionStateEnum.RETRIED
+            RoundExecutionStateEnum.PlanAccepted,
+            RoundExecutionStateEnum.Running,
+            RoundExecutionStateEnum.Retried
         )
     }
 }

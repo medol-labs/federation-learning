@@ -62,7 +62,7 @@ open class DefaultUploadedFileCatalogReadModelProjectionUpdater(
             entity.fileLocation = event.fileLocation
             entity.checksum = event.checksum
             entity.expiresAt = event.expiresAt
-            entity.state = UploadedFileStateEnum.AVAILABLE
+            entity.state = UploadedFileStateEnum.Available
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -81,7 +81,7 @@ open class DefaultUploadedFileCatalogReadModelProjectionUpdater(
             entity.referencedByContext = event.referencedByContext
             entity.referencedByCommand = event.referencedByCommand
             entity.referencedByCommandId = event.referencedByCommandId
-            entity.state = UploadedFileStateEnum.REFERENCED
+            entity.state = UploadedFileStateEnum.Referenced
             entity.referencedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -99,7 +99,7 @@ open class DefaultUploadedFileCatalogReadModelProjectionUpdater(
         }
             entity.fileId = event.fileId
             entity.discardReason = event.discardReason
-            entity.state = UploadedFileStateEnum.DISCARDED
+            entity.state = UploadedFileStateEnum.Discarded
             entity.discardedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -118,7 +118,7 @@ open class DefaultUploadedFileCatalogReadModelProjectionUpdater(
             entity.fileId = event.fileId
             entity.expiredAt = event.expiredAt
             entity.expirationReason = event.expirationReason
-            entity.state = UploadedFileStateEnum.EXPIRED
+            entity.state = UploadedFileStateEnum.Expired
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 

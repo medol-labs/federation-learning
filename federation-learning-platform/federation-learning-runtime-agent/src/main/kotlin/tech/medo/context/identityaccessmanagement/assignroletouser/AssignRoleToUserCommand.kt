@@ -14,4 +14,5 @@ data class AssignRoleToUserCommand(
     @TargetEntityId
     val selection: UserAccountSelection = UserAccountSelection(userAccountId = userAccountId)
 
+
 }

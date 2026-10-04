@@ -43,7 +43,7 @@ class FederationMembershipState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ParticipantInvitedEvent): FederationMembershipState = apply {
-        currentState = FederationMembershipStateEnum.INVITED
+        currentState = FederationMembershipStateEnum.Invited
         federationId = event.federationId
         federationName = event.federationName
         organizationId = event.organizationId
@@ -53,7 +53,7 @@ class FederationMembershipState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ParticipantJoinedEvent): FederationMembershipState = apply {
-        currentState = FederationMembershipStateEnum.ACTIVE
+        currentState = FederationMembershipStateEnum.Active
         federationId = event.federationId
         federationName = event.federationName
         organizationId = event.organizationId
@@ -63,7 +63,7 @@ class FederationMembershipState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ParticipantRejectedEvent): FederationMembershipState = apply {
-        currentState = FederationMembershipStateEnum.REJECTED
+        currentState = FederationMembershipStateEnum.Rejected
         federationId = event.federationId
         federationName = event.federationName
         organizationId = event.organizationId
@@ -73,7 +73,7 @@ class FederationMembershipState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ParticipantInvitationRevokedEvent): FederationMembershipState = apply {
-        currentState = FederationMembershipStateEnum.INVITATION_REVOKED
+        currentState = FederationMembershipStateEnum.InvitationRevoked
         federationId = event.federationId
         federationName = event.federationName
         organizationId = event.organizationId
@@ -83,7 +83,7 @@ class FederationMembershipState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ParticipantSuspendedEvent): FederationMembershipState = apply {
-        currentState = FederationMembershipStateEnum.SUSPENDED
+        currentState = FederationMembershipStateEnum.Suspended
         federationId = event.federationId
         federationName = event.federationName
         organizationId = event.organizationId
@@ -93,7 +93,7 @@ class FederationMembershipState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ParticipantRemovedEvent): FederationMembershipState = apply {
-        currentState = FederationMembershipStateEnum.REMOVED
+        currentState = FederationMembershipStateEnum.Removed
         federationId = event.federationId
         federationName = event.federationName
         organizationId = event.organizationId

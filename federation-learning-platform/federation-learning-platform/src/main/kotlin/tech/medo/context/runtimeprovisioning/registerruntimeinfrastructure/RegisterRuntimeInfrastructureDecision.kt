@@ -12,7 +12,7 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 
 interface RegisterRuntimeInfrastructureDecision {
     fun decide(command: RegisterRuntimeInfrastructureCommand, state: RuntimeInfrastructureState): List<Any> {
-        require(state.currentState == RuntimeInfrastructureStateEnum.PLANNED) {
+        require(state.currentState == RuntimeInfrastructureStateEnum.Planned) {
             "RegisterRuntimeInfrastructure requires RuntimeInfrastructure to be Planned."
         }
         return listOf(

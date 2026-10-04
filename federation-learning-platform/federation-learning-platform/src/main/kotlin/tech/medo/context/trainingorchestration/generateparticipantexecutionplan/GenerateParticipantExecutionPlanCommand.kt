@@ -43,4 +43,5 @@ data class GenerateParticipantExecutionPlanCommand(
     @TargetEntityId
     val selection: ParticipantExecutionPlanSelection = ParticipantExecutionPlanSelection(executionPlanId = executionPlanId)
 
+
 }

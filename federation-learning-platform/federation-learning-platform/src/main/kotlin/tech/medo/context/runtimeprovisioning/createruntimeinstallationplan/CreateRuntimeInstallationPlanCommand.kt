@@ -23,4 +23,5 @@ data class CreateRuntimeInstallationPlanCommand(
     @TargetEntityId
     val selection: RuntimeInstallationPlanSelection = RuntimeInstallationPlanSelection(organizationId = organizationId)
 
+
 }

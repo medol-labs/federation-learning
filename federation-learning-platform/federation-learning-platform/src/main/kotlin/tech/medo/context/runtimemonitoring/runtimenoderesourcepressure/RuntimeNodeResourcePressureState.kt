@@ -31,7 +31,7 @@ class RuntimeNodeResourcePressureState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeNodeResourcePressureDetectedEvent): RuntimeNodeResourcePressureState = apply {
-        currentState = RuntimeNodeResourcePressureStateEnum.PRESSURE_DETECTED
+        currentState = RuntimeNodeResourcePressureStateEnum.PressureDetected
         nodeId = event.nodeId
         runtimeAgentId = event.runtimeAgentId
         federationId = event.federationId

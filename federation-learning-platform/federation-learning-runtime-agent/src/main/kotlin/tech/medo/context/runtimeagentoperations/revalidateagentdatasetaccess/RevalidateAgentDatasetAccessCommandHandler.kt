@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.revalidateagentdatasetaccess.RevalidateAgentDatasetAccessCommand
 import tech.medo.runtimeagentoperations.revalidateagentdatasetaccess.RevalidateAgentDatasetAccessInput
 import tech.medo.runtimeagentoperations.revalidateagentdatasetaccess.RevalidateAgentDatasetAccessService
+
+
 import tech.medo.runtimeagentoperations.agentdatasetaccessvalidation.AgentDatasetAccessValidationState
 import tech.medo.runtimeagentoperations.domain.states.AgentDatasetAccessValidationStateEnum
 
@@ -22,7 +24,7 @@ class RevalidateAgentDatasetAccessCommandHandler(
         @InjectEntity(idProperty = "datasetAccessValidationId") state: AgentDatasetAccessValidationState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == AgentDatasetAccessValidationStateEnum.CHECKED) {
+        require(state.currentState == AgentDatasetAccessValidationStateEnum.Checked) {
             "RevalidateAgentDatasetAccess requires AgentDatasetAccessValidation to be Checked."
         }
         val input = RevalidateAgentDatasetAccessInput(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = command.runtimeDatasetBindingId)

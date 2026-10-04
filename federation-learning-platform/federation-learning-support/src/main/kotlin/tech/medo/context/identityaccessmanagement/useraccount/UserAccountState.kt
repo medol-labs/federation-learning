@@ -31,7 +31,7 @@ class UserAccountState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: UserAccountRegisteredEvent): UserAccountState = apply {
-        currentState = UserAccountStateEnum.ACTIVE
+        currentState = UserAccountStateEnum.Active
         userAccountId = event.userAccountId
         username = event.username
         providerSubject = event.providerSubject
@@ -41,7 +41,7 @@ class UserAccountState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: UserAccountDeactivatedEvent): UserAccountState = apply {
-        currentState = UserAccountStateEnum.DEACTIVATED
+        currentState = UserAccountStateEnum.Deactivated
         userAccountId = event.userAccountId
         reason = event.reason
     }
@@ -55,7 +55,7 @@ class UserAccountState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RoleAssignedToUserEvent): UserAccountState = apply {
-        currentState = UserAccountStateEnum.ACTIVE
+        currentState = UserAccountStateEnum.Active
         userAccountId = event.userAccountId
         roleCode = event.roleCode
     }

@@ -17,4 +17,5 @@ data class AppendAuditTrailCommand(
     @TargetEntityId
     val selection: AuditRecordSelection = AuditRecordSelection(auditRecordId = auditRecordId)
 
+
 }

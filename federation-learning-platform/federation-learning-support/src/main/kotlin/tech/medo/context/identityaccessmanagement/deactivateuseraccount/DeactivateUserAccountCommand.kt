@@ -14,4 +14,5 @@ data class DeactivateUserAccountCommand(
     @TargetEntityId
     val selection: UserAccountSelection = UserAccountSelection(userAccountId = userAccountId)
 
+
 }

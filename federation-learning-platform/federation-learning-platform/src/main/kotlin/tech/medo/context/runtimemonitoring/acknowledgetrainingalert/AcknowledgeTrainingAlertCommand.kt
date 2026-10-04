@@ -14,4 +14,5 @@ data class AcknowledgeTrainingAlertCommand(
     @TargetEntityId
     val selection: TrainingAlertSelection = TrainingAlertSelection(alertId = alertId)
 
+
 }

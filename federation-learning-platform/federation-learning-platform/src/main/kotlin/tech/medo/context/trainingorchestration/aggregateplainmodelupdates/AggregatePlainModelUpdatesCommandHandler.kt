@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.trainingorchestration.aggregateplainmodelupdates.AggregatePlainModelUpdatesCommand
 import tech.medo.trainingorchestration.aggregateplainmodelupdates.AggregatePlainModelUpdatesInput
 import tech.medo.trainingorchestration.aggregateplainmodelupdates.AggregatePlainModelUpdatesService
+
+
 import tech.medo.trainingorchestration.traininground.TrainingRoundState
 
 

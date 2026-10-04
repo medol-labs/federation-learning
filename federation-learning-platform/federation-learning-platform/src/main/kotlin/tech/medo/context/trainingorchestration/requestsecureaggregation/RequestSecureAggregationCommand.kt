@@ -33,4 +33,5 @@ data class RequestSecureAggregationCommand(
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
 
+
 }

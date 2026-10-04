@@ -13,4 +13,5 @@ data class LoadRuntimeAgentBootstrapConfigurationCommand(
     @TargetEntityId
     val selection: RuntimeAgentLifecycleSelection = RuntimeAgentLifecycleSelection(bootstrapRequestId = bootstrapRequestId)
 
+
 }

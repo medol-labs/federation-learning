@@ -6,6 +6,8 @@ import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.organizationmanagement.deactivateorganization.DeactivateOrganizationCommand
 
+
+
 import tech.medo.organizationmanagement.organization.OrganizationState
 
 
@@ -17,7 +19,7 @@ class DeactivateOrganizationCommandHandler(
     @CommandHandler
     fun handle(
         command: DeactivateOrganizationCommand,
-        @InjectEntity(idProperty = "organizationName") state: OrganizationState,
+        @InjectEntity(idProperty = "organizationNameEntityId") state: OrganizationState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))

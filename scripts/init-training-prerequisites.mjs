@@ -13,7 +13,11 @@ loadEnvFiles([resolve(import.meta.dirname, '../.env'), resolve(process.cwd(), '.
 const dryRun = Boolean(args['dry-run']);
 const strict = Boolean(args.strict);
 const createJob = booleanOption(args['create-job'] ?? process.env.FL_CREATE_TRAINING_JOB, true);
-const activateLifecycle = Boolean(args.activate);
+const skipLifecycleActivation = booleanOption(
+    args['skip-activation'] ?? process.env.FL_SKIP_LIFECYCLE_ACTIVATION,
+    false
+);
+const activateLifecycle = booleanOption(args.activate ?? process.env.FL_ACTIVATE_LIFECYCLE, !skipLifecycleActivation);
 const timeoutMs = positiveInt(args.timeout, 30000);
 const pollIntervalMs = positiveInt(args['poll-interval'], 800);
 const trainingScenario = normalizeScenario(args.scenario ?? args['training-scenario'] ?? process.env.FL_TRAINING_SCENARIO ?? 'densenet');
@@ -85,6 +89,7 @@ console.log(`[init-training] runtimeEngineImage=${runtimeEngineImage}`);
 console.log(`[init-training] runtimeAgentInstallMode=${runtimeAgentInstallMode}`);
 console.log(`[init-training] registerRuntimeInfrastructure=${registerRuntimeInfrastructure}`);
 console.log(`[init-training] createAndSubmitTrainingJob=${createJob}`);
+console.log(`[init-training] lifecycleActivation=${activateLifecycle}`);
 console.log(`[init-training] target=${initTarget}`);
 console.log(`[init-training] trainingScenario=${trainingScenario}`);
 console.log(`[init-training] datasetPath=${datasetPath}`);
@@ -144,18 +149,38 @@ async function ensurePlatformData() {
         createPayload: seed.organization
     });
 
-    if (activateLifecycle && !isActive(organization?.state)) {
-        await postCommand(platformUrl, '/organization/activateorganization', {
+    const organizationState = dryRun && organization && organization.state == null ? 'Registered' : organization?.state;
+    if (activateLifecycle && isRegistered(organizationState)) {
+        await postActivationCommand(platformUrl, '/organization/activateorganization', {
             organizationId: seed.organization.organizationId,
             organizationName: seed.organization.organizationName,
             activationNote: 'Development bootstrap'
-        }, 'activate organization');
+        }, 'activate organization', '/organization/organizationdirectory', {
+            'organizationId.equals': seed.organization.organizationId
+        });
         await waitForOne(platformUrl, '/organization/organizationdirectory', {
             'organizationId.equals': seed.organization.organizationId,
-            'state.equals': 'ACTIVE'
+            'state.equals': 'Active'
         }, 'active organization');
-    } else if (!isActive(organization?.state)) {
-        console.log('[init-training] skip organization activation; pass --activate when lifecycle transition tags are fixed');
+    } else if (activateLifecycle && isDeactivated(organizationState)) {
+        await postActivationCommand(platformUrl, '/organization/reactivateorganization', {
+            organizationId: seed.organization.organizationId,
+            organizationName: seed.organization.organizationName,
+            reactivationReason: 'Development bootstrap'
+        }, 'reactivate organization', '/organization/organizationdirectory', {
+            'organizationId.equals': seed.organization.organizationId
+        });
+        await waitForOne(platformUrl, '/organization/organizationdirectory', {
+            'organizationId.equals': seed.organization.organizationId,
+            'state.equals': 'Active'
+        }, 'active organization');
+    } else if (activateLifecycle && !isActive(organizationState)) {
+        fail(
+            `Organization is ${organizationState ?? 'unknown'} and cannot be activated by the bootstrap script. ` +
+            'Expected Registered, Deactivated, or Active.'
+        );
+    } else if (!isActive(organizationState)) {
+        console.log('[init-training] skip organization activation; platform selections may be ineligible');
     }
 
     const federation = await ensureOne({
@@ -167,18 +192,38 @@ async function ensurePlatformData() {
         createPayload: seed.federation
     });
 
-    if (activateLifecycle && !isActive(federation?.state)) {
-        await postCommand(platformUrl, '/federation/activatefederation', {
+    const federationState = dryRun && federation && federation.state == null ? 'Draft' : federation?.state;
+    if (activateLifecycle && isDraft(federationState)) {
+        await postActivationCommand(platformUrl, '/federation/activatefederation', {
             federationId: seed.federation.federationId,
             federationName: seed.federation.federationName,
             activationNote: 'Development bootstrap'
-        }, 'activate federation');
+        }, 'activate federation', '/federation/federationoverview', {
+            'federationId.equals': seed.federation.federationId
+        });
         await waitForOne(platformUrl, '/federation/federationoverview', {
             'federationId.equals': seed.federation.federationId,
-            'state.equals': 'ACTIVE'
+            'state.equals': 'Active'
         }, 'active federation');
-    } else if (!isActive(federation?.state)) {
-        console.log('[init-training] skip federation activation; pass --activate when lifecycle transition tags are fixed');
+    } else if (activateLifecycle && isSuspended(federationState)) {
+        await postActivationCommand(platformUrl, '/federation/reactivatefederation', {
+            federationId: seed.federation.federationId,
+            federationName: seed.federation.federationName,
+            reactivationReason: 'Development bootstrap'
+        }, 'reactivate federation', '/federation/federationoverview', {
+            'federationId.equals': seed.federation.federationId
+        });
+        await waitForOne(platformUrl, '/federation/federationoverview', {
+            'federationId.equals': seed.federation.federationId,
+            'state.equals': 'Active'
+        }, 'active federation');
+    } else if (activateLifecycle && !isActive(federationState)) {
+        fail(
+            `Federation is ${federationState ?? 'unknown'} and cannot be activated by the bootstrap script. ` +
+            'Expected Draft, Suspended, or Active.'
+        );
+    } else if (!isActive(federationState)) {
+        console.log('[init-training] skip federation activation; training configuration selection may be ineligible');
     }
 
     const membership = await findOne(platformUrl, '/federationmembership/federationmembershipdirectory', {
@@ -266,6 +311,19 @@ async function ensurePlatformData() {
 
 async function ensureTrainingJob() {
     if (!createJob) return;
+
+    const trainingRunConfiguration = await findOne(platformUrl, '/trainingrunconfiguration/trainingrunconfigurationcatalog', {
+        'trainingRunConfigurationId.equals': seed.trainingRunConfiguration.trainingRunConfigurationId
+    });
+    if (!trainingRunConfiguration) {
+        fail('Training run configuration does not exist. Run platform initialization before creating the training job.');
+    }
+    if (!isDraft(trainingRunConfiguration.state)) {
+        fail(
+            `Training run configuration is ${trainingRunConfiguration.state ?? 'unknown'}, but CreateTrainingJob requires Draft. ` +
+            'Create a new configuration or reset dev data before creating the training job.'
+        );
+    }
 
     const trainingJob = await ensureOne({
         label: 'training job',
@@ -690,6 +748,24 @@ async function postCommand(baseUrl, path, payload, label) {
         throw new Error(message);
     }
     console.log(`[init-training] posted ${label}`);
+}
+
+async function postActivationCommand(baseUrl, path, payload, label, queryPath, query) {
+    try {
+        await postCommand(baseUrl, path, payload, label);
+        return;
+    } catch (error) {
+        const current = await findOne(baseUrl, queryPath, query);
+        if (isActive(current?.state)) {
+            console.log(`[init-training] ${label} already reflected as Active`);
+            return;
+        }
+        error.message =
+            `${error.message}; projection state is ${current?.state ?? 'unknown'}. ` +
+            'If this local environment was initialized before lifecycle event tags were generated, ' +
+            'reset the development event/projection data and rerun the bootstrap script.';
+        throw error;
+    }
 }
 
 function applyRuntimeInfrastructureId(runtimeInfrastructureId) {
@@ -1498,6 +1574,18 @@ function isActive(value) {
     return normalize(value) === 'ACTIVE';
 }
 
+function isRegistered(value) {
+    return normalize(value) === 'REGISTERED';
+}
+
+function isDeactivated(value) {
+    return normalize(value) === 'DEACTIVATED';
+}
+
+function isSuspended(value) {
+    return normalize(value) === 'SUSPENDED';
+}
+
 function isTrainingJobSubmittedOrBeyond(value) {
     return ['SUBMITTED', 'RUNNING', 'PAUSED', 'CANCELED', 'COMPLETED'].includes(normalize(value));
 }
@@ -1512,6 +1600,10 @@ function isJoinedMembership(item) {
 
 function isPublished(value) {
     return normalize(value) === 'PUBLISHED';
+}
+
+function isDraft(value) {
+    return normalize(value) === 'DRAFT';
 }
 
 function isReported(value) {

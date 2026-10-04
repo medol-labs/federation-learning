@@ -27,7 +27,7 @@ type UploadedFileCatalogRecord = {
   purpose: string;
   fileLocation: string;
   checksum?: string;
-  state: "AVAILABLE" | "REFERENCED" | "DISCARDED" | "EXPIRED";
+  state: "Available" | "Referenced" | "Discarded" | "Expired";
   uploadedAt?: string;
   referencedAt?: string;
   referencedByContext?: string;
@@ -278,10 +278,10 @@ export const UploadedFileCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Available", value: "AVAILABLE" },
-            { label: "Referenced", value: "REFERENCED" },
-            { label: "Discarded", value: "DISCARDED" },
-            { label: "Expired", value: "EXPIRED" },
+            { label: "Available", value: "Available" },
+            { label: "Referenced", value: "Referenced" },
+            { label: "Discarded", value: "Discarded" },
+            { label: "Expired", value: "Expired" },
           ],
         },
         cell: ({ getValue, row }) =>

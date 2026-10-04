@@ -12,7 +12,7 @@ import tech.medo.dictionarymaintenance.domain.states.DictionaryValueStateEnum
 
 interface EnableDictionaryValueDecision {
     fun decide(command: EnableDictionaryValueCommand, state: DictionaryValueState): List<Any> {
-        require(state.currentState == DictionaryValueStateEnum.DISABLED) {
+        require(state.currentState == DictionaryValueStateEnum.Disabled) {
             "EnableDictionaryValue requires DictionaryValue to be Disabled."
         }
         return listOf(

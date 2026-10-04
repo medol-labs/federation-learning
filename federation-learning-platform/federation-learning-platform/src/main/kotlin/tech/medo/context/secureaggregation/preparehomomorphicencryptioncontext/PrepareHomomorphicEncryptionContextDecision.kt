@@ -12,7 +12,7 @@ import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEn
 
 interface PrepareHomomorphicEncryptionContextDecision {
     fun decide(command: PrepareHomomorphicEncryptionContextCommand, state: SecureAggregationSessionState, portResult: PrepareHomomorphicEncryptionContextResult): List<Any> {
-        require(state.currentState == SecureAggregationSessionStateEnum.PARTICIPANTS_SELECTED) {
+        require(state.currentState == SecureAggregationSessionStateEnum.ParticipantsSelected) {
             "PrepareHomomorphicEncryptionContext requires SecureAggregationSession to be ParticipantsSelected."
         }
         return when (portResult) {

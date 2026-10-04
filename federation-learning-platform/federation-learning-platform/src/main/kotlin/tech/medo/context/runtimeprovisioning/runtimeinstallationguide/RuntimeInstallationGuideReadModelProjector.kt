@@ -144,7 +144,7 @@ open class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
-            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.PLANNED
+            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.Planned
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -171,7 +171,7 @@ open class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
-            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.REGISTERED
+            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.Registered
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -198,7 +198,7 @@ open class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
-            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.PREPARED
+            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.Prepared
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -225,7 +225,7 @@ open class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
-            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFIED
+            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.Verified
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -252,7 +252,7 @@ open class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
-            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
+            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VerificationFailed
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -279,7 +279,7 @@ open class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
-            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFIED
+            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.Verified
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -306,7 +306,7 @@ open class DefaultRuntimeInstallationGuideReadModelProjectionUpdater(
             entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
-            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
+            entity.runtimeInfrastructureState = RuntimeInfrastructureStateEnum.VerificationFailed
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 

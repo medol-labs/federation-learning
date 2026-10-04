@@ -21,4 +21,5 @@ data class RegisterCandidateModelCommand(
     @TargetEntityId
     val selection: ModelSelection = ModelSelection(modelId = modelId)
 
+
 }

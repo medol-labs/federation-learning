@@ -167,7 +167,7 @@ open class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.secureAggregationRequired = event.secureAggregationRequired
-            entity.state = TrainingRoundStateEnum.PARTICIPANTS_SELECTED
+            entity.state = TrainingRoundStateEnum.ParticipantsSelected
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -198,7 +198,7 @@ open class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.secureAggregationRequired = event.secureAggregationRequired
             entity.failureReason = event.failureReason
-            entity.state = TrainingRoundStateEnum.FAILED
+            entity.state = TrainingRoundStateEnum.Failed
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -228,7 +228,7 @@ open class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.secureAggregationRequired = event.secureAggregationRequired
-            entity.state = TrainingRoundStateEnum.RUNNING
+            entity.state = TrainingRoundStateEnum.Running
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -259,7 +259,7 @@ open class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.secureAggregationRequired = event.secureAggregationRequired
             entity.failureReason = event.failureReason
-            entity.state = TrainingRoundStateEnum.FAILED
+            entity.state = TrainingRoundStateEnum.Failed
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -419,7 +419,7 @@ open class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.trainingJobObjective = event.trainingJobObjective
             entity.roundNumber = event.roundNumber
             entity.aggregatedModelId = event.aggregatedModelId
-            entity.state = TrainingRoundStateEnum.EVALUATING_GLOBAL_MODEL
+            entity.state = TrainingRoundStateEnum.EvaluatingGlobalModel
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -467,7 +467,7 @@ open class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.roundNumber = event.roundNumber
             entity.aggregatedModelId = event.aggregatedModelId
             entity.globalAccuracy = event.globalAccuracy
-            entity.state = TrainingRoundStateEnum.COMPLETED
+            entity.state = TrainingRoundStateEnum.Completed
             entity.completedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -491,7 +491,7 @@ open class DefaultTrainingRoundProgressReadModelProjectionUpdater(
             entity.selectedRuntimeCount = event.selectedRuntimeCount
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.failureReason = event.failureReason
-            entity.state = TrainingRoundStateEnum.FAILED
+            entity.state = TrainingRoundStateEnum.Failed
             entity.failedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

@@ -31,7 +31,7 @@ type TrainingJobDashboardRecord = {
   strategyName?: string;
   aggregationAlgorithm?: string;
   secureAggregationRequired?: boolean;
-  state: "DRAFT" | "SUBMITTED" | "RUNNING" | "PAUSED" | "CANCELED" | "COMPLETED";
+  state: "Draft" | "Submitted" | "Running" | "Paused" | "Canceled" | "Completed";
   workflowStage: string;
   workflowStep: number;
   nextAction?: string;
@@ -395,12 +395,12 @@ export const TrainingJobDashboardList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Draft", value: "DRAFT" },
-            { label: "Submitted", value: "SUBMITTED" },
-            { label: "Running", value: "RUNNING" },
-            { label: "Paused", value: "PAUSED" },
-            { label: "Canceled", value: "CANCELED" },
-            { label: "Completed", value: "COMPLETED" },
+            { label: "Draft", value: "Draft" },
+            { label: "Submitted", value: "Submitted" },
+            { label: "Running", value: "Running" },
+            { label: "Paused", value: "Paused" },
+            { label: "Canceled", value: "Canceled" },
+            { label: "Completed", value: "Completed" },
           ],
         },
         cell: ({ getValue, row }) =>

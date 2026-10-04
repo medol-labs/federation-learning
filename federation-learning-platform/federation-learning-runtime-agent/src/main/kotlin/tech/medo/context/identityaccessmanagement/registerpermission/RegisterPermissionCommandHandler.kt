@@ -9,6 +9,8 @@ import tech.medo.identityaccessmanagement.registerpermission.RegisterPermissionC
 
 
 
+
+
 @Component
 class RegisterPermissionCommandHandler(
     private val decision: RegisterPermissionDecision

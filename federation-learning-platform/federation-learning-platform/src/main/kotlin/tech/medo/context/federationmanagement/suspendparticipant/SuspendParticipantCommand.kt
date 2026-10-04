@@ -17,4 +17,5 @@ data class SuspendParticipantCommand(
     @TargetEntityId
     val selection: FederationMembershipSelection = FederationMembershipSelection(federationId = federationId, organizationId = organizationId)
 
+
 }

@@ -19,4 +19,5 @@ data class FailTrainingRoundCommand(
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
 
+
 }

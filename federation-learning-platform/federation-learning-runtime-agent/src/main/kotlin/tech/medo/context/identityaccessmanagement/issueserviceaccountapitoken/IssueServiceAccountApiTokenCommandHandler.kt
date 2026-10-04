@@ -10,6 +10,8 @@ import tech.medo.identityaccessmanagement.issueserviceaccountapitoken.IssueServi
 
 
 
+
+
 @Component
 class IssueServiceAccountApiTokenCommandHandler(
     private val decision: IssueServiceAccountApiTokenDecision,

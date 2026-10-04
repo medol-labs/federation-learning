@@ -12,7 +12,7 @@ import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 interface PromoteModelToProductionDecision {
     fun decide(command: PromoteModelToProductionCommand, state: ModelState): List<Any> {
-        require(state.currentState == ModelStateEnum.APPROVED) {
+        require(state.currentState == ModelStateEnum.Approved) {
             "PromoteModelToProduction requires Model to be Approved."
         }
         return listOf(

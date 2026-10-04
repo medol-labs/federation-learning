@@ -6,13 +6,16 @@ import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.organizationmanagement.binduseraccounttoorganization.BindUserAccountToOrganizationCommand
 
+import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelRepository
+import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
 
 
 import tech.medo.organizationmanagement.userorganizationmembership.UserOrganizationMembershipUserAccountIdOrganizationIdReservationState
 
 @Component
 class BindUserAccountToOrganizationCommandHandler(
-    private val decision: BindUserAccountToOrganizationDecision
+    private val decision: BindUserAccountToOrganizationDecision,
+    private val organizationDirectoryReadModelRepository: OrganizationDirectoryReadModelRepository
 ) {
     @CommandHandler
     fun handle(
@@ -20,6 +23,10 @@ class BindUserAccountToOrganizationCommandHandler(
         @InjectEntity(idProperty = "userOrganizationMembershipUserAccountIdOrganizationIdSelection") userOrganizationMembershipUserAccountIdOrganizationIdReservation: UserOrganizationMembershipUserAccountIdOrganizationIdReservationState,
         eventAppender: EventAppender
     ) {
+        val organizationDirectoryReadModelSelection = organizationDirectoryReadModelRepository.findById(command.organizationId)
+        require(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active) {
+            "Organization Directory selection is not eligible for Bind User Account To Organization."
+        }
         eventAppender.append(decision.decide(command, userOrganizationMembershipUserAccountIdOrganizationIdReservation))
     }
 }

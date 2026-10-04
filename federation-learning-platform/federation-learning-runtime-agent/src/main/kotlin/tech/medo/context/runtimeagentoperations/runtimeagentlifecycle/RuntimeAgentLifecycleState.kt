@@ -37,7 +37,7 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentBootstrapConfigurationLoadedEvent): RuntimeAgentLifecycleState = apply {
-        currentState = RuntimeAgentLifecycleStateEnum.BOOTSTRAP_LOADED
+        currentState = RuntimeAgentLifecycleStateEnum.BootstrapLoaded
         runtimeAgentId = event.runtimeAgentId
         runtimeInfrastructureId = event.runtimeInfrastructureId
         agentVersion = event.agentVersion
@@ -48,14 +48,14 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentBootstrapConfigurationLoadFailedEvent): RuntimeAgentLifecycleState = apply {
-        currentState = RuntimeAgentLifecycleStateEnum.BOOTSTRAP_LOADED
+        currentState = RuntimeAgentLifecycleStateEnum.BootstrapLoaded
         bootstrapRequestId = event.bootstrapRequestId
         failureReason = event.failureReason
     }
 
     @EventSourcingHandler
     fun evolve(event: RuntimeAgentStartedEvent): RuntimeAgentLifecycleState = apply {
-        currentState = RuntimeAgentLifecycleStateEnum.STARTED
+        currentState = RuntimeAgentLifecycleStateEnum.Started
         runtimeAgentId = event.runtimeAgentId
         runtimeInfrastructureId = event.runtimeInfrastructureId
         agentVersion = event.agentVersion
@@ -65,7 +65,7 @@ class RuntimeAgentLifecycleState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInstanceSelfCheckPassedEvent): RuntimeAgentLifecycleState = apply {
-        currentState = RuntimeAgentLifecycleStateEnum.READY
+        currentState = RuntimeAgentLifecycleStateEnum.Ready
         runtimeAgentId = event.runtimeAgentId
         runtimeInfrastructureId = event.runtimeInfrastructureId
         agentVersion = event.agentVersion

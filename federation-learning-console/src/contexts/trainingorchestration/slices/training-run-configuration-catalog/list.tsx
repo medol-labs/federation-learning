@@ -58,7 +58,7 @@ type TrainingRunConfigurationCatalogRecord = {
   minimumFairnessScore?: string;
   updateReason?: string;
   lockedByTrainingJobId?: string;
-  state: "DRAFT" | "LOCKED";
+  state: "Draft" | "Locked";
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -1115,8 +1115,8 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Draft", value: "DRAFT" },
-            { label: "Locked", value: "LOCKED" },
+            { label: "Draft", value: "Draft" },
+            { label: "Locked", value: "Locked" },
           ],
         },
         cell: ({ getValue, row }) =>

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.runtimeagentoperations.reportruntimeinstanceselfcheckpassed.ReportRuntimeInstanceSelfCheckPassedCommand
 import tech.medo.runtimeagentoperations.reportruntimeinstanceselfcheckpassed.ReportRuntimeInstanceSelfCheckPassedInput
 import tech.medo.runtimeagentoperations.reportruntimeinstanceselfcheckpassed.ReportRuntimeInstanceSelfCheckPassedService
+
+
 import tech.medo.runtimeagentoperations.runtimeagentlifecycle.RuntimeAgentLifecycleState
 import tech.medo.runtimeagentoperations.domain.states.RuntimeAgentLifecycleStateEnum
 
@@ -22,7 +24,7 @@ class ReportRuntimeInstanceSelfCheckPassedCommandHandler(
         @InjectEntity(idProperty = "bootstrapRequestId") state: RuntimeAgentLifecycleState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RuntimeAgentLifecycleStateEnum.STARTED) {
+        require(state.currentState == RuntimeAgentLifecycleStateEnum.Started) {
             "ReportRuntimeInstanceSelfCheckPassed requires RuntimeAgentLifecycle to be Started."
         }
         val input = ReportRuntimeInstanceSelfCheckPassedInput(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId, agentVersion = command.agentVersion, runtimeAgentEndpoint = command.runtimeAgentEndpoint, endpointScope = command.endpointScope)

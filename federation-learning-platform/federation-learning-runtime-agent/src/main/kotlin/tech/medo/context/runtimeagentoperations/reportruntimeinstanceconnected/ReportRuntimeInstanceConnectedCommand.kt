@@ -21,4 +21,5 @@ data class ReportRuntimeInstanceConnectedCommand(
     @TargetEntityId
     val selection: AgentRuntimeInfrastructureConnectionSelection = AgentRuntimeInfrastructureConnectionSelection(runtimeInfrastructureId = runtimeInfrastructureId)
 
+
 }

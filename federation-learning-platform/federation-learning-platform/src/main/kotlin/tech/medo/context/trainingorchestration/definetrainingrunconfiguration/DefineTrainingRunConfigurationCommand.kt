@@ -44,4 +44,5 @@ data class DefineTrainingRunConfigurationCommand(
     @TargetEntityId
     val selection: TrainingRunConfigurationSelection = TrainingRunConfigurationSelection(trainingRunConfigurationId = trainingRunConfigurationId)
 
+
 }

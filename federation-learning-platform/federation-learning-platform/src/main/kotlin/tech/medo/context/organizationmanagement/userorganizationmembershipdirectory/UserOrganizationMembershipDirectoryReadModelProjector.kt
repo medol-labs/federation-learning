@@ -53,7 +53,7 @@ open class DefaultUserOrganizationMembershipDirectoryReadModelProjectionUpdater(
             entity.organizationId = event.organizationId
             entity.organizationName = event.organizationName
             entity.organizationUserRole = event.organizationUserRole
-            entity.state = UserOrganizationMembershipStateEnum.ACTIVE
+            entity.state = UserOrganizationMembershipStateEnum.Active
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 

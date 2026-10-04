@@ -12,7 +12,7 @@ import tech.medo.federationmanagement.domain.states.FederationMembershipStateEnu
 
 interface RevokeParticipantInvitationDecision {
     fun decide(command: RevokeParticipantInvitationCommand, state: FederationMembershipState): List<Any> {
-        require(state.currentState == FederationMembershipStateEnum.INVITED) {
+        require(state.currentState == FederationMembershipStateEnum.Invited) {
             "RevokeParticipantInvitation requires FederationMembership to be Invited."
         }
         return listOf(

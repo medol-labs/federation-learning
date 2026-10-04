@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.secureaggregation.selectsecureaggregationparticipants.SelectSecureAggregationParticipantsCommand
 import tech.medo.secureaggregation.selectsecureaggregationparticipants.SelectSecureAggregationParticipantsInput
 import tech.medo.secureaggregation.selectsecureaggregationparticipants.SelectSecureAggregationParticipantsService
+
+
 import tech.medo.secureaggregation.secureaggregationsession.SecureAggregationSessionState
 import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
 
@@ -22,7 +24,7 @@ class SelectSecureAggregationParticipantsCommandHandler(
         @InjectEntity(idProperty = "secureAggregationSessionId") state: SecureAggregationSessionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == SecureAggregationSessionStateEnum.PLANNED) {
+        require(state.currentState == SecureAggregationSessionStateEnum.Planned) {
             "SelectSecureAggregationParticipants requires SecureAggregationSession to be Planned."
         }
         val input = SelectSecureAggregationParticipantsInput(secureAggregationSessionId = command.secureAggregationSessionId, roundId = command.roundId, trainingJobId = command.trainingJobId, federationId = command.federationId, federationName = command.federationName, trainingRunConfigurationId = command.trainingRunConfigurationId, configurationName = command.configurationName, trainingJobObjective = command.trainingJobObjective, featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, featureSchemaVersion = command.featureSchemaVersion, roundNumber = command.roundNumber, selectedOrganizationIds = command.selectedOrganizationIds, selectedRuntimeIds = command.selectedRuntimeIds, selectedOrganizationCount = command.selectedOrganizationCount, selectedParticipantCount = command.selectedParticipantCount, minimumNodesPerRound = command.minimumNodesPerRound, maxRounds = command.maxRounds, minimumAccuracy = command.minimumAccuracy, secureAggregationRequired = command.secureAggregationRequired)

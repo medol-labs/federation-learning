@@ -12,7 +12,7 @@ import tech.medo.datasetgovernance.domain.states.FeatureSchemaStateEnum
 
 interface RetireFeatureSchemaDecision {
     fun decide(command: RetireFeatureSchemaCommand, state: FeatureSchemaState): List<Any> {
-        require(state.currentState == FeatureSchemaStateEnum.DEPRECATED) {
+        require(state.currentState == FeatureSchemaStateEnum.Deprecated) {
             "RetireFeatureSchema requires FeatureSchema to be Deprecated."
         }
         return listOf(

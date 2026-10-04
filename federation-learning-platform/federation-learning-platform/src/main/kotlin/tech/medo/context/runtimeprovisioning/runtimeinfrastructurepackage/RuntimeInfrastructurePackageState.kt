@@ -32,7 +32,7 @@ class RuntimeInfrastructurePackageState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeInfrastructurePackageRegisteredEvent): RuntimeInfrastructurePackageState = apply {
-        currentState = RuntimeInfrastructurePackageStateEnum.REGISTERED
+        currentState = RuntimeInfrastructurePackageStateEnum.Registered
         runtimeInfrastructurePackageId = event.runtimeInfrastructurePackageId
         packageName = event.packageName
         packageVersion = event.packageVersion

@@ -16,4 +16,5 @@ data class PublishFeatureSchemaCommand(
     @TargetEntityId
     val selection: FeatureSchemaSelection = FeatureSchemaSelection(featureDomain = featureDomain, version = version)
 
+
 }

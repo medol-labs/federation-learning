@@ -13,7 +13,7 @@ import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 interface RetryRoundExecutionAfterStartFailureDecision {
     fun decide(command: RetryRoundExecutionAfterStartFailureCommand, state: RoundExecutionState, portResult: RetryRoundExecutionAfterStartFailureResult): List<Any> {
-        require(state.currentState == RoundExecutionStateEnum.START_FAILED) {
+        require(state.currentState == RoundExecutionStateEnum.StartFailed) {
             "RetryRoundExecutionAfterStartFailure requires RoundExecution to be StartFailed."
         }
         return when (portResult) {

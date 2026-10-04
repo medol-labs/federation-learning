@@ -20,4 +20,5 @@ data class RecordModelEvaluationPackageCommand(
     @TargetEntityId
     val selection: ModelSelection = ModelSelection(modelId = modelId)
 
+
 }

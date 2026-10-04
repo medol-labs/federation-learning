@@ -130,11 +130,13 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
                     );
                   }}
                   placeholder={t("resources.training_job_dashboard.commands.createTrainingJob.fields.federationId.placeholder", "Select Federation Id")}
+                  filters={[{"field":"state","operator":"eq","value":"Active"}]}
                   meta={{
                     idField: "federationId",
                     label: t("resources.training_job_dashboard.commands.createTrainingJob.fields.federationId.label", "Federation Overview"),
                     aggregateRoute: "federation",
                     queryRoute: "federationoverview",
+                    queryFields: ["state"],
                   }}
                 />
                 <FormMessage />
@@ -174,11 +176,13 @@ export const TrainingJobDashboardCreateTrainingJob = () => {
                     );
                   }}
                   placeholder={t("resources.training_job_dashboard.commands.createTrainingJob.fields.trainingRunConfigurationId.placeholder", "Select Training Run Configuration Id")}
+                  filters={[{"field":"state","operator":"eq","value":"Draft"}]}
                   meta={{
                     idField: "trainingRunConfigurationId",
                     label: t("resources.training_job_dashboard.commands.createTrainingJob.fields.trainingRunConfigurationId.label", "Training Run Configuration Catalog"),
                     aggregateRoute: "trainingrunconfiguration",
                     queryRoute: "trainingrunconfigurationcatalog",
+                    queryFields: ["state"],
                   }}
                 />
                 <FormMessage />

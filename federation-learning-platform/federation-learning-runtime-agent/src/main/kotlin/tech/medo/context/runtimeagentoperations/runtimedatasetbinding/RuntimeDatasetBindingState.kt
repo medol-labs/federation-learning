@@ -40,7 +40,7 @@ class RuntimeDatasetBindingState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: RuntimeDatasetBindingConfiguredEvent): RuntimeDatasetBindingState = apply {
-        currentState = RuntimeDatasetBindingStateEnum.CONFIGURED
+        currentState = RuntimeDatasetBindingStateEnum.Configured
         runtimeDatasetBindingId = event.runtimeDatasetBindingId
         datasetId = event.datasetId
         organizationId = event.organizationId

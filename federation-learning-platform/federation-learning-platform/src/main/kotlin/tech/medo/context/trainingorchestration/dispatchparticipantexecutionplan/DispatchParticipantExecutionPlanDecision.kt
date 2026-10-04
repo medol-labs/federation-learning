@@ -12,7 +12,7 @@ import tech.medo.trainingorchestration.domain.states.ParticipantExecutionPlanSta
 
 interface DispatchParticipantExecutionPlanDecision {
     fun decide(command: DispatchParticipantExecutionPlanCommand, state: ParticipantExecutionPlanState, portResult: DispatchParticipantExecutionPlanResult): List<Any> {
-        require(state.currentState == ParticipantExecutionPlanStateEnum.PLAN_GENERATED) {
+        require(state.currentState == ParticipantExecutionPlanStateEnum.PlanGenerated) {
             "DispatchParticipantExecutionPlan requires ParticipantExecutionPlan to be PlanGenerated."
         }
         return when (portResult) {

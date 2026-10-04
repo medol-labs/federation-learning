@@ -24,4 +24,5 @@ data class DetectRuntimeNodeResourcePressureCommand(
     @TargetEntityId
     val selection: RuntimeNodeResourcePressureSelection = RuntimeNodeResourcePressureSelection(nodeId = nodeId)
 
+
 }

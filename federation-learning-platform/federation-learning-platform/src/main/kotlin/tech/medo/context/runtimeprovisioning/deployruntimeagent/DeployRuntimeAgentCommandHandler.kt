@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component
 import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentCommand
 import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentInput
 import tech.medo.runtimeprovisioning.deployruntimeagent.DeployRuntimeAgentService
+
+
 import tech.medo.runtimeprovisioning.runtimeinfrastructure.RuntimeInfrastructureState
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
@@ -22,7 +24,7 @@ class DeployRuntimeAgentCommandHandler(
         @InjectEntity(idProperty = "runtimeInfrastructureId") state: RuntimeInfrastructureState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RuntimeInfrastructureStateEnum.VERIFIED) {
+        require(state.currentState == RuntimeInfrastructureStateEnum.Verified) {
             "DeployRuntimeAgent requires RuntimeInfrastructure to be Verified."
         }
         val input = DeployRuntimeAgentInput(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, agentInstallMode = command.agentInstallMode, expectedNodeCount = command.expectedNodeCount)

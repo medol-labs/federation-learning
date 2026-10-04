@@ -26,7 +26,7 @@ type UserOrganizationMembershipDirectoryRecord = {
   organizationId: string;
   organizationName?: string;
   organizationUserRole?: string;
-  state: "ACTIVE";
+  state: "Active";
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -240,7 +240,7 @@ export const UserOrganizationMembershipDirectoryList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Active", value: "ACTIVE" },
+            { label: "Active", value: "Active" },
           ],
         },
         cell: ({ getValue, row }) =>

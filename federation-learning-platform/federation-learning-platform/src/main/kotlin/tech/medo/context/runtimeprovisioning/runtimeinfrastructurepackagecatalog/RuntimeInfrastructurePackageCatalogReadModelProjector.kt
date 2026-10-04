@@ -38,7 +38,7 @@ open class DefaultRuntimeInfrastructurePackageCatalogReadModelProjectionUpdater(
             entity.packageName = event.packageName
             entity.packageVersion = event.packageVersion
             entity.runtimeEnvironmentType = event.runtimeEnvironmentType
-            entity.state = RuntimeInfrastructurePackageStateEnum.REGISTERED
+            entity.state = RuntimeInfrastructurePackageStateEnum.Registered
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 

@@ -128,11 +128,13 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
                     );
                   }}
                   placeholder={t("resources.organization_directory.commands.createRuntimeInstallationPlan.fields.organizationId.placeholder", "Select Organization Id")}
+                  filters={[{"field":"state","operator":"eq","value":"Active"}]}
                   meta={{
                     idField: "organizationId",
                     label: t("resources.organization_directory.commands.createRuntimeInstallationPlan.fields.organizationId.label", "Organization Directory"),
                     aggregateRoute: "organization",
                     queryRoute: "organizationdirectory",
+                    queryFields: ["state"],
                   }}
                 />
                 <FormMessage />
@@ -172,11 +174,13 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
                     );
                   }}
                   placeholder={t("resources.organization_directory.commands.createRuntimeInstallationPlan.fields.runtimeInfrastructurePackageId.placeholder", "Select Runtime Infrastructure Package Id")}
+                  filters={[{"field":"state","operator":"eq","value":"Registered"}]}
                   meta={{
                     idField: "runtimeInfrastructurePackageId",
                     label: t("resources.organization_directory.commands.createRuntimeInstallationPlan.fields.runtimeInfrastructurePackageId.label", "Runtime Infrastructure Package Catalog"),
                     aggregateRoute: "runtimeinfrastructurepackage",
                     queryRoute: "runtimeinfrastructurepackagecatalog",
+                    queryFields: ["state"],
                   }}
                 />
                 <FormMessage />
@@ -219,7 +223,7 @@ export const OrganizationDirectoryCreateRuntimeInstallationPlan = () => {
                     field.onChange(value);
                   }}
                   placeholder={t("resources.organization_directory.commands.createRuntimeInstallationPlan.fields.agentInstallMode.placeholder", "Select Agent Install Mode")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_INSTALL_MODE"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"RUNTIME_AGENT_INSTALL_MODE"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{

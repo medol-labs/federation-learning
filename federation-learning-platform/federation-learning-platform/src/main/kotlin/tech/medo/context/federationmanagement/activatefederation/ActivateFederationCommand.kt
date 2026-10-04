@@ -15,4 +15,5 @@ data class ActivateFederationCommand(
     @TargetEntityId
     val selection: FederationSelection = FederationSelection(federationName = federationName)
 
+
 }

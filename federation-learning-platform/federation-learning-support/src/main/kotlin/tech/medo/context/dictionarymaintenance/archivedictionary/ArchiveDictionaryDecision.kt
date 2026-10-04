@@ -12,7 +12,7 @@ import tech.medo.dictionarymaintenance.domain.states.DictionaryStateEnum
 
 interface ArchiveDictionaryDecision {
     fun decide(command: ArchiveDictionaryCommand, state: DictionaryState): List<Any> {
-        require(state.currentState == DictionaryStateEnum.REGISTERED) {
+        require(state.currentState == DictionaryStateEnum.Registered) {
             "ArchiveDictionary requires Dictionary to be Registered."
         }
         return listOf(

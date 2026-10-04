@@ -14,4 +14,5 @@ data class GenerateUserAccountLoginPasswordCommand(
     @TargetEntityId
     val selection: UserAccountSelection = UserAccountSelection(userAccountId = userAccountId)
 
+
 }

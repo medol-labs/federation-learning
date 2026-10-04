@@ -12,7 +12,7 @@ import tech.medo.runtimeagentoperations.domain.states.RuntimeAgentLifecycleState
 
 interface ReportRuntimeInstanceSelfCheckPassedDecision {
     fun decide(command: ReportRuntimeInstanceSelfCheckPassedCommand, state: RuntimeAgentLifecycleState, portResult: ReportRuntimeInstanceSelfCheckPassedResult): List<Any> {
-        require(state.currentState == RuntimeAgentLifecycleStateEnum.STARTED) {
+        require(state.currentState == RuntimeAgentLifecycleStateEnum.Started) {
             "ReportRuntimeInstanceSelfCheckPassed requires RuntimeAgentLifecycle to be Started."
         }
         return when (portResult) {

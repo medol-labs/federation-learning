@@ -13,4 +13,5 @@ data class RetryTrainingRoundParticipantSelectionCommand(
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
 
+
 }

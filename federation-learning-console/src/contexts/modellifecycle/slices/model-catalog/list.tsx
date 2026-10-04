@@ -28,7 +28,7 @@ type ModelCatalogRecord = {
   modelArtifactDigest: string;
   evaluationReportId: string;
   finalGlobalAccuracy: string;
-  state: "CANDIDATE" | "EVALUATION_PACKAGED" | "APPROVED" | "PRODUCTION" | "ROLLED_BACK" | "RETIRED";
+  state: "Candidate" | "EvaluationPackaged" | "Approved" | "Production" | "RolledBack" | "Retired";
   releaseChannel?: string;
   productionStage?: string;
   previousModelId?: string;
@@ -313,12 +313,12 @@ export const ModelCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Candidate", value: "CANDIDATE" },
-            { label: "Evaluation Packaged", value: "EVALUATION_PACKAGED" },
-            { label: "Approved", value: "APPROVED" },
-            { label: "Production", value: "PRODUCTION" },
-            { label: "Rolled Back", value: "ROLLED_BACK" },
-            { label: "Retired", value: "RETIRED" },
+            { label: "Candidate", value: "Candidate" },
+            { label: "Evaluation Packaged", value: "EvaluationPackaged" },
+            { label: "Approved", value: "Approved" },
+            { label: "Production", value: "Production" },
+            { label: "Rolled Back", value: "RolledBack" },
+            { label: "Retired", value: "Retired" },
           ],
         },
         cell: ({ getValue, row }) =>

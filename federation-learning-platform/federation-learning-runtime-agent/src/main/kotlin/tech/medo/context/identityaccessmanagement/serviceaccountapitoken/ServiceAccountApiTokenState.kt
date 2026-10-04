@@ -28,7 +28,7 @@ class ServiceAccountApiTokenState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: ServiceAccountApiTokenIssuedEvent): ServiceAccountApiTokenState = apply {
-        currentState = ServiceAccountApiTokenStateEnum.ISSUED
+        currentState = ServiceAccountApiTokenStateEnum.Issued
         apiTokenId = event.apiTokenId
         userAccountId = event.userAccountId
         username = event.username

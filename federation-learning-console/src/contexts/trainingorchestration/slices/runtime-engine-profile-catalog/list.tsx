@@ -29,7 +29,7 @@ type RuntimeEngineProfileCatalogRecord = {
   supportedModelPluginsDescription?: string;
   supportedAggregationAlgorithmsDescription?: string;
   active: boolean;
-  state: "REGISTERED";
+  state: "Registered";
   registeredAt?: string;
 };
 
@@ -299,7 +299,7 @@ export const RuntimeEngineProfileCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Registered", value: "REGISTERED" },
+            { label: "Registered", value: "Registered" },
           ],
         },
         cell: ({ getValue, row }) =>

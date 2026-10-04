@@ -36,14 +36,14 @@ class PlatformUserOrganizationResolverTest {
             ExpectedCount.once(),
             requestTo(
                 "http://platform:8081/userorganizationmembership/userorganizationmembershipdirectory" +
-                    "?userAccountId.equals=$userAccountId&state.equals=ACTIVE&size=20",
+                    "?userAccountId.equals=$userAccountId&state.equals=Active&size=20",
             ),
         )
             .andExpect(method(HttpMethod.GET))
             .andExpect(header(InternalTokenAuthenticationFilter.INTERNAL_TOKEN_HEADER, "service-token"))
             .andRespond(
                 withSuccess(
-                    """{"content":[{"organizationId":"$organizationId","organizationName":"Acme","state":"ACTIVE"}]}""",
+                    """{"content":[{"organizationId":"$organizationId","organizationName":"Acme","state":"Active"}]}""",
                     MediaType.APPLICATION_JSON,
                 ),
             )

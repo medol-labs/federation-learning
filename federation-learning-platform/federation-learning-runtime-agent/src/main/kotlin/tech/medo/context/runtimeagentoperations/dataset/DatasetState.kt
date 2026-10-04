@@ -57,7 +57,7 @@ class DatasetState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetDeclaredEvent): DatasetState = apply {
-        currentState = DatasetStateEnum.REGISTERED
+        currentState = DatasetStateEnum.Registered
         datasetId = event.datasetId
         organizationId = event.organizationId
         organizationName = event.organizationName
@@ -72,7 +72,7 @@ class DatasetState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetContractValidatedEvent): DatasetState = apply {
-        currentState = DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED
+        currentState = DatasetStateEnum.ContractValidationCompleted
         datasetId = event.datasetId
         featureSchemaId = event.featureSchemaId
         metadataReportId = event.metadataReportId
@@ -84,7 +84,7 @@ class DatasetState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetContractValidationFailedEvent): DatasetState = apply {
-        currentState = DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED
+        currentState = DatasetStateEnum.ContractValidationCompleted
         datasetId = event.datasetId
         featureSchemaId = event.featureSchemaId
         metadataReportId = event.metadataReportId
@@ -108,7 +108,7 @@ class DatasetState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetContractRevalidationFailedEvent): DatasetState = apply {
-        currentState = DatasetStateEnum.CONTRACT_VALIDATION_COMPLETED
+        currentState = DatasetStateEnum.ContractValidationCompleted
         datasetId = event.datasetId
         featureSchemaId = event.featureSchemaId
         metadataReportId = event.metadataReportId
@@ -121,21 +121,21 @@ class DatasetState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DatasetRejectedForTrainingEvent): DatasetState = apply {
-        currentState = DatasetStateEnum.REJECTED
+        currentState = DatasetStateEnum.Rejected
         datasetId = event.datasetId
         rejectionReason = event.rejectionReason
     }
 
     @EventSourcingHandler
     fun evolve(event: DatasetApprovedForTrainingEvent): DatasetState = apply {
-        currentState = DatasetStateEnum.APPROVED
+        currentState = DatasetStateEnum.Approved
         datasetId = event.datasetId
         organizationId = event.organizationId
     }
 
     @EventSourcingHandler
     fun evolve(event: DatasetTrainingApprovalRevokedEvent): DatasetState = apply {
-        currentState = DatasetStateEnum.APPROVAL_REVOKED
+        currentState = DatasetStateEnum.ApprovalRevoked
         datasetId = event.datasetId
         revokeReason = event.revokeReason
     }

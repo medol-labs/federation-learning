@@ -13,4 +13,5 @@ data class DownloadFileCommand(
     @TargetEntityId
     val selection: UploadedFileSelection = UploadedFileSelection(fileId = fileId)
 
+
 }

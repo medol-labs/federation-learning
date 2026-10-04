@@ -12,7 +12,7 @@ import tech.medo.datasetgovernance.domain.states.FeatureSchemaStateEnum
 
 interface PublishFeatureSchemaDecision {
     fun decide(command: PublishFeatureSchemaCommand, state: FeatureSchemaState): List<Any> {
-        require(state.currentState == FeatureSchemaStateEnum.DRAFT) {
+        require(state.currentState == FeatureSchemaStateEnum.Draft) {
             "PublishFeatureSchema requires FeatureSchema to be Draft."
         }
         return listOf(

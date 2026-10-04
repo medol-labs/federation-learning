@@ -18,4 +18,5 @@ data class ReportRuntimeInstanceSelfCheckPassedCommand(
     @TargetEntityId
     val selection: RuntimeAgentLifecycleSelection = RuntimeAgentLifecycleSelection(bootstrapRequestId = bootstrapRequestId)
 
+
 }

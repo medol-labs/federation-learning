@@ -39,4 +39,5 @@ data class DispatchParticipantExecutionPlanCommand(
     @TargetEntityId
     val selection: ParticipantExecutionPlanSelection = ParticipantExecutionPlanSelection(executionPlanId = executionPlanId)
 
+
 }

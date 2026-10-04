@@ -40,4 +40,5 @@ data class ReceiveParticipantExecutionPlanCommand(
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
 
+
 }

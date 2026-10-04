@@ -81,7 +81,7 @@ open class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
             entity.trainingJobObjective = event.trainingJobObjective
             entity.severity = event.severity
             entity.message = event.message
-            entity.state = TrainingAlertStateEnum.RAISED
+            entity.state = TrainingAlertStateEnum.Raised
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -97,7 +97,7 @@ open class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
                 this.alertId = event.alertId
         }
             entity.alertId = event.alertId
-            entity.state = TrainingAlertStateEnum.ACKNOWLEDGED
+            entity.state = TrainingAlertStateEnum.Acknowledged
             entity.acknowledgedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -115,7 +115,7 @@ open class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
         }
             entity.alertId = event.alertId
             entity.resolutionSummary = event.resolutionSummary
-            entity.state = TrainingAlertStateEnum.RESOLVED
+            entity.state = TrainingAlertStateEnum.Resolved
             entity.resolvedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

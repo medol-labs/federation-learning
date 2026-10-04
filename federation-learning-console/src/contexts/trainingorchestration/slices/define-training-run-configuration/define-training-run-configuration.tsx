@@ -189,11 +189,13 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                     );
                   }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.federationId.placeholder", "Select Federation Id")}
+                  filters={[{"field":"state","operator":"eq","value":"Active"}]}
                   meta={{
                     idField: "federationId",
                     label: t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.federationId.label", "Federation Overview"),
                     aggregateRoute: "federation",
                     queryRoute: "federationoverview",
+                    queryFields: ["state"],
                   }}
                 />
                 <FormMessage />
@@ -228,11 +230,13 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                     );
                   }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
+                  filters={[{"field":"schemaStatus","operator":"eq","value":"Published"}]}
                   meta={{
                     idField: "featureSchemaId",
                     label: t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.featureSchemaId.label", "Feature Schema Catalog"),
                     aggregateRoute: "featureschema",
                     queryRoute: "featureschemacatalog",
+                    queryFields: ["schemaStatus"],
                   }}
                 />
                 <FormMessage />
@@ -272,11 +276,13 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                     );
                   }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.initialModelId.placeholder", "Select Initial Model Id")}
+                  filters={[{"field":"state","operator":"eq","value":"Registered"}]}
                   meta={{
                     idField: "modelId",
                     label: t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.initialModelId.label", "Model Artifact Catalog"),
                     aggregateRoute: "modelartifact",
                     queryRoute: "modelartifactcatalog",
+                    queryFields: ["state"],
                   }}
                 />
                 <FormMessage />
@@ -321,11 +327,13 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                     );
                   }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.runtimeEngineProfileId.placeholder", "Select Runtime Engine Profile Id")}
+                  filters={[{"field":"state","operator":"eq","value":"Registered"},{"field":"active","operator":"eq","value":true}]}
                   meta={{
                     idField: "runtimeEngineProfileId",
                     label: t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.runtimeEngineProfileId.label", "Runtime Engine Profile Catalog"),
                     aggregateRoute: "runtimeengineprofile",
                     queryRoute: "runtimeengineprofilecatalog",
+                    queryFields: ["state","active"],
                   }}
                 />
                 <FormMessage />
@@ -350,7 +358,7 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                     field.onChange(value);
                   }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.strategyName.placeholder", "Select Strategy Name")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_STRATEGY"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_STRATEGY"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
@@ -383,7 +391,7 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                     field.onChange(value);
                   }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.aggregationAlgorithm.placeholder", "Select Aggregation Algorithm")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"AGGREGATION_ALGORITHM"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"AGGREGATION_ALGORITHM"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
@@ -548,7 +556,7 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                     field.onChange(value);
                   }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.optimizer.placeholder", "Select Optimizer")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_OPTIMIZER"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_OPTIMIZER"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{
@@ -581,7 +589,7 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                     field.onChange(value);
                   }}
                   placeholder={t("resources.training_run_configuration_catalog.commands.defineTrainingRunConfiguration.fields.lossFunction.placeholder", "Select Loss Function")}
-                  filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_LOSS_FUNCTION"},{"field":"state","operator":"eq","value":"ACTIVE"}]}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"TRAINING_LOSS_FUNCTION"},{"field":"state","operator":"eq","value":"Active"}]}
                   sorters={[{"field":"displayOrder","order":"asc"}]}
                   pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
                   meta={{

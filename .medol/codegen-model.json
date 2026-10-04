@@ -8557,6 +8557,33 @@
               "portOutput": false
             },
             {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "OrganizationDirectory.organizationName"
+                ],
+                "lookup": {
+                  "key": "organizationId",
+                  "cacheProjection": "OrganizationDirectory",
+                  "sourceField": "organizationName",
+                  "targetField": "organizationName",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
               "name": "activationNote",
               "type": "String",
               "cardinality": "Single",
@@ -8610,6 +8637,20 @@
               "idAttribute": true,
               "generated": false,
               "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
               "query": false,
               "display": false,
               "uploadFile": false,
@@ -8736,6 +8777,33 @@
               "portOutput": false
             },
             {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "OrganizationDirectory.organizationName"
+                ],
+                "lookup": {
+                  "key": "organizationId",
+                  "cacheProjection": "OrganizationDirectory",
+                  "sourceField": "organizationName",
+                  "targetField": "organizationName",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
               "name": "deactivationReason",
               "type": "String",
               "cardinality": "Single",
@@ -8789,6 +8857,20 @@
               "idAttribute": true,
               "generated": false,
               "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
               "query": false,
               "display": false,
               "uploadFile": false,
@@ -8903,6 +8985,33 @@
               "portOutput": false
             },
             {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false,
+              "source": {
+                "kind": "derived",
+                "from": [
+                  "OrganizationDirectory.organizationName"
+                ],
+                "lookup": {
+                  "key": "organizationId",
+                  "cacheProjection": "OrganizationDirectory",
+                  "sourceField": "organizationName",
+                  "targetField": "organizationName",
+                  "missingValuePolicy": "keep"
+                }
+              }
+            },
+            {
               "name": "reactivationReason",
               "type": "String",
               "cardinality": "Single",
@@ -8956,6 +9065,20 @@
               "idAttribute": true,
               "generated": false,
               "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
               "query": false,
               "display": false,
               "uploadFile": false,
@@ -9154,7 +9277,47 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "eligibility": [
+            {
+              "profile": "InviteParticipant",
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "Organization.state",
+                  "operator": "==",
+                  "right": "Active"
+                }
+              ]
+            },
+            {
+              "profile": "BindUserAccountToOrganization",
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "Organization.state",
+                  "operator": "==",
+                  "right": "Active"
+                }
+              ]
+            },
+            {
+              "profile": "CreateRuntimeInstallationPlan",
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "Organization.state",
+                  "operator": "==",
+                  "right": "Active"
+                }
+              ]
+            }
+          ],
+          "metadata": {
+            "eligibleFor:InviteParticipant": "Organization.state == Active",
+            "eligibleFor:BindUserAccountToOrganization": "Organization.state == Active",
+            "eligibleFor:CreateRuntimeInstallationPlan": "Organization.state == Active"
+          }
         }
       ],
       "screens": [
@@ -10783,7 +10946,22 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "eligibility": [
+            {
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "Federation.state",
+                  "operator": "==",
+                  "right": "Active"
+                }
+              ]
+            }
+          ],
+          "metadata": {
+            "eligibleWhen": "Federation.state == Active"
+          }
         }
       ],
       "screens": [],
@@ -10831,7 +11009,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "FederationOverview.federationId"
+                ]
+              }
             },
             {
               "name": "federationName",
@@ -10872,7 +11056,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "OrganizationDirectory.organizationId"
+                ]
+              }
             },
             {
               "name": "organizationName",
@@ -16922,7 +17112,23 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "eligibility": [
+            {
+              "profile": "CreateRuntimeInstallationPlan",
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "RuntimeInfrastructurePackage.state",
+                  "operator": "==",
+                  "right": "Registered"
+                }
+              ]
+            }
+          ],
+          "metadata": {
+            "eligibleFor:CreateRuntimeInstallationPlan": "RuntimeInfrastructurePackage.state == Registered"
+          }
         }
       ],
       "screens": [],
@@ -16996,7 +17202,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "OrganizationDirectory.organizationId"
+                ]
+              }
             },
             {
               "name": "organizationName",
@@ -17037,7 +17249,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "RuntimeInfrastructurePackageCatalog.runtimeInfrastructurePackageId"
+                ]
+              }
             },
             {
               "name": "runtimeInfrastructurePackageName",
@@ -28318,7 +28536,35 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "eligibility": [
+            {
+              "profile": "DefineTrainingRunConfiguration",
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "FeatureSchemaCatalog.schemaStatus",
+                  "operator": "==",
+                  "right": "Published"
+                }
+              ]
+            },
+            {
+              "profile": "UpdateTrainingRunConfiguration",
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "FeatureSchemaCatalog.schemaStatus",
+                  "operator": "==",
+                  "right": "Published"
+                }
+              ]
+            }
+          ],
+          "metadata": {
+            "eligibleFor:DefineTrainingRunConfiguration": "FeatureSchemaCatalog.schemaStatus == Published",
+            "eligibleFor:UpdateTrainingRunConfiguration": "FeatureSchemaCatalog.schemaStatus == Published"
+          }
         }
       ],
       "screens": [],
@@ -31088,7 +31334,35 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "eligibility": [
+            {
+              "profile": "DefineTrainingRunConfiguration",
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "ModelArtifact.state",
+                  "operator": "==",
+                  "right": "Registered"
+                }
+              ]
+            },
+            {
+              "profile": "UpdateTrainingRunConfiguration",
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "ModelArtifact.state",
+                  "operator": "==",
+                  "right": "Registered"
+                }
+              ]
+            }
+          ],
+          "metadata": {
+            "eligibleFor:DefineTrainingRunConfiguration": "ModelArtifact.state == Registered",
+            "eligibleFor:UpdateTrainingRunConfiguration": "ModelArtifact.state == Registered"
+          }
         }
       ],
       "screens": [],
@@ -32811,7 +33085,47 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "eligibility": [
+            {
+              "profile": "DefineTrainingRunConfiguration",
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "RuntimeEngineProfile.state",
+                  "operator": "==",
+                  "right": "Registered"
+                },
+                {
+                  "left": "RuntimeEngineProfileCatalog.active",
+                  "operator": "==",
+                  "right": true
+                }
+              ]
+            },
+            {
+              "profile": "UpdateTrainingRunConfiguration",
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "RuntimeEngineProfile.state",
+                  "operator": "==",
+                  "right": "Registered"
+                },
+                {
+                  "left": "RuntimeEngineProfileCatalog.active",
+                  "operator": "==",
+                  "right": true
+                }
+              ]
+            }
+          ],
+          "metadata": {
+            "eligibleFor:DefineTrainingRunConfiguration": "RuntimeEngineProfile.state == Registered",
+            "eligibleFor:DefineTrainingRunConfiguration2": "RuntimeEngineProfileCatalog.active == true",
+            "eligibleFor:UpdateTrainingRunConfiguration": "RuntimeEngineProfile.state == Registered",
+            "eligibleFor:UpdateTrainingRunConfiguration2": "RuntimeEngineProfileCatalog.active == true"
+          }
         }
       ],
       "screens": [],
@@ -32880,7 +33194,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "FederationOverview.federationId"
+                ]
+              }
             },
             {
               "name": "federationName",
@@ -32921,7 +33241,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "FeatureSchemaCatalog.featureSchemaId"
+                ]
+              }
             },
             {
               "name": "featureDomain",
@@ -33515,7 +33841,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "FeatureSchemaCatalog.featureSchemaId"
+                ]
+              }
             },
             {
               "name": "featureDomain",
@@ -34557,7 +34889,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "FederationOverview.federationId"
+                ]
+              }
             },
             {
               "name": "federationName",
@@ -36374,7 +36712,7 @@
                 "from": [
                   "TrainingJobSubmitted.trainingRunConfigurationId"
                 ],
-                "rule": "Lock the configuration carried by the submitted training job event."
+                "rule": "Lock the configuration carried by the submitted training job event so it cannot be edited after the job is submitted."
               }
             },
             {
@@ -37116,7 +37454,23 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "eligibility": [
+            {
+              "profile": "CreateTrainingJob",
+              "operator": "AND",
+              "conditions": [
+                {
+                  "left": "TrainingRunConfiguration.state",
+                  "operator": "==",
+                  "right": "Draft"
+                }
+              ]
+            }
+          ],
+          "metadata": {
+            "eligibleFor:CreateTrainingJob": "TrainingRunConfiguration.state == Draft"
+          }
         }
       ],
       "screens": [],
@@ -37171,7 +37525,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "FederationOverview.federationId"
+                ]
+              }
             },
             {
               "name": "federationName",
@@ -37212,7 +37572,13 @@
               "display": false,
               "uploadFile": false,
               "file": false,
-              "portOutput": false
+              "portOutput": false,
+              "source": {
+                "kind": "direct",
+                "from": [
+                  "TrainingRunConfigurationCatalog.trainingRunConfigurationId"
+                ]
+              }
             },
             {
               "name": "configurationName",
@@ -96132,27 +96498,6 @@
   "defaultLocale": "zh-CN",
   "translations": {
     "zh-CN": {
-      "AgentReady": "代理就绪",
-      "ApprovalRevoked": "审批已撤销",
-      "CollectingUpdates": "正在收集更新",
-      "DatasetGovernance": "DatasetGovernance",
-      "DictionaryMaintenance": "字典维护",
-      "FederationLearningPlatform": "FederationLearningPlatform",
-      "FederationManagement": "FederationManagement",
-      "InvitationRevoked": "InvitationRevoked",
-      "MetadataReported": "元数据已报告",
-      "ModelRepository": "ModelRepository",
-      "OrganizationManagement": "OrganizationManagement",
-      "PUBLIC_HEALTH_AGENCY": "PUBLIC_HEALTH_AGENCY",
-      "REHABILITATION_CENTER": "REHABILITATION_CENTER",
-      "RESEARCH_INSTITUTE": "RESEARCH_INSTITUTE",
-      "RuntimeAgentFailed": "RuntimeAgentFailed",
-      "RuntimeProvisioning": "RuntimeProvisioning",
-      "VerificationFailed": "验证失败",
-      "unique (FeatureSchema.featureDomain, FeatureSchema.version)": "唯一 (FeatureSchema.featureDomain, FeatureSchema.version)",
-      "unique Dictionary.dictionaryCode": "Dictionary.dictionaryCode 不能重复",
-      "unique Federation.federationName": "Federation.federationName 必须唯一",
-      "unique Organization.organizationName": "unique Organization.organizationName",
       "A dataset can be approved only after contract validation succeeds with acceptable quality and schema compatibility.": "只有当数据集合约验证成功且具有可接受的质量和架构兼容性时，才能批准数据集。",
       "A feature schema can be published only from the Draft lifecycle state.": "特征架构只能在草稿生命周期状态下发布。",
       "A feature schema is uniquely identified by the combination of its domain and system-assigned version. Two schemas within the same domain cannot share a version, and users do not manually type the next version. The schema data modality describes whether the feature list represents tabular columns or logical inputs for unstructured data such as text, image, audio, document, or embedding datasets.": "特征架构通过其域与系统分配的版本的组合进行唯一标识。同一个域下的两个架构不能共享版本，用户不会手动输入下一个版本。架构的数据模态描述特征列表是表示表格列，还是文本、图像、音频、文档或嵌入数据集等非结构化数据的逻辑输入。",
@@ -96272,6 +96617,7 @@
       "Agent Version": "代理版本",
       "Agent Version is required": "代理版本为必填项",
       "Agent jobs can leak local credentials if secret references are materialized outside the participant boundary.": "如果机密引用在参与者边界之外被实例化，代理作业可能会泄漏本地凭据。",
+      "AgentReady": "代理就绪",
       "Aggregate Accepted Plain Updates": "聚合已接受的明文更新",
       "Aggregate Plain Model Updates": "聚合明文模型更新",
       "Aggregate Plain Updates When Quorum Reached": "达到法定人数时聚合明文更新",
@@ -96329,6 +96675,7 @@
       "Approval Note is required": "审批备注为必填项",
       "Approval Status": "审批状态",
       "Approval Status is required": "审批状态为必填项",
+      "ApprovalRevoked": "审批已撤销",
       "Approve Dataset For Training": "批准数据集用于训练",
       "Approve Evaluation Packaged Model": "批准评估打包模型",
       "Approve Invited Participant": "批准已邀请的参与者",
@@ -96469,6 +96816,7 @@
       "Class Balance Score is required": "类别平衡分数为必填项",
       "Class Labels": "类别标签",
       "Class Labels is required": "类别标签为必填项",
+      "CollectingUpdates": "正在收集更新",
       "Complete Aggregation When Encrypted Updates Ready": "加密更新就绪时完成聚合",
       "Complete Homomorphic Aggregation Session": "完成同态聚合会话",
       "Complete Job When Training Stop Criteria Met": "满足训练停止条件时完成作业",
@@ -96585,6 +96933,7 @@
       "Dataset Usage is required": "数据集用途为必填项",
       "Dataset contract validation succeeds only when the reported dataset metadata is compatible with the expected feature schema and label contract.": "数据集合约验证仅在报告的数据集元数据与预期特征架构和标签合约兼容时才会成功。",
       "Dataset governance separates feature schemas, platform-recorded runtime dataset metadata, dataset access validation evidence, and train evaluation bundles. Runtime agents own dataset declarations, data connectors, local access profiles, and credentials inside participant infrastructure.": "数据集治理将特征架构、平台记录的运行时数据集元数据、数据集访问验证证据以及训练评估包进行分离。运行时代理在参与者基础设施内拥有数据集声明、数据连接器、本地访问配置文件和凭据。",
+      "DatasetGovernance": "DatasetGovernance",
       "Datasets may be approved despite schema drift, privacy sensitivity, or non IID skew that invalidates training assumptions.": "即使存在使训练假设失效的架构漂移、隐私敏感性或非 IID 偏差，数据集也可能被批准。",
       "Deactivate Organization": "停用组织",
       "Deactivate User Account": "停用用户账户",
@@ -96638,6 +96987,11 @@
       "Dictionary Name": "字典名称",
       "Dictionary Name is required": "字典名称为必填项",
       "Dictionary Registered": "字典已注册",
+      "Dictionary maintenance owns dynamic option dictionaries used by platform contexts. Business contexts store valueCode and query DictionaryValueCatalog by dictionaryCode for display and selection.": "字典维护负责管理平台上下文使用的动态选项字典。业务上下文存储 valueCode 并通过 dictionaryCode 查询 DictionaryValueCatalog 以进行显示和选择。",
+      "agentRuntimeJobFailureRate": "agentRuntimeJobFailureRate",
+      "agentRuntimeJobStartupLatency": "agentRuntimeJobStartupLatency",
+      "auditTrailCompleteness": "auditTrailCompleteness",
+      "datasetContractValidationFailureRate": "datasetContractValidationFailureRate",
       "Dictionary Updated": "字典已更新",
       "Dictionary Value": "字典值",
       "Dictionary Value Added": "字典值已添加",
@@ -96648,7 +97002,7 @@
       "Dictionary Value Enabled": "字典值已启用",
       "Dictionary Value Id": "字典值 ID",
       "Dictionary Value Id is required": "字典值 ID 为必填项",
-      "Dictionary maintenance owns dynamic option dictionaries used by platform contexts. Business contexts store valueCode and query DictionaryValueCatalog by dictionaryCode for display and selection.": "字典维护负责管理平台上下文使用的动态选项字典。业务上下文存储 valueCode 并通过 dictionaryCode 查询 DictionaryValueCatalog 以进行显示和选择。",
+      "DictionaryMaintenance": "字典维护",
       "Disable Dictionary Value": "停用字典值",
       "Disabled": "已停用",
       "Disabled At": "停用时间",
@@ -96682,7 +97036,6 @@
       "Duplicate Rate": "重复率",
       "Duplicate Rate is required": "重复率为必填项",
       "Duplicate dictionary value codes can cause inconsistent command payloads across deployables.": "重复的字典值代码可能会在可部署项之间导致不一致的命令负载。",
-      "Each training round starts from a runtime snapshot selected by domain policy. The policy evaluates submitted job, locked training configuration, active federation membership, active runtime identity, detected runtime capabilities, connected runtime status, and approved dataset evidence matching the feature schema. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If the selected runtime count is below quorum, the system records a failed participant selection event so the operator can fix runtime or dataset readiness and retry selection.": "每轮训练从域策略所选的运行时快照开始。该策略评估已提交的作业、已锁定的训练配置、活跃的联邦成员、活跃的运行时身份、检测到的运行时能力、已连接的运行时状态，以及与特征架构匹配的已批准数据集证据。在某轮训练开始后才就绪的运行时无法加入该轮，但如果策略允许动态轮次快照，它们可以被选入后续轮次。如果所选运行时数量低于法定数量，系统会记录参与者选择失败事件，以便操作员修复运行时或数据集的就绪状态并重试选择。",
       "Eligibility Reason": "资格原因",
       "Eligibility Reason is required": "资格原因为必填项",
       "Eligibility Score": "资格评分",
@@ -97136,6 +97489,7 @@
       "Enter Runtime Engine Image Digest": "输入运行时引擎镜像摘要",
       "Enter Runtime Engine Job Id": "输入运行时引擎作业 ID",
       "Enter Runtime Engine Observation At": "输入运行时引擎观察时间",
+      "dictionaryValueActivationLatency": "dictionaryValueActivationLatency",
       "Enter Runtime Engine Observed Status": "输入运行时引擎观察状态",
       "Enter Runtime Engine Plugin Profile": "输入运行时引擎插件配置文件",
       "Enter Runtime Engine Profile Id": "输入运行时引擎配置文件 ID",
@@ -97336,6 +97690,8 @@
       "Federation management owns federations and federation membership governance.": "联邦管理负责联邦及联邦成员资格治理。",
       "Federation names must be unique.": "联邦名称必须唯一。",
       "Federation training can proceed with too few available organization-owned compute nodes if eligibility is not enforced.": "如果未强制执行资格条件，联邦训练可能在可用的组织拥有的计算节点过少的情况下继续进行。",
+      "FederationLearningPlatform": "FederationLearningPlatform",
+      "FederationManagement": "FederationManagement",
       "File Discarded": "文件已丢弃",
       "File Download Authorized": "文件下载已授权",
       "File Expired": "文件已过期",
@@ -97437,6 +97793,7 @@
       "Inventory Hash is required": "清单哈希为必填项",
       "Invitation Note": "邀请备注",
       "Invitation Note is required": "邀请备注为必填项",
+      "InvitationRevoked": "InvitationRevoked",
       "Invite Participant": "邀请参与者",
       "Invited": "已邀请",
       "Is Identifier": "是否为标识符",
@@ -97521,6 +97878,7 @@
       "Metadata Report Id is required": "元数据报告 ID 为必填项",
       "Metadata Status": "元数据状态",
       "Metadata Status is required": "元数据状态为必填项",
+      "MetadataReported": "元数据已报告",
       "Metrics Artifact Ref": "指标制品引用",
       "Metrics Artifact Ref is required": "指标制品引用为必填项",
       "Minimum Accuracy": "最低准确率",
@@ -97600,6 +97958,7 @@
       "Model artifact content is not available for download.": "模型工件内容不可下载。",
       "Model lifecycle starts after training has produced a final evaluated candidate.": "模型生命周期从训练产生最终已评估候选之后开始。",
       "Model repository owns model identity, versioning, lineage, and pullable artifact references used by training orchestration and runtime agents. FileUpload owns the underlying bytes and storage adapter; ModelArtifact owns their model-specific lifecycle and metadata.": "模型仓库拥有模型标识、版本控制、血缘关系以及训练编排和运行时代理所使用的可拉取工件引用。FileUpload 拥有底层字节和存储适配器；ModelArtifact 拥有其特定于模型的生命周期和元数据。",
+      "ModelRepository": "ModelRepository",
       "Next Action": "下一步操作",
       "Next Action is required": "下一步操作为必填项",
       "Next Required Action": "下一步必需操作",
@@ -97618,6 +97977,13 @@
       "Node Taint Command is required": "节点污点命令为必填项",
       "Node operators can manually retry dataset access validation after correcting local credentials or data source configuration.": "节点操作员可以在更正本地凭据或数据源配置后手动重试数据集访问验证。",
       "Node operators can retry profiling after a profiling failure without resubmitting dataset identity fields; the current profile state supplies those identifiers.": "节点操作员可以在剖析失败后重试剖析，无需重新提交数据集标识字段；当前剖析状态将提供这些标识符。",
+      "federationActivationLeadTime": "federationActivationLeadTime",
+      "fileUploadFailureRate": "fileUploadFailureRate",
+      "fileUploadLatency": "fileUploadLatency",
+      "globalAccuracyGap": "globalAccuracyGap",
+      "modelApprovalLeadTime": "modelApprovalLeadTime",
+      "modelArtifactPullFailureRate": "modelArtifactPullFailureRate",
+      "modelArtifactRegistrationLatency": "modelArtifactRegistrationLatency",
       "Non Iid Score": "非 IID 分数",
       "Non Iid Score is required": "非 IID 分数为必填项",
       "Nullable": "可空",
@@ -97677,11 +98043,13 @@
       "Organization User Role is required": "组织用户角色为必填项",
       "Organization management owns organization lifecycle and runtime-discovered compute node availability.": "组织管理负责组织生命周期以及运行时发现的计算节点可用性。",
       "Organization names must be unique.": "组织名称必须唯一。",
+      "OrganizationManagement": "OrganizationManagement",
       "Organizations can receive wrong runtime installation guidance and fail to connect runtime infrastructure.": "组织可能会收到错误的运行时安装指南，并无法连接运行时基础设施。",
       "Original File Name": "原始文件名",
       "Original File Name is required": "原始文件名为必填项",
       "Overall Readiness": "总体就绪状态",
       "Overall Readiness is required": "总体就绪状态为必填项",
+      "PUBLIC_HEALTH_AGENCY": "PUBLIC_HEALTH_AGENCY",
       "Package Name": "包名称",
       "Package Name is required": "包名称为必填项",
       "Package Version": "包版本",
@@ -97802,6 +98170,8 @@
       "Quorum Met is required": "法定人数已满足为必填项",
       "Quorum Status": "法定人数状态",
       "Quorum Status is required": "法定人数状态为必填项",
+      "REHABILITATION_CENTER": "REHABILITATION_CENTER",
+      "RESEARCH_INSTITUTE": "RESEARCH_INSTITUTE",
       "Raise Alert On Node Resource Pressure": "在节点资源压力时发出警报",
       "Raise Training Alert": "引发训练告警",
       "Raised": "已引发",
@@ -98096,6 +98466,13 @@
       "Runtime Agent Recovered": "运行时代理已恢复",
       "Runtime Agent Self Check Passed": "运行时代理自检通过",
       "Runtime Agent Self Check Passed is required": "运行时代理自检通过为必填项",
+      "Runtime agent deployment runs automatically after the runtime infrastructure is verified when the selected installation mode is platform managed. The deployment service deploys the agent workload to the target infrastructure and records exactly one outcome: RuntimeAgentInstallationSucceeded when the agent starts and passes its readiness checks, or RuntimeAgentInstallationFailed when deployment or readiness fails.": "当所选安装模式为平台管理时，运行时基础设施验证通过后，运行时代理部署将自动运行。部署服务将代理工作负载部署到目标基础设施，并准确记录一项结果：代理启动并通过就绪性检查时为 RuntimeAgentInstallationSucceeded，部署或就绪性失败时为 RuntimeAgentInstallationFailed。",
+      "Runtime agent operations is a separate deployable that runs inside participant infrastructure and executes dispatched training jobs with local data and local secrets.": "运行时代理操作是一个独立的可部署组件，在参与者基础设施内运行，并使用本地数据和本地机密执行分派的训练作业。",
+      "nodeDropoutRate": "nodeDropoutRate",
+      "organizationActivationLeadTime": "organizationActivationLeadTime",
+      "participantApprovalLeadTime": "participantApprovalLeadTime",
+      "productionRollbackRate": "productionRollbackRate",
+      "roundCompletionLatency": "roundCompletionLatency",
       "Runtime Agent Started": "运行时代理已启动",
       "Runtime Agent Startup Bootstrap Configuration": "运行时代理启动引导配置",
       "Runtime Agent Tolerations Yaml": "运行时代理容忍度 YAML",
@@ -98241,9 +98618,6 @@
       "Runtime Status": "运行时状态",
       "Runtime Status is required": "运行时状态为必填项",
       "Runtime Telemetry Latest": "运行时最新遥测",
-      "Runtime agent deployment runs automatically after the runtime infrastructure is verified when the selected installation mode is platform managed. The deployment service deploys the agent workload to the target infrastructure and records exactly one outcome: RuntimeAgentInstallationSucceeded when the agent starts and passes its readiness checks, or RuntimeAgentInstallationFailed when deployment or readiness fails.": "当所选安装模式为平台管理时，运行时基础设施验证通过后，运行时代理部署将自动运行。部署服务将代理工作负载部署到目标基础设施，并准确记录一项结果：代理启动并通过就绪性检查时为 RuntimeAgentInstallationSucceeded，部署或就绪性失败时为 RuntimeAgentInstallationFailed。",
-      "Runtime agent operations is a separate deployable that runs inside participant infrastructure and executes dispatched training jobs with local data and local secrets.": "运行时代理操作是一个独立的可部署组件，在参与者基础设施内运行，并使用本地数据和本地机密执行分派的训练作业。",
-      "Runtime agent startup begins by loading bootstrap configuration from environment variables, mounted files, or platform-issued startup material. The configuration must provide the stable runtimeAgentId generated when RuntimeInfrastructure was registered, the matching runtimeInfrastructureId, and the agent version. A successful load starts the runtime-agent lifecycle; a missing or invalid configuration records a bootstrap failure and must not create a new random runtimeAgentId.": "运行时代理启动通过从环境变量、已挂载文件或平台颁发的启动材料加载引导配置来开始。该配置必须提供在 RuntimeInfrastructure 注册时生成的稳定 runtimeAgentId、与之匹配的 runtimeInfrastructureId，以及代理版本。成功加载将启动运行时代理生命周期；缺失或无效的配置会记录引导失败，并且不得创建新的随机 runtimeAgentId。",
       "Runtime agents can pull stale or tampered models if artifact URI, digest, registry, format, and signature are not snapshotted with the training run.": "如果未将制品 URI、摘要、注册表、格式及签名与训练运行一同快照，运行时代理可能会拉取到过时或被篡改的模型。",
       "Runtime bootstrap and agent installation material is support configuration, not domain state: the platform backend adapter reads platform.runtime.bootstrap.publicBaseAddress, platform.runtime.agent.platformApiBaseAddress, platform.runtime.agent.controlApiBaseAddress, platform.runtime.agent.containerRegistry, platform.runtime.agent.trustBundleSecretName, and platform.runtime.agent.accessGrantSecretPrefix from deployment config or a secret store. Commands, events, and read models keep only runtimeInstallationPlanId, runtimeInfrastructurePackageId, and generated access grant IDs.": "运行时引导和代理安装材料是支持配置，而非领域状态：平台后端适配器从部署配置或密钥存储中读取 platform.runtime.bootstrap.publicBaseAddress、platform.runtime.agent.platformApiBaseAddress、platform.runtime.agent.controlApiBaseAddress、platform.runtime.agent.containerRegistry、platform.runtime.agent.trustBundleSecretName 和 platform.runtime.agent.accessGrantSecretPrefix。命令、事件和读模型仅保留 runtimeInstallationPlanId、runtimeInfrastructurePackageId 以及生成的访问授权 ID。",
       "Runtime engine jobs can remain running after platform cancellation unless local job lifecycle is tracked explicitly.": "运行时引擎作业在平台取消后可能仍保持运行，除非明确跟踪本地作业生命周期。",
@@ -98253,7 +98627,9 @@
       "Runtime onboarding owns runtime installation planning, bootstrap configuration, runtime environment registration, agent installation, readiness, connection reporting, and access revocation. K3s, Kubernetes, Docker Compose, and host process runtimes are installation targets, not separate domain concepts.": "运行时入驻负责运行时安装规划、引导配置、运行时环境注册、代理安装、就绪检查、连接报告及访问撤销。K3s、Kubernetes、Docker Compose 与主机进程运行时均为安装目标，而非独立的领域概念。",
       "Runtime operations separates low-frequency runtime state changes, node inventory changes, latest telemetry views, training alerts, and append only audit records. High-frequency heartbeat and resource samples are telemetry, not event-sourced domain events.": "运行时运维将低频运行时状态变更、节点清单变更、最新遥测视图、训练告警以及仅追加审计记录区分开来。高频心跳和资源样本属于遥测，而非事件溯源领域事件。",
       "Runtime option changes can invalidate pending installation plans if dictionary values are removed instead of disabled.": "如果字典值被移除而不是停用，运行时选项更改可能会使待处理的安装计划失效。",
+      "RuntimeAgentFailed": "RuntimeAgentFailed",
       "RuntimeEngineProfile is the business selectable runtime engine package used by training configurations. It hides raw image selection behind an operator-managed profile name while snapshotting the exact image, plugin profile, and optional digest that runtime agents must use when starting per-round runtime-engine workloads. Training runs must not depend on runtime-agent local environment defaults when a profile is selected.\n\nunique RuntimeEngineProfile.profileName": "RuntimeEngineProfile 是训练配置所使用的业务可选运行时引擎包。它将原始镜像选择隐藏在操作员管理的配置文件名称之后，同时对运行时代理在启动每轮运行时引擎工作负载时必须使用的精确镜像、插件配置文件和可选摘要进行快照。选择配置文件后，训练运行不得依赖于运行时代理本地环境的默认值。\n\nunique RuntimeEngineProfile.profileName",
+      "RuntimeProvisioning": "RuntimeProvisioning",
       "Sample Batch Readable": "样本批次可读性",
       "Sample Batch Readable is required": "样本批次可读性为必填项",
       "Sample Count": "样本数量",
@@ -98582,6 +98958,14 @@
       "Select Nullable": "选择是否可空",
       "Select Objective": "选择目标",
       "Select Observed At": "选择观察时间",
+      "Select all": "全选",
+      "runtimeActivationLeadTime": "runtimeActivationLeadTime",
+      "runtimeAlertMeanTimeToAcknowledge": "runtimeAlertMeanTimeToAcknowledge",
+      "runtimeBootstrapSuccessRate": "runtimeBootstrapSuccessRate",
+      "runtimeDatasetAccessValidationLatency": "runtimeDatasetAccessValidationLatency",
+      "runtimeIdentityCoverage": "runtimeIdentityCoverage",
+      "runtimeInfrastructureConnectionLatency": "runtimeInfrastructureConnectionLatency",
+      "secureAggregationCompletionLatency": "secureAggregationCompletionLatency",
       "Select Observed Node Count": "选择观察到的节点数量",
       "Select Observed Status": "选择观察到的状态",
       "Select Observed Value": "选择观察值",
@@ -98812,7 +99196,6 @@
       "Select Workflow Step": "选择工作流步骤",
       "Select Working Directory Writable": "选择工作目录可写",
       "Select Workload Capacity": "选择工作负载容量",
-      "Select all": "全选",
       "Select row": "选择行",
       "Selected At": "选择时间",
       "Selected At is required": "选择时间为必填项",
@@ -99036,6 +99419,7 @@
       "Verification Failed At is required": "验证失败时间为必填项",
       "Verification Failure Reason": "验证失败原因",
       "Verification Failure Reason is required": "验证失败原因为必填项",
+      "VerificationFailed": "验证失败",
       "Verified": "已验证",
       "Verified At": "验证时间",
       "Verified At is required": "验证时间为必填项",
@@ -99056,30 +99440,10 @@
       "Working Directory Writable is required": "工作目录可写为必填项",
       "Workload Capacity": "工作负载容量",
       "Workload Capacity is required": "工作负载容量为必填项",
-      "agentRuntimeJobFailureRate": "agentRuntimeJobFailureRate",
-      "agentRuntimeJobStartupLatency": "agentRuntimeJobStartupLatency",
-      "auditTrailCompleteness": "auditTrailCompleteness",
-      "datasetContractValidationFailureRate": "datasetContractValidationFailureRate",
-      "dictionaryValueActivationLatency": "dictionaryValueActivationLatency",
-      "federationActivationLeadTime": "federationActivationLeadTime",
-      "fileUploadFailureRate": "fileUploadFailureRate",
-      "fileUploadLatency": "fileUploadLatency",
-      "globalAccuracyGap": "globalAccuracyGap",
-      "modelApprovalLeadTime": "modelApprovalLeadTime",
-      "modelArtifactPullFailureRate": "modelArtifactPullFailureRate",
-      "modelArtifactRegistrationLatency": "modelArtifactRegistrationLatency",
-      "nodeDropoutRate": "nodeDropoutRate",
-      "organizationActivationLeadTime": "organizationActivationLeadTime",
-      "participantApprovalLeadTime": "participantApprovalLeadTime",
-      "productionRollbackRate": "productionRollbackRate",
-      "roundCompletionLatency": "roundCompletionLatency",
-      "runtimeActivationLeadTime": "runtimeActivationLeadTime",
-      "runtimeAlertMeanTimeToAcknowledge": "runtimeAlertMeanTimeToAcknowledge",
-      "runtimeBootstrapSuccessRate": "runtimeBootstrapSuccessRate",
-      "runtimeDatasetAccessValidationLatency": "runtimeDatasetAccessValidationLatency",
-      "runtimeIdentityCoverage": "runtimeIdentityCoverage",
-      "runtimeInfrastructureConnectionLatency": "runtimeInfrastructureConnectionLatency",
-      "secureAggregationCompletionLatency": "secureAggregationCompletionLatency"
+      "unique (FeatureSchema.featureDomain, FeatureSchema.version)": "唯一 (FeatureSchema.featureDomain, FeatureSchema.version)",
+      "unique Dictionary.dictionaryCode": "Dictionary.dictionaryCode 不能重复",
+      "unique Federation.federationName": "Federation.federationName 必须唯一",
+      "unique Organization.organizationName": "unique Organization.organizationName"
     }
   }
 }

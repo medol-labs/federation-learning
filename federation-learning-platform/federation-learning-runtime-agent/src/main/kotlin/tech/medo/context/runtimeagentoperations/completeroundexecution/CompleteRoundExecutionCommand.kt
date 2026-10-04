@@ -36,4 +36,5 @@ data class CompleteRoundExecutionCommand(
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
 
+
 }

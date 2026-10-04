@@ -24,4 +24,5 @@ data class RegisterRuntimeInfrastructureCommand(
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
 
+
 }

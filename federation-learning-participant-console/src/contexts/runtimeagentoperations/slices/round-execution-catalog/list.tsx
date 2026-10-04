@@ -29,7 +29,7 @@ type RoundExecutionCatalogRecord = {
   roundNumber?: number;
   organizationId?: string;
   runtimeId: string;
-  state: "PLAN_RECEIVED" | "PLAN_ACCEPTED" | "PLAN_REJECTED" | "RUNNING" | "START_FAILED" | "RETRIED" | "COMPLETED" | "FAILED" | "UPDATE_SUBMITTED" | "RUNTIME_ENGINE_RELEASED" | "RUNTIME_ENGINE_RELEASE_HANDLED";
+  state: "PlanReceived" | "PlanAccepted" | "PlanRejected" | "Running" | "StartFailed" | "Retried" | "Completed" | "Failed" | "UpdateSubmitted" | "RuntimeEngineReleased" | "RuntimeEngineReleaseHandled";
   featureSchemaId?: string;
   baseModelId?: string;
   runtimeEngineProfileId?: string;
@@ -358,17 +358,17 @@ export const RoundExecutionCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Plan Received", value: "PLAN_RECEIVED" },
-            { label: "Plan Accepted", value: "PLAN_ACCEPTED" },
-            { label: "Plan Rejected", value: "PLAN_REJECTED" },
-            { label: "Running", value: "RUNNING" },
-            { label: "Start Failed", value: "START_FAILED" },
-            { label: "Retried", value: "RETRIED" },
-            { label: "Completed", value: "COMPLETED" },
-            { label: "Failed", value: "FAILED" },
-            { label: "Update Submitted", value: "UPDATE_SUBMITTED" },
-            { label: "Runtime Engine Released", value: "RUNTIME_ENGINE_RELEASED" },
-            { label: "Runtime Engine Release Handled", value: "RUNTIME_ENGINE_RELEASE_HANDLED" },
+            { label: "Plan Received", value: "PlanReceived" },
+            { label: "Plan Accepted", value: "PlanAccepted" },
+            { label: "Plan Rejected", value: "PlanRejected" },
+            { label: "Running", value: "Running" },
+            { label: "Start Failed", value: "StartFailed" },
+            { label: "Retried", value: "Retried" },
+            { label: "Completed", value: "Completed" },
+            { label: "Failed", value: "Failed" },
+            { label: "Update Submitted", value: "UpdateSubmitted" },
+            { label: "Runtime Engine Released", value: "RuntimeEngineReleased" },
+            { label: "Runtime Engine Release Handled", value: "RuntimeEngineReleaseHandled" },
           ],
         },
         cell: ({ getValue, row }) =>

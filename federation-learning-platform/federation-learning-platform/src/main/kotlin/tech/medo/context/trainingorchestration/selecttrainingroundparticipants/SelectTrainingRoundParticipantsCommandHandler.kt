@@ -10,6 +10,8 @@ import tech.medo.trainingorchestration.selecttrainingroundparticipants.SelectTra
 
 
 
+
+
 @Component
 class SelectTrainingRoundParticipantsCommandHandler(
     private val decision: SelectTrainingRoundParticipantsDecision,

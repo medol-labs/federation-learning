@@ -17,4 +17,5 @@ data class UpdateDictionaryCommand(
     @TargetEntityId
     val selection: DictionarySelection = DictionarySelection(dictionaryCode = dictionaryCode)
 
+
 }

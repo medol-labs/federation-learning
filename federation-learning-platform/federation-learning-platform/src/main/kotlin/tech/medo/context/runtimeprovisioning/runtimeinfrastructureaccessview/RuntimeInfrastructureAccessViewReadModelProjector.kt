@@ -172,7 +172,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.runtimeEnvironmentType = event.runtimeEnvironmentType
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
-            entity.state = RuntimeInfrastructureStateEnum.PLANNED
+            entity.state = RuntimeInfrastructureStateEnum.Planned
             entity.infrastructureVerificationFailedAt = null
             entity.infrastructureVerificationFailureReason = null
             ProjectionMetadata.assign(entity, message)
@@ -201,7 +201,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
-            entity.state = RuntimeInfrastructureStateEnum.REGISTERED
+            entity.state = RuntimeInfrastructureStateEnum.Registered
             entity.infrastructureVerificationFailedAt = null
             entity.infrastructureVerificationFailureReason = null
             ProjectionMetadata.assign(entity, message)
@@ -231,7 +231,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.preparedNodeCount = event.preparedNodeCount
-            entity.state = RuntimeInfrastructureStateEnum.PREPARED
+            entity.state = RuntimeInfrastructureStateEnum.Prepared
             entity.infrastructurePreparedAt = eventTime(message)
             entity.infrastructureVerificationFailedAt = null
             entity.infrastructureVerificationFailureReason = null
@@ -261,7 +261,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
-            entity.state = RuntimeInfrastructureStateEnum.VERIFIED
+            entity.state = RuntimeInfrastructureStateEnum.Verified
             entity.infrastructureVerifiedAt = eventTime(message)
             entity.infrastructureVerificationFailedAt = null
             entity.infrastructureVerificationFailureReason = null
@@ -292,7 +292,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.infrastructureVerificationFailedAt = eventTime(message)
-            entity.state = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
+            entity.state = RuntimeInfrastructureStateEnum.VerificationFailed
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -319,7 +319,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
-            entity.state = RuntimeInfrastructureStateEnum.AGENT_READY
+            entity.state = RuntimeInfrastructureStateEnum.AgentReady
             entity.runtimeAgentVersion = event.agentVersion
             entity.agentReadyAt = eventTime(message)
             entity.agentDeploymentFailedAt = null
@@ -353,7 +353,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.agentDeploymentFailedAt = eventTime(message)
-            entity.state = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
+            entity.state = RuntimeInfrastructureStateEnum.RuntimeAgentFailed
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -380,7 +380,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
-            entity.state = RuntimeInfrastructureStateEnum.VERIFIED
+            entity.state = RuntimeInfrastructureStateEnum.Verified
             entity.infrastructureVerifiedAt = eventTime(message)
             entity.infrastructureVerificationFailedAt = null
             entity.infrastructureVerificationFailureReason = null
@@ -411,7 +411,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.infrastructureVerificationFailedAt = eventTime(message)
-            entity.state = RuntimeInfrastructureStateEnum.VERIFICATION_FAILED
+            entity.state = RuntimeInfrastructureStateEnum.VerificationFailed
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -438,7 +438,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.agentInstallMode = event.agentInstallMode
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
-            entity.state = RuntimeInfrastructureStateEnum.AGENT_READY
+            entity.state = RuntimeInfrastructureStateEnum.AgentReady
             entity.runtimeAgentVersion = event.agentVersion
             entity.agentReadyAt = eventTime(message)
             entity.agentDeploymentFailedAt = null
@@ -472,7 +472,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.expectedNodeCount = event.expectedNodeCount
             entity.runtimeAgentId = event.runtimeAgentId
             entity.agentDeploymentRetryFailedAt = eventTime(message)
-            entity.state = RuntimeInfrastructureStateEnum.RUNTIME_AGENT_FAILED
+            entity.state = RuntimeInfrastructureStateEnum.RuntimeAgentFailed
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -493,7 +493,7 @@ open class DefaultRuntimeInfrastructureAccessViewReadModelProjectionUpdater(
             entity.runtimeName = event.runtimeName
             entity.agentInstallMode = event.agentInstallMode
             entity.runtimeAgentId = event.runtimeAgentId
-            entity.state = RuntimeInfrastructureStateEnum.CONNECTED
+            entity.state = RuntimeInfrastructureStateEnum.Connected
             entity.connectedAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)

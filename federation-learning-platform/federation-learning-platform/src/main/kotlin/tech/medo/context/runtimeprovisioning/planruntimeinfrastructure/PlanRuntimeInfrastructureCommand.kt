@@ -23,4 +23,5 @@ data class PlanRuntimeInfrastructureCommand(
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
 
+
 }

@@ -17,4 +17,5 @@ data class SupersedeFeatureSchemaVersionCommand(
     @TargetEntityId
     val selection: FeatureSchemaSelection = FeatureSchemaSelection(featureDomain = featureDomain, version = version)
 
+
 }

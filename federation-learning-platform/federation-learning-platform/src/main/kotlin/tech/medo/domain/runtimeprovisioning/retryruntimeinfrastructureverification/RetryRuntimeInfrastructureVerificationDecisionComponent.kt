@@ -16,10 +16,10 @@ class RetryRuntimeInfrastructureVerificationDecisionComponent : RetryRuntimeInfr
         portResult: RetryRuntimeInfrastructureVerificationResult,
         now: LocalDateTime
     ): List<Any> {
-        require(state.currentState == RuntimeInfrastructureStateEnum.VERIFICATION_FAILED) {
+        require(state.currentState == RuntimeInfrastructureStateEnum.VerificationFailed) {
             "Runtime Infrastructure Verification Retry is allowed only when RuntimeInfrastructure is VerificationFailed."
         }
-        require(command.currentRuntimeInfrastructureState == RuntimeInfrastructureStateEnum.VERIFICATION_FAILED) {
+        require(command.currentRuntimeInfrastructureState == RuntimeInfrastructureStateEnum.VerificationFailed) {
             "Runtime Infrastructure Verification Retry command state must be VerificationFailed."
         }
         return super.decide(command, state, portResult, now)

@@ -27,7 +27,7 @@ class DictionaryState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DictionaryRegisteredEvent): DictionaryState = apply {
-        currentState = DictionaryStateEnum.REGISTERED
+        currentState = DictionaryStateEnum.Registered
         dictionaryId = event.dictionaryId
         dictionaryCode = event.dictionaryCode
         dictionaryName = event.dictionaryName
@@ -43,7 +43,7 @@ class DictionaryState @EntityCreator constructor() {
 
     @EventSourcingHandler
     fun evolve(event: DictionaryArchivedEvent): DictionaryState = apply {
-        currentState = DictionaryStateEnum.ARCHIVED
+        currentState = DictionaryStateEnum.Archived
         dictionaryId = event.dictionaryId
         archiveReason = event.archiveReason
     }

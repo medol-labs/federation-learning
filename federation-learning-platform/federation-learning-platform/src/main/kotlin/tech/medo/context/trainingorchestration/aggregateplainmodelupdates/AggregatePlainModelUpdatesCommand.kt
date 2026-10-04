@@ -25,4 +25,5 @@ data class AggregatePlainModelUpdatesCommand(
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
 
+
 }
