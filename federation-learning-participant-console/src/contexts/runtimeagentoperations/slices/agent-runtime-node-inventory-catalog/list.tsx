@@ -20,6 +20,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type AgentRuntimeNodeInventoryCatalogRecord = {
+  nodeId: string;
   runtimeNodeInventoryReportId: string;
   organizationId: string;
   runtimeInfrastructureId: string;
@@ -78,6 +79,32 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         size: 32,
         enableSorting: false,
         enableHiding: false,
+      }),
+      columnHelper.accessor("nodeId", {
+        id: "nodeId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.agent_runtime_node_inventory_catalog.fields.nodeId.label", "Node Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.agent_runtime_node_inventory_catalog.fields.nodeId.label", "Node Id"),
+          placeholder: "Enter Node Id",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<AgentRuntimeNodeInventoryCatalogRecord>(
+            frontendComposition,
+            "field:agent-runtime-node-inventory-catalog:display:nodeId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "agent-runtime-node-inventory-catalog",
+              field: "nodeId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("runtimeNodeInventoryReportId", {
         id: "runtimeNodeInventoryReportId",
@@ -512,7 +539,7 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
         tableName: "agent_runtime_node_inventory_catalog_read_model_entity",
         idField: "runtimeNodeInventoryReportId",
         idFields: ["runtimeNodeInventoryReportId"],
-        queryFields: ["runtimeNodeInventoryReportId","organizationId","runtimeInfrastructureId","runtimeAgentId","organizationName","runtimeNodeName","infrastructureNodeId","runtimeNodeRole","nodeReady","runtimeEngineVersion","containerEngineVersion","operatingSystem","architecture","inventoryHash","discoveredAt"],
+        queryFields: ["nodeId","runtimeNodeInventoryReportId","organizationId","runtimeInfrastructureId","runtimeAgentId","organizationName","runtimeNodeName","infrastructureNodeId","runtimeNodeRole","nodeReady","runtimeEngineVersion","containerEngineVersion","operatingSystem","architecture","inventoryHash","discoveredAt"],
         label: t("resources.agent_runtime_node_inventory_catalog.label", "Agent Runtime Node Inventory Catalog"),
         aggregateRoute: "agentruntimenodeinventory",
         queryRoute: "agentruntimenodeinventorycatalog",

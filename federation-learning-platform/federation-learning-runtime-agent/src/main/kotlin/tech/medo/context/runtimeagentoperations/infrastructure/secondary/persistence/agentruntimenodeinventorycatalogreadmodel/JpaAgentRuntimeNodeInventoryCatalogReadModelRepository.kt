@@ -38,6 +38,7 @@ class JpaAgentRuntimeNodeInventoryCatalogReadModelRepository(
 
     private fun AgentRuntimeNodeInventoryCatalogReadModelEntity.toProjection(): AgentRuntimeNodeInventoryCatalogReadModelProjection =
         AgentRuntimeNodeInventoryCatalogReadModelProjection().also {
+            it.nodeId = this@toProjection.nodeId
             it.runtimeNodeInventoryReportId = this@toProjection.runtimeNodeInventoryReportId
             it.organizationId = this@toProjection.organizationId
             it.runtimeInfrastructureId = this@toProjection.runtimeInfrastructureId
@@ -63,6 +64,7 @@ class JpaAgentRuntimeNodeInventoryCatalogReadModelRepository(
 
     private fun AgentRuntimeNodeInventoryCatalogReadModelProjection.toEntity(): AgentRuntimeNodeInventoryCatalogReadModelEntity =
         AgentRuntimeNodeInventoryCatalogReadModelEntity().also {
+            it.nodeId = this@toEntity.nodeId
             it.runtimeNodeInventoryReportId = this@toEntity.runtimeNodeInventoryReportId
             it.organizationId = this@toEntity.organizationId
             it.runtimeInfrastructureId = this@toEntity.runtimeInfrastructureId

@@ -14,7 +14,7 @@ interface CompleteTrainingJobDecision {
     fun decide(command: CompleteTrainingJobCommand, state: TrainingJobState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(
-            TrainingJobCompletedEvent(trainingJobId = command.trainingJobId, finalRoundId = command.finalRoundId, finalModelId = command.finalModelId, trainingJobObjective = command.trainingJobObjective, stopReason = command.stopReason)
+            TrainingJobCompletedEvent(trainingJobId = command.trainingJobId, finalRoundId = command.finalRoundId, finalModelId = command.finalModelId, finalModelArtifactDigest = command.finalModelArtifactDigest, finalGlobalAccuracy = command.finalGlobalAccuracy, finalEvaluationReportId = command.finalEvaluationReportId, trainingJobObjective = command.trainingJobObjective, stopReason = command.stopReason)
         )
     }
 }

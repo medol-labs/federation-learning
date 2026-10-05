@@ -8,6 +8,8 @@ import java.util.UUID;
 
 @Event
 data class AgentRuntimeNodeInventoryReportedEvent(
+    @EventTag(key = "nodeId")
+    val nodeId: UUID,
     @EventTag(key = "runtimeNodeInventoryReportId")
     val runtimeNodeInventoryReportId: UUID,
     val organizationId: UUID,

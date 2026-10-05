@@ -25,7 +25,7 @@ class BindUserAccountToOrganizationCommandHandler(
     ) {
         val organizationDirectoryReadModelSelection = organizationDirectoryReadModelRepository.findById(command.organizationId)
         require(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active) {
-            "Organization Directory selection is not eligible for Bind User Account To Organization."
+            "Organization Directory selection is not eligible."
         }
         eventAppender.append(decision.decide(command, userOrganizationMembershipUserAccountIdOrganizationIdReservation))
     }

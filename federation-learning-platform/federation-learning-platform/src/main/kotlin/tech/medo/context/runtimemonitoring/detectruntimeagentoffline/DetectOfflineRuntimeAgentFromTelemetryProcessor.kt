@@ -19,9 +19,9 @@ class DetectOfflineRuntimeAgentFromTelemetryProcessor(
         repository.findAll(PageRequest.of(0, 100))
             .content
             .asSequence()
-            .filter { todo -> todo.heartbeatMissingBeyondThreshold == true && todo.nodeId != null && todo.runtimeAgentId != null }
+            .filter { todo -> todo.offlineDetectionPending == true && todo.nodeId != null && todo.runtimeAgentId != null && todo.offlineReason != null }
             .forEach { todo ->
-                commandGateway.send(DetectRuntimeAgentOfflineCommand(nodeId = todo.nodeId!!, runtimeAgentId = todo.runtimeAgentId!!, federationId = todo.federationId, federationName = todo.federationName, trainingJobId = todo.trainingJobId, trainingJobObjective = todo.trainingJobObjective, roundExecutionId = todo.roundExecutionId, runtimeNodeName = todo.runtimeNodeName, offlineReason = "" /* TODO: provide offlineReason */))
+                commandGateway.send(DetectRuntimeAgentOfflineCommand(nodeId = todo.nodeId!!, runtimeAgentId = todo.runtimeAgentId!!, federationId = todo.federationId, federationName = todo.federationName, trainingJobId = todo.trainingJobId, trainingJobObjective = todo.trainingJobObjective, roundExecutionId = todo.roundExecutionId, runtimeNodeName = todo.runtimeNodeName, offlineReason = todo.offlineReason!!))
             }
     }
 }

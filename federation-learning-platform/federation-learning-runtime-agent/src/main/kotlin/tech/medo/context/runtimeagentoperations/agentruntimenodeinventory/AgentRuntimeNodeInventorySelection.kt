@@ -4,10 +4,12 @@ import java.util.UUID;
 
 
 data class AgentRuntimeNodeInventorySelection(
+    val nodeId: UUID,
     val runtimeNodeInventoryReportId: UUID
 )
 
 object AgentRuntimeNodeInventoryTags {
+    const val NODE_ID = "nodeId"
     const val RUNTIME_NODE_INVENTORY_REPORT_ID = "runtimeNodeInventoryReportId"
 }
 

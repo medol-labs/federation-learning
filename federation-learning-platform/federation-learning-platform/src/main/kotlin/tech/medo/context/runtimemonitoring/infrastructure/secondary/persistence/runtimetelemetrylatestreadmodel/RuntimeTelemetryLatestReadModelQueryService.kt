@@ -43,9 +43,18 @@ class RuntimeTelemetryLatestReadModelQueryService(
             criteria.gpuLoad?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<BigDecimal>> { root -> root.get("gpuLoad") })) }
             criteria.memoryLoad?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<BigDecimal>> { root -> root.get("memoryLoad") })) }
             criteria.lastHeartbeatAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("lastHeartbeatAt") })) }
-            criteria.heartbeatMissingBeyondThreshold?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<Boolean>> { root -> root.get("heartbeatMissingBeyondThreshold") })) }
-            criteria.heartbeatObservedAfterOffline?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<Boolean>> { root -> root.get("heartbeatObservedAfterOffline") })) }
-            criteria.resourcePressureDetected?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<Boolean>> { root -> root.get("resourcePressureDetected") })) }
+            criteria.lastRecoveredAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("lastRecoveredAt") })) }
+            criteria.offlineDetectionPending?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<Boolean>> { root -> root.get("offlineDetectionPending") })) }
+            criteria.recoveryDetectionPending?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<Boolean>> { root -> root.get("recoveryDetectionPending") })) }
+            criteria.resourcePressureDetectionPending?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<Boolean>> { root -> root.get("resourcePressureDetectionPending") })) }
+            criteria.offlineReason?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> root.get("offlineReason") })) }
+            criteria.recoveryReason?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> root.get("recoveryReason") })) }
+            criteria.pressureType?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> root.get("pressureType") })) }
+            criteria.observedValue?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<BigDecimal>> { root -> root.get("observedValue") })) }
+            criteria.thresholdValue?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<BigDecimal>> { root -> root.get("thresholdValue") })) }
+            criteria.alertSeverity?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> root.get("alertSeverity") })) }
+            criteria.alertMessage?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> root.get("alertMessage") })) }
+            criteria.healthStatus?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> root.get("healthStatus") })) }
             criteria.telemetryRetentionPolicy?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> root.get("telemetryRetentionPolicy") })) }
         }
         return specification
@@ -116,9 +125,18 @@ class RuntimeTelemetryLatestReadModelQueryService(
             it.gpuLoad = this@toProjection.gpuLoad
             it.memoryLoad = this@toProjection.memoryLoad
             it.lastHeartbeatAt = this@toProjection.lastHeartbeatAt
-            it.heartbeatMissingBeyondThreshold = this@toProjection.heartbeatMissingBeyondThreshold
-            it.heartbeatObservedAfterOffline = this@toProjection.heartbeatObservedAfterOffline
-            it.resourcePressureDetected = this@toProjection.resourcePressureDetected
+            it.lastRecoveredAt = this@toProjection.lastRecoveredAt
+            it.offlineDetectionPending = this@toProjection.offlineDetectionPending
+            it.recoveryDetectionPending = this@toProjection.recoveryDetectionPending
+            it.resourcePressureDetectionPending = this@toProjection.resourcePressureDetectionPending
+            it.offlineReason = this@toProjection.offlineReason
+            it.recoveryReason = this@toProjection.recoveryReason
+            it.pressureType = this@toProjection.pressureType
+            it.observedValue = this@toProjection.observedValue
+            it.thresholdValue = this@toProjection.thresholdValue
+            it.alertSeverity = this@toProjection.alertSeverity
+            it.alertMessage = this@toProjection.alertMessage
+            it.healthStatus = this@toProjection.healthStatus
             it.telemetryRetentionPolicy = this@toProjection.telemetryRetentionPolicy
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId

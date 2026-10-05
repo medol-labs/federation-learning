@@ -74,57 +74,10 @@ overwritten by regeneration. Business customizations should live under
 | Module | Label | Data provider | Home route |
 | --- | --- | --- | --- |
 | `federation-learning-support` | Federation Learning Support | `federation-learning-support` | `/dictionary-catalog` |
-| `federation-learning-platform` | Federation Learning Platform | `federation-learning-platform` | `/audit-record-log` |
+| `federation-learning-platform` | Federation Learning Platform | `federation-learning-platform` | `/current-recommended-feature-schema-catalog` |
 | `federation-learning-runtime-agent` | Federation Learning Runtime Agent | `federation-learning-runtime-agent` | `/dashboard` |
 
 ## Resource Extension Points
-
-### Audit Record Log
-
-| Property | Value |
-| --- | --- |
-| Resource name | `audit_record_log` |
-| Route | `/audit-record-log` |
-| Backend module | `federation-learning-platform` |
-| Data provider | `federation-learning-platform` |
-| Generated list page | `src/contexts/runtimemonitoring/slices/audit-record-log/list.tsx` |
-| Generated show page | `src/contexts/runtimemonitoring/slices/audit-record-log/show.tsx` |
-| Resource metadata override | `resourceOverrides[{ name: "audit_record_log" }]` |
-| Menu icon request | `resolveMenuIcon({ type: "resource", name: "audit_record_log", parent: "runtimemonitoring" })` |
-
-#### Page Overrides
-
-| View | Override key | Generated fallback |
-| --- | --- | --- |
-| `list` | `audit-record-log:list` | `src/contexts/runtimemonitoring/slices/audit-record-log/list.tsx` |
-| `show` | `audit-record-log:show` | `src/contexts/runtimemonitoring/slices/audit-record-log/show.tsx` |
-
-Example:
-
-```tsx
-// src/domain/page-overrides.tsx
-import { MyAuditRecordLogList } from "./pages/my-audit-record-log-list";
-
-export const pageOverrides = {
-  "audit-record-log:list": <MyAuditRecordLogList />,
-};
-```
-
-#### Commands And Row Actions
-
-| Command | Override key | Generated fallback | Fields |
-| --- | --- | --- | --- |
-| _(none)_ | | | |
-
-#### Field Renderers
-
-| Field | Type | Renderer override id | Default renderer |
-| --- | --- | --- | --- |
-| `auditRecordId` | `string` | `audit-record-log:field:auditRecordId` | `formatValue/display text` |
-| `sourceEventName` | `string` | `audit-record-log:field:sourceEventName` | `formatValue/display text` |
-| `sourceEntityId` | `string` | `audit-record-log:field:sourceEntityId` | `formatValue/display text` |
-| `severity` | `string` | `audit-record-log:field:severity` | `formatValue/display text` |
-| `payloadHash` | `string` | `audit-record-log:field:payloadHash` | `formatValue/display text` |
 
 ### Current Recommended Feature Schema Catalog
 
@@ -609,22 +562,10 @@ export const pageOverrides = {
 | `state` | `&#34;Candidate&#34; | &#34;EvaluationPackaged&#34; | &#34;Approved&#34; | &#34;Production&#34; | &#34;RolledBack&#34; | &#34;Retired&#34;` | `model-catalog:field:state` | `Select/display text` |
 | `releaseChannel` | `string` | `model-catalog:field:releaseChannel` | `formatValue/display text` |
 | `productionStage` | `string` | `model-catalog:field:productionStage` | `formatValue/display text` |
-| `previousModelId` | `string` | `model-catalog:field:previousModelId` | `formatValue/display text` |
 | `experimentId` | `string` | `model-catalog:field:experimentId` | `formatValue/display text` |
 | `hyperparameterSnapshotId` | `string` | `model-catalog:field:hyperparameterSnapshotId` | `formatValue/display text` |
 | `reproducibilityManifestId` | `string` | `model-catalog:field:reproducibilityManifestId` | `formatValue/display text` |
 | `modelCardId` | `string` | `model-catalog:field:modelCardId` | `formatValue/display text` |
-| `baselineModelId` | `string` | `model-catalog:field:baselineModelId` | `formatValue/display text` |
-| `hasEvaluationPackage` | `boolean` | `model-catalog:field:hasEvaluationPackage` | `formatValue/display text` |
-| `approvalStatus` | `string` | `model-catalog:field:approvalStatus` | `formatValue/display text` |
-| `releaseStatus` | `string` | `model-catalog:field:releaseStatus` | `formatValue/display text` |
-| `isProduction` | `boolean` | `model-catalog:field:isProduction` | `formatValue/display text` |
-| `canRecordEvaluationPackage` | `boolean` | `model-catalog:field:canRecordEvaluationPackage` | `formatValue/display text` |
-| `canApprove` | `boolean` | `model-catalog:field:canApprove` | `formatValue/display text` |
-| `canPromoteToProduction` | `boolean` | `model-catalog:field:canPromoteToProduction` | `formatValue/display text` |
-| `canRollback` | `boolean` | `model-catalog:field:canRollback` | `formatValue/display text` |
-| `canRetire` | `boolean` | `model-catalog:field:canRetire` | `formatValue/display text` |
-| `blockedReason` | `string` | `model-catalog:field:blockedReason` | `formatValue/display text` |
 
 ### Organization Directory
 
@@ -1492,6 +1433,7 @@ export const pageOverrides = {
 | --- | --- | --- |
 | `list` | `runtime-node-resource-latest:list` | `src/contexts/runtimemonitoring/slices/runtime-node-resource-latest/list.tsx` |
 | `show` | `runtime-node-resource-latest:show` | `src/contexts/runtimemonitoring/slices/runtime-node-resource-latest/show.tsx` |
+| `recordRuntimeNodeResourceTelemetry` | `runtime-node-resource-latest:recordRuntimeNodeResourceTelemetry` | `src/contexts/runtimemonitoring/slices/record-runtime-node-resource-telemetry/record-runtime-node-resource-telemetry.tsx` |
 
 Example:
 
@@ -1508,7 +1450,7 @@ export const pageOverrides = {
 
 | Command | Override key | Generated fallback | Fields |
 | --- | --- | --- | --- |
-| _(none)_ | | | |
+| `recordRuntimeNodeResourceTelemetry` | `runtime-node-resource-latest:recordRuntimeNodeResourceTelemetry` | `src/contexts/runtimemonitoring/slices/record-runtime-node-resource-telemetry/record-runtime-node-resource-telemetry.tsx` | `runtimeAgentId`, `runtimeInfrastructureId`, `runtimeNodeName`, `nodeReady`, `allocatableCpuCores`, `allocatableMemoryGb`, `allocatableGpuCount`, `allocatedCpuCores`, `allocatedMemoryGb`, `allocatedGpuCount`, `availableCpuCores`, `availableMemoryGb`, `availableGpuCount`, `runningWorkloadCount`, `workloadCapacity`, `observedAt`, `lastResourceSnapshotAt`, `telemetryRetentionPolicy` |
 
 #### Field Renderers
 
@@ -1531,7 +1473,7 @@ export const pageOverrides = {
 | `runningWorkloadCount` | `number` | `runtime-node-resource-latest:field:runningWorkloadCount` | `formatValue/display text` |
 | `workloadCapacity` | `number` | `runtime-node-resource-latest:field:workloadCapacity` | `formatValue/display text` |
 | `observedAt` | `string` | `runtime-node-resource-latest:field:observedAt` | `formatValue/display text` |
-| `allocatableCapacityChanged` | `boolean` | `runtime-node-resource-latest:field:allocatableCapacityChanged` | `formatValue/display text` |
+| `lastResourceSnapshotAt` | `string` | `runtime-node-resource-latest:field:lastResourceSnapshotAt` | `formatValue/display text` |
 | `telemetryRetentionPolicy` | `string` | `runtime-node-resource-latest:field:telemetryRetentionPolicy` | `formatValue/display text` |
 
 ### Runtime Telemetry Latest
@@ -1553,6 +1495,7 @@ export const pageOverrides = {
 | --- | --- | --- |
 | `list` | `runtime-telemetry-latest:list` | `src/contexts/runtimemonitoring/slices/runtime-telemetry-latest/list.tsx` |
 | `show` | `runtime-telemetry-latest:show` | `src/contexts/runtimemonitoring/slices/runtime-telemetry-latest/show.tsx` |
+| `recordRuntimeTelemetry` | `runtime-telemetry-latest:recordRuntimeTelemetry` | `src/contexts/runtimemonitoring/slices/record-runtime-telemetry/record-runtime-telemetry.tsx` |
 
 Example:
 
@@ -1569,7 +1512,7 @@ export const pageOverrides = {
 
 | Command | Override key | Generated fallback | Fields |
 | --- | --- | --- | --- |
-| _(none)_ | | | |
+| `recordRuntimeTelemetry` | `runtime-telemetry-latest:recordRuntimeTelemetry` | `src/contexts/runtimemonitoring/slices/record-runtime-telemetry/record-runtime-telemetry.tsx` | `runtimeAgentId`, `federationId`, `federationName`, `trainingJobId`, `trainingJobObjective`, `roundExecutionId`, `runtimeNodeName`, `cpuLoad`, `gpuLoad`, `memoryLoad`, `lastHeartbeatAt`, `lastRecoveredAt`, `offlineDetectionPending`, `recoveryDetectionPending`, `resourcePressureDetectionPending`, `offlineReason`, `recoveryReason`, `pressureType`, `observedValue`, `thresholdValue`, `alertSeverity`, `alertMessage`, `healthStatus`, `telemetryRetentionPolicy` |
 
 #### Field Renderers
 
@@ -1587,9 +1530,18 @@ export const pageOverrides = {
 | `gpuLoad` | `string` | `runtime-telemetry-latest:field:gpuLoad` | `formatValue/display text` |
 | `memoryLoad` | `string` | `runtime-telemetry-latest:field:memoryLoad` | `formatValue/display text` |
 | `lastHeartbeatAt` | `string` | `runtime-telemetry-latest:field:lastHeartbeatAt` | `formatValue/display text` |
-| `heartbeatMissingBeyondThreshold` | `boolean` | `runtime-telemetry-latest:field:heartbeatMissingBeyondThreshold` | `formatValue/display text` |
-| `heartbeatObservedAfterOffline` | `boolean` | `runtime-telemetry-latest:field:heartbeatObservedAfterOffline` | `formatValue/display text` |
-| `resourcePressureDetected` | `boolean` | `runtime-telemetry-latest:field:resourcePressureDetected` | `formatValue/display text` |
+| `lastRecoveredAt` | `string` | `runtime-telemetry-latest:field:lastRecoveredAt` | `formatValue/display text` |
+| `offlineDetectionPending` | `boolean` | `runtime-telemetry-latest:field:offlineDetectionPending` | `formatValue/display text` |
+| `recoveryDetectionPending` | `boolean` | `runtime-telemetry-latest:field:recoveryDetectionPending` | `formatValue/display text` |
+| `resourcePressureDetectionPending` | `boolean` | `runtime-telemetry-latest:field:resourcePressureDetectionPending` | `formatValue/display text` |
+| `offlineReason` | `string` | `runtime-telemetry-latest:field:offlineReason` | `formatValue/display text` |
+| `recoveryReason` | `string` | `runtime-telemetry-latest:field:recoveryReason` | `formatValue/display text` |
+| `pressureType` | `string` | `runtime-telemetry-latest:field:pressureType` | `formatValue/display text` |
+| `observedValue` | `string` | `runtime-telemetry-latest:field:observedValue` | `formatValue/display text` |
+| `thresholdValue` | `string` | `runtime-telemetry-latest:field:thresholdValue` | `formatValue/display text` |
+| `alertSeverity` | `string` | `runtime-telemetry-latest:field:alertSeverity` | `formatValue/display text` |
+| `alertMessage` | `string` | `runtime-telemetry-latest:field:alertMessage` | `formatValue/display text` |
+| `healthStatus` | `string` | `runtime-telemetry-latest:field:healthStatus` | `formatValue/display text` |
 | `telemetryRetentionPolicy` | `string` | `runtime-telemetry-latest:field:telemetryRetentionPolicy` | `formatValue/display text` |
 
 ### Secure Aggregation Session Catalog
@@ -1770,8 +1722,6 @@ export const pageOverrides = {
 | `acknowledgedAt` | `string` | `training-alert-catalog:field:acknowledgedAt` | `formatValue/display text` |
 | `resolvedAt` | `string` | `training-alert-catalog:field:resolvedAt` | `formatValue/display text` |
 | `resolutionSummary` | `string` | `training-alert-catalog:field:resolutionSummary` | `formatValue/display text` |
-| `canAcknowledge` | `boolean` | `training-alert-catalog:field:canAcknowledge` | `formatValue/display text` |
-| `canResolve` | `boolean` | `training-alert-catalog:field:canResolve` | `formatValue/display text` |
 
 ### Training Job Dashboard
 

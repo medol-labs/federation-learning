@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimeagentoperations.reportagentruntimenoderesourcetelemetry
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimeagentoperations.reportagentruntimenoderesourcetelemetry.ReportAgentRuntimeNodeResourceTelemetryDecision
+
+@Component
+class ReportAgentRuntimeNodeResourceTelemetryDecisionComponent : ReportAgentRuntimeNodeResourceTelemetryDecision

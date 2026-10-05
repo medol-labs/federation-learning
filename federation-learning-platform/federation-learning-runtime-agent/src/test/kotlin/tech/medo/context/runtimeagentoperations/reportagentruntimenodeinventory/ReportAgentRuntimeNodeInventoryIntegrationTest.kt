@@ -25,6 +25,7 @@ class ReportAgentRuntimeNodeInventoryIntegrationTest(
     @Test
     fun ReportAgentRuntimeNodeInventoryintegration() {
         val command = ReportAgentRuntimeNodeInventoryCommand(
+            nodeId = java.util.UUID.randomUUID(),
             runtimeNodeInventoryReportId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             organizationName = null,

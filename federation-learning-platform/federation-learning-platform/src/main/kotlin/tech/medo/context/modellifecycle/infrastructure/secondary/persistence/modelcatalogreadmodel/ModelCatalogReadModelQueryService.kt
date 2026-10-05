@@ -40,22 +40,10 @@ class ModelCatalogReadModelQueryService(
             criteria.state?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<ModelStateEnum>> { root -> root.get("state") })) }
             criteria.releaseChannel?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> root.get("releaseChannel") })) }
             criteria.productionStage?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> root.get("productionStage") })) }
-            criteria.previousModelId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("previousModelId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.experimentId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("experimentId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.hyperparameterSnapshotId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("hyperparameterSnapshotId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.reproducibilityManifestId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("reproducibilityManifestId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.modelCardId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("modelCardId") as JpaExpression<UUID>).cast(String::class.java) })) }
-            criteria.baselineModelId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("baselineModelId") as JpaExpression<UUID>).cast(String::class.java) })) }
-            criteria.hasEvaluationPackage?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("hasEvaluationPackage") })) }
-            criteria.approvalStatus?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> root.get("approvalStatus") })) }
-            criteria.releaseStatus?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> root.get("releaseStatus") })) }
-            criteria.isProduction?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("isProduction") })) }
-            criteria.canRecordEvaluationPackage?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("canRecordEvaluationPackage") })) }
-            criteria.canApprove?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("canApprove") })) }
-            criteria.canPromoteToProduction?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("canPromoteToProduction") })) }
-            criteria.canRollback?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("canRollback") })) }
-            criteria.canRetire?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("canRetire") })) }
-            criteria.blockedReason?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> root.get("blockedReason") })) }
         }
         return specification
     }
@@ -92,22 +80,10 @@ class ModelCatalogReadModelQueryService(
             it.state = this@toProjection.state
             it.releaseChannel = this@toProjection.releaseChannel
             it.productionStage = this@toProjection.productionStage
-            it.previousModelId = this@toProjection.previousModelId
             it.experimentId = this@toProjection.experimentId
             it.hyperparameterSnapshotId = this@toProjection.hyperparameterSnapshotId
             it.reproducibilityManifestId = this@toProjection.reproducibilityManifestId
             it.modelCardId = this@toProjection.modelCardId
-            it.baselineModelId = this@toProjection.baselineModelId
-            it.hasEvaluationPackage = this@toProjection.hasEvaluationPackage
-            it.approvalStatus = this@toProjection.approvalStatus
-            it.releaseStatus = this@toProjection.releaseStatus
-            it.isProduction = this@toProjection.isProduction
-            it.canRecordEvaluationPackage = this@toProjection.canRecordEvaluationPackage
-            it.canApprove = this@toProjection.canApprove
-            it.canPromoteToProduction = this@toProjection.canPromoteToProduction
-            it.canRollback = this@toProjection.canRollback
-            it.canRetire = this@toProjection.canRetire
-            it.blockedReason = this@toProjection.blockedReason
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

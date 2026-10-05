@@ -96,16 +96,6 @@ export const TrainingAlertCatalogShow = () => {
               {renderFieldOverride(frontendComposition, "field:training-alert-catalog:display:resolutionSummary", { value: record?.resolutionSummary, record, resource: "training-alert-catalog", field: "resolutionSummary", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.resolutionSummary, t)}</p>}
             </div>
             <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_alert_catalog.fields.canAcknowledge.label", "Can Acknowledge")}</h4>
-              {renderFieldOverride(frontendComposition, "field:training-alert-catalog:display:canAcknowledge", { value: record?.canAcknowledge, record, resource: "training-alert-catalog", field: "canAcknowledge", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.canAcknowledge, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.training_alert_catalog.fields.canResolve.label", "Can Resolve")}</h4>
-              {renderFieldOverride(frontendComposition, "field:training-alert-catalog:display:canResolve", { value: record?.canResolve, record, resource: "training-alert-catalog", field: "canResolve", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.canResolve, t)}</p>}
-            </div>
-            <Separator />
           </CardContent>
         </Card>
       </div>

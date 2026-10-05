@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
@@ -29,8 +28,6 @@ class TrainingAlertCatalogReadModelCriteria {
     var acknowledgedAt: RangeFilter<LocalDateTime>? = null
     var resolvedAt: RangeFilter<LocalDateTime>? = null
     var resolutionSummary: StringFilter? = null
-    var canAcknowledge: BooleanFilter? = null
-    var canResolve: BooleanFilter? = null
 }
 
 
@@ -46,8 +43,6 @@ class TrainingAlertCatalogReadModelProjection : MetadataProjection {
     var acknowledgedAt: LocalDateTime? = null
     var resolvedAt: LocalDateTime? = null
     var resolutionSummary: String? = null
-    var canAcknowledge: Boolean? = null
-    var canResolve: Boolean? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -69,8 +64,6 @@ fun TrainingAlertCatalogReadModelProjection.toReadModel(): TrainingAlertCatalogR
     acknowledgedAt = acknowledgedAt,
     resolvedAt = resolvedAt,
     resolutionSummary = resolutionSummary,
-    canAcknowledge = canAcknowledge,
-    canResolve = canResolve,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -99,8 +92,6 @@ data class TrainingAlertCatalogReadModel(
     val acknowledgedAt: LocalDateTime?,
     val resolvedAt: LocalDateTime?,
     val resolutionSummary: String?,
-    val canAcknowledge: Boolean?,
-    val canResolve: Boolean?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

@@ -13,5 +13,5 @@ import org.springframework.stereotype.Component
 class ActivateRuntimeIdentityWhenAgentInstalledProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: RuntimeAgentInstallationSucceededEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(ActivateRuntimeIdentityCommand(runtimeInfrastructureId = event.runtimeInfrastructureId, runtimeAgentId = event.runtimeAgentId, organizationId = event.organizationId, organizationName = event.organizationName, runtimeName = event.runtimeName)).resultMessage
+        commandGateway.send(ActivateRuntimeIdentityCommand(runtimeId = event.runtimeAgentId, runtimeInfrastructureId = event.runtimeInfrastructureId, runtimeAgentId = event.runtimeAgentId, organizationId = event.organizationId, organizationName = event.organizationName, runtimeName = event.runtimeName)).resultMessage
 }

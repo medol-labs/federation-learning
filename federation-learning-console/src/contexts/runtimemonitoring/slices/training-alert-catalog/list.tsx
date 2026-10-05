@@ -31,8 +31,6 @@ type TrainingAlertCatalogRecord = {
   acknowledgedAt?: string;
   resolvedAt?: string;
   resolutionSummary?: string;
-  canAcknowledge: boolean;
-  canResolve: boolean;
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -371,60 +369,6 @@ export const TrainingAlertCatalogList = () => {
             },
           ) ?? String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("canAcknowledge", {
-        id: "canAcknowledge",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_alert_catalog.fields.canAcknowledge.label", "Can Acknowledge")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.training_alert_catalog.fields.canAcknowledge.label", "Can Acknowledge"),
-          placeholder: "Enter Can Acknowledge",
-          variant: "boolean",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<TrainingAlertCatalogRecord>(
-            frontendComposition,
-            "field:training-alert-catalog:display:canAcknowledge",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "training-alert-catalog",
-              field: "canAcknowledge",
-              view: "display",
-              compact: true,
-            },
-          ) ?? getValue() ? "Yes" : "No",
-      }),
-      columnHelper.accessor("canResolve", {
-        id: "canResolve",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.training_alert_catalog.fields.canResolve.label", "Can Resolve")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.training_alert_catalog.fields.canResolve.label", "Can Resolve"),
-          placeholder: "Enter Can Resolve",
-          variant: "boolean",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<TrainingAlertCatalogRecord>(
-            frontendComposition,
-            "field:training-alert-catalog:display:canResolve",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "training-alert-catalog",
-              field: "canResolve",
-              view: "display",
-              compact: true,
-            },
-          ) ?? getValue() ? "Yes" : "No",
-      }),
       columnHelper.display({
         id: "actions",
         header: t("table.actions", "Actions"),
@@ -437,7 +381,7 @@ export const TrainingAlertCatalogList = () => {
                 "rowActions.before",
                 { resource: "training-alert-catalog", record: row.original },
               )}
-                {isCommandVisible(row.original, "canAcknowledge", "state", ["Raised"]) && (
+                {isCommandVisible(row.original, "", "state", ["Raised"]) && (
                   <CommandButton
                     variant="ghost"
                     command="acknowledgeTrainingAlert"
@@ -445,7 +389,7 @@ export const TrainingAlertCatalogList = () => {
                     size="sm"
                   />
                 )}
-                {isCommandVisible(row.original, "canResolve", "state", ["Acknowledged"]) && (
+                {isCommandVisible(row.original, "", "state", ["Acknowledged"]) && (
                   <CommandButton
                     variant="ghost"
                     command="resolveTrainingAlert"
@@ -485,7 +429,7 @@ export const TrainingAlertCatalogList = () => {
         tableName: "training_alert_catalog_read_model_entity",
         idField: "alertId",
         idFields: ["alertId"],
-        queryFields: ["alertId","nodeId","trainingJobId","runtimeNodeName","trainingJobObjective","severity","message","state","acknowledgedAt","resolvedAt","resolutionSummary","canAcknowledge","canResolve"],
+        queryFields: ["alertId","nodeId","trainingJobId","runtimeNodeName","trainingJobObjective","severity","message","state","acknowledgedAt","resolvedAt","resolutionSummary"],
         label: t("resources.training_alert_catalog.label", "Training Alert Catalog"),
         aggregateRoute: "trainingalert",
         queryRoute: "trainingalertcatalog",

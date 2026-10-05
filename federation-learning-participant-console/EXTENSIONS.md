@@ -429,6 +429,7 @@ export const pageOverrides = {
 
 | Field | Type | Renderer override id | Default renderer |
 | --- | --- | --- | --- |
+| `nodeId` | `string` | `agent-runtime-node-inventory-catalog:field:nodeId` | `formatValue/display text` |
 | `runtimeNodeInventoryReportId` | `string` | `agent-runtime-node-inventory-catalog:field:runtimeNodeInventoryReportId` | `formatValue/display text` |
 | `organizationId` | `string` | `agent-runtime-node-inventory-catalog:field:organizationId` | `formatValue/display text` |
 | `runtimeInfrastructureId` | `string` | `agent-runtime-node-inventory-catalog:field:runtimeInfrastructureId` | `formatValue/display text` |
@@ -464,6 +465,7 @@ export const pageOverrides = {
 | --- | --- | --- |
 | `list` | `agent-runtime-node-resource-latest:list` | `src/contexts/runtimeagentoperations/slices/agent-runtime-node-resource-latest/list.tsx` |
 | `show` | `agent-runtime-node-resource-latest:show` | `src/contexts/runtimeagentoperations/slices/agent-runtime-node-resource-latest/show.tsx` |
+| `reportAgentRuntimeNodeResourceTelemetry` | `agent-runtime-node-resource-latest:reportAgentRuntimeNodeResourceTelemetry` | `src/contexts/runtimeagentoperations/slices/report-agent-runtime-node-resource-telemetry/report-agent-runtime-node-resource-telemetry.tsx` |
 
 Example:
 
@@ -480,7 +482,7 @@ export const pageOverrides = {
 
 | Command | Override key | Generated fallback | Fields |
 | --- | --- | --- | --- |
-| _(none)_ | | | |
+| `reportAgentRuntimeNodeResourceTelemetry` | `agent-runtime-node-resource-latest:reportAgentRuntimeNodeResourceTelemetry` | `src/contexts/runtimeagentoperations/slices/report-agent-runtime-node-resource-telemetry/report-agent-runtime-node-resource-telemetry.tsx` | `runtimeAgentId`, `runtimeInfrastructureId`, `runtimeNodeName`, `nodeReady`, `allocatableCpuCores`, `allocatableMemoryGb`, `allocatableGpuCount`, `allocatedCpuCores`, `allocatedMemoryGb`, `allocatedGpuCount`, `availableCpuCores`, `availableMemoryGb`, `availableGpuCount`, `runningWorkloadCount`, `workloadCapacity`, `observedAt`, `telemetryRetentionPolicy` |
 
 #### Field Renderers
 
@@ -524,6 +526,7 @@ export const pageOverrides = {
 | --- | --- | --- |
 | `list` | `agent-runtime-telemetry-latest:list` | `src/contexts/runtimeagentoperations/slices/agent-runtime-telemetry-latest/list.tsx` |
 | `show` | `agent-runtime-telemetry-latest:show` | `src/contexts/runtimeagentoperations/slices/agent-runtime-telemetry-latest/show.tsx` |
+| `reportAgentRuntimeTelemetry` | `agent-runtime-telemetry-latest:reportAgentRuntimeTelemetry` | `src/contexts/runtimeagentoperations/slices/report-agent-runtime-telemetry/report-agent-runtime-telemetry.tsx` |
 
 Example:
 
@@ -540,7 +543,7 @@ export const pageOverrides = {
 
 | Command | Override key | Generated fallback | Fields |
 | --- | --- | --- | --- |
-| _(none)_ | | | |
+| `reportAgentRuntimeTelemetry` | `agent-runtime-telemetry-latest:reportAgentRuntimeTelemetry` | `src/contexts/runtimeagentoperations/slices/report-agent-runtime-telemetry/report-agent-runtime-telemetry.tsx` | `runtimeAgentId`, `federationId`, `trainingJobId`, `roundExecutionId`, `cpuLoad`, `gpuLoad`, `memoryLoad`, `lastHeartbeatAt`, `telemetryRetentionPolicy` |
 
 #### Field Renderers
 

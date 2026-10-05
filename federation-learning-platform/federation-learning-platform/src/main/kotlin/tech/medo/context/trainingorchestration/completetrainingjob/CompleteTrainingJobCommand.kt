@@ -4,6 +4,7 @@ import org.axonframework.messaging.commandhandling.annotation.Command
 import org.axonframework.modelling.annotation.TargetEntityId
 import tech.medo.trainingorchestration.trainingjob.TrainingJobSelection
 import java.util.UUID;
+import java.math.BigDecimal;
 
 
 @Command
@@ -11,6 +12,9 @@ data class CompleteTrainingJobCommand(
     val trainingJobId: UUID,
     val finalRoundId: UUID,
     val finalModelId: UUID,
+    val finalModelArtifactDigest: String,
+    val finalGlobalAccuracy: BigDecimal,
+    val finalEvaluationReportId: UUID,
     val trainingJobObjective: String,
     val stopReason: String = ""
 ) {

@@ -35,10 +35,6 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("automation-runtime-governance-detect-runtime-capabilities").notCustomized()
 
     @Bean
-    fun automationRuntimeMonitoringAppendAuditTrailEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("automation-runtime-monitoring-append-audit-trail").notCustomized()
-
-    @Bean
     fun automationRuntimeMonitoringRaiseTrainingAlertEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("automation-runtime-monitoring-raise-training-alert").notCustomized()
 
@@ -163,10 +159,6 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("integration-runtime-governance-detect-runtime-capabilities").notCustomized()
 
     @Bean
-    fun integrationRuntimeMonitoringAppendAuditTrailEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("integration-runtime-monitoring-append-audit-trail").notCustomized()
-
-    @Bean
     fun integrationRuntimeMonitoringRaiseTrainingAlertEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("integration-runtime-monitoring-raise-training-alert").notCustomized()
 
@@ -265,10 +257,6 @@ class AxonEventProcessorConfiguration {
     @Bean
     fun integrationTrainingOrchestrationSubmitGlobalModelEvaluationEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("integration-training-orchestration-submit-global-model-evaluation").notCustomized()
-
-    @Bean
-    fun readmodelAuditRecordLogEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("readmodel-audit-record-log").notCustomized()
 
     @Bean
     fun readmodelCurrentRecommendedFeatureSchemaCatalogEventProcessorDefinition(): EventProcessorDefinition =

@@ -602,6 +602,58 @@ export const RetireModelCommandSchema = z.object({
 });
 export type RetireModelCommandInput = z.infer<typeof RetireModelCommandSchema>;
 
+export const RecordRuntimeTelemetryCommandSchema = z.object({
+  nodeId: z.string().uuid(),
+  runtimeAgentId: z.string().uuid(),
+  federationId: z.string().uuid().optional().nullable(),
+  federationName: z.string().optional().nullable(),
+  trainingJobId: z.string().uuid().optional().nullable(),
+  trainingJobObjective: z.string().optional().nullable(),
+  roundExecutionId: z.string().uuid().optional().nullable(),
+  runtimeNodeName: z.string().optional().nullable(),
+  cpuLoad: z.coerce.number().optional().nullable(),
+  gpuLoad: z.coerce.number().optional().nullable(),
+  memoryLoad: z.coerce.number().optional().nullable(),
+  lastHeartbeatAt: dateTimeLocalSchema.optional().nullable(),
+  lastRecoveredAt: dateTimeLocalSchema.optional().nullable(),
+  offlineDetectionPending: z.boolean(),
+  recoveryDetectionPending: z.boolean(),
+  resourcePressureDetectionPending: z.boolean(),
+  offlineReason: z.string().optional().nullable(),
+  recoveryReason: z.string().optional().nullable(),
+  pressureType: z.string().optional().nullable(),
+  observedValue: z.coerce.number().optional().nullable(),
+  thresholdValue: z.coerce.number().optional().nullable(),
+  alertSeverity: z.string().optional().nullable(),
+  alertMessage: z.string().optional().nullable(),
+  healthStatus: z.string(),
+  telemetryRetentionPolicy: z.string(),
+});
+export type RecordRuntimeTelemetryCommandInput = z.infer<typeof RecordRuntimeTelemetryCommandSchema>;
+
+export const RecordRuntimeNodeResourceTelemetryCommandSchema = z.object({
+  nodeId: z.string().uuid(),
+  runtimeAgentId: z.string().uuid(),
+  runtimeInfrastructureId: z.string().uuid().optional().nullable(),
+  runtimeNodeName: z.string().optional().nullable(),
+  nodeReady: z.boolean(),
+  allocatableCpuCores: z.coerce.number().int(),
+  allocatableMemoryGb: z.coerce.number().int(),
+  allocatableGpuCount: z.coerce.number().int(),
+  allocatedCpuCores: z.coerce.number().int(),
+  allocatedMemoryGb: z.coerce.number().int(),
+  allocatedGpuCount: z.coerce.number().int(),
+  availableCpuCores: z.coerce.number().int(),
+  availableMemoryGb: z.coerce.number().int(),
+  availableGpuCount: z.coerce.number().int(),
+  runningWorkloadCount: z.coerce.number().int(),
+  workloadCapacity: z.coerce.number().int(),
+  observedAt: dateTimeLocalSchema,
+  lastResourceSnapshotAt: dateTimeLocalSchema,
+  telemetryRetentionPolicy: z.string(),
+});
+export type RecordRuntimeNodeResourceTelemetryCommandInput = z.infer<typeof RecordRuntimeNodeResourceTelemetryCommandSchema>;
+
 export const AcknowledgeTrainingAlertCommandSchema = z.object({
   alertId: z.string().uuid(),
   acknowledgementNote: z.string().optional().nullable(),

@@ -34,6 +34,7 @@ open class DefaultAgentRuntimeNodeInventoryCatalogReadModelProjectionUpdater(
         val entity = repository.findProjectionById(event.runtimeNodeInventoryReportId) ?: AgentRuntimeNodeInventoryCatalogReadModelProjection().apply {
                 this.runtimeNodeInventoryReportId = event.runtimeNodeInventoryReportId
         }
+            entity.nodeId = event.nodeId
             entity.runtimeNodeInventoryReportId = event.runtimeNodeInventoryReportId
             entity.organizationId = event.organizationId
             entity.runtimeInfrastructureId = event.runtimeInfrastructureId

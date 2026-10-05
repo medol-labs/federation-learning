@@ -20,9 +20,9 @@ class DetectResourcePressureFromTelemetryProcessor(
         repository.findAll(PageRequest.of(0, 100))
             .content
             .asSequence()
-            .filter { todo -> todo.resourcePressureDetected == true && todo.nodeId != null && todo.runtimeAgentId != null }
+            .filter { todo -> todo.resourcePressureDetectionPending == true && todo.nodeId != null && todo.runtimeAgentId != null && todo.pressureType != null && todo.observedValue != null && todo.thresholdValue != null && todo.alertSeverity != null && todo.alertMessage != null }
             .forEach { todo ->
-                commandGateway.send(DetectRuntimeNodeResourcePressureCommand(nodeId = todo.nodeId!!, runtimeAgentId = todo.runtimeAgentId!!, federationId = todo.federationId, federationName = todo.federationName, trainingJobId = todo.trainingJobId, trainingJobObjective = todo.trainingJobObjective, roundExecutionId = todo.roundExecutionId, runtimeNodeName = todo.runtimeNodeName, pressureType = "" /* TODO: provide pressureType */, observedValue = java.math.BigDecimal.ZERO /* TODO: provide observedValue */, thresholdValue = java.math.BigDecimal.ZERO /* TODO: provide thresholdValue */))
+                commandGateway.send(DetectRuntimeNodeResourcePressureCommand(nodeId = todo.nodeId!!, runtimeAgentId = todo.runtimeAgentId!!, federationId = todo.federationId, federationName = todo.federationName, trainingJobId = todo.trainingJobId, trainingJobObjective = todo.trainingJobObjective, roundExecutionId = todo.roundExecutionId, runtimeNodeName = todo.runtimeNodeName, pressureType = todo.pressureType!!, observedValue = todo.observedValue!!, thresholdValue = todo.thresholdValue!!, alertSeverity = todo.alertSeverity!!, alertMessage = todo.alertMessage!!))
             }
     }
 }

@@ -452,6 +452,51 @@ async function ensureRuntimeAgentData() {
         createPayload: seed.node
     });
 
+    await ensureOne({
+        label: 'platform runtime node inventory',
+        baseUrl: platformUrl,
+        queryPath: '/runtimenodeinventory/runtimenodeinventoryview',
+        query: {'nodeId.equals': seed.node.nodeId},
+        createPath: '/runtimenodeinventory/recordruntimenodeinventory',
+        createPayload: seed.node
+    });
+
+    await ensureOne({
+        label: 'agent runtime telemetry',
+        baseUrl: runtimeAgentUrl,
+        queryPath: '/agentruntimetelemetry/agentruntimetelemetrylatest',
+        query: {'nodeId.equals': seed.telemetry.nodeId},
+        createPath: '/agentruntimetelemetry/reportagentruntimetelemetry',
+        createPayload: seed.agentTelemetry
+    });
+
+    await ensureOne({
+        label: 'agent runtime node resource telemetry',
+        baseUrl: runtimeAgentUrl,
+        queryPath: '/agentruntimenoderesourcetelemetry/agentruntimenoderesourcelatest',
+        query: {'nodeId.equals': seed.nodeResource.nodeId},
+        createPath: '/agentruntimenoderesourcetelemetry/reportagentruntimenoderesourcetelemetry',
+        createPayload: seed.nodeResource
+    });
+
+    await ensureOne({
+        label: 'platform runtime telemetry',
+        baseUrl: platformUrl,
+        queryPath: '/noderuntimehealth/runtimetelemetrylatest',
+        query: {'nodeId.equals': seed.telemetry.nodeId},
+        createPath: '/noderuntimehealth/recordruntimetelemetry',
+        createPayload: seed.telemetry
+    });
+
+    await ensureOne({
+        label: 'platform runtime node resource telemetry',
+        baseUrl: platformUrl,
+        queryPath: '/runtimenoderesourcetelemetry/runtimenoderesourcelatest',
+        query: {'nodeId.equals': seed.nodeResource.nodeId},
+        createPath: '/runtimenoderesourcetelemetry/recordruntimenoderesourcetelemetry',
+        createPayload: seed.nodeResource
+    });
+
     const datasetCapability = await ensureOne({
         label: 'dataset declaration',
         baseUrl: runtimeAgentUrl,
@@ -536,17 +581,20 @@ async function ensureRuntimeAgentData() {
 }
 
 async function ensureRuntimeAgentPlatformRegistration() {
-    await ensureOne({
+    const runtimeIdentity = await ensureOne({
         label: 'runtime identity',
         baseUrl: platformUrl,
         queryPath: '/runtimeidentity/runtimeidentitycatalog',
         query: {
-            'runtimeId.equals': seed.runtime.runtimeId,
+            'runtimeAgentId.equals': seed.runtime.runtimeAgentId,
             'runtimeInfrastructureId.equals': seed.runtime.runtimeInfrastructureId
         },
         createPath: '/runtimeidentity/activateruntimeidentity',
         createPayload: seed.runtime
     });
+    if (runtimeIdentity?.runtimeId) {
+        applyRuntimeIdentity(runtimeIdentity.runtimeId);
+    }
 
     await ensureOne({
         label: 'runtime agent endpoint',
@@ -772,10 +820,24 @@ function applyRuntimeInfrastructureId(runtimeInfrastructureId) {
     seed.runtime.runtimeInfrastructureId = runtimeInfrastructureId;
     seed.runtimeInstallationPlan.runtimeInfrastructureId = runtimeInfrastructureId;
     seed.node.runtimeInfrastructureId = runtimeInfrastructureId;
+    seed.node.nodeId = stableUuid(
+        `fl-dev:runtime-node:${runtimeInfrastructureId}:${seed.runtime.runtimeAgentId}:local-dev-node`
+    );
     seed.node.runtimeNodeInventoryReportId = stableUuid(
         `fl-dev:node-inventory:${runtimeInfrastructureId}:${seed.runtime.runtimeAgentId}`
     );
     seed.node.inventoryHash = stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeEngineUrl}`);
+    seed.agentTelemetry.nodeId = seed.node.nodeId;
+    seed.telemetry.nodeId = seed.node.nodeId;
+    seed.nodeResource.nodeId = seed.node.nodeId;
+    seed.nodeResource.runtimeInfrastructureId = runtimeInfrastructureId;
+}
+
+function applyRuntimeIdentity(runtimeId) {
+    seed.runtime.runtimeId = runtimeId;
+    seed.binding.runtimeId = runtimeId;
+    seed.accessValidation.runtimeId = runtimeId;
+    seed.platformMetadata.runtimeId = runtimeId;
 }
 
 function printNextSteps() {
@@ -938,7 +1000,7 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
     );
     const runtimeInfrastructureId = stableNameUuid(`runtime-infrastructure:${runtimeInstallationPlanId}`);
     const runtimeAgentId = stableUuid('fl-dev:runtime-agent:local-vision');
-    const runtimeId = stableUuid('fl-dev:runtime:local-vision');
+    const runtimeId = runtimeAgentId;
     const datasetId = stableUuid('fl-dev:dataset:tiny-imagenet-densenet-imagefolder');
     const runtimeDatasetBindingId = stableUuid('fl-dev:dataset-binding:tiny-imagenet-densenet-local-runtime');
     const datasetAccessValidationId = stableUuid('fl-dev:dataset-access-validation:tiny-imagenet-densenet-local-runtime');
@@ -1013,6 +1075,7 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
         },
         runtimeEndpointScope: runtimeOptions.runtimeEndpointScope,
         node: {
+            nodeId: stableUuid(`fl-dev:runtime-node:${runtimeInfrastructureId}:${runtimeAgentId}:local-dev-node`),
             runtimeNodeInventoryReportId: stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeAgentId}`),
             organizationId,
             organizationName,
@@ -1028,6 +1091,66 @@ function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngine
             operatingSystem: process.platform,
             architecture: process.arch,
             inventoryHash: stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeEngineEndpoint}`)
+        },
+        agentTelemetry: {
+            nodeId: stableUuid(`fl-dev:runtime-node:${runtimeInfrastructureId}:${runtimeAgentId}:local-dev-node`),
+            runtimeAgentId,
+            federationId,
+            trainingJobId: null,
+            roundExecutionId: null,
+            cpuLoad: 0.18,
+            gpuLoad: 0.12,
+            memoryLoad: 0.27,
+            lastHeartbeatAt: localDateTimeNow(),
+            telemetryRetentionPolicy: 'LOCAL_DEV_LATEST_ONLY'
+        },
+        telemetry: {
+            nodeId: stableUuid(`fl-dev:runtime-node:${runtimeInfrastructureId}:${runtimeAgentId}:local-dev-node`),
+            runtimeAgentId,
+            federationId,
+            federationName,
+            trainingJobId: null,
+            trainingJobObjective: null,
+            roundExecutionId: null,
+            runtimeNodeName: runtimeName,
+            cpuLoad: 0.18,
+            gpuLoad: 0.12,
+            memoryLoad: 0.27,
+            lastHeartbeatAt: localDateTimeNow(),
+            lastRecoveredAt: null,
+            offlineDetectionPending: false,
+            recoveryDetectionPending: false,
+            resourcePressureDetectionPending: false,
+            offlineReason: null,
+            recoveryReason: null,
+            pressureType: null,
+            observedValue: null,
+            thresholdValue: null,
+            alertSeverity: null,
+            alertMessage: null,
+            healthStatus: 'Healthy',
+            telemetryRetentionPolicy: 'LOCAL_DEV_LATEST_ONLY'
+        },
+        nodeResource: {
+            nodeId: stableUuid(`fl-dev:runtime-node:${runtimeInfrastructureId}:${runtimeAgentId}:local-dev-node`),
+            runtimeAgentId,
+            runtimeInfrastructureId,
+            runtimeNodeName: runtimeName,
+            nodeReady: true,
+            allocatableCpuCores: 8,
+            allocatableMemoryGb: 32,
+            allocatableGpuCount: 1,
+            allocatedCpuCores: 2,
+            allocatedMemoryGb: 8,
+            allocatedGpuCount: 0,
+            availableCpuCores: 6,
+            availableMemoryGb: 24,
+            availableGpuCount: 1,
+            runningWorkloadCount: 0,
+            workloadCapacity: 4,
+            observedAt: localDateTimeNow(),
+            lastResourceSnapshotAt: localDateTimeNow(),
+            telemetryRetentionPolicy: 'LOCAL_DEV_LATEST_ONLY'
         },
         dataset: {
             datasetId,
@@ -1181,7 +1304,7 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
     );
     const runtimeInfrastructureId = stableNameUuid(`runtime-infrastructure:${runtimeInstallationPlanId}`);
     const runtimeAgentId = stableUuid('fl-dev:runtime-agent:local-medical');
-    const runtimeId = stableUuid('fl-dev:runtime:local-medical');
+    const runtimeId = runtimeAgentId;
     const datasetId = stableUuid('fl-dev:dataset:hospital-readmission-risk-csv');
     const runtimeDatasetBindingId = stableUuid('fl-dev:dataset-binding:hospital-readmission-risk-local-runtime');
     const datasetAccessValidationId = stableUuid('fl-dev:dataset-access-validation:hospital-readmission-risk-local-runtime');
@@ -1258,6 +1381,7 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
         },
         runtimeEndpointScope: runtimeOptions.runtimeEndpointScope,
         node: {
+            nodeId: stableUuid(`fl-dev:runtime-node:${runtimeInfrastructureId}:${runtimeAgentId}:local-dev-node`),
             runtimeNodeInventoryReportId: stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeAgentId}`),
             organizationId,
             organizationName,
@@ -1273,6 +1397,66 @@ function buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpo
             operatingSystem: process.platform,
             architecture: process.arch,
             inventoryHash: stableUuid(`fl-dev:node-inventory:${runtimeInfrastructureId}:${runtimeEngineEndpoint}`)
+        },
+        agentTelemetry: {
+            nodeId: stableUuid(`fl-dev:runtime-node:${runtimeInfrastructureId}:${runtimeAgentId}:local-dev-node`),
+            runtimeAgentId,
+            federationId,
+            trainingJobId: null,
+            roundExecutionId: null,
+            cpuLoad: 0.16,
+            gpuLoad: 0.0,
+            memoryLoad: 0.22,
+            lastHeartbeatAt: localDateTimeNow(),
+            telemetryRetentionPolicy: 'LOCAL_DEV_LATEST_ONLY'
+        },
+        telemetry: {
+            nodeId: stableUuid(`fl-dev:runtime-node:${runtimeInfrastructureId}:${runtimeAgentId}:local-dev-node`),
+            runtimeAgentId,
+            federationId,
+            federationName,
+            trainingJobId: null,
+            trainingJobObjective: null,
+            roundExecutionId: null,
+            runtimeNodeName: runtimeName,
+            cpuLoad: 0.16,
+            gpuLoad: 0.0,
+            memoryLoad: 0.22,
+            lastHeartbeatAt: localDateTimeNow(),
+            lastRecoveredAt: null,
+            offlineDetectionPending: false,
+            recoveryDetectionPending: false,
+            resourcePressureDetectionPending: false,
+            offlineReason: null,
+            recoveryReason: null,
+            pressureType: null,
+            observedValue: null,
+            thresholdValue: null,
+            alertSeverity: null,
+            alertMessage: null,
+            healthStatus: 'Healthy',
+            telemetryRetentionPolicy: 'LOCAL_DEV_LATEST_ONLY'
+        },
+        nodeResource: {
+            nodeId: stableUuid(`fl-dev:runtime-node:${runtimeInfrastructureId}:${runtimeAgentId}:local-dev-node`),
+            runtimeAgentId,
+            runtimeInfrastructureId,
+            runtimeNodeName: runtimeName,
+            nodeReady: true,
+            allocatableCpuCores: 4,
+            allocatableMemoryGb: 16,
+            allocatableGpuCount: 0,
+            allocatedCpuCores: 1,
+            allocatedMemoryGb: 4,
+            allocatedGpuCount: 0,
+            availableCpuCores: 3,
+            availableMemoryGb: 12,
+            availableGpuCount: 0,
+            runningWorkloadCount: 0,
+            workloadCapacity: 2,
+            observedAt: localDateTimeNow(),
+            lastResourceSnapshotAt: localDateTimeNow(),
+            telemetryRetentionPolicy: 'LOCAL_DEV_LATEST_ONLY'
         },
         dataset: {
             datasetId,
@@ -1543,6 +1727,10 @@ function authTokenForUrl(url) {
     return [...authTokensByBaseUrl.entries()]
         .sort(([left], [right]) => right.length - left.length)
         .find(([baseUrl]) => text === baseUrl || text.startsWith(`${baseUrl}/`))?.[1];
+}
+
+function localDateTimeNow() {
+    return new Date().toISOString().replace(/\.\d{3}Z$/, '');
 }
 
 function stableUuid(value) {

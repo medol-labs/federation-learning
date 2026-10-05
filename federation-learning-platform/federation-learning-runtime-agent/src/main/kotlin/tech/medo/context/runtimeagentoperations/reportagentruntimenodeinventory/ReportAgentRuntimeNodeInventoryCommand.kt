@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @Command
 data class ReportAgentRuntimeNodeInventoryCommand(
+    val nodeId: UUID,
     val runtimeNodeInventoryReportId: UUID = java.util.UUID.randomUUID(),
     val organizationId: UUID,
     val organizationName: String?,
@@ -25,7 +26,7 @@ data class ReportAgentRuntimeNodeInventoryCommand(
     val inventoryHash: String
 ) {
     @TargetEntityId
-    val selection: AgentRuntimeNodeInventorySelection = AgentRuntimeNodeInventorySelection(runtimeNodeInventoryReportId = runtimeNodeInventoryReportId)
+    val selection: AgentRuntimeNodeInventorySelection = AgentRuntimeNodeInventorySelection(nodeId = nodeId, runtimeNodeInventoryReportId = runtimeNodeInventoryReportId)
 
 
 }

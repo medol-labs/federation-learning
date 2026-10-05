@@ -12,6 +12,7 @@ class ReportAgentRuntimeNodeInventoryDecisionTest {
     fun ReportAgentRuntimeNodeInventoryEmitsAgentRuntimeNodeInventoryReportedEvent() {
         val events = (object : ReportAgentRuntimeNodeInventoryDecision {}).decide(
             ReportAgentRuntimeNodeInventoryCommand(
+            nodeId = java.util.UUID.randomUUID(),
             runtimeNodeInventoryReportId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             organizationName = null,

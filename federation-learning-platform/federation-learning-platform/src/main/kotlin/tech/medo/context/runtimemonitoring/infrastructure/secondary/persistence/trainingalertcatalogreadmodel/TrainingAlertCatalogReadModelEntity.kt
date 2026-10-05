@@ -32,8 +32,6 @@ class TrainingAlertCatalogReadModelEntity : MetadataProjection {
     var acknowledgedAt: LocalDateTime? = null
     var resolvedAt: LocalDateTime? = null
     var resolutionSummary: String? = null
-    var canAcknowledge: Boolean? = null
-    var canResolve: Boolean? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

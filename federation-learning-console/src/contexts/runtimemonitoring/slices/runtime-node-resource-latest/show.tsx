@@ -127,8 +127,8 @@ export const RuntimeNodeResourceLatestShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_node_resource_latest.fields.allocatableCapacityChanged.label", "Allocatable Capacity Changed")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-node-resource-latest:display:allocatableCapacityChanged", { value: record?.allocatableCapacityChanged, record, resource: "runtime-node-resource-latest", field: "allocatableCapacityChanged", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatableCapacityChanged, t)}</p>}
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_node_resource_latest.fields.lastResourceSnapshotAt.label", "Last Resource Snapshot At")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-node-resource-latest:display:lastResourceSnapshotAt", { value: record?.lastResourceSnapshotAt, record, resource: "runtime-node-resource-latest", field: "lastResourceSnapshotAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.lastResourceSnapshotAt, t)}</p>}
             </div>
             <Separator />
             <div>

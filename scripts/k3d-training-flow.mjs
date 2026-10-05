@@ -90,6 +90,7 @@ const skipDictionary = booleanOption(args['skip-dictionary'] ?? process.env.FL_K
 const skipAdminSetup = booleanOption(args['skip-admin-setup'] ?? process.env.FL_K3D_SKIP_ADMIN_SETUP, false);
 const skipRuntimeAgentData = booleanOption(args['skip-runtime-agent-data'] ?? process.env.FL_K3D_SKIP_RUNTIME_AGENT_DATA, false);
 const skipTrainingJob = booleanOption(args['skip-training-job'] ?? process.env.FL_K3D_SKIP_TRAINING_JOB, false);
+const syncDefaultKubeconfig = booleanOption(args['sync-default-kubeconfig'] ?? process.env.FL_K3D_SYNC_DEFAULT_KUBECONFIG, true);
 const dryRun = booleanOption(args['dry-run'], false);
 
 console.log('[k3d-flow] configuration');
@@ -114,6 +115,7 @@ console.log(JSON.stringify({
     skipDictionary,
     skipRuntimeAgentData,
     skipTrainingJob,
+    syncDefaultKubeconfig,
     dryRun
 }, null, 2));
 
@@ -132,6 +134,7 @@ if (rebuildAppImages) {
 if (!skipCluster) {
     await ensureCluster();
 }
+ensureKubeconfigUsable();
 ensureRuntimeEngineImageAvailable();
 if (!skipApply) {
     await waitForKubernetesApi();
@@ -247,10 +250,106 @@ cleanupPortForwards();
 async function ensureCluster() {
     if (recreateCluster) {
         runK3d('recreate');
+        syncDefaultKubeconfigContext();
         return;
     }
     const exists = commandOk('k3d', ['cluster', 'get', clusterName]);
     runK3d(exists ? 'kubeconfig' : 'create');
+    syncDefaultKubeconfigContext();
+}
+
+function ensureKubeconfigUsable() {
+    const firstCheck = commandResult('kubectl', ['get', '--raw=/readyz'], kubeEnv());
+    if (firstCheck.status === 0) {
+        return;
+    }
+    if (!isUnknownAuthorityFailure(firstCheck)) {
+        return;
+    }
+
+    console.log('[k3d-flow] kubectl reported an unknown-authority TLS error; refreshing k3d kubeconfig');
+    runK3d('kubeconfig');
+    syncDefaultKubeconfigContext();
+
+    const secondCheck = commandResult('kubectl', ['get', '--raw=/readyz'], kubeEnv());
+    if (secondCheck.status !== 0 && isUnknownAuthorityFailure(secondCheck)) {
+        fail([
+            'Kubernetes API TLS verification still fails after refreshing k3d kubeconfig.',
+            `Dedicated kubeconfig: ${kubeconfigFile}`,
+            'Try deleting and recreating the k3d cluster if the API server certificate changed while the server is still running.',
+            secondCheck.stderr ? `stderr tail: ${compactTail(secondCheck.stderr)}` : ''
+        ].filter(Boolean).join('\n'));
+    }
+}
+
+function syncDefaultKubeconfigContext() {
+    if (!syncDefaultKubeconfig) {
+        return;
+    }
+    const expectedContext = `k3d-${clusterName}`;
+    const expectedCluster = expectedContext;
+    const expectedUser = `admin@${expectedContext}`;
+    const currentContext = commandOutputOrNull('kubectl', ['config', 'current-context'])?.trim();
+    if (currentContext && currentContext !== expectedContext) {
+        return;
+    }
+    if (!commandOk('k3d', ['cluster', 'get', clusterName])) {
+        return;
+    }
+
+    if (!mergeDefaultKubeconfig(expectedContext)) {
+        return;
+    }
+
+    const check = commandResult('kubectl', ['--context', expectedContext, 'get', '--raw=/readyz']);
+    if (check.status === 0) {
+        console.log(`[k3d-flow] synced default kubeconfig context ${expectedContext}`);
+        return;
+    }
+    if (!isUnknownAuthorityFailure(check)) {
+        console.log([
+            `[k3d-flow] warning: synced default kubeconfig context ${expectedContext}, but kubectl check failed`,
+            check.stderr ? `stderr tail: ${compactTail(check.stderr)}` : ''
+        ].filter(Boolean).join('\n'));
+        return;
+    }
+
+    console.log(`[k3d-flow] stale default kubeconfig certificate detected for ${expectedContext}; rebuilding context entry`);
+    commandResult('kubectl', ['config', 'delete-context', expectedContext]);
+    commandResult('kubectl', ['config', 'delete-cluster', expectedCluster]);
+    commandResult('kubectl', ['config', 'delete-user', expectedUser]);
+
+    if (!mergeDefaultKubeconfig(expectedContext)) {
+        return;
+    }
+    const rebuiltCheck = commandResult('kubectl', ['--context', expectedContext, 'get', '--raw=/readyz']);
+    if (rebuiltCheck.status === 0) {
+        console.log(`[k3d-flow] rebuilt default kubeconfig context ${expectedContext}`);
+        return;
+    }
+    console.log([
+        `[k3d-flow] warning: rebuilt default kubeconfig context ${expectedContext}, but kubectl check still failed`,
+        rebuiltCheck.stderr ? `stderr tail: ${compactTail(rebuiltCheck.stderr)}` : ''
+    ].filter(Boolean).join('\n'));
+}
+
+function mergeDefaultKubeconfig(expectedContext) {
+    const args = ['kubeconfig', 'merge', clusterName, '--kubeconfig-merge-default', '--kubeconfig-switch-context'];
+    const result = commandResult('k3d', args);
+    if (result.status === 0) {
+        return true;
+    }
+    console.log([
+        `[k3d-flow] warning: failed to sync default kubeconfig context ${expectedContext}`,
+        result.stderr ? `stderr tail: ${compactTail(result.stderr)}` : ''
+    ].filter(Boolean).join('\n'));
+    return false;
+}
+
+function isUnknownAuthorityFailure(result) {
+    const output = `${result.stdout ?? ''}\n${result.stderr ?? ''}`;
+    return output.includes('x509: certificate signed by unknown authority') ||
+        output.includes('tls: failed to verify certificate');
 }
 
 async function waitForKubernetesApi() {
@@ -959,6 +1058,23 @@ function runCapture(command, commandArgs, extraEnv) {
     return result.stdout ?? '';
 }
 
+function commandResult(command, commandArgs, extraEnv = {}) {
+    if (dryRun) {
+        console.log(`[k3d-flow] DRY RUN ${command} ${commandArgs.join(' ')}`);
+        return {status: 0, stdout: '', stderr: ''};
+    }
+    const result = spawnSync(command, commandArgs, {
+        cwd: repoRoot,
+        env: {...process.env, ...extraEnv},
+        encoding: 'utf8'
+    });
+    return {
+        status: result.status ?? 1,
+        stdout: result.stdout ?? '',
+        stderr: result.stderr ?? ''
+    };
+}
+
 function commandOk(command, commandArgs, extraEnv = {}) {
     const result = spawnSync(command, commandArgs, {
         cwd: repoRoot,
@@ -1136,12 +1252,14 @@ Options:
   --admin-username <username>         Local admin username. Default: admin.
   --admin-password <password>         Local admin password. Default: admin.
   --admin-setup-token <token>         Local admin setup token.
+  --sync-default-kubeconfig <bool>    Sync ~/.kube/config for the k3d context. Default: true.
   --dry-run                           Print configuration and exit before side effects.
 
 Environment:
   FL_API_TOKEN                        Existing bearer token. When set, login is skipped.
   FL_K3D_ADMIN_USERNAME               Local admin username override.
   FL_K3D_ADMIN_PASSWORD               Local admin password override.
+  FL_K3D_SYNC_DEFAULT_KUBECONFIG      Set false to skip syncing the default kubeconfig.
   FL_K3D_ADMIN_SETUP_TOKEN            Local admin setup token override.
   FL_K3D_CLUSTER_NAME                 K3D cluster name.
   FL_K3D_NAMESPACE                    Kubernetes namespace.

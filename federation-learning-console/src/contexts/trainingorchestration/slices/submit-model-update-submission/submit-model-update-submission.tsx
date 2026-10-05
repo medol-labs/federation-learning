@@ -270,11 +270,13 @@ export const TrainingRoundProgressSubmitModelUpdateSubmission = () => {
                     field.onChange(value);
                   }}
                   placeholder={t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
+                  filters={[{"field":"schemaStatus","operator":"eq","value":"Published"}]}
                   meta={{
                     idField: "featureSchemaId",
                     label: t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.featureSchemaId.label", "Feature Schema Catalog"),
                     aggregateRoute: "featureschema",
                     queryRoute: "featureschemacatalog",
+                    queryFields: ["schemaStatus"],
                   }}
                 />
                 <FormMessage />

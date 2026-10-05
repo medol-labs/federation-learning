@@ -50,8 +50,6 @@ class JpaTrainingAlertCatalogReadModelRepository(
             it.acknowledgedAt = this@toProjection.acknowledgedAt
             it.resolvedAt = this@toProjection.resolvedAt
             it.resolutionSummary = this@toProjection.resolutionSummary
-            it.canAcknowledge = this@toProjection.canAcknowledge
-            it.canResolve = this@toProjection.canResolve
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -73,8 +71,6 @@ class JpaTrainingAlertCatalogReadModelRepository(
             it.acknowledgedAt = this@toEntity.acknowledgedAt
             it.resolvedAt = this@toEntity.resolvedAt
             it.resolutionSummary = this@toEntity.resolutionSummary
-            it.canAcknowledge = this@toEntity.canAcknowledge
-            it.canResolve = this@toEntity.canResolve
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

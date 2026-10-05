@@ -31,22 +31,10 @@ type ModelCatalogRecord = {
   state: "Candidate" | "EvaluationPackaged" | "Approved" | "Production" | "RolledBack" | "Retired";
   releaseChannel?: string;
   productionStage?: string;
-  previousModelId?: string;
   experimentId?: string;
   hyperparameterSnapshotId?: string;
   reproducibilityManifestId?: string;
   modelCardId?: string;
-  baselineModelId?: string;
-  hasEvaluationPackage: boolean;
-  approvalStatus: string;
-  releaseStatus: string;
-  isProduction: boolean;
-  canRecordEvaluationPackage: boolean;
-  canApprove: boolean;
-  canPromoteToProduction: boolean;
-  canRollback: boolean;
-  canRetire: boolean;
-  blockedReason?: string;
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -387,32 +375,6 @@ export const ModelCatalogList = () => {
             },
           ) ?? String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("previousModelId", {
-        id: "previousModelId",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.previousModelId.label", "Previous Model Id")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.previousModelId.label", "Previous Model Id"),
-          placeholder: "Enter Previous Model Id",
-          variant: "text",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:previousModelId",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "previousModelId",
-              view: "display",
-              compact: true,
-            },
-          ) ?? String(getValue() ?? "-"),
-      }),
       columnHelper.accessor("experimentId", {
         id: "experimentId",
         header: ({ column }) => (
@@ -517,299 +479,6 @@ export const ModelCatalogList = () => {
             },
           ) ?? String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("baselineModelId", {
-        id: "baselineModelId",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.baselineModelId.label", "Baseline Model Id")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.baselineModelId.label", "Baseline Model Id"),
-          placeholder: "Enter Baseline Model Id",
-          variant: "text",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:baselineModelId",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "baselineModelId",
-              view: "display",
-              compact: true,
-            },
-          ) ?? String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("hasEvaluationPackage", {
-        id: "hasEvaluationPackage",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.hasEvaluationPackage.label", "Has Evaluation Package")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.hasEvaluationPackage.label", "Has Evaluation Package"),
-          placeholder: "Enter Has Evaluation Package",
-          variant: "boolean",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:hasEvaluationPackage",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "hasEvaluationPackage",
-              view: "display",
-              compact: true,
-            },
-          ) ?? getValue() ? "Yes" : "No",
-      }),
-      columnHelper.accessor("approvalStatus", {
-        id: "approvalStatus",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.approvalStatus.label", "Approval Status")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.approvalStatus.label", "Approval Status"),
-          placeholder: "Enter Approval Status",
-          variant: "text",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:approvalStatus",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "approvalStatus",
-              view: "display",
-              compact: true,
-            },
-          ) ?? String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("releaseStatus", {
-        id: "releaseStatus",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.releaseStatus.label", "Release Status")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.releaseStatus.label", "Release Status"),
-          placeholder: "Enter Release Status",
-          variant: "text",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:releaseStatus",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "releaseStatus",
-              view: "display",
-              compact: true,
-            },
-          ) ?? String(getValue() ?? "-"),
-      }),
-      columnHelper.accessor("isProduction", {
-        id: "isProduction",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.isProduction.label", "Is Production")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.isProduction.label", "Is Production"),
-          placeholder: "Enter Is Production",
-          variant: "boolean",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:isProduction",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "isProduction",
-              view: "display",
-              compact: true,
-            },
-          ) ?? getValue() ? "Yes" : "No",
-      }),
-      columnHelper.accessor("canRecordEvaluationPackage", {
-        id: "canRecordEvaluationPackage",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.canRecordEvaluationPackage.label", "Can Record Evaluation Package")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.canRecordEvaluationPackage.label", "Can Record Evaluation Package"),
-          placeholder: "Enter Can Record Evaluation Package",
-          variant: "boolean",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:canRecordEvaluationPackage",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "canRecordEvaluationPackage",
-              view: "display",
-              compact: true,
-            },
-          ) ?? getValue() ? "Yes" : "No",
-      }),
-      columnHelper.accessor("canApprove", {
-        id: "canApprove",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.canApprove.label", "Can Approve")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.canApprove.label", "Can Approve"),
-          placeholder: "Enter Can Approve",
-          variant: "boolean",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:canApprove",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "canApprove",
-              view: "display",
-              compact: true,
-            },
-          ) ?? getValue() ? "Yes" : "No",
-      }),
-      columnHelper.accessor("canPromoteToProduction", {
-        id: "canPromoteToProduction",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.canPromoteToProduction.label", "Can Promote To Production")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.canPromoteToProduction.label", "Can Promote To Production"),
-          placeholder: "Enter Can Promote To Production",
-          variant: "boolean",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:canPromoteToProduction",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "canPromoteToProduction",
-              view: "display",
-              compact: true,
-            },
-          ) ?? getValue() ? "Yes" : "No",
-      }),
-      columnHelper.accessor("canRollback", {
-        id: "canRollback",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.canRollback.label", "Can Rollback")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.canRollback.label", "Can Rollback"),
-          placeholder: "Enter Can Rollback",
-          variant: "boolean",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:canRollback",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "canRollback",
-              view: "display",
-              compact: true,
-            },
-          ) ?? getValue() ? "Yes" : "No",
-      }),
-      columnHelper.accessor("canRetire", {
-        id: "canRetire",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.canRetire.label", "Can Retire")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.canRetire.label", "Can Retire"),
-          placeholder: "Enter Can Retire",
-          variant: "boolean",
-          filterOperator: "eq",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:canRetire",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "canRetire",
-              view: "display",
-              compact: true,
-            },
-          ) ?? getValue() ? "Yes" : "No",
-      }),
-      columnHelper.accessor("blockedReason", {
-        id: "blockedReason",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.model_catalog.fields.blockedReason.label", "Blocked Reason")} />
-        ),
-        enableSorting: true,
-        enableColumnFilter: true,
-        meta: {
-          label: t("resources.model_catalog.fields.blockedReason.label", "Blocked Reason"),
-          placeholder: "Enter Blocked Reason",
-          variant: "text",
-        },
-        cell: ({ getValue, row }) =>
-          renderFieldOverride<ModelCatalogRecord>(
-            frontendComposition,
-            "field:model-catalog:display:blockedReason",
-            {
-              value: getValue(),
-              record: row.original,
-              resource: "model-catalog",
-              field: "blockedReason",
-              view: "display",
-              compact: true,
-            },
-          ) ?? String(getValue() ?? "-"),
-      }),
       columnHelper.display({
         id: "actions",
         header: t("table.actions", "Actions"),
@@ -835,11 +504,10 @@ export const ModelCatalogList = () => {
                       hyperparameterSnapshotId: row.original.hyperparameterSnapshotId,
                       reproducibilityManifestId: row.original.reproducibilityManifestId,
                       modelCardId: row.original.modelCardId,
-                      baselineModelId: row.original.baselineModelId,
                     }}
                   />
                 )}
-                {isCommandVisible(row.original, "canApprove", "state", ["EvaluationPackaged"]) && (
+                {isCommandVisible(row.original, "", "state", ["EvaluationPackaged"]) && (
                   <CommandButton
                     variant="ghost"
                     command="approveModel"
@@ -859,18 +527,15 @@ export const ModelCatalogList = () => {
                     }}
                   />
                 )}
-                {isCommandVisible(row.original, "canRollback", "state", ["Production"]) && (
+                {isCommandVisible(row.original, "", "state", ["Production"]) && (
                   <CommandButton
                     variant="ghost"
                     command="rollbackModel"
                     recordItemId={row.original.modelId}
                     size="sm"
-                    query={{
-                      previousModelId: row.original.previousModelId,
-                    }}
                   />
                 )}
-                {isCommandVisible(row.original, "canRetire", "state", ["Production"]) && (
+                {isCommandVisible(row.original, "", "state", ["Production"]) && (
                   <CommandButton
                     variant="ghost"
                     command="retireModel"
@@ -907,7 +572,7 @@ export const ModelCatalogList = () => {
         tableName: "model_catalog_read_model_entity",
         idField: "modelId",
         idFields: ["modelId"],
-        queryFields: ["modelId","trainingJobId","finalRoundId","modelArtifactId","trainingJobObjective","modelArtifactDigest","evaluationReportId","finalGlobalAccuracy","state","releaseChannel","productionStage","previousModelId","experimentId","hyperparameterSnapshotId","reproducibilityManifestId","modelCardId","baselineModelId","hasEvaluationPackage","approvalStatus","releaseStatus","isProduction","canRecordEvaluationPackage","canApprove","canPromoteToProduction","canRollback","canRetire","blockedReason"],
+        queryFields: ["modelId","trainingJobId","finalRoundId","modelArtifactId","trainingJobObjective","modelArtifactDigest","evaluationReportId","finalGlobalAccuracy","state","releaseChannel","productionStage","experimentId","hyperparameterSnapshotId","reproducibilityManifestId","modelCardId"],
         label: t("resources.model_catalog.label", "Model Catalog"),
         aggregateRoute: "model",
         queryRoute: "modelcatalog",

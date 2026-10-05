@@ -42,6 +42,11 @@ export const AgentRuntimeNodeInventoryCatalogShow = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_inventory_catalog.fields.nodeId.label", "Node Id")}</h4>
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-inventory-catalog:display:nodeId", { value: record?.nodeId, record, resource: "agent-runtime-node-inventory-catalog", field: "nodeId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.nodeId, t)}</p>}
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_inventory_catalog.fields.runtimeNodeInventoryReportId.label", "Runtime Node Inventory Report Id")}</h4>
               {renderFieldOverride(frontendComposition, "field:agent-runtime-node-inventory-catalog:display:runtimeNodeInventoryReportId", { value: record?.runtimeNodeInventoryReportId, record, resource: "agent-runtime-node-inventory-catalog", field: "runtimeNodeInventoryReportId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeNodeInventoryReportId, t)}</p>}
             </div>

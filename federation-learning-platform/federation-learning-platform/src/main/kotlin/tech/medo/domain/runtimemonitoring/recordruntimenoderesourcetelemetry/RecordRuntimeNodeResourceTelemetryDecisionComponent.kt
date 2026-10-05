@@ -1,0 +1,7 @@
+package tech.medo.domain.runtimemonitoring.recordruntimenoderesourcetelemetry
+
+import org.springframework.stereotype.Component
+import tech.medo.runtimemonitoring.recordruntimenoderesourcetelemetry.RecordRuntimeNodeResourceTelemetryDecision
+
+@Component
+class RecordRuntimeNodeResourceTelemetryDecisionComponent : RecordRuntimeNodeResourceTelemetryDecision

@@ -131,11 +131,13 @@ export const FederationMembershipDirectoryRejectParticipant = () => {
                     field.onChange(value);
                   }}
                   placeholder={t("resources.federation_membership_directory.commands.rejectParticipant.fields.organizationId.placeholder", "Select Organization Id")}
+                  filters={[{"field":"state","operator":"eq","value":"Active"}]}
                   meta={{
                     idField: "organizationId",
                     label: t("resources.federation_membership_directory.commands.rejectParticipant.fields.organizationId.label", "Organization Directory"),
                     aggregateRoute: "organization",
                     queryRoute: "organizationdirectory",
+                    queryFields: ["state"],
                   }}
                 />
                 <FormMessage />

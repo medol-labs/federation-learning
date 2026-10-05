@@ -30,7 +30,7 @@ class InviteParticipantCommandHandler(
         }
         val organizationDirectoryReadModelSelection = organizationDirectoryReadModelRepository.findById(command.organizationId)
         require(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active) {
-            "Organization Directory selection is not eligible for Invite Participant."
+            "Organization Directory selection is not eligible."
         }
         eventAppender.append(decision.decide(command))
     }

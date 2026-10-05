@@ -45,8 +45,8 @@ object Concepts {
 
     data object AgentRuntimeTelemetry {
         const val NAME = "AgentRuntimeTelemetry"
-        val slices = listOf("AgentRuntimeTelemetryLatest")
-        val states = emptyList<String>()
+        val slices = listOf("ReportAgentRuntimeTelemetry", "AgentRuntimeTelemetryLatest")
+        val states = listOf("Reported")
     }
 
     data object AgentRuntimeNodeInventory {
@@ -57,7 +57,7 @@ object Concepts {
 
     data object AgentRuntimeNodeResourceTelemetry {
         const val NAME = "AgentRuntimeNodeResourceTelemetry"
-        val slices = listOf("AgentRuntimeNodeResourceLatest")
-        val states = emptyList<String>()
+        val slices = listOf("ReportAgentRuntimeNodeResourceTelemetry", "AgentRuntimeNodeResourceLatest")
+        val states = listOf("Reported")
     }
 }

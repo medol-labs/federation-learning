@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 
-import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
 import tech.medo.modellifecycle.events.ModelCandidateRegisteredEvent
 import tech.medo.modellifecycle.events.ModelEvaluationPackageRecordedEvent
 import tech.medo.modellifecycle.events.ModelApprovedEvent
@@ -22,11 +21,6 @@ import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 
 interface ModelCatalogReadModelProjectionUpdater {
-    fun update(
-        event: TrainingJobCreatedEvent,
-        message: EventMessage
-    )
-
     fun update(
         event: ModelCandidateRegisteredEvent,
         message: EventMessage
@@ -61,13 +55,6 @@ interface ModelCatalogReadModelProjectionUpdater {
 open class DefaultModelCatalogReadModelProjectionUpdater(
     private val repository: ModelCatalogReadModelRepository
 ) : ModelCatalogReadModelProjectionUpdater {
-    open override fun update(
-        event: TrainingJobCreatedEvent,
-        message: EventMessage
-    ) {
-        // Skipped: TrainingJobCreatedEvent does not provide enough key fields to locate ModelCatalogReadModelProjection.
-    }
-
     @Transactional
     open override fun update(
         event: ModelCandidateRegisteredEvent,
@@ -86,7 +73,6 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
             entity.evaluationReportId = event.evaluationReportId
             entity.finalGlobalAccuracy = event.finalGlobalAccuracy
             entity.state = ModelStateEnum.Candidate
-            entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -108,9 +94,7 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
             entity.hyperparameterSnapshotId = event.hyperparameterSnapshotId
             entity.reproducibilityManifestId = event.reproducibilityManifestId
             entity.modelCardId = event.modelCardId
-            entity.baselineModelId = event.baselineModelId
             entity.state = ModelStateEnum.EvaluationPackaged
-            entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -127,7 +111,6 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
         }
             entity.modelId = event.modelId
             entity.state = ModelStateEnum.Approved
-            entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -146,7 +129,6 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
             entity.releaseChannel = event.releaseChannel
             entity.productionStage = event.productionStage
             entity.state = ModelStateEnum.Production
-            entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -162,9 +144,7 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
                 this.modelId = event.modelId
         }
             entity.modelId = event.modelId
-            entity.previousModelId = event.previousModelId
             entity.state = ModelStateEnum.RolledBack
-            entity.baselineModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -181,7 +161,6 @@ open class DefaultModelCatalogReadModelProjectionUpdater(
         }
             entity.modelId = event.modelId
             entity.state = ModelStateEnum.Retired
-            entity.previousModelId = event.modelId
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
 
@@ -204,14 +183,6 @@ class ModelCatalogReadModelProjectionUpdaterConfiguration {
 class ModelCatalogReadModelProjector(
     private val updater: ModelCatalogReadModelProjectionUpdater
 ) {
-    @EventHandler
-    fun on(
-        event: TrainingJobCreatedEvent,
-        message: EventMessage
-    ) {
-        updater.update(event, message)
-    }
-
     @EventHandler
     fun on(
         event: ModelCandidateRegisteredEvent,

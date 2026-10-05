@@ -44,7 +44,6 @@ export const ModelCatalogRecordModelEvaluationPackage = () => {
     hyperparameterSnapshotId: searchParams.get("hyperparameterSnapshotId") ?? undefined,
     reproducibilityManifestId: searchParams.get("reproducibilityManifestId") ?? undefined,
     modelCardId: searchParams.get("modelCardId") ?? undefined,
-    baselineModelId: searchParams.get("baselineModelId") ?? undefined,
     modelId: searchParams.get("modelId") ?? undefined,
   } as unknown as Partial<RecordModelEvaluationPackageCommandInput>;
 

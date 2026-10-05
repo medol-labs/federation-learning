@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 
-import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
-import tech.medo.runtimemonitoring.events.RuntimeNodeInventoryReportedEvent
 import tech.medo.runtimemonitoring.events.TrainingAlertRaisedEvent
 import tech.medo.runtimemonitoring.events.TrainingAlertAcknowledgedEvent
 import tech.medo.runtimemonitoring.events.TrainingAlertResolvedEvent
@@ -22,16 +20,6 @@ import java.time.ZoneOffset
 
 
 interface TrainingAlertCatalogReadModelProjectionUpdater {
-    fun update(
-        event: TrainingJobCreatedEvent,
-        message: EventMessage
-    )
-
-    fun update(
-        event: RuntimeNodeInventoryReportedEvent,
-        message: EventMessage
-    )
-
     fun update(
         event: TrainingAlertRaisedEvent,
         message: EventMessage
@@ -51,20 +39,6 @@ interface TrainingAlertCatalogReadModelProjectionUpdater {
 open class DefaultTrainingAlertCatalogReadModelProjectionUpdater(
     private val repository: TrainingAlertCatalogReadModelRepository
 ) : TrainingAlertCatalogReadModelProjectionUpdater {
-    open override fun update(
-        event: TrainingJobCreatedEvent,
-        message: EventMessage
-    ) {
-        // Skipped: TrainingJobCreatedEvent does not provide enough key fields to locate TrainingAlertCatalogReadModelProjection.
-    }
-
-    open override fun update(
-        event: RuntimeNodeInventoryReportedEvent,
-        message: EventMessage
-    ) {
-        // Skipped: RuntimeNodeInventoryReportedEvent does not provide enough key fields to locate TrainingAlertCatalogReadModelProjection.
-    }
-
     @Transactional
     open override fun update(
         event: TrainingAlertRaisedEvent,
@@ -142,22 +116,6 @@ class TrainingAlertCatalogReadModelProjectionUpdaterConfiguration {
 class TrainingAlertCatalogReadModelProjector(
     private val updater: TrainingAlertCatalogReadModelProjectionUpdater
 ) {
-    @EventHandler
-    fun on(
-        event: TrainingJobCreatedEvent,
-        message: EventMessage
-    ) {
-        updater.update(event, message)
-    }
-
-    @EventHandler
-    fun on(
-        event: RuntimeNodeInventoryReportedEvent,
-        message: EventMessage
-    ) {
-        updater.update(event, message)
-    }
-
     @EventHandler
     fun on(
         event: TrainingAlertRaisedEvent,

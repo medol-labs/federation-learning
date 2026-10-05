@@ -35,15 +35,15 @@ class DefineTrainingRunConfigurationCommandHandler(
         }
         val featureSchemaCatalogReadModelSelection = featureSchemaCatalogReadModelRepository.findById(command.featureSchemaId)
         require(featureSchemaCatalogReadModelSelection != null && featureSchemaCatalogReadModelSelection.schemaStatus == "Published") {
-            "Feature Schema Catalog selection is not eligible for Define Training Run Configuration."
+            "Feature Schema Catalog selection is not eligible."
         }
         val modelArtifactCatalogReadModelSelection = modelArtifactCatalogReadModelRepository.findById(command.initialModelId)
         require(modelArtifactCatalogReadModelSelection != null && modelArtifactCatalogReadModelSelection.state == ModelArtifactStateEnum.Registered) {
-            "Model Artifact Catalog selection is not eligible for Define Training Run Configuration."
+            "Model Artifact Catalog selection is not eligible."
         }
         val runtimeEngineProfileCatalogReadModelSelection = runtimeEngineProfileCatalogReadModelRepository.findById(command.runtimeEngineProfileId)
         require(runtimeEngineProfileCatalogReadModelSelection != null && runtimeEngineProfileCatalogReadModelSelection.state == RuntimeEngineProfileStateEnum.Registered && runtimeEngineProfileCatalogReadModelSelection.active == true) {
-            "Runtime Engine Profile Catalog selection is not eligible for Define Training Run Configuration."
+            "Runtime Engine Profile Catalog selection is not eligible."
         }
         eventAppender.append(decision.decide(command))
     }

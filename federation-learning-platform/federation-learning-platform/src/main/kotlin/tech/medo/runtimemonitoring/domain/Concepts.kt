@@ -3,20 +3,14 @@ package tech.medo.runtimemonitoring.domain
 object Concepts {
     data object NodeRuntimeHealth {
         const val NAME = "NodeRuntimeHealth"
-        val slices = listOf("RuntimeTelemetryLatest", "DetectRuntimeAgentOffline", "MarkRuntimeAgentRecovered", "RuntimeHealthDashboard")
-        val states = listOf("Healthy", "Offline")
+        val slices = listOf("RecordRuntimeTelemetry", "RuntimeTelemetryLatest", "DetectRuntimeAgentOffline", "MarkRuntimeAgentRecovered", "RuntimeHealthDashboard")
+        val states = listOf("Recorded", "Healthy", "Offline")
     }
 
     data object RuntimeNodeResourcePressure {
         const val NAME = "RuntimeNodeResourcePressure"
         val slices = listOf("DetectRuntimeNodeResourcePressure")
         val states = listOf("PressureDetected")
-    }
-
-    data object RuntimeNodeCapacity {
-        const val NAME = "RuntimeNodeCapacity"
-        val slices = listOf("DetectRuntimeNodeCapacityChange")
-        val states = listOf("CapacityChanged")
     }
 
     data object RuntimeNodeInventory {
@@ -27,19 +21,13 @@ object Concepts {
 
     data object RuntimeNodeResourceTelemetry {
         const val NAME = "RuntimeNodeResourceTelemetry"
-        val slices = listOf("RuntimeNodeResourceLatest")
-        val states = emptyList<String>()
+        val slices = listOf("RecordRuntimeNodeResourceTelemetry", "RuntimeNodeResourceLatest")
+        val states = listOf("Recorded")
     }
 
     data object TrainingAlert {
         const val NAME = "TrainingAlert"
         val slices = listOf("RaiseTrainingAlert", "AcknowledgeTrainingAlert", "ResolveTrainingAlert", "TrainingAlertCatalog")
         val states = listOf("Raised", "Acknowledged", "Resolved")
-    }
-
-    data object AuditRecord {
-        const val NAME = "AuditRecord"
-        val slices = listOf("AppendAuditTrail", "AuditRecordLog")
-        val states = listOf("Appended")
     }
 }

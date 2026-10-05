@@ -37,7 +37,7 @@ type RuntimeNodeResourceLatestRecord = {
   runningWorkloadCount: number;
   workloadCapacity: number;
   observedAt: string;
-  allocatableCapacityChanged: boolean;
+  lastResourceSnapshotAt: string;
   telemetryRetentionPolicy: string;
 };
 
@@ -538,32 +538,32 @@ export const RuntimeNodeResourceLatestList = () => {
             },
           ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
-      columnHelper.accessor("allocatableCapacityChanged", {
-        id: "allocatableCapacityChanged",
+      columnHelper.accessor("lastResourceSnapshotAt", {
+        id: "lastResourceSnapshotAt",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.allocatableCapacityChanged.label", "Allocatable Capacity Changed")} />
+          <DataTableColumnHeader column={column} label={t("resources.runtime_node_resource_latest.fields.lastResourceSnapshotAt.label", "Last Resource Snapshot At")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.runtime_node_resource_latest.fields.allocatableCapacityChanged.label", "Allocatable Capacity Changed"),
-          placeholder: "Enter Allocatable Capacity Changed",
-          variant: "boolean",
+          label: t("resources.runtime_node_resource_latest.fields.lastResourceSnapshotAt.label", "Last Resource Snapshot At"),
+          placeholder: "Enter Last Resource Snapshot At",
+          variant: "date",
           filterOperator: "eq",
         },
         cell: ({ getValue, row }) =>
           renderFieldOverride<RuntimeNodeResourceLatestRecord>(
             frontendComposition,
-            "field:runtime-node-resource-latest:display:allocatableCapacityChanged",
+            "field:runtime-node-resource-latest:display:lastResourceSnapshotAt",
             {
               value: getValue(),
               record: row.original,
               resource: "runtime-node-resource-latest",
-              field: "allocatableCapacityChanged",
+              field: "lastResourceSnapshotAt",
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
       columnHelper.accessor("telemetryRetentionPolicy", {
         id: "telemetryRetentionPolicy",
@@ -632,7 +632,7 @@ export const RuntimeNodeResourceLatestList = () => {
         tableName: "runtime_node_resource_latest_read_model_entity",
         idField: "nodeId",
         idFields: ["nodeId"],
-        queryFields: ["nodeId","runtimeAgentId","runtimeInfrastructureId","runtimeNodeName","nodeReady","allocatableCpuCores","allocatableMemoryGb","allocatableGpuCount","allocatedCpuCores","allocatedMemoryGb","allocatedGpuCount","availableCpuCores","availableMemoryGb","availableGpuCount","runningWorkloadCount","workloadCapacity","observedAt","allocatableCapacityChanged","telemetryRetentionPolicy"],
+        queryFields: ["nodeId","runtimeAgentId","runtimeInfrastructureId","runtimeNodeName","nodeReady","allocatableCpuCores","allocatableMemoryGb","allocatableGpuCount","allocatedCpuCores","allocatedMemoryGb","allocatedGpuCount","availableCpuCores","availableMemoryGb","availableGpuCount","runningWorkloadCount","workloadCapacity","observedAt","lastResourceSnapshotAt","telemetryRetentionPolicy"],
         label: t("resources.runtime_node_resource_latest.label", "Runtime Node Resource Latest"),
         aggregateRoute: "runtimenoderesourcetelemetry",
         queryRoute: "runtimenoderesourcelatest",
@@ -645,6 +645,7 @@ export const RuntimeNodeResourceLatestList = () => {
     <ListView>
       <ListViewHeader canCreate={false}>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-node-resource-latest:list", "toolbar.before", { resource: "runtime-node-resource-latest", table })}
+        <CommandButton variant="default" command="recordRuntimeNodeResourceTelemetry" />
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-node-resource-latest:list", "toolbar.actions", { resource: "runtime-node-resource-latest", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={

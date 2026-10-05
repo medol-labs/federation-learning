@@ -16,6 +16,7 @@ import tech.jhipster.service.filter.StringFilter
 class AgentRuntimeNodeInventoryCatalogReadModelQuery
 
 class AgentRuntimeNodeInventoryCatalogReadModelCriteria {
+    var nodeId: StringFilter? = null
     var runtimeNodeInventoryReportId: StringFilter? = null
     var organizationId: StringFilter? = null
     var runtimeInfrastructureId: StringFilter? = null
@@ -35,6 +36,7 @@ class AgentRuntimeNodeInventoryCatalogReadModelCriteria {
 
 
 class AgentRuntimeNodeInventoryCatalogReadModelProjection : MetadataProjection {
+    var nodeId: UUID? = null
     var runtimeNodeInventoryReportId: UUID? = null
     var organizationId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
@@ -60,6 +62,7 @@ class AgentRuntimeNodeInventoryCatalogReadModelProjection : MetadataProjection {
 
 fun AgentRuntimeNodeInventoryCatalogReadModelProjection.toReadModel(): AgentRuntimeNodeInventoryCatalogReadModel =
     AgentRuntimeNodeInventoryCatalogReadModel(
+    nodeId = nodeId,
     runtimeNodeInventoryReportId = runtimeNodeInventoryReportId,
     organizationId = organizationId,
     runtimeInfrastructureId = runtimeInfrastructureId,
@@ -92,6 +95,7 @@ interface AgentRuntimeNodeInventoryCatalogReadModelRepository {
 }
 
 data class AgentRuntimeNodeInventoryCatalogReadModel(
+    val nodeId: UUID?,
     val runtimeNodeInventoryReportId: UUID?,
     val organizationId: UUID?,
     val runtimeInfrastructureId: UUID?,

@@ -30,6 +30,7 @@ class AgentRuntimeNodeInventoryCatalogReadModelQueryService(
     private fun createSpecification(criteria: AgentRuntimeNodeInventoryCatalogReadModelCriteria?): Specification<AgentRuntimeNodeInventoryCatalogReadModelEntity> {
         var specification = Specification.where<AgentRuntimeNodeInventoryCatalogReadModelEntity>(null)
         if (criteria != null) {
+            criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentRuntimeNodeInventoryCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeNodeInventoryReportId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentRuntimeNodeInventoryCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeNodeInventoryReportId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.organizationId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentRuntimeNodeInventoryCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("organizationId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeInfrastructureId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentRuntimeNodeInventoryCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInfrastructureId") as JpaExpression<UUID>).cast(String::class.java) })) }
@@ -102,6 +103,7 @@ class AgentRuntimeNodeInventoryCatalogReadModelQueryService(
 
     private fun AgentRuntimeNodeInventoryCatalogReadModelEntity.toProjection(): AgentRuntimeNodeInventoryCatalogReadModelProjection =
         AgentRuntimeNodeInventoryCatalogReadModelProjection().also {
+            it.nodeId = this@toProjection.nodeId
             it.runtimeNodeInventoryReportId = this@toProjection.runtimeNodeInventoryReportId
             it.organizationId = this@toProjection.organizationId
             it.runtimeInfrastructureId = this@toProjection.runtimeInfrastructureId

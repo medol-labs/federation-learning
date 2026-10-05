@@ -37,7 +37,6 @@ export const ModelCatalogRollbackModel = () => {
   const [searchParams] = useSearchParams();
   const { id } = useParsed();
   const defaultValues = {
-    previousModelId: searchParams.get("previousModelId") ?? undefined,
     modelId: searchParams.get("modelId") ?? undefined,
   } as unknown as Partial<RollbackModelCommandInput>;
 

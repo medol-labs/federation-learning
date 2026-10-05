@@ -392,6 +392,7 @@ export const AgentRuntimeTelemetryLatestList = () => {
     <ListView>
       <ListViewHeader canCreate={false}>
         {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-telemetry-latest:list", "toolbar.before", { resource: "agent-runtime-telemetry-latest", table })}
+        <CommandButton variant="default" command="reportAgentRuntimeTelemetry" />
         {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-telemetry-latest:list", "toolbar.actions", { resource: "agent-runtime-telemetry-latest", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={

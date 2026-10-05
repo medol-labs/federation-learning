@@ -28,11 +28,11 @@ class CreateRuntimeInstallationPlanCommandHandler(
     ) {
         val organizationDirectoryReadModelSelection = organizationDirectoryReadModelRepository.findById(command.organizationId)
         require(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active) {
-            "Organization Directory selection is not eligible for Create Runtime Installation Plan."
+            "Organization Directory selection is not eligible."
         }
         val runtimeInfrastructurePackageCatalogReadModelSelection = runtimeInfrastructurePackageCatalogReadModelRepository.findById(command.runtimeInfrastructurePackageId)
         require(runtimeInfrastructurePackageCatalogReadModelSelection != null && runtimeInfrastructurePackageCatalogReadModelSelection.state == RuntimeInfrastructurePackageStateEnum.Registered) {
-            "Runtime Infrastructure Package Catalog selection is not eligible for Create Runtime Installation Plan."
+            "Runtime Infrastructure Package Catalog selection is not eligible."
         }
         val input = CreateRuntimeInstallationPlanInput(runtimeInstallationPlanId = command.runtimeInstallationPlanId, runtimeInfrastructureId = command.runtimeInfrastructureId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, agentInstallMode = command.agentInstallMode, expectedNodeCount = command.expectedNodeCount)
         val portResult = createRuntimeInstallationPlanService.execute(input)

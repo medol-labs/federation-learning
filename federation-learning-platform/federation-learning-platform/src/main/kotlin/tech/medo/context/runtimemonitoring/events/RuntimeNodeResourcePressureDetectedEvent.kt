@@ -20,5 +20,7 @@ data class RuntimeNodeResourcePressureDetectedEvent(
     val runtimeNodeName: String?,
     val pressureType: String,
     val observedValue: BigDecimal,
-    val thresholdValue: BigDecimal
+    val thresholdValue: BigDecimal,
+    val alertSeverity: String,
+    val alertMessage: String
 )

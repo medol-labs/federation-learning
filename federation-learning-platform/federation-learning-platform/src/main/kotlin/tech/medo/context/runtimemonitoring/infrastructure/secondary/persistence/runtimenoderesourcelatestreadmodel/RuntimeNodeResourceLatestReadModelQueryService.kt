@@ -47,7 +47,7 @@ class RuntimeNodeResourceLatestReadModelQueryService(
             criteria.runningWorkloadCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<Int>> { root -> root.get("runningWorkloadCount") })) }
             criteria.workloadCapacity?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<Int>> { root -> root.get("workloadCapacity") })) }
             criteria.observedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("observedAt") })) }
-            criteria.allocatableCapacityChanged?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<Boolean>> { root -> root.get("allocatableCapacityChanged") })) }
+            criteria.lastResourceSnapshotAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("lastResourceSnapshotAt") })) }
             criteria.telemetryRetentionPolicy?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<String>> { root -> root.get("telemetryRetentionPolicy") })) }
         }
         return specification
@@ -123,7 +123,7 @@ class RuntimeNodeResourceLatestReadModelQueryService(
             it.runningWorkloadCount = this@toProjection.runningWorkloadCount
             it.workloadCapacity = this@toProjection.workloadCapacity
             it.observedAt = this@toProjection.observedAt
-            it.allocatableCapacityChanged = this@toProjection.allocatableCapacityChanged
+            it.lastResourceSnapshotAt = this@toProjection.lastResourceSnapshotAt
             it.telemetryRetentionPolicy = this@toProjection.telemetryRetentionPolicy
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId

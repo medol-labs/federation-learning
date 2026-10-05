@@ -655,6 +655,13 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       slots: ["rowActions.before", "rowActions.after"],
     },
     {
+      id: "field:agent-runtime-node-inventory-catalog:display:nodeId",
+      kind: "field",
+      resource: "agent-runtime-node-inventory-catalog",
+      field: "nodeId",
+      slots: ["field.before", "field.after", "field.renderer"],
+    },
+    {
       id: "field:agent-runtime-node-inventory-catalog:display:runtimeNodeInventoryReportId",
       kind: "field",
       resource: "agent-runtime-node-inventory-catalog",
@@ -779,6 +786,14 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       resource: "agent-runtime-node-resource-latest",
       view: "show",
       fallback: "src/contexts/runtimeagentoperations/slices/agent-runtime-node-resource-latest/show.tsx",
+      slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
+    },
+    {
+      id: "page:agent-runtime-node-resource-latest:reportAgentRuntimeNodeResourceTelemetry",
+      kind: "page",
+      resource: "agent-runtime-node-resource-latest",
+      view: "reportAgentRuntimeNodeResourceTelemetry",
+      fallback: "src/contexts/runtimeagentoperations/slices/report-agent-runtime-node-resource-telemetry/report-agent-runtime-node-resource-telemetry.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
@@ -922,6 +937,13 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       slots: ["field.before", "field.after", "field.renderer"],
     },
     {
+      id: "behavior:agent-runtime-node-resource-latest:reportAgentRuntimeNodeResourceTelemetry",
+      kind: "behavior",
+      resource: "agent-runtime-node-resource-latest",
+      view: "reportAgentRuntimeNodeResourceTelemetry",
+      slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
+    },
+    {
       id: "resource:agent-runtime-telemetry-latest",
       kind: "resource",
       resource: "agent-runtime-telemetry-latest",
@@ -941,6 +963,14 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       resource: "agent-runtime-telemetry-latest",
       view: "show",
       fallback: "src/contexts/runtimeagentoperations/slices/agent-runtime-telemetry-latest/show.tsx",
+      slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
+    },
+    {
+      id: "page:agent-runtime-telemetry-latest:reportAgentRuntimeTelemetry",
+      kind: "page",
+      resource: "agent-runtime-telemetry-latest",
+      view: "reportAgentRuntimeTelemetry",
+      fallback: "src/contexts/runtimeagentoperations/slices/report-agent-runtime-telemetry/report-agent-runtime-telemetry.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
@@ -1026,6 +1056,13 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       resource: "agent-runtime-telemetry-latest",
       field: "telemetryRetentionPolicy",
       slots: ["field.before", "field.after", "field.renderer"],
+    },
+    {
+      id: "behavior:agent-runtime-telemetry-latest:reportAgentRuntimeTelemetry",
+      kind: "behavior",
+      resource: "agent-runtime-telemetry-latest",
+      view: "reportAgentRuntimeTelemetry",
+      slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
     },
     {
       id: "resource:dataset-capability",

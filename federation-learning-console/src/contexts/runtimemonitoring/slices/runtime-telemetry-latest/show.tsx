@@ -102,18 +102,63 @@ export const RuntimeTelemetryLatestShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.heartbeatMissingBeyondThreshold.label", "Heartbeat Missing Beyond Threshold")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:heartbeatMissingBeyondThreshold", { value: record?.heartbeatMissingBeyondThreshold, record, resource: "runtime-telemetry-latest", field: "heartbeatMissingBeyondThreshold", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.heartbeatMissingBeyondThreshold, t)}</p>}
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.lastRecoveredAt.label", "Last Recovered At")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:lastRecoveredAt", { value: record?.lastRecoveredAt, record, resource: "runtime-telemetry-latest", field: "lastRecoveredAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.lastRecoveredAt, t)}</p>}
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.heartbeatObservedAfterOffline.label", "Heartbeat Observed After Offline")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:heartbeatObservedAfterOffline", { value: record?.heartbeatObservedAfterOffline, record, resource: "runtime-telemetry-latest", field: "heartbeatObservedAfterOffline", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.heartbeatObservedAfterOffline, t)}</p>}
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.offlineDetectionPending.label", "Offline Detection Pending")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:offlineDetectionPending", { value: record?.offlineDetectionPending, record, resource: "runtime-telemetry-latest", field: "offlineDetectionPending", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.offlineDetectionPending, t)}</p>}
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.resourcePressureDetected.label", "Resource Pressure Detected")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:resourcePressureDetected", { value: record?.resourcePressureDetected, record, resource: "runtime-telemetry-latest", field: "resourcePressureDetected", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.resourcePressureDetected, t)}</p>}
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.recoveryDetectionPending.label", "Recovery Detection Pending")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:recoveryDetectionPending", { value: record?.recoveryDetectionPending, record, resource: "runtime-telemetry-latest", field: "recoveryDetectionPending", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.recoveryDetectionPending, t)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.resourcePressureDetectionPending.label", "Resource Pressure Detection Pending")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:resourcePressureDetectionPending", { value: record?.resourcePressureDetectionPending, record, resource: "runtime-telemetry-latest", field: "resourcePressureDetectionPending", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.resourcePressureDetectionPending, t)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.offlineReason.label", "Offline Reason")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:offlineReason", { value: record?.offlineReason, record, resource: "runtime-telemetry-latest", field: "offlineReason", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.offlineReason, t)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.recoveryReason.label", "Recovery Reason")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:recoveryReason", { value: record?.recoveryReason, record, resource: "runtime-telemetry-latest", field: "recoveryReason", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.recoveryReason, t)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.pressureType.label", "Pressure Type")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:pressureType", { value: record?.pressureType, record, resource: "runtime-telemetry-latest", field: "pressureType", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.pressureType, t)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.observedValue.label", "Observed Value")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:observedValue", { value: record?.observedValue, record, resource: "runtime-telemetry-latest", field: "observedValue", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.observedValue, t)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.thresholdValue.label", "Threshold Value")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:thresholdValue", { value: record?.thresholdValue, record, resource: "runtime-telemetry-latest", field: "thresholdValue", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.thresholdValue, t)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.alertSeverity.label", "Alert Severity")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:alertSeverity", { value: record?.alertSeverity, record, resource: "runtime-telemetry-latest", field: "alertSeverity", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.alertSeverity, t)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.alertMessage.label", "Alert Message")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:alertMessage", { value: record?.alertMessage, record, resource: "runtime-telemetry-latest", field: "alertMessage", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.alertMessage, t)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_telemetry_latest.fields.healthStatus.label", "Health Status")}</h4>
+              {renderFieldOverride(frontendComposition, "field:runtime-telemetry-latest:display:healthStatus", { value: record?.healthStatus, record, resource: "runtime-telemetry-latest", field: "healthStatus", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.healthStatus, t)}</p>}
             </div>
             <Separator />
             <div>

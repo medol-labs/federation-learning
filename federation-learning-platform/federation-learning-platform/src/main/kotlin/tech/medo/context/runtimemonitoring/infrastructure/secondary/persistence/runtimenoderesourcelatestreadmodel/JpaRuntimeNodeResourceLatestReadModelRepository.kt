@@ -55,7 +55,7 @@ class JpaRuntimeNodeResourceLatestReadModelRepository(
             it.runningWorkloadCount = this@toProjection.runningWorkloadCount
             it.workloadCapacity = this@toProjection.workloadCapacity
             it.observedAt = this@toProjection.observedAt
-            it.allocatableCapacityChanged = this@toProjection.allocatableCapacityChanged
+            it.lastResourceSnapshotAt = this@toProjection.lastResourceSnapshotAt
             it.telemetryRetentionPolicy = this@toProjection.telemetryRetentionPolicy
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
@@ -84,7 +84,7 @@ class JpaRuntimeNodeResourceLatestReadModelRepository(
             it.runningWorkloadCount = this@toEntity.runningWorkloadCount
             it.workloadCapacity = this@toEntity.workloadCapacity
             it.observedAt = this@toEntity.observedAt
-            it.allocatableCapacityChanged = this@toEntity.allocatableCapacityChanged
+            it.lastResourceSnapshotAt = this@toEntity.lastResourceSnapshotAt
             it.telemetryRetentionPolicy = this@toEntity.telemetryRetentionPolicy
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId

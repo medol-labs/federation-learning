@@ -13,5 +13,5 @@ import org.springframework.stereotype.Component
 class RaiseAlertOnNodeResourcePressureProcessor(private val commandGateway: CommandGateway) {
     @EventHandler
     fun on(event: RuntimeNodeResourcePressureDetectedEvent): java.util.concurrent.CompletableFuture<*> =
-        commandGateway.send(RaiseTrainingAlertCommand(nodeId = event.nodeId, trainingJobId = event.trainingJobId, runtimeNodeName = event.runtimeNodeName, trainingJobObjective = event.trainingJobObjective, severity = "" /* TODO: provide severity */, message = "" /* TODO: provide message */)).resultMessage
+        commandGateway.send(RaiseTrainingAlertCommand(nodeId = event.nodeId, trainingJobId = event.trainingJobId, runtimeNodeName = event.runtimeNodeName, trainingJobObjective = event.trainingJobObjective, severity = event.alertSeverity, message = event.alertMessage)).resultMessage
 }

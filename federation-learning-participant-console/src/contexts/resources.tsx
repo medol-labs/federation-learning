@@ -207,7 +207,7 @@ export const resources: IResourceItem[] = [
       tableName: "agent_runtime_node_inventory_catalog_read_model_entity",
       idField: "runtimeNodeInventoryReportId",
       idFields: ["runtimeNodeInventoryReportId"],
-      queryFields: ["runtimeNodeInventoryReportId","organizationId","runtimeInfrastructureId","runtimeAgentId","organizationName","runtimeNodeName","infrastructureNodeId","runtimeNodeRole","nodeReady","runtimeEngineVersion","containerEngineVersion","operatingSystem","architecture","inventoryHash","discoveredAt"],
+      queryFields: ["nodeId","runtimeNodeInventoryReportId","organizationId","runtimeInfrastructureId","runtimeAgentId","organizationName","runtimeNodeName","infrastructureNodeId","runtimeNodeRole","nodeReady","runtimeEngineVersion","containerEngineVersion","operatingSystem","architecture","inventoryHash","discoveredAt"],
       actionControls: {"enabledFields":[]},
       aggregateRoute: "agentruntimenodeinventory",
       queryRoute: "agentruntimenodeinventorycatalog",
@@ -220,6 +220,7 @@ export const resources: IResourceItem[] = [
   {
     name: "agent_runtime_node_resource_latest",
     list: "/agent-runtime-node-resource-latest",
+    create: "/agent-runtime-node-resource-latest/command/report-agent-runtime-node-resource-telemetry",
     show: "/agent-runtime-node-resource-latest/show/:id",
     meta: {
       parent: "runtimeagentoperations",
@@ -236,12 +237,17 @@ export const resources: IResourceItem[] = [
       dataProviderName: "federation-learning-runtime-agent",
       moduleName: "federation-learning-runtime-agent",
       moduleLabel: "Federation Learning Runtime Agent",
+      commandRoute: "/agent-runtime-node-resource-latest/:id/command/:command",
+      commands: {
+        reportAgentRuntimeNodeResourceTelemetry: { label: "Report Agent Runtime Node Resource Telemetry", i18nKey: "resources.agent_runtime_node_resource_latest.commands.reportAgentRuntimeNodeResourceTelemetry.label", route: "/agent-runtime-node-resource-latest/command/report-agent-runtime-node-resource-telemetry", dataProviderName: "federation-learning-runtime-agent", uiPattern: "form", interactionMode: "form", requiresPage: true, downloadCommand: false, confirmTitle: "Report Agent Runtime Node Resource Telemetry?", confirmDescription: "This action will submit Report Agent Runtime Node Resource Telemetry.", confirmVariant: "default" },
+      },
       canDelete: false,
     },
   },
   {
     name: "agent_runtime_telemetry_latest",
     list: "/agent-runtime-telemetry-latest",
+    create: "/agent-runtime-telemetry-latest/command/report-agent-runtime-telemetry",
     show: "/agent-runtime-telemetry-latest/show/:id",
     meta: {
       parent: "runtimeagentoperations",
@@ -258,6 +264,10 @@ export const resources: IResourceItem[] = [
       dataProviderName: "federation-learning-runtime-agent",
       moduleName: "federation-learning-runtime-agent",
       moduleLabel: "Federation Learning Runtime Agent",
+      commandRoute: "/agent-runtime-telemetry-latest/:id/command/:command",
+      commands: {
+        reportAgentRuntimeTelemetry: { label: "Report Agent Runtime Telemetry", i18nKey: "resources.agent_runtime_telemetry_latest.commands.reportAgentRuntimeTelemetry.label", route: "/agent-runtime-telemetry-latest/command/report-agent-runtime-telemetry", dataProviderName: "federation-learning-runtime-agent", uiPattern: "form", interactionMode: "form", requiresPage: true, downloadCommand: false, confirmTitle: "Report Agent Runtime Telemetry?", confirmDescription: "This action will submit Report Agent Runtime Telemetry.", confirmVariant: "default" },
+      },
       canDelete: false,
     },
   },

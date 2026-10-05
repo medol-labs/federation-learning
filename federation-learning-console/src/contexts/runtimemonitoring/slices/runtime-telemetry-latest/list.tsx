@@ -32,9 +32,18 @@ type RuntimeTelemetryLatestRecord = {
   gpuLoad?: string;
   memoryLoad?: string;
   lastHeartbeatAt?: string;
-  heartbeatMissingBeyondThreshold: boolean;
-  heartbeatObservedAfterOffline: boolean;
-  resourcePressureDetected: boolean;
+  lastRecoveredAt?: string;
+  offlineDetectionPending: boolean;
+  recoveryDetectionPending: boolean;
+  resourcePressureDetectionPending: boolean;
+  offlineReason?: string;
+  recoveryReason?: string;
+  pressureType?: string;
+  observedValue?: string;
+  thresholdValue?: string;
+  alertSeverity?: string;
+  alertMessage?: string;
+  healthStatus: string;
   telemetryRetentionPolicy: string;
 };
 
@@ -396,86 +405,323 @@ export const RuntimeTelemetryLatestList = () => {
             },
           ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
       }),
-      columnHelper.accessor("heartbeatMissingBeyondThreshold", {
-        id: "heartbeatMissingBeyondThreshold",
+      columnHelper.accessor("lastRecoveredAt", {
+        id: "lastRecoveredAt",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.heartbeatMissingBeyondThreshold.label", "Heartbeat Missing Beyond Threshold")} />
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.lastRecoveredAt.label", "Last Recovered At")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.runtime_telemetry_latest.fields.heartbeatMissingBeyondThreshold.label", "Heartbeat Missing Beyond Threshold"),
-          placeholder: "Enter Heartbeat Missing Beyond Threshold",
+          label: t("resources.runtime_telemetry_latest.fields.lastRecoveredAt.label", "Last Recovered At"),
+          placeholder: "Enter Last Recovered At",
+          variant: "date",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:runtime-telemetry-latest:display:lastRecoveredAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-telemetry-latest",
+              field: "lastRecoveredAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("offlineDetectionPending", {
+        id: "offlineDetectionPending",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.offlineDetectionPending.label", "Offline Detection Pending")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.offlineDetectionPending.label", "Offline Detection Pending"),
+          placeholder: "Enter Offline Detection Pending",
           variant: "boolean",
           filterOperator: "eq",
         },
         cell: ({ getValue, row }) =>
           renderFieldOverride<RuntimeTelemetryLatestRecord>(
             frontendComposition,
-            "field:runtime-telemetry-latest:display:heartbeatMissingBeyondThreshold",
+            "field:runtime-telemetry-latest:display:offlineDetectionPending",
             {
               value: getValue(),
               record: row.original,
               resource: "runtime-telemetry-latest",
-              field: "heartbeatMissingBeyondThreshold",
+              field: "offlineDetectionPending",
               view: "display",
               compact: true,
             },
           ) ?? getValue() ? "Yes" : "No",
       }),
-      columnHelper.accessor("heartbeatObservedAfterOffline", {
-        id: "heartbeatObservedAfterOffline",
+      columnHelper.accessor("recoveryDetectionPending", {
+        id: "recoveryDetectionPending",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.heartbeatObservedAfterOffline.label", "Heartbeat Observed After Offline")} />
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.recoveryDetectionPending.label", "Recovery Detection Pending")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.runtime_telemetry_latest.fields.heartbeatObservedAfterOffline.label", "Heartbeat Observed After Offline"),
-          placeholder: "Enter Heartbeat Observed After Offline",
+          label: t("resources.runtime_telemetry_latest.fields.recoveryDetectionPending.label", "Recovery Detection Pending"),
+          placeholder: "Enter Recovery Detection Pending",
           variant: "boolean",
           filterOperator: "eq",
         },
         cell: ({ getValue, row }) =>
           renderFieldOverride<RuntimeTelemetryLatestRecord>(
             frontendComposition,
-            "field:runtime-telemetry-latest:display:heartbeatObservedAfterOffline",
+            "field:runtime-telemetry-latest:display:recoveryDetectionPending",
             {
               value: getValue(),
               record: row.original,
               resource: "runtime-telemetry-latest",
-              field: "heartbeatObservedAfterOffline",
+              field: "recoveryDetectionPending",
               view: "display",
               compact: true,
             },
           ) ?? getValue() ? "Yes" : "No",
       }),
-      columnHelper.accessor("resourcePressureDetected", {
-        id: "resourcePressureDetected",
+      columnHelper.accessor("resourcePressureDetectionPending", {
+        id: "resourcePressureDetectionPending",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.resourcePressureDetected.label", "Resource Pressure Detected")} />
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.resourcePressureDetectionPending.label", "Resource Pressure Detection Pending")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.runtime_telemetry_latest.fields.resourcePressureDetected.label", "Resource Pressure Detected"),
-          placeholder: "Enter Resource Pressure Detected",
+          label: t("resources.runtime_telemetry_latest.fields.resourcePressureDetectionPending.label", "Resource Pressure Detection Pending"),
+          placeholder: "Enter Resource Pressure Detection Pending",
           variant: "boolean",
           filterOperator: "eq",
         },
         cell: ({ getValue, row }) =>
           renderFieldOverride<RuntimeTelemetryLatestRecord>(
             frontendComposition,
-            "field:runtime-telemetry-latest:display:resourcePressureDetected",
+            "field:runtime-telemetry-latest:display:resourcePressureDetectionPending",
             {
               value: getValue(),
               record: row.original,
               resource: "runtime-telemetry-latest",
-              field: "resourcePressureDetected",
+              field: "resourcePressureDetectionPending",
               view: "display",
               compact: true,
             },
           ) ?? getValue() ? "Yes" : "No",
+      }),
+      columnHelper.accessor("offlineReason", {
+        id: "offlineReason",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.offlineReason.label", "Offline Reason")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.offlineReason.label", "Offline Reason"),
+          placeholder: "Enter Offline Reason",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:runtime-telemetry-latest:display:offlineReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-telemetry-latest",
+              field: "offlineReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("recoveryReason", {
+        id: "recoveryReason",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.recoveryReason.label", "Recovery Reason")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.recoveryReason.label", "Recovery Reason"),
+          placeholder: "Enter Recovery Reason",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:runtime-telemetry-latest:display:recoveryReason",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-telemetry-latest",
+              field: "recoveryReason",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("pressureType", {
+        id: "pressureType",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.pressureType.label", "Pressure Type")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.pressureType.label", "Pressure Type"),
+          placeholder: "Enter Pressure Type",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:runtime-telemetry-latest:display:pressureType",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-telemetry-latest",
+              field: "pressureType",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("observedValue", {
+        id: "observedValue",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.observedValue.label", "Observed Value")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.observedValue.label", "Observed Value"),
+          placeholder: "Enter Observed Value",
+          variant: "number",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:runtime-telemetry-latest:display:observedValue",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-telemetry-latest",
+              field: "observedValue",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("thresholdValue", {
+        id: "thresholdValue",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.thresholdValue.label", "Threshold Value")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.thresholdValue.label", "Threshold Value"),
+          placeholder: "Enter Threshold Value",
+          variant: "number",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:runtime-telemetry-latest:display:thresholdValue",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-telemetry-latest",
+              field: "thresholdValue",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("alertSeverity", {
+        id: "alertSeverity",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.alertSeverity.label", "Alert Severity")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.alertSeverity.label", "Alert Severity"),
+          placeholder: "Enter Alert Severity",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:runtime-telemetry-latest:display:alertSeverity",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-telemetry-latest",
+              field: "alertSeverity",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("alertMessage", {
+        id: "alertMessage",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.alertMessage.label", "Alert Message")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.alertMessage.label", "Alert Message"),
+          placeholder: "Enter Alert Message",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:runtime-telemetry-latest:display:alertMessage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-telemetry-latest",
+              field: "alertMessage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("healthStatus", {
+        id: "healthStatus",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.runtime_telemetry_latest.fields.healthStatus.label", "Health Status")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.runtime_telemetry_latest.fields.healthStatus.label", "Health Status"),
+          placeholder: "Enter Health Status",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<RuntimeTelemetryLatestRecord>(
+            frontendComposition,
+            "field:runtime-telemetry-latest:display:healthStatus",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "runtime-telemetry-latest",
+              field: "healthStatus",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
       }),
       columnHelper.accessor("telemetryRetentionPolicy", {
         id: "telemetryRetentionPolicy",
@@ -515,6 +761,40 @@ export const RuntimeTelemetryLatestList = () => {
                 "rowActions.before",
                 { resource: "runtime-telemetry-latest", record: row.original },
               )}
+                {isCommandVisible(row.original, "", "", []) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="recordRuntimeTelemetry"
+                    recordItemId={row.original.nodeId}
+                    size="sm"
+                    query={{
+                      runtimeAgentId: row.original.runtimeAgentId,
+                      federationId: row.original.federationId,
+                      federationName: row.original.federationName,
+                      trainingJobId: row.original.trainingJobId,
+                      trainingJobObjective: row.original.trainingJobObjective,
+                      roundExecutionId: row.original.roundExecutionId,
+                      runtimeNodeName: row.original.runtimeNodeName,
+                      cpuLoad: row.original.cpuLoad,
+                      gpuLoad: row.original.gpuLoad,
+                      memoryLoad: row.original.memoryLoad,
+                      lastHeartbeatAt: row.original.lastHeartbeatAt,
+                      lastRecoveredAt: row.original.lastRecoveredAt,
+                      offlineDetectionPending: row.original.offlineDetectionPending,
+                      recoveryDetectionPending: row.original.recoveryDetectionPending,
+                      resourcePressureDetectionPending: row.original.resourcePressureDetectionPending,
+                      offlineReason: row.original.offlineReason,
+                      recoveryReason: row.original.recoveryReason,
+                      pressureType: row.original.pressureType,
+                      observedValue: row.original.observedValue,
+                      thresholdValue: row.original.thresholdValue,
+                      alertSeverity: row.original.alertSeverity,
+                      alertMessage: row.original.alertMessage,
+                      healthStatus: row.original.healthStatus,
+                      telemetryRetentionPolicy: row.original.telemetryRetentionPolicy,
+                    }}
+                  />
+                )}
               <ShowButton variant="ghost" recordItemId={row.original.nodeId} size="sm" />
               {renderSlotExtensions<RuntimeTelemetryLatestRecord>(
                 frontendComposition,
@@ -544,7 +824,7 @@ export const RuntimeTelemetryLatestList = () => {
         tableName: "runtime_telemetry_latest_read_model_entity",
         idField: "nodeId",
         idFields: ["nodeId"],
-        queryFields: ["nodeId","runtimeAgentId","federationId","federationName","trainingJobId","trainingJobObjective","roundExecutionId","runtimeNodeName","cpuLoad","gpuLoad","memoryLoad","lastHeartbeatAt","heartbeatMissingBeyondThreshold","heartbeatObservedAfterOffline","resourcePressureDetected","telemetryRetentionPolicy"],
+        queryFields: ["nodeId","runtimeAgentId","federationId","federationName","trainingJobId","trainingJobObjective","roundExecutionId","runtimeNodeName","cpuLoad","gpuLoad","memoryLoad","lastHeartbeatAt","lastRecoveredAt","offlineDetectionPending","recoveryDetectionPending","resourcePressureDetectionPending","offlineReason","recoveryReason","pressureType","observedValue","thresholdValue","alertSeverity","alertMessage","healthStatus","telemetryRetentionPolicy"],
         label: t("resources.runtime_telemetry_latest.label", "Runtime Telemetry Latest"),
         aggregateRoute: "noderuntimehealth",
         queryRoute: "runtimetelemetrylatest",

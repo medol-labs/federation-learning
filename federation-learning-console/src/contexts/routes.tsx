@@ -3,10 +3,6 @@ import { Route } from "react-router";
 
 import { resolvePageOverride } from "@/domain/page-overrides";
 import {
-  AuditRecordLogList,
-  AuditRecordLogShow,
-} from "./runtimemonitoring/read-models/audit-record-log";
-import {
   CurrentRecommendedFeatureSchemaCatalogList,
   CurrentRecommendedFeatureSchemaCatalogShow,
 } from "./datasetgovernance/read-models/current-recommended-feature-schema-catalog";
@@ -158,10 +154,12 @@ import {
 import {
   RuntimeNodeResourceLatestList,
   RuntimeNodeResourceLatestShow,
+  RuntimeNodeResourceLatestRecordRuntimeNodeResourceTelemetry,
 } from "./runtimemonitoring/read-models/runtime-node-resource-latest";
 import {
   RuntimeTelemetryLatestList,
   RuntimeTelemetryLatestShow,
+  RuntimeTelemetryLatestRecordRuntimeTelemetry,
 } from "./runtimemonitoring/read-models/runtime-telemetry-latest";
 import {
   SecureAggregationSessionCatalogList,
@@ -232,10 +230,6 @@ import {
 
 export const contextRoutes = (
   <>
-    <Route path="/audit-record-log">
-      <Route index element={resolvePageOverride("audit-record-log", "list", <AuditRecordLogList />)} />
-      <Route path="show/:id" element={resolvePageOverride("audit-record-log", "show", <AuditRecordLogShow />)} />
-    </Route>
     <Route path="/current-recommended-feature-schema-catalog">
       <Route index element={resolvePageOverride("current-recommended-feature-schema-catalog", "list", <CurrentRecommendedFeatureSchemaCatalogList />)} />
       <Route path="show/:id" element={resolvePageOverride("current-recommended-feature-schema-catalog", "show", <CurrentRecommendedFeatureSchemaCatalogShow />)} />
@@ -387,11 +381,13 @@ export const contextRoutes = (
     </Route>
     <Route path="/runtime-node-resource-latest">
       <Route index element={resolvePageOverride("runtime-node-resource-latest", "list", <RuntimeNodeResourceLatestList />)} />
+      <Route path="command/record-runtime-node-resource-telemetry" element={resolvePageOverride("runtime-node-resource-latest", "recordRuntimeNodeResourceTelemetry", <RuntimeNodeResourceLatestRecordRuntimeNodeResourceTelemetry />)} />
       <Route path="show/:id" element={resolvePageOverride("runtime-node-resource-latest", "show", <RuntimeNodeResourceLatestShow />)} />
     </Route>
     <Route path="/runtime-telemetry-latest">
       <Route index element={resolvePageOverride("runtime-telemetry-latest", "list", <RuntimeTelemetryLatestList />)} />
       <Route path="show/:id" element={resolvePageOverride("runtime-telemetry-latest", "show", <RuntimeTelemetryLatestShow />)} />
+      <Route path=":id/command/record-runtime-telemetry" element={resolvePageOverride("runtime-telemetry-latest", "recordRuntimeTelemetry", <RuntimeTelemetryLatestRecordRuntimeTelemetry />)} />
     </Route>
     <Route path="/secure-aggregation-session-catalog">
       <Route index element={resolvePageOverride("secure-aggregation-session-catalog", "list", <SecureAggregationSessionCatalogList />)} />

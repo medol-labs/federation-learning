@@ -30,9 +30,18 @@ class RuntimeTelemetryLatestReadModelCriteria {
     var gpuLoad: BigDecimalFilter? = null
     var memoryLoad: BigDecimalFilter? = null
     var lastHeartbeatAt: RangeFilter<LocalDateTime>? = null
-    var heartbeatMissingBeyondThreshold: BooleanFilter? = null
-    var heartbeatObservedAfterOffline: BooleanFilter? = null
-    var resourcePressureDetected: BooleanFilter? = null
+    var lastRecoveredAt: RangeFilter<LocalDateTime>? = null
+    var offlineDetectionPending: BooleanFilter? = null
+    var recoveryDetectionPending: BooleanFilter? = null
+    var resourcePressureDetectionPending: BooleanFilter? = null
+    var offlineReason: StringFilter? = null
+    var recoveryReason: StringFilter? = null
+    var pressureType: StringFilter? = null
+    var observedValue: BigDecimalFilter? = null
+    var thresholdValue: BigDecimalFilter? = null
+    var alertSeverity: StringFilter? = null
+    var alertMessage: StringFilter? = null
+    var healthStatus: StringFilter? = null
     var telemetryRetentionPolicy: StringFilter? = null
 }
 
@@ -50,9 +59,18 @@ class RuntimeTelemetryLatestReadModelProjection : MetadataProjection {
     var gpuLoad: BigDecimal? = null
     var memoryLoad: BigDecimal? = null
     var lastHeartbeatAt: LocalDateTime? = null
-    var heartbeatMissingBeyondThreshold: Boolean? = null
-    var heartbeatObservedAfterOffline: Boolean? = null
-    var resourcePressureDetected: Boolean? = null
+    var lastRecoveredAt: LocalDateTime? = null
+    var offlineDetectionPending: Boolean? = null
+    var recoveryDetectionPending: Boolean? = null
+    var resourcePressureDetectionPending: Boolean? = null
+    var offlineReason: String? = null
+    var recoveryReason: String? = null
+    var pressureType: String? = null
+    var observedValue: BigDecimal? = null
+    var thresholdValue: BigDecimal? = null
+    var alertSeverity: String? = null
+    var alertMessage: String? = null
+    var healthStatus: String? = null
     var telemetryRetentionPolicy: String? = null
     override var userId: String? = null
     override var sessionId: String? = null
@@ -76,9 +94,18 @@ fun RuntimeTelemetryLatestReadModelProjection.toReadModel(): RuntimeTelemetryLat
     gpuLoad = gpuLoad,
     memoryLoad = memoryLoad,
     lastHeartbeatAt = lastHeartbeatAt,
-    heartbeatMissingBeyondThreshold = heartbeatMissingBeyondThreshold,
-    heartbeatObservedAfterOffline = heartbeatObservedAfterOffline,
-    resourcePressureDetected = resourcePressureDetected,
+    lastRecoveredAt = lastRecoveredAt,
+    offlineDetectionPending = offlineDetectionPending,
+    recoveryDetectionPending = recoveryDetectionPending,
+    resourcePressureDetectionPending = resourcePressureDetectionPending,
+    offlineReason = offlineReason,
+    recoveryReason = recoveryReason,
+    pressureType = pressureType,
+    observedValue = observedValue,
+    thresholdValue = thresholdValue,
+    alertSeverity = alertSeverity,
+    alertMessage = alertMessage,
+    healthStatus = healthStatus,
     telemetryRetentionPolicy = telemetryRetentionPolicy,
     userId = userId,
     sessionId = sessionId,
@@ -109,9 +136,18 @@ data class RuntimeTelemetryLatestReadModel(
     val gpuLoad: BigDecimal?,
     val memoryLoad: BigDecimal?,
     val lastHeartbeatAt: LocalDateTime?,
-    val heartbeatMissingBeyondThreshold: Boolean?,
-    val heartbeatObservedAfterOffline: Boolean?,
-    val resourcePressureDetected: Boolean?,
+    val lastRecoveredAt: LocalDateTime?,
+    val offlineDetectionPending: Boolean?,
+    val recoveryDetectionPending: Boolean?,
+    val resourcePressureDetectionPending: Boolean?,
+    val offlineReason: String?,
+    val recoveryReason: String?,
+    val pressureType: String?,
+    val observedValue: BigDecimal?,
+    val thresholdValue: BigDecimal?,
+    val alertSeverity: String?,
+    val alertMessage: String?,
+    val healthStatus: String?,
     val telemetryRetentionPolicy: String?,
     val userId: String?,
     val sessionId: String?,

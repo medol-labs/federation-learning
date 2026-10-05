@@ -97,11 +97,6 @@ export const ModelCatalogShow = () => {
             </div>
             <Separator />
             <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.previousModelId.label", "Previous Model Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:previousModelId", { value: record?.previousModelId, record, resource: "model-catalog", field: "previousModelId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.previousModelId, t)}</p>}
-            </div>
-            <Separator />
-            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.experimentId.label", "Experiment Id")}</h4>
               {renderFieldOverride(frontendComposition, "field:model-catalog:display:experimentId", { value: record?.experimentId, record, resource: "model-catalog", field: "experimentId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.experimentId, t)}</p>}
             </div>
@@ -119,61 +114,6 @@ export const ModelCatalogShow = () => {
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.modelCardId.label", "Model Card Id")}</h4>
               {renderFieldOverride(frontendComposition, "field:model-catalog:display:modelCardId", { value: record?.modelCardId, record, resource: "model-catalog", field: "modelCardId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.modelCardId, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.baselineModelId.label", "Baseline Model Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:baselineModelId", { value: record?.baselineModelId, record, resource: "model-catalog", field: "baselineModelId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.baselineModelId, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.hasEvaluationPackage.label", "Has Evaluation Package")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:hasEvaluationPackage", { value: record?.hasEvaluationPackage, record, resource: "model-catalog", field: "hasEvaluationPackage", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.hasEvaluationPackage, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.approvalStatus.label", "Approval Status")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:approvalStatus", { value: record?.approvalStatus, record, resource: "model-catalog", field: "approvalStatus", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.approvalStatus, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.releaseStatus.label", "Release Status")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:releaseStatus", { value: record?.releaseStatus, record, resource: "model-catalog", field: "releaseStatus", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.releaseStatus, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.isProduction.label", "Is Production")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:isProduction", { value: record?.isProduction, record, resource: "model-catalog", field: "isProduction", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.isProduction, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.canRecordEvaluationPackage.label", "Can Record Evaluation Package")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:canRecordEvaluationPackage", { value: record?.canRecordEvaluationPackage, record, resource: "model-catalog", field: "canRecordEvaluationPackage", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.canRecordEvaluationPackage, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.canApprove.label", "Can Approve")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:canApprove", { value: record?.canApprove, record, resource: "model-catalog", field: "canApprove", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.canApprove, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.canPromoteToProduction.label", "Can Promote To Production")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:canPromoteToProduction", { value: record?.canPromoteToProduction, record, resource: "model-catalog", field: "canPromoteToProduction", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.canPromoteToProduction, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.canRollback.label", "Can Rollback")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:canRollback", { value: record?.canRollback, record, resource: "model-catalog", field: "canRollback", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.canRollback, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.canRetire.label", "Can Retire")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:canRetire", { value: record?.canRetire, record, resource: "model-catalog", field: "canRetire", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.canRetire, t)}</p>}
-            </div>
-            <Separator />
-            <div>
-              <h4 className="mb-2 text-sm font-medium">{t("resources.model_catalog.fields.blockedReason.label", "Blocked Reason")}</h4>
-              {renderFieldOverride(frontendComposition, "field:model-catalog:display:blockedReason", { value: record?.blockedReason, record, resource: "model-catalog", field: "blockedReason", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.blockedReason, t)}</p>}
             </div>
             <Separator />
           </CardContent>

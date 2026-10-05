@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Command
 data class ActivateRuntimeIdentityCommand(
-    val runtimeId: UUID = java.util.UUID.randomUUID(),
+    val runtimeId: UUID,
     val runtimeInfrastructureId: UUID,
     val runtimeAgentId: UUID,
     val organizationId: UUID,

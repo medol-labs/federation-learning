@@ -33,10 +33,12 @@ import {
 import {
   AgentRuntimeNodeResourceLatestList,
   AgentRuntimeNodeResourceLatestShow,
+  AgentRuntimeNodeResourceLatestReportAgentRuntimeNodeResourceTelemetry,
 } from "./runtimeagentoperations/read-models/agent-runtime-node-resource-latest";
 import {
   AgentRuntimeTelemetryLatestList,
   AgentRuntimeTelemetryLatestShow,
+  AgentRuntimeTelemetryLatestReportAgentRuntimeTelemetry,
 } from "./runtimeagentoperations/read-models/agent-runtime-telemetry-latest";
 import {
   DatasetCapabilityList,
@@ -133,10 +135,12 @@ export const contextRoutes = (
     </Route>
     <Route path="/agent-runtime-node-resource-latest">
       <Route index element={resolvePageOverride("agent-runtime-node-resource-latest", "list", <AgentRuntimeNodeResourceLatestList />)} />
+      <Route path="command/report-agent-runtime-node-resource-telemetry" element={resolvePageOverride("agent-runtime-node-resource-latest", "reportAgentRuntimeNodeResourceTelemetry", <AgentRuntimeNodeResourceLatestReportAgentRuntimeNodeResourceTelemetry />)} />
       <Route path="show/:id" element={resolvePageOverride("agent-runtime-node-resource-latest", "show", <AgentRuntimeNodeResourceLatestShow />)} />
     </Route>
     <Route path="/agent-runtime-telemetry-latest">
       <Route index element={resolvePageOverride("agent-runtime-telemetry-latest", "list", <AgentRuntimeTelemetryLatestList />)} />
+      <Route path="command/report-agent-runtime-telemetry" element={resolvePageOverride("agent-runtime-telemetry-latest", "reportAgentRuntimeTelemetry", <AgentRuntimeTelemetryLatestReportAgentRuntimeTelemetry />)} />
       <Route path="show/:id" element={resolvePageOverride("agent-runtime-telemetry-latest", "show", <AgentRuntimeTelemetryLatestShow />)} />
     </Route>
     <Route path="/dataset-capability">

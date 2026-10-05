@@ -23,7 +23,9 @@ class DetectRuntimeNodeResourcePressureDecisionTest {
             runtimeNodeName = null,
             pressureType = "",
             observedValue = java.math.BigDecimal.ZERO,
-            thresholdValue = java.math.BigDecimal.ZERO
+            thresholdValue = java.math.BigDecimal.ZERO,
+            alertSeverity = "",
+            alertMessage = ""
             )
         )
 

@@ -35,7 +35,7 @@ class RuntimeNodeResourceLatestReadModelEntity : MetadataProjection {
     var runningWorkloadCount: Int? = null
     var workloadCapacity: Int? = null
     var observedAt: LocalDateTime? = null
-    var allocatableCapacityChanged: Boolean? = null
+    var lastResourceSnapshotAt: LocalDateTime? = null
     var telemetryRetentionPolicy: String? = null
     override var userId: String? = null
     override var sessionId: String? = null

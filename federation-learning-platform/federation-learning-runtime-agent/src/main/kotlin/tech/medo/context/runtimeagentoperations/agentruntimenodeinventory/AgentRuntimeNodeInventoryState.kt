@@ -12,10 +12,20 @@ import tech.medo.runtimeagentoperations.domain.states.AgentRuntimeNodeInventoryS
 import java.util.UUID;
 
 
-@EventSourced(idType = UUID::class, tagKey = AgentRuntimeNodeInventoryTags.RUNTIME_NODE_INVENTORY_REPORT_ID)
+@EventSourced(idType = AgentRuntimeNodeInventorySelection::class)
 class AgentRuntimeNodeInventoryState @EntityCreator constructor() {
+    companion object {
+        @JvmStatic
+        @EventCriteriaBuilder
+        fun resolveCriteria(selection: AgentRuntimeNodeInventorySelection): EventCriteria = EventCriteria.either(
+                EventCriteria.havingTags(Tag.of(AgentRuntimeNodeInventoryTags.NODE_ID, selection.nodeId.toString())),
+                EventCriteria.havingTags(Tag.of(AgentRuntimeNodeInventoryTags.RUNTIME_NODE_INVENTORY_REPORT_ID, selection.runtimeNodeInventoryReportId.toString()))
+        )
+    }
+
 
     var currentState: AgentRuntimeNodeInventoryStateEnum? = null
+    var nodeId: UUID? = null
     var runtimeNodeInventoryReportId: UUID? = null
     var organizationId: UUID? = null
     var organizationName: String? = null
@@ -35,6 +45,7 @@ class AgentRuntimeNodeInventoryState @EntityCreator constructor() {
     @EventSourcingHandler
     fun evolve(event: AgentRuntimeNodeInventoryReportedEvent): AgentRuntimeNodeInventoryState = apply {
         currentState = AgentRuntimeNodeInventoryStateEnum.Reported
+        nodeId = event.nodeId
         runtimeNodeInventoryReportId = event.runtimeNodeInventoryReportId
         organizationId = event.organizationId
         organizationName = event.organizationName

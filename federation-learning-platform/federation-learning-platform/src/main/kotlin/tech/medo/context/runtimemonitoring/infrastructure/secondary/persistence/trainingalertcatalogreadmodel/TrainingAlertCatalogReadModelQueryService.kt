@@ -42,8 +42,6 @@ class TrainingAlertCatalogReadModelQueryService(
             criteria.acknowledgedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("acknowledgedAt") })) }
             criteria.resolvedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("resolvedAt") })) }
             criteria.resolutionSummary?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<String>> { root -> root.get("resolutionSummary") })) }
-            criteria.canAcknowledge?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("canAcknowledge") })) }
-            criteria.canResolve?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("canResolve") })) }
         }
         return specification
     }
@@ -112,8 +110,6 @@ class TrainingAlertCatalogReadModelQueryService(
             it.acknowledgedAt = this@toProjection.acknowledgedAt
             it.resolvedAt = this@toProjection.resolvedAt
             it.resolutionSummary = this@toProjection.resolutionSummary
-            it.canAcknowledge = this@toProjection.canAcknowledge
-            it.canResolve = this@toProjection.canResolve
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

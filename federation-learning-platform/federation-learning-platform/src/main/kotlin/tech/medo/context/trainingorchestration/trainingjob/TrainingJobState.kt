@@ -15,6 +15,7 @@ import tech.medo.trainingorchestration.events.TrainingJobCompletedEvent
 import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
 
 import java.util.UUID;
+import java.math.BigDecimal;
 
 
 @EventSourced(idType = UUID::class, tagKey = TrainingJobTags.TRAINING_JOB_ID)
@@ -37,6 +38,9 @@ class TrainingJobState @EntityCreator constructor() {
     var cancelReason: String? = null
     var finalRoundId: UUID? = null
     var finalModelId: UUID? = null
+    var finalModelArtifactDigest: String? = null
+    var finalGlobalAccuracy: BigDecimal? = null
+    var finalEvaluationReportId: UUID? = null
     var stopReason: String? = null
 
     @EventSourcingHandler
@@ -97,6 +101,9 @@ class TrainingJobState @EntityCreator constructor() {
         trainingJobId = event.trainingJobId
         finalRoundId = event.finalRoundId
         finalModelId = event.finalModelId
+        finalModelArtifactDigest = event.finalModelArtifactDigest
+        finalGlobalAccuracy = event.finalGlobalAccuracy
+        finalEvaluationReportId = event.finalEvaluationReportId
         trainingJobObjective = event.trainingJobObjective
         stopReason = event.stopReason
     }

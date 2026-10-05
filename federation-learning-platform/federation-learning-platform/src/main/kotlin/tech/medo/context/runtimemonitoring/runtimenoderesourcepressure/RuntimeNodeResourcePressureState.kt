@@ -28,6 +28,8 @@ class RuntimeNodeResourcePressureState @EntityCreator constructor() {
     var pressureType: String? = null
     var observedValue: BigDecimal? = null
     var thresholdValue: BigDecimal? = null
+    var alertSeverity: String? = null
+    var alertMessage: String? = null
 
     @EventSourcingHandler
     fun evolve(event: RuntimeNodeResourcePressureDetectedEvent): RuntimeNodeResourcePressureState = apply {
@@ -43,5 +45,7 @@ class RuntimeNodeResourcePressureState @EntityCreator constructor() {
         pressureType = event.pressureType
         observedValue = event.observedValue
         thresholdValue = event.thresholdValue
+        alertSeverity = event.alertSeverity
+        alertMessage = event.alertMessage
     }
 }

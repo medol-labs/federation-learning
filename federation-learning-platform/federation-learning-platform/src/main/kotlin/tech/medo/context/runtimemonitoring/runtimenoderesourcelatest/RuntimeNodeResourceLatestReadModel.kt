@@ -34,7 +34,7 @@ class RuntimeNodeResourceLatestReadModelCriteria {
     var runningWorkloadCount: IntegerFilter? = null
     var workloadCapacity: IntegerFilter? = null
     var observedAt: RangeFilter<LocalDateTime>? = null
-    var allocatableCapacityChanged: BooleanFilter? = null
+    var lastResourceSnapshotAt: RangeFilter<LocalDateTime>? = null
     var telemetryRetentionPolicy: StringFilter? = null
 }
 
@@ -57,7 +57,7 @@ class RuntimeNodeResourceLatestReadModelProjection : MetadataProjection {
     var runningWorkloadCount: Int? = null
     var workloadCapacity: Int? = null
     var observedAt: LocalDateTime? = null
-    var allocatableCapacityChanged: Boolean? = null
+    var lastResourceSnapshotAt: LocalDateTime? = null
     var telemetryRetentionPolicy: String? = null
     override var userId: String? = null
     override var sessionId: String? = null
@@ -86,7 +86,7 @@ fun RuntimeNodeResourceLatestReadModelProjection.toReadModel(): RuntimeNodeResou
     runningWorkloadCount = runningWorkloadCount,
     workloadCapacity = workloadCapacity,
     observedAt = observedAt,
-    allocatableCapacityChanged = allocatableCapacityChanged,
+    lastResourceSnapshotAt = lastResourceSnapshotAt,
     telemetryRetentionPolicy = telemetryRetentionPolicy,
     userId = userId,
     sessionId = sessionId,
@@ -122,7 +122,7 @@ data class RuntimeNodeResourceLatestReadModel(
     val runningWorkloadCount: Int?,
     val workloadCapacity: Int?,
     val observedAt: LocalDateTime?,
-    val allocatableCapacityChanged: Boolean?,
+    val lastResourceSnapshotAt: LocalDateTime?,
     val telemetryRetentionPolicy: String?,
     val userId: String?,
     val sessionId: String?,

@@ -131,11 +131,13 @@ export const FederationOverviewSuspendParticipant = () => {
                     field.onChange(value);
                   }}
                   placeholder={t("resources.federation_overview.commands.suspendParticipant.fields.organizationId.placeholder", "Select Organization Id")}
+                  filters={[{"field":"state","operator":"eq","value":"Active"}]}
                   meta={{
                     idField: "organizationId",
                     label: t("resources.federation_overview.commands.suspendParticipant.fields.organizationId.label", "Organization Directory"),
                     aggregateRoute: "organization",
                     queryRoute: "organizationdirectory",
+                    queryFields: ["state"],
                   }}
                 />
                 <FormMessage />

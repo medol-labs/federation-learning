@@ -617,6 +617,7 @@ export const AgentRuntimeNodeResourceLatestList = () => {
     <ListView>
       <ListViewHeader canCreate={false}>
         {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-node-resource-latest:list", "toolbar.before", { resource: "agent-runtime-node-resource-latest", table })}
+        <CommandButton variant="default" command="reportAgentRuntimeNodeResourceTelemetry" />
         {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-node-resource-latest:list", "toolbar.actions", { resource: "agent-runtime-node-resource-latest", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
