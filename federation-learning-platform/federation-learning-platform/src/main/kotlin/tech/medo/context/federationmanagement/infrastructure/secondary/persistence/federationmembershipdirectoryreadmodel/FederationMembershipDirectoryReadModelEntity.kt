@@ -10,12 +10,14 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelKey
 import java.util.UUID;
+import java.time.LocalDateTime
 
 
 @IdClass(FederationMembershipDirectoryReadModelKey::class)
 @Entity
 @Table(name = "federation_membership_directory")
 class FederationMembershipDirectoryReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var federationId: UUID? = null
     @Id

@@ -1,29 +1,91 @@
 package tech.medo.runtimemonitoring.trainingalertcatalog
 
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import tech.medo.shared.application.export.DataExportColumn
+import tech.medo.shared.application.export.DataExportExecutionTask
+import tech.medo.shared.application.export.DataExportResourceExecutor
+import tech.medo.shared.application.export.DataExportRequest
+import tech.medo.shared.application.export.DataExportService
+import tech.jhipster.service.filter.RangeFilter
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.UUID;
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/trainingalert/trainingalertcatalog")
-class TrainingAlertCatalogReadModelResource(private val repository: TrainingAlertCatalogReadModelRepository) {
+class TrainingAlertCatalogReadModelResource(
+    private val repository: TrainingAlertCatalogReadModelRepository,
+    private val dataExportService: DataExportService
+) {
+    private val exportColumns = listOf(
+        DataExportColumn("alertId", "alertId"),
+        DataExportColumn("nodeId", "nodeId"),
+        DataExportColumn("trainingJobId", "trainingJobId"),
+        DataExportColumn("runtimeNodeName", "runtimeNodeName"),
+        DataExportColumn("trainingJobObjective", "trainingJobObjective"),
+        DataExportColumn("severity", "severity"),
+        DataExportColumn("message", "message"),
+        DataExportColumn("state", "state"),
+        DataExportColumn("acknowledgedAt", "acknowledgedAt"),
+        DataExportColumn("resolvedAt", "resolvedAt"),
+        DataExportColumn("resolutionSummary", "resolutionSummary")
+    )
+
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('training_alert_catalog:list') or hasAuthority('training_alert_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: TrainingAlertCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<TrainingAlertCatalogReadModel> =
+        findPage(criteria, pageable)
+
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('training_alert_catalog:export') or hasAuthority('training_alert_catalog:list') or hasAuthority('training_alert_catalog:read')")
+    @PostMapping("/export")
+    fun export(
+        @RequestBody(required = false) request: DataExportRequest?,
+        criteria: TrainingAlertCatalogReadModelCriteria,
+        @PageableDefault(size = 20) pageable: Pageable
+    ): ResponseEntity<Any> {
+        val columns = dataExportService.validatedColumns(request?.columns, exportColumns)
+        val snapshotUpperBound = LocalDateTime.now(ZoneOffset.UTC)
+        val snapshotCriteria = applyExportSnapshot(criteria, snapshotUpperBound)
+        val exportPageable = PageRequest.of(0, dataExportService.pageSize(), pageable.sort)
+        val firstPage = findPage(snapshotCriteria, exportPageable)
+        return dataExportService.export("trainingalertcatalog", columns, snapshotCriteria, pageable.sort, firstPage, fetchPage = { nextPage ->
+            findPage(snapshotCriteria, nextPage)
+        }, snapshotUpperBound = snapshotUpperBound.toInstant(ZoneOffset.UTC))
+    }
+
+
+    private fun findPage(criteria: TrainingAlertCatalogReadModelCriteria, pageable: Pageable): Page<TrainingAlertCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
+    private fun applyExportSnapshot(criteria: TrainingAlertCatalogReadModelCriteria, snapshotUpperBound: LocalDateTime): TrainingAlertCatalogReadModelCriteria {
+        val projectionUpdatedAt = criteria.projectionUpdatedAt ?: RangeFilter<LocalDateTime>().also {
+            criteria.projectionUpdatedAt = it
+        }
+        val requestedUpperBound = projectionUpdatedAt.getLessThanOrEqual()
+        if (requestedUpperBound == null || requestedUpperBound.isAfter(snapshotUpperBound)) {
+            projectionUpdatedAt.setLessThanOrEqual(snapshotUpperBound)
+        }
+        return criteria
+    }
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('training_alert_catalog:read')")
@@ -31,4 +93,58 @@ class TrainingAlertCatalogReadModelResource(private val repository: TrainingAler
     fun findOne(@PathVariable id: UUID): ResponseEntity<TrainingAlertCatalogReadModel> =
         repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
+}
+
+@Component
+class TrainingAlertCatalogDataExportExecutor(
+    private val repository: TrainingAlertCatalogReadModelRepository,
+    private val dataExportService: DataExportService,
+    private val objectMapper: ObjectMapper
+) : DataExportResourceExecutor {
+    override val resourceName: String = "trainingalertcatalog"
+
+    override fun execute(task: DataExportExecutionTask) =
+        dataExportService.writeCsvFile(
+            fileName = task.fileName,
+            columns = dataExportService.columnsFromJson(task.columnsJson, exportColumns),
+            firstPage = firstPage(task),
+            fetchPage = { nextPage -> repository.findAllByCriteria(criteria(task), nextPage) }
+        )
+
+    private fun firstPage(task: DataExportExecutionTask): Page<TrainingAlertCatalogReadModel> {
+        val pageable = PageRequest.of(0, dataExportService.pageSize(), dataExportService.sortFromJson(task.sortJson))
+        return repository.findAllByCriteria(criteria(task), pageable)
+    }
+
+    private fun criteria(task: DataExportExecutionTask): TrainingAlertCatalogReadModelCriteria {
+        val criteria = objectMapper.readValue(task.criteriaJson, TrainingAlertCatalogReadModelCriteria::class.java)
+        val snapshotUpperBound = LocalDateTime.ofInstant(task.snapshotUpperBound, ZoneOffset.UTC)
+        applyExportSnapshot(criteria, snapshotUpperBound)
+        return criteria
+    }
+
+    private fun applyExportSnapshot(criteria: TrainingAlertCatalogReadModelCriteria, snapshotUpperBound: LocalDateTime): TrainingAlertCatalogReadModelCriteria {
+        val projectionUpdatedAt = criteria.projectionUpdatedAt ?: RangeFilter<LocalDateTime>().also {
+            criteria.projectionUpdatedAt = it
+        }
+        val requestedUpperBound = projectionUpdatedAt.getLessThanOrEqual()
+        if (requestedUpperBound == null || requestedUpperBound.isAfter(snapshotUpperBound)) {
+            projectionUpdatedAt.setLessThanOrEqual(snapshotUpperBound)
+        }
+        return criteria
+    }
+
+    private val exportColumns = listOf(
+        DataExportColumn("alertId", "alertId"),
+        DataExportColumn("nodeId", "nodeId"),
+        DataExportColumn("trainingJobId", "trainingJobId"),
+        DataExportColumn("runtimeNodeName", "runtimeNodeName"),
+        DataExportColumn("trainingJobObjective", "trainingJobObjective"),
+        DataExportColumn("severity", "severity"),
+        DataExportColumn("message", "message"),
+        DataExportColumn("state", "state"),
+        DataExportColumn("acknowledgedAt", "acknowledgedAt"),
+        DataExportColumn("resolvedAt", "resolvedAt"),
+        DataExportColumn("resolutionSummary", "resolutionSummary")
+    )
 }

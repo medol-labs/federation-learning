@@ -39,6 +39,7 @@ class RuntimeAgentLifecycleCatalogReadModelCriteria {
 
 
 class RuntimeAgentLifecycleCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeAgentId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
     var agentVersion: String? = null

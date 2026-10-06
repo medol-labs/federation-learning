@@ -24,6 +24,7 @@ class CurrentRecommendedFeatureSchemaCatalogReadModelCriteria {
 
 
 class CurrentRecommendedFeatureSchemaCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var featureDomain: String? = null
     var recommendedFeatureSchemaId: UUID? = null
     var recommendedVersion: String? = null

@@ -8,6 +8,7 @@ import tech.medo.organizationmanagement.domain.states.UserOrganizationMembership
 
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class UserOrganizationMembershipDirectoryReadModelQuery
@@ -24,6 +25,7 @@ class UserOrganizationMembershipDirectoryReadModelCriteria {
 
 
 class UserOrganizationMembershipDirectoryReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var userOrganizationMembershipId: UUID? = null
     var userAccountId: UUID? = null
     var username: String? = null

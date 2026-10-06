@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "uploaded_file_catalog")
 class UploadedFileCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var fileId: UUID? = null
     var originalFileName: String? = null

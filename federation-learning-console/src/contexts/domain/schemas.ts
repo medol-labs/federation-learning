@@ -159,37 +159,6 @@ export const RemoveParticipantCommandSchema = z.object({
 });
 export type RemoveParticipantCommandInput = z.infer<typeof RemoveParticipantCommandSchema>;
 
-export const UploadFileCommandSchema = z.object({
-  uploadedFile: z.string(),
-  originalFileName: z.string(),
-  contentType: z.string().optional().nullable(),
-  sizeBytes: z.coerce.number().optional().nullable(),
-  fileLocation: z.string(),
-  checksum: z.string().optional().nullable(),
-  expiresAt: dateTimeLocalSchema,
-  purpose: z.string(),
-});
-export type UploadFileCommandInput = z.infer<typeof UploadFileCommandSchema>;
-
-export const MarkFileReferencedCommandSchema = z.object({
-  fileId: z.string().uuid(),
-  referencedByContext: z.string(),
-  referencedByCommand: z.string(),
-  referencedByCommandId: z.string().uuid().optional().nullable(),
-});
-export type MarkFileReferencedCommandInput = z.infer<typeof MarkFileReferencedCommandSchema>;
-
-export const DownloadFileCommandSchema = z.object({
-  fileId: z.string().uuid(),
-});
-export type DownloadFileCommandInput = z.infer<typeof DownloadFileCommandSchema>;
-
-export const DiscardFileCommandSchema = z.object({
-  fileId: z.string().uuid(),
-  discardReason: z.string().optional().nullable(),
-});
-export type DiscardFileCommandInput = z.infer<typeof DiscardFileCommandSchema>;
-
 export const RegisterRuntimeInfrastructurePackageCommandSchema = z.object({
   packageName: z.string(),
   packageVersion: z.string(),
@@ -629,6 +598,37 @@ export const FailSecureAggregationSessionCommandSchema = z.object({
   failureReason: z.string(),
 });
 export type FailSecureAggregationSessionCommandInput = z.infer<typeof FailSecureAggregationSessionCommandSchema>;
+
+export const UploadFileCommandSchema = z.object({
+  uploadedFile: z.string(),
+  originalFileName: z.string(),
+  contentType: z.string().optional().nullable(),
+  sizeBytes: z.coerce.number().optional().nullable(),
+  fileLocation: z.string(),
+  checksum: z.string().optional().nullable(),
+  expiresAt: dateTimeLocalSchema,
+  purpose: z.string(),
+});
+export type UploadFileCommandInput = z.infer<typeof UploadFileCommandSchema>;
+
+export const MarkFileReferencedCommandSchema = z.object({
+  fileId: z.string().uuid(),
+  referencedByContext: z.string(),
+  referencedByCommand: z.string(),
+  referencedByCommandId: z.string().uuid().optional().nullable(),
+});
+export type MarkFileReferencedCommandInput = z.infer<typeof MarkFileReferencedCommandSchema>;
+
+export const DownloadFileCommandSchema = z.object({
+  fileId: z.string().uuid(),
+});
+export type DownloadFileCommandInput = z.infer<typeof DownloadFileCommandSchema>;
+
+export const DiscardFileCommandSchema = z.object({
+  fileId: z.string().uuid(),
+  discardReason: z.string().optional().nullable(),
+});
+export type DiscardFileCommandInput = z.infer<typeof DiscardFileCommandSchema>;
 
 export const RegisterDictionaryCommandSchema = z.object({
   dictionaryCode: DictionaryCodeSchema,

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
-import tech.medo.shared.application.sync.SyncOutboxAppender
+import tech.medo.shared.application.outbox.MedolOutboxAppender
 
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.runtimegovernance.events.RuntimeIdentityActivatedEvent
@@ -39,7 +39,7 @@ interface RuntimeIdentityCatalogReadModelProjectionUpdater {
 
 open class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
     private val repository: RuntimeIdentityCatalogReadModelRepository,
-    private val outbox: SyncOutboxAppender
+    private val outbox: MedolOutboxAppender
 ) : RuntimeIdentityCatalogReadModelProjectionUpdater {
     open override fun update(
         event: OrganizationRegisteredEvent,
@@ -113,7 +113,7 @@ class RuntimeIdentityCatalogReadModelProjectionUpdaterConfiguration {
     @ConditionalOnMissingBean(RuntimeIdentityCatalogReadModelProjectionUpdater::class)
     fun defaultRuntimeIdentityCatalogReadModelProjectionUpdater(
         repository: RuntimeIdentityCatalogReadModelRepository,
-        outbox: SyncOutboxAppender
+        outbox: MedolOutboxAppender
     ): RuntimeIdentityCatalogReadModelProjectionUpdater =
         DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(repository, outbox)
 }

@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "runtime_node_inventory_view")
 class RuntimeNodeInventoryViewReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var nodeId: UUID? = null
     var runtimeNodeInventoryReportId: UUID? = null

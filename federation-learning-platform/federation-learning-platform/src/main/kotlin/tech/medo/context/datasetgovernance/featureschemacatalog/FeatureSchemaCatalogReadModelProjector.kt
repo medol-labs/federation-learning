@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
-import tech.medo.shared.application.sync.SyncOutboxAppender
+import tech.medo.shared.application.outbox.MedolOutboxAppender
 
 import tech.medo.datasetgovernance.events.FeatureSchemaDefinedEvent
 import tech.medo.datasetgovernance.events.FeatureSchemaPublishedEvent
@@ -55,7 +55,7 @@ interface FeatureSchemaCatalogReadModelProjectionUpdater {
 
 open class DefaultFeatureSchemaCatalogReadModelProjectionUpdater(
     private val repository: FeatureSchemaCatalogReadModelRepository,
-    private val outbox: SyncOutboxAppender
+    private val outbox: MedolOutboxAppender
 ) : FeatureSchemaCatalogReadModelProjectionUpdater {
     @Transactional
     open override fun update(
@@ -221,7 +221,7 @@ class FeatureSchemaCatalogReadModelProjectionUpdaterConfiguration {
     @ConditionalOnMissingBean(FeatureSchemaCatalogReadModelProjectionUpdater::class)
     fun defaultFeatureSchemaCatalogReadModelProjectionUpdater(
         repository: FeatureSchemaCatalogReadModelRepository,
-        outbox: SyncOutboxAppender
+        outbox: MedolOutboxAppender
     ): FeatureSchemaCatalogReadModelProjectionUpdater =
         DefaultFeatureSchemaCatalogReadModelProjectionUpdater(repository, outbox)
 }

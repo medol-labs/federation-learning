@@ -37,6 +37,7 @@ class AgentDatasetAccessValidationCatalogReadModelCriteria {
 
 
 class AgentDatasetAccessValidationCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var datasetAccessValidationId: UUID? = null
     var runtimeDatasetBindingId: UUID? = null
     var datasetId: UUID? = null

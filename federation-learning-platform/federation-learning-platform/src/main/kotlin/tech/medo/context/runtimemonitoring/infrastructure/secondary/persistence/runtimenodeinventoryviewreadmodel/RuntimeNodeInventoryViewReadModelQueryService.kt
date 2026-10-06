@@ -30,6 +30,7 @@ class RuntimeNodeInventoryViewReadModelQueryService(
     private fun createSpecification(criteria: RuntimeNodeInventoryViewReadModelCriteria?): Specification<RuntimeNodeInventoryViewReadModelEntity> {
         var specification = Specification.where<RuntimeNodeInventoryViewReadModelEntity>(null)
         if (criteria != null) {
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeNodeInventoryReportId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeNodeInventoryReportId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.organizationId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("organizationId") as JpaExpression<UUID>).cast(String::class.java) })) }

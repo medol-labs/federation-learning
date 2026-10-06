@@ -9,6 +9,7 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class RuntimeInstallationGuideReadModelQuery
@@ -37,6 +38,7 @@ class RuntimeInstallationGuideReadModelCriteria {
 
 
 class RuntimeInstallationGuideReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeInstallationPlanId: UUID? = null
     var organizationId: UUID? = null
     var runtimeInfrastructureId: UUID? = null

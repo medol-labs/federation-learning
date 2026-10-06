@@ -50,6 +50,7 @@ class SecureAggregationSessionCatalogReadModelCriteria {
 
 
 class SecureAggregationSessionCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var secureAggregationSessionId: UUID? = null
     var trainingJobId: UUID? = null
     var trainingRunConfigurationId: UUID? = null

@@ -373,6 +373,7 @@ export const DictionaryCatalogList = () => {
                     query={{
                       dictionaryName: row.original.dictionaryName,
                       description: row.original.description,
+                      dictionaryCode: row.original.dictionaryCode,
                     }}
                   />
                 )}

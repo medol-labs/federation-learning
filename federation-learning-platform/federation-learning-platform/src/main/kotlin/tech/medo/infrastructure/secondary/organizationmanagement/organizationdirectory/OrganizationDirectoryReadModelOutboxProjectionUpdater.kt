@@ -13,12 +13,12 @@ import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirect
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelRepository
 import tech.medo.organizationmanagement.organizationdirectory.toReadModel
 import tech.medo.shared.application.metadata.ProjectionMetadata
-import tech.medo.shared.application.sync.SyncOutboxAppender
+import tech.medo.shared.application.outbox.MedolOutboxAppender
 
 @Component
 class OrganizationDirectoryReadModelOutboxProjectionUpdater(
     private val repository: OrganizationDirectoryReadModelRepository,
-    private val outbox: SyncOutboxAppender
+    private val outbox: MedolOutboxAppender
 ) : OrganizationDirectoryReadModelProjectionUpdater {
     @Transactional
     override fun update(

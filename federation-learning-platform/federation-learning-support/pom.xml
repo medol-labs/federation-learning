@@ -187,7 +187,7 @@
                     </to>
                     <container>
                         <ports>
-                            <port>8080</port>
+                            <port>8082</port>
                         </ports>
                         <environment>
                             <JAVA_TOOL_OPTIONS>-XX:MaxRAMPercentage=75.0</JAVA_TOOL_OPTIONS>

@@ -31,6 +31,7 @@ class AgentRuntimeInfrastructureConnectionCatalogReadModelCriteria {
 
 
 class AgentRuntimeInfrastructureConnectionCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeInfrastructureId: UUID? = null
     var runtimeAgentId: UUID? = null
     var runtimePlatformConnectionReady: Boolean? = null

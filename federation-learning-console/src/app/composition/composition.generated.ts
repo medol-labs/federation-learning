@@ -105,19 +105,19 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
-      id: "page:dictionary-catalog:updateDictionary",
-      kind: "page",
-      resource: "dictionary-catalog",
-      view: "updateDictionary",
-      fallback: "src/contexts/dictionarymaintenance/slices/update-dictionary/update-dictionary.tsx",
-      slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
-    },
-    {
       id: "page:dictionary-catalog:archiveDictionary",
       kind: "page",
       resource: "dictionary-catalog",
       view: "archiveDictionary",
       fallback: "src/contexts/dictionarymaintenance/slices/archive-dictionary/archive-dictionary.tsx",
+      slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
+    },
+    {
+      id: "page:dictionary-catalog:updateDictionary",
+      kind: "page",
+      resource: "dictionary-catalog",
+      view: "updateDictionary",
+      fallback: "src/contexts/dictionarymaintenance/slices/update-dictionary/update-dictionary.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
@@ -213,17 +213,17 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
     },
     {
-      id: "behavior:dictionary-catalog:updateDictionary",
-      kind: "behavior",
-      resource: "dictionary-catalog",
-      view: "updateDictionary",
-      slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
-    },
-    {
       id: "behavior:dictionary-catalog:archiveDictionary",
       kind: "behavior",
       resource: "dictionary-catalog",
       view: "archiveDictionary",
+      slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
+    },
+    {
+      id: "behavior:dictionary-catalog:updateDictionary",
+      kind: "behavior",
+      resource: "dictionary-catalog",
+      view: "updateDictionary",
       slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
     },
     {
@@ -264,14 +264,6 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
-      id: "page:dictionary-value-catalog:updateDictionaryValueTranslation",
-      kind: "page",
-      resource: "dictionary-value-catalog",
-      view: "updateDictionaryValueTranslation",
-      fallback: "src/contexts/dictionarymaintenance/slices/update-dictionary-value-translation/update-dictionary-value-translation-dictionary-value-catalog.tsx",
-      slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
-    },
-    {
       id: "page:dictionary-value-catalog:disableDictionaryValue",
       kind: "page",
       resource: "dictionary-value-catalog",
@@ -293,6 +285,14 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       resource: "dictionary-value-catalog",
       view: "setDictionaryValueTranslation",
       fallback: "src/contexts/dictionarymaintenance/slices/set-dictionary-value-translation/set-dictionary-value-translation.tsx",
+      slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
+    },
+    {
+      id: "page:dictionary-value-catalog:updateDictionaryValueTranslation",
+      kind: "page",
+      resource: "dictionary-value-catalog",
+      view: "updateDictionaryValueTranslation",
+      fallback: "src/contexts/dictionarymaintenance/slices/update-dictionary-value-translation/update-dictionary-value-translation-dictionary-value-catalog.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
@@ -415,13 +415,6 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
     },
     {
-      id: "behavior:dictionary-value-catalog:updateDictionaryValueTranslation",
-      kind: "behavior",
-      resource: "dictionary-value-catalog",
-      view: "updateDictionaryValueTranslation",
-      slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
-    },
-    {
       id: "behavior:dictionary-value-catalog:disableDictionaryValue",
       kind: "behavior",
       resource: "dictionary-value-catalog",
@@ -440,6 +433,13 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       kind: "behavior",
       resource: "dictionary-value-catalog",
       view: "setDictionaryValueTranslation",
+      slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
+    },
+    {
+      id: "behavior:dictionary-value-catalog:updateDictionaryValueTranslation",
+      kind: "behavior",
+      resource: "dictionary-value-catalog",
+      view: "updateDictionaryValueTranslation",
       slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
     },
     {

@@ -17,19 +17,19 @@ cp federation-learning-runtime-agent/.env-example federation-learning-runtime-ag
 ./mvnw -pl federation-learning-runtime-agent -am spring-boot:run
 ```
 
-Health endpoint: `http://localhost:8082/actuator/health`
+Health endpoint: `http://localhost:8081/actuator/health`
 
 OpenAPI endpoints:
 
-- Swagger UI: `http://localhost:8082/swagger-ui.html`
-- OpenAPI JSON: `http://localhost:8082/v3/api-docs`
+- Swagger UI: `http://localhost:8081/swagger-ui.html`
+- OpenAPI JSON: `http://localhost:8081/v3/api-docs`
 
 Default ports:
 
-- Application: `8082`; override with `SERVER_PORT`
-- PostgreSQL host port: `5434`; override with `DB_PORT` in this module's `.env`
+- Application: `8081`; override with `SERVER_PORT`
+- PostgreSQL host port: `5433`; override with `DB_PORT` in this module's `.env`
 - PostgreSQL database: `federation_learning_runtime_agent`; override the full connection with `DB_URL`
-- UmaDB host port: `50053`; override with `UMADB_PORT` in this module's `.env`
+- UmaDB host port: `50052`; override with `UMADB_PORT` in this module's `.env`
 - Axon Server UI: `http://localhost:8024`; override with `AXON_SERVER_HTTP_PORT`
 - Axon Server gRPC: `localhost:8124`; override with `AXON_SERVER_SERVERS`
 
@@ -129,7 +129,7 @@ docker compose -f federation-learning-runtime-agent/docker-compose.yml --profile
 ```
 
 Bundled frontend services:
-- `federation-learning-participant-console` on `${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_PORT:-5175}`, using `${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8082}` for this backend API.
+- `federation-learning-participant-console` on `${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_PORT:-5174}`, using `${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8081}` for this backend API.
 
 The UmaDB adapter implements Axon Framework's `EventStorageEngine` boundary over UmaDB's official `umadb.v1.DCB` gRPC service: events are stored with DCB tags, Axon event criteria are mapped to UmaDB queries, conditional append uses UmaDB's DCB conflict condition, and source/stream tokens use Axon's global next-position semantics. Axon processor checkpoints still use the generated `token_entry` table; UmaDB's optional `TrackingInfo` API is not used as an Axon token store.
 
@@ -253,7 +253,7 @@ cd ..
 ./mvnw -pl federation-learning-runtime-agent -DskipTests -Djib.container.platform.os=linux -Djib.container.platform.architecture=amd64 com.google.cloud.tools:jib-maven-plugin:3.4.5:dockerBuild
 ```
 
-The generated image is `medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT` and exposes port `8082`.
+The generated image is `medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT` and exposes port `8081`.
 The container disables Spring Boot docker-compose integration; pass `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD` for the runtime database.
 
 Root package: `tech.medo`

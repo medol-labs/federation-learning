@@ -9,6 +9,7 @@ import tech.medo.federationmanagement.domain.states.FederationStateEnum;
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class FederationOverviewReadModelQuery
@@ -26,6 +27,7 @@ class FederationOverviewReadModelCriteria {
 
 
 class FederationOverviewReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var federationId: UUID? = null
     var federationName: String? = null
     var state: FederationStateEnum? = null

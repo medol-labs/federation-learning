@@ -18,6 +18,7 @@ import tech.jhipster.service.filter.StringFilter
 class RuntimeTelemetryLatestReadModelQuery
 
 class RuntimeTelemetryLatestReadModelCriteria {
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
     var nodeId: StringFilter? = null
     var runtimeAgentId: StringFilter? = null
     var federationId: StringFilter? = null
@@ -47,6 +48,7 @@ class RuntimeTelemetryLatestReadModelCriteria {
 
 
 class RuntimeTelemetryLatestReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
     var federationId: UUID? = null

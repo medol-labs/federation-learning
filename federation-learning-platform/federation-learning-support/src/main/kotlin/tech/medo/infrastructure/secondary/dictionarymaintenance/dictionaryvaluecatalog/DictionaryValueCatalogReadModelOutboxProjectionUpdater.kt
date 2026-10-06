@@ -14,12 +14,12 @@ import tech.medo.dictionarymaintenance.events.DictionaryValueAddedEvent
 import tech.medo.dictionarymaintenance.events.DictionaryValueDisabledEvent
 import tech.medo.dictionarymaintenance.events.DictionaryValueEnabledEvent
 import tech.medo.shared.application.metadata.ProjectionMetadata
-import tech.medo.shared.application.sync.SyncOutboxAppender
+import tech.medo.shared.application.outbox.MedolOutboxAppender
 
 @Component
 class DictionaryValueCatalogReadModelOutboxProjectionUpdater(
     private val repository: DictionaryValueCatalogReadModelRepository,
-    private val outbox: SyncOutboxAppender
+    private val outbox: MedolOutboxAppender
 ) : DictionaryValueCatalogReadModelProjectionUpdater {
     @Transactional
     override fun update(

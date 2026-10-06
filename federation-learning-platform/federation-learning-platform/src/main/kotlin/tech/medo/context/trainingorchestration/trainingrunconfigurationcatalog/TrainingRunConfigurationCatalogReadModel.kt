@@ -12,6 +12,7 @@ import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class TrainingRunConfigurationCatalogReadModelQuery
@@ -60,6 +61,7 @@ class TrainingRunConfigurationCatalogReadModelCriteria {
 
 
 class TrainingRunConfigurationCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var trainingRunConfigurationId: UUID? = null
     var configurationName: String? = null
     var federationId: UUID? = null

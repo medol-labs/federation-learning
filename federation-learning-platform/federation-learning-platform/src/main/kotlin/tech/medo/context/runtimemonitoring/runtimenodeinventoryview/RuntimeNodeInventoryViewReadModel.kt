@@ -16,6 +16,7 @@ import tech.jhipster.service.filter.StringFilter
 class RuntimeNodeInventoryViewReadModelQuery
 
 class RuntimeNodeInventoryViewReadModelCriteria {
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
     var nodeId: StringFilter? = null
     var runtimeNodeInventoryReportId: StringFilter? = null
     var organizationId: StringFilter? = null
@@ -38,6 +39,7 @@ class RuntimeNodeInventoryViewReadModelCriteria {
 
 
 class RuntimeNodeInventoryViewReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var nodeId: UUID? = null
     var runtimeNodeInventoryReportId: UUID? = null
     var organizationId: UUID? = null

@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "agent_dataset_access_validation_catalog")
 class AgentDatasetAccessValidationCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var datasetAccessValidationId: UUID? = null
     var runtimeDatasetBindingId: UUID? = null

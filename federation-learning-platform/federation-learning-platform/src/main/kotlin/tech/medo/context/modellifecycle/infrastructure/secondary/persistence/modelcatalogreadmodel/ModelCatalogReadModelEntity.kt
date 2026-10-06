@@ -11,11 +11,13 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import java.math.BigDecimal;
 import tech.medo.modellifecycle.domain.states.ModelStateEnum;
+import java.time.LocalDateTime
 
 
 @Entity
 @Table(name = "model_catalog")
 class ModelCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var modelId: UUID? = null
     var trainingJobId: UUID? = null

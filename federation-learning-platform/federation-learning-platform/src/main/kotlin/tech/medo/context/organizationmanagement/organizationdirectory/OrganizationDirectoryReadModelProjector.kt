@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
-import tech.medo.shared.application.sync.SyncOutboxAppender
+import tech.medo.shared.application.outbox.MedolOutboxAppender
 
 import tech.medo.organizationmanagement.events.OrganizationRegisteredEvent
 import tech.medo.organizationmanagement.events.OrganizationActivatedEvent
@@ -43,7 +43,7 @@ interface OrganizationDirectoryReadModelProjectionUpdater {
 
 open class DefaultOrganizationDirectoryReadModelProjectionUpdater(
     private val repository: OrganizationDirectoryReadModelRepository,
-    private val outbox: SyncOutboxAppender
+    private val outbox: MedolOutboxAppender
 ) : OrganizationDirectoryReadModelProjectionUpdater {
     @Transactional
     open override fun update(
@@ -154,7 +154,7 @@ class OrganizationDirectoryReadModelProjectionUpdaterConfiguration {
     @ConditionalOnMissingBean(OrganizationDirectoryReadModelProjectionUpdater::class)
     fun defaultOrganizationDirectoryReadModelProjectionUpdater(
         repository: OrganizationDirectoryReadModelRepository,
-        outbox: SyncOutboxAppender
+        outbox: MedolOutboxAppender
     ): OrganizationDirectoryReadModelProjectionUpdater =
         DefaultOrganizationDirectoryReadModelProjectionUpdater(repository, outbox)
 }

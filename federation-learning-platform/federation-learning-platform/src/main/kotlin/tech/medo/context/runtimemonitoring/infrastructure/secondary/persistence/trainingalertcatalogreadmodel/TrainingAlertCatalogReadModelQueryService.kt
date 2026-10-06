@@ -31,6 +31,7 @@ class TrainingAlertCatalogReadModelQueryService(
     private fun createSpecification(criteria: TrainingAlertCatalogReadModelCriteria?): Specification<TrainingAlertCatalogReadModelEntity> {
         var specification = Specification.where<TrainingAlertCatalogReadModelEntity>(null)
         if (criteria != null) {
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
             criteria.alertId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("alertId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.trainingJobId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("trainingJobId") as JpaExpression<UUID>).cast(String::class.java) })) }

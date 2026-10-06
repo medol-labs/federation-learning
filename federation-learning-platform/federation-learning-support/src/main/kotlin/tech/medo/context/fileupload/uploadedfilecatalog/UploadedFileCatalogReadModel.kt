@@ -40,6 +40,7 @@ class UploadedFileCatalogReadModelCriteria {
 
 
 class UploadedFileCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var fileId: UUID? = null
     var originalFileName: String? = null
     var contentType: String? = null

@@ -4,7 +4,7 @@ services:
     platform: ${DOCKER_PLATFORM:-}
     restart: unless-stopped
     ports:
-      - "${DB_PORT:-5433}:5432"
+      - "${DB_PORT:-5432}:5432"
     environment:
       POSTGRES_USER: medol
       POSTGRES_PASSWORD: medol
@@ -46,7 +46,7 @@ services:
     platform: ${DOCKER_PLATFORM:-}
     restart: unless-stopped
     ports:
-      - "${UMADB_PORT:-50052}:50051"
+      - "${UMADB_PORT:-50051}:50051"
     volumes:
       - umadb_data:/data
 
@@ -62,9 +62,9 @@ services:
       umadb:
         condition: service_started
     ports:
-      - "${APP_PORT:-8081}:8081"
+      - "${APP_PORT:-8080}:8080"
     environment:
-      SERVER_PORT: 8081
+      SERVER_PORT: 8080
       SPRING_DOCKER_COMPOSE_ENABLED: "false"
       DB_URL: jdbc:postgresql://postgres:5432/federation_learning_platform
       DB_USERNAME: medol
@@ -94,8 +94,8 @@ services:
       AXON_SERVER_EVENT_STORE_ENABLED: "false"
       AXON_UPDATE_CHECK_DISABLED: ${AXON_UPDATE_CHECK_DISABLED:-true}
       RUNTIME_AGENT_URL: ${RUNTIME_AGENT_URL:-}
-      FEDERATION_LEARNING_SUPPORT_URL: ${FEDERATION_LEARNING_SUPPORT_URL:-}
       FEDERATION_LEARNING_RUNTIME_AGENT_URL: ${FEDERATION_LEARNING_RUNTIME_AGENT_URL:-}
+      FEDERATION_LEARNING_SUPPORT_URL: ${FEDERATION_LEARNING_SUPPORT_URL:-}
 
 
 volumes:

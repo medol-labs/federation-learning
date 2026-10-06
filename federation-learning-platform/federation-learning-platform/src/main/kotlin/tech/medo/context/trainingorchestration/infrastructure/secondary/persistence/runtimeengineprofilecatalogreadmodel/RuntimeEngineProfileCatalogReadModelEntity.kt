@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "runtime_engine_profile_catalog")
 class RuntimeEngineProfileCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var runtimeEngineProfileId: UUID? = null
     var profileName: String? = null

@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:8081}
+  port: ${SERVER_PORT:8080}
 
 spring:
   config:
@@ -18,7 +18,7 @@ spring:
       profiles:
         active: axon-server
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5433/federation_learning_platform}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/federation_learning_platform}
     username: ${DB_USERNAME:medol}
     password: ${DB_PASSWORD:medol}
     driver-class-name: org.postgresql.Driver
@@ -76,7 +76,7 @@ medol:
       enabled: ${MEDOL_AXON_FLOW_LOGGING_ENABLED:true}
     event-storage: ${MEDOL_AXON_EVENT_STORAGE:umadb}
     umadb:
-      target: ${UMADB_TARGET:localhost:50052}
+      target: ${UMADB_TARGET:localhost:50051}
       plaintext: ${UMADB_PLAINTEXT:true}
       api-key: ${UMADB_API_KEY:}
       batch-size: ${UMADB_BATCH_SIZE:256}
@@ -87,16 +87,21 @@ medol:
     source-base-url: ${MEDOL_SYNC_SOURCE_BASE_URL:}
     page-size: ${MEDOL_SYNC_PAGE_SIZE:200}
     fixed-delay-ms: ${MEDOL_SYNC_FIXED_DELAY_MS:30000}
+  data-exchange:
+    export:
+      page-size: ${MEDOL_DATA_EXCHANGE_EXPORT_PAGE_SIZE:1000}
+      async-threshold: ${MEDOL_DATA_EXCHANGE_EXPORT_ASYNC_THRESHOLD:10000}
+      max-rows: ${MEDOL_DATA_EXCHANGE_EXPORT_MAX_ROWS:800000}
 
 external:
   runtime-agent:
     endpoint: ${RUNTIME_AGENT_URL:}
 
 integration:
-  federation-learning-support:
-    endpoint: ${FEDERATION_LEARNING_SUPPORT_URL:}
   federation-learning-runtime-agent:
     endpoint: ${FEDERATION_LEARNING_RUNTIME_AGENT_URL:}
+  federation-learning-support:
+    endpoint: ${FEDERATION_LEARNING_SUPPORT_URL:}
 
 management:
   endpoints:

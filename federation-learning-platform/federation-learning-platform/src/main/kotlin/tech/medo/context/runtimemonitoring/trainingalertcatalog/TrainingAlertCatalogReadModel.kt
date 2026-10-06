@@ -17,6 +17,7 @@ import tech.jhipster.service.filter.StringFilter
 class TrainingAlertCatalogReadModelQuery
 
 class TrainingAlertCatalogReadModelCriteria {
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
     var alertId: StringFilter? = null
     var nodeId: StringFilter? = null
     var trainingJobId: StringFilter? = null
@@ -32,6 +33,7 @@ class TrainingAlertCatalogReadModelCriteria {
 
 
 class TrainingAlertCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var alertId: UUID? = null
     var nodeId: UUID? = null
     var trainingJobId: UUID? = null

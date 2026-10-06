@@ -10,11 +10,13 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum;
+import java.time.LocalDateTime
 
 
 @Entity
 @Table(name = "runtime_infrastructure_package_catalog")
 class RuntimeInfrastructurePackageCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var runtimeInfrastructurePackageId: UUID? = null
     var packageName: String? = null

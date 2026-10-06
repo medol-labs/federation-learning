@@ -2,6 +2,7 @@ import identity-access-management as PlatformIam deploy FederationLearningSuppor
 import identity-access-management as ParticipantIam deploy FederationLearningRuntimeAgent
 import dictionary-maintenance as PlatformDictionary deploy FederationLearningSupport
 import file-upload as PlatformFileUpload deploy FederationLearningSupport
+import data-exchange as PlatformDataExchange deploy FederationLearningPlatform
 
 domain FederationLearningPlatform {
 context OrganizationManagement {
@@ -4625,6 +4626,7 @@ context RuntimeMonitoring {
 
   slice RuntimeTelemetryLatest {
     readmodel todo RuntimeTelemetryLatest[] {
+      exportable by PlatformDataExchange
       nodeId: UUID id
       runtimeAgentId: UUID
       federationId: UUID?
@@ -4882,6 +4884,7 @@ context RuntimeMonitoring {
 
   slice RuntimeNodeInventoryView {
     readmodel RuntimeNodeInventoryView[] {
+      exportable by PlatformDataExchange
       nodeId: UUID id
       runtimeNodeInventoryReportId: UUID
       organizationId: UUID
@@ -4906,6 +4909,7 @@ context RuntimeMonitoring {
 
   slice RuntimeNodeResourceLatest {
     readmodel todo RuntimeNodeResourceLatest[] {
+      exportable by PlatformDataExchange
       nodeId: UUID id
       runtimeAgentId: UUID
       runtimeInfrastructureId: UUID?
@@ -4981,6 +4985,7 @@ context RuntimeMonitoring {
 
   slice RuntimeHealthDashboard {
     readmodel RuntimeHealthDashboard[] {
+      exportable by PlatformDataExchange
       nodeId: UUID id
       runtimeAgentId: UUID
       federationId: UUID
@@ -5076,6 +5081,7 @@ context RuntimeMonitoring {
 
   slice TrainingAlertCatalog {
     readmodel TrainingAlertCatalog[] {
+      exportable by PlatformDataExchange
       alertId: UUID id
       nodeId: UUID
       trainingJobId: UUID?
@@ -8253,6 +8259,7 @@ context RuntimeAgentOperations {
     includes FederationManagement from FederationLearningPlatform
     includes DictionaryMaintenance from FederationLearningSupport
     includes FileUpload from FederationLearningSupport
+    includes DataExchange from FederationLearningSupport
     includes RuntimeProvisioning from FederationLearningPlatform
     includes DatasetGovernance from FederationLearningPlatform
     includes ModelRepository from FederationLearningPlatform

@@ -37,6 +37,7 @@ class DictionaryValueCatalogReadModelCriteria {
 
 
 class DictionaryValueCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var dictionaryValueId: UUID? = null
     var dictionaryId: UUID? = null
     var dictionaryCode: String? = null

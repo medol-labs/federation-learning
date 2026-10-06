@@ -10,11 +10,13 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
+import java.time.LocalDateTime
 
 
 @Entity
 @Table(name = "runtime_installation_guide")
 class RuntimeInstallationGuideReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var runtimeInstallationPlanId: UUID? = null
     var organizationId: UUID? = null

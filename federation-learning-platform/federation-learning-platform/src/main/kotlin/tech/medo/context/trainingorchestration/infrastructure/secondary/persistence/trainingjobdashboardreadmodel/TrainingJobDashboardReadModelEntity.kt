@@ -11,11 +11,13 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum;
 import java.math.BigDecimal;
+import java.time.LocalDateTime
 
 
 @Entity
 @Table(name = "training_job_dashboard")
 class TrainingJobDashboardReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var trainingJobId: UUID? = null
     var federationId: UUID? = null

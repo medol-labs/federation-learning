@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import tech.medo.shared.application.sync.SyncOutboxRepository
+import tech.medo.shared.application.outbox.MedolOutboxRepository
 
 @CrossOrigin
 @RestController
 @RequestMapping("/sync/read-models/dictionary-maintenance/dictionary-value-translation-catalog")
 class DictionaryValueTranslationCatalogReadModelSyncReadModelResource(
     private val repository: DictionaryValueTranslationCatalogReadModelRepository,
-    private val outboxRepository: SyncOutboxRepository,
+    private val outboxRepository: MedolOutboxRepository,
     private val objectMapper: ObjectMapper
 ) {
     private val mapType = object : TypeReference<Map<String, Any?>>() {}
@@ -33,7 +33,7 @@ class DictionaryValueTranslationCatalogReadModelSyncReadModelResource(
         val pageNumber = cursor?.toIntOrNull()?.coerceAtLeast(0) ?: 0
         val page = repository.findAllByCriteria(null, PageRequest.of(pageNumber, size.coerceIn(1, 1000)))
         val highWatermark = outboxRepository
-            .findFirstBySourceContextAndSourceReadModelOrderBySequenceDesc("DictionaryMaintenance", "DictionaryValueTranslationCatalog")
+            .findFirstBySourceContextAndSourceNameOrderBySequenceDesc("DictionaryMaintenance", "DictionaryValueTranslationCatalog")
             ?.sequence ?: 0
         val items = page.content.mapNotNull { item ->
             val payload = objectMapper.convertValue(item, mapType)
@@ -60,7 +60,7 @@ class DictionaryValueTranslationCatalogReadModelSyncReadModelResource(
         val reserved = setOf("afterSequence", "size", "cursor")
         val filters = parameters.filterKeys { it !in reserved }
         val rows = outboxRepository
-            .findBySourceContextAndSourceReadModelAndSequenceGreaterThanOrderBySequenceAsc(
+            .findBySourceContextAndSourceNameAndSequenceGreaterThanOrderBySequenceAsc(
                 "DictionaryMaintenance",
                 "DictionaryValueTranslationCatalog",
                 afterSequence,
@@ -76,7 +76,7 @@ class DictionaryValueTranslationCatalogReadModelSyncReadModelResource(
                     "operation" to row.operation,
                     "channel" to row.channel,
                     "sourceContext" to row.sourceContext,
-                    "sourceReadModel" to row.sourceReadModel,
+                    "sourceReadModel" to row.sourceName,
                     "readModelKey" to row.messageKey,
                     "eventId" to row.eventId,
                     "eventType" to row.eventType,

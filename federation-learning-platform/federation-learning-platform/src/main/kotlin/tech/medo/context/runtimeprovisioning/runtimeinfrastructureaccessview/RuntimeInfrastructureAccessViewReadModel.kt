@@ -47,6 +47,7 @@ class RuntimeInfrastructureAccessViewReadModelCriteria {
 
 
 class RuntimeInfrastructureAccessViewReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeInfrastructureId: UUID? = null
     var organizationId: UUID? = null
     var runtimeInstallationPlanId: UUID? = null

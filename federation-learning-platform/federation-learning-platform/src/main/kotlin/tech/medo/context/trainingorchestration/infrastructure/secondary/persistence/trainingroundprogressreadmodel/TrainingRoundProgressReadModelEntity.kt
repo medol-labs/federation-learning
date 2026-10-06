@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "training_round_progress")
 class TrainingRoundProgressReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var trainingJobId: UUID? = null
     var trainingRunConfigurationId: UUID? = null

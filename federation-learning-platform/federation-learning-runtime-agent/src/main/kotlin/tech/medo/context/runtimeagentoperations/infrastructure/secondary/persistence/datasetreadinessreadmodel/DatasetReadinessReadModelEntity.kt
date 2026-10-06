@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "dataset_readiness")
 class DatasetReadinessReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var datasetId: UUID? = null
     var organizationId: UUID? = null

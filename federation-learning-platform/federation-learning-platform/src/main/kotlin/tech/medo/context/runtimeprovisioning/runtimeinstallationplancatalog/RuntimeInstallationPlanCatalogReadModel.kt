@@ -46,6 +46,7 @@ class RuntimeInstallationPlanCatalogReadModelCriteria {
 
 
 class RuntimeInstallationPlanCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeInstallationPlanId: UUID? = null
     var organizationId: UUID? = null
     var organizationName: String? = null

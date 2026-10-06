@@ -32,6 +32,7 @@ class RuntimeEngineProfileCatalogReadModelCriteria {
 
 
 class RuntimeEngineProfileCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeEngineProfileId: UUID? = null
     var profileName: String? = null
     var pluginProfile: String? = null

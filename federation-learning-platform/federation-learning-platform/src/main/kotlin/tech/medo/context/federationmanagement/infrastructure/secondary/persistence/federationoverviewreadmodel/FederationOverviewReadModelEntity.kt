@@ -10,11 +10,13 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.federationmanagement.domain.states.FederationStateEnum;
+import java.time.LocalDateTime
 
 
 @Entity
 @Table(name = "federation_overview")
 class FederationOverviewReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var federationId: UUID? = null
     var federationName: String? = null

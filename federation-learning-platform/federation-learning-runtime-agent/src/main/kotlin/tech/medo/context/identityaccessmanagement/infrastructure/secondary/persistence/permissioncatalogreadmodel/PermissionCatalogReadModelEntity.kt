@@ -9,11 +9,13 @@ import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
+import java.time.LocalDateTime
 
 
 @Entity
 @Table(name = "permission_catalog")
 class PermissionCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var permissionId: UUID? = null
     var permissionCode: String? = null

@@ -39,6 +39,7 @@ class AgentRuntimeNodeResourceLatestReadModelCriteria {
 
 
 class AgentRuntimeNodeResourceLatestReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
     var runtimeInfrastructureId: UUID? = null

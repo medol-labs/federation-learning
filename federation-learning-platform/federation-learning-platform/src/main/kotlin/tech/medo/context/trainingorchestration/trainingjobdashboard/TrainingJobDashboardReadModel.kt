@@ -12,6 +12,7 @@ import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class TrainingJobDashboardReadModelQuery
@@ -51,6 +52,7 @@ class TrainingJobDashboardReadModelCriteria {
 
 
 class TrainingJobDashboardReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var trainingJobId: UUID? = null
     var federationId: UUID? = null
     var trainingRunConfigurationId: UUID? = null

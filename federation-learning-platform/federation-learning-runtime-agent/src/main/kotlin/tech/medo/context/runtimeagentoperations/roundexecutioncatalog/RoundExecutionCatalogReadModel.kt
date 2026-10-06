@@ -70,6 +70,7 @@ class RoundExecutionCatalogReadModelCriteria {
 
 
 class RoundExecutionCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var roundExecutionId: UUID? = null
     var executionSessionId: UUID? = null
     var executionPlanId: UUID? = null

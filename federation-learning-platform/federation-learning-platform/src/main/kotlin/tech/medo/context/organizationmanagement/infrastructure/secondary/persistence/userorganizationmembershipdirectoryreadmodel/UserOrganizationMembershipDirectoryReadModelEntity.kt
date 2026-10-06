@@ -10,11 +10,13 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum;
+import java.time.LocalDateTime
 
 
 @Entity
 @Table(name = "user_organization_membership_directory")
 class UserOrganizationMembershipDirectoryReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var userOrganizationMembershipId: UUID? = null
     var userAccountId: UUID? = null

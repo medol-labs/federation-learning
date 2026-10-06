@@ -10,12 +10,14 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermissionGrantCatalogReadModelKey
 import java.util.UUID;
+import java.time.LocalDateTime
 
 
 @IdClass(RolePermissionGrantCatalogReadModelKey::class)
 @Entity
 @Table(name = "role_permission_grant_catalog")
 class RolePermissionGrantCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var roleId: UUID? = null
     @Id
     var roleCode: String? = null

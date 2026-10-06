@@ -73,9 +73,9 @@ overwritten by regeneration. Business customizations should live under
 
 | Module | Label | Data provider | Home route |
 | --- | --- | --- | --- |
-| `federation-learning-support` | Federation Learning Support | `federation-learning-support` | `/dashboard` |
 | `federation-learning-platform` | Federation Learning Platform | `federation-learning-platform` | `/dashboard` |
 | `federation-learning-runtime-agent` | Federation Learning Runtime Agent | `federation-learning-runtime-agent` | `/agent-dataset-access-validation-catalog` |
+| `federation-learning-support` | Federation Learning Support | `federation-learning-support` | `/dashboard` |
 
 ## Resource Extension Points
 

@@ -6,6 +6,7 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 data class UserRoleAssignmentCatalogReadModelKey(
@@ -24,6 +25,7 @@ class UserRoleAssignmentCatalogReadModelCriteria {
 
 
 class UserRoleAssignmentCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var userAccountId: UUID? = null
     var username: String? = null
     var roleCode: String? = null

@@ -6,6 +6,7 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class PermissionCatalogReadModelQuery
@@ -19,6 +20,7 @@ class PermissionCatalogReadModelCriteria {
 
 
 class PermissionCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var permissionId: UUID? = null
     var permissionCode: String? = null
     var permissionName: String? = null

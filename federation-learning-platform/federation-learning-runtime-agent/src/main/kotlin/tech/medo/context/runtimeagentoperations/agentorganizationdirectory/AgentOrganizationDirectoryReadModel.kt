@@ -24,6 +24,7 @@ class AgentOrganizationDirectoryReadModelCriteria {
 
 
 class AgentOrganizationDirectoryReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var organizationId: UUID? = null
     var organizationName: String? = null
     var organizationType: String? = null

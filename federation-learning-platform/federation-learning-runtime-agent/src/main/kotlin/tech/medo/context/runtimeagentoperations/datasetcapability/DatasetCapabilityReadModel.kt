@@ -46,6 +46,7 @@ class DatasetCapabilityReadModelCriteria {
 
 
 class DatasetCapabilityReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
     var runtimeId: UUID? = null

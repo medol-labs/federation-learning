@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "agent_runtime_telemetry_latest")
 class AgentRuntimeTelemetryLatestReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null

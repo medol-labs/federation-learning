@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "runtime_dataset_binding_catalog")
 class RuntimeDatasetBindingCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var runtimeDatasetBindingId: UUID? = null
     var datasetId: UUID? = null

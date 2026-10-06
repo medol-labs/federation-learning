@@ -1173,6 +1173,29 @@ export const TrainingRunConfigurationCatalogList = () => {
                     command="updateTrainingRunConfiguration"
                     recordItemId={row.original.trainingRunConfigurationId}
                     size="sm"
+                    query={{
+                      configurationName: row.original.configurationName,
+                      federationId: row.original.federationId,
+                      featureSchemaId: row.original.featureSchemaId,
+                      initialModelId: row.original.initialModelId,
+                      runtimeEngineProfileId: row.original.runtimeEngineProfileId,
+                      strategyName: row.original.strategyName,
+                      aggregationAlgorithm: row.original.aggregationAlgorithm,
+                      maxRounds: row.original.maxRounds,
+                      minimumNodesPerRound: row.original.minimumNodesPerRound,
+                      roundTimeoutSeconds: row.original.roundTimeoutSeconds,
+                      nodeResponseTimeoutSeconds: row.original.nodeResponseTimeoutSeconds,
+                      localEpochs: row.original.localEpochs,
+                      batchSize: row.original.batchSize,
+                      learningRate: row.original.learningRate,
+                      optimizer: row.original.optimizer,
+                      lossFunction: row.original.lossFunction,
+                      gradientClippingNorm: row.original.gradientClippingNorm,
+                      secureAggregationRequired: row.original.secureAggregationRequired,
+                      minimumAccuracy: row.original.minimumAccuracy,
+                      minimumFairnessScore: row.original.minimumFairnessScore,
+                      updateReason: row.original.updateReason,
+                    }}
                   />
                 )}
                 {isCommandVisible(row.original, "", "", []) && (

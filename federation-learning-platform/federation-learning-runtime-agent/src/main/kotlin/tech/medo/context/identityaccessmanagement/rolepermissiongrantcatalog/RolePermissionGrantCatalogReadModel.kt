@@ -6,6 +6,7 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 data class RolePermissionGrantCatalogReadModelKey(
@@ -25,6 +26,7 @@ class RolePermissionGrantCatalogReadModelCriteria {
 
 
 class RolePermissionGrantCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var roleId: UUID? = null
     var roleCode: String? = null
     var roleName: String? = null

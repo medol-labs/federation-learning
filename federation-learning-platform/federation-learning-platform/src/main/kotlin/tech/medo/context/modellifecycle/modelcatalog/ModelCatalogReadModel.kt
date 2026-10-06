@@ -10,6 +10,7 @@ import tech.medo.modellifecycle.domain.states.ModelStateEnum;
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class ModelCatalogReadModelQuery
@@ -34,6 +35,7 @@ class ModelCatalogReadModelCriteria {
 
 
 class ModelCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var modelId: UUID? = null
     var trainingJobId: UUID? = null
     var finalRoundId: UUID? = null

@@ -490,20 +490,6 @@ export const DictionaryValueCatalogList = () => {
                 "rowActions.before",
                 { resource: "dictionary-value-catalog", record: row.original },
               )}
-                {isCommandVisible(row.original, "", "", []) && (
-                  <CommandButton
-                    variant="ghost"
-                    command="updateDictionaryValueTranslation"
-                    recordItemId={row.original.dictionaryValueId}
-                    size="sm"
-                    query={{
-                      dictionaryValueId: row.original.dictionaryValueId,
-                      dictionaryCode: row.original.dictionaryCode,
-                      valueCode: row.original.valueCode,
-                      description: row.original.description,
-                    }}
-                  />
-                )}
                 {isCommandVisible(row.original, "", "state", ["Active"]) && (
                   <CommandButton
                     variant="ghost"
@@ -533,6 +519,20 @@ export const DictionaryValueCatalogList = () => {
                   <CommandButton
                     variant="ghost"
                     command="setDictionaryValueTranslation"
+                    recordItemId={row.original.dictionaryValueId}
+                    size="sm"
+                    query={{
+                      dictionaryValueId: row.original.dictionaryValueId,
+                      dictionaryCode: row.original.dictionaryCode,
+                      valueCode: row.original.valueCode,
+                      description: row.original.description,
+                    }}
+                  />
+                )}
+                {isCommandVisible(row.original, "", "", []) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="updateDictionaryValueTranslation"
                     recordItemId={row.original.dictionaryValueId}
                     size="sm"
                     query={{

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
-import tech.medo.shared.application.sync.SyncOutboxAppender
+import tech.medo.shared.application.outbox.MedolOutboxAppender
 
 import tech.medo.dictionarymaintenance.events.DictionaryValueTranslationSetEvent
 import tech.medo.dictionarymaintenance.events.DictionaryValueTranslationUpdatedEvent
@@ -31,7 +31,7 @@ interface DictionaryValueTranslationCatalogReadModelProjectionUpdater {
 
 open class DefaultDictionaryValueTranslationCatalogReadModelProjectionUpdater(
     private val repository: DictionaryValueTranslationCatalogReadModelRepository,
-    private val outbox: SyncOutboxAppender
+    private val outbox: MedolOutboxAppender
 ) : DictionaryValueTranslationCatalogReadModelProjectionUpdater {
     @Transactional
     open override fun update(
@@ -99,7 +99,7 @@ class DictionaryValueTranslationCatalogReadModelProjectionUpdaterConfiguration {
     @ConditionalOnMissingBean(DictionaryValueTranslationCatalogReadModelProjectionUpdater::class)
     fun defaultDictionaryValueTranslationCatalogReadModelProjectionUpdater(
         repository: DictionaryValueTranslationCatalogReadModelRepository,
-        outbox: SyncOutboxAppender
+        outbox: MedolOutboxAppender
     ): DictionaryValueTranslationCatalogReadModelProjectionUpdater =
         DefaultDictionaryValueTranslationCatalogReadModelProjectionUpdater(repository, outbox)
 }

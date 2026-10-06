@@ -46,6 +46,7 @@ class RuntimeDatasetMetadataCatalogReadModelCriteria {
 
 
 class RuntimeDatasetMetadataCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeDatasetBindingId: UUID? = null
     var metadataReportId: UUID? = null
     var datasetId: UUID? = null

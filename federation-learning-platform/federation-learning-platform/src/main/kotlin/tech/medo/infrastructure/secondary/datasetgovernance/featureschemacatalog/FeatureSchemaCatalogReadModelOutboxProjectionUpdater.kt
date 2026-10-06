@@ -14,12 +14,12 @@ import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogRead
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelRepository
 import tech.medo.datasetgovernance.featureschemacatalog.toReadModel
 import tech.medo.shared.application.metadata.ProjectionMetadata
-import tech.medo.shared.application.sync.SyncOutboxAppender
+import tech.medo.shared.application.outbox.MedolOutboxAppender
 
 @Component
 class FeatureSchemaCatalogReadModelOutboxProjectionUpdater(
     private val repository: FeatureSchemaCatalogReadModelRepository,
-    private val outbox: SyncOutboxAppender
+    private val outbox: MedolOutboxAppender
 ) : FeatureSchemaCatalogReadModelProjectionUpdater {
     @Transactional
     override fun update(

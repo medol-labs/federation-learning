@@ -4,7 +4,7 @@ services:
     platform: ${DOCKER_PLATFORM:-}
     restart: unless-stopped
     ports:
-      - "${DB_PORT:-5434}:5432"
+      - "${DB_PORT:-5433}:5432"
     environment:
       POSTGRES_USER: medol
       POSTGRES_PASSWORD: medol
@@ -46,7 +46,7 @@ services:
     platform: ${DOCKER_PLATFORM:-}
     restart: unless-stopped
     ports:
-      - "${UMADB_PORT:-50053}:50051"
+      - "${UMADB_PORT:-50052}:50051"
     volumes:
       - umadb_data:/data
 
@@ -62,9 +62,9 @@ services:
       umadb:
         condition: service_started
     ports:
-      - "${APP_PORT:-8082}:8082"
+      - "${APP_PORT:-8081}:8081"
     environment:
-      SERVER_PORT: 8082
+      SERVER_PORT: 8081
       SPRING_DOCKER_COMPOSE_ENABLED: "false"
       DB_URL: jdbc:postgresql://postgres:5432/federation_learning_runtime_agent
       DB_USERNAME: medol
@@ -110,13 +110,13 @@ services:
       federation-learning-runtime-agent:
         condition: service_started
     ports:
-      - "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_PORT:-5175}:80"
+      - "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_PORT:-5174}:80"
     environment:
       VITE_AUTH_PROVIDER: ${VITE_AUTH_PROVIDER:-local}
       VITE_ACCESS_CONTROL_MODE: ${VITE_ACCESS_CONTROL_MODE:-permissive}
-      VITE_AUTH_API_URL: ${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8082}
-      VITE_AXON_API_URL: ${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8082}
-      VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL: ${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8082}
+      VITE_AUTH_API_URL: ${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8081}
+      VITE_AXON_API_URL: ${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8081}
+      VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL: ${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_API_URL:-http://localhost:8081}
       VITE_FRONTEND_APP: FederationLearningParticipantConsole
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/health >/dev/null 2>&1 || exit 1"]

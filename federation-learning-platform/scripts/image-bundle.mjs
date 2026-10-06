@@ -5,9 +5,9 @@ import {resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
 
 const defaultModules = [
-    "federation-learning-support",
     "federation-learning-platform",
-    "federation-learning-runtime-agent"
+    "federation-learning-runtime-agent",
+    "federation-learning-support"
 ];
 const defaultTar = 'federation-learning-platform-images.tar';
 const args = parseArgs(process.argv.slice(2));

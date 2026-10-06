@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "round_execution_catalog")
 class RoundExecutionCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var roundExecutionId: UUID? = null
     var executionSessionId: UUID? = null

@@ -28,6 +28,7 @@ class RuntimeIdentityCatalogReadModelCriteria {
 
 
 class RuntimeIdentityCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
     var runtimeAgentId: UUID? = null

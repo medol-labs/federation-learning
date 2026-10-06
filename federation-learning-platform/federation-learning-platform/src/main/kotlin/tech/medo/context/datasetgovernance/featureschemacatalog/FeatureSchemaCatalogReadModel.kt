@@ -10,6 +10,7 @@ import tech.medo.datasetgovernance.domain.types.LabelDefinition;
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.IntegerFilter
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class FeatureSchemaCatalogReadModelQuery
@@ -27,6 +28,7 @@ class FeatureSchemaCatalogReadModelCriteria {
 
 
 class FeatureSchemaCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var featureSchemaId: UUID? = null
     var featureDomain: String? = null
     var version: String? = null

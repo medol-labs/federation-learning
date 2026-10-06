@@ -6,6 +6,7 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class ServiceAccountApiTokenCatalogReadModelQuery
@@ -21,6 +22,7 @@ class ServiceAccountApiTokenCatalogReadModelCriteria {
 
 
 class ServiceAccountApiTokenCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var apiTokenId: UUID? = null
     var userAccountId: UUID? = null
     var username: String? = null

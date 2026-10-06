@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class UserAccountCatalogReadModelQuery
@@ -22,6 +23,7 @@ class UserAccountCatalogReadModelCriteria {
 
 
 class UserAccountCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var userAccountId: UUID? = null
     var username: String? = null
     var providerSubject: String? = null

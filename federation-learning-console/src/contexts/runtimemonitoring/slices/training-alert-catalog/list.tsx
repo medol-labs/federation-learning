@@ -1,7 +1,8 @@
 // Generated from config.json by the refine generator.
 import { useTable } from "@refinedev/react-table";
-import { useTranslate } from "@refinedev/core";
+import { useNotification, useTranslate, type CrudFilter, type CrudSorting } from "@refinedev/core";
 import { createColumnHelper } from "@tanstack/react-table";
+import { Download } from "lucide-react";
 import React from "react";
 
 import { frontendComposition } from "@/app/composition/composition.resolved";
@@ -16,6 +17,8 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { requestDataExport, type DataExportColumn } from "@/lib/data-export";
 import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
@@ -70,6 +73,8 @@ const formatValue = (
 
 export const TrainingAlertCatalogList = () => {
   const t = useTranslate();
+  const { open } = useNotification();
+  const [isExporting, setIsExporting] = React.useState(false);
   const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<TrainingAlertCatalogRecord>();
@@ -461,10 +466,68 @@ export const TrainingAlertCatalogList = () => {
     },
   });
 
+  const handleExport = React.useCallback(async () => {
+    setIsExporting(true);
+    try {
+      const tableState = table.reactTable.getState();
+      const filters: CrudFilter[] = tableState.columnFilters.flatMap((filter) => {
+        const currentFilter = filter as { id: string; operator?: string; value?: unknown };
+        if (!currentFilter.operator) {
+          return [];
+        }
+        return [{
+          field: currentFilter.id,
+          operator: currentFilter.operator,
+          value: currentFilter.value,
+        } as CrudFilter];
+      });
+      const sorters: CrudSorting = tableState.sorting.map((sort) => ({
+        field: sort.id,
+        order: sort.desc ? "desc" : "asc",
+      }));
+      const columns: DataExportColumn[] = table.reactTable
+        .getAllLeafColumns()
+        .filter((column) => column.getIsVisible())
+        .filter((column) => !["select", "actions"].includes(column.id))
+        .map((column) => ({
+          field: column.id,
+          label: String(column.columnDef.meta?.label ?? column.id),
+        }));
+      const result = await requestDataExport({
+        aggregateRoute: "trainingalert",
+        queryRoute: "trainingalertcatalog",
+        dataProviderName: "federation-learning-platform",
+        filters,
+        sorters,
+        columns,
+      });
+      open?.({
+        type: "success",
+        message: result.kind === "job"
+          ? t("dataExport.jobCreated", "Export job created")
+          : t("dataExport.downloadStarted", "Export download started"),
+        description: result.kind === "job" ? result.jobId : result.filename,
+      });
+    } catch (error) {
+      open?.({
+        type: "error",
+        message: t("dataExport.failed", "Export failed"),
+        description: error instanceof Error ? error.message : undefined,
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  }, [open, table, t]);
+
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>
         {renderSlotExtensions(frontendComposition, "toolbar:training-alert-catalog:list", "toolbar.before", { resource: "training-alert-catalog", table })}
+        <Button type="button" variant="outline" onClick={handleExport} disabled={isExporting}>
+          <Download className="size-4" />
+          {isExporting ? t("dataExport.exporting", "Exporting") : t("dataExport.export", "Export")}
+        </Button>
         {renderSlotExtensions(frontendComposition, "toolbar:training-alert-catalog:list", "toolbar.actions", { resource: "training-alert-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={

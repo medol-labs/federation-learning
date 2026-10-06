@@ -322,7 +322,6 @@ export const DictionaryValueTranslationCatalogList = () => {
                     recordItemId={row.original.dictionaryValueTranslationId}
                     size="sm"
                     query={{
-                      dictionaryValueTranslationId: row.original.dictionaryValueTranslationId,
                       dictionaryValueId: row.original.dictionaryValueId,
                       dictionaryCode: row.original.dictionaryCode,
                       valueCode: row.original.valueCode,

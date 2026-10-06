@@ -9,11 +9,13 @@ import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
+import java.time.LocalDateTime
 
 
 @Entity
 @Table(name = "service_account_api_token_catalog")
 class ServiceAccountApiTokenCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var apiTokenId: UUID? = null
     var userAccountId: UUID? = null

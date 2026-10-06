@@ -9,8 +9,8 @@
     <modules>
         <module>axon-event-storage-umadb</module>
         <module>shared-kernel</module>
-        <module>federation-learning-support</module>
         <module>federation-learning-platform</module>
         <module>federation-learning-runtime-agent</module>
+        <module>federation-learning-support</module>
     </modules>
 </project>

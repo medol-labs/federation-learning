@@ -10,6 +10,7 @@ import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum;
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class OrganizationDirectoryReadModelQuery
@@ -24,6 +25,7 @@ class OrganizationDirectoryReadModelCriteria {
 
 
 class OrganizationDirectoryReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var organizationId: UUID? = null
     var organizationName: String? = null
     var organizationType: OrganizationType? = null

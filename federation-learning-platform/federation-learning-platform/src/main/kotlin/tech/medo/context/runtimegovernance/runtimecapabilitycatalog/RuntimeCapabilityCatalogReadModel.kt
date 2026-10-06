@@ -22,6 +22,7 @@ class RuntimeCapabilityCatalogReadModelCriteria {
 
 
 class RuntimeCapabilityCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeId: UUID? = null
     var capabilityTypes: List<String> = emptyList()
     var capabilityStatus: String? = null

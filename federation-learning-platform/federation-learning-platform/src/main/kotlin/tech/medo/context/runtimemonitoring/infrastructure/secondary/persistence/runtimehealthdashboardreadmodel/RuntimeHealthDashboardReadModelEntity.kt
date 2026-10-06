@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "runtime_health_dashboard")
 class RuntimeHealthDashboardReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null

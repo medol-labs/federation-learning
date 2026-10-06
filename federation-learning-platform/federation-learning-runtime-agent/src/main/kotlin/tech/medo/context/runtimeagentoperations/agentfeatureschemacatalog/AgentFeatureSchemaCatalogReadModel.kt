@@ -24,6 +24,7 @@ class AgentFeatureSchemaCatalogReadModelCriteria {
 
 
 class AgentFeatureSchemaCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var featureSchemaId: UUID? = null
     var featureDomain: String? = null
     var featureSchemaVersion: String? = null

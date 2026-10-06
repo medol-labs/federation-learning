@@ -8,6 +8,7 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageS
 
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 class RuntimeInfrastructurePackageCatalogReadModelQuery
@@ -22,6 +23,7 @@ class RuntimeInfrastructurePackageCatalogReadModelCriteria {
 
 
 class RuntimeInfrastructurePackageCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeInfrastructurePackageId: UUID? = null
     var packageName: String? = null
     var packageVersion: String? = null

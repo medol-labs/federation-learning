@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "secure_aggregation_session_catalog")
 class SecureAggregationSessionCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var secureAggregationSessionId: UUID? = null
     var trainingJobId: UUID? = null

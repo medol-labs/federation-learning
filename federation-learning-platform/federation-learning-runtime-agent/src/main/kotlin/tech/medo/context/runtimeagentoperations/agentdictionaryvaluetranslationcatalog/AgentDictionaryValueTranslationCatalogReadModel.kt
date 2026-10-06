@@ -27,6 +27,7 @@ class AgentDictionaryValueTranslationCatalogReadModelCriteria {
 
 
 class AgentDictionaryValueTranslationCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var dictionaryValueTranslationId: UUID? = null
     var dictionaryValueId: UUID? = null
     var dictionaryCode: String? = null

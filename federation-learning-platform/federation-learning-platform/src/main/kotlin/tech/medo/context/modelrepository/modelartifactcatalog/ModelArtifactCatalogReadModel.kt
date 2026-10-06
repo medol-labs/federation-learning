@@ -39,6 +39,7 @@ class ModelArtifactCatalogReadModelCriteria {
 
 
 class ModelArtifactCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var modelId: UUID? = null
     var modelName: String? = null
     var modelPlugin: String? = null

@@ -10,11 +10,13 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 import java.math.BigDecimal;
+import java.time.LocalDateTime
 
 
 @Entity
 @Table(name = "training_participant_eligibility")
 class TrainingParticipantEligibilityReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var trainingJobId: UUID? = null
     var federationId: UUID? = null

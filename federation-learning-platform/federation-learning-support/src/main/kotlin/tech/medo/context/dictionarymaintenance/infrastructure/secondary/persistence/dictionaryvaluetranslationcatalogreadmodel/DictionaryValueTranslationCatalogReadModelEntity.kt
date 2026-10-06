@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "dictionary_value_translation_catalog")
 class DictionaryValueTranslationCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var dictionaryValueTranslationId: UUID? = null
     var dictionaryValueId: UUID? = null

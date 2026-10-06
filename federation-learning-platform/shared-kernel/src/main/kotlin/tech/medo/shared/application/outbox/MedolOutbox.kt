@@ -1,4 +1,4 @@
-package tech.medo.shared.application.sync
+package tech.medo.shared.application.outbox
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.persistence.Column
@@ -28,29 +28,29 @@ import java.time.ZoneOffset
 
 @Entity
 @Table(
-    name = "medol_sync_read_model_outbox",
+    name = "medol_outbox",
     uniqueConstraints = [
         UniqueConstraint(
-            name = "uk_sync_read_model_outbox_event",
-            columnNames = ["source_context", "source_read_model", "read_model_key", "event_id", "operation"]
+            name = "uk_medol_outbox_event",
+            columnNames = ["source_context", "source_name", "message_key", "event_id", "operation"]
         )
     ],
     indexes = [
         Index(
-            name = "idx_sync_read_model_outbox_channel_sequence",
+            name = "idx_medol_outbox_channel_sequence",
             columnList = "channel, sequence"
         ),
         Index(
-            name = "idx_sync_read_model_outbox_source_sequence",
-            columnList = "source_context, source_read_model, sequence"
+            name = "idx_medol_outbox_source_sequence",
+            columnList = "source_context, source_name, sequence"
         ),
         Index(
-            name = "idx_sync_read_model_outbox_queue_available",
+            name = "idx_medol_outbox_queue_available",
             columnList = "channel, status, available_at, sequence"
         )
     ]
 )
-class SyncOutboxMessage {
+class MedolOutboxMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var sequence: Long? = null
@@ -60,10 +60,10 @@ class SyncOutboxMessage {
     @Column(name = "source_context")
     var sourceContext: String = ""
 
-    @Column(name = "source_read_model")
-    var sourceReadModel: String = ""
+    @Column(name = "source_name")
+    var sourceName: String = ""
 
-    @Column(name = "read_model_key")
+    @Column(name = "message_key")
     var messageKey: String = ""
     var operation: String = "UPSERT"
 
@@ -87,7 +87,7 @@ class SyncOutboxMessage {
     @Column(columnDefinition = "text")
     var headersJson: String = "{}"
 
-    var status: String? = SyncOutboxStatus.AVAILABLE
+    var status: String? = MedolOutboxStatus.AVAILABLE
 
     @Column(name = "available_at")
     var availableAt: LocalDateTime? = LocalDateTime.now()
@@ -108,26 +108,26 @@ class SyncOutboxMessage {
     var lastError: String? = null
 }
 
-object SyncOutboxStatus {
+object MedolOutboxStatus {
     const val AVAILABLE = "AVAILABLE"
     const val PROCESSING = "PROCESSING"
     const val PROCESSED = "PROCESSED"
     const val FAILED = "FAILED"
 }
 
-interface SyncOutboxRepository : JpaRepository<SyncOutboxMessage, Long> {
+interface MedolOutboxRepository : JpaRepository<MedolOutboxMessage, Long> {
     fun findByChannelAndSequenceGreaterThanOrderBySequenceAsc(
         channel: String,
         sequence: Long,
         pageable: Pageable
-    ): List<SyncOutboxMessage>
+    ): List<MedolOutboxMessage>
 
-    fun findBySourceContextAndSourceReadModelAndSequenceGreaterThanOrderBySequenceAsc(
+    fun findBySourceContextAndSourceNameAndSequenceGreaterThanOrderBySequenceAsc(
         sourceContext: String,
-        sourceReadModel: String,
+        sourceName: String,
         sequence: Long,
         pageable: Pageable
-    ): List<SyncOutboxMessage>
+    ): List<MedolOutboxMessage>
 
     fun existsByChannelAndMessageKeyAndEventIdAndOperation(
         channel: String,
@@ -136,25 +136,25 @@ interface SyncOutboxRepository : JpaRepository<SyncOutboxMessage, Long> {
         operation: String
     ): Boolean
 
-    fun existsBySourceContextAndSourceReadModelAndMessageKeyAndEventIdAndOperation(
+    fun existsBySourceContextAndSourceNameAndMessageKeyAndEventIdAndOperation(
         sourceContext: String,
-        sourceReadModel: String,
+        sourceName: String,
         messageKey: String,
         eventId: String,
         operation: String
     ): Boolean
 
-    fun findFirstByChannelOrderBySequenceDesc(channel: String): SyncOutboxMessage?
+    fun findFirstByChannelOrderBySequenceDesc(channel: String): MedolOutboxMessage?
 
-    fun findFirstBySourceContextAndSourceReadModelOrderBySequenceDesc(
+    fun findFirstBySourceContextAndSourceNameOrderBySequenceDesc(
         sourceContext: String,
-        sourceReadModel: String
-    ): SyncOutboxMessage?
+        sourceName: String
+    ): MedolOutboxMessage?
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(
         """
-        select message from SyncOutboxMessage message
+        select message from MedolOutboxMessage message
         where message.channel = :channel
           and (message.status is null or message.status = :status)
           and (message.availableAt is null or message.availableAt <= :availableAt)
@@ -166,12 +166,12 @@ interface SyncOutboxRepository : JpaRepository<SyncOutboxMessage, Long> {
         @Param("status") status: String,
         @Param("availableAt") availableAt: LocalDateTime,
         pageable: Pageable
-    ): List<SyncOutboxMessage>
+    ): List<MedolOutboxMessage>
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(
         """
-        select message from SyncOutboxMessage message
+        select message from MedolOutboxMessage message
         where message.channel = :channel
           and message.status = :status
           and message.claimedUntil <= :claimedUntil
@@ -183,14 +183,14 @@ interface SyncOutboxRepository : JpaRepository<SyncOutboxMessage, Long> {
         @Param("status") status: String,
         @Param("claimedUntil") claimedUntil: LocalDateTime,
         pageable: Pageable
-    ): List<SyncOutboxMessage>
+    ): List<MedolOutboxMessage>
 
     fun deleteByStatusAndProcessedAtBefore(status: String, processedAt: LocalDateTime): Long
 }
 
 @Component
-class SyncOutboxAppender(
-    private val repository: SyncOutboxRepository,
+class MedolOutboxAppender(
+    private val repository: MedolOutboxRepository,
     private val objectMapper: ObjectMapper
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
@@ -204,7 +204,7 @@ class SyncOutboxAppender(
         message: EventMessage
     ) {
         val eventId = message.identifier()
-        if (repository.existsBySourceContextAndSourceReadModelAndMessageKeyAndEventIdAndOperation(
+        if (repository.existsBySourceContextAndSourceNameAndMessageKeyAndEventIdAndOperation(
                 sourceContext,
                 sourceReadModel,
                 readModelKey,
@@ -213,7 +213,7 @@ class SyncOutboxAppender(
             )
         ) {
             log.debug(
-                "SYNC OUTBOX skip duplicate source={}.{} key={} operation={} eventId={}",
+                "MEDOL OUTBOX skip duplicate readmodel source={}.{} key={} operation={} eventId={}",
                 sourceContext,
                 sourceReadModel,
                 readModelKey,
@@ -223,9 +223,9 @@ class SyncOutboxAppender(
             return
         }
         append(
-            channel = syncReadModelChannel(sourceContext, sourceReadModel),
+            channel = readModelOutboxChannel(sourceContext, sourceReadModel),
             sourceContext = sourceContext,
-            sourceReadModel = sourceReadModel,
+            sourceName = sourceReadModel,
             messageKey = readModelKey,
             operation = operation,
             payload = payload,
@@ -237,7 +237,7 @@ class SyncOutboxAppender(
     fun append(
         channel: String,
         sourceContext: String,
-        sourceReadModel: String,
+        sourceName: String,
         messageKey: String,
         operation: String,
         payload: Any,
@@ -253,7 +253,7 @@ class SyncOutboxAppender(
             )
         ) {
             log.debug(
-                "SYNC OUTBOX skip duplicate channel={} key={} operation={} eventId={}",
+                "MEDOL OUTBOX skip duplicate channel={} key={} operation={} eventId={}",
                 channel,
                 messageKey,
                 operation,
@@ -261,10 +261,10 @@ class SyncOutboxAppender(
             )
             return
         }
-        val saved = repository.save(SyncOutboxMessage().also {
+        val saved = repository.save(MedolOutboxMessage().also {
             it.channel = channel
             it.sourceContext = sourceContext
-            it.sourceReadModel = sourceReadModel
+            it.sourceName = sourceName
             it.messageKey = messageKey
             it.operation = operation
             it.eventId = eventId
@@ -274,11 +274,64 @@ class SyncOutboxAppender(
             it.headersJson = objectMapper.writeValueAsString(headers)
         })
         log.info(
-            "SYNC OUTBOX stored sequence={} channel={} source={}.{} key={} operation={} eventId={} eventType={}",
+            "MEDOL OUTBOX stored sequence={} channel={} source={}.{} key={} operation={} eventId={} eventType={}",
             saved.sequence,
             saved.channel,
             saved.sourceContext,
-            saved.sourceReadModel,
+            saved.sourceName,
+            saved.messageKey,
+            saved.operation,
+            saved.eventId,
+            saved.eventType
+        )
+    }
+
+    fun appendExternal(
+        channel: String,
+        sourceContext: String,
+        sourceName: String,
+        messageKey: String,
+        operation: String,
+        payload: Any,
+        eventId: String,
+        eventType: String,
+        occurredAt: LocalDateTime = LocalDateTime.now(),
+        headers: Map<String, Any?> = emptyMap()
+    ) {
+        if (repository.existsByChannelAndMessageKeyAndEventIdAndOperation(
+                channel,
+                messageKey,
+                eventId,
+                operation
+            )
+        ) {
+            log.debug(
+                "MEDOL OUTBOX skip duplicate channel={} key={} operation={} eventId={}",
+                channel,
+                messageKey,
+                operation,
+                eventId
+            )
+            return
+        }
+        val saved = repository.save(MedolOutboxMessage().also {
+            it.channel = channel
+            it.sourceContext = sourceContext
+            it.sourceName = sourceName
+            it.messageKey = messageKey
+            it.operation = operation
+            it.eventId = eventId
+            it.eventType = eventType
+            it.occurredAt = occurredAt
+            it.payloadJson = objectMapper.writeValueAsString(payload)
+            it.headersJson = objectMapper.writeValueAsString(headers)
+        })
+        log.info(
+            "MEDOL OUTBOX stored sequence={} channel={} source={}.{} key={} operation={} eventId={} eventType={}",
+            saved.sequence,
+            saved.channel,
+            saved.sourceContext,
+            saved.sourceName,
             saved.messageKey,
             saved.operation,
             saved.eventId,
@@ -288,8 +341,8 @@ class SyncOutboxAppender(
 }
 
 @Component
-class SyncOutboxQueue(
-    private val repository: SyncOutboxRepository
+class MedolOutboxQueue(
+    private val repository: MedolOutboxRepository
 ) {
     @Transactional
     fun claimAvailable(
@@ -297,18 +350,18 @@ class SyncOutboxQueue(
         consumerId: String,
         batchSize: Int,
         claimTimeout: Duration = Duration.ofMinutes(5)
-    ): List<SyncOutboxMessage> {
+    ): List<MedolOutboxMessage> {
         val now = LocalDateTime.now()
         val limit = PageRequest.of(0, batchSize.coerceIn(1, 1000))
         val available = repository.findAvailableForClaim(
             channel,
-            SyncOutboxStatus.AVAILABLE,
+            MedolOutboxStatus.AVAILABLE,
             now,
             limit
         )
         val expired = repository.findExpiredClaimsForClaim(
             channel,
-            SyncOutboxStatus.PROCESSING,
+            MedolOutboxStatus.PROCESSING,
             now,
             limit
         )
@@ -316,7 +369,7 @@ class SyncOutboxQueue(
             .distinctBy { it.sequence }
             .take(batchSize.coerceIn(1, 1000))
             .onEach {
-                it.status = SyncOutboxStatus.PROCESSING
+                it.status = MedolOutboxStatus.PROCESSING
                 it.claimedBy = consumerId
                 it.claimedUntil = now.plus(claimTimeout)
                 it.lastError = null
@@ -327,7 +380,7 @@ class SyncOutboxQueue(
     @Transactional
     fun markProcessed(sequence: Long) {
         repository.findById(sequence).ifPresent {
-            it.status = SyncOutboxStatus.PROCESSED
+            it.status = MedolOutboxStatus.PROCESSED
             it.processedAt = LocalDateTime.now()
             it.claimedBy = null
             it.claimedUntil = null
@@ -344,9 +397,9 @@ class SyncOutboxQueue(
             it.claimedBy = null
             it.claimedUntil = null
             if (nextRetryCount >= maxRetries) {
-                it.status = SyncOutboxStatus.FAILED
+                it.status = MedolOutboxStatus.FAILED
             } else {
-                it.status = SyncOutboxStatus.AVAILABLE
+                it.status = MedolOutboxStatus.AVAILABLE
                 it.availableAt = LocalDateTime.now().plus(retryDelay)
             }
             repository.save(it)
@@ -355,8 +408,8 @@ class SyncOutboxQueue(
 
     @Transactional
     fun purgeProcessedBefore(cutoff: LocalDateTime): Long =
-        repository.deleteByStatusAndProcessedAtBefore(SyncOutboxStatus.PROCESSED, cutoff)
+        repository.deleteByStatusAndProcessedAtBefore(MedolOutboxStatus.PROCESSED, cutoff)
 }
 
-fun syncReadModelChannel(sourceContext: String, sourceReadModel: String): String =
+fun readModelOutboxChannel(sourceContext: String, sourceReadModel: String): String =
     "readmodel.$sourceContext.$sourceReadModel"

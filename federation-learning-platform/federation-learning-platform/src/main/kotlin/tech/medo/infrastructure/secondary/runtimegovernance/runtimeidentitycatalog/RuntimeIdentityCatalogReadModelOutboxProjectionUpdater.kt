@@ -13,12 +13,12 @@ import tech.medo.runtimegovernance.runtimeidentitycatalog.RuntimeIdentityCatalog
 import tech.medo.runtimegovernance.runtimeidentitycatalog.RuntimeIdentityCatalogReadModelRepository
 import tech.medo.runtimegovernance.runtimeidentitycatalog.toReadModel
 import tech.medo.shared.application.metadata.ProjectionMetadata
-import tech.medo.shared.application.sync.SyncOutboxAppender
+import tech.medo.shared.application.outbox.MedolOutboxAppender
 
 @Component
 class RuntimeIdentityCatalogReadModelOutboxProjectionUpdater(
     private val repository: RuntimeIdentityCatalogReadModelRepository,
-    private val outbox: SyncOutboxAppender
+    private val outbox: MedolOutboxAppender
 ) : RuntimeIdentityCatalogReadModelProjectionUpdater {
     override fun update(
         event: OrganizationRegisteredEvent,

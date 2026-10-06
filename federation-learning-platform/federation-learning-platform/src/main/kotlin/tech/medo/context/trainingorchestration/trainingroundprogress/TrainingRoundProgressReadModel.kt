@@ -77,6 +77,7 @@ class TrainingRoundProgressReadModelCriteria {
 
 
 class TrainingRoundProgressReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var trainingJobId: UUID? = null
     var trainingRunConfigurationId: UUID? = null
     var featureSchemaId: UUID? = null

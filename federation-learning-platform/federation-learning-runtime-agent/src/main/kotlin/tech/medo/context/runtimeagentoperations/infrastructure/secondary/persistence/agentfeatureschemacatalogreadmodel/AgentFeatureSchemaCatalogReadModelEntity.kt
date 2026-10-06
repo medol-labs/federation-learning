@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "agent_feature_schema_catalog")
 class AgentFeatureSchemaCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var featureSchemaId: UUID? = null
     var featureDomain: String? = null

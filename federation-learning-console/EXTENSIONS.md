@@ -73,9 +73,9 @@ overwritten by regeneration. Business customizations should live under
 
 | Module | Label | Data provider | Home route |
 | --- | --- | --- | --- |
-| `federation-learning-support` | Federation Learning Support | `federation-learning-support` | `/dictionary-catalog` |
 | `federation-learning-platform` | Federation Learning Platform | `federation-learning-platform` | `/current-recommended-feature-schema-catalog` |
 | `federation-learning-runtime-agent` | Federation Learning Runtime Agent | `federation-learning-runtime-agent` | `/dashboard` |
+| `federation-learning-support` | Federation Learning Support | `federation-learning-support` | `/dictionary-catalog` |
 
 ## Resource Extension Points
 
@@ -146,8 +146,8 @@ export const pageOverrides = {
 | `list` | `dictionary-catalog:list` | `src/contexts/dictionarymaintenance/slices/dictionary-catalog/list.tsx` |
 | `show` | `dictionary-catalog:show` | `src/contexts/dictionarymaintenance/slices/dictionary-catalog/show.tsx` |
 | `registerDictionary` | `dictionary-catalog:registerDictionary` | `src/contexts/dictionarymaintenance/slices/register-dictionary/register-dictionary.tsx` |
-| `updateDictionary` | `dictionary-catalog:updateDictionary` | `src/contexts/dictionarymaintenance/slices/update-dictionary/update-dictionary.tsx` |
 | `archiveDictionary` | `dictionary-catalog:archiveDictionary` | `src/contexts/dictionarymaintenance/slices/archive-dictionary/archive-dictionary.tsx` |
+| `updateDictionary` | `dictionary-catalog:updateDictionary` | `src/contexts/dictionarymaintenance/slices/update-dictionary/update-dictionary.tsx` |
 | `addDictionaryValue` | `dictionary-catalog:addDictionaryValue` | `src/contexts/dictionarymaintenance/slices/add-dictionary-value/add-dictionary-value-dictionary-catalog.tsx` |
 
 Example:
@@ -166,8 +166,8 @@ export const pageOverrides = {
 | Command | Override key | Generated fallback | Fields |
 | --- | --- | --- | --- |
 | `registerDictionary` | `dictionary-catalog:registerDictionary` | `src/contexts/dictionarymaintenance/slices/register-dictionary/register-dictionary.tsx` | `dictionaryCode`, `dictionaryName`, `description` |
-| `updateDictionary` | `dictionary-catalog:updateDictionary` | `src/contexts/dictionarymaintenance/slices/update-dictionary/update-dictionary.tsx` | `dictionaryName`, `description` |
 | `archiveDictionary` | `dictionary-catalog:archiveDictionary` | `src/contexts/dictionarymaintenance/slices/archive-dictionary/archive-dictionary.tsx` | `archiveReason` |
+| `updateDictionary` | `dictionary-catalog:updateDictionary` | `src/contexts/dictionarymaintenance/slices/update-dictionary/update-dictionary.tsx` | `dictionaryName`, `description` |
 | `addDictionaryValue` | `dictionary-catalog:addDictionaryValue` | `src/contexts/dictionarymaintenance/slices/add-dictionary-value/add-dictionary-value-dictionary-catalog.tsx` | `dictionaryId`, `dictionaryCode`, `valueCode`, `defaultDisplayName`, `displayOrder`, `description`, `active` |
 
 #### Field Renderers
@@ -204,10 +204,10 @@ export const pageOverrides = {
 | `list` | `dictionary-value-catalog:list` | `src/contexts/dictionarymaintenance/slices/dictionary-value-catalog/list.tsx` |
 | `show` | `dictionary-value-catalog:show` | `src/contexts/dictionarymaintenance/slices/dictionary-value-catalog/show.tsx` |
 | `addDictionaryValue` | `dictionary-value-catalog:addDictionaryValue` | `src/contexts/dictionarymaintenance/slices/add-dictionary-value/add-dictionary-value-dictionary-value-catalog.tsx` |
-| `updateDictionaryValueTranslation` | `dictionary-value-catalog:updateDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/update-dictionary-value-translation/update-dictionary-value-translation-dictionary-value-catalog.tsx` |
 | `disableDictionaryValue` | `dictionary-value-catalog:disableDictionaryValue` | `src/contexts/dictionarymaintenance/slices/disable-dictionary-value/disable-dictionary-value.tsx` |
 | `enableDictionaryValue` | `dictionary-value-catalog:enableDictionaryValue` | `src/contexts/dictionarymaintenance/slices/enable-dictionary-value/enable-dictionary-value.tsx` |
 | `setDictionaryValueTranslation` | `dictionary-value-catalog:setDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/set-dictionary-value-translation/set-dictionary-value-translation.tsx` |
+| `updateDictionaryValueTranslation` | `dictionary-value-catalog:updateDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/update-dictionary-value-translation/update-dictionary-value-translation-dictionary-value-catalog.tsx` |
 
 Example:
 
@@ -225,10 +225,10 @@ export const pageOverrides = {
 | Command | Override key | Generated fallback | Fields |
 | --- | --- | --- | --- |
 | `addDictionaryValue` | `dictionary-value-catalog:addDictionaryValue` | `src/contexts/dictionarymaintenance/slices/add-dictionary-value/add-dictionary-value-dictionary-value-catalog.tsx` | `dictionaryId`, `dictionaryCode`, `valueCode`, `defaultDisplayName`, `displayOrder`, `description`, `active` |
-| `updateDictionaryValueTranslation` | `dictionary-value-catalog:updateDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/update-dictionary-value-translation/update-dictionary-value-translation-dictionary-value-catalog.tsx` | `dictionaryValueId`, `dictionaryCode`, `valueCode`, `locale`, `displayName`, `description` |
 | `disableDictionaryValue` | `dictionary-value-catalog:disableDictionaryValue` | `src/contexts/dictionarymaintenance/slices/disable-dictionary-value/disable-dictionary-value.tsx` | `disabledReason` |
 | `enableDictionaryValue` | `dictionary-value-catalog:enableDictionaryValue` | `src/contexts/dictionarymaintenance/slices/enable-dictionary-value/enable-dictionary-value.tsx` | `enableReason` |
 | `setDictionaryValueTranslation` | `dictionary-value-catalog:setDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/set-dictionary-value-translation/set-dictionary-value-translation.tsx` | `dictionaryValueId`, `dictionaryCode`, `valueCode`, `locale`, `displayName`, `description` |
+| `updateDictionaryValueTranslation` | `dictionary-value-catalog:updateDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/update-dictionary-value-translation/update-dictionary-value-translation-dictionary-value-catalog.tsx` | `dictionaryValueId`, `dictionaryCode`, `valueCode`, `locale`, `displayName`, `description` |
 
 #### Field Renderers
 

@@ -36,6 +36,7 @@ class AgentRuntimeNodeInventoryCatalogReadModelCriteria {
 
 
 class AgentRuntimeNodeInventoryCatalogReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var nodeId: UUID? = null
     var runtimeNodeInventoryReportId: UUID? = null
     var organizationId: UUID? = null

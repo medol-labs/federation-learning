@@ -18,6 +18,7 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 @Entity
 @Table(name = "runtime_infrastructure_access_view")
 class RuntimeInfrastructureAccessViewReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var runtimeInfrastructureId: UUID? = null
     var organizationId: UUID? = null

@@ -90,9 +90,9 @@ Configure these values in `.env` or the Compose environment:
 - `VITE_AUTH_PROVIDER` for authentication mode: `local` or `supabase`; default: `local`
 - `VITE_ACCESS_CONTROL_MODE` for frontend permission checks: `permissive` or `strict`; default: `permissive`
 - `VITE_AUTH_API_URL` for login and current-user API; when omitted, it falls back to the backend module that contains `IdentityAccessManagement`
-- `VITE_FEDERATION_LEARNING_SUPPORT_API_URL` for `Federation Learning Support`; default: `http://localhost:8080`
-- `VITE_FEDERATION_LEARNING_PLATFORM_API_URL` for `Federation Learning Platform`; default: `http://localhost:8081`
-- `VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL` for `Federation Learning Runtime Agent`; default: `http://localhost:8082`
+- `VITE_FEDERATION_LEARNING_PLATFORM_API_URL` for `Federation Learning Platform`; default: `http://localhost:8080`
+- `VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL` for `Federation Learning Runtime Agent`; default: `http://localhost:8081`
+- `VITE_FEDERATION_LEARNING_SUPPORT_API_URL` for `Federation Learning Support`; default: `http://localhost:8082`
 
 ```bash
 docker compose up -d

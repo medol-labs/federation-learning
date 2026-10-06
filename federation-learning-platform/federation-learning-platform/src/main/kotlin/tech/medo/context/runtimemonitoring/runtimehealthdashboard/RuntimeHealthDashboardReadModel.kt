@@ -19,6 +19,7 @@ import tech.jhipster.service.filter.StringFilter
 class RuntimeHealthDashboardReadModelQuery
 
 class RuntimeHealthDashboardReadModelCriteria {
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
     var nodeId: StringFilter? = null
     var runtimeAgentId: StringFilter? = null
     var federationId: StringFilter? = null
@@ -42,6 +43,7 @@ class RuntimeHealthDashboardReadModelCriteria {
 
 
 class RuntimeHealthDashboardReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
     var federationId: UUID? = null

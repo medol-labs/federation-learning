@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "agent_runtime_infrastructure_connection_catalog")
 class AgentRuntimeInfrastructureConnectionCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var runtimeInfrastructureId: UUID? = null
     var runtimeAgentId: UUID? = null

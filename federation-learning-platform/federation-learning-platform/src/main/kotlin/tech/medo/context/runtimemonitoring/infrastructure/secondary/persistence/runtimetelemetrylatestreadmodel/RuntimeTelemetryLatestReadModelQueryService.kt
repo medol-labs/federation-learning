@@ -31,6 +31,7 @@ class RuntimeTelemetryLatestReadModelQueryService(
     private fun createSpecification(criteria: RuntimeTelemetryLatestReadModelCriteria?): Specification<RuntimeTelemetryLatestReadModelEntity> {
         var specification = Specification.where<RuntimeTelemetryLatestReadModelEntity>(null)
         if (criteria != null) {
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeAgentId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeAgentId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.federationId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("federationId") as JpaExpression<UUID>).cast(String::class.java) })) }

@@ -10,12 +10,14 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssignmentCatalogReadModelKey
 import java.util.UUID;
+import java.time.LocalDateTime
 
 
 @IdClass(UserRoleAssignmentCatalogReadModelKey::class)
 @Entity
 @Table(name = "user_role_assignment_catalog")
 class UserRoleAssignmentCatalogReadModelEntity : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var userAccountId: UUID? = null
     var username: String? = null

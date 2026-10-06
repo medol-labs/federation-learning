@@ -6,6 +6,7 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID;
 
 import tech.jhipster.service.filter.StringFilter
+import java.time.LocalDateTime
 
 
 data class FederationMembershipDirectoryReadModelKey(
@@ -27,6 +28,7 @@ class FederationMembershipDirectoryReadModelCriteria {
 
 
 class FederationMembershipDirectoryReadModelProjection : MetadataProjection {
+    override var projectionUpdatedAt: LocalDateTime? = null
     var federationId: UUID? = null
     var organizationId: UUID? = null
     var federationName: String? = null

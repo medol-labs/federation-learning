@@ -6,18 +6,10 @@ import { getAppConfig } from "@/providers/app-config";
 
 export const backendModules = [
   {
-    name: "federation-learning-support",
-    label: "Federation Learning Support",
-    dataProviderName: "federation-learning-support",
-    apiUrl: getAppConfig("VITE_FEDERATION_LEARNING_SUPPORT_API_URL", "http://localhost:8080"),
-    homeRoute: "/dashboard",
-    resources: [],
-  },
-  {
     name: "federation-learning-platform",
     label: "Federation Learning Platform",
     dataProviderName: "federation-learning-platform",
-    apiUrl: getAppConfig("VITE_FEDERATION_LEARNING_PLATFORM_API_URL", "http://localhost:8081"),
+    apiUrl: getAppConfig("VITE_FEDERATION_LEARNING_PLATFORM_API_URL", "http://localhost:8080"),
     homeRoute: "/dashboard",
     resources: [],
   },
@@ -25,9 +17,17 @@ export const backendModules = [
     name: "federation-learning-runtime-agent",
     label: "Federation Learning Runtime Agent",
     dataProviderName: "federation-learning-runtime-agent",
-    apiUrl: getAppConfig("VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL", "http://localhost:8082"),
+    apiUrl: getAppConfig("VITE_FEDERATION_LEARNING_RUNTIME_AGENT_API_URL", "http://localhost:8081"),
     homeRoute: "/agent-dataset-access-validation-catalog",
     resources: ["agent-dataset-access-validation-catalog","agent-dictionary-value-catalog","agent-dictionary-value-translation-catalog","agent-feature-schema-catalog","agent-organization-directory","agent-runtime-identity-catalog","agent-runtime-infrastructure-connection-catalog","agent-runtime-node-inventory-catalog","agent-runtime-node-resource-latest","agent-runtime-telemetry-latest","dataset-capability","dataset-readiness","permission-catalog","role-catalog","role-permission-grant-catalog","round-execution-catalog","runtime-agent-lifecycle-catalog","runtime-dataset-binding-catalog","service-account-api-token-catalog","user-account-catalog","user-role-assignment-catalog"],
+  },
+  {
+    name: "federation-learning-support",
+    label: "Federation Learning Support",
+    dataProviderName: "federation-learning-support",
+    apiUrl: getAppConfig("VITE_FEDERATION_LEARNING_SUPPORT_API_URL", "http://localhost:8082"),
+    homeRoute: "/dashboard",
+    resources: [],
   },
 ];
 
