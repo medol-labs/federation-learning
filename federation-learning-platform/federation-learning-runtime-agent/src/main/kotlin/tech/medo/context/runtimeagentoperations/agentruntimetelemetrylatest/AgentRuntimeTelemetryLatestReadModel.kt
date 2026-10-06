@@ -3,11 +3,11 @@ package tech.medo.runtimeagentoperations.agentruntimetelemetrylatest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.math.BigDecimal
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.RangeFilter
@@ -27,11 +27,11 @@ class AgentRuntimeTelemetryLatestReadModelCriteria {
     var memoryLoad: BigDecimalFilter? = null
     var lastHeartbeatAt: RangeFilter<LocalDateTime>? = null
     var telemetryRetentionPolicy: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class AgentRuntimeTelemetryLatestReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
     var federationId: UUID? = null
@@ -42,6 +42,7 @@ class AgentRuntimeTelemetryLatestReadModelProjection : MetadataProjection {
     var memoryLoad: BigDecimal? = null
     var lastHeartbeatAt: LocalDateTime? = null
     var telemetryRetentionPolicy: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -62,6 +63,7 @@ fun AgentRuntimeTelemetryLatestReadModelProjection.toReadModel(): AgentRuntimeTe
     memoryLoad = memoryLoad,
     lastHeartbeatAt = lastHeartbeatAt,
     telemetryRetentionPolicy = telemetryRetentionPolicy,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -89,6 +91,7 @@ data class AgentRuntimeTelemetryLatestReadModel(
     val memoryLoad: BigDecimal?,
     val lastHeartbeatAt: LocalDateTime?,
     val telemetryRetentionPolicy: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

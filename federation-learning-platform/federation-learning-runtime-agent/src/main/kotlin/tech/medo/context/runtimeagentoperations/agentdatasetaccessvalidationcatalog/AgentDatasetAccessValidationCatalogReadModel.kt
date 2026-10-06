@@ -3,10 +3,10 @@ package tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.RangeFilter
@@ -33,11 +33,11 @@ class AgentDatasetAccessValidationCatalogReadModelCriteria {
     var validationStatus: StringFilter? = null
     var failureReason: StringFilter? = null
     var validatedAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class AgentDatasetAccessValidationCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var datasetAccessValidationId: UUID? = null
     var runtimeDatasetBindingId: UUID? = null
     var datasetId: UUID? = null
@@ -55,6 +55,7 @@ class AgentDatasetAccessValidationCatalogReadModelProjection : MetadataProjectio
     var validationStatus: String? = null
     var failureReason: String? = null
     var validatedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -82,6 +83,7 @@ fun AgentDatasetAccessValidationCatalogReadModelProjection.toReadModel(): AgentD
     validationStatus = validationStatus,
     failureReason = failureReason,
     validatedAt = validatedAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -116,6 +118,7 @@ data class AgentDatasetAccessValidationCatalogReadModel(
     val validationStatus: String?,
     val failureReason: String?,
     val validatedAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

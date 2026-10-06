@@ -8,17 +8,16 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 
 @Entity
 @Table(name = "model_artifact_catalog")
 class ModelArtifactCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var modelId: UUID? = null
     var modelName: String? = null
@@ -39,6 +38,7 @@ class ModelArtifactCatalogReadModelEntity : MetadataProjection {
     @Enumerated(EnumType.STRING)
     var state: ModelArtifactStateEnum? = null
     var registeredAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

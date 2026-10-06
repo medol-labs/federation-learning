@@ -10,11 +10,12 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import tech.medo.dictionarymaintenance.domain.states.DictionaryValueStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import tech.medo.dictionarymaintenance.domain.states.DictionaryValueStateEnum
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.dictionarymaintenance.dictionaryvaluecatalog.DictionaryValueCatalogReadModel
 import tech.medo.dictionarymaintenance.dictionaryvaluecatalog.DictionaryValueCatalogReadModelCriteria
@@ -45,6 +46,7 @@ class DictionaryValueCatalogReadModelQueryService(
             criteria.disabledAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DictionaryValueCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("disabledAt") })) }
             criteria.disabledReason?.let { specification = specification.and(buildSpecification(it, Function<Root<DictionaryValueCatalogReadModelEntity>, Expression<String>> { root -> root.get("disabledReason") })) }
             criteria.enabledAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DictionaryValueCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("enabledAt") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DictionaryValueCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -116,6 +118,7 @@ class DictionaryValueCatalogReadModelQueryService(
             it.disabledAt = this@toProjection.disabledAt
             it.disabledReason = this@toProjection.disabledReason
             it.enabledAt = this@toProjection.enabledAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

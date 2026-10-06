@@ -3,14 +3,15 @@ package tech.medo.datasetgovernance.featureschemacatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.datasetgovernance.domain.types.FeatureDefinition;
-import tech.medo.datasetgovernance.domain.types.LabelDefinition;
+import java.util.UUID
+import tech.medo.datasetgovernance.domain.types.FeatureDefinition
+import tech.medo.datasetgovernance.domain.types.LabelDefinition
 
+import java.time.LocalDateTime
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
-import java.time.LocalDateTime
 
 
 class FeatureSchemaCatalogReadModelQuery
@@ -24,11 +25,11 @@ class FeatureSchemaCatalogReadModelCriteria {
     var schemaStatus: StringFilter? = null
     var supersededByFeatureSchemaId: StringFilter? = null
     var recommendedForDomain: BooleanFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class FeatureSchemaCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var featureSchemaId: UUID? = null
     var featureDomain: String? = null
     var version: String? = null
@@ -39,6 +40,7 @@ class FeatureSchemaCatalogReadModelProjection : MetadataProjection {
     var schemaStatus: String? = null
     var supersededByFeatureSchemaId: UUID? = null
     var recommendedForDomain: Boolean? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -59,6 +61,7 @@ fun FeatureSchemaCatalogReadModelProjection.toReadModel(): FeatureSchemaCatalogR
     schemaStatus = schemaStatus,
     supersededByFeatureSchemaId = supersededByFeatureSchemaId,
     recommendedForDomain = recommendedForDomain,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -86,6 +89,7 @@ data class FeatureSchemaCatalogReadModel(
     val schemaStatus: String?,
     val supersededByFeatureSchemaId: UUID?,
     val recommendedForDomain: Boolean?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

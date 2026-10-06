@@ -3,10 +3,11 @@ package tech.medo.identityaccessmanagement.rolecatalogs
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
+import java.util.UUID
 
-import tech.jhipster.service.filter.StringFilter
 import java.time.LocalDateTime
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
 
 
 class RoleCatalogReadModelQuery
@@ -15,14 +16,15 @@ class RoleCatalogReadModelCriteria {
     var roleId: StringFilter? = null
     var roleCode: StringFilter? = null
     var roleName: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RoleCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var roleId: UUID? = null
     var roleCode: String? = null
     var roleName: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -36,6 +38,7 @@ fun RoleCatalogReadModelProjection.toReadModel(): RoleCatalogReadModel =
     roleId = roleId,
     roleCode = roleCode,
     roleName = roleName,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -56,6 +59,7 @@ data class RoleCatalogReadModel(
     val roleId: UUID?,
     val roleCode: String?,
     val roleName: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

@@ -618,6 +618,7 @@ export const ModelArtifactCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

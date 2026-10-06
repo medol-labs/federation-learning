@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/serviceaccountapitoken/serviceaccountapitokencatalog")
-class ServiceAccountApiTokenCatalogReadModelResource(private val repository: ServiceAccountApiTokenCatalogReadModelRepository) {
+class ServiceAccountApiTokenCatalogReadModelResource(
+    private val repository: ServiceAccountApiTokenCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('service_account_api_token_catalog:list') or hasAuthority('service_account_api_token_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: ServiceAccountApiTokenCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<ServiceAccountApiTokenCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: ServiceAccountApiTokenCatalogReadModelCriteria, pageable: Pageable): Page<ServiceAccountApiTokenCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('service_account_api_token_catalog:read')")

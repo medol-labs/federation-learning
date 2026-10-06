@@ -8,22 +8,22 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 
 @Entity
 @Table(name = "current_recommended_feature_schema_catalog")
 class CurrentRecommendedFeatureSchemaCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var featureDomain: String? = null
     var recommendedFeatureSchemaId: UUID? = null
     var recommendedVersion: String? = null
     var recommendedAt: LocalDateTime? = null
     var recommendationNote: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

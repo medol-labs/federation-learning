@@ -8,17 +8,16 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 
 @Entity
 @Table(name = "secure_aggregation_session_catalog")
 class SecureAggregationSessionCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var secureAggregationSessionId: UUID? = null
     var trainingJobId: UUID? = null
@@ -53,6 +52,7 @@ class SecureAggregationSessionCatalogReadModelEntity : MetadataProjection {
     var decryptedAt: LocalDateTime? = null
     var completedAt: LocalDateTime? = null
     var failedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

@@ -3,13 +3,14 @@ package tech.medo.runtimeprovisioning.runtimeinstallationguide
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
+import java.util.UUID
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
+import java.time.LocalDateTime
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
-import java.time.LocalDateTime
 
 
 class RuntimeInstallationGuideReadModelQuery
@@ -34,11 +35,11 @@ class RuntimeInstallationGuideReadModelCriteria {
     var runtimeEnvironmentType: StringFilter? = null
     var agentInstallMode: StringFilter? = null
     var expectedNodeCount: IntegerFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeInstallationGuideReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeInstallationPlanId: UUID? = null
     var organizationId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
@@ -58,6 +59,7 @@ class RuntimeInstallationGuideReadModelProjection : MetadataProjection {
     var runtimeEnvironmentType: String? = null
     var agentInstallMode: String? = null
     var expectedNodeCount: Int? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -87,6 +89,7 @@ fun RuntimeInstallationGuideReadModelProjection.toReadModel(): RuntimeInstallati
     runtimeEnvironmentType = runtimeEnvironmentType,
     agentInstallMode = agentInstallMode,
     expectedNodeCount = expectedNodeCount,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -123,6 +126,7 @@ data class RuntimeInstallationGuideReadModel(
     val runtimeEnvironmentType: String?,
     val agentInstallMode: String?,
     val expectedNodeCount: Int?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

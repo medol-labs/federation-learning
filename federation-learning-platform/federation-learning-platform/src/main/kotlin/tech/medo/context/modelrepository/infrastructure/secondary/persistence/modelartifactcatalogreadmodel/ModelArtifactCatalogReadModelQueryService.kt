@@ -10,11 +10,12 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModel
 import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModelCriteria
@@ -48,6 +49,7 @@ class ModelArtifactCatalogReadModelQueryService(
             criteria.trainingJobObjective?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("trainingJobObjective") })) }
             criteria.state?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<ModelArtifactStateEnum>> { root -> root.get("state") })) }
             criteria.registeredAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("registeredAt") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -122,6 +124,7 @@ class ModelArtifactCatalogReadModelQueryService(
             it.trainingJobObjective = this@toProjection.trainingJobObjective
             it.state = this@toProjection.state
             it.registeredAt = this@toProjection.registeredAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

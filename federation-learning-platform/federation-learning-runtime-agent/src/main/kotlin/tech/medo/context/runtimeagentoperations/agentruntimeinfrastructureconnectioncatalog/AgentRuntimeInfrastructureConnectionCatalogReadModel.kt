@@ -3,10 +3,10 @@ package tech.medo.runtimeagentoperations.agentruntimeinfrastructureconnectioncat
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.RangeFilter
@@ -27,11 +27,11 @@ class AgentRuntimeInfrastructureConnectionCatalogReadModelCriteria {
     var connectionReportFailedAt: RangeFilter<LocalDateTime>? = null
     var connectionReportFailureReason: StringFilter? = null
     var connectionReportRetryable: BooleanFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class AgentRuntimeInfrastructureConnectionCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeInfrastructureId: UUID? = null
     var runtimeAgentId: UUID? = null
     var runtimePlatformConnectionReady: Boolean? = null
@@ -43,6 +43,7 @@ class AgentRuntimeInfrastructureConnectionCatalogReadModelProjection : MetadataP
     var connectionReportFailedAt: LocalDateTime? = null
     var connectionReportFailureReason: String? = null
     var connectionReportRetryable: Boolean? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -64,6 +65,7 @@ fun AgentRuntimeInfrastructureConnectionCatalogReadModelProjection.toReadModel()
     connectionReportFailedAt = connectionReportFailedAt,
     connectionReportFailureReason = connectionReportFailureReason,
     connectionReportRetryable = connectionReportRetryable,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -92,6 +94,7 @@ data class AgentRuntimeInfrastructureConnectionCatalogReadModel(
     val connectionReportFailedAt: LocalDateTime?,
     val connectionReportFailureReason: String?,
     val connectionReportRetryable: Boolean?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

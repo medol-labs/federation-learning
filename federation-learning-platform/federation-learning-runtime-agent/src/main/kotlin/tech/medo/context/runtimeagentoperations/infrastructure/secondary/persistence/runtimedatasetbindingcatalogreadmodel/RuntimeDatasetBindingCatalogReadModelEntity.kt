@@ -8,16 +8,15 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 
 @Entity
 @Table(name = "runtime_dataset_binding_catalog")
 class RuntimeDatasetBindingCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var runtimeDatasetBindingId: UUID? = null
     var datasetId: UUID? = null
@@ -32,6 +31,7 @@ class RuntimeDatasetBindingCatalogReadModelEntity : MetadataProjection {
     var filePath: String? = null
     var dataFormat: String? = null
     var configuredAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

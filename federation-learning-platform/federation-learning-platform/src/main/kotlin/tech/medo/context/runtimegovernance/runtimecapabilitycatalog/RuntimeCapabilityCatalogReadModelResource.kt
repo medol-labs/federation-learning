@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/runtimecapability/runtimecapabilitycatalog")
-class RuntimeCapabilityCatalogReadModelResource(private val repository: RuntimeCapabilityCatalogReadModelRepository) {
+class RuntimeCapabilityCatalogReadModelResource(
+    private val repository: RuntimeCapabilityCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_capability_catalog:list') or hasAuthority('runtime_capability_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: RuntimeCapabilityCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<RuntimeCapabilityCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: RuntimeCapabilityCatalogReadModelCriteria, pageable: Pageable): Page<RuntimeCapabilityCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_capability_catalog:read')")

@@ -8,15 +8,14 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
-import java.time.LocalDateTime
+import java.util.UUID
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "runtime_installation_guide")
 class RuntimeInstallationGuideReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var runtimeInstallationPlanId: UUID? = null
     var organizationId: UUID? = null
@@ -44,6 +43,7 @@ class RuntimeInstallationGuideReadModelEntity : MetadataProjection {
     var runtimeEnvironmentType: String? = null
     var agentInstallMode: String? = null
     var expectedNodeCount: Int? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

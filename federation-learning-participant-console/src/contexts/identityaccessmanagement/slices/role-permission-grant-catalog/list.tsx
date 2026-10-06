@@ -268,6 +268,7 @@ export const RolePermissionGrantCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

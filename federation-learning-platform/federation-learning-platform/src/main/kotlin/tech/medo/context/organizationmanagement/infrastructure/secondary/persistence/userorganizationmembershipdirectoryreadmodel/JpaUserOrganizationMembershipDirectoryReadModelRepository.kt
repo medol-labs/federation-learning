@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
-import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum;
+import java.util.UUID
+import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum
 
 import tech.medo.organizationmanagement.userorganizationmembershipdirectory.UserOrganizationMembershipDirectoryReadModel
 import tech.medo.organizationmanagement.userorganizationmembershipdirectory.UserOrganizationMembershipDirectoryReadModelCriteria
@@ -43,6 +43,7 @@ class JpaUserOrganizationMembershipDirectoryReadModelRepository(
             it.organizationName = this@toProjection.organizationName
             it.organizationUserRole = this@toProjection.organizationUserRole
             it.state = this@toProjection.state
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -60,6 +61,7 @@ class JpaUserOrganizationMembershipDirectoryReadModelRepository(
             it.organizationName = this@toEntity.organizationName
             it.organizationUserRole = this@toEntity.organizationUserRole
             it.state = this@toEntity.state
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

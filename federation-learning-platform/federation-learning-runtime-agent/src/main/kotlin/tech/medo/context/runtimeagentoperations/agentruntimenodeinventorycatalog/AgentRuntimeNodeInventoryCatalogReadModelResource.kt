@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/agentruntimenodeinventory/agentruntimenodeinventorycatalog")
-class AgentRuntimeNodeInventoryCatalogReadModelResource(private val repository: AgentRuntimeNodeInventoryCatalogReadModelRepository) {
+class AgentRuntimeNodeInventoryCatalogReadModelResource(
+    private val repository: AgentRuntimeNodeInventoryCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_runtime_node_inventory_catalog:list') or hasAuthority('agent_runtime_node_inventory_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: AgentRuntimeNodeInventoryCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<AgentRuntimeNodeInventoryCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: AgentRuntimeNodeInventoryCatalogReadModelCriteria, pageable: Pageable): Page<AgentRuntimeNodeInventoryCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_runtime_node_inventory_catalog:read')")

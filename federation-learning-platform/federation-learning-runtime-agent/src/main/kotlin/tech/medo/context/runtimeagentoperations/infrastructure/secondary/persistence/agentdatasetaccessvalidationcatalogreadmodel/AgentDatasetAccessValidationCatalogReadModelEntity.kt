@@ -8,16 +8,15 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 
 @Entity
 @Table(name = "agent_dataset_access_validation_catalog")
 class AgentDatasetAccessValidationCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var datasetAccessValidationId: UUID? = null
     var runtimeDatasetBindingId: UUID? = null
@@ -37,6 +36,7 @@ class AgentDatasetAccessValidationCatalogReadModelEntity : MetadataProjection {
     @Column(columnDefinition = "text")
     var failureReason: String? = null
     var validatedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

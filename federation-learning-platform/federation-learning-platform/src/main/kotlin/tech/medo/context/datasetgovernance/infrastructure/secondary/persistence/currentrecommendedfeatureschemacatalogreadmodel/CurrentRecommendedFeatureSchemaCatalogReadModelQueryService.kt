@@ -10,10 +10,11 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.datasetgovernance.currentrecommendedfeatureschemacatalog.CurrentRecommendedFeatureSchemaCatalogReadModel
 import tech.medo.datasetgovernance.currentrecommendedfeatureschemacatalog.CurrentRecommendedFeatureSchemaCatalogReadModelCriteria
@@ -35,6 +36,7 @@ class CurrentRecommendedFeatureSchemaCatalogReadModelQueryService(
             criteria.recommendedVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<CurrentRecommendedFeatureSchemaCatalogReadModelEntity>, Expression<String>> { root -> root.get("recommendedVersion") })) }
             criteria.recommendedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<CurrentRecommendedFeatureSchemaCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("recommendedAt") })) }
             criteria.recommendationNote?.let { specification = specification.and(buildSpecification(it, Function<Root<CurrentRecommendedFeatureSchemaCatalogReadModelEntity>, Expression<String>> { root -> root.get("recommendationNote") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<CurrentRecommendedFeatureSchemaCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -97,6 +99,7 @@ class CurrentRecommendedFeatureSchemaCatalogReadModelQueryService(
             it.recommendedVersion = this@toProjection.recommendedVersion
             it.recommendedAt = this@toProjection.recommendedAt
             it.recommendationNote = this@toProjection.recommendationNote
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

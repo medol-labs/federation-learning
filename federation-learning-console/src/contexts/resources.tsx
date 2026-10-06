@@ -204,7 +204,7 @@ export const resources: IResourceItem[] = [
       tableName: "data_export_job_catalog_read_model_entity",
       idField: "dataExportJobId",
       idFields: ["dataExportJobId"],
-      queryFields: ["dataExportJobId","resourceName","requestedLocale","status"],
+      queryFields: ["dataExportJobId","resourceName","criteriaJson","sortJson","columnsJson","requestedLocale","requestedAt","snapshotUpperBound","requestHash","status","fileName","filePath","rowCount","errorMessage"],
       actionControls: {"enabledFields":[]},
       aggregateRoute: "dataexportjob",
       queryRoute: "dataexportjobcatalog",

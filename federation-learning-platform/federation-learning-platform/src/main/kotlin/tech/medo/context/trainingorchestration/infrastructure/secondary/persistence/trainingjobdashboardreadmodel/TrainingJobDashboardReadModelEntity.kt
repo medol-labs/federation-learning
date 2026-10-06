@@ -8,16 +8,15 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum;
-import java.math.BigDecimal;
-import java.time.LocalDateTime
+import java.util.UUID
+import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
+import java.math.BigDecimal
 
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "training_job_dashboard")
 class TrainingJobDashboardReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var trainingJobId: UUID? = null
     var federationId: UUID? = null
@@ -54,6 +53,7 @@ class TrainingJobDashboardReadModelEntity : MetadataProjection {
     var finalModelId: UUID? = null
     @Column(columnDefinition = "text")
     var stopReason: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

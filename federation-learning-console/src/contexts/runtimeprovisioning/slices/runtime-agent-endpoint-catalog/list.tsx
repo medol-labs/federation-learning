@@ -419,6 +419,7 @@ export const RuntimeAgentEndpointCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

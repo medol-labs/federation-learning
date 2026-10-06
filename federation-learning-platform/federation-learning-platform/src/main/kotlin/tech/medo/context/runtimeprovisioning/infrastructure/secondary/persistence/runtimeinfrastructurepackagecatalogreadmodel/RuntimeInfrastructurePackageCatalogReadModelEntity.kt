@@ -8,15 +8,14 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum;
-import java.time.LocalDateTime
+import java.util.UUID
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum
 
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "runtime_infrastructure_package_catalog")
 class RuntimeInfrastructurePackageCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var runtimeInfrastructurePackageId: UUID? = null
     var packageName: String? = null
@@ -24,6 +23,7 @@ class RuntimeInfrastructurePackageCatalogReadModelEntity : MetadataProjection {
     var runtimeEnvironmentType: String? = null
     @Enumerated(EnumType.STRING)
     var state: RuntimeInfrastructurePackageStateEnum? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

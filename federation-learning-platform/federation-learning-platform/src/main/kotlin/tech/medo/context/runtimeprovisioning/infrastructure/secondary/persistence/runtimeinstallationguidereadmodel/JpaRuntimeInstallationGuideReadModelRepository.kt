@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
-import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
+import java.util.UUID
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModel
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModelCriteria
@@ -55,6 +55,7 @@ class JpaRuntimeInstallationGuideReadModelRepository(
             it.runtimeEnvironmentType = this@toProjection.runtimeEnvironmentType
             it.agentInstallMode = this@toProjection.agentInstallMode
             it.expectedNodeCount = this@toProjection.expectedNodeCount
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -84,6 +85,7 @@ class JpaRuntimeInstallationGuideReadModelRepository(
             it.runtimeEnvironmentType = this@toEntity.runtimeEnvironmentType
             it.agentInstallMode = this@toEntity.agentInstallMode
             it.expectedNodeCount = this@toEntity.expectedNodeCount
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

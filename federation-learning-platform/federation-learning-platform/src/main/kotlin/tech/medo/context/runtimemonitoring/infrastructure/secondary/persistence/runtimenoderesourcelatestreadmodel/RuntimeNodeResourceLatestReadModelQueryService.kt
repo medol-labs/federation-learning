@@ -10,10 +10,11 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimemonitoring.runtimenoderesourcelatest.RuntimeNodeResourceLatestReadModel
 import tech.medo.runtimemonitoring.runtimenoderesourcelatest.RuntimeNodeResourceLatestReadModelCriteria
@@ -30,7 +31,6 @@ class RuntimeNodeResourceLatestReadModelQueryService(
     private fun createSpecification(criteria: RuntimeNodeResourceLatestReadModelCriteria?): Specification<RuntimeNodeResourceLatestReadModelEntity> {
         var specification = Specification.where<RuntimeNodeResourceLatestReadModelEntity>(null)
         if (criteria != null) {
-            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeAgentId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeAgentId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeInfrastructureId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInfrastructureId") as JpaExpression<UUID>).cast(String::class.java) })) }
@@ -50,6 +50,7 @@ class RuntimeNodeResourceLatestReadModelQueryService(
             criteria.observedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("observedAt") })) }
             criteria.lastResourceSnapshotAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("lastResourceSnapshotAt") })) }
             criteria.telemetryRetentionPolicy?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<String>> { root -> root.get("telemetryRetentionPolicy") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -126,6 +127,7 @@ class RuntimeNodeResourceLatestReadModelQueryService(
             it.observedAt = this@toProjection.observedAt
             it.lastResourceSnapshotAt = this@toProjection.lastResourceSnapshotAt
             it.telemetryRetentionPolicy = this@toProjection.telemetryRetentionPolicy
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

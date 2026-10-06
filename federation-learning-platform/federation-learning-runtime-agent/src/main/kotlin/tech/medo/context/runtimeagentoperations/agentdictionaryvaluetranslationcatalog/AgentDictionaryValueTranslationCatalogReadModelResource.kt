@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/agentdictionaryvaluetranslationcatalog/agentdictionaryvaluetranslationcatalog")
-class AgentDictionaryValueTranslationCatalogReadModelResource(private val repository: AgentDictionaryValueTranslationCatalogReadModelRepository) {
+class AgentDictionaryValueTranslationCatalogReadModelResource(
+    private val repository: AgentDictionaryValueTranslationCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_dictionary_value_translation_catalog:list') or hasAuthority('agent_dictionary_value_translation_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: AgentDictionaryValueTranslationCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<AgentDictionaryValueTranslationCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: AgentDictionaryValueTranslationCatalogReadModelCriteria, pageable: Pageable): Page<AgentDictionaryValueTranslationCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_dictionary_value_translation_catalog:read')")

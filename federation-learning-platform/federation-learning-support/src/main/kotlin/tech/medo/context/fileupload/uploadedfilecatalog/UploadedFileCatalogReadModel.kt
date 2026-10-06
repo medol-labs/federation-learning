@@ -3,11 +3,11 @@ package tech.medo.fileupload.uploadedfilecatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.fileupload.domain.states.UploadedFileStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.fileupload.domain.states.UploadedFileStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.LongFilter
@@ -36,11 +36,11 @@ class UploadedFileCatalogReadModelCriteria {
     var expiresAt: RangeFilter<LocalDateTime>? = null
     var expiredAt: RangeFilter<LocalDateTime>? = null
     var expirationReason: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class UploadedFileCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var fileId: UUID? = null
     var originalFileName: String? = null
     var contentType: String? = null
@@ -59,6 +59,7 @@ class UploadedFileCatalogReadModelProjection : MetadataProjection {
     var expiresAt: LocalDateTime? = null
     var expiredAt: LocalDateTime? = null
     var expirationReason: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -87,6 +88,7 @@ fun UploadedFileCatalogReadModelProjection.toReadModel(): UploadedFileCatalogRea
     expiresAt = expiresAt,
     expiredAt = expiredAt,
     expirationReason = expirationReason,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -122,6 +124,7 @@ data class UploadedFileCatalogReadModel(
     val expiresAt: LocalDateTime?,
     val expiredAt: LocalDateTime?,
     val expirationReason: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

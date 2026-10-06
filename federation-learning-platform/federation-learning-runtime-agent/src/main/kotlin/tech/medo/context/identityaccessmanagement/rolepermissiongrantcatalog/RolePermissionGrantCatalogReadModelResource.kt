@@ -15,14 +15,21 @@ import org.springframework.web.bind.annotation.RestController
 @CrossOrigin
 @RestController
 @RequestMapping("/rolepermissiongrant/rolepermissiongrantcatalog")
-class RolePermissionGrantCatalogReadModelResource(private val repository: RolePermissionGrantCatalogReadModelRepository) {
+class RolePermissionGrantCatalogReadModelResource(
+    private val repository: RolePermissionGrantCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('role_permission_grant_catalog:list') or hasAuthority('role_permission_grant_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: RolePermissionGrantCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<RolePermissionGrantCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: RolePermissionGrantCatalogReadModelCriteria, pageable: Pageable): Page<RolePermissionGrantCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
 }

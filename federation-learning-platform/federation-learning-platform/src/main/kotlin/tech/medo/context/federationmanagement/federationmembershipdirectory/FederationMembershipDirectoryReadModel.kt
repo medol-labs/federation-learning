@@ -3,10 +3,11 @@ package tech.medo.federationmanagement.federationmembershipdirectory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
+import java.util.UUID
 
-import tech.jhipster.service.filter.StringFilter
 import java.time.LocalDateTime
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
 
 
 data class FederationMembershipDirectoryReadModelKey(
@@ -24,11 +25,11 @@ class FederationMembershipDirectoryReadModelCriteria {
     var membershipStatus: StringFilter? = null
     var invitationNote: StringFilter? = null
     var approvalNote: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class FederationMembershipDirectoryReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var federationId: UUID? = null
     var organizationId: UUID? = null
     var federationName: String? = null
@@ -36,6 +37,7 @@ class FederationMembershipDirectoryReadModelProjection : MetadataProjection {
     var membershipStatus: String? = null
     var invitationNote: String? = null
     var approvalNote: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -53,6 +55,7 @@ fun FederationMembershipDirectoryReadModelProjection.toReadModel(): FederationMe
     membershipStatus = membershipStatus,
     invitationNote = invitationNote,
     approvalNote = approvalNote,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -79,6 +82,7 @@ data class FederationMembershipDirectoryReadModel(
     val membershipStatus: String?,
     val invitationNote: String?,
     val approvalNote: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

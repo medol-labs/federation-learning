@@ -3,14 +3,15 @@ package tech.medo.trainingorchestration.trainingparticipanteligibility
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.math.BigDecimal;
+import java.util.UUID
+import java.math.BigDecimal
 
+import java.time.LocalDateTime
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
-import java.time.LocalDateTime
 
 
 class TrainingParticipantEligibilityReadModelQuery
@@ -50,11 +51,11 @@ class TrainingParticipantEligibilityReadModelCriteria {
     var selectionReady: BooleanFilter? = null
     var eligibilityReason: StringFilter? = null
     var nextRequiredAction: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class TrainingParticipantEligibilityReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var trainingJobId: UUID? = null
     var federationId: UUID? = null
     var organizationId: UUID? = null
@@ -91,6 +92,7 @@ class TrainingParticipantEligibilityReadModelProjection : MetadataProjection {
     var ineligibleReasons: List<String> = emptyList()
     var warningReasons: List<String> = emptyList()
     var nextRequiredAction: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -137,6 +139,7 @@ fun TrainingParticipantEligibilityReadModelProjection.toReadModel(): TrainingPar
     ineligibleReasons = ineligibleReasons,
     warningReasons = warningReasons,
     nextRequiredAction = nextRequiredAction,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -190,6 +193,7 @@ data class TrainingParticipantEligibilityReadModel(
     val ineligibleReasons: List<String>,
     val warningReasons: List<String>,
     val nextRequiredAction: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

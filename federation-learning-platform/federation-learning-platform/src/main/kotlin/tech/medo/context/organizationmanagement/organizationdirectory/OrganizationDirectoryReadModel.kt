@@ -3,14 +3,15 @@ package tech.medo.organizationmanagement.organizationdirectory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.organizationmanagement.domain.types.OrganizationType;
-import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum;
+import java.util.UUID
+import tech.medo.organizationmanagement.domain.types.OrganizationType
+import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
 
+import java.time.LocalDateTime
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
-import java.time.LocalDateTime
 
 
 class OrganizationDirectoryReadModelQuery
@@ -21,16 +22,17 @@ class OrganizationDirectoryReadModelCriteria {
     var organizationType: Filter<OrganizationType>? = null
     var state: Filter<OrganizationStateEnum>? = null
     var approvedDatasetCount: IntegerFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class OrganizationDirectoryReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var organizationId: UUID? = null
     var organizationName: String? = null
     var organizationType: OrganizationType? = null
     var state: OrganizationStateEnum? = null
     var approvedDatasetCount: Int? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -46,6 +48,7 @@ fun OrganizationDirectoryReadModelProjection.toReadModel(): OrganizationDirector
     organizationType = organizationType,
     state = state,
     approvedDatasetCount = approvedDatasetCount,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -68,6 +71,7 @@ data class OrganizationDirectoryReadModel(
     val organizationType: OrganizationType?,
     val state: OrganizationStateEnum?,
     val approvedDatasetCount: Int?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

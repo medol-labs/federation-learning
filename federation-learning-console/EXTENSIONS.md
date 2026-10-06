@@ -75,7 +75,7 @@ overwritten by regeneration. Business customizations should live under
 | --- | --- | --- | --- |
 | `federation-learning-platform` | Federation Learning Platform | `federation-learning-platform` | `/current-recommended-feature-schema-catalog` |
 | `federation-learning-runtime-agent` | Federation Learning Runtime Agent | `federation-learning-runtime-agent` | `/dashboard` |
-| `federation-learning-support` | Federation Learning Support | `federation-learning-support` | `/dictionary-catalog` |
+| `federation-learning-support` | Federation Learning Support | `federation-learning-support` | `/data-export-job-catalog` |
 
 ## Resource Extension Points
 
@@ -125,6 +125,62 @@ export const pageOverrides = {
 | `recommendedVersion` | `string` | `current-recommended-feature-schema-catalog:field:recommendedVersion` | `formatValue/display text` |
 | `recommendedAt` | `string` | `current-recommended-feature-schema-catalog:field:recommendedAt` | `formatValue/display text` |
 | `recommendationNote` | `string` | `current-recommended-feature-schema-catalog:field:recommendationNote` | `formatValue/display text` |
+
+### Data Export Job Catalog
+
+| Property | Value |
+| --- | --- |
+| Resource name | `data_export_job_catalog` |
+| Route | `/data-export-job-catalog` |
+| Backend module | `federation-learning-support` |
+| Data provider | `federation-learning-support` |
+| Generated list page | `src/contexts/dataexchange/slices/data-export-job/list.tsx` |
+| Generated show page | `src/contexts/dataexchange/slices/data-export-job/show.tsx` |
+| Resource metadata override | `resourceOverrides[{ name: "data_export_job_catalog" }]` |
+| Menu icon request | `resolveMenuIcon({ type: "resource", name: "data_export_job_catalog", parent: "dataexchange" })` |
+
+#### Page Overrides
+
+| View | Override key | Generated fallback |
+| --- | --- | --- |
+| `list` | `data-export-job-catalog:list` | `src/contexts/dataexchange/slices/data-export-job/list.tsx` |
+| `show` | `data-export-job-catalog:show` | `src/contexts/dataexchange/slices/data-export-job/show.tsx` |
+
+Example:
+
+```tsx
+// src/domain/page-overrides.tsx
+import { MyDataExportJobCatalogList } from "./pages/my-data-export-job-catalog-list";
+
+export const pageOverrides = {
+  "data-export-job-catalog:list": <MyDataExportJobCatalogList />,
+};
+```
+
+#### Commands And Row Actions
+
+| Command | Override key | Generated fallback | Fields |
+| --- | --- | --- | --- |
+| _(none)_ | | | |
+
+#### Field Renderers
+
+| Field | Type | Renderer override id | Default renderer |
+| --- | --- | --- | --- |
+| `dataExportJobId` | `string` | `data-export-job-catalog:field:dataExportJobId` | `formatValue/display text` |
+| `resourceName` | `string` | `data-export-job-catalog:field:resourceName` | `formatValue/display text` |
+| `criteriaJson` | `string` | `data-export-job-catalog:field:criteriaJson` | `CopyableText` |
+| `sortJson` | `string` | `data-export-job-catalog:field:sortJson` | `CopyableText` |
+| `columnsJson` | `string` | `data-export-job-catalog:field:columnsJson` | `CopyableText` |
+| `requestedLocale` | `string` | `data-export-job-catalog:field:requestedLocale` | `formatValue/display text` |
+| `requestedAt` | `string` | `data-export-job-catalog:field:requestedAt` | `formatValue/display text` |
+| `snapshotUpperBound` | `string` | `data-export-job-catalog:field:snapshotUpperBound` | `formatValue/display text` |
+| `requestHash` | `string` | `data-export-job-catalog:field:requestHash` | `formatValue/display text` |
+| `status` | `string` | `data-export-job-catalog:field:status` | `formatValue/display text` |
+| `fileName` | `string` | `data-export-job-catalog:field:fileName` | `formatValue/display text` |
+| `filePath` | `string` | `data-export-job-catalog:field:filePath` | `formatValue/display text` |
+| `rowCount` | `number` | `data-export-job-catalog:field:rowCount` | `formatValue/display text` |
+| `errorMessage` | `string` | `data-export-job-catalog:field:errorMessage` | `CopyableText` |
 
 ### Dictionary Catalog
 

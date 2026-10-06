@@ -3,10 +3,10 @@ package tech.medo.runtimeprovisioning.runtimeagentendpointcatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
@@ -25,11 +25,11 @@ class RuntimeAgentEndpointCatalogReadModelCriteria {
     var connectionStatus: StringFilter? = null
     var connectedAt: RangeFilter<LocalDateTime>? = null
     var activatedAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeAgentEndpointCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeAgentId: UUID? = null
     var runtimeId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
@@ -40,6 +40,7 @@ class RuntimeAgentEndpointCatalogReadModelProjection : MetadataProjection {
     var connectionStatus: String? = null
     var connectedAt: LocalDateTime? = null
     var activatedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -60,6 +61,7 @@ fun RuntimeAgentEndpointCatalogReadModelProjection.toReadModel(): RuntimeAgentEn
     connectionStatus = connectionStatus,
     connectedAt = connectedAt,
     activatedAt = activatedAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -87,6 +89,7 @@ data class RuntimeAgentEndpointCatalogReadModel(
     val connectionStatus: String?,
     val connectedAt: LocalDateTime?,
     val activatedAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

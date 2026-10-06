@@ -3,10 +3,10 @@ package tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.IntegerFilter
@@ -35,11 +35,11 @@ class AgentRuntimeNodeResourceLatestReadModelCriteria {
     var workloadCapacity: IntegerFilter? = null
     var observedAt: RangeFilter<LocalDateTime>? = null
     var telemetryRetentionPolicy: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class AgentRuntimeNodeResourceLatestReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
@@ -58,6 +58,7 @@ class AgentRuntimeNodeResourceLatestReadModelProjection : MetadataProjection {
     var workloadCapacity: Int? = null
     var observedAt: LocalDateTime? = null
     var telemetryRetentionPolicy: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -86,6 +87,7 @@ fun AgentRuntimeNodeResourceLatestReadModelProjection.toReadModel(): AgentRuntim
     workloadCapacity = workloadCapacity,
     observedAt = observedAt,
     telemetryRetentionPolicy = telemetryRetentionPolicy,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -121,6 +123,7 @@ data class AgentRuntimeNodeResourceLatestReadModel(
     val workloadCapacity: Int?,
     val observedAt: LocalDateTime?,
     val telemetryRetentionPolicy: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

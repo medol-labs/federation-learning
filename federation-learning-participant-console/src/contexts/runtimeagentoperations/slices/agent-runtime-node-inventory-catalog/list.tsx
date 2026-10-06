@@ -567,6 +567,7 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

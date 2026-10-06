@@ -3,11 +3,11 @@ package tech.medo.trainingorchestration.runtimeengineprofilecatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.trainingorchestration.domain.states.RuntimeEngineProfileStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.trainingorchestration.domain.states.RuntimeEngineProfileStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.Filter
@@ -28,11 +28,11 @@ class RuntimeEngineProfileCatalogReadModelCriteria {
     var active: BooleanFilter? = null
     var state: Filter<RuntimeEngineProfileStateEnum>? = null
     var registeredAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeEngineProfileCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeEngineProfileId: UUID? = null
     var profileName: String? = null
     var pluginProfile: String? = null
@@ -43,6 +43,7 @@ class RuntimeEngineProfileCatalogReadModelProjection : MetadataProjection {
     var active: Boolean? = null
     var state: RuntimeEngineProfileStateEnum? = null
     var registeredAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -63,6 +64,7 @@ fun RuntimeEngineProfileCatalogReadModelProjection.toReadModel(): RuntimeEngineP
     active = active,
     state = state,
     registeredAt = registeredAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -90,6 +92,7 @@ data class RuntimeEngineProfileCatalogReadModel(
     val active: Boolean?,
     val state: RuntimeEngineProfileStateEnum?,
     val registeredAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

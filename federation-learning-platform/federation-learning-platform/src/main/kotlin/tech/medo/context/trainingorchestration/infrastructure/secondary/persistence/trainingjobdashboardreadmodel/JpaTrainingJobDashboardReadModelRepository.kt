@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-import java.util.UUID;
-import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum;
-import java.math.BigDecimal;
+import java.util.UUID
+import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
+import java.math.BigDecimal
 
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModel
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelCriteria
@@ -71,6 +71,7 @@ class JpaTrainingJobDashboardReadModelRepository(
             it.globalAccuracy = this@toProjection.globalAccuracy
             it.finalModelId = this@toProjection.finalModelId
             it.stopReason = this@toProjection.stopReason
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -112,6 +113,7 @@ class JpaTrainingJobDashboardReadModelRepository(
             it.globalAccuracy = this@toEntity.globalAccuracy
             it.finalModelId = this@toEntity.finalModelId
             it.stopReason = this@toEntity.stopReason
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

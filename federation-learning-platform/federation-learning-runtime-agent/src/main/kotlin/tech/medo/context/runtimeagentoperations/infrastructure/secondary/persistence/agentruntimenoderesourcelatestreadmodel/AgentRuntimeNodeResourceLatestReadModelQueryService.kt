@@ -10,10 +10,11 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest.AgentRuntimeNodeResourceLatestReadModel
 import tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest.AgentRuntimeNodeResourceLatestReadModelCriteria
@@ -48,6 +49,7 @@ class AgentRuntimeNodeResourceLatestReadModelQueryService(
             criteria.workloadCapacity?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<AgentRuntimeNodeResourceLatestReadModelEntity>, Expression<Int>> { root -> root.get("workloadCapacity") })) }
             criteria.observedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<AgentRuntimeNodeResourceLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("observedAt") })) }
             criteria.telemetryRetentionPolicy?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentRuntimeNodeResourceLatestReadModelEntity>, Expression<String>> { root -> root.get("telemetryRetentionPolicy") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<AgentRuntimeNodeResourceLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -123,6 +125,7 @@ class AgentRuntimeNodeResourceLatestReadModelQueryService(
             it.workloadCapacity = this@toProjection.workloadCapacity
             it.observedAt = this@toProjection.observedAt
             it.telemetryRetentionPolicy = this@toProjection.telemetryRetentionPolicy
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

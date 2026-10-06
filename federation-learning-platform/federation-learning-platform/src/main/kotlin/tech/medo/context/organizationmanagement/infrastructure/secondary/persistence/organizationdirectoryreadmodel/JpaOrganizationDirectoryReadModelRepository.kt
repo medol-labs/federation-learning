@@ -4,9 +4,9 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
-import tech.medo.organizationmanagement.domain.types.OrganizationType;
-import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum;
+import java.util.UUID
+import tech.medo.organizationmanagement.domain.types.OrganizationType
+import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
 
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModel
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelCriteria
@@ -42,6 +42,7 @@ class JpaOrganizationDirectoryReadModelRepository(
             it.organizationType = this@toProjection.organizationType
             it.state = this@toProjection.state
             it.approvedDatasetCount = this@toProjection.approvedDatasetCount
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -57,6 +58,7 @@ class JpaOrganizationDirectoryReadModelRepository(
             it.organizationType = this@toEntity.organizationType
             it.state = this@toEntity.state
             it.approvedDatasetCount = this@toEntity.approvedDatasetCount
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

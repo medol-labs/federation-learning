@@ -3,13 +3,13 @@ package tech.medo.runtimeagentoperations.datasetcapability
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition;
-import tech.medo.runtimeagentoperations.domain.types.LabelDefinition;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition
+import tech.medo.runtimeagentoperations.domain.types.LabelDefinition
+import java.math.BigDecimal
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.BooleanFilter
@@ -42,11 +42,11 @@ class DatasetCapabilityReadModelCriteria {
     var approvalStatus: StringFilter? = null
     var approved: BooleanFilter? = null
     var lastProfiledAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class DatasetCapabilityReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
     var runtimeId: UUID? = null
@@ -70,6 +70,7 @@ class DatasetCapabilityReadModelProjection : MetadataProjection {
     var approvalStatus: String? = null
     var approved: Boolean? = null
     var lastProfiledAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -103,6 +104,7 @@ fun DatasetCapabilityReadModelProjection.toReadModel(): DatasetCapabilityReadMod
     approvalStatus = approvalStatus,
     approved = approved,
     lastProfiledAt = lastProfiledAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -143,6 +145,7 @@ data class DatasetCapabilityReadModel(
     val approvalStatus: String?,
     val approved: Boolean?,
     val lastProfiledAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

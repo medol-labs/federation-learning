@@ -3,14 +3,15 @@ package tech.medo.modellifecycle.modelcatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.math.BigDecimal;
-import tech.medo.modellifecycle.domain.states.ModelStateEnum;
+import java.util.UUID
+import java.math.BigDecimal
+import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
+import java.time.LocalDateTime
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
-import java.time.LocalDateTime
 
 
 class ModelCatalogReadModelQuery
@@ -31,11 +32,11 @@ class ModelCatalogReadModelCriteria {
     var hyperparameterSnapshotId: StringFilter? = null
     var reproducibilityManifestId: StringFilter? = null
     var modelCardId: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class ModelCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var modelId: UUID? = null
     var trainingJobId: UUID? = null
     var finalRoundId: UUID? = null
@@ -51,6 +52,7 @@ class ModelCatalogReadModelProjection : MetadataProjection {
     var hyperparameterSnapshotId: UUID? = null
     var reproducibilityManifestId: UUID? = null
     var modelCardId: UUID? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -76,6 +78,7 @@ fun ModelCatalogReadModelProjection.toReadModel(): ModelCatalogReadModel =
     hyperparameterSnapshotId = hyperparameterSnapshotId,
     reproducibilityManifestId = reproducibilityManifestId,
     modelCardId = modelCardId,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -108,6 +111,7 @@ data class ModelCatalogReadModel(
     val hyperparameterSnapshotId: UUID?,
     val reproducibilityManifestId: UUID?,
     val modelCardId: UUID?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

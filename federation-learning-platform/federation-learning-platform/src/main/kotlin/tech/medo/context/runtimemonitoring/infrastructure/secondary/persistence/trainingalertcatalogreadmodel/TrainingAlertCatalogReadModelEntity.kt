@@ -8,17 +8,16 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 
 @Entity
 @Table(name = "training_alert_catalog")
 class TrainingAlertCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var alertId: UUID? = null
     var nodeId: UUID? = null
@@ -33,6 +32,7 @@ class TrainingAlertCatalogReadModelEntity : MetadataProjection {
     var acknowledgedAt: LocalDateTime? = null
     var resolvedAt: LocalDateTime? = null
     var resolutionSummary: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

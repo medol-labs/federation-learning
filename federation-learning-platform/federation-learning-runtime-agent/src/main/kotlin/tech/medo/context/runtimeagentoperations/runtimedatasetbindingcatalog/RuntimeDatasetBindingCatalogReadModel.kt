@@ -3,10 +3,10 @@ package tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
@@ -28,11 +28,11 @@ class RuntimeDatasetBindingCatalogReadModelCriteria {
     var filePath: StringFilter? = null
     var dataFormat: StringFilter? = null
     var configuredAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeDatasetBindingCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeDatasetBindingId: UUID? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
@@ -46,6 +46,7 @@ class RuntimeDatasetBindingCatalogReadModelProjection : MetadataProjection {
     var filePath: String? = null
     var dataFormat: String? = null
     var configuredAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -69,6 +70,7 @@ fun RuntimeDatasetBindingCatalogReadModelProjection.toReadModel(): RuntimeDatase
     filePath = filePath,
     dataFormat = dataFormat,
     configuredAt = configuredAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -99,6 +101,7 @@ data class RuntimeDatasetBindingCatalogReadModel(
     val filePath: String?,
     val dataFormat: String?,
     val configuredAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

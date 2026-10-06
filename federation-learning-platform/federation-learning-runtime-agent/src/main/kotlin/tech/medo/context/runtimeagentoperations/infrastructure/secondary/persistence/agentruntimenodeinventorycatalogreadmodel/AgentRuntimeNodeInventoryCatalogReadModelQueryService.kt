@@ -10,10 +10,11 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog.AgentRuntimeNodeInventoryCatalogReadModel
 import tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog.AgentRuntimeNodeInventoryCatalogReadModelCriteria
@@ -46,6 +47,7 @@ class AgentRuntimeNodeInventoryCatalogReadModelQueryService(
             criteria.architecture?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentRuntimeNodeInventoryCatalogReadModelEntity>, Expression<String>> { root -> root.get("architecture") })) }
             criteria.inventoryHash?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentRuntimeNodeInventoryCatalogReadModelEntity>, Expression<String>> { root -> root.get("inventoryHash") })) }
             criteria.discoveredAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<AgentRuntimeNodeInventoryCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("discoveredAt") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<AgentRuntimeNodeInventoryCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -119,6 +121,7 @@ class AgentRuntimeNodeInventoryCatalogReadModelQueryService(
             it.architecture = this@toProjection.architecture
             it.inventoryHash = this@toProjection.inventoryHash
             it.discoveredAt = this@toProjection.discoveredAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

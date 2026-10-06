@@ -3,11 +3,11 @@ package tech.medo.runtimeagentoperations.datasetreadiness
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.math.BigDecimal
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.BooleanFilter
@@ -53,11 +53,11 @@ class DatasetReadinessReadModelCriteria {
     var lastAccessValidatedAt: RangeFilter<LocalDateTime>? = null
     var lastRuntimeHeartbeatAt: RangeFilter<LocalDateTime>? = null
     var lastUpdatedAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class DatasetReadinessReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var datasetId: UUID? = null
     var organizationId: UUID? = null
     var runtimeId: UUID? = null
@@ -95,6 +95,7 @@ class DatasetReadinessReadModelProjection : MetadataProjection {
     var lastAccessValidatedAt: LocalDateTime? = null
     var lastRuntimeHeartbeatAt: LocalDateTime? = null
     var lastUpdatedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -142,6 +143,7 @@ fun DatasetReadinessReadModelProjection.toReadModel(): DatasetReadinessReadModel
     lastAccessValidatedAt = lastAccessValidatedAt,
     lastRuntimeHeartbeatAt = lastRuntimeHeartbeatAt,
     lastUpdatedAt = lastUpdatedAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -196,6 +198,7 @@ data class DatasetReadinessReadModel(
     val lastAccessValidatedAt: LocalDateTime?,
     val lastRuntimeHeartbeatAt: LocalDateTime?,
     val lastUpdatedAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

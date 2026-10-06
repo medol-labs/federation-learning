@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-import java.util.UUID;
-import java.math.BigDecimal;
+import java.util.UUID
+import java.math.BigDecimal
 
 import tech.medo.trainingorchestration.trainingparticipanteligibility.TrainingParticipantEligibilityReadModel
 import tech.medo.trainingorchestration.trainingparticipanteligibility.TrainingParticipantEligibilityReadModelCriteria
@@ -75,6 +75,7 @@ class JpaTrainingParticipantEligibilityReadModelRepository(
             it.ineligibleReasons = this@toProjection.ineligibleReasons?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.warningReasons = this@toProjection.warningReasons?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.nextRequiredAction = this@toProjection.nextRequiredAction
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -121,6 +122,7 @@ class JpaTrainingParticipantEligibilityReadModelRepository(
             it.ineligibleReasons = objectMapper.writeValueAsString(this@toEntity.ineligibleReasons)
             it.warningReasons = objectMapper.writeValueAsString(this@toEntity.warningReasons)
             it.nextRequiredAction = this@toEntity.nextRequiredAction
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

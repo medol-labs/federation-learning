@@ -3,10 +3,10 @@ package tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.RangeFilter
@@ -32,11 +32,11 @@ class AgentRuntimeNodeInventoryCatalogReadModelCriteria {
     var architecture: StringFilter? = null
     var inventoryHash: StringFilter? = null
     var discoveredAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class AgentRuntimeNodeInventoryCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var nodeId: UUID? = null
     var runtimeNodeInventoryReportId: UUID? = null
     var organizationId: UUID? = null
@@ -53,6 +53,7 @@ class AgentRuntimeNodeInventoryCatalogReadModelProjection : MetadataProjection {
     var architecture: String? = null
     var inventoryHash: String? = null
     var discoveredAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -79,6 +80,7 @@ fun AgentRuntimeNodeInventoryCatalogReadModelProjection.toReadModel(): AgentRunt
     architecture = architecture,
     inventoryHash = inventoryHash,
     discoveredAt = discoveredAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -112,6 +114,7 @@ data class AgentRuntimeNodeInventoryCatalogReadModel(
     val architecture: String?,
     val inventoryHash: String?,
     val discoveredAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

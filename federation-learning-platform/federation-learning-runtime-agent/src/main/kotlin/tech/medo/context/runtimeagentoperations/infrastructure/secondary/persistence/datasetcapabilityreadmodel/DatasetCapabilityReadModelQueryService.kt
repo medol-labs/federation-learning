@@ -10,13 +10,14 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition;
-import tech.medo.runtimeagentoperations.domain.types.LabelDefinition;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition
+import tech.medo.runtimeagentoperations.domain.types.LabelDefinition
+import java.math.BigDecimal
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModel
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModelCriteria
@@ -55,6 +56,7 @@ class DatasetCapabilityReadModelQueryService(
             criteria.approvalStatus?.let { specification = specification.and(buildSpecification(it, Function<Root<DatasetCapabilityReadModelEntity>, Expression<String>> { root -> root.get("approvalStatus") })) }
             criteria.approved?.let { specification = specification.and(buildSpecification(it, Function<Root<DatasetCapabilityReadModelEntity>, Expression<Boolean>> { root -> root.get("approved") })) }
             criteria.lastProfiledAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DatasetCapabilityReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("lastProfiledAt") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DatasetCapabilityReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -135,6 +137,7 @@ class DatasetCapabilityReadModelQueryService(
             it.approvalStatus = this@toProjection.approvalStatus
             it.approved = this@toProjection.approved
             it.lastProfiledAt = this@toProjection.lastProfiledAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

@@ -8,17 +8,16 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.math.BigDecimal
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 
 @Entity
 @Table(name = "runtime_telemetry_latest")
 class RuntimeTelemetryLatestReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
@@ -48,6 +47,7 @@ class RuntimeTelemetryLatestReadModelEntity : MetadataProjection {
     var alertMessage: String? = null
     var healthStatus: String? = null
     var telemetryRetentionPolicy: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

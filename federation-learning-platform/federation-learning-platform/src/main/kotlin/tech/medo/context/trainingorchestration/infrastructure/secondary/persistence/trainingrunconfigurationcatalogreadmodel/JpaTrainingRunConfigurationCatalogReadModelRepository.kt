@@ -4,9 +4,9 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
-import java.math.BigDecimal;
-import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum;
+import java.util.UUID
+import java.math.BigDecimal
+import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum
 
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModel
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelCriteria
@@ -76,6 +76,7 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
             it.updateReason = this@toProjection.updateReason
             it.lockedByTrainingJobId = this@toProjection.lockedByTrainingJobId
             it.state = this@toProjection.state
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -125,6 +126,7 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
             it.updateReason = this@toEntity.updateReason
             it.lockedByTrainingJobId = this@toEntity.lockedByTrainingJobId
             it.state = this@toEntity.state
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

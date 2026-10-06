@@ -8,16 +8,15 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.math.BigDecimal;
-import tech.medo.modellifecycle.domain.states.ModelStateEnum;
-import java.time.LocalDateTime
+import java.util.UUID
+import java.math.BigDecimal
+import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "model_catalog")
 class ModelCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var modelId: UUID? = null
     var trainingJobId: UUID? = null
@@ -35,6 +34,7 @@ class ModelCatalogReadModelEntity : MetadataProjection {
     var hyperparameterSnapshotId: UUID? = null
     var reproducibilityManifestId: UUID? = null
     var modelCardId: UUID? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

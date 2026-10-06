@@ -10,21 +10,28 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
-import tech.medo.dictionarymaintenance.domain.states.DictionaryValueStateEnum;
+import java.util.UUID
+import tech.medo.dictionarymaintenance.domain.states.DictionaryValueStateEnum
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/dictionaryvalue/dictionaryvaluecatalog")
-class DictionaryValueCatalogReadModelResource(private val repository: DictionaryValueCatalogReadModelRepository) {
+class DictionaryValueCatalogReadModelResource(
+    private val repository: DictionaryValueCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('dictionary_value_catalog:list') or hasAuthority('dictionary_value_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: DictionaryValueCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<DictionaryValueCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: DictionaryValueCatalogReadModelCriteria, pageable: Pageable): Page<DictionaryValueCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('dictionary_value_catalog:read')")

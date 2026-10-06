@@ -10,11 +10,12 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import java.math.BigDecimal
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimeagentoperations.agentruntimetelemetrylatest.AgentRuntimeTelemetryLatestReadModel
 import tech.medo.runtimeagentoperations.agentruntimetelemetrylatest.AgentRuntimeTelemetryLatestReadModelCriteria
@@ -41,6 +42,7 @@ class AgentRuntimeTelemetryLatestReadModelQueryService(
             criteria.memoryLoad?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<AgentRuntimeTelemetryLatestReadModelEntity>, Expression<BigDecimal>> { root -> root.get("memoryLoad") })) }
             criteria.lastHeartbeatAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<AgentRuntimeTelemetryLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("lastHeartbeatAt") })) }
             criteria.telemetryRetentionPolicy?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentRuntimeTelemetryLatestReadModelEntity>, Expression<String>> { root -> root.get("telemetryRetentionPolicy") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<AgentRuntimeTelemetryLatestReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -108,6 +110,7 @@ class AgentRuntimeTelemetryLatestReadModelQueryService(
             it.memoryLoad = this@toProjection.memoryLoad
             it.lastHeartbeatAt = this@toProjection.lastHeartbeatAt
             it.telemetryRetentionPolicy = this@toProjection.telemetryRetentionPolicy
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

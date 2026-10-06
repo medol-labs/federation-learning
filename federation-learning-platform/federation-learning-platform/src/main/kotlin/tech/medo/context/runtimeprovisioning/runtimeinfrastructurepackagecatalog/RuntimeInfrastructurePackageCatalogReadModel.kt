@@ -3,12 +3,13 @@ package tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum;
+import java.util.UUID
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum
 
-import tech.jhipster.service.filter.Filter
-import tech.jhipster.service.filter.StringFilter
 import java.time.LocalDateTime
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
 
 
 class RuntimeInfrastructurePackageCatalogReadModelQuery
@@ -19,16 +20,17 @@ class RuntimeInfrastructurePackageCatalogReadModelCriteria {
     var packageVersion: StringFilter? = null
     var runtimeEnvironmentType: StringFilter? = null
     var state: Filter<RuntimeInfrastructurePackageStateEnum>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeInfrastructurePackageCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeInfrastructurePackageId: UUID? = null
     var packageName: String? = null
     var packageVersion: String? = null
     var runtimeEnvironmentType: String? = null
     var state: RuntimeInfrastructurePackageStateEnum? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -44,6 +46,7 @@ fun RuntimeInfrastructurePackageCatalogReadModelProjection.toReadModel(): Runtim
     packageVersion = packageVersion,
     runtimeEnvironmentType = runtimeEnvironmentType,
     state = state,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -66,6 +69,7 @@ data class RuntimeInfrastructurePackageCatalogReadModel(
     val packageVersion: String?,
     val runtimeEnvironmentType: String?,
     val state: RuntimeInfrastructurePackageStateEnum?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

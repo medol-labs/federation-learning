@@ -8,17 +8,16 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.fileupload.domain.states.UploadedFileStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.fileupload.domain.states.UploadedFileStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 
 @Entity
 @Table(name = "uploaded_file_catalog")
 class UploadedFileCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var fileId: UUID? = null
     var originalFileName: String? = null
@@ -41,6 +40,7 @@ class UploadedFileCatalogReadModelEntity : MetadataProjection {
     var expiredAt: LocalDateTime? = null
     @Column(columnDefinition = "text")
     var expirationReason: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

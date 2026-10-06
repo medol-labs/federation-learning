@@ -10,11 +10,12 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimemonitoring.trainingalertcatalog.TrainingAlertCatalogReadModel
 import tech.medo.runtimemonitoring.trainingalertcatalog.TrainingAlertCatalogReadModelCriteria
@@ -31,7 +32,6 @@ class TrainingAlertCatalogReadModelQueryService(
     private fun createSpecification(criteria: TrainingAlertCatalogReadModelCriteria?): Specification<TrainingAlertCatalogReadModelEntity> {
         var specification = Specification.where<TrainingAlertCatalogReadModelEntity>(null)
         if (criteria != null) {
-            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
             criteria.alertId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("alertId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.trainingJobId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("trainingJobId") as JpaExpression<UUID>).cast(String::class.java) })) }
@@ -43,6 +43,7 @@ class TrainingAlertCatalogReadModelQueryService(
             criteria.acknowledgedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("acknowledgedAt") })) }
             criteria.resolvedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("resolvedAt") })) }
             criteria.resolutionSummary?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<String>> { root -> root.get("resolutionSummary") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -111,6 +112,7 @@ class TrainingAlertCatalogReadModelQueryService(
             it.acknowledgedAt = this@toProjection.acknowledgedAt
             it.resolvedAt = this@toProjection.resolvedAt
             it.resolutionSummary = this@toProjection.resolutionSummary
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

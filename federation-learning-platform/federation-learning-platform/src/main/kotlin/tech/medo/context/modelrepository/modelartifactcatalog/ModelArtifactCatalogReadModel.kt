@@ -3,11 +3,11 @@ package tech.medo.modelrepository.modelartifactcatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
@@ -35,11 +35,11 @@ class ModelArtifactCatalogReadModelCriteria {
     var trainingJobObjective: StringFilter? = null
     var state: Filter<ModelArtifactStateEnum>? = null
     var registeredAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class ModelArtifactCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var modelId: UUID? = null
     var modelName: String? = null
     var modelPlugin: String? = null
@@ -57,6 +57,7 @@ class ModelArtifactCatalogReadModelProjection : MetadataProjection {
     var trainingJobObjective: String? = null
     var state: ModelArtifactStateEnum? = null
     var registeredAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -84,6 +85,7 @@ fun ModelArtifactCatalogReadModelProjection.toReadModel(): ModelArtifactCatalogR
     trainingJobObjective = trainingJobObjective,
     state = state,
     registeredAt = registeredAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -118,6 +120,7 @@ data class ModelArtifactCatalogReadModel(
     val trainingJobObjective: String?,
     val state: ModelArtifactStateEnum?,
     val registeredAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

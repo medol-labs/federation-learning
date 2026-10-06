@@ -3,10 +3,10 @@ package tech.medo.runtimegovernance.runtimeidentitycatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
@@ -24,11 +24,11 @@ class RuntimeIdentityCatalogReadModelCriteria {
     var identityStatus: StringFilter? = null
     var activatedAt: RangeFilter<LocalDateTime>? = null
     var revokedAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeIdentityCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
     var runtimeAgentId: UUID? = null
@@ -38,6 +38,7 @@ class RuntimeIdentityCatalogReadModelProjection : MetadataProjection {
     var identityStatus: String? = null
     var activatedAt: LocalDateTime? = null
     var revokedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -57,6 +58,7 @@ fun RuntimeIdentityCatalogReadModelProjection.toReadModel(): RuntimeIdentityCata
     identityStatus = identityStatus,
     activatedAt = activatedAt,
     revokedAt = revokedAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -83,6 +85,7 @@ data class RuntimeIdentityCatalogReadModel(
     val identityStatus: String?,
     val activatedAt: LocalDateTime?,
     val revokedAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

@@ -1578,6 +1578,7 @@ export const TrainingRoundProgressList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/role/rolecatalog")
-class RoleCatalogReadModelResource(private val repository: RoleCatalogReadModelRepository) {
+class RoleCatalogReadModelResource(
+    private val repository: RoleCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('role_catalog:list') or hasAuthority('role_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: RoleCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<RoleCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: RoleCatalogReadModelCriteria, pageable: Pageable): Page<RoleCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('role_catalog:read')")

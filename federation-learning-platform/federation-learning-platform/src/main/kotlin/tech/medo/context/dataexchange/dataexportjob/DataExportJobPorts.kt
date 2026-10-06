@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component
 import tech.medo.shared.application.export.DataExportJobLifecyclePort
 import tech.medo.shared.application.export.DataExportJobRequestMessage
 import tech.medo.shared.application.export.DataExportJobRequestPort
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.UUID
 
 @Component
@@ -20,8 +22,8 @@ class AxonDataExportJobRequestPort(
                 sortJson = message.sortJson,
                 columnsJson = message.columnsJson,
                 requestedLocale = message.requestedLocale,
-                requestedAt = message.requestedAt,
-                snapshotUpperBound = message.snapshotUpperBound,
+                requestedAt = LocalDateTime.ofInstant(message.requestedAt, ZoneOffset.UTC),
+                snapshotUpperBound = LocalDateTime.ofInstant(message.snapshotUpperBound, ZoneOffset.UTC),
                 requestHash = message.requestHash,
                 fileName = message.fileName,
                 status = DataExportJobStatus.REQUESTED
@@ -45,4 +47,11 @@ class AxonDataExportJobLifecyclePort(
     override fun fail(dataExportJobId: UUID, errorMessage: String) {
         commandGateway.send(FailDataExportCommand(dataExportJobId, errorMessage, DataExportJobStatus.FAILED)).resultMessage.toCompletableFuture().join()
     }
+}
+
+object DataExportJobStatus {
+    const val REQUESTED = "REQUESTED"
+    const val PROCESSING = "PROCESSING"
+    const val COMPLETED = "COMPLETED"
+    const val FAILED = "FAILED"
 }

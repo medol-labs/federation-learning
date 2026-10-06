@@ -8,15 +8,14 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.math.BigDecimal;
-import java.time.LocalDateTime
+import java.util.UUID
+import java.math.BigDecimal
 
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "training_participant_eligibility")
 class TrainingParticipantEligibilityReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var trainingJobId: UUID? = null
     var federationId: UUID? = null
@@ -57,6 +56,7 @@ class TrainingParticipantEligibilityReadModelEntity : MetadataProjection {
     @Column(columnDefinition = "text")
     var warningReasons: String? = null
     var nextRequiredAction: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

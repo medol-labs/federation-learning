@@ -8,17 +8,16 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
 
 @Entity
 @Table(name = "runtime_infrastructure_access_view")
 class RuntimeInfrastructureAccessViewReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var runtimeInfrastructureId: UUID? = null
     var organizationId: UUID? = null
@@ -49,6 +48,7 @@ class RuntimeInfrastructureAccessViewReadModelEntity : MetadataProjection {
     var connectedAt: LocalDateTime? = null
     @Enumerated(EnumType.STRING)
     var state: RuntimeInfrastructureStateEnum? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

@@ -6,13 +6,13 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-import java.util.UUID;
-import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition;
-import tech.medo.runtimeagentoperations.domain.types.LabelDefinition;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.runtimeagentoperations.domain.types.FeatureDefinition
+import tech.medo.runtimeagentoperations.domain.types.LabelDefinition
+import java.math.BigDecimal
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModel
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModelCriteria
@@ -67,6 +67,7 @@ class JpaDatasetCapabilityReadModelRepository(
             it.approvalStatus = this@toProjection.approvalStatus
             it.approved = this@toProjection.approved
             it.lastProfiledAt = this@toProjection.lastProfiledAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -100,6 +101,7 @@ class JpaDatasetCapabilityReadModelRepository(
             it.approvalStatus = this@toEntity.approvalStatus
             it.approved = this@toEntity.approved
             it.lastProfiledAt = this@toEntity.lastProfiledAt
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

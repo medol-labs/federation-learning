@@ -8,16 +8,15 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.math.BigDecimal;
-import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum;
-import java.time.LocalDateTime
+import java.util.UUID
+import java.math.BigDecimal
+import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum
 
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "training_run_configuration_catalog")
 class TrainingRunConfigurationCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var trainingRunConfigurationId: UUID? = null
     var configurationName: String? = null
@@ -60,6 +59,7 @@ class TrainingRunConfigurationCatalogReadModelEntity : MetadataProjection {
     var lockedByTrainingJobId: UUID? = null
     @Enumerated(EnumType.STRING)
     var state: TrainingRunConfigurationStateEnum? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

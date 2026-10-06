@@ -955,6 +955,7 @@ export const SecureAggregationSessionCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

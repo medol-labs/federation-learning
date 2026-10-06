@@ -3,10 +3,10 @@ package tech.medo.runtimemonitoring.runtimenodeinventoryview
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.RangeFilter
@@ -16,7 +16,6 @@ import tech.jhipster.service.filter.StringFilter
 class RuntimeNodeInventoryViewReadModelQuery
 
 class RuntimeNodeInventoryViewReadModelCriteria {
-    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
     var nodeId: StringFilter? = null
     var runtimeNodeInventoryReportId: StringFilter? = null
     var organizationId: StringFilter? = null
@@ -35,11 +34,11 @@ class RuntimeNodeInventoryViewReadModelCriteria {
     var inventoryHash: StringFilter? = null
     var discoveredAt: RangeFilter<LocalDateTime>? = null
     var recordedAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeNodeInventoryViewReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var nodeId: UUID? = null
     var runtimeNodeInventoryReportId: UUID? = null
     var organizationId: UUID? = null
@@ -58,6 +57,7 @@ class RuntimeNodeInventoryViewReadModelProjection : MetadataProjection {
     var inventoryHash: String? = null
     var discoveredAt: LocalDateTime? = null
     var recordedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -86,6 +86,7 @@ fun RuntimeNodeInventoryViewReadModelProjection.toReadModel(): RuntimeNodeInvent
     inventoryHash = inventoryHash,
     discoveredAt = discoveredAt,
     recordedAt = recordedAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -121,6 +122,7 @@ data class RuntimeNodeInventoryViewReadModel(
     val inventoryHash: String?,
     val discoveredAt: LocalDateTime?,
     val recordedAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

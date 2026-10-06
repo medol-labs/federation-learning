@@ -10,11 +10,12 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import java.math.BigDecimal
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.RuntimeDatasetMetadataCatalogReadModel
 import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.RuntimeDatasetMetadataCatalogReadModelCriteria
@@ -54,6 +55,7 @@ class RuntimeDatasetMetadataCatalogReadModelQueryService(
             criteria.profilingStatus?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetMetadataCatalogReadModelEntity>, Expression<String>> { root -> root.get("profilingStatus") })) }
             criteria.failureReason?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetMetadataCatalogReadModelEntity>, Expression<String>> { root -> root.get("failureReason") })) }
             criteria.profiledAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeDatasetMetadataCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("profiledAt") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeDatasetMetadataCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -134,6 +136,7 @@ class RuntimeDatasetMetadataCatalogReadModelQueryService(
             it.profilingStatus = this@toProjection.profilingStatus
             it.failureReason = this@toProjection.failureReason
             it.profiledAt = this@toProjection.profiledAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

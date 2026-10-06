@@ -242,6 +242,7 @@ export const RuntimeCapabilityCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

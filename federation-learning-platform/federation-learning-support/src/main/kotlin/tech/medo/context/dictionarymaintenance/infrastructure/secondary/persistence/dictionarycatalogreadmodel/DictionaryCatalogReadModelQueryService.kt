@@ -10,11 +10,12 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import tech.medo.dictionarymaintenance.domain.states.DictionaryStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import tech.medo.dictionarymaintenance.domain.states.DictionaryStateEnum
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.dictionarymaintenance.dictionarycatalog.DictionaryCatalogReadModel
 import tech.medo.dictionarymaintenance.dictionarycatalog.DictionaryCatalogReadModelCriteria
@@ -40,6 +41,7 @@ class DictionaryCatalogReadModelQueryService(
             criteria.updatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DictionaryCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("updatedAt") })) }
             criteria.archivedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DictionaryCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("archivedAt") })) }
             criteria.archiveReason?.let { specification = specification.and(buildSpecification(it, Function<Root<DictionaryCatalogReadModelEntity>, Expression<String>> { root -> root.get("archiveReason") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DictionaryCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -106,6 +108,7 @@ class DictionaryCatalogReadModelQueryService(
             it.updatedAt = this@toProjection.updatedAt
             it.archivedAt = this@toProjection.archivedAt
             it.archiveReason = this@toProjection.archiveReason
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

@@ -3,10 +3,10 @@ package tech.medo.runtimeagentoperations.runtimeagentlifecyclecatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.RangeFilter
@@ -35,11 +35,11 @@ class RuntimeAgentLifecycleCatalogReadModelCriteria {
     var bootstrapFailedAt: RangeFilter<LocalDateTime>? = null
     var startedAt: RangeFilter<LocalDateTime>? = null
     var readyAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeAgentLifecycleCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeAgentId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
     var agentVersion: String? = null
@@ -59,6 +59,7 @@ class RuntimeAgentLifecycleCatalogReadModelProjection : MetadataProjection {
     var bootstrapFailedAt: LocalDateTime? = null
     var startedAt: LocalDateTime? = null
     var readyAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -88,6 +89,7 @@ fun RuntimeAgentLifecycleCatalogReadModelProjection.toReadModel(): RuntimeAgentL
     bootstrapFailedAt = bootstrapFailedAt,
     startedAt = startedAt,
     readyAt = readyAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -124,6 +126,7 @@ data class RuntimeAgentLifecycleCatalogReadModel(
     val bootstrapFailedAt: LocalDateTime?,
     val startedAt: LocalDateTime?,
     val readyAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

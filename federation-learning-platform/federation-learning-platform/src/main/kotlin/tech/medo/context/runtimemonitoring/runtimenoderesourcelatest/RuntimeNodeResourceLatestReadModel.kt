@@ -3,10 +3,10 @@ package tech.medo.runtimemonitoring.runtimenoderesourcelatest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.IntegerFilter
@@ -17,7 +17,6 @@ import tech.jhipster.service.filter.StringFilter
 class RuntimeNodeResourceLatestReadModelQuery
 
 class RuntimeNodeResourceLatestReadModelCriteria {
-    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
     var nodeId: StringFilter? = null
     var runtimeAgentId: StringFilter? = null
     var runtimeInfrastructureId: StringFilter? = null
@@ -37,11 +36,11 @@ class RuntimeNodeResourceLatestReadModelCriteria {
     var observedAt: RangeFilter<LocalDateTime>? = null
     var lastResourceSnapshotAt: RangeFilter<LocalDateTime>? = null
     var telemetryRetentionPolicy: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeNodeResourceLatestReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
@@ -61,6 +60,7 @@ class RuntimeNodeResourceLatestReadModelProjection : MetadataProjection {
     var observedAt: LocalDateTime? = null
     var lastResourceSnapshotAt: LocalDateTime? = null
     var telemetryRetentionPolicy: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -90,6 +90,7 @@ fun RuntimeNodeResourceLatestReadModelProjection.toReadModel(): RuntimeNodeResou
     observedAt = observedAt,
     lastResourceSnapshotAt = lastResourceSnapshotAt,
     telemetryRetentionPolicy = telemetryRetentionPolicy,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -126,6 +127,7 @@ data class RuntimeNodeResourceLatestReadModel(
     val observedAt: LocalDateTime?,
     val lastResourceSnapshotAt: LocalDateTime?,
     val telemetryRetentionPolicy: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

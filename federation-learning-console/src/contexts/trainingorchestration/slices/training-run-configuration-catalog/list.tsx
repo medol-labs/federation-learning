@@ -1248,6 +1248,7 @@ export const TrainingRunConfigurationCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

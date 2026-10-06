@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
-import tech.medo.federationmanagement.domain.states.FederationStateEnum;
+import java.util.UUID
+import tech.medo.federationmanagement.domain.states.FederationStateEnum
 
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModel
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModelCriteria
@@ -44,6 +44,7 @@ class JpaFederationOverviewReadModelRepository(
             it.pendingInvitationCount = this@toProjection.pendingInvitationCount
             it.activeRuntimeCount = this@toProjection.activeRuntimeCount
             it.activeTrainingJobCount = this@toProjection.activeTrainingJobCount
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -62,6 +63,7 @@ class JpaFederationOverviewReadModelRepository(
             it.pendingInvitationCount = this@toEntity.pendingInvitationCount
             it.activeRuntimeCount = this@toEntity.activeRuntimeCount
             it.activeTrainingJobCount = this@toEntity.activeTrainingJobCount
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

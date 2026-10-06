@@ -3,13 +3,14 @@ package tech.medo.federationmanagement.federationoverview
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.federationmanagement.domain.states.FederationStateEnum;
+import java.util.UUID
+import tech.medo.federationmanagement.domain.states.FederationStateEnum
 
+import java.time.LocalDateTime
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
-import java.time.LocalDateTime
 
 
 class FederationOverviewReadModelQuery
@@ -23,11 +24,11 @@ class FederationOverviewReadModelCriteria {
     var pendingInvitationCount: IntegerFilter? = null
     var activeRuntimeCount: IntegerFilter? = null
     var activeTrainingJobCount: IntegerFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class FederationOverviewReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var federationId: UUID? = null
     var federationName: String? = null
     var state: FederationStateEnum? = null
@@ -36,6 +37,7 @@ class FederationOverviewReadModelProjection : MetadataProjection {
     var pendingInvitationCount: Int? = null
     var activeRuntimeCount: Int? = null
     var activeTrainingJobCount: Int? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -54,6 +56,7 @@ fun FederationOverviewReadModelProjection.toReadModel(): FederationOverviewReadM
     pendingInvitationCount = pendingInvitationCount,
     activeRuntimeCount = activeRuntimeCount,
     activeTrainingJobCount = activeTrainingJobCount,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -79,6 +82,7 @@ data class FederationOverviewReadModel(
     val pendingInvitationCount: Int?,
     val activeRuntimeCount: Int?,
     val activeTrainingJobCount: Int?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

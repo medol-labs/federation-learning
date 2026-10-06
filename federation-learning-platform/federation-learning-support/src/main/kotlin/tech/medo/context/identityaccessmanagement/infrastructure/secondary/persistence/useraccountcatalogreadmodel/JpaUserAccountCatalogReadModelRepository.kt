@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
+import java.util.UUID
 
 import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModel
 import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelCriteria
@@ -41,6 +41,7 @@ class JpaUserAccountCatalogReadModelRepository(
             it.userSource = this@toProjection.userSource
             it.passwordHash = this@toProjection.passwordHash
             it.active = this@toProjection.active
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -57,6 +58,7 @@ class JpaUserAccountCatalogReadModelRepository(
             it.userSource = this@toEntity.userSource
             it.passwordHash = this@toEntity.passwordHash
             it.active = this@toEntity.active
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

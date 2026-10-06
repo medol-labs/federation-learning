@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/dataset/datasetreadiness")
-class DatasetReadinessReadModelResource(private val repository: DatasetReadinessReadModelRepository) {
+class DatasetReadinessReadModelResource(
+    private val repository: DatasetReadinessReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('dataset_readiness:list') or hasAuthority('dataset_readiness:read')")
     @GetMapping
     fun findAll(
         criteria: DatasetReadinessReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<DatasetReadinessReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: DatasetReadinessReadModelCriteria, pageable: Pageable): Page<DatasetReadinessReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('dataset_readiness:read')")

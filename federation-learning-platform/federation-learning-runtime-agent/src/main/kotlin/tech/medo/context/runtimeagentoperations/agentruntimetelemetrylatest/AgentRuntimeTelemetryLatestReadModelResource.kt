@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/agentruntimetelemetry/agentruntimetelemetrylatest")
-class AgentRuntimeTelemetryLatestReadModelResource(private val repository: AgentRuntimeTelemetryLatestReadModelRepository) {
+class AgentRuntimeTelemetryLatestReadModelResource(
+    private val repository: AgentRuntimeTelemetryLatestReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_runtime_telemetry_latest:list') or hasAuthority('agent_runtime_telemetry_latest:read')")
     @GetMapping
     fun findAll(
         criteria: AgentRuntimeTelemetryLatestReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<AgentRuntimeTelemetryLatestReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: AgentRuntimeTelemetryLatestReadModelCriteria, pageable: Pageable): Page<AgentRuntimeTelemetryLatestReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_runtime_telemetry_latest:read')")

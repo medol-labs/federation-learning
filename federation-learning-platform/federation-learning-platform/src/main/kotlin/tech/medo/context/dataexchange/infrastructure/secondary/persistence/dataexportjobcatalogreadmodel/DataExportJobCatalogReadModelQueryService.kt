@@ -1,20 +1,25 @@
 package tech.medo.dataexchange.infrastructure.secondary.persistence.dataexportjobcatalogreadmodel
 
-import jakarta.persistence.criteria.Expression
-import jakarta.persistence.criteria.Root
-import org.hibernate.query.criteria.JpaExpression
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
+import jakarta.persistence.criteria.Expression
+import jakarta.persistence.criteria.Root
+import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
+import tech.jhipster.service.filter.RangeFilter
+import java.util.function.Function
+import java.time.LocalDateTime
+
+import java.util.UUID
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
+
 import tech.medo.dataexchange.dataexportjob.DataExportJobCatalogReadModel
 import tech.medo.dataexchange.dataexportjob.DataExportJobCatalogReadModelCriteria
 import tech.medo.dataexchange.dataexportjob.DataExportJobCatalogReadModelProjection
 import tech.medo.dataexchange.dataexportjob.toReadModel
-import java.time.Instant
-import java.util.UUID
-import java.util.function.Function
 
 @Service
 class DataExportJobCatalogReadModelQueryService(
@@ -28,21 +33,57 @@ class DataExportJobCatalogReadModelQueryService(
         if (criteria != null) {
             criteria.dataExportJobId?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("dataExportJobId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.resourceName?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("resourceName") })) }
+            criteria.criteriaJson?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("criteriaJson") })) }
+            criteria.sortJson?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("sortJson") })) }
+            criteria.columnsJson?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("columnsJson") })) }
             criteria.requestedLocale?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("requestedLocale") })) }
-            criteria.requestedAt?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<Instant>> { root -> root.get("requestedAt") })) }
-            criteria.snapshotUpperBound?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<Instant>> { root -> root.get("snapshotUpperBound") })) }
+            criteria.requestedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("requestedAt") })) }
+            criteria.snapshotUpperBound?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("snapshotUpperBound") })) }
             criteria.requestHash?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("requestHash") })) }
+            criteria.status?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("status") })) }
             criteria.fileName?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("fileName") })) }
             criteria.filePath?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("filePath") })) }
             criteria.rowCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<Long>> { root -> root.get("rowCount") })) }
             criteria.errorMessage?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("errorMessage") })) }
-            criteria.status?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("status") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
 
+    private fun buildLocalDateTimeRangeSpecification(
+        filter: RangeFilter<*>,
+        field: Function<Root<DataExportJobCatalogReadModelEntity>, Expression<LocalDateTime>>
+    ): Specification<DataExportJobCatalogReadModelEntity> =
+        Specification { root, _, builder ->
+            val expression = field.apply(root)
+            val predicates = mutableListOf<jakarta.persistence.criteria.Predicate>()
+            filter.getEquals()?.let { predicates.add(builder.equal(expression, localDateTimeValue(it))) }
+            filter.getNotEquals()?.let { predicates.add(builder.notEqual(expression, localDateTimeValue(it))) }
+            filter.getSpecified()?.let { predicates.add(if (it) builder.isNotNull(expression) else builder.isNull(expression)) }
+            (filter.getIn() as List<*>?)?.takeIf { it.isNotEmpty() }?.let { predicates.add(expression.`in`(it.map { value -> localDateTimeValue(value) })) }
+            (filter.getNotIn() as List<*>?)?.takeIf { it.isNotEmpty() }?.let { predicates.add(builder.not(expression.`in`(it.map { value -> localDateTimeValue(value) }))) }
+            filter.getGreaterThan()?.let { predicates.add(builder.greaterThan(expression, localDateTimeValue(it))) }
+            filter.getGreaterThanOrEqual()?.let { predicates.add(builder.greaterThanOrEqualTo(expression, localDateTimeValue(it))) }
+            filter.getLessThan()?.let { predicates.add(builder.lessThan(expression, localDateTimeValue(it))) }
+            filter.getLessThanOrEqual()?.let { predicates.add(builder.lessThanOrEqualTo(expression, localDateTimeValue(it))) }
+            builder.and(*predicates.toTypedArray())
+        }
+
+    private fun localDateTimeValue(value: Any?): LocalDateTime =
+        when (value) {
+            is LocalDateTime -> value
+            null -> throw IllegalArgumentException("LocalDateTime filter value is required.")
+            else -> value.toString().let { raw ->
+                if (raw.all { it.isDigit() }) {
+                    java.time.Instant.ofEpochMilli(raw.toLong()).atZone(java.time.ZoneId.systemDefault()).toLocalDateTime()
+                } else {
+                    LocalDateTime.parse(raw)
+                }
+            }
+        }
+
     private fun <X : Comparable<in X>> buildExpressionRangeSpecification(
-        filter: tech.jhipster.service.filter.RangeFilter<X>,
+        filter: RangeFilter<X>,
         field: Function<Root<DataExportJobCatalogReadModelEntity>, Expression<X>>
     ): Specification<DataExportJobCatalogReadModelEntity> =
         Specification { root, _, builder ->
@@ -62,7 +103,6 @@ class DataExportJobCatalogReadModelQueryService(
 
     private fun DataExportJobCatalogReadModelEntity.toProjection(): DataExportJobCatalogReadModelProjection =
         DataExportJobCatalogReadModelProjection().also {
-            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.dataExportJobId = this@toProjection.dataExportJobId
             it.resourceName = this@toProjection.resourceName
             it.criteriaJson = this@toProjection.criteriaJson
@@ -72,11 +112,12 @@ class DataExportJobCatalogReadModelQueryService(
             it.requestedAt = this@toProjection.requestedAt
             it.snapshotUpperBound = this@toProjection.snapshotUpperBound
             it.requestHash = this@toProjection.requestHash
+            it.status = this@toProjection.status
             it.fileName = this@toProjection.fileName
             it.filePath = this@toProjection.filePath
             it.rowCount = this@toProjection.rowCount
             it.errorMessage = this@toProjection.errorMessage
-            it.status = this@toProjection.status
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

@@ -1,16 +1,21 @@
 package tech.medo.dataexchange.infrastructure.secondary.persistence.dataexportjobcatalogreadmodel
 
 import jakarta.persistence.criteria.Predicate
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Repository
+
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
+
 import tech.medo.dataexchange.dataexportjob.DataExportJobCatalogReadModel
 import tech.medo.dataexchange.dataexportjob.DataExportJobCatalogReadModelCriteria
 import tech.medo.dataexchange.dataexportjob.DataExportJobCatalogReadModelProjection
 import tech.medo.dataexchange.dataexportjob.DataExportJobCatalogReadModelRepository
 import tech.medo.dataexchange.dataexportjob.toReadModel
-import java.util.UUID
 
 @Repository
 class JpaDataExportJobCatalogReadModelRepository(
@@ -40,9 +45,9 @@ class JpaDataExportJobCatalogReadModelRepository(
             criteriaBuilder.and(*predicates.toTypedArray())
         }
 
+
     private fun DataExportJobCatalogReadModelEntity.toProjection(): DataExportJobCatalogReadModelProjection =
         DataExportJobCatalogReadModelProjection().also {
-            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.dataExportJobId = this@toProjection.dataExportJobId
             it.resourceName = this@toProjection.resourceName
             it.criteriaJson = this@toProjection.criteriaJson
@@ -52,11 +57,12 @@ class JpaDataExportJobCatalogReadModelRepository(
             it.requestedAt = this@toProjection.requestedAt
             it.snapshotUpperBound = this@toProjection.snapshotUpperBound
             it.requestHash = this@toProjection.requestHash
+            it.status = this@toProjection.status
             it.fileName = this@toProjection.fileName
             it.filePath = this@toProjection.filePath
             it.rowCount = this@toProjection.rowCount
             it.errorMessage = this@toProjection.errorMessage
-            it.status = this@toProjection.status
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -67,7 +73,6 @@ class JpaDataExportJobCatalogReadModelRepository(
 
     private fun DataExportJobCatalogReadModelProjection.toEntity(): DataExportJobCatalogReadModelEntity =
         DataExportJobCatalogReadModelEntity().also {
-            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.dataExportJobId = this@toEntity.dataExportJobId
             it.resourceName = this@toEntity.resourceName
             it.criteriaJson = this@toEntity.criteriaJson
@@ -77,11 +82,12 @@ class JpaDataExportJobCatalogReadModelRepository(
             it.requestedAt = this@toEntity.requestedAt
             it.snapshotUpperBound = this@toEntity.snapshotUpperBound
             it.requestHash = this@toEntity.requestHash
+            it.status = this@toEntity.status
             it.fileName = this@toEntity.fileName
             it.filePath = this@toEntity.filePath
             it.rowCount = this@toEntity.rowCount
             it.errorMessage = this@toEntity.errorMessage
-            it.status = this@toEntity.status
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId
@@ -89,4 +95,4 @@ class JpaDataExportJobCatalogReadModelRepository(
             it.traceId = this@toEntity.traceId
             it.tenantId = this@toEntity.tenantId
         }
-}
+        }

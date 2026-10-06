@@ -3,10 +3,10 @@ package tech.medo.runtimeagentoperations.agentdictionaryvaluetranslationcatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
@@ -23,11 +23,11 @@ class AgentDictionaryValueTranslationCatalogReadModelCriteria {
     var displayName: StringFilter? = null
     var description: StringFilter? = null
     var syncedAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class AgentDictionaryValueTranslationCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var dictionaryValueTranslationId: UUID? = null
     var dictionaryValueId: UUID? = null
     var dictionaryCode: String? = null
@@ -36,6 +36,7 @@ class AgentDictionaryValueTranslationCatalogReadModelProjection : MetadataProjec
     var displayName: String? = null
     var description: String? = null
     var syncedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -54,6 +55,7 @@ fun AgentDictionaryValueTranslationCatalogReadModelProjection.toReadModel(): Age
     displayName = displayName,
     description = description,
     syncedAt = syncedAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -79,6 +81,7 @@ data class AgentDictionaryValueTranslationCatalogReadModel(
     val displayName: String?,
     val description: String?,
     val syncedAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

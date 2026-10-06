@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/runtimeinfrastructure/runtimeinfrastructureaccessview")
-class RuntimeInfrastructureAccessViewReadModelResource(private val repository: RuntimeInfrastructureAccessViewReadModelRepository) {
+class RuntimeInfrastructureAccessViewReadModelResource(
+    private val repository: RuntimeInfrastructureAccessViewReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_infrastructure_access_view:list') or hasAuthority('runtime_infrastructure_access_view:read')")
     @GetMapping
     fun findAll(
         criteria: RuntimeInfrastructureAccessViewReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<RuntimeInfrastructureAccessViewReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: RuntimeInfrastructureAccessViewReadModelCriteria, pageable: Pageable): Page<RuntimeInfrastructureAccessViewReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_infrastructure_access_view:read')")

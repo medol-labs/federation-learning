@@ -10,10 +10,11 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModel
 import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModelCriteria
@@ -30,7 +31,6 @@ class RuntimeNodeInventoryViewReadModelQueryService(
     private fun createSpecification(criteria: RuntimeNodeInventoryViewReadModelCriteria?): Specification<RuntimeNodeInventoryViewReadModelEntity> {
         var specification = Specification.where<RuntimeNodeInventoryViewReadModelEntity>(null)
         if (criteria != null) {
-            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.runtimeNodeInventoryReportId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeNodeInventoryReportId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.organizationId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("organizationId") as JpaExpression<UUID>).cast(String::class.java) })) }
@@ -49,6 +49,7 @@ class RuntimeNodeInventoryViewReadModelQueryService(
             criteria.inventoryHash?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<String>> { root -> root.get("inventoryHash") })) }
             criteria.discoveredAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("discoveredAt") })) }
             criteria.recordedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("recordedAt") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -124,6 +125,7 @@ class RuntimeNodeInventoryViewReadModelQueryService(
             it.inventoryHash = this@toProjection.inventoryHash
             it.discoveredAt = this@toProjection.discoveredAt
             it.recordedAt = this@toProjection.recordedAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

@@ -352,6 +352,7 @@ export const AgentDictionaryValueTranslationCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

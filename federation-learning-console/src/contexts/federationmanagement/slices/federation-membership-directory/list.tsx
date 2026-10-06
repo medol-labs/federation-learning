@@ -399,6 +399,7 @@ export const FederationMembershipDirectoryList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

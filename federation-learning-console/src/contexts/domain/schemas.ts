@@ -753,3 +753,18 @@ export const IssueServiceAccountApiTokenCommandSchema = z.object({
 });
 export type IssueServiceAccountApiTokenCommandInput = z.infer<typeof IssueServiceAccountApiTokenCommandSchema>;
 
+export const RequestDataExportCommandSchema = z.object({
+  dataExportJobId: z.string().uuid(),
+  resourceName: z.string(),
+  criteriaJson: z.string(),
+  sortJson: z.string(),
+  columnsJson: z.string(),
+  requestedLocale: z.string().optional().nullable(),
+  requestedAt: dateTimeLocalSchema,
+  snapshotUpperBound: dateTimeLocalSchema,
+  requestHash: z.string(),
+  fileName: z.string(),
+  status: z.string(),
+});
+export type RequestDataExportCommandInput = z.infer<typeof RequestDataExportCommandSchema>;
+

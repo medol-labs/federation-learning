@@ -10,12 +10,13 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.math.BigDecimal;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
+import java.math.BigDecimal
 
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModel
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelCriteria
@@ -78,6 +79,7 @@ class RoundExecutionCatalogReadModelQueryService(
             criteria.retryReason?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> root.get("retryReason") })) }
             criteria.runtimeEngineReleased?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("runtimeEngineReleased") })) }
             criteria.runtimeEngineReleaseFailureReason?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEngineReleaseFailureReason") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -181,6 +183,7 @@ class RoundExecutionCatalogReadModelQueryService(
             it.runtimeEngineReleased = this@toProjection.runtimeEngineReleased
             it.runtimeEngineReleaseFailureReason = this@toProjection.runtimeEngineReleaseFailureReason
             it.rejectionReasons = this@toProjection.rejectionReasons?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

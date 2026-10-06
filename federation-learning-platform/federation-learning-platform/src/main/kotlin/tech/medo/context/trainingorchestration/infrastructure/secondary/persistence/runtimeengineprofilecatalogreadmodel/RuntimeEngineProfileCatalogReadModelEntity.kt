@@ -8,17 +8,16 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.trainingorchestration.domain.states.RuntimeEngineProfileStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.trainingorchestration.domain.states.RuntimeEngineProfileStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 
 @Entity
 @Table(name = "runtime_engine_profile_catalog")
 class RuntimeEngineProfileCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var runtimeEngineProfileId: UUID? = null
     var profileName: String? = null
@@ -33,6 +32,7 @@ class RuntimeEngineProfileCatalogReadModelEntity : MetadataProjection {
     @Enumerated(EnumType.STRING)
     var state: RuntimeEngineProfileStateEnum? = null
     var registeredAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

@@ -3,10 +3,10 @@ package tech.medo.runtimeagentoperations.agentfeatureschemacatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
@@ -20,16 +20,17 @@ class AgentFeatureSchemaCatalogReadModelCriteria {
     var featureSchemaVersion: StringFilter? = null
     var schemaStatus: StringFilter? = null
     var syncedAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class AgentFeatureSchemaCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var featureSchemaId: UUID? = null
     var featureDomain: String? = null
     var featureSchemaVersion: String? = null
     var schemaStatus: String? = null
     var syncedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -45,6 +46,7 @@ fun AgentFeatureSchemaCatalogReadModelProjection.toReadModel(): AgentFeatureSche
     featureSchemaVersion = featureSchemaVersion,
     schemaStatus = schemaStatus,
     syncedAt = syncedAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -67,6 +69,7 @@ data class AgentFeatureSchemaCatalogReadModel(
     val featureSchemaVersion: String?,
     val schemaStatus: String?,
     val syncedAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

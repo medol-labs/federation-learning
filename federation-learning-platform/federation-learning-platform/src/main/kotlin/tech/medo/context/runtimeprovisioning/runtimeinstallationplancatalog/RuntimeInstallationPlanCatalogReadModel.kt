@@ -3,10 +3,10 @@ package tech.medo.runtimeprovisioning.runtimeinstallationplancatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.IntegerFilter
 import tech.jhipster.service.filter.RangeFilter
@@ -42,11 +42,11 @@ class RuntimeInstallationPlanCatalogReadModelCriteria {
     var agentDeploymentRetryFailedAt: RangeFilter<LocalDateTime>? = null
     var agentDeploymentRetryFailureReason: StringFilter? = null
     var lastConnectedAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeInstallationPlanCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeInstallationPlanId: UUID? = null
     var organizationId: UUID? = null
     var organizationName: String? = null
@@ -73,6 +73,7 @@ class RuntimeInstallationPlanCatalogReadModelProjection : MetadataProjection {
     var agentDeploymentRetryFailedAt: LocalDateTime? = null
     var agentDeploymentRetryFailureReason: String? = null
     var lastConnectedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -109,6 +110,7 @@ fun RuntimeInstallationPlanCatalogReadModelProjection.toReadModel(): RuntimeInst
     agentDeploymentRetryFailedAt = agentDeploymentRetryFailedAt,
     agentDeploymentRetryFailureReason = agentDeploymentRetryFailureReason,
     lastConnectedAt = lastConnectedAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -152,6 +154,7 @@ data class RuntimeInstallationPlanCatalogReadModel(
     val agentDeploymentRetryFailedAt: LocalDateTime?,
     val agentDeploymentRetryFailureReason: String?,
     val lastConnectedAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

@@ -1,72 +1,45 @@
 package tech.medo.dataexchange.dataexportjob
 
+import tech.medo.dataexchange.dataexportjob.RequestDataExportCommand
+import tech.medo.dataexchange.dataexportjob.MarkDataExportProcessingCommand
+import tech.medo.dataexchange.dataexportjob.CompleteDataExportCommand
+import tech.medo.dataexchange.dataexportjob.FailDataExportCommand
+
+
+import tech.medo.dataexchange.events.DataExportRequestedEvent
+import tech.medo.dataexchange.events.DataExportProcessingStartedEvent
 import tech.medo.dataexchange.events.DataExportCompletedEvent
 import tech.medo.dataexchange.events.DataExportFailedEvent
-import tech.medo.dataexchange.events.DataExportProcessingStartedEvent
-import tech.medo.dataexchange.events.DataExportRequestedEvent
+
+
+
+
 
 interface DataExportJobDecision {
-    fun decide(command: RequestDataExportCommand): List<Any> =
-        listOf(
-            DataExportRequestedEvent(
-                dataExportJobId = command.dataExportJobId,
-                resourceName = command.resourceName,
-                criteriaJson = command.criteriaJson,
-                sortJson = command.sortJson,
-                columnsJson = command.columnsJson,
-                requestedLocale = command.requestedLocale,
-                requestedAt = command.requestedAt,
-                snapshotUpperBound = command.snapshotUpperBound,
-                requestHash = command.requestHash,
-                fileName = command.fileName,
-                status = DataExportJobStatus.REQUESTED
-            )
+    fun decide(command: RequestDataExportCommand): List<Any> {
+        return listOf(
+            DataExportRequestedEvent(dataExportJobId = command.dataExportJobId, resourceName = command.resourceName, criteriaJson = command.criteriaJson, sortJson = command.sortJson, columnsJson = command.columnsJson, requestedLocale = command.requestedLocale, requestedAt = command.requestedAt, snapshotUpperBound = command.snapshotUpperBound, requestHash = command.requestHash, fileName = command.fileName, status = command.status)
         )
+    }
 
     fun decide(command: MarkDataExportProcessingCommand, state: DataExportJobState): List<Any> {
-        if (state.status == DataExportJobStatus.PROCESSING || state.status == DataExportJobStatus.COMPLETED) {
-            return emptyList()
-        }
+        // TODO: validate domain rules against state before appending events.
         return listOf(
-            DataExportProcessingStartedEvent(
-                dataExportJobId = command.dataExportJobId,
-                status = DataExportJobStatus.PROCESSING
-            )
+            DataExportRequestedEvent(dataExportJobId = command.dataExportJobId, resourceName = "" /* TODO: derive value */, criteriaJson = "" /* TODO: derive value */, sortJson = "" /* TODO: derive value */, columnsJson = "" /* TODO: derive value */, requestedLocale = null /* TODO: derive value */, requestedAt = java.time.LocalDateTime.now() /* TODO: derive value */, snapshotUpperBound = java.time.LocalDateTime.now() /* TODO: derive value */, requestHash = "" /* TODO: derive value */, fileName = requireNotNull(state.fileName) { "fileName is required from state." }, status = command.status)
         )
     }
 
     fun decide(command: CompleteDataExportCommand, state: DataExportJobState): List<Any> {
-        if (state.status == DataExportJobStatus.COMPLETED) {
-            return emptyList()
-        }
+        // TODO: validate domain rules against state before appending events.
         return listOf(
-            DataExportCompletedEvent(
-                dataExportJobId = command.dataExportJobId,
-                fileName = command.fileName,
-                filePath = command.filePath,
-                rowCount = command.rowCount,
-                status = DataExportJobStatus.COMPLETED
-            )
+            DataExportRequestedEvent(dataExportJobId = command.dataExportJobId, resourceName = "" /* TODO: derive value */, criteriaJson = "" /* TODO: derive value */, sortJson = "" /* TODO: derive value */, columnsJson = "" /* TODO: derive value */, requestedLocale = null /* TODO: derive value */, requestedAt = java.time.LocalDateTime.now() /* TODO: derive value */, snapshotUpperBound = java.time.LocalDateTime.now() /* TODO: derive value */, requestHash = "" /* TODO: derive value */, fileName = command.fileName, status = command.status)
         )
     }
 
     fun decide(command: FailDataExportCommand, state: DataExportJobState): List<Any> {
-        if (state.status == DataExportJobStatus.COMPLETED || state.status == DataExportJobStatus.FAILED) {
-            return emptyList()
-        }
+        // TODO: validate domain rules against state before appending events.
         return listOf(
-            DataExportFailedEvent(
-                dataExportJobId = command.dataExportJobId,
-                errorMessage = command.errorMessage,
-                status = DataExportJobStatus.FAILED
-            )
+            DataExportRequestedEvent(dataExportJobId = command.dataExportJobId, resourceName = "" /* TODO: derive value */, criteriaJson = "" /* TODO: derive value */, sortJson = "" /* TODO: derive value */, columnsJson = "" /* TODO: derive value */, requestedLocale = null /* TODO: derive value */, requestedAt = java.time.LocalDateTime.now() /* TODO: derive value */, snapshotUpperBound = java.time.LocalDateTime.now() /* TODO: derive value */, requestHash = "" /* TODO: derive value */, fileName = requireNotNull(state.fileName) { "fileName is required from state." }, status = command.status)
         )
     }
-}
-
-object DataExportJobStatus {
-    const val REQUESTED = "REQUESTED"
-    const val PROCESSING = "PROCESSING"
-    const val COMPLETED = "COMPLETED"
-    const val FAILED = "FAILED"
 }

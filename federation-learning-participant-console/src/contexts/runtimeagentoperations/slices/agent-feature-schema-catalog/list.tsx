@@ -269,6 +269,7 @@ export const AgentFeatureSchemaCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

@@ -241,6 +241,7 @@ export const PermissionCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

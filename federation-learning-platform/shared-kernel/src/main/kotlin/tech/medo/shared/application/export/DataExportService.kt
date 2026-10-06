@@ -15,12 +15,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
-import java.security.MessageDigest
+import java.nio.charset.StandardCharsets
 import java.time.Instant
 import java.time.format.DateTimeFormatter
+import java.security.MessageDigest
 import java.util.UUID
 import kotlin.io.path.createDirectories
 
@@ -38,12 +38,13 @@ class DataExportService(
 
     fun validatedColumns(requested: List<DataExportColumn>?, allowed: List<DataExportColumn>): List<DataExportColumn> {
         val allowedByField = allowed.associateBy { it.field }
-        return requested
+        val selected = requested
             ?.mapNotNull { requestedColumn ->
                 allowedByField[requestedColumn.field]?.copy(label = requestedColumn.label ?: allowedByField[requestedColumn.field]?.label)
             }
             ?.takeIf { it.isNotEmpty() }
             ?: allowed
+        return selected
     }
 
     fun <T : Any> export(
@@ -69,7 +70,18 @@ class DataExportService(
             val columnsJson = objectMapper.writeValueAsString(columns)
             val requestHash = requestHash(resourceName, criteriaJson, sortJson, columnsJson, requestedLocale, effectiveSnapshotUpperBound)
             val jobId = UUID.nameUUIDFromBytes(requestHash.toByteArray(StandardCharsets.UTF_8))
-            val request = DataExportJobRequestMessage(jobId, resourceName, criteriaJson, sortJson, columnsJson, requestedLocale, requestedAt, effectiveSnapshotUpperBound, requestHash, fileName)
+            val request = DataExportJobRequestMessage(
+                dataExportJobId = jobId,
+                resourceName = resourceName,
+                criteriaJson = criteriaJson,
+                sortJson = sortJson,
+                columnsJson = columnsJson,
+                requestedLocale = requestedLocale,
+                requestedAt = requestedAt,
+                snapshotUpperBound = effectiveSnapshotUpperBound,
+                requestHash = requestHash,
+                fileName = fileName
+            )
             val port = requestPort.getIfAvailable()
                 ?: throw ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Data export job request port is not available.")
             port.request(request)
@@ -165,7 +177,14 @@ class DataExportService(
     private fun sortOrders(sort: Sort): List<DataExportSortOrder> =
         sort.map { DataExportSortOrder(it.property, it.direction.name) }.toList()
 
-    private fun requestHash(resourceName: String, criteriaJson: String, sortJson: String, columnsJson: String, requestedLocale: String?, snapshotUpperBound: Instant): String {
+    private fun requestHash(
+        resourceName: String,
+        criteriaJson: String,
+        sortJson: String,
+        columnsJson: String,
+        requestedLocale: String?,
+        snapshotUpperBound: Instant
+    ): String {
         val value = listOf(resourceName, criteriaJson, sortJson, columnsJson, requestedLocale.orEmpty(), snapshotUpperBound.toString()).joinToString("\u001F")
         val digest = MessageDigest.getInstance("SHA-256").digest(value.toByteArray(StandardCharsets.UTF_8))
         return digest.joinToString("") { "%02x".format(it) }

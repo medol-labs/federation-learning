@@ -3,12 +3,13 @@ package tech.medo.organizationmanagement.userorganizationmembershipdirectory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum;
+import java.util.UUID
+import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum
 
-import tech.jhipster.service.filter.Filter
-import tech.jhipster.service.filter.StringFilter
 import java.time.LocalDateTime
+import tech.jhipster.service.filter.Filter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
 
 
 class UserOrganizationMembershipDirectoryReadModelQuery
@@ -21,11 +22,11 @@ class UserOrganizationMembershipDirectoryReadModelCriteria {
     var organizationName: StringFilter? = null
     var organizationUserRole: StringFilter? = null
     var state: Filter<UserOrganizationMembershipStateEnum>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class UserOrganizationMembershipDirectoryReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var userOrganizationMembershipId: UUID? = null
     var userAccountId: UUID? = null
     var username: String? = null
@@ -33,6 +34,7 @@ class UserOrganizationMembershipDirectoryReadModelProjection : MetadataProjectio
     var organizationName: String? = null
     var organizationUserRole: String? = null
     var state: UserOrganizationMembershipStateEnum? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -50,6 +52,7 @@ fun UserOrganizationMembershipDirectoryReadModelProjection.toReadModel(): UserOr
     organizationName = organizationName,
     organizationUserRole = organizationUserRole,
     state = state,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -74,6 +77,7 @@ data class UserOrganizationMembershipDirectoryReadModel(
     val organizationName: String?,
     val organizationUserRole: String?,
     val state: UserOrganizationMembershipStateEnum?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

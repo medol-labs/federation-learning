@@ -632,6 +632,7 @@ export const AgentRuntimeNodeResourceLatestList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

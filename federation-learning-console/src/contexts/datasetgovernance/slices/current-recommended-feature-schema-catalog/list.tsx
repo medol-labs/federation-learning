@@ -269,6 +269,7 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

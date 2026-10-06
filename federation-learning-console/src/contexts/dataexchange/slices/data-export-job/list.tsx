@@ -18,12 +18,23 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
+import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 
 type DataExportJobCatalogRecord = {
   dataExportJobId: string;
   resourceName: string;
+  criteriaJson: string;
+  sortJson: string;
+  columnsJson: string;
   requestedLocale?: string;
+  requestedAt: string;
+  snapshotUpperBound: string;
+  requestHash: string;
   status: string;
+  fileName?: string;
+  filePath?: string;
+  rowCount?: number;
+  errorMessage?: string;
 };
 
 const normalizeWorkflowState = (value: unknown) =>
@@ -139,6 +150,87 @@ export const DataExportJobCatalogList = () => {
             },
           ) ?? String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("criteriaJson", {
+        id: "criteriaJson",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.data_export_job_catalog.fields.criteriaJson.label", "Criteria Json")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.data_export_job_catalog.fields.criteriaJson.label", "Criteria Json"),
+          placeholder: "Enter Criteria Json",
+          variant: "text",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DataExportJobCatalogRecord>(
+            frontendComposition,
+            "field:data-export-job-catalog:display:criteriaJson",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "data-export-job-catalog",
+              field: "criteriaJson",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
+      }),
+      columnHelper.accessor("sortJson", {
+        id: "sortJson",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.data_export_job_catalog.fields.sortJson.label", "Sort Json")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.data_export_job_catalog.fields.sortJson.label", "Sort Json"),
+          placeholder: "Enter Sort Json",
+          variant: "text",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DataExportJobCatalogRecord>(
+            frontendComposition,
+            "field:data-export-job-catalog:display:sortJson",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "data-export-job-catalog",
+              field: "sortJson",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
+      }),
+      columnHelper.accessor("columnsJson", {
+        id: "columnsJson",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.data_export_job_catalog.fields.columnsJson.label", "Columns Json")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.data_export_job_catalog.fields.columnsJson.label", "Columns Json"),
+          placeholder: "Enter Columns Json",
+          variant: "text",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DataExportJobCatalogRecord>(
+            frontendComposition,
+            "field:data-export-job-catalog:display:columnsJson",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "data-export-job-catalog",
+              field: "columnsJson",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
+      }),
       columnHelper.accessor("requestedLocale", {
         id: "requestedLocale",
         header: ({ column }) => (
@@ -160,6 +252,86 @@ export const DataExportJobCatalogList = () => {
               record: row.original,
               resource: "data-export-job-catalog",
               field: "requestedLocale",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("requestedAt", {
+        id: "requestedAt",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.data_export_job_catalog.fields.requestedAt.label", "Requested At")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.data_export_job_catalog.fields.requestedAt.label", "Requested At"),
+          placeholder: "Enter Requested At",
+          variant: "date",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DataExportJobCatalogRecord>(
+            frontendComposition,
+            "field:data-export-job-catalog:display:requestedAt",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "data-export-job-catalog",
+              field: "requestedAt",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("snapshotUpperBound", {
+        id: "snapshotUpperBound",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.data_export_job_catalog.fields.snapshotUpperBound.label", "Snapshot Upper Bound")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.data_export_job_catalog.fields.snapshotUpperBound.label", "Snapshot Upper Bound"),
+          placeholder: "Enter Snapshot Upper Bound",
+          variant: "date",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DataExportJobCatalogRecord>(
+            frontendComposition,
+            "field:data-export-job-catalog:display:snapshotUpperBound",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "data-export-job-catalog",
+              field: "snapshotUpperBound",
+              view: "display",
+              compact: true,
+            },
+          ) ?? getValue() ? new Date(String(getValue())).toLocaleString() : "-",
+      }),
+      columnHelper.accessor("requestHash", {
+        id: "requestHash",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.data_export_job_catalog.fields.requestHash.label", "Request Hash")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.data_export_job_catalog.fields.requestHash.label", "Request Hash"),
+          placeholder: "Enter Request Hash",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DataExportJobCatalogRecord>(
+            frontendComposition,
+            "field:data-export-job-catalog:display:requestHash",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "data-export-job-catalog",
+              field: "requestHash",
               view: "display",
               compact: true,
             },
@@ -190,6 +362,112 @@ export const DataExportJobCatalogList = () => {
               compact: true,
             },
           ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("fileName", {
+        id: "fileName",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.data_export_job_catalog.fields.fileName.label", "File Name")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.data_export_job_catalog.fields.fileName.label", "File Name"),
+          placeholder: "Enter File Name",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DataExportJobCatalogRecord>(
+            frontendComposition,
+            "field:data-export-job-catalog:display:fileName",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "data-export-job-catalog",
+              field: "fileName",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("filePath", {
+        id: "filePath",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.data_export_job_catalog.fields.filePath.label", "File Path")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.data_export_job_catalog.fields.filePath.label", "File Path"),
+          placeholder: "Enter File Path",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DataExportJobCatalogRecord>(
+            frontendComposition,
+            "field:data-export-job-catalog:display:filePath",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "data-export-job-catalog",
+              field: "filePath",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("rowCount", {
+        id: "rowCount",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.data_export_job_catalog.fields.rowCount.label", "Row Count")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.data_export_job_catalog.fields.rowCount.label", "Row Count"),
+          placeholder: "Enter Row Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DataExportJobCatalogRecord>(
+            frontendComposition,
+            "field:data-export-job-catalog:display:rowCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "data-export-job-catalog",
+              field: "rowCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("errorMessage", {
+        id: "errorMessage",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.data_export_job_catalog.fields.errorMessage.label", "Error Message")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.data_export_job_catalog.fields.errorMessage.label", "Error Message"),
+          placeholder: "Enter Error Message",
+          variant: "text",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DataExportJobCatalogRecord>(
+            frontendComposition,
+            "field:data-export-job-catalog:display:errorMessage",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "data-export-job-catalog",
+              field: "errorMessage",
+              view: "display",
+              compact: true,
+            },
+          ) ?? <CopyableText value={getValue()} compact />,
       }),
       columnHelper.display({
         id: "actions",
@@ -232,7 +510,7 @@ export const DataExportJobCatalogList = () => {
         tableName: "data_export_job_catalog_read_model_entity",
         idField: "dataExportJobId",
         idFields: ["dataExportJobId"],
-        queryFields: ["dataExportJobId","resourceName","requestedLocale","status"],
+        queryFields: ["dataExportJobId","resourceName","criteriaJson","sortJson","columnsJson","requestedLocale","requestedAt","snapshotUpperBound","requestHash","status","fileName","filePath","rowCount","errorMessage"],
         label: t("resources.data_export_job_catalog.label", "Data Export Job Catalog"),
         aggregateRoute: "dataexportjob",
         queryRoute: "dataexportjobcatalog",

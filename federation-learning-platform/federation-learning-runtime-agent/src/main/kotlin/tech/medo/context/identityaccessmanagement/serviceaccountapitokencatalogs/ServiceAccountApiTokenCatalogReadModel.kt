@@ -3,10 +3,11 @@ package tech.medo.identityaccessmanagement.serviceaccountapitokencatalogs
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
+import java.util.UUID
 
-import tech.jhipster.service.filter.StringFilter
 import java.time.LocalDateTime
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
 
 
 class ServiceAccountApiTokenCatalogReadModelQuery
@@ -18,11 +19,11 @@ class ServiceAccountApiTokenCatalogReadModelCriteria {
     var tokenName: StringFilter? = null
     var tokenPrefix: StringFilter? = null
     var issuedAt: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class ServiceAccountApiTokenCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var apiTokenId: UUID? = null
     var userAccountId: UUID? = null
     var username: String? = null
@@ -31,6 +32,7 @@ class ServiceAccountApiTokenCatalogReadModelProjection : MetadataProjection {
     var issuedAt: String? = null
     var roles: List<String> = emptyList()
     var permissions: List<String> = emptyList()
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -49,6 +51,7 @@ fun ServiceAccountApiTokenCatalogReadModelProjection.toReadModel(): ServiceAccou
     issuedAt = issuedAt,
     roles = roles,
     permissions = permissions,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -74,6 +77,7 @@ data class ServiceAccountApiTokenCatalogReadModel(
     val issuedAt: String?,
     val roles: List<String>,
     val permissions: List<String>,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

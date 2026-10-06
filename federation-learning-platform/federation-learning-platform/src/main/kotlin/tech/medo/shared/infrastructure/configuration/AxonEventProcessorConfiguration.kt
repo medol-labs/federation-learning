@@ -11,6 +11,10 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("audit-trail").notCustomized()
 
     @Bean
+    fun automationDataExchangeDataExportJobEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("automation-data-exchange-data-export-job").notCustomized()
+
+    @Bean
     fun automationDatasetGovernanceRecordRuntimeDatasetMetadataEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("automation-dataset-governance-record-runtime-dataset-metadata").notCustomized()
 
@@ -133,6 +137,10 @@ class AxonEventProcessorConfiguration {
     @Bean
     fun automationTrainingOrchestrationSubmitGlobalModelEvaluationEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("automation-training-orchestration-submit-global-model-evaluation").notCustomized()
+
+    @Bean
+    fun integrationDataExchangeDataExportJobEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("integration-data-exchange-data-export-job").notCustomized()
 
     @Bean
     fun integrationDatasetGovernanceRecordRuntimeDatasetMetadataEventProcessorDefinition(): EventProcessorDefinition =
@@ -261,6 +269,10 @@ class AxonEventProcessorConfiguration {
     @Bean
     fun readmodelCurrentRecommendedFeatureSchemaCatalogEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("readmodel-current-recommended-feature-schema-catalog").notCustomized()
+
+    @Bean
+    fun readmodelDataExportJobCatalogEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("readmodel-data-export-job-catalog").notCustomized()
 
     @Bean
     fun readmodelFeatureSchemaCatalogEventProcessorDefinition(): EventProcessorDefinition =

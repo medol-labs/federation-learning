@@ -3,13 +3,13 @@ package tech.medo.trainingorchestration.trainingroundprogress
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum;
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.math.BigDecimal;
+import java.util.UUID
+import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
+import java.math.BigDecimal
 
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.BooleanFilter
@@ -73,11 +73,11 @@ class TrainingRoundProgressReadModelCriteria {
     var globalAccuracy: BigDecimalFilter? = null
     var globalFairnessScore: BigDecimalFilter? = null
     var failureReason: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class TrainingRoundProgressReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var trainingJobId: UUID? = null
     var trainingRunConfigurationId: UUID? = null
     var featureSchemaId: UUID? = null
@@ -128,6 +128,7 @@ class TrainingRoundProgressReadModelProjection : MetadataProjection {
     var globalAccuracy: BigDecimal? = null
     var globalFairnessScore: BigDecimal? = null
     var failureReason: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -188,6 +189,7 @@ fun TrainingRoundProgressReadModelProjection.toReadModel(): TrainingRoundProgres
     globalAccuracy = globalAccuracy,
     globalFairnessScore = globalFairnessScore,
     failureReason = failureReason,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -257,6 +259,7 @@ data class TrainingRoundProgressReadModel(
     val globalAccuracy: BigDecimal?,
     val globalFairnessScore: BigDecimal?,
     val failureReason: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

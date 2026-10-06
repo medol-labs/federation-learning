@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
+import java.util.UUID
 
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModel
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelCriteria
@@ -49,6 +49,7 @@ class JpaFederationMembershipDirectoryReadModelRepository(
             it.membershipStatus = this@toProjection.membershipStatus
             it.invitationNote = this@toProjection.invitationNote
             it.approvalNote = this@toProjection.approvalNote
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -66,6 +67,7 @@ class JpaFederationMembershipDirectoryReadModelRepository(
             it.membershipStatus = this@toEntity.membershipStatus
             it.invitationNote = this@toEntity.invitationNote
             it.approvalNote = this@toEntity.approvalNote
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

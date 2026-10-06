@@ -4,10 +4,10 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelCriteria
@@ -51,6 +51,7 @@ class JpaRuntimeDatasetBindingCatalogReadModelRepository(
             it.filePath = this@toProjection.filePath
             it.dataFormat = this@toProjection.dataFormat
             it.configuredAt = this@toProjection.configuredAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -74,6 +75,7 @@ class JpaRuntimeDatasetBindingCatalogReadModelRepository(
             it.filePath = this@toEntity.filePath
             it.dataFormat = this@toEntity.dataFormat
             it.configuredAt = this@toEntity.configuredAt
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

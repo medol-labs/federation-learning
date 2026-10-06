@@ -4,6 +4,16 @@ import org.axonframework.messaging.commandhandling.annotation.CommandHandler
 import org.axonframework.messaging.eventhandling.gateway.EventAppender
 import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
+import tech.medo.dataexchange.dataexportjob.RequestDataExportCommand
+import tech.medo.dataexchange.dataexportjob.MarkDataExportProcessingCommand
+import tech.medo.dataexchange.dataexportjob.CompleteDataExportCommand
+import tech.medo.dataexchange.dataexportjob.FailDataExportCommand
+
+
+
+
+
+
 
 @Component
 class DataExportJobCommandHandler(
@@ -20,7 +30,7 @@ class DataExportJobCommandHandler(
     @CommandHandler
     fun handle(
         command: MarkDataExportProcessingCommand,
-        @InjectEntity(idProperty = "selection") state: DataExportJobState,
+        @InjectEntity(idProperty = "dataExportJobId") state: DataExportJobState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))
@@ -29,7 +39,7 @@ class DataExportJobCommandHandler(
     @CommandHandler
     fun handle(
         command: CompleteDataExportCommand,
-        @InjectEntity(idProperty = "selection") state: DataExportJobState,
+        @InjectEntity(idProperty = "dataExportJobId") state: DataExportJobState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))
@@ -38,7 +48,7 @@ class DataExportJobCommandHandler(
     @CommandHandler
     fun handle(
         command: FailDataExportCommand,
-        @InjectEntity(idProperty = "selection") state: DataExportJobState,
+        @InjectEntity(idProperty = "dataExportJobId") state: DataExportJobState,
         eventAppender: EventAppender
     ) {
         eventAppender.append(decision.decide(command, state))

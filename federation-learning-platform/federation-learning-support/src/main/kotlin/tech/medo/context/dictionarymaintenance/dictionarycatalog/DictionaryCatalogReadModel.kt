@@ -3,11 +3,11 @@ package tech.medo.dictionarymaintenance.dictionarycatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.dictionarymaintenance.domain.states.DictionaryStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.dictionarymaintenance.domain.states.DictionaryStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.RangeFilter
@@ -26,11 +26,11 @@ class DictionaryCatalogReadModelCriteria {
     var updatedAt: RangeFilter<LocalDateTime>? = null
     var archivedAt: RangeFilter<LocalDateTime>? = null
     var archiveReason: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class DictionaryCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var dictionaryId: UUID? = null
     var dictionaryCode: String? = null
     var dictionaryName: String? = null
@@ -40,6 +40,7 @@ class DictionaryCatalogReadModelProjection : MetadataProjection {
     var updatedAt: LocalDateTime? = null
     var archivedAt: LocalDateTime? = null
     var archiveReason: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -59,6 +60,7 @@ fun DictionaryCatalogReadModelProjection.toReadModel(): DictionaryCatalogReadMod
     updatedAt = updatedAt,
     archivedAt = archivedAt,
     archiveReason = archiveReason,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -85,6 +87,7 @@ data class DictionaryCatalogReadModel(
     val updatedAt: LocalDateTime?,
     val archivedAt: LocalDateTime?,
     val archiveReason: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

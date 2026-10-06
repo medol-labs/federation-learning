@@ -3,11 +3,11 @@ package tech.medo.runtimemonitoring.trainingalertcatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.RangeFilter
@@ -17,7 +17,6 @@ import tech.jhipster.service.filter.StringFilter
 class TrainingAlertCatalogReadModelQuery
 
 class TrainingAlertCatalogReadModelCriteria {
-    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
     var alertId: StringFilter? = null
     var nodeId: StringFilter? = null
     var trainingJobId: StringFilter? = null
@@ -29,11 +28,11 @@ class TrainingAlertCatalogReadModelCriteria {
     var acknowledgedAt: RangeFilter<LocalDateTime>? = null
     var resolvedAt: RangeFilter<LocalDateTime>? = null
     var resolutionSummary: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class TrainingAlertCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var alertId: UUID? = null
     var nodeId: UUID? = null
     var trainingJobId: UUID? = null
@@ -45,6 +44,7 @@ class TrainingAlertCatalogReadModelProjection : MetadataProjection {
     var acknowledgedAt: LocalDateTime? = null
     var resolvedAt: LocalDateTime? = null
     var resolutionSummary: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -66,6 +66,7 @@ fun TrainingAlertCatalogReadModelProjection.toReadModel(): TrainingAlertCatalogR
     acknowledgedAt = acknowledgedAt,
     resolvedAt = resolvedAt,
     resolutionSummary = resolutionSummary,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -94,6 +95,7 @@ data class TrainingAlertCatalogReadModel(
     val acknowledgedAt: LocalDateTime?,
     val resolvedAt: LocalDateTime?,
     val resolutionSummary: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

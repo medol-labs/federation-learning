@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-import java.util.UUID;
+import java.util.UUID
 
 import tech.medo.identityaccessmanagement.serviceaccountapitokencatalogs.ServiceAccountApiTokenCatalogReadModel
 import tech.medo.identityaccessmanagement.serviceaccountapitokencatalogs.ServiceAccountApiTokenCatalogReadModelCriteria
@@ -46,6 +46,7 @@ class JpaServiceAccountApiTokenCatalogReadModelRepository(
             it.issuedAt = this@toProjection.issuedAt
             it.roles = this@toProjection.roles?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
             it.permissions = this@toProjection.permissions?.let { json -> objectMapper.readValue(json, object : com.fasterxml.jackson.core.type.TypeReference<List<String>>() {}) } ?: emptyList()
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -64,6 +65,7 @@ class JpaServiceAccountApiTokenCatalogReadModelRepository(
             it.issuedAt = this@toEntity.issuedAt
             it.roles = objectMapper.writeValueAsString(this@toEntity.roles)
             it.permissions = objectMapper.writeValueAsString(this@toEntity.permissions)
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

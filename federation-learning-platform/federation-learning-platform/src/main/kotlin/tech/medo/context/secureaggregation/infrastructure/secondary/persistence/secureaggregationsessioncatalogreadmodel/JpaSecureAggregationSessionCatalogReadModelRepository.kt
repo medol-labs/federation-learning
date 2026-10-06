@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-import java.util.UUID;
-import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModel
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModelCriteria
@@ -71,6 +71,7 @@ class JpaSecureAggregationSessionCatalogReadModelRepository(
             it.decryptedAt = this@toProjection.decryptedAt
             it.completedAt = this@toProjection.completedAt
             it.failedAt = this@toProjection.failedAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -110,6 +111,7 @@ class JpaSecureAggregationSessionCatalogReadModelRepository(
             it.decryptedAt = this@toEntity.decryptedAt
             it.completedAt = this@toEntity.completedAt
             it.failedAt = this@toEntity.failedAt
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

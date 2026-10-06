@@ -3,7 +3,6 @@ package tech.medo.runtimemonitoring.runtimetelemetrylatest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -15,15 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import tech.medo.shared.application.export.DataExportColumn
-import tech.medo.shared.application.export.DataExportExecutionTask
-import tech.medo.shared.application.export.DataExportResourceExecutor
-import tech.medo.shared.application.export.DataExportRequest
-import tech.medo.shared.application.export.DataExportService
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import tech.jhipster.service.filter.RangeFilter
+import tech.medo.shared.application.export.DataExportColumn
+import tech.medo.shared.application.export.DataExportExecutionResult
+import tech.medo.shared.application.export.DataExportExecutionTask
+import tech.medo.shared.application.export.DataExportRequest
+import tech.medo.shared.application.export.DataExportResourceExecutor
+import tech.medo.shared.application.export.DataExportService
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
@@ -102,6 +104,7 @@ class RuntimeTelemetryLatestReadModelResource(
     }
 
 
+
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_telemetry_latest:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<RuntimeTelemetryLatestReadModel> =
@@ -110,44 +113,12 @@ class RuntimeTelemetryLatestReadModelResource(
 }
 
 @Component
-class RuntimeTelemetryLatestDataExportExecutor(
+class RuntimeTelemetryLatestReadModelDataExportExecutor(
     private val repository: RuntimeTelemetryLatestReadModelRepository,
     private val dataExportService: DataExportService,
     private val objectMapper: ObjectMapper
 ) : DataExportResourceExecutor {
     override val resourceName: String = "runtimetelemetrylatest"
-
-    override fun execute(task: DataExportExecutionTask) =
-        dataExportService.writeCsvFile(
-            fileName = task.fileName,
-            columns = dataExportService.columnsFromJson(task.columnsJson, exportColumns),
-            firstPage = firstPage(task),
-            fetchPage = { nextPage -> repository.findAllByCriteria(criteria(task), nextPage) }
-        )
-
-    private fun firstPage(task: DataExportExecutionTask): Page<RuntimeTelemetryLatestReadModel> {
-        val pageable = PageRequest.of(0, dataExportService.pageSize(), dataExportService.sortFromJson(task.sortJson))
-        return repository.findAllByCriteria(criteria(task), pageable)
-    }
-
-    private fun criteria(task: DataExportExecutionTask): RuntimeTelemetryLatestReadModelCriteria {
-        val criteria = objectMapper.readValue(task.criteriaJson, RuntimeTelemetryLatestReadModelCriteria::class.java)
-        val snapshotUpperBound = LocalDateTime.ofInstant(task.snapshotUpperBound, ZoneOffset.UTC)
-        applyExportSnapshot(criteria, snapshotUpperBound)
-        return criteria
-    }
-
-    private fun applyExportSnapshot(criteria: RuntimeTelemetryLatestReadModelCriteria, snapshotUpperBound: LocalDateTime): RuntimeTelemetryLatestReadModelCriteria {
-        val projectionUpdatedAt = criteria.projectionUpdatedAt ?: RangeFilter<LocalDateTime>().also {
-            criteria.projectionUpdatedAt = it
-        }
-        val requestedUpperBound = projectionUpdatedAt.getLessThanOrEqual()
-        if (requestedUpperBound == null || requestedUpperBound.isAfter(snapshotUpperBound)) {
-            projectionUpdatedAt.setLessThanOrEqual(snapshotUpperBound)
-        }
-        return criteria
-    }
-
     private val exportColumns = listOf(
         DataExportColumn("nodeId", "nodeId"),
         DataExportColumn("runtimeAgentId", "runtimeAgentId"),
@@ -175,4 +146,27 @@ class RuntimeTelemetryLatestDataExportExecutor(
         DataExportColumn("healthStatus", "healthStatus"),
         DataExportColumn("telemetryRetentionPolicy", "telemetryRetentionPolicy")
     )
+
+    override fun execute(task: DataExportExecutionTask): DataExportExecutionResult {
+        val criteria = objectMapper.readValue<RuntimeTelemetryLatestReadModelCriteria>(task.criteriaJson)
+        val snapshotUpperBound = LocalDateTime.ofInstant(task.snapshotUpperBound, ZoneOffset.UTC)
+        applyExportSnapshot(criteria, snapshotUpperBound)
+        val columns = dataExportService.columnsFromJson(task.columnsJson, exportColumns)
+        val sort = dataExportService.sortFromJson(task.sortJson)
+        val firstPage = repository.findAllByCriteria(criteria, PageRequest.of(0, dataExportService.pageSize(), sort))
+        return dataExportService.writeCsvFile(task.fileName, columns, firstPage) { nextPage ->
+            repository.findAllByCriteria(criteria, nextPage)
+        }
+    }
+
+    private fun applyExportSnapshot(criteria: RuntimeTelemetryLatestReadModelCriteria, snapshotUpperBound: LocalDateTime): RuntimeTelemetryLatestReadModelCriteria {
+        val projectionUpdatedAt = criteria.projectionUpdatedAt ?: RangeFilter<LocalDateTime>().also {
+            criteria.projectionUpdatedAt = it
+        }
+        val requestedUpperBound = projectionUpdatedAt.getLessThanOrEqual()
+        if (requestedUpperBound == null || requestedUpperBound.isAfter(snapshotUpperBound)) {
+            projectionUpdatedAt.setLessThanOrEqual(snapshotUpperBound)
+        }
+        return criteria
+    }
 }

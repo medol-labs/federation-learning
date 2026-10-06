@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/userorganizationmembership/userorganizationmembershipdirectory")
-class UserOrganizationMembershipDirectoryReadModelResource(private val repository: UserOrganizationMembershipDirectoryReadModelRepository) {
+class UserOrganizationMembershipDirectoryReadModelResource(
+    private val repository: UserOrganizationMembershipDirectoryReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('user_organization_membership_directory:list') or hasAuthority('user_organization_membership_directory:read')")
     @GetMapping
     fun findAll(
         criteria: UserOrganizationMembershipDirectoryReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<UserOrganizationMembershipDirectoryReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: UserOrganizationMembershipDirectoryReadModelCriteria, pageable: Pageable): Page<UserOrganizationMembershipDirectoryReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('user_organization_membership_directory:read')")

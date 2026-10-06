@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/secureaggregationsession/secureaggregationsessioncatalog")
-class SecureAggregationSessionCatalogReadModelResource(private val repository: SecureAggregationSessionCatalogReadModelRepository) {
+class SecureAggregationSessionCatalogReadModelResource(
+    private val repository: SecureAggregationSessionCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('secure_aggregation_session_catalog:list') or hasAuthority('secure_aggregation_session_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: SecureAggregationSessionCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<SecureAggregationSessionCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: SecureAggregationSessionCatalogReadModelCriteria, pageable: Pageable): Page<SecureAggregationSessionCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('secure_aggregation_session_catalog:read')")

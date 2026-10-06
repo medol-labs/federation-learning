@@ -1130,6 +1130,7 @@ export const TrainingParticipantEligibilityList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

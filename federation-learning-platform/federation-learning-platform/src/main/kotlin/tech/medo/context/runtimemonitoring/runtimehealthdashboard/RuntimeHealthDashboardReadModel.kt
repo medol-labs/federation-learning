@@ -3,11 +3,11 @@ package tech.medo.runtimemonitoring.runtimehealthdashboard
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.math.BigDecimal
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.BooleanFilter
@@ -19,7 +19,6 @@ import tech.jhipster.service.filter.StringFilter
 class RuntimeHealthDashboardReadModelQuery
 
 class RuntimeHealthDashboardReadModelCriteria {
-    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
     var nodeId: StringFilter? = null
     var runtimeAgentId: StringFilter? = null
     var federationId: StringFilter? = null
@@ -39,11 +38,11 @@ class RuntimeHealthDashboardReadModelCriteria {
     var healthStatus: StringFilter? = null
     var lastHeartbeatAt: RangeFilter<LocalDateTime>? = null
     var lastResourceSnapshotAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeHealthDashboardReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var nodeId: UUID? = null
     var runtimeAgentId: UUID? = null
     var federationId: UUID? = null
@@ -63,6 +62,7 @@ class RuntimeHealthDashboardReadModelProjection : MetadataProjection {
     var healthStatus: String? = null
     var lastHeartbeatAt: LocalDateTime? = null
     var lastResourceSnapshotAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -92,6 +92,7 @@ fun RuntimeHealthDashboardReadModelProjection.toReadModel(): RuntimeHealthDashbo
     healthStatus = healthStatus,
     lastHeartbeatAt = lastHeartbeatAt,
     lastResourceSnapshotAt = lastResourceSnapshotAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -128,6 +129,7 @@ data class RuntimeHealthDashboardReadModel(
     val healthStatus: String?,
     val lastHeartbeatAt: LocalDateTime?,
     val lastResourceSnapshotAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

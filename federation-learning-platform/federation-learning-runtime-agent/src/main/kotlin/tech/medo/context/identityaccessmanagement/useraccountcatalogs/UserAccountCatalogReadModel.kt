@@ -3,11 +3,12 @@ package tech.medo.identityaccessmanagement.useraccountcatalogs
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
+import java.util.UUID
 
-import tech.jhipster.service.filter.BooleanFilter
-import tech.jhipster.service.filter.StringFilter
 import java.time.LocalDateTime
+import tech.jhipster.service.filter.BooleanFilter
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
 
 
 class UserAccountCatalogReadModelQuery
@@ -19,17 +20,18 @@ class UserAccountCatalogReadModelCriteria {
     var userSource: StringFilter? = null
     var passwordHash: StringFilter? = null
     var active: BooleanFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class UserAccountCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var userAccountId: UUID? = null
     var username: String? = null
     var providerSubject: String? = null
     var userSource: String? = null
     var passwordHash: String? = null
     var active: Boolean? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -46,6 +48,7 @@ fun UserAccountCatalogReadModelProjection.toReadModel(): UserAccountCatalogReadM
     userSource = userSource,
     passwordHash = passwordHash,
     active = active,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -69,6 +72,7 @@ data class UserAccountCatalogReadModel(
     val userSource: String?,
     val passwordHash: String?,
     val active: Boolean?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

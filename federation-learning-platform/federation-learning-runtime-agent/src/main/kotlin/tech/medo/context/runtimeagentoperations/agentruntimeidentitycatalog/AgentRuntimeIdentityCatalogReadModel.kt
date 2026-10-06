@@ -3,10 +3,10 @@ package tech.medo.runtimeagentoperations.agentruntimeidentitycatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
@@ -25,11 +25,11 @@ class AgentRuntimeIdentityCatalogReadModelCriteria {
     var activatedAt: RangeFilter<LocalDateTime>? = null
     var revokedAt: RangeFilter<LocalDateTime>? = null
     var syncedAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class AgentRuntimeIdentityCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeId: UUID? = null
     var runtimeInfrastructureId: UUID? = null
     var runtimeAgentId: UUID? = null
@@ -40,6 +40,7 @@ class AgentRuntimeIdentityCatalogReadModelProjection : MetadataProjection {
     var activatedAt: LocalDateTime? = null
     var revokedAt: LocalDateTime? = null
     var syncedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -60,6 +61,7 @@ fun AgentRuntimeIdentityCatalogReadModelProjection.toReadModel(): AgentRuntimeId
     activatedAt = activatedAt,
     revokedAt = revokedAt,
     syncedAt = syncedAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -87,6 +89,7 @@ data class AgentRuntimeIdentityCatalogReadModel(
     val activatedAt: LocalDateTime?,
     val revokedAt: LocalDateTime?,
     val syncedAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

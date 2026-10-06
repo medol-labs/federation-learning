@@ -10,10 +10,11 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimeprovisioning.runtimeagentendpointcatalog.RuntimeAgentEndpointCatalogReadModel
 import tech.medo.runtimeprovisioning.runtimeagentendpointcatalog.RuntimeAgentEndpointCatalogReadModelCriteria
@@ -40,6 +41,7 @@ class RuntimeAgentEndpointCatalogReadModelQueryService(
             criteria.connectionStatus?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeAgentEndpointCatalogReadModelEntity>, Expression<String>> { root -> root.get("connectionStatus") })) }
             criteria.connectedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeAgentEndpointCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("connectedAt") })) }
             criteria.activatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeAgentEndpointCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("activatedAt") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<RuntimeAgentEndpointCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -107,6 +109,7 @@ class RuntimeAgentEndpointCatalogReadModelQueryService(
             it.connectionStatus = this@toProjection.connectionStatus
             it.connectedAt = this@toProjection.connectedAt
             it.activatedAt = this@toProjection.activatedAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

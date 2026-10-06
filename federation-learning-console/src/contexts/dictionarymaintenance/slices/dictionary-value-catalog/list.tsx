@@ -581,6 +581,7 @@ export const DictionaryValueCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

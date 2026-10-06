@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/featureschema/featureschemacatalog")
-class FeatureSchemaCatalogReadModelResource(private val repository: FeatureSchemaCatalogReadModelRepository) {
+class FeatureSchemaCatalogReadModelResource(
+    private val repository: FeatureSchemaCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('feature_schema_catalog:list') or hasAuthority('feature_schema_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: FeatureSchemaCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<FeatureSchemaCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: FeatureSchemaCatalogReadModelCriteria, pageable: Pageable): Page<FeatureSchemaCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('feature_schema_catalog:read')")

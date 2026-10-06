@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/roundexecution/roundexecutioncatalog")
-class RoundExecutionCatalogReadModelResource(private val repository: RoundExecutionCatalogReadModelRepository) {
+class RoundExecutionCatalogReadModelResource(
+    private val repository: RoundExecutionCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('round_execution_catalog:list') or hasAuthority('round_execution_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: RoundExecutionCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<RoundExecutionCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: RoundExecutionCatalogReadModelCriteria, pageable: Pageable): Page<RoundExecutionCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('round_execution_catalog:read')")

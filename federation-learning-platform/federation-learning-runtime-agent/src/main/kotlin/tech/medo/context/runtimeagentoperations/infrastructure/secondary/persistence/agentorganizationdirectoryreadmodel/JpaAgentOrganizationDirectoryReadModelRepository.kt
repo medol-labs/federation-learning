@@ -4,10 +4,10 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimeagentoperations.agentorganizationdirectory.AgentOrganizationDirectoryReadModel
 import tech.medo.runtimeagentoperations.agentorganizationdirectory.AgentOrganizationDirectoryReadModelCriteria
@@ -43,6 +43,7 @@ class JpaAgentOrganizationDirectoryReadModelRepository(
             it.organizationType = this@toProjection.organizationType
             it.state = this@toProjection.state
             it.syncedAt = this@toProjection.syncedAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -58,6 +59,7 @@ class JpaAgentOrganizationDirectoryReadModelRepository(
             it.organizationType = this@toEntity.organizationType
             it.state = this@toEntity.state
             it.syncedAt = this@toEntity.syncedAt
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

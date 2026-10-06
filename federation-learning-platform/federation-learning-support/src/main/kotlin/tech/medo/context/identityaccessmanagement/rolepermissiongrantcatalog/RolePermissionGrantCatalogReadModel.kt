@@ -3,10 +3,11 @@ package tech.medo.identityaccessmanagement.rolepermissiongrantcatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
+import java.util.UUID
 
-import tech.jhipster.service.filter.StringFilter
 import java.time.LocalDateTime
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
 
 
 data class RolePermissionGrantCatalogReadModelKey(
@@ -22,16 +23,17 @@ class RolePermissionGrantCatalogReadModelCriteria {
     var roleName: StringFilter? = null
     var permissionCode: StringFilter? = null
     var permissionName: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RolePermissionGrantCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var roleId: UUID? = null
     var roleCode: String? = null
     var roleName: String? = null
     var permissionCode: String? = null
     var permissionName: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -47,6 +49,7 @@ fun RolePermissionGrantCatalogReadModelProjection.toReadModel(): RolePermissionG
     roleName = roleName,
     permissionCode = permissionCode,
     permissionName = permissionName,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -71,6 +74,7 @@ data class RolePermissionGrantCatalogReadModel(
     val roleName: String?,
     val permissionCode: String?,
     val permissionName: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

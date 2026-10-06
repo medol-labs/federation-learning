@@ -407,6 +407,7 @@ export const AgentRuntimeTelemetryLatestList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

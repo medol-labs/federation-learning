@@ -3,10 +3,11 @@ package tech.medo.identityaccessmanagement.permissioncatalogs
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
+import java.util.UUID
 
-import tech.jhipster.service.filter.StringFilter
 import java.time.LocalDateTime
+import tech.jhipster.service.filter.RangeFilter
+import tech.jhipster.service.filter.StringFilter
 
 
 class PermissionCatalogReadModelQuery
@@ -16,15 +17,16 @@ class PermissionCatalogReadModelCriteria {
     var permissionCode: StringFilter? = null
     var permissionName: StringFilter? = null
     var description: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class PermissionCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var permissionId: UUID? = null
     var permissionCode: String? = null
     var permissionName: String? = null
     var description: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -39,6 +41,7 @@ fun PermissionCatalogReadModelProjection.toReadModel(): PermissionCatalogReadMod
     permissionCode = permissionCode,
     permissionName = permissionName,
     description = description,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -60,6 +63,7 @@ data class PermissionCatalogReadModel(
     val permissionCode: String?,
     val permissionName: String?,
     val description: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

@@ -8,15 +8,14 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.federationmanagement.domain.states.FederationStateEnum;
-import java.time.LocalDateTime
+import java.util.UUID
+import tech.medo.federationmanagement.domain.states.FederationStateEnum
 
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "federation_overview")
 class FederationOverviewReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var federationId: UUID? = null
     var federationName: String? = null
@@ -27,6 +26,7 @@ class FederationOverviewReadModelEntity : MetadataProjection {
     var pendingInvitationCount: Int? = null
     var activeRuntimeCount: Int? = null
     var activeTrainingJobCount: Int? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

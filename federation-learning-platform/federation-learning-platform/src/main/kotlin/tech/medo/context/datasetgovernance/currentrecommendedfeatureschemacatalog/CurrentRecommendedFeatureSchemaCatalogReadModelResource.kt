@@ -15,14 +15,21 @@ import org.springframework.web.bind.annotation.RestController
 @CrossOrigin
 @RestController
 @RequestMapping("/featureschema/currentrecommendedfeatureschemacatalog")
-class CurrentRecommendedFeatureSchemaCatalogReadModelResource(private val repository: CurrentRecommendedFeatureSchemaCatalogReadModelRepository) {
+class CurrentRecommendedFeatureSchemaCatalogReadModelResource(
+    private val repository: CurrentRecommendedFeatureSchemaCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('current_recommended_feature_schema_catalog:list') or hasAuthority('current_recommended_feature_schema_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: CurrentRecommendedFeatureSchemaCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<CurrentRecommendedFeatureSchemaCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: CurrentRecommendedFeatureSchemaCatalogReadModelCriteria, pageable: Pageable): Page<CurrentRecommendedFeatureSchemaCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('current_recommended_feature_schema_catalog:read')")

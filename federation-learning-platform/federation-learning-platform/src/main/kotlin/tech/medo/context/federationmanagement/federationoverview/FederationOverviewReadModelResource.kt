@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/federation/federationoverview")
-class FederationOverviewReadModelResource(private val repository: FederationOverviewReadModelRepository) {
+class FederationOverviewReadModelResource(
+    private val repository: FederationOverviewReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('federation_overview:list') or hasAuthority('federation_overview:read')")
     @GetMapping
     fun findAll(
         criteria: FederationOverviewReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<FederationOverviewReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: FederationOverviewReadModelCriteria, pageable: Pageable): Page<FederationOverviewReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('federation_overview:read')")

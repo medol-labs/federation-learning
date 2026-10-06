@@ -4,9 +4,9 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
-import java.math.BigDecimal;
-import tech.medo.modellifecycle.domain.states.ModelStateEnum;
+import java.util.UUID
+import java.math.BigDecimal
+import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 import tech.medo.modellifecycle.modelcatalog.ModelCatalogReadModel
 import tech.medo.modellifecycle.modelcatalog.ModelCatalogReadModelCriteria
@@ -52,6 +52,7 @@ class JpaModelCatalogReadModelRepository(
             it.hyperparameterSnapshotId = this@toProjection.hyperparameterSnapshotId
             it.reproducibilityManifestId = this@toProjection.reproducibilityManifestId
             it.modelCardId = this@toProjection.modelCardId
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -77,6 +78,7 @@ class JpaModelCatalogReadModelRepository(
             it.hyperparameterSnapshotId = this@toEntity.hyperparameterSnapshotId
             it.reproducibilityManifestId = this@toEntity.reproducibilityManifestId
             it.modelCardId = this@toEntity.modelCardId
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

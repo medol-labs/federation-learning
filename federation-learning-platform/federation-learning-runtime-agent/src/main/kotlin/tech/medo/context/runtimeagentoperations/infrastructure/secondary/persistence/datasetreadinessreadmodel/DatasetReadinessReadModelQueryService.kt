@@ -10,11 +10,12 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import java.math.BigDecimal
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModel
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModelCriteria
@@ -66,6 +67,7 @@ class DatasetReadinessReadModelQueryService(
             criteria.lastAccessValidatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DatasetReadinessReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("lastAccessValidatedAt") })) }
             criteria.lastRuntimeHeartbeatAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DatasetReadinessReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("lastRuntimeHeartbeatAt") })) }
             criteria.lastUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DatasetReadinessReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("lastUpdatedAt") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DatasetReadinessReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -160,6 +162,7 @@ class DatasetReadinessReadModelQueryService(
             it.lastAccessValidatedAt = this@toProjection.lastAccessValidatedAt
             it.lastRuntimeHeartbeatAt = this@toProjection.lastRuntimeHeartbeatAt
             it.lastUpdatedAt = this@toProjection.lastUpdatedAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

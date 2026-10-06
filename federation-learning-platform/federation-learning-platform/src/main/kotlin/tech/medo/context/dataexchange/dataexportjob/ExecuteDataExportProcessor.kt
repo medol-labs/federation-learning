@@ -8,6 +8,7 @@ import tech.medo.dataexchange.events.DataExportRequestedEvent
 import tech.medo.shared.application.export.DataExportExecutionTask
 import tech.medo.shared.application.export.DataExportJobLifecyclePort
 import tech.medo.shared.application.export.DataExportResourceExecutorRegistry
+import java.time.ZoneOffset
 
 @Namespace("automation-data-exchange-execute-data-export")
 @Component
@@ -26,8 +27,8 @@ class ExecuteDataExportProcessor(
             sortJson = event.sortJson,
             columnsJson = event.columnsJson,
             requestedLocale = event.requestedLocale,
-            requestedAt = event.requestedAt,
-            snapshotUpperBound = event.snapshotUpperBound,
+            requestedAt = event.requestedAt.toInstant(ZoneOffset.UTC),
+            snapshotUpperBound = event.snapshotUpperBound.toInstant(ZoneOffset.UTC),
             requestHash = event.requestHash,
             fileName = event.fileName
         )

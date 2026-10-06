@@ -3,16 +3,17 @@ package tech.medo.trainingorchestration.trainingrunconfigurationcatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.math.BigDecimal;
-import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum;
+import java.util.UUID
+import java.math.BigDecimal
+import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum
 
+import java.time.LocalDateTime
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
-import java.time.LocalDateTime
 
 
 class TrainingRunConfigurationCatalogReadModelQuery
@@ -57,11 +58,11 @@ class TrainingRunConfigurationCatalogReadModelCriteria {
     var updateReason: StringFilter? = null
     var lockedByTrainingJobId: StringFilter? = null
     var state: Filter<TrainingRunConfigurationStateEnum>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class TrainingRunConfigurationCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var trainingRunConfigurationId: UUID? = null
     var configurationName: String? = null
     var federationId: UUID? = null
@@ -101,6 +102,7 @@ class TrainingRunConfigurationCatalogReadModelProjection : MetadataProjection {
     var updateReason: String? = null
     var lockedByTrainingJobId: UUID? = null
     var state: TrainingRunConfigurationStateEnum? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -150,6 +152,7 @@ fun TrainingRunConfigurationCatalogReadModelProjection.toReadModel(): TrainingRu
     updateReason = updateReason,
     lockedByTrainingJobId = lockedByTrainingJobId,
     state = state,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -206,6 +209,7 @@ data class TrainingRunConfigurationCatalogReadModel(
     val updateReason: String?,
     val lockedByTrainingJobId: UUID?,
     val state: TrainingRunConfigurationStateEnum?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

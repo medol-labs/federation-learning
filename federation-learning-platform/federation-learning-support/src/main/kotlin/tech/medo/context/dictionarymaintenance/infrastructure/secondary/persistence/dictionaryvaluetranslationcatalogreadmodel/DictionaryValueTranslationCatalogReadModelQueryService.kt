@@ -10,10 +10,11 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.dictionarymaintenance.dictionaryvaluetranslationcatalog.DictionaryValueTranslationCatalogReadModel
 import tech.medo.dictionarymaintenance.dictionaryvaluetranslationcatalog.DictionaryValueTranslationCatalogReadModelCriteria
@@ -38,6 +39,7 @@ class DictionaryValueTranslationCatalogReadModelQueryService(
             criteria.displayName?.let { specification = specification.and(buildSpecification(it, Function<Root<DictionaryValueTranslationCatalogReadModelEntity>, Expression<String>> { root -> root.get("displayName") })) }
             criteria.description?.let { specification = specification.and(buildSpecification(it, Function<Root<DictionaryValueTranslationCatalogReadModelEntity>, Expression<String>> { root -> root.get("description") })) }
             criteria.updatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DictionaryValueTranslationCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("updatedAt") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DictionaryValueTranslationCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -103,6 +105,7 @@ class DictionaryValueTranslationCatalogReadModelQueryService(
             it.displayName = this@toProjection.displayName
             it.description = this@toProjection.description
             it.updatedAt = this@toProjection.updatedAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

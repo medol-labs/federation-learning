@@ -10,9 +10,11 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.math.BigDecimal;
-import tech.medo.modellifecycle.domain.states.ModelStateEnum;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import java.math.BigDecimal
+import tech.medo.modellifecycle.domain.states.ModelStateEnum
 
 import tech.medo.modellifecycle.modelcatalog.ModelCatalogReadModel
 import tech.medo.modellifecycle.modelcatalog.ModelCatalogReadModelCriteria
@@ -44,9 +46,42 @@ class ModelCatalogReadModelQueryService(
             criteria.hyperparameterSnapshotId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("hyperparameterSnapshotId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.reproducibilityManifestId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("reproducibilityManifestId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.modelCardId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("modelCardId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<ModelCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
+
+    private fun buildLocalDateTimeRangeSpecification(
+        filter: RangeFilter<*>,
+        field: Function<Root<ModelCatalogReadModelEntity>, Expression<LocalDateTime>>
+    ): Specification<ModelCatalogReadModelEntity> =
+        Specification { root, _, builder ->
+            val expression = field.apply(root)
+            val predicates = mutableListOf<jakarta.persistence.criteria.Predicate>()
+            filter.getEquals()?.let { predicates.add(builder.equal(expression, localDateTimeValue(it))) }
+            filter.getNotEquals()?.let { predicates.add(builder.notEqual(expression, localDateTimeValue(it))) }
+            filter.getSpecified()?.let { predicates.add(if (it) builder.isNotNull(expression) else builder.isNull(expression)) }
+            (filter.getIn() as List<*>?)?.takeIf { it.isNotEmpty() }?.let { predicates.add(expression.`in`(it.map { value -> localDateTimeValue(value) })) }
+            (filter.getNotIn() as List<*>?)?.takeIf { it.isNotEmpty() }?.let { predicates.add(builder.not(expression.`in`(it.map { value -> localDateTimeValue(value) }))) }
+            filter.getGreaterThan()?.let { predicates.add(builder.greaterThan(expression, localDateTimeValue(it))) }
+            filter.getGreaterThanOrEqual()?.let { predicates.add(builder.greaterThanOrEqualTo(expression, localDateTimeValue(it))) }
+            filter.getLessThan()?.let { predicates.add(builder.lessThan(expression, localDateTimeValue(it))) }
+            filter.getLessThanOrEqual()?.let { predicates.add(builder.lessThanOrEqualTo(expression, localDateTimeValue(it))) }
+            builder.and(*predicates.toTypedArray())
+        }
+
+    private fun localDateTimeValue(value: Any?): LocalDateTime =
+        when (value) {
+            is LocalDateTime -> value
+            null -> throw IllegalArgumentException("LocalDateTime filter value is required.")
+            else -> value.toString().let { raw ->
+                if (raw.all { it.isDigit() }) {
+                    java.time.Instant.ofEpochMilli(raw.toLong()).atZone(java.time.ZoneId.systemDefault()).toLocalDateTime()
+                } else {
+                    LocalDateTime.parse(raw)
+                }
+            }
+        }
 
     private fun <X : Comparable<in X>> buildExpressionRangeSpecification(
         filter: RangeFilter<X>,
@@ -84,6 +119,7 @@ class ModelCatalogReadModelQueryService(
             it.hyperparameterSnapshotId = this@toProjection.hyperparameterSnapshotId
             it.reproducibilityManifestId = this@toProjection.reproducibilityManifestId
             it.modelCardId = this@toProjection.modelCardId
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

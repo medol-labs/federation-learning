@@ -3,10 +3,10 @@ package tech.medo.runtimeagentoperations.agentdictionaryvaluecatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.IntegerFilter
@@ -26,11 +26,11 @@ class AgentDictionaryValueCatalogReadModelCriteria {
     var active: BooleanFilter? = null
     var state: StringFilter? = null
     var syncedAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class AgentDictionaryValueCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var dictionaryValueId: UUID? = null
     var dictionaryId: UUID? = null
     var dictionaryCode: String? = null
@@ -40,6 +40,7 @@ class AgentDictionaryValueCatalogReadModelProjection : MetadataProjection {
     var active: Boolean? = null
     var state: String? = null
     var syncedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -59,6 +60,7 @@ fun AgentDictionaryValueCatalogReadModelProjection.toReadModel(): AgentDictionar
     active = active,
     state = state,
     syncedAt = syncedAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -85,6 +87,7 @@ data class AgentDictionaryValueCatalogReadModel(
     val active: Boolean?,
     val state: String?,
     val syncedAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

@@ -3,11 +3,11 @@ package tech.medo.datasetgovernance.runtimedatasetmetadatacatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.math.BigDecimal
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.BooleanFilter
@@ -42,11 +42,11 @@ class RuntimeDatasetMetadataCatalogReadModelCriteria {
     var profilingStatus: StringFilter? = null
     var failureReason: StringFilter? = null
     var profiledAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeDatasetMetadataCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeDatasetBindingId: UUID? = null
     var metadataReportId: UUID? = null
     var datasetId: UUID? = null
@@ -70,6 +70,7 @@ class RuntimeDatasetMetadataCatalogReadModelProjection : MetadataProjection {
     var profilingStatus: String? = null
     var failureReason: String? = null
     var profiledAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -103,6 +104,7 @@ fun RuntimeDatasetMetadataCatalogReadModelProjection.toReadModel(): RuntimeDatas
     profilingStatus = profilingStatus,
     failureReason = failureReason,
     profiledAt = profiledAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -143,6 +145,7 @@ data class RuntimeDatasetMetadataCatalogReadModel(
     val profilingStatus: String?,
     val failureReason: String?,
     val profiledAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

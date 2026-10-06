@@ -6,13 +6,13 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-import java.util.UUID;
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
-import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.math.BigDecimal;
+import java.util.UUID
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
+import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
+import java.math.BigDecimal
 
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModel
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelCriteria
@@ -101,6 +101,7 @@ class JpaTrainingRoundProgressReadModelRepository(
             it.globalAccuracy = this@toProjection.globalAccuracy
             it.globalFairnessScore = this@toProjection.globalFairnessScore
             it.failureReason = this@toProjection.failureReason
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -161,6 +162,7 @@ class JpaTrainingRoundProgressReadModelRepository(
             it.globalAccuracy = this@toEntity.globalAccuracy
             it.globalFairnessScore = this@toEntity.globalFairnessScore
             it.failureReason = this@toEntity.failureReason
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

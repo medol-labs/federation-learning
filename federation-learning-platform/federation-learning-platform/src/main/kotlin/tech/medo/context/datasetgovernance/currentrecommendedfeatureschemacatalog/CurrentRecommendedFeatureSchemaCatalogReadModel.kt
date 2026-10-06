@@ -3,10 +3,10 @@ package tech.medo.datasetgovernance.currentrecommendedfeatureschemacatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
@@ -20,16 +20,17 @@ class CurrentRecommendedFeatureSchemaCatalogReadModelCriteria {
     var recommendedVersion: StringFilter? = null
     var recommendedAt: RangeFilter<LocalDateTime>? = null
     var recommendationNote: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class CurrentRecommendedFeatureSchemaCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var featureDomain: String? = null
     var recommendedFeatureSchemaId: UUID? = null
     var recommendedVersion: String? = null
     var recommendedAt: LocalDateTime? = null
     var recommendationNote: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -45,6 +46,7 @@ fun CurrentRecommendedFeatureSchemaCatalogReadModelProjection.toReadModel(): Cur
     recommendedVersion = recommendedVersion,
     recommendedAt = recommendedAt,
     recommendationNote = recommendationNote,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -67,6 +69,7 @@ data class CurrentRecommendedFeatureSchemaCatalogReadModel(
     val recommendedVersion: String?,
     val recommendedAt: LocalDateTime?,
     val recommendationNote: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

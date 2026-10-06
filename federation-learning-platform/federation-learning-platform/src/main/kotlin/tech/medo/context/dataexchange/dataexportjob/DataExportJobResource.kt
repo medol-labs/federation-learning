@@ -27,4 +27,28 @@ class DataExportJobResource(
         request: HttpServletRequest
     ): CompletableFuture<RequestDataExportCommand> =
         commandGateway.send(command, MetadataFactory.from(request)).resultMessage.thenApply { command }
+
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('mark_data_export_processing:execute')")
+    @PostMapping("/markdataexportprocessing")
+    fun MarkDataExportProcessing(
+        @Valid @RequestBody command: MarkDataExportProcessingCommand,
+        request: HttpServletRequest
+    ): CompletableFuture<MarkDataExportProcessingCommand> =
+        commandGateway.send(command, MetadataFactory.from(request)).resultMessage.thenApply { command }
+
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('complete_data_export:execute')")
+    @PostMapping("/completedataexport")
+    fun CompleteDataExport(
+        @Valid @RequestBody command: CompleteDataExportCommand,
+        request: HttpServletRequest
+    ): CompletableFuture<CompleteDataExportCommand> =
+        commandGateway.send(command, MetadataFactory.from(request)).resultMessage.thenApply { command }
+
+    @PreAuthorize("hasAuthority('*:*') or hasAuthority('fail_data_export:execute')")
+    @PostMapping("/faildataexport")
+    fun FailDataExport(
+        @Valid @RequestBody command: FailDataExportCommand,
+        request: HttpServletRequest
+    ): CompletableFuture<FailDataExportCommand> =
+        commandGateway.send(command, MetadataFactory.from(request)).resultMessage.thenApply { command }
 }

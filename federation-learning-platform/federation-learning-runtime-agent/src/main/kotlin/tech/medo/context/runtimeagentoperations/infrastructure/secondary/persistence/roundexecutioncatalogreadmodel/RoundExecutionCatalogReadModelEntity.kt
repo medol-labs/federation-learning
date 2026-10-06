@@ -8,18 +8,17 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.math.BigDecimal;
+import java.util.UUID
+import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
+import java.math.BigDecimal
 
 
 @Entity
 @Table(name = "round_execution_catalog")
 class RoundExecutionCatalogReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var roundExecutionId: UUID? = null
     var executionSessionId: UUID? = null
@@ -72,6 +71,7 @@ class RoundExecutionCatalogReadModelEntity : MetadataProjection {
     var runtimeEngineReleaseFailureReason: String? = null
     @Column(columnDefinition = "text")
     var rejectionReasons: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

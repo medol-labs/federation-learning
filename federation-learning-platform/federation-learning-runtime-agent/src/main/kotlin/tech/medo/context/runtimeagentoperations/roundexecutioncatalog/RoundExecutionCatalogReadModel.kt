@@ -3,12 +3,12 @@ package tech.medo.runtimeagentoperations.roundexecutioncatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.math.BigDecimal;
+import java.util.UUID
+import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
+import java.math.BigDecimal
 
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.BooleanFilter
@@ -66,11 +66,11 @@ class RoundExecutionCatalogReadModelCriteria {
     var retryReason: StringFilter? = null
     var runtimeEngineReleased: BooleanFilter? = null
     var runtimeEngineReleaseFailureReason: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RoundExecutionCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var roundExecutionId: UUID? = null
     var executionSessionId: UUID? = null
     var executionPlanId: UUID? = null
@@ -117,6 +117,7 @@ class RoundExecutionCatalogReadModelProjection : MetadataProjection {
     var runtimeEngineReleased: Boolean? = null
     var runtimeEngineReleaseFailureReason: String? = null
     var rejectionReasons: List<String> = emptyList()
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -173,6 +174,7 @@ fun RoundExecutionCatalogReadModelProjection.toReadModel(): RoundExecutionCatalo
     runtimeEngineReleased = runtimeEngineReleased,
     runtimeEngineReleaseFailureReason = runtimeEngineReleaseFailureReason,
     rejectionReasons = rejectionReasons,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -236,6 +238,7 @@ data class RoundExecutionCatalogReadModel(
     val runtimeEngineReleased: Boolean?,
     val runtimeEngineReleaseFailureReason: String?,
     val rejectionReasons: List<String>,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

@@ -3,16 +3,17 @@ package tech.medo.trainingorchestration.trainingjobdashboard
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum;
-import java.math.BigDecimal;
+import java.util.UUID
+import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
+import java.math.BigDecimal
 
+import java.time.LocalDateTime
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
+import tech.jhipster.service.filter.RangeFilter
 import tech.jhipster.service.filter.StringFilter
-import java.time.LocalDateTime
 
 
 class TrainingJobDashboardReadModelQuery
@@ -48,11 +49,11 @@ class TrainingJobDashboardReadModelCriteria {
     var globalAccuracy: BigDecimalFilter? = null
     var finalModelId: StringFilter? = null
     var stopReason: StringFilter? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class TrainingJobDashboardReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var trainingJobId: UUID? = null
     var federationId: UUID? = null
     var trainingRunConfigurationId: UUID? = null
@@ -84,6 +85,7 @@ class TrainingJobDashboardReadModelProjection : MetadataProjection {
     var globalAccuracy: BigDecimal? = null
     var finalModelId: UUID? = null
     var stopReason: String? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -125,6 +127,7 @@ fun TrainingJobDashboardReadModelProjection.toReadModel(): TrainingJobDashboardR
     globalAccuracy = globalAccuracy,
     finalModelId = finalModelId,
     stopReason = stopReason,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -173,6 +176,7 @@ data class TrainingJobDashboardReadModel(
     val globalAccuracy: BigDecimal?,
     val finalModelId: UUID?,
     val stopReason: String?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

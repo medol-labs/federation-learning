@@ -3,11 +3,11 @@ package tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
@@ -43,11 +43,11 @@ class RuntimeInfrastructureAccessViewReadModelCriteria {
     var agentDeploymentRetryFailureReason: StringFilter? = null
     var connectedAt: RangeFilter<LocalDateTime>? = null
     var state: Filter<RuntimeInfrastructureStateEnum>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class RuntimeInfrastructureAccessViewReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var runtimeInfrastructureId: UUID? = null
     var organizationId: UUID? = null
     var runtimeInstallationPlanId: UUID? = null
@@ -73,6 +73,7 @@ class RuntimeInfrastructureAccessViewReadModelProjection : MetadataProjection {
     var agentDeploymentRetryFailureReason: String? = null
     var connectedAt: LocalDateTime? = null
     var state: RuntimeInfrastructureStateEnum? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -108,6 +109,7 @@ fun RuntimeInfrastructureAccessViewReadModelProjection.toReadModel(): RuntimeInf
     agentDeploymentRetryFailureReason = agentDeploymentRetryFailureReason,
     connectedAt = connectedAt,
     state = state,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -150,6 +152,7 @@ data class RuntimeInfrastructureAccessViewReadModel(
     val agentDeploymentRetryFailureReason: String?,
     val connectedAt: LocalDateTime?,
     val state: RuntimeInfrastructureStateEnum?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

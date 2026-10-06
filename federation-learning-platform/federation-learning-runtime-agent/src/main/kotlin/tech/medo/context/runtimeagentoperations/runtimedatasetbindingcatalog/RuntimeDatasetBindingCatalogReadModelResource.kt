@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/runtimedatasetbinding/runtimedatasetbindingcatalog")
-class RuntimeDatasetBindingCatalogReadModelResource(private val repository: RuntimeDatasetBindingCatalogReadModelRepository) {
+class RuntimeDatasetBindingCatalogReadModelResource(
+    private val repository: RuntimeDatasetBindingCatalogReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_dataset_binding_catalog:list') or hasAuthority('runtime_dataset_binding_catalog:read')")
     @GetMapping
     fun findAll(
         criteria: RuntimeDatasetBindingCatalogReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<RuntimeDatasetBindingCatalogReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: RuntimeDatasetBindingCatalogReadModelCriteria, pageable: Pageable): Page<RuntimeDatasetBindingCatalogReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_dataset_binding_catalog:read')")

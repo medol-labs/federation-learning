@@ -10,20 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID;
+import java.util.UUID
 
 
 @CrossOrigin
 @RestController
 @RequestMapping("/agentruntimenoderesourcetelemetry/agentruntimenoderesourcelatest")
-class AgentRuntimeNodeResourceLatestReadModelResource(private val repository: AgentRuntimeNodeResourceLatestReadModelRepository) {
+class AgentRuntimeNodeResourceLatestReadModelResource(
+    private val repository: AgentRuntimeNodeResourceLatestReadModelRepository
+) {
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_runtime_node_resource_latest:list') or hasAuthority('agent_runtime_node_resource_latest:read')")
     @GetMapping
     fun findAll(
         criteria: AgentRuntimeNodeResourceLatestReadModelCriteria,
         @PageableDefault(size = 20) pageable: Pageable
     ): Page<AgentRuntimeNodeResourceLatestReadModel> =
+        findPage(criteria, pageable)
+
+
+    private fun findPage(criteria: AgentRuntimeNodeResourceLatestReadModelCriteria, pageable: Pageable): Page<AgentRuntimeNodeResourceLatestReadModel> =
         repository.findAllByCriteria(criteria, pageable)
+
 
 
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_runtime_node_resource_latest:read')")

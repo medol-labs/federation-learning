@@ -4,10 +4,10 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimemonitoring.runtimenoderesourcelatest.RuntimeNodeResourceLatestReadModel
 import tech.medo.runtimemonitoring.runtimenoderesourcelatest.RuntimeNodeResourceLatestReadModelCriteria
@@ -57,6 +57,7 @@ class JpaRuntimeNodeResourceLatestReadModelRepository(
             it.observedAt = this@toProjection.observedAt
             it.lastResourceSnapshotAt = this@toProjection.lastResourceSnapshotAt
             it.telemetryRetentionPolicy = this@toProjection.telemetryRetentionPolicy
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -86,6 +87,7 @@ class JpaRuntimeNodeResourceLatestReadModelRepository(
             it.observedAt = this@toEntity.observedAt
             it.lastResourceSnapshotAt = this@toEntity.lastResourceSnapshotAt
             it.telemetryRetentionPolicy = this@toEntity.telemetryRetentionPolicy
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

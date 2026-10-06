@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
+import java.util.UUID
 
 import tech.medo.identityaccessmanagement.permissioncatalogs.PermissionCatalogReadModel
 import tech.medo.identityaccessmanagement.permissioncatalogs.PermissionCatalogReadModelCriteria
@@ -39,6 +39,7 @@ class JpaPermissionCatalogReadModelRepository(
             it.permissionCode = this@toProjection.permissionCode
             it.permissionName = this@toProjection.permissionName
             it.description = this@toProjection.description
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -53,6 +54,7 @@ class JpaPermissionCatalogReadModelRepository(
             it.permissionCode = this@toEntity.permissionCode
             it.permissionName = this@toEntity.permissionName
             it.description = this@toEntity.description
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

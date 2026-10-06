@@ -3,11 +3,11 @@ package tech.medo.secureaggregation.secureaggregationsessioncatalog
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.UUID
+import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
+import java.time.LocalDateTime
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.Filter
@@ -46,11 +46,11 @@ class SecureAggregationSessionCatalogReadModelCriteria {
     var decryptedAt: RangeFilter<LocalDateTime>? = null
     var completedAt: RangeFilter<LocalDateTime>? = null
     var failedAt: RangeFilter<LocalDateTime>? = null
+    var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
 
 
 class SecureAggregationSessionCatalogReadModelProjection : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     var secureAggregationSessionId: UUID? = null
     var trainingJobId: UUID? = null
     var trainingRunConfigurationId: UUID? = null
@@ -80,6 +80,7 @@ class SecureAggregationSessionCatalogReadModelProjection : MetadataProjection {
     var decryptedAt: LocalDateTime? = null
     var completedAt: LocalDateTime? = null
     var failedAt: LocalDateTime? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null
@@ -119,6 +120,7 @@ fun SecureAggregationSessionCatalogReadModelProjection.toReadModel(): SecureAggr
     decryptedAt = decryptedAt,
     completedAt = completedAt,
     failedAt = failedAt,
+    projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
     sessionId = sessionId,
     correlationId = correlationId,
@@ -165,6 +167,7 @@ data class SecureAggregationSessionCatalogReadModel(
     val decryptedAt: LocalDateTime?,
     val completedAt: LocalDateTime?,
     val failedAt: LocalDateTime?,
+    val projectionUpdatedAt: LocalDateTime?,
     val userId: String?,
     val sessionId: String?,
     val correlationId: String?,

@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID;
+import java.util.UUID
 
 import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModel
 import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModelCriteria
@@ -38,6 +38,7 @@ class JpaRoleCatalogReadModelRepository(
             it.roleId = this@toProjection.roleId
             it.roleCode = this@toProjection.roleCode
             it.roleName = this@toProjection.roleName
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -51,6 +52,7 @@ class JpaRoleCatalogReadModelRepository(
             it.roleId = this@toEntity.roleId
             it.roleCode = this@toEntity.roleCode
             it.roleName = this@toEntity.roleName
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId

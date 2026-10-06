@@ -10,11 +10,12 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModel
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModelCriteria
@@ -59,6 +60,7 @@ class SecureAggregationSessionCatalogReadModelQueryService(
             criteria.decryptedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<SecureAggregationSessionCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("decryptedAt") })) }
             criteria.completedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<SecureAggregationSessionCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("completedAt") })) }
             criteria.failedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<SecureAggregationSessionCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("failedAt") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<SecureAggregationSessionCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -145,6 +147,7 @@ class SecureAggregationSessionCatalogReadModelQueryService(
             it.decryptedAt = this@toProjection.decryptedAt
             it.completedAt = this@toProjection.completedAt
             it.failedAt = this@toProjection.failedAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

@@ -3,6 +3,7 @@ import { useShow, useTranslate } from "@refinedev/core";
 
 import { frontendComposition } from "@/app/composition/composition.resolved";
 import { ShowView, ShowViewHeader } from "@/components/refine-ui/views/show-view";
+import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 import {
   Card,
   CardContent,
@@ -66,13 +67,63 @@ export const DataExportJobCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.criteriaJson.label", "Criteria Json")}</h4>
+              {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:criteriaJson", { value: record?.criteriaJson, record, resource: "data-export-job-catalog", field: "criteriaJson", view: "display" }) ?? <CopyableText value={record?.criteriaJson} />}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.sortJson.label", "Sort Json")}</h4>
+              {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:sortJson", { value: record?.sortJson, record, resource: "data-export-job-catalog", field: "sortJson", view: "display" }) ?? <CopyableText value={record?.sortJson} />}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.columnsJson.label", "Columns Json")}</h4>
+              {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:columnsJson", { value: record?.columnsJson, record, resource: "data-export-job-catalog", field: "columnsJson", view: "display" }) ?? <CopyableText value={record?.columnsJson} />}
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.requestedLocale.label", "Requested Locale")}</h4>
               {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:requestedLocale", { value: record?.requestedLocale, record, resource: "data-export-job-catalog", field: "requestedLocale", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.requestedLocale, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.requestedAt.label", "Requested At")}</h4>
+              {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:requestedAt", { value: record?.requestedAt, record, resource: "data-export-job-catalog", field: "requestedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.requestedAt, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.snapshotUpperBound.label", "Snapshot Upper Bound")}</h4>
+              {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:snapshotUpperBound", { value: record?.snapshotUpperBound, record, resource: "data-export-job-catalog", field: "snapshotUpperBound", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.snapshotUpperBound, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.requestHash.label", "Request Hash")}</h4>
+              {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:requestHash", { value: record?.requestHash, record, resource: "data-export-job-catalog", field: "requestHash", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.requestHash, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.status.label", "Status")}</h4>
               {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:status", { value: record?.status, record, resource: "data-export-job-catalog", field: "status", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.status, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.fileName.label", "File Name")}</h4>
+              {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:fileName", { value: record?.fileName, record, resource: "data-export-job-catalog", field: "fileName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.fileName, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.filePath.label", "File Path")}</h4>
+              {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:filePath", { value: record?.filePath, record, resource: "data-export-job-catalog", field: "filePath", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.filePath, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.rowCount.label", "Row Count")}</h4>
+              {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:rowCount", { value: record?.rowCount, record, resource: "data-export-job-catalog", field: "rowCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.rowCount, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.errorMessage.label", "Error Message")}</h4>
+              {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:errorMessage", { value: record?.errorMessage, record, resource: "data-export-job-catalog", field: "errorMessage", view: "display" }) ?? <CopyableText value={record?.errorMessage} />}
             </div>
             <Separator />
           </CardContent>

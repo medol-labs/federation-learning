@@ -10,10 +10,11 @@ import org.hibernate.query.criteria.JpaExpression
 import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
-import java.util.UUID;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime
+
+import java.util.UUID
+import org.springframework.format.annotation.DateTimeFormat
+import com.fasterxml.jackson.annotation.JsonFormat
 
 import tech.medo.runtimeagentoperations.agentfeatureschemacatalog.AgentFeatureSchemaCatalogReadModel
 import tech.medo.runtimeagentoperations.agentfeatureschemacatalog.AgentFeatureSchemaCatalogReadModelCriteria
@@ -35,6 +36,7 @@ class AgentFeatureSchemaCatalogReadModelQueryService(
             criteria.featureSchemaVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentFeatureSchemaCatalogReadModelEntity>, Expression<String>> { root -> root.get("featureSchemaVersion") })) }
             criteria.schemaStatus?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentFeatureSchemaCatalogReadModelEntity>, Expression<String>> { root -> root.get("schemaStatus") })) }
             criteria.syncedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<AgentFeatureSchemaCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("syncedAt") })) }
+            criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<AgentFeatureSchemaCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
         return specification
     }
@@ -97,6 +99,7 @@ class AgentFeatureSchemaCatalogReadModelQueryService(
             it.featureSchemaVersion = this@toProjection.featureSchemaVersion
             it.schemaStatus = this@toProjection.schemaStatus
             it.syncedAt = this@toProjection.syncedAt
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId

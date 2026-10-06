@@ -369,6 +369,7 @@ export const DictionaryValueTranslationCatalogList = () => {
     },
   });
 
+
   return (
     <ListView>
       <ListViewHeader canCreate={false}>

@@ -8,15 +8,14 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
-import java.util.UUID;
-import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum;
-import java.time.LocalDateTime
+import java.util.UUID
+import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum
 
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "user_organization_membership_directory")
 class UserOrganizationMembershipDirectoryReadModelEntity : MetadataProjection {
-    override var projectionUpdatedAt: LocalDateTime? = null
     @Id
     var userOrganizationMembershipId: UUID? = null
     var userAccountId: UUID? = null
@@ -26,6 +25,7 @@ class UserOrganizationMembershipDirectoryReadModelEntity : MetadataProjection {
     var organizationUserRole: String? = null
     @Enumerated(EnumType.STRING)
     var state: UserOrganizationMembershipStateEnum? = null
+    override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
     override var sessionId: String? = null
     override var correlationId: String? = null

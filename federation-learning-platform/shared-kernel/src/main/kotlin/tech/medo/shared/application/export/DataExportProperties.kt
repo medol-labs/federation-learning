@@ -10,6 +10,4 @@ class DataExportProperties {
     var asyncThreshold: Long = 10000
     var maxRows: Long = 800000
     var storagePath: String = "build/data-exports"
-    var workerBatchSize: Int = 10
-    var workerFixedDelayMs: Long = 5000
 }

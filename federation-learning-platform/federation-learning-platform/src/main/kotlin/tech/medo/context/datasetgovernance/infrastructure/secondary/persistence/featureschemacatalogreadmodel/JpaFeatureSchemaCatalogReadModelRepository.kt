@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-import java.util.UUID;
-import tech.medo.datasetgovernance.domain.types.FeatureDefinition;
-import tech.medo.datasetgovernance.domain.types.LabelDefinition;
+import java.util.UUID
+import tech.medo.datasetgovernance.domain.types.FeatureDefinition
+import tech.medo.datasetgovernance.domain.types.LabelDefinition
 
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModel
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelCriteria
@@ -50,6 +50,7 @@ class JpaFeatureSchemaCatalogReadModelRepository(
             it.schemaStatus = this@toProjection.schemaStatus
             it.supersededByFeatureSchemaId = this@toProjection.supersededByFeatureSchemaId
             it.recommendedForDomain = this@toProjection.recommendedForDomain
+            it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
             it.sessionId = this@toProjection.sessionId
             it.correlationId = this@toProjection.correlationId
@@ -70,6 +71,7 @@ class JpaFeatureSchemaCatalogReadModelRepository(
             it.schemaStatus = this@toEntity.schemaStatus
             it.supersededByFeatureSchemaId = this@toEntity.supersededByFeatureSchemaId
             it.recommendedForDomain = this@toEntity.recommendedForDomain
+            it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId
             it.sessionId = this@toEntity.sessionId
             it.correlationId = this@toEntity.correlationId
