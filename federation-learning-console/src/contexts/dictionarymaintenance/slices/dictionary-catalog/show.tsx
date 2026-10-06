@@ -10,17 +10,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { Separator } from "@/components/ui/separator";
 import { renderFieldOverride } from "@/platform/composition";
 
-const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
   if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
   if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
-  return String(value);
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
 };
 
 export const DictionaryCatalogShow = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const { result: record } = useShow({
     dataProviderName: "federation-learning-support",
     meta: {
@@ -44,17 +58,17 @@ export const DictionaryCatalogShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.dictionary_catalog.fields.dictionaryId.label", "Dictionary Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:dictionaryId", { value: record?.dictionaryId, record, resource: "dictionary-catalog", field: "dictionaryId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.dictionaryId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:dictionaryId", { value: record?.dictionaryId, record, resource: "dictionary-catalog", field: "dictionaryId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.dictionaryId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.dictionary_catalog.fields.dictionaryCode.label", "Dictionary Code")}</h4>
-              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:dictionaryCode", { value: record?.dictionaryCode, record, resource: "dictionary-catalog", field: "dictionaryCode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.dictionaryCode, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:dictionaryCode", { value: record?.dictionaryCode, record, resource: "dictionary-catalog", field: "dictionaryCode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.dictionaryCode, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.dictionary_catalog.fields.dictionaryName.label", "Dictionary Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:dictionaryName", { value: record?.dictionaryName, record, resource: "dictionary-catalog", field: "dictionaryName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.dictionaryName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:dictionaryName", { value: record?.dictionaryName, record, resource: "dictionary-catalog", field: "dictionaryName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.dictionaryName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
@@ -64,27 +78,30 @@ export const DictionaryCatalogShow = () => {
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.dictionary_catalog.fields.state.label", "State")}</h4>
-              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:state", { value: record?.state, record, resource: "dictionary-catalog", field: "state", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.state, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:state", { value: record?.state, record, resource: "dictionary-catalog", field: "state", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.state, t, dictionaryLabel, [
+                { label: t("resources.dictionary_catalog.fields.state.options.Registered", "Registered"), value: "Registered" },
+                { label: t("resources.dictionary_catalog.fields.state.options.Archived", "Archived"), value: "Archived" },
+              ])}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.dictionary_catalog.fields.registeredAt.label", "Registered At")}</h4>
-              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:registeredAt", { value: record?.registeredAt, record, resource: "dictionary-catalog", field: "registeredAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.registeredAt, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:registeredAt", { value: record?.registeredAt, record, resource: "dictionary-catalog", field: "registeredAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.registeredAt, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.dictionary_catalog.fields.updatedAt.label", "Updated At")}</h4>
-              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:updatedAt", { value: record?.updatedAt, record, resource: "dictionary-catalog", field: "updatedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.updatedAt, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:updatedAt", { value: record?.updatedAt, record, resource: "dictionary-catalog", field: "updatedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.updatedAt, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.dictionary_catalog.fields.archivedAt.label", "Archived At")}</h4>
-              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:archivedAt", { value: record?.archivedAt, record, resource: "dictionary-catalog", field: "archivedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.archivedAt, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:archivedAt", { value: record?.archivedAt, record, resource: "dictionary-catalog", field: "archivedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.archivedAt, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.dictionary_catalog.fields.archiveReason.label", "Archive Reason")}</h4>
-              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:archiveReason", { value: record?.archiveReason, record, resource: "dictionary-catalog", field: "archiveReason", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.archiveReason, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:dictionary-catalog:display:archiveReason", { value: record?.archiveReason, record, resource: "dictionary-catalog", field: "archiveReason", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.archiveReason, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
           </CardContent>

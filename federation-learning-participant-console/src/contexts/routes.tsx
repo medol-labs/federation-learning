@@ -11,6 +11,10 @@ import {
   AgentDictionaryValueCatalogShow,
 } from "./runtimeagentoperations/read-models/agent-dictionary-value-catalog";
 import {
+  AgentDictionaryValueTranslationCatalogList,
+  AgentDictionaryValueTranslationCatalogShow,
+} from "./runtimeagentoperations/read-models/agent-dictionary-value-translation-catalog";
+import {
   AgentFeatureSchemaCatalogList,
   AgentFeatureSchemaCatalogShow,
 } from "./runtimeagentoperations/read-models/agent-feature-schema-catalog";
@@ -112,6 +116,10 @@ export const contextRoutes = (
     <Route path="/agent-dictionary-value-catalog">
       <Route index element={resolvePageOverride("agent-dictionary-value-catalog", "list", <AgentDictionaryValueCatalogList />)} />
       <Route path="show/:id" element={resolvePageOverride("agent-dictionary-value-catalog", "show", <AgentDictionaryValueCatalogShow />)} />
+    </Route>
+    <Route path="/agent-dictionary-value-translation-catalog">
+      <Route index element={resolvePageOverride("agent-dictionary-value-translation-catalog", "list", <AgentDictionaryValueTranslationCatalogList />)} />
+      <Route path="show/:id" element={resolvePageOverride("agent-dictionary-value-translation-catalog", "show", <AgentDictionaryValueTranslationCatalogShow />)} />
     </Route>
     <Route path="/agent-feature-schema-catalog">
       <Route index element={resolvePageOverride("agent-feature-schema-catalog", "list", <AgentFeatureSchemaCatalogList />)} />

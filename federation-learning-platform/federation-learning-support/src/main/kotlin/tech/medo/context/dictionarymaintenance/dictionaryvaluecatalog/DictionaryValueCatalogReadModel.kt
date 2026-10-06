@@ -23,7 +23,7 @@ class DictionaryValueCatalogReadModelCriteria {
     var dictionaryId: StringFilter? = null
     var dictionaryCode: StringFilter? = null
     var valueCode: StringFilter? = null
-    var displayName: StringFilter? = null
+    var defaultDisplayName: StringFilter? = null
     var displayOrder: IntegerFilter? = null
     var description: StringFilter? = null
     var active: BooleanFilter? = null
@@ -41,7 +41,7 @@ class DictionaryValueCatalogReadModelProjection : MetadataProjection {
     var dictionaryId: UUID? = null
     var dictionaryCode: String? = null
     var valueCode: String? = null
-    var displayName: String? = null
+    var defaultDisplayName: String? = null
     var displayOrder: Int? = null
     var description: String? = null
     var active: Boolean? = null
@@ -65,7 +65,7 @@ fun DictionaryValueCatalogReadModelProjection.toReadModel(): DictionaryValueCata
     dictionaryId = dictionaryId,
     dictionaryCode = dictionaryCode,
     valueCode = valueCode,
-    displayName = displayName,
+    defaultDisplayName = defaultDisplayName,
     displayOrder = displayOrder,
     description = description,
     active = active,
@@ -96,7 +96,7 @@ data class DictionaryValueCatalogReadModel(
     val dictionaryId: UUID?,
     val dictionaryCode: String?,
     val valueCode: String?,
-    val displayName: String?,
+    val defaultDisplayName: String?,
     val displayOrder: Int?,
     val description: String?,
     val active: Boolean?,

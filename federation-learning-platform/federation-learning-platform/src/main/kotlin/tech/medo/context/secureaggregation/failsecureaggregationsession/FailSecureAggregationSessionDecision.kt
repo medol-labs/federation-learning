@@ -12,8 +12,18 @@ import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEn
 
 interface FailSecureAggregationSessionDecision {
     fun decide(command: FailSecureAggregationSessionCommand, state: SecureAggregationSessionState): List<Any> {
-        require(state.currentState == SecureAggregationSessionStateEnum.Planned) {
-            "FailSecureAggregationSession requires SecureAggregationSession to be Planned."
+        if (state.currentState != SecureAggregationSessionStateEnum.Planned) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.secureaggregation.failSecureAggregationSession.requiresState",
+                args = mapOf(
+                    "command" to "FailSecureAggregationSession",
+                    "aggregate" to "SecureAggregationSession",
+                    "expectedState" to "Planned",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "FailSecureAggregationSession requires SecureAggregationSession to be Planned."
+            )
         }
         return listOf(
             SecureAggregationFailedEvent(secureAggregationSessionId = command.secureAggregationSessionId, failureReason = command.failureReason)

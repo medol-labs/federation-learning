@@ -24,8 +24,18 @@ class RevalidateAgentDatasetAccessCommandHandler(
         @InjectEntity(idProperty = "datasetAccessValidationId") state: AgentDatasetAccessValidationState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == AgentDatasetAccessValidationStateEnum.Checked) {
-            "RevalidateAgentDatasetAccess requires AgentDatasetAccessValidation to be Checked."
+        if (state.currentState != AgentDatasetAccessValidationStateEnum.Checked) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeagentoperations.revalidateAgentDatasetAccess.requiresState",
+                args = mapOf(
+                    "command" to "RevalidateAgentDatasetAccess",
+                    "aggregate" to "AgentDatasetAccessValidation",
+                    "expectedState" to "Checked",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "RevalidateAgentDatasetAccess requires AgentDatasetAccessValidation to be Checked."
+            )
         }
         val input = RevalidateAgentDatasetAccessInput(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = command.runtimeDatasetBindingId)
         val portResult = revalidateAgentDatasetAccessService.execute(input)

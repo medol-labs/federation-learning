@@ -24,8 +24,18 @@ class ReportRuntimeInstanceSelfCheckPassedCommandHandler(
         @InjectEntity(idProperty = "bootstrapRequestId") state: RuntimeAgentLifecycleState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RuntimeAgentLifecycleStateEnum.Started) {
-            "ReportRuntimeInstanceSelfCheckPassed requires RuntimeAgentLifecycle to be Started."
+        if (state.currentState != RuntimeAgentLifecycleStateEnum.Started) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeagentoperations.reportRuntimeInstanceSelfCheckPassed.requiresState",
+                args = mapOf(
+                    "command" to "ReportRuntimeInstanceSelfCheckPassed",
+                    "aggregate" to "RuntimeAgentLifecycle",
+                    "expectedState" to "Started",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "ReportRuntimeInstanceSelfCheckPassed requires RuntimeAgentLifecycle to be Started."
+            )
         }
         val input = ReportRuntimeInstanceSelfCheckPassedInput(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId, agentVersion = command.agentVersion, runtimeAgentEndpoint = command.runtimeAgentEndpoint, endpointScope = command.endpointScope)
         val portResult = reportRuntimeInstanceSelfCheckPassedService.execute(input)

@@ -24,8 +24,18 @@ class ReprofileAgentDatasetCommandHandler(
         @InjectEntity(idProperty = "runtimeDatasetBindingId") state: AgentDatasetProfileState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == AgentDatasetProfileStateEnum.Reported) {
-            "ReprofileAgentDataset requires AgentDatasetProfile to be Reported."
+        if (state.currentState != AgentDatasetProfileStateEnum.Reported) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeagentoperations.reprofileAgentDataset.requiresState",
+                args = mapOf(
+                    "command" to "ReprofileAgentDataset",
+                    "aggregate" to "AgentDatasetProfile",
+                    "expectedState" to "Reported",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "ReprofileAgentDataset requires AgentDatasetProfile to be Reported."
+            )
         }
         val input = ReprofileAgentDatasetInput(metadataReportId = command.metadataReportId, runtimeDatasetBindingId = command.runtimeDatasetBindingId)
         val portResult = reprofileAgentDatasetService.execute(input)

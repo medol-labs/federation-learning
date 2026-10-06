@@ -9,17 +9,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { Separator } from "@/components/ui/separator";
 import { renderFieldOverride } from "@/platform/composition";
 
-const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
   if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
   if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
-  return String(value);
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
 };
 
 export const AgentDatasetAccessValidationCatalogShow = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const { result: record } = useShow({
     dataProviderName: "federation-learning-runtime-agent",
     meta: {
@@ -43,87 +57,87 @@ export const AgentDatasetAccessValidationCatalogShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.datasetAccessValidationId.label", "Dataset Access Validation Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:datasetAccessValidationId", { value: record?.datasetAccessValidationId, record, resource: "agent-dataset-access-validation-catalog", field: "datasetAccessValidationId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.datasetAccessValidationId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:datasetAccessValidationId", { value: record?.datasetAccessValidationId, record, resource: "agent-dataset-access-validation-catalog", field: "datasetAccessValidationId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.datasetAccessValidationId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.runtimeDatasetBindingId.label", "Runtime Dataset Binding Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:runtimeDatasetBindingId", { value: record?.runtimeDatasetBindingId, record, resource: "agent-dataset-access-validation-catalog", field: "runtimeDatasetBindingId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeDatasetBindingId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:runtimeDatasetBindingId", { value: record?.runtimeDatasetBindingId, record, resource: "agent-dataset-access-validation-catalog", field: "runtimeDatasetBindingId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeDatasetBindingId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.datasetId.label", "Dataset Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:datasetId", { value: record?.datasetId, record, resource: "agent-dataset-access-validation-catalog", field: "datasetId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.datasetId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:datasetId", { value: record?.datasetId, record, resource: "agent-dataset-access-validation-catalog", field: "datasetId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.datasetId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.organizationId.label", "Organization Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:organizationId", { value: record?.organizationId, record, resource: "agent-dataset-access-validation-catalog", field: "organizationId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.organizationId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:organizationId", { value: record?.organizationId, record, resource: "agent-dataset-access-validation-catalog", field: "organizationId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.organizationId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.organizationName.label", "Organization Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:organizationName", { value: record?.organizationName, record, resource: "agent-dataset-access-validation-catalog", field: "organizationName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.organizationName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:organizationName", { value: record?.organizationName, record, resource: "agent-dataset-access-validation-catalog", field: "organizationName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.organizationName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.featureSchemaId.label", "Feature Schema Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:featureSchemaId", { value: record?.featureSchemaId, record, resource: "agent-dataset-access-validation-catalog", field: "featureSchemaId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.featureSchemaId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:featureSchemaId", { value: record?.featureSchemaId, record, resource: "agent-dataset-access-validation-catalog", field: "featureSchemaId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.featureSchemaId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.featureDomain.label", "Feature Domain")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:featureDomain", { value: record?.featureDomain, record, resource: "agent-dataset-access-validation-catalog", field: "featureDomain", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.featureDomain, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:featureDomain", { value: record?.featureDomain, record, resource: "agent-dataset-access-validation-catalog", field: "featureDomain", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.featureDomain, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.featureSchemaVersion.label", "Feature Schema Version")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:featureSchemaVersion", { value: record?.featureSchemaVersion, record, resource: "agent-dataset-access-validation-catalog", field: "featureSchemaVersion", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.featureSchemaVersion, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:featureSchemaVersion", { value: record?.featureSchemaVersion, record, resource: "agent-dataset-access-validation-catalog", field: "featureSchemaVersion", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.featureSchemaVersion, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.runtimeId.label", "Runtime Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:runtimeId", { value: record?.runtimeId, record, resource: "agent-dataset-access-validation-catalog", field: "runtimeId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:runtimeId", { value: record?.runtimeId, record, resource: "agent-dataset-access-validation-catalog", field: "runtimeId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.datasetName.label", "Dataset Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:datasetName", { value: record?.datasetName, record, resource: "agent-dataset-access-validation-catalog", field: "datasetName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.datasetName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:datasetName", { value: record?.datasetName, record, resource: "agent-dataset-access-validation-catalog", field: "datasetName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.datasetName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.runtimeName.label", "Runtime Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:runtimeName", { value: record?.runtimeName, record, resource: "agent-dataset-access-validation-catalog", field: "runtimeName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:runtimeName", { value: record?.runtimeName, record, resource: "agent-dataset-access-validation-catalog", field: "runtimeName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.readable.label", "Readable")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:readable", { value: record?.readable, record, resource: "agent-dataset-access-validation-catalog", field: "readable", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.readable, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:readable", { value: record?.readable, record, resource: "agent-dataset-access-validation-catalog", field: "readable", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.readable, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.schemaReadable.label", "Schema Readable")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:schemaReadable", { value: record?.schemaReadable, record, resource: "agent-dataset-access-validation-catalog", field: "schemaReadable", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.schemaReadable, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:schemaReadable", { value: record?.schemaReadable, record, resource: "agent-dataset-access-validation-catalog", field: "schemaReadable", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.schemaReadable, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.sampleBatchReadable.label", "Sample Batch Readable")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:sampleBatchReadable", { value: record?.sampleBatchReadable, record, resource: "agent-dataset-access-validation-catalog", field: "sampleBatchReadable", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.sampleBatchReadable, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:sampleBatchReadable", { value: record?.sampleBatchReadable, record, resource: "agent-dataset-access-validation-catalog", field: "sampleBatchReadable", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.sampleBatchReadable, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.validationStatus.label", "Validation Status")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:validationStatus", { value: record?.validationStatus, record, resource: "agent-dataset-access-validation-catalog", field: "validationStatus", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.validationStatus, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:validationStatus", { value: record?.validationStatus, record, resource: "agent-dataset-access-validation-catalog", field: "validationStatus", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.validationStatus, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.failureReason.label", "Failure Reason")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:failureReason", { value: record?.failureReason, record, resource: "agent-dataset-access-validation-catalog", field: "failureReason", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.failureReason, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:failureReason", { value: record?.failureReason, record, resource: "agent-dataset-access-validation-catalog", field: "failureReason", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.failureReason, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_dataset_access_validation_catalog.fields.validatedAt.label", "Validated At")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:validatedAt", { value: record?.validatedAt, record, resource: "agent-dataset-access-validation-catalog", field: "validatedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.validatedAt, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-dataset-access-validation-catalog:display:validatedAt", { value: record?.validatedAt, record, resource: "agent-dataset-access-validation-catalog", field: "validatedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.validatedAt, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
           </CardContent>

@@ -237,8 +237,9 @@ export const RuntimeInfrastructureAccessViewConfirmRuntimeInfrastructurePrepared
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.RUNTIME_ENVIRONMENT_TYPE."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);
@@ -288,8 +289,9 @@ export const RuntimeInfrastructureAccessViewConfirmRuntimeInfrastructurePrepared
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.RUNTIME_AGENT_INSTALL_MODE."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);

@@ -24,8 +24,18 @@ class RetryDatasetContractValidationCommandHandler(
         @InjectEntity(idProperty = "selection") state: DatasetState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == DatasetStateEnum.ContractValidationCompleted) {
-            "RetryDatasetContractValidation requires Dataset to be ContractValidationCompleted."
+        if (state.currentState != DatasetStateEnum.ContractValidationCompleted) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeagentoperations.retryDatasetContractValidation.requiresState",
+                args = mapOf(
+                    "command" to "RetryDatasetContractValidation",
+                    "aggregate" to "Dataset",
+                    "expectedState" to "ContractValidationCompleted",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "RetryDatasetContractValidation requires Dataset to be ContractValidationCompleted."
+            )
         }
         val input = RetryDatasetContractValidationInput(datasetId = command.datasetId)
         val portResult = retryDatasetContractValidationService.execute(input)

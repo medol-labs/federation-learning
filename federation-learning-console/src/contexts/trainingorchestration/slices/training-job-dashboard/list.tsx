@@ -17,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type TrainingJobDashboardRecord = {
@@ -70,8 +71,27 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
+};
+
 export const TrainingJobDashboardList = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<TrainingJobDashboardRecord>();
     return [
@@ -327,7 +347,7 @@ export const TrainingJobDashboardList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "TRAINING_STRATEGY"),
       }),
       columnHelper.accessor("aggregationAlgorithm", {
         id: "aggregationAlgorithm",
@@ -353,7 +373,7 @@ export const TrainingJobDashboardList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "AGGREGATION_ALGORITHM"),
       }),
       columnHelper.accessor("secureAggregationRequired", {
         id: "secureAggregationRequired",
@@ -380,7 +400,7 @@ export const TrainingJobDashboardList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -395,12 +415,12 @@ export const TrainingJobDashboardList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Draft", value: "Draft" },
-            { label: "Submitted", value: "Submitted" },
-            { label: "Running", value: "Running" },
-            { label: "Paused", value: "Paused" },
-            { label: "Canceled", value: "Canceled" },
-            { label: "Completed", value: "Completed" },
+            { label: t("resources.training_job_dashboard.fields.state.options.Draft", "Draft"), value: "Draft" },
+            { label: t("resources.training_job_dashboard.fields.state.options.Submitted", "Submitted"), value: "Submitted" },
+            { label: t("resources.training_job_dashboard.fields.state.options.Running", "Running"), value: "Running" },
+            { label: t("resources.training_job_dashboard.fields.state.options.Paused", "Paused"), value: "Paused" },
+            { label: t("resources.training_job_dashboard.fields.state.options.Canceled", "Canceled"), value: "Canceled" },
+            { label: t("resources.training_job_dashboard.fields.state.options.Completed", "Completed"), value: "Completed" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -415,7 +435,14 @@ export const TrainingJobDashboardList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, [
+            { label: t("resources.training_job_dashboard.fields.state.options.Draft", "Draft"), value: "Draft" },
+            { label: t("resources.training_job_dashboard.fields.state.options.Submitted", "Submitted"), value: "Submitted" },
+            { label: t("resources.training_job_dashboard.fields.state.options.Running", "Running"), value: "Running" },
+            { label: t("resources.training_job_dashboard.fields.state.options.Paused", "Paused"), value: "Paused" },
+            { label: t("resources.training_job_dashboard.fields.state.options.Canceled", "Canceled"), value: "Canceled" },
+            { label: t("resources.training_job_dashboard.fields.state.options.Completed", "Completed"), value: "Completed" },
+          ]),
       }),
       columnHelper.accessor("workflowStage", {
         id: "workflowStage",
@@ -573,7 +600,7 @@ export const TrainingJobDashboardList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("canStartRound", {
         id: "canStartRound",
@@ -600,7 +627,7 @@ export const TrainingJobDashboardList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("canPause", {
         id: "canPause",
@@ -627,7 +654,7 @@ export const TrainingJobDashboardList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("canResume", {
         id: "canResume",
@@ -654,7 +681,7 @@ export const TrainingJobDashboardList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("canCancel", {
         id: "canCancel",
@@ -681,7 +708,7 @@ export const TrainingJobDashboardList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("canComplete", {
         id: "canComplete",
@@ -708,7 +735,7 @@ export const TrainingJobDashboardList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("currentRoundNumber", {
         id: "currentRoundNumber",
@@ -990,7 +1017,7 @@ export const TrainingJobDashboardList = () => {
         size: 32,
       }),
     ];
-  }, [t]);
+  }, [dictionaryLabel, t]);
 
   const table = useTable({
     columns,

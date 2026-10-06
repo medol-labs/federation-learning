@@ -24,8 +24,18 @@ class VerifyRuntimeInfrastructureCommandHandler(
         @InjectEntity(idProperty = "runtimeInfrastructureId") state: RuntimeInfrastructureState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RuntimeInfrastructureStateEnum.Prepared) {
-            "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Prepared."
+        if (state.currentState != RuntimeInfrastructureStateEnum.Prepared) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeprovisioning.verifyRuntimeInfrastructure.requiresState",
+                args = mapOf(
+                    "command" to "VerifyRuntimeInfrastructure",
+                    "aggregate" to "RuntimeInfrastructure",
+                    "expectedState" to "Prepared",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Prepared."
+            )
         }
         val input = RuntimeInfrastructureVerificationInput(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, expectedNodeCount = command.expectedNodeCount, runtimeAgentId = command.runtimeAgentId)
         val portResult = verifyRuntimeInfrastructureService.verify(input)

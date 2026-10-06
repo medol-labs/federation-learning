@@ -12,8 +12,18 @@ import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEn
 
 interface PrepareHomomorphicEncryptionContextDecision {
     fun decide(command: PrepareHomomorphicEncryptionContextCommand, state: SecureAggregationSessionState, portResult: PrepareHomomorphicEncryptionContextResult): List<Any> {
-        require(state.currentState == SecureAggregationSessionStateEnum.ParticipantsSelected) {
-            "PrepareHomomorphicEncryptionContext requires SecureAggregationSession to be ParticipantsSelected."
+        if (state.currentState != SecureAggregationSessionStateEnum.ParticipantsSelected) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.secureaggregation.prepareHomomorphicEncryptionContext.requiresState",
+                args = mapOf(
+                    "command" to "PrepareHomomorphicEncryptionContext",
+                    "aggregate" to "SecureAggregationSession",
+                    "expectedState" to "ParticipantsSelected",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "PrepareHomomorphicEncryptionContext requires SecureAggregationSession to be ParticipantsSelected."
+            )
         }
         return when (portResult) {
                     is PrepareHomomorphicEncryptionContextResult.Succeeded -> listOf(

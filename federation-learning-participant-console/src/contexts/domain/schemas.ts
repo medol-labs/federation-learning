@@ -7,9 +7,6 @@ const dateTimeLocalSchema = z.preprocess((value) => {
 }, z.string().datetime({ local: true }));
 
 export const OrganizationTypeSchema = z.enum(["HOSPITAL", "RESEARCH_INSTITUTE", "PUBLIC_HEALTH_AGENCY", "LABORATORY", "REHABILITATION_CENTER"]);
-export const DictionaryCodeSchema = z.string();
-export const DictionaryValueCodeSchema = z.string();
-export const DisplayOrderSchema = z.coerce.number().int().min(0).max(999999);
 export const FeatureDefinitionSchema = z.object({
   featureName: z.string(),
   dataType: z.string(),
@@ -38,6 +35,10 @@ export const TrainingRoundParticipantSchema = z.object({
   runtimeId: z.string().uuid(),
   datasetId: z.string().uuid()
 });
+export const DictionaryCodeSchema = z.string();
+export const DictionaryValueCodeSchema = z.string();
+export const LocaleCodeSchema = z.string();
+export const DisplayOrderSchema = z.coerce.number().int().min(0).max(999999);
 
 export const DeclareDatasetCommandSchema = z.object({
   organizationId: z.string().uuid(),

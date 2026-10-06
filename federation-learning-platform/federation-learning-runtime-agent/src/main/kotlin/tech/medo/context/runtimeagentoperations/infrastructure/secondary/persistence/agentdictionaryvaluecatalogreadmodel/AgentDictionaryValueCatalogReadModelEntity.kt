@@ -22,7 +22,7 @@ class AgentDictionaryValueCatalogReadModelEntity : MetadataProjection {
     var dictionaryId: UUID? = null
     var dictionaryCode: String? = null
     var valueCode: String? = null
-    var displayName: String? = null
+    var defaultDisplayName: String? = null
     var displayOrder: Int? = null
     var active: Boolean? = null
     var state: String? = null

@@ -160,8 +160,9 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.MODEL_PLUGIN."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);
@@ -230,8 +231,9 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.MODEL_ARTIFACT_SOURCE_TYPE."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);
@@ -283,8 +285,9 @@ export const ModelArtifactCatalogRegisterModelArtifact = () => {
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.MODEL_FORMAT."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);

@@ -12,8 +12,18 @@ import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationSta
 
 interface UpdateTrainingRunConfigurationDecision {
     fun decide(command: UpdateTrainingRunConfigurationCommand, state: TrainingRunConfigurationState): List<Any> {
-        require(state.currentState == TrainingRunConfigurationStateEnum.Draft) {
-            "UpdateTrainingRunConfiguration requires TrainingRunConfiguration to be Draft."
+        if (state.currentState != TrainingRunConfigurationStateEnum.Draft) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.trainingorchestration.updateTrainingRunConfiguration.requiresState",
+                args = mapOf(
+                    "command" to "UpdateTrainingRunConfiguration",
+                    "aggregate" to "TrainingRunConfiguration",
+                    "expectedState" to "Draft",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "UpdateTrainingRunConfiguration requires TrainingRunConfiguration to be Draft."
+            )
         }
         return listOf(
             TrainingRunConfigurationUpdatedEvent(trainingRunConfigurationId = command.trainingRunConfigurationId, configurationName = command.configurationName, federationId = command.federationId, federationName = command.federationName, featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, featureSchemaVersion = command.featureSchemaVersion, initialModelId = command.initialModelId, initialModelName = command.initialModelName, initialModelPlugin = command.initialModelPlugin, initialModelVersion = command.initialModelVersion, initialModelArtifactUri = requireNotNull(state.initialModelArtifactUri) { "initialModelArtifactUri is required from state." }, initialModelRegistryRef = requireNotNull(state.initialModelRegistryRef) { "initialModelRegistryRef is required from state." }, initialModelFormat = requireNotNull(state.initialModelFormat) { "initialModelFormat is required from state." }, initialModelArtifactDigest = requireNotNull(state.initialModelArtifactDigest) { "initialModelArtifactDigest is required from state." }, initialModelSignatureUri = state.initialModelSignatureUri, runtimeEngineProfileId = command.runtimeEngineProfileId, runtimeEngineProfileName = command.runtimeEngineProfileName, runtimeEnginePluginProfile = command.runtimeEnginePluginProfile, runtimeEngineImage = command.runtimeEngineImage, runtimeEngineImageDigest = command.runtimeEngineImageDigest, strategyName = command.strategyName, aggregationAlgorithm = command.aggregationAlgorithm, maxRounds = command.maxRounds, minimumNodesPerRound = command.minimumNodesPerRound, roundTimeoutSeconds = command.roundTimeoutSeconds, nodeResponseTimeoutSeconds = command.nodeResponseTimeoutSeconds, localEpochs = command.localEpochs, batchSize = command.batchSize, learningRate = command.learningRate, optimizer = command.optimizer, lossFunction = command.lossFunction, gradientClippingNorm = command.gradientClippingNorm, secureAggregationRequired = command.secureAggregationRequired, minimumAccuracy = command.minimumAccuracy, minimumFairnessScore = command.minimumFairnessScore, updateReason = command.updateReason)

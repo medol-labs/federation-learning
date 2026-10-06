@@ -17,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 import type { OrganizationType } from "@/contexts/domain/value-types";
 
@@ -45,8 +46,27 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
+};
+
 export const OrganizationDirectoryList = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<OrganizationDirectoryRecord>();
     return [
@@ -135,11 +155,11 @@ export const OrganizationDirectoryList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Hospital", value: "HOSPITAL" },
-            { label: "Research Institute", value: "RESEARCH_INSTITUTE" },
-            { label: "Public Health Agency", value: "PUBLIC_HEALTH_AGENCY" },
-            { label: "Laboratory", value: "LABORATORY" },
-            { label: "Rehabilitation Center", value: "REHABILITATION_CENTER" },
+            { label: t("resources.organization_directory.fields.organizationType.options.HOSPITAL", "Hospital"), value: "HOSPITAL" },
+            { label: t("resources.organization_directory.fields.organizationType.options.RESEARCH_INSTITUTE", "Research Institute"), value: "RESEARCH_INSTITUTE" },
+            { label: t("resources.organization_directory.fields.organizationType.options.PUBLIC_HEALTH_AGENCY", "Public Health Agency"), value: "PUBLIC_HEALTH_AGENCY" },
+            { label: t("resources.organization_directory.fields.organizationType.options.LABORATORY", "Laboratory"), value: "LABORATORY" },
+            { label: t("resources.organization_directory.fields.organizationType.options.REHABILITATION_CENTER", "Rehabilitation Center"), value: "REHABILITATION_CENTER" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -154,7 +174,13 @@ export const OrganizationDirectoryList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, [
+            { label: t("resources.organization_directory.fields.organizationType.options.HOSPITAL", "Hospital"), value: "HOSPITAL" },
+            { label: t("resources.organization_directory.fields.organizationType.options.RESEARCH_INSTITUTE", "Research Institute"), value: "RESEARCH_INSTITUTE" },
+            { label: t("resources.organization_directory.fields.organizationType.options.PUBLIC_HEALTH_AGENCY", "Public Health Agency"), value: "PUBLIC_HEALTH_AGENCY" },
+            { label: t("resources.organization_directory.fields.organizationType.options.LABORATORY", "Laboratory"), value: "LABORATORY" },
+            { label: t("resources.organization_directory.fields.organizationType.options.REHABILITATION_CENTER", "Rehabilitation Center"), value: "REHABILITATION_CENTER" },
+          ]),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -169,9 +195,9 @@ export const OrganizationDirectoryList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Registered", value: "Registered" },
-            { label: "Active", value: "Active" },
-            { label: "Deactivated", value: "Deactivated" },
+            { label: t("resources.organization_directory.fields.state.options.Registered", "Registered"), value: "Registered" },
+            { label: t("resources.organization_directory.fields.state.options.Active", "Active"), value: "Active" },
+            { label: t("resources.organization_directory.fields.state.options.Deactivated", "Deactivated"), value: "Deactivated" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -186,7 +212,11 @@ export const OrganizationDirectoryList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, [
+            { label: t("resources.organization_directory.fields.state.options.Registered", "Registered"), value: "Registered" },
+            { label: t("resources.organization_directory.fields.state.options.Active", "Active"), value: "Active" },
+            { label: t("resources.organization_directory.fields.state.options.Deactivated", "Deactivated"), value: "Deactivated" },
+          ]),
       }),
       columnHelper.accessor("approvedDatasetCount", {
         id: "approvedDatasetCount",
@@ -276,7 +306,7 @@ export const OrganizationDirectoryList = () => {
         size: 32,
       }),
     ];
-  }, [t]);
+  }, [dictionaryLabel, t]);
 
   const table = useTable({
     columns,

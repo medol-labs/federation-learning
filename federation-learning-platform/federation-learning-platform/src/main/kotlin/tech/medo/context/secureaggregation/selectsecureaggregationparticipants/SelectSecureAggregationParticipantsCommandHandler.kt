@@ -24,8 +24,18 @@ class SelectSecureAggregationParticipantsCommandHandler(
         @InjectEntity(idProperty = "secureAggregationSessionId") state: SecureAggregationSessionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == SecureAggregationSessionStateEnum.Planned) {
-            "SelectSecureAggregationParticipants requires SecureAggregationSession to be Planned."
+        if (state.currentState != SecureAggregationSessionStateEnum.Planned) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.secureaggregation.selectSecureAggregationParticipants.requiresState",
+                args = mapOf(
+                    "command" to "SelectSecureAggregationParticipants",
+                    "aggregate" to "SecureAggregationSession",
+                    "expectedState" to "Planned",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "SelectSecureAggregationParticipants requires SecureAggregationSession to be Planned."
+            )
         }
         val input = SelectSecureAggregationParticipantsInput(secureAggregationSessionId = command.secureAggregationSessionId, roundId = command.roundId, trainingJobId = command.trainingJobId, federationId = command.federationId, federationName = command.federationName, trainingRunConfigurationId = command.trainingRunConfigurationId, configurationName = command.configurationName, trainingJobObjective = command.trainingJobObjective, featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, featureSchemaVersion = command.featureSchemaVersion, roundNumber = command.roundNumber, selectedOrganizationIds = command.selectedOrganizationIds, selectedRuntimeIds = command.selectedRuntimeIds, selectedOrganizationCount = command.selectedOrganizationCount, selectedParticipantCount = command.selectedParticipantCount, minimumNodesPerRound = command.minimumNodesPerRound, maxRounds = command.maxRounds, minimumAccuracy = command.minimumAccuracy, secureAggregationRequired = command.secureAggregationRequired)
         val portResult = selectSecureAggregationParticipantsService.execute(input)

@@ -13,8 +13,18 @@ import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
 
 interface StartTrainingRoundDecision {
     fun decide(command: StartTrainingRoundCommand, state: TrainingRoundState, portResult: StartTrainingRoundResult, now: java.time.LocalDateTime): List<Any> {
-        require(state.currentState == TrainingRoundStateEnum.ParticipantsSelected) {
-            "StartTrainingRound requires TrainingRound to be ParticipantsSelected."
+        if (state.currentState != TrainingRoundStateEnum.ParticipantsSelected) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.trainingorchestration.startTrainingRound.requiresState",
+                args = mapOf(
+                    "command" to "StartTrainingRound",
+                    "aggregate" to "TrainingRound",
+                    "expectedState" to "ParticipantsSelected",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "StartTrainingRound requires TrainingRound to be ParticipantsSelected."
+            )
         }
         return when (portResult) {
                     is StartTrainingRoundResult.Succeeded -> listOf(

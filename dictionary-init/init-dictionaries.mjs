@@ -25,8 +25,11 @@ const endpoints = {
     registerDictionary: args['register-path'] ?? '/dictionary/registerdictionary',
     updateDictionary: args['update-path'] ?? '/dictionary/updatedictionary',
     addDictionaryValue: args['add-value-path'] ?? '/dictionaryvalue/adddictionaryvalue',
+    setDictionaryValueTranslation: args['set-value-translation-path'] ?? '/dictionaryvaluetranslation/setdictionaryvaluetranslation',
+    updateDictionaryValueTranslation: args['update-value-translation-path'] ?? '/dictionaryvaluetranslation/updatedictionaryvaluetranslation',
     dictionaryCatalog: args['dictionary-catalog-path'] ?? '/dictionary/dictionarycatalog',
-    dictionaryValueCatalog: args['value-catalog-path'] ?? '/dictionaryvalue/dictionaryvaluecatalog'
+    dictionaryValueCatalog: args['value-catalog-path'] ?? '/dictionaryvalue/dictionaryvaluecatalog',
+    dictionaryValueTranslationCatalog: args['value-translation-catalog-path'] ?? '/dictionaryvaluetranslation/dictionaryvaluetranslationcatalog'
 };
 
 if (!existsSync(dataPath)) {
@@ -67,6 +70,8 @@ for (const dictionary of dictionaries) {
 
     const existingValues = dryRun || force ? [] : await findDictionaryValues(dictionaryCode);
     const existingValueByCode = new Map(existingValues.map((value) => [normalizeCode(value.valueCode), value]));
+    const existingTranslations = dryRun || force ? [] : await findDictionaryValueTranslations(dictionaryCode);
+    const existingTranslationByKey = new Map(existingTranslations.map((translation) => [translationKey(translation), translation]));
 
     for (let index = 0; index < dictionary.values.length; index += 1) {
         const value = dictionary.values[index];
@@ -80,12 +85,35 @@ for (const dictionary of dictionaries) {
             skipped += 1;
             if (needsDictionaryValueUpdate(existingValue, value)) {
                 warned += 1;
-                console.warn(`[dict-init] WARN value ${dictionaryCode}.${valueCode} displayName differs: existing="${compact(existingValue.displayName)}", desired="${compact(value.displayName)}". Dictionary values do not currently have an update endpoint, so the existing value was skipped.`);
+                console.warn(`[dict-init] WARN value ${dictionaryCode}.${valueCode} defaultDisplayName differs: existing="${compact(existingValue.defaultDisplayName ?? existingValue.displayName)}", desired="${compact(value.defaultDisplayName)}". Dictionary values do not currently have an update endpoint, so the existing value was skipped.`);
             } else {
                 console.log(`[dict-init] SKIP value ${dictionaryCode}.${valueCode}`);
             }
         } else {
             await postCommand('AddDictionaryValue', endpoints.addDictionaryValue, addPayload);
+        }
+
+        for (const translation of value.translations) {
+            const existingTranslation = existingTranslationByKey.get(translationKey({
+                dictionaryCode,
+                valueCode,
+                locale: translation.locale
+            }));
+            const translationPayload = setDictionaryValueTranslationPayload(dictionary, value, translation, existingTranslation);
+            const updateTranslationPayload = updateDictionaryValueTranslationPayload(dictionary, value, translation, existingTranslation);
+
+            if (dryRun) {
+                printDryRun('SetDictionaryValueTranslation', endpoints.setDictionaryValueTranslation, translationPayload);
+            } else if (existingTranslation && !force) {
+                if (needsDictionaryValueTranslationUpdate(existingTranslation, translation)) {
+                    await postCommand('UpdateDictionaryValueTranslation', endpoints.updateDictionaryValueTranslation, updateTranslationPayload);
+                } else {
+                    skipped += 1;
+                    console.log(`[dict-init] SKIP translation ${dictionaryCode}.${valueCode}.${translation.locale}`);
+                }
+            } else {
+                await postCommand('SetDictionaryValueTranslation', endpoints.setDictionaryValueTranslation, translationPayload);
+            }
         }
     }
 }
@@ -161,7 +189,8 @@ function normalizeDictionaryData(raw) {
                 return {
                     ...value,
                     valueCode,
-                    displayName: value.displayName ?? value.name ?? humanize(valueCode),
+                    defaultDisplayName: value.defaultDisplayName ?? value.displayNameEn ?? value.labelEn ?? value.name ?? humanize(valueCode),
+                    translations: normalizeValueTranslations(value),
                     displayOrder: value.displayOrder ?? value.order ?? (valueIndex + 1) * 10,
                     active: value.active ?? true
                 };
@@ -196,7 +225,7 @@ function addDictionaryValuePayload(dictionary, value, dictionaryId) {
         dictionaryId,
         dictionaryCode: dictionary.dictionaryCode,
         valueCode: value.valueCode,
-        displayName: value.displayName,
+        defaultDisplayName: value.defaultDisplayName,
         displayOrder: value.displayOrder,
         description: value.description ?? null,
         active: value.active,
@@ -205,16 +234,71 @@ function addDictionaryValuePayload(dictionary, value, dictionaryId) {
     };
 }
 
+function setDictionaryValueTranslationPayload(dictionary, value, translation, existingTranslation) {
+    const locale = translation.locale;
+    return {
+        dictionaryValueTranslationId: existingTranslation?.dictionaryValueTranslationId
+            ?? translation.dictionaryValueTranslationId
+            ?? stableUuid(`dictionary-value-translation:${dictionary.dictionaryCode}:${value.valueCode}:${locale}`),
+        dictionaryValueId: value.dictionaryValueId ?? stableUuid(`dictionary-value:${dictionary.dictionaryCode}:${value.valueCode}`),
+        dictionaryCode: dictionary.dictionaryCode,
+        valueCode: value.valueCode,
+        locale,
+        displayName: translation.displayName,
+        description: translation.description ?? null
+    };
+}
+
+function updateDictionaryValueTranslationPayload(dictionary, value, translation, existingTranslation) {
+    return setDictionaryValueTranslationPayload(dictionary, value, translation, existingTranslation);
+}
+
 function needsDictionaryUpdate(existingDictionary, dictionary) {
     return trimText(existingDictionary.dictionaryName) !== trimText(dictionary.dictionaryName)
         || trimText(existingDictionary.description) !== trimText(dictionary.description);
 }
 
 function needsDictionaryValueUpdate(existingValue, value) {
-    return trimText(existingValue.displayName) !== trimText(value.displayName)
+    return trimText(existingValue.defaultDisplayName ?? existingValue.displayName) !== trimText(value.defaultDisplayName)
         || trimText(existingValue.description) !== trimText(value.description)
         || Number(existingValue.displayOrder ?? 0) !== Number(value.displayOrder ?? 0)
         || Boolean(existingValue.active ?? true) !== Boolean(value.active ?? true);
+}
+
+function needsDictionaryValueTranslationUpdate(existingTranslation, translation) {
+    return trimText(existingTranslation.displayName) !== trimText(translation.displayName)
+        || trimText(existingTranslation.description) !== trimText(translation.description);
+}
+
+function normalizeValueTranslations(value) {
+    const translations = [];
+    const seen = new Set();
+    const add = (locale, displayName, description) => {
+        const normalizedLocale = String(locale ?? '').trim();
+        if (!normalizedLocale || displayName === undefined || displayName === null) return;
+        const key = normalizedLocale.toLowerCase();
+        if (seen.has(key)) return;
+        seen.add(key);
+        translations.push({
+            locale: normalizedLocale,
+            displayName: String(displayName),
+            description: description ?? null
+        });
+    };
+
+    (Array.isArray(value.translations) ? value.translations : []).forEach((translation) => {
+        add(translation.locale ?? translation.language, translation.displayName ?? translation.label ?? translation.name, translation.description);
+    });
+
+    if (value.localizedNames && typeof value.localizedNames === 'object') {
+        Object.entries(value.localizedNames).forEach(([locale, displayName]) => add(locale, displayName, value.description));
+    }
+
+    add('zh-CN', value.displayNameZh ?? value.labelZh ?? value.displayName, value.description);
+    if (value.displayNameEn || value.labelEn) {
+        add('en', value.displayNameEn ?? value.labelEn, value.description);
+    }
+    return translations;
 }
 
 async function findDictionary(dictionaryCode) {
@@ -227,6 +311,20 @@ async function findDictionaryValues(dictionaryCode) {
     const query = `dictionaryCode.equals=${encodeURIComponent(dictionaryCode)}&size=500`;
     const result = await getJson(`${endpoints.dictionaryValueCatalog}?${query}`);
     return pageContent(result);
+}
+
+async function findDictionaryValueTranslations(dictionaryCode) {
+    const query = `dictionaryCode.equals=${encodeURIComponent(dictionaryCode)}&size=1000`;
+    const result = await getJson(`${endpoints.dictionaryValueTranslationCatalog}?${query}`);
+    return pageContent(result);
+}
+
+function translationKey(value) {
+    return [
+        normalizeCode(value.dictionaryCode),
+        normalizeCode(value.valueCode),
+        String(value.locale ?? '').trim().toLowerCase()
+    ].join('|');
 }
 
 async function getJson(path) {
@@ -365,7 +463,12 @@ Options:
   --register-path <path>              RegisterDictionary endpoint path.
   --update-path <path>                UpdateDictionary endpoint path.
   --add-value-path <path>             AddDictionaryValue endpoint path.
+  --set-value-translation-path <path> SetDictionaryValueTranslation endpoint path.
+  --update-value-translation-path <path>
+                                      UpdateDictionaryValueTranslation endpoint path.
   --dictionary-catalog-path <path>    DictionaryCatalog read endpoint path.
   --value-catalog-path <path>         DictionaryValueCatalog read endpoint path.
+  --value-translation-catalog-path <path>
+                                      DictionaryValueTranslationCatalog read endpoint path.
 `);
 }

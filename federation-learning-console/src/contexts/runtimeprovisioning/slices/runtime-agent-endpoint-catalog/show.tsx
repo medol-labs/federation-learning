@@ -9,17 +9,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { Separator } from "@/components/ui/separator";
 import { renderFieldOverride } from "@/platform/composition";
 
-const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
   if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
   if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
-  return String(value);
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
 };
 
 export const RuntimeAgentEndpointCatalogShow = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const { result: record } = useShow({
     dataProviderName: "federation-learning-platform",
     meta: {
@@ -43,52 +57,52 @@ export const RuntimeAgentEndpointCatalogShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_endpoint_catalog.fields.runtimeAgentId.label", "Runtime Agent Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:runtimeAgentId", { value: record?.runtimeAgentId, record, resource: "runtime-agent-endpoint-catalog", field: "runtimeAgentId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:runtimeAgentId", { value: record?.runtimeAgentId, record, resource: "runtime-agent-endpoint-catalog", field: "runtimeAgentId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_endpoint_catalog.fields.runtimeId.label", "Runtime Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:runtimeId", { value: record?.runtimeId, record, resource: "runtime-agent-endpoint-catalog", field: "runtimeId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:runtimeId", { value: record?.runtimeId, record, resource: "runtime-agent-endpoint-catalog", field: "runtimeId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_endpoint_catalog.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:runtimeInfrastructureId", { value: record?.runtimeInfrastructureId, record, resource: "runtime-agent-endpoint-catalog", field: "runtimeInfrastructureId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructureId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:runtimeInfrastructureId", { value: record?.runtimeInfrastructureId, record, resource: "runtime-agent-endpoint-catalog", field: "runtimeInfrastructureId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructureId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_endpoint_catalog.fields.organizationId.label", "Organization Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:organizationId", { value: record?.organizationId, record, resource: "runtime-agent-endpoint-catalog", field: "organizationId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.organizationId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:organizationId", { value: record?.organizationId, record, resource: "runtime-agent-endpoint-catalog", field: "organizationId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.organizationId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_endpoint_catalog.fields.runtimeName.label", "Runtime Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:runtimeName", { value: record?.runtimeName, record, resource: "runtime-agent-endpoint-catalog", field: "runtimeName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:runtimeName", { value: record?.runtimeName, record, resource: "runtime-agent-endpoint-catalog", field: "runtimeName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_endpoint_catalog.fields.runtimeAgentEndpoint.label", "Runtime Agent Endpoint")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:runtimeAgentEndpoint", { value: record?.runtimeAgentEndpoint, record, resource: "runtime-agent-endpoint-catalog", field: "runtimeAgentEndpoint", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentEndpoint, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:runtimeAgentEndpoint", { value: record?.runtimeAgentEndpoint, record, resource: "runtime-agent-endpoint-catalog", field: "runtimeAgentEndpoint", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentEndpoint, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_endpoint_catalog.fields.endpointScope.label", "Endpoint Scope")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:endpointScope", { value: record?.endpointScope, record, resource: "runtime-agent-endpoint-catalog", field: "endpointScope", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.endpointScope, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:endpointScope", { value: record?.endpointScope, record, resource: "runtime-agent-endpoint-catalog", field: "endpointScope", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.endpointScope, t, dictionaryLabel, undefined, "RUNTIME_AGENT_ENDPOINT_SCOPE")}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_endpoint_catalog.fields.connectionStatus.label", "Connection Status")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:connectionStatus", { value: record?.connectionStatus, record, resource: "runtime-agent-endpoint-catalog", field: "connectionStatus", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.connectionStatus, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:connectionStatus", { value: record?.connectionStatus, record, resource: "runtime-agent-endpoint-catalog", field: "connectionStatus", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.connectionStatus, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_endpoint_catalog.fields.connectedAt.label", "Connected At")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:connectedAt", { value: record?.connectedAt, record, resource: "runtime-agent-endpoint-catalog", field: "connectedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.connectedAt, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:connectedAt", { value: record?.connectedAt, record, resource: "runtime-agent-endpoint-catalog", field: "connectedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.connectedAt, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_agent_endpoint_catalog.fields.activatedAt.label", "Activated At")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:activatedAt", { value: record?.activatedAt, record, resource: "runtime-agent-endpoint-catalog", field: "activatedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.activatedAt, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-agent-endpoint-catalog:display:activatedAt", { value: record?.activatedAt, record, resource: "runtime-agent-endpoint-catalog", field: "activatedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.activatedAt, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
           </CardContent>

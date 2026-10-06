@@ -12,8 +12,18 @@ import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 interface ReleaseRuntimeEngineJobAfterCompletionDecision {
     fun decide(command: ReleaseRuntimeEngineJobAfterCompletionCommand, state: RoundExecutionState, portResult: ReleaseRuntimeEngineJobAfterCompletionResult): List<Any> {
-        require(state.currentState == RoundExecutionStateEnum.UpdateSubmitted) {
-            "ReleaseRuntimeEngineJobAfterCompletion requires RoundExecution to be UpdateSubmitted."
+        if (state.currentState != RoundExecutionStateEnum.UpdateSubmitted) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeagentoperations.releaseRuntimeEngineJobAfterCompletion.requiresState",
+                args = mapOf(
+                    "command" to "ReleaseRuntimeEngineJobAfterCompletion",
+                    "aggregate" to "RoundExecution",
+                    "expectedState" to "UpdateSubmitted",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "ReleaseRuntimeEngineJobAfterCompletion requires RoundExecution to be UpdateSubmitted."
+            )
         }
         return when (portResult) {
                     is ReleaseRuntimeEngineJobAfterCompletionResult.Succeeded -> listOf(

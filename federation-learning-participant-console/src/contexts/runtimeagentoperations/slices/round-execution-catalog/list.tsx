@@ -17,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RoundExecutionCatalogRecord = {
@@ -85,8 +86,27 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
+};
+
 export const RoundExecutionCatalogList = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<RoundExecutionCatalogRecord>();
     return [
@@ -358,17 +378,17 @@ export const RoundExecutionCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Plan Received", value: "PlanReceived" },
-            { label: "Plan Accepted", value: "PlanAccepted" },
-            { label: "Plan Rejected", value: "PlanRejected" },
-            { label: "Running", value: "Running" },
-            { label: "Start Failed", value: "StartFailed" },
-            { label: "Retried", value: "Retried" },
-            { label: "Completed", value: "Completed" },
-            { label: "Failed", value: "Failed" },
-            { label: "Update Submitted", value: "UpdateSubmitted" },
-            { label: "Runtime Engine Released", value: "RuntimeEngineReleased" },
-            { label: "Runtime Engine Release Handled", value: "RuntimeEngineReleaseHandled" },
+            { label: t("resources.round_execution_catalog.fields.state.options.PlanReceived", "Plan Received"), value: "PlanReceived" },
+            { label: t("resources.round_execution_catalog.fields.state.options.PlanAccepted", "Plan Accepted"), value: "PlanAccepted" },
+            { label: t("resources.round_execution_catalog.fields.state.options.PlanRejected", "Plan Rejected"), value: "PlanRejected" },
+            { label: t("resources.round_execution_catalog.fields.state.options.Running", "Running"), value: "Running" },
+            { label: t("resources.round_execution_catalog.fields.state.options.StartFailed", "Start Failed"), value: "StartFailed" },
+            { label: t("resources.round_execution_catalog.fields.state.options.Retried", "Retried"), value: "Retried" },
+            { label: t("resources.round_execution_catalog.fields.state.options.Completed", "Completed"), value: "Completed" },
+            { label: t("resources.round_execution_catalog.fields.state.options.Failed", "Failed"), value: "Failed" },
+            { label: t("resources.round_execution_catalog.fields.state.options.UpdateSubmitted", "Update Submitted"), value: "UpdateSubmitted" },
+            { label: t("resources.round_execution_catalog.fields.state.options.RuntimeEngineReleased", "Runtime Engine Released"), value: "RuntimeEngineReleased" },
+            { label: t("resources.round_execution_catalog.fields.state.options.RuntimeEngineReleaseHandled", "Runtime Engine Release Handled"), value: "RuntimeEngineReleaseHandled" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -383,7 +403,19 @@ export const RoundExecutionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, [
+            { label: t("resources.round_execution_catalog.fields.state.options.PlanReceived", "Plan Received"), value: "PlanReceived" },
+            { label: t("resources.round_execution_catalog.fields.state.options.PlanAccepted", "Plan Accepted"), value: "PlanAccepted" },
+            { label: t("resources.round_execution_catalog.fields.state.options.PlanRejected", "Plan Rejected"), value: "PlanRejected" },
+            { label: t("resources.round_execution_catalog.fields.state.options.Running", "Running"), value: "Running" },
+            { label: t("resources.round_execution_catalog.fields.state.options.StartFailed", "Start Failed"), value: "StartFailed" },
+            { label: t("resources.round_execution_catalog.fields.state.options.Retried", "Retried"), value: "Retried" },
+            { label: t("resources.round_execution_catalog.fields.state.options.Completed", "Completed"), value: "Completed" },
+            { label: t("resources.round_execution_catalog.fields.state.options.Failed", "Failed"), value: "Failed" },
+            { label: t("resources.round_execution_catalog.fields.state.options.UpdateSubmitted", "Update Submitted"), value: "UpdateSubmitted" },
+            { label: t("resources.round_execution_catalog.fields.state.options.RuntimeEngineReleased", "Runtime Engine Released"), value: "RuntimeEngineReleased" },
+            { label: t("resources.round_execution_catalog.fields.state.options.RuntimeEngineReleaseHandled", "Runtime Engine Release Handled"), value: "RuntimeEngineReleaseHandled" },
+          ]),
       }),
       columnHelper.accessor("featureSchemaId", {
         id: "featureSchemaId",
@@ -513,7 +545,7 @@ export const RoundExecutionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "RUNTIME_ENGINE_PLUGIN_PROFILE"),
       }),
       columnHelper.accessor("runtimeEngineImage", {
         id: "runtimeEngineImage",
@@ -723,7 +755,7 @@ export const RoundExecutionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("runtimeIdentityMatched", {
         id: "runtimeIdentityMatched",
@@ -750,7 +782,7 @@ export const RoundExecutionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("runtimeDatasetBindingAvailable", {
         id: "runtimeDatasetBindingAvailable",
@@ -777,7 +809,7 @@ export const RoundExecutionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("datasetAccessValidated", {
         id: "datasetAccessValidated",
@@ -804,7 +836,7 @@ export const RoundExecutionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("baseModelAvailable", {
         id: "baseModelAvailable",
@@ -831,7 +863,7 @@ export const RoundExecutionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("trainingConfigurationSupported", {
         id: "trainingConfigurationSupported",
@@ -858,7 +890,7 @@ export const RoundExecutionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("runtimeResourceAvailable", {
         id: "runtimeResourceAvailable",
@@ -885,7 +917,7 @@ export const RoundExecutionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("runtimeAgentIdle", {
         id: "runtimeAgentIdle",
@@ -912,7 +944,7 @@ export const RoundExecutionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("updateArtifactId", {
         id: "updateArtifactId",
@@ -1285,7 +1317,7 @@ export const RoundExecutionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("runtimeEngineReleaseFailureReason", {
         id: "runtimeEngineReleaseFailureReason",
@@ -1405,7 +1437,7 @@ export const RoundExecutionCatalogList = () => {
         size: 32,
       }),
     ];
-  }, [t]);
+  }, [dictionaryLabel, t]);
 
   const table = useTable({
     columns,

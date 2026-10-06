@@ -9,17 +9,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { Separator } from "@/components/ui/separator";
 import { renderFieldOverride } from "@/platform/composition";
 
-const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
   if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
   if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
-  return String(value);
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
 };
 
 export const RoleCatalogShow = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const { result: record } = useShow({
     dataProviderName: "federation-learning-support",
     meta: {
@@ -43,17 +57,17 @@ export const RoleCatalogShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.role_catalog.fields.roleId.label", "Role Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:role-catalog:display:roleId", { value: record?.roleId, record, resource: "role-catalog", field: "roleId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:role-catalog:display:roleId", { value: record?.roleId, record, resource: "role-catalog", field: "roleId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.role_catalog.fields.roleCode.label", "Role Code")}</h4>
-              {renderFieldOverride(frontendComposition, "field:role-catalog:display:roleCode", { value: record?.roleCode, record, resource: "role-catalog", field: "roleCode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleCode, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:role-catalog:display:roleCode", { value: record?.roleCode, record, resource: "role-catalog", field: "roleCode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleCode, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.role_catalog.fields.roleName.label", "Role Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:role-catalog:display:roleName", { value: record?.roleName, record, resource: "role-catalog", field: "roleName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:role-catalog:display:roleName", { value: record?.roleName, record, resource: "role-catalog", field: "roleName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
           </CardContent>

@@ -159,16 +159,16 @@ export const DictionaryCatalogAddDictionaryValue = () => {
           />
           <FormField
             control={form.control}
-            name="displayName"
-            rules={{ required: "Display Name is required" }}
+            name="defaultDisplayName"
+            rules={{ required: "Default Display Name is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.dictionary_catalog.commands.addDictionaryValue.fields.displayName.label", "Display Name")}</FormLabel>
+                <FormLabel>{t("resources.dictionary_catalog.commands.addDictionaryValue.fields.defaultDisplayName.label", "Default Display Name")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Display Name"}
+                    placeholder={"Enter Default Display Name"}
                   />
                 </FormControl>
                 <FormMessage />

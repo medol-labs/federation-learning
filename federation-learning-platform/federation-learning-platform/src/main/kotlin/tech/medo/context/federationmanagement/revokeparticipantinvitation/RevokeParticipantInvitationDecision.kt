@@ -12,8 +12,18 @@ import tech.medo.federationmanagement.domain.states.FederationMembershipStateEnu
 
 interface RevokeParticipantInvitationDecision {
     fun decide(command: RevokeParticipantInvitationCommand, state: FederationMembershipState): List<Any> {
-        require(state.currentState == FederationMembershipStateEnum.Invited) {
-            "RevokeParticipantInvitation requires FederationMembership to be Invited."
+        if (state.currentState != FederationMembershipStateEnum.Invited) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.federationmanagement.revokeParticipantInvitation.requiresState",
+                args = mapOf(
+                    "command" to "RevokeParticipantInvitation",
+                    "aggregate" to "FederationMembership",
+                    "expectedState" to "Invited",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "RevokeParticipantInvitation requires FederationMembership to be Invited."
+            )
         }
         return listOf(
             ParticipantInvitationRevokedEvent(federationId = command.federationId, federationName = command.federationName, organizationId = command.organizationId, organizationName = command.organizationName, revokeReason = command.revokeReason)

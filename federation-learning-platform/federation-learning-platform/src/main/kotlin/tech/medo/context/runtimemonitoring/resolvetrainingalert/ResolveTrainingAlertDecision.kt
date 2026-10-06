@@ -12,8 +12,18 @@ import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum
 
 interface ResolveTrainingAlertDecision {
     fun decide(command: ResolveTrainingAlertCommand, state: TrainingAlertState): List<Any> {
-        require(state.currentState == TrainingAlertStateEnum.Acknowledged) {
-            "ResolveTrainingAlert requires TrainingAlert to be Acknowledged."
+        if (state.currentState != TrainingAlertStateEnum.Acknowledged) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimemonitoring.resolveTrainingAlert.requiresState",
+                args = mapOf(
+                    "command" to "ResolveTrainingAlert",
+                    "aggregate" to "TrainingAlert",
+                    "expectedState" to "Acknowledged",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "ResolveTrainingAlert requires TrainingAlert to be Acknowledged."
+            )
         }
         return listOf(
             TrainingAlertResolvedEvent(alertId = command.alertId, resolutionSummary = command.resolutionSummary)

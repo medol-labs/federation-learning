@@ -55,7 +55,7 @@ class JpaDictionaryValueCatalogReadModelRepository(
             it.dictionaryId = this@toProjection.dictionaryId
             it.dictionaryCode = this@toProjection.dictionaryCode
             it.valueCode = this@toProjection.valueCode
-            it.displayName = this@toProjection.displayName
+            it.defaultDisplayName = this@toProjection.defaultDisplayName
             it.displayOrder = this@toProjection.displayOrder
             it.description = this@toProjection.description
             it.active = this@toProjection.active
@@ -79,7 +79,7 @@ class JpaDictionaryValueCatalogReadModelRepository(
             it.dictionaryId = this@toEntity.dictionaryId
             it.dictionaryCode = this@toEntity.dictionaryCode
             it.valueCode = this@toEntity.valueCode
-            it.displayName = this@toEntity.displayName
+            it.defaultDisplayName = this@toEntity.defaultDisplayName
             it.displayOrder = this@toEntity.displayOrder
             it.description = this@toEntity.description
             it.active = this@toEntity.active

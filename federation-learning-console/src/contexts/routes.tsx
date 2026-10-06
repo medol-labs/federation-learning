@@ -18,9 +18,16 @@ import {
   DictionaryValueCatalogList,
   DictionaryValueCatalogShow,
   DictionaryValueCatalogAddDictionaryValue,
+  DictionaryValueCatalogUpdateDictionaryValueTranslation,
   DictionaryValueCatalogDisableDictionaryValue,
   DictionaryValueCatalogEnableDictionaryValue,
+  DictionaryValueCatalogSetDictionaryValueTranslation,
 } from "./dictionarymaintenance/read-models/dictionary-value-catalog";
+import {
+  DictionaryValueTranslationCatalogList,
+  DictionaryValueTranslationCatalogShow,
+  DictionaryValueTranslationCatalogUpdateDictionaryValueTranslation,
+} from "./dictionarymaintenance/read-models/dictionary-value-translation-catalog";
 import {
   FeatureSchemaCatalogList,
   FeatureSchemaCatalogShow,
@@ -245,9 +252,16 @@ export const contextRoutes = (
     <Route path="/dictionary-value-catalog">
       <Route index element={resolvePageOverride("dictionary-value-catalog", "list", <DictionaryValueCatalogList />)} />
       <Route path="command/add-dictionary-value" element={resolvePageOverride("dictionary-value-catalog", "addDictionaryValue", <DictionaryValueCatalogAddDictionaryValue />)} />
+      <Route path="edit/:id" element={resolvePageOverride("dictionary-value-catalog", "edit", <DictionaryValueCatalogUpdateDictionaryValueTranslation />)} />
       <Route path="show/:id" element={resolvePageOverride("dictionary-value-catalog", "show", <DictionaryValueCatalogShow />)} />
       <Route path=":id/command/disable-dictionary-value" element={resolvePageOverride("dictionary-value-catalog", "disableDictionaryValue", <DictionaryValueCatalogDisableDictionaryValue />)} />
       <Route path=":id/command/enable-dictionary-value" element={resolvePageOverride("dictionary-value-catalog", "enableDictionaryValue", <DictionaryValueCatalogEnableDictionaryValue />)} />
+      <Route path=":id/command/set-dictionary-value-translation" element={resolvePageOverride("dictionary-value-catalog", "setDictionaryValueTranslation", <DictionaryValueCatalogSetDictionaryValueTranslation />)} />
+    </Route>
+    <Route path="/dictionary-value-translation-catalog">
+      <Route index element={resolvePageOverride("dictionary-value-translation-catalog", "list", <DictionaryValueTranslationCatalogList />)} />
+      <Route path="edit/:id" element={resolvePageOverride("dictionary-value-translation-catalog", "edit", <DictionaryValueTranslationCatalogUpdateDictionaryValueTranslation />)} />
+      <Route path="show/:id" element={resolvePageOverride("dictionary-value-translation-catalog", "show", <DictionaryValueTranslationCatalogShow />)} />
     </Route>
     <Route path="/feature-schema-catalog">
       <Route index element={resolvePageOverride("feature-schema-catalog", "list", <FeatureSchemaCatalogList />)} />

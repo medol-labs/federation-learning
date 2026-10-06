@@ -1,14 +1,14 @@
 {
   "actors": [
     {
+      "name": "DictionaryAdministrator",
+      "title": "Dictionary Administrator",
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR"
+    },
+    {
       "name": "IdentityAdministrator",
       "title": "Identity Administrator",
       "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR"
-    },
-    {
-      "name": "PlatformAdmin",
-      "title": "Platform Admin",
-      "roleCode": "ACTOR_PLATFORM_ADMIN"
     },
     {
       "name": "PlatformService",
@@ -76,6 +76,16 @@
       "code": "dictionary_value_catalog:read",
       "name": "Dictionary Value Catalog Read",
       "description": "dictionary_value_catalog:read"
+    },
+    {
+      "code": "dictionary_value_translation_catalog:list",
+      "name": "Dictionary Value Translation Catalog List",
+      "description": "dictionary_value_translation_catalog:list"
+    },
+    {
+      "code": "dictionary_value_translation_catalog:read",
+      "name": "Dictionary Value Translation Catalog Read",
+      "description": "dictionary_value_translation_catalog:read"
     },
     {
       "code": "disable_dictionary_value:execute",
@@ -178,6 +188,16 @@
       "description": "service_account_api_token_catalog:read"
     },
     {
+      "code": "set_dictionary_value_translation:execute",
+      "name": "Set Dictionary Value Translation Execute",
+      "description": "set_dictionary_value_translation:execute"
+    },
+    {
+      "code": "update_dictionary_value_translation:execute",
+      "name": "Update Dictionary Value Translation Execute",
+      "description": "update_dictionary_value_translation:execute"
+    },
+    {
       "code": "update_dictionary:execute",
       "name": "Update Dictionary Execute",
       "description": "update_dictionary:execute"
@@ -219,6 +239,62 @@
     }
   ],
   "grants": [
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "add_dictionary_value:execute"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "archive_dictionary:execute"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "dictionary_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "dictionary_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "dictionary_value_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "dictionary_value_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "dictionary_value_translation_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "dictionary_value_translation_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "disable_dictionary_value:execute"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "enable_dictionary_value:execute"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "register_dictionary:execute"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "set_dictionary_value_translation:execute"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "update_dictionary_value_translation:execute"
+    },
+    {
+      "roleCode": "ACTOR_DICTIONARY_ADMINISTRATOR",
+      "permissionCode": "update_dictionary:execute"
+    },
     {
       "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
       "permissionCode": "assign_role_to_user:execute"
@@ -294,46 +370,6 @@
     {
       "roleCode": "ACTOR_IDENTITY_ADMINISTRATOR",
       "permissionCode": "user_role_assignment_catalog:read"
-    },
-    {
-      "roleCode": "ACTOR_PLATFORM_ADMIN",
-      "permissionCode": "add_dictionary_value:execute"
-    },
-    {
-      "roleCode": "ACTOR_PLATFORM_ADMIN",
-      "permissionCode": "archive_dictionary:execute"
-    },
-    {
-      "roleCode": "ACTOR_PLATFORM_ADMIN",
-      "permissionCode": "dictionary_catalog:list"
-    },
-    {
-      "roleCode": "ACTOR_PLATFORM_ADMIN",
-      "permissionCode": "dictionary_catalog:read"
-    },
-    {
-      "roleCode": "ACTOR_PLATFORM_ADMIN",
-      "permissionCode": "dictionary_value_catalog:list"
-    },
-    {
-      "roleCode": "ACTOR_PLATFORM_ADMIN",
-      "permissionCode": "dictionary_value_catalog:read"
-    },
-    {
-      "roleCode": "ACTOR_PLATFORM_ADMIN",
-      "permissionCode": "disable_dictionary_value:execute"
-    },
-    {
-      "roleCode": "ACTOR_PLATFORM_ADMIN",
-      "permissionCode": "enable_dictionary_value:execute"
-    },
-    {
-      "roleCode": "ACTOR_PLATFORM_ADMIN",
-      "permissionCode": "register_dictionary:execute"
-    },
-    {
-      "roleCode": "ACTOR_PLATFORM_ADMIN",
-      "permissionCode": "update_dictionary:execute"
     },
     {
       "roleCode": "ACTOR_PLATFORM_SERVICE",

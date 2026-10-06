@@ -12,8 +12,18 @@ import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEn
 
 interface SelectSecureAggregationParticipantsDecision {
     fun decide(command: SelectSecureAggregationParticipantsCommand, state: SecureAggregationSessionState, portResult: SelectSecureAggregationParticipantsResult): List<Any> {
-        require(state.currentState == SecureAggregationSessionStateEnum.Planned) {
-            "SelectSecureAggregationParticipants requires SecureAggregationSession to be Planned."
+        if (state.currentState != SecureAggregationSessionStateEnum.Planned) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.secureaggregation.selectSecureAggregationParticipants.requiresState",
+                args = mapOf(
+                    "command" to "SelectSecureAggregationParticipants",
+                    "aggregate" to "SecureAggregationSession",
+                    "expectedState" to "Planned",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "SelectSecureAggregationParticipants requires SecureAggregationSession to be Planned."
+            )
         }
         return when (portResult) {
                     is SelectSecureAggregationParticipantsResult.Succeeded -> listOf(

@@ -13,8 +13,18 @@ import tech.medo.runtimeagentoperations.domain.states.AgentDatasetAccessValidati
 
 interface RevalidateAgentDatasetAccessDecision {
     fun decide(command: RevalidateAgentDatasetAccessCommand, state: AgentDatasetAccessValidationState, portResult: RevalidateAgentDatasetAccessResult, now: java.time.LocalDateTime): List<Any> {
-        require(state.currentState == AgentDatasetAccessValidationStateEnum.Checked) {
-            "RevalidateAgentDatasetAccess requires AgentDatasetAccessValidation to be Checked."
+        if (state.currentState != AgentDatasetAccessValidationStateEnum.Checked) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeagentoperations.revalidateAgentDatasetAccess.requiresState",
+                args = mapOf(
+                    "command" to "RevalidateAgentDatasetAccess",
+                    "aggregate" to "AgentDatasetAccessValidation",
+                    "expectedState" to "Checked",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "RevalidateAgentDatasetAccess requires AgentDatasetAccessValidation to be Checked."
+            )
         }
         return when (portResult) {
                     is RevalidateAgentDatasetAccessResult.Succeeded -> listOf(

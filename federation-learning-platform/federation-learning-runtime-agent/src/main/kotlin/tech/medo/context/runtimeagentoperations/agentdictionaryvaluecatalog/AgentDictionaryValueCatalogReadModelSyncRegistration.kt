@@ -21,7 +21,7 @@ class AgentDictionaryValueCatalogReadModelSyncRegistration {
             "dictionaryId" to "dictionaryId",
             "dictionaryCode" to "dictionaryCode",
             "valueCode" to "valueCode",
-            "displayName" to "displayName",
+            "defaultDisplayName" to "defaultDisplayName",
             "displayOrder" to "displayOrder",
             "active" to "active",
             "state" to "state"
@@ -38,7 +38,7 @@ class AgentDictionaryValueCatalogReadModelSyncRegistration {
                 projection.dictionaryId = SyncValueConverters.required(SyncValueConverters.uuid(row["dictionaryId"]), targetName, "dictionaryId")
                 projection.dictionaryCode = SyncValueConverters.required(SyncValueConverters.string(row["dictionaryCode"]), targetName, "dictionaryCode")
                 projection.valueCode = SyncValueConverters.required(SyncValueConverters.string(row["valueCode"]), targetName, "valueCode")
-                projection.displayName = SyncValueConverters.required(SyncValueConverters.string(row["displayName"]), targetName, "displayName")
+                projection.defaultDisplayName = SyncValueConverters.required(SyncValueConverters.string(row["defaultDisplayName"]), targetName, "defaultDisplayName")
                 projection.displayOrder = SyncValueConverters.int(row["displayOrder"])
                 projection.active = SyncValueConverters.required(SyncValueConverters.boolean(row["active"]), targetName, "active")
                 projection.state = SyncValueConverters.required(SyncValueConverters.string(row["state"]), targetName, "state")

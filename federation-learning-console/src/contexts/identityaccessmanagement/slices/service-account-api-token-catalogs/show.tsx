@@ -9,17 +9,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { Separator } from "@/components/ui/separator";
 import { renderFieldOverride } from "@/platform/composition";
 
-const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
   if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
   if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
-  return String(value);
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
 };
 
 export const ServiceAccountApiTokenCatalogShow = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const { result: record } = useShow({
     dataProviderName: "federation-learning-support",
     meta: {
@@ -43,42 +57,42 @@ export const ServiceAccountApiTokenCatalogShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.service_account_api_token_catalog.fields.apiTokenId.label", "Api Token Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:apiTokenId", { value: record?.apiTokenId, record, resource: "service-account-api-token-catalog", field: "apiTokenId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.apiTokenId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:apiTokenId", { value: record?.apiTokenId, record, resource: "service-account-api-token-catalog", field: "apiTokenId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.apiTokenId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.service_account_api_token_catalog.fields.userAccountId.label", "User Account Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:userAccountId", { value: record?.userAccountId, record, resource: "service-account-api-token-catalog", field: "userAccountId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.userAccountId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:userAccountId", { value: record?.userAccountId, record, resource: "service-account-api-token-catalog", field: "userAccountId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.userAccountId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.service_account_api_token_catalog.fields.username.label", "Username")}</h4>
-              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:username", { value: record?.username, record, resource: "service-account-api-token-catalog", field: "username", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.username, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:username", { value: record?.username, record, resource: "service-account-api-token-catalog", field: "username", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.username, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.service_account_api_token_catalog.fields.tokenName.label", "Token Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:tokenName", { value: record?.tokenName, record, resource: "service-account-api-token-catalog", field: "tokenName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.tokenName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:tokenName", { value: record?.tokenName, record, resource: "service-account-api-token-catalog", field: "tokenName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.tokenName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.service_account_api_token_catalog.fields.tokenPrefix.label", "Token Prefix")}</h4>
-              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:tokenPrefix", { value: record?.tokenPrefix, record, resource: "service-account-api-token-catalog", field: "tokenPrefix", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.tokenPrefix, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:tokenPrefix", { value: record?.tokenPrefix, record, resource: "service-account-api-token-catalog", field: "tokenPrefix", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.tokenPrefix, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.service_account_api_token_catalog.fields.issuedAt.label", "Issued At")}</h4>
-              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:issuedAt", { value: record?.issuedAt, record, resource: "service-account-api-token-catalog", field: "issuedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.issuedAt, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:issuedAt", { value: record?.issuedAt, record, resource: "service-account-api-token-catalog", field: "issuedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.issuedAt, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.service_account_api_token_catalog.fields.roles.label", "Roles")}</h4>
-              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:roles", { value: record?.roles, record, resource: "service-account-api-token-catalog", field: "roles", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roles, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:roles", { value: record?.roles, record, resource: "service-account-api-token-catalog", field: "roles", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roles, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.service_account_api_token_catalog.fields.permissions.label", "Permissions")}</h4>
-              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:permissions", { value: record?.permissions, record, resource: "service-account-api-token-catalog", field: "permissions", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.permissions, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:service-account-api-token-catalog:display:permissions", { value: record?.permissions, record, resource: "service-account-api-token-catalog", field: "permissions", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.permissions, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
           </CardContent>

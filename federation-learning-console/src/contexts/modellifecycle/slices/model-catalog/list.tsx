@@ -17,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type ModelCatalogRecord = {
@@ -54,8 +55,27 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
+};
+
 export const ModelCatalogList = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<ModelCatalogRecord>();
     return [
@@ -301,12 +321,12 @@ export const ModelCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Candidate", value: "Candidate" },
-            { label: "Evaluation Packaged", value: "EvaluationPackaged" },
-            { label: "Approved", value: "Approved" },
-            { label: "Production", value: "Production" },
-            { label: "Rolled Back", value: "RolledBack" },
-            { label: "Retired", value: "Retired" },
+            { label: t("resources.model_catalog.fields.state.options.Candidate", "Candidate"), value: "Candidate" },
+            { label: t("resources.model_catalog.fields.state.options.EvaluationPackaged", "Evaluation Packaged"), value: "EvaluationPackaged" },
+            { label: t("resources.model_catalog.fields.state.options.Approved", "Approved"), value: "Approved" },
+            { label: t("resources.model_catalog.fields.state.options.Production", "Production"), value: "Production" },
+            { label: t("resources.model_catalog.fields.state.options.RolledBack", "Rolled Back"), value: "RolledBack" },
+            { label: t("resources.model_catalog.fields.state.options.Retired", "Retired"), value: "Retired" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -321,7 +341,14 @@ export const ModelCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, [
+            { label: t("resources.model_catalog.fields.state.options.Candidate", "Candidate"), value: "Candidate" },
+            { label: t("resources.model_catalog.fields.state.options.EvaluationPackaged", "Evaluation Packaged"), value: "EvaluationPackaged" },
+            { label: t("resources.model_catalog.fields.state.options.Approved", "Approved"), value: "Approved" },
+            { label: t("resources.model_catalog.fields.state.options.Production", "Production"), value: "Production" },
+            { label: t("resources.model_catalog.fields.state.options.RolledBack", "Rolled Back"), value: "RolledBack" },
+            { label: t("resources.model_catalog.fields.state.options.Retired", "Retired"), value: "Retired" },
+          ]),
       }),
       columnHelper.accessor("releaseChannel", {
         id: "releaseChannel",
@@ -347,7 +374,7 @@ export const ModelCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "MODEL_RELEASE_CHANNEL"),
       }),
       columnHelper.accessor("productionStage", {
         id: "productionStage",
@@ -373,7 +400,7 @@ export const ModelCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "MODEL_PRODUCTION_STAGE"),
       }),
       columnHelper.accessor("experimentId", {
         id: "experimentId",
@@ -557,7 +584,7 @@ export const ModelCatalogList = () => {
         size: 32,
       }),
     ];
-  }, [t]);
+  }, [dictionaryLabel, t]);
 
   const table = useTable({
     columns,

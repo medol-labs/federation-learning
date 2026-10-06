@@ -17,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 
@@ -59,8 +60,27 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
+};
+
 export const RuntimeInstallationGuideList = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<RuntimeInstallationGuideRecord>();
     return [
@@ -201,15 +221,15 @@ export const RuntimeInstallationGuideList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Planned", value: "Planned" },
-            { label: "Registered", value: "Registered" },
-            { label: "Prepared", value: "Prepared" },
-            { label: "Verified", value: "Verified" },
-            { label: "Verification Failed", value: "VerificationFailed" },
-            { label: "Agent Ready", value: "AgentReady" },
-            { label: "Runtime Agent Failed", value: "RuntimeAgentFailed" },
-            { label: "Offline", value: "Offline" },
-            { label: "Connected", value: "Connected" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Planned", "Planned"), value: "Planned" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Registered", "Registered"), value: "Registered" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Prepared", "Prepared"), value: "Prepared" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Verified", "Verified"), value: "Verified" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.VerificationFailed", "Verification Failed"), value: "VerificationFailed" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.AgentReady", "Agent Ready"), value: "AgentReady" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.RuntimeAgentFailed", "Runtime Agent Failed"), value: "RuntimeAgentFailed" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Offline", "Offline"), value: "Offline" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Connected", "Connected"), value: "Connected" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -224,7 +244,17 @@ export const RuntimeInstallationGuideList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, [
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Planned", "Planned"), value: "Planned" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Registered", "Registered"), value: "Registered" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Prepared", "Prepared"), value: "Prepared" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Verified", "Verified"), value: "Verified" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.VerificationFailed", "Verification Failed"), value: "VerificationFailed" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.AgentReady", "Agent Ready"), value: "AgentReady" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.RuntimeAgentFailed", "Runtime Agent Failed"), value: "RuntimeAgentFailed" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Offline", "Offline"), value: "Offline" },
+            { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Connected", "Connected"), value: "Connected" },
+          ]),
       }),
       columnHelper.accessor("runtimeInfrastructurePackageId", {
         id: "runtimeInfrastructurePackageId",
@@ -542,7 +572,7 @@ export const RuntimeInstallationGuideList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "RUNTIME_ENVIRONMENT_TYPE"),
       }),
       columnHelper.accessor("agentInstallMode", {
         id: "agentInstallMode",
@@ -568,7 +598,7 @@ export const RuntimeInstallationGuideList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "RUNTIME_AGENT_INSTALL_MODE"),
       }),
       columnHelper.accessor("expectedNodeCount", {
         id: "expectedNodeCount",
@@ -666,7 +696,7 @@ export const RuntimeInstallationGuideList = () => {
         size: 32,
       }),
     ];
-  }, [t]);
+  }, [dictionaryLabel, t]);
 
   const table = useTable({
     columns,

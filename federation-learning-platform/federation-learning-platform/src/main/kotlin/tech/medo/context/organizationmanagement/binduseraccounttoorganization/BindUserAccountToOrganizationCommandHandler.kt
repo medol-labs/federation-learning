@@ -24,8 +24,18 @@ class BindUserAccountToOrganizationCommandHandler(
         eventAppender: EventAppender
     ) {
         val organizationDirectoryReadModelSelection = organizationDirectoryReadModelRepository.findById(command.organizationId)
-        require(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active) {
-            "Organization Directory selection is not eligible."
+        if (!(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active)) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "SELECTION_NOT_ELIGIBLE",
+                i18nKey = "errors.organizationmanagement.bindUserAccountToOrganization.organizationDirectory.notEligible",
+                args = mapOf(
+                    "command" to "Bind User Account To Organization",
+                    "projection" to "Organization Directory",
+                    "field" to "organizationId",
+                    "profile" to null
+                ),
+                message = "Organization Directory selection is not eligible."
+            )
         }
         eventAppender.append(decision.decide(command, userOrganizationMembershipUserAccountIdOrganizationIdReservation))
     }

@@ -19,7 +19,7 @@ class AddDictionaryValueDecisionTest {
             dictionaryId = java.util.UUID.randomUUID(),
             dictionaryCode = DictionaryCode(""),
             valueCode = DictionaryValueCode(""),
-            displayName = "",
+            defaultDisplayName = "",
             displayOrder = null,
             description = null,
             active = false

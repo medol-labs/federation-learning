@@ -244,8 +244,9 @@ export const FeatureSchemaCatalogDefineFeatureSchema = () => {
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.FEATURE_SCHEMA_DATA_MODALITY."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);

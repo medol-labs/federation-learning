@@ -13,8 +13,18 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 
 interface DeployRuntimeAgentDecision {
     fun decide(command: DeployRuntimeAgentCommand, state: RuntimeInfrastructureState, portResult: DeployRuntimeAgentResult, now: java.time.LocalDateTime): List<Any> {
-        require(state.currentState == RuntimeInfrastructureStateEnum.Verified) {
-            "DeployRuntimeAgent requires RuntimeInfrastructure to be Verified."
+        if (state.currentState != RuntimeInfrastructureStateEnum.Verified) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeprovisioning.deployRuntimeAgent.requiresState",
+                args = mapOf(
+                    "command" to "DeployRuntimeAgent",
+                    "aggregate" to "RuntimeInfrastructure",
+                    "expectedState" to "Verified",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "DeployRuntimeAgent requires RuntimeInfrastructure to be Verified."
+            )
         }
         return when (portResult) {
                     is DeployRuntimeAgentResult.Succeeded -> listOf(

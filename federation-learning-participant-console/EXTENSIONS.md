@@ -183,11 +183,61 @@ export const pageOverrides = {
 | `dictionaryId` | `string` | `agent-dictionary-value-catalog:field:dictionaryId` | `formatValue/display text` |
 | `dictionaryCode` | `string` | `agent-dictionary-value-catalog:field:dictionaryCode` | `formatValue/display text` |
 | `valueCode` | `string` | `agent-dictionary-value-catalog:field:valueCode` | `formatValue/display text` |
-| `displayName` | `string` | `agent-dictionary-value-catalog:field:displayName` | `formatValue/display text` |
+| `defaultDisplayName` | `string` | `agent-dictionary-value-catalog:field:defaultDisplayName` | `formatValue/display text` |
 | `displayOrder` | `number` | `agent-dictionary-value-catalog:field:displayOrder` | `formatValue/display text` |
 | `active` | `boolean` | `agent-dictionary-value-catalog:field:active` | `formatValue/display text` |
 | `state` | `string` | `agent-dictionary-value-catalog:field:state` | `formatValue/display text` |
 | `syncedAt` | `string` | `agent-dictionary-value-catalog:field:syncedAt` | `formatValue/display text` |
+
+### Agent Dictionary Value Translation Catalog
+
+| Property | Value |
+| --- | --- |
+| Resource name | `agent_dictionary_value_translation_catalog` |
+| Route | `/agent-dictionary-value-translation-catalog` |
+| Backend module | `federation-learning-runtime-agent` |
+| Data provider | `federation-learning-runtime-agent` |
+| Generated list page | `src/contexts/runtimeagentoperations/slices/agent-dictionary-value-translation-catalog/list.tsx` |
+| Generated show page | `src/contexts/runtimeagentoperations/slices/agent-dictionary-value-translation-catalog/show.tsx` |
+| Resource metadata override | `resourceOverrides[{ name: "agent_dictionary_value_translation_catalog" }]` |
+| Menu icon request | `resolveMenuIcon({ type: "resource", name: "agent_dictionary_value_translation_catalog", parent: "runtimeagentoperations" })` |
+
+#### Page Overrides
+
+| View | Override key | Generated fallback |
+| --- | --- | --- |
+| `list` | `agent-dictionary-value-translation-catalog:list` | `src/contexts/runtimeagentoperations/slices/agent-dictionary-value-translation-catalog/list.tsx` |
+| `show` | `agent-dictionary-value-translation-catalog:show` | `src/contexts/runtimeagentoperations/slices/agent-dictionary-value-translation-catalog/show.tsx` |
+
+Example:
+
+```tsx
+// src/domain/page-overrides.tsx
+import { MyAgentDictionaryValueTranslationCatalogList } from "./pages/my-agent-dictionary-value-translation-catalog-list";
+
+export const pageOverrides = {
+  "agent-dictionary-value-translation-catalog:list": <MyAgentDictionaryValueTranslationCatalogList />,
+};
+```
+
+#### Commands And Row Actions
+
+| Command | Override key | Generated fallback | Fields |
+| --- | --- | --- | --- |
+| _(none)_ | | | |
+
+#### Field Renderers
+
+| Field | Type | Renderer override id | Default renderer |
+| --- | --- | --- | --- |
+| `dictionaryValueTranslationId` | `string` | `agent-dictionary-value-translation-catalog:field:dictionaryValueTranslationId` | `formatValue/display text` |
+| `dictionaryValueId` | `string` | `agent-dictionary-value-translation-catalog:field:dictionaryValueId` | `formatValue/display text` |
+| `dictionaryCode` | `string` | `agent-dictionary-value-translation-catalog:field:dictionaryCode` | `formatValue/display text` |
+| `valueCode` | `string` | `agent-dictionary-value-translation-catalog:field:valueCode` | `formatValue/display text` |
+| `locale` | `string` | `agent-dictionary-value-translation-catalog:field:locale` | `formatValue/display text` |
+| `displayName` | `string` | `agent-dictionary-value-translation-catalog:field:displayName` | `formatValue/display text` |
+| `description` | `string` | `agent-dictionary-value-translation-catalog:field:description` | `CopyableText` |
+| `syncedAt` | `string` | `agent-dictionary-value-translation-catalog:field:syncedAt` | `formatValue/display text` |
 
 ### Agent Feature Schema Catalog
 

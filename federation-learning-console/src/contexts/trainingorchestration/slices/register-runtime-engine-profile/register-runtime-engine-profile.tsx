@@ -124,8 +124,9 @@ export const RuntimeEngineProfileCatalogRegisterRuntimeEngineProfile = () => {
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.RUNTIME_ENGINE_PLUGIN_PROFILE."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);

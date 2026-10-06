@@ -1,8 +1,5 @@
 // Generated domain value types. Do not edit manually.
 export type OrganizationType = "HOSPITAL" | "RESEARCH_INSTITUTE" | "PUBLIC_HEALTH_AGENCY" | "LABORATORY" | "REHABILITATION_CENTER";
-export type DictionaryCode = string;
-export type DictionaryValueCode = string;
-export type DisplayOrder = number;
 export type FeatureDefinition = {
   featureName: string;
   dataType: string;
@@ -31,3 +28,7 @@ export type TrainingRoundParticipant = {
   runtimeId: string;
   datasetId: string;
 };
+export type DictionaryCode = string;
+export type DictionaryValueCode = string;
+export type LocaleCode = string;
+export type DisplayOrder = number;

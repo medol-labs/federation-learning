@@ -17,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type TrainingRunConfigurationCatalogRecord = {
@@ -78,8 +79,27 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
+};
+
 export const TrainingRunConfigurationCatalogList = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<TrainingRunConfigurationCatalogRecord>();
     return [
@@ -283,7 +303,7 @@ export const TrainingRunConfigurationCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "MODEL_PLUGIN"),
       }),
       columnHelper.accessor("initialModelVersion", {
         id: "initialModelVersion",
@@ -595,7 +615,7 @@ export const TrainingRunConfigurationCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "RUNTIME_ENGINE_PLUGIN_PROFILE"),
       }),
       columnHelper.accessor("runtimeEngineImage", {
         id: "runtimeEngineImage",
@@ -673,7 +693,7 @@ export const TrainingRunConfigurationCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "TRAINING_STRATEGY"),
       }),
       columnHelper.accessor("aggregationAlgorithm", {
         id: "aggregationAlgorithm",
@@ -699,7 +719,7 @@ export const TrainingRunConfigurationCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "AGGREGATION_ALGORITHM"),
       }),
       columnHelper.accessor("maxRounds", {
         id: "maxRounds",
@@ -914,7 +934,7 @@ export const TrainingRunConfigurationCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "TRAINING_OPTIMIZER"),
       }),
       columnHelper.accessor("lossFunction", {
         id: "lossFunction",
@@ -940,7 +960,7 @@ export const TrainingRunConfigurationCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "TRAINING_LOSS_FUNCTION"),
       }),
       columnHelper.accessor("gradientClippingNorm", {
         id: "gradientClippingNorm",
@@ -994,7 +1014,7 @@ export const TrainingRunConfigurationCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("minimumAccuracy", {
         id: "minimumAccuracy",
@@ -1115,8 +1135,8 @@ export const TrainingRunConfigurationCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Draft", value: "Draft" },
-            { label: "Locked", value: "Locked" },
+            { label: t("resources.training_run_configuration_catalog.fields.state.options.Draft", "Draft"), value: "Draft" },
+            { label: t("resources.training_run_configuration_catalog.fields.state.options.Locked", "Locked"), value: "Locked" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -1131,7 +1151,10 @@ export const TrainingRunConfigurationCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, [
+            { label: t("resources.training_run_configuration_catalog.fields.state.options.Draft", "Draft"), value: "Draft" },
+            { label: t("resources.training_run_configuration_catalog.fields.state.options.Locked", "Locked"), value: "Locked" },
+          ]),
       }),
       columnHelper.display({
         id: "actions",
@@ -1174,7 +1197,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         size: 32,
       }),
     ];
-  }, [t]);
+  }, [dictionaryLabel, t]);
 
   const table = useTable({
     columns,

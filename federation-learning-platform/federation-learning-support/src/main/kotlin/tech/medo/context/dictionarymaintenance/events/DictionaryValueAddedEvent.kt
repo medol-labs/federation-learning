@@ -17,7 +17,7 @@ data class DictionaryValueAddedEvent(
     val dictionaryCode: DictionaryCode,
     @EventTag(key = "valueCode")
     val valueCode: DictionaryValueCode,
-    val displayName: String,
+    val defaultDisplayName: String,
     val displayOrder: DisplayOrder?,
     val description: String?,
     val active: Boolean

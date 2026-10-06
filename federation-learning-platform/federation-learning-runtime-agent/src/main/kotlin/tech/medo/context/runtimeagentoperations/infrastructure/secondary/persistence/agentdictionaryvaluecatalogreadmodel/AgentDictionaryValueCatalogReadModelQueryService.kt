@@ -34,7 +34,7 @@ class AgentDictionaryValueCatalogReadModelQueryService(
             criteria.dictionaryId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDictionaryValueCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("dictionaryId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.dictionaryCode?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDictionaryValueCatalogReadModelEntity>, Expression<String>> { root -> root.get("dictionaryCode") })) }
             criteria.valueCode?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDictionaryValueCatalogReadModelEntity>, Expression<String>> { root -> root.get("valueCode") })) }
-            criteria.displayName?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDictionaryValueCatalogReadModelEntity>, Expression<String>> { root -> root.get("displayName") })) }
+            criteria.defaultDisplayName?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDictionaryValueCatalogReadModelEntity>, Expression<String>> { root -> root.get("defaultDisplayName") })) }
             criteria.displayOrder?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<AgentDictionaryValueCatalogReadModelEntity>, Expression<Int>> { root -> root.get("displayOrder") })) }
             criteria.active?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDictionaryValueCatalogReadModelEntity>, Expression<Boolean>> { root -> root.get("active") })) }
             criteria.state?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDictionaryValueCatalogReadModelEntity>, Expression<String>> { root -> root.get("state") })) }
@@ -100,7 +100,7 @@ class AgentDictionaryValueCatalogReadModelQueryService(
             it.dictionaryId = this@toProjection.dictionaryId
             it.dictionaryCode = this@toProjection.dictionaryCode
             it.valueCode = this@toProjection.valueCode
-            it.displayName = this@toProjection.displayName
+            it.defaultDisplayName = this@toProjection.defaultDisplayName
             it.displayOrder = this@toProjection.displayOrder
             it.active = this@toProjection.active
             it.state = this@toProjection.state

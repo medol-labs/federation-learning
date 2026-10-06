@@ -13,8 +13,18 @@ import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 interface StartRoundExecutionDecision {
     fun decide(command: StartRoundExecutionCommand, state: RoundExecutionState, portResult: StartRoundExecutionResult, now: java.time.LocalDateTime): List<Any> {
-        require(state.currentState == RoundExecutionStateEnum.PlanAccepted) {
-            "StartRoundExecution requires RoundExecution to be PlanAccepted."
+        if (state.currentState != RoundExecutionStateEnum.PlanAccepted) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeagentoperations.startRoundExecution.requiresState",
+                args = mapOf(
+                    "command" to "StartRoundExecution",
+                    "aggregate" to "RoundExecution",
+                    "expectedState" to "PlanAccepted",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "StartRoundExecution requires RoundExecution to be PlanAccepted."
+            )
         }
         return when (portResult) {
                     is StartRoundExecutionResult.Succeeded -> listOf(

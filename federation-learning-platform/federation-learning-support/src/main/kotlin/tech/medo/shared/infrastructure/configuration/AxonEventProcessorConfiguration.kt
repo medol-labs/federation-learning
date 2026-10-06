@@ -27,6 +27,10 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("readmodel-dictionary-value-catalog").notCustomized()
 
     @Bean
+    fun readmodelDictionaryValueTranslationCatalogEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("readmodel-dictionary-value-translation-catalog").notCustomized()
+
+    @Bean
     fun readmodelPermissionCatalogEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("readmodel-permission-catalog").notCustomized()
 

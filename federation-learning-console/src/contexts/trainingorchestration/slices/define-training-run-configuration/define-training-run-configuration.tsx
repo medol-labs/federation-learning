@@ -351,8 +351,9 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.TRAINING_STRATEGY."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);
@@ -384,8 +385,9 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.AGGREGATION_ALGORITHM."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);
@@ -549,8 +551,9 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.TRAINING_OPTIMIZER."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);
@@ -582,8 +585,9 @@ export const TrainingRunConfigurationCatalogDefineTrainingRunConfiguration = () 
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.TRAINING_LOSS_FUNCTION."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);

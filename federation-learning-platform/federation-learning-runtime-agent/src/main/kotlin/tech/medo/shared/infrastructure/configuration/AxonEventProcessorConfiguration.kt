@@ -163,6 +163,10 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("readmodel-agent-dictionary-value-catalog").notCustomized()
 
     @Bean
+    fun readmodelAgentDictionaryValueTranslationCatalogEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("readmodel-agent-dictionary-value-translation-catalog").notCustomized()
+
+    @Bean
     fun readmodelAgentFeatureSchemaCatalogEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("readmodel-agent-feature-schema-catalog").notCustomized()
 

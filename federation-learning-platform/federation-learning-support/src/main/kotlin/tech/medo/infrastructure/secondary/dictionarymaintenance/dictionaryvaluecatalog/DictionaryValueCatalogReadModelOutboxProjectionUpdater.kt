@@ -33,7 +33,7 @@ class DictionaryValueCatalogReadModelOutboxProjectionUpdater(
         entity.dictionaryId = event.dictionaryId
         entity.dictionaryCode = event.dictionaryCode.value
         entity.valueCode = event.valueCode.value
-        entity.displayName = event.displayName
+        entity.defaultDisplayName = event.defaultDisplayName
         entity.displayOrder = event.displayOrder?.value
         entity.description = event.description
         entity.active = event.active

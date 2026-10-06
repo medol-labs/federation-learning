@@ -23,7 +23,7 @@ class DictionaryValueCatalogReadModelEntity : MetadataProjection {
     var dictionaryId: UUID? = null
     var dictionaryCode: String? = null
     var valueCode: String? = null
-    var displayName: String? = null
+    var defaultDisplayName: String? = null
     var displayOrder: Int? = null
     @Column(columnDefinition = "text")
     var description: String? = null

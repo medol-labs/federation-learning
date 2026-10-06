@@ -13,8 +13,18 @@ import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnu
 
 interface VerifyRuntimeInfrastructureDecision {
     fun decide(command: VerifyRuntimeInfrastructureCommand, state: RuntimeInfrastructureState, portResult: RuntimeInfrastructureVerification, now: java.time.LocalDateTime): List<Any> {
-        require(state.currentState == RuntimeInfrastructureStateEnum.Prepared) {
-            "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Prepared."
+        if (state.currentState != RuntimeInfrastructureStateEnum.Prepared) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeprovisioning.verifyRuntimeInfrastructure.requiresState",
+                args = mapOf(
+                    "command" to "VerifyRuntimeInfrastructure",
+                    "aggregate" to "RuntimeInfrastructure",
+                    "expectedState" to "Prepared",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "VerifyRuntimeInfrastructure requires RuntimeInfrastructure to be Prepared."
+            )
         }
         return when (portResult) {
                     is RuntimeInfrastructureVerification.Succeeded -> listOf(

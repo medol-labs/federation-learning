@@ -27,12 +27,32 @@ class CreateRuntimeInstallationPlanCommandHandler(
         eventAppender: EventAppender
     ) {
         val organizationDirectoryReadModelSelection = organizationDirectoryReadModelRepository.findById(command.organizationId)
-        require(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active) {
-            "Organization Directory selection is not eligible."
+        if (!(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active)) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "SELECTION_NOT_ELIGIBLE",
+                i18nKey = "errors.runtimeprovisioning.createRuntimeInstallationPlan.organizationDirectory.notEligible",
+                args = mapOf(
+                    "command" to "Create Runtime Installation Plan",
+                    "projection" to "Organization Directory",
+                    "field" to "organizationId",
+                    "profile" to null
+                ),
+                message = "Organization Directory selection is not eligible."
+            )
         }
         val runtimeInfrastructurePackageCatalogReadModelSelection = runtimeInfrastructurePackageCatalogReadModelRepository.findById(command.runtimeInfrastructurePackageId)
-        require(runtimeInfrastructurePackageCatalogReadModelSelection != null && runtimeInfrastructurePackageCatalogReadModelSelection.state == RuntimeInfrastructurePackageStateEnum.Registered) {
-            "Runtime Infrastructure Package Catalog selection is not eligible."
+        if (!(runtimeInfrastructurePackageCatalogReadModelSelection != null && runtimeInfrastructurePackageCatalogReadModelSelection.state == RuntimeInfrastructurePackageStateEnum.Registered)) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "SELECTION_NOT_ELIGIBLE",
+                i18nKey = "errors.runtimeprovisioning.createRuntimeInstallationPlan.runtimeInfrastructurePackageCatalog.notEligible",
+                args = mapOf(
+                    "command" to "Create Runtime Installation Plan",
+                    "projection" to "Runtime Infrastructure Package Catalog",
+                    "field" to "runtimeInfrastructurePackageId",
+                    "profile" to null
+                ),
+                message = "Runtime Infrastructure Package Catalog selection is not eligible."
+            )
         }
         val input = CreateRuntimeInstallationPlanInput(runtimeInstallationPlanId = command.runtimeInstallationPlanId, runtimeInfrastructureId = command.runtimeInfrastructureId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, agentInstallMode = command.agentInstallMode, expectedNodeCount = command.expectedNodeCount)
         val portResult = createRuntimeInstallationPlanService.execute(input)

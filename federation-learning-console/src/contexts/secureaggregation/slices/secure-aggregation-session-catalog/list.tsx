@@ -17,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type SecureAggregationSessionCatalogRecord = {
@@ -68,8 +69,27 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
+};
+
 export const SecureAggregationSessionCatalogList = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<SecureAggregationSessionCatalogRecord>();
     return [
@@ -435,7 +455,7 @@ export const SecureAggregationSessionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("receivedEncryptedUpdateCount", {
         id: "receivedEncryptedUpdateCount",
@@ -488,7 +508,7 @@ export const SecureAggregationSessionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "SECURE_AGGREGATION_ENCRYPTION_SCHEME"),
       }),
       columnHelper.accessor("publicKeyVersion", {
         id: "publicKeyVersion",
@@ -660,11 +680,11 @@ export const SecureAggregationSessionCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Planned", value: "Planned" },
-            { label: "Participants Selected", value: "ParticipantsSelected" },
-            { label: "Encryption Context Prepared", value: "EncryptionContextPrepared" },
-            { label: "Completed", value: "Completed" },
-            { label: "Failed", value: "Failed" },
+            { label: t("resources.secure_aggregation_session_catalog.fields.state.options.Planned", "Planned"), value: "Planned" },
+            { label: t("resources.secure_aggregation_session_catalog.fields.state.options.ParticipantsSelected", "Participants Selected"), value: "ParticipantsSelected" },
+            { label: t("resources.secure_aggregation_session_catalog.fields.state.options.EncryptionContextPrepared", "Encryption Context Prepared"), value: "EncryptionContextPrepared" },
+            { label: t("resources.secure_aggregation_session_catalog.fields.state.options.Completed", "Completed"), value: "Completed" },
+            { label: t("resources.secure_aggregation_session_catalog.fields.state.options.Failed", "Failed"), value: "Failed" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -679,7 +699,13 @@ export const SecureAggregationSessionCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, [
+            { label: t("resources.secure_aggregation_session_catalog.fields.state.options.Planned", "Planned"), value: "Planned" },
+            { label: t("resources.secure_aggregation_session_catalog.fields.state.options.ParticipantsSelected", "Participants Selected"), value: "ParticipantsSelected" },
+            { label: t("resources.secure_aggregation_session_catalog.fields.state.options.EncryptionContextPrepared", "Encryption Context Prepared"), value: "EncryptionContextPrepared" },
+            { label: t("resources.secure_aggregation_session_catalog.fields.state.options.Completed", "Completed"), value: "Completed" },
+            { label: t("resources.secure_aggregation_session_catalog.fields.state.options.Failed", "Failed"), value: "Failed" },
+          ]),
       }),
       columnHelper.accessor("failureReason", {
         id: "failureReason",
@@ -906,7 +932,7 @@ export const SecureAggregationSessionCatalogList = () => {
         size: 32,
       }),
     ];
-  }, [t]);
+  }, [dictionaryLabel, t]);
 
   const table = useTable({
     columns,

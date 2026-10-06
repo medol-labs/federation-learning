@@ -21,7 +21,7 @@ class AgentDictionaryValueCatalogReadModelCriteria {
     var dictionaryId: StringFilter? = null
     var dictionaryCode: StringFilter? = null
     var valueCode: StringFilter? = null
-    var displayName: StringFilter? = null
+    var defaultDisplayName: StringFilter? = null
     var displayOrder: IntegerFilter? = null
     var active: BooleanFilter? = null
     var state: StringFilter? = null
@@ -34,7 +34,7 @@ class AgentDictionaryValueCatalogReadModelProjection : MetadataProjection {
     var dictionaryId: UUID? = null
     var dictionaryCode: String? = null
     var valueCode: String? = null
-    var displayName: String? = null
+    var defaultDisplayName: String? = null
     var displayOrder: Int? = null
     var active: Boolean? = null
     var state: String? = null
@@ -53,7 +53,7 @@ fun AgentDictionaryValueCatalogReadModelProjection.toReadModel(): AgentDictionar
     dictionaryId = dictionaryId,
     dictionaryCode = dictionaryCode,
     valueCode = valueCode,
-    displayName = displayName,
+    defaultDisplayName = defaultDisplayName,
     displayOrder = displayOrder,
     active = active,
     state = state,
@@ -79,7 +79,7 @@ data class AgentDictionaryValueCatalogReadModel(
     val dictionaryId: UUID?,
     val dictionaryCode: String?,
     val valueCode: String?,
-    val displayName: String?,
+    val defaultDisplayName: String?,
     val displayOrder: Int?,
     val active: Boolean?,
     val state: String?,

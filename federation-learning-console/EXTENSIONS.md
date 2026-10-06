@@ -168,7 +168,7 @@ export const pageOverrides = {
 | `registerDictionary` | `dictionary-catalog:registerDictionary` | `src/contexts/dictionarymaintenance/slices/register-dictionary/register-dictionary.tsx` | `dictionaryCode`, `dictionaryName`, `description` |
 | `updateDictionary` | `dictionary-catalog:updateDictionary` | `src/contexts/dictionarymaintenance/slices/update-dictionary/update-dictionary.tsx` | `dictionaryName`, `description` |
 | `archiveDictionary` | `dictionary-catalog:archiveDictionary` | `src/contexts/dictionarymaintenance/slices/archive-dictionary/archive-dictionary.tsx` | `archiveReason` |
-| `addDictionaryValue` | `dictionary-catalog:addDictionaryValue` | `src/contexts/dictionarymaintenance/slices/add-dictionary-value/add-dictionary-value-dictionary-catalog.tsx` | `dictionaryId`, `dictionaryCode`, `valueCode`, `displayName`, `displayOrder`, `description`, `active` |
+| `addDictionaryValue` | `dictionary-catalog:addDictionaryValue` | `src/contexts/dictionarymaintenance/slices/add-dictionary-value/add-dictionary-value-dictionary-catalog.tsx` | `dictionaryId`, `dictionaryCode`, `valueCode`, `defaultDisplayName`, `displayOrder`, `description`, `active` |
 
 #### Field Renderers
 
@@ -204,8 +204,10 @@ export const pageOverrides = {
 | `list` | `dictionary-value-catalog:list` | `src/contexts/dictionarymaintenance/slices/dictionary-value-catalog/list.tsx` |
 | `show` | `dictionary-value-catalog:show` | `src/contexts/dictionarymaintenance/slices/dictionary-value-catalog/show.tsx` |
 | `addDictionaryValue` | `dictionary-value-catalog:addDictionaryValue` | `src/contexts/dictionarymaintenance/slices/add-dictionary-value/add-dictionary-value-dictionary-value-catalog.tsx` |
+| `updateDictionaryValueTranslation` | `dictionary-value-catalog:updateDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/update-dictionary-value-translation/update-dictionary-value-translation-dictionary-value-catalog.tsx` |
 | `disableDictionaryValue` | `dictionary-value-catalog:disableDictionaryValue` | `src/contexts/dictionarymaintenance/slices/disable-dictionary-value/disable-dictionary-value.tsx` |
 | `enableDictionaryValue` | `dictionary-value-catalog:enableDictionaryValue` | `src/contexts/dictionarymaintenance/slices/enable-dictionary-value/enable-dictionary-value.tsx` |
+| `setDictionaryValueTranslation` | `dictionary-value-catalog:setDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/set-dictionary-value-translation/set-dictionary-value-translation.tsx` |
 
 Example:
 
@@ -222,9 +224,11 @@ export const pageOverrides = {
 
 | Command | Override key | Generated fallback | Fields |
 | --- | --- | --- | --- |
-| `addDictionaryValue` | `dictionary-value-catalog:addDictionaryValue` | `src/contexts/dictionarymaintenance/slices/add-dictionary-value/add-dictionary-value-dictionary-value-catalog.tsx` | `dictionaryId`, `dictionaryCode`, `valueCode`, `displayName`, `displayOrder`, `description`, `active` |
+| `addDictionaryValue` | `dictionary-value-catalog:addDictionaryValue` | `src/contexts/dictionarymaintenance/slices/add-dictionary-value/add-dictionary-value-dictionary-value-catalog.tsx` | `dictionaryId`, `dictionaryCode`, `valueCode`, `defaultDisplayName`, `displayOrder`, `description`, `active` |
+| `updateDictionaryValueTranslation` | `dictionary-value-catalog:updateDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/update-dictionary-value-translation/update-dictionary-value-translation-dictionary-value-catalog.tsx` | `dictionaryValueId`, `dictionaryCode`, `valueCode`, `locale`, `displayName`, `description` |
 | `disableDictionaryValue` | `dictionary-value-catalog:disableDictionaryValue` | `src/contexts/dictionarymaintenance/slices/disable-dictionary-value/disable-dictionary-value.tsx` | `disabledReason` |
 | `enableDictionaryValue` | `dictionary-value-catalog:enableDictionaryValue` | `src/contexts/dictionarymaintenance/slices/enable-dictionary-value/enable-dictionary-value.tsx` | `enableReason` |
+| `setDictionaryValueTranslation` | `dictionary-value-catalog:setDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/set-dictionary-value-translation/set-dictionary-value-translation.tsx` | `dictionaryValueId`, `dictionaryCode`, `valueCode`, `locale`, `displayName`, `description` |
 
 #### Field Renderers
 
@@ -234,7 +238,7 @@ export const pageOverrides = {
 | `dictionaryId` | `string` | `dictionary-value-catalog:field:dictionaryId` | `formatValue/display text` |
 | `dictionaryCode` | `DictionaryCode` | `dictionary-value-catalog:field:dictionaryCode` | `formatValue/display text` |
 | `valueCode` | `DictionaryValueCode` | `dictionary-value-catalog:field:valueCode` | `formatValue/display text` |
-| `displayName` | `string` | `dictionary-value-catalog:field:displayName` | `formatValue/display text` |
+| `defaultDisplayName` | `string` | `dictionary-value-catalog:field:defaultDisplayName` | `formatValue/display text` |
 | `displayOrder` | `DisplayOrder` | `dictionary-value-catalog:field:displayOrder` | `formatValue/display text` |
 | `description` | `string` | `dictionary-value-catalog:field:description` | `CopyableText` |
 | `active` | `boolean` | `dictionary-value-catalog:field:active` | `formatValue/display text` |
@@ -244,6 +248,57 @@ export const pageOverrides = {
 | `disabledAt` | `string` | `dictionary-value-catalog:field:disabledAt` | `formatValue/display text` |
 | `disabledReason` | `string` | `dictionary-value-catalog:field:disabledReason` | `formatValue/display text` |
 | `enabledAt` | `string` | `dictionary-value-catalog:field:enabledAt` | `formatValue/display text` |
+
+### Dictionary Value Translation Catalog
+
+| Property | Value |
+| --- | --- |
+| Resource name | `dictionary_value_translation_catalog` |
+| Route | `/dictionary-value-translation-catalog` |
+| Backend module | `federation-learning-support` |
+| Data provider | `federation-learning-support` |
+| Generated list page | `src/contexts/dictionarymaintenance/slices/dictionary-value-translation-catalog/list.tsx` |
+| Generated show page | `src/contexts/dictionarymaintenance/slices/dictionary-value-translation-catalog/show.tsx` |
+| Resource metadata override | `resourceOverrides[{ name: "dictionary_value_translation_catalog" }]` |
+| Menu icon request | `resolveMenuIcon({ type: "resource", name: "dictionary_value_translation_catalog", parent: "dictionarymaintenance" })` |
+
+#### Page Overrides
+
+| View | Override key | Generated fallback |
+| --- | --- | --- |
+| `list` | `dictionary-value-translation-catalog:list` | `src/contexts/dictionarymaintenance/slices/dictionary-value-translation-catalog/list.tsx` |
+| `show` | `dictionary-value-translation-catalog:show` | `src/contexts/dictionarymaintenance/slices/dictionary-value-translation-catalog/show.tsx` |
+| `updateDictionaryValueTranslation` | `dictionary-value-translation-catalog:updateDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/update-dictionary-value-translation/update-dictionary-value-translation-dictionary-value-translation-catalog.tsx` |
+
+Example:
+
+```tsx
+// src/domain/page-overrides.tsx
+import { MyDictionaryValueTranslationCatalogList } from "./pages/my-dictionary-value-translation-catalog-list";
+
+export const pageOverrides = {
+  "dictionary-value-translation-catalog:list": <MyDictionaryValueTranslationCatalogList />,
+};
+```
+
+#### Commands And Row Actions
+
+| Command | Override key | Generated fallback | Fields |
+| --- | --- | --- | --- |
+| `updateDictionaryValueTranslation` | `dictionary-value-translation-catalog:updateDictionaryValueTranslation` | `src/contexts/dictionarymaintenance/slices/update-dictionary-value-translation/update-dictionary-value-translation-dictionary-value-translation-catalog.tsx` | `dictionaryValueId`, `dictionaryCode`, `valueCode`, `locale`, `displayName`, `description` |
+
+#### Field Renderers
+
+| Field | Type | Renderer override id | Default renderer |
+| --- | --- | --- | --- |
+| `dictionaryValueTranslationId` | `string` | `dictionary-value-translation-catalog:field:dictionaryValueTranslationId` | `formatValue/display text` |
+| `dictionaryValueId` | `string` | `dictionary-value-translation-catalog:field:dictionaryValueId` | `formatValue/display text` |
+| `dictionaryCode` | `DictionaryCode` | `dictionary-value-translation-catalog:field:dictionaryCode` | `formatValue/display text` |
+| `valueCode` | `DictionaryValueCode` | `dictionary-value-translation-catalog:field:valueCode` | `formatValue/display text` |
+| `locale` | `LocaleCode` | `dictionary-value-translation-catalog:field:locale` | `formatValue/display text` |
+| `displayName` | `string` | `dictionary-value-translation-catalog:field:displayName` | `formatValue/display text` |
+| `description` | `string` | `dictionary-value-translation-catalog:field:description` | `CopyableText` |
+| `updatedAt` | `string` | `dictionary-value-translation-catalog:field:updatedAt` | `formatValue/display text` |
 
 ### Feature Schema Catalog
 

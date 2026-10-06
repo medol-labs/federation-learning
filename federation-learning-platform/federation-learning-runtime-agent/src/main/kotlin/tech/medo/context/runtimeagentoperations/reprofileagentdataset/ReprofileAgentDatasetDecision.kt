@@ -13,8 +13,18 @@ import tech.medo.runtimeagentoperations.domain.states.AgentDatasetProfileStateEn
 
 interface ReprofileAgentDatasetDecision {
     fun decide(command: ReprofileAgentDatasetCommand, state: AgentDatasetProfileState, portResult: ReprofileAgentDatasetResult, now: java.time.LocalDateTime): List<Any> {
-        require(state.currentState == AgentDatasetProfileStateEnum.Reported) {
-            "ReprofileAgentDataset requires AgentDatasetProfile to be Reported."
+        if (state.currentState != AgentDatasetProfileStateEnum.Reported) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeagentoperations.reprofileAgentDataset.requiresState",
+                args = mapOf(
+                    "command" to "ReprofileAgentDataset",
+                    "aggregate" to "AgentDatasetProfile",
+                    "expectedState" to "Reported",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "ReprofileAgentDataset requires AgentDatasetProfile to be Reported."
+            )
         }
         return when (portResult) {
                     is ReprofileAgentDatasetResult.Succeeded -> listOf(

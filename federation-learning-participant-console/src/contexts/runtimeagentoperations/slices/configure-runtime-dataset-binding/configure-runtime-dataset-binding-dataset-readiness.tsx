@@ -240,8 +240,9 @@ export const DatasetReadinessConfigureRuntimeDatasetBinding = () => {
                   withFormControl
                   resource="agent_dictionary_value_catalog"
                   dataProviderName="federation-learning-runtime-agent"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.DATA_FORMAT."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);

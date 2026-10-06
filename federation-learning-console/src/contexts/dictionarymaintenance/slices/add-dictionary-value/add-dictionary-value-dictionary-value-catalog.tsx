@@ -41,7 +41,7 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
     dictionaryId: searchParams.get("dictionaryId") ?? undefined,
     dictionaryCode: searchParams.get("dictionaryCode") ?? undefined,
     valueCode: searchParams.get("valueCode") ?? undefined,
-    displayName: searchParams.get("displayName") ?? undefined,
+    defaultDisplayName: searchParams.get("defaultDisplayName") ?? undefined,
     displayOrder: (() => { const value = searchParams.get("displayOrder"); return value === null ? undefined : Number(value); })(),
     description: searchParams.get("description") ?? undefined,
     active: (() => { const value = searchParams.get("active"); return value === null ? undefined : value === "true"; })(),
@@ -163,16 +163,16 @@ export const DictionaryValueCatalogAddDictionaryValue = () => {
           />
           <FormField
             control={form.control}
-            name="displayName"
-            rules={{ required: "Display Name is required" }}
+            name="defaultDisplayName"
+            rules={{ required: "Default Display Name is required" }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("resources.dictionary_value_catalog.commands.addDictionaryValue.fields.displayName.label", "Display Name")}</FormLabel>
+                <FormLabel>{t("resources.dictionary_value_catalog.commands.addDictionaryValue.fields.defaultDisplayName.label", "Default Display Name")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder={"Enter Display Name"}
+                    placeholder={"Enter Default Display Name"}
                   />
                 </FormControl>
                 <FormMessage />

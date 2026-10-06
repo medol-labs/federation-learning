@@ -17,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type AgentDictionaryValueCatalogRecord = {
@@ -24,7 +25,7 @@ type AgentDictionaryValueCatalogRecord = {
   dictionaryId: string;
   dictionaryCode: string;
   valueCode: string;
-  displayName: string;
+  defaultDisplayName: string;
   displayOrder?: number;
   active: boolean;
   state: string;
@@ -48,8 +49,27 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
+};
+
 export const AgentDictionaryValueCatalogList = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<AgentDictionaryValueCatalogRecord>();
     return [
@@ -177,27 +197,27 @@ export const AgentDictionaryValueCatalogList = () => {
             },
           ) ?? String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("displayName", {
-        id: "displayName",
+      columnHelper.accessor("defaultDisplayName", {
+        id: "defaultDisplayName",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.agent_dictionary_value_catalog.fields.displayName.label", "Display Name")} />
+          <DataTableColumnHeader column={column} label={t("resources.agent_dictionary_value_catalog.fields.defaultDisplayName.label", "Default Display Name")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.agent_dictionary_value_catalog.fields.displayName.label", "Display Name"),
-          placeholder: "Enter Display Name",
+          label: t("resources.agent_dictionary_value_catalog.fields.defaultDisplayName.label", "Default Display Name"),
+          placeholder: "Enter Default Display Name",
           variant: "text",
         },
         cell: ({ getValue, row }) =>
           renderFieldOverride<AgentDictionaryValueCatalogRecord>(
             frontendComposition,
-            "field:agent-dictionary-value-catalog:display:displayName",
+            "field:agent-dictionary-value-catalog:display:defaultDisplayName",
             {
               value: getValue(),
               record: row.original,
               resource: "agent-dictionary-value-catalog",
-              field: "displayName",
+              field: "defaultDisplayName",
               view: "display",
               compact: true,
             },
@@ -255,7 +275,7 @@ export const AgentDictionaryValueCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -336,7 +356,7 @@ export const AgentDictionaryValueCatalogList = () => {
         size: 32,
       }),
     ];
-  }, [t]);
+  }, [dictionaryLabel, t]);
 
   const table = useTable({
     columns,
@@ -351,7 +371,7 @@ export const AgentDictionaryValueCatalogList = () => {
         tableName: "agent_dictionary_value_catalog_read_model_entity",
         idField: "dictionaryValueId",
         idFields: ["dictionaryValueId"],
-        queryFields: ["dictionaryValueId","dictionaryId","dictionaryCode","valueCode","displayName","displayOrder","active","state","syncedAt"],
+        queryFields: ["dictionaryValueId","dictionaryId","dictionaryCode","valueCode","defaultDisplayName","displayOrder","active","state","syncedAt"],
         label: t("resources.agent_dictionary_value_catalog.label", "Agent Dictionary Value Catalog"),
         aggregateRoute: "agentdictionaryvaluecatalog",
         queryRoute: "agentdictionaryvaluecatalog",

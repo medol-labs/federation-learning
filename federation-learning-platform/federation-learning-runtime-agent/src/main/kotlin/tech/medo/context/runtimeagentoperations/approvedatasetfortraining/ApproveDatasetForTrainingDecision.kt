@@ -12,8 +12,18 @@ import tech.medo.runtimeagentoperations.domain.states.DatasetStateEnum
 
 interface ApproveDatasetForTrainingDecision {
     fun decide(command: ApproveDatasetForTrainingCommand, state: DatasetState): List<Any> {
-        require(state.currentState == DatasetStateEnum.ContractValidationCompleted) {
-            "ApproveDatasetForTraining requires Dataset to be ContractValidationCompleted."
+        if (state.currentState != DatasetStateEnum.ContractValidationCompleted) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeagentoperations.approveDatasetForTraining.requiresState",
+                args = mapOf(
+                    "command" to "ApproveDatasetForTraining",
+                    "aggregate" to "Dataset",
+                    "expectedState" to "ContractValidationCompleted",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "ApproveDatasetForTraining requires Dataset to be ContractValidationCompleted."
+            )
         }
         return listOf(
             DatasetApprovedForTrainingEvent(datasetId = command.datasetId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, datasetName = command.datasetName)

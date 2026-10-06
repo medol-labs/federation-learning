@@ -17,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type RuntimeAgentLifecycleCatalogRecord = {
@@ -58,8 +59,27 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
+};
+
 export const RuntimeAgentLifecycleCatalogList = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<RuntimeAgentLifecycleCatalogRecord>();
     return [
@@ -211,7 +231,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "RUNTIME_AGENT_ENDPOINT_SCOPE"),
       }),
       columnHelper.accessor("lifecycleStatus", {
         id: "lifecycleStatus",
@@ -264,7 +284,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("bootstrapFailureReason", {
         id: "bootstrapFailureReason",
@@ -317,7 +337,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("configurationLoaded", {
         id: "configurationLoaded",
@@ -344,7 +364,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("secretStoreAccessible", {
         id: "secretStoreAccessible",
@@ -371,7 +391,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("runtimeEngineAdapterReady", {
         id: "runtimeEngineAdapterReady",
@@ -398,7 +418,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("modelRepositoryClientReady", {
         id: "modelRepositoryClientReady",
@@ -425,7 +445,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("localDatasetBindingStoreReady", {
         id: "localDatasetBindingStoreReady",
@@ -452,7 +472,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("workingDirectoryWritable", {
         id: "workingDirectoryWritable",
@@ -479,7 +499,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("bootstrappedAt", {
         id: "bootstrappedAt",
@@ -615,7 +635,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         size: 32,
       }),
     ];
-  }, [t]);
+  }, [dictionaryLabel, t]);
 
   const table = useTable({
     columns,

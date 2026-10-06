@@ -24,8 +24,18 @@ class PrepareHomomorphicEncryptionContextCommandHandler(
         @InjectEntity(idProperty = "secureAggregationSessionId") state: SecureAggregationSessionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == SecureAggregationSessionStateEnum.ParticipantsSelected) {
-            "PrepareHomomorphicEncryptionContext requires SecureAggregationSession to be ParticipantsSelected."
+        if (state.currentState != SecureAggregationSessionStateEnum.ParticipantsSelected) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.secureaggregation.prepareHomomorphicEncryptionContext.requiresState",
+                args = mapOf(
+                    "command" to "PrepareHomomorphicEncryptionContext",
+                    "aggregate" to "SecureAggregationSession",
+                    "expectedState" to "ParticipantsSelected",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "PrepareHomomorphicEncryptionContext requires SecureAggregationSession to be ParticipantsSelected."
+            )
         }
         val input = PrepareHomomorphicEncryptionContextInput(secureAggregationSessionId = command.secureAggregationSessionId, trainingJobId = command.trainingJobId, federationId = command.federationId, federationName = command.federationName, trainingRunConfigurationId = command.trainingRunConfigurationId, configurationName = command.configurationName, trainingJobObjective = command.trainingJobObjective, featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, featureSchemaVersion = command.featureSchemaVersion, roundId = command.roundId, roundNumber = command.roundNumber, selectedOrganizationIds = command.selectedOrganizationIds, selectedRuntimeIds = command.selectedRuntimeIds, selectedOrganizationCount = command.selectedOrganizationCount, selectedRuntimeCount = command.selectedRuntimeCount, minimumNodesPerRound = command.minimumNodesPerRound, maxRounds = command.maxRounds, minimumAccuracy = command.minimumAccuracy, secureAggregationRequired = command.secureAggregationRequired)
         val portResult = prepareHomomorphicEncryptionContextService.execute(input)

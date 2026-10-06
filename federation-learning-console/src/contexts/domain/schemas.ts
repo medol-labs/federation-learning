@@ -7,9 +7,6 @@ const dateTimeLocalSchema = z.preprocess((value) => {
 }, z.string().datetime({ local: true }));
 
 export const OrganizationTypeSchema = z.enum(["HOSPITAL", "RESEARCH_INSTITUTE", "PUBLIC_HEALTH_AGENCY", "LABORATORY", "REHABILITATION_CENTER"]);
-export const DictionaryCodeSchema = z.string();
-export const DictionaryValueCodeSchema = z.string();
-export const DisplayOrderSchema = z.coerce.number().int().min(0).max(999999);
 export const FeatureDefinitionSchema = z.object({
   featureName: z.string(),
   dataType: z.string(),
@@ -38,6 +35,10 @@ export const TrainingRoundParticipantSchema = z.object({
   runtimeId: z.string().uuid(),
   datasetId: z.string().uuid()
 });
+export const DictionaryCodeSchema = z.string();
+export const DictionaryValueCodeSchema = z.string();
+export const LocaleCodeSchema = z.string();
+export const DisplayOrderSchema = z.coerce.number().int().min(0).max(999999);
 
 export const RegisterOrganizationCommandSchema = z.object({
   organizationName: z.string(),
@@ -157,55 +158,6 @@ export const RemoveParticipantCommandSchema = z.object({
   removalReason: z.string(),
 });
 export type RemoveParticipantCommandInput = z.infer<typeof RemoveParticipantCommandSchema>;
-
-export const RegisterDictionaryCommandSchema = z.object({
-  dictionaryCode: DictionaryCodeSchema,
-  dictionaryName: z.string(),
-  description: z.string().optional().nullable(),
-});
-export type RegisterDictionaryCommandInput = z.infer<typeof RegisterDictionaryCommandSchema>;
-
-export const UpdateDictionaryCommandSchema = z.object({
-  dictionaryId: z.string().uuid(),
-  dictionaryName: z.string(),
-  description: z.string().optional().nullable(),
-  dictionaryCode: DictionaryCodeSchema,
-});
-export type UpdateDictionaryCommandInput = z.infer<typeof UpdateDictionaryCommandSchema>;
-
-export const ArchiveDictionaryCommandSchema = z.object({
-  dictionaryId: z.string().uuid(),
-  archiveReason: z.string(),
-  dictionaryCode: DictionaryCodeSchema,
-});
-export type ArchiveDictionaryCommandInput = z.infer<typeof ArchiveDictionaryCommandSchema>;
-
-export const AddDictionaryValueCommandSchema = z.object({
-  dictionaryId: z.string().uuid(),
-  dictionaryCode: DictionaryCodeSchema,
-  valueCode: DictionaryValueCodeSchema,
-  displayName: z.string(),
-  displayOrder: DisplayOrderSchema.optional().nullable(),
-  description: z.string().optional().nullable(),
-  active: z.boolean(),
-});
-export type AddDictionaryValueCommandInput = z.infer<typeof AddDictionaryValueCommandSchema>;
-
-export const DisableDictionaryValueCommandSchema = z.object({
-  dictionaryValueId: z.string().uuid(),
-  disabledReason: z.string(),
-  dictionaryCode: DictionaryCodeSchema,
-  valueCode: DictionaryValueCodeSchema,
-});
-export type DisableDictionaryValueCommandInput = z.infer<typeof DisableDictionaryValueCommandSchema>;
-
-export const EnableDictionaryValueCommandSchema = z.object({
-  dictionaryValueId: z.string().uuid(),
-  enableReason: z.string(),
-  dictionaryCode: DictionaryCodeSchema,
-  valueCode: DictionaryValueCodeSchema,
-});
-export type EnableDictionaryValueCommandInput = z.infer<typeof EnableDictionaryValueCommandSchema>;
 
 export const UploadFileCommandSchema = z.object({
   uploadedFile: z.string(),
@@ -677,6 +629,77 @@ export const FailSecureAggregationSessionCommandSchema = z.object({
   failureReason: z.string(),
 });
 export type FailSecureAggregationSessionCommandInput = z.infer<typeof FailSecureAggregationSessionCommandSchema>;
+
+export const RegisterDictionaryCommandSchema = z.object({
+  dictionaryCode: DictionaryCodeSchema,
+  dictionaryName: z.string(),
+  description: z.string().optional().nullable(),
+});
+export type RegisterDictionaryCommandInput = z.infer<typeof RegisterDictionaryCommandSchema>;
+
+export const UpdateDictionaryCommandSchema = z.object({
+  dictionaryId: z.string().uuid(),
+  dictionaryName: z.string(),
+  description: z.string().optional().nullable(),
+  dictionaryCode: DictionaryCodeSchema,
+});
+export type UpdateDictionaryCommandInput = z.infer<typeof UpdateDictionaryCommandSchema>;
+
+export const ArchiveDictionaryCommandSchema = z.object({
+  dictionaryId: z.string().uuid(),
+  archiveReason: z.string(),
+  dictionaryCode: DictionaryCodeSchema,
+});
+export type ArchiveDictionaryCommandInput = z.infer<typeof ArchiveDictionaryCommandSchema>;
+
+export const AddDictionaryValueCommandSchema = z.object({
+  dictionaryId: z.string().uuid(),
+  dictionaryCode: DictionaryCodeSchema,
+  valueCode: DictionaryValueCodeSchema,
+  defaultDisplayName: z.string(),
+  displayOrder: DisplayOrderSchema.optional().nullable(),
+  description: z.string().optional().nullable(),
+  active: z.boolean(),
+});
+export type AddDictionaryValueCommandInput = z.infer<typeof AddDictionaryValueCommandSchema>;
+
+export const DisableDictionaryValueCommandSchema = z.object({
+  dictionaryValueId: z.string().uuid(),
+  disabledReason: z.string(),
+  dictionaryCode: DictionaryCodeSchema,
+  valueCode: DictionaryValueCodeSchema,
+});
+export type DisableDictionaryValueCommandInput = z.infer<typeof DisableDictionaryValueCommandSchema>;
+
+export const EnableDictionaryValueCommandSchema = z.object({
+  dictionaryValueId: z.string().uuid(),
+  enableReason: z.string(),
+  dictionaryCode: DictionaryCodeSchema,
+  valueCode: DictionaryValueCodeSchema,
+});
+export type EnableDictionaryValueCommandInput = z.infer<typeof EnableDictionaryValueCommandSchema>;
+
+export const SetDictionaryValueTranslationCommandSchema = z.object({
+  dictionaryValueTranslationId: z.string().uuid(),
+  dictionaryValueId: z.string().uuid(),
+  dictionaryCode: DictionaryCodeSchema,
+  valueCode: DictionaryValueCodeSchema,
+  locale: LocaleCodeSchema,
+  displayName: z.string(),
+  description: z.string().optional().nullable(),
+});
+export type SetDictionaryValueTranslationCommandInput = z.infer<typeof SetDictionaryValueTranslationCommandSchema>;
+
+export const UpdateDictionaryValueTranslationCommandSchema = z.object({
+  dictionaryValueTranslationId: z.string().uuid(),
+  dictionaryValueId: z.string().uuid(),
+  dictionaryCode: DictionaryCodeSchema,
+  valueCode: DictionaryValueCodeSchema,
+  locale: LocaleCodeSchema,
+  displayName: z.string(),
+  description: z.string().optional().nullable(),
+});
+export type UpdateDictionaryValueTranslationCommandInput = z.infer<typeof UpdateDictionaryValueTranslationCommandSchema>;
 
 export const RegisterUserAccountCommandSchema = z.object({
   username: z.string(),

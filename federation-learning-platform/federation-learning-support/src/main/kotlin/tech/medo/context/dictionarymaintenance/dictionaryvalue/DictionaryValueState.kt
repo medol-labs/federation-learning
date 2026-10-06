@@ -34,7 +34,7 @@ class DictionaryValueState @EntityCreator constructor() {
     var dictionaryId: UUID? = null
     var dictionaryCode: DictionaryCode? = null
     var valueCode: DictionaryValueCode? = null
-    var displayName: String? = null
+    var defaultDisplayName: String? = null
     var displayOrder: DisplayOrder? = null
     var description: String? = null
     var active: Boolean? = null
@@ -48,7 +48,7 @@ class DictionaryValueState @EntityCreator constructor() {
         dictionaryId = event.dictionaryId
         dictionaryCode = event.dictionaryCode
         valueCode = event.valueCode
-        displayName = event.displayName
+        defaultDisplayName = event.defaultDisplayName
         displayOrder = event.displayOrder
         description = event.description
         active = event.active

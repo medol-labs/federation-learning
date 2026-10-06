@@ -24,8 +24,18 @@ class DeployRuntimeAgentCommandHandler(
         @InjectEntity(idProperty = "runtimeInfrastructureId") state: RuntimeInfrastructureState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RuntimeInfrastructureStateEnum.Verified) {
-            "DeployRuntimeAgent requires RuntimeInfrastructure to be Verified."
+        if (state.currentState != RuntimeInfrastructureStateEnum.Verified) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeprovisioning.deployRuntimeAgent.requiresState",
+                args = mapOf(
+                    "command" to "DeployRuntimeAgent",
+                    "aggregate" to "RuntimeInfrastructure",
+                    "expectedState" to "Verified",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "DeployRuntimeAgent requires RuntimeInfrastructure to be Verified."
+            )
         }
         val input = DeployRuntimeAgentInput(runtimeAgentId = command.runtimeAgentId, runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, agentInstallMode = command.agentInstallMode, expectedNodeCount = command.expectedNodeCount)
         val portResult = deployRuntimeAgentService.execute(input)

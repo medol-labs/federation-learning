@@ -24,8 +24,18 @@ class RetryRoundExecutionAfterRuntimeFailureCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
-        require(state.currentState == RoundExecutionStateEnum.Failed) {
-            "RetryRoundExecutionAfterRuntimeFailure requires RoundExecution to be Failed."
+        if (state.currentState != RoundExecutionStateEnum.Failed) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeagentoperations.retryRoundExecutionAfterRuntimeFailure.requiresState",
+                args = mapOf(
+                    "command" to "RetryRoundExecutionAfterRuntimeFailure",
+                    "aggregate" to "RoundExecution",
+                    "expectedState" to "Failed",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "RetryRoundExecutionAfterRuntimeFailure requires RoundExecution to be Failed."
+            )
         }
         val input = RetryRoundExecutionAfterRuntimeFailureInput(roundExecutionId = command.roundExecutionId, executionSessionId = command.executionSessionId, executionPlanId = command.executionPlanId, trainingJobId = command.trainingJobId, trainingRunConfigurationId = command.trainingRunConfigurationId, roundId = command.roundId, roundNumber = command.roundNumber, runtimeId = command.runtimeId, organizationId = command.organizationId, featureSchemaId = command.featureSchemaId, baseModelId = command.baseModelId, runtimeEngineJobId = command.runtimeEngineJobId, retryReason = command.retryReason)
         val portResult = retryRoundExecutionAfterRuntimeFailureService.execute(input)

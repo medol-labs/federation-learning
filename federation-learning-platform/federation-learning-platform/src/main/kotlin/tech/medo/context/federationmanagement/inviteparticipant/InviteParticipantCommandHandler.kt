@@ -25,12 +25,32 @@ class InviteParticipantCommandHandler(
         eventAppender: EventAppender
     ) {
         val federationOverviewReadModelSelection = federationOverviewReadModelRepository.findById(command.federationId)
-        require(federationOverviewReadModelSelection != null && federationOverviewReadModelSelection.state == FederationStateEnum.Active) {
-            "Federation Overview selection is not eligible."
+        if (!(federationOverviewReadModelSelection != null && federationOverviewReadModelSelection.state == FederationStateEnum.Active)) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "SELECTION_NOT_ELIGIBLE",
+                i18nKey = "errors.federationmanagement.inviteParticipant.federationOverview.notEligible",
+                args = mapOf(
+                    "command" to "Invite Participant",
+                    "projection" to "Federation Overview",
+                    "field" to "federationId",
+                    "profile" to null
+                ),
+                message = "Federation Overview selection is not eligible."
+            )
         }
         val organizationDirectoryReadModelSelection = organizationDirectoryReadModelRepository.findById(command.organizationId)
-        require(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active) {
-            "Organization Directory selection is not eligible."
+        if (!(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active)) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "SELECTION_NOT_ELIGIBLE",
+                i18nKey = "errors.federationmanagement.inviteParticipant.organizationDirectory.notEligible",
+                args = mapOf(
+                    "command" to "Invite Participant",
+                    "projection" to "Organization Directory",
+                    "field" to "organizationId",
+                    "profile" to null
+                ),
+                message = "Organization Directory selection is not eligible."
+            )
         }
         eventAppender.append(decision.decide(command))
     }

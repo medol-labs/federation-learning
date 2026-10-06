@@ -12,8 +12,18 @@ import tech.medo.dictionarymaintenance.domain.states.DictionaryValueStateEnum
 
 interface DisableDictionaryValueDecision {
     fun decide(command: DisableDictionaryValueCommand, state: DictionaryValueState): List<Any> {
-        require(state.currentState == DictionaryValueStateEnum.Active) {
-            "DisableDictionaryValue requires DictionaryValue to be Active."
+        if (state.currentState != DictionaryValueStateEnum.Active) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.dictionarymaintenance.disableDictionaryValue.requiresState",
+                args = mapOf(
+                    "command" to "DisableDictionaryValue",
+                    "aggregate" to "DictionaryValue",
+                    "expectedState" to "Active",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "DisableDictionaryValue requires DictionaryValue to be Active."
+            )
         }
         return listOf(
             DictionaryValueDisabledEvent(dictionaryValueId = command.dictionaryValueId, disabledReason = command.disabledReason, dictionaryCode = command.dictionaryCode, valueCode = command.valueCode)

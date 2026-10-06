@@ -105,8 +105,9 @@ export const ModelCatalogPromoteModelToProduction = () => {
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.MODEL_RELEASE_CHANNEL."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);
@@ -138,8 +139,9 @@ export const ModelCatalogPromoteModelToProduction = () => {
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.MODEL_PRODUCTION_STAGE."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);

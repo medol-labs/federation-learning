@@ -17,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 
 type ModelArtifactCatalogRecord = {
@@ -56,8 +57,27 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
+};
+
 export const ModelArtifactCatalogList = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<ModelArtifactCatalogRecord>();
     return [
@@ -157,7 +177,7 @@ export const ModelArtifactCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "MODEL_PLUGIN"),
       }),
       columnHelper.accessor("modelVersion", {
         id: "modelVersion",
@@ -235,7 +255,7 @@ export const ModelArtifactCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "MODEL_ARTIFACT_SOURCE_TYPE"),
       }),
       columnHelper.accessor("modelArtifactUri", {
         id: "modelArtifactUri",
@@ -313,7 +333,7 @@ export const ModelArtifactCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "MODEL_FORMAT"),
       }),
       columnHelper.accessor("modelArtifactDigest", {
         id: "modelArtifactDigest",
@@ -485,7 +505,7 @@ export const ModelArtifactCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Registered", value: "Registered" },
+            { label: t("resources.model_artifact_catalog.fields.state.options.Registered", "Registered"), value: "Registered" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -500,7 +520,9 @@ export const ModelArtifactCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, [
+            { label: t("resources.model_artifact_catalog.fields.state.options.Registered", "Registered"), value: "Registered" },
+          ]),
       }),
       columnHelper.accessor("registeredAt", {
         id: "registeredAt",
@@ -573,7 +595,7 @@ export const ModelArtifactCatalogList = () => {
         size: 32,
       }),
     ];
-  }, [t]);
+  }, [dictionaryLabel, t]);
 
   const table = useTable({
     columns,

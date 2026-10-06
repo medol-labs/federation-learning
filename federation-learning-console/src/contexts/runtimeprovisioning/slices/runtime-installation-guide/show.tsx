@@ -10,17 +10,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { Separator } from "@/components/ui/separator";
 import { renderFieldOverride } from "@/platform/composition";
 
-const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
   if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
   if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
-  return String(value);
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
 };
 
 export const RuntimeInstallationGuideShow = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const { result: record } = useShow({
     dataProviderName: "federation-learning-platform",
     meta: {
@@ -44,52 +58,62 @@ export const RuntimeInstallationGuideShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInstallationPlanId.label", "Runtime Installation Plan Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInstallationPlanId", { value: record?.runtimeInstallationPlanId, record, resource: "runtime-installation-guide", field: "runtimeInstallationPlanId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInstallationPlanId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInstallationPlanId", { value: record?.runtimeInstallationPlanId, record, resource: "runtime-installation-guide", field: "runtimeInstallationPlanId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInstallationPlanId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.organizationId.label", "Organization Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:organizationId", { value: record?.organizationId, record, resource: "runtime-installation-guide", field: "organizationId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.organizationId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:organizationId", { value: record?.organizationId, record, resource: "runtime-installation-guide", field: "organizationId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.organizationId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInfrastructureId", { value: record?.runtimeInfrastructureId, record, resource: "runtime-installation-guide", field: "runtimeInfrastructureId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructureId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInfrastructureId", { value: record?.runtimeInfrastructureId, record, resource: "runtime-installation-guide", field: "runtimeInfrastructureId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructureId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeAgentId.label", "Runtime Agent Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeAgentId", { value: record?.runtimeAgentId, record, resource: "runtime-installation-guide", field: "runtimeAgentId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeAgentId", { value: record?.runtimeAgentId, record, resource: "runtime-installation-guide", field: "runtimeAgentId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.label", "Runtime Infrastructure State")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInfrastructureState", { value: record?.runtimeInfrastructureState, record, resource: "runtime-installation-guide", field: "runtimeInfrastructureState", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructureState, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInfrastructureState", { value: record?.runtimeInfrastructureState, record, resource: "runtime-installation-guide", field: "runtimeInfrastructureState", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructureState, t, dictionaryLabel, [
+                { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Planned", "Planned"), value: "Planned" },
+                { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Registered", "Registered"), value: "Registered" },
+                { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Prepared", "Prepared"), value: "Prepared" },
+                { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Verified", "Verified"), value: "Verified" },
+                { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.VerificationFailed", "Verification Failed"), value: "VerificationFailed" },
+                { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.AgentReady", "Agent Ready"), value: "AgentReady" },
+                { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.RuntimeAgentFailed", "Runtime Agent Failed"), value: "RuntimeAgentFailed" },
+                { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Offline", "Offline"), value: "Offline" },
+                { label: t("resources.runtime_installation_guide.fields.runtimeInfrastructureState.options.Connected", "Connected"), value: "Connected" },
+              ])}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInfrastructurePackageId.label", "Runtime Infrastructure Package Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInfrastructurePackageId", { value: record?.runtimeInfrastructurePackageId, record, resource: "runtime-installation-guide", field: "runtimeInfrastructurePackageId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructurePackageId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInfrastructurePackageId", { value: record?.runtimeInfrastructurePackageId, record, resource: "runtime-installation-guide", field: "runtimeInfrastructurePackageId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructurePackageId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInfrastructurePackageName.label", "Runtime Infrastructure Package Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInfrastructurePackageName", { value: record?.runtimeInfrastructurePackageName, record, resource: "runtime-installation-guide", field: "runtimeInfrastructurePackageName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructurePackageName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInfrastructurePackageName", { value: record?.runtimeInfrastructurePackageName, record, resource: "runtime-installation-guide", field: "runtimeInfrastructurePackageName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructurePackageName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeInfrastructurePackageVersion.label", "Runtime Infrastructure Package Version")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInfrastructurePackageVersion", { value: record?.runtimeInfrastructurePackageVersion, record, resource: "runtime-installation-guide", field: "runtimeInfrastructurePackageVersion", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructurePackageVersion, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeInfrastructurePackageVersion", { value: record?.runtimeInfrastructurePackageVersion, record, resource: "runtime-installation-guide", field: "runtimeInfrastructurePackageVersion", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructurePackageVersion, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.organizationName.label", "Organization Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:organizationName", { value: record?.organizationName, record, resource: "runtime-installation-guide", field: "organizationName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.organizationName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:organizationName", { value: record?.organizationName, record, resource: "runtime-installation-guide", field: "organizationName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.organizationName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeName.label", "Runtime Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeName", { value: record?.runtimeName, record, resource: "runtime-installation-guide", field: "runtimeName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeName", { value: record?.runtimeName, record, resource: "runtime-installation-guide", field: "runtimeName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
@@ -124,17 +148,17 @@ export const RuntimeInstallationGuideShow = () => {
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.runtimeEnvironmentType.label", "Runtime Environment Type")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeEnvironmentType", { value: record?.runtimeEnvironmentType, record, resource: "runtime-installation-guide", field: "runtimeEnvironmentType", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEnvironmentType, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:runtimeEnvironmentType", { value: record?.runtimeEnvironmentType, record, resource: "runtime-installation-guide", field: "runtimeEnvironmentType", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeEnvironmentType, t, dictionaryLabel, undefined, "RUNTIME_ENVIRONMENT_TYPE")}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.agentInstallMode.label", "Agent Install Mode")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:agentInstallMode", { value: record?.agentInstallMode, record, resource: "runtime-installation-guide", field: "agentInstallMode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.agentInstallMode, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:agentInstallMode", { value: record?.agentInstallMode, record, resource: "runtime-installation-guide", field: "agentInstallMode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.agentInstallMode, t, dictionaryLabel, undefined, "RUNTIME_AGENT_INSTALL_MODE")}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.runtime_installation_guide.fields.expectedNodeCount.label", "Expected Node Count")}</h4>
-              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:expectedNodeCount", { value: record?.expectedNodeCount, record, resource: "runtime-installation-guide", field: "expectedNodeCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.expectedNodeCount, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:runtime-installation-guide:display:expectedNodeCount", { value: record?.expectedNodeCount, record, resource: "runtime-installation-guide", field: "expectedNodeCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.expectedNodeCount, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
           </CardContent>

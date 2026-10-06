@@ -169,8 +169,9 @@ export const RuntimeAgentEndpointCatalogRecordRuntimeConnectionEstablished = () 
                   withFormControl
                   resource="dictionary_value_catalog"
                   dataProviderName="federation-learning-support"
-                  optionLabel="displayName"
+                  optionLabel="defaultDisplayName"
                   optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.RUNTIME_AGENT_ENDPOINT_SCOPE."
                   value={field.value || ""}
                   onValueChange={(value) => {
                     field.onChange(value);

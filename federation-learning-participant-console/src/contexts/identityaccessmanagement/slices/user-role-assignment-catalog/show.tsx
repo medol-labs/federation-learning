@@ -9,17 +9,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { Separator } from "@/components/ui/separator";
 import { renderFieldOverride } from "@/platform/composition";
 
-const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
   if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
   if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
-  return String(value);
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
 };
 
 export const UserRoleAssignmentCatalogShow = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const { result: record } = useShow({
     dataProviderName: "federation-learning-runtime-agent",
     meta: {
@@ -43,22 +57,22 @@ export const UserRoleAssignmentCatalogShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_role_assignment_catalog.fields.userAccountId.label", "User Account Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:user-role-assignment-catalog:display:userAccountId", { value: record?.userAccountId, record, resource: "user-role-assignment-catalog", field: "userAccountId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.userAccountId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:user-role-assignment-catalog:display:userAccountId", { value: record?.userAccountId, record, resource: "user-role-assignment-catalog", field: "userAccountId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.userAccountId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_role_assignment_catalog.fields.username.label", "Username")}</h4>
-              {renderFieldOverride(frontendComposition, "field:user-role-assignment-catalog:display:username", { value: record?.username, record, resource: "user-role-assignment-catalog", field: "username", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.username, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:user-role-assignment-catalog:display:username", { value: record?.username, record, resource: "user-role-assignment-catalog", field: "username", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.username, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_role_assignment_catalog.fields.roleCode.label", "Role Code")}</h4>
-              {renderFieldOverride(frontendComposition, "field:user-role-assignment-catalog:display:roleCode", { value: record?.roleCode, record, resource: "user-role-assignment-catalog", field: "roleCode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleCode, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:user-role-assignment-catalog:display:roleCode", { value: record?.roleCode, record, resource: "user-role-assignment-catalog", field: "roleCode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleCode, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_role_assignment_catalog.fields.roleName.label", "Role Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:user-role-assignment-catalog:display:roleName", { value: record?.roleName, record, resource: "user-role-assignment-catalog", field: "roleName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:user-role-assignment-catalog:display:roleName", { value: record?.roleName, record, resource: "user-role-assignment-catalog", field: "roleName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.roleName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
           </CardContent>

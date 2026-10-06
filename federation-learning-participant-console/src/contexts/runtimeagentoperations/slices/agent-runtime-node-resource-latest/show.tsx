@@ -9,17 +9,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { Separator } from "@/components/ui/separator";
 import { renderFieldOverride } from "@/platform/composition";
 
-const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
   if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
   if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
-  return String(value);
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
 };
 
 export const AgentRuntimeNodeResourceLatestShow = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const { result: record } = useShow({
     dataProviderName: "federation-learning-runtime-agent",
     meta: {
@@ -43,92 +57,92 @@ export const AgentRuntimeNodeResourceLatestShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.nodeId.label", "Node Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:nodeId", { value: record?.nodeId, record, resource: "agent-runtime-node-resource-latest", field: "nodeId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.nodeId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:nodeId", { value: record?.nodeId, record, resource: "agent-runtime-node-resource-latest", field: "nodeId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.nodeId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.runtimeAgentId.label", "Runtime Agent Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:runtimeAgentId", { value: record?.runtimeAgentId, record, resource: "agent-runtime-node-resource-latest", field: "runtimeAgentId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:runtimeAgentId", { value: record?.runtimeAgentId, record, resource: "agent-runtime-node-resource-latest", field: "runtimeAgentId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeAgentId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.runtimeInfrastructureId.label", "Runtime Infrastructure Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:runtimeInfrastructureId", { value: record?.runtimeInfrastructureId, record, resource: "agent-runtime-node-resource-latest", field: "runtimeInfrastructureId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructureId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:runtimeInfrastructureId", { value: record?.runtimeInfrastructureId, record, resource: "agent-runtime-node-resource-latest", field: "runtimeInfrastructureId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeInfrastructureId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.runtimeNodeName.label", "Runtime Node Name")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:runtimeNodeName", { value: record?.runtimeNodeName, record, resource: "agent-runtime-node-resource-latest", field: "runtimeNodeName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeNodeName, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:runtimeNodeName", { value: record?.runtimeNodeName, record, resource: "agent-runtime-node-resource-latest", field: "runtimeNodeName", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runtimeNodeName, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.nodeReady.label", "Node Ready")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:nodeReady", { value: record?.nodeReady, record, resource: "agent-runtime-node-resource-latest", field: "nodeReady", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.nodeReady, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:nodeReady", { value: record?.nodeReady, record, resource: "agent-runtime-node-resource-latest", field: "nodeReady", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.nodeReady, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.allocatableCpuCores.label", "Allocatable Cpu Cores")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatableCpuCores", { value: record?.allocatableCpuCores, record, resource: "agent-runtime-node-resource-latest", field: "allocatableCpuCores", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatableCpuCores, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatableCpuCores", { value: record?.allocatableCpuCores, record, resource: "agent-runtime-node-resource-latest", field: "allocatableCpuCores", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatableCpuCores, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.allocatableMemoryGb.label", "Allocatable Memory Gb")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatableMemoryGb", { value: record?.allocatableMemoryGb, record, resource: "agent-runtime-node-resource-latest", field: "allocatableMemoryGb", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatableMemoryGb, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatableMemoryGb", { value: record?.allocatableMemoryGb, record, resource: "agent-runtime-node-resource-latest", field: "allocatableMemoryGb", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatableMemoryGb, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.allocatableGpuCount.label", "Allocatable Gpu Count")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatableGpuCount", { value: record?.allocatableGpuCount, record, resource: "agent-runtime-node-resource-latest", field: "allocatableGpuCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatableGpuCount, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatableGpuCount", { value: record?.allocatableGpuCount, record, resource: "agent-runtime-node-resource-latest", field: "allocatableGpuCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatableGpuCount, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.allocatedCpuCores.label", "Allocated Cpu Cores")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatedCpuCores", { value: record?.allocatedCpuCores, record, resource: "agent-runtime-node-resource-latest", field: "allocatedCpuCores", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatedCpuCores, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatedCpuCores", { value: record?.allocatedCpuCores, record, resource: "agent-runtime-node-resource-latest", field: "allocatedCpuCores", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatedCpuCores, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.allocatedMemoryGb.label", "Allocated Memory Gb")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatedMemoryGb", { value: record?.allocatedMemoryGb, record, resource: "agent-runtime-node-resource-latest", field: "allocatedMemoryGb", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatedMemoryGb, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatedMemoryGb", { value: record?.allocatedMemoryGb, record, resource: "agent-runtime-node-resource-latest", field: "allocatedMemoryGb", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatedMemoryGb, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.allocatedGpuCount.label", "Allocated Gpu Count")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatedGpuCount", { value: record?.allocatedGpuCount, record, resource: "agent-runtime-node-resource-latest", field: "allocatedGpuCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatedGpuCount, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:allocatedGpuCount", { value: record?.allocatedGpuCount, record, resource: "agent-runtime-node-resource-latest", field: "allocatedGpuCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.allocatedGpuCount, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.availableCpuCores.label", "Available Cpu Cores")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:availableCpuCores", { value: record?.availableCpuCores, record, resource: "agent-runtime-node-resource-latest", field: "availableCpuCores", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.availableCpuCores, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:availableCpuCores", { value: record?.availableCpuCores, record, resource: "agent-runtime-node-resource-latest", field: "availableCpuCores", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.availableCpuCores, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.availableMemoryGb.label", "Available Memory Gb")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:availableMemoryGb", { value: record?.availableMemoryGb, record, resource: "agent-runtime-node-resource-latest", field: "availableMemoryGb", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.availableMemoryGb, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:availableMemoryGb", { value: record?.availableMemoryGb, record, resource: "agent-runtime-node-resource-latest", field: "availableMemoryGb", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.availableMemoryGb, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.availableGpuCount.label", "Available Gpu Count")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:availableGpuCount", { value: record?.availableGpuCount, record, resource: "agent-runtime-node-resource-latest", field: "availableGpuCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.availableGpuCount, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:availableGpuCount", { value: record?.availableGpuCount, record, resource: "agent-runtime-node-resource-latest", field: "availableGpuCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.availableGpuCount, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.runningWorkloadCount.label", "Running Workload Count")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:runningWorkloadCount", { value: record?.runningWorkloadCount, record, resource: "agent-runtime-node-resource-latest", field: "runningWorkloadCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runningWorkloadCount, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:runningWorkloadCount", { value: record?.runningWorkloadCount, record, resource: "agent-runtime-node-resource-latest", field: "runningWorkloadCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.runningWorkloadCount, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.workloadCapacity.label", "Workload Capacity")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:workloadCapacity", { value: record?.workloadCapacity, record, resource: "agent-runtime-node-resource-latest", field: "workloadCapacity", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.workloadCapacity, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:workloadCapacity", { value: record?.workloadCapacity, record, resource: "agent-runtime-node-resource-latest", field: "workloadCapacity", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.workloadCapacity, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.observedAt.label", "Observed At")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:observedAt", { value: record?.observedAt, record, resource: "agent-runtime-node-resource-latest", field: "observedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.observedAt, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:observedAt", { value: record?.observedAt, record, resource: "agent-runtime-node-resource-latest", field: "observedAt", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.observedAt, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.agent_runtime_node_resource_latest.fields.telemetryRetentionPolicy.label", "Telemetry Retention Policy")}</h4>
-              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:telemetryRetentionPolicy", { value: record?.telemetryRetentionPolicy, record, resource: "agent-runtime-node-resource-latest", field: "telemetryRetentionPolicy", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.telemetryRetentionPolicy, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:agent-runtime-node-resource-latest:display:telemetryRetentionPolicy", { value: record?.telemetryRetentionPolicy, record, resource: "agent-runtime-node-resource-latest", field: "telemetryRetentionPolicy", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.telemetryRetentionPolicy, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
           </CardContent>

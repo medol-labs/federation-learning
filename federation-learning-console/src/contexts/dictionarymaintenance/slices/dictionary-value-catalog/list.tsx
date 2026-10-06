@@ -17,6 +17,7 @@ import {
   ListViewHeader
 } from "@/components/refine-ui/views/list-view";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { renderFieldOverride, renderSlotExtensions } from "@/platform/composition";
 import { CopyableText } from "@/components/refine-ui/fields/copyable-text";
 import type { DictionaryCode, DictionaryValueCode, DisplayOrder } from "@/contexts/domain/value-types";
@@ -26,7 +27,7 @@ type DictionaryValueCatalogRecord = {
   dictionaryId: string;
   dictionaryCode: DictionaryCode;
   valueCode: DictionaryValueCode;
-  displayName: string;
+  defaultDisplayName: string;
   displayOrder?: DisplayOrder;
   description?: string;
   active: boolean;
@@ -55,8 +56,27 @@ const isCommandVisible = (
   return allowedStates.map(normalizeWorkflowState).includes(currentState);
 };
 
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
+  if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
+  if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
+};
+
 export const DictionaryValueCatalogList = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const columns = React.useMemo(() => {
     const columnHelper = createColumnHelper<DictionaryValueCatalogRecord>();
     return [
@@ -184,27 +204,27 @@ export const DictionaryValueCatalogList = () => {
             },
           ) ?? String(getValue() ?? "-"),
       }),
-      columnHelper.accessor("displayName", {
-        id: "displayName",
+      columnHelper.accessor("defaultDisplayName", {
+        id: "defaultDisplayName",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.displayName.label", "Display Name")} />
+          <DataTableColumnHeader column={column} label={t("resources.dictionary_value_catalog.fields.defaultDisplayName.label", "Default Display Name")} />
         ),
         enableSorting: true,
         enableColumnFilter: true,
         meta: {
-          label: t("resources.dictionary_value_catalog.fields.displayName.label", "Display Name"),
-          placeholder: "Enter Display Name",
+          label: t("resources.dictionary_value_catalog.fields.defaultDisplayName.label", "Default Display Name"),
+          placeholder: "Enter Default Display Name",
           variant: "text",
         },
         cell: ({ getValue, row }) =>
           renderFieldOverride<DictionaryValueCatalogRecord>(
             frontendComposition,
-            "field:dictionary-value-catalog:display:displayName",
+            "field:dictionary-value-catalog:display:defaultDisplayName",
             {
               value: getValue(),
               record: row.original,
               resource: "dictionary-value-catalog",
-              field: "displayName",
+              field: "defaultDisplayName",
               view: "display",
               compact: true,
             },
@@ -289,7 +309,7 @@ export const DictionaryValueCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? getValue() ? "Yes" : "No",
+          ) ?? formatValue(getValue(), t, dictionaryLabel),
       }),
       columnHelper.accessor("state", {
         id: "state",
@@ -304,8 +324,8 @@ export const DictionaryValueCatalogList = () => {
           variant: "multiSelect",
           filterOperator: "inArray",
           options: [
-            { label: "Active", value: "Active" },
-            { label: "Disabled", value: "Disabled" },
+            { label: t("resources.dictionary_value_catalog.fields.state.options.Active", "Active"), value: "Active" },
+            { label: t("resources.dictionary_value_catalog.fields.state.options.Disabled", "Disabled"), value: "Disabled" },
           ],
         },
         cell: ({ getValue, row }) =>
@@ -320,7 +340,10 @@ export const DictionaryValueCatalogList = () => {
               view: "display",
               compact: true,
             },
-          ) ?? String(getValue() ?? "-"),
+          ) ?? formatValue(getValue(), t, dictionaryLabel, [
+            { label: t("resources.dictionary_value_catalog.fields.state.options.Active", "Active"), value: "Active" },
+            { label: t("resources.dictionary_value_catalog.fields.state.options.Disabled", "Disabled"), value: "Disabled" },
+          ]),
       }),
       columnHelper.accessor("addedAt", {
         id: "addedAt",
@@ -468,6 +491,9 @@ export const DictionaryValueCatalogList = () => {
                 "rowActions.before",
                 { resource: "dictionary-value-catalog", record: row.original },
               )}
+                {isCommandVisible(row.original, "", "", []) && (
+                  <EditButton variant="ghost" recordItemId={row.original.dictionaryValueId} size="sm" />
+                )}
                 {isCommandVisible(row.original, "", "state", ["Active"]) && (
                   <CommandButton
                     variant="ghost"
@@ -493,6 +519,20 @@ export const DictionaryValueCatalogList = () => {
                     }}
                   />
                 )}
+                {isCommandVisible(row.original, "", "", []) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="setDictionaryValueTranslation"
+                    recordItemId={row.original.dictionaryValueId}
+                    size="sm"
+                    query={{
+                      dictionaryValueId: row.original.dictionaryValueId,
+                      dictionaryCode: row.original.dictionaryCode,
+                      valueCode: row.original.valueCode,
+                      description: row.original.description,
+                    }}
+                  />
+                )}
               <ShowButton variant="ghost" recordItemId={row.original.dictionaryValueId} size="sm" />
               {renderSlotExtensions<DictionaryValueCatalogRecord>(
                 frontendComposition,
@@ -507,7 +547,7 @@ export const DictionaryValueCatalogList = () => {
         size: 32,
       }),
     ];
-  }, [t]);
+  }, [dictionaryLabel, t]);
 
   const table = useTable({
     columns,
@@ -522,7 +562,7 @@ export const DictionaryValueCatalogList = () => {
         tableName: "dictionary_value_catalog_read_model_entity",
         idField: "dictionaryValueId",
         idFields: ["dictionaryValueId"],
-        queryFields: ["dictionaryValueId","dictionaryId","dictionaryCode","valueCode","displayName","displayOrder","description","active","state","addedAt","updatedAt","disabledAt","disabledReason","enabledAt"],
+        queryFields: ["dictionaryValueId","dictionaryId","dictionaryCode","valueCode","defaultDisplayName","displayOrder","description","active","state","addedAt","updatedAt","disabledAt","disabledReason","enabledAt"],
         label: t("resources.dictionary_value_catalog.label", "Dictionary Value Catalog"),
         aggregateRoute: "dictionaryvalue",
         queryRoute: "dictionaryvaluecatalog",

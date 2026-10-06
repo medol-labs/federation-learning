@@ -12,8 +12,18 @@ import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 
 interface ReleaseRuntimeEngineJobAfterRuntimeRetryFailureDecision {
     fun decide(command: ReleaseRuntimeEngineJobAfterRuntimeRetryFailureCommand, state: RoundExecutionState, portResult: ReleaseRuntimeEngineJobAfterRuntimeRetryFailureResult): List<Any> {
-        require(state.currentState == RoundExecutionStateEnum.Failed) {
-            "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure requires RoundExecution to be Failed."
+        if (state.currentState != RoundExecutionStateEnum.Failed) {
+            throw tech.medo.shared.domain.CommandRejectedException(
+                code = "COMMAND_REQUIRES_STATE",
+                i18nKey = "errors.runtimeagentoperations.releaseRuntimeEngineJobAfterRuntimeRetryFailure.requiresState",
+                args = mapOf(
+                    "command" to "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure",
+                    "aggregate" to "RoundExecution",
+                    "expectedState" to "Failed",
+                    "actualState" to state.currentState.toString()
+                ),
+                message = "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure requires RoundExecution to be Failed."
+            )
         }
         return when (portResult) {
                     is ReleaseRuntimeEngineJobAfterRuntimeRetryFailureResult.Succeeded -> listOf(

@@ -12,4 +12,10 @@ object Concepts {
         val slices = listOf("AddDictionaryValue", "DisableDictionaryValue", "EnableDictionaryValue", "DictionaryValueCatalog")
         val states = listOf("Active", "Disabled")
     }
+
+    data object DictionaryValueTranslation {
+        const val NAME = "DictionaryValueTranslation"
+        val slices = listOf("SetDictionaryValueTranslation", "UpdateDictionaryValueTranslation", "DictionaryValueTranslationCatalog")
+        val states = listOf("Active")
+    }
 }

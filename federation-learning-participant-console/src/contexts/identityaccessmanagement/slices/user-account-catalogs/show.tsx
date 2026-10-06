@@ -9,17 +9,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useDictionaryTranslation } from "@/lib/dictionary-i18n";
 import { Separator } from "@/components/ui/separator";
 import { renderFieldOverride } from "@/platform/composition";
 
-const formatValue = (value: unknown, t: ReturnType<typeof useTranslate>) => {
+const formatValue = (
+  value: unknown,
+  t: ReturnType<typeof useTranslate>,
+  dictionaryLabel: ReturnType<typeof useDictionaryTranslation>["dictionaryLabel"],
+  options?: Array<{ label: string; value: string }>,
+  dictionaryCode?: string,
+): string => {
   if (value === null || value === undefined || value === "") return "-";
+  if (Array.isArray(value)) {
+    const formatted: string[] = value.map((item) => formatValue(item, t, dictionaryLabel, options, dictionaryCode)).filter((item) => item !== "-");
+    return formatted.length > 0 ? formatted.join(", ") : "-";
+  }
   if (typeof value === "boolean") return value ? t("values.boolean.true", "True") : t("values.boolean.false", "False");
-  return String(value);
+  const stringValue = String(value);
+  if (dictionaryCode) return dictionaryLabel(dictionaryCode, stringValue, t(`dictionaries.${dictionaryCode}.${stringValue}`, stringValue));
+  return options?.find((option) => option.value === stringValue)?.label ?? stringValue;
 };
 
 export const UserAccountCatalogShow = () => {
   const t = useTranslate();
+  const { dictionaryLabel } = useDictionaryTranslation();
   const { result: record } = useShow({
     dataProviderName: "federation-learning-runtime-agent",
     meta: {
@@ -43,32 +57,32 @@ export const UserAccountCatalogShow = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_account_catalog.fields.userAccountId.label", "User Account Id")}</h4>
-              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:userAccountId", { value: record?.userAccountId, record, resource: "user-account-catalog", field: "userAccountId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.userAccountId, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:userAccountId", { value: record?.userAccountId, record, resource: "user-account-catalog", field: "userAccountId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.userAccountId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_account_catalog.fields.username.label", "Username")}</h4>
-              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:username", { value: record?.username, record, resource: "user-account-catalog", field: "username", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.username, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:username", { value: record?.username, record, resource: "user-account-catalog", field: "username", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.username, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_account_catalog.fields.providerSubject.label", "Provider Subject")}</h4>
-              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:providerSubject", { value: record?.providerSubject, record, resource: "user-account-catalog", field: "providerSubject", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.providerSubject, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:providerSubject", { value: record?.providerSubject, record, resource: "user-account-catalog", field: "providerSubject", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.providerSubject, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_account_catalog.fields.userSource.label", "User Source")}</h4>
-              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:userSource", { value: record?.userSource, record, resource: "user-account-catalog", field: "userSource", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.userSource, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:userSource", { value: record?.userSource, record, resource: "user-account-catalog", field: "userSource", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.userSource, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_account_catalog.fields.passwordHash.label", "Password Hash")}</h4>
-              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:passwordHash", { value: record?.passwordHash, record, resource: "user-account-catalog", field: "passwordHash", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.passwordHash, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:passwordHash", { value: record?.passwordHash, record, resource: "user-account-catalog", field: "passwordHash", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.passwordHash, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.user_account_catalog.fields.active.label", "Active")}</h4>
-              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:active", { value: record?.active, record, resource: "user-account-catalog", field: "active", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.active, t)}</p>}
+              {renderFieldOverride(frontendComposition, "field:user-account-catalog:display:active", { value: record?.active, record, resource: "user-account-catalog", field: "active", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.active, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
           </CardContent>
