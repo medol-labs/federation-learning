@@ -7,7 +7,6 @@ import React from "react";
 import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
-import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { RefineDataTable } from "@/components/refine-ui/data-table/refine-data-table";
 import { RowActionMenu } from "@/components/refine-ui/row-action-menu";
@@ -317,7 +316,21 @@ export const DictionaryValueTranslationCatalogList = () => {
                 { resource: "dictionary-value-translation-catalog", record: row.original },
               )}
                 {isCommandVisible(row.original, "", "", []) && (
-                  <EditButton variant="ghost" recordItemId={row.original.dictionaryValueTranslationId} size="sm" />
+                  <CommandButton
+                    variant="ghost"
+                    command="updateDictionaryValueTranslation"
+                    recordItemId={row.original.dictionaryValueTranslationId}
+                    size="sm"
+                    query={{
+                      dictionaryValueTranslationId: row.original.dictionaryValueTranslationId,
+                      dictionaryValueId: row.original.dictionaryValueId,
+                      dictionaryCode: row.original.dictionaryCode,
+                      valueCode: row.original.valueCode,
+                      locale: row.original.locale,
+                      displayName: row.original.displayName,
+                      description: row.original.description,
+                    }}
+                  />
                 )}
               <ShowButton variant="ghost" recordItemId={row.original.dictionaryValueTranslationId} size="sm" />
               {renderSlotExtensions<DictionaryValueTranslationCatalogRecord>(

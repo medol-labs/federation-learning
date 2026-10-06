@@ -244,24 +244,24 @@ export const contextRoutes = (
     <Route path="/dictionary-catalog">
       <Route index element={resolvePageOverride("dictionary-catalog", "list", <DictionaryCatalogList />)} />
       <Route path="command/register-dictionary" element={resolvePageOverride("dictionary-catalog", "registerDictionary", <DictionaryCatalogRegisterDictionary />)} />
-      <Route path="edit/:id" element={resolvePageOverride("dictionary-catalog", "edit", <DictionaryCatalogUpdateDictionary />)} />
       <Route path="show/:id" element={resolvePageOverride("dictionary-catalog", "show", <DictionaryCatalogShow />)} />
+      <Route path=":id/command/update-dictionary" element={resolvePageOverride("dictionary-catalog", "updateDictionary", <DictionaryCatalogUpdateDictionary />)} />
       <Route path=":id/command/archive-dictionary" element={resolvePageOverride("dictionary-catalog", "archiveDictionary", <DictionaryCatalogArchiveDictionary />)} />
       <Route path=":id/command/add-dictionary-value" element={resolvePageOverride("dictionary-catalog", "addDictionaryValue", <DictionaryCatalogAddDictionaryValue />)} />
     </Route>
     <Route path="/dictionary-value-catalog">
       <Route index element={resolvePageOverride("dictionary-value-catalog", "list", <DictionaryValueCatalogList />)} />
       <Route path="command/add-dictionary-value" element={resolvePageOverride("dictionary-value-catalog", "addDictionaryValue", <DictionaryValueCatalogAddDictionaryValue />)} />
-      <Route path="edit/:id" element={resolvePageOverride("dictionary-value-catalog", "edit", <DictionaryValueCatalogUpdateDictionaryValueTranslation />)} />
       <Route path="show/:id" element={resolvePageOverride("dictionary-value-catalog", "show", <DictionaryValueCatalogShow />)} />
+      <Route path=":id/command/update-dictionary-value-translation" element={resolvePageOverride("dictionary-value-catalog", "updateDictionaryValueTranslation", <DictionaryValueCatalogUpdateDictionaryValueTranslation />)} />
       <Route path=":id/command/disable-dictionary-value" element={resolvePageOverride("dictionary-value-catalog", "disableDictionaryValue", <DictionaryValueCatalogDisableDictionaryValue />)} />
       <Route path=":id/command/enable-dictionary-value" element={resolvePageOverride("dictionary-value-catalog", "enableDictionaryValue", <DictionaryValueCatalogEnableDictionaryValue />)} />
       <Route path=":id/command/set-dictionary-value-translation" element={resolvePageOverride("dictionary-value-catalog", "setDictionaryValueTranslation", <DictionaryValueCatalogSetDictionaryValueTranslation />)} />
     </Route>
     <Route path="/dictionary-value-translation-catalog">
       <Route index element={resolvePageOverride("dictionary-value-translation-catalog", "list", <DictionaryValueTranslationCatalogList />)} />
-      <Route path="edit/:id" element={resolvePageOverride("dictionary-value-translation-catalog", "edit", <DictionaryValueTranslationCatalogUpdateDictionaryValueTranslation />)} />
       <Route path="show/:id" element={resolvePageOverride("dictionary-value-translation-catalog", "show", <DictionaryValueTranslationCatalogShow />)} />
+      <Route path=":id/command/update-dictionary-value-translation" element={resolvePageOverride("dictionary-value-translation-catalog", "updateDictionaryValueTranslation", <DictionaryValueTranslationCatalogUpdateDictionaryValueTranslation />)} />
     </Route>
     <Route path="/feature-schema-catalog">
       <Route index element={resolvePageOverride("feature-schema-catalog", "list", <FeatureSchemaCatalogList />)} />
@@ -441,8 +441,8 @@ export const contextRoutes = (
     <Route path="/training-run-configuration-catalog">
       <Route index element={resolvePageOverride("training-run-configuration-catalog", "list", <TrainingRunConfigurationCatalogList />)} />
       <Route path="command/define-training-run-configuration" element={resolvePageOverride("training-run-configuration-catalog", "defineTrainingRunConfiguration", <TrainingRunConfigurationCatalogDefineTrainingRunConfiguration />)} />
-      <Route path="edit/:id" element={resolvePageOverride("training-run-configuration-catalog", "edit", <TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration />)} />
       <Route path="show/:id" element={resolvePageOverride("training-run-configuration-catalog", "show", <TrainingRunConfigurationCatalogShow />)} />
+      <Route path=":id/command/update-training-run-configuration" element={resolvePageOverride("training-run-configuration-catalog", "updateTrainingRunConfiguration", <TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration />)} />
       <Route path=":id/command/create-training-job" element={resolvePageOverride("training-run-configuration-catalog", "createTrainingJob", <TrainingRunConfigurationCatalogCreateTrainingJob />)} />
     </Route>
     <Route path="/uploaded-file-catalog">

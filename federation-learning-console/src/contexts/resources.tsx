@@ -188,7 +188,6 @@ export const resources: IResourceItem[] = [
     name: "dictionary_catalog",
     list: "/dictionary-catalog",
     create: "/dictionary-catalog/command/register-dictionary",
-    edit: "/dictionary-catalog/edit/:id",
     show: "/dictionary-catalog/show/:id",
     meta: {
       parent: "dictionarymaintenance",
@@ -219,7 +218,6 @@ export const resources: IResourceItem[] = [
     name: "dictionary_value_catalog",
     list: "/dictionary-value-catalog",
     create: "/dictionary-value-catalog/command/add-dictionary-value",
-    edit: "/dictionary-value-catalog/edit/:id",
     show: "/dictionary-value-catalog/show/:id",
     meta: {
       parent: "dictionarymaintenance",
@@ -251,7 +249,6 @@ export const resources: IResourceItem[] = [
   {
     name: "dictionary_value_translation_catalog",
     list: "/dictionary-value-translation-catalog",
-    edit: "/dictionary-value-translation-catalog/edit/:id",
     show: "/dictionary-value-translation-catalog/show/:id",
     meta: {
       parent: "dictionarymaintenance",
@@ -1047,7 +1044,6 @@ export const resources: IResourceItem[] = [
     name: "training_run_configuration_catalog",
     list: "/training-run-configuration-catalog",
     create: "/training-run-configuration-catalog/command/define-training-run-configuration",
-    edit: "/training-run-configuration-catalog/edit/:id",
     show: "/training-run-configuration-catalog/show/:id",
     meta: {
       parent: "trainingorchestration",

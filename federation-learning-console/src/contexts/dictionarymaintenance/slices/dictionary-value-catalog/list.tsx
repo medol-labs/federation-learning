@@ -7,7 +7,6 @@ import React from "react";
 import { frontendComposition } from "@/app/composition/composition.resolved";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CommandButton } from "@/components/refine-ui/buttons/command";
-import { EditButton } from "@/components/refine-ui/buttons/edit";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { RefineDataTable } from "@/components/refine-ui/data-table/refine-data-table";
 import { RowActionMenu } from "@/components/refine-ui/row-action-menu";
@@ -492,7 +491,18 @@ export const DictionaryValueCatalogList = () => {
                 { resource: "dictionary-value-catalog", record: row.original },
               )}
                 {isCommandVisible(row.original, "", "", []) && (
-                  <EditButton variant="ghost" recordItemId={row.original.dictionaryValueId} size="sm" />
+                  <CommandButton
+                    variant="ghost"
+                    command="updateDictionaryValueTranslation"
+                    recordItemId={row.original.dictionaryValueId}
+                    size="sm"
+                    query={{
+                      dictionaryValueId: row.original.dictionaryValueId,
+                      dictionaryCode: row.original.dictionaryCode,
+                      valueCode: row.original.valueCode,
+                      description: row.original.description,
+                    }}
+                  />
                 )}
                 {isCommandVisible(row.original, "", "state", ["Active"]) && (
                   <CommandButton
