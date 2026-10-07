@@ -11,11 +11,9 @@ import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
-
 import java.util.UUID
 import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
 import java.math.BigDecimal
-
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModel
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelCriteria
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelProjection

@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID
-import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum
+import java.util.UUID;
+import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum;
 
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModel
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModelCriteria

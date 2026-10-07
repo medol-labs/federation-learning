@@ -842,7 +842,8 @@ export const DatasetCapabilityList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:dataset-capability:list", "toolbar.after", { resource: "dataset-capability", table })}
       </RefineDataTable>
     </ListView>

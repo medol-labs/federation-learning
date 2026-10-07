@@ -610,7 +610,8 @@ export const AgentDatasetAccessValidationCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:agent-dataset-access-validation-catalog:list", "toolbar.after", { resource: "agent-dataset-access-validation-catalog", table })}
       </RefineDataTable>
     </ListView>

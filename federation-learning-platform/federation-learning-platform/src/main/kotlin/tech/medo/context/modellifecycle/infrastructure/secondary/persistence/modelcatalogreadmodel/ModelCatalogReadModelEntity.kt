@@ -11,7 +11,6 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID
 import java.math.BigDecimal
 import tech.medo.modellifecycle.domain.states.ModelStateEnum
-
 import java.time.LocalDateTime
 
 @Entity

@@ -11,10 +11,10 @@ import tech.medo.dataexchange.events.DataExportProcessingStartedEvent
 import tech.medo.dataexchange.events.DataExportCompletedEvent
 import tech.medo.dataexchange.events.DataExportFailedEvent
 
-import java.util.UUID
-import java.time.LocalDateTime
-import org.springframework.format.annotation.DateTimeFormat
-import com.fasterxml.jackson.annotation.JsonFormat
+import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @EventSourced(idType = UUID::class, tagKey = DataExportJobTags.DATA_EXPORT_JOB_ID)

@@ -6,7 +6,6 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID
 import java.math.BigDecimal
 import tech.medo.modellifecycle.domain.states.ModelStateEnum
-
 import java.time.LocalDateTime
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.Filter
@@ -111,11 +110,11 @@ data class ModelCatalogReadModel(
     val hyperparameterSnapshotId: UUID?,
     val reproducibilityManifestId: UUID?,
     val modelCardId: UUID?,
-    val projectionUpdatedAt: LocalDateTime?,
-    val userId: String?,
-    val sessionId: String?,
-    val correlationId: String?,
-    val causationId: String?,
-    val traceId: String?,
-    val tenantId: String?
+    val projectionUpdatedAt: LocalDateTime? = null,
+    val userId: String? = null,
+    val sessionId: String? = null,
+    val correlationId: String? = null,
+    val causationId: String? = null,
+    val traceId: String? = null,
+    val tenantId: String? = null
 )

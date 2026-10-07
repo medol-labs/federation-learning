@@ -27,7 +27,6 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.UUID
 
-
 @CrossOrigin
 @RestController
 @RequestMapping("/noderuntimehealth/runtimetelemetrylatest")
@@ -85,7 +84,7 @@ class RuntimeTelemetryLatestReadModelResource(
         val firstPage = findPage(snapshotCriteria, exportPageable)
         return dataExportService.export("runtimetelemetrylatest", columns, snapshotCriteria, pageable.sort, firstPage, fetchPage = { nextPage ->
             findPage(snapshotCriteria, nextPage)
-        }, snapshotUpperBound = snapshotUpperBound.toInstant(ZoneOffset.UTC))
+        }, requestedLocale = request?.requestedLocale, snapshotUpperBound = snapshotUpperBound.toInstant(ZoneOffset.UTC))
     }
 
 
@@ -154,7 +153,7 @@ class RuntimeTelemetryLatestReadModelDataExportExecutor(
         val columns = dataExportService.columnsFromJson(task.columnsJson, exportColumns)
         val sort = dataExportService.sortFromJson(task.sortJson)
         val firstPage = repository.findAllByCriteria(criteria, PageRequest.of(0, dataExportService.pageSize(), sort))
-        return dataExportService.writeCsvFile(task.fileName, columns, firstPage) { nextPage ->
+        return dataExportService.writeCsvFile(task.fileName, columns, firstPage, requestedLocale = task.requestedLocale) { nextPage ->
             repository.findAllByCriteria(criteria, nextPage)
         }
     }

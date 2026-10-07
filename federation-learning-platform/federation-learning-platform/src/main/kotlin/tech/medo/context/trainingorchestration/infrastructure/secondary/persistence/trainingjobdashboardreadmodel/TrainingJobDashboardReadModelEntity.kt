@@ -11,7 +11,6 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID
 import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
 import java.math.BigDecimal
-
 import java.time.LocalDateTime
 
 @Entity

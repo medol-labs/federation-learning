@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID
-import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum
+import java.util.UUID;
+import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum;
 
 import tech.medo.organizationmanagement.userorganizationmembershipdirectory.UserOrganizationMembershipDirectoryReadModel
 import tech.medo.organizationmanagement.userorganizationmembershipdirectory.UserOrganizationMembershipDirectoryReadModelCriteria

@@ -287,6 +287,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_run_configuration_catalog.fields.initialModelPlugin.label", "Initial Model Plugin"),
+          dictionaryCode: "MODEL_PLUGIN",
           placeholder: "Enter Initial Model Plugin",
           variant: "text",
         },
@@ -599,6 +600,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_run_configuration_catalog.fields.runtimeEnginePluginProfile.label", "Runtime Engine Plugin Profile"),
+          dictionaryCode: "RUNTIME_ENGINE_PLUGIN_PROFILE",
           placeholder: "Enter Runtime Engine Plugin Profile",
           variant: "text",
         },
@@ -677,6 +679,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_run_configuration_catalog.fields.strategyName.label", "Strategy Name"),
+          dictionaryCode: "TRAINING_STRATEGY",
           placeholder: "Enter Strategy Name",
           variant: "text",
         },
@@ -703,6 +706,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_run_configuration_catalog.fields.aggregationAlgorithm.label", "Aggregation Algorithm"),
+          dictionaryCode: "AGGREGATION_ALGORITHM",
           placeholder: "Enter Aggregation Algorithm",
           variant: "text",
         },
@@ -918,6 +922,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_run_configuration_catalog.fields.optimizer.label", "Optimizer"),
+          dictionaryCode: "TRAINING_OPTIMIZER",
           placeholder: "Enter Optimizer",
           variant: "text",
         },
@@ -944,6 +949,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_run_configuration_catalog.fields.lossFunction.label", "Loss Function"),
+          dictionaryCode: "TRAINING_LOSS_FUNCTION",
           placeholder: "Enter Loss Function",
           variant: "text",
         },
@@ -1263,7 +1269,8 @@ export const TrainingRunConfigurationCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:training-run-configuration-catalog:list", "toolbar.after", { resource: "training-run-configuration-catalog", table })}
       </RefineDataTable>
     </ListView>

@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-import java.util.UUID
-import java.math.BigDecimal
-import java.time.LocalDateTime
-import org.springframework.format.annotation.DateTimeFormat
-import com.fasterxml.jackson.annotation.JsonFormat
+import java.util.UUID;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModel
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModelCriteria

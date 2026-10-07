@@ -6,7 +6,6 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID
 import tech.medo.organizationmanagement.domain.types.OrganizationType
 import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
-
 import java.time.LocalDateTime
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
@@ -71,11 +70,11 @@ data class OrganizationDirectoryReadModel(
     val organizationType: OrganizationType?,
     val state: OrganizationStateEnum?,
     val approvedDatasetCount: Int?,
-    val projectionUpdatedAt: LocalDateTime?,
-    val userId: String?,
-    val sessionId: String?,
-    val correlationId: String?,
-    val causationId: String?,
-    val traceId: String?,
-    val tenantId: String?
+    val projectionUpdatedAt: LocalDateTime? = null,
+    val userId: String? = null,
+    val sessionId: String? = null,
+    val correlationId: String? = null,
+    val causationId: String? = null,
+    val traceId: String? = null,
+    val tenantId: String? = null
 )

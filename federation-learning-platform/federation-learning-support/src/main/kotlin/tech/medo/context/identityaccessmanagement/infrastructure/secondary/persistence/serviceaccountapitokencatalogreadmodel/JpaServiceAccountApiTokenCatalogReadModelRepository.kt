@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-import java.util.UUID
+import java.util.UUID;
 
 import tech.medo.identityaccessmanagement.serviceaccountapitokencatalogs.ServiceAccountApiTokenCatalogReadModel
 import tech.medo.identityaccessmanagement.serviceaccountapitokencatalogs.ServiceAccountApiTokenCatalogReadModelCriteria

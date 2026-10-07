@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID
-import tech.medo.federationmanagement.domain.states.FederationStateEnum
+import java.util.UUID;
+import tech.medo.federationmanagement.domain.states.FederationStateEnum;
 
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModel
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModelCriteria

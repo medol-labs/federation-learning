@@ -647,7 +647,8 @@ export const AgentRuntimeNodeResourceLatestList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-node-resource-latest:list", "toolbar.after", { resource: "agent-runtime-node-resource-latest", table })}
       </RefineDataTable>
     </ListView>

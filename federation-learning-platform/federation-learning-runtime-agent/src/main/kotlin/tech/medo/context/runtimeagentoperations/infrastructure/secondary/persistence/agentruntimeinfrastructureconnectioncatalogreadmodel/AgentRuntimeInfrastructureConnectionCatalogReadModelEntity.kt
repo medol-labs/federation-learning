@@ -13,7 +13,6 @@ import java.time.LocalDateTime
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
 
-
 @Entity
 @Table(name = "agent_runtime_infrastructure_connection_catalog")
 class AgentRuntimeInfrastructureConnectionCatalogReadModelEntity : MetadataProjection {

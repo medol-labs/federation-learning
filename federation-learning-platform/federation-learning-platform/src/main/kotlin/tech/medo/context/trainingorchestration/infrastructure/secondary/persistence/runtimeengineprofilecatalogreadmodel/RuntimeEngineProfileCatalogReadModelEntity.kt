@@ -14,7 +14,6 @@ import java.time.LocalDateTime
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
 
-
 @Entity
 @Table(name = "runtime_engine_profile_catalog")
 class RuntimeEngineProfileCatalogReadModelEntity : MetadataProjection {

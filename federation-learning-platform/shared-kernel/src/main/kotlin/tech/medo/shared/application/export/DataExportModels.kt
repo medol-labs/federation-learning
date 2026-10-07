@@ -5,11 +5,13 @@ import java.util.UUID
 
 data class DataExportColumn(
     val field: String,
-    val label: String? = null
+    val label: String? = null,
+    val dictionaryCode: String? = null
 )
 
 data class DataExportRequest(
-    val columns: List<DataExportColumn>? = null
+    val columns: List<DataExportColumn>? = null,
+    val requestedLocale: String? = null
 )
 
 data class DataExportSortOrder(

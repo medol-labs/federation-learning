@@ -485,6 +485,12 @@ export const TrainingAlertCatalogList = () => {
         field: sort.id,
         order: sort.desc ? "desc" : "asc",
       }));
+      const selectedIds = Object.entries(tableState.rowSelection)
+        .filter(([, selected]) => selected)
+        .map(([id]) => id);
+      const exportFilters: CrudFilter[] = selectedIds.length > 0
+        ? [...filters, { field: "alertId", operator: "in", value: selectedIds } as CrudFilter]
+        : filters;
       const columns: DataExportColumn[] = table.reactTable
         .getAllLeafColumns()
         .filter((column) => column.getIsVisible())
@@ -492,12 +498,15 @@ export const TrainingAlertCatalogList = () => {
         .map((column) => ({
           field: column.id,
           label: String(column.columnDef.meta?.label ?? column.id),
+          dictionaryCode: typeof column.columnDef.meta?.dictionaryCode === "string"
+            ? column.columnDef.meta.dictionaryCode
+            : undefined,
         }));
       const result = await requestDataExport({
         aggregateRoute: "trainingalert",
         queryRoute: "trainingalertcatalog",
         dataProviderName: "federation-learning-platform",
-        filters,
+        filters: exportFilters,
         sorters,
         columns,
       });
@@ -524,10 +533,6 @@ export const TrainingAlertCatalogList = () => {
     <ListView>
       <ListViewHeader canCreate={false}>
         {renderSlotExtensions(frontendComposition, "toolbar:training-alert-catalog:list", "toolbar.before", { resource: "training-alert-catalog", table })}
-        <Button type="button" variant="outline" onClick={handleExport} disabled={isExporting}>
-          <Download className="size-4" />
-          {isExporting ? t("dataExport.exporting", "Exporting") : t("dataExport.export", "Export")}
-        </Button>
         {renderSlotExtensions(frontendComposition, "toolbar:training-alert-catalog:list", "toolbar.actions", { resource: "training-alert-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
@@ -537,7 +542,16 @@ export const TrainingAlertCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+          <Button type="button" variant="outline" size="sm" onClick={handleExport} disabled={isExporting}>
+            <Download className="size-4" />
+            {isExporting
+              ? t("dataExport.exporting", "Exporting")
+              : Object.values(table.reactTable.getState().rowSelection).some(Boolean)
+                ? t("dataExport.exportSelected", "Export selected")
+                : t("dataExport.export", "Export")}
+          </Button>
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:training-alert-catalog:list", "toolbar.after", { resource: "training-alert-catalog", table })}
       </RefineDataTable>
     </ListView>

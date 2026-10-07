@@ -57,6 +57,7 @@ class ReadModelDownloadModelArtifactAdapterTest {
         trainingJobObjective = null,
         state = ModelArtifactStateEnum.Registered,
         registeredAt = null,
+        projectionUpdatedAt = null,
         userId = null,
         sessionId = null,
         correlationId = null,

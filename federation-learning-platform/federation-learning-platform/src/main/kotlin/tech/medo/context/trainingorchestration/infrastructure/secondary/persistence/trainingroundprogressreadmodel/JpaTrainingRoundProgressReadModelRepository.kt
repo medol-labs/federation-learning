@@ -6,13 +6,13 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-import java.util.UUID
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
-import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
-import java.time.LocalDateTime
-import org.springframework.format.annotation.DateTimeFormat
-import com.fasterxml.jackson.annotation.JsonFormat
-import java.math.BigDecimal
+import java.util.UUID;
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant;
+import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.math.BigDecimal;
 
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModel
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelCriteria

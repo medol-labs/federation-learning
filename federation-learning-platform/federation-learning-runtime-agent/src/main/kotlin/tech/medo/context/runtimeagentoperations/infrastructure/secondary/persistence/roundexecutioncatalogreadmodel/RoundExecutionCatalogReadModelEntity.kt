@@ -15,7 +15,6 @@ import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.math.BigDecimal
 
-
 @Entity
 @Table(name = "round_execution_catalog")
 class RoundExecutionCatalogReadModelEntity : MetadataProjection {

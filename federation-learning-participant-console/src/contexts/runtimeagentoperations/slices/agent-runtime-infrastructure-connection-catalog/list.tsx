@@ -452,7 +452,8 @@ export const AgentRuntimeInfrastructureConnectionCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-infrastructure-connection-catalog:list", "toolbar.after", { resource: "agent-runtime-infrastructure-connection-catalog", table })}
       </RefineDataTable>
     </ListView>

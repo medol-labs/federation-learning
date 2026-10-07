@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.nio.file.Files
 import java.nio.file.Path
 
-@RestController
+@RestController("dataExportJobDownloadResource")
 @RequestMapping("/data-export/jobs")
 class DataExportJobResource(
     private val dataExportService: DataExportService

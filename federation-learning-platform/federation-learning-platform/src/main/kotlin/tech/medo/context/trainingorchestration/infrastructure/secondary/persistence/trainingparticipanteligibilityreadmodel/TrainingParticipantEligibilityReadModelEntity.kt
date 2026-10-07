@@ -10,7 +10,6 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID
 import java.math.BigDecimal
-
 import java.time.LocalDateTime
 
 @Entity

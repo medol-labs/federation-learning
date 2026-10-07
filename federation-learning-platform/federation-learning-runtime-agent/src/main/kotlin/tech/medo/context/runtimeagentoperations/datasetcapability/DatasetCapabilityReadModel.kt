@@ -10,7 +10,6 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.IntegerFilter
@@ -145,11 +144,11 @@ data class DatasetCapabilityReadModel(
     val approvalStatus: String?,
     val approved: Boolean?,
     val lastProfiledAt: LocalDateTime?,
-    val projectionUpdatedAt: LocalDateTime?,
-    val userId: String?,
-    val sessionId: String?,
-    val correlationId: String?,
-    val causationId: String?,
-    val traceId: String?,
-    val tenantId: String?
+    val projectionUpdatedAt: LocalDateTime? = null,
+    val userId: String? = null,
+    val sessionId: String? = null,
+    val correlationId: String? = null,
+    val causationId: String? = null,
+    val traceId: String? = null,
+    val tenantId: String? = null
 )

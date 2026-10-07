@@ -343,7 +343,8 @@ export const UserOrganizationMembershipDirectoryList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:user-organization-membership-directory:list", "toolbar.after", { resource: "user-organization-membership-directory", table })}
       </RefineDataTable>
     </ListView>

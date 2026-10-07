@@ -301,6 +301,7 @@ export const RuntimeInstallationPlanCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_installation_plan_catalog.fields.agentInstallMode.label", "Agent Install Mode"),
+          dictionaryCode: "RUNTIME_AGENT_INSTALL_MODE",
           placeholder: "Enter Agent Install Mode",
           variant: "text",
         },
@@ -931,7 +932,8 @@ export const RuntimeInstallationPlanCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-installation-plan-catalog:list", "toolbar.after", { resource: "runtime-installation-plan-catalog", table })}
       </RefineDataTable>
     </ListView>

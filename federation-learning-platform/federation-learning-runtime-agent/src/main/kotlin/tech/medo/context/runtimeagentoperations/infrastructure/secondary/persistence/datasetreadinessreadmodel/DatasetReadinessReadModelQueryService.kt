@@ -11,12 +11,10 @@ import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
-
 import java.util.UUID
 import java.math.BigDecimal
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModel
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModelCriteria
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModelProjection

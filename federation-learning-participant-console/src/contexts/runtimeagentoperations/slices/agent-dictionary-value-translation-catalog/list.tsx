@@ -366,7 +366,8 @@ export const AgentDictionaryValueTranslationCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:agent-dictionary-value-translation-catalog:list", "toolbar.after", { resource: "agent-dictionary-value-translation-catalog", table })}
       </RefineDataTable>
     </ListView>

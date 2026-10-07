@@ -529,6 +529,7 @@ export const RoundExecutionCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.round_execution_catalog.fields.runtimeEnginePluginProfile.label", "Runtime Engine Plugin Profile"),
+          dictionaryCode: "RUNTIME_ENGINE_PLUGIN_PROFILE",
           placeholder: "Enter Runtime Engine Plugin Profile",
           variant: "text",
         },
@@ -1474,7 +1475,8 @@ export const RoundExecutionCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:round-execution-catalog:list", "toolbar.after", { resource: "round-execution-catalog", table })}
       </RefineDataTable>
     </ListView>

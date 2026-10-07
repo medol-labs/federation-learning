@@ -358,6 +358,7 @@ export const ModelCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.model_catalog.fields.releaseChannel.label", "Release Channel"),
+          dictionaryCode: "MODEL_RELEASE_CHANNEL",
           placeholder: "Enter Release Channel",
           variant: "text",
         },
@@ -384,6 +385,7 @@ export const ModelCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.model_catalog.fields.productionStage.label", "Production Stage"),
+          dictionaryCode: "MODEL_PRODUCTION_STAGE",
           placeholder: "Enter Production Stage",
           variant: "text",
         },
@@ -621,7 +623,8 @@ export const ModelCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:model-catalog:list", "toolbar.after", { resource: "model-catalog", table })}
       </RefineDataTable>
     </ListView>

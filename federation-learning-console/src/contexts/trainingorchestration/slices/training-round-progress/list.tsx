@@ -1592,7 +1592,8 @@ export const TrainingRoundProgressList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:training-round-progress:list", "toolbar.after", { resource: "training-round-progress", table })}
       </RefineDataTable>
     </ListView>

@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID
 import tech.medo.federationmanagement.domain.states.FederationStateEnum
-
 import java.time.LocalDateTime
 import tech.jhipster.service.filter.Filter
 import tech.jhipster.service.filter.IntegerFilter
@@ -82,11 +81,11 @@ data class FederationOverviewReadModel(
     val pendingInvitationCount: Int?,
     val activeRuntimeCount: Int?,
     val activeTrainingJobCount: Int?,
-    val projectionUpdatedAt: LocalDateTime?,
-    val userId: String?,
-    val sessionId: String?,
-    val correlationId: String?,
-    val causationId: String?,
-    val traceId: String?,
-    val tenantId: String?
+    val projectionUpdatedAt: LocalDateTime? = null,
+    val userId: String? = null,
+    val sessionId: String? = null,
+    val correlationId: String? = null,
+    val causationId: String? = null,
+    val traceId: String? = null,
+    val tenantId: String? = null
 )

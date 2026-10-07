@@ -11,11 +11,9 @@ import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
-
 import java.util.UUID
 import tech.medo.datasetgovernance.domain.types.FeatureDefinition
 import tech.medo.datasetgovernance.domain.types.LabelDefinition
-
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModel
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelCriteria
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelProjection

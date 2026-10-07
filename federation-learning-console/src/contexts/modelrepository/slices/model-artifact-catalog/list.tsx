@@ -161,6 +161,7 @@ export const ModelArtifactCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.model_artifact_catalog.fields.modelPlugin.label", "Model Plugin"),
+          dictionaryCode: "MODEL_PLUGIN",
           placeholder: "Enter Model Plugin",
           variant: "text",
         },
@@ -239,6 +240,7 @@ export const ModelArtifactCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.model_artifact_catalog.fields.sourceType.label", "Source Type"),
+          dictionaryCode: "MODEL_ARTIFACT_SOURCE_TYPE",
           placeholder: "Enter Source Type",
           variant: "text",
         },
@@ -317,6 +319,7 @@ export const ModelArtifactCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.model_artifact_catalog.fields.modelFormat.label", "Model Format"),
+          dictionaryCode: "MODEL_FORMAT",
           placeholder: "Enter Model Format",
           variant: "text",
         },
@@ -633,7 +636,8 @@ export const ModelArtifactCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:model-artifact-catalog:list", "toolbar.after", { resource: "model-artifact-catalog", table })}
       </RefineDataTable>
     </ListView>

@@ -11,11 +11,9 @@ import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
-
 import java.util.UUID
 import tech.medo.organizationmanagement.domain.types.OrganizationType
 import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
-
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModel
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelCriteria
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelProjection

@@ -94131,7 +94131,8 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "exportable": {}
         }
       ],
       "screens": [],
@@ -94959,7 +94960,8 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "exportable": {}
         }
       ],
       "screens": [],
@@ -95891,6 +95893,7 @@
             }
           ],
           "listElement": true,
+          "exportable": {},
           "capabilityProviders": [
             {
               "capability": "DictionaryMaintenance",
@@ -96765,6 +96768,7 @@
             }
           ],
           "listElement": true,
+          "exportable": {},
           "capabilityProviders": [
             {
               "capability": "DictionaryMaintenance",
@@ -98808,7 +98812,8 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "exportable": {}
         }
       ],
       "screens": [],
@@ -98896,7 +98901,8 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "exportable": {}
         }
       ],
       "screens": [],
@@ -98998,7 +99004,8 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "exportable": {}
         }
       ],
       "screens": [],
@@ -99126,7 +99133,8 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "exportable": {}
         }
       ],
       "screens": [],
@@ -99281,7 +99289,8 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "exportable": {}
         }
       ],
       "screens": [],
@@ -99439,7 +99448,8 @@
               "elementType": "EVENT"
             }
           ],
-          "listElement": true
+          "listElement": true,
+          "exportable": {}
         }
       ],
       "screens": [],
@@ -103386,7 +103396,142 @@
       "Working Directory Writable": "工作目录可写",
       "Working Directory Writable is required": "工作目录可写为必填项",
       "Workload Capacity": "工作负载容量",
-      "Workload Capacity is required": "工作负载容量为必填项"
+      "Workload Capacity is required": "工作负载容量为必填项",
+      "A dictionary value can only have one translation for the same locale.": "同一区域下，一个字典值只能有一个翻译。",
+      "After the runtime agent reports it has started, it performs a local self-check through an adapter. The adapter verifies that bootstrap configuration was loaded, required local stores and working directories are accessible, the runtime-engine adapter can be initialized, and platform/support clients are configured. The RuntimeInstanceSelfCheckPassed event must carry the runtime-agent endpoint from startup configuration so the platform can dispatch future execution plans to this agent.": "在运行时代理报告已启动之后，它通过适配器执行本地自检。该适配器验证引导配置已加载、所需的本地存储和工作目录可访问、运行时引擎适配器可初始化，以及平台/支持客户端已配置。RuntimeInstanceSelfCheckPassed 事件必须携带启动配置中的 runtime-agent 端点，以便平台能够将未来的执行计划分派给该代理。",
+      "Agent Dictionary Value Translation Catalog": "代理字典值翻译目录",
+      "Agent Runtime Node Resource Telemetry Reported": "代理运行时节点资源遥测已报告",
+      "Agent Runtime Telemetry Reported": "代理运行时遥测已报告",
+      "Alert Message": "警报消息",
+      "Alert Message is required": "警报消息为必填项",
+      "Alert Severity": "警报严重程度",
+      "Alert Severity is required": "警报严重程度为必填项",
+      "Columns Json": "列 Json",
+      "Columns Json is required": "列 Json 为必填项",
+      "Complete Data Export": "完成数据导出",
+      "Criteria Json": "条件 Json",
+      "Criteria Json is required": "条件 Json 为必填项",
+      "Data Exchange": "数据交换",
+      "Data Export Completed": "数据导出已完成",
+      "Data Export Failed": "数据导出失败",
+      "Data Export Job": "数据导出作业",
+      "Data Export Job Catalog": "数据导出作业目录",
+      "Data Export Job Id": "数据导出作业 ID",
+      "Data Export Job Id is required": "数据导出作业 ID 为必填项",
+      "Data Export Processing Started": "数据导出处理已开始",
+      "Data Export Requested": "数据导出已请求",
+      "Default Display Name": "默认显示名称",
+      "Default Display Name is required": "默认显示名称为必填项",
+      "Dictionary Administrator": "字典管理员",
+      "Dictionary Value Translation": "字典值翻译",
+      "Dictionary Value Translation Catalog": "字典值翻译目录",
+      "Dictionary Value Translation Id": "字典值翻译 ID",
+      "Dictionary Value Translation Id is required": "字典值翻译 ID 为必填项",
+      "Dictionary Value Translation Locale Unique": "字典值翻译区域唯一",
+      "Dictionary Value Translation Set": "字典值翻译设置",
+      "Dictionary Value Translation Updated": "字典值翻译已更新",
+      "Dictionary maintenance owns dynamic option dictionaries used by platform contexts. Business contexts store valueCode and query DictionaryValueCatalog by dictionaryCode for selection. Localized display text is maintained in DictionaryValueTranslationCatalog by locale.": "字典维护管理平台上下文使用的动态选项字典。业务上下文存储 valueCode，并通过 dictionaryCode 查询 DictionaryValueCatalog 以供选择。本地化显示文本由 DictionaryValueTranslationCatalog 按区域设置维护。",
+      "Dictionary value translation already exists for locale.": "该区域已存在字典值翻译。",
+      "Each training round starts from a runtime snapshot selected by domain policy. Selection first verifies that the federation has joined organizations and that those organizations have dataset metadata for the training configuration's exact feature schema with both schema and label compatibility confirmed. Only then can an active runtime identity with the same organization and runtime identity be paired with that dataset. One deterministic dataset is selected per runtime for a round snapshot. Runtimes that become ready after a round has begun cannot join that round, but they can be selected for a later round when policy allows dynamic round snapshots. If federation membership, compatible dataset evidence, runtime identity matching, or quorum validation fails, the system records a failed participant selection event with a stage-specific reason so the operator can fix readiness and retry selection.": "每个训练轮次从域策略选择的运行时快照开始。选择首先验证联邦是否拥有已加入的组织，且这些组织是否拥有训练配置确切特征架构的数据集元数据，并确认架构兼容性和标签兼容性均通过。仅在此之后，组织相同且运行时身份相同的活跃运行时才能与该数据集配对。每个运行时在轮次快照中选择一个确定性数据集。在轮次开始后才变为就绪的运行时无法加入该轮次，但在策略允许动态轮次快照时，它们可被选入后续轮次。如果联邦成员资格、兼容的数据集证据、运行时身份匹配或法定人数验证失败，系统将记录一个失败的参与者选择事件，并附带阶段特定原因，以便操作员修复就绪状态并重试选择。",
+      "Enter Alert Message": "输入警报消息",
+      "Enter Alert Severity": "输入警报严重程度",
+      "Enter Columns Json": "输入列 Json",
+      "Enter Criteria Json": "输入条件 Json",
+      "Enter Data Export Job Id": "输入数据导出作业 ID",
+      "Enter Default Display Name": "输入默认显示名称",
+      "Enter Dictionary Value Translation Id": "输入字典值翻译 ID",
+      "Enter Error Message": "输入错误消息",
+      "Enter File Name": "输入文件名",
+      "Enter Final Evaluation Report Id": "输入最终评估报告 ID",
+      "Enter Final Model Artifact Digest": "输入最终模型工件摘要",
+      "Enter Last Recovered At": "输入最后恢复时间",
+      "Enter Locale": "输入区域设置",
+      "Enter Offline Detection Pending": "输入离线检测待处理",
+      "Enter Recovery Detection Pending": "输入恢复检测待处理",
+      "Enter Request Hash": "输入请求哈希",
+      "Enter Requested Locale": "输入请求的区域设置",
+      "Enter Resource Name": "输入资源名称",
+      "Enter Resource Pressure Detection Pending": "输入资源压力检测待处理",
+      "Enter Row Count": "输入行数",
+      "Enter Snapshot Upper Bound": "输入快照上限",
+      "Enter Sort Json": "输入排序 Json",
+      "Enter Status": "输入状态",
+      "Error Message": "错误消息",
+      "Error Message is required": "错误消息为必填项",
+      "Execute Data Export": "执行数据导出",
+      "Fail Data Export": "失败数据导出",
+      "File Name": "文件名",
+      "File Name is required": "文件名为必填项",
+      "Final Evaluation Report Id": "最终评估报告 ID",
+      "Final Evaluation Report Id is required": "最终评估报告 ID 为必填项",
+      "Final Model Artifact Digest": "最终模型工件摘要",
+      "Final Model Artifact Digest is required": "最终模型工件摘要为必填项",
+      "Last Recovered At": "最后恢复时间",
+      "Last Recovered At is required": "最后恢复时间为必填项",
+      "Locale": "区域设置",
+      "Locale Code": "区域代码",
+      "Locale is required": "区域设置为必填项",
+      "Mark Data Export Processing": "标记数据导出处理中",
+      "Offline Detection Pending": "离线检测待处理",
+      "Offline Detection Pending is required": "离线检测待处理为必填项",
+      "Platform runtime monitoring keeps the control-plane view small: node inventory, latest telemetry/resource snapshots, health transitions, and actionable training alerts. High-frequency heartbeat and resource samples remain telemetry, not event-sourced domain events.": "平台运行时监控保持控制平面视图精简：节点清单、最新遥测/资源快照、健康状态转换和可操作的训练告警。高频心跳和资源样本仍属于遥测数据，而非事件溯源领域事件。",
+      "Record Runtime Node Resource Telemetry": "记录运行时节点资源遥测",
+      "Record Runtime Telemetry": "记录运行时遥测",
+      "Recorded": "已记录",
+      "Recovery Detection Pending": "恢复检测待处理",
+      "Recovery Detection Pending is required": "恢复检测待处理为必填项",
+      "Reject Duplicate Dictionary Value Translation Locale": "拒绝重复的字典值翻译区域",
+      "Reject Selection Without Compatible Dataset Evidence": "无兼容数据集证据时拒绝选择",
+      "Reject Selection Without Joined Federation Members": "无已加入联邦成员时拒绝选择",
+      "Report Agent Runtime Node Resource Telemetry": "上报代理运行时节点资源遥测",
+      "Report Agent Runtime Telemetry": "上报代理运行时遥测",
+      "Request Data Export": "请求数据导出",
+      "Request Hash": "请求哈希",
+      "Request Hash is required": "请求哈希为必填项",
+      "Requested Locale": "请求的区域设置",
+      "Requested Locale is required": "请求的区域设置为必填项",
+      "Resource Name": "资源名称",
+      "Resource Name is required": "资源名称为必填项",
+      "Resource Pressure Detection Pending": "资源压力检测待处理",
+      "Resource Pressure Detection Pending is required": "资源压力检测待处理为必填项",
+      "Row Count": "行数",
+      "Row Count is required": "行数为必填项",
+      "Runtime Agent Instance Self Check": "运行时代理实例自检",
+      "Runtime Node Resource Telemetry Recorded": "运行时节点资源遥测已记录",
+      "Runtime Telemetry Recorded": "运行时遥测已记录",
+      "Runtime agent startup begins by loading bootstrap configuration from environment variables, mounted files, or platform-issued startup material. The configuration must provide the stable runtimeAgentId generated when RuntimeInfrastructure was registered, the matching runtimeInfrastructureId, the agent version, and the endpoint the platform can use to call this runtime agent. A successful load starts the runtime-agent lifecycle; a missing or invalid configuration records a bootstrap failure and must not create a new random runtimeAgentId.": "运行时代理启动时首先从环境变量、已挂载文件或平台下发的启动材料中加载引导配置。该配置必须提供在 RuntimeInfrastructure 注册时生成的稳定 runtimeAgentId、匹配的 runtimeInfrastructureId、代理版本，以及平台可用于调用此运行时代理的端点。成功加载将启动运行时代理生命周期；若配置缺失或无效，则记录引导失败，并且不得创建新的随机 runtimeAgentId。",
+      "Select Alert Message": "选择警报消息",
+      "Select Alert Severity": "选择警报严重程度",
+      "Select Columns Json": "选择列 Json",
+      "Select Criteria Json": "选择条件 Json",
+      "Select Data Export Job Id": "选择数据导出作业 ID",
+      "Select Default Display Name": "选择默认显示名称",
+      "Select Dictionary Value Translation Id": "选择字典值翻译 ID",
+      "Select Error Message": "选择错误消息",
+      "Select File Name": "选择文件名",
+      "Select Final Evaluation Report Id": "选择最终评估报告 ID",
+      "Select Final Model Artifact Digest": "选择最终模型工件摘要",
+      "Select Last Recovered At": "选择最后恢复时间",
+      "Select Locale": "选择区域设置",
+      "Select Offline Detection Pending": "选择离线检测待处理",
+      "Select Recovery Detection Pending": "选择恢复检测待处理",
+      "Select Request Hash": "选择请求哈希",
+      "Select Requested Locale": "选择请求的区域设置",
+      "Select Resource Name": "选择资源名称",
+      "Select Resource Pressure Detection Pending": "选择资源压力检测待处理",
+      "Select Row Count": "选择行数",
+      "Select Snapshot Upper Bound": "选择快照上限",
+      "Select Sort Json": "选择排序 Json",
+      "Select Status": "选择状态",
+      "Set Dictionary Value Translation": "设置字典值翻译",
+      "Snapshot Upper Bound": "快照上限",
+      "Snapshot Upper Bound is required": "快照上限为必填项",
+      "Sort Json": "排序 Json",
+      "Sort Json is required": "排序 Json 为必填项",
+      "Status": "状态",
+      "Status is required": "状态为必填项",
+      "Update Dictionary Value Translation": "更新字典值翻译",
+      "runtimeAlertMeanTimeToResolve": "runtimeAlertMeanTimeToResolve"
     }
   }
 }

@@ -414,7 +414,8 @@ export const FederationMembershipDirectoryList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:federation-membership-directory:list", "toolbar.after", { resource: "federation-membership-directory", table })}
       </RefineDataTable>
     </ListView>

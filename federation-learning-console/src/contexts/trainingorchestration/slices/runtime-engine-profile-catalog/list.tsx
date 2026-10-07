@@ -155,6 +155,7 @@ export const RuntimeEngineProfileCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_engine_profile_catalog.fields.pluginProfile.label", "Plugin Profile"),
+          dictionaryCode: "RUNTIME_ENGINE_PLUGIN_PROFILE",
           placeholder: "Enter Plugin Profile",
           variant: "text",
         },
@@ -429,7 +430,8 @@ export const RuntimeEngineProfileCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-engine-profile-catalog:list", "toolbar.after", { resource: "runtime-engine-profile-catalog", table })}
       </RefineDataTable>
     </ListView>

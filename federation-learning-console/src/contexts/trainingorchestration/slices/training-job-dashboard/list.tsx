@@ -331,6 +331,7 @@ export const TrainingJobDashboardList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_job_dashboard.fields.strategyName.label", "Strategy Name"),
+          dictionaryCode: "TRAINING_STRATEGY",
           placeholder: "Enter Strategy Name",
           variant: "text",
         },
@@ -357,6 +358,7 @@ export const TrainingJobDashboardList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.training_job_dashboard.fields.aggregationAlgorithm.label", "Aggregation Algorithm"),
+          dictionaryCode: "AGGREGATION_ALGORITHM",
           placeholder: "Enter Aggregation Algorithm",
           variant: "text",
         },
@@ -1055,7 +1057,8 @@ export const TrainingJobDashboardList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:training-job-dashboard:list", "toolbar.after", { resource: "training-job-dashboard", table })}
       </RefineDataTable>
     </ListView>

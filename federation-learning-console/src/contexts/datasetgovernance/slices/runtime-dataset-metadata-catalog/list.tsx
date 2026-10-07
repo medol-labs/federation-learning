@@ -778,7 +778,8 @@ export const RuntimeDatasetMetadataCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-dataset-metadata-catalog:list", "toolbar.after", { resource: "runtime-dataset-metadata-catalog", table })}
       </RefineDataTable>
     </ListView>

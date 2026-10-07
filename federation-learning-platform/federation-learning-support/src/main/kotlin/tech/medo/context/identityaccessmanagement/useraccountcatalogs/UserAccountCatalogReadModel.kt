@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID
-
 import java.time.LocalDateTime
 import tech.jhipster.service.filter.BooleanFilter
 import tech.jhipster.service.filter.RangeFilter
@@ -72,11 +71,11 @@ data class UserAccountCatalogReadModel(
     val userSource: String?,
     val passwordHash: String?,
     val active: Boolean?,
-    val projectionUpdatedAt: LocalDateTime?,
-    val userId: String?,
-    val sessionId: String?,
-    val correlationId: String?,
-    val causationId: String?,
-    val traceId: String?,
-    val tenantId: String?
+    val projectionUpdatedAt: LocalDateTime? = null,
+    val userId: String? = null,
+    val sessionId: String? = null,
+    val correlationId: String? = null,
+    val causationId: String? = null,
+    val traceId: String? = null,
+    val tenantId: String? = null
 )

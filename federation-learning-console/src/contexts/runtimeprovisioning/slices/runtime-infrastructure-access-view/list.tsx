@@ -326,6 +326,7 @@ export const RuntimeInfrastructureAccessViewList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_infrastructure_access_view.fields.runtimeEnvironmentType.label", "Runtime Environment Type"),
+          dictionaryCode: "RUNTIME_ENVIRONMENT_TYPE",
           placeholder: "Enter Runtime Environment Type",
           variant: "text",
         },
@@ -352,6 +353,7 @@ export const RuntimeInfrastructureAccessViewList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_infrastructure_access_view.fields.agentInstallMode.label", "Agent Install Mode"),
+          dictionaryCode: "RUNTIME_AGENT_INSTALL_MODE",
           placeholder: "Enter Agent Install Mode",
           variant: "text",
         },
@@ -901,7 +903,8 @@ export const RuntimeInfrastructureAccessViewList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-infrastructure-access-view:list", "toolbar.after", { resource: "runtime-infrastructure-access-view", table })}
       </RefineDataTable>
     </ListView>

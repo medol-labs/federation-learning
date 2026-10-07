@@ -400,7 +400,8 @@ export const RuntimeIdentityCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-identity-catalog:list", "toolbar.after", { resource: "runtime-identity-catalog", table })}
       </RefineDataTable>
     </ListView>

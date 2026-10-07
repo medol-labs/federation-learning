@@ -420,7 +420,8 @@ export const AgentRuntimeIdentityCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-identity-catalog:list", "toolbar.after", { resource: "agent-runtime-identity-catalog", table })}
       </RefineDataTable>
     </ListView>

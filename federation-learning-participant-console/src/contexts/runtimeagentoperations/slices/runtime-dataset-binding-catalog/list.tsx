@@ -391,6 +391,7 @@ export const RuntimeDatasetBindingCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_dataset_binding_catalog.fields.dataFormat.label", "Data Format"),
+          dictionaryCode: "DATA_FORMAT",
           placeholder: "Enter Data Format",
           variant: "text",
         },
@@ -500,7 +501,8 @@ export const RuntimeDatasetBindingCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-dataset-binding-catalog:list", "toolbar.after", { resource: "runtime-dataset-binding-catalog", table })}
       </RefineDataTable>
     </ListView>

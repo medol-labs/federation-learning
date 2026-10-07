@@ -258,6 +258,7 @@ export const RuntimeAgentEndpointCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_agent_endpoint_catalog.fields.endpointScope.label", "Endpoint Scope"),
+          dictionaryCode: "RUNTIME_AGENT_ENDPOINT_SCOPE",
           placeholder: "Enter Endpoint Scope",
           variant: "text",
         },
@@ -433,7 +434,8 @@ export const RuntimeAgentEndpointCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-agent-endpoint-catalog:list", "toolbar.after", { resource: "runtime-agent-endpoint-catalog", table })}
       </RefineDataTable>
     </ListView>

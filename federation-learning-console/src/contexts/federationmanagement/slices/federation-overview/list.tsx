@@ -478,7 +478,8 @@ export const FederationOverviewList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:federation-overview:list", "toolbar.after", { resource: "federation-overview", table })}
       </RefineDataTable>
     </ListView>

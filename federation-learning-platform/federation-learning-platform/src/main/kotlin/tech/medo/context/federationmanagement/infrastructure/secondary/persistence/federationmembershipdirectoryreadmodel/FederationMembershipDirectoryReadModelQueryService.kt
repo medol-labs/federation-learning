@@ -11,9 +11,7 @@ import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
-
 import java.util.UUID
-
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModel
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelCriteria
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelProjection

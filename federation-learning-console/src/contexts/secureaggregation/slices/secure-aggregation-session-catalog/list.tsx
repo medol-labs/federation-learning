@@ -492,6 +492,7 @@ export const SecureAggregationSessionCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.secure_aggregation_session_catalog.fields.encryptionScheme.label", "Encryption Scheme"),
+          dictionaryCode: "SECURE_AGGREGATION_ENCRYPTION_SCHEME",
           placeholder: "Enter Encryption Scheme",
           variant: "text",
         },
@@ -969,7 +970,8 @@ export const SecureAggregationSessionCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:secure-aggregation-session-catalog:list", "toolbar.after", { resource: "secure-aggregation-session-catalog", table })}
       </RefineDataTable>
     </ListView>

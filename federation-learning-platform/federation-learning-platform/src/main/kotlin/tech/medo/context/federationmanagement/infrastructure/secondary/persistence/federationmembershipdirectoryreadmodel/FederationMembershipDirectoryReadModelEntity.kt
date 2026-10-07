@@ -10,7 +10,6 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelKey
 import java.util.UUID
-
 import java.time.LocalDateTime
 
 @IdClass(FederationMembershipDirectoryReadModelKey::class)

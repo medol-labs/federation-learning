@@ -11,10 +11,8 @@ import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
-
 import java.util.UUID
 import java.math.BigDecimal
-
 import tech.medo.trainingorchestration.trainingparticipanteligibility.TrainingParticipantEligibilityReadModel
 import tech.medo.trainingorchestration.trainingparticipanteligibility.TrainingParticipantEligibilityReadModelCriteria
 import tech.medo.trainingorchestration.trainingparticipanteligibility.TrainingParticipantEligibilityReadModelProjection

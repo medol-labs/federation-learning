@@ -13,7 +13,6 @@ import java.time.LocalDateTime
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
 
-
 @Entity
 @Table(name = "data_export_job_catalog")
 class DataExportJobCatalogReadModelEntity : MetadataProjection {

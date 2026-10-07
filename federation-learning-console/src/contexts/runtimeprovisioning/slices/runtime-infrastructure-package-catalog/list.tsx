@@ -175,6 +175,7 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_infrastructure_package_catalog.fields.runtimeEnvironmentType.label", "Runtime Environment Type"),
+          dictionaryCode: "RUNTIME_ENVIRONMENT_TYPE",
           placeholder: "Enter Runtime Environment Type",
           variant: "text",
         },
@@ -289,7 +290,8 @@ export const RuntimeInfrastructurePackageCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-infrastructure-package-catalog:list", "toolbar.after", { resource: "runtime-infrastructure-package-catalog", table })}
       </RefineDataTable>
     </ListView>

@@ -16,7 +16,6 @@ import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.math.BigDecimal
 
-
 @IdClass(TrainingRoundProgressReadModelKey::class)
 @Entity
 @Table(name = "training_round_progress")

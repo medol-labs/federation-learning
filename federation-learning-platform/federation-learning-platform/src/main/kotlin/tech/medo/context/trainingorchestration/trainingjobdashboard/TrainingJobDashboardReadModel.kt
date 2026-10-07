@@ -6,7 +6,6 @@ import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID
 import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
 import java.math.BigDecimal
-
 import java.time.LocalDateTime
 import tech.jhipster.service.filter.BigDecimalFilter
 import tech.jhipster.service.filter.BooleanFilter
@@ -176,11 +175,11 @@ data class TrainingJobDashboardReadModel(
     val globalAccuracy: BigDecimal?,
     val finalModelId: UUID?,
     val stopReason: String?,
-    val projectionUpdatedAt: LocalDateTime?,
-    val userId: String?,
-    val sessionId: String?,
-    val correlationId: String?,
-    val causationId: String?,
-    val traceId: String?,
-    val tenantId: String?
+    val projectionUpdatedAt: LocalDateTime? = null,
+    val userId: String? = null,
+    val sessionId: String? = null,
+    val correlationId: String? = null,
+    val causationId: String? = null,
+    val traceId: String? = null,
+    val tenantId: String? = null
 )

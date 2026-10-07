@@ -10,7 +10,6 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
-
 import java.time.LocalDateTime
 
 @Entity

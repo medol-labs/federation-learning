@@ -6,10 +6,10 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID
-import java.time.LocalDateTime
-import org.springframework.format.annotation.DateTimeFormat
-import com.fasterxml.jackson.annotation.JsonFormat
+import java.util.UUID;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tech.medo.runtimeagentoperations.agentdictionaryvaluetranslationcatalog.AgentDictionaryValueTranslationCatalogReadModel
 import tech.medo.runtimeagentoperations.agentdictionaryvaluetranslationcatalog.AgentDictionaryValueTranslationCatalogReadModelCriteria

@@ -533,7 +533,8 @@ export const DataExportJobCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:data-export-job-catalog:list", "toolbar.after", { resource: "data-export-job-catalog", table })}
       </RefineDataTable>
     </ListView>

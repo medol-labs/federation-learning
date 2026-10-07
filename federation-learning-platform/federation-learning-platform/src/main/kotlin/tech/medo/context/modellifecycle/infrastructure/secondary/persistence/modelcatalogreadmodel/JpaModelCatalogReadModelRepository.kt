@@ -4,9 +4,9 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID
-import java.math.BigDecimal
-import tech.medo.modellifecycle.domain.states.ModelStateEnum
+import java.util.UUID;
+import java.math.BigDecimal;
+import tech.medo.modellifecycle.domain.states.ModelStateEnum;
 
 import tech.medo.modellifecycle.modelcatalog.ModelCatalogReadModel
 import tech.medo.modellifecycle.modelcatalog.ModelCatalogReadModelCriteria

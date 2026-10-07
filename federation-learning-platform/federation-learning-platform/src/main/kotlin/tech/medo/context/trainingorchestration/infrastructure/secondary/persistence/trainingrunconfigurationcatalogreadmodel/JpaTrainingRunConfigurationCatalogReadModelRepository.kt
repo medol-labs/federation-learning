@@ -4,9 +4,9 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID
-import java.math.BigDecimal
-import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum
+import java.util.UUID;
+import java.math.BigDecimal;
+import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum;
 
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModel
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelCriteria

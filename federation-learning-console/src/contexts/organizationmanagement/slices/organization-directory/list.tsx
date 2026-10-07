@@ -344,7 +344,8 @@ export const OrganizationDirectoryList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:organization-directory:list", "toolbar.after", { resource: "organization-directory", table })}
       </RefineDataTable>
     </ListView>

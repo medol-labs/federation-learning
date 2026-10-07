@@ -11,12 +11,10 @@ import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
-
 import java.util.UUID
 import tech.medo.fileupload.domain.states.UploadedFileStateEnum
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-
 import tech.medo.fileupload.uploadedfilecatalog.UploadedFileCatalogReadModel
 import tech.medo.fileupload.uploadedfilecatalog.UploadedFileCatalogReadModelCriteria
 import tech.medo.fileupload.uploadedfilecatalog.UploadedFileCatalogReadModelProjection

@@ -122,6 +122,7 @@ export const RuntimeCapabilityCatalogList = () => {
         enableColumnFilter: false,
         meta: {
           label: t("resources.runtime_capability_catalog.fields.capabilityTypes.label", "Capability Types"),
+          dictionaryCode: "RUNTIME_CAPABILITY_TYPE",
           placeholder: "Enter Capability Types",
           variant: "text",
         },
@@ -256,7 +257,8 @@ export const RuntimeCapabilityCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-capability-catalog:list", "toolbar.after", { resource: "runtime-capability-catalog", table })}
       </RefineDataTable>
     </ListView>

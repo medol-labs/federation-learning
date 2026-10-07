@@ -283,7 +283,8 @@ export const CurrentRecommendedFeatureSchemaCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:current-recommended-feature-schema-catalog:list", "toolbar.after", { resource: "current-recommended-feature-schema-catalog", table })}
       </RefineDataTable>
     </ListView>

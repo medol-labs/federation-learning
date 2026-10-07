@@ -11,12 +11,10 @@ import tech.jhipster.service.QueryService
 import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
-
 import java.util.UUID
 import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-
 import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModel
 import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModelCriteria
 import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModelProjection

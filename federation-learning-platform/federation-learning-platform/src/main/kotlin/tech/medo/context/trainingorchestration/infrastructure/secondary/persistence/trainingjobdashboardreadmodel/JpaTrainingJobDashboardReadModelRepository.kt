@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-import java.util.UUID
-import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
-import java.math.BigDecimal
+import java.util.UUID;
+import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum;
+import java.math.BigDecimal;
 
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModel
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelCriteria

@@ -16,3 +16,7 @@ interface DataExportResourceExecutor {
     val resourceName: String
     fun execute(task: DataExportExecutionTask): DataExportExecutionResult
 }
+
+interface DataExportDictionaryLabelProvider {
+    fun labels(dictionaryCode: String, locale: String?): Map<String, String>
+}

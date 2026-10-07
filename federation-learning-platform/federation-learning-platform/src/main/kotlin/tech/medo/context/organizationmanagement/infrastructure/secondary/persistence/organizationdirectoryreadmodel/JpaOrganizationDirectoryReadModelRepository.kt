@@ -4,9 +4,9 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID
-import tech.medo.organizationmanagement.domain.types.OrganizationType
-import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
+import java.util.UUID;
+import tech.medo.organizationmanagement.domain.types.OrganizationType;
+import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum;
 
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModel
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelCriteria

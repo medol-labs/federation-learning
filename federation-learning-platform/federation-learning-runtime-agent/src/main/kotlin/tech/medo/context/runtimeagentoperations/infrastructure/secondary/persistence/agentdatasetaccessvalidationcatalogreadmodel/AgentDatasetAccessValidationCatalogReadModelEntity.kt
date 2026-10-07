@@ -13,7 +13,6 @@ import java.time.LocalDateTime
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
 
-
 @Entity
 @Table(name = "agent_dataset_access_validation_catalog")
 class AgentDatasetAccessValidationCatalogReadModelEntity : MetadataProjection {

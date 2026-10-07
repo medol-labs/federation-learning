@@ -283,7 +283,8 @@ export const AgentOrganizationDirectoryList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:agent-organization-directory:list", "toolbar.after", { resource: "agent-organization-directory", table })}
       </RefineDataTable>
     </ListView>

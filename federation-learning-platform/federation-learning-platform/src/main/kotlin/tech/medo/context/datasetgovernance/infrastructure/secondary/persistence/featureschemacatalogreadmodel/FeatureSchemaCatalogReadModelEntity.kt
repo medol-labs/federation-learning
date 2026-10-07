@@ -9,7 +9,6 @@ import jakarta.persistence.IdClass
 import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import java.util.UUID
-
 import java.time.LocalDateTime
 
 @Entity

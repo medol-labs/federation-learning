@@ -181,6 +181,7 @@ export const FeatureSchemaCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.feature_schema_catalog.fields.dataModality.label", "Data Modality"),
+          dictionaryCode: "FEATURE_SCHEMA_DATA_MODALITY",
           placeholder: "Enter Data Modality",
           variant: "text",
         },
@@ -482,7 +483,8 @@ export const FeatureSchemaCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:feature-schema-catalog:list", "toolbar.after", { resource: "feature-schema-catalog", table })}
       </RefineDataTable>
     </ListView>

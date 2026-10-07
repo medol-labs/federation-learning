@@ -14,7 +14,6 @@ import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
 
-
 @Entity
 @Table(name = "runtime_infrastructure_access_view")
 class RuntimeInfrastructureAccessViewReadModelEntity : MetadataProjection {

@@ -283,7 +283,8 @@ export const AgentFeatureSchemaCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:agent-feature-schema-catalog:list", "toolbar.after", { resource: "agent-feature-schema-catalog", table })}
       </RefineDataTable>
     </ListView>

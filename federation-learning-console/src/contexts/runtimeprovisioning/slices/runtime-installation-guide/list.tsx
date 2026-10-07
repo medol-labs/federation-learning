@@ -556,6 +556,7 @@ export const RuntimeInstallationGuideList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_installation_guide.fields.runtimeEnvironmentType.label", "Runtime Environment Type"),
+          dictionaryCode: "RUNTIME_ENVIRONMENT_TYPE",
           placeholder: "Enter Runtime Environment Type",
           variant: "text",
         },
@@ -582,6 +583,7 @@ export const RuntimeInstallationGuideList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_installation_guide.fields.agentInstallMode.label", "Agent Install Mode"),
+          dictionaryCode: "RUNTIME_AGENT_INSTALL_MODE",
           placeholder: "Enter Agent Install Mode",
           variant: "text",
         },
@@ -733,7 +735,8 @@ export const RuntimeInstallationGuideList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-installation-guide:list", "toolbar.after", { resource: "runtime-installation-guide", table })}
       </RefineDataTable>
     </ListView>

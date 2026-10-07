@@ -215,6 +215,7 @@ export const RuntimeAgentLifecycleCatalogList = () => {
         enableColumnFilter: true,
         meta: {
           label: t("resources.runtime_agent_lifecycle_catalog.fields.endpointScope.label", "Endpoint Scope"),
+          dictionaryCode: "RUNTIME_AGENT_ENDPOINT_SCOPE",
           placeholder: "Enter Endpoint Scope",
           variant: "text",
         },
@@ -673,7 +674,8 @@ export const RuntimeAgentLifecycleCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-agent-lifecycle-catalog:list", "toolbar.after", { resource: "runtime-agent-lifecycle-catalog", table })}
       </RefineDataTable>
     </ListView>

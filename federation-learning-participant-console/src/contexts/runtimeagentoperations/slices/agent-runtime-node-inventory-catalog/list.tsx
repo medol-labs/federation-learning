@@ -581,7 +581,8 @@ export const AgentRuntimeNodeInventoryCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:agent-runtime-node-inventory-catalog:list", "toolbar.after", { resource: "agent-runtime-node-inventory-catalog", table })}
       </RefineDataTable>
     </ListView>

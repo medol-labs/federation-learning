@@ -10,7 +10,6 @@ import jakarta.persistence.Table
 import tech.medo.shared.application.metadata.MetadataProjection
 import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermissionGrantCatalogReadModelKey
 import java.util.UUID
-
 import java.time.LocalDateTime
 
 @IdClass(RolePermissionGrantCatalogReadModelKey::class)

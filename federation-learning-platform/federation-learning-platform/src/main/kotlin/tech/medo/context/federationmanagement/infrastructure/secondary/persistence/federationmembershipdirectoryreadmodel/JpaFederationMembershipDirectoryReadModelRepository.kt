@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
-import java.util.UUID
+import java.util.UUID;
 
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModel
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelCriteria

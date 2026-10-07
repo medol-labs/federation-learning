@@ -876,6 +876,12 @@ export const RuntimeTelemetryLatestList = () => {
         field: sort.id,
         order: sort.desc ? "desc" : "asc",
       }));
+      const selectedIds = Object.entries(tableState.rowSelection)
+        .filter(([, selected]) => selected)
+        .map(([id]) => id);
+      const exportFilters: CrudFilter[] = selectedIds.length > 0
+        ? [...filters, { field: "nodeId", operator: "in", value: selectedIds } as CrudFilter]
+        : filters;
       const columns: DataExportColumn[] = table.reactTable
         .getAllLeafColumns()
         .filter((column) => column.getIsVisible())
@@ -883,12 +889,15 @@ export const RuntimeTelemetryLatestList = () => {
         .map((column) => ({
           field: column.id,
           label: String(column.columnDef.meta?.label ?? column.id),
+          dictionaryCode: typeof column.columnDef.meta?.dictionaryCode === "string"
+            ? column.columnDef.meta.dictionaryCode
+            : undefined,
         }));
       const result = await requestDataExport({
         aggregateRoute: "noderuntimehealth",
         queryRoute: "runtimetelemetrylatest",
         dataProviderName: "federation-learning-platform",
-        filters,
+        filters: exportFilters,
         sorters,
         columns,
       });
@@ -915,10 +924,6 @@ export const RuntimeTelemetryLatestList = () => {
     <ListView>
       <ListViewHeader canCreate={false}>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-telemetry-latest:list", "toolbar.before", { resource: "runtime-telemetry-latest", table })}
-        <Button type="button" variant="outline" onClick={handleExport} disabled={isExporting}>
-          <Download className="size-4" />
-          {isExporting ? t("dataExport.exporting", "Exporting") : t("dataExport.export", "Export")}
-        </Button>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-telemetry-latest:list", "toolbar.actions", { resource: "runtime-telemetry-latest", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={
@@ -928,7 +933,16 @@ export const RuntimeTelemetryLatestList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
-        />
+        >
+          <Button type="button" variant="outline" size="sm" onClick={handleExport} disabled={isExporting}>
+            <Download className="size-4" />
+            {isExporting
+              ? t("dataExport.exporting", "Exporting")
+              : Object.values(table.reactTable.getState().rowSelection).some(Boolean)
+                ? t("dataExport.exportSelected", "Export selected")
+                : t("dataExport.export", "Export")}
+          </Button>
+        </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:runtime-telemetry-latest:list", "toolbar.after", { resource: "runtime-telemetry-latest", table })}
       </RefineDataTable>
     </ListView>
