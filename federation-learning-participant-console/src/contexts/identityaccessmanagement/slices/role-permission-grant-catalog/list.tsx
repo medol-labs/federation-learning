@@ -344,13 +344,15 @@ export const RolePermissionGrantCatalogList = () => {
           table={table.reactTable}
           isQuerying={table.refineCore.tableQuery.isFetching}
           onQuery={() => table.refineCore.tableQuery.refetch()}
+          leadingActions={
+            <Button type="button" variant="outline" size="sm" onClick={handleExport} disabled={isExporting}>
+              <Download className="size-4" />
+              {isExporting
+                ? t("dataExport.exporting", "Exporting")
+                : t("dataExport.export", "Export")}
+            </Button>
+          }
         >
-          <Button type="button" variant="outline" size="sm" onClick={handleExport} disabled={isExporting}>
-            <Download className="size-4" />
-            {isExporting
-              ? t("dataExport.exporting", "Exporting")
-              : t("dataExport.export", "Export")}
-          </Button>
         </ListToolbar>
         {renderSlotExtensions(frontendComposition, "toolbar:role-permission-grant-catalog:list", "toolbar.after", { resource: "role-permission-grant-catalog", table })}
       </RefineDataTable>

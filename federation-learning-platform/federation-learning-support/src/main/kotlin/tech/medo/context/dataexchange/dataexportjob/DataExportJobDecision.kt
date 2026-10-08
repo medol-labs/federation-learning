@@ -25,21 +25,21 @@ interface DataExportJobDecision {
     fun decide(command: MarkDataExportProcessingCommand, state: DataExportJobState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(
-            DataExportRequestedEvent(dataExportJobId = command.dataExportJobId, resourceName = "" /* TODO: derive value */, criteriaJson = "" /* TODO: derive value */, sortJson = "" /* TODO: derive value */, columnsJson = "" /* TODO: derive value */, requestedLocale = null /* TODO: derive value */, requestedAt = java.time.LocalDateTime.now() /* TODO: derive value */, snapshotUpperBound = java.time.LocalDateTime.now() /* TODO: derive value */, requestHash = "" /* TODO: derive value */, fileName = requireNotNull(state.fileName) { "fileName is required from state." }, status = command.status)
+            DataExportProcessingStartedEvent(dataExportJobId = command.dataExportJobId, status = command.status)
         )
     }
 
     fun decide(command: CompleteDataExportCommand, state: DataExportJobState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(
-            DataExportRequestedEvent(dataExportJobId = command.dataExportJobId, resourceName = "" /* TODO: derive value */, criteriaJson = "" /* TODO: derive value */, sortJson = "" /* TODO: derive value */, columnsJson = "" /* TODO: derive value */, requestedLocale = null /* TODO: derive value */, requestedAt = java.time.LocalDateTime.now() /* TODO: derive value */, snapshotUpperBound = java.time.LocalDateTime.now() /* TODO: derive value */, requestHash = "" /* TODO: derive value */, fileName = command.fileName, status = command.status)
+            DataExportCompletedEvent(dataExportJobId = command.dataExportJobId, fileName = command.fileName, filePath = command.filePath, rowCount = command.rowCount, status = command.status)
         )
     }
 
     fun decide(command: FailDataExportCommand, state: DataExportJobState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(
-            DataExportRequestedEvent(dataExportJobId = command.dataExportJobId, resourceName = "" /* TODO: derive value */, criteriaJson = "" /* TODO: derive value */, sortJson = "" /* TODO: derive value */, columnsJson = "" /* TODO: derive value */, requestedLocale = null /* TODO: derive value */, requestedAt = java.time.LocalDateTime.now() /* TODO: derive value */, snapshotUpperBound = java.time.LocalDateTime.now() /* TODO: derive value */, requestHash = "" /* TODO: derive value */, fileName = requireNotNull(state.fileName) { "fileName is required from state." }, status = command.status)
+            DataExportFailedEvent(dataExportJobId = command.dataExportJobId, errorMessage = command.errorMessage, status = command.status)
         )
     }
 }
