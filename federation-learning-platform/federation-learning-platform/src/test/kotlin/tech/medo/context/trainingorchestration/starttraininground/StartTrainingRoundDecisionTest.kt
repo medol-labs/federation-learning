@@ -39,6 +39,11 @@ class StartTrainingRoundDecisionTest {
             maxRounds = 0,
             minimumAccuracy = java.math.BigDecimal.ZERO,
             aggregationAlgorithm = null,
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,
@@ -76,6 +81,11 @@ class StartTrainingRoundDecisionTest {
         assertEquals(command.maxRounds, event.maxRounds)
         assertEquals(command.minimumAccuracy, event.minimumAccuracy)
         assertEquals(command.aggregationAlgorithm, event.aggregationAlgorithm)
+        assertEquals(command.personalizationMode, event.personalizationMode)
+        assertEquals(command.personalizationScope, event.personalizationScope)
+        assertEquals(command.personalizedArtifactPolicy, event.personalizedArtifactPolicy)
+        assertEquals(command.personalizationMetric, event.personalizationMetric)
+        assertEquals(command.minimumPersonalizationLift, event.minimumPersonalizationLift)
         assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
         assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
         assertEquals(command.encryptionScheme, event.encryptionScheme)
@@ -109,6 +119,11 @@ class StartTrainingRoundDecisionTest {
             maxRounds = 0,
             minimumAccuracy = java.math.BigDecimal.ZERO,
             aggregationAlgorithm = null,
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,
@@ -145,6 +160,11 @@ class StartTrainingRoundDecisionTest {
         assertEquals(command.minimumNodesPerRound, event.minimumNodesPerRound)
         assertEquals(command.maxRounds, event.maxRounds)
         assertEquals(command.minimumAccuracy, event.minimumAccuracy)
+        assertEquals(command.personalizationMode, event.personalizationMode)
+        assertEquals(command.personalizationScope, event.personalizationScope)
+        assertEquals(command.personalizedArtifactPolicy, event.personalizedArtifactPolicy)
+        assertEquals(command.personalizationMetric, event.personalizationMetric)
+        assertEquals(command.minimumPersonalizationLift, event.minimumPersonalizationLift)
         assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
         assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
         assertEquals(command.encryptionScheme, event.encryptionScheme)

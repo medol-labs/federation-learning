@@ -1,6 +1,7 @@
 package tech.medo.runtimeagentoperations.startroundexecution
 
 import java.util.UUID;
+import java.math.BigDecimal;
 
 interface StartRoundExecutionService {
     fun supports(input: StartRoundExecutionInput): Boolean = true
@@ -18,6 +19,15 @@ data class StartRoundExecutionInput(
     val runtimeId: UUID,
     val organizationId: UUID,
     val featureSchemaId: UUID,
+    val personalizationMode: String?,
+    val personalizationScope: String?,
+    val personalizedArtifactPolicy: String?,
+    val personalizationMetric: String?,
+    val minimumPersonalizationLift: BigDecimal?,
+    val personalizationTargetType: String?,
+    val personalizationTargetId: UUID?,
+    val personalizationCohortId: UUID?,
+    val personalizationProfileId: UUID?,
     val baseModelId: UUID,
     val baseModelArtifactUri: String,
     val baseModelRegistryRef: String,
@@ -25,6 +35,9 @@ data class StartRoundExecutionInput(
     val baseModelFormat: String,
     val baseModelArtifactDigest: String,
     val baseModelSignatureUri: String?,
+    val personalizedBaseModelId: UUID?,
+    val personalizedBaseModelArtifactUri: String?,
+    val personalizedBaseModelArtifactDigest: String?,
     val runtimeEngineProfileId: UUID,
     val runtimeEngineProfileName: String?,
     val runtimeEnginePluginProfile: String,

@@ -35,6 +35,11 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         val maxRounds = trainingRunConfiguration?.maxRounds ?: trainingJob?.maxRounds
         val minimumAccuracy = trainingRunConfiguration?.minimumAccuracy
         val aggregationAlgorithm = trainingRunConfiguration?.aggregationAlgorithm
+        val personalizationMode = trainingRunConfiguration?.personalizationMode ?: "GLOBAL_ONLY"
+        val personalizationScope = trainingRunConfiguration?.personalizationScope ?: "FEDERATION"
+        val personalizedArtifactPolicy = trainingRunConfiguration?.personalizedArtifactPolicy ?: "NONE"
+        val personalizationMetric = trainingRunConfiguration?.personalizationMetric
+        val minimumPersonalizationLift = trainingRunConfiguration?.minimumPersonalizationLift
         val minimumNodesPerRound = trainingRunConfiguration?.minimumNodesPerRound ?: trainingJob?.minimumNodesPerRound
         val secureAggregationRequired = trainingRunConfiguration?.secureAggregationRequired ?: trainingJob?.secureAggregationRequired ?: false
 
@@ -213,7 +218,11 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
                     TrainingRoundParticipant(
                         organizationId = organizationId,
                         runtimeId = runtimeId,
-                        datasetId = datasetId
+                        datasetId = datasetId,
+                        personalizationTargetType = personalizationTargetType(personalizationMode, personalizationScope),
+                        personalizationTargetId = personalizationTargetId(personalizationMode, personalizationScope, organizationId, runtimeId),
+                        personalizationCohortId = null,
+                        personalizationProfileId = null
                     )
                 }
             }
@@ -274,6 +283,11 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             maxRounds = maxRounds,
             minimumAccuracy = minimumAccuracy,
             aggregationAlgorithm = aggregationAlgorithm,
+            personalizationMode = personalizationMode,
+            personalizationScope = personalizationScope,
+            personalizedArtifactPolicy = personalizedArtifactPolicy,
+            personalizationMetric = personalizationMetric,
+            minimumPersonalizationLift = minimumPersonalizationLift,
             minimumNodesPerRound = minimumNodesPerRound,
             secureAggregationRequired = secureAggregationRequired,
             selectedOrganizationIds = selectedOrganizationIds,
@@ -286,6 +300,34 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
 
     private fun String?.isJoinedLike(): Boolean =
         this == null || equals("Joined", ignoreCase = true) || equals("Approved", ignoreCase = true) || equals("Active", ignoreCase = true)
+
+    private fun personalizationTargetType(personalizationMode: String?, personalizationScope: String?): String? {
+        if (personalizationMode.equals("GLOBAL_ONLY", ignoreCase = true)) {
+            return null
+        }
+        return when (personalizationScope?.uppercase()) {
+            "PARTICIPANT" -> "PARTICIPANT"
+            "ORGANIZATION" -> "ORGANIZATION"
+            "COHORT" -> "COHORT"
+            else -> null
+        }
+    }
+
+    private fun personalizationTargetId(
+        personalizationMode: String?,
+        personalizationScope: String?,
+        organizationId: UUID,
+        runtimeId: UUID
+    ): UUID? {
+        if (personalizationMode.equals("GLOBAL_ONLY", ignoreCase = true)) {
+            return null
+        }
+        return when (personalizationScope?.uppercase()) {
+            "PARTICIPANT" -> runtimeId
+            "ORGANIZATION" -> organizationId
+            else -> null
+        }
+    }
 
     private fun findActiveRuntimeIdentities(organizationIds: Set<UUID>): List<RuntimeIdentityCatalogReadModelEntity> =
         entityManager.criteriaBuilder.let { cb ->
@@ -335,6 +377,11 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
         maxRounds: Int,
         minimumAccuracy: BigDecimal,
         aggregationAlgorithm: String,
+        personalizationMode: String? = "GLOBAL_ONLY",
+        personalizationScope: String? = "FEDERATION",
+        personalizedArtifactPolicy: String? = "NONE",
+        personalizationMetric: String? = null,
+        minimumPersonalizationLift: BigDecimal? = null,
         minimumNodesPerRound: Int,
         secureAggregationRequired: Boolean,
         selectedOrganizationIds: List<UUID> = emptyList(),
@@ -350,6 +397,11 @@ class ReadModelTrainingRoundParticipantSelectionAdapter(
             maxRounds = maxRounds,
             minimumAccuracy = minimumAccuracy,
             aggregationAlgorithm = aggregationAlgorithm,
+            personalizationMode = personalizationMode,
+            personalizationScope = personalizationScope,
+            personalizedArtifactPolicy = personalizedArtifactPolicy,
+            personalizationMetric = personalizationMetric,
+            minimumPersonalizationLift = minimumPersonalizationLift,
             minimumNodesPerRound = minimumNodesPerRound,
             secureAggregationRequired = secureAggregationRequired,
             selectedOrganizationIds = selectedOrganizationIds,

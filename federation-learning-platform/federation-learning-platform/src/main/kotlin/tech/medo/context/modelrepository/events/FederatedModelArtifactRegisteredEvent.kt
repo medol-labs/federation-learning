@@ -16,6 +16,7 @@ data class FederatedModelArtifactRegisteredEvent(
     val modelVersion: String,
     val modelDescription: String?,
     val sourceType: String,
+    val modelScope: String,
     val modelArtifactUri: String,
     val modelRegistryRef: String,
     val modelFormat: String,

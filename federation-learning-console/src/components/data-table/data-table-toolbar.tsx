@@ -82,7 +82,6 @@ export function DataTableToolbar<TData>({
             {t("buttons.reset", "Reset")}
           </Button>
         )}
-        {leadingActions}
         {children}
         {activeFilters.map((filter) => (
           <Badge
@@ -102,6 +101,7 @@ export function DataTableToolbar<TData>({
         ))}
       </div>
       <div className="flex shrink-0 items-center gap-2">
+        {leadingActions}
         <DataTableViewOptions table={table} align="end" />
         {trailingActions}
       </div>

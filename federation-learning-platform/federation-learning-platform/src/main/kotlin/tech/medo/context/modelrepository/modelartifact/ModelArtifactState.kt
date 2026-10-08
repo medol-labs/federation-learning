@@ -9,6 +9,7 @@ import org.axonframework.messaging.eventstreaming.Tag
 import tech.medo.modelrepository.events.ModelArtifactRegisteredEvent
 import tech.medo.modelrepository.events.ModelArtifactDownloadAuthorizedEvent
 import tech.medo.modelrepository.events.FederatedModelArtifactRegisteredEvent
+import tech.medo.modelrepository.events.PersonalizedModelArtifactRegisteredEvent
 import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum
 
 import java.util.UUID;
@@ -40,9 +41,15 @@ class ModelArtifactState @EntityCreator constructor() {
     var modelSignatureUri: String? = null
     var modelSizeBytes: Int? = null
     var downloadUri: String? = null
+    var modelScope: String? = null
     var trainingJobId: UUID? = null
     var trainingJobObjective: String? = null
     var roundId: UUID? = null
+    var personalizationMode: String? = null
+    var personalizationTargetType: String? = null
+    var personalizationTargetId: UUID? = null
+    var personalizationCohortId: UUID? = null
+    var baseGlobalModelId: UUID? = null
 
     @EventSourcingHandler
     fun evolve(event: ModelArtifactRegisteredEvent): ModelArtifactState = apply {
@@ -80,6 +87,7 @@ class ModelArtifactState @EntityCreator constructor() {
         modelVersion = event.modelVersion
         modelDescription = event.modelDescription
         sourceType = event.sourceType
+        modelScope = event.modelScope
         modelArtifactUri = event.modelArtifactUri
         modelRegistryRef = event.modelRegistryRef
         modelFormat = event.modelFormat
@@ -89,5 +97,31 @@ class ModelArtifactState @EntityCreator constructor() {
         trainingJobId = event.trainingJobId
         trainingJobObjective = event.trainingJobObjective
         roundId = event.roundId
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: PersonalizedModelArtifactRegisteredEvent): ModelArtifactState = apply {
+        currentState = ModelArtifactStateEnum.Registered
+        modelId = event.modelId
+        modelName = event.modelName
+        modelPlugin = event.modelPlugin
+        modelVersion = event.modelVersion
+        modelDescription = event.modelDescription
+        sourceType = event.sourceType
+        modelScope = event.modelScope
+        modelArtifactUri = event.modelArtifactUri
+        modelRegistryRef = event.modelRegistryRef
+        modelFormat = event.modelFormat
+        modelArtifactDigest = event.modelArtifactDigest
+        modelSignatureUri = event.modelSignatureUri
+        modelSizeBytes = event.modelSizeBytes
+        trainingJobId = event.trainingJobId
+        trainingJobObjective = event.trainingJobObjective
+        roundId = event.roundId
+        personalizationMode = event.personalizationMode
+        personalizationTargetType = event.personalizationTargetType
+        personalizationTargetId = event.personalizationTargetId
+        personalizationCohortId = event.personalizationCohortId
+        baseGlobalModelId = event.baseGlobalModelId
     }
 }

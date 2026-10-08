@@ -40,6 +40,11 @@ class TrainingRunConfigurationCatalogReadModelEntity : MetadataProjection {
     var runtimeEngineImageDigest: String? = null
     var strategyName: String? = null
     var aggregationAlgorithm: String? = null
+    var personalizationMode: String? = null
+    var personalizationScope: String? = null
+    var personalizedArtifactPolicy: String? = null
+    var personalizationMetric: String? = null
+    var minimumPersonalizationLift: BigDecimal? = null
     var maxRounds: Int? = null
     var minimumNodesPerRound: Int? = null
     var roundTimeoutSeconds: Int? = null

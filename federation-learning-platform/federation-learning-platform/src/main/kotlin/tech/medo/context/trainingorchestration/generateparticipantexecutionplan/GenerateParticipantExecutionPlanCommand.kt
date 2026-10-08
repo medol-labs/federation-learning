@@ -4,6 +4,7 @@ import org.axonframework.messaging.commandhandling.annotation.Command
 import org.axonframework.modelling.annotation.TargetEntityId
 import tech.medo.trainingorchestration.participantexecutionplan.ParticipantExecutionPlanSelection
 import java.util.UUID;
+import java.math.BigDecimal;
 
 
 @Command
@@ -21,6 +22,15 @@ data class GenerateParticipantExecutionPlanCommand(
     val roundNumber: Int,
     val runtimeId: UUID,
     val organizationId: UUID,
+    val personalizationMode: String?,
+    val personalizationScope: String?,
+    val personalizedArtifactPolicy: String?,
+    val personalizationMetric: String?,
+    val minimumPersonalizationLift: BigDecimal?,
+    val personalizationTargetType: String?,
+    val personalizationTargetId: UUID?,
+    val personalizationCohortId: UUID?,
+    val personalizationProfileId: UUID?,
     val baseModelId: UUID,
     val baseModelArtifactUri: String,
     val baseModelRegistryRef: String,
@@ -28,6 +38,9 @@ data class GenerateParticipantExecutionPlanCommand(
     val baseModelFormat: String,
     val baseModelArtifactDigest: String,
     val baseModelSignatureUri: String?,
+    val personalizedBaseModelId: UUID?,
+    val personalizedBaseModelArtifactUri: String?,
+    val personalizedBaseModelArtifactDigest: String?,
     val runtimeEngineProfileId: UUID,
     val runtimeEngineProfileName: String?,
     val runtimeEnginePluginProfile: String,

@@ -171,6 +171,31 @@ export const TrainingRunConfigurationCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.personalizationMode.label", "Personalization Mode")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-run-configuration-catalog:display:personalizationMode", { value: record?.personalizationMode, record, resource: "training-run-configuration-catalog", field: "personalizationMode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizationMode, t, dictionaryLabel, undefined, "PERSONALIZATION_MODE")}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.personalizationScope.label", "Personalization Scope")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-run-configuration-catalog:display:personalizationScope", { value: record?.personalizationScope, record, resource: "training-run-configuration-catalog", field: "personalizationScope", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizationScope, t, dictionaryLabel, undefined, "PERSONALIZATION_SCOPE")}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.personalizedArtifactPolicy.label", "Personalized Artifact Policy")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-run-configuration-catalog:display:personalizedArtifactPolicy", { value: record?.personalizedArtifactPolicy, record, resource: "training-run-configuration-catalog", field: "personalizedArtifactPolicy", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizedArtifactPolicy, t, dictionaryLabel, undefined, "PERSONALIZED_ARTIFACT_POLICY")}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.personalizationMetric.label", "Personalization Metric")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-run-configuration-catalog:display:personalizationMetric", { value: record?.personalizationMetric, record, resource: "training-run-configuration-catalog", field: "personalizationMetric", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizationMetric, t, dictionaryLabel, undefined, "MODEL_EVALUATION_METRIC")}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.minimumPersonalizationLift.label", "Minimum Personalization Lift")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-run-configuration-catalog:display:minimumPersonalizationLift", { value: record?.minimumPersonalizationLift, record, resource: "training-run-configuration-catalog", field: "minimumPersonalizationLift", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.minimumPersonalizationLift, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.training_run_configuration_catalog.fields.maxRounds.label", "Max Rounds")}</h4>
               {renderFieldOverride(frontendComposition, "field:training-run-configuration-catalog:display:maxRounds", { value: record?.maxRounds, record, resource: "training-run-configuration-catalog", field: "maxRounds", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.maxRounds, t, dictionaryLabel, undefined)}</p>}
             </div>

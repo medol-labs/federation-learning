@@ -35,9 +35,9 @@ class CreateRuntimeInstallationPlanCommandHandler(
                     "command" to "Create Runtime Installation Plan",
                     "projection" to "Organization Directory",
                     "field" to "organizationId",
-                    "profile" to null
+                    "profile" to "Create Runtime Installation Plan"
                 ),
-                message = "Organization Directory selection is not eligible."
+                message = "Organization Directory selection is not eligible for Create Runtime Installation Plan."
             )
         }
         val runtimeInfrastructurePackageCatalogReadModelSelection = runtimeInfrastructurePackageCatalogReadModelRepository.findById(command.runtimeInfrastructurePackageId)
@@ -49,9 +49,9 @@ class CreateRuntimeInstallationPlanCommandHandler(
                     "command" to "Create Runtime Installation Plan",
                     "projection" to "Runtime Infrastructure Package Catalog",
                     "field" to "runtimeInfrastructurePackageId",
-                    "profile" to null
+                    "profile" to "Create Runtime Installation Plan"
                 ),
-                message = "Runtime Infrastructure Package Catalog selection is not eligible."
+                message = "Runtime Infrastructure Package Catalog selection is not eligible for Create Runtime Installation Plan."
             )
         }
         val input = CreateRuntimeInstallationPlanInput(runtimeInstallationPlanId = command.runtimeInstallationPlanId, runtimeInfrastructureId = command.runtimeInfrastructureId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, agentInstallMode = command.agentInstallMode, expectedNodeCount = command.expectedNodeCount)

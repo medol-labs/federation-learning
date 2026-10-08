@@ -52,9 +52,9 @@ class DefineTrainingRunConfigurationCommandHandler(
                     "command" to "Define Training Run Configuration",
                     "projection" to "Feature Schema Catalog",
                     "field" to "featureSchemaId",
-                    "profile" to null
+                    "profile" to "Define Training Run Configuration"
                 ),
-                message = "Feature Schema Catalog selection is not eligible."
+                message = "Feature Schema Catalog selection is not eligible for Define Training Run Configuration."
             )
         }
         val modelArtifactCatalogReadModelSelection = modelArtifactCatalogReadModelRepository.findById(command.initialModelId)
@@ -66,9 +66,9 @@ class DefineTrainingRunConfigurationCommandHandler(
                     "command" to "Define Training Run Configuration",
                     "projection" to "Model Artifact Catalog",
                     "field" to "initialModelId",
-                    "profile" to null
+                    "profile" to "Define Training Run Configuration"
                 ),
-                message = "Model Artifact Catalog selection is not eligible."
+                message = "Model Artifact Catalog selection is not eligible for Define Training Run Configuration."
             )
         }
         val runtimeEngineProfileCatalogReadModelSelection = runtimeEngineProfileCatalogReadModelRepository.findById(command.runtimeEngineProfileId)
@@ -80,9 +80,9 @@ class DefineTrainingRunConfigurationCommandHandler(
                     "command" to "Define Training Run Configuration",
                     "projection" to "Runtime Engine Profile Catalog",
                     "field" to "runtimeEngineProfileId",
-                    "profile" to null
+                    "profile" to "Define Training Run Configuration"
                 ),
-                message = "Runtime Engine Profile Catalog selection is not eligible."
+                message = "Runtime Engine Profile Catalog selection is not eligible for Define Training Run Configuration."
             )
         }
         eventAppender.append(decision.decide(command))

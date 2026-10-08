@@ -27,6 +27,15 @@ class ObserveRuntimeEngineJobDecisionTest {
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             baseModelId = java.util.UUID.randomUUID(),
             baseModelArtifactUri = "",
             baseModelRegistryRef = "",
@@ -34,6 +43,9 @@ class ObserveRuntimeEngineJobDecisionTest {
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            personalizedBaseModelId = null,
+            personalizedBaseModelArtifactUri = null,
+            personalizedBaseModelArtifactDigest = null,
             runtimeEngineProfileId = java.util.UUID.randomUUID(),
             runtimeEngineProfileName = null,
             runtimeEnginePluginProfile = "",
@@ -60,6 +72,15 @@ class ObserveRuntimeEngineJobDecisionTest {
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             runtimeEngineJobId = "",
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
@@ -80,7 +101,14 @@ class ObserveRuntimeEngineJobDecisionTest {
                 modelUpdateArtifactDigest = null,
                 updateProtectionType = null,
                 metricsArtifactRef = null,
-                trainingLoss = null
+                trainingLoss = null,
+                personalizedArtifactAvailable = null,
+                personalizedModelId = null,
+                personalizedModelArtifactRef = null,
+                personalizedModelArtifactDigest = null,
+                personalizedMetricsArtifactRef = null,
+                personalizedAccuracy = null,
+                personalizationLift = null
             )
         )
 
@@ -95,6 +123,15 @@ class ObserveRuntimeEngineJobDecisionTest {
         assertEquals(command.runtimeId, event.runtimeId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
+        assertEquals(command.personalizationMode, event.personalizationMode)
+        assertEquals(command.personalizationScope, event.personalizationScope)
+        assertEquals(command.personalizedArtifactPolicy, event.personalizedArtifactPolicy)
+        assertEquals(command.personalizationMetric, event.personalizationMetric)
+        assertEquals(command.minimumPersonalizationLift, event.minimumPersonalizationLift)
+        assertEquals(command.personalizationTargetType, event.personalizationTargetType)
+        assertEquals(command.personalizationTargetId, event.personalizationTargetId)
+        assertEquals(command.personalizationCohortId, event.personalizationCohortId)
+        assertEquals(command.personalizationProfileId, event.personalizationProfileId)
         assertEquals(command.runtimeEngineJobId, event.runtimeEngineJobId)
         assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
         assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
@@ -117,6 +154,15 @@ class ObserveRuntimeEngineJobDecisionTest {
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             baseModelId = java.util.UUID.randomUUID(),
             baseModelArtifactUri = "",
             baseModelRegistryRef = "",
@@ -124,6 +170,9 @@ class ObserveRuntimeEngineJobDecisionTest {
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            personalizedBaseModelId = null,
+            personalizedBaseModelArtifactUri = null,
+            personalizedBaseModelArtifactDigest = null,
             runtimeEngineProfileId = java.util.UUID.randomUUID(),
             runtimeEngineProfileName = null,
             runtimeEnginePluginProfile = "",
@@ -150,6 +199,15 @@ class ObserveRuntimeEngineJobDecisionTest {
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             runtimeEngineJobId = "",
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
@@ -170,7 +228,14 @@ class ObserveRuntimeEngineJobDecisionTest {
                 modelUpdateArtifactDigest = null,
                 updateProtectionType = null,
                 metricsArtifactRef = null,
-                trainingLoss = null
+                trainingLoss = null,
+                personalizedArtifactAvailable = null,
+                personalizedModelId = null,
+                personalizedModelArtifactRef = null,
+                personalizedModelArtifactDigest = null,
+                personalizedMetricsArtifactRef = null,
+                personalizedAccuracy = null,
+                personalizationLift = null
             )
         )
 
@@ -185,6 +250,15 @@ class ObserveRuntimeEngineJobDecisionTest {
         assertEquals(command.runtimeId, event.runtimeId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
+        assertEquals(command.personalizationMode, event.personalizationMode)
+        assertEquals(command.personalizationScope, event.personalizationScope)
+        assertEquals(command.personalizedArtifactPolicy, event.personalizedArtifactPolicy)
+        assertEquals(command.personalizationMetric, event.personalizationMetric)
+        assertEquals(command.minimumPersonalizationLift, event.minimumPersonalizationLift)
+        assertEquals(command.personalizationTargetType, event.personalizationTargetType)
+        assertEquals(command.personalizationTargetId, event.personalizationTargetId)
+        assertEquals(command.personalizationCohortId, event.personalizationCohortId)
+        assertEquals(command.personalizationProfileId, event.personalizationProfileId)
         assertEquals(command.runtimeEngineJobId, event.runtimeEngineJobId)
         assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
         assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
@@ -207,6 +281,15 @@ class ObserveRuntimeEngineJobDecisionTest {
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             baseModelId = java.util.UUID.randomUUID(),
             baseModelArtifactUri = "",
             baseModelRegistryRef = "",
@@ -214,6 +297,9 @@ class ObserveRuntimeEngineJobDecisionTest {
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            personalizedBaseModelId = null,
+            personalizedBaseModelArtifactUri = null,
+            personalizedBaseModelArtifactDigest = null,
             runtimeEngineProfileId = java.util.UUID.randomUUID(),
             runtimeEngineProfileName = null,
             runtimeEnginePluginProfile = "",
@@ -240,6 +326,15 @@ class ObserveRuntimeEngineJobDecisionTest {
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
             featureSchemaId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             runtimeEngineJobId = "",
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
@@ -260,7 +355,14 @@ class ObserveRuntimeEngineJobDecisionTest {
                 modelUpdateArtifactDigest = null,
                 updateProtectionType = null,
                 metricsArtifactRef = null,
-                trainingLoss = null
+                trainingLoss = null,
+                personalizedArtifactAvailable = null,
+                personalizedModelId = null,
+                personalizedModelArtifactRef = null,
+                personalizedModelArtifactDigest = null,
+                personalizedMetricsArtifactRef = null,
+                personalizedAccuracy = null,
+                personalizationLift = null
             )
         )
 
@@ -275,6 +377,15 @@ class ObserveRuntimeEngineJobDecisionTest {
         assertEquals(command.runtimeId, event.runtimeId)
         assertEquals(command.organizationId, event.organizationId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
+        assertEquals(command.personalizationMode, event.personalizationMode)
+        assertEquals(command.personalizationScope, event.personalizationScope)
+        assertEquals(command.personalizedArtifactPolicy, event.personalizedArtifactPolicy)
+        assertEquals(command.personalizationMetric, event.personalizationMetric)
+        assertEquals(command.minimumPersonalizationLift, event.minimumPersonalizationLift)
+        assertEquals(command.personalizationTargetType, event.personalizationTargetType)
+        assertEquals(command.personalizationTargetId, event.personalizationTargetId)
+        assertEquals(command.personalizationCohortId, event.personalizationCohortId)
+        assertEquals(command.personalizationProfileId, event.personalizationProfileId)
         assertEquals(command.runtimeEngineJobId, event.runtimeEngineJobId)
         assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
         assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)

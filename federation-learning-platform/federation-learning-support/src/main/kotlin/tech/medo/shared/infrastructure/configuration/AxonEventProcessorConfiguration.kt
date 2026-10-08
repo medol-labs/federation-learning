@@ -11,8 +11,8 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("audit-trail").notCustomized()
 
     @Bean
-    fun automationDataExchangeDataExportJobEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("automation-data-exchange-data-export-job").notCustomized()
+    fun automationFederationLearningSupportDataExchangeExecuteDataExportEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("automation-federation-learning-support-data-exchange-execute-data-export").notCustomized()
 
     @Bean
     fun automationDataExchangeDataImportJobEventProcessorDefinition(): EventProcessorDefinition =
@@ -35,8 +35,8 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("integration-file-upload-expire-file").notCustomized()
 
     @Bean
-    fun readmodelDataExportJobCatalogEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("readmodel-data-export-job-catalog").notCustomized()
+    fun readmodelFederationLearningSupportDataExportJobCatalogEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("readmodel-federation-learning-support-data-export-job-catalog").notCustomized()
 
     @Bean
     fun readmodelDataImportJobCatalogEventProcessorDefinition(): EventProcessorDefinition =

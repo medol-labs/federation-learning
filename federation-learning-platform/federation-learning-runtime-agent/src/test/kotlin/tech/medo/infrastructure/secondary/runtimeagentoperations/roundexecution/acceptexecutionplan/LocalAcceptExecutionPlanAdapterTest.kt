@@ -16,6 +16,7 @@ import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCata
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelProjection
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelRepository
+import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -71,6 +72,15 @@ class LocalAcceptExecutionPlanAdapterTest {
             roundNumber = 1,
             runtimeId = runtimeId,
             organizationId = organizationId,
+            personalizationMode = "GLOBAL_ONLY",
+            personalizationScope = "FEDERATION",
+            personalizedArtifactPolicy = "NONE",
+            personalizationMetric = null,
+            minimumPersonalizationLift = BigDecimal.ZERO,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             baseModelId = UUID.fromString("99999999-9999-4999-8999-999999999999"),
             baseModelArtifactUri = "oci://registry.example.com/fl/model@sha256:abc",
             baseModelRegistryRef = "oci://registry.example.com/fl",
@@ -78,6 +88,9 @@ class LocalAcceptExecutionPlanAdapterTest {
             baseModelFormat = "ONNX",
             baseModelArtifactDigest = "sha256:abc",
             baseModelSignatureUri = "oci://registry.example.com/fl/model.sig",
+            personalizedBaseModelId = null,
+            personalizedBaseModelArtifactUri = null,
+            personalizedBaseModelArtifactDigest = null,
             runtimeEngineProfileId = UUID.fromString("bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"),
             runtimeEngineProfileName = "PyTorch Vision Runtime",
             runtimeEnginePluginProfile = "pytorch-vision",

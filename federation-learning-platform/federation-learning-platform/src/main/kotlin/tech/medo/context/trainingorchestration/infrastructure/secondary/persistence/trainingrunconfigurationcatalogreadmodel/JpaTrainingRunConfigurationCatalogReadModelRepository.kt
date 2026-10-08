@@ -60,6 +60,11 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
             it.runtimeEngineImageDigest = this@toProjection.runtimeEngineImageDigest
             it.strategyName = this@toProjection.strategyName
             it.aggregationAlgorithm = this@toProjection.aggregationAlgorithm
+            it.personalizationMode = this@toProjection.personalizationMode
+            it.personalizationScope = this@toProjection.personalizationScope
+            it.personalizedArtifactPolicy = this@toProjection.personalizedArtifactPolicy
+            it.personalizationMetric = this@toProjection.personalizationMetric
+            it.minimumPersonalizationLift = this@toProjection.minimumPersonalizationLift
             it.maxRounds = this@toProjection.maxRounds
             it.minimumNodesPerRound = this@toProjection.minimumNodesPerRound
             it.roundTimeoutSeconds = this@toProjection.roundTimeoutSeconds
@@ -110,6 +115,11 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
             it.runtimeEngineImageDigest = this@toEntity.runtimeEngineImageDigest
             it.strategyName = this@toEntity.strategyName
             it.aggregationAlgorithm = this@toEntity.aggregationAlgorithm
+            it.personalizationMode = this@toEntity.personalizationMode
+            it.personalizationScope = this@toEntity.personalizationScope
+            it.personalizedArtifactPolicy = this@toEntity.personalizedArtifactPolicy
+            it.personalizationMetric = this@toEntity.personalizationMetric
+            it.minimumPersonalizationLift = this@toEntity.minimumPersonalizationLift
             it.maxRounds = this@toEntity.maxRounds
             it.minimumNodesPerRound = this@toEntity.minimumNodesPerRound
             it.roundTimeoutSeconds = this@toEntity.roundTimeoutSeconds

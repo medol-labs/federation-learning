@@ -45,6 +45,11 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
     runtimeEngineProfileId: searchParams.get("runtimeEngineProfileId") ?? undefined,
     strategyName: searchParams.get("strategyName") ?? undefined,
     aggregationAlgorithm: searchParams.get("aggregationAlgorithm") ?? undefined,
+    personalizationMode: searchParams.get("personalizationMode") ?? undefined,
+    personalizationScope: searchParams.get("personalizationScope") ?? undefined,
+    personalizedArtifactPolicy: searchParams.get("personalizedArtifactPolicy") ?? undefined,
+    personalizationMetric: searchParams.get("personalizationMetric") ?? undefined,
+    minimumPersonalizationLift: (() => { const value = searchParams.get("minimumPersonalizationLift"); return value === null ? undefined : Number(value); })(),
     maxRounds: (() => { const value = searchParams.get("maxRounds"); return value === null ? undefined : Number(value); })(),
     minimumNodesPerRound: (() => { const value = searchParams.get("minimumNodesPerRound"); return value === null ? undefined : Number(value); })(),
     roundTimeoutSeconds: (() => { const value = searchParams.get("roundTimeoutSeconds"); return value === null ? undefined : Number(value); })(),
@@ -409,6 +414,160 @@ export const TrainingRunConfigurationCatalogUpdateTrainingRunConfiguration = () 
                     queryFields: ["dictionaryCode","active","state"],
                   }}
                 />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizationMode"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizationMode.label", "Personalization Mode")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="dictionary_value_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="defaultDisplayName"
+                  optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.PERSONALIZATION_MODE."
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizationMode.placeholder", "Select Personalization Mode")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"PERSONALIZATION_MODE"},{"field":"state","operator":"eq","value":"Active"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizationMode.label", "Dictionary Value Catalog"),
+                    aggregateRoute: "dictionaryvalue",
+                    queryRoute: "dictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizationScope"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizationScope.label", "Personalization Scope")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="dictionary_value_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="defaultDisplayName"
+                  optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.PERSONALIZATION_SCOPE."
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizationScope.placeholder", "Select Personalization Scope")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"PERSONALIZATION_SCOPE"},{"field":"state","operator":"eq","value":"Active"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizationScope.label", "Dictionary Value Catalog"),
+                    aggregateRoute: "dictionaryvalue",
+                    queryRoute: "dictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizedArtifactPolicy"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizedArtifactPolicy.label", "Personalized Artifact Policy")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="dictionary_value_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="defaultDisplayName"
+                  optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.PERSONALIZED_ARTIFACT_POLICY."
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizedArtifactPolicy.placeholder", "Select Personalized Artifact Policy")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"PERSONALIZED_ARTIFACT_POLICY"},{"field":"state","operator":"eq","value":"Active"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizedArtifactPolicy.label", "Dictionary Value Catalog"),
+                    aggregateRoute: "dictionaryvalue",
+                    queryRoute: "dictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizationMetric"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizationMetric.label", "Personalization Metric")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="dictionary_value_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="defaultDisplayName"
+                  optionValue="valueCode"
+                  optionI18nPrefix="dictionaries.MODEL_EVALUATION_METRIC."
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizationMetric.placeholder", "Select Personalization Metric")}
+                  filters={[{"field":"dictionaryCode","operator":"eq","value":"MODEL_EVALUATION_METRIC"},{"field":"state","operator":"eq","value":"Active"}]}
+                  sorters={[{"field":"displayOrder","order":"asc"}]}
+                  pagination={{"currentPage":1,"pageSize":100,"mode":"server"}}
+                  meta={{
+                    idField: "dictionaryValueId",
+                    label: t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.personalizationMetric.label", "Dictionary Value Catalog"),
+                    aggregateRoute: "dictionaryvalue",
+                    queryRoute: "dictionaryvaluecatalog",
+                    queryFields: ["dictionaryCode","active","state"],
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="minimumPersonalizationLift"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_run_configuration_catalog.commands.updateTrainingRunConfiguration.fields.minimumPersonalizationLift.label", "Minimum Personalization Lift")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Minimum Personalization Lift"}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

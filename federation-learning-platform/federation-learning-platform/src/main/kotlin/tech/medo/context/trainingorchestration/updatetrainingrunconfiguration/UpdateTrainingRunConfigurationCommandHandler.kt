@@ -52,9 +52,9 @@ class UpdateTrainingRunConfigurationCommandHandler(
                     "command" to "Update Training Run Configuration",
                     "projection" to "Model Artifact Catalog",
                     "field" to "initialModelId",
-                    "profile" to null
+                    "profile" to "Update Training Run Configuration"
                 ),
-                message = "Model Artifact Catalog selection is not eligible."
+                message = "Model Artifact Catalog selection is not eligible for Update Training Run Configuration."
             )
         }
         val runtimeEngineProfileCatalogReadModelSelection = runtimeEngineProfileCatalogReadModelRepository.findById(command.runtimeEngineProfileId)
@@ -66,9 +66,9 @@ class UpdateTrainingRunConfigurationCommandHandler(
                     "command" to "Update Training Run Configuration",
                     "projection" to "Runtime Engine Profile Catalog",
                     "field" to "runtimeEngineProfileId",
-                    "profile" to null
+                    "profile" to "Update Training Run Configuration"
                 ),
-                message = "Runtime Engine Profile Catalog selection is not eligible."
+                message = "Runtime Engine Profile Catalog selection is not eligible for Update Training Run Configuration."
             )
         }
         eventAppender.append(decision.decide(command, state))

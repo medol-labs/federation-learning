@@ -222,6 +222,9 @@ open class DefaultTrainingJobDashboardReadModelProjectionUpdater(
             entity.featureDomain = event.featureDomain
             entity.featureSchemaVersion = event.featureSchemaVersion
             entity.aggregationAlgorithm = event.aggregationAlgorithm
+            entity.personalizationMode = event.personalizationMode
+            entity.personalizationScope = event.personalizationScope
+            entity.personalizedArtifactPolicy = event.personalizedArtifactPolicy
             entity.secureAggregationRequired = event.secureAggregationRequired
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.maxRounds = event.maxRounds

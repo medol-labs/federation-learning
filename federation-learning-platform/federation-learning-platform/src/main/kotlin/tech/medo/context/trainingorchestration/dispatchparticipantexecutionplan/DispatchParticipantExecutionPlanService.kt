@@ -1,6 +1,7 @@
 package tech.medo.trainingorchestration.dispatchparticipantexecutionplan
 
 import java.util.UUID;
+import java.math.BigDecimal;
 
 interface DispatchParticipantExecutionPlanService {
     fun supports(input: DispatchParticipantExecutionPlanInput): Boolean = true
@@ -17,6 +18,15 @@ data class DispatchParticipantExecutionPlanInput(
     val roundNumber: Int,
     val runtimeId: UUID,
     val organizationId: UUID,
+    val personalizationMode: String?,
+    val personalizationScope: String?,
+    val personalizedArtifactPolicy: String?,
+    val personalizationMetric: String?,
+    val minimumPersonalizationLift: BigDecimal?,
+    val personalizationTargetType: String?,
+    val personalizationTargetId: UUID?,
+    val personalizationCohortId: UUID?,
+    val personalizationProfileId: UUID?,
     val baseModelId: UUID,
     val baseModelArtifactUri: String,
     val baseModelRegistryRef: String,
@@ -24,6 +34,9 @@ data class DispatchParticipantExecutionPlanInput(
     val baseModelFormat: String,
     val baseModelArtifactDigest: String,
     val baseModelSignatureUri: String?,
+    val personalizedBaseModelId: UUID?,
+    val personalizedBaseModelArtifactUri: String?,
+    val personalizedBaseModelArtifactDigest: String?,
     val runtimeEngineProfileId: UUID,
     val runtimeEngineProfileName: String?,
     val runtimeEnginePluginProfile: String,

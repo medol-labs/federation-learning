@@ -25,6 +25,7 @@ class ModelArtifactCatalogReadModelEntity : MetadataProjection {
     @Column(columnDefinition = "text")
     var modelDescription: String? = null
     var sourceType: String? = null
+    var modelScope: String? = null
     var modelArtifactUri: String? = null
     var modelRegistryRef: String? = null
     var modelFormat: String? = null
@@ -34,6 +35,11 @@ class ModelArtifactCatalogReadModelEntity : MetadataProjection {
     var trainingJobId: UUID? = null
     var roundId: UUID? = null
     var trainingJobObjective: String? = null
+    var personalizationMode: String? = null
+    var personalizationTargetType: String? = null
+    var personalizationTargetId: UUID? = null
+    var personalizationCohortId: UUID? = null
+    var baseGlobalModelId: UUID? = null
     @Enumerated(EnumType.STRING)
     var state: ModelArtifactStateEnum? = null
     var registeredAt: LocalDateTime? = null

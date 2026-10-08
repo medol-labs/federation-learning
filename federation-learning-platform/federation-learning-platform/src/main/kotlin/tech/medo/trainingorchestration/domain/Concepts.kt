@@ -25,6 +25,12 @@ object Concepts {
         val states = listOf("ParticipantsSelected", "Running", "CollectingUpdates", "Aggregating", "EvaluatingGlobalModel", "Completed", "Failed")
     }
 
+    data object PersonalizedModelResult {
+        const val NAME = "PersonalizedModelResult"
+        val slices = listOf("RecordPersonalizedModelResult", "PersonalizedModelCatalog")
+        val states = listOf("PersonalizedResultRecorded")
+    }
+
     data object ParticipantExecutionPlan {
         const val NAME = "ParticipantExecutionPlan"
         val slices = listOf("GenerateParticipantExecutionPlan", "DispatchParticipantExecutionPlan")

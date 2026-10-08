@@ -12,6 +12,7 @@ import tech.medo.dataexchange.events.DataExportCompletedEvent
 import tech.medo.dataexchange.events.DataExportFailedEvent
 import tech.medo.dataexchange.events.DataExportProcessingStartedEvent
 import tech.medo.dataexchange.events.DataExportRequestedEvent
+import tech.medo.shared.application.metadata.MetadataKeys
 import tech.medo.shared.application.metadata.ProjectionMetadata
 
 interface DataExportJobCatalogReadModelProjectionUpdater {
@@ -92,28 +93,35 @@ class DataExportJobCatalogReadModelProjectionUpdaterConfiguration {
         DefaultDataExportJobCatalogReadModelProjectionUpdater(repository)
 }
 
-@Namespace("readmodel-data-export-job-catalog")
+@Namespace("readmodel-federation-learning-platform-data-export-job-catalog")
 @Component
 class DataExportJobCatalogReadModelProjector(
     private val updater: DataExportJobCatalogReadModelProjectionUpdater
 ) {
+    private fun accepts(message: EventMessage): Boolean =
+        message.metadata()[MetadataKeys.DEPLOYMENT_NAME]?.toString() == AxonDataExportJobRequestPort.DEPLOYMENT_NAME
+
     @EventHandler
     fun on(event: DataExportRequestedEvent, message: EventMessage) {
+        if (!accepts(message)) return
         updater.update(event, message)
     }
 
     @EventHandler
     fun on(event: DataExportProcessingStartedEvent, message: EventMessage) {
+        if (!accepts(message)) return
         updater.update(event, message)
     }
 
     @EventHandler
     fun on(event: DataExportCompletedEvent, message: EventMessage) {
+        if (!accepts(message)) return
         updater.update(event, message)
     }
 
     @EventHandler
     fun on(event: DataExportFailedEvent, message: EventMessage) {
+        if (!accepts(message)) return
         updater.update(event, message)
     }
 }

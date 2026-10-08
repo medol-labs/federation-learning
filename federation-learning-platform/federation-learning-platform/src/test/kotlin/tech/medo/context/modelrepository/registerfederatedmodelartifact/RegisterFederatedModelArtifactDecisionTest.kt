@@ -21,6 +21,7 @@ class RegisterFederatedModelArtifactDecisionTest {
             modelVersion = "",
             modelDescription = null,
             sourceType = "",
+            modelScope = "",
             modelArtifactUri = "",
             modelRegistryRef = "",
             modelFormat = "",
@@ -44,6 +45,7 @@ class RegisterFederatedModelArtifactDecisionTest {
         assertEquals(command.modelVersion, event.modelVersion)
         assertEquals(command.modelDescription, event.modelDescription)
         assertEquals(command.sourceType, event.sourceType)
+        assertEquals(command.modelScope, event.modelScope)
         assertEquals(command.modelArtifactUri, event.modelArtifactUri)
         assertEquals(command.modelRegistryRef, event.modelRegistryRef)
         assertEquals(command.modelFormat, event.modelFormat)

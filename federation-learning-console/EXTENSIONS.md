@@ -656,6 +656,7 @@ export const pageOverrides = {
 | `modelVersion` | `string` | `model-artifact-catalog:field:modelVersion` | `formatValue/display text` |
 | `modelDescription` | `string` | `model-artifact-catalog:field:modelDescription` | `formatValue/display text` |
 | `sourceType` | `string` | `model-artifact-catalog:field:sourceType` | `formatValue/display text` |
+| `modelScope` | `string` | `model-artifact-catalog:field:modelScope` | `formatValue/display text` |
 | `modelArtifactUri` | `string` | `model-artifact-catalog:field:modelArtifactUri` | `formatValue/display text` |
 | `modelRegistryRef` | `string` | `model-artifact-catalog:field:modelRegistryRef` | `formatValue/display text` |
 | `modelFormat` | `string` | `model-artifact-catalog:field:modelFormat` | `formatValue/display text` |
@@ -665,6 +666,11 @@ export const pageOverrides = {
 | `trainingJobId` | `string` | `model-artifact-catalog:field:trainingJobId` | `formatValue/display text` |
 | `roundId` | `string` | `model-artifact-catalog:field:roundId` | `formatValue/display text` |
 | `trainingJobObjective` | `string` | `model-artifact-catalog:field:trainingJobObjective` | `formatValue/display text` |
+| `personalizationMode` | `string` | `model-artifact-catalog:field:personalizationMode` | `formatValue/display text` |
+| `personalizationTargetType` | `string` | `model-artifact-catalog:field:personalizationTargetType` | `formatValue/display text` |
+| `personalizationTargetId` | `string` | `model-artifact-catalog:field:personalizationTargetId` | `formatValue/display text` |
+| `personalizationCohortId` | `string` | `model-artifact-catalog:field:personalizationCohortId` | `formatValue/display text` |
+| `baseGlobalModelId` | `string` | `model-artifact-catalog:field:baseGlobalModelId` | `formatValue/display text` |
 | `state` | `&#34;Registered&#34;` | `model-artifact-catalog:field:state` | `Select/display text` |
 | `registeredAt` | `string` | `model-artifact-catalog:field:registeredAt` | `formatValue/display text` |
 
@@ -836,6 +842,71 @@ export const pageOverrides = {
 | `permissionCode` | `string` | `permission-catalog:field:permissionCode` | `formatValue/display text` |
 | `permissionName` | `string` | `permission-catalog:field:permissionName` | `formatValue/display text` |
 | `description` | `string` | `permission-catalog:field:description` | `formatValue/display text` |
+
+### Personalized Model Catalog
+
+| Property | Value |
+| --- | --- |
+| Resource name | `personalized_model_catalog` |
+| Route | `/personalized-model-catalog` |
+| Backend module | `federation-learning-platform` |
+| Data provider | `federation-learning-platform` |
+| Generated list page | `src/contexts/trainingorchestration/slices/personalized-model-catalog/list.tsx` |
+| Generated show page | `src/contexts/trainingorchestration/slices/personalized-model-catalog/show.tsx` |
+| Resource metadata override | `resourceOverrides[{ name: "personalized_model_catalog" }]` |
+| Menu icon request | `resolveMenuIcon({ type: "resource", name: "personalized_model_catalog", parent: "trainingorchestration" })` |
+
+#### Page Overrides
+
+| View | Override key | Generated fallback |
+| --- | --- | --- |
+| `list` | `personalized-model-catalog:list` | `src/contexts/trainingorchestration/slices/personalized-model-catalog/list.tsx` |
+| `show` | `personalized-model-catalog:show` | `src/contexts/trainingorchestration/slices/personalized-model-catalog/show.tsx` |
+
+Example:
+
+```tsx
+// src/domain/page-overrides.tsx
+import { MyPersonalizedModelCatalogList } from "./pages/my-personalized-model-catalog-list";
+
+export const pageOverrides = {
+  "personalized-model-catalog:list": <MyPersonalizedModelCatalogList />,
+};
+```
+
+#### Commands And Row Actions
+
+| Command | Override key | Generated fallback | Fields |
+| --- | --- | --- | --- |
+| _(none)_ | | | |
+
+#### Field Renderers
+
+| Field | Type | Renderer override id | Default renderer |
+| --- | --- | --- | --- |
+| `personalizedModelId` | `string` | `personalized-model-catalog:field:personalizedModelId` | `formatValue/display text` |
+| `modelUpdateSubmissionId` | `string` | `personalized-model-catalog:field:modelUpdateSubmissionId` | `formatValue/display text` |
+| `trainingJobId` | `string` | `personalized-model-catalog:field:trainingJobId` | `formatValue/display text` |
+| `trainingRunConfigurationId` | `string` | `personalized-model-catalog:field:trainingRunConfigurationId` | `formatValue/display text` |
+| `roundId` | `string` | `personalized-model-catalog:field:roundId` | `formatValue/display text` |
+| `roundNumber` | `number` | `personalized-model-catalog:field:roundNumber` | `formatValue/display text` |
+| `runtimeId` | `string` | `personalized-model-catalog:field:runtimeId` | `formatValue/display text` |
+| `featureSchemaId` | `string` | `personalized-model-catalog:field:featureSchemaId` | `formatValue/display text` |
+| `personalizationMode` | `string` | `personalized-model-catalog:field:personalizationMode` | `formatValue/display text` |
+| `personalizationScope` | `string` | `personalized-model-catalog:field:personalizationScope` | `formatValue/display text` |
+| `personalizedArtifactPolicy` | `string` | `personalized-model-catalog:field:personalizedArtifactPolicy` | `formatValue/display text` |
+| `personalizationMetric` | `string` | `personalized-model-catalog:field:personalizationMetric` | `formatValue/display text` |
+| `minimumPersonalizationLift` | `string` | `personalized-model-catalog:field:minimumPersonalizationLift` | `formatValue/display text` |
+| `personalizationTargetType` | `string` | `personalized-model-catalog:field:personalizationTargetType` | `formatValue/display text` |
+| `personalizationTargetId` | `string` | `personalized-model-catalog:field:personalizationTargetId` | `formatValue/display text` |
+| `personalizationCohortId` | `string` | `personalized-model-catalog:field:personalizationCohortId` | `formatValue/display text` |
+| `personalizationProfileId` | `string` | `personalized-model-catalog:field:personalizationProfileId` | `formatValue/display text` |
+| `personalizedModelArtifactRef` | `string` | `personalized-model-catalog:field:personalizedModelArtifactRef` | `formatValue/display text` |
+| `personalizedModelArtifactDigest` | `string` | `personalized-model-catalog:field:personalizedModelArtifactDigest` | `formatValue/display text` |
+| `personalizedMetricsArtifactRef` | `string` | `personalized-model-catalog:field:personalizedMetricsArtifactRef` | `formatValue/display text` |
+| `personalizedAccuracy` | `string` | `personalized-model-catalog:field:personalizedAccuracy` | `formatValue/display text` |
+| `personalizationLift` | `string` | `personalized-model-catalog:field:personalizationLift` | `formatValue/display text` |
+| `state` | `&#34;PersonalizedResultRecorded&#34;` | `personalized-model-catalog:field:state` | `Select/display text` |
 
 ### Role Catalog
 
@@ -2068,6 +2139,9 @@ export const pageOverrides = {
 | `objective` | `string` | `training-job-dashboard:field:objective` | `formatValue/display text` |
 | `strategyName` | `string` | `training-job-dashboard:field:strategyName` | `formatValue/display text` |
 | `aggregationAlgorithm` | `string` | `training-job-dashboard:field:aggregationAlgorithm` | `formatValue/display text` |
+| `personalizationMode` | `string` | `training-job-dashboard:field:personalizationMode` | `formatValue/display text` |
+| `personalizationScope` | `string` | `training-job-dashboard:field:personalizationScope` | `formatValue/display text` |
+| `personalizedArtifactPolicy` | `string` | `training-job-dashboard:field:personalizedArtifactPolicy` | `formatValue/display text` |
 | `secureAggregationRequired` | `boolean` | `training-job-dashboard:field:secureAggregationRequired` | `formatValue/display text` |
 | `state` | `&#34;Draft&#34; | &#34;Submitted&#34; | &#34;Running&#34; | &#34;Paused&#34; | &#34;Canceled&#34; | &#34;Completed&#34;` | `training-job-dashboard:field:state` | `Select/display text` |
 | `workflowStage` | `string` | `training-job-dashboard:field:workflowStage` | `formatValue/display text` |
@@ -2088,6 +2162,10 @@ export const pageOverrides = {
 | `roundProgressPercent` | `number` | `training-job-dashboard:field:roundProgressPercent` | `formatValue/display text` |
 | `globalAccuracy` | `string` | `training-job-dashboard:field:globalAccuracy` | `formatValue/display text` |
 | `finalModelId` | `string` | `training-job-dashboard:field:finalModelId` | `formatValue/display text` |
+| `personalizedModelCount` | `number` | `training-job-dashboard:field:personalizedModelCount` | `formatValue/display text` |
+| `meanPersonalizedAccuracy` | `string` | `training-job-dashboard:field:meanPersonalizedAccuracy` | `formatValue/display text` |
+| `worstPersonalizedAccuracy` | `string` | `training-job-dashboard:field:worstPersonalizedAccuracy` | `formatValue/display text` |
+| `meanPersonalizationLift` | `string` | `training-job-dashboard:field:meanPersonalizationLift` | `formatValue/display text` |
 | `stopReason` | `string` | `training-job-dashboard:field:stopReason` | `formatValue/display text` |
 
 ### Training Participant Eligibility
@@ -2210,7 +2288,7 @@ export const pageOverrides = {
 | Command | Override key | Generated fallback | Fields |
 | --- | --- | --- | --- |
 | `cancelTrainingJob` | `training-round-progress:cancelTrainingJob` | `src/contexts/trainingorchestration/slices/cancel-training-job/cancel-training-job-training-round-progress.tsx` | `cancelReason` |
-| `submitModelUpdateSubmission` | `training-round-progress:submitModelUpdateSubmission` | `src/contexts/trainingorchestration/slices/submit-model-update-submission/submit-model-update-submission.tsx` | `executionSessionId`, `executionPlanId`, `trainingJobId`, `trainingRunConfigurationId`, `roundId`, `roundExecutionId`, `runtimeId`, `featureSchemaId`, `secureAggregationRequired`, `secureAggregationSessionId`, `encryptionScheme`, `publicKeyVersion`, `localModelId`, `updateArtifactId`, `artifactRef`, `artifactDigest`, `updateProtectionType`, `trainingLoss` |
+| `submitModelUpdateSubmission` | `training-round-progress:submitModelUpdateSubmission` | `src/contexts/trainingorchestration/slices/submit-model-update-submission/submit-model-update-submission.tsx` | `executionSessionId`, `executionPlanId`, `trainingJobId`, `trainingRunConfigurationId`, `roundId`, `roundExecutionId`, `runtimeId`, `featureSchemaId`, `personalizationMode`, `personalizationScope`, `personalizedArtifactPolicy`, `personalizationMetric`, `minimumPersonalizationLift`, `personalizationTargetType`, `personalizationTargetId`, `personalizationCohortId`, `personalizationProfileId`, `secureAggregationRequired`, `secureAggregationSessionId`, `encryptionScheme`, `publicKeyVersion`, `localModelId`, `updateArtifactId`, `artifactRef`, `artifactDigest`, `updateProtectionType`, `trainingLoss`, `personalizedArtifactAvailable`, `personalizedModelId`, `personalizedModelArtifactRef`, `personalizedModelArtifactDigest`, `personalizedMetricsArtifactRef`, `personalizedAccuracy`, `personalizationLift` |
 | `submitTrainingJob` | `training-round-progress:submitTrainingJob` | `src/contexts/trainingorchestration/slices/submit-training-job/submit-training-job-training-round-progress.tsx` | _(none)_ |
 | `retryTrainingRoundParticipantSelection` | `training-round-progress:retryTrainingRoundParticipantSelection` | `src/contexts/trainingorchestration/slices/retry-training-round-participant-selection/retry-training-round-participant-selection-training-round-progress.tsx` | _(none)_ |
 | `pauseTrainingJob` | `training-round-progress:pauseTrainingJob` | `src/contexts/trainingorchestration/slices/pause-training-job/pause-training-job-training-round-progress.tsx` | `pauseReason` |
@@ -2308,8 +2386,8 @@ export const pageOverrides = {
 
 | Command | Override key | Generated fallback | Fields |
 | --- | --- | --- | --- |
-| `defineTrainingRunConfiguration` | `training-run-configuration-catalog:defineTrainingRunConfiguration` | `src/contexts/trainingorchestration/slices/define-training-run-configuration/define-training-run-configuration.tsx` | `configurationName`, `federationId`, `featureSchemaId`, `initialModelId`, `runtimeEngineProfileId`, `strategyName`, `aggregationAlgorithm`, `maxRounds`, `minimumNodesPerRound`, `roundTimeoutSeconds`, `nodeResponseTimeoutSeconds`, `localEpochs`, `batchSize`, `learningRate`, `optimizer`, `lossFunction`, `gradientClippingNorm`, `secureAggregationRequired`, `minimumAccuracy`, `minimumFairnessScore` |
-| `updateTrainingRunConfiguration` | `training-run-configuration-catalog:updateTrainingRunConfiguration` | `src/contexts/trainingorchestration/slices/update-training-run-configuration/update-training-run-configuration.tsx` | `configurationName`, `federationId`, `featureSchemaId`, `initialModelId`, `runtimeEngineProfileId`, `strategyName`, `aggregationAlgorithm`, `maxRounds`, `minimumNodesPerRound`, `roundTimeoutSeconds`, `nodeResponseTimeoutSeconds`, `localEpochs`, `batchSize`, `learningRate`, `optimizer`, `lossFunction`, `gradientClippingNorm`, `secureAggregationRequired`, `minimumAccuracy`, `minimumFairnessScore`, `updateReason` |
+| `defineTrainingRunConfiguration` | `training-run-configuration-catalog:defineTrainingRunConfiguration` | `src/contexts/trainingorchestration/slices/define-training-run-configuration/define-training-run-configuration.tsx` | `configurationName`, `federationId`, `featureSchemaId`, `initialModelId`, `runtimeEngineProfileId`, `strategyName`, `aggregationAlgorithm`, `personalizationMode`, `personalizationScope`, `personalizedArtifactPolicy`, `personalizationMetric`, `minimumPersonalizationLift`, `maxRounds`, `minimumNodesPerRound`, `roundTimeoutSeconds`, `nodeResponseTimeoutSeconds`, `localEpochs`, `batchSize`, `learningRate`, `optimizer`, `lossFunction`, `gradientClippingNorm`, `secureAggregationRequired`, `minimumAccuracy`, `minimumFairnessScore` |
+| `updateTrainingRunConfiguration` | `training-run-configuration-catalog:updateTrainingRunConfiguration` | `src/contexts/trainingorchestration/slices/update-training-run-configuration/update-training-run-configuration.tsx` | `configurationName`, `federationId`, `featureSchemaId`, `initialModelId`, `runtimeEngineProfileId`, `strategyName`, `aggregationAlgorithm`, `personalizationMode`, `personalizationScope`, `personalizedArtifactPolicy`, `personalizationMetric`, `minimumPersonalizationLift`, `maxRounds`, `minimumNodesPerRound`, `roundTimeoutSeconds`, `nodeResponseTimeoutSeconds`, `localEpochs`, `batchSize`, `learningRate`, `optimizer`, `lossFunction`, `gradientClippingNorm`, `secureAggregationRequired`, `minimumAccuracy`, `minimumFairnessScore`, `updateReason` |
 | `createTrainingJob` | `training-run-configuration-catalog:createTrainingJob` | `src/contexts/trainingorchestration/slices/create-training-job/create-training-job-training-run-configuration-catalog.tsx` | `federationId`, `trainingRunConfigurationId`, `objective` |
 
 #### Field Renderers
@@ -2339,6 +2417,11 @@ export const pageOverrides = {
 | `runtimeEngineImageDigest` | `string` | `training-run-configuration-catalog:field:runtimeEngineImageDigest` | `formatValue/display text` |
 | `strategyName` | `string` | `training-run-configuration-catalog:field:strategyName` | `formatValue/display text` |
 | `aggregationAlgorithm` | `string` | `training-run-configuration-catalog:field:aggregationAlgorithm` | `formatValue/display text` |
+| `personalizationMode` | `string` | `training-run-configuration-catalog:field:personalizationMode` | `formatValue/display text` |
+| `personalizationScope` | `string` | `training-run-configuration-catalog:field:personalizationScope` | `formatValue/display text` |
+| `personalizedArtifactPolicy` | `string` | `training-run-configuration-catalog:field:personalizedArtifactPolicy` | `formatValue/display text` |
+| `personalizationMetric` | `string` | `training-run-configuration-catalog:field:personalizationMetric` | `formatValue/display text` |
+| `minimumPersonalizationLift` | `string` | `training-run-configuration-catalog:field:minimumPersonalizationLift` | `formatValue/display text` |
 | `maxRounds` | `number` | `training-run-configuration-catalog:field:maxRounds` | `formatValue/display text` |
 | `minimumNodesPerRound` | `number` | `training-run-configuration-catalog:field:minimumNodesPerRound` | `formatValue/display text` |
 | `roundTimeoutSeconds` | `number` | `training-run-configuration-catalog:field:roundTimeoutSeconds` | `formatValue/display text` |

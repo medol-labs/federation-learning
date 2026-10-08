@@ -47,9 +47,9 @@ class InviteParticipantCommandHandler(
                     "command" to "Invite Participant",
                     "projection" to "Organization Directory",
                     "field" to "organizationId",
-                    "profile" to null
+                    "profile" to "Invite Participant"
                 ),
-                message = "Organization Directory selection is not eligible."
+                message = "Organization Directory selection is not eligible for Invite Participant."
             )
         }
         eventAppender.append(decision.decide(command))

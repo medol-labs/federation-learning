@@ -270,15 +270,175 @@ export const TrainingRoundProgressSubmitModelUpdateSubmission = () => {
                     field.onChange(value);
                   }}
                   placeholder={t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.featureSchemaId.placeholder", "Select Feature Schema Id")}
-                  filters={[{"field":"schemaStatus","operator":"eq","value":"Published"}]}
                   meta={{
                     idField: "featureSchemaId",
                     label: t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.featureSchemaId.label", "Feature Schema Catalog"),
                     aggregateRoute: "featureschema",
                     queryRoute: "featureschemacatalog",
-                    queryFields: ["schemaStatus"],
                   }}
                 />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizationMode"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizationMode.label", "Personalization Mode")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalization Mode"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizationScope"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizationScope.label", "Personalization Scope")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalization Scope"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizedArtifactPolicy"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizedArtifactPolicy.label", "Personalized Artifact Policy")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalized Artifact Policy"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizationMetric"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizationMetric.label", "Personalization Metric")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalization Metric"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="minimumPersonalizationLift"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.minimumPersonalizationLift.label", "Minimum Personalization Lift")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Minimum Personalization Lift"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizationTargetType"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizationTargetType.label", "Personalization Target Type")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalization Target Type"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizationTargetId"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizationTargetId.label", "Personalization Target Id")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalization Target Id"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizationCohortId"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizationCohortId.label", "Personalization Cohort Id")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalization Cohort Id"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizationProfileId"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizationProfileId.label", "Personalization Profile Id")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalization Profile Id"}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -475,6 +635,152 @@ export const TrainingRoundProgressSubmitModelUpdateSubmission = () => {
                     {...field}
                     value={field.value || ""}
                     placeholder={"Enter Training Loss"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizedArtifactAvailable"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizedArtifactAvailable.label", "Personalized Artifact Available")}</FormLabel>
+                <Select
+                  value={field.value === undefined || field.value === null ? undefined : String(field.value)}
+                  onValueChange={(value) => field.onChange(value === "true")}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizedArtifactAvailable.placeholder", "Select Personalized Artifact Available")} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="true">{t("values.boolean.true", "True")}</SelectItem>
+                    <SelectItem value="false">{t("values.boolean.false", "False")}</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizedModelId"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizedModelId.label", "Personalized Model Id")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="personalized_model_catalog"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="personalizationMode"
+                  optionValue="personalizedModelId"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizedModelId.placeholder", "Select Personalized Model Id")}
+                  filters={[{"field":"state","operator":"eq","value":"PersonalizedResultRecorded"}]}
+                  meta={{
+                    idField: "personalizedModelId",
+                    label: t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizedModelId.label", "Personalized Model Catalog"),
+                    aggregateRoute: "personalizedmodelresult",
+                    queryRoute: "personalizedmodelcatalog",
+                    queryFields: ["state"],
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizedModelArtifactRef"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizedModelArtifactRef.label", "Personalized Model Artifact Ref")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalized Model Artifact Ref"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizedModelArtifactDigest"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizedModelArtifactDigest.label", "Personalized Model Artifact Digest")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalized Model Artifact Digest"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizedMetricsArtifactRef"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizedMetricsArtifactRef.label", "Personalized Metrics Artifact Ref")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalized Metrics Artifact Ref"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizedAccuracy"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizedAccuracy.label", "Personalized Accuracy")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalized Accuracy"}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalizationLift"
+            rules={{}}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.training_round_progress.commands.submitModelUpdateSubmission.fields.personalizationLift.label", "Personalization Lift")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder={"Enter Personalization Lift"}
                   />
                 </FormControl>
                 <FormMessage />

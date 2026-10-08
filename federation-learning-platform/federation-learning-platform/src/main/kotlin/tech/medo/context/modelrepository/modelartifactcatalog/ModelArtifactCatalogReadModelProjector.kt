@@ -13,6 +13,7 @@ import tech.medo.shared.application.metadata.ProjectionMetadata
 
 import tech.medo.modelrepository.events.ModelArtifactRegisteredEvent
 import tech.medo.modelrepository.events.FederatedModelArtifactRegisteredEvent
+import tech.medo.modelrepository.events.PersonalizedModelArtifactRegisteredEvent
 import tech.medo.trainingorchestration.events.TrainingJobCreatedEvent
 import tech.medo.trainingorchestration.events.GlobalModelUpdatedEvent
 import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum
@@ -28,6 +29,11 @@ interface ModelArtifactCatalogReadModelProjectionUpdater {
 
     fun update(
         event: FederatedModelArtifactRegisteredEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: PersonalizedModelArtifactRegisteredEvent,
         message: EventMessage
     )
 
@@ -67,6 +73,7 @@ open class DefaultModelArtifactCatalogReadModelProjectionUpdater(
             entity.modelSignatureUri = event.modelSignatureUri
             entity.modelSizeBytes = event.modelSizeBytes
             entity.state = ModelArtifactStateEnum.Registered
+            entity.baseGlobalModelId = event.modelId
             entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
         repository.save(entity)
@@ -88,6 +95,7 @@ open class DefaultModelArtifactCatalogReadModelProjectionUpdater(
             entity.modelVersion = event.modelVersion
             entity.modelDescription = event.modelDescription
             entity.sourceType = event.sourceType
+            entity.modelScope = event.modelScope
             entity.modelArtifactUri = event.modelArtifactUri
             entity.modelRegistryRef = event.modelRegistryRef
             entity.modelFormat = event.modelFormat
@@ -97,6 +105,44 @@ open class DefaultModelArtifactCatalogReadModelProjectionUpdater(
             entity.trainingJobId = event.trainingJobId
             entity.roundId = event.roundId
             entity.trainingJobObjective = event.trainingJobObjective
+            entity.state = ModelArtifactStateEnum.Registered
+            entity.baseGlobalModelId = event.modelId
+            entity.registeredAt = eventTime(message)
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+
+    }
+
+    @Transactional
+    open override fun update(
+        event: PersonalizedModelArtifactRegisteredEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(event.modelId) ?: ModelArtifactCatalogReadModelProjection().apply {
+                this.modelId = event.modelId
+        }
+            entity.modelId = event.modelId
+            entity.modelName = event.modelName
+            entity.modelPlugin = event.modelPlugin
+            entity.modelVersion = event.modelVersion
+            entity.modelDescription = event.modelDescription
+            entity.sourceType = event.sourceType
+            entity.modelScope = event.modelScope
+            entity.modelArtifactUri = event.modelArtifactUri
+            entity.modelRegistryRef = event.modelRegistryRef
+            entity.modelFormat = event.modelFormat
+            entity.modelArtifactDigest = event.modelArtifactDigest
+            entity.modelSignatureUri = event.modelSignatureUri
+            entity.modelSizeBytes = event.modelSizeBytes
+            entity.trainingJobId = event.trainingJobId
+            entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
+            entity.personalizationMode = event.personalizationMode
+            entity.personalizationTargetType = event.personalizationTargetType
+            entity.personalizationTargetId = event.personalizationTargetId
+            entity.personalizationCohortId = event.personalizationCohortId
+            entity.baseGlobalModelId = event.baseGlobalModelId
             entity.state = ModelArtifactStateEnum.Registered
             entity.registeredAt = eventTime(message)
             ProjectionMetadata.assign(entity, message)
@@ -149,6 +195,14 @@ class ModelArtifactCatalogReadModelProjector(
     @EventHandler
     fun on(
         event: FederatedModelArtifactRegisteredEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: PersonalizedModelArtifactRegisteredEvent,
         message: EventMessage
     ) {
         updater.update(event, message)

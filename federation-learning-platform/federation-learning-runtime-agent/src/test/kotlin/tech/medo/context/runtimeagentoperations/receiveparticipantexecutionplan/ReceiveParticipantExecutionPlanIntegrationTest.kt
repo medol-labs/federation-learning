@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import tech.medo.runtimeagentoperations.receiveparticipantexecutionplan.ReceiveParticipantExecutionPlanCommand
 import java.util.UUID
+import java.math.BigDecimal
 
 @SpringBootTest(properties = [
     "spring.docker.compose.enabled=false",
@@ -35,6 +36,15 @@ class ReceiveParticipantExecutionPlanIntegrationTest(
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             baseModelId = java.util.UUID.randomUUID(),
             baseModelArtifactUri = "",
             baseModelRegistryRef = "",
@@ -42,6 +52,9 @@ class ReceiveParticipantExecutionPlanIntegrationTest(
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            personalizedBaseModelId = null,
+            personalizedBaseModelArtifactUri = null,
+            personalizedBaseModelArtifactDigest = null,
             runtimeEngineProfileId = java.util.UUID.randomUUID(),
             runtimeEngineProfileName = null,
             runtimeEnginePluginProfile = "",

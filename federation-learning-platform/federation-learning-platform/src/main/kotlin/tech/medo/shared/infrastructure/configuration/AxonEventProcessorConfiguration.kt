@@ -11,6 +11,10 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("audit-trail").notCustomized()
 
     @Bean
+    fun automationFederationLearningPlatformDataExchangeExecuteDataExportEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("automation-federation-learning-platform-data-exchange-execute-data-export").notCustomized()
+
+    @Bean
     fun automationDatasetGovernanceRecordRuntimeDatasetMetadataEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("automation-dataset-governance-record-runtime-dataset-metadata").notCustomized()
 
@@ -25,6 +29,10 @@ class AxonEventProcessorConfiguration {
     @Bean
     fun automationModelRepositoryRegisterFederatedModelArtifactEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("automation-model-repository-register-federated-model-artifact").notCustomized()
+
+    @Bean
+    fun automationModelRepositoryRegisterPersonalizedModelArtifactEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("automation-model-repository-register-personalized-model-artifact").notCustomized()
 
     @Bean
     fun automationRuntimeGovernanceActivateRuntimeIdentityEventProcessorDefinition(): EventProcessorDefinition =
@@ -111,6 +119,10 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("automation-training-orchestration-lock-training-run-configuration").notCustomized()
 
     @Bean
+    fun automationTrainingOrchestrationRecordPersonalizedModelResultEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("automation-training-orchestration-record-personalized-model-result").notCustomized()
+
+    @Bean
     fun automationTrainingOrchestrationRequestSecureAggregationEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("automation-training-orchestration-request-secure-aggregation").notCustomized()
 
@@ -149,6 +161,10 @@ class AxonEventProcessorConfiguration {
     @Bean
     fun integrationModelRepositoryRegisterFederatedModelArtifactEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("integration-model-repository-register-federated-model-artifact").notCustomized()
+
+    @Bean
+    fun integrationModelRepositoryRegisterPersonalizedModelArtifactEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("integration-model-repository-register-personalized-model-artifact").notCustomized()
 
     @Bean
     fun integrationRuntimeGovernanceActivateRuntimeIdentityEventProcessorDefinition(): EventProcessorDefinition =
@@ -235,6 +251,10 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("integration-training-orchestration-lock-training-run-configuration").notCustomized()
 
     @Bean
+    fun integrationTrainingOrchestrationRecordPersonalizedModelResultEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("integration-training-orchestration-record-personalized-model-result").notCustomized()
+
+    @Bean
     fun integrationTrainingOrchestrationRequestSecureAggregationEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("integration-training-orchestration-request-secure-aggregation").notCustomized()
 
@@ -257,6 +277,10 @@ class AxonEventProcessorConfiguration {
     @Bean
     fun integrationTrainingOrchestrationSubmitGlobalModelEvaluationEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("integration-training-orchestration-submit-global-model-evaluation").notCustomized()
+
+    @Bean
+    fun readmodelFederationLearningPlatformDataExportJobCatalogEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("readmodel-federation-learning-platform-data-export-job-catalog").notCustomized()
 
     @Bean
     fun readmodelCurrentRecommendedFeatureSchemaCatalogEventProcessorDefinition(): EventProcessorDefinition =
@@ -285,6 +309,10 @@ class AxonEventProcessorConfiguration {
     @Bean
     fun readmodelOrganizationDirectoryEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("readmodel-organization-directory").notCustomized()
+
+    @Bean
+    fun readmodelPersonalizedModelCatalogEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("readmodel-personalized-model-catalog").notCustomized()
 
     @Bean
     fun readmodelRuntimeAgentEndpointCatalogEventProcessorDefinition(): EventProcessorDefinition =

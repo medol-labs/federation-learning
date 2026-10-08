@@ -43,6 +43,11 @@ type TrainingRunConfigurationCatalogRecord = {
   runtimeEngineImageDigest?: string;
   strategyName: string;
   aggregationAlgorithm: string;
+  personalizationMode?: string;
+  personalizationScope?: string;
+  personalizedArtifactPolicy?: string;
+  personalizationMetric?: string;
+  minimumPersonalizationLift?: string;
   maxRounds: number;
   minimumNodesPerRound: number;
   roundTimeoutSeconds: number;
@@ -724,6 +729,141 @@ export const TrainingRunConfigurationCatalogList = () => {
             },
           ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "AGGREGATION_ALGORITHM"),
       }),
+      columnHelper.accessor("personalizationMode", {
+        id: "personalizationMode",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.personalizationMode.label", "Personalization Mode")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.personalizationMode.label", "Personalization Mode"),
+          dictionaryCode: "PERSONALIZATION_MODE",
+          placeholder: "Enter Personalization Mode",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:personalizationMode",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "personalizationMode",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "PERSONALIZATION_MODE"),
+      }),
+      columnHelper.accessor("personalizationScope", {
+        id: "personalizationScope",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.personalizationScope.label", "Personalization Scope")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.personalizationScope.label", "Personalization Scope"),
+          dictionaryCode: "PERSONALIZATION_SCOPE",
+          placeholder: "Enter Personalization Scope",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:personalizationScope",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "personalizationScope",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "PERSONALIZATION_SCOPE"),
+      }),
+      columnHelper.accessor("personalizedArtifactPolicy", {
+        id: "personalizedArtifactPolicy",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.personalizedArtifactPolicy.label", "Personalized Artifact Policy")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.personalizedArtifactPolicy.label", "Personalized Artifact Policy"),
+          dictionaryCode: "PERSONALIZED_ARTIFACT_POLICY",
+          placeholder: "Enter Personalized Artifact Policy",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:personalizedArtifactPolicy",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "personalizedArtifactPolicy",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "PERSONALIZED_ARTIFACT_POLICY"),
+      }),
+      columnHelper.accessor("personalizationMetric", {
+        id: "personalizationMetric",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.personalizationMetric.label", "Personalization Metric")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.personalizationMetric.label", "Personalization Metric"),
+          dictionaryCode: "MODEL_EVALUATION_METRIC",
+          placeholder: "Enter Personalization Metric",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:personalizationMetric",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "personalizationMetric",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "MODEL_EVALUATION_METRIC"),
+      }),
+      columnHelper.accessor("minimumPersonalizationLift", {
+        id: "minimumPersonalizationLift",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_run_configuration_catalog.fields.minimumPersonalizationLift.label", "Minimum Personalization Lift")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_run_configuration_catalog.fields.minimumPersonalizationLift.label", "Minimum Personalization Lift"),
+          placeholder: "Enter Minimum Personalization Lift",
+          variant: "number",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingRunConfigurationCatalogRecord>(
+            frontendComposition,
+            "field:training-run-configuration-catalog:display:minimumPersonalizationLift",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-run-configuration-catalog",
+              field: "minimumPersonalizationLift",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("maxRounds", {
         id: "maxRounds",
         header: ({ column }) => (
@@ -1187,6 +1327,11 @@ export const TrainingRunConfigurationCatalogList = () => {
                       runtimeEngineProfileId: row.original.runtimeEngineProfileId,
                       strategyName: row.original.strategyName,
                       aggregationAlgorithm: row.original.aggregationAlgorithm,
+                      personalizationMode: row.original.personalizationMode,
+                      personalizationScope: row.original.personalizationScope,
+                      personalizedArtifactPolicy: row.original.personalizedArtifactPolicy,
+                      personalizationMetric: row.original.personalizationMetric,
+                      minimumPersonalizationLift: row.original.minimumPersonalizationLift,
                       maxRounds: row.original.maxRounds,
                       minimumNodesPerRound: row.original.minimumNodesPerRound,
                       roundTimeoutSeconds: row.original.roundTimeoutSeconds,
@@ -1245,7 +1390,7 @@ export const TrainingRunConfigurationCatalogList = () => {
         tableName: "training_run_configuration_catalog_read_model_entity",
         idField: "trainingRunConfigurationId",
         idFields: ["trainingRunConfigurationId"],
-        queryFields: ["trainingRunConfigurationId","configurationName","federationId","featureSchemaId","initialModelId","initialModelName","initialModelPlugin","initialModelVersion","federationName","featureDomain","featureSchemaVersion","initialModelArtifactUri","initialModelRegistryRef","initialModelFormat","initialModelArtifactDigest","initialModelSignatureUri","runtimeEngineProfileId","runtimeEngineProfileName","runtimeEnginePluginProfile","runtimeEngineImage","runtimeEngineImageDigest","strategyName","aggregationAlgorithm","maxRounds","minimumNodesPerRound","roundTimeoutSeconds","nodeResponseTimeoutSeconds","localEpochs","batchSize","learningRate","optimizer","lossFunction","gradientClippingNorm","secureAggregationRequired","minimumAccuracy","minimumFairnessScore","updateReason","lockedByTrainingJobId","state"],
+        queryFields: ["trainingRunConfigurationId","configurationName","federationId","featureSchemaId","initialModelId","initialModelName","initialModelPlugin","initialModelVersion","federationName","featureDomain","featureSchemaVersion","initialModelArtifactUri","initialModelRegistryRef","initialModelFormat","initialModelArtifactDigest","initialModelSignatureUri","runtimeEngineProfileId","runtimeEngineProfileName","runtimeEnginePluginProfile","runtimeEngineImage","runtimeEngineImageDigest","strategyName","aggregationAlgorithm","personalizationMode","personalizationScope","personalizedArtifactPolicy","personalizationMetric","minimumPersonalizationLift","maxRounds","minimumNodesPerRound","roundTimeoutSeconds","nodeResponseTimeoutSeconds","localEpochs","batchSize","learningRate","optimizer","lossFunction","gradientClippingNorm","secureAggregationRequired","minimumAccuracy","minimumFairnessScore","updateReason","lockedByTrainingJobId","state"],
         label: t("resources.training_run_configuration_catalog.label", "Training Run Configuration Catalog"),
         aggregateRoute: "trainingrunconfiguration",
         queryRoute: "trainingrunconfigurationcatalog",

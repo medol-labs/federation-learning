@@ -40,6 +40,9 @@ class TrainingJobDashboardReadModelQueryService(
             criteria.objective?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<String>> { root -> root.get("objective") })) }
             criteria.strategyName?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<String>> { root -> root.get("strategyName") })) }
             criteria.aggregationAlgorithm?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<String>> { root -> root.get("aggregationAlgorithm") })) }
+            criteria.personalizationMode?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<String>> { root -> root.get("personalizationMode") })) }
+            criteria.personalizationScope?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<String>> { root -> root.get("personalizationScope") })) }
+            criteria.personalizedArtifactPolicy?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<String>> { root -> root.get("personalizedArtifactPolicy") })) }
             criteria.secureAggregationRequired?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<Boolean>> { root -> root.get("secureAggregationRequired") })) }
             criteria.state?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<TrainingJobStateEnum>> { root -> root.get("state") })) }
             criteria.workflowStage?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<String>> { root -> root.get("workflowStage") })) }
@@ -59,6 +62,10 @@ class TrainingJobDashboardReadModelQueryService(
             criteria.roundProgressPercent?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<Int>> { root -> root.get("roundProgressPercent") })) }
             criteria.globalAccuracy?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<BigDecimal>> { root -> root.get("globalAccuracy") })) }
             criteria.finalModelId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("finalModelId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.personalizedModelCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<Int>> { root -> root.get("personalizedModelCount") })) }
+            criteria.meanPersonalizedAccuracy?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<BigDecimal>> { root -> root.get("meanPersonalizedAccuracy") })) }
+            criteria.worstPersonalizedAccuracy?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<BigDecimal>> { root -> root.get("worstPersonalizedAccuracy") })) }
+            criteria.meanPersonalizationLift?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<BigDecimal>> { root -> root.get("meanPersonalizationLift") })) }
             criteria.stopReason?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<String>> { root -> root.get("stopReason") })) }
             criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
         }
@@ -128,6 +135,9 @@ class TrainingJobDashboardReadModelQueryService(
             it.objective = this@toProjection.objective
             it.strategyName = this@toProjection.strategyName
             it.aggregationAlgorithm = this@toProjection.aggregationAlgorithm
+            it.personalizationMode = this@toProjection.personalizationMode
+            it.personalizationScope = this@toProjection.personalizationScope
+            it.personalizedArtifactPolicy = this@toProjection.personalizedArtifactPolicy
             it.secureAggregationRequired = this@toProjection.secureAggregationRequired
             it.state = this@toProjection.state
             it.workflowStage = this@toProjection.workflowStage
@@ -148,6 +158,10 @@ class TrainingJobDashboardReadModelQueryService(
             it.roundProgressPercent = this@toProjection.roundProgressPercent
             it.globalAccuracy = this@toProjection.globalAccuracy
             it.finalModelId = this@toProjection.finalModelId
+            it.personalizedModelCount = this@toProjection.personalizedModelCount
+            it.meanPersonalizedAccuracy = this@toProjection.meanPersonalizedAccuracy
+            it.worstPersonalizedAccuracy = this@toProjection.worstPersonalizedAccuracy
+            it.meanPersonalizationLift = this@toProjection.meanPersonalizationLift
             it.stopReason = this@toProjection.stopReason
             it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId

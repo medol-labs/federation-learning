@@ -38,6 +38,11 @@ class EvaluateModelUpdateSubmissionDecisionTest {
             maxRounds = 0,
             minimumAccuracy = java.math.BigDecimal.ZERO,
             aggregationAlgorithm = null,
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,
@@ -57,6 +62,15 @@ class EvaluateModelUpdateSubmissionDecisionTest {
             roundExecutionId = java.util.UUID.randomUUID(),
             runtimeId = UUID.nameUUIDFromBytes("runtime-1".toByteArray()),
             featureSchemaId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,
@@ -66,7 +80,14 @@ class EvaluateModelUpdateSubmissionDecisionTest {
             artifactRef = "",
             artifactDigest = "",
             updateProtectionType = "",
-            trainingLoss = BigDecimal("0.23")
+            trainingLoss = BigDecimal("0.23"),
+            personalizedArtifactAvailable = false,
+            personalizedModelId = null,
+            personalizedModelArtifactRef = null,
+            personalizedModelArtifactDigest = null,
+            personalizedMetricsArtifactRef = null,
+            personalizedAccuracy = null,
+            personalizationLift = null
             )
         )
 
@@ -79,6 +100,15 @@ class EvaluateModelUpdateSubmissionDecisionTest {
             roundId = java.util.UUID.randomUUID(),
             runtimeId = UUID.nameUUIDFromBytes("runtime-1".toByteArray()),
             featureSchemaId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             secureAggregationRequired = false,
             secureAggregationSessionId = null,
             encryptionScheme = null,
@@ -87,6 +117,13 @@ class EvaluateModelUpdateSubmissionDecisionTest {
             artifactRef = "",
             artifactDigest = "",
             updateProtectionType = "",
+            personalizedArtifactAvailable = false,
+            personalizedModelId = null,
+            personalizedModelArtifactRef = null,
+            personalizedModelArtifactDigest = null,
+            personalizedMetricsArtifactRef = null,
+            personalizedAccuracy = null,
+            personalizationLift = null,
             anomalyScore = BigDecimal("0.12")
         )
 
@@ -104,6 +141,15 @@ class EvaluateModelUpdateSubmissionDecisionTest {
         assertEquals(command.roundId, event.roundId)
         assertEquals(UUID.nameUUIDFromBytes("runtime-1".toByteArray()), event.runtimeId)
         assertEquals(command.featureSchemaId, event.featureSchemaId)
+        assertEquals(command.personalizationMode, event.personalizationMode)
+        assertEquals(command.personalizationScope, event.personalizationScope)
+        assertEquals(command.personalizedArtifactPolicy, event.personalizedArtifactPolicy)
+        assertEquals(command.personalizationMetric, event.personalizationMetric)
+        assertEquals(command.minimumPersonalizationLift, event.minimumPersonalizationLift)
+        assertEquals(command.personalizationTargetType, event.personalizationTargetType)
+        assertEquals(command.personalizationTargetId, event.personalizationTargetId)
+        assertEquals(command.personalizationCohortId, event.personalizationCohortId)
+        assertEquals(command.personalizationProfileId, event.personalizationProfileId)
         assertEquals(command.secureAggregationRequired, event.secureAggregationRequired)
         assertEquals(command.secureAggregationSessionId, event.secureAggregationSessionId)
         assertEquals(command.encryptionScheme, event.encryptionScheme)
@@ -112,6 +158,13 @@ class EvaluateModelUpdateSubmissionDecisionTest {
         assertEquals(command.artifactRef, event.artifactRef)
         assertEquals(command.artifactDigest, event.artifactDigest)
         assertEquals(command.updateProtectionType, event.updateProtectionType)
+        assertEquals(command.personalizedArtifactAvailable, event.personalizedArtifactAvailable)
+        assertEquals(command.personalizedModelId, event.personalizedModelId)
+        assertEquals(command.personalizedModelArtifactRef, event.personalizedModelArtifactRef)
+        assertEquals(command.personalizedModelArtifactDigest, event.personalizedModelArtifactDigest)
+        assertEquals(command.personalizedMetricsArtifactRef, event.personalizedMetricsArtifactRef)
+        assertEquals(command.personalizedAccuracy, event.personalizedAccuracy)
+        assertEquals(command.personalizationLift, event.personalizationLift)
         assertEquals(BigDecimal("0.12"), event.anomalyScore)
     }
 }

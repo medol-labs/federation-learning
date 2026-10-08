@@ -23,6 +23,7 @@ class ModelArtifactCatalogReadModelCriteria {
     var modelVersion: StringFilter? = null
     var modelDescription: StringFilter? = null
     var sourceType: StringFilter? = null
+    var modelScope: StringFilter? = null
     var modelArtifactUri: StringFilter? = null
     var modelRegistryRef: StringFilter? = null
     var modelFormat: StringFilter? = null
@@ -32,6 +33,11 @@ class ModelArtifactCatalogReadModelCriteria {
     var trainingJobId: StringFilter? = null
     var roundId: StringFilter? = null
     var trainingJobObjective: StringFilter? = null
+    var personalizationMode: StringFilter? = null
+    var personalizationTargetType: StringFilter? = null
+    var personalizationTargetId: StringFilter? = null
+    var personalizationCohortId: StringFilter? = null
+    var baseGlobalModelId: StringFilter? = null
     var state: Filter<ModelArtifactStateEnum>? = null
     var registeredAt: RangeFilter<LocalDateTime>? = null
     var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
@@ -45,6 +51,7 @@ class ModelArtifactCatalogReadModelProjection : MetadataProjection {
     var modelVersion: String? = null
     var modelDescription: String? = null
     var sourceType: String? = null
+    var modelScope: String? = null
     var modelArtifactUri: String? = null
     var modelRegistryRef: String? = null
     var modelFormat: String? = null
@@ -54,6 +61,11 @@ class ModelArtifactCatalogReadModelProjection : MetadataProjection {
     var trainingJobId: UUID? = null
     var roundId: UUID? = null
     var trainingJobObjective: String? = null
+    var personalizationMode: String? = null
+    var personalizationTargetType: String? = null
+    var personalizationTargetId: UUID? = null
+    var personalizationCohortId: UUID? = null
+    var baseGlobalModelId: UUID? = null
     var state: ModelArtifactStateEnum? = null
     var registeredAt: LocalDateTime? = null
     override var projectionUpdatedAt: LocalDateTime? = null
@@ -73,6 +85,7 @@ fun ModelArtifactCatalogReadModelProjection.toReadModel(): ModelArtifactCatalogR
     modelVersion = modelVersion,
     modelDescription = modelDescription,
     sourceType = sourceType,
+    modelScope = modelScope,
     modelArtifactUri = modelArtifactUri,
     modelRegistryRef = modelRegistryRef,
     modelFormat = modelFormat,
@@ -82,6 +95,11 @@ fun ModelArtifactCatalogReadModelProjection.toReadModel(): ModelArtifactCatalogR
     trainingJobId = trainingJobId,
     roundId = roundId,
     trainingJobObjective = trainingJobObjective,
+    personalizationMode = personalizationMode,
+    personalizationTargetType = personalizationTargetType,
+    personalizationTargetId = personalizationTargetId,
+    personalizationCohortId = personalizationCohortId,
+    baseGlobalModelId = baseGlobalModelId,
     state = state,
     registeredAt = registeredAt,
     projectionUpdatedAt = projectionUpdatedAt,
@@ -108,6 +126,7 @@ data class ModelArtifactCatalogReadModel(
     val modelVersion: String?,
     val modelDescription: String?,
     val sourceType: String?,
+    val modelScope: String?,
     val modelArtifactUri: String?,
     val modelRegistryRef: String?,
     val modelFormat: String?,
@@ -117,6 +136,11 @@ data class ModelArtifactCatalogReadModel(
     val trainingJobId: UUID?,
     val roundId: UUID?,
     val trainingJobObjective: String?,
+    val personalizationMode: String?,
+    val personalizationTargetType: String?,
+    val personalizationTargetId: UUID?,
+    val personalizationCohortId: UUID?,
+    val baseGlobalModelId: UUID?,
     val state: ModelArtifactStateEnum?,
     val registeredAt: LocalDateTime?,
     val projectionUpdatedAt: LocalDateTime? = null,

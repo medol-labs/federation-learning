@@ -11,6 +11,7 @@ import tech.medo.trainingorchestration.events.ParticipantExecutionPlanDispatched
 import tech.medo.trainingorchestration.domain.states.ParticipantExecutionPlanStateEnum
 
 import java.util.UUID;
+import java.math.BigDecimal;
 
 
 @EventSourced(idType = UUID::class, tagKey = ParticipantExecutionPlanTags.EXECUTION_PLAN_ID)
@@ -30,6 +31,15 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
     var roundNumber: Int? = null
     var runtimeId: UUID? = null
     var organizationId: UUID? = null
+    var personalizationMode: String? = null
+    var personalizationScope: String? = null
+    var personalizedArtifactPolicy: String? = null
+    var personalizationMetric: String? = null
+    var minimumPersonalizationLift: BigDecimal? = null
+    var personalizationTargetType: String? = null
+    var personalizationTargetId: UUID? = null
+    var personalizationCohortId: UUID? = null
+    var personalizationProfileId: UUID? = null
     var baseModelId: UUID? = null
     var baseModelArtifactUri: String? = null
     var baseModelRegistryRef: String? = null
@@ -37,6 +47,9 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
     var baseModelFormat: String? = null
     var baseModelArtifactDigest: String? = null
     var baseModelSignatureUri: String? = null
+    var personalizedBaseModelId: UUID? = null
+    var personalizedBaseModelArtifactUri: String? = null
+    var personalizedBaseModelArtifactDigest: String? = null
     var runtimeEngineProfileId: UUID? = null
     var runtimeEngineProfileName: String? = null
     var runtimeEnginePluginProfile: String? = null
@@ -65,6 +78,15 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         organizationId = event.organizationId
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
+        personalizationTargetType = event.personalizationTargetType
+        personalizationTargetId = event.personalizationTargetId
+        personalizationCohortId = event.personalizationCohortId
+        personalizationProfileId = event.personalizationProfileId
         baseModelId = event.baseModelId
         baseModelArtifactUri = event.baseModelArtifactUri
         baseModelRegistryRef = event.baseModelRegistryRef
@@ -72,6 +94,9 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        personalizedBaseModelId = event.personalizedBaseModelId
+        personalizedBaseModelArtifactUri = event.personalizedBaseModelArtifactUri
+        personalizedBaseModelArtifactDigest = event.personalizedBaseModelArtifactDigest
         runtimeEngineProfileId = event.runtimeEngineProfileId
         runtimeEngineProfileName = event.runtimeEngineProfileName
         runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
@@ -97,6 +122,15 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         organizationId = event.organizationId
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
+        personalizationTargetType = event.personalizationTargetType
+        personalizationTargetId = event.personalizationTargetId
+        personalizationCohortId = event.personalizationCohortId
+        personalizationProfileId = event.personalizationProfileId
         baseModelId = event.baseModelId
         baseModelArtifactUri = event.baseModelArtifactUri
         baseModelRegistryRef = event.baseModelRegistryRef
@@ -104,6 +138,9 @@ class ParticipantExecutionPlanState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        personalizedBaseModelId = event.personalizedBaseModelId
+        personalizedBaseModelArtifactUri = event.personalizedBaseModelArtifactUri
+        personalizedBaseModelArtifactDigest = event.personalizedBaseModelArtifactDigest
         runtimeEngineProfileId = event.runtimeEngineProfileId
         runtimeEngineProfileName = event.runtimeEngineProfileName
         runtimeEnginePluginProfile = event.runtimeEnginePluginProfile

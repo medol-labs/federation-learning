@@ -50,6 +50,9 @@ class JpaTrainingJobDashboardReadModelRepository(
             it.objective = this@toProjection.objective
             it.strategyName = this@toProjection.strategyName
             it.aggregationAlgorithm = this@toProjection.aggregationAlgorithm
+            it.personalizationMode = this@toProjection.personalizationMode
+            it.personalizationScope = this@toProjection.personalizationScope
+            it.personalizedArtifactPolicy = this@toProjection.personalizedArtifactPolicy
             it.secureAggregationRequired = this@toProjection.secureAggregationRequired
             it.state = this@toProjection.state
             it.workflowStage = this@toProjection.workflowStage
@@ -70,6 +73,10 @@ class JpaTrainingJobDashboardReadModelRepository(
             it.roundProgressPercent = this@toProjection.roundProgressPercent
             it.globalAccuracy = this@toProjection.globalAccuracy
             it.finalModelId = this@toProjection.finalModelId
+            it.personalizedModelCount = this@toProjection.personalizedModelCount
+            it.meanPersonalizedAccuracy = this@toProjection.meanPersonalizedAccuracy
+            it.worstPersonalizedAccuracy = this@toProjection.worstPersonalizedAccuracy
+            it.meanPersonalizationLift = this@toProjection.meanPersonalizationLift
             it.stopReason = this@toProjection.stopReason
             it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
             it.userId = this@toProjection.userId
@@ -92,6 +99,9 @@ class JpaTrainingJobDashboardReadModelRepository(
             it.objective = this@toEntity.objective
             it.strategyName = this@toEntity.strategyName
             it.aggregationAlgorithm = this@toEntity.aggregationAlgorithm
+            it.personalizationMode = this@toEntity.personalizationMode
+            it.personalizationScope = this@toEntity.personalizationScope
+            it.personalizedArtifactPolicy = this@toEntity.personalizedArtifactPolicy
             it.secureAggregationRequired = this@toEntity.secureAggregationRequired
             it.state = this@toEntity.state
             it.workflowStage = this@toEntity.workflowStage
@@ -112,6 +122,10 @@ class JpaTrainingJobDashboardReadModelRepository(
             it.roundProgressPercent = this@toEntity.roundProgressPercent
             it.globalAccuracy = this@toEntity.globalAccuracy
             it.finalModelId = this@toEntity.finalModelId
+            it.personalizedModelCount = this@toEntity.personalizedModelCount
+            it.meanPersonalizedAccuracy = this@toEntity.meanPersonalizedAccuracy
+            it.worstPersonalizedAccuracy = this@toEntity.worstPersonalizedAccuracy
+            it.meanPersonalizationLift = this@toEntity.meanPersonalizationLift
             it.stopReason = this@toEntity.stopReason
             it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt
             it.userId = this@toEntity.userId

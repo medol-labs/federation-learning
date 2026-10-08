@@ -86,6 +86,11 @@ export const ModelArtifactCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelScope.label", "Model Scope")}</h4>
+              {renderFieldOverride(frontendComposition, "field:model-artifact-catalog:display:modelScope", { value: record?.modelScope, record, resource: "model-artifact-catalog", field: "modelScope", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.modelScope, t, dictionaryLabel, undefined, "MODEL_SCOPE")}</p>}
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.modelArtifactUri.label", "Model Artifact Uri")}</h4>
               {renderFieldOverride(frontendComposition, "field:model-artifact-catalog:display:modelArtifactUri", { value: record?.modelArtifactUri, record, resource: "model-artifact-catalog", field: "modelArtifactUri", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.modelArtifactUri, t, dictionaryLabel, undefined)}</p>}
             </div>
@@ -128,6 +133,31 @@ export const ModelArtifactCatalogShow = () => {
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.trainingJobObjective.label", "Training Job Objective")}</h4>
               {renderFieldOverride(frontendComposition, "field:model-artifact-catalog:display:trainingJobObjective", { value: record?.trainingJobObjective, record, resource: "model-artifact-catalog", field: "trainingJobObjective", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.trainingJobObjective, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.personalizationMode.label", "Personalization Mode")}</h4>
+              {renderFieldOverride(frontendComposition, "field:model-artifact-catalog:display:personalizationMode", { value: record?.personalizationMode, record, resource: "model-artifact-catalog", field: "personalizationMode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizationMode, t, dictionaryLabel, undefined, "PERSONALIZATION_MODE")}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.personalizationTargetType.label", "Personalization Target Type")}</h4>
+              {renderFieldOverride(frontendComposition, "field:model-artifact-catalog:display:personalizationTargetType", { value: record?.personalizationTargetType, record, resource: "model-artifact-catalog", field: "personalizationTargetType", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizationTargetType, t, dictionaryLabel, undefined, "PERSONALIZATION_TARGET_TYPE")}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.personalizationTargetId.label", "Personalization Target Id")}</h4>
+              {renderFieldOverride(frontendComposition, "field:model-artifact-catalog:display:personalizationTargetId", { value: record?.personalizationTargetId, record, resource: "model-artifact-catalog", field: "personalizationTargetId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizationTargetId, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.personalizationCohortId.label", "Personalization Cohort Id")}</h4>
+              {renderFieldOverride(frontendComposition, "field:model-artifact-catalog:display:personalizationCohortId", { value: record?.personalizationCohortId, record, resource: "model-artifact-catalog", field: "personalizationCohortId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizationCohortId, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.baseGlobalModelId.label", "Base Global Model Id")}</h4>
+              {renderFieldOverride(frontendComposition, "field:model-artifact-catalog:display:baseGlobalModelId", { value: record?.baseGlobalModelId, record, resource: "model-artifact-catalog", field: "baseGlobalModelId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.baseGlobalModelId, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>

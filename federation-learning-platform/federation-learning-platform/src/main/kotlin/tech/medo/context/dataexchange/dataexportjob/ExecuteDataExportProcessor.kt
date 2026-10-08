@@ -1,6 +1,7 @@
 package tech.medo.dataexchange.dataexportjob
 
 import org.axonframework.messaging.core.annotation.Namespace
+import org.axonframework.messaging.eventhandling.EventMessage
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -8,9 +9,10 @@ import tech.medo.dataexchange.events.DataExportRequestedEvent
 import tech.medo.shared.application.export.DataExportExecutionTask
 import tech.medo.shared.application.export.DataExportJobLifecyclePort
 import tech.medo.shared.application.export.DataExportResourceExecutorRegistry
+import tech.medo.shared.application.metadata.MetadataKeys
 import java.time.ZoneOffset
 
-@Namespace("automation-data-exchange-execute-data-export")
+@Namespace("automation-federation-learning-platform-data-exchange-execute-data-export")
 @Component
 class ExecuteDataExportProcessor(
     private val registry: DataExportResourceExecutorRegistry,
@@ -19,7 +21,10 @@ class ExecuteDataExportProcessor(
     private val log = LoggerFactory.getLogger(javaClass)
 
     @EventHandler
-    fun on(event: DataExportRequestedEvent) {
+    fun on(event: DataExportRequestedEvent, message: EventMessage) {
+        if (message.metadata()[MetadataKeys.DEPLOYMENT_NAME]?.toString() != AxonDataExportJobRequestPort.DEPLOYMENT_NAME) {
+            return
+        }
         val task = DataExportExecutionTask(
             dataExportJobId = event.dataExportJobId,
             resourceName = event.resourceName,
@@ -33,7 +38,6 @@ class ExecuteDataExportProcessor(
             fileName = event.fileName
         )
         try {
-            lifecyclePort.markProcessing(event.dataExportJobId)
             val result = registry.executor(event.resourceName).execute(task)
             lifecyclePort.complete(event.dataExportJobId, result.fileName, result.filePath, result.rowCount)
         } catch (ex: Exception) {

@@ -30,6 +30,9 @@ type TrainingJobDashboardRecord = {
   objective: string;
   strategyName?: string;
   aggregationAlgorithm?: string;
+  personalizationMode?: string;
+  personalizationScope?: string;
+  personalizedArtifactPolicy?: string;
   secureAggregationRequired?: boolean;
   state: "Draft" | "Submitted" | "Running" | "Paused" | "Canceled" | "Completed";
   workflowStage: string;
@@ -50,6 +53,10 @@ type TrainingJobDashboardRecord = {
   roundProgressPercent: number;
   globalAccuracy?: string;
   finalModelId?: string;
+  personalizedModelCount: number;
+  meanPersonalizedAccuracy?: string;
+  worstPersonalizedAccuracy?: string;
+  meanPersonalizationLift?: string;
   stopReason?: string;
 };
 
@@ -375,6 +382,87 @@ export const TrainingJobDashboardList = () => {
               compact: true,
             },
           ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "AGGREGATION_ALGORITHM"),
+      }),
+      columnHelper.accessor("personalizationMode", {
+        id: "personalizationMode",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.personalizationMode.label", "Personalization Mode")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.personalizationMode.label", "Personalization Mode"),
+          dictionaryCode: "PERSONALIZATION_MODE",
+          placeholder: "Enter Personalization Mode",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:personalizationMode",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "personalizationMode",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "PERSONALIZATION_MODE"),
+      }),
+      columnHelper.accessor("personalizationScope", {
+        id: "personalizationScope",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.personalizationScope.label", "Personalization Scope")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.personalizationScope.label", "Personalization Scope"),
+          dictionaryCode: "PERSONALIZATION_SCOPE",
+          placeholder: "Enter Personalization Scope",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:personalizationScope",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "personalizationScope",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "PERSONALIZATION_SCOPE"),
+      }),
+      columnHelper.accessor("personalizedArtifactPolicy", {
+        id: "personalizedArtifactPolicy",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.personalizedArtifactPolicy.label", "Personalized Artifact Policy")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.personalizedArtifactPolicy.label", "Personalized Artifact Policy"),
+          dictionaryCode: "PERSONALIZED_ARTIFACT_POLICY",
+          placeholder: "Enter Personalized Artifact Policy",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:personalizedArtifactPolicy",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "personalizedArtifactPolicy",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "PERSONALIZED_ARTIFACT_POLICY"),
       }),
       columnHelper.accessor("secureAggregationRequired", {
         id: "secureAggregationRequired",
@@ -926,6 +1014,114 @@ export const TrainingJobDashboardList = () => {
             },
           ) ?? String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("personalizedModelCount", {
+        id: "personalizedModelCount",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.personalizedModelCount.label", "Personalized Model Count")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.personalizedModelCount.label", "Personalized Model Count"),
+          placeholder: "Enter Personalized Model Count",
+          variant: "number",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:personalizedModelCount",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "personalizedModelCount",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("meanPersonalizedAccuracy", {
+        id: "meanPersonalizedAccuracy",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.meanPersonalizedAccuracy.label", "Mean Personalized Accuracy")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.meanPersonalizedAccuracy.label", "Mean Personalized Accuracy"),
+          placeholder: "Enter Mean Personalized Accuracy",
+          variant: "number",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:meanPersonalizedAccuracy",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "meanPersonalizedAccuracy",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("worstPersonalizedAccuracy", {
+        id: "worstPersonalizedAccuracy",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.worstPersonalizedAccuracy.label", "Worst Personalized Accuracy")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.worstPersonalizedAccuracy.label", "Worst Personalized Accuracy"),
+          placeholder: "Enter Worst Personalized Accuracy",
+          variant: "number",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:worstPersonalizedAccuracy",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "worstPersonalizedAccuracy",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("meanPersonalizationLift", {
+        id: "meanPersonalizationLift",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.training_job_dashboard.fields.meanPersonalizationLift.label", "Mean Personalization Lift")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.training_job_dashboard.fields.meanPersonalizationLift.label", "Mean Personalization Lift"),
+          placeholder: "Enter Mean Personalization Lift",
+          variant: "number",
+          filterOperator: "eq",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<TrainingJobDashboardRecord>(
+            frontendComposition,
+            "field:training-job-dashboard:display:meanPersonalizationLift",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "training-job-dashboard",
+              field: "meanPersonalizationLift",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("stopReason", {
         id: "stopReason",
         header: ({ column }) => (
@@ -1033,7 +1229,7 @@ export const TrainingJobDashboardList = () => {
         tableName: "training_job_dashboard_read_model_entity",
         idField: "trainingJobId",
         idFields: ["trainingJobId"],
-        queryFields: ["trainingJobId","federationId","trainingRunConfigurationId","featureSchemaId","federationName","featureDomain","featureSchemaVersion","objective","strategyName","aggregationAlgorithm","secureAggregationRequired","state","workflowStage","workflowStep","nextAction","blockedReason","canSubmit","canStartRound","canPause","canResume","canCancel","canComplete","currentRoundNumber","startedRuntimeCount","minimumNodesPerRound","maxRounds","roundProgressPercent","globalAccuracy","finalModelId","stopReason"],
+        queryFields: ["trainingJobId","federationId","trainingRunConfigurationId","featureSchemaId","federationName","featureDomain","featureSchemaVersion","objective","strategyName","aggregationAlgorithm","personalizationMode","personalizationScope","personalizedArtifactPolicy","secureAggregationRequired","state","workflowStage","workflowStep","nextAction","blockedReason","canSubmit","canStartRound","canPause","canResume","canCancel","canComplete","currentRoundNumber","startedRuntimeCount","minimumNodesPerRound","maxRounds","roundProgressPercent","globalAccuracy","finalModelId","personalizedModelCount","meanPersonalizedAccuracy","worstPersonalizedAccuracy","meanPersonalizationLift","stopReason"],
         label: t("resources.training_job_dashboard.label", "Training Job Dashboard"),
         aggregateRoute: "trainingjob",
         queryRoute: "trainingjobdashboard",

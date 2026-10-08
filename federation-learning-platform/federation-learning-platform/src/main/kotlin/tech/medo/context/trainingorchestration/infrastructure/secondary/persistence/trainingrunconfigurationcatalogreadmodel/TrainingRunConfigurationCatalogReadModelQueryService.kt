@@ -52,6 +52,11 @@ class TrainingRunConfigurationCatalogReadModelQueryService(
             criteria.runtimeEngineImageDigest?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("runtimeEngineImageDigest") })) }
             criteria.strategyName?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("strategyName") })) }
             criteria.aggregationAlgorithm?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("aggregationAlgorithm") })) }
+            criteria.personalizationMode?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("personalizationMode") })) }
+            criteria.personalizationScope?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("personalizationScope") })) }
+            criteria.personalizedArtifactPolicy?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("personalizedArtifactPolicy") })) }
+            criteria.personalizationMetric?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<String>> { root -> root.get("personalizationMetric") })) }
+            criteria.minimumPersonalizationLift?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<BigDecimal>> { root -> root.get("minimumPersonalizationLift") })) }
             criteria.maxRounds?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<Int>> { root -> root.get("maxRounds") })) }
             criteria.minimumNodesPerRound?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<Int>> { root -> root.get("minimumNodesPerRound") })) }
             criteria.roundTimeoutSeconds?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<TrainingRunConfigurationCatalogReadModelEntity>, Expression<Int>> { root -> root.get("roundTimeoutSeconds") })) }
@@ -149,6 +154,11 @@ class TrainingRunConfigurationCatalogReadModelQueryService(
             it.runtimeEngineImageDigest = this@toProjection.runtimeEngineImageDigest
             it.strategyName = this@toProjection.strategyName
             it.aggregationAlgorithm = this@toProjection.aggregationAlgorithm
+            it.personalizationMode = this@toProjection.personalizationMode
+            it.personalizationScope = this@toProjection.personalizationScope
+            it.personalizedArtifactPolicy = this@toProjection.personalizedArtifactPolicy
+            it.personalizationMetric = this@toProjection.personalizationMetric
+            it.minimumPersonalizationLift = this@toProjection.minimumPersonalizationLift
             it.maxRounds = this@toProjection.maxRounds
             it.minimumNodesPerRound = this@toProjection.minimumNodesPerRound
             it.roundTimeoutSeconds = this@toProjection.roundTimeoutSeconds

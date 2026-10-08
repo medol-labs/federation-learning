@@ -27,6 +27,10 @@ export type TrainingRoundParticipant = {
   organizationId: string;
   runtimeId: string;
   datasetId: string;
+  personalizationTargetType?: string;
+  personalizationTargetId?: string;
+  personalizationCohortId?: string;
+  personalizationProfileId?: string;
 };
 export type DictionaryCode = string;
 export type DictionaryValueCode = string;

@@ -1,0 +1,7 @@
+package tech.medo.domain.modelrepository.registerpersonalizedmodelartifact
+
+import org.springframework.stereotype.Component
+import tech.medo.modelrepository.registerpersonalizedmodelartifact.RegisterPersonalizedModelArtifactDecision
+
+@Component
+class RegisterPersonalizedModelArtifactDecisionComponent : RegisterPersonalizedModelArtifactDecision

@@ -44,7 +44,14 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
                     modelUpdateArtifactDigest = null,
                     updateProtectionType = null,
                     metricsArtifactRef = null,
-                    trainingLoss = null
+                    trainingLoss = null,
+                    personalizedArtifactAvailable = false,
+                    personalizedModelId = null,
+                    personalizedModelArtifactRef = null,
+                    personalizedModelArtifactDigest = null,
+                    personalizedMetricsArtifactRef = null,
+                    personalizedAccuracy = null,
+                    personalizationLift = null
                 )
             }
             val normalizedStatus = normalizeStatus(response.status)
@@ -90,7 +97,14 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
                     modelUpdateArtifactDigest = modelUpdate.artifactDigest,
                     updateProtectionType = modelUpdate.protectionType,
                     metricsArtifactRef = metricsArtifactRef,
-                    trainingLoss = readTrainingLoss(metricsArtifactRef)
+                    trainingLoss = readTrainingLoss(metricsArtifactRef),
+                    personalizedArtifactAvailable = false,
+                    personalizedModelId = null,
+                    personalizedModelArtifactRef = null,
+                    personalizedModelArtifactDigest = null,
+                    personalizedMetricsArtifactRef = null,
+                    personalizedAccuracy = null,
+                    personalizationLift = null
                 )
             }
             STATUS_FAILED -> {
@@ -107,7 +121,14 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
                     modelUpdateArtifactDigest = null,
                     updateProtectionType = null,
                     metricsArtifactRef = stringOutput(response, "metrics"),
-                    trainingLoss = readTrainingLoss(stringOutput(response, "metrics"))
+                    trainingLoss = readTrainingLoss(stringOutput(response, "metrics")),
+                    personalizedArtifactAvailable = false,
+                    personalizedModelId = null,
+                    personalizedModelArtifactRef = null,
+                    personalizedModelArtifactDigest = null,
+                    personalizedMetricsArtifactRef = null,
+                    personalizedAccuracy = null,
+                    personalizationLift = null
                 )
             }
             else -> toRunningResult(input, response)
@@ -127,7 +148,14 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
             modelUpdateArtifactDigest = null,
             updateProtectionType = null,
             metricsArtifactRef = stringOutput(response, "metrics"),
-            trainingLoss = null
+            trainingLoss = null,
+            personalizedArtifactAvailable = false,
+            personalizedModelId = null,
+            personalizedModelArtifactRef = null,
+            personalizedModelArtifactDigest = null,
+            personalizedMetricsArtifactRef = null,
+            personalizedAccuracy = null,
+            personalizationLift = null
         )
     }
 

@@ -128,13 +128,11 @@ export const RuntimeInfrastructureAccessViewConfirmRuntimeInfrastructurePrepared
                     field.onChange(value);
                   }}
                   placeholder={t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.organizationId.placeholder", "Select Organization Id")}
-                  filters={[{"field":"state","operator":"eq","value":"Active"}]}
                   meta={{
                     idField: "organizationId",
                     label: t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.organizationId.label", "Organization Directory"),
                     aggregateRoute: "organization",
                     queryRoute: "organizationdirectory",
-                    queryFields: ["state"],
                   }}
                 />
                 <FormMessage />
@@ -177,13 +175,11 @@ export const RuntimeInfrastructureAccessViewConfirmRuntimeInfrastructurePrepared
                     field.onChange(value);
                   }}
                   placeholder={t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeInfrastructurePackageId.placeholder", "Select Runtime Infrastructure Package Id")}
-                  filters={[{"field":"state","operator":"eq","value":"Registered"}]}
                   meta={{
                     idField: "runtimeInfrastructurePackageId",
                     label: t("resources.runtime_infrastructure_access_view.commands.confirmRuntimeInfrastructurePrepared.fields.runtimeInfrastructurePackageId.label", "Runtime Infrastructure Package Catalog"),
                     aggregateRoute: "runtimeinfrastructurepackage",
                     queryRoute: "runtimeinfrastructurepackagecatalog",
-                    queryFields: ["state"],
                   }}
                 />
                 <FormMessage />

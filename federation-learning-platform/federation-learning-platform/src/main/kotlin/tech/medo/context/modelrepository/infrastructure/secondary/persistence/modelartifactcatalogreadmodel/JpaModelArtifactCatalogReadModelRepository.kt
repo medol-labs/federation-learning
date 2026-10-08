@@ -45,6 +45,7 @@ class JpaModelArtifactCatalogReadModelRepository(
             it.modelVersion = this@toProjection.modelVersion
             it.modelDescription = this@toProjection.modelDescription
             it.sourceType = this@toProjection.sourceType
+            it.modelScope = this@toProjection.modelScope
             it.modelArtifactUri = this@toProjection.modelArtifactUri
             it.modelRegistryRef = this@toProjection.modelRegistryRef
             it.modelFormat = this@toProjection.modelFormat
@@ -54,6 +55,11 @@ class JpaModelArtifactCatalogReadModelRepository(
             it.trainingJobId = this@toProjection.trainingJobId
             it.roundId = this@toProjection.roundId
             it.trainingJobObjective = this@toProjection.trainingJobObjective
+            it.personalizationMode = this@toProjection.personalizationMode
+            it.personalizationTargetType = this@toProjection.personalizationTargetType
+            it.personalizationTargetId = this@toProjection.personalizationTargetId
+            it.personalizationCohortId = this@toProjection.personalizationCohortId
+            it.baseGlobalModelId = this@toProjection.baseGlobalModelId
             it.state = this@toProjection.state
             it.registeredAt = this@toProjection.registeredAt
             it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
@@ -73,6 +79,7 @@ class JpaModelArtifactCatalogReadModelRepository(
             it.modelVersion = this@toEntity.modelVersion
             it.modelDescription = this@toEntity.modelDescription
             it.sourceType = this@toEntity.sourceType
+            it.modelScope = this@toEntity.modelScope
             it.modelArtifactUri = this@toEntity.modelArtifactUri
             it.modelRegistryRef = this@toEntity.modelRegistryRef
             it.modelFormat = this@toEntity.modelFormat
@@ -82,6 +89,11 @@ class JpaModelArtifactCatalogReadModelRepository(
             it.trainingJobId = this@toEntity.trainingJobId
             it.roundId = this@toEntity.roundId
             it.trainingJobObjective = this@toEntity.trainingJobObjective
+            it.personalizationMode = this@toEntity.personalizationMode
+            it.personalizationTargetType = this@toEntity.personalizationTargetType
+            it.personalizationTargetId = this@toEntity.personalizationTargetId
+            it.personalizationCohortId = this@toEntity.personalizationCohortId
+            it.baseGlobalModelId = this@toEntity.baseGlobalModelId
             it.state = this@toEntity.state
             it.registeredAt = this@toEntity.registeredAt
             it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt

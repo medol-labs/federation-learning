@@ -12,6 +12,7 @@ import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeData
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelRepository
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionInput
 import tech.medo.runtimeagentoperations.startroundexecution.StartRoundExecutionResult
+import java.math.BigDecimal
 import java.time.Duration
 import java.time.LocalDateTime
 import java.util.UUID
@@ -135,6 +136,15 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
             runtimeId = runtimeId,
             organizationId = organizationId,
             featureSchemaId = UUID.fromString("99999999-9999-4999-8999-999999999999"),
+            personalizationMode = "GLOBAL_ONLY",
+            personalizationScope = "FEDERATION",
+            personalizedArtifactPolicy = "NONE",
+            personalizationMetric = null,
+            minimumPersonalizationLift = BigDecimal.ZERO,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             baseModelId = UUID.fromString("aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"),
             baseModelArtifactUri = "file:///workspace/inputs/global_model.json",
             baseModelRegistryRef = "local",
@@ -142,6 +152,9 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
             baseModelFormat = "json",
             baseModelArtifactDigest = "sha256:abc",
             baseModelSignatureUri = null,
+            personalizedBaseModelId = null,
+            personalizedBaseModelArtifactUri = null,
+            personalizedBaseModelArtifactDigest = null,
             runtimeEngineProfileId = UUID.fromString("eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee"),
             runtimeEngineProfileName = "Python Linear Runtime",
             runtimeEnginePluginProfile = "python-linear",

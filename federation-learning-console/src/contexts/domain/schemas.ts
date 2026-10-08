@@ -33,7 +33,11 @@ export const LabelDefinitionSchema = z.object({
 export const TrainingRoundParticipantSchema = z.object({
   organizationId: z.string().uuid(),
   runtimeId: z.string().uuid(),
-  datasetId: z.string().uuid()
+  datasetId: z.string().uuid(),
+  personalizationTargetType: z.string().optional().nullable(),
+  personalizationTargetId: z.string().uuid().optional().nullable(),
+  personalizationCohortId: z.string().uuid().optional().nullable(),
+  personalizationProfileId: z.string().uuid().optional().nullable()
 });
 export const DictionaryCodeSchema = z.string();
 export const DictionaryValueCodeSchema = z.string();
@@ -375,6 +379,11 @@ export const DefineTrainingRunConfigurationCommandSchema = z.object({
   runtimeEngineImageDigest: z.string().optional().nullable(),
   strategyName: z.string(),
   aggregationAlgorithm: z.string(),
+  personalizationMode: z.string().optional().nullable(),
+  personalizationScope: z.string().optional().nullable(),
+  personalizedArtifactPolicy: z.string().optional().nullable(),
+  personalizationMetric: z.string().optional().nullable(),
+  minimumPersonalizationLift: z.coerce.number().optional().nullable(),
   maxRounds: z.coerce.number().int(),
   minimumNodesPerRound: z.coerce.number().int(),
   roundTimeoutSeconds: z.coerce.number().int(),
@@ -410,6 +419,11 @@ export const UpdateTrainingRunConfigurationCommandSchema = z.object({
   runtimeEngineImageDigest: z.string().optional().nullable(),
   strategyName: z.string(),
   aggregationAlgorithm: z.string(),
+  personalizationMode: z.string().optional().nullable(),
+  personalizationScope: z.string().optional().nullable(),
+  personalizedArtifactPolicy: z.string().optional().nullable(),
+  personalizationMetric: z.string().optional().nullable(),
+  minimumPersonalizationLift: z.coerce.number().optional().nullable(),
   maxRounds: z.coerce.number().int(),
   minimumNodesPerRound: z.coerce.number().int(),
   roundTimeoutSeconds: z.coerce.number().int(),
@@ -475,6 +489,15 @@ export const SubmitModelUpdateSubmissionCommandSchema = z.object({
   roundExecutionId: z.string().uuid(),
   runtimeId: z.string().uuid(),
   featureSchemaId: z.string().uuid(),
+  personalizationMode: z.string().optional().nullable(),
+  personalizationScope: z.string().optional().nullable(),
+  personalizedArtifactPolicy: z.string().optional().nullable(),
+  personalizationMetric: z.string().optional().nullable(),
+  minimumPersonalizationLift: z.coerce.number().optional().nullable(),
+  personalizationTargetType: z.string().optional().nullable(),
+  personalizationTargetId: z.string().uuid().optional().nullable(),
+  personalizationCohortId: z.string().uuid().optional().nullable(),
+  personalizationProfileId: z.string().uuid().optional().nullable(),
   secureAggregationRequired: z.boolean(),
   secureAggregationSessionId: z.string().uuid().optional().nullable(),
   encryptionScheme: z.string().optional().nullable(),
@@ -485,6 +508,13 @@ export const SubmitModelUpdateSubmissionCommandSchema = z.object({
   artifactDigest: z.string(),
   updateProtectionType: z.string(),
   trainingLoss: z.coerce.number(),
+  personalizedArtifactAvailable: z.boolean(),
+  personalizedModelId: z.string().uuid().optional().nullable(),
+  personalizedModelArtifactRef: z.string().optional().nullable(),
+  personalizedModelArtifactDigest: z.string().optional().nullable(),
+  personalizedMetricsArtifactRef: z.string().optional().nullable(),
+  personalizedAccuracy: z.coerce.number().optional().nullable(),
+  personalizationLift: z.coerce.number().optional().nullable(),
 });
 export type SubmitModelUpdateSubmissionCommandInput = z.infer<typeof SubmitModelUpdateSubmissionCommandSchema>;
 

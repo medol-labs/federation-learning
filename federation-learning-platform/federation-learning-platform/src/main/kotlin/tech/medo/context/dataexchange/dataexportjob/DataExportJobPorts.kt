@@ -1,10 +1,12 @@
 package tech.medo.dataexchange.dataexportjob
 
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
+import org.axonframework.messaging.core.Metadata
 import org.springframework.stereotype.Component
 import tech.medo.shared.application.export.DataExportJobLifecyclePort
 import tech.medo.shared.application.export.DataExportJobRequestMessage
 import tech.medo.shared.application.export.DataExportJobRequestPort
+import tech.medo.shared.application.metadata.MetadataKeys
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.UUID
@@ -13,6 +15,8 @@ import java.util.UUID
 class AxonDataExportJobRequestPort(
     private val commandGateway: CommandGateway
 ) : DataExportJobRequestPort {
+    private val metadata: Metadata = Metadata.from(mapOf(MetadataKeys.DEPLOYMENT_NAME to DEPLOYMENT_NAME))
+
     override fun request(message: DataExportJobRequestMessage) {
         commandGateway.send(
             RequestDataExportCommand(
@@ -27,8 +31,13 @@ class AxonDataExportJobRequestPort(
                 requestHash = message.requestHash,
                 fileName = message.fileName,
                 status = DataExportJobStatus.REQUESTED
-            )
+            ),
+            metadata
         ).resultMessage.toCompletableFuture().join()
+    }
+
+    companion object {
+        const val DEPLOYMENT_NAME = "federation-learning-platform"
     }
 }
 
@@ -36,16 +45,18 @@ class AxonDataExportJobRequestPort(
 class AxonDataExportJobLifecyclePort(
     private val commandGateway: CommandGateway
 ) : DataExportJobLifecyclePort {
+    private val metadata: Metadata = Metadata.from(mapOf(MetadataKeys.DEPLOYMENT_NAME to AxonDataExportJobRequestPort.DEPLOYMENT_NAME))
+
     override fun markProcessing(dataExportJobId: UUID) {
-        commandGateway.send(MarkDataExportProcessingCommand(dataExportJobId, DataExportJobStatus.PROCESSING)).resultMessage.toCompletableFuture().join()
+        commandGateway.send(MarkDataExportProcessingCommand(dataExportJobId, DataExportJobStatus.PROCESSING), metadata).resultMessage.toCompletableFuture().join()
     }
 
     override fun complete(dataExportJobId: UUID, fileName: String, filePath: String, rowCount: Long) {
-        commandGateway.send(CompleteDataExportCommand(dataExportJobId, fileName, filePath, rowCount, DataExportJobStatus.COMPLETED)).resultMessage.toCompletableFuture().join()
+        commandGateway.send(CompleteDataExportCommand(dataExportJobId, fileName, filePath, rowCount, DataExportJobStatus.COMPLETED), metadata).resultMessage.toCompletableFuture().join()
     }
 
     override fun fail(dataExportJobId: UUID, errorMessage: String) {
-        commandGateway.send(FailDataExportCommand(dataExportJobId, errorMessage, DataExportJobStatus.FAILED)).resultMessage.toCompletableFuture().join()
+        commandGateway.send(FailDataExportCommand(dataExportJobId, errorMessage, DataExportJobStatus.FAILED), metadata).resultMessage.toCompletableFuture().join()
     }
 }
 

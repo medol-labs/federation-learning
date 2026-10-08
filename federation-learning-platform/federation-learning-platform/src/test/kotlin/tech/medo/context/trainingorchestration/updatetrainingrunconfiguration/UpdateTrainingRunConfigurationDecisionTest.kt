@@ -39,6 +39,11 @@ class UpdateTrainingRunConfigurationDecisionTest {
             runtimeEngineImageDigest = null,
             strategyName = "",
             aggregationAlgorithm = "",
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
             maxRounds = 0,
             minimumNodesPerRound = 0,
             roundTimeoutSeconds = 0,
@@ -74,6 +79,11 @@ class UpdateTrainingRunConfigurationDecisionTest {
             runtimeEngineImageDigest = null,
             strategyName = "FED_AVG",
             aggregationAlgorithm = "FEDERATED_AVERAGING",
+            personalizationMode = "GLOBAL_ONLY",
+            personalizationScope = "FEDERATION",
+            personalizedArtifactPolicy = "NONE",
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
             maxRounds = 20,
             minimumNodesPerRound = 3,
             roundTimeoutSeconds = 1800,
@@ -114,6 +124,11 @@ class UpdateTrainingRunConfigurationDecisionTest {
         assertEquals(command.runtimeEngineImageDigest, event.runtimeEngineImageDigest)
         assertEquals("FED_AVG", event.strategyName)
         assertEquals("FEDERATED_AVERAGING", event.aggregationAlgorithm)
+        assertEquals("GLOBAL_ONLY", event.personalizationMode)
+        assertEquals("FEDERATION", event.personalizationScope)
+        assertEquals("NONE", event.personalizedArtifactPolicy)
+        assertEquals(command.personalizationMetric, event.personalizationMetric)
+        assertEquals(command.minimumPersonalizationLift, event.minimumPersonalizationLift)
         assertEquals(20, event.maxRounds)
         assertEquals(3, event.minimumNodesPerRound)
         assertEquals(1800, event.roundTimeoutSeconds)

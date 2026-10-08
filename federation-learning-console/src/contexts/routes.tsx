@@ -100,6 +100,10 @@ import {
   PermissionCatalogRegisterPermission,
 } from "./identityaccessmanagement/read-models/permission-catalog";
 import {
+  PersonalizedModelCatalogList,
+  PersonalizedModelCatalogShow,
+} from "./trainingorchestration/read-models/personalized-model-catalog";
+import {
   RoleCatalogList,
   RoleCatalogShow,
   RoleCatalogRegisterRole,
@@ -353,6 +357,10 @@ export const contextRoutes = (
       <Route index element={resolvePageOverride("permission-catalog", "list", <PermissionCatalogList />)} />
       <Route path="command/register-permission" element={resolvePageOverride("permission-catalog", "registerPermission", <PermissionCatalogRegisterPermission />)} />
       <Route path="show/:id" element={resolvePageOverride("permission-catalog", "show", <PermissionCatalogShow />)} />
+    </Route>
+    <Route path="/personalized-model-catalog">
+      <Route index element={resolvePageOverride("personalized-model-catalog", "list", <PersonalizedModelCatalogList />)} />
+      <Route path="show/:id" element={resolvePageOverride("personalized-model-catalog", "show", <PersonalizedModelCatalogShow />)} />
     </Route>
     <Route path="/role-catalog">
       <Route index element={resolvePageOverride("role-catalog", "list", <RoleCatalogList />)} />

@@ -32,6 +32,11 @@ class DefineTrainingRunConfigurationDecisionTest {
             runtimeEngineImageDigest = null,
             strategyName = "FED_AVG",
             aggregationAlgorithm = "FEDERATED_AVERAGING",
+            personalizationMode = "GLOBAL_ONLY",
+            personalizationScope = "FEDERATION",
+            personalizedArtifactPolicy = "NONE",
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
             maxRounds = 10,
             minimumNodesPerRound = 3,
             roundTimeoutSeconds = 1800,
@@ -70,6 +75,11 @@ class DefineTrainingRunConfigurationDecisionTest {
         assertEquals(command.runtimeEngineImageDigest, event.runtimeEngineImageDigest)
         assertEquals("FED_AVG", event.strategyName)
         assertEquals("FEDERATED_AVERAGING", event.aggregationAlgorithm)
+        assertEquals("GLOBAL_ONLY", event.personalizationMode)
+        assertEquals("FEDERATION", event.personalizationScope)
+        assertEquals("NONE", event.personalizedArtifactPolicy)
+        assertEquals(command.personalizationMetric, event.personalizationMetric)
+        assertEquals(command.minimumPersonalizationLift, event.minimumPersonalizationLift)
         assertEquals(10, event.maxRounds)
         assertEquals(3, event.minimumNodesPerRound)
         assertEquals(1800, event.roundTimeoutSeconds)

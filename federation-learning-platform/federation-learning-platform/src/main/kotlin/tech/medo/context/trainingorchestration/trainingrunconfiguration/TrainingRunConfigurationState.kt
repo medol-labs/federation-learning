@@ -42,6 +42,11 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
     var runtimeEngineImageDigest: String? = null
     var strategyName: String? = null
     var aggregationAlgorithm: String? = null
+    var personalizationMode: String? = null
+    var personalizationScope: String? = null
+    var personalizedArtifactPolicy: String? = null
+    var personalizationMetric: String? = null
+    var minimumPersonalizationLift: BigDecimal? = null
     var maxRounds: Int? = null
     var minimumNodesPerRound: Int? = null
     var roundTimeoutSeconds: Int? = null
@@ -84,6 +89,11 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
         runtimeEngineImageDigest = event.runtimeEngineImageDigest
         strategyName = event.strategyName
         aggregationAlgorithm = event.aggregationAlgorithm
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
         maxRounds = event.maxRounds
         minimumNodesPerRound = event.minimumNodesPerRound
         roundTimeoutSeconds = event.roundTimeoutSeconds
@@ -124,6 +134,11 @@ class TrainingRunConfigurationState @EntityCreator constructor() {
         runtimeEngineImageDigest = event.runtimeEngineImageDigest
         strategyName = event.strategyName
         aggregationAlgorithm = event.aggregationAlgorithm
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
         maxRounds = event.maxRounds
         minimumNodesPerRound = event.minimumNodesPerRound
         roundTimeoutSeconds = event.roundTimeoutSeconds

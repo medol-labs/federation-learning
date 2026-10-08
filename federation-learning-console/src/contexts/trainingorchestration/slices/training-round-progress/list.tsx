@@ -422,7 +422,7 @@ export const TrainingRoundProgressList = () => {
         enableColumnFilter: false,
         meta: {
           label: t("resources.training_round_progress.fields.selectedParticipants.label", "Selected Participants"),
-          placeholder: "[\n  {\n    \"organizationId\": \"\",\n    \"runtimeId\": \"\",\n    \"datasetId\": \"\"\n  }\n]",
+          placeholder: "[\n  {\n    \"organizationId\": \"\",\n    \"runtimeId\": \"\",\n    \"datasetId\": \"\",\n    \"personalizationTargetType\": \"\",\n    \"personalizationTargetId\": \"\",\n    \"personalizationCohortId\": \"\",\n    \"personalizationProfileId\": \"\"\n  }\n]",
           variant: "text",
         },
         cell: ({ getValue, row }) =>

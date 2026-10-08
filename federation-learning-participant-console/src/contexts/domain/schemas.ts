@@ -33,7 +33,11 @@ export const LabelDefinitionSchema = z.object({
 export const TrainingRoundParticipantSchema = z.object({
   organizationId: z.string().uuid(),
   runtimeId: z.string().uuid(),
-  datasetId: z.string().uuid()
+  datasetId: z.string().uuid(),
+  personalizationTargetType: z.string().optional().nullable(),
+  personalizationTargetId: z.string().uuid().optional().nullable(),
+  personalizationCohortId: z.string().uuid().optional().nullable(),
+  personalizationProfileId: z.string().uuid().optional().nullable()
 });
 export const DictionaryCodeSchema = z.string();
 export const DictionaryValueCodeSchema = z.string();

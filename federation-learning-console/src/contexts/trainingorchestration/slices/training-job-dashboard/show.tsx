@@ -106,6 +106,21 @@ export const TrainingJobDashboardShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_job_dashboard.fields.personalizationMode.label", "Personalization Mode")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-job-dashboard:display:personalizationMode", { value: record?.personalizationMode, record, resource: "training-job-dashboard", field: "personalizationMode", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizationMode, t, dictionaryLabel, undefined, "PERSONALIZATION_MODE")}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_job_dashboard.fields.personalizationScope.label", "Personalization Scope")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-job-dashboard:display:personalizationScope", { value: record?.personalizationScope, record, resource: "training-job-dashboard", field: "personalizationScope", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizationScope, t, dictionaryLabel, undefined, "PERSONALIZATION_SCOPE")}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_job_dashboard.fields.personalizedArtifactPolicy.label", "Personalized Artifact Policy")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-job-dashboard:display:personalizedArtifactPolicy", { value: record?.personalizedArtifactPolicy, record, resource: "training-job-dashboard", field: "personalizedArtifactPolicy", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizedArtifactPolicy, t, dictionaryLabel, undefined, "PERSONALIZED_ARTIFACT_POLICY")}</p>}
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.training_job_dashboard.fields.secureAggregationRequired.label", "Secure Aggregation Required")}</h4>
               {renderFieldOverride(frontendComposition, "field:training-job-dashboard:display:secureAggregationRequired", { value: record?.secureAggregationRequired, record, resource: "training-job-dashboard", field: "secureAggregationRequired", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.secureAggregationRequired, t, dictionaryLabel, undefined)}</p>}
             </div>
@@ -210,6 +225,26 @@ export const TrainingJobDashboardShow = () => {
             <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.training_job_dashboard.fields.finalModelId.label", "Final Model Id")}</h4>
               {renderFieldOverride(frontendComposition, "field:training-job-dashboard:display:finalModelId", { value: record?.finalModelId, record, resource: "training-job-dashboard", field: "finalModelId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.finalModelId, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_job_dashboard.fields.personalizedModelCount.label", "Personalized Model Count")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-job-dashboard:display:personalizedModelCount", { value: record?.personalizedModelCount, record, resource: "training-job-dashboard", field: "personalizedModelCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizedModelCount, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_job_dashboard.fields.meanPersonalizedAccuracy.label", "Mean Personalized Accuracy")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-job-dashboard:display:meanPersonalizedAccuracy", { value: record?.meanPersonalizedAccuracy, record, resource: "training-job-dashboard", field: "meanPersonalizedAccuracy", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.meanPersonalizedAccuracy, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_job_dashboard.fields.worstPersonalizedAccuracy.label", "Worst Personalized Accuracy")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-job-dashboard:display:worstPersonalizedAccuracy", { value: record?.worstPersonalizedAccuracy, record, resource: "training-job-dashboard", field: "worstPersonalizedAccuracy", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.worstPersonalizedAccuracy, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.training_job_dashboard.fields.meanPersonalizationLift.label", "Mean Personalization Lift")}</h4>
+              {renderFieldOverride(frontendComposition, "field:training-job-dashboard:display:meanPersonalizationLift", { value: record?.meanPersonalizationLift, record, resource: "training-job-dashboard", field: "meanPersonalizationLift", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.meanPersonalizationLift, t, dictionaryLabel, undefined)}</p>}
             </div>
             <Separator />
             <div>

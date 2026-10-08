@@ -95,6 +95,11 @@ open class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
             entity.runtimeEngineImageDigest = event.runtimeEngineImageDigest
             entity.strategyName = event.strategyName
             entity.aggregationAlgorithm = event.aggregationAlgorithm
+            entity.personalizationMode = event.personalizationMode
+            entity.personalizationScope = event.personalizationScope
+            entity.personalizedArtifactPolicy = event.personalizedArtifactPolicy
+            entity.personalizationMetric = event.personalizationMetric
+            entity.minimumPersonalizationLift = event.minimumPersonalizationLift
             entity.maxRounds = event.maxRounds
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.roundTimeoutSeconds = event.roundTimeoutSeconds
@@ -146,6 +151,11 @@ open class DefaultTrainingRunConfigurationCatalogReadModelProjectionUpdater(
             entity.runtimeEngineImageDigest = event.runtimeEngineImageDigest
             entity.strategyName = event.strategyName
             entity.aggregationAlgorithm = event.aggregationAlgorithm
+            entity.personalizationMode = event.personalizationMode
+            entity.personalizationScope = event.personalizationScope
+            entity.personalizedArtifactPolicy = event.personalizedArtifactPolicy
+            entity.personalizationMetric = event.personalizationMetric
+            entity.minimumPersonalizationLift = event.minimumPersonalizationLift
             entity.maxRounds = event.maxRounds
             entity.minimumNodesPerRound = event.minimumNodesPerRound
             entity.roundTimeoutSeconds = event.roundTimeoutSeconds

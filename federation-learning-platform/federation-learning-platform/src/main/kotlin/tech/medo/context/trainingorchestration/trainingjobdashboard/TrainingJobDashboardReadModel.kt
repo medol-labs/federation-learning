@@ -28,6 +28,9 @@ class TrainingJobDashboardReadModelCriteria {
     var objective: StringFilter? = null
     var strategyName: StringFilter? = null
     var aggregationAlgorithm: StringFilter? = null
+    var personalizationMode: StringFilter? = null
+    var personalizationScope: StringFilter? = null
+    var personalizedArtifactPolicy: StringFilter? = null
     var secureAggregationRequired: BooleanFilter? = null
     var state: Filter<TrainingJobStateEnum>? = null
     var workflowStage: StringFilter? = null
@@ -47,6 +50,10 @@ class TrainingJobDashboardReadModelCriteria {
     var roundProgressPercent: IntegerFilter? = null
     var globalAccuracy: BigDecimalFilter? = null
     var finalModelId: StringFilter? = null
+    var personalizedModelCount: IntegerFilter? = null
+    var meanPersonalizedAccuracy: BigDecimalFilter? = null
+    var worstPersonalizedAccuracy: BigDecimalFilter? = null
+    var meanPersonalizationLift: BigDecimalFilter? = null
     var stopReason: StringFilter? = null
     var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
 }
@@ -63,6 +70,9 @@ class TrainingJobDashboardReadModelProjection : MetadataProjection {
     var objective: String? = null
     var strategyName: String? = null
     var aggregationAlgorithm: String? = null
+    var personalizationMode: String? = null
+    var personalizationScope: String? = null
+    var personalizedArtifactPolicy: String? = null
     var secureAggregationRequired: Boolean? = null
     var state: TrainingJobStateEnum? = null
     var workflowStage: String? = null
@@ -83,6 +93,10 @@ class TrainingJobDashboardReadModelProjection : MetadataProjection {
     var roundProgressPercent: Int? = null
     var globalAccuracy: BigDecimal? = null
     var finalModelId: UUID? = null
+    var personalizedModelCount: Int? = null
+    var meanPersonalizedAccuracy: BigDecimal? = null
+    var worstPersonalizedAccuracy: BigDecimal? = null
+    var meanPersonalizationLift: BigDecimal? = null
     var stopReason: String? = null
     override var projectionUpdatedAt: LocalDateTime? = null
     override var userId: String? = null
@@ -105,6 +119,9 @@ fun TrainingJobDashboardReadModelProjection.toReadModel(): TrainingJobDashboardR
     objective = objective,
     strategyName = strategyName,
     aggregationAlgorithm = aggregationAlgorithm,
+    personalizationMode = personalizationMode,
+    personalizationScope = personalizationScope,
+    personalizedArtifactPolicy = personalizedArtifactPolicy,
     secureAggregationRequired = secureAggregationRequired,
     state = state,
     workflowStage = workflowStage,
@@ -125,6 +142,10 @@ fun TrainingJobDashboardReadModelProjection.toReadModel(): TrainingJobDashboardR
     roundProgressPercent = roundProgressPercent,
     globalAccuracy = globalAccuracy,
     finalModelId = finalModelId,
+    personalizedModelCount = personalizedModelCount,
+    meanPersonalizedAccuracy = meanPersonalizedAccuracy,
+    worstPersonalizedAccuracy = worstPersonalizedAccuracy,
+    meanPersonalizationLift = meanPersonalizationLift,
     stopReason = stopReason,
     projectionUpdatedAt = projectionUpdatedAt,
     userId = userId,
@@ -154,6 +175,9 @@ data class TrainingJobDashboardReadModel(
     val objective: String?,
     val strategyName: String?,
     val aggregationAlgorithm: String?,
+    val personalizationMode: String?,
+    val personalizationScope: String?,
+    val personalizedArtifactPolicy: String?,
     val secureAggregationRequired: Boolean?,
     val state: TrainingJobStateEnum?,
     val workflowStage: String?,
@@ -174,6 +198,10 @@ data class TrainingJobDashboardReadModel(
     val roundProgressPercent: Int?,
     val globalAccuracy: BigDecimal?,
     val finalModelId: UUID?,
+    val personalizedModelCount: Int?,
+    val meanPersonalizedAccuracy: BigDecimal?,
+    val worstPersonalizedAccuracy: BigDecimal?,
+    val meanPersonalizationLift: BigDecimal?,
     val stopReason: String?,
     val projectionUpdatedAt: LocalDateTime? = null,
     val userId: String? = null,

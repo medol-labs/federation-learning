@@ -44,6 +44,15 @@ class RoundExecutionState @EntityCreator constructor() {
     var roundNumber: Int? = null
     var runtimeId: UUID? = null
     var organizationId: UUID? = null
+    var personalizationMode: String? = null
+    var personalizationScope: String? = null
+    var personalizedArtifactPolicy: String? = null
+    var personalizationMetric: String? = null
+    var minimumPersonalizationLift: BigDecimal? = null
+    var personalizationTargetType: String? = null
+    var personalizationTargetId: UUID? = null
+    var personalizationCohortId: UUID? = null
+    var personalizationProfileId: UUID? = null
     var baseModelId: UUID? = null
     var baseModelArtifactUri: String? = null
     var baseModelRegistryRef: String? = null
@@ -51,6 +60,9 @@ class RoundExecutionState @EntityCreator constructor() {
     var baseModelFormat: String? = null
     var baseModelArtifactDigest: String? = null
     var baseModelSignatureUri: String? = null
+    var personalizedBaseModelId: UUID? = null
+    var personalizedBaseModelArtifactUri: String? = null
+    var personalizedBaseModelArtifactDigest: String? = null
     var runtimeEngineProfileId: UUID? = null
     var runtimeEngineProfileName: String? = null
     var runtimeEnginePluginProfile: String? = null
@@ -82,6 +94,13 @@ class RoundExecutionState @EntityCreator constructor() {
     var updateProtectionType: String? = null
     var metricsArtifactRef: String? = null
     var trainingLoss: BigDecimal? = null
+    var personalizedArtifactAvailable: Boolean? = null
+    var personalizedModelId: UUID? = null
+    var personalizedModelArtifactRef: String? = null
+    var personalizedModelArtifactDigest: String? = null
+    var personalizedMetricsArtifactRef: String? = null
+    var personalizedAccuracy: BigDecimal? = null
+    var personalizationLift: BigDecimal? = null
     var retryReason: String? = null
     var modelUpdateSubmissionId: UUID? = null
     var localModelId: UUID? = null
@@ -103,6 +122,15 @@ class RoundExecutionState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         organizationId = event.organizationId
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
+        personalizationTargetType = event.personalizationTargetType
+        personalizationTargetId = event.personalizationTargetId
+        personalizationCohortId = event.personalizationCohortId
+        personalizationProfileId = event.personalizationProfileId
         baseModelId = event.baseModelId
         baseModelArtifactUri = event.baseModelArtifactUri
         baseModelRegistryRef = event.baseModelRegistryRef
@@ -110,6 +138,9 @@ class RoundExecutionState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        personalizedBaseModelId = event.personalizedBaseModelId
+        personalizedBaseModelArtifactUri = event.personalizedBaseModelArtifactUri
+        personalizedBaseModelArtifactDigest = event.personalizedBaseModelArtifactDigest
         runtimeEngineProfileId = event.runtimeEngineProfileId
         runtimeEngineProfileName = event.runtimeEngineProfileName
         runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
@@ -136,6 +167,15 @@ class RoundExecutionState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         organizationId = event.organizationId
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
+        personalizationTargetType = event.personalizationTargetType
+        personalizationTargetId = event.personalizationTargetId
+        personalizationCohortId = event.personalizationCohortId
+        personalizationProfileId = event.personalizationProfileId
         baseModelId = event.baseModelId
         baseModelArtifactUri = event.baseModelArtifactUri
         baseModelRegistryRef = event.baseModelRegistryRef
@@ -143,6 +183,9 @@ class RoundExecutionState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        personalizedBaseModelId = event.personalizedBaseModelId
+        personalizedBaseModelArtifactUri = event.personalizedBaseModelArtifactUri
+        personalizedBaseModelArtifactDigest = event.personalizedBaseModelArtifactDigest
         runtimeEngineProfileId = event.runtimeEngineProfileId
         runtimeEngineProfileName = event.runtimeEngineProfileName
         runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
@@ -177,6 +220,15 @@ class RoundExecutionState @EntityCreator constructor() {
         roundNumber = event.roundNumber
         runtimeId = event.runtimeId
         organizationId = event.organizationId
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
+        personalizationTargetType = event.personalizationTargetType
+        personalizationTargetId = event.personalizationTargetId
+        personalizationCohortId = event.personalizationCohortId
+        personalizationProfileId = event.personalizationProfileId
         baseModelId = event.baseModelId
         baseModelArtifactUri = event.baseModelArtifactUri
         baseModelRegistryRef = event.baseModelRegistryRef
@@ -184,6 +236,9 @@ class RoundExecutionState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        personalizedBaseModelId = event.personalizedBaseModelId
+        personalizedBaseModelArtifactUri = event.personalizedBaseModelArtifactUri
+        personalizedBaseModelArtifactDigest = event.personalizedBaseModelArtifactDigest
         runtimeEngineProfileId = event.runtimeEngineProfileId
         runtimeEngineProfileName = event.runtimeEngineProfileName
         runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
@@ -219,6 +274,15 @@ class RoundExecutionState @EntityCreator constructor() {
         runtimeId = event.runtimeId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
+        personalizationTargetType = event.personalizationTargetType
+        personalizationTargetId = event.personalizationTargetId
+        personalizationCohortId = event.personalizationCohortId
+        personalizationProfileId = event.personalizationProfileId
         baseModelId = event.baseModelId
         baseModelArtifactUri = event.baseModelArtifactUri
         baseModelRegistryRef = event.baseModelRegistryRef
@@ -226,6 +290,9 @@ class RoundExecutionState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        personalizedBaseModelId = event.personalizedBaseModelId
+        personalizedBaseModelArtifactUri = event.personalizedBaseModelArtifactUri
+        personalizedBaseModelArtifactDigest = event.personalizedBaseModelArtifactDigest
         runtimeEngineProfileId = event.runtimeEngineProfileId
         runtimeEngineProfileName = event.runtimeEngineProfileName
         runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
@@ -253,6 +320,15 @@ class RoundExecutionState @EntityCreator constructor() {
         runtimeId = event.runtimeId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
+        personalizationTargetType = event.personalizationTargetType
+        personalizationTargetId = event.personalizationTargetId
+        personalizationCohortId = event.personalizationCohortId
+        personalizationProfileId = event.personalizationProfileId
         baseModelId = event.baseModelId
         baseModelArtifactUri = event.baseModelArtifactUri
         baseModelRegistryRef = event.baseModelRegistryRef
@@ -260,6 +336,9 @@ class RoundExecutionState @EntityCreator constructor() {
         baseModelFormat = event.baseModelFormat
         baseModelArtifactDigest = event.baseModelArtifactDigest
         baseModelSignatureUri = event.baseModelSignatureUri
+        personalizedBaseModelId = event.personalizedBaseModelId
+        personalizedBaseModelArtifactUri = event.personalizedBaseModelArtifactUri
+        personalizedBaseModelArtifactDigest = event.personalizedBaseModelArtifactDigest
         runtimeEngineProfileId = event.runtimeEngineProfileId
         runtimeEngineProfileName = event.runtimeEngineProfileName
         runtimeEnginePluginProfile = event.runtimeEnginePluginProfile
@@ -288,6 +367,15 @@ class RoundExecutionState @EntityCreator constructor() {
         runtimeId = event.runtimeId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
+        personalizationTargetType = event.personalizationTargetType
+        personalizationTargetId = event.personalizationTargetId
+        personalizationCohortId = event.personalizationCohortId
+        personalizationProfileId = event.personalizationProfileId
         runtimeEngineJobId = event.runtimeEngineJobId
         secureAggregationRequired = event.secureAggregationRequired
         secureAggregationSessionId = event.secureAggregationSessionId
@@ -303,6 +391,13 @@ class RoundExecutionState @EntityCreator constructor() {
         updateProtectionType = event.updateProtectionType
         metricsArtifactRef = event.metricsArtifactRef
         trainingLoss = event.trainingLoss
+        personalizedArtifactAvailable = event.personalizedArtifactAvailable
+        personalizedModelId = event.personalizedModelId
+        personalizedModelArtifactRef = event.personalizedModelArtifactRef
+        personalizedModelArtifactDigest = event.personalizedModelArtifactDigest
+        personalizedMetricsArtifactRef = event.personalizedMetricsArtifactRef
+        personalizedAccuracy = event.personalizedAccuracy
+        personalizationLift = event.personalizationLift
     }
 
     @EventSourcingHandler
@@ -318,6 +413,15 @@ class RoundExecutionState @EntityCreator constructor() {
         runtimeId = event.runtimeId
         organizationId = event.organizationId
         featureSchemaId = event.featureSchemaId
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
+        personalizationTargetType = event.personalizationTargetType
+        personalizationTargetId = event.personalizationTargetId
+        personalizationCohortId = event.personalizationCohortId
+        personalizationProfileId = event.personalizationProfileId
         runtimeEngineJobId = event.runtimeEngineJobId
         secureAggregationRequired = event.secureAggregationRequired
         secureAggregationSessionId = event.secureAggregationSessionId
@@ -331,6 +435,13 @@ class RoundExecutionState @EntityCreator constructor() {
         updateProtectionType = event.updateProtectionType
         metricsArtifactRef = event.metricsArtifactRef
         trainingLoss = event.trainingLoss
+        personalizedArtifactAvailable = event.personalizedArtifactAvailable
+        personalizedModelId = event.personalizedModelId
+        personalizedModelArtifactRef = event.personalizedModelArtifactRef
+        personalizedModelArtifactDigest = event.personalizedModelArtifactDigest
+        personalizedMetricsArtifactRef = event.personalizedMetricsArtifactRef
+        personalizedAccuracy = event.personalizedAccuracy
+        personalizationLift = event.personalizationLift
     }
 
     @EventSourcingHandler
@@ -436,6 +547,15 @@ class RoundExecutionState @EntityCreator constructor() {
         roundId = event.roundId
         runtimeId = event.runtimeId
         featureSchemaId = event.featureSchemaId
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
+        personalizationTargetType = event.personalizationTargetType
+        personalizationTargetId = event.personalizationTargetId
+        personalizationCohortId = event.personalizationCohortId
+        personalizationProfileId = event.personalizationProfileId
         secureAggregationRequired = event.secureAggregationRequired
         secureAggregationSessionId = event.secureAggregationSessionId
         encryptionScheme = event.encryptionScheme
@@ -447,6 +567,13 @@ class RoundExecutionState @EntityCreator constructor() {
         artifactDigest = event.artifactDigest
         updateProtectionType = event.updateProtectionType
         trainingLoss = event.trainingLoss
+        personalizedArtifactAvailable = event.personalizedArtifactAvailable
+        personalizedModelId = event.personalizedModelId
+        personalizedModelArtifactRef = event.personalizedModelArtifactRef
+        personalizedModelArtifactDigest = event.personalizedModelArtifactDigest
+        personalizedMetricsArtifactRef = event.personalizedMetricsArtifactRef
+        personalizedAccuracy = event.personalizedAccuracy
+        personalizationLift = event.personalizationLift
     }
 
     @EventSourcingHandler

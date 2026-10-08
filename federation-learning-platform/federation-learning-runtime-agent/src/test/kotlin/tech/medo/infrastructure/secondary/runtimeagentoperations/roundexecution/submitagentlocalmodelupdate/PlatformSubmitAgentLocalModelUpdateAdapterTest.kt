@@ -131,6 +131,15 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
             roundId = UUID.fromString("77777777-7777-4777-8777-777777777777"),
             runtimeId = UUID.fromString("88888888-8888-4888-8888-888888888888"),
             featureSchemaId = UUID.fromString("99999999-9999-4999-8999-999999999999"),
+            personalizationMode = "GLOBAL_ONLY",
+            personalizationScope = "FEDERATION",
+            personalizedArtifactPolicy = "NONE",
+            personalizationMetric = null,
+            minimumPersonalizationLift = BigDecimal.ZERO,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             secureAggregationRequired = secureAggregationRequired,
             secureAggregationSessionId = secureAggregationSessionId,
             encryptionScheme = encryptionScheme,
@@ -141,7 +150,14 @@ class PlatformSubmitAgentLocalModelUpdateAdapterTest {
             artifactRef = artifactRef,
             artifactDigest = artifactDigest,
             updateProtectionType = updateProtectionType,
-            trainingLoss = BigDecimal("0.125")
+            trainingLoss = BigDecimal("0.125"),
+            personalizedArtifactAvailable = false,
+            personalizedModelId = null,
+            personalizedModelArtifactRef = null,
+            personalizedModelArtifactDigest = null,
+            personalizedMetricsArtifactRef = null,
+            personalizedAccuracy = null,
+            personalizationLift = null
         )
 
     private class RecordingClient : PlatformModelUpdateSubmissionClient {

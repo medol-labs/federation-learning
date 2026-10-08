@@ -36,6 +36,7 @@ class ModelArtifactCatalogReadModelQueryService(
             criteria.modelVersion?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelVersion") })) }
             criteria.modelDescription?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelDescription") })) }
             criteria.sourceType?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("sourceType") })) }
+            criteria.modelScope?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelScope") })) }
             criteria.modelArtifactUri?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelArtifactUri") })) }
             criteria.modelRegistryRef?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelRegistryRef") })) }
             criteria.modelFormat?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelFormat") })) }
@@ -45,6 +46,11 @@ class ModelArtifactCatalogReadModelQueryService(
             criteria.trainingJobId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("trainingJobId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.roundId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("roundId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.trainingJobObjective?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("trainingJobObjective") })) }
+            criteria.personalizationMode?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("personalizationMode") })) }
+            criteria.personalizationTargetType?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("personalizationTargetType") })) }
+            criteria.personalizationTargetId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("personalizationTargetId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.personalizationCohortId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("personalizationCohortId") as JpaExpression<UUID>).cast(String::class.java) })) }
+            criteria.baseGlobalModelId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("baseGlobalModelId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.state?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<ModelArtifactStateEnum>> { root -> root.get("state") })) }
             criteria.registeredAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("registeredAt") })) }
             criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
@@ -111,6 +117,7 @@ class ModelArtifactCatalogReadModelQueryService(
             it.modelVersion = this@toProjection.modelVersion
             it.modelDescription = this@toProjection.modelDescription
             it.sourceType = this@toProjection.sourceType
+            it.modelScope = this@toProjection.modelScope
             it.modelArtifactUri = this@toProjection.modelArtifactUri
             it.modelRegistryRef = this@toProjection.modelRegistryRef
             it.modelFormat = this@toProjection.modelFormat
@@ -120,6 +127,11 @@ class ModelArtifactCatalogReadModelQueryService(
             it.trainingJobId = this@toProjection.trainingJobId
             it.roundId = this@toProjection.roundId
             it.trainingJobObjective = this@toProjection.trainingJobObjective
+            it.personalizationMode = this@toProjection.personalizationMode
+            it.personalizationTargetType = this@toProjection.personalizationTargetType
+            it.personalizationTargetId = this@toProjection.personalizationTargetId
+            it.personalizationCohortId = this@toProjection.personalizationCohortId
+            it.baseGlobalModelId = this@toProjection.baseGlobalModelId
             it.state = this@toProjection.state
             it.registeredAt = this@toProjection.registeredAt
             it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt

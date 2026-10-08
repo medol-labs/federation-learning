@@ -1,0 +1,7 @@
+package tech.medo.domain.trainingorchestration.recordpersonalizedmodelresult
+
+import org.springframework.stereotype.Component
+import tech.medo.trainingorchestration.recordpersonalizedmodelresult.RecordPersonalizedModelResultDecision
+
+@Component
+class RecordPersonalizedModelResultDecisionComponent : RecordPersonalizedModelResultDecision

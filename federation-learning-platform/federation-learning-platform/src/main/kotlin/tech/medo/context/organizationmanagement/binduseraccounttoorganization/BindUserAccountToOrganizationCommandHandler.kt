@@ -32,9 +32,9 @@ class BindUserAccountToOrganizationCommandHandler(
                     "command" to "Bind User Account To Organization",
                     "projection" to "Organization Directory",
                     "field" to "organizationId",
-                    "profile" to null
+                    "profile" to "Bind User Account To Organization"
                 ),
-                message = "Organization Directory selection is not eligible."
+                message = "Organization Directory selection is not eligible for Bind User Account To Organization."
             )
         }
         eventAppender.append(decision.decide(command, userOrganizationMembershipUserAccountIdOrganizationIdReservation))

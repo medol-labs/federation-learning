@@ -41,6 +41,11 @@ class TrainingRunConfigurationCatalogReadModelCriteria {
     var runtimeEngineImageDigest: StringFilter? = null
     var strategyName: StringFilter? = null
     var aggregationAlgorithm: StringFilter? = null
+    var personalizationMode: StringFilter? = null
+    var personalizationScope: StringFilter? = null
+    var personalizedArtifactPolicy: StringFilter? = null
+    var personalizationMetric: StringFilter? = null
+    var minimumPersonalizationLift: BigDecimalFilter? = null
     var maxRounds: IntegerFilter? = null
     var minimumNodesPerRound: IntegerFilter? = null
     var roundTimeoutSeconds: IntegerFilter? = null
@@ -85,6 +90,11 @@ class TrainingRunConfigurationCatalogReadModelProjection : MetadataProjection {
     var runtimeEngineImageDigest: String? = null
     var strategyName: String? = null
     var aggregationAlgorithm: String? = null
+    var personalizationMode: String? = null
+    var personalizationScope: String? = null
+    var personalizedArtifactPolicy: String? = null
+    var personalizationMetric: String? = null
+    var minimumPersonalizationLift: BigDecimal? = null
     var maxRounds: Int? = null
     var minimumNodesPerRound: Int? = null
     var roundTimeoutSeconds: Int? = null
@@ -135,6 +145,11 @@ fun TrainingRunConfigurationCatalogReadModelProjection.toReadModel(): TrainingRu
     runtimeEngineImageDigest = runtimeEngineImageDigest,
     strategyName = strategyName,
     aggregationAlgorithm = aggregationAlgorithm,
+    personalizationMode = personalizationMode,
+    personalizationScope = personalizationScope,
+    personalizedArtifactPolicy = personalizedArtifactPolicy,
+    personalizationMetric = personalizationMetric,
+    minimumPersonalizationLift = minimumPersonalizationLift,
     maxRounds = maxRounds,
     minimumNodesPerRound = minimumNodesPerRound,
     roundTimeoutSeconds = roundTimeoutSeconds,
@@ -192,6 +207,11 @@ data class TrainingRunConfigurationCatalogReadModel(
     val runtimeEngineImageDigest: String?,
     val strategyName: String?,
     val aggregationAlgorithm: String?,
+    val personalizationMode: String?,
+    val personalizationScope: String?,
+    val personalizedArtifactPolicy: String?,
+    val personalizationMetric: String?,
+    val minimumPersonalizationLift: BigDecimal?,
     val maxRounds: Int?,
     val minimumNodesPerRound: Int?,
     val roundTimeoutSeconds: Int?,

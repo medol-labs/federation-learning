@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import tech.medo.runtimeagentoperations.receiveparticipantexecutionplan.ReceiveParticipantExecutionPlanCommand
 import tech.medo.runtimeagentoperations.events.ExecutionPlanReceivedEvent
 import java.util.UUID
+import java.math.BigDecimal
 
 class ReceiveParticipantExecutionPlanDecisionTest {
     @Test
@@ -22,6 +23,15 @@ class ReceiveParticipantExecutionPlanDecisionTest {
             roundNumber = 0,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             baseModelId = java.util.UUID.randomUUID(),
             baseModelArtifactUri = "",
             baseModelRegistryRef = "",
@@ -29,6 +39,9 @@ class ReceiveParticipantExecutionPlanDecisionTest {
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            personalizedBaseModelId = null,
+            personalizedBaseModelArtifactUri = null,
+            personalizedBaseModelArtifactDigest = null,
             runtimeEngineProfileId = java.util.UUID.randomUUID(),
             runtimeEngineProfileName = null,
             runtimeEnginePluginProfile = "",

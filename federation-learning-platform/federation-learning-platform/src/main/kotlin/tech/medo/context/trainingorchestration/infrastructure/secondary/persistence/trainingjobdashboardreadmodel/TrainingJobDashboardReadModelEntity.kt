@@ -27,6 +27,9 @@ class TrainingJobDashboardReadModelEntity : MetadataProjection {
     var objective: String? = null
     var strategyName: String? = null
     var aggregationAlgorithm: String? = null
+    var personalizationMode: String? = null
+    var personalizationScope: String? = null
+    var personalizedArtifactPolicy: String? = null
     var secureAggregationRequired: Boolean? = null
     @Enumerated(EnumType.STRING)
     var state: TrainingJobStateEnum? = null
@@ -50,6 +53,10 @@ class TrainingJobDashboardReadModelEntity : MetadataProjection {
     var roundProgressPercent: Int? = null
     var globalAccuracy: BigDecimal? = null
     var finalModelId: UUID? = null
+    var personalizedModelCount: Int? = null
+    var meanPersonalizedAccuracy: BigDecimal? = null
+    var worstPersonalizedAccuracy: BigDecimal? = null
+    var meanPersonalizationLift: BigDecimal? = null
     @Column(columnDefinition = "text")
     var stopReason: String? = null
     override var projectionUpdatedAt: LocalDateTime? = null

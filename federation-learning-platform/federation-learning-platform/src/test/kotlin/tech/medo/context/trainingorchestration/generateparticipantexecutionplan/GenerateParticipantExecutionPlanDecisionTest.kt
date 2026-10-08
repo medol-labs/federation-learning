@@ -8,8 +8,8 @@ import tech.medo.trainingorchestration.events.TrainingRoundStartedEvent
 import tech.medo.trainingorchestration.events.ParticipantExecutionPlanGeneratedEvent
 import tech.medo.trainingorchestration.events.TrainingRoundCompletedEvent
 import java.util.UUID
-import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 import java.math.BigDecimal
+import tech.medo.trainingorchestration.domain.types.TrainingRoundParticipant
 
 class GenerateParticipantExecutionPlanDecisionTest {
     @Test
@@ -30,6 +30,15 @@ class GenerateParticipantExecutionPlanDecisionTest {
             roundNumber = 1,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             baseModelId = java.util.UUID.randomUUID(),
             baseModelArtifactUri = "",
             baseModelRegistryRef = "",
@@ -37,6 +46,9 @@ class GenerateParticipantExecutionPlanDecisionTest {
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            personalizedBaseModelId = null,
+            personalizedBaseModelArtifactUri = null,
+            personalizedBaseModelArtifactDigest = null,
             runtimeEngineProfileId = java.util.UUID.randomUUID(),
             runtimeEngineProfileName = null,
             runtimeEnginePluginProfile = "",
@@ -68,6 +80,15 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(1, event.roundNumber)
         assertEquals(command.runtimeId, event.runtimeId)
         assertEquals(command.organizationId, event.organizationId)
+        assertEquals(command.personalizationMode, event.personalizationMode)
+        assertEquals(command.personalizationScope, event.personalizationScope)
+        assertEquals(command.personalizedArtifactPolicy, event.personalizedArtifactPolicy)
+        assertEquals(command.personalizationMetric, event.personalizationMetric)
+        assertEquals(command.minimumPersonalizationLift, event.minimumPersonalizationLift)
+        assertEquals(command.personalizationTargetType, event.personalizationTargetType)
+        assertEquals(command.personalizationTargetId, event.personalizationTargetId)
+        assertEquals(command.personalizationCohortId, event.personalizationCohortId)
+        assertEquals(command.personalizationProfileId, event.personalizationProfileId)
         assertEquals(command.baseModelId, event.baseModelId)
         assertEquals(command.baseModelArtifactUri, event.baseModelArtifactUri)
         assertEquals(command.baseModelRegistryRef, event.baseModelRegistryRef)
@@ -75,6 +96,9 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(command.baseModelFormat, event.baseModelFormat)
         assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
         assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
+        assertEquals(command.personalizedBaseModelId, event.personalizedBaseModelId)
+        assertEquals(command.personalizedBaseModelArtifactUri, event.personalizedBaseModelArtifactUri)
+        assertEquals(command.personalizedBaseModelArtifactDigest, event.personalizedBaseModelArtifactDigest)
         assertEquals(command.runtimeEngineProfileId, event.runtimeEngineProfileId)
         assertEquals(command.runtimeEngineProfileName, event.runtimeEngineProfileName)
         assertEquals(command.runtimeEnginePluginProfile, event.runtimeEnginePluginProfile)
@@ -106,6 +130,15 @@ class GenerateParticipantExecutionPlanDecisionTest {
             roundNumber = 2,
             runtimeId = java.util.UUID.randomUUID(),
             organizationId = java.util.UUID.randomUUID(),
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
+            personalizationTargetType = null,
+            personalizationTargetId = null,
+            personalizationCohortId = null,
+            personalizationProfileId = null,
             baseModelId = java.util.UUID.randomUUID(),
             baseModelArtifactUri = "",
             baseModelRegistryRef = "",
@@ -113,6 +146,9 @@ class GenerateParticipantExecutionPlanDecisionTest {
             baseModelFormat = "",
             baseModelArtifactDigest = "",
             baseModelSignatureUri = null,
+            personalizedBaseModelId = null,
+            personalizedBaseModelArtifactUri = null,
+            personalizedBaseModelArtifactDigest = null,
             runtimeEngineProfileId = java.util.UUID.randomUUID(),
             runtimeEngineProfileName = null,
             runtimeEnginePluginProfile = "",
@@ -144,6 +180,15 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(2, event.roundNumber)
         assertEquals(command.runtimeId, event.runtimeId)
         assertEquals(command.organizationId, event.organizationId)
+        assertEquals(command.personalizationMode, event.personalizationMode)
+        assertEquals(command.personalizationScope, event.personalizationScope)
+        assertEquals(command.personalizedArtifactPolicy, event.personalizedArtifactPolicy)
+        assertEquals(command.personalizationMetric, event.personalizationMetric)
+        assertEquals(command.minimumPersonalizationLift, event.minimumPersonalizationLift)
+        assertEquals(command.personalizationTargetType, event.personalizationTargetType)
+        assertEquals(command.personalizationTargetId, event.personalizationTargetId)
+        assertEquals(command.personalizationCohortId, event.personalizationCohortId)
+        assertEquals(command.personalizationProfileId, event.personalizationProfileId)
         assertEquals(command.baseModelId, event.baseModelId)
         assertEquals(command.baseModelArtifactUri, event.baseModelArtifactUri)
         assertEquals(command.baseModelRegistryRef, event.baseModelRegistryRef)
@@ -151,6 +196,9 @@ class GenerateParticipantExecutionPlanDecisionTest {
         assertEquals(command.baseModelFormat, event.baseModelFormat)
         assertEquals(command.baseModelArtifactDigest, event.baseModelArtifactDigest)
         assertEquals(command.baseModelSignatureUri, event.baseModelSignatureUri)
+        assertEquals(command.personalizedBaseModelId, event.personalizedBaseModelId)
+        assertEquals(command.personalizedBaseModelArtifactUri, event.personalizedBaseModelArtifactUri)
+        assertEquals(command.personalizedBaseModelArtifactDigest, event.personalizedBaseModelArtifactDigest)
         assertEquals(command.runtimeEngineProfileId, event.runtimeEngineProfileId)
         assertEquals(command.runtimeEngineProfileName, event.runtimeEngineProfileName)
         assertEquals(command.runtimeEnginePluginProfile, event.runtimeEnginePluginProfile)

@@ -6,5 +6,9 @@ import java.util.UUID;
 data class TrainingRoundParticipant(
     val organizationId: UUID,
     val runtimeId: UUID,
-    val datasetId: UUID
+    val datasetId: UUID,
+    val personalizationTargetType: String?,
+    val personalizationTargetId: UUID?,
+    val personalizationCohortId: UUID?,
+    val personalizationProfileId: UUID?
 )

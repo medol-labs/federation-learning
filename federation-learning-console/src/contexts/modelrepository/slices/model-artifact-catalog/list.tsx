@@ -26,6 +26,7 @@ type ModelArtifactCatalogRecord = {
   modelVersion: string;
   modelDescription?: string;
   sourceType?: string;
+  modelScope?: string;
   modelArtifactUri: string;
   modelRegistryRef: string;
   modelFormat: string;
@@ -35,6 +36,11 @@ type ModelArtifactCatalogRecord = {
   trainingJobId?: string;
   roundId?: string;
   trainingJobObjective?: string;
+  personalizationMode?: string;
+  personalizationTargetType?: string;
+  personalizationTargetId?: string;
+  personalizationCohortId?: string;
+  baseGlobalModelId?: string;
   state: "Registered";
   registeredAt?: string;
 };
@@ -257,6 +263,33 @@ export const ModelArtifactCatalogList = () => {
               compact: true,
             },
           ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "MODEL_ARTIFACT_SOURCE_TYPE"),
+      }),
+      columnHelper.accessor("modelScope", {
+        id: "modelScope",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.modelScope.label", "Model Scope")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.modelScope.label", "Model Scope"),
+          dictionaryCode: "MODEL_SCOPE",
+          placeholder: "Enter Model Scope",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:modelScope",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "modelScope",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "MODEL_SCOPE"),
       }),
       columnHelper.accessor("modelArtifactUri", {
         id: "modelArtifactUri",
@@ -494,6 +527,138 @@ export const ModelArtifactCatalogList = () => {
             },
           ) ?? String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("personalizationMode", {
+        id: "personalizationMode",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.personalizationMode.label", "Personalization Mode")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.personalizationMode.label", "Personalization Mode"),
+          dictionaryCode: "PERSONALIZATION_MODE",
+          placeholder: "Enter Personalization Mode",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:personalizationMode",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "personalizationMode",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "PERSONALIZATION_MODE"),
+      }),
+      columnHelper.accessor("personalizationTargetType", {
+        id: "personalizationTargetType",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.personalizationTargetType.label", "Personalization Target Type")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.personalizationTargetType.label", "Personalization Target Type"),
+          dictionaryCode: "PERSONALIZATION_TARGET_TYPE",
+          placeholder: "Enter Personalization Target Type",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:personalizationTargetType",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "personalizationTargetType",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "PERSONALIZATION_TARGET_TYPE"),
+      }),
+      columnHelper.accessor("personalizationTargetId", {
+        id: "personalizationTargetId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.personalizationTargetId.label", "Personalization Target Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.personalizationTargetId.label", "Personalization Target Id"),
+          placeholder: "Enter Personalization Target Id",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:personalizationTargetId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "personalizationTargetId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("personalizationCohortId", {
+        id: "personalizationCohortId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.personalizationCohortId.label", "Personalization Cohort Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.personalizationCohortId.label", "Personalization Cohort Id"),
+          placeholder: "Enter Personalization Cohort Id",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:personalizationCohortId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "personalizationCohortId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
+      columnHelper.accessor("baseGlobalModelId", {
+        id: "baseGlobalModelId",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.baseGlobalModelId.label", "Base Global Model Id")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.baseGlobalModelId.label", "Base Global Model Id"),
+          placeholder: "Enter Base Global Model Id",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:baseGlobalModelId",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "baseGlobalModelId",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("state", {
         id: "state",
         header: ({ column }) => (
@@ -580,6 +745,9 @@ export const ModelArtifactCatalogList = () => {
                       modelSignatureUri: row.original.modelSignatureUri,
                       trainingJobId: row.original.trainingJobId,
                       roundId: row.original.roundId,
+                      personalizationTargetId: row.original.personalizationTargetId,
+                      personalizationCohortId: row.original.personalizationCohortId,
+                      baseGlobalModelId: row.original.baseGlobalModelId,
                     }}
                   />
                 )}
@@ -612,7 +780,7 @@ export const ModelArtifactCatalogList = () => {
         tableName: "model_artifact_catalog_read_model_entity",
         idField: "modelId",
         idFields: ["modelId"],
-        queryFields: ["modelId","modelName","modelPlugin","modelVersion","modelDescription","sourceType","modelArtifactUri","modelRegistryRef","modelFormat","modelArtifactDigest","modelSignatureUri","modelSizeBytes","trainingJobId","roundId","trainingJobObjective","state","registeredAt"],
+        queryFields: ["modelId","modelName","modelPlugin","modelVersion","modelDescription","sourceType","modelScope","modelArtifactUri","modelRegistryRef","modelFormat","modelArtifactDigest","modelSignatureUri","modelSizeBytes","trainingJobId","roundId","trainingJobObjective","personalizationMode","personalizationTargetType","personalizationTargetId","personalizationCohortId","baseGlobalModelId","state","registeredAt"],
         label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
         aggregateRoute: "modelartifact",
         queryRoute: "modelartifactcatalog",
