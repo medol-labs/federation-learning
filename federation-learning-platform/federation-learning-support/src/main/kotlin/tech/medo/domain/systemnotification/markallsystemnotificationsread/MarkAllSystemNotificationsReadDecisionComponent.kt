@@ -1,0 +1,7 @@
+package tech.medo.domain.systemnotification.markallsystemnotificationsread
+
+import org.springframework.stereotype.Component
+import tech.medo.systemnotification.markallsystemnotificationsread.MarkAllSystemNotificationsReadDecision
+
+@Component
+class MarkAllSystemNotificationsReadDecisionComponent : MarkAllSystemNotificationsReadDecision

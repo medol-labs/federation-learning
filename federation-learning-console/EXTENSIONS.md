@@ -134,8 +134,8 @@ export const pageOverrides = {
 | Route | `/data-export-job-catalog` |
 | Backend module | `federation-learning-support` |
 | Data provider | `federation-learning-support` |
-| Generated list page | `src/contexts/dataexchange/slices/data-export-job/list.tsx` |
-| Generated show page | `src/contexts/dataexchange/slices/data-export-job/show.tsx` |
+| Generated list page | `src/contexts/dataexchange/slices/data-export-job-catalog/list.tsx` |
+| Generated show page | `src/contexts/dataexchange/slices/data-export-job-catalog/show.tsx` |
 | Resource metadata override | `resourceOverrides[{ name: "data_export_job_catalog" }]` |
 | Menu icon request | `resolveMenuIcon({ type: "resource", name: "data_export_job_catalog", parent: "dataexchange" })` |
 
@@ -143,8 +143,8 @@ export const pageOverrides = {
 
 | View | Override key | Generated fallback |
 | --- | --- | --- |
-| `list` | `data-export-job-catalog:list` | `src/contexts/dataexchange/slices/data-export-job/list.tsx` |
-| `show` | `data-export-job-catalog:show` | `src/contexts/dataexchange/slices/data-export-job/show.tsx` |
+| `list` | `data-export-job-catalog:list` | `src/contexts/dataexchange/slices/data-export-job-catalog/list.tsx` |
+| `show` | `data-export-job-catalog:show` | `src/contexts/dataexchange/slices/data-export-job-catalog/show.tsx` |
 
 Example:
 
@@ -181,6 +181,62 @@ export const pageOverrides = {
 | `filePath` | `string` | `data-export-job-catalog:field:filePath` | `formatValue/display text` |
 | `rowCount` | `number` | `data-export-job-catalog:field:rowCount` | `formatValue/display text` |
 | `errorMessage` | `string` | `data-export-job-catalog:field:errorMessage` | `CopyableText` |
+
+### Data Import Job Catalog
+
+| Property | Value |
+| --- | --- |
+| Resource name | `data_import_job_catalog` |
+| Route | `/data-import-job-catalog` |
+| Backend module | `federation-learning-support` |
+| Data provider | `federation-learning-support` |
+| Generated list page | `src/contexts/dataexchange/slices/data-import-job-catalog/list.tsx` |
+| Generated show page | `src/contexts/dataexchange/slices/data-import-job-catalog/show.tsx` |
+| Resource metadata override | `resourceOverrides[{ name: "data_import_job_catalog" }]` |
+| Menu icon request | `resolveMenuIcon({ type: "resource", name: "data_import_job_catalog", parent: "dataexchange" })` |
+
+#### Page Overrides
+
+| View | Override key | Generated fallback |
+| --- | --- | --- |
+| `list` | `data-import-job-catalog:list` | `src/contexts/dataexchange/slices/data-import-job-catalog/list.tsx` |
+| `show` | `data-import-job-catalog:show` | `src/contexts/dataexchange/slices/data-import-job-catalog/show.tsx` |
+
+Example:
+
+```tsx
+// src/domain/page-overrides.tsx
+import { MyDataImportJobCatalogList } from "./pages/my-data-import-job-catalog-list";
+
+export const pageOverrides = {
+  "data-import-job-catalog:list": <MyDataImportJobCatalogList />,
+};
+```
+
+#### Commands And Row Actions
+
+| Command | Override key | Generated fallback | Fields |
+| --- | --- | --- | --- |
+| _(none)_ | | | |
+
+#### Field Renderers
+
+| Field | Type | Renderer override id | Default renderer |
+| --- | --- | --- | --- |
+| `dataImportJobId` | `string` | `data-import-job-catalog:field:dataImportJobId` | `formatValue/display text` |
+| `commandName` | `string` | `data-import-job-catalog:field:commandName` | `formatValue/display text` |
+| `resourceName` | `string` | `data-import-job-catalog:field:resourceName` | `formatValue/display text` |
+| `originalFileName` | `string` | `data-import-job-catalog:field:originalFileName` | `formatValue/display text` |
+| `filePath` | `string` | `data-import-job-catalog:field:filePath` | `formatValue/display text` |
+| `requestedLocale` | `string` | `data-import-job-catalog:field:requestedLocale` | `formatValue/display text` |
+| `requestedAt` | `string` | `data-import-job-catalog:field:requestedAt` | `formatValue/display text` |
+| `requestHash` | `string` | `data-import-job-catalog:field:requestHash` | `formatValue/display text` |
+| `status` | `string` | `data-import-job-catalog:field:status` | `formatValue/display text` |
+| `totalRows` | `number` | `data-import-job-catalog:field:totalRows` | `formatValue/display text` |
+| `successRows` | `number` | `data-import-job-catalog:field:successRows` | `formatValue/display text` |
+| `failedRows` | `number` | `data-import-job-catalog:field:failedRows` | `formatValue/display text` |
+| `failureIndexPath` | `string` | `data-import-job-catalog:field:failureIndexPath` | `formatValue/display text` |
+| `errorMessage` | `string` | `data-import-job-catalog:field:errorMessage` | `CopyableText` |
 
 ### Dictionary Catalog
 
@@ -742,8 +798,8 @@ export const pageOverrides = {
 | Route | `/permission-catalog` |
 | Backend module | `federation-learning-support` |
 | Data provider | `federation-learning-support` |
-| Generated list page | `src/contexts/identityaccessmanagement/slices/permission-catalogs/list.tsx` |
-| Generated show page | `src/contexts/identityaccessmanagement/slices/permission-catalogs/show.tsx` |
+| Generated list page | `src/contexts/identityaccessmanagement/slices/permission-catalog/list.tsx` |
+| Generated show page | `src/contexts/identityaccessmanagement/slices/permission-catalog/show.tsx` |
 | Resource metadata override | `resourceOverrides[{ name: "permission_catalog" }]` |
 | Menu icon request | `resolveMenuIcon({ type: "resource", name: "permission_catalog", parent: "identityaccessmanagement" })` |
 
@@ -751,8 +807,8 @@ export const pageOverrides = {
 
 | View | Override key | Generated fallback |
 | --- | --- | --- |
-| `list` | `permission-catalog:list` | `src/contexts/identityaccessmanagement/slices/permission-catalogs/list.tsx` |
-| `show` | `permission-catalog:show` | `src/contexts/identityaccessmanagement/slices/permission-catalogs/show.tsx` |
+| `list` | `permission-catalog:list` | `src/contexts/identityaccessmanagement/slices/permission-catalog/list.tsx` |
+| `show` | `permission-catalog:show` | `src/contexts/identityaccessmanagement/slices/permission-catalog/show.tsx` |
 | `registerPermission` | `permission-catalog:registerPermission` | `src/contexts/identityaccessmanagement/slices/register-permission/register-permission.tsx` |
 
 Example:
@@ -789,8 +845,8 @@ export const pageOverrides = {
 | Route | `/role-catalog` |
 | Backend module | `federation-learning-support` |
 | Data provider | `federation-learning-support` |
-| Generated list page | `src/contexts/identityaccessmanagement/slices/role-catalogs/list.tsx` |
-| Generated show page | `src/contexts/identityaccessmanagement/slices/role-catalogs/show.tsx` |
+| Generated list page | `src/contexts/identityaccessmanagement/slices/role-catalog/list.tsx` |
+| Generated show page | `src/contexts/identityaccessmanagement/slices/role-catalog/show.tsx` |
 | Resource metadata override | `resourceOverrides[{ name: "role_catalog" }]` |
 | Menu icon request | `resolveMenuIcon({ type: "resource", name: "role_catalog", parent: "identityaccessmanagement" })` |
 
@@ -798,8 +854,8 @@ export const pageOverrides = {
 
 | View | Override key | Generated fallback |
 | --- | --- | --- |
-| `list` | `role-catalog:list` | `src/contexts/identityaccessmanagement/slices/role-catalogs/list.tsx` |
-| `show` | `role-catalog:show` | `src/contexts/identityaccessmanagement/slices/role-catalogs/show.tsx` |
+| `list` | `role-catalog:list` | `src/contexts/identityaccessmanagement/slices/role-catalog/list.tsx` |
+| `show` | `role-catalog:show` | `src/contexts/identityaccessmanagement/slices/role-catalog/show.tsx` |
 | `registerRole` | `role-catalog:registerRole` | `src/contexts/identityaccessmanagement/slices/register-role/register-role.tsx` |
 | `grantPermissionToRole` | `role-catalog:grantPermissionToRole` | `src/contexts/identityaccessmanagement/slices/grant-permission-to-role/grant-permission-to-role.tsx` |
 
@@ -1735,8 +1791,8 @@ export const pageOverrides = {
 | Route | `/service-account-api-token-catalog` |
 | Backend module | `federation-learning-support` |
 | Data provider | `federation-learning-support` |
-| Generated list page | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalogs/list.tsx` |
-| Generated show page | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalogs/show.tsx` |
+| Generated list page | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalog/list.tsx` |
+| Generated show page | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalog/show.tsx` |
 | Resource metadata override | `resourceOverrides[{ name: "service_account_api_token_catalog" }]` |
 | Menu icon request | `resolveMenuIcon({ type: "resource", name: "service_account_api_token_catalog", parent: "identityaccessmanagement" })` |
 
@@ -1744,8 +1800,8 @@ export const pageOverrides = {
 
 | View | Override key | Generated fallback |
 | --- | --- | --- |
-| `list` | `service-account-api-token-catalog:list` | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalogs/list.tsx` |
-| `show` | `service-account-api-token-catalog:show` | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalogs/show.tsx` |
+| `list` | `service-account-api-token-catalog:list` | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalog/list.tsx` |
+| `show` | `service-account-api-token-catalog:show` | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalog/show.tsx` |
 | `issueServiceAccountApiToken` | `service-account-api-token-catalog:issueServiceAccountApiToken` | `src/contexts/identityaccessmanagement/slices/issue-service-account-api-token/issue-service-account-api-token.tsx` |
 
 Example:
@@ -1777,6 +1833,122 @@ export const pageOverrides = {
 | `issuedAt` | `string` | `service-account-api-token-catalog:field:issuedAt` | `formatValue/display text` |
 | `roles` | `string[]` | `service-account-api-token-catalog:field:roles` | `formatValue/display text` |
 | `permissions` | `string[]` | `service-account-api-token-catalog:field:permissions` | `formatValue/display text` |
+
+### System Notification Catalog
+
+| Property | Value |
+| --- | --- |
+| Resource name | `system_notification_catalog` |
+| Route | `/system-notification-catalog` |
+| Backend module | `federation-learning-support` |
+| Data provider | `federation-learning-support` |
+| Generated list page | `src/contexts/systemnotification/slices/system-notification-catalog/list.tsx` |
+| Generated show page | `src/contexts/systemnotification/slices/system-notification-catalog/show.tsx` |
+| Resource metadata override | `resourceOverrides[{ name: "system_notification_catalog" }]` |
+| Menu icon request | `resolveMenuIcon({ type: "resource", name: "system_notification_catalog", parent: "systemnotification" })` |
+
+#### Page Overrides
+
+| View | Override key | Generated fallback |
+| --- | --- | --- |
+| `list` | `system-notification-catalog:list` | `src/contexts/systemnotification/slices/system-notification-catalog/list.tsx` |
+| `show` | `system-notification-catalog:show` | `src/contexts/systemnotification/slices/system-notification-catalog/show.tsx` |
+| `publishSystemNotification` | `system-notification-catalog:publishSystemNotification` | `src/contexts/systemnotification/slices/publish-system-notification/publish-system-notification.tsx` |
+| `markSystemNotificationRead` | `system-notification-catalog:markSystemNotificationRead` | `src/contexts/systemnotification/slices/mark-system-notification-read/mark-system-notification-read-system-notification-catalog.tsx` |
+
+Example:
+
+```tsx
+// src/domain/page-overrides.tsx
+import { MySystemNotificationCatalogList } from "./pages/my-system-notification-catalog-list";
+
+export const pageOverrides = {
+  "system-notification-catalog:list": <MySystemNotificationCatalogList />,
+};
+```
+
+#### Commands And Row Actions
+
+| Command | Override key | Generated fallback | Fields |
+| --- | --- | --- | --- |
+| `publishSystemNotification` | `system-notification-catalog:publishSystemNotification` | `src/contexts/systemnotification/slices/publish-system-notification/publish-system-notification.tsx` | `recipientUserId`, `recipientRole`, `category`, `severity`, `messageKey`, `messageArgsJson`, `fallbackTitle`, `fallbackBody`, `targetType`, `targetId`, `targetRoute`, `toastPolicy`, `publishedAt`, `status` |
+| `markSystemNotificationRead` | `system-notification-catalog:markSystemNotificationRead` | `src/contexts/systemnotification/slices/mark-system-notification-read/mark-system-notification-read-system-notification-catalog.tsx` | `recipientUserId`, `readAt` |
+
+#### Field Renderers
+
+| Field | Type | Renderer override id | Default renderer |
+| --- | --- | --- | --- |
+| `notificationId` | `string` | `system-notification-catalog:field:notificationId` | `formatValue/display text` |
+| `recipientUserId` | `string` | `system-notification-catalog:field:recipientUserId` | `formatValue/display text` |
+| `recipientRole` | `string` | `system-notification-catalog:field:recipientRole` | `formatValue/display text` |
+| `category` | `NotificationCategory` | `system-notification-catalog:field:category` | `Select/display text` |
+| `severity` | `NotificationSeverity` | `system-notification-catalog:field:severity` | `Select/display text` |
+| `messageKey` | `string` | `system-notification-catalog:field:messageKey` | `formatValue/display text` |
+| `messageArgsJson` | `string` | `system-notification-catalog:field:messageArgsJson` | `CopyableText` |
+| `fallbackTitle` | `string` | `system-notification-catalog:field:fallbackTitle` | `formatValue/display text` |
+| `fallbackBody` | `string` | `system-notification-catalog:field:fallbackBody` | `CopyableText` |
+| `targetType` | `string` | `system-notification-catalog:field:targetType` | `formatValue/display text` |
+| `targetId` | `string` | `system-notification-catalog:field:targetId` | `formatValue/display text` |
+| `targetRoute` | `string` | `system-notification-catalog:field:targetRoute` | `formatValue/display text` |
+| `toastPolicy` | `NotificationToastPolicy` | `system-notification-catalog:field:toastPolicy` | `Select/display text` |
+| `publishedAt` | `string` | `system-notification-catalog:field:publishedAt` | `formatValue/display text` |
+| `readAt` | `string` | `system-notification-catalog:field:readAt` | `formatValue/display text` |
+| `state` | `&#34;Unread&#34; | &#34;Read&#34;` | `system-notification-catalog:field:state` | `Select/display text` |
+
+### System Notification Summary
+
+| Property | Value |
+| --- | --- |
+| Resource name | `system_notification_summary` |
+| Route | `/system-notification-summary` |
+| Backend module | `federation-learning-support` |
+| Data provider | `federation-learning-support` |
+| Generated list page | `src/contexts/systemnotification/slices/system-notification-summary/list.tsx` |
+| Generated show page | `src/contexts/systemnotification/slices/system-notification-summary/show.tsx` |
+| Resource metadata override | `resourceOverrides[{ name: "system_notification_summary" }]` |
+| Menu icon request | `resolveMenuIcon({ type: "resource", name: "system_notification_summary", parent: "systemnotification" })` |
+
+#### Page Overrides
+
+| View | Override key | Generated fallback |
+| --- | --- | --- |
+| `list` | `system-notification-summary:list` | `src/contexts/systemnotification/slices/system-notification-summary/list.tsx` |
+| `show` | `system-notification-summary:show` | `src/contexts/systemnotification/slices/system-notification-summary/show.tsx` |
+| `markSystemNotificationRead` | `system-notification-summary:markSystemNotificationRead` | `src/contexts/systemnotification/slices/mark-system-notification-read/mark-system-notification-read-system-notification-summary.tsx` |
+| `markAllSystemNotificationsRead` | `system-notification-summary:markAllSystemNotificationsRead` | `src/contexts/systemnotification/slices/mark-all-system-notifications-read/mark-all-system-notifications-read.tsx` |
+
+Example:
+
+```tsx
+// src/domain/page-overrides.tsx
+import { MySystemNotificationSummaryList } from "./pages/my-system-notification-summary-list";
+
+export const pageOverrides = {
+  "system-notification-summary:list": <MySystemNotificationSummaryList />,
+};
+```
+
+#### Commands And Row Actions
+
+| Command | Override key | Generated fallback | Fields |
+| --- | --- | --- | --- |
+| `markSystemNotificationRead` | `system-notification-summary:markSystemNotificationRead` | `src/contexts/systemnotification/slices/mark-system-notification-read/mark-system-notification-read-system-notification-summary.tsx` | `recipientUserId`, `readAt` |
+| `markAllSystemNotificationsRead` | `system-notification-summary:markAllSystemNotificationsRead` | `src/contexts/systemnotification/slices/mark-all-system-notifications-read/mark-all-system-notifications-read.tsx` | `readAt` |
+
+#### Field Renderers
+
+| Field | Type | Renderer override id | Default renderer |
+| --- | --- | --- | --- |
+| `recipientUserId` | `string` | `system-notification-summary:field:recipientUserId` | `formatValue/display text` |
+| `unreadCount` | `number` | `system-notification-summary:field:unreadCount` | `formatValue/display text` |
+| `latestNotificationId` | `string` | `system-notification-summary:field:latestNotificationId` | `formatValue/display text` |
+| `latestSeverity` | `NotificationSeverity` | `system-notification-summary:field:latestSeverity` | `Select/display text` |
+| `latestPublishedAt` | `string` | `system-notification-summary:field:latestPublishedAt` | `formatValue/display text` |
+| `messageKey` | `string` | `system-notification-summary:field:messageKey` | `formatValue/display text` |
+| `fallbackTitle` | `string` | `system-notification-summary:field:fallbackTitle` | `formatValue/display text` |
+| `fallbackBody` | `string` | `system-notification-summary:field:fallbackBody` | `CopyableText` |
+| `toastPolicy` | `NotificationToastPolicy` | `system-notification-summary:field:toastPolicy` | `Select/display text` |
+| `hasUnreadError` | `boolean` | `system-notification-summary:field:hasUnreadError` | `formatValue/display text` |
 
 ### Training Alert Catalog
 
@@ -2259,8 +2431,8 @@ export const pageOverrides = {
 | Route | `/user-account-catalog` |
 | Backend module | `federation-learning-support` |
 | Data provider | `federation-learning-support` |
-| Generated list page | `src/contexts/identityaccessmanagement/slices/user-account-catalogs/list.tsx` |
-| Generated show page | `src/contexts/identityaccessmanagement/slices/user-account-catalogs/show.tsx` |
+| Generated list page | `src/contexts/identityaccessmanagement/slices/user-account-catalog/list.tsx` |
+| Generated show page | `src/contexts/identityaccessmanagement/slices/user-account-catalog/show.tsx` |
 | Resource metadata override | `resourceOverrides[{ name: "user_account_catalog" }]` |
 | Menu icon request | `resolveMenuIcon({ type: "resource", name: "user_account_catalog", parent: "identityaccessmanagement" })` |
 
@@ -2268,8 +2440,8 @@ export const pageOverrides = {
 
 | View | Override key | Generated fallback |
 | --- | --- | --- |
-| `list` | `user-account-catalog:list` | `src/contexts/identityaccessmanagement/slices/user-account-catalogs/list.tsx` |
-| `show` | `user-account-catalog:show` | `src/contexts/identityaccessmanagement/slices/user-account-catalogs/show.tsx` |
+| `list` | `user-account-catalog:list` | `src/contexts/identityaccessmanagement/slices/user-account-catalog/list.tsx` |
+| `show` | `user-account-catalog:show` | `src/contexts/identityaccessmanagement/slices/user-account-catalog/show.tsx` |
 | `registerUserAccount` | `user-account-catalog:registerUserAccount` | `src/contexts/identityaccessmanagement/slices/register-user-account/register-user-account.tsx` |
 | `generateUserAccountLoginPassword` | `user-account-catalog:generateUserAccountLoginPassword` | `src/contexts/identityaccessmanagement/slices/generate-user-account-login-password/generate-user-account-login-password.tsx` |
 | `deactivateUserAccount` | `user-account-catalog:deactivateUserAccount` | `src/contexts/identityaccessmanagement/slices/deactivate-user-account/deactivate-user-account.tsx` |

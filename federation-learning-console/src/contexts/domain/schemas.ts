@@ -39,6 +39,9 @@ export const DictionaryCodeSchema = z.string();
 export const DictionaryValueCodeSchema = z.string();
 export const LocaleCodeSchema = z.string();
 export const DisplayOrderSchema = z.coerce.number().int().min(0).max(999999);
+export const NotificationCategorySchema = z.enum(["SYSTEM", "DATA_EXCHANGE", "TRAINING", "RUNTIME", "SECURITY"]);
+export const NotificationSeveritySchema = z.enum(["INFO", "SUCCESS", "WARNING", "ERROR"]);
+export const NotificationToastPolicySchema = z.enum(["NONE", "DEFAULT", "IMPORTANT"]);
 
 export const RegisterOrganizationCommandSchema = z.object({
   organizationName: z.string(),
@@ -752,6 +755,50 @@ export const IssueServiceAccountApiTokenCommandSchema = z.object({
   tokenName: z.string(),
 });
 export type IssueServiceAccountApiTokenCommandInput = z.infer<typeof IssueServiceAccountApiTokenCommandSchema>;
+
+export const PublishSystemNotificationCommandSchema = z.object({
+  recipientUserId: z.string(),
+  recipientRole: z.string().optional().nullable(),
+  category: NotificationCategorySchema,
+  severity: NotificationSeveritySchema,
+  messageKey: z.string(),
+  messageArgsJson: z.string().optional().nullable(),
+  fallbackTitle: z.string(),
+  fallbackBody: z.string().optional().nullable(),
+  targetType: z.string().optional().nullable(),
+  targetId: z.string().optional().nullable(),
+  targetRoute: z.string().optional().nullable(),
+  toastPolicy: NotificationToastPolicySchema,
+  publishedAt: dateTimeLocalSchema,
+  status: z.string(),
+});
+export type PublishSystemNotificationCommandInput = z.infer<typeof PublishSystemNotificationCommandSchema>;
+
+export const MarkSystemNotificationReadCommandSchema = z.object({
+  notificationId: z.string().uuid(),
+  recipientUserId: z.string(),
+  readAt: dateTimeLocalSchema,
+});
+export type MarkSystemNotificationReadCommandInput = z.infer<typeof MarkSystemNotificationReadCommandSchema>;
+
+export const MarkAllSystemNotificationsReadCommandSchema = z.object({
+  recipientUserId: z.string(),
+  readAt: dateTimeLocalSchema,
+});
+export type MarkAllSystemNotificationsReadCommandInput = z.infer<typeof MarkAllSystemNotificationsReadCommandSchema>;
+
+export const RequestDataImportCommandSchema = z.object({
+  dataImportJobId: z.string().uuid(),
+  commandName: z.string(),
+  resourceName: z.string(),
+  originalFileName: z.string(),
+  filePath: z.string(),
+  requestedLocale: z.string().optional().nullable(),
+  requestedAt: dateTimeLocalSchema,
+  requestHash: z.string(),
+  status: z.string(),
+});
+export type RequestDataImportCommandInput = z.infer<typeof RequestDataImportCommandSchema>;
 
 export const RequestDataExportCommandSchema = z.object({
   dataExportJobId: z.string().uuid(),

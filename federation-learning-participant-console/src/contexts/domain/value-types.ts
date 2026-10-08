@@ -32,3 +32,6 @@ export type DictionaryCode = string;
 export type DictionaryValueCode = string;
 export type LocaleCode = string;
 export type DisplayOrder = number;
+export type NotificationCategory = "SYSTEM" | "DATA_EXCHANGE" | "TRAINING" | "RUNTIME" | "SECURITY";
+export type NotificationSeverity = "INFO" | "SUCCESS" | "WARNING" | "ERROR";
+export type NotificationToastPolicy = "NONE" | "DEFAULT" | "IMPORTANT";

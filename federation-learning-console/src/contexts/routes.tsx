@@ -11,6 +11,10 @@ import {
   DataExportJobCatalogShow,
 } from "./dataexchange/read-models/data-export-job-catalog";
 import {
+  DataImportJobCatalogList,
+  DataImportJobCatalogShow,
+} from "./dataexchange/read-models/data-import-job-catalog";
+import {
   DictionaryCatalogList,
   DictionaryCatalogShow,
   DictionaryCatalogRegisterDictionary,
@@ -183,6 +187,18 @@ import {
   ServiceAccountApiTokenCatalogIssueServiceAccountApiToken,
 } from "./identityaccessmanagement/read-models/service-account-api-token-catalog";
 import {
+  SystemNotificationCatalogList,
+  SystemNotificationCatalogShow,
+  SystemNotificationCatalogPublishSystemNotification,
+  SystemNotificationCatalogMarkSystemNotificationRead,
+} from "./systemnotification/read-models/system-notification-catalog";
+import {
+  SystemNotificationSummaryList,
+  SystemNotificationSummaryShow,
+  SystemNotificationSummaryMarkSystemNotificationRead,
+  SystemNotificationSummaryMarkAllSystemNotificationsRead,
+} from "./systemnotification/read-models/system-notification-summary";
+import {
   TrainingAlertCatalogList,
   TrainingAlertCatalogShow,
   TrainingAlertCatalogAcknowledgeTrainingAlert,
@@ -248,6 +264,10 @@ export const contextRoutes = (
     <Route path="/data-export-job-catalog">
       <Route index element={resolvePageOverride("data-export-job-catalog", "list", <DataExportJobCatalogList />)} />
       <Route path="show/:id" element={resolvePageOverride("data-export-job-catalog", "show", <DataExportJobCatalogShow />)} />
+    </Route>
+    <Route path="/data-import-job-catalog">
+      <Route index element={resolvePageOverride("data-import-job-catalog", "list", <DataImportJobCatalogList />)} />
+      <Route path="show/:id" element={resolvePageOverride("data-import-job-catalog", "show", <DataImportJobCatalogShow />)} />
     </Route>
     <Route path="/dictionary-catalog">
       <Route index element={resolvePageOverride("dictionary-catalog", "list", <DictionaryCatalogList />)} />
@@ -420,6 +440,18 @@ export const contextRoutes = (
       <Route index element={resolvePageOverride("service-account-api-token-catalog", "list", <ServiceAccountApiTokenCatalogList />)} />
       <Route path="command/issue-service-account-api-token" element={resolvePageOverride("service-account-api-token-catalog", "issueServiceAccountApiToken", <ServiceAccountApiTokenCatalogIssueServiceAccountApiToken />)} />
       <Route path="show/:id" element={resolvePageOverride("service-account-api-token-catalog", "show", <ServiceAccountApiTokenCatalogShow />)} />
+    </Route>
+    <Route path="/system-notification-catalog">
+      <Route index element={resolvePageOverride("system-notification-catalog", "list", <SystemNotificationCatalogList />)} />
+      <Route path="command/publish-system-notification" element={resolvePageOverride("system-notification-catalog", "publishSystemNotification", <SystemNotificationCatalogPublishSystemNotification />)} />
+      <Route path="show/:id" element={resolvePageOverride("system-notification-catalog", "show", <SystemNotificationCatalogShow />)} />
+      <Route path=":id/command/mark-system-notification-read" element={resolvePageOverride("system-notification-catalog", "markSystemNotificationRead", <SystemNotificationCatalogMarkSystemNotificationRead />)} />
+    </Route>
+    <Route path="/system-notification-summary">
+      <Route index element={resolvePageOverride("system-notification-summary", "list", <SystemNotificationSummaryList />)} />
+      <Route path="show/:id" element={resolvePageOverride("system-notification-summary", "show", <SystemNotificationSummaryShow />)} />
+      <Route path=":id/command/mark-system-notification-read" element={resolvePageOverride("system-notification-summary", "markSystemNotificationRead", <SystemNotificationSummaryMarkSystemNotificationRead />)} />
+      <Route path=":id/command/mark-all-system-notifications-read" element={resolvePageOverride("system-notification-summary", "markAllSystemNotificationsRead", <SystemNotificationSummaryMarkAllSystemNotificationsRead />)} />
     </Route>
     <Route path="/training-alert-catalog">
       <Route index element={resolvePageOverride("training-alert-catalog", "list", <TrainingAlertCatalogList />)} />

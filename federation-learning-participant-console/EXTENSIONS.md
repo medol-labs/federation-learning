@@ -782,8 +782,8 @@ export const pageOverrides = {
 | Route | `/permission-catalog` |
 | Backend module | `federation-learning-runtime-agent` |
 | Data provider | `federation-learning-runtime-agent` |
-| Generated list page | `src/contexts/identityaccessmanagement/slices/permission-catalogs/list.tsx` |
-| Generated show page | `src/contexts/identityaccessmanagement/slices/permission-catalogs/show.tsx` |
+| Generated list page | `src/contexts/identityaccessmanagement/slices/permission-catalog/list.tsx` |
+| Generated show page | `src/contexts/identityaccessmanagement/slices/permission-catalog/show.tsx` |
 | Resource metadata override | `resourceOverrides[{ name: "permission_catalog" }]` |
 | Menu icon request | `resolveMenuIcon({ type: "resource", name: "permission_catalog", parent: "identityaccessmanagement" })` |
 
@@ -791,8 +791,8 @@ export const pageOverrides = {
 
 | View | Override key | Generated fallback |
 | --- | --- | --- |
-| `list` | `permission-catalog:list` | `src/contexts/identityaccessmanagement/slices/permission-catalogs/list.tsx` |
-| `show` | `permission-catalog:show` | `src/contexts/identityaccessmanagement/slices/permission-catalogs/show.tsx` |
+| `list` | `permission-catalog:list` | `src/contexts/identityaccessmanagement/slices/permission-catalog/list.tsx` |
+| `show` | `permission-catalog:show` | `src/contexts/identityaccessmanagement/slices/permission-catalog/show.tsx` |
 | `registerPermission` | `permission-catalog:registerPermission` | `src/contexts/identityaccessmanagement/slices/register-permission/register-permission.tsx` |
 
 Example:
@@ -829,8 +829,8 @@ export const pageOverrides = {
 | Route | `/role-catalog` |
 | Backend module | `federation-learning-runtime-agent` |
 | Data provider | `federation-learning-runtime-agent` |
-| Generated list page | `src/contexts/identityaccessmanagement/slices/role-catalogs/list.tsx` |
-| Generated show page | `src/contexts/identityaccessmanagement/slices/role-catalogs/show.tsx` |
+| Generated list page | `src/contexts/identityaccessmanagement/slices/role-catalog/list.tsx` |
+| Generated show page | `src/contexts/identityaccessmanagement/slices/role-catalog/show.tsx` |
 | Resource metadata override | `resourceOverrides[{ name: "role_catalog" }]` |
 | Menu icon request | `resolveMenuIcon({ type: "resource", name: "role_catalog", parent: "identityaccessmanagement" })` |
 
@@ -838,8 +838,8 @@ export const pageOverrides = {
 
 | View | Override key | Generated fallback |
 | --- | --- | --- |
-| `list` | `role-catalog:list` | `src/contexts/identityaccessmanagement/slices/role-catalogs/list.tsx` |
-| `show` | `role-catalog:show` | `src/contexts/identityaccessmanagement/slices/role-catalogs/show.tsx` |
+| `list` | `role-catalog:list` | `src/contexts/identityaccessmanagement/slices/role-catalog/list.tsx` |
+| `show` | `role-catalog:show` | `src/contexts/identityaccessmanagement/slices/role-catalog/show.tsx` |
 | `registerRole` | `role-catalog:registerRole` | `src/contexts/identityaccessmanagement/slices/register-role/register-role.tsx` |
 | `grantPermissionToRole` | `role-catalog:grantPermissionToRole` | `src/contexts/identityaccessmanagement/slices/grant-permission-to-role/grant-permission-to-role.tsx` |
 
@@ -1133,8 +1133,8 @@ export const pageOverrides = {
 | Route | `/service-account-api-token-catalog` |
 | Backend module | `federation-learning-runtime-agent` |
 | Data provider | `federation-learning-runtime-agent` |
-| Generated list page | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalogs/list.tsx` |
-| Generated show page | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalogs/show.tsx` |
+| Generated list page | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalog/list.tsx` |
+| Generated show page | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalog/show.tsx` |
 | Resource metadata override | `resourceOverrides[{ name: "service_account_api_token_catalog" }]` |
 | Menu icon request | `resolveMenuIcon({ type: "resource", name: "service_account_api_token_catalog", parent: "identityaccessmanagement" })` |
 
@@ -1142,8 +1142,8 @@ export const pageOverrides = {
 
 | View | Override key | Generated fallback |
 | --- | --- | --- |
-| `list` | `service-account-api-token-catalog:list` | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalogs/list.tsx` |
-| `show` | `service-account-api-token-catalog:show` | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalogs/show.tsx` |
+| `list` | `service-account-api-token-catalog:list` | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalog/list.tsx` |
+| `show` | `service-account-api-token-catalog:show` | `src/contexts/identityaccessmanagement/slices/service-account-api-token-catalog/show.tsx` |
 | `issueServiceAccountApiToken` | `service-account-api-token-catalog:issueServiceAccountApiToken` | `src/contexts/identityaccessmanagement/slices/issue-service-account-api-token/issue-service-account-api-token.tsx` |
 
 Example:
@@ -1184,8 +1184,8 @@ export const pageOverrides = {
 | Route | `/user-account-catalog` |
 | Backend module | `federation-learning-runtime-agent` |
 | Data provider | `federation-learning-runtime-agent` |
-| Generated list page | `src/contexts/identityaccessmanagement/slices/user-account-catalogs/list.tsx` |
-| Generated show page | `src/contexts/identityaccessmanagement/slices/user-account-catalogs/show.tsx` |
+| Generated list page | `src/contexts/identityaccessmanagement/slices/user-account-catalog/list.tsx` |
+| Generated show page | `src/contexts/identityaccessmanagement/slices/user-account-catalog/show.tsx` |
 | Resource metadata override | `resourceOverrides[{ name: "user_account_catalog" }]` |
 | Menu icon request | `resolveMenuIcon({ type: "resource", name: "user_account_catalog", parent: "identityaccessmanagement" })` |
 
@@ -1193,8 +1193,8 @@ export const pageOverrides = {
 
 | View | Override key | Generated fallback |
 | --- | --- | --- |
-| `list` | `user-account-catalog:list` | `src/contexts/identityaccessmanagement/slices/user-account-catalogs/list.tsx` |
-| `show` | `user-account-catalog:show` | `src/contexts/identityaccessmanagement/slices/user-account-catalogs/show.tsx` |
+| `list` | `user-account-catalog:list` | `src/contexts/identityaccessmanagement/slices/user-account-catalog/list.tsx` |
+| `show` | `user-account-catalog:show` | `src/contexts/identityaccessmanagement/slices/user-account-catalog/show.tsx` |
 | `registerUserAccount` | `user-account-catalog:registerUserAccount` | `src/contexts/identityaccessmanagement/slices/register-user-account/register-user-account.tsx` |
 | `generateUserAccountLoginPassword` | `user-account-catalog:generateUserAccountLoginPassword` | `src/contexts/identityaccessmanagement/slices/generate-user-account-login-password/generate-user-account-login-password.tsx` |
 | `deactivateUserAccount` | `user-account-catalog:deactivateUserAccount` | `src/contexts/identityaccessmanagement/slices/deactivate-user-account/deactivate-user-account.tsx` |

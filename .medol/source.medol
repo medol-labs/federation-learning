@@ -2,7 +2,8 @@ import identity-access-management as PlatformIam deploy FederationLearningSuppor
 import identity-access-management as ParticipantIam deploy FederationLearningRuntimeAgent
 import dictionary-maintenance as PlatformDictionary deploy FederationLearningSupport
 import file-upload as PlatformFileUpload deploy FederationLearningSupport
-import data-exchange as PlatformDataExchange deploy FederationLearningPlatform
+import data-exchange as PlatformDataExchange deploy FederationLearningSupport
+import system-notification as PlatformNotification deploy FederationLearningSupport
 
 domain FederationLearningPlatform {
 context OrganizationManagement {
@@ -8260,6 +8261,7 @@ context RuntimeAgentOperations {
     includes DictionaryMaintenance from FederationLearningSupport
     includes FileUpload from FederationLearningSupport
     includes DataExchange from FederationLearningSupport
+    includes SystemNotification from FederationLearningSupport
     includes RuntimeProvisioning from FederationLearningPlatform
     includes DatasetGovernance from FederationLearningPlatform
     includes ModelRepository from FederationLearningPlatform

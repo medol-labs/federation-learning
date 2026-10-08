@@ -157,11 +157,6 @@
           "id": "context-dec3aef8",
           "name": "RuntimeProvisioning",
           "title": "Runtime Provisioning"
-        },
-        {
-          "id": "context-16936fd4",
-          "name": "DataExchange",
-          "title": "Data Exchange"
         }
       ]
     },
@@ -188,6 +183,16 @@
       "name": "FederationLearningSupport",
       "title": "Federation Learning Support",
       "contexts": [
+        {
+          "id": "context-5a841cb7",
+          "name": "SystemNotification",
+          "title": "System Notification"
+        },
+        {
+          "id": "context-16936fd4",
+          "name": "DataExchange",
+          "title": "Data Exchange"
+        },
         {
           "id": "context-35ec5a6d",
           "name": "FileUpload",
@@ -241,6 +246,12 @@
           "id": "context-16936fd4",
           "name": "DataExchange",
           "title": "Data Exchange",
+          "backend": "FederationLearningSupport"
+        },
+        {
+          "id": "context-5a841cb7",
+          "name": "SystemNotification",
+          "title": "System Notification",
           "backend": "FederationLearningSupport"
         },
         {
@@ -2098,6 +2109,70 @@
       ]
     },
     {
+      "id": "context-5a841cb7",
+      "name": "SystemNotification",
+      "title": "System Notification",
+      "notes": [],
+      "risks": [],
+      "decisions": [],
+      "metrics": [],
+      "valueTypes": [
+        {
+          "id": "type-a0e89f66",
+          "name": "NotificationCategory",
+          "title": "Notification Category",
+          "kind": "enum"
+        },
+        {
+          "id": "type-cdb832f9",
+          "name": "NotificationSeverity",
+          "title": "Notification Severity",
+          "kind": "enum"
+        },
+        {
+          "id": "type-85b02f0b",
+          "name": "NotificationToastPolicy",
+          "title": "Notification Toast Policy",
+          "kind": "enum"
+        }
+      ],
+      "aggregates": [],
+      "concepts": [
+        {
+          "id": "concept-e9b18f0f",
+          "name": "SystemNotification",
+          "title": "System Notification",
+          "states": [
+            "Unread",
+            "Read"
+          ]
+        }
+      ],
+      "externalSystems": [],
+      "slices": [
+        {
+          "id": "slice-1ef66bc8",
+          "name": "PublishSystemNotification",
+          "title": "Publish System Notification"
+        },
+        {
+          "id": "slice-5f9a1330",
+          "name": "MarkSystemNotificationRead",
+          "title": "Mark System Notification Read"
+        },
+        {
+          "id": "slice-2d581b98",
+          "name": "MarkAllSystemNotificationsRead",
+          "title": "Mark All System Notifications Read"
+        },
+        {
+          "id": "slice-96a87cd8",
+          "name": "SystemNotificationCatalog",
+          "title": "System Notification Catalog"
+        }
+      ]
+    },
+    {
       "id": "context-16936fd4",
       "name": "DataExchange",
       "title": "Data Exchange",
@@ -2110,6 +2185,11 @@
       "concepts": [],
       "externalSystems": [],
       "slices": [
+        {
+          "id": "slice-31a982aa",
+          "name": "DataImportJob",
+          "title": "Data Import Job"
+        },
         {
           "id": "slice-d5975397",
           "name": "DataExportJob",
@@ -2824,6 +2904,54 @@
         }
       ],
       "values": [],
+      "fields": []
+    },
+    {
+      "id": "type-a0e89f66",
+      "name": "NotificationCategory",
+      "title": "Notification Category",
+      "context": "SystemNotification",
+      "baseType": "String",
+      "kind": "enum",
+      "constraints": [],
+      "values": [
+        "SYSTEM",
+        "DATA_EXCHANGE",
+        "TRAINING",
+        "RUNTIME",
+        "SECURITY"
+      ],
+      "fields": []
+    },
+    {
+      "id": "type-cdb832f9",
+      "name": "NotificationSeverity",
+      "title": "Notification Severity",
+      "context": "SystemNotification",
+      "baseType": "String",
+      "kind": "enum",
+      "constraints": [],
+      "values": [
+        "INFO",
+        "SUCCESS",
+        "WARNING",
+        "ERROR"
+      ],
+      "fields": []
+    },
+    {
+      "id": "type-85b02f0b",
+      "name": "NotificationToastPolicy",
+      "title": "Notification Toast Policy",
+      "context": "SystemNotification",
+      "baseType": "String",
+      "kind": "enum",
+      "constraints": [],
+      "values": [
+        "NONE",
+        "DEFAULT",
+        "IMPORTANT"
+      ],
       "fields": []
     }
   ],
@@ -4296,6 +4424,38 @@
           "id": "slice-6047e82e",
           "name": "ServiceAccountApiTokenCatalogs",
           "title": "Service Account Api Token Catalogs"
+        }
+      ]
+    },
+    {
+      "id": "concept-e9b18f0f",
+      "name": "SystemNotification",
+      "title": "System Notification",
+      "context": "SystemNotification",
+      "states": [
+        "Unread",
+        "Read"
+      ],
+      "slices": [
+        {
+          "id": "slice-1ef66bc8",
+          "name": "PublishSystemNotification",
+          "title": "Publish System Notification"
+        },
+        {
+          "id": "slice-5f9a1330",
+          "name": "MarkSystemNotificationRead",
+          "title": "Mark System Notification Read"
+        },
+        {
+          "id": "slice-2d581b98",
+          "name": "MarkAllSystemNotificationsRead",
+          "title": "Mark All System Notifications Read"
+        },
+        {
+          "id": "slice-96a87cd8",
+          "name": "SystemNotificationCatalog",
+          "title": "System Notification Catalog"
         }
       ]
     }
@@ -8183,6 +8343,66 @@
       },
       "to": "Issued",
       "startsLifecycle": true
+    },
+    {
+      "id": "transition-512bbd9f",
+      "context": "SystemNotification",
+      "owner": {
+        "id": "concept-e9b18f0f",
+        "type": "concept",
+        "name": "SystemNotification",
+        "title": "System Notification"
+      },
+      "slice": {
+        "id": "slice-1ef66bc8",
+        "name": "PublishSystemNotification",
+        "title": "Publish System Notification"
+      },
+      "command": {
+        "id": "command-9b49c3d0",
+        "name": "PublishSystemNotification",
+        "title": "Publish System Notification"
+      },
+      "event": {
+        "id": "event-d80ee6e8",
+        "name": "SystemNotificationPublished",
+        "title": "System Notification Published"
+      },
+      "to": "Unread",
+      "startsLifecycle": true
+    },
+    {
+      "id": "transition-7cfbc379",
+      "context": "SystemNotification",
+      "owner": {
+        "id": "concept-e9b18f0f",
+        "type": "concept",
+        "name": "SystemNotification",
+        "title": "System Notification"
+      },
+      "slice": {
+        "id": "slice-5f9a1330",
+        "name": "MarkSystemNotificationRead",
+        "title": "Mark System Notification Read"
+      },
+      "command": {
+        "id": "command-27e3f120",
+        "name": "MarkSystemNotificationRead",
+        "title": "Mark System Notification Read"
+      },
+      "event": {
+        "id": "event-22088a9a",
+        "name": "SystemNotificationRead",
+        "title": "System Notification Read"
+      },
+      "trigger": {
+        "id": "event-d80ee6e8",
+        "name": "SystemNotificationPublished",
+        "title": "System Notification Published"
+      },
+      "from": "Unread",
+      "to": "Read",
+      "startsLifecycle": false
     }
   ],
   "actors": [
@@ -99465,8 +99685,2253 @@
       "hotspots": []
     },
     {
-      "id": "slice-d5975397",
+      "id": "slice-1ef66bc8",
       "index": 189,
+      "name": "PublishSystemNotification",
+      "title": "Publish System Notification",
+      "chapter": "SystemNotification",
+      "context": "SystemNotification",
+      "tags": [],
+      "concepts": [
+        "SystemNotification"
+      ],
+      "commands": [
+        {
+          "id": "command-9b49c3d0",
+          "name": "PublishSystemNotification",
+          "title": "Publish System Notification",
+          "type": "COMMAND",
+          "modelContext": "SystemNotification",
+          "slice": "Publish System Notification",
+          "fields": [
+            {
+              "name": "notificationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": true,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recipientUserId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recipientRole",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "category",
+              "type": "NotificationCategory",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "severity",
+              "type": "NotificationSeverity",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "messageKey",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "messageArgsJson",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "fallbackTitle",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "fallbackBody",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "targetType",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "targetId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "targetRoute",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "toastPolicy",
+              "type": "NotificationToastPolicy",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "publishedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-d80ee6e8",
+              "direction": "OUTBOUND",
+              "title": "System Notification Published",
+              "elementType": "EVENT"
+            }
+          ],
+          "startsLifecycle": true
+        }
+      ],
+      "events": [
+        {
+          "id": "event-d80ee6e8",
+          "name": "SystemNotificationPublished",
+          "title": "System Notification Published",
+          "type": "EVENT",
+          "modelContext": "SystemNotification",
+          "slice": "Publish System Notification",
+          "fields": [
+            {
+              "name": "notificationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recipientUserId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recipientRole",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "category",
+              "type": "NotificationCategory",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "severity",
+              "type": "NotificationSeverity",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "messageKey",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "messageArgsJson",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "fallbackTitle",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "fallbackBody",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "targetType",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "targetId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "targetRoute",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "toastPolicy",
+              "type": "NotificationToastPolicy",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "publishedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-9b49c3d0",
+              "direction": "INBOUND",
+              "title": "Publish System Notification",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "command-27e3f120",
+              "direction": "OUTBOUND",
+              "title": "Mark System Notification Read",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "command-3eb943f0",
+              "direction": "OUTBOUND",
+              "title": "Mark All System Notifications Read",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-d034bb48",
+              "direction": "OUTBOUND",
+              "title": "System Notification Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-c237a5e3",
+              "direction": "OUTBOUND",
+              "title": "System Notification Summary",
+              "elementType": "READMODEL"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [],
+      "hotspots": [],
+      "stateChange": {
+        "event": "SystemNotificationPublished",
+        "eventId": "event-d80ee6e8",
+        "to": "Unread"
+      }
+    },
+    {
+      "id": "slice-5f9a1330",
+      "index": 190,
+      "name": "MarkSystemNotificationRead",
+      "title": "Mark System Notification Read",
+      "chapter": "SystemNotification",
+      "context": "SystemNotification",
+      "tags": [],
+      "concepts": [
+        "SystemNotification"
+      ],
+      "commands": [
+        {
+          "id": "command-27e3f120",
+          "name": "MarkSystemNotificationRead",
+          "title": "Mark System Notification Read",
+          "type": "COMMAND",
+          "modelContext": "SystemNotification",
+          "slice": "Mark System Notification Read",
+          "fields": [
+            {
+              "name": "notificationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recipientUserId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "readAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-d80ee6e8",
+              "direction": "INBOUND",
+              "title": "System Notification Published",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-22088a9a",
+              "direction": "OUTBOUND",
+              "title": "System Notification Read",
+              "elementType": "EVENT"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "event-22088a9a",
+          "name": "SystemNotificationRead",
+          "title": "System Notification Read",
+          "type": "EVENT",
+          "modelContext": "SystemNotification",
+          "slice": "Mark System Notification Read",
+          "fields": [
+            {
+              "name": "notificationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recipientUserId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "readAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-27e3f120",
+              "direction": "INBOUND",
+              "title": "Mark System Notification Read",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-d034bb48",
+              "direction": "OUTBOUND",
+              "title": "System Notification Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-c237a5e3",
+              "direction": "OUTBOUND",
+              "title": "System Notification Summary",
+              "elementType": "READMODEL"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [],
+      "hotspots": [],
+      "stateChange": {
+        "event": "SystemNotificationRead",
+        "eventId": "event-22088a9a",
+        "to": "Read"
+      }
+    },
+    {
+      "id": "slice-2d581b98",
+      "index": 191,
+      "name": "MarkAllSystemNotificationsRead",
+      "title": "Mark All System Notifications Read",
+      "chapter": "SystemNotification",
+      "context": "SystemNotification",
+      "tags": [],
+      "concepts": [
+        "SystemNotification"
+      ],
+      "commands": [
+        {
+          "id": "command-3eb943f0",
+          "name": "MarkAllSystemNotificationsRead",
+          "title": "Mark All System Notifications Read",
+          "type": "COMMAND",
+          "modelContext": "SystemNotification",
+          "slice": "Mark All System Notifications Read",
+          "fields": [
+            {
+              "name": "recipientUserId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "readAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-d80ee6e8",
+              "direction": "INBOUND",
+              "title": "System Notification Published",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-4d2339a6",
+              "direction": "OUTBOUND",
+              "title": "All System Notifications Read",
+              "elementType": "EVENT"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "event-4d2339a6",
+          "name": "AllSystemNotificationsRead",
+          "title": "All System Notifications Read",
+          "type": "EVENT",
+          "modelContext": "SystemNotification",
+          "slice": "Mark All System Notifications Read",
+          "fields": [
+            {
+              "name": "recipientUserId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": true,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "readAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "command-3eb943f0",
+              "direction": "INBOUND",
+              "title": "Mark All System Notifications Read",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "readmodel-d034bb48",
+              "direction": "OUTBOUND",
+              "title": "System Notification Catalog",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "readmodel-c237a5e3",
+              "direction": "OUTBOUND",
+              "title": "System Notification Summary",
+              "elementType": "READMODEL"
+            }
+          ]
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [],
+      "hotspots": []
+    },
+    {
+      "id": "slice-96a87cd8",
+      "index": 192,
+      "name": "SystemNotificationCatalog",
+      "title": "System Notification Catalog",
+      "chapter": "SystemNotification",
+      "context": "SystemNotification",
+      "tags": [],
+      "concepts": [
+        "SystemNotification"
+      ],
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "readmodel-d034bb48",
+          "name": "SystemNotificationCatalog",
+          "title": "System Notification Catalog",
+          "type": "READMODEL",
+          "modelContext": "SystemNotification",
+          "slice": "System Notification Catalog",
+          "fields": [
+            {
+              "name": "notificationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recipientUserId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": true,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "recipientRole",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": true,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "category",
+              "type": "NotificationCategory",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": true,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "severity",
+              "type": "NotificationSeverity",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": true,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "messageKey",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "messageArgsJson",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "fallbackTitle",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "fallbackBody",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "targetType",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "targetId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "targetRoute",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "toastPolicy",
+              "type": "NotificationToastPolicy",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "publishedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "readAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "state",
+              "type": "SystemNotification.State",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": true,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-d80ee6e8",
+              "direction": "INBOUND",
+              "title": "System Notification Published",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-22088a9a",
+              "direction": "INBOUND",
+              "title": "System Notification Read",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-4d2339a6",
+              "direction": "INBOUND",
+              "title": "All System Notifications Read",
+              "elementType": "EVENT"
+            }
+          ],
+          "listElement": true
+        },
+        {
+          "id": "readmodel-c237a5e3",
+          "name": "SystemNotificationSummary",
+          "title": "System Notification Summary",
+          "type": "READMODEL",
+          "modelContext": "SystemNotification",
+          "slice": "System Notification Catalog",
+          "fields": [
+            {
+              "name": "recipientUserId",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "unreadCount",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "latestNotificationId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "latestSeverity",
+              "type": "NotificationSeverity",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "latestPublishedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "messageKey",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "fallbackTitle",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "fallbackBody",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "toastPolicy",
+              "type": "NotificationToastPolicy",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "hasUnreadError",
+              "type": "Boolean",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-d80ee6e8",
+              "direction": "INBOUND",
+              "title": "System Notification Published",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-22088a9a",
+              "direction": "INBOUND",
+              "title": "System Notification Read",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-4d2339a6",
+              "direction": "INBOUND",
+              "title": "All System Notifications Read",
+              "elementType": "EVENT"
+            }
+          ],
+          "listElement": true
+        }
+      ],
+      "screens": [],
+      "processors": [],
+      "specifications": [],
+      "actors": [],
+      "hotspots": []
+    },
+    {
+      "id": "slice-31a982aa",
+      "index": 193,
+      "name": "DataImportJob",
+      "title": "Data Import Job",
+      "chapter": "DataExchange",
+      "context": "DataExchange",
+      "tags": [],
+      "concepts": [],
+      "commands": [
+        {
+          "id": "command-977b3863",
+          "name": "RequestDataImport",
+          "title": "Request Data Import",
+          "type": "COMMAND",
+          "modelContext": "DataExchange",
+          "slice": "Data Import Job",
+          "fields": [
+            {
+              "name": "dataImportJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "commandName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "resourceName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "originalFileName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "filePath",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "requestedLocale",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "requestedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "requestHash",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "event-c24a4f95",
+              "direction": "OUTBOUND",
+              "title": "Data Import Requested",
+              "elementType": "EVENT"
+            }
+          ],
+          "startsLifecycle": true
+        },
+        {
+          "id": "command-86dca89a",
+          "name": "MarkDataImportProcessing",
+          "title": "Mark Data Import Processing",
+          "type": "COMMAND",
+          "modelContext": "DataExchange",
+          "slice": "Data Import Job",
+          "fields": [
+            {
+              "name": "dataImportJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "totalRows",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "automation-51c9467d",
+              "direction": "INBOUND",
+              "title": "Execute Data Import",
+              "elementType": "PROCESSOR"
+            }
+          ]
+        },
+        {
+          "id": "command-17980d9b",
+          "name": "CompleteDataImport",
+          "title": "Complete Data Import",
+          "type": "COMMAND",
+          "modelContext": "DataExchange",
+          "slice": "Data Import Job",
+          "fields": [
+            {
+              "name": "dataImportJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "totalRows",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "successRows",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "failedRows",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "failureIndexPath",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "automation-51c9467d",
+              "direction": "INBOUND",
+              "title": "Execute Data Import",
+              "elementType": "PROCESSOR"
+            }
+          ]
+        },
+        {
+          "id": "command-d4d46a78",
+          "name": "FailDataImport",
+          "title": "Fail Data Import",
+          "type": "COMMAND",
+          "modelContext": "DataExchange",
+          "slice": "Data Import Job",
+          "fields": [
+            {
+              "name": "dataImportJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "errorMessage",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "automation-51c9467d",
+              "direction": "INBOUND",
+              "title": "Execute Data Import",
+              "elementType": "PROCESSOR"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": "event-c24a4f95",
+          "name": "DataImportRequested",
+          "title": "Data Import Requested",
+          "type": "EVENT",
+          "modelContext": "DataExchange",
+          "slice": "Data Import Job",
+          "fields": [
+            {
+              "name": "dataImportJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "commandName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "resourceName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "originalFileName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "filePath",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "requestedLocale",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "requestedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "requestHash",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [
+            {
+              "id": "automation-51c9467d",
+              "direction": "OUTBOUND",
+              "title": "Execute Data Import",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "command-977b3863",
+              "direction": "INBOUND",
+              "title": "Request Data Import",
+              "elementType": "COMMAND"
+            }
+          ]
+        },
+        {
+          "id": "event-4926a415",
+          "name": "DataImportProcessingStarted",
+          "title": "Data Import Processing Started",
+          "type": "EVENT",
+          "modelContext": "DataExchange",
+          "slice": "Data Import Job",
+          "fields": [
+            {
+              "name": "dataImportJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "totalRows",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": []
+        },
+        {
+          "id": "event-0228bf44",
+          "name": "DataImportCompleted",
+          "title": "Data Import Completed",
+          "type": "EVENT",
+          "modelContext": "DataExchange",
+          "slice": "Data Import Job",
+          "fields": [
+            {
+              "name": "dataImportJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "totalRows",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "successRows",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "failedRows",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "failureIndexPath",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [],
+          "notifiable": {}
+        },
+        {
+          "id": "event-8c6df056",
+          "name": "DataImportFailed",
+          "title": "Data Import Failed",
+          "type": "EVENT",
+          "modelContext": "DataExchange",
+          "slice": "Data Import Job",
+          "fields": [
+            {
+              "name": "dataImportJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "errorMessage",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [],
+          "notifiable": {}
+        }
+      ],
+      "readmodels": [
+        {
+          "id": "readmodel-62d7a332",
+          "name": "DataImportJobCatalog",
+          "title": "Data Import Job Catalog",
+          "type": "READMODEL",
+          "modelContext": "DataExchange",
+          "slice": "Data Import Job",
+          "fields": [
+            {
+              "name": "dataImportJobId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": true,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "commandName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": true,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "resourceName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": true,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "originalFileName",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": true,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "filePath",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "requestedLocale",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "requestedAt",
+              "type": "DateTime",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "requestHash",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": false,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": true,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "totalRows",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "successRows",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "failedRows",
+              "type": "Long",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "failureIndexPath",
+              "type": "String",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            },
+            {
+              "name": "errorMessage",
+              "type": "Text",
+              "cardinality": "Single",
+              "optional": true,
+              "idAttribute": false,
+              "generated": false,
+              "technicalAttribute": false,
+              "query": false,
+              "display": false,
+              "uploadFile": false,
+              "file": false,
+              "portOutput": false
+            }
+          ],
+          "dependencies": [],
+          "listElement": true
+        }
+      ],
+      "screens": [],
+      "processors": [
+        {
+          "id": "automation-51c9467d",
+          "name": "ExecuteDataImport",
+          "title": "Execute Data Import",
+          "type": "PROCESSOR",
+          "modelContext": "DataExchange",
+          "slice": "Data Import Job",
+          "fields": [],
+          "dependencies": [
+            {
+              "id": "event-c24a4f95",
+              "direction": "INBOUND",
+              "title": "Data Import Requested",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "command-86dca89a",
+              "direction": "OUTBOUND",
+              "title": "Mark Data Import Processing",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "command-17980d9b",
+              "direction": "OUTBOUND",
+              "title": "Complete Data Import",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "command-d4d46a78",
+              "direction": "OUTBOUND",
+              "title": "Fail Data Import",
+              "elementType": "COMMAND"
+            }
+          ],
+          "metadata": {
+            "on": "DataImportRequested",
+            "onKind": "event",
+            "emits": "MarkDataImportProcessing",
+            "emits2": "CompleteDataImport",
+            "emits3": "FailDataImport",
+            "uses": "PlatformDataExchange.import"
+          }
+        }
+      ],
+      "specifications": [],
+      "actors": [],
+      "hotspots": []
+    },
+    {
+      "id": "slice-d5975397",
+      "index": 194,
       "name": "DataExportJob",
       "title": "Data Export Job",
       "chapter": "DataExchange",
@@ -100139,7 +102604,8 @@
               "portOutput": false
             }
           ],
-          "dependencies": []
+          "dependencies": [],
+          "notifiable": {}
         },
         {
           "id": "event-a3be1af6",
@@ -100192,7 +102658,8 @@
               "portOutput": false
             }
           ],
-          "dependencies": []
+          "dependencies": [],
+          "notifiable": {}
         }
       ],
       "readmodels": [

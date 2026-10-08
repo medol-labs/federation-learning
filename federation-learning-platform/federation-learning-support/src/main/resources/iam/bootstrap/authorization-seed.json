@@ -53,6 +53,26 @@
       "description": "assign_role_to_user:execute"
     },
     {
+      "code": "data_export_job_catalog:list",
+      "name": "Data Export Job Catalog List",
+      "description": "List Data Export Job Catalog"
+    },
+    {
+      "code": "data_export_job_catalog:read",
+      "name": "Data Export Job Catalog Read",
+      "description": "Read Data Export Job Catalog"
+    },
+    {
+      "code": "data_import_job_catalog:list",
+      "name": "Data Import Job Catalog List",
+      "description": "List Data Import Job Catalog"
+    },
+    {
+      "code": "data_import_job_catalog:read",
+      "name": "Data Import Job Catalog Read",
+      "description": "Read Data Import Job Catalog"
+    },
+    {
       "code": "deactivate_user_account:execute",
       "name": "Deactivate User Account Execute",
       "description": "deactivate_user_account:execute"
@@ -191,6 +211,26 @@
       "code": "set_dictionary_value_translation:execute",
       "name": "Set Dictionary Value Translation Execute",
       "description": "set_dictionary_value_translation:execute"
+    },
+    {
+      "code": "system_notification_catalog:list",
+      "name": "System Notification Catalog List",
+      "description": "List System Notification Catalog"
+    },
+    {
+      "code": "system_notification_catalog:read",
+      "name": "System Notification Catalog Read",
+      "description": "Read System Notification Catalog"
+    },
+    {
+      "code": "system_notification_summary:list",
+      "name": "System Notification Summary List",
+      "description": "List System Notification Summary"
+    },
+    {
+      "code": "system_notification_summary:read",
+      "name": "System Notification Summary Read",
+      "description": "Read System Notification Summary"
     },
     {
       "code": "update_dictionary_value_translation:execute",

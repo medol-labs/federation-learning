@@ -1,0 +1,7 @@
+package tech.medo.domain.systemnotification.publishsystemnotification
+
+import org.springframework.stereotype.Component
+import tech.medo.systemnotification.publishsystemnotification.PublishSystemNotificationDecision
+
+@Component
+class PublishSystemNotificationDecisionComponent : PublishSystemNotificationDecision

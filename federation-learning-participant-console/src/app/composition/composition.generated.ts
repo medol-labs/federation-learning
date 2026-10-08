@@ -1824,7 +1824,7 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       kind: "page",
       resource: "permission-catalog",
       view: "list",
-      fallback: "src/contexts/identityaccessmanagement/slices/permission-catalogs/list.tsx",
+      fallback: "src/contexts/identityaccessmanagement/slices/permission-catalog/list.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
@@ -1832,7 +1832,7 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       kind: "page",
       resource: "permission-catalog",
       view: "show",
-      fallback: "src/contexts/identityaccessmanagement/slices/permission-catalogs/show.tsx",
+      fallback: "src/contexts/identityaccessmanagement/slices/permission-catalog/show.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
@@ -1903,7 +1903,7 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       kind: "page",
       resource: "role-catalog",
       view: "list",
-      fallback: "src/contexts/identityaccessmanagement/slices/role-catalogs/list.tsx",
+      fallback: "src/contexts/identityaccessmanagement/slices/role-catalog/list.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
@@ -1911,7 +1911,7 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       kind: "page",
       resource: "role-catalog",
       view: "show",
-      fallback: "src/contexts/identityaccessmanagement/slices/role-catalogs/show.tsx",
+      fallback: "src/contexts/identityaccessmanagement/slices/role-catalog/show.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
@@ -2775,7 +2775,7 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       kind: "page",
       resource: "service-account-api-token-catalog",
       view: "list",
-      fallback: "src/contexts/identityaccessmanagement/slices/service-account-api-token-catalogs/list.tsx",
+      fallback: "src/contexts/identityaccessmanagement/slices/service-account-api-token-catalog/list.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
@@ -2783,7 +2783,7 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       kind: "page",
       resource: "service-account-api-token-catalog",
       view: "show",
-      fallback: "src/contexts/identityaccessmanagement/slices/service-account-api-token-catalogs/show.tsx",
+      fallback: "src/contexts/identityaccessmanagement/slices/service-account-api-token-catalog/show.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
@@ -2882,7 +2882,7 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       kind: "page",
       resource: "user-account-catalog",
       view: "list",
-      fallback: "src/contexts/identityaccessmanagement/slices/user-account-catalogs/list.tsx",
+      fallback: "src/contexts/identityaccessmanagement/slices/user-account-catalog/list.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
@@ -2890,7 +2890,7 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       kind: "page",
       resource: "user-account-catalog",
       view: "show",
-      fallback: "src/contexts/identityaccessmanagement/slices/user-account-catalogs/show.tsx",
+      fallback: "src/contexts/identityaccessmanagement/slices/user-account-catalog/show.tsx",
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
