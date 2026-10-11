@@ -32,7 +32,7 @@ interface DataExportJobDecision {
     fun decide(command: CompleteDataExportCommand, state: DataExportJobState): List<Any> {
         // TODO: validate domain rules against state before appending events.
         return listOf(
-            DataExportCompletedEvent(dataExportJobId = command.dataExportJobId, fileName = command.fileName, filePath = command.filePath, rowCount = command.rowCount, status = command.status)
+            DataExportCompletedEvent(dataExportJobId = command.dataExportJobId, fileName = command.fileName, filePath = command.filePath, downloadUri = command.downloadUri, rowCount = command.rowCount, status = command.status)
         )
     }
 

@@ -394,6 +394,12 @@ class TrainingRoundState @EntityCreator constructor() {
         minimumNodesPerRound = event.minimumNodesPerRound
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
+        aggregationAlgorithm = event.aggregationAlgorithm
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
         secureAggregationRequired = event.secureAggregationRequired
     }
 

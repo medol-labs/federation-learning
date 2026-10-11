@@ -272,7 +272,7 @@ export const OrganizationDirectoryList = () => {
                     size="sm"
                   />
                 )}
-                {isCommandVisible(row.original, "", "", []) && (
+                {isCommandVisible(row.original, "", "state", ["Active"]) && (
                   <CommandButton
                     variant="ghost"
                     command="createRuntimeInstallationPlan"

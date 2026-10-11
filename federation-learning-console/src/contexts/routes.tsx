@@ -9,6 +9,7 @@ import {
 import {
   DataExportJobCatalogList,
   DataExportJobCatalogShow,
+  DataExportJobCatalogRequestDataExport,
 } from "./dataexchange/read-models/data-export-job-catalog";
 import {
   DataImportJobCatalogList,
@@ -267,6 +268,7 @@ export const contextRoutes = (
     </Route>
     <Route path="/data-export-job-catalog">
       <Route index element={resolvePageOverride("data-export-job-catalog", "list", <DataExportJobCatalogList />)} />
+      <Route path="command/request-data-export" element={resolvePageOverride("data-export-job-catalog", "requestDataExport", <DataExportJobCatalogRequestDataExport />)} />
       <Route path="show/:id" element={resolvePageOverride("data-export-job-catalog", "show", <DataExportJobCatalogShow />)} />
     </Route>
     <Route path="/data-import-job-catalog">

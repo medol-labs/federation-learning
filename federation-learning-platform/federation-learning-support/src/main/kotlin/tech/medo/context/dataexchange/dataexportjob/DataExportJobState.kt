@@ -10,6 +10,7 @@ import tech.medo.dataexchange.events.DataExportRequestedEvent
 import tech.medo.dataexchange.events.DataExportProcessingStartedEvent
 import tech.medo.dataexchange.events.DataExportCompletedEvent
 import tech.medo.dataexchange.events.DataExportFailedEvent
+import tech.medo.dataexchange.events.DataExportFileDownloadAuthorizedEvent
 
 import java.util.UUID;
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ class DataExportJobState @EntityCreator constructor() {
     var fileName: String? = null
     var status: String? = null
     var filePath: String? = null
+    var downloadUri: String? = null
     var rowCount: Long? = null
     var errorMessage: String? = null
 
@@ -61,6 +63,7 @@ class DataExportJobState @EntityCreator constructor() {
         dataExportJobId = event.dataExportJobId
         fileName = event.fileName
         filePath = event.filePath
+        downloadUri = event.downloadUri
         rowCount = event.rowCount
         status = event.status
     }
@@ -70,5 +73,12 @@ class DataExportJobState @EntityCreator constructor() {
         dataExportJobId = event.dataExportJobId
         errorMessage = event.errorMessage
         status = event.status
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: DataExportFileDownloadAuthorizedEvent): DataExportJobState = apply {
+        dataExportJobId = event.dataExportJobId
+        fileName = event.fileName
+        downloadUri = event.downloadUri
     }
 }

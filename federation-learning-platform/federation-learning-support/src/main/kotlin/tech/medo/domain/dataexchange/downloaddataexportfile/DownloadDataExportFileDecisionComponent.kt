@@ -1,0 +1,7 @@
+package tech.medo.domain.dataexchange.downloaddataexportfile
+
+import org.springframework.stereotype.Component
+import tech.medo.dataexchange.downloaddataexportfile.DownloadDataExportFileDecision
+
+@Component
+class DownloadDataExportFileDecisionComponent : DownloadDataExportFileDecision

@@ -10,6 +10,7 @@ data class CompleteDataExportCommand(
     val dataExportJobId: UUID,
     val fileName: String,
     val filePath: String,
+    val downloadUri: String,
     val rowCount: Long,
     val status: String
 ) {

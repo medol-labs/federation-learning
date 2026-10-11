@@ -41,6 +41,7 @@ class DataExportJobCatalogReadModelQueryService(
             criteria.status?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("status") })) }
             criteria.fileName?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("fileName") })) }
             criteria.filePath?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("filePath") })) }
+            criteria.downloadUri?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("downloadUri") })) }
             criteria.rowCount?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<Long>> { root -> root.get("rowCount") })) }
             criteria.errorMessage?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> root.get("errorMessage") })) }
             criteria.projectionUpdatedAt?.let { specification = specification.and(buildLocalDateTimeRangeSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<LocalDateTime>> { root -> root.get("projectionUpdatedAt") })) }
@@ -113,6 +114,7 @@ class DataExportJobCatalogReadModelQueryService(
             it.status = this@toProjection.status
             it.fileName = this@toProjection.fileName
             it.filePath = this@toProjection.filePath
+            it.downloadUri = this@toProjection.downloadUri
             it.rowCount = this@toProjection.rowCount
             it.errorMessage = this@toProjection.errorMessage
             it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt

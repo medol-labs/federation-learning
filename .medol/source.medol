@@ -3448,12 +3448,30 @@ context TrainingOrchestration {
         from TrainingRoundParticipantsSelected.minimumAccuracy, HomomorphicEncryptionContextPrepared.minimumAccuracy
         rule "Carry the target global accuracy for downstream completion and next-round decisions."
       }
-      aggregationAlgorithm: String? from TrainingRoundParticipantsSelected.aggregationAlgorithm
-      personalizationMode: String? from TrainingRoundParticipantsSelected.personalizationMode
-      personalizationScope: String? from TrainingRoundParticipantsSelected.personalizationScope
-      personalizedArtifactPolicy: String? from TrainingRoundParticipantsSelected.personalizedArtifactPolicy
-      personalizationMetric: String? from TrainingRoundParticipantsSelected.personalizationMetric
-      minimumPersonalizationLift: Decimal? from TrainingRoundParticipantsSelected.minimumPersonalizationLift
+      aggregationAlgorithm: String? derived {
+        from TrainingRoundParticipantsSelected.aggregationAlgorithm, HomomorphicEncryptionContextPrepared.aggregationAlgorithm
+        rule "Use the selected participant snapshot for plaintext rounds and the prepared encryption context for secure aggregation rounds."
+      }
+      personalizationMode: String? derived {
+        from TrainingRoundParticipantsSelected.personalizationMode, HomomorphicEncryptionContextPrepared.personalizationMode
+        rule "Use the selected participant snapshot for plaintext rounds and the prepared encryption context for secure aggregation rounds."
+      }
+      personalizationScope: String? derived {
+        from TrainingRoundParticipantsSelected.personalizationScope, HomomorphicEncryptionContextPrepared.personalizationScope
+        rule "Use the selected participant snapshot for plaintext rounds and the prepared encryption context for secure aggregation rounds."
+      }
+      personalizedArtifactPolicy: String? derived {
+        from TrainingRoundParticipantsSelected.personalizedArtifactPolicy, HomomorphicEncryptionContextPrepared.personalizedArtifactPolicy
+        rule "Use the selected participant snapshot for plaintext rounds and the prepared encryption context for secure aggregation rounds."
+      }
+      personalizationMetric: String? derived {
+        from TrainingRoundParticipantsSelected.personalizationMetric, HomomorphicEncryptionContextPrepared.personalizationMetric
+        rule "Use the selected participant snapshot for plaintext rounds and the prepared encryption context for secure aggregation rounds."
+      }
+      minimumPersonalizationLift: Decimal? derived {
+        from TrainingRoundParticipantsSelected.minimumPersonalizationLift, HomomorphicEncryptionContextPrepared.minimumPersonalizationLift
+        rule "Use the selected participant snapshot for plaintext rounds and the prepared encryption context for secure aggregation rounds."
+      }
       secureAggregationRequired: Boolean derived {
         from TrainingRoundParticipantsSelected.secureAggregationRequired, HomomorphicEncryptionContextPrepared.secureAggregationRequired
         rule "Plaintext rounds use false from participant selection; secure aggregation rounds use true from the prepared encryption context."
@@ -4296,6 +4314,12 @@ context TrainingOrchestration {
       minimumNodesPerRound: Int from TrainingRoundParticipantsSelected.minimumNodesPerRound
       maxRounds: Int from TrainingRoundParticipantsSelected.maxRounds
       minimumAccuracy: Decimal from TrainingRoundParticipantsSelected.minimumAccuracy
+      aggregationAlgorithm: String from TrainingRoundParticipantsSelected.aggregationAlgorithm
+      personalizationMode: String? from TrainingRoundParticipantsSelected.personalizationMode
+      personalizationScope: String? from TrainingRoundParticipantsSelected.personalizationScope
+      personalizedArtifactPolicy: String? from TrainingRoundParticipantsSelected.personalizedArtifactPolicy
+      personalizationMetric: String? from TrainingRoundParticipantsSelected.personalizationMetric
+      minimumPersonalizationLift: Decimal? from TrainingRoundParticipantsSelected.minimumPersonalizationLift
       secureAggregationRequired: Boolean from TrainingRoundParticipantsSelected.secureAggregationRequired
     }
 
@@ -4319,6 +4343,12 @@ context TrainingOrchestration {
       minimumNodesPerRound: Int
       maxRounds: Int
       minimumAccuracy: Decimal
+      aggregationAlgorithm: String
+      personalizationMode: String? dictionary "PERSONALIZATION_MODE"
+      personalizationScope: String? dictionary "PERSONALIZATION_SCOPE"
+      personalizedArtifactPolicy: String? dictionary "PERSONALIZED_ARTIFACT_POLICY"
+      personalizationMetric: String? dictionary "MODEL_EVALUATION_METRIC"
+      minimumPersonalizationLift: Decimal?
       secureAggregationRequired: Boolean
     }
 
@@ -5766,6 +5796,12 @@ context SecureAggregation {
       minimumNodesPerRound: Int from SecureAggregationRequested.minimumNodesPerRound
       maxRounds: Int from SecureAggregationRequested.maxRounds
       minimumAccuracy: Decimal from SecureAggregationRequested.minimumAccuracy
+      aggregationAlgorithm: String from SecureAggregationRequested.aggregationAlgorithm
+      personalizationMode: String? from SecureAggregationRequested.personalizationMode
+      personalizationScope: String? from SecureAggregationRequested.personalizationScope
+      personalizedArtifactPolicy: String? from SecureAggregationRequested.personalizedArtifactPolicy
+      personalizationMetric: String? from SecureAggregationRequested.personalizationMetric
+      minimumPersonalizationLift: Decimal? from SecureAggregationRequested.minimumPersonalizationLift
       secureAggregationRequired: Boolean from SecureAggregationRequested.secureAggregationRequired
     }
 
@@ -5790,6 +5826,12 @@ context SecureAggregation {
       minimumNodesPerRound: Int
       maxRounds: Int
       minimumAccuracy: Decimal
+      aggregationAlgorithm: String
+      personalizationMode: String? dictionary "PERSONALIZATION_MODE"
+      personalizationScope: String? dictionary "PERSONALIZATION_SCOPE"
+      personalizedArtifactPolicy: String? dictionary "PERSONALIZED_ARTIFACT_POLICY"
+      personalizationMetric: String? dictionary "MODEL_EVALUATION_METRIC"
+      minimumPersonalizationLift: Decimal?
       secureAggregationRequired: Boolean
     }
 
@@ -5825,6 +5867,12 @@ context SecureAggregation {
       minimumNodesPerRound: Int from SecureAggregationSessionCreated.minimumNodesPerRound
       maxRounds: Int from SecureAggregationSessionCreated.maxRounds
       minimumAccuracy: Decimal from SecureAggregationSessionCreated.minimumAccuracy
+      aggregationAlgorithm: String from SecureAggregationSessionCreated.aggregationAlgorithm
+      personalizationMode: String? from SecureAggregationSessionCreated.personalizationMode
+      personalizationScope: String? from SecureAggregationSessionCreated.personalizationScope
+      personalizedArtifactPolicy: String? from SecureAggregationSessionCreated.personalizedArtifactPolicy
+      personalizationMetric: String? from SecureAggregationSessionCreated.personalizationMetric
+      minimumPersonalizationLift: Decimal? from SecureAggregationSessionCreated.minimumPersonalizationLift
       secureAggregationRequired: Boolean from SecureAggregationSessionCreated.secureAggregationRequired
     }
 
@@ -5848,6 +5896,12 @@ context SecureAggregation {
       minimumNodesPerRound: Int
       maxRounds: Int
       minimumAccuracy: Decimal
+      aggregationAlgorithm: String
+      personalizationMode: String? dictionary "PERSONALIZATION_MODE"
+      personalizationScope: String? dictionary "PERSONALIZATION_SCOPE"
+      personalizedArtifactPolicy: String? dictionary "PERSONALIZED_ARTIFACT_POLICY"
+      personalizationMetric: String? dictionary "MODEL_EVALUATION_METRIC"
+      minimumPersonalizationLift: Decimal?
       secureAggregationRequired: Boolean
     }
 
@@ -5884,6 +5938,12 @@ context SecureAggregation {
       minimumNodesPerRound: Int from SecureAggregationParticipantsSelected.minimumNodesPerRound
       maxRounds: Int from SecureAggregationParticipantsSelected.maxRounds
       minimumAccuracy: Decimal from SecureAggregationParticipantsSelected.minimumAccuracy
+      aggregationAlgorithm: String from SecureAggregationParticipantsSelected.aggregationAlgorithm
+      personalizationMode: String? from SecureAggregationParticipantsSelected.personalizationMode
+      personalizationScope: String? from SecureAggregationParticipantsSelected.personalizationScope
+      personalizedArtifactPolicy: String? from SecureAggregationParticipantsSelected.personalizedArtifactPolicy
+      personalizationMetric: String? from SecureAggregationParticipantsSelected.personalizationMetric
+      minimumPersonalizationLift: Decimal? from SecureAggregationParticipantsSelected.minimumPersonalizationLift
       secureAggregationRequired: Boolean from SecureAggregationParticipantsSelected.secureAggregationRequired
     }
 
@@ -5907,6 +5967,12 @@ context SecureAggregation {
       minimumNodesPerRound: Int
       maxRounds: Int
       minimumAccuracy: Decimal
+      aggregationAlgorithm: String
+      personalizationMode: String? dictionary "PERSONALIZATION_MODE"
+      personalizationScope: String? dictionary "PERSONALIZATION_SCOPE"
+      personalizedArtifactPolicy: String? dictionary "PERSONALIZED_ARTIFACT_POLICY"
+      personalizationMetric: String? dictionary "MODEL_EVALUATION_METRIC"
+      minimumPersonalizationLift: Decimal?
       secureAggregationRequired: Boolean
       // PAILLIER
       encryptionScheme: String portOutput

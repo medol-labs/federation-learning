@@ -117,6 +117,11 @@ export const DataExportJobCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.downloadUri.label", "Download Uri")}</h4>
+              {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:downloadUri", { value: record?.downloadUri, record, resource: "data-export-job-catalog", field: "downloadUri", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.downloadUri, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.data_export_job_catalog.fields.rowCount.label", "Row Count")}</h4>
               {renderFieldOverride(frontendComposition, "field:data-export-job-catalog:display:rowCount", { value: record?.rowCount, record, resource: "data-export-job-catalog", field: "rowCount", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.rowCount, t, dictionaryLabel, undefined)}</p>}
             </div>

@@ -60,6 +60,7 @@ class JpaDataExportJobCatalogReadModelRepository(
             it.status = this@toProjection.status
             it.fileName = this@toProjection.fileName
             it.filePath = this@toProjection.filePath
+            it.downloadUri = this@toProjection.downloadUri
             it.rowCount = this@toProjection.rowCount
             it.errorMessage = this@toProjection.errorMessage
             it.projectionUpdatedAt = this@toProjection.projectionUpdatedAt
@@ -85,6 +86,7 @@ class JpaDataExportJobCatalogReadModelRepository(
             it.status = this@toEntity.status
             it.fileName = this@toEntity.fileName
             it.filePath = this@toEntity.filePath
+            it.downloadUri = this@toEntity.downloadUri
             it.rowCount = this@toEntity.rowCount
             it.errorMessage = this@toEntity.errorMessage
             it.projectionUpdatedAt = this@toEntity.projectionUpdatedAt

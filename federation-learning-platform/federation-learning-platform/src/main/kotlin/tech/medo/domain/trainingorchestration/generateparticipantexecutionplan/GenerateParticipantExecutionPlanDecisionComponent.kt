@@ -1,12 +1,21 @@
 package tech.medo.domain.trainingorchestration.generateparticipantexecutionplan
 
 import org.slf4j.LoggerFactory
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Component
+import tech.jhipster.service.filter.StringFilter
+import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModelProjection
+import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModelRepository
 import tech.medo.trainingorchestration.events.ParticipantExecutionPlanGeneratedEvent
 import tech.medo.trainingorchestration.generateparticipantexecutionplan.GenerateParticipantExecutionPlanCommand
 import tech.medo.trainingorchestration.generateparticipantexecutionplan.GenerateParticipantExecutionPlanDecision
+import tech.medo.trainingorchestration.personalizedmodelcatalog.PersonalizedModelCatalogReadModelCriteria
+import tech.medo.trainingorchestration.personalizedmodelcatalog.PersonalizedModelCatalogReadModel
+import tech.medo.trainingorchestration.personalizedmodelcatalog.PersonalizedModelCatalogReadModelRepository
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelProjection
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelRepository
+import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelProjection
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelRepository
 import java.util.UUID
 
@@ -14,18 +23,27 @@ import java.util.UUID
 class GenerateParticipantExecutionPlanDecisionComponent(
     private val trainingRunConfigurationCatalog: TrainingRunConfigurationCatalogReadModelRepository,
     private val trainingRoundProgress: TrainingRoundProgressReadModelRepository,
+    private val modelArtifactCatalog: ModelArtifactCatalogReadModelRepository,
+    private val personalizedModelCatalog: PersonalizedModelCatalogReadModelRepository,
 ) : GenerateParticipantExecutionPlanDecision {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun decide(command: GenerateParticipantExecutionPlanCommand): List<Any> {
-        val baseModel = resolveBaseModel(command)
+        val configuration = trainingRunConfigurationCatalog.findProjectionById(command.trainingRunConfigurationId)
+            ?: error(
+                "Training run configuration ${command.trainingRunConfigurationId} is required to generate participant execution plans.",
+            )
+        val baseModel = resolveBaseModel(command, configuration)
+        val runtimeEngineProfile = resolveRuntimeEngineProfile(command, configuration)
+        val personalizedBaseModel = resolvePersonalizedBaseModel(command)
         log.info(
-            "Generated participant execution plan. trainingJobId={}, roundId={}, roundNumber={}, runtimeId={}, baseModelId={}, artifactUri={}",
+            "Generated participant execution plan. trainingJobId={}, roundId={}, roundNumber={}, runtimeId={}, baseModelId={}, personalizedBaseModelId={}, artifactUri={}",
             command.trainingJobId,
             command.roundId,
             command.roundNumber,
             command.runtimeId,
             baseModel.baseModelId,
+            personalizedBaseModel?.personalizedBaseModelId,
             baseModel.baseModelArtifactUri,
         )
 
@@ -60,14 +78,14 @@ class GenerateParticipantExecutionPlanDecisionComponent(
                 baseModelFormat = baseModel.baseModelFormat,
                 baseModelArtifactDigest = baseModel.baseModelArtifactDigest,
                 baseModelSignatureUri = baseModel.baseModelSignatureUri,
-                personalizedBaseModelId = command.personalizedBaseModelId,
-                personalizedBaseModelArtifactUri = command.personalizedBaseModelArtifactUri,
-                personalizedBaseModelArtifactDigest = command.personalizedBaseModelArtifactDigest,
-                runtimeEngineProfileId = command.runtimeEngineProfileId,
-                runtimeEngineProfileName = command.runtimeEngineProfileName,
-                runtimeEnginePluginProfile = command.runtimeEnginePluginProfile,
-                runtimeEngineImage = command.runtimeEngineImage,
-                runtimeEngineImageDigest = command.runtimeEngineImageDigest,
+                personalizedBaseModelId = personalizedBaseModel?.personalizedBaseModelId,
+                personalizedBaseModelArtifactUri = personalizedBaseModel?.personalizedBaseModelArtifactUri,
+                personalizedBaseModelArtifactDigest = personalizedBaseModel?.personalizedBaseModelArtifactDigest,
+                runtimeEngineProfileId = runtimeEngineProfile.runtimeEngineProfileId,
+                runtimeEngineProfileName = runtimeEngineProfile.runtimeEngineProfileName,
+                runtimeEnginePluginProfile = runtimeEngineProfile.runtimeEnginePluginProfile,
+                runtimeEngineImage = runtimeEngineProfile.runtimeEngineImage,
+                runtimeEngineImageDigest = runtimeEngineProfile.runtimeEngineImageDigest,
                 secureAggregationRequired = command.secureAggregationRequired,
                 secureAggregationSessionId = command.secureAggregationSessionId,
                 encryptionScheme = command.encryptionScheme,
@@ -78,28 +96,45 @@ class GenerateParticipantExecutionPlanDecisionComponent(
         )
     }
 
-    private fun resolveBaseModel(command: GenerateParticipantExecutionPlanCommand): BaseModelSnapshot {
+    private fun resolveBaseModel(
+        command: GenerateParticipantExecutionPlanCommand,
+        configuration: TrainingRunConfigurationCatalogReadModelProjection,
+    ): BaseModelSnapshot {
         previousRoundSnapshot(command)?.let { return it }
-
-        val configuration = trainingRunConfigurationCatalog.findProjectionById(command.trainingRunConfigurationId)
-            ?: error(
-                "Training run configuration ${command.trainingRunConfigurationId} is required to generate participant execution plans.",
-            )
 
         return BaseModelSnapshot(
             baseModelId = configuration.initialModelId
                 ?: error("TrainingRunConfiguration ${command.trainingRunConfigurationId} does not provide initialModelId."),
-            baseModelArtifactUri = configuration.initialModelArtifactUri.orEmpty(),
-            baseModelRegistryRef = configuration.initialModelRegistryRef.orEmpty(),
+            baseModelArtifactUri = configuration.initialModelArtifactUri
+                ?: error("TrainingRunConfiguration ${command.trainingRunConfigurationId} does not provide initialModelArtifactUri."),
+            baseModelRegistryRef = configuration.initialModelRegistryRef
+                ?: error("TrainingRunConfiguration ${command.trainingRunConfigurationId} does not provide initialModelRegistryRef."),
             baseModelPlugin = configuration.initialModelPlugin
                 ?: error(
                     "TrainingRunConfiguration ${command.trainingRunConfigurationId} does not provide initialModelPlugin.",
                 ),
-            baseModelFormat = configuration.initialModelFormat.orEmpty(),
-            baseModelArtifactDigest = configuration.initialModelArtifactDigest.orEmpty(),
+            baseModelFormat = configuration.initialModelFormat
+                ?: error("TrainingRunConfiguration ${command.trainingRunConfigurationId} does not provide initialModelFormat."),
+            baseModelArtifactDigest = configuration.initialModelArtifactDigest
+                ?: error("TrainingRunConfiguration ${command.trainingRunConfigurationId} does not provide initialModelArtifactDigest."),
             baseModelSignatureUri = configuration.initialModelSignatureUri,
         )
     }
+
+    private fun resolveRuntimeEngineProfile(
+        command: GenerateParticipantExecutionPlanCommand,
+        configuration: TrainingRunConfigurationCatalogReadModelProjection,
+    ): RuntimeEngineProfileSnapshot =
+        RuntimeEngineProfileSnapshot(
+            runtimeEngineProfileId = configuration.runtimeEngineProfileId
+                ?: error("TrainingRunConfiguration ${command.trainingRunConfigurationId} does not provide runtimeEngineProfileId."),
+            runtimeEngineProfileName = configuration.runtimeEngineProfileName,
+            runtimeEnginePluginProfile = configuration.runtimeEnginePluginProfile
+                ?: error("TrainingRunConfiguration ${command.trainingRunConfigurationId} does not provide runtimeEnginePluginProfile."),
+            runtimeEngineImage = configuration.runtimeEngineImage
+                ?: error("TrainingRunConfiguration ${command.trainingRunConfigurationId} does not provide runtimeEngineImage."),
+            runtimeEngineImageDigest = configuration.runtimeEngineImageDigest,
+        )
 
     private fun previousRoundSnapshot(command: GenerateParticipantExecutionPlanCommand): BaseModelSnapshot? {
         if (command.roundNumber <= 1) {
@@ -118,9 +153,63 @@ class GenerateParticipantExecutionPlanDecisionComponent(
     }
 
     private fun TrainingRoundProgressReadModelProjection.toBaseModelSnapshot(): BaseModelSnapshot? {
-        // The round progress projection currently exposes only aggregatedModelId, not the
-        // immutable model artifact snapshot required to dispatch the next round safely.
-        return null
+        val modelId = aggregatedModelId ?: return null
+        val model = modelArtifactCatalog.findProjectionById(modelId)
+            ?: error("Aggregated model $modelId is required to generate the next round execution plan.")
+
+        return model.toBaseModelSnapshot()
+    }
+
+    private fun ModelArtifactCatalogReadModelProjection.toBaseModelSnapshot(): BaseModelSnapshot =
+        BaseModelSnapshot(
+            baseModelId = modelId ?: error("ModelArtifactCatalog projection does not provide modelId."),
+            baseModelArtifactUri = modelArtifactUri ?: error("ModelArtifactCatalog $modelId does not provide modelArtifactUri."),
+            baseModelRegistryRef = modelRegistryRef ?: error("ModelArtifactCatalog $modelId does not provide modelRegistryRef."),
+            baseModelPlugin = modelPlugin ?: error("ModelArtifactCatalog $modelId does not provide modelPlugin."),
+            baseModelFormat = modelFormat ?: error("ModelArtifactCatalog $modelId does not provide modelFormat."),
+            baseModelArtifactDigest = modelArtifactDigest ?: error("ModelArtifactCatalog $modelId does not provide modelArtifactDigest."),
+            baseModelSignatureUri = modelSignatureUri,
+        )
+
+    private fun resolvePersonalizedBaseModel(command: GenerateParticipantExecutionPlanCommand): PersonalizedBaseModelSnapshot? {
+        if (command.roundNumber <= 1 || command.personalizationMode.isNullOrBlank() || command.personalizationMode == "GLOBAL_ONLY") {
+            return null
+        }
+
+        val criteria = PersonalizedModelCatalogReadModelCriteria().apply {
+            trainingJobId = command.trainingJobId.asStringFilter()
+            trainingRunConfigurationId = command.trainingRunConfigurationId.asStringFilter()
+            runtimeId = command.runtimeId.asStringFilter()
+            featureSchemaId = command.featureSchemaId.asStringFilter()
+            personalizationTargetType = command.personalizationTargetType?.asStringFilter()
+            personalizationTargetId = command.personalizationTargetId?.asStringFilter()
+            personalizationCohortId = command.personalizationCohortId?.asStringFilter()
+            personalizationProfileId = command.personalizationProfileId?.asStringFilter()
+        }
+        val pageable = PageRequest.of(0, 100, Sort.by(Sort.Direction.DESC, "roundNumber"))
+
+        return personalizedModelCatalog.findAllByCriteria(criteria, pageable)
+            .content
+            .asSequence()
+            .filter { model -> (model.roundNumber ?: 0) < command.roundNumber }
+            .firstOrNull()
+            ?.toPersonalizedBaseModelSnapshot()
+    }
+
+    private fun PersonalizedModelCatalogReadModel.toPersonalizedBaseModelSnapshot(): PersonalizedBaseModelSnapshot =
+        PersonalizedBaseModelSnapshot(
+            personalizedBaseModelId = personalizedModelId
+                ?: error("PersonalizedModelCatalog projection does not provide personalizedModelId."),
+            personalizedBaseModelArtifactUri = personalizedModelArtifactRef
+                ?: error("PersonalizedModelCatalog $personalizedModelId does not provide personalizedModelArtifactRef."),
+            personalizedBaseModelArtifactDigest = personalizedModelArtifactDigest
+                ?: error("PersonalizedModelCatalog $personalizedModelId does not provide personalizedModelArtifactDigest."),
+        )
+
+    private fun UUID.asStringFilter(): StringFilter = toString().asStringFilter()
+
+    private fun String.asStringFilter(): StringFilter = StringFilter().apply {
+        equals = this@asStringFilter
     }
 }
 
@@ -132,4 +221,18 @@ private data class BaseModelSnapshot(
     val baseModelFormat: String,
     val baseModelArtifactDigest: String,
     val baseModelSignatureUri: String?,
+)
+
+private data class PersonalizedBaseModelSnapshot(
+    val personalizedBaseModelId: UUID,
+    val personalizedBaseModelArtifactUri: String,
+    val personalizedBaseModelArtifactDigest: String,
+)
+
+private data class RuntimeEngineProfileSnapshot(
+    val runtimeEngineProfileId: UUID,
+    val runtimeEngineProfileName: String?,
+    val runtimeEnginePluginProfile: String,
+    val runtimeEngineImage: String,
+    val runtimeEngineImageDigest: String?,
 )

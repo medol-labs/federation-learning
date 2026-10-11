@@ -145,6 +145,8 @@ export const pageOverrides = {
 | --- | --- | --- |
 | `list` | `data-export-job-catalog:list` | `src/contexts/dataexchange/slices/data-export-job-catalog/list.tsx` |
 | `show` | `data-export-job-catalog:show` | `src/contexts/dataexchange/slices/data-export-job-catalog/show.tsx` |
+| `requestDataExport` | `data-export-job-catalog:requestDataExport` | `src/contexts/dataexchange/slices/data-export-job/request-data-export.tsx` |
+| `downloadDataExportFile` | `data-export-job-catalog:downloadDataExportFile` | `src/contexts/dataexchange/slices/download-data-export-file/download-data-export-file.tsx` |
 
 Example:
 
@@ -161,7 +163,8 @@ export const pageOverrides = {
 
 | Command | Override key | Generated fallback | Fields |
 | --- | --- | --- | --- |
-| _(none)_ | | | |
+| `requestDataExport` | `data-export-job-catalog:requestDataExport` | `src/contexts/dataexchange/slices/data-export-job/request-data-export.tsx` | `dataExportJobId`, `resourceName`, `criteriaJson`, `sortJson`, `columnsJson`, `requestedLocale`, `requestedAt`, `snapshotUpperBound`, `requestHash`, `fileName`, `status` |
+| `downloadDataExportFile` | `data-export-job-catalog:downloadDataExportFile` | `src/contexts/dataexchange/slices/download-data-export-file/download-data-export-file.tsx` | _(none)_ |
 
 #### Field Renderers
 
@@ -179,6 +182,7 @@ export const pageOverrides = {
 | `status` | `string` | `data-export-job-catalog:field:status` | `formatValue/display text` |
 | `fileName` | `string` | `data-export-job-catalog:field:fileName` | `formatValue/display text` |
 | `filePath` | `string` | `data-export-job-catalog:field:filePath` | `formatValue/display text` |
+| `downloadUri` | `string` | `data-export-job-catalog:field:downloadUri` | `formatValue/display text` |
 | `rowCount` | `number` | `data-export-job-catalog:field:rowCount` | `formatValue/display text` |
 | `errorMessage` | `string` | `data-export-job-catalog:field:errorMessage` | `CopyableText` |
 

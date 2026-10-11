@@ -370,7 +370,7 @@ export const FederationOverviewList = () => {
                     }}
                   />
                 )}
-                {isCommandVisible(row.original, "", "", []) && (
+                {isCommandVisible(row.original, "", "state", ["Active"]) && (
                   <CommandButton
                     variant="ghost"
                     command="inviteParticipant"

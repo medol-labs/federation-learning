@@ -42,6 +42,12 @@ class SecureAggregationSessionState @EntityCreator constructor() {
     var minimumNodesPerRound: Int? = null
     var maxRounds: Int? = null
     var minimumAccuracy: BigDecimal? = null
+    var aggregationAlgorithm: String? = null
+    var personalizationMode: String? = null
+    var personalizationScope: String? = null
+    var personalizedArtifactPolicy: String? = null
+    var personalizationMetric: String? = null
+    var minimumPersonalizationLift: BigDecimal? = null
     var secureAggregationRequired: Boolean? = null
     var selectedParticipantCount: Int? = null
     var encryptionScheme: String? = null
@@ -93,6 +99,12 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         minimumNodesPerRound = event.minimumNodesPerRound
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
+        aggregationAlgorithm = event.aggregationAlgorithm
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
         secureAggregationRequired = event.secureAggregationRequired
     }
 
@@ -118,6 +130,12 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         minimumNodesPerRound = event.minimumNodesPerRound
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
+        aggregationAlgorithm = event.aggregationAlgorithm
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
         secureAggregationRequired = event.secureAggregationRequired
     }
 
@@ -143,6 +161,12 @@ class SecureAggregationSessionState @EntityCreator constructor() {
         minimumNodesPerRound = event.minimumNodesPerRound
         maxRounds = event.maxRounds
         minimumAccuracy = event.minimumAccuracy
+        aggregationAlgorithm = event.aggregationAlgorithm
+        personalizationMode = event.personalizationMode
+        personalizationScope = event.personalizationScope
+        personalizedArtifactPolicy = event.personalizedArtifactPolicy
+        personalizationMetric = event.personalizationMetric
+        minimumPersonalizationLift = event.minimumPersonalizationLift
         secureAggregationRequired = event.secureAggregationRequired
         encryptionScheme = event.encryptionScheme
         publicKeyVersion = event.publicKeyVersion

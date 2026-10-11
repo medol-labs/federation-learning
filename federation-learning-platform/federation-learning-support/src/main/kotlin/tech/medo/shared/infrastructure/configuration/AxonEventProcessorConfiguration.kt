@@ -15,28 +15,20 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("automation-federation-learning-support-data-exchange-execute-data-export").notCustomized()
 
     @Bean
-    fun automationDataExchangeDataImportJobEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("automation-data-exchange-data-import-job").notCustomized()
+    fun automationFederationLearningSupportDataExchangeExecuteDataImportEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("automation-federation-learning-support-data-exchange-execute-data-import").notCustomized()
 
     @Bean
     fun automationFileUploadExpireFileEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("automation-file-upload-expire-file").notCustomized()
 
     @Bean
-    fun integrationDataExchangeDataExportJobEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("integration-data-exchange-data-export-job").notCustomized()
-
-    @Bean
-    fun integrationDataExchangeDataImportJobEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("integration-data-exchange-data-import-job").notCustomized()
-
-    @Bean
     fun integrationFileUploadExpireFileEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("integration-file-upload-expire-file").notCustomized()
 
     @Bean
-    fun readmodelFederationLearningSupportDataExportJobCatalogEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("readmodel-federation-learning-support-data-export-job-catalog").notCustomized()
+    fun readmodelDataExportJobCatalogEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("readmodel-data-export-job-catalog").notCustomized()
 
     @Bean
     fun readmodelDataImportJobCatalogEventProcessorDefinition(): EventProcessorDefinition =

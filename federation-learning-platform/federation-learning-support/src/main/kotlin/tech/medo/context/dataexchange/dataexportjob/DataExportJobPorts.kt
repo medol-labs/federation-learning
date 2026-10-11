@@ -7,6 +7,8 @@ import tech.medo.shared.application.export.DataExportJobLifecyclePort
 import tech.medo.shared.application.export.DataExportJobRequestMessage
 import tech.medo.shared.application.export.DataExportJobRequestPort
 import tech.medo.shared.application.metadata.MetadataKeys
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.UUID
@@ -52,7 +54,10 @@ class AxonDataExportJobLifecyclePort(
     }
 
     override fun complete(dataExportJobId: UUID, fileName: String, filePath: String, rowCount: Long) {
-        commandGateway.send(CompleteDataExportCommand(dataExportJobId, fileName, filePath, rowCount, DataExportJobStatus.COMPLETED), metadata).resultMessage.toCompletableFuture().join()
+        val encodedFilePath = URLEncoder.encode(filePath, StandardCharsets.UTF_8).replace("+", "%20")
+        val encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8).replace("+", "%20")
+        val downloadUri = "/data-export/jobs/download?filePath=$encodedFilePath&fileName=$encodedFileName"
+        commandGateway.send(CompleteDataExportCommand(dataExportJobId, fileName, filePath, downloadUri, rowCount, DataExportJobStatus.COMPLETED), metadata).resultMessage.toCompletableFuture().join()
     }
 
     override fun fail(dataExportJobId: UUID, errorMessage: String) {

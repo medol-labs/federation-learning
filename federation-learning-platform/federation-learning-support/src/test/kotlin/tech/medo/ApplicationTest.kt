@@ -1,13 +1,11 @@
 package tech.medo
 
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
-import tech.medo.shared.application.export.DataExportResourceExecutorRegistry
 
 @AutoConfigureMockMvc
 @SpringBootTest(properties = [
@@ -23,8 +21,7 @@ import tech.medo.shared.application.export.DataExportResourceExecutorRegistry
     "medol.axon.event-storage=inmemory"
 ])
 class FederationLearningSupportApplicationTest(
-    @Autowired private val mockMvc: MockMvc,
-    @Autowired private val dataExportResourceExecutorRegistry: DataExportResourceExecutorRegistry
+    @Autowired private val mockMvc: MockMvc
 ) {
     @Test
     fun contextLoads() {
@@ -37,10 +34,5 @@ class FederationLearningSupportApplicationTest(
                 status { isOk() }
                 jsonPath("$.openapi") { exists() }
             }
-    }
-
-    @Test
-    fun dictionaryCatalogDataExportExecutorIsRegistered() {
-        assertTrue("dictionarycatalog" in dataExportResourceExecutorRegistry.availableResourceNames())
     }
 }

@@ -29,5 +29,11 @@ data class SecureAggregationRequestedEvent(
     val minimumNodesPerRound: Int,
     val maxRounds: Int,
     val minimumAccuracy: BigDecimal,
+    val aggregationAlgorithm: String,
+    val personalizationMode: String?,
+    val personalizationScope: String?,
+    val personalizedArtifactPolicy: String?,
+    val personalizationMetric: String?,
+    val minimumPersonalizationLift: BigDecimal?,
     val secureAggregationRequired: Boolean
 )

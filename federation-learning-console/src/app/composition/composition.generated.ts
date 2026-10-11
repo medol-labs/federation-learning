@@ -97,6 +97,22 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
     },
     {
+      id: "page:data-export-job-catalog:requestDataExport",
+      kind: "page",
+      resource: "data-export-job-catalog",
+      view: "requestDataExport",
+      fallback: "src/contexts/dataexchange/slices/data-export-job/request-data-export.tsx",
+      slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
+    },
+    {
+      id: "page:data-export-job-catalog:downloadDataExportFile",
+      kind: "page",
+      resource: "data-export-job-catalog",
+      view: "downloadDataExportFile",
+      fallback: "src/contexts/dataexchange/slices/download-data-export-file/download-data-export-file.tsx",
+      slots: ["header.before", "header.after", "content.before", "content.after", "footer"],
+    },
+    {
       id: "toolbar:data-export-job-catalog:list",
       kind: "action",
       resource: "data-export-job-catalog",
@@ -195,6 +211,13 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       slots: ["field.before", "field.after", "field.renderer"],
     },
     {
+      id: "field:data-export-job-catalog:display:downloadUri",
+      kind: "field",
+      resource: "data-export-job-catalog",
+      field: "downloadUri",
+      slots: ["field.before", "field.after", "field.renderer"],
+    },
+    {
       id: "field:data-export-job-catalog:display:rowCount",
       kind: "field",
       resource: "data-export-job-catalog",
@@ -207,6 +230,20 @@ export const frontendCompositionGenerated: FrontendCompositionGenerated = {
       resource: "data-export-job-catalog",
       field: "errorMessage",
       slots: ["field.before", "field.after", "field.renderer"],
+    },
+    {
+      id: "behavior:data-export-job-catalog:requestDataExport",
+      kind: "behavior",
+      resource: "data-export-job-catalog",
+      view: "requestDataExport",
+      slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
+    },
+    {
+      id: "behavior:data-export-job-catalog:downloadDataExportFile",
+      kind: "behavior",
+      resource: "data-export-job-catalog",
+      view: "downloadDataExportFile",
+      slots: ["form.beforeSubmit", "form.afterSubmit", "form.validate", "form.mapCommandPayload"],
     },
     {
       id: "resource:data-import-job-catalog",

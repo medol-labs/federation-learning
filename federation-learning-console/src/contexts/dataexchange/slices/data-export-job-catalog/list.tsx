@@ -33,6 +33,7 @@ type DataExportJobCatalogRecord = {
   status: string;
   fileName?: string;
   filePath?: string;
+  downloadUri?: string;
   rowCount?: number;
   errorMessage?: string;
 };
@@ -415,6 +416,32 @@ export const DataExportJobCatalogList = () => {
             },
           ) ?? String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("downloadUri", {
+        id: "downloadUri",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.data_export_job_catalog.fields.downloadUri.label", "Download Uri")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.data_export_job_catalog.fields.downloadUri.label", "Download Uri"),
+          placeholder: "Enter Download Uri",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<DataExportJobCatalogRecord>(
+            frontendComposition,
+            "field:data-export-job-catalog:display:downloadUri",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "data-export-job-catalog",
+              field: "downloadUri",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("rowCount", {
         id: "rowCount",
         header: ({ column }) => (
@@ -481,6 +508,21 @@ export const DataExportJobCatalogList = () => {
                 "rowActions.before",
                 { resource: "data-export-job-catalog", record: row.original },
               )}
+                {isCommandVisible(row.original, "", "status", ["COMPLETED"]) && (
+                  <CommandButton
+                    variant="ghost"
+                    command="downloadDataExportFile"
+                    recordItemId={row.original.dataExportJobId}
+                    size="sm"
+                    query={{
+                      dataExportJobId: row.original.dataExportJobId,
+                      resourceName: row.original.resourceName,
+                      fileName: row.original.fileName,
+                      filePath: row.original.filePath,
+                      downloadUri: row.original.downloadUri,
+                    }}
+                  />
+                )}
               <ShowButton variant="ghost" recordItemId={row.original.dataExportJobId} size="sm" />
               {renderSlotExtensions<DataExportJobCatalogRecord>(
                 frontendComposition,
@@ -510,7 +552,7 @@ export const DataExportJobCatalogList = () => {
         tableName: "data_export_job_catalog_read_model_entity",
         idField: "dataExportJobId",
         idFields: ["dataExportJobId"],
-        queryFields: ["dataExportJobId","resourceName","criteriaJson","sortJson","columnsJson","requestedLocale","requestedAt","snapshotUpperBound","requestHash","status","fileName","filePath","rowCount","errorMessage"],
+        queryFields: ["dataExportJobId","resourceName","criteriaJson","sortJson","columnsJson","requestedLocale","requestedAt","snapshotUpperBound","requestHash","status","fileName","filePath","downloadUri","rowCount","errorMessage"],
         label: t("resources.data_export_job_catalog.label", "Data Export Job Catalog"),
         aggregateRoute: "dataexportjob",
         queryRoute: "dataexportjobcatalog",
@@ -524,6 +566,7 @@ export const DataExportJobCatalogList = () => {
     <ListView>
       <ListViewHeader canCreate={false}>
         {renderSlotExtensions(frontendComposition, "toolbar:data-export-job-catalog:list", "toolbar.before", { resource: "data-export-job-catalog", table })}
+        <CommandButton variant="default" command="requestDataExport" />
         {renderSlotExtensions(frontendComposition, "toolbar:data-export-job-catalog:list", "toolbar.actions", { resource: "data-export-job-catalog", table })}
       </ListViewHeader>
       <RefineDataTable table={table} actionBar={

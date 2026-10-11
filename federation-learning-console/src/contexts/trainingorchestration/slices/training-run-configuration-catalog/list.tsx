@@ -1349,7 +1349,7 @@ export const TrainingRunConfigurationCatalogList = () => {
                     }}
                   />
                 )}
-                {isCommandVisible(row.original, "", "", []) && (
+                {isCommandVisible(row.original, "", "state", ["Draft"]) && (
                   <CommandButton
                     variant="ghost"
                     command="createTrainingJob"

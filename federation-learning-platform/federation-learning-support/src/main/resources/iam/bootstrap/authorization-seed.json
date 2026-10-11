@@ -55,22 +55,22 @@
     {
       "code": "data_export_job_catalog:list",
       "name": "Data Export Job Catalog List",
-      "description": "List Data Export Job Catalog"
+      "description": "data_export_job_catalog:list"
     },
     {
       "code": "data_export_job_catalog:read",
       "name": "Data Export Job Catalog Read",
-      "description": "Read Data Export Job Catalog"
+      "description": "data_export_job_catalog:read"
     },
     {
       "code": "data_import_job_catalog:list",
       "name": "Data Import Job Catalog List",
-      "description": "List Data Import Job Catalog"
+      "description": "data_import_job_catalog:list"
     },
     {
       "code": "data_import_job_catalog:read",
       "name": "Data Import Job Catalog Read",
-      "description": "Read Data Import Job Catalog"
+      "description": "data_import_job_catalog:read"
     },
     {
       "code": "deactivate_user_account:execute",
@@ -116,6 +116,11 @@
       "code": "discard_file:execute",
       "name": "Discard File Execute",
       "description": "discard_file:execute"
+    },
+    {
+      "code": "download_data_export_file:execute",
+      "name": "Download Data Export File Execute",
+      "description": "download_data_export_file:execute"
     },
     {
       "code": "download_file:execute",
@@ -425,7 +430,27 @@
     },
     {
       "roleCode": "ACTOR_PLATFORM_USER",
+      "permissionCode": "data_export_job_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_USER",
+      "permissionCode": "data_export_job_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_USER",
+      "permissionCode": "data_import_job_catalog:list"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_USER",
+      "permissionCode": "data_import_job_catalog:read"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_USER",
       "permissionCode": "discard_file:execute"
+    },
+    {
+      "roleCode": "ACTOR_PLATFORM_USER",
+      "permissionCode": "download_data_export_file:execute"
     },
     {
       "roleCode": "ACTOR_PLATFORM_USER",

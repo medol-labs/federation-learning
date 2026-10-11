@@ -31,6 +31,12 @@ class LocalPrepareHomomorphicEncryptionContextAdapterTest {
             minimumNodesPerRound = 1,
             maxRounds = 1,
             minimumAccuracy = BigDecimal("0.90"),
+            aggregationAlgorithm = "FEDERATED_AVERAGING",
+            personalizationMode = "GLOBAL_ONLY",
+            personalizationScope = "FEDERATION",
+            personalizedArtifactPolicy = "NONE",
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
             secureAggregationRequired = true
         )
 

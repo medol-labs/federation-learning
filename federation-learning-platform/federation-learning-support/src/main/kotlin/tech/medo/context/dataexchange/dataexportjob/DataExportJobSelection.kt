@@ -12,5 +12,5 @@ object DataExportJobTags {
 }
 
 object DataExportJobMetadata {
-    val concepts = emptyList<String>()
+    val concepts = listOf("DataExportJob")
 }

@@ -73,6 +73,12 @@ class RequestSecureAggregationDecisionComponent : RequestSecureAggregationDecisi
                 minimumNodesPerRound = minimumNodesPerRound,
                 maxRounds = command.maxRounds,
                 minimumAccuracy = command.minimumAccuracy,
+                aggregationAlgorithm = command.aggregationAlgorithm,
+                personalizationMode = command.personalizationMode,
+                personalizationScope = command.personalizationScope,
+                personalizedArtifactPolicy = command.personalizedArtifactPolicy,
+                personalizationMetric = command.personalizationMetric,
+                minimumPersonalizationLift = command.minimumPersonalizationLift,
                 secureAggregationRequired = command.secureAggregationRequired
             )
         )

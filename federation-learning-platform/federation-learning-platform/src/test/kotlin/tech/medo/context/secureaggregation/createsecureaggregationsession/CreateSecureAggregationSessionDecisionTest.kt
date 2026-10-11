@@ -33,6 +33,12 @@ class CreateSecureAggregationSessionDecisionTest {
             minimumNodesPerRound = 0,
             maxRounds = 0,
             minimumAccuracy = java.math.BigDecimal.ZERO,
+            aggregationAlgorithm = "",
+            personalizationMode = null,
+            personalizationScope = null,
+            personalizedArtifactPolicy = null,
+            personalizationMetric = null,
+            minimumPersonalizationLift = null,
             secureAggregationRequired = false
             )
         )

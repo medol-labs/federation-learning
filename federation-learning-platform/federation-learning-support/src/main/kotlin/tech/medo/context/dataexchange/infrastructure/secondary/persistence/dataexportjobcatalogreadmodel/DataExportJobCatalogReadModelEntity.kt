@@ -32,6 +32,7 @@ class DataExportJobCatalogReadModelEntity : MetadataProjection {
     var status: String? = null
     var fileName: String? = null
     var filePath: String? = null
+    var downloadUri: String? = null
     var rowCount: Long? = null
     @Column(columnDefinition = "text")
     var errorMessage: String? = null

@@ -845,3 +845,10 @@ export const RequestDataExportCommandSchema = z.object({
 });
 export type RequestDataExportCommandInput = z.infer<typeof RequestDataExportCommandSchema>;
 
+export const DownloadDataExportFileCommandSchema = z.object({
+  dataExportJobId: z.string().uuid(),
+  fileName: z.string(),
+  downloadUri: z.string(),
+});
+export type DownloadDataExportFileCommandInput = z.infer<typeof DownloadDataExportFileCommandSchema>;
+

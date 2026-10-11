@@ -27,6 +27,7 @@ class DataExportJobCatalogReadModelCriteria {
     var status: StringFilter? = null
     var fileName: StringFilter? = null
     var filePath: StringFilter? = null
+    var downloadUri: StringFilter? = null
     var rowCount: LongFilter? = null
     var errorMessage: StringFilter? = null
     var projectionUpdatedAt: RangeFilter<LocalDateTime>? = null
@@ -46,6 +47,7 @@ class DataExportJobCatalogReadModelProjection : MetadataProjection {
     var status: String? = null
     var fileName: String? = null
     var filePath: String? = null
+    var downloadUri: String? = null
     var rowCount: Long? = null
     var errorMessage: String? = null
     override var projectionUpdatedAt: LocalDateTime? = null
@@ -71,6 +73,7 @@ fun DataExportJobCatalogReadModelProjection.toReadModel(): DataExportJobCatalogR
     status = status,
     fileName = fileName,
     filePath = filePath,
+    downloadUri = downloadUri,
     rowCount = rowCount,
     errorMessage = errorMessage,
     projectionUpdatedAt = projectionUpdatedAt,
@@ -103,6 +106,7 @@ data class DataExportJobCatalogReadModel(
     val status: String?,
     val fileName: String?,
     val filePath: String?,
+    val downloadUri: String?,
     val rowCount: Long?,
     val errorMessage: String?,
     val projectionUpdatedAt: LocalDateTime? = null,
