@@ -6,6 +6,29 @@ import data-exchange as PlatformDataExchange deploy FederationLearningSupport
 import system-notification as PlatformNotification deploy FederationLearningSupport
 
 domain FederationLearningPlatform {
+  access policy PublicAccess {
+  }
+
+  access policy ParticipantOwnedAccess {
+    OrganizationManagement.OrganizationDirectory.organizationId
+  }
+
+  access policy FederationMembershipAccess {
+    FederationManagement.FederationMembershipDirectory.federationId
+    FederationManagement.FederationMembershipDirectory.organizationId
+  }
+
+  access policy TrainingParticipantAccess {
+    TrainingOrchestration.TrainingParticipantEligibility.trainingJobId
+    TrainingOrchestration.TrainingParticipantEligibility.organizationId
+  }
+
+  access policy RuntimeAgentAccess {
+    RuntimeGovernance.RuntimeIdentityCatalog.runtimeId
+    RuntimeGovernance.RuntimeIdentityCatalog.runtimeAgentId
+    RuntimeGovernance.RuntimeIdentityCatalog.organizationId
+  }
+
 context OrganizationManagement {
   
   note "Organization management owns organization lifecycle and runtime-discovered compute node availability."
@@ -134,6 +157,7 @@ context OrganizationManagement {
     ui OrganizationDirectory
 
     readmodel OrganizationDirectory[] {
+      access ParticipantOwnedAccess
       organizationId: UUID id
       organizationName: String display
       organizationType: OrganizationType
@@ -208,6 +232,7 @@ context OrganizationManagement {
     ui OrganizationAdminScreen
 
     readmodel UserOrganizationMembershipDirectory[] {
+      access ParticipantOwnedAccess
       userOrganizationMembershipId: UUID id
       userAccountId: UUID
       username: String?
@@ -355,6 +380,7 @@ context FederationManagement {
     reactsTo ParticipantJoined
 
     readmodel FederationOverview[] {
+      access FederationMembershipAccess
       federationId: UUID id
       federationName: String display
       state: Federation.State
@@ -418,6 +444,7 @@ context FederationManagement {
     reactsTo ParticipantInvited
 
     readmodel FederationMembershipDirectory[] {
+      access ParticipantOwnedAccess
       federationId: UUID id
       organizationId: UUID id
       federationName: String?
@@ -668,6 +695,7 @@ context RuntimeProvisioning {
 
   slice RuntimeInfrastructurePackageCatalog {
     readmodel RuntimeInfrastructurePackageCatalog[] {
+      access PublicAccess
       runtimeInfrastructurePackageId: UUID id
       packageName: String display
       packageVersion: String
@@ -738,6 +766,7 @@ context RuntimeProvisioning {
     ui RuntimeInstallationPlanScreen
 
     readmodel RuntimeInstallationPlanCatalog[] {
+      access ParticipantOwnedAccess
       runtimeInstallationPlanId: UUID id
       organizationId: UUID
       organizationName: String?
@@ -788,6 +817,7 @@ context RuntimeProvisioning {
     reactsTo RuntimeInstallationPlanCreated
 
     readmodel RuntimeInstallationGuide[] {
+      access ParticipantOwnedAccess
       runtimeInstallationPlanId: UUID id
       organizationId: UUID
       runtimeInfrastructureId: UUID
@@ -1375,6 +1405,7 @@ context RuntimeProvisioning {
 
   slice RuntimeAgentEndpointCatalog {
     readmodel RuntimeAgentEndpointCatalog[] {
+      access RuntimeAgentAccess
       runtimeAgentId: UUID id
       runtimeId: UUID?
       runtimeInfrastructureId: UUID
@@ -1395,6 +1426,7 @@ context RuntimeProvisioning {
 
   slice RuntimeInfrastructureAccessView {
     readmodel RuntimeInfrastructureAccessView[] {
+      access RuntimeAgentAccess
       runtimeInfrastructureId: UUID id
       organizationId: UUID
       runtimeInstallationPlanId: UUID
@@ -1702,6 +1734,7 @@ context DatasetGovernance {
   
   slice CurrentRecommendedFeatureSchemaCatalog {
     readmodel CurrentRecommendedFeatureSchemaCatalog[] {
+      access PublicAccess
       featureDomain: String id
       recommendedFeatureSchemaId: UUID
       recommendedVersion: String
@@ -1713,6 +1746,7 @@ context DatasetGovernance {
 
   slice FeatureSchemaCatalog {
     readmodel FeatureSchemaCatalog[] {
+      access PublicAccess
       featureSchemaId: UUID id
       featureDomain: String display
       version: String
@@ -1871,6 +1905,7 @@ context DatasetGovernance {
 
   slice RuntimeDatasetMetadataCatalog {
     readmodel RuntimeDatasetMetadataCatalog[] {
+      access ParticipantOwnedAccess
       runtimeDatasetBindingId: UUID id
       metadataReportId: UUID
       datasetId: UUID
@@ -2009,6 +2044,7 @@ context ModelRepository {
 
   slice ModelArtifactCatalog {
     readmodel ModelArtifactCatalog[] {
+      access TrainingParticipantAccess
       modelId: UUID id
       modelName: String display
       modelPlugin: String dictionary "MODEL_PLUGIN"
@@ -2349,6 +2385,7 @@ context TrainingOrchestration {
 
   slice RuntimeEngineProfileCatalog {
     readmodel RuntimeEngineProfileCatalog[] {
+      access PublicAccess
       runtimeEngineProfileId: UUID id
       profileName: String display
       pluginProfile: String dictionary "RUNTIME_ENGINE_PLUGIN_PROFILE"
@@ -2779,6 +2816,7 @@ context TrainingOrchestration {
   // 具体配置 TODO
   slice TrainingRunConfigurationCatalog {
     readmodel TrainingRunConfigurationCatalog[] {
+      access FederationMembershipAccess
       trainingRunConfigurationId: UUID id
       configurationName: String display
       federationId: UUID
@@ -2967,6 +3005,7 @@ context TrainingOrchestration {
 
   slice TrainingJobDashboard {
     readmodel TrainingJobDashboard[] {
+      access TrainingParticipantAccess
       trainingJobId: UUID id
       federationId: UUID
       trainingRunConfigurationId: UUID
@@ -3022,6 +3061,7 @@ context TrainingOrchestration {
     reactsTo TrainingJobSubmitted
 
     readmodel TrainingParticipantEligibility[] {
+      access ParticipantOwnedAccess
       trainingJobId: UUID id
       federationId: UUID
       organizationId: UUID
@@ -4180,6 +4220,7 @@ context TrainingOrchestration {
 
   slice PersonalizedModelCatalog {
     readmodel PersonalizedModelCatalog[] {
+      access TrainingParticipantAccess
       personalizedModelId: UUID id
       modelUpdateSubmissionId: UUID
       trainingJobId: UUID
@@ -4674,6 +4715,7 @@ context TrainingOrchestration {
 
   slice TrainingRoundProgress {
     readmodel TrainingRoundProgress[] {
+      access TrainingParticipantAccess
       trainingJobId: UUID id
       trainingRunConfigurationId: UUID
       featureSchemaId: UUID
@@ -5019,6 +5061,7 @@ context ModelLifecycle {
 
   slice ModelCatalog {
     readmodel ModelCatalog[] {
+      access TrainingParticipantAccess
       modelId: UUID id
       trainingJobId: UUID
       finalRoundId: UUID
@@ -5085,6 +5128,7 @@ context RuntimeMonitoring {
 
   slice RuntimeTelemetryLatest {
     readmodel todo RuntimeTelemetryLatest[] {
+      access RuntimeAgentAccess
       exportable by PlatformDataExchange
       nodeId: UUID id
       runtimeAgentId: UUID
@@ -5343,6 +5387,7 @@ context RuntimeMonitoring {
 
   slice RuntimeNodeInventoryView {
     readmodel RuntimeNodeInventoryView[] {
+      access RuntimeAgentAccess
       exportable by PlatformDataExchange
       nodeId: UUID id
       runtimeNodeInventoryReportId: UUID
@@ -5368,6 +5413,7 @@ context RuntimeMonitoring {
 
   slice RuntimeNodeResourceLatest {
     readmodel todo RuntimeNodeResourceLatest[] {
+      access RuntimeAgentAccess
       exportable by PlatformDataExchange
       nodeId: UUID id
       runtimeAgentId: UUID
@@ -5444,6 +5490,7 @@ context RuntimeMonitoring {
 
   slice RuntimeHealthDashboard {
     readmodel RuntimeHealthDashboard[] {
+      access RuntimeAgentAccess
       exportable by PlatformDataExchange
       nodeId: UUID id
       runtimeAgentId: UUID
@@ -5540,6 +5587,7 @@ context RuntimeMonitoring {
 
   slice TrainingAlertCatalog {
     readmodel TrainingAlertCatalog[] {
+      access TrainingParticipantAccess
       exportable by PlatformDataExchange
       alertId: UUID id
       nodeId: UUID
@@ -5717,6 +5765,7 @@ context RuntimeGovernance {
 
   slice RuntimeIdentityCatalog {
     readmodel RuntimeIdentityCatalog[] {
+      access RuntimeAgentAccess
       runtimeId: UUID id
       runtimeInfrastructureId: UUID
       runtimeAgentId: UUID
@@ -5734,6 +5783,7 @@ context RuntimeGovernance {
 
   slice RuntimeCapabilityCatalog {
     readmodel RuntimeCapabilityCatalog[] {
+      access RuntimeAgentAccess
       runtimeId: UUID id
       capabilityTypes: String[] dictionary "RUNTIME_CAPABILITY_TYPE"
       capabilityStatus: String
@@ -6119,6 +6169,7 @@ context SecureAggregation {
 
   slice SecureAggregationSessionCatalog {
     readmodel SecureAggregationSessionCatalog[] {
+      access TrainingParticipantAccess
       secureAggregationSessionId: UUID id
       trainingJobId: UUID
       trainingRunConfigurationId: UUID
@@ -6289,6 +6340,7 @@ context RuntimeAgentOperations {
 
   slice AgentOrganizationDirectory {
     sync readmodel AgentOrganizationDirectory[] from OrganizationManagement.OrganizationDirectory where organizationId = sync.organizationId {
+      access ParticipantOwnedAccess
       organizationId: UUID id
       organizationName: String display
       organizationType: String
@@ -6299,6 +6351,7 @@ context RuntimeAgentOperations {
 
   slice AgentFeatureSchemaCatalog {
     sync readmodel AgentFeatureSchemaCatalog[] from DatasetGovernance.FeatureSchemaCatalog {
+      access PublicAccess
       featureSchemaId: UUID id
       featureDomain: String display
       featureSchemaVersion: String from version
@@ -6309,6 +6362,7 @@ context RuntimeAgentOperations {
 
   slice AgentDictionaryValueCatalog {
     sync readmodel AgentDictionaryValueCatalog[] from DictionaryMaintenance.DictionaryValueCatalog {
+      access PublicAccess
       dictionaryValueId: UUID id
       dictionaryId: UUID
       dictionaryCode: String query
@@ -6323,6 +6377,7 @@ context RuntimeAgentOperations {
 
   slice AgentDictionaryValueTranslationCatalog {
     sync readmodel AgentDictionaryValueTranslationCatalog[] from DictionaryMaintenance.DictionaryValueTranslationCatalog {
+      access PublicAccess
       dictionaryValueTranslationId: UUID id
       dictionaryValueId: UUID
       dictionaryCode: String query
@@ -6355,6 +6410,7 @@ context RuntimeAgentOperations {
 
   slice AgentRuntimeIdentityCatalog {
     sync readmodel AgentRuntimeIdentityCatalog[] from RuntimeProvisioning.RuntimeIdentityCatalog where runtimeAgentId = sync.runtimeAgentId {
+      access RuntimeAgentAccess
       runtimeId: UUID id
       runtimeInfrastructureId: UUID
       runtimeAgentId: UUID
@@ -6505,6 +6561,7 @@ context RuntimeAgentOperations {
 
   slice RuntimeDatasetBindingCatalog {
     readmodel RuntimeDatasetBindingCatalog[] {
+      access ParticipantOwnedAccess
       runtimeDatasetBindingId: UUID id
       datasetId: UUID
       organizationId: UUID
@@ -6713,6 +6770,7 @@ context RuntimeAgentOperations {
 
   slice AgentDatasetAccessValidationCatalog {
     readmodel AgentDatasetAccessValidationCatalog[] {
+      access ParticipantOwnedAccess
       datasetAccessValidationId: UUID id
       runtimeDatasetBindingId: UUID
       datasetId: UUID
@@ -7172,6 +7230,7 @@ context RuntimeAgentOperations {
 
   slice DatasetCapability {
     readmodel DatasetCapability[] {
+      access ParticipantOwnedAccess
       datasetId: UUID id
       organizationId: UUID
       runtimeId: UUID?
@@ -7214,6 +7273,7 @@ context RuntimeAgentOperations {
 
   slice DatasetReadiness {
     readmodel DatasetReadiness[] {
+      access ParticipantOwnedAccess
       datasetId: UUID id
       organizationId: UUID
       runtimeId: UUID?
@@ -8308,6 +8368,7 @@ context RuntimeAgentOperations {
 
   slice RoundExecutionCatalog {
     readmodel RoundExecutionCatalog[] {
+      access TrainingParticipantAccess
       roundExecutionId: UUID id
       executionSessionId: UUID?
       executionPlanId: UUID?
@@ -8544,6 +8605,7 @@ context RuntimeAgentOperations {
 
   slice RuntimeAgentLifecycleCatalog {
     readmodel RuntimeAgentLifecycleCatalog[] {
+      access RuntimeAgentAccess
       runtimeAgentId: UUID id
       runtimeInfrastructureId: UUID
       agentVersion: String
@@ -8677,6 +8739,7 @@ context RuntimeAgentOperations {
 
   slice AgentRuntimeInfrastructureConnectionCatalog {
     readmodel AgentRuntimeInfrastructureConnectionCatalog[] {
+      access RuntimeAgentAccess
       runtimeInfrastructureId: UUID id
       runtimeAgentId: UUID
       runtimePlatformConnectionReady: Boolean
@@ -8703,6 +8766,7 @@ context RuntimeAgentOperations {
 
   slice AgentRuntimeTelemetryLatest {
     readmodel AgentRuntimeTelemetryLatest[] {
+      access RuntimeAgentAccess
       nodeId: UUID id
       runtimeAgentId: UUID
       federationId: UUID?
@@ -8807,6 +8871,7 @@ context RuntimeAgentOperations {
 
   slice AgentRuntimeNodeInventoryCatalog {
     readmodel AgentRuntimeNodeInventoryCatalog[] {
+      access RuntimeAgentAccess
       nodeId: UUID
       runtimeNodeInventoryReportId: UUID id
       organizationId: UUID
@@ -8837,6 +8902,7 @@ context RuntimeAgentOperations {
 
   slice AgentRuntimeNodeResourceLatest {
     readmodel AgentRuntimeNodeResourceLatest[] {
+      access RuntimeAgentAccess
       nodeId: UUID id
       runtimeAgentId: UUID
       runtimeInfrastructureId: UUID?
