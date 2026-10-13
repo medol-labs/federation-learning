@@ -36,6 +36,8 @@ class PersonalizedModelCatalogReadModelEntity : MetadataProjection {
     var personalizationProfileId: UUID? = null
     var personalizedModelArtifactRef: String? = null
     var personalizedModelArtifactDigest: String? = null
+    var personalizedModelStorageLocation: String? = null
+    var platformManagedArtifactRef: String? = null
     var personalizedMetricsArtifactRef: String? = null
     var personalizedAccuracy: BigDecimal? = null
     var personalizationLift: BigDecimal? = null

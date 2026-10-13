@@ -1,5 +1,6 @@
 package tech.medo.runtimeprovisioning.infrastructure.secondary.persistence.runtimeinfrastructureaccessviewreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -10,6 +11,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModel
 import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModelCriteria
 import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModelProjection
@@ -19,16 +22,20 @@ import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.toReadModel
 @Repository
 class JpaRuntimeInfrastructureAccessViewReadModelRepository(
     private val jpaRepository: SpringDataRuntimeInfrastructureAccessViewReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: RuntimeInfrastructureAccessViewReadModelQueryService
 ) : RuntimeInfrastructureAccessViewReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeInfrastructureAccessViewReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: RuntimeInfrastructureAccessViewReadModelCriteria?, pageable: Pageable): Page<RuntimeInfrastructureAccessViewReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): RuntimeInfrastructureAccessViewReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): RuntimeInfrastructureAccessViewReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): RuntimeInfrastructureAccessViewReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -36,6 +43,21 @@ class JpaRuntimeInfrastructureAccessViewReadModelRepository(
     override fun save(projection: RuntimeInfrastructureAccessViewReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<RuntimeInfrastructureAccessViewReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("runtimeInfrastructureId"), id)
+        }
+
+    private fun accessSpecification(): Specification<RuntimeInfrastructureAccessViewReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "RuntimeProvisioning",
+            readModelName = "RuntimeInfrastructureAccessView",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun RuntimeInfrastructureAccessViewReadModelEntity.toProjection(): RuntimeInfrastructureAccessViewReadModelProjection =
         RuntimeInfrastructureAccessViewReadModelProjection().also {

@@ -78,15 +78,6 @@ import {
   ModelArtifactCatalogRegisterModelArtifact,
 } from "./modelrepository/read-models/model-artifact-catalog";
 import {
-  ModelCatalogList,
-  ModelCatalogShow,
-  ModelCatalogRecordModelEvaluationPackage,
-  ModelCatalogApproveModel,
-  ModelCatalogPromoteModelToProduction,
-  ModelCatalogRollbackModel,
-  ModelCatalogRetireModel,
-} from "./modellifecycle/read-models/model-catalog";
-import {
   OrganizationDirectoryList,
   OrganizationDirectoryShow,
   OrganizationDirectoryRegisterOrganization,
@@ -336,15 +327,6 @@ export const contextRoutes = (
       <Route index element={resolvePageOverride("model-artifact-catalog", "list", <ModelArtifactCatalogList />)} />
       <Route path="command/register-model-artifact" element={resolvePageOverride("model-artifact-catalog", "registerModelArtifact", <ModelArtifactCatalogRegisterModelArtifact />)} />
       <Route path="show/:id" element={resolvePageOverride("model-artifact-catalog", "show", <ModelArtifactCatalogShow />)} />
-    </Route>
-    <Route path="/model-catalog">
-      <Route index element={resolvePageOverride("model-catalog", "list", <ModelCatalogList />)} />
-      <Route path="show/:id" element={resolvePageOverride("model-catalog", "show", <ModelCatalogShow />)} />
-      <Route path=":id/command/record-model-evaluation-package" element={resolvePageOverride("model-catalog", "recordModelEvaluationPackage", <ModelCatalogRecordModelEvaluationPackage />)} />
-      <Route path=":id/command/approve-model" element={resolvePageOverride("model-catalog", "approveModel", <ModelCatalogApproveModel />)} />
-      <Route path=":id/command/promote-model-to-production" element={resolvePageOverride("model-catalog", "promoteModelToProduction", <ModelCatalogPromoteModelToProduction />)} />
-      <Route path=":id/command/rollback-model" element={resolvePageOverride("model-catalog", "rollbackModel", <ModelCatalogRollbackModel />)} />
-      <Route path=":id/command/retire-model" element={resolvePageOverride("model-catalog", "retireModel", <ModelCatalogRetireModel />)} />
     </Route>
     <Route path="/organization-directory">
       <Route index element={resolvePageOverride("organization-directory", "list", <OrganizationDirectoryList />)} />

@@ -76,6 +76,7 @@ interface RuntimeEngineProfileCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeEngineProfileCatalogReadModel>
     fun findAllByCriteria(criteria: RuntimeEngineProfileCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeEngineProfileCatalogReadModel>
     fun findById(id: UUID): RuntimeEngineProfileCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeEngineProfileCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeEngineProfileCatalogReadModelProjection?
     fun save(projection: RuntimeEngineProfileCatalogReadModelProjection)
 }

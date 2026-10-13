@@ -1,27 +1,21 @@
 package tech.medo.runtimemonitoring.markruntimeagentrecovered
 
-import tech.medo.runtimemonitoring.runtimetelemetrylatest.RuntimeTelemetryLatestReadModel
-import tech.medo.runtimemonitoring.runtimetelemetrylatest.RuntimeTelemetryLatestReadModelRepository
+import tech.medo.runtimemonitoring.events.RuntimeTelemetryRecordedEvent
 import tech.medo.runtimemonitoring.markruntimeagentrecovered.MarkRuntimeAgentRecoveredCommand
 import java.util.UUID;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
-import org.springframework.data.domain.PageRequest
-import org.springframework.scheduling.annotation.Scheduled
+import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("automation-runtime-monitoring-mark-runtime-agent-recovered")
 @Component
-class MarkRecoveredRuntimeAgentFromTelemetryProcessor(
-    private val repository: RuntimeTelemetryLatestReadModelRepository,
-    private val commandGateway: CommandGateway
-) {
-    @Scheduled(fixedDelayString = "\${automation.mark-recovered-runtime-agent-from-telemetry.fixed-delay-ms:5000}")
-    fun processTodo() {
-        repository.findAll(PageRequest.of(0, 100))
-            .content
-            .asSequence()
-            .filter { todo -> todo.recoveryDetectionPending == true && todo.nodeId != null && todo.runtimeAgentId != null }
-            .forEach { todo ->
-                commandGateway.send(MarkRuntimeAgentRecoveredCommand(nodeId = todo.nodeId!!, runtimeAgentId = todo.runtimeAgentId!!, federationId = todo.federationId, federationName = todo.federationName, trainingJobId = todo.trainingJobId, trainingJobObjective = todo.trainingJobObjective, roundExecutionId = todo.roundExecutionId, runtimeNodeName = todo.runtimeNodeName, recoveryReason = todo.recoveryReason))
-            }
-    }
+class MarkRecoveredRuntimeAgentFromTelemetryProcessor(private val commandGateway: CommandGateway) {
+    @EventHandler
+    fun on(event: RuntimeTelemetryRecordedEvent): java.util.concurrent.CompletableFuture<*> =
+        if (event.recoveryDetectionPending == true) {
+            commandGateway.send(MarkRuntimeAgentRecoveredCommand(nodeId = event.nodeId, runtimeAgentId = event.runtimeAgentId, federationId = event.federationId, federationName = event.federationName, trainingJobId = event.trainingJobId, trainingJobObjective = event.trainingJobObjective, roundExecutionId = event.roundExecutionId, runtimeNodeName = event.runtimeNodeName, recoveryReason = event.recoveryReason)).resultMessage
+        } else {
+            java.util.concurrent.CompletableFuture.completedFuture(null)
+        }
 }

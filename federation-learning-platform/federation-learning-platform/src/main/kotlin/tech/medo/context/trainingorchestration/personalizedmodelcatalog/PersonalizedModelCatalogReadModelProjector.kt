@@ -53,6 +53,8 @@ open class DefaultPersonalizedModelCatalogReadModelProjectionUpdater(
             entity.personalizationProfileId = event.personalizationProfileId
             entity.personalizedModelArtifactRef = event.personalizedModelArtifactRef
             entity.personalizedModelArtifactDigest = event.personalizedModelArtifactDigest
+            entity.personalizedModelStorageLocation = event.personalizedModelStorageLocation
+            entity.platformManagedArtifactRef = event.platformManagedArtifactRef
             entity.personalizedMetricsArtifactRef = event.personalizedMetricsArtifactRef
             entity.personalizedAccuracy = event.personalizedAccuracy
             entity.personalizationLift = event.personalizationLift

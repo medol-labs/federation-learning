@@ -1,11 +1,14 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.useraccountcatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModel
 import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelCriteria
 import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelProjection
@@ -15,16 +18,20 @@ import tech.medo.identityaccessmanagement.useraccountcatalogs.toReadModel
 @Repository
 class JpaUserAccountCatalogReadModelRepository(
     private val jpaRepository: SpringDataUserAccountCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: UserAccountCatalogReadModelQueryService
 ) : UserAccountCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<UserAccountCatalogReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: UserAccountCatalogReadModelCriteria?, pageable: Pageable): Page<UserAccountCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): UserAccountCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): UserAccountCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): UserAccountCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -32,6 +39,21 @@ class JpaUserAccountCatalogReadModelRepository(
     override fun save(projection: UserAccountCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<UserAccountCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("userAccountId"), id)
+        }
+
+    private fun accessSpecification(): Specification<UserAccountCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "IdentityAccessManagement",
+            readModelName = "UserAccountCatalog",
+            policy = ReadModelAccessPolicy(
+            name = "IdentityAccessManagementPublicAccess",
+            fields = emptyList<String>()
+        )
+        )
 
     private fun UserAccountCatalogReadModelEntity.toProjection(): UserAccountCatalogReadModelProjection =
         UserAccountCatalogReadModelProjection().also {

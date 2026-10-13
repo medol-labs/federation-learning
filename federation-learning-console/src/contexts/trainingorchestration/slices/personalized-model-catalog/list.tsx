@@ -39,6 +39,8 @@ type PersonalizedModelCatalogRecord = {
   personalizationProfileId?: string;
   personalizedModelArtifactRef: string;
   personalizedModelArtifactDigest: string;
+  personalizedModelStorageLocation: string;
+  platformManagedArtifactRef?: string;
   personalizedMetricsArtifactRef?: string;
   personalizedAccuracy?: string;
   personalizationLift?: string;
@@ -607,6 +609,59 @@ export const PersonalizedModelCatalogList = () => {
             },
           ) ?? String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("personalizedModelStorageLocation", {
+        id: "personalizedModelStorageLocation",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.personalized_model_catalog.fields.personalizedModelStorageLocation.label", "Personalized Model Storage Location")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.personalized_model_catalog.fields.personalizedModelStorageLocation.label", "Personalized Model Storage Location"),
+          dictionaryCode: "PERSONALIZED_MODEL_STORAGE_LOCATION",
+          placeholder: "Enter Personalized Model Storage Location",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<PersonalizedModelCatalogRecord>(
+            frontendComposition,
+            "field:personalized-model-catalog:display:personalizedModelStorageLocation",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "personalized-model-catalog",
+              field: "personalizedModelStorageLocation",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "PERSONALIZED_MODEL_STORAGE_LOCATION"),
+      }),
+      columnHelper.accessor("platformManagedArtifactRef", {
+        id: "platformManagedArtifactRef",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.personalized_model_catalog.fields.platformManagedArtifactRef.label", "Platform Managed Artifact Ref")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.personalized_model_catalog.fields.platformManagedArtifactRef.label", "Platform Managed Artifact Ref"),
+          placeholder: "Enter Platform Managed Artifact Ref",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<PersonalizedModelCatalogRecord>(
+            frontendComposition,
+            "field:personalized-model-catalog:display:platformManagedArtifactRef",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "personalized-model-catalog",
+              field: "platformManagedArtifactRef",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("personalizedMetricsArtifactRef", {
         id: "personalizedMetricsArtifactRef",
         header: ({ column }) => (
@@ -760,7 +815,7 @@ export const PersonalizedModelCatalogList = () => {
         tableName: "personalized_model_catalog_read_model_entity",
         idField: "personalizedModelId",
         idFields: ["personalizedModelId"],
-        queryFields: ["personalizedModelId","modelUpdateSubmissionId","trainingJobId","trainingRunConfigurationId","roundId","roundNumber","runtimeId","featureSchemaId","personalizationMode","personalizationScope","personalizedArtifactPolicy","personalizationMetric","minimumPersonalizationLift","personalizationTargetType","personalizationTargetId","personalizationCohortId","personalizationProfileId","personalizedModelArtifactRef","personalizedModelArtifactDigest","personalizedMetricsArtifactRef","personalizedAccuracy","personalizationLift","state"],
+        queryFields: ["personalizedModelId","modelUpdateSubmissionId","trainingJobId","trainingRunConfigurationId","roundId","roundNumber","runtimeId","featureSchemaId","personalizationMode","personalizationScope","personalizedArtifactPolicy","personalizationMetric","minimumPersonalizationLift","personalizationTargetType","personalizationTargetId","personalizationCohortId","personalizationProfileId","personalizedModelArtifactRef","personalizedModelArtifactDigest","personalizedModelStorageLocation","platformManagedArtifactRef","personalizedMetricsArtifactRef","personalizedAccuracy","personalizationLift","state"],
         label: t("resources.personalized_model_catalog.label", "Personalized Model Catalog"),
         aggregateRoute: "personalizedmodelresult",
         queryRoute: "personalizedmodelcatalog",

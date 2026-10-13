@@ -28,6 +28,8 @@ class RegisterPersonalizedModelArtifactDecisionTest {
             modelArtifactDigest = "",
             modelSignatureUri = null,
             modelSizeBytes = null,
+            personalizedModelStorageLocation = null,
+            platformManagedArtifactRef = null,
             trainingJobId = java.util.UUID.randomUUID(),
             trainingJobObjective = "",
             roundId = java.util.UUID.randomUUID(),
@@ -57,6 +59,8 @@ class RegisterPersonalizedModelArtifactDecisionTest {
         assertEquals(command.modelArtifactDigest, event.modelArtifactDigest)
         assertEquals(command.modelSignatureUri, event.modelSignatureUri)
         assertEquals(command.modelSizeBytes, event.modelSizeBytes)
+        assertEquals(command.personalizedModelStorageLocation, event.personalizedModelStorageLocation)
+        assertEquals(command.platformManagedArtifactRef, event.platformManagedArtifactRef)
         assertEquals(command.trainingJobId, event.trainingJobId)
         assertEquals(command.trainingJobObjective, event.trainingJobObjective)
         assertEquals(command.roundId, event.roundId)

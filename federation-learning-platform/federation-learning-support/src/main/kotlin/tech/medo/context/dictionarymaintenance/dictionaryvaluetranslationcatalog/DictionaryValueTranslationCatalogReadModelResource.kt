@@ -90,7 +90,7 @@ class DictionaryValueTranslationCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('dictionary_value_translation_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<DictionaryValueTranslationCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }
 

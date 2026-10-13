@@ -58,6 +58,7 @@ interface UserRoleAssignmentCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<UserRoleAssignmentCatalogReadModel>
     fun findAllByCriteria(criteria: UserRoleAssignmentCatalogReadModelCriteria?, pageable: Pageable): Page<UserRoleAssignmentCatalogReadModel>
     fun findById(id: UserRoleAssignmentCatalogReadModelKey): UserRoleAssignmentCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UserRoleAssignmentCatalogReadModelKey): UserRoleAssignmentCatalogReadModel?
     fun findProjectionById(id: UserRoleAssignmentCatalogReadModelKey): UserRoleAssignmentCatalogReadModelProjection?
     fun findProjectionsByUserAccountId(userAccountId: UUID): List<UserRoleAssignmentCatalogReadModelProjection>
     fun findProjectionsByRoleCode(roleCode: String): List<UserRoleAssignmentCatalogReadModelProjection>

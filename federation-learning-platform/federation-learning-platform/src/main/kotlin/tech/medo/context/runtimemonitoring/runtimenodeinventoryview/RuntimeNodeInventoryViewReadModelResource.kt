@@ -100,7 +100,7 @@ class RuntimeNodeInventoryViewReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_node_inventory_view:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<RuntimeNodeInventoryViewReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }
 

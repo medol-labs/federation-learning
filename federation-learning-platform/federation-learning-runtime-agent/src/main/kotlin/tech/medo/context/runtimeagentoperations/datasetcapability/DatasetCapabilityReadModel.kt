@@ -116,6 +116,7 @@ interface DatasetCapabilityReadModelRepository {
     fun findAll(pageable: Pageable): Page<DatasetCapabilityReadModel>
     fun findAllByCriteria(criteria: DatasetCapabilityReadModelCriteria?, pageable: Pageable): Page<DatasetCapabilityReadModel>
     fun findById(id: UUID): DatasetCapabilityReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): DatasetCapabilityReadModel?
     fun findProjectionById(id: UUID): DatasetCapabilityReadModelProjection?
     fun save(projection: DatasetCapabilityReadModelProjection)
 }

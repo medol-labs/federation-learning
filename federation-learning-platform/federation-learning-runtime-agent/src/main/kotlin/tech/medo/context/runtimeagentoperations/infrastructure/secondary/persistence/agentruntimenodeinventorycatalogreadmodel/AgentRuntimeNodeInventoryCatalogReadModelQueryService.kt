@@ -1,7 +1,5 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.agentruntimenodeinventorycatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog.AgentRuntimeNodeInventoryCatalogReadModel
 import tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog.AgentRuntimeNodeInventoryCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog.AgentRuntimeNodeInventoryCatalogReadModelProjection
-import tech.medo.runtimeagentoperations.agentruntimenodeinventorycatalog.toReadModel
 
 @Service
-class AgentRuntimeNodeInventoryCatalogReadModelQueryService(
-    private val repository: SpringDataAgentRuntimeNodeInventoryCatalogReadModelRepository
-) : QueryService<AgentRuntimeNodeInventoryCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: AgentRuntimeNodeInventoryCatalogReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeNodeInventoryCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: AgentRuntimeNodeInventoryCatalogReadModelCriteria?): Specification<AgentRuntimeNodeInventoryCatalogReadModelEntity> {
+class AgentRuntimeNodeInventoryCatalogReadModelQueryService() : QueryService<AgentRuntimeNodeInventoryCatalogReadModelEntity>() {
+    fun createSpecification(criteria: AgentRuntimeNodeInventoryCatalogReadModelCriteria?): Specification<AgentRuntimeNodeInventoryCatalogReadModelEntity> {
         var specification = Specification.where<AgentRuntimeNodeInventoryCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentRuntimeNodeInventoryCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }

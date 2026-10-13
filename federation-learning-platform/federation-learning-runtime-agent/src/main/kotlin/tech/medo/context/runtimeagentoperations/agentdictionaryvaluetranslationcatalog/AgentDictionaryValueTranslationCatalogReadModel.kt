@@ -67,6 +67,7 @@ interface AgentDictionaryValueTranslationCatalogReadModelRepository {
     fun findAllByFilter(dictionaryCode: String?, valueCode: String?, locale: String?, pageable: Pageable): Page<AgentDictionaryValueTranslationCatalogReadModel>
     fun findAllByCriteria(criteria: AgentDictionaryValueTranslationCatalogReadModelCriteria?, pageable: Pageable): Page<AgentDictionaryValueTranslationCatalogReadModel>
     fun findById(id: UUID): AgentDictionaryValueTranslationCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): AgentDictionaryValueTranslationCatalogReadModel?
     fun findProjectionById(id: UUID): AgentDictionaryValueTranslationCatalogReadModelProjection?
     fun save(projection: AgentDictionaryValueTranslationCatalogReadModelProjection)
 }

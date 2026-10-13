@@ -1,7 +1,5 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.permissioncatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -12,19 +10,12 @@ import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
 import java.util.UUID
-import tech.medo.identityaccessmanagement.permissioncatalogs.PermissionCatalogReadModel
 import tech.medo.identityaccessmanagement.permissioncatalogs.PermissionCatalogReadModelCriteria
 import tech.medo.identityaccessmanagement.permissioncatalogs.PermissionCatalogReadModelProjection
-import tech.medo.identityaccessmanagement.permissioncatalogs.toReadModel
 
 @Service
-class PermissionCatalogReadModelQueryService(
-    private val repository: SpringDataPermissionCatalogReadModelRepository
-) : QueryService<PermissionCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: PermissionCatalogReadModelCriteria?, pageable: Pageable): Page<PermissionCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: PermissionCatalogReadModelCriteria?): Specification<PermissionCatalogReadModelEntity> {
+class PermissionCatalogReadModelQueryService() : QueryService<PermissionCatalogReadModelEntity>() {
+    fun createSpecification(criteria: PermissionCatalogReadModelCriteria?): Specification<PermissionCatalogReadModelEntity> {
         var specification = Specification.where<PermissionCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.permissionId?.let { specification = specification.and(buildSpecification(it, Function<Root<PermissionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("permissionId") as JpaExpression<UUID>).cast(String::class.java) })) }

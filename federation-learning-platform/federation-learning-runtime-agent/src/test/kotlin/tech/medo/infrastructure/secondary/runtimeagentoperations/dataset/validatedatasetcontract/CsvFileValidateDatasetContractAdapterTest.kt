@@ -146,6 +146,9 @@ class CsvFileValidateDatasetContractAdapterTest {
             override fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel? =
                 bindings.firstOrNull { it.runtimeDatasetBindingId == id }
 
+            override fun findByIdWithAccessPolicy(id: UUID): RuntimeDatasetBindingCatalogReadModel? =
+                findById(id)
+
             override fun findProjectionById(id: UUID): RuntimeDatasetBindingCatalogReadModelProjection? =
                 null
 
@@ -169,6 +172,9 @@ class CsvFileValidateDatasetContractAdapterTest {
 
             override fun findById(id: UUID): DatasetCapabilityReadModel? =
                 datasetCapability?.takeIf { it.datasetId == id }
+
+            override fun findByIdWithAccessPolicy(id: UUID): DatasetCapabilityReadModel? =
+                findById(id)
 
             override fun findProjectionById(id: UUID): DatasetCapabilityReadModelProjection? =
                 null

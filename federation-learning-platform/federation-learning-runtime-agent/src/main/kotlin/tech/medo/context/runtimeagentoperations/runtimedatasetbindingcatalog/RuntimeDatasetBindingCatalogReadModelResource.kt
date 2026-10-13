@@ -35,6 +35,6 @@ class RuntimeDatasetBindingCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_dataset_binding_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<RuntimeDatasetBindingCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

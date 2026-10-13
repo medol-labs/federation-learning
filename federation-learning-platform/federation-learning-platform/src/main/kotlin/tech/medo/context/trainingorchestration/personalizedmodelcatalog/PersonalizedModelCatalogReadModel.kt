@@ -36,6 +36,8 @@ class PersonalizedModelCatalogReadModelCriteria {
     var personalizationProfileId: StringFilter? = null
     var personalizedModelArtifactRef: StringFilter? = null
     var personalizedModelArtifactDigest: StringFilter? = null
+    var personalizedModelStorageLocation: StringFilter? = null
+    var platformManagedArtifactRef: StringFilter? = null
     var personalizedMetricsArtifactRef: StringFilter? = null
     var personalizedAccuracy: BigDecimalFilter? = null
     var personalizationLift: BigDecimalFilter? = null
@@ -64,6 +66,8 @@ class PersonalizedModelCatalogReadModelProjection : MetadataProjection {
     var personalizationProfileId: UUID? = null
     var personalizedModelArtifactRef: String? = null
     var personalizedModelArtifactDigest: String? = null
+    var personalizedModelStorageLocation: String? = null
+    var platformManagedArtifactRef: String? = null
     var personalizedMetricsArtifactRef: String? = null
     var personalizedAccuracy: BigDecimal? = null
     var personalizationLift: BigDecimal? = null
@@ -98,6 +102,8 @@ fun PersonalizedModelCatalogReadModelProjection.toReadModel(): PersonalizedModel
     personalizationProfileId = personalizationProfileId,
     personalizedModelArtifactRef = personalizedModelArtifactRef,
     personalizedModelArtifactDigest = personalizedModelArtifactDigest,
+    personalizedModelStorageLocation = personalizedModelStorageLocation,
+    platformManagedArtifactRef = platformManagedArtifactRef,
     personalizedMetricsArtifactRef = personalizedMetricsArtifactRef,
     personalizedAccuracy = personalizedAccuracy,
     personalizationLift = personalizationLift,
@@ -115,6 +121,7 @@ interface PersonalizedModelCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<PersonalizedModelCatalogReadModel>
     fun findAllByCriteria(criteria: PersonalizedModelCatalogReadModelCriteria?, pageable: Pageable): Page<PersonalizedModelCatalogReadModel>
     fun findById(id: UUID): PersonalizedModelCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): PersonalizedModelCatalogReadModel?
     fun findProjectionById(id: UUID): PersonalizedModelCatalogReadModelProjection?
     fun save(projection: PersonalizedModelCatalogReadModelProjection)
 }
@@ -139,6 +146,8 @@ data class PersonalizedModelCatalogReadModel(
     val personalizationProfileId: UUID?,
     val personalizedModelArtifactRef: String?,
     val personalizedModelArtifactDigest: String?,
+    val personalizedModelStorageLocation: String?,
+    val platformManagedArtifactRef: String?,
     val personalizedMetricsArtifactRef: String?,
     val personalizedAccuracy: BigDecimal?,
     val personalizationLift: BigDecimal?,

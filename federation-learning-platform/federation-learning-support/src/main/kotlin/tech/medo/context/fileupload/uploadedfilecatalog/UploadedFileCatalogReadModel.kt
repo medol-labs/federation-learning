@@ -100,6 +100,7 @@ interface UploadedFileCatalogReadModelRepository {
     fun findAllByFilter(purpose: String?, pageable: Pageable): Page<UploadedFileCatalogReadModel>
     fun findAllByCriteria(criteria: UploadedFileCatalogReadModelCriteria?, pageable: Pageable): Page<UploadedFileCatalogReadModel>
     fun findById(id: UUID): UploadedFileCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): UploadedFileCatalogReadModel?
     fun findProjectionById(id: UUID): UploadedFileCatalogReadModelProjection?
     fun save(projection: UploadedFileCatalogReadModelProjection)
 }

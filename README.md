@@ -30,7 +30,7 @@ the system can be regenerated without losing domain-specific code.
 The business domain should be read from `.medol/source.medol` first. This
 workspace is generated from these modeled domains:
 
-- Federation Learning Platform: Organization Management, Federation Management, Dictionary Maintenance, File Upload, Runtime Provisioning, Dataset Governance, Model Repository, Training Orchestration, Model Lifecycle, Runtime Monitoring, Runtime Governance, Secure Aggregation, Runtime Agent Operations.
+- Federation Learning Platform: Organization Management, Federation Management, Dictionary Maintenance, File Upload, Runtime Provisioning, Dataset Governance, Model Repository, Training Orchestration, Runtime Monitoring, Runtime Governance, Secure Aggregation, Runtime Agent Operations.
 - Identity Access Management: Identity Access Management.
 
 When changing behavior, update the MEDOL model before regenerating framework
@@ -42,12 +42,12 @@ not part of the model itself.
 Backend deployments:
 
 - Federation Learning Support: Dictionary Maintenance, File Upload, Identity Access Management.
-- Federation Learning Platform: Organization Management, Federation Management, Dataset Governance, Model Repository, Training Orchestration, Model Lifecycle, Runtime Monitoring, Runtime Governance, Secure Aggregation, Runtime Provisioning.
+- Federation Learning Platform: Organization Management, Federation Management, Dataset Governance, Model Repository, Training Orchestration, Runtime Monitoring, Runtime Governance, Secure Aggregation, Runtime Provisioning.
 - Federation Learning Runtime Agent: Runtime Agent Operations, Identity Access Management.
 
 Frontend applications:
 
-- Federation Learning Console: Organization Management, Federation Management, Dictionary Maintenance, File Upload, Runtime Provisioning, Dataset Governance, Model Repository, Training Orchestration, Model Lifecycle, Runtime Monitoring, Runtime Governance, Secure Aggregation, Identity Access Management.
+- Federation Learning Console: Organization Management, Federation Management, Dictionary Maintenance, File Upload, Runtime Provisioning, Dataset Governance, Model Repository, Training Orchestration, Runtime Monitoring, Runtime Governance, Secure Aggregation, Identity Access Management.
 - Federation Learning Participant Console: Runtime Agent Operations, Identity Access Management.
 
 ## Generation
@@ -98,6 +98,23 @@ npm run dev
 
 Not every generated workspace contains every stack. Follow the directories
 present in this repository.
+
+### Modeling Verification
+
+Use the repository verification script after changing `.medol/source.medol`,
+dictionary seeds, generated CodegenModel snapshots, or generated frontend/backend
+artifacts:
+
+```bash
+node scripts/verify-modeling-consistency.mjs
+node scripts/verify-modeling-consistency.mjs --full
+```
+
+The default run checks MEDOL parsing, example-model parsing, CodegenModel
+synchronization, dictionary seed validity, personalized federation storage rules,
+runtime monitoring/governance regressions, and removed lifecycle residue. `--full`
+also runs the platform console typecheck and the backend Maven reactor
+`test-compile`.
 
 ### K3D Training Flow
 

@@ -95,6 +95,7 @@ interface AgentDatasetAccessValidationCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentDatasetAccessValidationCatalogReadModel>
     fun findAllByCriteria(criteria: AgentDatasetAccessValidationCatalogReadModelCriteria?, pageable: Pageable): Page<AgentDatasetAccessValidationCatalogReadModel>
     fun findById(id: UUID): AgentDatasetAccessValidationCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): AgentDatasetAccessValidationCatalogReadModel?
     fun findProjectionById(id: UUID): AgentDatasetAccessValidationCatalogReadModelProjection?
     fun save(projection: AgentDatasetAccessValidationCatalogReadModelProjection)
 }

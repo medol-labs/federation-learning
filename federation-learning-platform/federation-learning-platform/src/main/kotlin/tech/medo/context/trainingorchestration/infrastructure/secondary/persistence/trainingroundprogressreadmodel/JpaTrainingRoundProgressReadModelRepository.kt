@@ -1,5 +1,6 @@
 package tech.medo.trainingorchestration.infrastructure.secondary.persistence.trainingroundprogressreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -14,6 +15,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModel
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelCriteria
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelKey
@@ -24,6 +27,7 @@ import tech.medo.trainingorchestration.trainingroundprogress.toReadModel
 @Repository
 class JpaTrainingRoundProgressReadModelRepository(
     private val jpaRepository: SpringDataTrainingRoundProgressReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: TrainingRoundProgressReadModelQueryService,
     private val objectMapper: ObjectMapper
 ) : TrainingRoundProgressReadModelRepository {
@@ -31,10 +35,13 @@ class JpaTrainingRoundProgressReadModelRepository(
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: TrainingRoundProgressReadModelCriteria?, pageable: Pageable): Page<TrainingRoundProgressReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -48,6 +55,24 @@ class JpaTrainingRoundProgressReadModelRepository(
     override fun save(projection: TrainingRoundProgressReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: TrainingRoundProgressReadModelKey): Specification<TrainingRoundProgressReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.and(
+                criteriaBuilder.equal(root.get<UUID>("trainingJobId"), id.trainingJobId),
+                criteriaBuilder.equal(root.get<UUID>("roundId"), id.roundId)
+            )
+        }
+
+    private fun accessSpecification(): Specification<TrainingRoundProgressReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "TrainingOrchestration",
+            readModelName = "TrainingRoundProgress",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun TrainingRoundProgressReadModelEntity.toProjection(): TrainingRoundProgressReadModelProjection =
         TrainingRoundProgressReadModelProjection().also {

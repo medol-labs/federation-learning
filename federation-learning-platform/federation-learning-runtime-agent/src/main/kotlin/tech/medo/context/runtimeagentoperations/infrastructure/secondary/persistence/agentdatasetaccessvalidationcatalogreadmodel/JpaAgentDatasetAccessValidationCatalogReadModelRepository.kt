@@ -1,5 +1,6 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.agentdatasetaccessvalidationcatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -9,6 +10,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.AgentDatasetAccessValidationCatalogReadModel
 import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.AgentDatasetAccessValidationCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.AgentDatasetAccessValidationCatalogReadModelProjection
@@ -18,16 +21,20 @@ import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.toRe
 @Repository
 class JpaAgentDatasetAccessValidationCatalogReadModelRepository(
     private val jpaRepository: SpringDataAgentDatasetAccessValidationCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: AgentDatasetAccessValidationCatalogReadModelQueryService
 ) : AgentDatasetAccessValidationCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<AgentDatasetAccessValidationCatalogReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: AgentDatasetAccessValidationCatalogReadModelCriteria?, pageable: Pageable): Page<AgentDatasetAccessValidationCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): AgentDatasetAccessValidationCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): AgentDatasetAccessValidationCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): AgentDatasetAccessValidationCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -35,6 +42,21 @@ class JpaAgentDatasetAccessValidationCatalogReadModelRepository(
     override fun save(projection: AgentDatasetAccessValidationCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<AgentDatasetAccessValidationCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("datasetAccessValidationId"), id)
+        }
+
+    private fun accessSpecification(): Specification<AgentDatasetAccessValidationCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "RuntimeAgentOperations",
+            readModelName = "AgentDatasetAccessValidationCatalog",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun AgentDatasetAccessValidationCatalogReadModelEntity.toProjection(): AgentDatasetAccessValidationCatalogReadModelProjection =
         AgentDatasetAccessValidationCatalogReadModelProjection().also {

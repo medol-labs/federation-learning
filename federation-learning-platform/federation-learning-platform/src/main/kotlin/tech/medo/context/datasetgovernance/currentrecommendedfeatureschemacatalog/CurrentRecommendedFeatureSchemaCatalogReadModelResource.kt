@@ -35,6 +35,6 @@ class CurrentRecommendedFeatureSchemaCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('current_recommended_feature_schema_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: String): ResponseEntity<CurrentRecommendedFeatureSchemaCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

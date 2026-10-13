@@ -60,6 +60,7 @@ interface UserAccountCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<UserAccountCatalogReadModel>
     fun findAllByCriteria(criteria: UserAccountCatalogReadModelCriteria?, pageable: Pageable): Page<UserAccountCatalogReadModel>
     fun findById(id: UUID): UserAccountCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): UserAccountCatalogReadModel?
     fun findProjectionById(id: UUID): UserAccountCatalogReadModelProjection?
     fun save(projection: UserAccountCatalogReadModelProjection)
 }

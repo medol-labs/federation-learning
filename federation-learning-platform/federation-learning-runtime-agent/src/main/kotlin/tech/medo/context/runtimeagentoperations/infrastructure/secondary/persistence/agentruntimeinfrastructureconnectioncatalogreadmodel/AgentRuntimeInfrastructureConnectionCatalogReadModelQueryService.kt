@@ -1,7 +1,5 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.agentruntimeinfrastructureconnectioncatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimeagentoperations.agentruntimeinfrastructureconnectioncatalog.AgentRuntimeInfrastructureConnectionCatalogReadModel
 import tech.medo.runtimeagentoperations.agentruntimeinfrastructureconnectioncatalog.AgentRuntimeInfrastructureConnectionCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.agentruntimeinfrastructureconnectioncatalog.AgentRuntimeInfrastructureConnectionCatalogReadModelProjection
-import tech.medo.runtimeagentoperations.agentruntimeinfrastructureconnectioncatalog.toReadModel
 
 @Service
-class AgentRuntimeInfrastructureConnectionCatalogReadModelQueryService(
-    private val repository: SpringDataAgentRuntimeInfrastructureConnectionCatalogReadModelRepository
-) : QueryService<AgentRuntimeInfrastructureConnectionCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: AgentRuntimeInfrastructureConnectionCatalogReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeInfrastructureConnectionCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: AgentRuntimeInfrastructureConnectionCatalogReadModelCriteria?): Specification<AgentRuntimeInfrastructureConnectionCatalogReadModelEntity> {
+class AgentRuntimeInfrastructureConnectionCatalogReadModelQueryService() : QueryService<AgentRuntimeInfrastructureConnectionCatalogReadModelEntity>() {
+    fun createSpecification(criteria: AgentRuntimeInfrastructureConnectionCatalogReadModelCriteria?): Specification<AgentRuntimeInfrastructureConnectionCatalogReadModelEntity> {
         var specification = Specification.where<AgentRuntimeInfrastructureConnectionCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.runtimeInfrastructureId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentRuntimeInfrastructureConnectionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInfrastructureId") as JpaExpression<UUID>).cast(String::class.java) })) }

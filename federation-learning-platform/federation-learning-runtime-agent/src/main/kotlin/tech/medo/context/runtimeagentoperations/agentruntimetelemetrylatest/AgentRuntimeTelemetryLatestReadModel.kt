@@ -75,6 +75,7 @@ interface AgentRuntimeTelemetryLatestReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentRuntimeTelemetryLatestReadModel>
     fun findAllByCriteria(criteria: AgentRuntimeTelemetryLatestReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeTelemetryLatestReadModel>
     fun findById(id: UUID): AgentRuntimeTelemetryLatestReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): AgentRuntimeTelemetryLatestReadModel?
     fun findProjectionById(id: UUID): AgentRuntimeTelemetryLatestReadModelProjection?
     fun save(projection: AgentRuntimeTelemetryLatestReadModelProjection)
 }

@@ -114,6 +114,9 @@ class ImageFolderProfileAgentDatasetAdapterTest {
             override fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel? =
                 bindings.firstOrNull { it.runtimeDatasetBindingId == id }
 
+            override fun findByIdWithAccessPolicy(id: UUID): RuntimeDatasetBindingCatalogReadModel? =
+                findById(id)
+
             override fun findProjectionById(id: UUID): RuntimeDatasetBindingCatalogReadModelProjection? =
                 null
 

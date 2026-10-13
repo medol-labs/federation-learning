@@ -86,6 +86,7 @@ interface DataImportJobCatalogReadModelRepository {
     fun findAllByFilter(commandName: String?, resourceName: String?, status: String?, pageable: Pageable): Page<DataImportJobCatalogReadModel>
     fun findAllByCriteria(criteria: DataImportJobCatalogReadModelCriteria?, pageable: Pageable): Page<DataImportJobCatalogReadModel>
     fun findById(id: UUID): DataImportJobCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): DataImportJobCatalogReadModel?
     fun findProjectionById(id: UUID): DataImportJobCatalogReadModelProjection?
     fun save(projection: DataImportJobCatalogReadModelProjection)
 }

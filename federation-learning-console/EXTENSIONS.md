@@ -667,6 +667,8 @@ export const pageOverrides = {
 | `modelArtifactDigest` | `string` | `model-artifact-catalog:field:modelArtifactDigest` | `formatValue/display text` |
 | `modelSignatureUri` | `string` | `model-artifact-catalog:field:modelSignatureUri` | `formatValue/display text` |
 | `modelSizeBytes` | `number` | `model-artifact-catalog:field:modelSizeBytes` | `formatValue/display text` |
+| `personalizedModelStorageLocation` | `string` | `model-artifact-catalog:field:personalizedModelStorageLocation` | `formatValue/display text` |
+| `platformManagedArtifactRef` | `string` | `model-artifact-catalog:field:platformManagedArtifactRef` | `formatValue/display text` |
 | `trainingJobId` | `string` | `model-artifact-catalog:field:trainingJobId` | `formatValue/display text` |
 | `roundId` | `string` | `model-artifact-catalog:field:roundId` | `formatValue/display text` |
 | `trainingJobObjective` | `string` | `model-artifact-catalog:field:trainingJobObjective` | `formatValue/display text` |
@@ -677,72 +679,6 @@ export const pageOverrides = {
 | `baseGlobalModelId` | `string` | `model-artifact-catalog:field:baseGlobalModelId` | `formatValue/display text` |
 | `state` | `&#34;Registered&#34;` | `model-artifact-catalog:field:state` | `Select/display text` |
 | `registeredAt` | `string` | `model-artifact-catalog:field:registeredAt` | `formatValue/display text` |
-
-### Model Catalog
-
-| Property | Value |
-| --- | --- |
-| Resource name | `model_catalog` |
-| Route | `/model-catalog` |
-| Backend module | `federation-learning-platform` |
-| Data provider | `federation-learning-platform` |
-| Generated list page | `src/contexts/modellifecycle/slices/model-catalog/list.tsx` |
-| Generated show page | `src/contexts/modellifecycle/slices/model-catalog/show.tsx` |
-| Resource metadata override | `resourceOverrides[{ name: "model_catalog" }]` |
-| Menu icon request | `resolveMenuIcon({ type: "resource", name: "model_catalog", parent: "modellifecycle" })` |
-
-#### Page Overrides
-
-| View | Override key | Generated fallback |
-| --- | --- | --- |
-| `list` | `model-catalog:list` | `src/contexts/modellifecycle/slices/model-catalog/list.tsx` |
-| `show` | `model-catalog:show` | `src/contexts/modellifecycle/slices/model-catalog/show.tsx` |
-| `recordModelEvaluationPackage` | `model-catalog:recordModelEvaluationPackage` | `src/contexts/modellifecycle/slices/record-model-evaluation-package/record-model-evaluation-package.tsx` |
-| `approveModel` | `model-catalog:approveModel` | `src/contexts/modellifecycle/slices/approve-model/approve-model.tsx` |
-| `promoteModelToProduction` | `model-catalog:promoteModelToProduction` | `src/contexts/modellifecycle/slices/promote-model-to-production/promote-model-to-production.tsx` |
-| `rollbackModel` | `model-catalog:rollbackModel` | `src/contexts/modellifecycle/slices/rollback-model/rollback-model.tsx` |
-| `retireModel` | `model-catalog:retireModel` | `src/contexts/modellifecycle/slices/retire-model/retire-model.tsx` |
-
-Example:
-
-```tsx
-// src/domain/page-overrides.tsx
-import { MyModelCatalogList } from "./pages/my-model-catalog-list";
-
-export const pageOverrides = {
-  "model-catalog:list": <MyModelCatalogList />,
-};
-```
-
-#### Commands And Row Actions
-
-| Command | Override key | Generated fallback | Fields |
-| --- | --- | --- | --- |
-| `recordModelEvaluationPackage` | `model-catalog:recordModelEvaluationPackage` | `src/contexts/modellifecycle/slices/record-model-evaluation-package/record-model-evaluation-package.tsx` | `trainingJobId`, `evaluationReportId`, `experimentId`, `hyperparameterSnapshotId`, `reproducibilityManifestId`, `modelCardId`, `baselineModelId` |
-| `approveModel` | `model-catalog:approveModel` | `src/contexts/modellifecycle/slices/approve-model/approve-model.tsx` | `approvalNote` |
-| `promoteModelToProduction` | `model-catalog:promoteModelToProduction` | `src/contexts/modellifecycle/slices/promote-model-to-production/promote-model-to-production.tsx` | `releaseChannel`, `productionStage` |
-| `rollbackModel` | `model-catalog:rollbackModel` | `src/contexts/modellifecycle/slices/rollback-model/rollback-model.tsx` | `previousModelId`, `rollbackReason` |
-| `retireModel` | `model-catalog:retireModel` | `src/contexts/modellifecycle/slices/retire-model/retire-model.tsx` | `retirementReason` |
-
-#### Field Renderers
-
-| Field | Type | Renderer override id | Default renderer |
-| --- | --- | --- | --- |
-| `modelId` | `string` | `model-catalog:field:modelId` | `formatValue/display text` |
-| `trainingJobId` | `string` | `model-catalog:field:trainingJobId` | `formatValue/display text` |
-| `finalRoundId` | `string` | `model-catalog:field:finalRoundId` | `formatValue/display text` |
-| `modelArtifactId` | `string` | `model-catalog:field:modelArtifactId` | `formatValue/display text` |
-| `trainingJobObjective` | `string` | `model-catalog:field:trainingJobObjective` | `formatValue/display text` |
-| `modelArtifactDigest` | `string` | `model-catalog:field:modelArtifactDigest` | `formatValue/display text` |
-| `evaluationReportId` | `string` | `model-catalog:field:evaluationReportId` | `formatValue/display text` |
-| `finalGlobalAccuracy` | `string` | `model-catalog:field:finalGlobalAccuracy` | `formatValue/display text` |
-| `state` | `&#34;Candidate&#34; | &#34;EvaluationPackaged&#34; | &#34;Approved&#34; | &#34;Production&#34; | &#34;RolledBack&#34; | &#34;Retired&#34;` | `model-catalog:field:state` | `Select/display text` |
-| `releaseChannel` | `string` | `model-catalog:field:releaseChannel` | `formatValue/display text` |
-| `productionStage` | `string` | `model-catalog:field:productionStage` | `formatValue/display text` |
-| `experimentId` | `string` | `model-catalog:field:experimentId` | `formatValue/display text` |
-| `hyperparameterSnapshotId` | `string` | `model-catalog:field:hyperparameterSnapshotId` | `formatValue/display text` |
-| `reproducibilityManifestId` | `string` | `model-catalog:field:reproducibilityManifestId` | `formatValue/display text` |
-| `modelCardId` | `string` | `model-catalog:field:modelCardId` | `formatValue/display text` |
 
 ### Organization Directory
 
@@ -907,6 +843,8 @@ export const pageOverrides = {
 | `personalizationProfileId` | `string` | `personalized-model-catalog:field:personalizationProfileId` | `formatValue/display text` |
 | `personalizedModelArtifactRef` | `string` | `personalized-model-catalog:field:personalizedModelArtifactRef` | `formatValue/display text` |
 | `personalizedModelArtifactDigest` | `string` | `personalized-model-catalog:field:personalizedModelArtifactDigest` | `formatValue/display text` |
+| `personalizedModelStorageLocation` | `string` | `personalized-model-catalog:field:personalizedModelStorageLocation` | `formatValue/display text` |
+| `platformManagedArtifactRef` | `string` | `personalized-model-catalog:field:platformManagedArtifactRef` | `formatValue/display text` |
 | `personalizedMetricsArtifactRef` | `string` | `personalized-model-catalog:field:personalizedMetricsArtifactRef` | `formatValue/display text` |
 | `personalizedAccuracy` | `string` | `personalized-model-catalog:field:personalizedAccuracy` | `formatValue/display text` |
 | `personalizationLift` | `string` | `personalized-model-catalog:field:personalizationLift` | `formatValue/display text` |

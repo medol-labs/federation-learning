@@ -222,6 +222,9 @@ class GenerateParticipantExecutionPlanDecisionComponentTest {
 
             override fun findById(id: UUID): TrainingRunConfigurationCatalogReadModel? = null
 
+            override fun findByIdWithAccessPolicy(id: UUID): TrainingRunConfigurationCatalogReadModel? =
+                findById(id)
+
             override fun findProjectionById(id: UUID): TrainingRunConfigurationCatalogReadModelProjection? =
                 projection.takeIf { id == projection.trainingRunConfigurationId }
 
@@ -242,6 +245,9 @@ class GenerateParticipantExecutionPlanDecisionComponentTest {
                 findAll(pageable)
 
             override fun findById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModel? = null
+
+            override fun findByIdWithAccessPolicy(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModel? =
+                findById(id)
 
             override fun findProjectionById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModelProjection? =
                 null
@@ -270,6 +276,9 @@ class GenerateParticipantExecutionPlanDecisionComponentTest {
 
             override fun findById(id: UUID): ModelArtifactCatalogReadModel? = null
 
+            override fun findByIdWithAccessPolicy(id: UUID): ModelArtifactCatalogReadModel? =
+                findById(id)
+
             override fun findProjectionById(id: UUID): ModelArtifactCatalogReadModelProjection? =
                 projections.firstOrNull { it.modelId == id }
 
@@ -290,6 +299,9 @@ class GenerateParticipantExecutionPlanDecisionComponentTest {
                 PageImpl(projections.map { it.toReadModel() })
 
             override fun findById(id: UUID): PersonalizedModelCatalogReadModel? = null
+
+            override fun findByIdWithAccessPolicy(id: UUID): PersonalizedModelCatalogReadModel? =
+                findById(id)
 
             override fun findProjectionById(id: UUID): PersonalizedModelCatalogReadModelProjection? =
                 projections.firstOrNull { it.personalizedModelId == id }
@@ -318,6 +330,8 @@ class GenerateParticipantExecutionPlanDecisionComponentTest {
             personalizationProfileId = personalizationProfileId,
             personalizedModelArtifactRef = personalizedModelArtifactRef,
             personalizedModelArtifactDigest = personalizedModelArtifactDigest,
+            personalizedModelStorageLocation = personalizedModelStorageLocation,
+            platformManagedArtifactRef = platformManagedArtifactRef,
             personalizedMetricsArtifactRef = personalizedMetricsArtifactRef,
             personalizedAccuracy = personalizedAccuracy,
             personalizationLift = personalizationLift,

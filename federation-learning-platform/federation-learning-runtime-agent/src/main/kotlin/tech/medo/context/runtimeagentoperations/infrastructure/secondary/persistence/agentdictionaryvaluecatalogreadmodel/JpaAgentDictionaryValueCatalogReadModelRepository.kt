@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.runtimeagentoperations.agentdictionaryvaluecatalog.AgentDictionaryValueCatalogReadModel
 import tech.medo.runtimeagentoperations.agentdictionaryvaluecatalog.AgentDictionaryValueCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.agentdictionaryvaluecatalog.AgentDictionaryValueCatalogReadModelProjection
@@ -20,16 +22,20 @@ import tech.medo.runtimeagentoperations.agentdictionaryvaluecatalog.toReadModel
 @Repository
 class JpaAgentDictionaryValueCatalogReadModelRepository(
     private val jpaRepository: SpringDataAgentDictionaryValueCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: AgentDictionaryValueCatalogReadModelQueryService
 ) : AgentDictionaryValueCatalogReadModelRepository {
     override fun findAllByFilter(dictionaryCode: String?, active: Boolean?, state: String?, pageable: Pageable): Page<AgentDictionaryValueCatalogReadModel> =
-        jpaRepository.findAll(filters(dictionaryCode, active, state), pageable).map { it.toProjection().toReadModel() }
+        jpaRepository.findAll(filters(dictionaryCode, active, state).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findAllByCriteria(criteria: AgentDictionaryValueCatalogReadModelCriteria?, pageable: Pageable): Page<AgentDictionaryValueCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): AgentDictionaryValueCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): AgentDictionaryValueCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): AgentDictionaryValueCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -47,6 +53,21 @@ class JpaAgentDictionaryValueCatalogReadModelRepository(
             criteriaBuilder.and(*predicates.toTypedArray())
         }
 
+
+    private fun idSpecification(id: UUID): Specification<AgentDictionaryValueCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("dictionaryValueId"), id)
+        }
+
+    private fun accessSpecification(): Specification<AgentDictionaryValueCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "RuntimeAgentOperations",
+            readModelName = "AgentDictionaryValueCatalog",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun AgentDictionaryValueCatalogReadModelEntity.toProjection(): AgentDictionaryValueCatalogReadModelProjection =
         AgentDictionaryValueCatalogReadModelProjection().also {

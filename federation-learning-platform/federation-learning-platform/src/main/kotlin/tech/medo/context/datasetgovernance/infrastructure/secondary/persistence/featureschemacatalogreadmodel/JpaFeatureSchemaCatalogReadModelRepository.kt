@@ -1,5 +1,6 @@
 package tech.medo.datasetgovernance.infrastructure.secondary.persistence.featureschemacatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -10,6 +11,8 @@ import java.util.UUID;
 import tech.medo.datasetgovernance.domain.types.FeatureDefinition;
 import tech.medo.datasetgovernance.domain.types.LabelDefinition;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModel
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelCriteria
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelProjection
@@ -19,6 +22,7 @@ import tech.medo.datasetgovernance.featureschemacatalog.toReadModel
 @Repository
 class JpaFeatureSchemaCatalogReadModelRepository(
     private val jpaRepository: SpringDataFeatureSchemaCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: FeatureSchemaCatalogReadModelQueryService,
     private val objectMapper: ObjectMapper
 ) : FeatureSchemaCatalogReadModelRepository {
@@ -26,10 +30,13 @@ class JpaFeatureSchemaCatalogReadModelRepository(
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: FeatureSchemaCatalogReadModelCriteria?, pageable: Pageable): Page<FeatureSchemaCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): FeatureSchemaCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): FeatureSchemaCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): FeatureSchemaCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -37,6 +44,21 @@ class JpaFeatureSchemaCatalogReadModelRepository(
     override fun save(projection: FeatureSchemaCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<FeatureSchemaCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("featureSchemaId"), id)
+        }
+
+    private fun accessSpecification(): Specification<FeatureSchemaCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "DatasetGovernance",
+            readModelName = "FeatureSchemaCatalog",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun FeatureSchemaCatalogReadModelEntity.toProjection(): FeatureSchemaCatalogReadModelProjection =
         FeatureSchemaCatalogReadModelProjection().also {

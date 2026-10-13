@@ -1,7 +1,5 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.agentruntimenoderesourcelatestreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest.AgentRuntimeNodeResourceLatestReadModel
 import tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest.AgentRuntimeNodeResourceLatestReadModelCriteria
 import tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest.AgentRuntimeNodeResourceLatestReadModelProjection
-import tech.medo.runtimeagentoperations.agentruntimenoderesourcelatest.toReadModel
 
 @Service
-class AgentRuntimeNodeResourceLatestReadModelQueryService(
-    private val repository: SpringDataAgentRuntimeNodeResourceLatestReadModelRepository
-) : QueryService<AgentRuntimeNodeResourceLatestReadModelEntity>() {
-    fun findByCriteria(criteria: AgentRuntimeNodeResourceLatestReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeNodeResourceLatestReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: AgentRuntimeNodeResourceLatestReadModelCriteria?): Specification<AgentRuntimeNodeResourceLatestReadModelEntity> {
+class AgentRuntimeNodeResourceLatestReadModelQueryService() : QueryService<AgentRuntimeNodeResourceLatestReadModelEntity>() {
+    fun createSpecification(criteria: AgentRuntimeNodeResourceLatestReadModelCriteria?): Specification<AgentRuntimeNodeResourceLatestReadModelEntity> {
         var specification = Specification.where<AgentRuntimeNodeResourceLatestReadModelEntity>(null)
         if (criteria != null) {
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentRuntimeNodeResourceLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }

@@ -39,13 +39,13 @@ export const TrainingRoundParticipantSchema = z.object({
   personalizationCohortId: z.string().uuid().optional().nullable(),
   personalizationProfileId: z.string().uuid().optional().nullable()
 });
+export const NotificationCategorySchema = z.enum(["SYSTEM", "DATA_EXCHANGE", "TRAINING", "RUNTIME", "SECURITY"]);
+export const NotificationSeveritySchema = z.enum(["INFO", "SUCCESS", "WARNING", "ERROR"]);
+export const NotificationToastPolicySchema = z.enum(["NONE", "DEFAULT", "IMPORTANT"]);
 export const DictionaryCodeSchema = z.string();
 export const DictionaryValueCodeSchema = z.string();
 export const LocaleCodeSchema = z.string();
 export const DisplayOrderSchema = z.coerce.number().int().min(0).max(999999);
-export const NotificationCategorySchema = z.enum(["SYSTEM", "DATA_EXCHANGE", "TRAINING", "RUNTIME", "SECURITY"]);
-export const NotificationSeveritySchema = z.enum(["INFO", "SUCCESS", "WARNING", "ERROR"]);
-export const NotificationToastPolicySchema = z.enum(["NONE", "DEFAULT", "IMPORTANT"]);
 
 export const DeclareDatasetCommandSchema = z.object({
   organizationId: z.string().uuid(),

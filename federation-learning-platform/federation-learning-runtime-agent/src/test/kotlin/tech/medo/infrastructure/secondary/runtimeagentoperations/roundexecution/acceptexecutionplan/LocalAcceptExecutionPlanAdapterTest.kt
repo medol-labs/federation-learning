@@ -144,6 +144,7 @@ class LocalAcceptExecutionPlanAdapterTest {
                 findAll(pageable)
 
             override fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel? = null
+            override fun findByIdWithAccessPolicy(id: UUID): RuntimeDatasetBindingCatalogReadModel? = findById(id)
             override fun findProjectionById(id: UUID): RuntimeDatasetBindingCatalogReadModelProjection? = null
             override fun save(projection: RuntimeDatasetBindingCatalogReadModelProjection) = Unit
         }
@@ -162,6 +163,7 @@ class LocalAcceptExecutionPlanAdapterTest {
                 findAll(pageable)
 
             override fun findById(id: UUID): RoundExecutionCatalogReadModel? = null
+            override fun findByIdWithAccessPolicy(id: UUID): RoundExecutionCatalogReadModel? = findById(id)
             override fun findProjectionById(id: UUID): RoundExecutionCatalogReadModelProjection? = null
             override fun save(projection: RoundExecutionCatalogReadModelProjection) = Unit
         }

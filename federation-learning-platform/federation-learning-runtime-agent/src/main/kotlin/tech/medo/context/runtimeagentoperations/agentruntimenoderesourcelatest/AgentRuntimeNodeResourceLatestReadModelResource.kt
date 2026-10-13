@@ -35,6 +35,6 @@ class AgentRuntimeNodeResourceLatestReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_runtime_node_resource_latest:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<AgentRuntimeNodeResourceLatestReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

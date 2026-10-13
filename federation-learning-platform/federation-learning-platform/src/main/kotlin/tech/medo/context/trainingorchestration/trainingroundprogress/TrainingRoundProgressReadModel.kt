@@ -201,6 +201,7 @@ interface TrainingRoundProgressReadModelRepository {
     fun findAll(pageable: Pageable): Page<TrainingRoundProgressReadModel>
     fun findAllByCriteria(criteria: TrainingRoundProgressReadModelCriteria?, pageable: Pageable): Page<TrainingRoundProgressReadModel>
     fun findById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModel?
+    fun findByIdWithAccessPolicy(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModel?
     fun findProjectionById(id: TrainingRoundProgressReadModelKey): TrainingRoundProgressReadModelProjection?
     fun findProjectionsByTrainingJobId(trainingJobId: UUID): List<TrainingRoundProgressReadModelProjection>
     fun findProjectionsByRoundId(roundId: UUID): List<TrainingRoundProgressReadModelProjection>

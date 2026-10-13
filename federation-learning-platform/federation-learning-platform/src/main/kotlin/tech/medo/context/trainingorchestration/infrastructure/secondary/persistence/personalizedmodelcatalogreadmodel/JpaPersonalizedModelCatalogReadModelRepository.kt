@@ -1,5 +1,6 @@
 package tech.medo.trainingorchestration.infrastructure.secondary.persistence.personalizedmodelcatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -8,6 +9,8 @@ import java.util.UUID;
 import java.math.BigDecimal;
 import tech.medo.trainingorchestration.domain.states.PersonalizedModelResultStateEnum;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.trainingorchestration.personalizedmodelcatalog.PersonalizedModelCatalogReadModel
 import tech.medo.trainingorchestration.personalizedmodelcatalog.PersonalizedModelCatalogReadModelCriteria
 import tech.medo.trainingorchestration.personalizedmodelcatalog.PersonalizedModelCatalogReadModelProjection
@@ -17,16 +20,20 @@ import tech.medo.trainingorchestration.personalizedmodelcatalog.toReadModel
 @Repository
 class JpaPersonalizedModelCatalogReadModelRepository(
     private val jpaRepository: SpringDataPersonalizedModelCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: PersonalizedModelCatalogReadModelQueryService
 ) : PersonalizedModelCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<PersonalizedModelCatalogReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: PersonalizedModelCatalogReadModelCriteria?, pageable: Pageable): Page<PersonalizedModelCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): PersonalizedModelCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): PersonalizedModelCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): PersonalizedModelCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -34,6 +41,21 @@ class JpaPersonalizedModelCatalogReadModelRepository(
     override fun save(projection: PersonalizedModelCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<PersonalizedModelCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("personalizedModelId"), id)
+        }
+
+    private fun accessSpecification(): Specification<PersonalizedModelCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "TrainingOrchestration",
+            readModelName = "PersonalizedModelCatalog",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun PersonalizedModelCatalogReadModelEntity.toProjection(): PersonalizedModelCatalogReadModelProjection =
         PersonalizedModelCatalogReadModelProjection().also {
@@ -56,6 +78,8 @@ class JpaPersonalizedModelCatalogReadModelRepository(
             it.personalizationProfileId = this@toProjection.personalizationProfileId
             it.personalizedModelArtifactRef = this@toProjection.personalizedModelArtifactRef
             it.personalizedModelArtifactDigest = this@toProjection.personalizedModelArtifactDigest
+            it.personalizedModelStorageLocation = this@toProjection.personalizedModelStorageLocation
+            it.platformManagedArtifactRef = this@toProjection.platformManagedArtifactRef
             it.personalizedMetricsArtifactRef = this@toProjection.personalizedMetricsArtifactRef
             it.personalizedAccuracy = this@toProjection.personalizedAccuracy
             it.personalizationLift = this@toProjection.personalizationLift
@@ -90,6 +114,8 @@ class JpaPersonalizedModelCatalogReadModelRepository(
             it.personalizationProfileId = this@toEntity.personalizationProfileId
             it.personalizedModelArtifactRef = this@toEntity.personalizedModelArtifactRef
             it.personalizedModelArtifactDigest = this@toEntity.personalizedModelArtifactDigest
+            it.personalizedModelStorageLocation = this@toEntity.personalizedModelStorageLocation
+            it.platformManagedArtifactRef = this@toEntity.platformManagedArtifactRef
             it.personalizedMetricsArtifactRef = this@toEntity.personalizedMetricsArtifactRef
             it.personalizedAccuracy = this@toEntity.personalizedAccuracy
             it.personalizationLift = this@toEntity.personalizationLift

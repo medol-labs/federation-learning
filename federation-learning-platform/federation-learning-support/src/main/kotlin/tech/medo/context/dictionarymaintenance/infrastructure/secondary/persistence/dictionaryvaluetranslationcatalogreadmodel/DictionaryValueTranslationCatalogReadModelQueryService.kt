@@ -1,7 +1,5 @@
 package tech.medo.dictionarymaintenance.infrastructure.secondary.persistence.dictionaryvaluetranslationcatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.dictionarymaintenance.dictionaryvaluetranslationcatalog.DictionaryValueTranslationCatalogReadModel
 import tech.medo.dictionarymaintenance.dictionaryvaluetranslationcatalog.DictionaryValueTranslationCatalogReadModelCriteria
 import tech.medo.dictionarymaintenance.dictionaryvaluetranslationcatalog.DictionaryValueTranslationCatalogReadModelProjection
-import tech.medo.dictionarymaintenance.dictionaryvaluetranslationcatalog.toReadModel
 
 @Service
-class DictionaryValueTranslationCatalogReadModelQueryService(
-    private val repository: SpringDataDictionaryValueTranslationCatalogReadModelRepository
-) : QueryService<DictionaryValueTranslationCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: DictionaryValueTranslationCatalogReadModelCriteria?, pageable: Pageable): Page<DictionaryValueTranslationCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: DictionaryValueTranslationCatalogReadModelCriteria?): Specification<DictionaryValueTranslationCatalogReadModelEntity> {
+class DictionaryValueTranslationCatalogReadModelQueryService() : QueryService<DictionaryValueTranslationCatalogReadModelEntity>() {
+    fun createSpecification(criteria: DictionaryValueTranslationCatalogReadModelCriteria?): Specification<DictionaryValueTranslationCatalogReadModelEntity> {
         var specification = Specification.where<DictionaryValueTranslationCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.dictionaryValueTranslationId?.let { specification = specification.and(buildSpecification(it, Function<Root<DictionaryValueTranslationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("dictionaryValueTranslationId") as JpaExpression<UUID>).cast(String::class.java) })) }

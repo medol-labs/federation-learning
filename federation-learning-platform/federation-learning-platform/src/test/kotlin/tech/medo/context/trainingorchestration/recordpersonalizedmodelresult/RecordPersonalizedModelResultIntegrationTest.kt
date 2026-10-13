@@ -45,6 +45,8 @@ class RecordPersonalizedModelResultIntegrationTest(
             personalizationProfileId = null,
             personalizedModelArtifactRef = "",
             personalizedModelArtifactDigest = "",
+            personalizedModelStorageLocation = "",
+            platformManagedArtifactRef = null,
             personalizedMetricsArtifactRef = null,
             personalizedAccuracy = null,
             personalizationLift = null

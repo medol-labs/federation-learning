@@ -63,6 +63,7 @@ interface ServiceAccountApiTokenCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<ServiceAccountApiTokenCatalogReadModel>
     fun findAllByCriteria(criteria: ServiceAccountApiTokenCatalogReadModelCriteria?, pageable: Pageable): Page<ServiceAccountApiTokenCatalogReadModel>
     fun findById(id: UUID): ServiceAccountApiTokenCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): ServiceAccountApiTokenCatalogReadModel?
     fun findProjectionById(id: UUID): ServiceAccountApiTokenCatalogReadModelProjection?
     fun save(projection: ServiceAccountApiTokenCatalogReadModelProjection)
 }

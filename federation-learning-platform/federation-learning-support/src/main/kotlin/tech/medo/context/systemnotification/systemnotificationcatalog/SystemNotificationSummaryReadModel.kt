@@ -78,6 +78,7 @@ interface SystemNotificationSummaryReadModelRepository {
     fun findAll(pageable: Pageable): Page<SystemNotificationSummaryReadModel>
     fun findAllByCriteria(criteria: SystemNotificationSummaryReadModelCriteria?, pageable: Pageable): Page<SystemNotificationSummaryReadModel>
     fun findById(id: String): SystemNotificationSummaryReadModel?
+    fun findByIdWithAccessPolicy(id: String): SystemNotificationSummaryReadModel?
     fun findProjectionById(id: String): SystemNotificationSummaryReadModelProjection?
     fun save(projection: SystemNotificationSummaryReadModelProjection)
 }

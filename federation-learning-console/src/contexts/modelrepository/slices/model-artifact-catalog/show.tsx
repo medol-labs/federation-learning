@@ -121,6 +121,16 @@ export const ModelArtifactCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.personalizedModelStorageLocation.label", "Personalized Model Storage Location")}</h4>
+              {renderFieldOverride(frontendComposition, "field:model-artifact-catalog:display:personalizedModelStorageLocation", { value: record?.personalizedModelStorageLocation, record, resource: "model-artifact-catalog", field: "personalizedModelStorageLocation", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizedModelStorageLocation, t, dictionaryLabel, undefined, "PERSONALIZED_MODEL_STORAGE_LOCATION")}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.platformManagedArtifactRef.label", "Platform Managed Artifact Ref")}</h4>
+              {renderFieldOverride(frontendComposition, "field:model-artifact-catalog:display:platformManagedArtifactRef", { value: record?.platformManagedArtifactRef, record, resource: "model-artifact-catalog", field: "platformManagedArtifactRef", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.platformManagedArtifactRef, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.model_artifact_catalog.fields.trainingJobId.label", "Training Job Id")}</h4>
               {renderFieldOverride(frontendComposition, "field:model-artifact-catalog:display:trainingJobId", { value: record?.trainingJobId, record, resource: "model-artifact-catalog", field: "trainingJobId", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.trainingJobId, t, dictionaryLabel, undefined)}</p>}
             </div>

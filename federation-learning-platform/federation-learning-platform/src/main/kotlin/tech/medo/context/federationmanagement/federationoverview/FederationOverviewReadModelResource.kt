@@ -35,6 +35,6 @@ class FederationOverviewReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('federation_overview:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<FederationOverviewReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

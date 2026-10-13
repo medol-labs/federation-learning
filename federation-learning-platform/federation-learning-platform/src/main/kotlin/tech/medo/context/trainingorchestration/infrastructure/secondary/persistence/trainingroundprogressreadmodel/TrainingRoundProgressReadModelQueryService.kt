@@ -1,7 +1,5 @@
 package tech.medo.trainingorchestration.infrastructure.secondary.persistence.trainingroundprogressreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -17,20 +15,14 @@ import tech.medo.trainingorchestration.domain.states.TrainingRoundStateEnum
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.math.BigDecimal
-import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModel
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelCriteria
 import tech.medo.trainingorchestration.trainingroundprogress.TrainingRoundProgressReadModelProjection
-import tech.medo.trainingorchestration.trainingroundprogress.toReadModel
 
 @Service
 class TrainingRoundProgressReadModelQueryService(
-    private val repository: SpringDataTrainingRoundProgressReadModelRepository,
     private val objectMapper: com.fasterxml.jackson.databind.ObjectMapper
 ) : QueryService<TrainingRoundProgressReadModelEntity>() {
-    fun findByCriteria(criteria: TrainingRoundProgressReadModelCriteria?, pageable: Pageable): Page<TrainingRoundProgressReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: TrainingRoundProgressReadModelCriteria?): Specification<TrainingRoundProgressReadModelEntity> {
+    fun createSpecification(criteria: TrainingRoundProgressReadModelCriteria?): Specification<TrainingRoundProgressReadModelEntity> {
         var specification = Specification.where<TrainingRoundProgressReadModelEntity>(null)
         if (criteria != null) {
             criteria.trainingJobId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingRoundProgressReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("trainingJobId") as JpaExpression<UUID>).cast(String::class.java) })) }

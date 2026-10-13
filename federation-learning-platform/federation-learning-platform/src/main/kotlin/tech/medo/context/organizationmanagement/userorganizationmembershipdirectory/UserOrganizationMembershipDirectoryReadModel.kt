@@ -64,6 +64,7 @@ interface UserOrganizationMembershipDirectoryReadModelRepository {
     fun findAll(pageable: Pageable): Page<UserOrganizationMembershipDirectoryReadModel>
     fun findAllByCriteria(criteria: UserOrganizationMembershipDirectoryReadModelCriteria?, pageable: Pageable): Page<UserOrganizationMembershipDirectoryReadModel>
     fun findById(id: UUID): UserOrganizationMembershipDirectoryReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): UserOrganizationMembershipDirectoryReadModel?
     fun findProjectionById(id: UUID): UserOrganizationMembershipDirectoryReadModelProjection?
     fun save(projection: UserOrganizationMembershipDirectoryReadModelProjection)
 }

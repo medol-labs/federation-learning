@@ -1,5 +1,6 @@
 package tech.medo.runtimemonitoring.infrastructure.secondary.persistence.runtimenoderesourcelatestreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -9,6 +10,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.runtimemonitoring.runtimenoderesourcelatest.RuntimeNodeResourceLatestReadModel
 import tech.medo.runtimemonitoring.runtimenoderesourcelatest.RuntimeNodeResourceLatestReadModelCriteria
 import tech.medo.runtimemonitoring.runtimenoderesourcelatest.RuntimeNodeResourceLatestReadModelProjection
@@ -18,16 +21,20 @@ import tech.medo.runtimemonitoring.runtimenoderesourcelatest.toReadModel
 @Repository
 class JpaRuntimeNodeResourceLatestReadModelRepository(
     private val jpaRepository: SpringDataRuntimeNodeResourceLatestReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: RuntimeNodeResourceLatestReadModelQueryService
 ) : RuntimeNodeResourceLatestReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeNodeResourceLatestReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: RuntimeNodeResourceLatestReadModelCriteria?, pageable: Pageable): Page<RuntimeNodeResourceLatestReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): RuntimeNodeResourceLatestReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): RuntimeNodeResourceLatestReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): RuntimeNodeResourceLatestReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -35,6 +42,21 @@ class JpaRuntimeNodeResourceLatestReadModelRepository(
     override fun save(projection: RuntimeNodeResourceLatestReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<RuntimeNodeResourceLatestReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("nodeId"), id)
+        }
+
+    private fun accessSpecification(): Specification<RuntimeNodeResourceLatestReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "RuntimeMonitoring",
+            readModelName = "RuntimeNodeResourceLatest",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun RuntimeNodeResourceLatestReadModelEntity.toProjection(): RuntimeNodeResourceLatestReadModelProjection =
         RuntimeNodeResourceLatestReadModelProjection().also {

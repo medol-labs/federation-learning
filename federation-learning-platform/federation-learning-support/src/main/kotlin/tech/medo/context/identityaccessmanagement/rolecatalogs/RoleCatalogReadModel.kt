@@ -50,6 +50,7 @@ interface RoleCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RoleCatalogReadModel>
     fun findAllByCriteria(criteria: RoleCatalogReadModelCriteria?, pageable: Pageable): Page<RoleCatalogReadModel>
     fun findById(id: UUID): RoleCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RoleCatalogReadModel?
     fun findProjectionById(id: UUID): RoleCatalogReadModelProjection?
     fun save(projection: RoleCatalogReadModelProjection)
 }

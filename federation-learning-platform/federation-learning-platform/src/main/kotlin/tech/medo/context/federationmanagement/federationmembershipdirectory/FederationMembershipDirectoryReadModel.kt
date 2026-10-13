@@ -67,6 +67,7 @@ interface FederationMembershipDirectoryReadModelRepository {
     fun findAll(pageable: Pageable): Page<FederationMembershipDirectoryReadModel>
     fun findAllByCriteria(criteria: FederationMembershipDirectoryReadModelCriteria?, pageable: Pageable): Page<FederationMembershipDirectoryReadModel>
     fun findById(id: FederationMembershipDirectoryReadModelKey): FederationMembershipDirectoryReadModel?
+    fun findByIdWithAccessPolicy(id: FederationMembershipDirectoryReadModelKey): FederationMembershipDirectoryReadModel?
     fun findProjectionById(id: FederationMembershipDirectoryReadModelKey): FederationMembershipDirectoryReadModelProjection?
     fun findProjectionsByFederationId(federationId: UUID): List<FederationMembershipDirectoryReadModelProjection>
     fun findProjectionsByOrganizationId(organizationId: UUID): List<FederationMembershipDirectoryReadModelProjection>

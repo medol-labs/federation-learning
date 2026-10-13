@@ -19,10 +19,6 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("automation-dataset-governance-record-runtime-dataset-reprofiled-metadata").notCustomized()
 
     @Bean
-    fun automationModelLifecycleRegisterCandidateModelEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("automation-model-lifecycle-register-candidate-model").notCustomized()
-
-    @Bean
     fun automationModelRepositoryRegisterFederatedModelArtifactEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("automation-model-repository-register-federated-model-artifact").notCustomized()
 
@@ -37,6 +33,18 @@ class AxonEventProcessorConfiguration {
     @Bean
     fun automationRuntimeGovernanceDetectRuntimeCapabilitiesEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("automation-runtime-governance-detect-runtime-capabilities").notCustomized()
+
+    @Bean
+    fun automationRuntimeMonitoringDetectRuntimeAgentOfflineEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("automation-runtime-monitoring-detect-runtime-agent-offline").notCustomized()
+
+    @Bean
+    fun automationRuntimeMonitoringDetectRuntimeNodeResourcePressureEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("automation-runtime-monitoring-detect-runtime-node-resource-pressure").notCustomized()
+
+    @Bean
+    fun automationRuntimeMonitoringMarkRuntimeAgentRecoveredEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("automation-runtime-monitoring-mark-runtime-agent-recovered").notCustomized()
 
     @Bean
     fun automationRuntimeMonitoringRaiseTrainingAlertEventProcessorDefinition(): EventProcessorDefinition =
@@ -151,10 +159,6 @@ class AxonEventProcessorConfiguration {
         EventProcessorDefinition.pooledStreamingMatching("integration-dataset-governance-record-runtime-dataset-reprofiled-metadata").notCustomized()
 
     @Bean
-    fun integrationModelLifecycleRegisterCandidateModelEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("integration-model-lifecycle-register-candidate-model").notCustomized()
-
-    @Bean
     fun integrationModelRepositoryRegisterFederatedModelArtifactEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("integration-model-repository-register-federated-model-artifact").notCustomized()
 
@@ -169,6 +173,18 @@ class AxonEventProcessorConfiguration {
     @Bean
     fun integrationRuntimeGovernanceDetectRuntimeCapabilitiesEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("integration-runtime-governance-detect-runtime-capabilities").notCustomized()
+
+    @Bean
+    fun integrationRuntimeMonitoringDetectRuntimeAgentOfflineEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("integration-runtime-monitoring-detect-runtime-agent-offline").notCustomized()
+
+    @Bean
+    fun integrationRuntimeMonitoringDetectRuntimeNodeResourcePressureEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("integration-runtime-monitoring-detect-runtime-node-resource-pressure").notCustomized()
+
+    @Bean
+    fun integrationRuntimeMonitoringMarkRuntimeAgentRecoveredEventProcessorDefinition(): EventProcessorDefinition =
+        EventProcessorDefinition.pooledStreamingMatching("integration-runtime-monitoring-mark-runtime-agent-recovered").notCustomized()
 
     @Bean
     fun integrationRuntimeMonitoringRaiseTrainingAlertEventProcessorDefinition(): EventProcessorDefinition =
@@ -293,10 +309,6 @@ class AxonEventProcessorConfiguration {
     @Bean
     fun readmodelModelArtifactCatalogEventProcessorDefinition(): EventProcessorDefinition =
         EventProcessorDefinition.pooledStreamingMatching("readmodel-model-artifact-catalog").notCustomized()
-
-    @Bean
-    fun readmodelModelCatalogEventProcessorDefinition(): EventProcessorDefinition =
-        EventProcessorDefinition.pooledStreamingMatching("readmodel-model-catalog").notCustomized()
 
     @Bean
     fun readmodelOrganizationDirectoryEventProcessorDefinition(): EventProcessorDefinition =

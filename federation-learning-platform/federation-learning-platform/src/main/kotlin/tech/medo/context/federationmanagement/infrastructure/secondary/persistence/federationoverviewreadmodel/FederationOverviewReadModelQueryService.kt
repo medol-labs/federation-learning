@@ -1,7 +1,5 @@
 package tech.medo.federationmanagement.infrastructure.secondary.persistence.federationoverviewreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -13,19 +11,12 @@ import java.util.function.Function
 import java.time.LocalDateTime
 import java.util.UUID
 import tech.medo.federationmanagement.domain.states.FederationStateEnum
-import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModel
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModelCriteria
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModelProjection
-import tech.medo.federationmanagement.federationoverview.toReadModel
 
 @Service
-class FederationOverviewReadModelQueryService(
-    private val repository: SpringDataFederationOverviewReadModelRepository
-) : QueryService<FederationOverviewReadModelEntity>() {
-    fun findByCriteria(criteria: FederationOverviewReadModelCriteria?, pageable: Pageable): Page<FederationOverviewReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: FederationOverviewReadModelCriteria?): Specification<FederationOverviewReadModelEntity> {
+class FederationOverviewReadModelQueryService() : QueryService<FederationOverviewReadModelEntity>() {
+    fun createSpecification(criteria: FederationOverviewReadModelCriteria?): Specification<FederationOverviewReadModelEntity> {
         var specification = Specification.where<FederationOverviewReadModelEntity>(null)
         if (criteria != null) {
             criteria.federationId?.let { specification = specification.and(buildSpecification(it, Function<Root<FederationOverviewReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("federationId") as JpaExpression<UUID>).cast(String::class.java) })) }

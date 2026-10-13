@@ -35,6 +35,6 @@ class AgentOrganizationDirectoryReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_organization_directory:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<AgentOrganizationDirectoryReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

@@ -1,7 +1,5 @@
 package tech.medo.secureaggregation.infrastructure.secondary.persistence.secureaggregationsessioncatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -15,20 +13,14 @@ import java.util.UUID
 import tech.medo.secureaggregation.domain.states.SecureAggregationSessionStateEnum
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModel
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModelCriteria
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModelProjection
-import tech.medo.secureaggregation.secureaggregationsessioncatalog.toReadModel
 
 @Service
 class SecureAggregationSessionCatalogReadModelQueryService(
-    private val repository: SpringDataSecureAggregationSessionCatalogReadModelRepository,
     private val objectMapper: com.fasterxml.jackson.databind.ObjectMapper
 ) : QueryService<SecureAggregationSessionCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: SecureAggregationSessionCatalogReadModelCriteria?, pageable: Pageable): Page<SecureAggregationSessionCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: SecureAggregationSessionCatalogReadModelCriteria?): Specification<SecureAggregationSessionCatalogReadModelEntity> {
+    fun createSpecification(criteria: SecureAggregationSessionCatalogReadModelCriteria?): Specification<SecureAggregationSessionCatalogReadModelEntity> {
         var specification = Specification.where<SecureAggregationSessionCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.secureAggregationSessionId?.let { specification = specification.and(buildSpecification(it, Function<Root<SecureAggregationSessionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("secureAggregationSessionId") as JpaExpression<UUID>).cast(String::class.java) })) }

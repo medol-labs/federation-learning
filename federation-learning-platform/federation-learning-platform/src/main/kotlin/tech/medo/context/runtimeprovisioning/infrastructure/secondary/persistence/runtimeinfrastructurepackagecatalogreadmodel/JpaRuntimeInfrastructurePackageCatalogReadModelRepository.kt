@@ -1,5 +1,6 @@
 package tech.medo.runtimeprovisioning.infrastructure.secondary.persistence.runtimeinfrastructurepackagecatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Repository
 import java.util.UUID;
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructurePackageStateEnum;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModel
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModelCriteria
 import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.RuntimeInfrastructurePackageCatalogReadModelProjection
@@ -16,16 +19,20 @@ import tech.medo.runtimeprovisioning.runtimeinfrastructurepackagecatalog.toReadM
 @Repository
 class JpaRuntimeInfrastructurePackageCatalogReadModelRepository(
     private val jpaRepository: SpringDataRuntimeInfrastructurePackageCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: RuntimeInfrastructurePackageCatalogReadModelQueryService
 ) : RuntimeInfrastructurePackageCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeInfrastructurePackageCatalogReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: RuntimeInfrastructurePackageCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeInfrastructurePackageCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): RuntimeInfrastructurePackageCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): RuntimeInfrastructurePackageCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): RuntimeInfrastructurePackageCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -33,6 +40,21 @@ class JpaRuntimeInfrastructurePackageCatalogReadModelRepository(
     override fun save(projection: RuntimeInfrastructurePackageCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<RuntimeInfrastructurePackageCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("runtimeInfrastructurePackageId"), id)
+        }
+
+    private fun accessSpecification(): Specification<RuntimeInfrastructurePackageCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "RuntimeProvisioning",
+            readModelName = "RuntimeInfrastructurePackageCatalog",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun RuntimeInfrastructurePackageCatalogReadModelEntity.toProjection(): RuntimeInfrastructurePackageCatalogReadModelProjection =
         RuntimeInfrastructurePackageCatalogReadModelProjection().also {

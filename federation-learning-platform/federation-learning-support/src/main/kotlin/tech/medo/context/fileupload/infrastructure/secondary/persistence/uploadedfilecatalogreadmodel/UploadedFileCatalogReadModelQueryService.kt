@@ -1,7 +1,5 @@
 package tech.medo.fileupload.infrastructure.secondary.persistence.uploadedfilecatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -15,19 +13,12 @@ import java.util.UUID
 import tech.medo.fileupload.domain.states.UploadedFileStateEnum
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.fileupload.uploadedfilecatalog.UploadedFileCatalogReadModel
 import tech.medo.fileupload.uploadedfilecatalog.UploadedFileCatalogReadModelCriteria
 import tech.medo.fileupload.uploadedfilecatalog.UploadedFileCatalogReadModelProjection
-import tech.medo.fileupload.uploadedfilecatalog.toReadModel
 
 @Service
-class UploadedFileCatalogReadModelQueryService(
-    private val repository: SpringDataUploadedFileCatalogReadModelRepository
-) : QueryService<UploadedFileCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: UploadedFileCatalogReadModelCriteria?, pageable: Pageable): Page<UploadedFileCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: UploadedFileCatalogReadModelCriteria?): Specification<UploadedFileCatalogReadModelEntity> {
+class UploadedFileCatalogReadModelQueryService() : QueryService<UploadedFileCatalogReadModelEntity>() {
+    fun createSpecification(criteria: UploadedFileCatalogReadModelCriteria?): Specification<UploadedFileCatalogReadModelEntity> {
         var specification = Specification.where<UploadedFileCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.fileId?.let { specification = specification.and(buildSpecification(it, Function<Root<UploadedFileCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("fileId") as JpaExpression<UUID>).cast(String::class.java) })) }

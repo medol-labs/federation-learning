@@ -58,6 +58,7 @@ interface AgentFeatureSchemaCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentFeatureSchemaCatalogReadModel>
     fun findAllByCriteria(criteria: AgentFeatureSchemaCatalogReadModelCriteria?, pageable: Pageable): Page<AgentFeatureSchemaCatalogReadModel>
     fun findById(id: UUID): AgentFeatureSchemaCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): AgentFeatureSchemaCatalogReadModel?
     fun findProjectionById(id: UUID): AgentFeatureSchemaCatalogReadModelProjection?
     fun save(projection: AgentFeatureSchemaCatalogReadModelProjection)
 }

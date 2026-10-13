@@ -1,7 +1,5 @@
 package tech.medo.runtimeprovisioning.infrastructure.secondary.persistence.runtimeinstallationplancatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimeprovisioning.runtimeinstallationplancatalog.RuntimeInstallationPlanCatalogReadModel
 import tech.medo.runtimeprovisioning.runtimeinstallationplancatalog.RuntimeInstallationPlanCatalogReadModelCriteria
 import tech.medo.runtimeprovisioning.runtimeinstallationplancatalog.RuntimeInstallationPlanCatalogReadModelProjection
-import tech.medo.runtimeprovisioning.runtimeinstallationplancatalog.toReadModel
 
 @Service
-class RuntimeInstallationPlanCatalogReadModelQueryService(
-    private val repository: SpringDataRuntimeInstallationPlanCatalogReadModelRepository
-) : QueryService<RuntimeInstallationPlanCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: RuntimeInstallationPlanCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeInstallationPlanCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: RuntimeInstallationPlanCatalogReadModelCriteria?): Specification<RuntimeInstallationPlanCatalogReadModelEntity> {
+class RuntimeInstallationPlanCatalogReadModelQueryService() : QueryService<RuntimeInstallationPlanCatalogReadModelEntity>() {
+    fun createSpecification(criteria: RuntimeInstallationPlanCatalogReadModelCriteria?): Specification<RuntimeInstallationPlanCatalogReadModelEntity> {
         var specification = Specification.where<RuntimeInstallationPlanCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.runtimeInstallationPlanId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationPlanCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInstallationPlanId") as JpaExpression<UUID>).cast(String::class.java) })) }

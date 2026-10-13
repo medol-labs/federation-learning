@@ -33,6 +33,8 @@ type ModelArtifactCatalogRecord = {
   modelArtifactDigest: string;
   modelSignatureUri?: string;
   modelSizeBytes?: number;
+  personalizedModelStorageLocation?: string;
+  platformManagedArtifactRef?: string;
   trainingJobId?: string;
   roundId?: string;
   trainingJobObjective?: string;
@@ -449,6 +451,59 @@ export const ModelArtifactCatalogList = () => {
             },
           ) ?? String(getValue() ?? "-"),
       }),
+      columnHelper.accessor("personalizedModelStorageLocation", {
+        id: "personalizedModelStorageLocation",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.personalizedModelStorageLocation.label", "Personalized Model Storage Location")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.personalizedModelStorageLocation.label", "Personalized Model Storage Location"),
+          dictionaryCode: "PERSONALIZED_MODEL_STORAGE_LOCATION",
+          placeholder: "Enter Personalized Model Storage Location",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:personalizedModelStorageLocation",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "personalizedModelStorageLocation",
+              view: "display",
+              compact: true,
+            },
+          ) ?? formatValue(getValue(), t, dictionaryLabel, undefined, "PERSONALIZED_MODEL_STORAGE_LOCATION"),
+      }),
+      columnHelper.accessor("platformManagedArtifactRef", {
+        id: "platformManagedArtifactRef",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={t("resources.model_artifact_catalog.fields.platformManagedArtifactRef.label", "Platform Managed Artifact Ref")} />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        meta: {
+          label: t("resources.model_artifact_catalog.fields.platformManagedArtifactRef.label", "Platform Managed Artifact Ref"),
+          placeholder: "Enter Platform Managed Artifact Ref",
+          variant: "text",
+        },
+        cell: ({ getValue, row }) =>
+          renderFieldOverride<ModelArtifactCatalogRecord>(
+            frontendComposition,
+            "field:model-artifact-catalog:display:platformManagedArtifactRef",
+            {
+              value: getValue(),
+              record: row.original,
+              resource: "model-artifact-catalog",
+              field: "platformManagedArtifactRef",
+              view: "display",
+              compact: true,
+            },
+          ) ?? String(getValue() ?? "-"),
+      }),
       columnHelper.accessor("trainingJobId", {
         id: "trainingJobId",
         header: ({ column }) => (
@@ -743,6 +798,7 @@ export const ModelArtifactCatalogList = () => {
                       modelArtifactUri: row.original.modelArtifactUri,
                       modelFormat: row.original.modelFormat,
                       modelSignatureUri: row.original.modelSignatureUri,
+                      personalizedModelStorageLocation: row.original.personalizedModelStorageLocation,
                       trainingJobId: row.original.trainingJobId,
                       roundId: row.original.roundId,
                       personalizationTargetId: row.original.personalizationTargetId,
@@ -780,7 +836,7 @@ export const ModelArtifactCatalogList = () => {
         tableName: "model_artifact_catalog_read_model_entity",
         idField: "modelId",
         idFields: ["modelId"],
-        queryFields: ["modelId","modelName","modelPlugin","modelVersion","modelDescription","sourceType","modelScope","modelArtifactUri","modelRegistryRef","modelFormat","modelArtifactDigest","modelSignatureUri","modelSizeBytes","trainingJobId","roundId","trainingJobObjective","personalizationMode","personalizationTargetType","personalizationTargetId","personalizationCohortId","baseGlobalModelId","state","registeredAt"],
+        queryFields: ["modelId","modelName","modelPlugin","modelVersion","modelDescription","sourceType","modelScope","modelArtifactUri","modelRegistryRef","modelFormat","modelArtifactDigest","modelSignatureUri","modelSizeBytes","personalizedModelStorageLocation","platformManagedArtifactRef","trainingJobId","roundId","trainingJobObjective","personalizationMode","personalizationTargetType","personalizationTargetId","personalizationCohortId","baseGlobalModelId","state","registeredAt"],
         label: t("resources.model_artifact_catalog.label", "Model Artifact Catalog"),
         aggregateRoute: "modelartifact",
         queryRoute: "modelartifactcatalog",

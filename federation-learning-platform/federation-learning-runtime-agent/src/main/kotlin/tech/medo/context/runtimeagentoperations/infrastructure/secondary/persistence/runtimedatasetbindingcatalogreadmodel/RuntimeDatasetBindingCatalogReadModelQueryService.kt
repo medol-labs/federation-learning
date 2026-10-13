@@ -1,7 +1,5 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.runtimedatasetbindingcatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModel
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.RuntimeDatasetBindingCatalogReadModelProjection
-import tech.medo.runtimeagentoperations.runtimedatasetbindingcatalog.toReadModel
 
 @Service
-class RuntimeDatasetBindingCatalogReadModelQueryService(
-    private val repository: SpringDataRuntimeDatasetBindingCatalogReadModelRepository
-) : QueryService<RuntimeDatasetBindingCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: RuntimeDatasetBindingCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeDatasetBindingCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: RuntimeDatasetBindingCatalogReadModelCriteria?): Specification<RuntimeDatasetBindingCatalogReadModelEntity> {
+class RuntimeDatasetBindingCatalogReadModelQueryService() : QueryService<RuntimeDatasetBindingCatalogReadModelEntity>() {
+    fun createSpecification(criteria: RuntimeDatasetBindingCatalogReadModelCriteria?): Specification<RuntimeDatasetBindingCatalogReadModelEntity> {
         var specification = Specification.where<RuntimeDatasetBindingCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.runtimeDatasetBindingId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeDatasetBindingCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeDatasetBindingId") as JpaExpression<UUID>).cast(String::class.java) })) }

@@ -1,5 +1,6 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.agentruntimeidentitycatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -9,6 +10,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.runtimeagentoperations.agentruntimeidentitycatalog.AgentRuntimeIdentityCatalogReadModel
 import tech.medo.runtimeagentoperations.agentruntimeidentitycatalog.AgentRuntimeIdentityCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.agentruntimeidentitycatalog.AgentRuntimeIdentityCatalogReadModelProjection
@@ -18,16 +21,20 @@ import tech.medo.runtimeagentoperations.agentruntimeidentitycatalog.toReadModel
 @Repository
 class JpaAgentRuntimeIdentityCatalogReadModelRepository(
     private val jpaRepository: SpringDataAgentRuntimeIdentityCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: AgentRuntimeIdentityCatalogReadModelQueryService
 ) : AgentRuntimeIdentityCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<AgentRuntimeIdentityCatalogReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: AgentRuntimeIdentityCatalogReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeIdentityCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): AgentRuntimeIdentityCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): AgentRuntimeIdentityCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): AgentRuntimeIdentityCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -35,6 +42,21 @@ class JpaAgentRuntimeIdentityCatalogReadModelRepository(
     override fun save(projection: AgentRuntimeIdentityCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<AgentRuntimeIdentityCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("runtimeId"), id)
+        }
+
+    private fun accessSpecification(): Specification<AgentRuntimeIdentityCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "RuntimeAgentOperations",
+            readModelName = "AgentRuntimeIdentityCatalog",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun AgentRuntimeIdentityCatalogReadModelEntity.toProjection(): AgentRuntimeIdentityCatalogReadModelProjection =
         AgentRuntimeIdentityCatalogReadModelProjection().also {

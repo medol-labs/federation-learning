@@ -32,6 +32,8 @@ class ModelArtifactCatalogReadModelEntity : MetadataProjection {
     var modelArtifactDigest: String? = null
     var modelSignatureUri: String? = null
     var modelSizeBytes: Int? = null
+    var personalizedModelStorageLocation: String? = null
+    var platformManagedArtifactRef: String? = null
     var trainingJobId: UUID? = null
     var roundId: UUID? = null
     var trainingJobObjective: String? = null

@@ -99,6 +99,7 @@ interface AgentRuntimeNodeResourceLatestReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentRuntimeNodeResourceLatestReadModel>
     fun findAllByCriteria(criteria: AgentRuntimeNodeResourceLatestReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeNodeResourceLatestReadModel>
     fun findById(id: UUID): AgentRuntimeNodeResourceLatestReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): AgentRuntimeNodeResourceLatestReadModel?
     fun findProjectionById(id: UUID): AgentRuntimeNodeResourceLatestReadModelProjection?
     fun save(projection: AgentRuntimeNodeResourceLatestReadModelProjection)
 }

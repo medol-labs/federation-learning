@@ -1,7 +1,5 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.rolepermissiongrantcatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -12,19 +10,12 @@ import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
 import java.util.UUID
-import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermissionGrantCatalogReadModel
 import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermissionGrantCatalogReadModelCriteria
 import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermissionGrantCatalogReadModelProjection
-import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.toReadModel
 
 @Service
-class RolePermissionGrantCatalogReadModelQueryService(
-    private val repository: SpringDataRolePermissionGrantCatalogReadModelRepository
-) : QueryService<RolePermissionGrantCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: RolePermissionGrantCatalogReadModelCriteria?, pageable: Pageable): Page<RolePermissionGrantCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: RolePermissionGrantCatalogReadModelCriteria?): Specification<RolePermissionGrantCatalogReadModelEntity> {
+class RolePermissionGrantCatalogReadModelQueryService() : QueryService<RolePermissionGrantCatalogReadModelEntity>() {
+    fun createSpecification(criteria: RolePermissionGrantCatalogReadModelCriteria?): Specification<RolePermissionGrantCatalogReadModelEntity> {
         var specification = Specification.where<RolePermissionGrantCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.roleId?.let { specification = specification.and(buildSpecification(it, Function<Root<RolePermissionGrantCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("roleId") as JpaExpression<UUID>).cast(String::class.java) })) }

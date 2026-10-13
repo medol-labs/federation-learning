@@ -1,5 +1,6 @@
 package tech.medo.federationmanagement.infrastructure.secondary.persistence.federationoverviewreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Repository
 import java.util.UUID;
 import tech.medo.federationmanagement.domain.states.FederationStateEnum;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModel
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModelCriteria
 import tech.medo.federationmanagement.federationoverview.FederationOverviewReadModelProjection
@@ -16,16 +19,20 @@ import tech.medo.federationmanagement.federationoverview.toReadModel
 @Repository
 class JpaFederationOverviewReadModelRepository(
     private val jpaRepository: SpringDataFederationOverviewReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: FederationOverviewReadModelQueryService
 ) : FederationOverviewReadModelRepository {
     override fun findAll(pageable: Pageable): Page<FederationOverviewReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: FederationOverviewReadModelCriteria?, pageable: Pageable): Page<FederationOverviewReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): FederationOverviewReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): FederationOverviewReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): FederationOverviewReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -33,6 +40,21 @@ class JpaFederationOverviewReadModelRepository(
     override fun save(projection: FederationOverviewReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<FederationOverviewReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("federationId"), id)
+        }
+
+    private fun accessSpecification(): Specification<FederationOverviewReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "FederationManagement",
+            readModelName = "FederationOverview",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun FederationOverviewReadModelEntity.toProjection(): FederationOverviewReadModelProjection =
         FederationOverviewReadModelProjection().also {

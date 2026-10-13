@@ -1,5 +1,6 @@
 package tech.medo.runtimemonitoring.infrastructure.secondary.persistence.runtimehealthdashboardreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.runtimemonitoring.runtimehealthdashboard.RuntimeHealthDashboardReadModel
 import tech.medo.runtimemonitoring.runtimehealthdashboard.RuntimeHealthDashboardReadModelCriteria
 import tech.medo.runtimemonitoring.runtimehealthdashboard.RuntimeHealthDashboardReadModelProjection
@@ -19,16 +22,20 @@ import tech.medo.runtimemonitoring.runtimehealthdashboard.toReadModel
 @Repository
 class JpaRuntimeHealthDashboardReadModelRepository(
     private val jpaRepository: SpringDataRuntimeHealthDashboardReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: RuntimeHealthDashboardReadModelQueryService
 ) : RuntimeHealthDashboardReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeHealthDashboardReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: RuntimeHealthDashboardReadModelCriteria?, pageable: Pageable): Page<RuntimeHealthDashboardReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): RuntimeHealthDashboardReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): RuntimeHealthDashboardReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): RuntimeHealthDashboardReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -36,6 +43,21 @@ class JpaRuntimeHealthDashboardReadModelRepository(
     override fun save(projection: RuntimeHealthDashboardReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<RuntimeHealthDashboardReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("nodeId"), id)
+        }
+
+    private fun accessSpecification(): Specification<RuntimeHealthDashboardReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "RuntimeMonitoring",
+            readModelName = "RuntimeHealthDashboard",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun RuntimeHealthDashboardReadModelEntity.toProjection(): RuntimeHealthDashboardReadModelProjection =
         RuntimeHealthDashboardReadModelProjection().also {

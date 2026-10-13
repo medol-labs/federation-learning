@@ -1,11 +1,14 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.userroleassignmentcatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssignmentCatalogReadModel
 import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssignmentCatalogReadModelCriteria
 import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssignmentCatalogReadModelKey
@@ -16,16 +19,20 @@ import tech.medo.identityaccessmanagement.userroleassignmentcatalog.toReadModel
 @Repository
 class JpaUserRoleAssignmentCatalogReadModelRepository(
     private val jpaRepository: SpringDataUserRoleAssignmentCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: UserRoleAssignmentCatalogReadModelQueryService
 ) : UserRoleAssignmentCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<UserRoleAssignmentCatalogReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: UserRoleAssignmentCatalogReadModelCriteria?, pageable: Pageable): Page<UserRoleAssignmentCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UserRoleAssignmentCatalogReadModelKey): UserRoleAssignmentCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UserRoleAssignmentCatalogReadModelKey): UserRoleAssignmentCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UserRoleAssignmentCatalogReadModelKey): UserRoleAssignmentCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -39,6 +46,24 @@ class JpaUserRoleAssignmentCatalogReadModelRepository(
     override fun save(projection: UserRoleAssignmentCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UserRoleAssignmentCatalogReadModelKey): Specification<UserRoleAssignmentCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.and(
+                criteriaBuilder.equal(root.get<UUID>("userAccountId"), id.userAccountId),
+                criteriaBuilder.equal(root.get<String>("roleCode"), id.roleCode)
+            )
+        }
+
+    private fun accessSpecification(): Specification<UserRoleAssignmentCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "IdentityAccessManagement",
+            readModelName = "UserRoleAssignmentCatalog",
+            policy = ReadModelAccessPolicy(
+            name = "IdentityAccessManagementPublicAccess",
+            fields = emptyList<String>()
+        )
+        )
 
     private fun UserRoleAssignmentCatalogReadModelEntity.toProjection(): UserRoleAssignmentCatalogReadModelProjection =
         UserRoleAssignmentCatalogReadModelProjection().also {

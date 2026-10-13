@@ -35,6 +35,6 @@ class TrainingJobDashboardReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('training_job_dashboard:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<TrainingJobDashboardReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

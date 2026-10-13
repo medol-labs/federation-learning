@@ -68,7 +68,7 @@ open class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
         repository.save(entity)
 
         outbox.appendReadModel(
-            sourceContext = "RuntimeProvisioning",
+            sourceContext = "RuntimeGovernance",
             sourceReadModel = "RuntimeIdentityCatalog",
             readModelKey = event.runtimeId.toString(),
             operation = "UPSERT",
@@ -93,7 +93,7 @@ open class DefaultRuntimeIdentityCatalogReadModelProjectionUpdater(
         repository.save(entity)
 
         outbox.appendReadModel(
-            sourceContext = "RuntimeProvisioning",
+            sourceContext = "RuntimeGovernance",
             sourceReadModel = "RuntimeIdentityCatalog",
             readModelKey = event.runtimeId.toString(),
             operation = "UPSERT",

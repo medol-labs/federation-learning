@@ -1,7 +1,5 @@
 package tech.medo.runtimeprovisioning.infrastructure.secondary.persistence.runtimeinstallationguidereadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -13,19 +11,12 @@ import java.util.function.Function
 import java.time.LocalDateTime
 import java.util.UUID
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
-import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModel
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModelCriteria
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModelProjection
-import tech.medo.runtimeprovisioning.runtimeinstallationguide.toReadModel
 
 @Service
-class RuntimeInstallationGuideReadModelQueryService(
-    private val repository: SpringDataRuntimeInstallationGuideReadModelRepository
-) : QueryService<RuntimeInstallationGuideReadModelEntity>() {
-    fun findByCriteria(criteria: RuntimeInstallationGuideReadModelCriteria?, pageable: Pageable): Page<RuntimeInstallationGuideReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: RuntimeInstallationGuideReadModelCriteria?): Specification<RuntimeInstallationGuideReadModelEntity> {
+class RuntimeInstallationGuideReadModelQueryService() : QueryService<RuntimeInstallationGuideReadModelEntity>() {
+    fun createSpecification(criteria: RuntimeInstallationGuideReadModelCriteria?): Specification<RuntimeInstallationGuideReadModelEntity> {
         var specification = Specification.where<RuntimeInstallationGuideReadModelEntity>(null)
         if (criteria != null) {
             criteria.runtimeInstallationPlanId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInstallationGuideReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInstallationPlanId") as JpaExpression<UUID>).cast(String::class.java) })) }

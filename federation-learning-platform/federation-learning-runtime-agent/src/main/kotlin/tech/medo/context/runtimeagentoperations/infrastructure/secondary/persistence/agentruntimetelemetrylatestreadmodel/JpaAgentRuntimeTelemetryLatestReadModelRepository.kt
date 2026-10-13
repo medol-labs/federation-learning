@@ -1,5 +1,6 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.agentruntimetelemetrylatestreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.runtimeagentoperations.agentruntimetelemetrylatest.AgentRuntimeTelemetryLatestReadModel
 import tech.medo.runtimeagentoperations.agentruntimetelemetrylatest.AgentRuntimeTelemetryLatestReadModelCriteria
 import tech.medo.runtimeagentoperations.agentruntimetelemetrylatest.AgentRuntimeTelemetryLatestReadModelProjection
@@ -19,16 +22,20 @@ import tech.medo.runtimeagentoperations.agentruntimetelemetrylatest.toReadModel
 @Repository
 class JpaAgentRuntimeTelemetryLatestReadModelRepository(
     private val jpaRepository: SpringDataAgentRuntimeTelemetryLatestReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: AgentRuntimeTelemetryLatestReadModelQueryService
 ) : AgentRuntimeTelemetryLatestReadModelRepository {
     override fun findAll(pageable: Pageable): Page<AgentRuntimeTelemetryLatestReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: AgentRuntimeTelemetryLatestReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeTelemetryLatestReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): AgentRuntimeTelemetryLatestReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): AgentRuntimeTelemetryLatestReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): AgentRuntimeTelemetryLatestReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -36,6 +43,21 @@ class JpaAgentRuntimeTelemetryLatestReadModelRepository(
     override fun save(projection: AgentRuntimeTelemetryLatestReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<AgentRuntimeTelemetryLatestReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("nodeId"), id)
+        }
+
+    private fun accessSpecification(): Specification<AgentRuntimeTelemetryLatestReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "RuntimeAgentOperations",
+            readModelName = "AgentRuntimeTelemetryLatest",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun AgentRuntimeTelemetryLatestReadModelEntity.toProjection(): AgentRuntimeTelemetryLatestReadModelProjection =
         AgentRuntimeTelemetryLatestReadModelProjection().also {

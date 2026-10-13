@@ -23,6 +23,8 @@ data class PersonalizedModelArtifactRegisteredEvent(
     val modelArtifactDigest: String,
     val modelSignatureUri: String?,
     val modelSizeBytes: Int?,
+    val personalizedModelStorageLocation: String?,
+    val platformManagedArtifactRef: String?,
     val trainingJobId: UUID,
     val trainingJobObjective: String?,
     val roundId: UUID,

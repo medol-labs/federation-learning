@@ -1,7 +1,5 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.roundexecutioncatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -16,20 +14,14 @@ import tech.medo.runtimeagentoperations.domain.states.RoundExecutionStateEnum
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.math.BigDecimal
-import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModel
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.roundexecutioncatalog.RoundExecutionCatalogReadModelProjection
-import tech.medo.runtimeagentoperations.roundexecutioncatalog.toReadModel
 
 @Service
 class RoundExecutionCatalogReadModelQueryService(
-    private val repository: SpringDataRoundExecutionCatalogReadModelRepository,
     private val objectMapper: com.fasterxml.jackson.databind.ObjectMapper
 ) : QueryService<RoundExecutionCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: RoundExecutionCatalogReadModelCriteria?, pageable: Pageable): Page<RoundExecutionCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: RoundExecutionCatalogReadModelCriteria?): Specification<RoundExecutionCatalogReadModelEntity> {
+    fun createSpecification(criteria: RoundExecutionCatalogReadModelCriteria?): Specification<RoundExecutionCatalogReadModelEntity> {
         var specification = Specification.where<RoundExecutionCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.roundExecutionId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoundExecutionCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("roundExecutionId") as JpaExpression<UUID>).cast(String::class.java) })) }

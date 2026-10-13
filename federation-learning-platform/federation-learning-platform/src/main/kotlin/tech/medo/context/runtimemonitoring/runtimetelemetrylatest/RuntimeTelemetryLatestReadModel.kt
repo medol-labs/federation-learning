@@ -121,6 +121,7 @@ interface RuntimeTelemetryLatestReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeTelemetryLatestReadModel>
     fun findAllByCriteria(criteria: RuntimeTelemetryLatestReadModelCriteria?, pageable: Pageable): Page<RuntimeTelemetryLatestReadModel>
     fun findById(id: UUID): RuntimeTelemetryLatestReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeTelemetryLatestReadModel?
     fun findProjectionById(id: UUID): RuntimeTelemetryLatestReadModelProjection?
     fun save(projection: RuntimeTelemetryLatestReadModelProjection)
 }

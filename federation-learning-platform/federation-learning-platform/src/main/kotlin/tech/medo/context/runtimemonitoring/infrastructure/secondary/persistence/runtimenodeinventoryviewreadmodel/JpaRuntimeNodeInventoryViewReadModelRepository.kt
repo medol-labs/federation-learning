@@ -1,5 +1,6 @@
 package tech.medo.runtimemonitoring.infrastructure.secondary.persistence.runtimenodeinventoryviewreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -9,6 +10,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModel
 import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModelCriteria
 import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModelProjection
@@ -18,16 +21,20 @@ import tech.medo.runtimemonitoring.runtimenodeinventoryview.toReadModel
 @Repository
 class JpaRuntimeNodeInventoryViewReadModelRepository(
     private val jpaRepository: SpringDataRuntimeNodeInventoryViewReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: RuntimeNodeInventoryViewReadModelQueryService
 ) : RuntimeNodeInventoryViewReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeNodeInventoryViewReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: RuntimeNodeInventoryViewReadModelCriteria?, pageable: Pageable): Page<RuntimeNodeInventoryViewReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): RuntimeNodeInventoryViewReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): RuntimeNodeInventoryViewReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): RuntimeNodeInventoryViewReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -35,6 +42,21 @@ class JpaRuntimeNodeInventoryViewReadModelRepository(
     override fun save(projection: RuntimeNodeInventoryViewReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<RuntimeNodeInventoryViewReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("nodeId"), id)
+        }
+
+    private fun accessSpecification(): Specification<RuntimeNodeInventoryViewReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "RuntimeMonitoring",
+            readModelName = "RuntimeNodeInventoryView",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun RuntimeNodeInventoryViewReadModelEntity.toProjection(): RuntimeNodeInventoryViewReadModelProjection =
         RuntimeNodeInventoryViewReadModelProjection().also {

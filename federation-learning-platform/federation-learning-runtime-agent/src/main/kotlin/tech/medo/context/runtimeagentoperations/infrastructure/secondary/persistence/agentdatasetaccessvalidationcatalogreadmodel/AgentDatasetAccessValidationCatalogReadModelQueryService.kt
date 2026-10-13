@@ -1,7 +1,5 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.agentdatasetaccessvalidationcatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.AgentDatasetAccessValidationCatalogReadModel
 import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.AgentDatasetAccessValidationCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.AgentDatasetAccessValidationCatalogReadModelProjection
-import tech.medo.runtimeagentoperations.agentdatasetaccessvalidationcatalog.toReadModel
 
 @Service
-class AgentDatasetAccessValidationCatalogReadModelQueryService(
-    private val repository: SpringDataAgentDatasetAccessValidationCatalogReadModelRepository
-) : QueryService<AgentDatasetAccessValidationCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: AgentDatasetAccessValidationCatalogReadModelCriteria?, pageable: Pageable): Page<AgentDatasetAccessValidationCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: AgentDatasetAccessValidationCatalogReadModelCriteria?): Specification<AgentDatasetAccessValidationCatalogReadModelEntity> {
+class AgentDatasetAccessValidationCatalogReadModelQueryService() : QueryService<AgentDatasetAccessValidationCatalogReadModelEntity>() {
+    fun createSpecification(criteria: AgentDatasetAccessValidationCatalogReadModelCriteria?): Specification<AgentDatasetAccessValidationCatalogReadModelEntity> {
         var specification = Specification.where<AgentDatasetAccessValidationCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.datasetAccessValidationId?.let { specification = specification.and(buildSpecification(it, Function<Root<AgentDatasetAccessValidationCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("datasetAccessValidationId") as JpaExpression<UUID>).cast(String::class.java) })) }

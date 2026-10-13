@@ -1,7 +1,5 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.userroleassignmentcatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -12,19 +10,12 @@ import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
 import java.util.UUID
-import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssignmentCatalogReadModel
 import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssignmentCatalogReadModelCriteria
 import tech.medo.identityaccessmanagement.userroleassignmentcatalog.UserRoleAssignmentCatalogReadModelProjection
-import tech.medo.identityaccessmanagement.userroleassignmentcatalog.toReadModel
 
 @Service
-class UserRoleAssignmentCatalogReadModelQueryService(
-    private val repository: SpringDataUserRoleAssignmentCatalogReadModelRepository
-) : QueryService<UserRoleAssignmentCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: UserRoleAssignmentCatalogReadModelCriteria?, pageable: Pageable): Page<UserRoleAssignmentCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: UserRoleAssignmentCatalogReadModelCriteria?): Specification<UserRoleAssignmentCatalogReadModelEntity> {
+class UserRoleAssignmentCatalogReadModelQueryService() : QueryService<UserRoleAssignmentCatalogReadModelEntity>() {
+    fun createSpecification(criteria: UserRoleAssignmentCatalogReadModelCriteria?): Specification<UserRoleAssignmentCatalogReadModelEntity> {
         var specification = Specification.where<UserRoleAssignmentCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.userAccountId?.let { specification = specification.and(buildSpecification(it, Function<Root<UserRoleAssignmentCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("userAccountId") as JpaExpression<UUID>).cast(String::class.java) })) }

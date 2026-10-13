@@ -82,6 +82,7 @@ interface RuntimeDatasetBindingCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeDatasetBindingCatalogReadModel>
     fun findAllByCriteria(criteria: RuntimeDatasetBindingCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeDatasetBindingCatalogReadModel>
     fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeDatasetBindingCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeDatasetBindingCatalogReadModelProjection?
     fun save(projection: RuntimeDatasetBindingCatalogReadModelProjection)
 }

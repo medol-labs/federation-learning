@@ -98,6 +98,7 @@ interface RuntimeNodeInventoryViewReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeNodeInventoryViewReadModel>
     fun findAllByCriteria(criteria: RuntimeNodeInventoryViewReadModelCriteria?, pageable: Pageable): Page<RuntimeNodeInventoryViewReadModel>
     fun findById(id: UUID): RuntimeNodeInventoryViewReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeNodeInventoryViewReadModel?
     fun findProjectionById(id: UUID): RuntimeNodeInventoryViewReadModelProjection?
     fun save(projection: RuntimeNodeInventoryViewReadModelProjection)
 }

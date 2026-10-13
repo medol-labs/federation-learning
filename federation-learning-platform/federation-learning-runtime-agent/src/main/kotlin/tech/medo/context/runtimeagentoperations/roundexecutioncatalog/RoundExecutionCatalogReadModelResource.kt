@@ -35,6 +35,6 @@ class RoundExecutionCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('round_execution_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<RoundExecutionCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

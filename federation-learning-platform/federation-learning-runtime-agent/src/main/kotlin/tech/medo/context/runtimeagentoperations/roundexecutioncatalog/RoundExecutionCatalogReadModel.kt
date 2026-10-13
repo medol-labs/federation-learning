@@ -186,6 +186,7 @@ interface RoundExecutionCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RoundExecutionCatalogReadModel>
     fun findAllByCriteria(criteria: RoundExecutionCatalogReadModelCriteria?, pageable: Pageable): Page<RoundExecutionCatalogReadModel>
     fun findById(id: UUID): RoundExecutionCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RoundExecutionCatalogReadModel?
     fun findProjectionById(id: UUID): RoundExecutionCatalogReadModelProjection?
     fun save(projection: RoundExecutionCatalogReadModelProjection)
 }

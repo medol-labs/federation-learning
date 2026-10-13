@@ -35,6 +35,6 @@ class RuntimeInstallationGuideReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_installation_guide:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<RuntimeInstallationGuideReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

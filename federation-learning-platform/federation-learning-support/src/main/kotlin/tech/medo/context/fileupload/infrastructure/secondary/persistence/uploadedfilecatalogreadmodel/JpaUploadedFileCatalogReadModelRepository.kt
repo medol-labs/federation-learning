@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.fileupload.uploadedfilecatalog.UploadedFileCatalogReadModel
 import tech.medo.fileupload.uploadedfilecatalog.UploadedFileCatalogReadModelCriteria
 import tech.medo.fileupload.uploadedfilecatalog.UploadedFileCatalogReadModelProjection
@@ -21,16 +23,20 @@ import tech.medo.fileupload.uploadedfilecatalog.toReadModel
 @Repository
 class JpaUploadedFileCatalogReadModelRepository(
     private val jpaRepository: SpringDataUploadedFileCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: UploadedFileCatalogReadModelQueryService
 ) : UploadedFileCatalogReadModelRepository {
     override fun findAllByFilter(purpose: String?, pageable: Pageable): Page<UploadedFileCatalogReadModel> =
-        jpaRepository.findAll(filters(purpose), pageable).map { it.toProjection().toReadModel() }
+        jpaRepository.findAll(filters(purpose).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findAllByCriteria(criteria: UploadedFileCatalogReadModelCriteria?, pageable: Pageable): Page<UploadedFileCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): UploadedFileCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): UploadedFileCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): UploadedFileCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -46,6 +52,21 @@ class JpaUploadedFileCatalogReadModelRepository(
             criteriaBuilder.and(*predicates.toTypedArray())
         }
 
+
+    private fun idSpecification(id: UUID): Specification<UploadedFileCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("fileId"), id)
+        }
+
+    private fun accessSpecification(): Specification<UploadedFileCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "FileUpload",
+            readModelName = "UploadedFileCatalog",
+            policy = ReadModelAccessPolicy(
+            name = "FileUploadPublicAccess",
+            fields = emptyList<String>()
+        )
+        )
 
     private fun UploadedFileCatalogReadModelEntity.toProjection(): UploadedFileCatalogReadModelProjection =
         UploadedFileCatalogReadModelProjection().also {

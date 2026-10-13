@@ -135,6 +135,8 @@ open class DefaultModelArtifactCatalogReadModelProjectionUpdater(
             entity.modelArtifactDigest = event.modelArtifactDigest
             entity.modelSignatureUri = event.modelSignatureUri
             entity.modelSizeBytes = event.modelSizeBytes
+            entity.personalizedModelStorageLocation = event.personalizedModelStorageLocation
+            entity.platformManagedArtifactRef = event.platformManagedArtifactRef
             entity.trainingJobId = event.trainingJobId
             entity.roundId = event.roundId
             entity.trainingJobObjective = event.trainingJobObjective

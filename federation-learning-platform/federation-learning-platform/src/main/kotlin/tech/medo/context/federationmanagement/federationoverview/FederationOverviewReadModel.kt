@@ -68,6 +68,7 @@ interface FederationOverviewReadModelRepository {
     fun findAll(pageable: Pageable): Page<FederationOverviewReadModel>
     fun findAllByCriteria(criteria: FederationOverviewReadModelCriteria?, pageable: Pageable): Page<FederationOverviewReadModel>
     fun findById(id: UUID): FederationOverviewReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): FederationOverviewReadModel?
     fun findProjectionById(id: UUID): FederationOverviewReadModelProjection?
     fun save(projection: FederationOverviewReadModelProjection)
 }

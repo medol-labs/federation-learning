@@ -1,5 +1,6 @@
 package tech.medo.datasetgovernance.infrastructure.secondary.persistence.runtimedatasetmetadatacatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.RuntimeDatasetMetadataCatalogReadModel
 import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.RuntimeDatasetMetadataCatalogReadModelCriteria
 import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.RuntimeDatasetMetadataCatalogReadModelProjection
@@ -19,16 +22,20 @@ import tech.medo.datasetgovernance.runtimedatasetmetadatacatalog.toReadModel
 @Repository
 class JpaRuntimeDatasetMetadataCatalogReadModelRepository(
     private val jpaRepository: SpringDataRuntimeDatasetMetadataCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: RuntimeDatasetMetadataCatalogReadModelQueryService
 ) : RuntimeDatasetMetadataCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeDatasetMetadataCatalogReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: RuntimeDatasetMetadataCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeDatasetMetadataCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): RuntimeDatasetMetadataCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): RuntimeDatasetMetadataCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): RuntimeDatasetMetadataCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -36,6 +43,21 @@ class JpaRuntimeDatasetMetadataCatalogReadModelRepository(
     override fun save(projection: RuntimeDatasetMetadataCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<RuntimeDatasetMetadataCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("runtimeDatasetBindingId"), id)
+        }
+
+    private fun accessSpecification(): Specification<RuntimeDatasetMetadataCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "DatasetGovernance",
+            readModelName = "RuntimeDatasetMetadataCatalog",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun RuntimeDatasetMetadataCatalogReadModelEntity.toProjection(): RuntimeDatasetMetadataCatalogReadModelProjection =
         RuntimeDatasetMetadataCatalogReadModelProjection().also {

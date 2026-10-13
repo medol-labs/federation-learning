@@ -35,6 +35,6 @@ class SystemNotificationSummaryReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('system_notification_summary:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: String): ResponseEntity<SystemNotificationSummaryReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

@@ -104,6 +104,7 @@ interface RuntimeHealthDashboardReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeHealthDashboardReadModel>
     fun findAllByCriteria(criteria: RuntimeHealthDashboardReadModelCriteria?, pageable: Pageable): Page<RuntimeHealthDashboardReadModel>
     fun findById(id: UUID): RuntimeHealthDashboardReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeHealthDashboardReadModel?
     fun findProjectionById(id: UUID): RuntimeHealthDashboardReadModelProjection?
     fun save(projection: RuntimeHealthDashboardReadModelProjection)
 }

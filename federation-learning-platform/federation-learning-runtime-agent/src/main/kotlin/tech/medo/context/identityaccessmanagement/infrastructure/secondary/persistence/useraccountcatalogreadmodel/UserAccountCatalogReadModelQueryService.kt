@@ -1,7 +1,5 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.useraccountcatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -12,19 +10,12 @@ import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
 import java.util.UUID
-import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModel
 import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelCriteria
 import tech.medo.identityaccessmanagement.useraccountcatalogs.UserAccountCatalogReadModelProjection
-import tech.medo.identityaccessmanagement.useraccountcatalogs.toReadModel
 
 @Service
-class UserAccountCatalogReadModelQueryService(
-    private val repository: SpringDataUserAccountCatalogReadModelRepository
-) : QueryService<UserAccountCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: UserAccountCatalogReadModelCriteria?, pageable: Pageable): Page<UserAccountCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: UserAccountCatalogReadModelCriteria?): Specification<UserAccountCatalogReadModelEntity> {
+class UserAccountCatalogReadModelQueryService() : QueryService<UserAccountCatalogReadModelEntity>() {
+    fun createSpecification(criteria: UserAccountCatalogReadModelCriteria?): Specification<UserAccountCatalogReadModelEntity> {
         var specification = Specification.where<UserAccountCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.userAccountId?.let { specification = specification.and(buildSpecification(it, Function<Root<UserAccountCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("userAccountId") as JpaExpression<UUID>).cast(String::class.java) })) }

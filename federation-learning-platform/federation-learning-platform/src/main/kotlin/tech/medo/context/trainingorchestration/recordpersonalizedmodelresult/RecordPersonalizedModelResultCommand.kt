@@ -28,6 +28,8 @@ data class RecordPersonalizedModelResultCommand(
     val personalizationProfileId: UUID?,
     val personalizedModelArtifactRef: String,
     val personalizedModelArtifactDigest: String,
+    val personalizedModelStorageLocation: String,
+    val platformManagedArtifactRef: String?,
     val personalizedMetricsArtifactRef: String?,
     val personalizedAccuracy: BigDecimal?,
     val personalizationLift: BigDecimal?

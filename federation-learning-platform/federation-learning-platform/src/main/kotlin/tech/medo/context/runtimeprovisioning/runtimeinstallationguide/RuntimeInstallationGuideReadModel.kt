@@ -101,6 +101,7 @@ interface RuntimeInstallationGuideReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeInstallationGuideReadModel>
     fun findAllByCriteria(criteria: RuntimeInstallationGuideReadModelCriteria?, pageable: Pageable): Page<RuntimeInstallationGuideReadModel>
     fun findById(id: UUID): RuntimeInstallationGuideReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeInstallationGuideReadModel?
     fun findProjectionById(id: UUID): RuntimeInstallationGuideReadModelProjection?
     fun save(projection: RuntimeInstallationGuideReadModelProjection)
 }

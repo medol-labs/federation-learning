@@ -1,11 +1,14 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.rolecatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModel
 import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModelCriteria
 import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModelProjection
@@ -15,16 +18,20 @@ import tech.medo.identityaccessmanagement.rolecatalogs.toReadModel
 @Repository
 class JpaRoleCatalogReadModelRepository(
     private val jpaRepository: SpringDataRoleCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: RoleCatalogReadModelQueryService
 ) : RoleCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RoleCatalogReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: RoleCatalogReadModelCriteria?, pageable: Pageable): Page<RoleCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): RoleCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): RoleCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): RoleCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -32,6 +39,21 @@ class JpaRoleCatalogReadModelRepository(
     override fun save(projection: RoleCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<RoleCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("roleId"), id)
+        }
+
+    private fun accessSpecification(): Specification<RoleCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "IdentityAccessManagement",
+            readModelName = "RoleCatalog",
+            policy = ReadModelAccessPolicy(
+            name = "IdentityAccessManagementPublicAccess",
+            fields = emptyList<String>()
+        )
+        )
 
     private fun RoleCatalogReadModelEntity.toProjection(): RoleCatalogReadModelProjection =
         RoleCatalogReadModelProjection().also {

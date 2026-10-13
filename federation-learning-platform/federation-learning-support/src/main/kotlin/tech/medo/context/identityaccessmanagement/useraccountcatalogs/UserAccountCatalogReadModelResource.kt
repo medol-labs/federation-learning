@@ -86,7 +86,7 @@ class UserAccountCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('user_account_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<UserAccountCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }
 

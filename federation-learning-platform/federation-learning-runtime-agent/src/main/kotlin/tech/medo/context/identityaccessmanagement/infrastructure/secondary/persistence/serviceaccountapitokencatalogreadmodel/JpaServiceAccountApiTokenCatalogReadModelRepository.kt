@@ -1,5 +1,6 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.serviceaccountapitokencatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -8,6 +9,8 @@ import com.fasterxml.jackson.module.kotlin.readValue
 
 import java.util.UUID;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.identityaccessmanagement.serviceaccountapitokencatalogs.ServiceAccountApiTokenCatalogReadModel
 import tech.medo.identityaccessmanagement.serviceaccountapitokencatalogs.ServiceAccountApiTokenCatalogReadModelCriteria
 import tech.medo.identityaccessmanagement.serviceaccountapitokencatalogs.ServiceAccountApiTokenCatalogReadModelProjection
@@ -17,6 +20,7 @@ import tech.medo.identityaccessmanagement.serviceaccountapitokencatalogs.toReadM
 @Repository
 class JpaServiceAccountApiTokenCatalogReadModelRepository(
     private val jpaRepository: SpringDataServiceAccountApiTokenCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: ServiceAccountApiTokenCatalogReadModelQueryService,
     private val objectMapper: ObjectMapper
 ) : ServiceAccountApiTokenCatalogReadModelRepository {
@@ -24,10 +28,13 @@ class JpaServiceAccountApiTokenCatalogReadModelRepository(
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: ServiceAccountApiTokenCatalogReadModelCriteria?, pageable: Pageable): Page<ServiceAccountApiTokenCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): ServiceAccountApiTokenCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): ServiceAccountApiTokenCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): ServiceAccountApiTokenCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -35,6 +42,21 @@ class JpaServiceAccountApiTokenCatalogReadModelRepository(
     override fun save(projection: ServiceAccountApiTokenCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<ServiceAccountApiTokenCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("apiTokenId"), id)
+        }
+
+    private fun accessSpecification(): Specification<ServiceAccountApiTokenCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "IdentityAccessManagement",
+            readModelName = "ServiceAccountApiTokenCatalog",
+            policy = ReadModelAccessPolicy(
+            name = "IdentityAccessManagementPublicAccess",
+            fields = emptyList<String>()
+        )
+        )
 
     private fun ServiceAccountApiTokenCatalogReadModelEntity.toProjection(): ServiceAccountApiTokenCatalogReadModelProjection =
         ServiceAccountApiTokenCatalogReadModelProjection().also {

@@ -179,6 +179,7 @@ interface TrainingRunConfigurationCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<TrainingRunConfigurationCatalogReadModel>
     fun findAllByCriteria(criteria: TrainingRunConfigurationCatalogReadModelCriteria?, pageable: Pageable): Page<TrainingRunConfigurationCatalogReadModel>
     fun findById(id: UUID): TrainingRunConfigurationCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): TrainingRunConfigurationCatalogReadModel?
     fun findProjectionById(id: UUID): TrainingRunConfigurationCatalogReadModelProjection?
     fun save(projection: TrainingRunConfigurationCatalogReadModelProjection)
 }

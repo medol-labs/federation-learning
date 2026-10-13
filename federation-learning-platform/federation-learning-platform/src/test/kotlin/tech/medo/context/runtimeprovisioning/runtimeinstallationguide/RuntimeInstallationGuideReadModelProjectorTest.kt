@@ -77,6 +77,9 @@ private class FakeRuntimeInstallationGuideRepository : RuntimeInstallationGuideR
     override fun findById(id: UUID): RuntimeInstallationGuideReadModel? =
         projections[id]?.toReadModel()
 
+    override fun findByIdWithAccessPolicy(id: UUID): RuntimeInstallationGuideReadModel? =
+        findById(id)
+
     override fun findProjectionById(id: UUID): RuntimeInstallationGuideReadModelProjection? =
         projections[id]
 

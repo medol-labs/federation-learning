@@ -1,7 +1,5 @@
 package tech.medo.runtimemonitoring.infrastructure.secondary.persistence.trainingalertcatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -15,19 +13,12 @@ import java.util.UUID
 import tech.medo.runtimemonitoring.domain.states.TrainingAlertStateEnum
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimemonitoring.trainingalertcatalog.TrainingAlertCatalogReadModel
 import tech.medo.runtimemonitoring.trainingalertcatalog.TrainingAlertCatalogReadModelCriteria
 import tech.medo.runtimemonitoring.trainingalertcatalog.TrainingAlertCatalogReadModelProjection
-import tech.medo.runtimemonitoring.trainingalertcatalog.toReadModel
 
 @Service
-class TrainingAlertCatalogReadModelQueryService(
-    private val repository: SpringDataTrainingAlertCatalogReadModelRepository
-) : QueryService<TrainingAlertCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: TrainingAlertCatalogReadModelCriteria?, pageable: Pageable): Page<TrainingAlertCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: TrainingAlertCatalogReadModelCriteria?): Specification<TrainingAlertCatalogReadModelEntity> {
+class TrainingAlertCatalogReadModelQueryService() : QueryService<TrainingAlertCatalogReadModelEntity>() {
+    fun createSpecification(criteria: TrainingAlertCatalogReadModelCriteria?): Specification<TrainingAlertCatalogReadModelEntity> {
         var specification = Specification.where<TrainingAlertCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.alertId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingAlertCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("alertId") as JpaExpression<UUID>).cast(String::class.java) })) }

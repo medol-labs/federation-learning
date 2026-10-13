@@ -12,10 +12,10 @@ class AgentRuntimeIdentityCatalogReadModelSyncRegistration {
         val targetName = "AgentRuntimeIdentityCatalog"
         return SyncReadModelTarget(
             name = targetName,
-            source = "RuntimeProvisioning.RuntimeIdentityCatalog",
-            sourceContext = "RuntimeProvisioning",
+            source = "RuntimeGovernance.RuntimeIdentityCatalog",
+            sourceContext = "RuntimeGovernance",
             sourceReadModel = "RuntimeIdentityCatalog",
-            sourcePath = "/sync/read-models/runtime-provisioning/runtime-identity-catalog",
+            sourcePath = "/sync/read-models/runtime-governance/runtime-identity-catalog",
             fieldMappings = mapOf(
             "runtimeId" to "runtimeId",
             "runtimeInfrastructureId" to "runtimeInfrastructureId",

@@ -1,5 +1,6 @@
 package tech.medo.organizationmanagement.infrastructure.secondary.persistence.organizationdirectoryreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -8,6 +9,8 @@ import java.util.UUID;
 import tech.medo.organizationmanagement.domain.types.OrganizationType;
 import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModel
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelCriteria
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelProjection
@@ -17,16 +20,20 @@ import tech.medo.organizationmanagement.organizationdirectory.toReadModel
 @Repository
 class JpaOrganizationDirectoryReadModelRepository(
     private val jpaRepository: SpringDataOrganizationDirectoryReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: OrganizationDirectoryReadModelQueryService
 ) : OrganizationDirectoryReadModelRepository {
     override fun findAll(pageable: Pageable): Page<OrganizationDirectoryReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: OrganizationDirectoryReadModelCriteria?, pageable: Pageable): Page<OrganizationDirectoryReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): OrganizationDirectoryReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): OrganizationDirectoryReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): OrganizationDirectoryReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -34,6 +41,21 @@ class JpaOrganizationDirectoryReadModelRepository(
     override fun save(projection: OrganizationDirectoryReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<OrganizationDirectoryReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("organizationId"), id)
+        }
+
+    private fun accessSpecification(): Specification<OrganizationDirectoryReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "OrganizationManagement",
+            readModelName = "OrganizationDirectory",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun OrganizationDirectoryReadModelEntity.toProjection(): OrganizationDirectoryReadModelProjection =
         OrganizationDirectoryReadModelProjection().also {

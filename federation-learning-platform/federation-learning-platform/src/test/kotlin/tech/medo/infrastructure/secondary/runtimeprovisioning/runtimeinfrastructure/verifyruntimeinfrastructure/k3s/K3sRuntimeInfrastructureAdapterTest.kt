@@ -338,6 +338,8 @@ private class FakeRuntimeInstallationPlanRepository(
 
     override fun findById(id: UUID): RuntimeInstallationPlanCatalogReadModel? = plans[id]
 
+    override fun findByIdWithAccessPolicy(id: UUID): RuntimeInstallationPlanCatalogReadModel? = findById(id)
+
     override fun findProjectionById(id: UUID): RuntimeInstallationPlanCatalogReadModelProjection? = null
 
     override fun save(projection: RuntimeInstallationPlanCatalogReadModelProjection) = Unit
@@ -358,6 +360,8 @@ private class FakeRuntimeInfrastructurePackageRepository(
         findAll(pageable)
 
     override fun findById(id: UUID): RuntimeInfrastructurePackageCatalogReadModel? = packages[id]
+
+    override fun findByIdWithAccessPolicy(id: UUID): RuntimeInfrastructurePackageCatalogReadModel? = findById(id)
 
     override fun findProjectionById(id: UUID): RuntimeInfrastructurePackageCatalogReadModelProjection? = null
 

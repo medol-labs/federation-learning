@@ -1,7 +1,5 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.rolecatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -12,19 +10,12 @@ import tech.jhipster.service.filter.RangeFilter
 import java.util.function.Function
 import java.time.LocalDateTime
 import java.util.UUID
-import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModel
 import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModelCriteria
 import tech.medo.identityaccessmanagement.rolecatalogs.RoleCatalogReadModelProjection
-import tech.medo.identityaccessmanagement.rolecatalogs.toReadModel
 
 @Service
-class RoleCatalogReadModelQueryService(
-    private val repository: SpringDataRoleCatalogReadModelRepository
-) : QueryService<RoleCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: RoleCatalogReadModelCriteria?, pageable: Pageable): Page<RoleCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: RoleCatalogReadModelCriteria?): Specification<RoleCatalogReadModelEntity> {
+class RoleCatalogReadModelQueryService() : QueryService<RoleCatalogReadModelEntity>() {
+    fun createSpecification(criteria: RoleCatalogReadModelCriteria?): Specification<RoleCatalogReadModelEntity> {
         var specification = Specification.where<RoleCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.roleId?.let { specification = specification.and(buildSpecification(it, Function<Root<RoleCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("roleId") as JpaExpression<UUID>).cast(String::class.java) })) }

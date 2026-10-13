@@ -1,7 +1,5 @@
 package tech.medo.dataexchange.infrastructure.secondary.persistence.dataexportjobcatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.dataexchange.dataexportjob.DataExportJobCatalogReadModel
 import tech.medo.dataexchange.dataexportjob.DataExportJobCatalogReadModelCriteria
 import tech.medo.dataexchange.dataexportjob.DataExportJobCatalogReadModelProjection
-import tech.medo.dataexchange.dataexportjob.toReadModel
 
 @Service
-class DataExportJobCatalogReadModelQueryService(
-    private val repository: SpringDataDataExportJobCatalogReadModelRepository
-) : QueryService<DataExportJobCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: DataExportJobCatalogReadModelCriteria?, pageable: Pageable): Page<DataExportJobCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: DataExportJobCatalogReadModelCriteria?): Specification<DataExportJobCatalogReadModelEntity> {
+class DataExportJobCatalogReadModelQueryService() : QueryService<DataExportJobCatalogReadModelEntity>() {
+    fun createSpecification(criteria: DataExportJobCatalogReadModelCriteria?): Specification<DataExportJobCatalogReadModelEntity> {
         var specification = Specification.where<DataExportJobCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.dataExportJobId?.let { specification = specification.and(buildSpecification(it, Function<Root<DataExportJobCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("dataExportJobId") as JpaExpression<UUID>).cast(String::class.java) })) }

@@ -102,6 +102,7 @@ interface RuntimeNodeResourceLatestReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeNodeResourceLatestReadModel>
     fun findAllByCriteria(criteria: RuntimeNodeResourceLatestReadModelCriteria?, pageable: Pageable): Page<RuntimeNodeResourceLatestReadModel>
     fun findById(id: UUID): RuntimeNodeResourceLatestReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeNodeResourceLatestReadModel?
     fun findProjectionById(id: UUID): RuntimeNodeResourceLatestReadModelProjection?
     fun save(projection: RuntimeNodeResourceLatestReadModelProjection)
 }

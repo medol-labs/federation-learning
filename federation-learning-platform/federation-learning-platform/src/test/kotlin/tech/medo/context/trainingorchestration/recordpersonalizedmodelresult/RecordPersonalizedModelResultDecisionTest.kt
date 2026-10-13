@@ -34,6 +34,8 @@ class RecordPersonalizedModelResultDecisionTest {
             personalizationProfileId = null,
             personalizedModelArtifactRef = "",
             personalizedModelArtifactDigest = "",
+            personalizedModelStorageLocation = "",
+            platformManagedArtifactRef = null,
             personalizedMetricsArtifactRef = null,
             personalizedAccuracy = null,
             personalizationLift = null
@@ -63,6 +65,8 @@ class RecordPersonalizedModelResultDecisionTest {
         assertEquals(command.personalizationProfileId, event.personalizationProfileId)
         assertEquals(command.personalizedModelArtifactRef, event.personalizedModelArtifactRef)
         assertEquals(command.personalizedModelArtifactDigest, event.personalizedModelArtifactDigest)
+        assertEquals(command.personalizedModelStorageLocation, event.personalizedModelStorageLocation)
+        assertEquals(command.platformManagedArtifactRef, event.platformManagedArtifactRef)
         assertEquals(command.personalizedMetricsArtifactRef, event.personalizedMetricsArtifactRef)
         assertEquals(command.personalizedAccuracy, event.personalizedAccuracy)
         assertEquals(command.personalizationLift, event.personalizationLift)

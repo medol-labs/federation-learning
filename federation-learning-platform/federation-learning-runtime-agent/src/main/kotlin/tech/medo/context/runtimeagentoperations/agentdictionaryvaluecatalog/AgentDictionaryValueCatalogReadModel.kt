@@ -72,6 +72,7 @@ interface AgentDictionaryValueCatalogReadModelRepository {
     fun findAllByFilter(dictionaryCode: String?, active: Boolean?, state: String?, pageable: Pageable): Page<AgentDictionaryValueCatalogReadModel>
     fun findAllByCriteria(criteria: AgentDictionaryValueCatalogReadModelCriteria?, pageable: Pageable): Page<AgentDictionaryValueCatalogReadModel>
     fun findById(id: UUID): AgentDictionaryValueCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): AgentDictionaryValueCatalogReadModel?
     fun findProjectionById(id: UUID): AgentDictionaryValueCatalogReadModelProjection?
     fun save(projection: AgentDictionaryValueCatalogReadModelProjection)
 }

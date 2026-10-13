@@ -1,5 +1,6 @@
 package tech.medo.trainingorchestration.infrastructure.secondary.persistence.trainingrunconfigurationcatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -8,6 +9,8 @@ import java.util.UUID;
 import java.math.BigDecimal;
 import tech.medo.trainingorchestration.domain.states.TrainingRunConfigurationStateEnum;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModel
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelCriteria
 import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.TrainingRunConfigurationCatalogReadModelProjection
@@ -17,16 +20,20 @@ import tech.medo.trainingorchestration.trainingrunconfigurationcatalog.toReadMod
 @Repository
 class JpaTrainingRunConfigurationCatalogReadModelRepository(
     private val jpaRepository: SpringDataTrainingRunConfigurationCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: TrainingRunConfigurationCatalogReadModelQueryService
 ) : TrainingRunConfigurationCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<TrainingRunConfigurationCatalogReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: TrainingRunConfigurationCatalogReadModelCriteria?, pageable: Pageable): Page<TrainingRunConfigurationCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): TrainingRunConfigurationCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): TrainingRunConfigurationCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): TrainingRunConfigurationCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -34,6 +41,21 @@ class JpaTrainingRunConfigurationCatalogReadModelRepository(
     override fun save(projection: TrainingRunConfigurationCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<TrainingRunConfigurationCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("trainingRunConfigurationId"), id)
+        }
+
+    private fun accessSpecification(): Specification<TrainingRunConfigurationCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "TrainingOrchestration",
+            readModelName = "TrainingRunConfigurationCatalog",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun TrainingRunConfigurationCatalogReadModelEntity.toProjection(): TrainingRunConfigurationCatalogReadModelProjection =
         TrainingRunConfigurationCatalogReadModelProjection().also {

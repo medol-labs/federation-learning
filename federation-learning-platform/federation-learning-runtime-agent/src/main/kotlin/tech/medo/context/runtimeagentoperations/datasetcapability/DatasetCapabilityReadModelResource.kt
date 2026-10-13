@@ -35,6 +35,6 @@ class DatasetCapabilityReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('dataset_capability:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<DatasetCapabilityReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

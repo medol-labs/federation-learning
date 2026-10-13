@@ -1,5 +1,6 @@
 package tech.medo.trainingorchestration.infrastructure.secondary.persistence.trainingjobdashboardreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -10,6 +11,8 @@ import java.util.UUID;
 import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum;
 import java.math.BigDecimal;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModel
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelCriteria
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelProjection
@@ -19,6 +22,7 @@ import tech.medo.trainingorchestration.trainingjobdashboard.toReadModel
 @Repository
 class JpaTrainingJobDashboardReadModelRepository(
     private val jpaRepository: SpringDataTrainingJobDashboardReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: TrainingJobDashboardReadModelQueryService,
     private val objectMapper: ObjectMapper
 ) : TrainingJobDashboardReadModelRepository {
@@ -26,10 +30,13 @@ class JpaTrainingJobDashboardReadModelRepository(
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: TrainingJobDashboardReadModelCriteria?, pageable: Pageable): Page<TrainingJobDashboardReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): TrainingJobDashboardReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): TrainingJobDashboardReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): TrainingJobDashboardReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -37,6 +44,21 @@ class JpaTrainingJobDashboardReadModelRepository(
     override fun save(projection: TrainingJobDashboardReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<TrainingJobDashboardReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("trainingJobId"), id)
+        }
+
+    private fun accessSpecification(): Specification<TrainingJobDashboardReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "TrainingOrchestration",
+            readModelName = "TrainingJobDashboard",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun TrainingJobDashboardReadModelEntity.toProjection(): TrainingJobDashboardReadModelProjection =
         TrainingJobDashboardReadModelProjection().also {

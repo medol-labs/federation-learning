@@ -1,5 +1,6 @@
 package tech.medo.organizationmanagement.infrastructure.secondary.persistence.userorganizationmembershipdirectoryreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Repository
 import java.util.UUID;
 import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.organizationmanagement.userorganizationmembershipdirectory.UserOrganizationMembershipDirectoryReadModel
 import tech.medo.organizationmanagement.userorganizationmembershipdirectory.UserOrganizationMembershipDirectoryReadModelCriteria
 import tech.medo.organizationmanagement.userorganizationmembershipdirectory.UserOrganizationMembershipDirectoryReadModelProjection
@@ -16,16 +19,20 @@ import tech.medo.organizationmanagement.userorganizationmembershipdirectory.toRe
 @Repository
 class JpaUserOrganizationMembershipDirectoryReadModelRepository(
     private val jpaRepository: SpringDataUserOrganizationMembershipDirectoryReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: UserOrganizationMembershipDirectoryReadModelQueryService
 ) : UserOrganizationMembershipDirectoryReadModelRepository {
     override fun findAll(pageable: Pageable): Page<UserOrganizationMembershipDirectoryReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: UserOrganizationMembershipDirectoryReadModelCriteria?, pageable: Pageable): Page<UserOrganizationMembershipDirectoryReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): UserOrganizationMembershipDirectoryReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): UserOrganizationMembershipDirectoryReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): UserOrganizationMembershipDirectoryReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -33,6 +40,21 @@ class JpaUserOrganizationMembershipDirectoryReadModelRepository(
     override fun save(projection: UserOrganizationMembershipDirectoryReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<UserOrganizationMembershipDirectoryReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("userOrganizationMembershipId"), id)
+        }
+
+    private fun accessSpecification(): Specification<UserOrganizationMembershipDirectoryReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "OrganizationManagement",
+            readModelName = "UserOrganizationMembershipDirectory",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun UserOrganizationMembershipDirectoryReadModelEntity.toProjection(): UserOrganizationMembershipDirectoryReadModelProjection =
         UserOrganizationMembershipDirectoryReadModelProjection().also {

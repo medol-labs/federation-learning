@@ -89,6 +89,7 @@ interface DataExportJobCatalogReadModelRepository {
     fun findAllByFilter(status: String?, pageable: Pageable): Page<DataExportJobCatalogReadModel>
     fun findAllByCriteria(criteria: DataExportJobCatalogReadModelCriteria?, pageable: Pageable): Page<DataExportJobCatalogReadModel>
     fun findById(id: UUID): DataExportJobCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): DataExportJobCatalogReadModel?
     fun findProjectionById(id: UUID): DataExportJobCatalogReadModelProjection?
     fun save(projection: DataExportJobCatalogReadModelProjection)
 }

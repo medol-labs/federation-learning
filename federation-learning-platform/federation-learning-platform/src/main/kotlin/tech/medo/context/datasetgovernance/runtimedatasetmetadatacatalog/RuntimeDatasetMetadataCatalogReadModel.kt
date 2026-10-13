@@ -116,6 +116,7 @@ interface RuntimeDatasetMetadataCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeDatasetMetadataCatalogReadModel>
     fun findAllByCriteria(criteria: RuntimeDatasetMetadataCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeDatasetMetadataCatalogReadModel>
     fun findById(id: UUID): RuntimeDatasetMetadataCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeDatasetMetadataCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeDatasetMetadataCatalogReadModelProjection?
     fun save(projection: RuntimeDatasetMetadataCatalogReadModelProjection)
 }

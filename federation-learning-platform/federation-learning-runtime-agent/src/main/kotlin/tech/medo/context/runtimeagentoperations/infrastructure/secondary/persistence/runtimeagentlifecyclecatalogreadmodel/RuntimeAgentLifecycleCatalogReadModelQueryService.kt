@@ -1,7 +1,5 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.runtimeagentlifecyclecatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimeagentoperations.runtimeagentlifecyclecatalog.RuntimeAgentLifecycleCatalogReadModel
 import tech.medo.runtimeagentoperations.runtimeagentlifecyclecatalog.RuntimeAgentLifecycleCatalogReadModelCriteria
 import tech.medo.runtimeagentoperations.runtimeagentlifecyclecatalog.RuntimeAgentLifecycleCatalogReadModelProjection
-import tech.medo.runtimeagentoperations.runtimeagentlifecyclecatalog.toReadModel
 
 @Service
-class RuntimeAgentLifecycleCatalogReadModelQueryService(
-    private val repository: SpringDataRuntimeAgentLifecycleCatalogReadModelRepository
-) : QueryService<RuntimeAgentLifecycleCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: RuntimeAgentLifecycleCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeAgentLifecycleCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: RuntimeAgentLifecycleCatalogReadModelCriteria?): Specification<RuntimeAgentLifecycleCatalogReadModelEntity> {
+class RuntimeAgentLifecycleCatalogReadModelQueryService() : QueryService<RuntimeAgentLifecycleCatalogReadModelEntity>() {
+    fun createSpecification(criteria: RuntimeAgentLifecycleCatalogReadModelCriteria?): Specification<RuntimeAgentLifecycleCatalogReadModelEntity> {
         var specification = Specification.where<RuntimeAgentLifecycleCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.runtimeAgentId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeAgentLifecycleCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeAgentId") as JpaExpression<UUID>).cast(String::class.java) })) }

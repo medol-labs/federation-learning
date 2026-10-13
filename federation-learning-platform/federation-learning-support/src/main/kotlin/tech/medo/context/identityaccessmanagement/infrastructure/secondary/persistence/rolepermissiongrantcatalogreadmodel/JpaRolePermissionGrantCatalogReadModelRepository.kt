@@ -1,11 +1,14 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.rolepermissiongrantcatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermissionGrantCatalogReadModel
 import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermissionGrantCatalogReadModelCriteria
 import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.RolePermissionGrantCatalogReadModelKey
@@ -16,16 +19,20 @@ import tech.medo.identityaccessmanagement.rolepermissiongrantcatalog.toReadModel
 @Repository
 class JpaRolePermissionGrantCatalogReadModelRepository(
     private val jpaRepository: SpringDataRolePermissionGrantCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: RolePermissionGrantCatalogReadModelQueryService
 ) : RolePermissionGrantCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RolePermissionGrantCatalogReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: RolePermissionGrantCatalogReadModelCriteria?, pageable: Pageable): Page<RolePermissionGrantCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: RolePermissionGrantCatalogReadModelKey): RolePermissionGrantCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: RolePermissionGrantCatalogReadModelKey): RolePermissionGrantCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: RolePermissionGrantCatalogReadModelKey): RolePermissionGrantCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -39,6 +46,24 @@ class JpaRolePermissionGrantCatalogReadModelRepository(
     override fun save(projection: RolePermissionGrantCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: RolePermissionGrantCatalogReadModelKey): Specification<RolePermissionGrantCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.and(
+                criteriaBuilder.equal(root.get<String>("roleCode"), id.roleCode),
+                criteriaBuilder.equal(root.get<String>("permissionCode"), id.permissionCode)
+            )
+        }
+
+    private fun accessSpecification(): Specification<RolePermissionGrantCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "IdentityAccessManagement",
+            readModelName = "RolePermissionGrantCatalog",
+            policy = ReadModelAccessPolicy(
+            name = "IdentityAccessManagementPublicAccess",
+            fields = emptyList<String>()
+        )
+        )
 
     private fun RolePermissionGrantCatalogReadModelEntity.toProjection(): RolePermissionGrantCatalogReadModelProjection =
         RolePermissionGrantCatalogReadModelProjection().also {

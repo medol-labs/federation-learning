@@ -1,11 +1,14 @@
 package tech.medo.identityaccessmanagement.infrastructure.secondary.persistence.permissioncatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.identityaccessmanagement.permissioncatalogs.PermissionCatalogReadModel
 import tech.medo.identityaccessmanagement.permissioncatalogs.PermissionCatalogReadModelCriteria
 import tech.medo.identityaccessmanagement.permissioncatalogs.PermissionCatalogReadModelProjection
@@ -15,16 +18,20 @@ import tech.medo.identityaccessmanagement.permissioncatalogs.toReadModel
 @Repository
 class JpaPermissionCatalogReadModelRepository(
     private val jpaRepository: SpringDataPermissionCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: PermissionCatalogReadModelQueryService
 ) : PermissionCatalogReadModelRepository {
     override fun findAll(pageable: Pageable): Page<PermissionCatalogReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: PermissionCatalogReadModelCriteria?, pageable: Pageable): Page<PermissionCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): PermissionCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): PermissionCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): PermissionCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -32,6 +39,21 @@ class JpaPermissionCatalogReadModelRepository(
     override fun save(projection: PermissionCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<PermissionCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("permissionId"), id)
+        }
+
+    private fun accessSpecification(): Specification<PermissionCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "IdentityAccessManagement",
+            readModelName = "PermissionCatalog",
+            policy = ReadModelAccessPolicy(
+            name = "IdentityAccessManagementPublicAccess",
+            fields = emptyList<String>()
+        )
+        )
 
     private fun PermissionCatalogReadModelEntity.toProjection(): PermissionCatalogReadModelProjection =
         PermissionCatalogReadModelProjection().also {

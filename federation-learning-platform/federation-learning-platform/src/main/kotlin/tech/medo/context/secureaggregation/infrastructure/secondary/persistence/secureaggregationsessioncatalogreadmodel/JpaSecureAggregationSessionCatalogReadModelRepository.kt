@@ -1,5 +1,6 @@
 package tech.medo.secureaggregation.infrastructure.secondary.persistence.secureaggregationsessioncatalogreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -12,6 +13,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModel
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModelCriteria
 import tech.medo.secureaggregation.secureaggregationsessioncatalog.SecureAggregationSessionCatalogReadModelProjection
@@ -21,6 +24,7 @@ import tech.medo.secureaggregation.secureaggregationsessioncatalog.toReadModel
 @Repository
 class JpaSecureAggregationSessionCatalogReadModelRepository(
     private val jpaRepository: SpringDataSecureAggregationSessionCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: SecureAggregationSessionCatalogReadModelQueryService,
     private val objectMapper: ObjectMapper
 ) : SecureAggregationSessionCatalogReadModelRepository {
@@ -28,10 +32,13 @@ class JpaSecureAggregationSessionCatalogReadModelRepository(
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: SecureAggregationSessionCatalogReadModelCriteria?, pageable: Pageable): Page<SecureAggregationSessionCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): SecureAggregationSessionCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): SecureAggregationSessionCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): SecureAggregationSessionCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -39,6 +46,21 @@ class JpaSecureAggregationSessionCatalogReadModelRepository(
     override fun save(projection: SecureAggregationSessionCatalogReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<SecureAggregationSessionCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("secureAggregationSessionId"), id)
+        }
+
+    private fun accessSpecification(): Specification<SecureAggregationSessionCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "SecureAggregation",
+            readModelName = "SecureAggregationSessionCatalog",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun SecureAggregationSessionCatalogReadModelEntity.toProjection(): SecureAggregationSessionCatalogReadModelProjection =
         SecureAggregationSessionCatalogReadModelProjection().also {

@@ -21,6 +21,8 @@ data class RegisterPersonalizedModelArtifactCommand(
     val modelArtifactDigest: String,
     val modelSignatureUri: String? = null,
     val modelSizeBytes: Int? = null,
+    val personalizedModelStorageLocation: String?,
+    val platformManagedArtifactRef: String?,
     val trainingJobId: UUID,
     val trainingJobObjective: String,
     val roundId: UUID,

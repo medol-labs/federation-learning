@@ -70,6 +70,7 @@ interface RuntimeIdentityCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeIdentityCatalogReadModel>
     fun findAllByCriteria(criteria: RuntimeIdentityCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeIdentityCatalogReadModel>
     fun findById(id: UUID): RuntimeIdentityCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeIdentityCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeIdentityCatalogReadModelProjection?
     fun save(projection: RuntimeIdentityCatalogReadModelProjection)
 }

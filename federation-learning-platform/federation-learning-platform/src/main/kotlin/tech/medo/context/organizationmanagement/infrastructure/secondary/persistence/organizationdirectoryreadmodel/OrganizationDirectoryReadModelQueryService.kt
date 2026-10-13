@@ -1,7 +1,5 @@
 package tech.medo.organizationmanagement.infrastructure.secondary.persistence.organizationdirectoryreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import tech.medo.organizationmanagement.domain.types.OrganizationType
 import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
-import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModel
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelCriteria
 import tech.medo.organizationmanagement.organizationdirectory.OrganizationDirectoryReadModelProjection
-import tech.medo.organizationmanagement.organizationdirectory.toReadModel
 
 @Service
-class OrganizationDirectoryReadModelQueryService(
-    private val repository: SpringDataOrganizationDirectoryReadModelRepository
-) : QueryService<OrganizationDirectoryReadModelEntity>() {
-    fun findByCriteria(criteria: OrganizationDirectoryReadModelCriteria?, pageable: Pageable): Page<OrganizationDirectoryReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: OrganizationDirectoryReadModelCriteria?): Specification<OrganizationDirectoryReadModelEntity> {
+class OrganizationDirectoryReadModelQueryService() : QueryService<OrganizationDirectoryReadModelEntity>() {
+    fun createSpecification(criteria: OrganizationDirectoryReadModelCriteria?): Specification<OrganizationDirectoryReadModelEntity> {
         var specification = Specification.where<OrganizationDirectoryReadModelEntity>(null)
         if (criteria != null) {
             criteria.organizationId?.let { specification = specification.and(buildSpecification(it, Function<Root<OrganizationDirectoryReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("organizationId") as JpaExpression<UUID>).cast(String::class.java) })) }

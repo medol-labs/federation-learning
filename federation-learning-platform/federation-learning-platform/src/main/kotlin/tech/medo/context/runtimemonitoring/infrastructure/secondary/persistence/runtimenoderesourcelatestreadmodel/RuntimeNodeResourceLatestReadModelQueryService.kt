@@ -1,7 +1,5 @@
 package tech.medo.runtimemonitoring.infrastructure.secondary.persistence.runtimenoderesourcelatestreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimemonitoring.runtimenoderesourcelatest.RuntimeNodeResourceLatestReadModel
 import tech.medo.runtimemonitoring.runtimenoderesourcelatest.RuntimeNodeResourceLatestReadModelCriteria
 import tech.medo.runtimemonitoring.runtimenoderesourcelatest.RuntimeNodeResourceLatestReadModelProjection
-import tech.medo.runtimemonitoring.runtimenoderesourcelatest.toReadModel
 
 @Service
-class RuntimeNodeResourceLatestReadModelQueryService(
-    private val repository: SpringDataRuntimeNodeResourceLatestReadModelRepository
-) : QueryService<RuntimeNodeResourceLatestReadModelEntity>() {
-    fun findByCriteria(criteria: RuntimeNodeResourceLatestReadModelCriteria?, pageable: Pageable): Page<RuntimeNodeResourceLatestReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: RuntimeNodeResourceLatestReadModelCriteria?): Specification<RuntimeNodeResourceLatestReadModelEntity> {
+class RuntimeNodeResourceLatestReadModelQueryService() : QueryService<RuntimeNodeResourceLatestReadModelEntity>() {
+    fun createSpecification(criteria: RuntimeNodeResourceLatestReadModelCriteria?): Specification<RuntimeNodeResourceLatestReadModelEntity> {
         var specification = Specification.where<RuntimeNodeResourceLatestReadModelEntity>(null)
         if (criteria != null) {
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeResourceLatestReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }

@@ -45,6 +45,8 @@ class ModelArtifactState @EntityCreator constructor() {
     var trainingJobId: UUID? = null
     var trainingJobObjective: String? = null
     var roundId: UUID? = null
+    var personalizedModelStorageLocation: String? = null
+    var platformManagedArtifactRef: String? = null
     var personalizationMode: String? = null
     var personalizationTargetType: String? = null
     var personalizationTargetId: UUID? = null
@@ -115,6 +117,8 @@ class ModelArtifactState @EntityCreator constructor() {
         modelArtifactDigest = event.modelArtifactDigest
         modelSignatureUri = event.modelSignatureUri
         modelSizeBytes = event.modelSizeBytes
+        personalizedModelStorageLocation = event.personalizedModelStorageLocation
+        platformManagedArtifactRef = event.platformManagedArtifactRef
         trainingJobId = event.trainingJobId
         trainingJobObjective = event.trainingJobObjective
         roundId = event.roundId

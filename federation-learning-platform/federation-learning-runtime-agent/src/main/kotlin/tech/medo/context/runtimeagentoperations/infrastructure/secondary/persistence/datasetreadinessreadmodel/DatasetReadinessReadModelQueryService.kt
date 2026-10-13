@@ -1,7 +1,5 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.datasetreadinessreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -15,20 +13,14 @@ import java.util.UUID
 import java.math.BigDecimal
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModel
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModelCriteria
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModelProjection
-import tech.medo.runtimeagentoperations.datasetreadiness.toReadModel
 
 @Service
 class DatasetReadinessReadModelQueryService(
-    private val repository: SpringDataDatasetReadinessReadModelRepository,
     private val objectMapper: com.fasterxml.jackson.databind.ObjectMapper
 ) : QueryService<DatasetReadinessReadModelEntity>() {
-    fun findByCriteria(criteria: DatasetReadinessReadModelCriteria?, pageable: Pageable): Page<DatasetReadinessReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: DatasetReadinessReadModelCriteria?): Specification<DatasetReadinessReadModelEntity> {
+    fun createSpecification(criteria: DatasetReadinessReadModelCriteria?): Specification<DatasetReadinessReadModelEntity> {
         var specification = Specification.where<DatasetReadinessReadModelEntity>(null)
         if (criteria != null) {
             criteria.datasetId?.let { specification = specification.and(buildSpecification(it, Function<Root<DatasetReadinessReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("datasetId") as JpaExpression<UUID>).cast(String::class.java) })) }

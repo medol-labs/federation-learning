@@ -30,6 +30,8 @@ class ModelArtifactCatalogReadModelCriteria {
     var modelArtifactDigest: StringFilter? = null
     var modelSignatureUri: StringFilter? = null
     var modelSizeBytes: IntegerFilter? = null
+    var personalizedModelStorageLocation: StringFilter? = null
+    var platformManagedArtifactRef: StringFilter? = null
     var trainingJobId: StringFilter? = null
     var roundId: StringFilter? = null
     var trainingJobObjective: StringFilter? = null
@@ -58,6 +60,8 @@ class ModelArtifactCatalogReadModelProjection : MetadataProjection {
     var modelArtifactDigest: String? = null
     var modelSignatureUri: String? = null
     var modelSizeBytes: Int? = null
+    var personalizedModelStorageLocation: String? = null
+    var platformManagedArtifactRef: String? = null
     var trainingJobId: UUID? = null
     var roundId: UUID? = null
     var trainingJobObjective: String? = null
@@ -92,6 +96,8 @@ fun ModelArtifactCatalogReadModelProjection.toReadModel(): ModelArtifactCatalogR
     modelArtifactDigest = modelArtifactDigest,
     modelSignatureUri = modelSignatureUri,
     modelSizeBytes = modelSizeBytes,
+    personalizedModelStorageLocation = personalizedModelStorageLocation,
+    platformManagedArtifactRef = platformManagedArtifactRef,
     trainingJobId = trainingJobId,
     roundId = roundId,
     trainingJobObjective = trainingJobObjective,
@@ -115,6 +121,7 @@ interface ModelArtifactCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<ModelArtifactCatalogReadModel>
     fun findAllByCriteria(criteria: ModelArtifactCatalogReadModelCriteria?, pageable: Pageable): Page<ModelArtifactCatalogReadModel>
     fun findById(id: UUID): ModelArtifactCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): ModelArtifactCatalogReadModel?
     fun findProjectionById(id: UUID): ModelArtifactCatalogReadModelProjection?
     fun save(projection: ModelArtifactCatalogReadModelProjection)
 }
@@ -133,6 +140,8 @@ data class ModelArtifactCatalogReadModel(
     val modelArtifactDigest: String?,
     val modelSignatureUri: String?,
     val modelSizeBytes: Int?,
+    val personalizedModelStorageLocation: String?,
+    val platformManagedArtifactRef: String?,
     val trainingJobId: UUID?,
     val roundId: UUID?,
     val trainingJobObjective: String?,

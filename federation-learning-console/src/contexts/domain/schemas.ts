@@ -39,13 +39,13 @@ export const TrainingRoundParticipantSchema = z.object({
   personalizationCohortId: z.string().uuid().optional().nullable(),
   personalizationProfileId: z.string().uuid().optional().nullable()
 });
+export const NotificationCategorySchema = z.enum(["SYSTEM", "DATA_EXCHANGE", "TRAINING", "RUNTIME", "SECURITY"]);
+export const NotificationSeveritySchema = z.enum(["INFO", "SUCCESS", "WARNING", "ERROR"]);
+export const NotificationToastPolicySchema = z.enum(["NONE", "DEFAULT", "IMPORTANT"]);
 export const DictionaryCodeSchema = z.string();
 export const DictionaryValueCodeSchema = z.string();
 export const LocaleCodeSchema = z.string();
 export const DisplayOrderSchema = z.coerce.number().int().min(0).max(999999);
-export const NotificationCategorySchema = z.enum(["SYSTEM", "DATA_EXCHANGE", "TRAINING", "RUNTIME", "SECURITY"]);
-export const NotificationSeveritySchema = z.enum(["INFO", "SUCCESS", "WARNING", "ERROR"]);
-export const NotificationToastPolicySchema = z.enum(["NONE", "DEFAULT", "IMPORTANT"]);
 
 export const RegisterOrganizationCommandSchema = z.object({
   organizationName: z.string(),
@@ -518,44 +518,6 @@ export const SubmitModelUpdateSubmissionCommandSchema = z.object({
 });
 export type SubmitModelUpdateSubmissionCommandInput = z.infer<typeof SubmitModelUpdateSubmissionCommandSchema>;
 
-export const RecordModelEvaluationPackageCommandSchema = z.object({
-  modelId: z.string().uuid(),
-  trainingJobId: z.string().uuid(),
-  evaluationReportId: z.string().uuid(),
-  experimentId: z.string().uuid(),
-  hyperparameterSnapshotId: z.string().uuid(),
-  reproducibilityManifestId: z.string().uuid(),
-  modelCardId: z.string().uuid(),
-  baselineModelId: z.string().uuid().optional().nullable(),
-});
-export type RecordModelEvaluationPackageCommandInput = z.infer<typeof RecordModelEvaluationPackageCommandSchema>;
-
-export const ApproveModelCommandSchema = z.object({
-  modelId: z.string().uuid(),
-  approvalNote: z.string().optional().nullable(),
-});
-export type ApproveModelCommandInput = z.infer<typeof ApproveModelCommandSchema>;
-
-export const PromoteModelToProductionCommandSchema = z.object({
-  modelId: z.string().uuid(),
-  releaseChannel: z.string(),
-  productionStage: z.string(),
-});
-export type PromoteModelToProductionCommandInput = z.infer<typeof PromoteModelToProductionCommandSchema>;
-
-export const RollbackModelCommandSchema = z.object({
-  modelId: z.string().uuid(),
-  previousModelId: z.string().uuid(),
-  rollbackReason: z.string(),
-});
-export type RollbackModelCommandInput = z.infer<typeof RollbackModelCommandSchema>;
-
-export const RetireModelCommandSchema = z.object({
-  modelId: z.string().uuid(),
-  retirementReason: z.string(),
-});
-export type RetireModelCommandInput = z.infer<typeof RetireModelCommandSchema>;
-
 export const RecordRuntimeTelemetryCommandSchema = z.object({
   nodeId: z.string().uuid(),
   runtimeAgentId: z.string().uuid(),
@@ -631,6 +593,72 @@ export const FailSecureAggregationSessionCommandSchema = z.object({
   failureReason: z.string(),
 });
 export type FailSecureAggregationSessionCommandInput = z.infer<typeof FailSecureAggregationSessionCommandSchema>;
+
+export const PublishSystemNotificationCommandSchema = z.object({
+  recipientUserId: z.string(),
+  recipientRole: z.string().optional().nullable(),
+  category: NotificationCategorySchema,
+  severity: NotificationSeveritySchema,
+  messageKey: z.string(),
+  messageArgsJson: z.string().optional().nullable(),
+  fallbackTitle: z.string(),
+  fallbackBody: z.string().optional().nullable(),
+  targetType: z.string().optional().nullable(),
+  targetId: z.string().optional().nullable(),
+  targetRoute: z.string().optional().nullable(),
+  toastPolicy: NotificationToastPolicySchema,
+  publishedAt: dateTimeLocalSchema,
+  status: z.string(),
+});
+export type PublishSystemNotificationCommandInput = z.infer<typeof PublishSystemNotificationCommandSchema>;
+
+export const MarkSystemNotificationReadCommandSchema = z.object({
+  notificationId: z.string().uuid(),
+  recipientUserId: z.string(),
+  readAt: dateTimeLocalSchema,
+});
+export type MarkSystemNotificationReadCommandInput = z.infer<typeof MarkSystemNotificationReadCommandSchema>;
+
+export const MarkAllSystemNotificationsReadCommandSchema = z.object({
+  recipientUserId: z.string(),
+  readAt: dateTimeLocalSchema,
+});
+export type MarkAllSystemNotificationsReadCommandInput = z.infer<typeof MarkAllSystemNotificationsReadCommandSchema>;
+
+export const RequestDataImportCommandSchema = z.object({
+  dataImportJobId: z.string().uuid(),
+  commandName: z.string(),
+  resourceName: z.string(),
+  originalFileName: z.string(),
+  filePath: z.string(),
+  requestedLocale: z.string().optional().nullable(),
+  requestedAt: dateTimeLocalSchema,
+  requestHash: z.string(),
+  status: z.string(),
+});
+export type RequestDataImportCommandInput = z.infer<typeof RequestDataImportCommandSchema>;
+
+export const RequestDataExportCommandSchema = z.object({
+  dataExportJobId: z.string().uuid(),
+  resourceName: z.string(),
+  criteriaJson: z.string(),
+  sortJson: z.string(),
+  columnsJson: z.string(),
+  requestedLocale: z.string().optional().nullable(),
+  requestedAt: dateTimeLocalSchema,
+  snapshotUpperBound: dateTimeLocalSchema,
+  requestHash: z.string(),
+  fileName: z.string(),
+  status: z.string(),
+});
+export type RequestDataExportCommandInput = z.infer<typeof RequestDataExportCommandSchema>;
+
+export const DownloadDataExportFileCommandSchema = z.object({
+  dataExportJobId: z.string().uuid(),
+  fileName: z.string(),
+  downloadUri: z.string(),
+});
+export type DownloadDataExportFileCommandInput = z.infer<typeof DownloadDataExportFileCommandSchema>;
 
 export const UploadFileCommandSchema = z.object({
   uploadedFile: z.string(),
@@ -785,70 +813,4 @@ export const IssueServiceAccountApiTokenCommandSchema = z.object({
   tokenName: z.string(),
 });
 export type IssueServiceAccountApiTokenCommandInput = z.infer<typeof IssueServiceAccountApiTokenCommandSchema>;
-
-export const PublishSystemNotificationCommandSchema = z.object({
-  recipientUserId: z.string(),
-  recipientRole: z.string().optional().nullable(),
-  category: NotificationCategorySchema,
-  severity: NotificationSeveritySchema,
-  messageKey: z.string(),
-  messageArgsJson: z.string().optional().nullable(),
-  fallbackTitle: z.string(),
-  fallbackBody: z.string().optional().nullable(),
-  targetType: z.string().optional().nullable(),
-  targetId: z.string().optional().nullable(),
-  targetRoute: z.string().optional().nullable(),
-  toastPolicy: NotificationToastPolicySchema,
-  publishedAt: dateTimeLocalSchema,
-  status: z.string(),
-});
-export type PublishSystemNotificationCommandInput = z.infer<typeof PublishSystemNotificationCommandSchema>;
-
-export const MarkSystemNotificationReadCommandSchema = z.object({
-  notificationId: z.string().uuid(),
-  recipientUserId: z.string(),
-  readAt: dateTimeLocalSchema,
-});
-export type MarkSystemNotificationReadCommandInput = z.infer<typeof MarkSystemNotificationReadCommandSchema>;
-
-export const MarkAllSystemNotificationsReadCommandSchema = z.object({
-  recipientUserId: z.string(),
-  readAt: dateTimeLocalSchema,
-});
-export type MarkAllSystemNotificationsReadCommandInput = z.infer<typeof MarkAllSystemNotificationsReadCommandSchema>;
-
-export const RequestDataImportCommandSchema = z.object({
-  dataImportJobId: z.string().uuid(),
-  commandName: z.string(),
-  resourceName: z.string(),
-  originalFileName: z.string(),
-  filePath: z.string(),
-  requestedLocale: z.string().optional().nullable(),
-  requestedAt: dateTimeLocalSchema,
-  requestHash: z.string(),
-  status: z.string(),
-});
-export type RequestDataImportCommandInput = z.infer<typeof RequestDataImportCommandSchema>;
-
-export const RequestDataExportCommandSchema = z.object({
-  dataExportJobId: z.string().uuid(),
-  resourceName: z.string(),
-  criteriaJson: z.string(),
-  sortJson: z.string(),
-  columnsJson: z.string(),
-  requestedLocale: z.string().optional().nullable(),
-  requestedAt: dateTimeLocalSchema,
-  snapshotUpperBound: dateTimeLocalSchema,
-  requestHash: z.string(),
-  fileName: z.string(),
-  status: z.string(),
-});
-export type RequestDataExportCommandInput = z.infer<typeof RequestDataExportCommandSchema>;
-
-export const DownloadDataExportFileCommandSchema = z.object({
-  dataExportJobId: z.string().uuid(),
-  fileName: z.string(),
-  downloadUri: z.string(),
-});
-export type DownloadDataExportFileCommandInput = z.infer<typeof DownloadDataExportFileCommandSchema>;
 

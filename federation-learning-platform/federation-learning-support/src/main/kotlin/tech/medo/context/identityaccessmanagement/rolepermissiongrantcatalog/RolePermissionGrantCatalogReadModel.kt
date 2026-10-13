@@ -61,6 +61,7 @@ interface RolePermissionGrantCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RolePermissionGrantCatalogReadModel>
     fun findAllByCriteria(criteria: RolePermissionGrantCatalogReadModelCriteria?, pageable: Pageable): Page<RolePermissionGrantCatalogReadModel>
     fun findById(id: RolePermissionGrantCatalogReadModelKey): RolePermissionGrantCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: RolePermissionGrantCatalogReadModelKey): RolePermissionGrantCatalogReadModel?
     fun findProjectionById(id: RolePermissionGrantCatalogReadModelKey): RolePermissionGrantCatalogReadModelProjection?
     fun findProjectionsByRoleCode(roleCode: String): List<RolePermissionGrantCatalogReadModelProjection>
     fun findProjectionsByPermissionCode(permissionCode: String): List<RolePermissionGrantCatalogReadModelProjection>

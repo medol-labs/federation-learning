@@ -1,27 +1,21 @@
 package tech.medo.runtimemonitoring.detectruntimeagentoffline
 
-import tech.medo.runtimemonitoring.runtimetelemetrylatest.RuntimeTelemetryLatestReadModel
-import tech.medo.runtimemonitoring.runtimetelemetrylatest.RuntimeTelemetryLatestReadModelRepository
+import tech.medo.runtimemonitoring.events.RuntimeTelemetryRecordedEvent
 import tech.medo.runtimemonitoring.detectruntimeagentoffline.DetectRuntimeAgentOfflineCommand
 import java.util.UUID;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
-import org.springframework.data.domain.PageRequest
-import org.springframework.scheduling.annotation.Scheduled
+import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("automation-runtime-monitoring-detect-runtime-agent-offline")
 @Component
-class DetectOfflineRuntimeAgentFromTelemetryProcessor(
-    private val repository: RuntimeTelemetryLatestReadModelRepository,
-    private val commandGateway: CommandGateway
-) {
-    @Scheduled(fixedDelayString = "\${automation.detect-offline-runtime-agent-from-telemetry.fixed-delay-ms:5000}")
-    fun processTodo() {
-        repository.findAll(PageRequest.of(0, 100))
-            .content
-            .asSequence()
-            .filter { todo -> todo.offlineDetectionPending == true && todo.nodeId != null && todo.runtimeAgentId != null && todo.offlineReason != null }
-            .forEach { todo ->
-                commandGateway.send(DetectRuntimeAgentOfflineCommand(nodeId = todo.nodeId!!, runtimeAgentId = todo.runtimeAgentId!!, federationId = todo.federationId, federationName = todo.federationName, trainingJobId = todo.trainingJobId, trainingJobObjective = todo.trainingJobObjective, roundExecutionId = todo.roundExecutionId, runtimeNodeName = todo.runtimeNodeName, offlineReason = todo.offlineReason!!))
-            }
-    }
+class DetectOfflineRuntimeAgentFromTelemetryProcessor(private val commandGateway: CommandGateway) {
+    @EventHandler
+    fun on(event: RuntimeTelemetryRecordedEvent): java.util.concurrent.CompletableFuture<*> =
+        if (event.offlineDetectionPending == true) {
+            commandGateway.send(DetectRuntimeAgentOfflineCommand(nodeId = event.nodeId, runtimeAgentId = event.runtimeAgentId, federationId = event.federationId, federationName = event.federationName, trainingJobId = event.trainingJobId, trainingJobObjective = event.trainingJobObjective, roundExecutionId = event.roundExecutionId, runtimeNodeName = event.runtimeNodeName, offlineReason = event.offlineReason!!)).resultMessage
+        } else {
+            java.util.concurrent.CompletableFuture.completedFuture(null)
+        }
 }

@@ -1,5 +1,6 @@
 package tech.medo.runtimeprovisioning.infrastructure.secondary.persistence.runtimeinstallationguidereadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Repository
 import java.util.UUID;
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModel
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModelCriteria
 import tech.medo.runtimeprovisioning.runtimeinstallationguide.RuntimeInstallationGuideReadModelProjection
@@ -16,16 +19,20 @@ import tech.medo.runtimeprovisioning.runtimeinstallationguide.toReadModel
 @Repository
 class JpaRuntimeInstallationGuideReadModelRepository(
     private val jpaRepository: SpringDataRuntimeInstallationGuideReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: RuntimeInstallationGuideReadModelQueryService
 ) : RuntimeInstallationGuideReadModelRepository {
     override fun findAll(pageable: Pageable): Page<RuntimeInstallationGuideReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: RuntimeInstallationGuideReadModelCriteria?, pageable: Pageable): Page<RuntimeInstallationGuideReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): RuntimeInstallationGuideReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): RuntimeInstallationGuideReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): RuntimeInstallationGuideReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -33,6 +40,21 @@ class JpaRuntimeInstallationGuideReadModelRepository(
     override fun save(projection: RuntimeInstallationGuideReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<RuntimeInstallationGuideReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("runtimeInstallationPlanId"), id)
+        }
+
+    private fun accessSpecification(): Specification<RuntimeInstallationGuideReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "RuntimeProvisioning",
+            readModelName = "RuntimeInstallationGuide",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun RuntimeInstallationGuideReadModelEntity.toProjection(): RuntimeInstallationGuideReadModelProjection =
         RuntimeInstallationGuideReadModelProjection().also {

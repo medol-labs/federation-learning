@@ -1,11 +1,14 @@
 package tech.medo.federationmanagement.infrastructure.secondary.persistence.federationmembershipdirectoryreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 import java.util.UUID;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModel
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelCriteria
 import tech.medo.federationmanagement.federationmembershipdirectory.FederationMembershipDirectoryReadModelKey
@@ -16,16 +19,20 @@ import tech.medo.federationmanagement.federationmembershipdirectory.toReadModel
 @Repository
 class JpaFederationMembershipDirectoryReadModelRepository(
     private val jpaRepository: SpringDataFederationMembershipDirectoryReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: FederationMembershipDirectoryReadModelQueryService
 ) : FederationMembershipDirectoryReadModelRepository {
     override fun findAll(pageable: Pageable): Page<FederationMembershipDirectoryReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: FederationMembershipDirectoryReadModelCriteria?, pageable: Pageable): Page<FederationMembershipDirectoryReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: FederationMembershipDirectoryReadModelKey): FederationMembershipDirectoryReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: FederationMembershipDirectoryReadModelKey): FederationMembershipDirectoryReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: FederationMembershipDirectoryReadModelKey): FederationMembershipDirectoryReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -39,6 +46,24 @@ class JpaFederationMembershipDirectoryReadModelRepository(
     override fun save(projection: FederationMembershipDirectoryReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: FederationMembershipDirectoryReadModelKey): Specification<FederationMembershipDirectoryReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.and(
+                criteriaBuilder.equal(root.get<UUID>("federationId"), id.federationId),
+                criteriaBuilder.equal(root.get<UUID>("organizationId"), id.organizationId)
+            )
+        }
+
+    private fun accessSpecification(): Specification<FederationMembershipDirectoryReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "FederationManagement",
+            readModelName = "FederationMembershipDirectory",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun FederationMembershipDirectoryReadModelEntity.toProjection(): FederationMembershipDirectoryReadModelProjection =
         FederationMembershipDirectoryReadModelProjection().also {

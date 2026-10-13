@@ -78,6 +78,7 @@ interface TrainingAlertCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<TrainingAlertCatalogReadModel>
     fun findAllByCriteria(criteria: TrainingAlertCatalogReadModelCriteria?, pageable: Pageable): Page<TrainingAlertCatalogReadModel>
     fun findById(id: UUID): TrainingAlertCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): TrainingAlertCatalogReadModel?
     fun findProjectionById(id: UUID): TrainingAlertCatalogReadModelProjection?
     fun save(projection: TrainingAlertCatalogReadModelProjection)
 }

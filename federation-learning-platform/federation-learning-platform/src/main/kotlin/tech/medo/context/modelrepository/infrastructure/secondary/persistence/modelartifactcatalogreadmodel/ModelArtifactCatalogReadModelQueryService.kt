@@ -1,7 +1,5 @@
 package tech.medo.modelrepository.infrastructure.secondary.persistence.modelartifactcatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -15,19 +13,12 @@ import java.util.UUID
 import tech.medo.modelrepository.domain.states.ModelArtifactStateEnum
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModel
 import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModelCriteria
 import tech.medo.modelrepository.modelartifactcatalog.ModelArtifactCatalogReadModelProjection
-import tech.medo.modelrepository.modelartifactcatalog.toReadModel
 
 @Service
-class ModelArtifactCatalogReadModelQueryService(
-    private val repository: SpringDataModelArtifactCatalogReadModelRepository
-) : QueryService<ModelArtifactCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: ModelArtifactCatalogReadModelCriteria?, pageable: Pageable): Page<ModelArtifactCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: ModelArtifactCatalogReadModelCriteria?): Specification<ModelArtifactCatalogReadModelEntity> {
+class ModelArtifactCatalogReadModelQueryService() : QueryService<ModelArtifactCatalogReadModelEntity>() {
+    fun createSpecification(criteria: ModelArtifactCatalogReadModelCriteria?): Specification<ModelArtifactCatalogReadModelEntity> {
         var specification = Specification.where<ModelArtifactCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.modelId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("modelId") as JpaExpression<UUID>).cast(String::class.java) })) }
@@ -43,6 +34,8 @@ class ModelArtifactCatalogReadModelQueryService(
             criteria.modelArtifactDigest?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelArtifactDigest") })) }
             criteria.modelSignatureUri?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("modelSignatureUri") })) }
             criteria.modelSizeBytes?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<Int>> { root -> root.get("modelSizeBytes") })) }
+            criteria.personalizedModelStorageLocation?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("personalizedModelStorageLocation") })) }
+            criteria.platformManagedArtifactRef?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("platformManagedArtifactRef") })) }
             criteria.trainingJobId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("trainingJobId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.roundId?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("roundId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.trainingJobObjective?.let { specification = specification.and(buildSpecification(it, Function<Root<ModelArtifactCatalogReadModelEntity>, Expression<String>> { root -> root.get("trainingJobObjective") })) }
@@ -124,6 +117,8 @@ class ModelArtifactCatalogReadModelQueryService(
             it.modelArtifactDigest = this@toProjection.modelArtifactDigest
             it.modelSignatureUri = this@toProjection.modelSignatureUri
             it.modelSizeBytes = this@toProjection.modelSizeBytes
+            it.personalizedModelStorageLocation = this@toProjection.personalizedModelStorageLocation
+            it.platformManagedArtifactRef = this@toProjection.platformManagedArtifactRef
             it.trainingJobId = this@toProjection.trainingJobId
             it.roundId = this@toProjection.roundId
             it.trainingJobObjective = this@toProjection.trainingJobObjective

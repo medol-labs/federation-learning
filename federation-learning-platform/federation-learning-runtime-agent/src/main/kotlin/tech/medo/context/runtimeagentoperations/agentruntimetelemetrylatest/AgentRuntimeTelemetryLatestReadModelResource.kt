@@ -35,6 +35,6 @@ class AgentRuntimeTelemetryLatestReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_runtime_telemetry_latest:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<AgentRuntimeTelemetryLatestReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

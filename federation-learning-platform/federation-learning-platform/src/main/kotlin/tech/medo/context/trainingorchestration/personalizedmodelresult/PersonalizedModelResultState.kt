@@ -36,6 +36,8 @@ class PersonalizedModelResultState @EntityCreator constructor() {
     var personalizationProfileId: UUID? = null
     var personalizedModelArtifactRef: String? = null
     var personalizedModelArtifactDigest: String? = null
+    var personalizedModelStorageLocation: String? = null
+    var platformManagedArtifactRef: String? = null
     var personalizedMetricsArtifactRef: String? = null
     var personalizedAccuracy: BigDecimal? = null
     var personalizationLift: BigDecimal? = null
@@ -62,6 +64,8 @@ class PersonalizedModelResultState @EntityCreator constructor() {
         personalizationProfileId = event.personalizationProfileId
         personalizedModelArtifactRef = event.personalizedModelArtifactRef
         personalizedModelArtifactDigest = event.personalizedModelArtifactDigest
+        personalizedModelStorageLocation = event.personalizedModelStorageLocation
+        platformManagedArtifactRef = event.platformManagedArtifactRef
         personalizedMetricsArtifactRef = event.personalizedMetricsArtifactRef
         personalizedAccuracy = event.personalizedAccuracy
         personalizationLift = event.personalizationLift

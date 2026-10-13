@@ -155,6 +155,7 @@ interface DatasetReadinessReadModelRepository {
     fun findAll(pageable: Pageable): Page<DatasetReadinessReadModel>
     fun findAllByCriteria(criteria: DatasetReadinessReadModelCriteria?, pageable: Pageable): Page<DatasetReadinessReadModel>
     fun findById(id: UUID): DatasetReadinessReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): DatasetReadinessReadModel?
     fun findProjectionById(id: UUID): DatasetReadinessReadModelProjection?
     fun save(projection: DatasetReadinessReadModelProjection)
 }

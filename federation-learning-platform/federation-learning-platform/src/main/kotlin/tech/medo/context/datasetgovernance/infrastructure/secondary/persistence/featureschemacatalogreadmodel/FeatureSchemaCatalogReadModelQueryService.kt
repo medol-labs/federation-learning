@@ -1,7 +1,5 @@
 package tech.medo.datasetgovernance.infrastructure.secondary.persistence.featureschemacatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,20 +12,14 @@ import java.time.LocalDateTime
 import java.util.UUID
 import tech.medo.datasetgovernance.domain.types.FeatureDefinition
 import tech.medo.datasetgovernance.domain.types.LabelDefinition
-import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModel
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelCriteria
 import tech.medo.datasetgovernance.featureschemacatalog.FeatureSchemaCatalogReadModelProjection
-import tech.medo.datasetgovernance.featureschemacatalog.toReadModel
 
 @Service
 class FeatureSchemaCatalogReadModelQueryService(
-    private val repository: SpringDataFeatureSchemaCatalogReadModelRepository,
     private val objectMapper: com.fasterxml.jackson.databind.ObjectMapper
 ) : QueryService<FeatureSchemaCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: FeatureSchemaCatalogReadModelCriteria?, pageable: Pageable): Page<FeatureSchemaCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: FeatureSchemaCatalogReadModelCriteria?): Specification<FeatureSchemaCatalogReadModelEntity> {
+    fun createSpecification(criteria: FeatureSchemaCatalogReadModelCriteria?): Specification<FeatureSchemaCatalogReadModelEntity> {
         var specification = Specification.where<FeatureSchemaCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.featureSchemaId?.let { specification = specification.and(buildSpecification(it, Function<Root<FeatureSchemaCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("featureSchemaId") as JpaExpression<UUID>).cast(String::class.java) })) }

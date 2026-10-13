@@ -132,6 +132,7 @@ interface SecureAggregationSessionCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<SecureAggregationSessionCatalogReadModel>
     fun findAllByCriteria(criteria: SecureAggregationSessionCatalogReadModelCriteria?, pageable: Pageable): Page<SecureAggregationSessionCatalogReadModel>
     fun findById(id: UUID): SecureAggregationSessionCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): SecureAggregationSessionCatalogReadModel?
     fun findProjectionById(id: UUID): SecureAggregationSessionCatalogReadModelProjection?
     fun save(projection: SecureAggregationSessionCatalogReadModelProjection)
 }

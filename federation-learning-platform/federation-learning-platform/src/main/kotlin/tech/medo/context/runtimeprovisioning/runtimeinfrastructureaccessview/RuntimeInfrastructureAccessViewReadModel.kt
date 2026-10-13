@@ -121,6 +121,7 @@ interface RuntimeInfrastructureAccessViewReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeInfrastructureAccessViewReadModel>
     fun findAllByCriteria(criteria: RuntimeInfrastructureAccessViewReadModelCriteria?, pageable: Pageable): Page<RuntimeInfrastructureAccessViewReadModel>
     fun findById(id: UUID): RuntimeInfrastructureAccessViewReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeInfrastructureAccessViewReadModel?
     fun findProjectionById(id: UUID): RuntimeInfrastructureAccessViewReadModelProjection?
     fun save(projection: RuntimeInfrastructureAccessViewReadModelProjection)
 }

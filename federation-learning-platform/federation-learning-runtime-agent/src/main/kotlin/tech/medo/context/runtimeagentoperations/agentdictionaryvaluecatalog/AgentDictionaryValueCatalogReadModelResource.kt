@@ -35,6 +35,6 @@ class AgentDictionaryValueCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_dictionary_value_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<AgentDictionaryValueCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

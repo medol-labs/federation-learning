@@ -58,6 +58,7 @@ interface CurrentRecommendedFeatureSchemaCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<CurrentRecommendedFeatureSchemaCatalogReadModel>
     fun findAllByCriteria(criteria: CurrentRecommendedFeatureSchemaCatalogReadModelCriteria?, pageable: Pageable): Page<CurrentRecommendedFeatureSchemaCatalogReadModel>
     fun findById(id: String): CurrentRecommendedFeatureSchemaCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: String): CurrentRecommendedFeatureSchemaCatalogReadModel?
     fun findProjectionById(id: String): CurrentRecommendedFeatureSchemaCatalogReadModelProjection?
     fun save(projection: CurrentRecommendedFeatureSchemaCatalogReadModelProjection)
 }

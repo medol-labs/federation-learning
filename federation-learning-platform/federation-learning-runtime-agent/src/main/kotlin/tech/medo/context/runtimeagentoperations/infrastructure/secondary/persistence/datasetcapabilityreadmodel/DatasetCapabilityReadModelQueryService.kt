@@ -1,7 +1,5 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.datasetcapabilityreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -17,20 +15,14 @@ import tech.medo.runtimeagentoperations.domain.types.LabelDefinition
 import java.math.BigDecimal
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModel
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModelCriteria
 import tech.medo.runtimeagentoperations.datasetcapability.DatasetCapabilityReadModelProjection
-import tech.medo.runtimeagentoperations.datasetcapability.toReadModel
 
 @Service
 class DatasetCapabilityReadModelQueryService(
-    private val repository: SpringDataDatasetCapabilityReadModelRepository,
     private val objectMapper: com.fasterxml.jackson.databind.ObjectMapper
 ) : QueryService<DatasetCapabilityReadModelEntity>() {
-    fun findByCriteria(criteria: DatasetCapabilityReadModelCriteria?, pageable: Pageable): Page<DatasetCapabilityReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: DatasetCapabilityReadModelCriteria?): Specification<DatasetCapabilityReadModelEntity> {
+    fun createSpecification(criteria: DatasetCapabilityReadModelCriteria?): Specification<DatasetCapabilityReadModelEntity> {
         var specification = Specification.where<DatasetCapabilityReadModelEntity>(null)
         if (criteria != null) {
             criteria.datasetId?.let { specification = specification.and(buildSpecification(it, Function<Root<DatasetCapabilityReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("datasetId") as JpaExpression<UUID>).cast(String::class.java) })) }

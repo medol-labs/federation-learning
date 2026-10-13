@@ -1,5 +1,6 @@
 package tech.medo.systemnotification.infrastructure.secondary.persistence.systemnotificationsummaryreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -11,6 +12,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import tech.medo.systemnotification.domain.types.NotificationToastPolicy;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.systemnotification.systemnotificationcatalog.SystemNotificationSummaryReadModel
 import tech.medo.systemnotification.systemnotificationcatalog.SystemNotificationSummaryReadModelCriteria
 import tech.medo.systemnotification.systemnotificationcatalog.SystemNotificationSummaryReadModelProjection
@@ -20,16 +23,20 @@ import tech.medo.systemnotification.systemnotificationcatalog.toReadModel
 @Repository
 class JpaSystemNotificationSummaryReadModelRepository(
     private val jpaRepository: SpringDataSystemNotificationSummaryReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: SystemNotificationSummaryReadModelQueryService
 ) : SystemNotificationSummaryReadModelRepository {
     override fun findAll(pageable: Pageable): Page<SystemNotificationSummaryReadModel> =
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: SystemNotificationSummaryReadModelCriteria?, pageable: Pageable): Page<SystemNotificationSummaryReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: String): SystemNotificationSummaryReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: String): SystemNotificationSummaryReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: String): SystemNotificationSummaryReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -37,6 +44,21 @@ class JpaSystemNotificationSummaryReadModelRepository(
     override fun save(projection: SystemNotificationSummaryReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: String): Specification<SystemNotificationSummaryReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<String>("recipientUserId"), id)
+        }
+
+    private fun accessSpecification(): Specification<SystemNotificationSummaryReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "SystemNotification",
+            readModelName = "SystemNotificationSummary",
+            policy = ReadModelAccessPolicy(
+            name = "SystemNotificationPublicAccess",
+            fields = emptyList<String>()
+        )
+        )
 
     private fun SystemNotificationSummaryReadModelEntity.toProjection(): SystemNotificationSummaryReadModelProjection =
         SystemNotificationSummaryReadModelProjection().also {

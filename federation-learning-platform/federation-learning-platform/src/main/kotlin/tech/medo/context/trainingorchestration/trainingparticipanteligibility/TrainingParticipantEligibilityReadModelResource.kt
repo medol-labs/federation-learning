@@ -35,6 +35,6 @@ class TrainingParticipantEligibilityReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('training_participant_eligibility:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<TrainingParticipantEligibilityReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

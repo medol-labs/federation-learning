@@ -35,6 +35,6 @@ class AgentRuntimeNodeInventoryCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_runtime_node_inventory_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<AgentRuntimeNodeInventoryCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

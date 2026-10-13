@@ -31,7 +31,6 @@ const chapterIcons: Record<string, ReactNode> = {
   federationmanagement: <Network />,
   fileupload: <FileUp />,
   identityaccessmanagement: <Shield />,
-  modellifecycle: <Brain />,
   modelrepository: <Boxes />,
   organizationmanagement: <Users />,
   runtimegovernance: <Network />,

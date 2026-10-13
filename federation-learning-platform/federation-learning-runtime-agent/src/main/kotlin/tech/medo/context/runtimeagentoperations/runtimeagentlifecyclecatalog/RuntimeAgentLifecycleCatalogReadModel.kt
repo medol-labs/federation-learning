@@ -101,6 +101,7 @@ interface RuntimeAgentLifecycleCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeAgentLifecycleCatalogReadModel>
     fun findAllByCriteria(criteria: RuntimeAgentLifecycleCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeAgentLifecycleCatalogReadModel>
     fun findById(id: UUID): RuntimeAgentLifecycleCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeAgentLifecycleCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeAgentLifecycleCatalogReadModelProjection?
     fun save(projection: RuntimeAgentLifecycleCatalogReadModelProjection)
 }

@@ -151,6 +151,16 @@ export const PersonalizedModelCatalogShow = () => {
             </div>
             <Separator />
             <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.personalized_model_catalog.fields.personalizedModelStorageLocation.label", "Personalized Model Storage Location")}</h4>
+              {renderFieldOverride(frontendComposition, "field:personalized-model-catalog:display:personalizedModelStorageLocation", { value: record?.personalizedModelStorageLocation, record, resource: "personalized-model-catalog", field: "personalizedModelStorageLocation", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizedModelStorageLocation, t, dictionaryLabel, undefined, "PERSONALIZED_MODEL_STORAGE_LOCATION")}</p>}
+            </div>
+            <Separator />
+            <div>
+              <h4 className="mb-2 text-sm font-medium">{t("resources.personalized_model_catalog.fields.platformManagedArtifactRef.label", "Platform Managed Artifact Ref")}</h4>
+              {renderFieldOverride(frontendComposition, "field:personalized-model-catalog:display:platformManagedArtifactRef", { value: record?.platformManagedArtifactRef, record, resource: "personalized-model-catalog", field: "platformManagedArtifactRef", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.platformManagedArtifactRef, t, dictionaryLabel, undefined)}</p>}
+            </div>
+            <Separator />
+            <div>
               <h4 className="mb-2 text-sm font-medium">{t("resources.personalized_model_catalog.fields.personalizedMetricsArtifactRef.label", "Personalized Metrics Artifact Ref")}</h4>
               {renderFieldOverride(frontendComposition, "field:personalized-model-catalog:display:personalizedMetricsArtifactRef", { value: record?.personalizedMetricsArtifactRef, record, resource: "personalized-model-catalog", field: "personalizedMetricsArtifactRef", view: "display" }) ?? <p className="text-sm text-muted-foreground">{formatValue(record?.personalizedMetricsArtifactRef, t, dictionaryLabel, undefined)}</p>}
             </div>

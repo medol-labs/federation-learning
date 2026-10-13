@@ -58,6 +58,7 @@ interface AgentOrganizationDirectoryReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentOrganizationDirectoryReadModel>
     fun findAllByCriteria(criteria: AgentOrganizationDirectoryReadModelCriteria?, pageable: Pageable): Page<AgentOrganizationDirectoryReadModel>
     fun findById(id: UUID): AgentOrganizationDirectoryReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): AgentOrganizationDirectoryReadModel?
     fun findProjectionById(id: UUID): AgentOrganizationDirectoryReadModelProjection?
     fun save(projection: AgentOrganizationDirectoryReadModelProjection)
 }

@@ -205,6 +205,7 @@ class LocalDockerComposeStartRoundExecutionAdapterTest {
                 findAll(pageable)
 
             override fun findById(id: UUID): RuntimeDatasetBindingCatalogReadModel? = null
+            override fun findByIdWithAccessPolicy(id: UUID): RuntimeDatasetBindingCatalogReadModel? = findById(id)
             override fun findProjectionById(id: UUID): RuntimeDatasetBindingCatalogReadModelProjection? = null
             override fun save(projection: RuntimeDatasetBindingCatalogReadModelProjection) = Unit
         }

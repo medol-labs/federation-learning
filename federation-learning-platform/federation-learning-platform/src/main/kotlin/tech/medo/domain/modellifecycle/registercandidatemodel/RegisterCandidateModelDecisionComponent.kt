@@ -1,7 +1,0 @@
-package tech.medo.domain.modellifecycle.registercandidatemodel
-
-import org.springframework.stereotype.Component
-import tech.medo.modellifecycle.registercandidatemodel.RegisterCandidateModelDecision
-
-@Component
-class RegisterCandidateModelDecisionComponent : RegisterCandidateModelDecision

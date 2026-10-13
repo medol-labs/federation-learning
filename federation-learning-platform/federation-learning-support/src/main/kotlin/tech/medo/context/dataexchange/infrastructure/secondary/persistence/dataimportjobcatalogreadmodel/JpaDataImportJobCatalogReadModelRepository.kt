@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.dataexchange.dataimportjob.DataImportJobCatalogReadModel
 import tech.medo.dataexchange.dataimportjob.DataImportJobCatalogReadModelCriteria
 import tech.medo.dataexchange.dataimportjob.DataImportJobCatalogReadModelProjection
@@ -20,16 +22,20 @@ import tech.medo.dataexchange.dataimportjob.toReadModel
 @Repository
 class JpaDataImportJobCatalogReadModelRepository(
     private val jpaRepository: SpringDataDataImportJobCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: DataImportJobCatalogReadModelQueryService
 ) : DataImportJobCatalogReadModelRepository {
     override fun findAllByFilter(commandName: String?, resourceName: String?, status: String?, pageable: Pageable): Page<DataImportJobCatalogReadModel> =
-        jpaRepository.findAll(filters(commandName, resourceName, status), pageable).map { it.toProjection().toReadModel() }
+        jpaRepository.findAll(filters(commandName, resourceName, status).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findAllByCriteria(criteria: DataImportJobCatalogReadModelCriteria?, pageable: Pageable): Page<DataImportJobCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): DataImportJobCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): DataImportJobCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): DataImportJobCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -47,6 +53,21 @@ class JpaDataImportJobCatalogReadModelRepository(
             criteriaBuilder.and(*predicates.toTypedArray())
         }
 
+
+    private fun idSpecification(id: UUID): Specification<DataImportJobCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("dataImportJobId"), id)
+        }
+
+    private fun accessSpecification(): Specification<DataImportJobCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "DataExchange",
+            readModelName = "DataImportJobCatalog",
+            policy = ReadModelAccessPolicy(
+            name = "DataExchangePublicAccess",
+            fields = emptyList<String>()
+        )
+        )
 
     private fun DataImportJobCatalogReadModelEntity.toProjection(): DataImportJobCatalogReadModelProjection =
         DataImportJobCatalogReadModelProjection().also {

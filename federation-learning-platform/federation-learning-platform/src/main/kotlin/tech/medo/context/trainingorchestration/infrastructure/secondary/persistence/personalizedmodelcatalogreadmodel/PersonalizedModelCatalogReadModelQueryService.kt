@@ -1,7 +1,5 @@
 package tech.medo.trainingorchestration.infrastructure.secondary.persistence.personalizedmodelcatalogreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import java.math.BigDecimal
 import tech.medo.trainingorchestration.domain.states.PersonalizedModelResultStateEnum
-import tech.medo.trainingorchestration.personalizedmodelcatalog.PersonalizedModelCatalogReadModel
 import tech.medo.trainingorchestration.personalizedmodelcatalog.PersonalizedModelCatalogReadModelCriteria
 import tech.medo.trainingorchestration.personalizedmodelcatalog.PersonalizedModelCatalogReadModelProjection
-import tech.medo.trainingorchestration.personalizedmodelcatalog.toReadModel
 
 @Service
-class PersonalizedModelCatalogReadModelQueryService(
-    private val repository: SpringDataPersonalizedModelCatalogReadModelRepository
-) : QueryService<PersonalizedModelCatalogReadModelEntity>() {
-    fun findByCriteria(criteria: PersonalizedModelCatalogReadModelCriteria?, pageable: Pageable): Page<PersonalizedModelCatalogReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: PersonalizedModelCatalogReadModelCriteria?): Specification<PersonalizedModelCatalogReadModelEntity> {
+class PersonalizedModelCatalogReadModelQueryService() : QueryService<PersonalizedModelCatalogReadModelEntity>() {
+    fun createSpecification(criteria: PersonalizedModelCatalogReadModelCriteria?): Specification<PersonalizedModelCatalogReadModelEntity> {
         var specification = Specification.where<PersonalizedModelCatalogReadModelEntity>(null)
         if (criteria != null) {
             criteria.personalizedModelId?.let { specification = specification.and(buildSpecification(it, Function<Root<PersonalizedModelCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("personalizedModelId") as JpaExpression<UUID>).cast(String::class.java) })) }
@@ -48,6 +39,8 @@ class PersonalizedModelCatalogReadModelQueryService(
             criteria.personalizationProfileId?.let { specification = specification.and(buildSpecification(it, Function<Root<PersonalizedModelCatalogReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("personalizationProfileId") as JpaExpression<UUID>).cast(String::class.java) })) }
             criteria.personalizedModelArtifactRef?.let { specification = specification.and(buildSpecification(it, Function<Root<PersonalizedModelCatalogReadModelEntity>, Expression<String>> { root -> root.get("personalizedModelArtifactRef") })) }
             criteria.personalizedModelArtifactDigest?.let { specification = specification.and(buildSpecification(it, Function<Root<PersonalizedModelCatalogReadModelEntity>, Expression<String>> { root -> root.get("personalizedModelArtifactDigest") })) }
+            criteria.personalizedModelStorageLocation?.let { specification = specification.and(buildSpecification(it, Function<Root<PersonalizedModelCatalogReadModelEntity>, Expression<String>> { root -> root.get("personalizedModelStorageLocation") })) }
+            criteria.platformManagedArtifactRef?.let { specification = specification.and(buildSpecification(it, Function<Root<PersonalizedModelCatalogReadModelEntity>, Expression<String>> { root -> root.get("platformManagedArtifactRef") })) }
             criteria.personalizedMetricsArtifactRef?.let { specification = specification.and(buildSpecification(it, Function<Root<PersonalizedModelCatalogReadModelEntity>, Expression<String>> { root -> root.get("personalizedMetricsArtifactRef") })) }
             criteria.personalizedAccuracy?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<PersonalizedModelCatalogReadModelEntity>, Expression<BigDecimal>> { root -> root.get("personalizedAccuracy") })) }
             criteria.personalizationLift?.let { specification = specification.and(buildExpressionRangeSpecification(it, Function<Root<PersonalizedModelCatalogReadModelEntity>, Expression<BigDecimal>> { root -> root.get("personalizationLift") })) }
@@ -129,6 +122,8 @@ class PersonalizedModelCatalogReadModelQueryService(
             it.personalizationProfileId = this@toProjection.personalizationProfileId
             it.personalizedModelArtifactRef = this@toProjection.personalizedModelArtifactRef
             it.personalizedModelArtifactDigest = this@toProjection.personalizedModelArtifactDigest
+            it.personalizedModelStorageLocation = this@toProjection.personalizedModelStorageLocation
+            it.platformManagedArtifactRef = this@toProjection.platformManagedArtifactRef
             it.personalizedMetricsArtifactRef = this@toProjection.personalizedMetricsArtifactRef
             it.personalizedAccuracy = this@toProjection.personalizedAccuracy
             it.personalizationLift = this@toProjection.personalizationLift

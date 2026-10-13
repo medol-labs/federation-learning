@@ -53,6 +53,7 @@ interface PermissionCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<PermissionCatalogReadModel>
     fun findAllByCriteria(criteria: PermissionCatalogReadModelCriteria?, pageable: Pageable): Page<PermissionCatalogReadModel>
     fun findById(id: UUID): PermissionCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): PermissionCatalogReadModel?
     fun findProjectionById(id: UUID): PermissionCatalogReadModelProjection?
     fun save(projection: PermissionCatalogReadModelProjection)
 }

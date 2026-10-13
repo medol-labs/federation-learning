@@ -93,7 +93,7 @@ class TrainingAlertCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('training_alert_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<TrainingAlertCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }
 

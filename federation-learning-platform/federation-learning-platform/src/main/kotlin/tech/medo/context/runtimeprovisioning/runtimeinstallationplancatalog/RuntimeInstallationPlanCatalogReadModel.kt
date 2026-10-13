@@ -122,6 +122,7 @@ interface RuntimeInstallationPlanCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<RuntimeInstallationPlanCatalogReadModel>
     fun findAllByCriteria(criteria: RuntimeInstallationPlanCatalogReadModelCriteria?, pageable: Pageable): Page<RuntimeInstallationPlanCatalogReadModel>
     fun findById(id: UUID): RuntimeInstallationPlanCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): RuntimeInstallationPlanCatalogReadModel?
     fun findProjectionById(id: UUID): RuntimeInstallationPlanCatalogReadModelProjection?
     fun save(projection: RuntimeInstallationPlanCatalogReadModelProjection)
 }

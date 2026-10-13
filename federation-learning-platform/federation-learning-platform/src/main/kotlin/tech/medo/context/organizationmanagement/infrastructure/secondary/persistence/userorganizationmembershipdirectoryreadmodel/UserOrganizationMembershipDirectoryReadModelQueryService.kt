@@ -1,7 +1,5 @@
 package tech.medo.organizationmanagement.infrastructure.secondary.persistence.userorganizationmembershipdirectoryreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -13,19 +11,12 @@ import java.util.function.Function
 import java.time.LocalDateTime
 import java.util.UUID
 import tech.medo.organizationmanagement.domain.states.UserOrganizationMembershipStateEnum
-import tech.medo.organizationmanagement.userorganizationmembershipdirectory.UserOrganizationMembershipDirectoryReadModel
 import tech.medo.organizationmanagement.userorganizationmembershipdirectory.UserOrganizationMembershipDirectoryReadModelCriteria
 import tech.medo.organizationmanagement.userorganizationmembershipdirectory.UserOrganizationMembershipDirectoryReadModelProjection
-import tech.medo.organizationmanagement.userorganizationmembershipdirectory.toReadModel
 
 @Service
-class UserOrganizationMembershipDirectoryReadModelQueryService(
-    private val repository: SpringDataUserOrganizationMembershipDirectoryReadModelRepository
-) : QueryService<UserOrganizationMembershipDirectoryReadModelEntity>() {
-    fun findByCriteria(criteria: UserOrganizationMembershipDirectoryReadModelCriteria?, pageable: Pageable): Page<UserOrganizationMembershipDirectoryReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: UserOrganizationMembershipDirectoryReadModelCriteria?): Specification<UserOrganizationMembershipDirectoryReadModelEntity> {
+class UserOrganizationMembershipDirectoryReadModelQueryService() : QueryService<UserOrganizationMembershipDirectoryReadModelEntity>() {
+    fun createSpecification(criteria: UserOrganizationMembershipDirectoryReadModelCriteria?): Specification<UserOrganizationMembershipDirectoryReadModelEntity> {
         var specification = Specification.where<UserOrganizationMembershipDirectoryReadModelEntity>(null)
         if (criteria != null) {
             criteria.userOrganizationMembershipId?.let { specification = specification.and(buildSpecification(it, Function<Root<UserOrganizationMembershipDirectoryReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("userOrganizationMembershipId") as JpaExpression<UUID>).cast(String::class.java) })) }

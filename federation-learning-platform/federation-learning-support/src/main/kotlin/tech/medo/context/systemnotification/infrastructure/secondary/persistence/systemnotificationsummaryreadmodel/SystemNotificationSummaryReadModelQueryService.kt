@@ -1,7 +1,5 @@
 package tech.medo.systemnotification.infrastructure.secondary.persistence.systemnotificationsummaryreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -16,19 +14,12 @@ import tech.medo.systemnotification.domain.types.NotificationSeverity
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
 import tech.medo.systemnotification.domain.types.NotificationToastPolicy
-import tech.medo.systemnotification.systemnotificationcatalog.SystemNotificationSummaryReadModel
 import tech.medo.systemnotification.systemnotificationcatalog.SystemNotificationSummaryReadModelCriteria
 import tech.medo.systemnotification.systemnotificationcatalog.SystemNotificationSummaryReadModelProjection
-import tech.medo.systemnotification.systemnotificationcatalog.toReadModel
 
 @Service
-class SystemNotificationSummaryReadModelQueryService(
-    private val repository: SpringDataSystemNotificationSummaryReadModelRepository
-) : QueryService<SystemNotificationSummaryReadModelEntity>() {
-    fun findByCriteria(criteria: SystemNotificationSummaryReadModelCriteria?, pageable: Pageable): Page<SystemNotificationSummaryReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: SystemNotificationSummaryReadModelCriteria?): Specification<SystemNotificationSummaryReadModelEntity> {
+class SystemNotificationSummaryReadModelQueryService() : QueryService<SystemNotificationSummaryReadModelEntity>() {
+    fun createSpecification(criteria: SystemNotificationSummaryReadModelCriteria?): Specification<SystemNotificationSummaryReadModelEntity> {
         var specification = Specification.where<SystemNotificationSummaryReadModelEntity>(null)
         if (criteria != null) {
             criteria.recipientUserId?.let { specification = specification.and(buildSpecification(it, Function<Root<SystemNotificationSummaryReadModelEntity>, Expression<String>> { root -> root.get("recipientUserId") })) }

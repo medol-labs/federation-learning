@@ -35,6 +35,6 @@ class PersonalizedModelCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('personalized_model_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<PersonalizedModelCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

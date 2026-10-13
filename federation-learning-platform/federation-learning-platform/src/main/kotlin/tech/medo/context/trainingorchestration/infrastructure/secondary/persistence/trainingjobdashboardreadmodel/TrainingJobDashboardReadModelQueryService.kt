@@ -1,7 +1,5 @@
 package tech.medo.trainingorchestration.infrastructure.secondary.persistence.trainingjobdashboardreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,20 +12,14 @@ import java.time.LocalDateTime
 import java.util.UUID
 import tech.medo.trainingorchestration.domain.states.TrainingJobStateEnum
 import java.math.BigDecimal
-import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModel
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelCriteria
 import tech.medo.trainingorchestration.trainingjobdashboard.TrainingJobDashboardReadModelProjection
-import tech.medo.trainingorchestration.trainingjobdashboard.toReadModel
 
 @Service
 class TrainingJobDashboardReadModelQueryService(
-    private val repository: SpringDataTrainingJobDashboardReadModelRepository,
     private val objectMapper: com.fasterxml.jackson.databind.ObjectMapper
 ) : QueryService<TrainingJobDashboardReadModelEntity>() {
-    fun findByCriteria(criteria: TrainingJobDashboardReadModelCriteria?, pageable: Pageable): Page<TrainingJobDashboardReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: TrainingJobDashboardReadModelCriteria?): Specification<TrainingJobDashboardReadModelEntity> {
+    fun createSpecification(criteria: TrainingJobDashboardReadModelCriteria?): Specification<TrainingJobDashboardReadModelEntity> {
         var specification = Specification.where<TrainingJobDashboardReadModelEntity>(null)
         if (criteria != null) {
             criteria.trainingJobId?.let { specification = specification.and(buildSpecification(it, Function<Root<TrainingJobDashboardReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("trainingJobId") as JpaExpression<UUID>).cast(String::class.java) })) }

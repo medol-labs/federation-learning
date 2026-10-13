@@ -13,7 +13,7 @@ import tech.medo.shared.application.outbox.MedolOutboxRepository
 
 @CrossOrigin
 @RestController
-@RequestMapping("/sync/read-models/runtime-provisioning/runtime-identity-catalog")
+@RequestMapping("/sync/read-models/runtime-governance/runtime-identity-catalog")
 class RuntimeIdentityCatalogReadModelSyncReadModelResource(
     private val repository: RuntimeIdentityCatalogReadModelRepository,
     private val outboxRepository: MedolOutboxRepository,
@@ -33,7 +33,7 @@ class RuntimeIdentityCatalogReadModelSyncReadModelResource(
         val pageNumber = cursor?.toIntOrNull()?.coerceAtLeast(0) ?: 0
         val page = repository.findAllByCriteria(null, PageRequest.of(pageNumber, size.coerceIn(1, 1000)))
         val highWatermark = outboxRepository
-            .findFirstBySourceContextAndSourceNameOrderBySequenceDesc("RuntimeProvisioning", "RuntimeIdentityCatalog")
+            .findFirstBySourceContextAndSourceNameOrderBySequenceDesc("RuntimeGovernance", "RuntimeIdentityCatalog")
             ?.sequence ?: 0
         val items = page.content.mapNotNull { item ->
             val payload = objectMapper.convertValue(item, mapType)
@@ -61,7 +61,7 @@ class RuntimeIdentityCatalogReadModelSyncReadModelResource(
         val filters = parameters.filterKeys { it !in reserved }
         val rows = outboxRepository
             .findBySourceContextAndSourceNameAndSequenceGreaterThanOrderBySequenceAsc(
-                "RuntimeProvisioning",
+                "RuntimeGovernance",
                 "RuntimeIdentityCatalog",
                 afterSequence,
                 PageRequest.of(0, size.coerceIn(1, 1000))

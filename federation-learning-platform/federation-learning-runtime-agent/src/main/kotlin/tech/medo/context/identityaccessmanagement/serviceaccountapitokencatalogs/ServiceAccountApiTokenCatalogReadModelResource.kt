@@ -90,7 +90,7 @@ class ServiceAccountApiTokenCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('service_account_api_token_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<ServiceAccountApiTokenCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }
 

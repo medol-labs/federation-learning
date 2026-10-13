@@ -77,6 +77,7 @@ interface AgentRuntimeInfrastructureConnectionCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentRuntimeInfrastructureConnectionCatalogReadModel>
     fun findAllByCriteria(criteria: AgentRuntimeInfrastructureConnectionCatalogReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeInfrastructureConnectionCatalogReadModel>
     fun findById(id: UUID): AgentRuntimeInfrastructureConnectionCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): AgentRuntimeInfrastructureConnectionCatalogReadModel?
     fun findProjectionById(id: UUID): AgentRuntimeInfrastructureConnectionCatalogReadModelProjection?
     fun save(projection: AgentRuntimeInfrastructureConnectionCatalogReadModelProjection)
 }

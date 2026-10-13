@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.systemnotification.systemnotificationcatalog.SystemNotificationCatalogReadModel
 import tech.medo.systemnotification.systemnotificationcatalog.SystemNotificationCatalogReadModelCriteria
 import tech.medo.systemnotification.systemnotificationcatalog.SystemNotificationCatalogReadModelProjection
@@ -24,16 +26,20 @@ import tech.medo.systemnotification.systemnotificationcatalog.toReadModel
 @Repository
 class JpaSystemNotificationCatalogReadModelRepository(
     private val jpaRepository: SpringDataSystemNotificationCatalogReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: SystemNotificationCatalogReadModelQueryService
 ) : SystemNotificationCatalogReadModelRepository {
     override fun findAllByFilter(recipientUserId: String?, recipientRole: String?, category: NotificationCategory?, severity: NotificationSeverity?, state: SystemNotificationStateEnum?, pageable: Pageable): Page<SystemNotificationCatalogReadModel> =
-        jpaRepository.findAll(filters(recipientUserId, recipientRole, category, severity, state), pageable).map { it.toProjection().toReadModel() }
+        jpaRepository.findAll(filters(recipientUserId, recipientRole, category, severity, state).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findAllByCriteria(criteria: SystemNotificationCatalogReadModelCriteria?, pageable: Pageable): Page<SystemNotificationCatalogReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): SystemNotificationCatalogReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): SystemNotificationCatalogReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): SystemNotificationCatalogReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -53,6 +59,21 @@ class JpaSystemNotificationCatalogReadModelRepository(
             criteriaBuilder.and(*predicates.toTypedArray())
         }
 
+
+    private fun idSpecification(id: UUID): Specification<SystemNotificationCatalogReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("notificationId"), id)
+        }
+
+    private fun accessSpecification(): Specification<SystemNotificationCatalogReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "SystemNotification",
+            readModelName = "SystemNotificationCatalog",
+            policy = ReadModelAccessPolicy(
+            name = "SystemNotificationPublicAccess",
+            fields = emptyList<String>()
+        )
+        )
 
     private fun SystemNotificationCatalogReadModelEntity.toProjection(): SystemNotificationCatalogReadModelProjection =
         SystemNotificationCatalogReadModelProjection().also {

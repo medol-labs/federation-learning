@@ -1,7 +1,5 @@
 package tech.medo.runtimemonitoring.infrastructure.secondary.persistence.runtimehealthdashboardreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -15,19 +13,12 @@ import java.util.UUID
 import java.math.BigDecimal
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimemonitoring.runtimehealthdashboard.RuntimeHealthDashboardReadModel
 import tech.medo.runtimemonitoring.runtimehealthdashboard.RuntimeHealthDashboardReadModelCriteria
 import tech.medo.runtimemonitoring.runtimehealthdashboard.RuntimeHealthDashboardReadModelProjection
-import tech.medo.runtimemonitoring.runtimehealthdashboard.toReadModel
 
 @Service
-class RuntimeHealthDashboardReadModelQueryService(
-    private val repository: SpringDataRuntimeHealthDashboardReadModelRepository
-) : QueryService<RuntimeHealthDashboardReadModelEntity>() {
-    fun findByCriteria(criteria: RuntimeHealthDashboardReadModelCriteria?, pageable: Pageable): Page<RuntimeHealthDashboardReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: RuntimeHealthDashboardReadModelCriteria?): Specification<RuntimeHealthDashboardReadModelEntity> {
+class RuntimeHealthDashboardReadModelQueryService() : QueryService<RuntimeHealthDashboardReadModelEntity>() {
+    fun createSpecification(criteria: RuntimeHealthDashboardReadModelCriteria?): Specification<RuntimeHealthDashboardReadModelEntity> {
         var specification = Specification.where<RuntimeHealthDashboardReadModelEntity>(null)
         if (criteria != null) {
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeHealthDashboardReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }

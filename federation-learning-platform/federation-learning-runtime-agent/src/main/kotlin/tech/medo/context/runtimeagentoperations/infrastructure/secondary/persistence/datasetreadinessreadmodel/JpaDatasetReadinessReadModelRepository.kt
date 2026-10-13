@@ -1,5 +1,6 @@
 package tech.medo.runtimeagentoperations.infrastructure.secondary.persistence.datasetreadinessreadmodel
 
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
@@ -12,6 +13,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import tech.medo.shared.application.access.ReadModelAccessPolicy
+import tech.medo.shared.application.access.ReadModelAccessPolicyFilter
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModel
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModelCriteria
 import tech.medo.runtimeagentoperations.datasetreadiness.DatasetReadinessReadModelProjection
@@ -21,6 +24,7 @@ import tech.medo.runtimeagentoperations.datasetreadiness.toReadModel
 @Repository
 class JpaDatasetReadinessReadModelRepository(
     private val jpaRepository: SpringDataDatasetReadinessReadModelRepository,
+    private val accessPolicyFilter: ReadModelAccessPolicyFilter,
     private val queryService: DatasetReadinessReadModelQueryService,
     private val objectMapper: ObjectMapper
 ) : DatasetReadinessReadModelRepository {
@@ -28,10 +32,13 @@ class JpaDatasetReadinessReadModelRepository(
         findAllByCriteria(null, pageable)
 
     override fun findAllByCriteria(criteria: DatasetReadinessReadModelCriteria?, pageable: Pageable): Page<DatasetReadinessReadModel> =
-        queryService.findByCriteria(criteria, pageable)
+        jpaRepository.findAll(queryService.createSpecification(criteria).and(accessSpecification()), pageable).map { it.toProjection().toReadModel() }
 
     override fun findById(id: UUID): DatasetReadinessReadModel? =
         jpaRepository.findById(id).map { it.toProjection().toReadModel() }.orElse(null)
+
+    override fun findByIdWithAccessPolicy(id: UUID): DatasetReadinessReadModel? =
+        jpaRepository.findOne(idSpecification(id).and(accessSpecification())).map { it.toProjection().toReadModel() }.orElse(null)
 
     override fun findProjectionById(id: UUID): DatasetReadinessReadModelProjection? =
         jpaRepository.findById(id).map { it.toProjection() }.orElse(null)
@@ -39,6 +46,21 @@ class JpaDatasetReadinessReadModelRepository(
     override fun save(projection: DatasetReadinessReadModelProjection) {
         jpaRepository.save(projection.toEntity())
     }
+
+    private fun idSpecification(id: UUID): Specification<DatasetReadinessReadModelEntity> =
+        Specification { root, _, criteriaBuilder ->
+            criteriaBuilder.equal(root.get<UUID>("datasetId"), id)
+        }
+
+    private fun accessSpecification(): Specification<DatasetReadinessReadModelEntity> =
+        accessPolicyFilter.specification(
+            contextName = "RuntimeAgentOperations",
+            readModelName = "DatasetReadiness",
+            policy = ReadModelAccessPolicy(
+            name = null,
+            fields = emptyList<String>()
+        )
+        )
 
     private fun DatasetReadinessReadModelEntity.toProjection(): DatasetReadinessReadModelProjection =
         DatasetReadinessReadModelProjection().also {

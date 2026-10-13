@@ -151,6 +151,7 @@ interface TrainingParticipantEligibilityReadModelRepository {
     fun findAll(pageable: Pageable): Page<TrainingParticipantEligibilityReadModel>
     fun findAllByCriteria(criteria: TrainingParticipantEligibilityReadModelCriteria?, pageable: Pageable): Page<TrainingParticipantEligibilityReadModel>
     fun findById(id: UUID): TrainingParticipantEligibilityReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): TrainingParticipantEligibilityReadModel?
     fun findProjectionById(id: UUID): TrainingParticipantEligibilityReadModelProjection?
     fun save(projection: TrainingParticipantEligibilityReadModelProjection)
 }

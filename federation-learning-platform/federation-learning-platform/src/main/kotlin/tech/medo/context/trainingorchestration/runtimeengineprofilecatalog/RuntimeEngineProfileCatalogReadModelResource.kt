@@ -35,6 +35,6 @@ class RuntimeEngineProfileCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('runtime_engine_profile_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<RuntimeEngineProfileCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

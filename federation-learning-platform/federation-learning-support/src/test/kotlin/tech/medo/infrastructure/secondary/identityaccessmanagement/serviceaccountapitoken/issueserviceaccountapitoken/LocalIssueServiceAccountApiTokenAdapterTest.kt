@@ -163,6 +163,7 @@ class LocalIssueServiceAccountApiTokenAdapterTest {
         ): Page<UserAccountCatalogReadModel> = PageImpl(listOf(user))
 
         override fun findById(id: UUID): UserAccountCatalogReadModel? = if (id == user.userAccountId) user else null
+        override fun findByIdWithAccessPolicy(id: UUID): UserAccountCatalogReadModel? = findById(id)
         override fun findProjectionById(id: UUID): UserAccountCatalogReadModelProjection? = null
         override fun save(projection: UserAccountCatalogReadModelProjection) = Unit
     }
@@ -177,6 +178,7 @@ class LocalIssueServiceAccountApiTokenAdapterTest {
         ): Page<UserRoleAssignmentCatalogReadModel> = PageImpl(assignments)
 
         override fun findById(id: UserRoleAssignmentCatalogReadModelKey): UserRoleAssignmentCatalogReadModel? = null
+        override fun findByIdWithAccessPolicy(id: UserRoleAssignmentCatalogReadModelKey): UserRoleAssignmentCatalogReadModel? = findById(id)
         override fun findProjectionById(id: UserRoleAssignmentCatalogReadModelKey): UserRoleAssignmentCatalogReadModelProjection? = null
         override fun findProjectionsByUserAccountId(userAccountId: UUID): List<UserRoleAssignmentCatalogReadModelProjection> =
             emptyList()
@@ -197,6 +199,7 @@ class LocalIssueServiceAccountApiTokenAdapterTest {
         ): Page<RolePermissionGrantCatalogReadModel> = PageImpl(grants)
 
         override fun findById(id: RolePermissionGrantCatalogReadModelKey): RolePermissionGrantCatalogReadModel? = null
+        override fun findByIdWithAccessPolicy(id: RolePermissionGrantCatalogReadModelKey): RolePermissionGrantCatalogReadModel? = findById(id)
         override fun findProjectionById(id: RolePermissionGrantCatalogReadModelKey): RolePermissionGrantCatalogReadModelProjection? = null
         override fun findProjectionsByRoleCode(roleCode: String): List<RolePermissionGrantCatalogReadModelProjection> =
             emptyList()

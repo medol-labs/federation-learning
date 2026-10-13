@@ -1,7 +1,5 @@
 package tech.medo.runtimemonitoring.infrastructure.secondary.persistence.runtimenodeinventoryviewreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -14,19 +12,12 @@ import java.time.LocalDateTime
 import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
-import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModel
 import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModelCriteria
 import tech.medo.runtimemonitoring.runtimenodeinventoryview.RuntimeNodeInventoryViewReadModelProjection
-import tech.medo.runtimemonitoring.runtimenodeinventoryview.toReadModel
 
 @Service
-class RuntimeNodeInventoryViewReadModelQueryService(
-    private val repository: SpringDataRuntimeNodeInventoryViewReadModelRepository
-) : QueryService<RuntimeNodeInventoryViewReadModelEntity>() {
-    fun findByCriteria(criteria: RuntimeNodeInventoryViewReadModelCriteria?, pageable: Pageable): Page<RuntimeNodeInventoryViewReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: RuntimeNodeInventoryViewReadModelCriteria?): Specification<RuntimeNodeInventoryViewReadModelEntity> {
+class RuntimeNodeInventoryViewReadModelQueryService() : QueryService<RuntimeNodeInventoryViewReadModelEntity>() {
+    fun createSpecification(criteria: RuntimeNodeInventoryViewReadModelCriteria?): Specification<RuntimeNodeInventoryViewReadModelEntity> {
         var specification = Specification.where<RuntimeNodeInventoryViewReadModelEntity>(null)
         if (criteria != null) {
             criteria.nodeId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeNodeInventoryViewReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("nodeId") as JpaExpression<UUID>).cast(String::class.java) })) }

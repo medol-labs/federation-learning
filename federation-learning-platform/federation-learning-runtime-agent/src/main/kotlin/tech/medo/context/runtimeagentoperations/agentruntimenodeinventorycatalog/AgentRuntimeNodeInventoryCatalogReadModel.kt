@@ -92,6 +92,7 @@ interface AgentRuntimeNodeInventoryCatalogReadModelRepository {
     fun findAll(pageable: Pageable): Page<AgentRuntimeNodeInventoryCatalogReadModel>
     fun findAllByCriteria(criteria: AgentRuntimeNodeInventoryCatalogReadModelCriteria?, pageable: Pageable): Page<AgentRuntimeNodeInventoryCatalogReadModel>
     fun findById(id: UUID): AgentRuntimeNodeInventoryCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): AgentRuntimeNodeInventoryCatalogReadModel?
     fun findProjectionById(id: UUID): AgentRuntimeNodeInventoryCatalogReadModelProjection?
     fun save(projection: AgentRuntimeNodeInventoryCatalogReadModelProjection)
 }

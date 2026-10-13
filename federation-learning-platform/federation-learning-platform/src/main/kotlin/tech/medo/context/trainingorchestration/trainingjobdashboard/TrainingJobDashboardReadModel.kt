@@ -160,6 +160,7 @@ interface TrainingJobDashboardReadModelRepository {
     fun findAll(pageable: Pageable): Page<TrainingJobDashboardReadModel>
     fun findAllByCriteria(criteria: TrainingJobDashboardReadModelCriteria?, pageable: Pageable): Page<TrainingJobDashboardReadModel>
     fun findById(id: UUID): TrainingJobDashboardReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): TrainingJobDashboardReadModel?
     fun findProjectionById(id: UUID): TrainingJobDashboardReadModelProjection?
     fun save(projection: TrainingJobDashboardReadModelProjection)
 }

@@ -467,87 +467,6 @@
       ]
     },
     {
-      "dictionaryCode": "MODEL_RELEASE_CHANNEL",
-      "dictionaryName": "模型发布通道",
-      "ownerContext": "ModelLifecycle",
-      "description": "Release channels for promoted model versions.",
-      "multiTenant": false,
-      "values": [
-        {
-          "valueCode": "EXPERIMENTAL",
-          "displayName": "实验",
-          "displayOrder": 10,
-          "description": "Early model release for controlled validation.",
-          "active": true
-        },
-        {
-          "valueCode": "CANARY",
-          "displayName": "灰度",
-          "displayOrder": 20,
-          "description": "Limited production exposure.",
-          "active": true
-        },
-        {
-          "valueCode": "STAGING",
-          "displayName": "预发",
-          "displayOrder": 30,
-          "description": "Pre-production validation channel.",
-          "active": true
-        },
-        {
-          "valueCode": "PRODUCTION",
-          "displayName": "生产",
-          "displayOrder": 40,
-          "description": "Main production serving channel.",
-          "active": true
-        }
-      ]
-    },
-    {
-      "dictionaryCode": "MODEL_PRODUCTION_STAGE",
-      "dictionaryName": "模型生产阶段",
-      "ownerContext": "ModelLifecycle",
-      "description": "Production lifecycle stage of a model version.",
-      "multiTenant": false,
-      "values": [
-        {
-          "valueCode": "SHADOW",
-          "displayName": "影子",
-          "displayOrder": 10,
-          "description": "Model receives production-like traffic without serving decisions.",
-          "active": true
-        },
-        {
-          "valueCode": "CANARY",
-          "displayName": "灰度",
-          "displayOrder": 20,
-          "description": "Model serves a small controlled portion of traffic.",
-          "active": true
-        },
-        {
-          "valueCode": "ACTIVE",
-          "displayName": "启用",
-          "displayOrder": 30,
-          "description": "Model is actively used for production decisions.",
-          "active": true
-        },
-        {
-          "valueCode": "DEPRECATED",
-          "displayName": "已弃用",
-          "displayOrder": 40,
-          "description": "Model remains available but should be replaced.",
-          "active": true
-        },
-        {
-          "valueCode": "RETIRED",
-          "displayName": "已退役",
-          "displayOrder": 50,
-          "description": "Model is no longer intended for production use.",
-          "active": true
-        }
-      ]
-    },
-    {
       "dictionaryCode": "RUNTIME_CAPABILITY_TYPE",
       "dictionaryName": "运行能力类型",
       "ownerContext": "RuntimeGovernance",
@@ -1016,6 +935,36 @@
           "displayName": "Pickle 制品",
           "displayOrder": 40,
           "description": "Python pickle artifact used by selected PyTorch plugins.",
+          "active": true
+        }
+      ]
+    },
+    {
+      "dictionaryCode": "PERSONALIZED_MODEL_STORAGE_LOCATION",
+      "dictionaryName": "个性化模型存储位置",
+      "ownerContext": "TrainingOrchestration",
+      "description": "Storage ownership locations for personalized model artifacts.",
+      "multiTenant": false,
+      "values": [
+        {
+          "valueCode": "RUNTIME_LOCAL",
+          "displayName": "运行时本地",
+          "displayOrder": 10,
+          "description": "The personalized model bytes remain in the producing runtime artifact store. The platform stores only the artifact reference and digest.",
+          "active": true
+        },
+        {
+          "valueCode": "PLATFORM_MANAGED",
+          "displayName": "平台托管",
+          "displayOrder": 20,
+          "description": "The personalized model is uploaded into platform-managed artifact storage according to the configured artifact policy.",
+          "active": true
+        },
+        {
+          "valueCode": "EXTERNAL_REGISTRY",
+          "displayName": "外部仓库",
+          "displayOrder": 30,
+          "description": "The personalized model is stored in an external model registry and verified by digest.",
           "active": true
         }
       ]

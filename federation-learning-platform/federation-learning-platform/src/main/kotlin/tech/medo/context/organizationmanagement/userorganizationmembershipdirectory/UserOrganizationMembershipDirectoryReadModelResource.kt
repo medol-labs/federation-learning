@@ -35,6 +35,6 @@ class UserOrganizationMembershipDirectoryReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('user_organization_membership_directory:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<UserOrganizationMembershipDirectoryReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

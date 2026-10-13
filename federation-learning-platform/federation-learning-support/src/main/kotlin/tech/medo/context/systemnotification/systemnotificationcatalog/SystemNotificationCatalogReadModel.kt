@@ -96,6 +96,7 @@ interface SystemNotificationCatalogReadModelRepository {
     fun findAllByFilter(recipientUserId: String?, recipientRole: String?, category: NotificationCategory?, severity: NotificationSeverity?, state: SystemNotificationStateEnum?, pageable: Pageable): Page<SystemNotificationCatalogReadModel>
     fun findAllByCriteria(criteria: SystemNotificationCatalogReadModelCriteria?, pageable: Pageable): Page<SystemNotificationCatalogReadModel>
     fun findById(id: UUID): SystemNotificationCatalogReadModel?
+    fun findByIdWithAccessPolicy(id: UUID): SystemNotificationCatalogReadModel?
     fun findProjectionById(id: UUID): SystemNotificationCatalogReadModelProjection?
     fun save(projection: SystemNotificationCatalogReadModelProjection)
 }

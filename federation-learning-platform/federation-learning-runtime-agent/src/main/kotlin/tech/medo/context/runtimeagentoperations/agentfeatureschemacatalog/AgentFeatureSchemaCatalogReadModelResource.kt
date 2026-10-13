@@ -35,6 +35,6 @@ class AgentFeatureSchemaCatalogReadModelResource(
     @PreAuthorize("hasAuthority('*:*') or hasAuthority('agent_feature_schema_catalog:read')")
     @GetMapping("/{id}")
     fun findOne(@PathVariable id: UUID): ResponseEntity<AgentFeatureSchemaCatalogReadModel> =
-        repository.findById(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
+        repository.findByIdWithAccessPolicy(id)?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()
 
 }

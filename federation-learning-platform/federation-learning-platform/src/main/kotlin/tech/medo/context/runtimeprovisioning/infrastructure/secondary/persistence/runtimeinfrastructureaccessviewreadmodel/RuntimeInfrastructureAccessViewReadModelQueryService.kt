@@ -1,7 +1,5 @@
 package tech.medo.runtimeprovisioning.infrastructure.secondary.persistence.runtimeinfrastructureaccessviewreadmodel
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import jakarta.persistence.criteria.Expression
@@ -15,19 +13,12 @@ import java.util.UUID
 import org.springframework.format.annotation.DateTimeFormat
 import com.fasterxml.jackson.annotation.JsonFormat
 import tech.medo.runtimeprovisioning.domain.states.RuntimeInfrastructureStateEnum
-import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModel
 import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModelCriteria
 import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.RuntimeInfrastructureAccessViewReadModelProjection
-import tech.medo.runtimeprovisioning.runtimeinfrastructureaccessview.toReadModel
 
 @Service
-class RuntimeInfrastructureAccessViewReadModelQueryService(
-    private val repository: SpringDataRuntimeInfrastructureAccessViewReadModelRepository
-) : QueryService<RuntimeInfrastructureAccessViewReadModelEntity>() {
-    fun findByCriteria(criteria: RuntimeInfrastructureAccessViewReadModelCriteria?, pageable: Pageable): Page<RuntimeInfrastructureAccessViewReadModel> =
-        repository.findAll(createSpecification(criteria), pageable).map { it.toProjection().toReadModel() }
-
-    private fun createSpecification(criteria: RuntimeInfrastructureAccessViewReadModelCriteria?): Specification<RuntimeInfrastructureAccessViewReadModelEntity> {
+class RuntimeInfrastructureAccessViewReadModelQueryService() : QueryService<RuntimeInfrastructureAccessViewReadModelEntity>() {
+    fun createSpecification(criteria: RuntimeInfrastructureAccessViewReadModelCriteria?): Specification<RuntimeInfrastructureAccessViewReadModelEntity> {
         var specification = Specification.where<RuntimeInfrastructureAccessViewReadModelEntity>(null)
         if (criteria != null) {
             criteria.runtimeInfrastructureId?.let { specification = specification.and(buildSpecification(it, Function<Root<RuntimeInfrastructureAccessViewReadModelEntity>, Expression<String>> { root -> (root.get<UUID>("runtimeInfrastructureId") as JpaExpression<UUID>).cast(String::class.java) })) }

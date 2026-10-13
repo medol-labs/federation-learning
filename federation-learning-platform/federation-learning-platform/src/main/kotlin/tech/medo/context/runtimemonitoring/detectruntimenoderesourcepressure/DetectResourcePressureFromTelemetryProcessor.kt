@@ -1,28 +1,22 @@
 package tech.medo.runtimemonitoring.detectruntimenoderesourcepressure
 
-import tech.medo.runtimemonitoring.runtimetelemetrylatest.RuntimeTelemetryLatestReadModel
-import tech.medo.runtimemonitoring.runtimetelemetrylatest.RuntimeTelemetryLatestReadModelRepository
+import tech.medo.runtimemonitoring.events.RuntimeTelemetryRecordedEvent
 import tech.medo.runtimemonitoring.detectruntimenoderesourcepressure.DetectRuntimeNodeResourcePressureCommand
 import java.util.UUID;
 import java.math.BigDecimal;
 import org.axonframework.messaging.commandhandling.gateway.CommandGateway
-import org.springframework.data.domain.PageRequest
-import org.springframework.scheduling.annotation.Scheduled
+import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.axonframework.messaging.core.annotation.Namespace
 import org.springframework.stereotype.Component
 
+@Namespace("automation-runtime-monitoring-detect-runtime-node-resource-pressure")
 @Component
-class DetectResourcePressureFromTelemetryProcessor(
-    private val repository: RuntimeTelemetryLatestReadModelRepository,
-    private val commandGateway: CommandGateway
-) {
-    @Scheduled(fixedDelayString = "\${automation.detect-resource-pressure-from-telemetry.fixed-delay-ms:5000}")
-    fun processTodo() {
-        repository.findAll(PageRequest.of(0, 100))
-            .content
-            .asSequence()
-            .filter { todo -> todo.resourcePressureDetectionPending == true && todo.nodeId != null && todo.runtimeAgentId != null && todo.pressureType != null && todo.observedValue != null && todo.thresholdValue != null && todo.alertSeverity != null && todo.alertMessage != null }
-            .forEach { todo ->
-                commandGateway.send(DetectRuntimeNodeResourcePressureCommand(nodeId = todo.nodeId!!, runtimeAgentId = todo.runtimeAgentId!!, federationId = todo.federationId, federationName = todo.federationName, trainingJobId = todo.trainingJobId, trainingJobObjective = todo.trainingJobObjective, roundExecutionId = todo.roundExecutionId, runtimeNodeName = todo.runtimeNodeName, pressureType = todo.pressureType!!, observedValue = todo.observedValue!!, thresholdValue = todo.thresholdValue!!, alertSeverity = todo.alertSeverity!!, alertMessage = todo.alertMessage!!))
-            }
-    }
+class DetectResourcePressureFromTelemetryProcessor(private val commandGateway: CommandGateway) {
+    @EventHandler
+    fun on(event: RuntimeTelemetryRecordedEvent): java.util.concurrent.CompletableFuture<*> =
+        if (event.resourcePressureDetectionPending == true) {
+            commandGateway.send(DetectRuntimeNodeResourcePressureCommand(nodeId = event.nodeId, runtimeAgentId = event.runtimeAgentId, federationId = event.federationId, federationName = event.federationName, trainingJobId = event.trainingJobId, trainingJobObjective = event.trainingJobObjective, roundExecutionId = event.roundExecutionId, runtimeNodeName = event.runtimeNodeName, pressureType = event.pressureType!!, observedValue = event.observedValue!!, thresholdValue = event.thresholdValue!!, alertSeverity = event.alertSeverity!!, alertMessage = event.alertMessage!!)).resultMessage
+        } else {
+            java.util.concurrent.CompletableFuture.completedFuture(null)
+        }
 }

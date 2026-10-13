@@ -53,6 +53,8 @@ class ReadModelDownloadModelArtifactAdapterTest {
         modelArtifactDigest = "sha256:model",
         modelSignatureUri = null,
         modelSizeBytes = 1024,
+        personalizedModelStorageLocation = null,
+        platformManagedArtifactRef = null,
         trainingJobId = null,
         roundId = null,
         trainingJobObjective = null,
@@ -83,6 +85,8 @@ class ReadModelDownloadModelArtifactAdapterTest {
         ): Page<ModelArtifactCatalogReadModel> = Page.empty(pageable)
 
         override fun findById(id: UUID): ModelArtifactCatalogReadModel? = artifact?.takeIf { it.modelId == id }
+
+        override fun findByIdWithAccessPolicy(id: UUID): ModelArtifactCatalogReadModel? = findById(id)
 
         override fun findProjectionById(id: UUID): ModelArtifactCatalogReadModelProjection? = null
 
