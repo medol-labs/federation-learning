@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: "federation-learning-console"
-          image: "medol/federation-learning-console:0.0.1-SNAPSHOT"
+          image: "fl/federation-learning-console:0.0.1-SNAPSHOT"
           ports:
             - containerPort: 80
           readinessProbe:
@@ -73,7 +73,7 @@ spec:
     spec:
       containers:
         - name: "federation-learning-participant-console"
-          image: "medol/federation-learning-participant-console:0.0.1-SNAPSHOT"
+          image: "fl/federation-learning-participant-console:0.0.1-SNAPSHOT"
           ports:
             - containerPort: 80
           readinessProbe:
@@ -128,7 +128,7 @@ spec:
     spec:
       containers:
         - name: "federation-learning-support"
-          image: "medol/federation-learning-support:0.0.1-SNAPSHOT"
+          image: "fl/federation-learning-support:0.0.1-SNAPSHOT"
           ports:
             - containerPort: 8080
           env:
@@ -196,7 +196,7 @@ spec:
     spec:
       containers:
         - name: "federation-learning-platform"
-          image: "medol/federation-learning-platform:0.0.1-SNAPSHOT"
+          image: "fl/federation-learning-platform:0.0.1-SNAPSHOT"
           ports:
             - containerPort: 8081
           env:
@@ -264,7 +264,7 @@ spec:
     spec:
       containers:
         - name: "federation-learning-runtime-agent"
-          image: "medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT"
+          image: "fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT"
           ports:
             - containerPort: 8082
           env:

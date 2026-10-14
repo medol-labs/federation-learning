@@ -22,6 +22,7 @@ import tech.medo.trainingorchestration.events.ParticipantExecutionPlanDispatched
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionReceivedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionAcceptedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionRejectedEvent
+import tech.medo.trainingorchestration.events.PlainModelAggregationFailedEvent
 import tech.medo.trainingorchestration.events.SecureAggregationRequestedEvent
 import tech.medo.trainingorchestration.events.GlobalModelUpdatedEvent
 import tech.medo.trainingorchestration.events.GlobalModelEvaluationSubmittedEvent
@@ -85,6 +86,11 @@ interface TrainingRoundProgressReadModelProjectionUpdater {
 
     fun update(
         event: ModelUpdateSubmissionRejectedEvent,
+        message: EventMessage
+    )
+
+    fun update(
+        event: PlainModelAggregationFailedEvent,
         message: EventMessage
     )
 
@@ -376,6 +382,32 @@ open class DefaultTrainingRoundProgressReadModelProjectionUpdater(
 
     @Transactional
     open override fun update(
+        event: PlainModelAggregationFailedEvent,
+        message: EventMessage
+    ) {
+
+        val entity = repository.findProjectionById(TrainingRoundProgressReadModelKey(trainingJobId = event.trainingJobId, roundId = event.roundId)) ?: TrainingRoundProgressReadModelProjection().apply {
+                this.trainingJobId = event.trainingJobId
+                this.roundId = event.roundId
+        }
+            entity.trainingJobId = event.trainingJobId
+            entity.trainingRunConfigurationId = event.trainingRunConfigurationId
+            entity.featureSchemaId = event.featureSchemaId
+            entity.roundId = event.roundId
+            entity.trainingJobObjective = event.trainingJobObjective
+            entity.roundNumber = event.roundNumber
+            entity.selectedRuntimeCount = event.selectedRuntimeCount
+            entity.minimumNodesPerRound = event.minimumNodesPerRound
+            entity.failureReason = event.failureReason
+            entity.secureAggregationStatus = "Failed"
+            entity.state = TrainingRoundStateEnum.Failed
+            ProjectionMetadata.assign(entity, message)
+        repository.save(entity)
+
+    }
+
+    @Transactional
+    open override fun update(
         event: SecureAggregationRequestedEvent,
         message: EventMessage
     ) {
@@ -601,6 +633,14 @@ class TrainingRoundProgressReadModelProjector(
     @EventHandler
     fun on(
         event: ModelUpdateSubmissionRejectedEvent,
+        message: EventMessage
+    ) {
+        updater.update(event, message)
+    }
+
+    @EventHandler
+    fun on(
+        event: PlainModelAggregationFailedEvent,
         message: EventMessage
     ) {
         updater.update(event, message)

@@ -131,8 +131,10 @@ Useful options:
 ```bash
 node scripts/k3d-training-flow.mjs --recreate
 node scripts/k3d-training-flow.mjs --scenario csv
+node scripts/k3d-training-flow.mjs --federation-mode personalized
+node scripts/k3d-training-flow.mjs --participant-count 2
 node scripts/k3d-training-flow.mjs --skip-cluster --skip-apply
-node scripts/k3d-training-flow.mjs --runtime-engine-image medol/federation-learning-runtime-engine:pytorch-vision
+node scripts/k3d-training-flow.mjs --runtime-engine-image fl/federation-learning-runtime-engine:pytorch-vision
 ```
 
 To run the phases manually, use:

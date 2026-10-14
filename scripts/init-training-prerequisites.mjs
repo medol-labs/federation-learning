@@ -21,7 +21,9 @@ const activateLifecycle = booleanOption(args.activate ?? process.env.FL_ACTIVATE
 const timeoutMs = positiveInt(args.timeout, 30000);
 const pollIntervalMs = positiveInt(args['poll-interval'], 800);
 const trainingScenario = normalizeScenario(args.scenario ?? args['training-scenario'] ?? process.env.FL_TRAINING_SCENARIO ?? 'densenet');
+const federationMode = normalizeFederationMode(args['federation-mode'] ?? process.env.FL_FEDERATION_MODE ?? 'global');
 const initTarget = normalizeInitTarget(args.target ?? args['init-target'] ?? process.env.FL_INIT_TRAINING_TARGET ?? 'all');
+const participantKey = normalizeParticipantKey(args['participant-key'] ?? args.participant ?? process.env.FL_PARTICIPANT_KEY ?? 'participant-1');
 
 const platformUrl = trimSlash(args['platform-url'] ?? process.env.FL_PLATFORM_URL ?? 'http://localhost:8081');
 const supportUrl = trimSlash(args['support-url'] ?? process.env.FL_SUPPORT_URL ?? 'http://localhost:8080');
@@ -47,7 +49,7 @@ const runtimeEngineImage = String(
     args['runtime-engine-image'] ??
     process.env.FL_RUNTIME_ENGINE_IMAGE ??
     process.env.RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE ??
-    'medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT'
+    defaultRuntimeEngineImage(trainingScenario)
 ).trim();
 const runtimeEngineImageDigest = nullableString(
     args['runtime-engine-image-digest'] ??
@@ -75,7 +77,14 @@ const seed = buildSeed(trainingScenario, runtimeDatasetPath, runtimeAgentUrl, ru
     runtimeEngineImage,
     runtimeEngineImageDigest
 });
+applyParticipantKey(seed, participantKey, trainingScenario);
+applyFederationMode(seed, federationMode, trainingScenario);
 const authTokensByBaseUrl = new Map();
+
+if (args['print-seed-json-only']) {
+    console.log(JSON.stringify(seedSummary(seed), null, 2));
+    process.exit(0);
+}
 
 console.log(`[init-training] platformUrl=${platformUrl}`);
 console.log(`[init-training] supportUrl=${supportUrl}`);
@@ -92,6 +101,9 @@ console.log(`[init-training] createAndSubmitTrainingJob=${createJob}`);
 console.log(`[init-training] lifecycleActivation=${activateLifecycle}`);
 console.log(`[init-training] target=${initTarget}`);
 console.log(`[init-training] trainingScenario=${trainingScenario}`);
+console.log(`[init-training] federationMode=${federationMode}`);
+console.log(`[init-training] participantKey=${participantKey}`);
+console.log(`[init-training] authMode=${authMode()}`);
 console.log(`[init-training] datasetPath=${datasetPath}`);
 console.log(`[init-training] runtimeDatasetPath=${runtimeDatasetPath}`);
 
@@ -122,22 +134,33 @@ if (shouldRunTrainingJob(initTarget)) {
 }
 
 console.log('[init-training] ready');
-console.log(JSON.stringify({
-    organizationId: seed.organization.organizationId,
-    federationId: seed.federation.federationId,
-    featureSchemaId: seed.featureSchema.featureSchemaId,
-    runtimeInfrastructurePackageId: seed.runtimeInfrastructurePackage.runtimeInfrastructurePackageId,
-    runtimeInstallationPlanId: seed.runtimeInstallationPlan.runtimeInstallationPlanId,
-    runtimeInfrastructureId: seed.runtime.runtimeInfrastructureId,
-    runtimeId: seed.runtime.runtimeId,
-    runtimeAgentId: seed.runtime.runtimeAgentId,
-    datasetId: seed.dataset.datasetId,
-    modelId: seed.model.modelId,
-    runtimeEngineProfileId: seed.runtimeEngineProfile.runtimeEngineProfileId,
-    trainingRunConfigurationId: seed.trainingRunConfiguration.trainingRunConfigurationId,
-    trainingJobId: createJob ? seed.trainingJob.trainingJobId : undefined
-}, null, 2));
+console.log(JSON.stringify(seedSummary(seed), null, 2));
 printNextSteps();
+
+function seedSummary(seedValue) {
+    return {
+        participantKey,
+        organizationId: seedValue.organization.organizationId,
+        organizationName: seedValue.organization.organizationName,
+        federationId: seedValue.federation.federationId,
+        featureSchemaId: seedValue.featureSchema.featureSchemaId,
+        runtimeInfrastructurePackageId: seedValue.runtimeInfrastructurePackage.runtimeInfrastructurePackageId,
+        runtimeInstallationPlanId: seedValue.runtimeInstallationPlan.runtimeInstallationPlanId,
+        runtimeInfrastructureId: seedValue.runtime.runtimeInfrastructureId,
+        runtimeId: seedValue.runtime.runtimeId,
+        runtimeAgentId: seedValue.runtime.runtimeAgentId,
+        runtimeName: seedValue.runtime.runtimeName,
+        datasetId: seedValue.dataset.datasetId,
+        modelId: seedValue.model.modelId,
+        runtimeEngineProfileId: seedValue.runtimeEngineProfile.runtimeEngineProfileId,
+        trainingRunConfigurationId: seedValue.trainingRunConfiguration.trainingRunConfigurationId,
+        federationMode,
+        personalizationMode: seedValue.trainingRunConfiguration.personalizationMode,
+        personalizationScope: seedValue.trainingRunConfiguration.personalizationScope,
+        personalizedArtifactPolicy: seedValue.trainingRunConfiguration.personalizedArtifactPolicy,
+        trainingJobId: createJob ? seedValue.trainingJob.trainingJobId : undefined
+    };
+}
 
 async function ensurePlatformData() {
     const organization = await ensureOne({
@@ -772,7 +795,10 @@ async function getPage(baseUrl, path, query) {
     });
     const body = await response.text();
     if (!response.ok) {
-        fail(`GET ${url} failed: ${response.status} ${compact(body)}`);
+        const authHint = response.status === 401 && (args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN)
+            ? ' Internal token was configured; verify the service secret MEDOL_SECURITY_INTERNAL_TOKEN matches this script and restart the deployment after changing it.'
+            : '';
+        fail(`GET ${url} failed: ${response.status} ${compact(body)}${authHint}`);
     }
     return body ? JSON.parse(body) : {content: []};
 }
@@ -970,11 +996,138 @@ function normalizeName(value) {
     return String(value ?? '').trim().replace(/^"|"$/g, '').replace(/[_\s-]/g, '').toLowerCase();
 }
 
+function titleCase(value) {
+    return String(value ?? '')
+        .split(/[-_\s]+/)
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(' ');
+}
+
 function buildSeed(scenario, datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions) {
     if (scenario === 'csv') {
         return buildCsvSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions);
     }
     return buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions);
+}
+
+function applyParticipantKey(seedValue, key, scenario) {
+    if (key === 'participant-1') {
+        return;
+    }
+
+    const displayName = titleCase(key);
+    const scope = `${scenario}:${key}`;
+    const organizationId = stableUuid(`fl-dev:organization:${scope}`);
+    const runtimeAgentId = stableUuid(`fl-dev:runtime-agent:${scope}`);
+    const runtimeId = runtimeAgentId;
+    const runtimeName = `${seedValue.runtime.runtimeName}-${key}`;
+    const runtimeInstallationPlanId = stableUuid(
+        `fl-dev:runtime-installation-plan:${organizationId}:` +
+        `${seedValue.runtimeInstallationPlan.runtimeInfrastructurePackageName}:` +
+        `${seedValue.runtimeInstallationPlan.runtimeInfrastructurePackageVersion}:${runtimeName}`
+    );
+    const runtimeInfrastructureId = stableNameUuid(`runtime-infrastructure:${runtimeInstallationPlanId}`);
+    const datasetId = stableUuid(`fl-dev:dataset:${scope}`);
+    const runtimeDatasetBindingId = stableUuid(`fl-dev:dataset-binding:${scope}`);
+    const datasetAccessValidationId = stableUuid(`fl-dev:dataset-access-validation:${scope}`);
+    const metadataReportId = stableUuid(`fl-dev:platform-metadata:${scope}:compatible`);
+    const organizationName = `${seedValue.organization.organizationName} ${displayName}`;
+    const datasetName = `${seedValue.dataset.datasetName} ${displayName}`;
+
+    seedValue.organization.organizationId = organizationId;
+    seedValue.organization.organizationName = organizationName;
+    seedValue.organization.contactEmail = `fl-dev+${key}@example.com`;
+
+    seedValue.runtime.runtimeId = runtimeId;
+    seedValue.runtime.runtimeInfrastructureId = runtimeInfrastructureId;
+    seedValue.runtime.runtimeAgentId = runtimeAgentId;
+    seedValue.runtime.organizationId = organizationId;
+    seedValue.runtime.organizationName = organizationName;
+    seedValue.runtime.runtimeName = runtimeName;
+
+    seedValue.runtimeInstallationPlan.runtimeInstallationPlanId = runtimeInstallationPlanId;
+    seedValue.runtimeInstallationPlan.runtimeInfrastructureId = runtimeInfrastructureId;
+    seedValue.runtimeInstallationPlan.organizationId = organizationId;
+    seedValue.runtimeInstallationPlan.organizationName = organizationName;
+    seedValue.runtimeInstallationPlan.runtimeName = runtimeName;
+
+    seedValue.node.organizationId = organizationId;
+    seedValue.node.organizationName = organizationName;
+    seedValue.node.runtimeInfrastructureId = runtimeInfrastructureId;
+    seedValue.node.runtimeAgentId = runtimeAgentId;
+    seedValue.node.runtimeName = runtimeName;
+    seedValue.node.runtimeNodeName = runtimeName;
+    seedValue.node.infrastructureNodeId = `${key}-node`;
+
+    seedValue.agentTelemetry.runtimeAgentId = runtimeAgentId;
+    seedValue.telemetry.runtimeAgentId = runtimeAgentId;
+    seedValue.telemetry.runtimeNodeName = runtimeName;
+    seedValue.nodeResource.runtimeAgentId = runtimeAgentId;
+    seedValue.nodeResource.runtimeInfrastructureId = runtimeInfrastructureId;
+    seedValue.nodeResource.runtimeNodeName = runtimeName;
+
+    seedValue.dataset.datasetId = datasetId;
+    seedValue.dataset.organizationId = organizationId;
+    seedValue.dataset.organizationName = organizationName;
+    seedValue.dataset.datasetName = datasetName;
+
+    seedValue.binding.runtimeDatasetBindingId = runtimeDatasetBindingId;
+    seedValue.binding.datasetId = datasetId;
+    seedValue.binding.organizationId = organizationId;
+    seedValue.binding.organizationName = organizationName;
+    seedValue.binding.datasetName = datasetName;
+    seedValue.binding.runtimeId = runtimeId;
+    seedValue.binding.runtimeName = runtimeName;
+
+    seedValue.accessValidation.datasetAccessValidationId = datasetAccessValidationId;
+    seedValue.accessValidation.runtimeDatasetBindingId = runtimeDatasetBindingId;
+    seedValue.accessValidation.datasetId = datasetId;
+    seedValue.accessValidation.organizationId = organizationId;
+    seedValue.accessValidation.organizationName = organizationName;
+    seedValue.accessValidation.datasetName = datasetName;
+    seedValue.accessValidation.runtimeId = runtimeId;
+    seedValue.accessValidation.runtimeName = runtimeName;
+
+    seedValue.platformMetadata.runtimeDatasetBindingId = runtimeDatasetBindingId;
+    seedValue.platformMetadata.metadataReportId = metadataReportId;
+    seedValue.platformMetadata.datasetId = datasetId;
+    seedValue.platformMetadata.organizationId = organizationId;
+    seedValue.platformMetadata.organizationName = organizationName;
+    seedValue.platformMetadata.runtimeId = runtimeId;
+    seedValue.platformMetadata.runtimeName = runtimeName;
+    seedValue.platformMetadata.datasetName = datasetName;
+
+    applyRuntimeInfrastructureId(runtimeInfrastructureId);
+    applyRuntimeIdentity(runtimeId);
+}
+
+function applyFederationMode(seedValue, mode, scenario) {
+    const config = seedValue.trainingRunConfiguration;
+    const job = seedValue.trainingJob;
+    if (mode === 'global') {
+        config.personalizationMode = 'GLOBAL_ONLY';
+        config.personalizationScope = 'FEDERATION';
+        config.personalizedArtifactPolicy = 'NONE';
+        config.personalizationMetric = null;
+        config.minimumPersonalizationLift = null;
+        return;
+    }
+
+    const trainingRunConfigurationId = stableUuid(`fl-dev:training-run-configuration:${scenario}:personalized:v1`);
+    const trainingJobId = stableUuid(`fl-dev:training-job:${scenario}:personalized`);
+    config.trainingRunConfigurationId = trainingRunConfigurationId;
+    config.configurationName = `${config.configurationName} Personalized`;
+    config.strategyName = `${config.strategyName}_PERSONALIZED`;
+    config.personalizationMode = 'LOCAL_ADAPTATION';
+    config.personalizationScope = 'PARTICIPANT';
+    config.personalizedArtifactPolicy = 'REGISTER_RUNTIME_LOCAL';
+    config.personalizationMetric = 'ACCURACY';
+    config.minimumPersonalizationLift = 0.0;
+    job.trainingRunConfigurationId = trainingRunConfigurationId;
+    job.trainingJobId = trainingJobId;
+    job.configurationName = config.configurationName;
+    job.objective = `${job.objective} with participant-level personalization`;
 }
 
 function buildDensenetSeed(datasetPathValue, runtimeAgentEndpoint, runtimeEngineEndpoint, runtimeOptions) {
@@ -1630,6 +1783,17 @@ function normalizeScenario(value) {
     fail(`Unsupported training scenario: ${value}. Supported scenarios: densenet, csv`);
 }
 
+function normalizeFederationMode(value) {
+    const normalized = String(value ?? '').trim().toLowerCase().replace(/[_\s]/g, '-');
+    if (['global', 'global-only', 'globalonly', 'federated', 'federation'].includes(normalized)) {
+        return 'global';
+    }
+    if (['personalized', 'personalization', 'personal', 'participant-personalized'].includes(normalized)) {
+        return 'personalized';
+    }
+    fail(`Unsupported federation mode: ${value}. Supported modes: global, personalized`);
+}
+
 function normalizeInitTarget(value) {
     const normalized = String(value ?? '').trim().toLowerCase().replace(/[_\s]/g, '-');
     if (['all', 'full'].includes(normalized)) return 'all';
@@ -1639,6 +1803,17 @@ function normalizeInitTarget(value) {
     }
     if (['training-job', 'job', 'submit-job'].includes(normalized)) return 'training-job';
     fail(`Unsupported init target: ${value}. Supported targets: all, platform, runtime-agent, training-job`);
+}
+
+function normalizeParticipantKey(value) {
+    const normalized = String(value ?? '').trim().toLowerCase().replace(/[_\s]/g, '-');
+    if (!normalized || ['1', 'default', 'primary', 'participant-1'].includes(normalized)) {
+        return 'participant-1';
+    }
+    if (/^\d+$/.test(normalized)) {
+        return `participant-${normalized}`;
+    }
+    return normalized.replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || 'participant-1';
 }
 
 function shouldRunPlatformData(target) {
@@ -1706,26 +1881,63 @@ function unquoteEnvValue(value) {
 
 function requestHeaders(baseHeaders = {}, url = '') {
     const result = {...baseHeaders};
+    const internalToken = args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN;
+    if (internalToken && !Object.hasOwn(result, 'X-MEDOL-INTERNAL-TOKEN')) {
+        result['X-MEDOL-INTERNAL-TOKEN'] = String(internalToken).trim();
+    }
+    if (internalToken) {
+        return result;
+    }
+
     const authToken = authTokenForUrl(url);
     if (authToken && !Object.hasOwn(result, 'Authorization')) {
         result.Authorization = `Bearer ${authToken}`;
+    }
+    const scopedApiToken = scopedApiTokenForUrl(url);
+    if (scopedApiToken && !Object.hasOwn(result, 'Authorization')) {
+        result.Authorization = scopedApiToken.startsWith('Bearer ') ? scopedApiToken : `Bearer ${scopedApiToken}`;
     }
     const apiToken = process.env.FL_API_TOKEN?.trim();
     if (apiToken && !Object.hasOwn(result, 'Authorization')) {
         result.Authorization = apiToken.startsWith('Bearer ') ? apiToken : `Bearer ${apiToken}`;
     }
-
-    const internalToken = args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN;
-    if (internalToken && !Object.hasOwn(result, 'X-MEDOL-INTERNAL-TOKEN')) {
-        result['X-MEDOL-INTERNAL-TOKEN'] = String(internalToken).trim();
-    }
     return result;
+}
+
+function authMode() {
+    if ((args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN)?.trim()) {
+        return 'internal-token';
+    }
+    if (
+        process.env.FL_PLATFORM_API_TOKEN?.trim() ||
+        process.env.FL_SUPPORT_API_TOKEN?.trim() ||
+        process.env.FL_RUNTIME_AGENT_API_TOKEN?.trim()
+    ) {
+        return 'scoped-api-token';
+    }
+    if (process.env.FL_API_TOKEN?.trim()) {
+        return 'api-token';
+    }
+    return skipAdminSetup ? 'none' : 'admin-login';
 }
 
 function authTokenForUrl(url) {
     const text = String(url ?? '');
     return [...authTokensByBaseUrl.entries()]
         .sort(([left], [right]) => right.length - left.length)
+        .find(([baseUrl]) => text === baseUrl || text.startsWith(`${baseUrl}/`))?.[1];
+}
+
+function scopedApiTokenForUrl(url) {
+    const text = String(url ?? '');
+    const scopedTokens = [
+        [platformUrl, process.env.FL_PLATFORM_API_TOKEN?.trim()],
+        [supportUrl, process.env.FL_SUPPORT_API_TOKEN?.trim()],
+        [runtimeAgentUrl, process.env.FL_RUNTIME_AGENT_API_TOKEN?.trim()]
+    ]
+        .filter(([, token]) => token)
+        .sort(([left], [right]) => right.length - left.length);
+    return scopedTokens
         .find(([baseUrl]) => text === baseUrl || text.startsWith(`${baseUrl}/`))?.[1];
 }
 
@@ -1871,6 +2083,42 @@ function defaultRuntimePackageName(environmentType) {
         default:
             return 'local-docker-compose-runtime-agent';
     }
+}
+
+function defaultRuntimeEngineImage(scenario) {
+    const imageVersion = String(process.env.IMAGE_VERSION ?? '0.0.1-SNAPSHOT');
+    const profile = defaultRuntimeEnginePluginProfile(scenario);
+    const imagePrefix = String(process.env.DOCKER_IMAGE_PREFIX ?? 'fl').replace(/\/+$/, '');
+    return `${imagePrefix}/federation-learning-runtime-engine:${runtimeEngineImageVersion(profile, imageVersion)}`;
+}
+
+function defaultRuntimeEnginePluginProfile(scenario) {
+    switch (normalize(scenario)) {
+        case 'DENSENET':
+        case 'DENSENET121':
+        case 'TINYIMAGENET':
+        case 'TINYIMAGENETDENSENET':
+            return 'pytorch-vision';
+        case 'CSV':
+            return 'sklearn';
+        default:
+            return 'full';
+    }
+}
+
+function runtimeEngineImageVersion(profile, version) {
+    const safeProfile = dockerTagPart(profile);
+    const safeVersion = String(version).trim();
+    if (!safeProfile || safeVersion.startsWith(`${safeProfile}-`)) return safeVersion;
+    return `${safeProfile}-${safeVersion}`;
+}
+
+function dockerTagPart(value) {
+    return String(value ?? '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9_.-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
 }
 
 function canonicalRuntimeEnvironmentType(value) {

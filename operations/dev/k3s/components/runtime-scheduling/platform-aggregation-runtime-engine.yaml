@@ -1,0 +1,81 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "federation-learning-aggregation-runtime-engine"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-aggregation-runtime-engine"
+    "app.kubernetes.io/component": "runtime-engine"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "federation-learning-aggregation-runtime-engine"
+  template:
+    metadata:
+      labels:
+        app: "federation-learning-aggregation-runtime-engine"
+    spec:
+      nodeSelector:
+        "medol.dev/node-role": "runtime"
+      tolerations:
+        - key: "medol.dev/runtime-only"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      containers:
+        - name: "runtime-engine"
+          image: "fl/federation-learning-runtime-engine:pytorch-vision-0.0.1-SNAPSHOT"
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: "RUNTIME_ENGINE_NODE_NAME"
+              value: "platform-aggregator"
+            - name: "RUNTIME_ENGINE_HOST"
+              value: "0.0.0.0"
+            - name: "RUNTIME_ENGINE_PORT"
+              value: "8080"
+            - name: "RUNTIME_ENGINE_ROOT"
+              value: "/workspace/tmp/runtime-engine"
+            - name: "RUNTIME_ENGINE_PLUGIN_PROFILE"
+              value: "pytorch-vision"
+          volumeMounts:
+            - name: "runtime-work"
+              mountPath: "/workspace/tmp/runtime-engine"
+          readinessProbe:
+            httpGet:
+              path: "/healthz"
+              port: 8080
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 20
+          livenessProbe:
+            httpGet:
+              path: "/healthz"
+              port: 8080
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 12
+      volumes:
+        - name: "runtime-work"
+          hostPath:
+            path: "/workspace/tmp/runtime-engine"
+            type: "DirectoryOrCreate"
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "federation-learning-aggregation-runtime-engine"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-aggregation-runtime-engine"
+    "app.kubernetes.io/component": "runtime-engine"
+    "app.kubernetes.io/managed-by": "federation-learning-operations"
+spec:
+  type: "ClusterIP"
+  selector:
+    app: "federation-learning-aggregation-runtime-engine"
+  ports:
+    - name: "http"
+      port: 8080
+      targetPort: 8080

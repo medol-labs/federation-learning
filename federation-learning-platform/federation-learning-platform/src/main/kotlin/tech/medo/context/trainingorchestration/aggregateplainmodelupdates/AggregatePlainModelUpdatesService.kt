@@ -37,5 +37,11 @@ sealed interface AggregatePlainModelUpdatesResult {
         val aggregatedModelSizeBytes: Int?
     ) : AggregatePlainModelUpdatesResult
 
+    data class Rejected(
+        val failureReason: String
+    ) : AggregatePlainModelUpdatesResult
 
+    data class Unavailable(
+        val failureReason: String
+    ) : AggregatePlainModelUpdatesResult
 }

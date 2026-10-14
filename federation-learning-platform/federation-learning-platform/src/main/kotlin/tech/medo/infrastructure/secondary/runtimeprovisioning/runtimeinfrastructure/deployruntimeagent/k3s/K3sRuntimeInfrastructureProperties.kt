@@ -10,7 +10,7 @@ class K3sRuntimeInfrastructureProperties {
     var agentManifestFile: String? = null
     var renderedManifestDirectory: String = "target/runtime-agent-manifests"
     var agentDeploymentName: String = "federation-learning-runtime-agent"
-    var agentImage: String = "medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT"
+    var agentImage: String = "fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT"
     var agentReplicas: Int = 1
     var agentContainerPort: Int = 8082
     var agentAllowedOrigins: String = "http://localhost:*,http://127.0.0.1:*,http://*:30082"
@@ -21,7 +21,7 @@ class K3sRuntimeInfrastructureProperties {
     var agentInternalTokenKey: String = "MEDOL_SECURITY_INTERNAL_TOKEN"
     var agentAdminBootstrapSetupTokenKey: String = "MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN"
     var participantConsoleEnabled: Boolean = true
-    var participantConsoleImage: String = "medol/federation-learning-participant-console:0.0.1-SNAPSHOT"
+    var participantConsoleImage: String = "fl/federation-learning-participant-console:0.0.1-SNAPSHOT"
     var participantConsoleReplicas: Int = 1
     var participantConsoleContainerPort: Int = 80
     var participantConsoleServiceType: String = "NodePort"
@@ -41,7 +41,7 @@ class K3sRuntimeInfrastructureProperties {
     var endpointScope: String = "CLUSTER"
     var agentVersion: String = "k3s"
     var runtimeEngineServiceAccountName: String = "federation-learning-runtime-engine-scheduler"
-    var runtimeEngineImage: String = "medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT"
+    var runtimeEngineImage: String = "fl/federation-learning-runtime-engine:0.0.1-SNAPSHOT"
     var runtimeEngineImagePullPolicy: String = "IfNotPresent"
     var runtimeEngineContainerPort: Int = 8080
     var runtimeEngineDatasetHostPath: String = "/workspace/datasets"

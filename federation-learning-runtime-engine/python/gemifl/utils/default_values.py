@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 
 metric_list = {
     "binary": ["auc", "precision", "recall", "best_score"],
@@ -8,4 +9,4 @@ metric_list = {
 
 NUMEXPR_MAX_THREADS = '32'
 
-contri_url = "http://192.168.8.11:8080/api/contribution-degrees"
+contri_url = os.getenv("GEMIFL_CONTRIBUTION_DEGREES_URL", "http://localhost:8080/api/contribution-degrees")

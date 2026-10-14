@@ -15,6 +15,7 @@ import tech.medo.trainingorchestration.events.ModelUpdateSubmissionReceivedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionAcceptedEvent
 import tech.medo.trainingorchestration.events.ModelUpdateSubmissionRejectedEvent
 import tech.medo.trainingorchestration.events.PlainModelAggregationCompletedEvent
+import tech.medo.trainingorchestration.events.PlainModelAggregationFailedEvent
 import tech.medo.trainingorchestration.events.SecureAggregationRequestedEvent
 import tech.medo.trainingorchestration.events.GlobalModelUpdatedEvent
 import tech.medo.trainingorchestration.events.GlobalModelEvaluationSubmittedEvent
@@ -371,6 +372,20 @@ class TrainingRoundState @EntityCreator constructor() {
         modelArtifactDigest = event.modelArtifactDigest
         aggregatedModelSignatureUri = event.aggregatedModelSignatureUri
         aggregatedModelSizeBytes = event.aggregatedModelSizeBytes
+    }
+
+    @EventSourcingHandler
+    fun evolve(event: PlainModelAggregationFailedEvent): TrainingRoundState = apply {
+        currentState = TrainingRoundStateEnum.Failed
+        trainingJobId = event.trainingJobId
+        trainingRunConfigurationId = event.trainingRunConfigurationId
+        trainingJobObjective = event.trainingJobObjective
+        featureSchemaId = event.featureSchemaId
+        roundId = event.roundId
+        roundNumber = event.roundNumber
+        selectedRuntimeCount = event.selectedRuntimeCount
+        minimumNodesPerRound = event.minimumNodesPerRound
+        failureReason = event.failureReason
     }
 
     @EventSourcingHandler

@@ -51,7 +51,7 @@ runtime-agent:
     job-observation-poll-interval: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_JOB_OBSERVATION_POLL_INTERVAL:PT2S}
     kubernetes-namespace: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_NAMESPACE:default}
     kubernetes-service-account-name: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_SERVICE_ACCOUNT_NAME:federation-learning-runtime-engine-scheduler}
-    kubernetes-image: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE:medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
+    kubernetes-image: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE:fl/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
     kubernetes-image-pull-policy: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_IMAGE_PULL_POLICY:IfNotPresent}
     kubernetes-container-port: ${RUNTIME_AGENT_LOCAL_RUNTIME_ENGINE_KUBERNETES_CONTAINER_PORT:8080}
     kubernetes-runtime-infrastructure-id: ${RUNTIME_INFRASTRUCTURE_ID:}

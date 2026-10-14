@@ -145,7 +145,7 @@ class K3sRuntimeInfrastructureAdapterTest {
         assertTrue(manifest.contains("name: \"runtime-agent-test-000000000000-console-nginx\""))
         assertTrue(manifest.contains("proxy_pass http://runtime-agent-test-000000000000:8082/;"))
         assertTrue(manifest.contains("location /api/runtime-agent/"))
-        assertTrue(manifest.contains("image: \"medol/federation-learning-participant-console:0.0.1-SNAPSHOT\""))
+        assertTrue(manifest.contains("image: \"fl/federation-learning-participant-console:0.0.1-SNAPSHOT\""))
         assertTrue(manifest.contains("type: \"NodePort\""))
         assertFalse(manifest.contains("kind: Middleware"))
         assertFalse(manifest.contains("traefik.ingress.kubernetes.io/router.middlewares"))

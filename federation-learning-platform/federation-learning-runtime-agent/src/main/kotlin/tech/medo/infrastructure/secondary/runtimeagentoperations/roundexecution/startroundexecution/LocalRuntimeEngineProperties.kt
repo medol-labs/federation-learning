@@ -27,7 +27,7 @@ data class LocalRuntimeEngineProperties(
     val jobObservationPollInterval: Duration = Duration.ofSeconds(2),
     val kubernetesNamespace: String = "default",
     val kubernetesServiceAccountName: String = "federation-learning-runtime-engine-scheduler",
-    val kubernetesImage: String = "medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT",
+    val kubernetesImage: String = "fl/federation-learning-runtime-engine:0.0.1-SNAPSHOT",
     val kubernetesImagePullPolicy: String = "IfNotPresent",
     val kubernetesContainerPort: Int = 8080,
     val kubernetesRuntimeInfrastructureId: String = "",

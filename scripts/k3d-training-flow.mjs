@@ -35,6 +35,7 @@ const configuredRuntimeAgentUrl = optionalString(args['runtime-agent-url'] ?? pr
 const runtimeAgentPortForwardPort = positiveInt(args['runtime-agent-port-forward-port'] ?? process.env.FL_RUNTIME_AGENT_PORT_FORWARD_PORT, 18082);
 let runtimeAgentUrl = trimSlash(configuredRuntimeAgentUrl ?? `http://127.0.0.1:${runtimeAgentPortForwardPort}`);
 const scenario = stringArg('scenario', 'FL_TRAINING_SCENARIO', 'densenet');
+const federationMode = normalizeFederationMode(args['federation-mode'] ?? process.env.FL_FEDERATION_MODE ?? 'global');
 const k3sDevEnvironmentDir = resolve(repoRoot, 'operations/dev/k3s/environments/dev');
 const k3sDevSecretsFile = resolve(k3sDevEnvironmentDir, 'secrets.dev.yaml');
 const k3sDevSecretsExampleFile = resolve(k3sDevEnvironmentDir, 'secrets.example.yaml');
@@ -48,9 +49,12 @@ const adminSetupToken = stringArg(
 const jwtSecret = stringArg('jwt-secret', 'FL_K3D_JWT_SECRET', 'local-dev-jwt-secret-local-dev-jwt-secret');
 const timeoutMs = positiveInt(args.timeout ?? process.env.FL_K3D_FLOW_TIMEOUT_MS, 240000);
 const pollIntervalMs = positiveInt(args['poll-interval'] ?? process.env.FL_K3D_FLOW_POLL_INTERVAL_MS, 3000);
+const participantCount = positiveInt(args['participant-count'] ?? process.env.FL_K3D_PARTICIPANT_COUNT, 2);
 const preparedNodeCount = positiveInt(args['prepared-node-count'] ?? process.env.FL_K3D_PREPARED_NODE_COUNT, 1);
 const imageVersion = stringArg('image-version', 'IMAGE_VERSION', '0.0.1-SNAPSHOT');
-const defaultRuntimeEngineImage = `192.168.139.3:5000/fl/federation-learning-runtime-engine:${imageVersion}`;
+const runtimeEnginePluginProfile = stringArg('runtime-engine-plugin-profile', 'FL_RUNTIME_ENGINE_PLUGIN_PROFILE', defaultRuntimeEnginePluginProfile(scenario));
+const configuredAppImagePrefix = optionalString(args['app-image-prefix'] ?? process.env.FL_APP_IMAGE_PREFIX ?? process.env.DOCKER_IMAGE_PREFIX);
+const defaultRuntimeEngineImage = `${configuredAppImagePrefix ?? 'fl'}/federation-learning-runtime-engine:${runtimeEngineImageVersion(runtimeEnginePluginProfile, imageVersion)}`;
 const runtimeEngineImage = stringArg(
     'runtime-engine-image',
     'FL_RUNTIME_ENGINE_IMAGE',
@@ -59,7 +63,7 @@ const runtimeEngineImage = stringArg(
 const appImagePrefix = stringArg(
     'app-image-prefix',
     'FL_APP_IMAGE_PREFIX',
-    imagePrefixFromImage(runtimeEngineImage) ?? process.env.DOCKER_IMAGE_PREFIX ?? '192.168.139.3:5000/fl'
+    imagePrefixFromImage(runtimeEngineImage) ?? configuredAppImagePrefix ?? 'fl'
 );
 const internalToken = optionalString(args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN) ?? 'local-dev-internal-token';
 const runtimeAgentImage = optionalString(args['runtime-agent-image'] ?? process.env.FL_RUNTIME_AGENT_IMAGE);
@@ -105,6 +109,9 @@ console.log(JSON.stringify({
     adminUsername,
     adminSetupEnabled: !skipAdminSetup,
     scenario,
+    federationMode,
+    runtimeEnginePluginProfile,
+    participantCount,
     rebuildAppImages,
     appImagePrefix,
     runtimeEngineImage,
@@ -159,73 +166,9 @@ if (!skipAdminSetup) {
     await ensureAdminUser(supportUrl, 'support');
 }
 
-const platformSeed = await runInitTraining('platform', {
-    createJob: false,
-    registerRuntimeInfrastructure: true,
-    runtimeAgentUrl,
-});
-const runtimeInfrastructureId = platformSeed.runtimeInfrastructureId;
-const organizationId = platformSeed.organizationId;
-const runtimeAgentId = platformSeed.runtimeAgentId;
-
-console.log(`[k3d-flow] organizationId=${organizationId}`);
-console.log(`[k3d-flow] runtimeInfrastructureId=${runtimeInfrastructureId}`);
-console.log(`[k3d-flow] runtimeAgentId=${runtimeAgentId}`);
-
-let deploymentRetried = false;
-await labelRuntimeNodes(runtimeInfrastructureId);
-const runtimeInfrastructure = await waitForRuntimeInfrastructure(
-    runtimeInfrastructureId,
-    (item) => isRegisteredOrBeyond(item) || isRuntimeAgentFailureState(item?.state)
-);
-if (isRuntimeAgentFailureState(runtimeInfrastructure?.state)) {
-    await retryRuntimeAgentDeployment(runtimeInfrastructure);
-    deploymentRetried = true;
-} else {
-    await confirmRuntimeInfrastructurePrepared(runtimeInfrastructure);
-}
-
-const verifiedInfrastructure = await waitForRuntimeInfrastructure(
-    runtimeInfrastructureId,
-    (item) => isStateAtLeast(item?.state, ['VERIFIED', 'AGENTREADY', 'CONNECTED']) ||
-        (!deploymentRetried && isFailureState(item?.state)),
-    'verified runtime infrastructure'
-);
-if (isFailureState(verifiedInfrastructure?.state)) {
-    if (!isRuntimeAgentFailureState(verifiedInfrastructure?.state)) {
-        fail(`Runtime infrastructure failed before agent deployment: ${JSON.stringify(verifiedInfrastructure)}`);
-    }
-    await retryRuntimeAgentDeployment(verifiedInfrastructure);
-    deploymentRetried = true;
-}
-
-const deployedInfrastructure = await waitForRuntimeInfrastructure(
-    runtimeInfrastructureId,
-    (item) => isStateAtLeast(item?.state, ['AGENTREADY', 'CONNECTED']) ||
-        (!deploymentRetried && isFailureState(item?.state)),
-    'runtime agent deployment'
-);
-if (isFailureState(deployedInfrastructure?.state)) {
-    fail(`Runtime agent deployment failed: ${JSON.stringify(deployedInfrastructure)}`);
-}
-
-await waitForManagedRuntimeAgent(runtimeAgentId);
-await ensureManagedRuntimeAgentAccess(runtimeAgentId);
-await waitForHttp(`${runtimeAgentUrl}/actuator/health`, 'managed runtime-agent health');
-if (!skipAdminSetup) {
-    await ensureAdminUser(runtimeAgentUrl, 'runtime-agent');
-}
-await loadRuntimeAgentBootstrapConfiguration();
-await recordManagedRuntimeAgentConnection(deployedInfrastructure);
-const endpoint = await waitForRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructureId);
-console.log(`[k3d-flow] platform runtime agent endpoint=${endpoint.runtimeAgentEndpoint ?? endpoint.endpoint ?? ''}`);
-
-if (!skipRuntimeAgentData) {
-    await runInitTraining('runtime-agent', {
-        createJob: false,
-        registerRuntimeInfrastructure: false,
-        runtimeAgentUrl,
-    });
+const participants = [];
+for (let slot = 1; slot <= participantCount; slot += 1) {
+    participants.push(await prepareParticipant(slot));
 }
 
 let trainingSeed = null;
@@ -233,16 +176,14 @@ if (!skipTrainingJob) {
     trainingSeed = await runInitTraining('training-job', {
         createJob: true,
         registerRuntimeInfrastructure: false,
-        runtimeAgentUrl,
+        runtimeAgentUrl: participants[0]?.runtimeAgentUrl ?? runtimeAgentUrl,
+        participantKey: participantKeyForSlot(1),
     });
 }
 
 console.log('[k3d-flow] ready');
 console.log(JSON.stringify({
-    organizationId,
-    runtimeInfrastructureId,
-    runtimeAgentId,
-    runtimeAgentUrl,
+    participants,
     trainingJobId: trainingSeed?.trainingJobId
 }, null, 2));
 cleanupPortForwards();
@@ -401,6 +342,92 @@ function runK3d(command) {
     });
 }
 
+async function prepareParticipant(slot) {
+    const participantKey = participantKeyForSlot(slot);
+    const participantRuntimeAgentUrl = configuredRuntimeAgentUrlForSlot(slot) ?? runtimeAgentUrlForSlot(slot);
+    console.log(`[k3d-flow] prepare participant slot=${slot} key=${participantKey}`);
+    const platformSeed = await runInitTraining('platform', {
+        createJob: false,
+        registerRuntimeInfrastructure: true,
+        runtimeAgentUrl: participantRuntimeAgentUrl,
+        participantKey,
+    });
+    const runtimeInfrastructureId = platformSeed.runtimeInfrastructureId;
+    const organizationId = platformSeed.organizationId;
+    const runtimeAgentId = platformSeed.runtimeAgentId;
+
+    console.log(`[k3d-flow] participant ${slot} organizationId=${organizationId}`);
+    console.log(`[k3d-flow] participant ${slot} runtimeInfrastructureId=${runtimeInfrastructureId}`);
+    console.log(`[k3d-flow] participant ${slot} runtimeAgentId=${runtimeAgentId}`);
+
+    let deploymentRetried = false;
+    await labelRuntimeNode(runtimeInfrastructureId, slot);
+    const runtimeInfrastructure = await waitForRuntimeInfrastructure(
+        runtimeInfrastructureId,
+        (item) => isRegisteredOrBeyond(item) || isRuntimeAgentFailureState(item?.state),
+        `participant ${slot} runtime infrastructure`
+    );
+    if (isRuntimeAgentFailureState(runtimeInfrastructure?.state)) {
+        await retryRuntimeAgentDeployment(runtimeInfrastructure);
+        deploymentRetried = true;
+    } else {
+        await confirmRuntimeInfrastructurePrepared(runtimeInfrastructure);
+    }
+
+    const verifiedInfrastructure = await waitForRuntimeInfrastructure(
+        runtimeInfrastructureId,
+        (item) => isStateAtLeast(item?.state, ['VERIFIED', 'AGENTREADY', 'CONNECTED']) ||
+            (!deploymentRetried && isFailureState(item?.state)),
+        `participant ${slot} verified runtime infrastructure`
+    );
+    if (isFailureState(verifiedInfrastructure?.state)) {
+        if (!isRuntimeAgentFailureState(verifiedInfrastructure?.state)) {
+            fail(`Runtime infrastructure failed before agent deployment: ${JSON.stringify(verifiedInfrastructure)}`);
+        }
+        await retryRuntimeAgentDeployment(verifiedInfrastructure);
+        deploymentRetried = true;
+    }
+
+    const deployedInfrastructure = await waitForRuntimeInfrastructure(
+        runtimeInfrastructureId,
+        (item) => isStateAtLeast(item?.state, ['AGENTREADY', 'CONNECTED']) ||
+            (!deploymentRetried && isFailureState(item?.state)),
+        `participant ${slot} runtime agent deployment`
+    );
+    if (isFailureState(deployedInfrastructure?.state)) {
+        fail(`Runtime agent deployment failed: ${JSON.stringify(deployedInfrastructure)}`);
+    }
+
+    await waitForManagedRuntimeAgent(runtimeAgentId);
+    const accessibleRuntimeAgentUrl = await ensureManagedRuntimeAgentAccess(runtimeAgentId, slot);
+    await waitForHttp(`${accessibleRuntimeAgentUrl}/actuator/health`, `participant ${slot} managed runtime-agent health`);
+    if (!skipAdminSetup) {
+        await ensureAdminUser(accessibleRuntimeAgentUrl, `runtime-agent participant ${slot}`);
+    }
+    await loadRuntimeAgentBootstrapConfiguration(accessibleRuntimeAgentUrl);
+    await recordManagedRuntimeAgentConnection(deployedInfrastructure);
+    const endpoint = await waitForRuntimeAgentEndpoint(runtimeAgentId, runtimeInfrastructureId);
+    console.log(`[k3d-flow] participant ${slot} platform runtime agent endpoint=${endpoint.runtimeAgentEndpoint ?? endpoint.endpoint ?? ''}`);
+
+    if (!skipRuntimeAgentData) {
+        await runInitTraining('runtime-agent', {
+            createJob: false,
+            registerRuntimeInfrastructure: false,
+            runtimeAgentUrl: accessibleRuntimeAgentUrl,
+            participantKey,
+        });
+    }
+
+    return {
+        slot,
+        participantKey,
+        organizationId,
+        runtimeInfrastructureId,
+        runtimeAgentId,
+        runtimeAgentUrl: accessibleRuntimeAgentUrl,
+    };
+}
+
 function rebuildApplicationImages() {
     const imagesScript = resolve(repoRoot, 'operations/dev/images.mjs');
     if (!existsSync(imagesScript)) {
@@ -424,17 +451,26 @@ function rebuildApplicationImages() {
 
 function ensureRuntimeEngineImageAvailable() {
     const pushImage = dockerPushImage(runtimeEngineImage);
+    const registryImage = runtimeEngineRegistryImage(runtimeEngineImage);
     const fallbackImages = [
         pushImage,
         runtimeEngineImage,
-        runtimeEngineImage.replace(/^192\.168\.\d+\.\d+:5000\/fl\//, 'medol/')
-    ];
-    const sourceImage = fallbackImages.find((image) => commandOk('docker', ['image', 'inspect', image]));
+        registryImage,
+        runtimeEngineImage.replace(/^[^/]+:\d+\/fl\//, 'fl/')
+    ].filter(Boolean);
+    let sourceImage = fallbackImages.find((image) => commandOk('docker', ['image', 'inspect', image]));
+    if (!sourceImage && registryImage) {
+        run('docker', ['pull', registryImage], {});
+        if (commandOk('docker', ['image', 'inspect', registryImage])) {
+            sourceImage = registryImage;
+        }
+    }
     if (!sourceImage) {
         fail(
             `Runtime engine image was not found locally: ${runtimeEngineImage}. ` +
+            (registryImage ? `Also tried pulling from registry: ${registryImage}. ` : '') +
             `Build or push it first, for example from federation-learning-runtime-engine: ` +
-            `DOCKER_IMAGE_PREFIX=localhost:5000/fl node scripts/build-images.mjs`
+            `node scripts/build-images.mjs`
         );
     }
     if (sourceImage !== pushImage) {
@@ -450,7 +486,26 @@ function isRegistryImage(image) {
 }
 
 function dockerPushImage(image) {
-    return image.replace(/^192\.168\.\d+\.\d+:5000\/fl\//, 'localhost:5000/fl/');
+    return image;
+}
+
+function runtimeEngineRegistryImage(image) {
+    const normalized = String(image ?? '').trim();
+    if (!normalized.startsWith('fl/')) return null;
+    const registryPrefix = registryImagePrefixFromKustomization();
+    if (!registryPrefix) return null;
+    const slashIndex = normalized.lastIndexOf('/');
+    const imageWithTag = slashIndex >= 0 ? normalized.slice(slashIndex + 1) : normalized;
+    return `${registryPrefix}/${imageWithTag}`;
+}
+
+function registryImagePrefixFromKustomization() {
+    const registryKustomization = resolve(repoRoot, 'operations/dev/k3s/environments/dev-registry/kustomization.yaml');
+    if (!existsSync(registryKustomization)) return null;
+    const content = readFileSync(registryKustomization, 'utf8');
+    const match = content.match(/^\s*newName:\s*["']?([^"'\n]+\/)federation-learning-(?:platform|support|console|participant-console|runtime-agent)["']?\s*$/m);
+    if (!match) return null;
+    return match[1].replace(/\/+$/, '');
 }
 
 function imagePrefixFromImage(image) {
@@ -548,18 +603,24 @@ async function ensureAdminToken() {
     if (!token) {
         fail('Support admin login did not provide an access token.');
     }
-    process.env.FL_API_TOKEN = token;
-    console.log(`[k3d-flow] authenticated ${adminUsername}; FL_API_TOKEN is available for this run`);
+    console.log(`[k3d-flow] authenticated ${adminUsername}; support token is scoped to ${supportUrl}`);
     return token;
 }
 
 async function runInitTraining(target, options) {
     const initScript = resolve(scriptDir, 'init-training-prerequisites.mjs');
     const extraEnv = initTrainingEnvironment(target, options.runtimeAgentUrl);
+    const initInternalToken = extraEnv.MEDOL_SECURITY_INTERNAL_TOKEN?.trim();
+    console.log(
+        `[k3d-flow] run init-training target=${target} authMode=${initTrainingAuthMode(extraEnv)} ` +
+        `runtimeAgentUrl=${options.runtimeAgentUrl}`
+    );
     const output = runCapture('node', [
         initScript,
         '--target', target,
         '--scenario', scenario,
+        '--federation-mode', federationMode,
+        ...(options.participantKey ? ['--participant-key', options.participantKey] : []),
         '--platform-url', platformUrl,
         '--support-url', supportUrl,
         '--runtime-agent-url', options.runtimeAgentUrl,
@@ -572,7 +633,7 @@ async function runInitTraining(target, options) {
         '--create-job', String(options.createJob),
         '--timeout', String(timeoutMs),
         '--poll-interval', String(Math.min(pollIntervalMs, 1000)),
-        ...(internalToken ? ['--internal-token', internalToken] : []),
+        ...(initInternalToken ? ['--internal-token', initInternalToken] : []),
         ...(dryRun ? ['--dry-run'] : [])
     ], extraEnv);
     process.stdout.write(output);
@@ -580,22 +641,118 @@ async function runInitTraining(target, options) {
 }
 
 function initTrainingEnvironment(target, runtimeAgentBaseUrl) {
-    const token = initTrainingApiToken(target, runtimeAgentBaseUrl);
-    return token ? {FL_API_TOKEN: token} : {};
+    const platformToken = explicitPlatformApiToken();
+    const supportToken = explicitSupportApiToken();
+    const runtimeAgentToken = explicitRuntimeAgentApiToken(runtimeAgentBaseUrl);
+    const hasExplicitScopedTokens = Boolean(
+        process.env.FL_PLATFORM_API_TOKEN?.trim() ||
+        process.env.FL_SUPPORT_API_TOKEN?.trim() ||
+        process.env.FL_RUNTIME_AGENT_API_TOKEN?.trim() ||
+        process.env.FL_API_TOKEN?.trim()
+    );
+    if (hasExplicitScopedTokens && (platformToken || runtimeAgentToken)) {
+        const primaryToken = target === 'runtime-agent'
+            ? runtimeAgentToken ?? platformToken
+            : platformToken ?? runtimeAgentToken;
+        return {
+            FL_API_TOKEN: '',
+            FL_PLATFORM_API_TOKEN: platformToken ?? '',
+            FL_SUPPORT_API_TOKEN: supportToken ?? platformToken ?? '',
+            FL_RUNTIME_AGENT_API_TOKEN: runtimeAgentToken ?? '',
+            MEDOL_SECURITY_INTERNAL_TOKEN: ''
+        };
+    }
+    if (internalToken) {
+        return {
+            FL_API_TOKEN: '',
+            MEDOL_SECURITY_INTERNAL_TOKEN: internalToken
+        };
+    }
+    return {};
+}
+
+function initTrainingAuthMode(extraEnv) {
+    if (extraEnv.MEDOL_SECURITY_INTERNAL_TOKEN?.trim()) {
+        return 'internal-token';
+    }
+    if (
+        extraEnv.FL_PLATFORM_API_TOKEN?.trim() ||
+        extraEnv.FL_SUPPORT_API_TOKEN?.trim() ||
+        extraEnv.FL_RUNTIME_AGENT_API_TOKEN?.trim()
+    ) {
+        return 'scoped-api-token';
+    }
+    if (extraEnv.FL_API_TOKEN?.trim()) {
+        return 'api-token';
+    }
+    return 'none';
 }
 
 function initTrainingApiToken(target, runtimeAgentBaseUrl) {
     if (target === 'runtime-agent') {
-        return process.env.FL_RUNTIME_AGENT_API_TOKEN?.trim()
-            ?? authTokensByBaseUrl.get(trimSlash(runtimeAgentBaseUrl))
-            ?? process.env.FL_API_TOKEN?.trim();
+        return explicitRuntimeAgentApiToken(runtimeAgentBaseUrl);
     }
+    return explicitPlatformApiToken();
+}
+
+function explicitPlatformApiToken() {
     return process.env.FL_PLATFORM_API_TOKEN?.trim()
-        ?? authTokensByBaseUrl.get(trimSlash(supportUrl))
         ?? process.env.FL_API_TOKEN?.trim();
 }
 
-async function labelRuntimeNodes(runtimeInfrastructureId) {
+function explicitSupportApiToken() {
+    return process.env.FL_SUPPORT_API_TOKEN?.trim()
+        ?? process.env.FL_API_TOKEN?.trim();
+}
+
+function explicitRuntimeAgentApiToken(runtimeAgentBaseUrl) {
+    return process.env.FL_RUNTIME_AGENT_API_TOKEN?.trim()
+        ?? process.env.FL_API_TOKEN?.trim();
+}
+
+function participantKeyForSlot(slot) {
+    const configured = optionalString(process.env[`FL_PARTICIPANT_${slot}_KEY`]);
+    return configured ?? `participant-${slot}`;
+}
+
+function configuredRuntimeAgentUrlForSlot(slot) {
+    return trimSlashOrNull(process.env[`FL_RUNTIME_AGENT_URL_${slot}`]) ??
+        (slot === 1 ? trimSlashOrNull(configuredRuntimeAgentUrl) : null);
+}
+
+function runtimeAgentUrlForSlot(slot) {
+    return trimSlash(`http://127.0.0.1:${runtimeAgentPortForwardPortForSlot(slot)}`);
+}
+
+function runtimeAgentPortForwardPortForSlot(slot) {
+    return runtimeAgentPortForwardPort + slot - 1;
+}
+
+function defaultRuntimeEnginePluginProfile(value) {
+    const normalized = String(value ?? '').trim().toLowerCase();
+    if (['densenet', 'densenet121', 'tiny-imagenet', 'tiny-imagenet-densenet'].includes(normalized)) {
+        return 'pytorch-vision';
+    }
+    if (normalized === 'csv') return 'sklearn';
+    return 'full';
+}
+
+function runtimeEngineImageVersion(profile, version) {
+    const safeProfile = dockerTagPart(profile);
+    const safeVersion = String(version).trim();
+    if (!safeProfile || safeVersion.startsWith(`${safeProfile}-`)) return safeVersion;
+    return `${safeProfile}-${safeVersion}`;
+}
+
+function dockerTagPart(value) {
+    return String(value ?? '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9_.-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+}
+
+async function labelRuntimeNode(runtimeInfrastructureId, slot) {
     const nodes = JSON.parse(runCapture('kubectl', ['get', 'nodes', '-o', 'json'], kubeEnv()));
     const runtimeNodes = nodes.items
         .filter((node) => !isControlPlaneNode(node))
@@ -604,19 +761,22 @@ async function labelRuntimeNodes(runtimeInfrastructureId) {
     if (runtimeNodes.length === 0) {
         fail('No k3d agent node was found for runtime scheduling.');
     }
-    for (const nodeName of runtimeNodes) {
-        run('kubectl', [
-            'label', 'node', nodeName,
-            'medol.dev/node-role=runtime',
-            `medol.dev/runtime-infrastructure-id=${runtimeInfrastructureId}`,
-            '--overwrite'
-        ], kubeEnv());
-        run('kubectl', [
-            'taint', 'node', nodeName,
-            'medol.dev/runtime-only=true:NoSchedule',
-            '--overwrite'
-        ], kubeEnv());
+    const nodeName = runtimeNodes[slot - 1];
+    if (!nodeName) {
+        fail(`Participant ${slot} requires a k3d agent node, but only ${runtimeNodes.length} agent node(s) were found.`);
     }
+    console.log(`[k3d-flow] label participant ${slot} runtime node ${nodeName}`);
+    run('kubectl', [
+        'label', 'node', nodeName,
+        'medol.dev/node-role=runtime',
+        `medol.dev/runtime-infrastructure-id=${runtimeInfrastructureId}`,
+        '--overwrite'
+    ], kubeEnv());
+    run('kubectl', [
+        'taint', 'node', nodeName,
+        'medol.dev/runtime-only=true:NoSchedule',
+        '--overwrite'
+    ], kubeEnv());
 }
 
 async function confirmRuntimeInfrastructurePrepared(runtimeInfrastructure) {
@@ -642,9 +802,9 @@ async function confirmRuntimeInfrastructurePrepared(runtimeInfrastructure) {
     }, 'confirm runtime infrastructure prepared');
 }
 
-async function loadRuntimeAgentBootstrapConfiguration() {
+async function loadRuntimeAgentBootstrapConfiguration(targetRuntimeAgentUrl) {
     await postCommand(
-        runtimeAgentUrl,
+        targetRuntimeAgentUrl,
         '/runtimeagentlifecycle/loadruntimeagentbootstrapconfiguration',
         {},
         'runtime agent bootstrap configuration load'
@@ -705,18 +865,19 @@ async function waitForManagedRuntimeAgent(runtimeAgentId) {
     }
 }
 
-async function ensureManagedRuntimeAgentAccess(runtimeAgentId) {
-    if (configuredRuntimeAgentUrl) {
-        return;
+async function ensureManagedRuntimeAgentAccess(runtimeAgentId, slot) {
+    const configured = configuredRuntimeAgentUrlForSlot(slot);
+    if (configured) {
+        return configured;
     }
     const serviceName = managedRuntimeAgentName(runtimeAgentId);
     const localPort = await startPortForward(
         serviceName,
-        runtimeAgentPortForwardPort,
+        runtimeAgentPortForwardPortForSlot(slot),
         8082,
-        'managed runtime-agent'
+        `participant ${slot} managed runtime-agent`
     );
-    runtimeAgentUrl = trimSlash(`http://127.0.0.1:${localPort}`);
+    return trimSlash(`http://127.0.0.1:${localPort}`);
 }
 
 async function recordManagedRuntimeAgentConnection(runtimeInfrastructure) {
@@ -893,7 +1054,10 @@ async function getPage(baseUrl, path, query) {
     const response = await httpRequest(url, {headers: requestHeaders({}, url)});
     const body = await response.text();
     if (!response.ok) {
-        fail(`GET ${url} failed: ${response.status} ${compact(body)}`);
+        const authHint = response.status === 401 && internalToken
+            ? ' Internal token was configured; verify MEDOL_SECURITY_INTERNAL_TOKEN in the target service secret and restart the deployment after changing it.'
+            : '';
+        fail(`GET ${url} failed: ${response.status} ${compact(body)}${authHint}`);
     }
     return body ? JSON.parse(body) : {content: []};
 }
@@ -1148,11 +1312,7 @@ function requestHeaders(baseHeaders = {}, url = '') {
     if (authToken && !Object.hasOwn(result, 'Authorization')) {
         result.Authorization = `Bearer ${authToken}`;
     }
-    const apiToken = process.env.FL_API_TOKEN?.trim();
-    if (apiToken && !Object.hasOwn(result, 'Authorization')) {
-        result.Authorization = apiToken.startsWith('Bearer ') ? apiToken : `Bearer ${apiToken}`;
-    }
-    if (internalToken && !Object.hasOwn(result, 'X-MEDOL-INTERNAL-TOKEN')) {
+    if (!result.Authorization && internalToken && !Object.hasOwn(result, 'X-MEDOL-INTERNAL-TOKEN')) {
         result['X-MEDOL-INTERNAL-TOKEN'] = internalToken;
     }
     return result;
@@ -1229,6 +1389,17 @@ function parseArgs(argv) {
     return result;
 }
 
+function normalizeFederationMode(value) {
+    const normalized = String(value ?? '').trim().toLowerCase().replace(/[_\s]/g, '-');
+    if (['global', 'global-only', 'globalonly', 'federated', 'federation'].includes(normalized)) {
+        return 'global';
+    }
+    if (['personalized', 'personalization', 'personal', 'participant-personalized'].includes(normalized)) {
+        return 'personalized';
+    }
+    fail(`Unsupported federation mode: ${value}. Supported modes: global, personalized`);
+}
+
 function printUsage() {
     console.log(`Usage:
   node scripts/k3d-training-flow.mjs [options]
@@ -1243,6 +1414,9 @@ Options:
   --rebuild-app-images               Rebuild and push backend application images before applying manifests.
   --app-image-prefix <prefix>         Application image prefix. Default is inferred from runtime-engine image.
   --scenario <densenet|csv>           Select training seed scenario.
+  --federation-mode <global|personalized>
+                                     Select global-only or participant-personalized federation config.
+  --participant-count <count>          Number of reference participants to seed and deploy. Default: 2.
   --skip-cluster                      Skip cluster create/kubeconfig.
   --skip-apply                        Skip manifest apply and deployment waits.
   --skip-dictionary                   Skip dictionary bootstrap.
@@ -1338,6 +1512,11 @@ function normalize(value) {
 
 function trimSlash(value) {
     return String(value).replace(/\/+$/, '');
+}
+
+function trimSlashOrNull(value) {
+    const text = optionalString(value);
+    return text ? trimSlash(text) : null;
 }
 
 function compact(value) {

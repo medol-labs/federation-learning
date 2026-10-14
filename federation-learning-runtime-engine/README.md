@@ -61,18 +61,24 @@ full              all built-in plugins                  all built-in plugins
 Build a profile image:
 
 ```bash
+node scripts/image-bundle.mjs build \
+  --plugin-profile pytorch-vision \
+  --version 0.0.1-SNAPSHOT
+```
+
+This builds:
+
+```text
+fl/federation-learning-runtime-engine:pytorch-vision-0.0.1-SNAPSHOT
+```
+
+Or use Docker directly:
+
+```bash
 docker build \
   -f docker/pytorch/Dockerfile \
   --build-arg PLUGIN_PROFILE=pytorch-vision \
-  -t medol/federation-learning-runtime-engine:pytorch-vision .
-```
-
-Or use compose:
-
-```bash
-RUNTIME_ENGINE_PLUGIN_PROFILE=pytorch-vision \
-RUNTIME_ENGINE_IMAGE=medol/federation-learning-runtime-engine:pytorch-vision \
-docker compose -f docker-compose.yml -f docker-compose.build.yml build
+  -t fl/federation-learning-runtime-engine:pytorch-vision-0.0.1-SNAPSHOT .
 ```
 
 `RUNTIME_ENGINE_ENABLED_MODEL_PLUGINS` can further restrict a built image to a
@@ -404,7 +410,7 @@ docker run --rm \
   -e RUNTIME_ENGINE_ROOT=/workspace/tmp/runtime-engine \
   -v /tmp/fl-demo-data/tiny-imagenet-densenet-demo:/workspace/datasets/tiny-imagenet-demo:ro \
   -v /tmp/fl-demo-data/runtime-engine-output:/workspace/tmp/runtime-engine \
-  medol/federation-learning-runtime-engine:pytorch-vision
+  fl/federation-learning-runtime-engine:pytorch-vision
 ```
 
 Submit a DenseNet121 training job from another shell:
@@ -544,7 +550,7 @@ node scripts/import-images.mjs --output federation-learning-runtime-engine-image
 Push the image to a registry:
 
 ```bash
-DOCKER_IMAGE_PREFIX=192.168.50.2:5000/federation-learning-platform node scripts/push-images.mjs
+DOCKER_IMAGE_PREFIX=<registry-host>:5000/fl node scripts/push-images.mjs
 ```
 
 Build and export in one command:
@@ -553,14 +559,15 @@ Build and export in one command:
 node scripts/image-bundle.mjs all
 ```
 
-The generated image is `medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT`.
+The generated image tag includes the plugin profile, for example
+`fl/federation-learning-runtime-engine:pytorch-vision-0.0.1-SNAPSHOT`.
 Override the image name with `--prefix`, `--image`, and `--version`, or set
 `RUNTIME_ENGINE_IMAGE` before running Docker Compose.
 
 Start the local runtime engine:
 
 ```bash
-docker image inspect medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT
+docker image inspect fl/federation-learning-runtime-engine:pytorch-vision-0.0.1-SNAPSHOT
 docker compose up -d federation-learning-runtime-engine
 curl http://localhost:18080/healthz
 ```

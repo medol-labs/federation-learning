@@ -15,7 +15,7 @@ platform:
       agent-manifest-file: ${PLATFORM_RUNTIME_K3S_AGENT_MANIFEST_FILE:}
       rendered-manifest-directory: ${PLATFORM_RUNTIME_K3S_RENDERED_MANIFEST_DIRECTORY:target/runtime-agent-manifests}
       agent-deployment-name: ${PLATFORM_RUNTIME_K3S_AGENT_DEPLOYMENT_NAME:federation-learning-runtime-agent}
-      agent-image: ${PLATFORM_RUNTIME_K3S_AGENT_IMAGE:medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT}
+      agent-image: ${PLATFORM_RUNTIME_K3S_AGENT_IMAGE:fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT}
       agent-replicas: ${PLATFORM_RUNTIME_K3S_AGENT_REPLICAS:1}
       agent-container-port: ${PLATFORM_RUNTIME_K3S_AGENT_CONTAINER_PORT:8082}
       agent-allowed-origins: ${PLATFORM_RUNTIME_K3S_AGENT_ALLOWED_ORIGINS:http://localhost:*,http://127.0.0.1:*,http://*:30082}
@@ -26,7 +26,7 @@ platform:
       agent-internal-token-key: ${PLATFORM_RUNTIME_K3S_AGENT_INTERNAL_TOKEN_KEY:MEDOL_SECURITY_INTERNAL_TOKEN}
       agent-admin-bootstrap-setup-token-key: ${PLATFORM_RUNTIME_K3S_AGENT_ADMIN_BOOTSTRAP_SETUP_TOKEN_KEY:MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN}
       participant-console-enabled: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_ENABLED:true}
-      participant-console-image: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_IMAGE:medol/federation-learning-participant-console:0.0.1-SNAPSHOT}
+      participant-console-image: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_IMAGE:fl/federation-learning-participant-console:0.0.1-SNAPSHOT}
       participant-console-replicas: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_REPLICAS:1}
       participant-console-container-port: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_CONTAINER_PORT:80}
       participant-console-service-type: ${PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_SERVICE_TYPE:ClusterIP}
@@ -48,7 +48,7 @@ platform:
       endpoint-scope: ${PLATFORM_RUNTIME_K3S_ENDPOINT_SCOPE:CLUSTER}
       agent-version: ${PLATFORM_RUNTIME_K3S_AGENT_VERSION:k3s}
       runtime-engine-service-account-name: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_SERVICE_ACCOUNT_NAME:federation-learning-runtime-engine-scheduler}
-      runtime-engine-image: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE:medol/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
+      runtime-engine-image: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE:fl/federation-learning-runtime-engine:0.0.1-SNAPSHOT}
       runtime-engine-image-pull-policy: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE_PULL_POLICY:IfNotPresent}
       runtime-engine-container-port: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_CONTAINER_PORT:8080}
       runtime-engine-dataset-host-path: ${PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_DATASET_HOST_PATH:/workspace/datasets}

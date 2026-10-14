@@ -84,7 +84,7 @@ class KubernetesRuntimeEngineManager(
 
         client.apps().deployments().inNamespace(properties.kubernetesNamespace).resource(podSpec).createOrReplace()
         client.services().inNamespace(properties.kubernetesNamespace).resource(service).createOrReplace()
-        awaitReady(name)
+        awaitReady(name, labels)
         log.info(
             "Runtime engine Kubernetes resources are ready. jobId={}, deployment={}, namespace={}",
             jobId,
@@ -107,7 +107,7 @@ class KubernetesRuntimeEngineManager(
         }
     }
 
-    private fun awaitReady(name: String) {
+    private fun awaitReady(name: String, labels: Map<String, String>) {
         val timeout = properties.healthTimeout.coerceAtLeast(Duration.ofSeconds(1))
         val deadline = Instant.now().plus(timeout)
         while (Instant.now().isBefore(deadline)) {
@@ -115,7 +115,40 @@ class KubernetesRuntimeEngineManager(
             if ((deployment?.status?.availableReplicas ?: 0) >= 1) return
             Thread.sleep(properties.healthPollInterval.coerceAtLeast(Duration.ofMillis(200)).toMillis())
         }
-        throw IllegalStateException("Runtime engine Deployment $name did not become ready within $timeout.")
+        throw IllegalStateException(
+            "Runtime engine Deployment $name did not become ready within $timeout. " +
+                runtimeEngineDiagnostics(name, labels)
+        )
+    }
+
+    private fun runtimeEngineDiagnostics(name: String, labels: Map<String, String>): String = runCatching {
+        val deployment = client.apps().deployments().inNamespace(properties.kubernetesNamespace).withName(name).get()
+        val deploymentStatus = deployment?.status?.let {
+            "deploymentStatus=replicas=${it.replicas}, ready=${it.readyReplicas}, available=${it.availableReplicas}, unavailable=${it.unavailableReplicas}"
+        } ?: "deploymentStatus=missing"
+        val pods = client.pods().inNamespace(properties.kubernetesNamespace).withLabels(labels).list().items
+        val podStatus = if (pods.isEmpty()) {
+            "pods=[]"
+        } else {
+            "pods=[" + pods.joinToString("; ") { pod ->
+                val status = pod.status
+                val waiting = status?.containerStatuses
+                    ?.mapNotNull { containerStatus ->
+                        containerStatus.state?.waiting?.let { waiting ->
+                            "${containerStatus.name}:waiting(${waiting.reason ?: "unknown"}: ${waiting.message ?: ""})"
+                        } ?: containerStatus.state?.terminated?.let { terminated ->
+                            "${containerStatus.name}:terminated(${terminated.reason ?: "unknown"} exitCode=${terminated.exitCode}: ${terminated.message ?: ""})"
+                        }
+                    }
+                    ?.joinToString(", ")
+                    ?.takeIf { it.isNotBlank() }
+                "${pod.metadata?.name}:phase=${status?.phase ?: "unknown"}, node=${pod.spec?.nodeName ?: "unscheduled"}" +
+                    (waiting?.let { ", containers=$it" } ?: "")
+            } + "]"
+        }
+        "$deploymentStatus, $podStatus"
+    }.getOrElse {
+        "diagnosticsUnavailable=${it.message}"
     }
 
     companion object {

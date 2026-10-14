@@ -11,8 +11,16 @@ const args = parseArgs(process.argv.slice(2));
 const command = args._[0] ?? 'help';
 const root = resolve(process.cwd(), args.root ?? '.');
 loadDotEnv(resolve(root, '.env'));
-const imagePrefix = String(args.prefix ?? process.env.DOCKER_IMAGE_PREFIX ?? 'medol').replace(/\/+$/, '');
-const imageVersion = String(args.version ?? process.env.IMAGE_VERSION ?? '0.0.1-SNAPSHOT');
+const imagePrefix = String(args.prefix ?? process.env.DOCKER_IMAGE_PREFIX ?? 'fl').replace(/\/+$/, '');
+const pluginProfile = String(firstNonEmpty(
+    args['plugin-profile'],
+    args.profile,
+    process.env.RUNTIME_ENGINE_PLUGIN_PROFILE,
+    process.env.PLUGIN_PROFILE,
+    'full'
+));
+const baseImageVersion = String(args.version ?? process.env.IMAGE_VERSION ?? '0.0.1-SNAPSHOT');
+const imageVersion = runtimeEngineImageVersion(pluginProfile, baseImageVersion);
 const imageName = String(args.image ?? process.env.IMAGE_NAME ?? defaultImageName);
 const fullImageName = `${imagePrefix}/${imageName}:${imageVersion}`;
 const tarFile = resolve(root, args.output ?? args.file ?? process.env.IMAGE_TAR ?? defaultTar);
@@ -82,6 +90,7 @@ function pushImage() {
 
 function printPlan() {
     console.log(`[images] image name: ${fullImageName}`);
+    console.log(`[images] plugin profile: ${pluginProfile}`);
     console.log(`[images] archive: ${tarFile}`);
     console.log(`[images] dockerfile: ${dockerfile}`);
     console.log(`[images] platform: ${platform}`);
@@ -101,13 +110,25 @@ function buildArgs() {
             process.env.BASE_IMAGE
         ], explicitKeys),
         buildArgFromEnv('PLUGIN_PROFILE', [
-            args['plugin-profile'],
-            args.profile,
-            process.env.RUNTIME_ENGINE_PLUGIN_PROFILE,
-            process.env.PLUGIN_PROFILE
+            pluginProfile
         ], explicitKeys)
     ].filter(Boolean);
     return [...defaultBuildArgs, ...explicitBuildArgs].flatMap((value) => ['--build-arg', value]);
+}
+
+function runtimeEngineImageVersion(profile, version) {
+    const safeProfile = dockerTagPart(profile);
+    const safeVersion = String(version).trim();
+    if (!safeProfile || safeVersion.startsWith(`${safeProfile}-`)) return safeVersion;
+    return `${safeProfile}-${safeVersion}`;
+}
+
+function dockerTagPart(value) {
+    return String(value ?? '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9_.-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
 }
 
 function buildArgFromEnv(name, values, explicitKeys) {
@@ -237,8 +258,8 @@ Wrappers:
 
 Options:
   --image <name>             Docker image name. Defaults to IMAGE_NAME or ${defaultImageName}.
-  --prefix <name>            Docker image prefix. Defaults to DOCKER_IMAGE_PREFIX or medol.
-  --version <tag>            Image tag. Defaults to IMAGE_VERSION or 0.0.1-SNAPSHOT.
+  --prefix <name>            Docker image prefix. Defaults to DOCKER_IMAGE_PREFIX or fl.
+  --version <tag>            Base image tag. Defaults to IMAGE_VERSION or 0.0.1-SNAPSHOT; runtime-engine tags are prefixed with the plugin profile.
   --platform <os/arch>       Target CPU architecture. Defaults to RUNTIME_ENGINE_IMAGE_PLATFORM, DOCKER_DEFAULT_PLATFORM, or host architecture.
   --dockerfile <file>        Dockerfile path. Defaults to ${defaultDockerfile}.
   --build-arg <key=value>    Forward a Docker build argument, for example BASE_IMAGE.

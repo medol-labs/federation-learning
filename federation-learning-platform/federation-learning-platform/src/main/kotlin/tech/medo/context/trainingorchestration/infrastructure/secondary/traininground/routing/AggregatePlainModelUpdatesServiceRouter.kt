@@ -21,10 +21,16 @@ class AggregatePlainModelUpdatesServiceRouter(private val adapters: ObjectProvid
             1 -> try {
                 candidates.first().execute(input)
             } catch (ex: Exception) {
-                throw ex
+                AggregatePlainModelUpdatesResult.Unavailable(
+                    failureReason = ex.message ?: "AggregatePlainModelUpdatesService is unavailable."
+                )
             }
-            0 -> error("No AggregatePlainModelUpdatesService adapter supports the requested input.")
-            else -> error("Multiple AggregatePlainModelUpdatesService adapters support the requested input.")
+            0 -> AggregatePlainModelUpdatesResult.Unavailable(
+                failureReason = "No AggregatePlainModelUpdatesService adapter supports the requested input."
+            )
+            else -> AggregatePlainModelUpdatesResult.Unavailable(
+                failureReason = "Multiple AggregatePlainModelUpdatesService adapters support the requested input."
+            )
         }
     }
 }

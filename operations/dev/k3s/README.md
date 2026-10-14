@@ -36,9 +36,9 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 For local development with k3d, create the dev cluster from the generated config:
 
 ```bash
-scripts/k3d-dev.sh recreate
-eval "$(scripts/k3d-dev.sh kubeconfig)"
-scripts/k3d-dev.sh apply
+scripts/federation-learning-dev.sh recreate
+eval "$(scripts/federation-learning-dev.sh kubeconfig)"
+scripts/federation-learning-dev.sh apply
 ```
 
 The helper script is generated for local debugging. You can override paths and the cluster name with environment variables.
@@ -72,11 +72,11 @@ In offline environments, recreate the cluster after changing `cluster/registries
 Build, push, or import these images on every node that may run the workloads:
 
 ```bash
-medol/federation-learning-console:0.0.1-SNAPSHOT
-medol/federation-learning-participant-console:0.0.1-SNAPSHOT
-medol/federation-learning-support:0.0.1-SNAPSHOT
-medol/federation-learning-platform:0.0.1-SNAPSHOT
-medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT
+fl/federation-learning-console:0.0.1-SNAPSHOT
+fl/federation-learning-participant-console:0.0.1-SNAPSHOT
+fl/federation-learning-support:0.0.1-SNAPSHOT
+fl/federation-learning-platform:0.0.1-SNAPSHOT
+fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT
 postgres:16
 umadb/umadb:0.7.8
 apache/apisix:3.13.0-debian
@@ -229,11 +229,11 @@ Rebuild generated application images and import them from local Docker images in
 cd <application-build-workspace>
 node scripts/build-images.mjs
 k3d image import \
-  medol/federation-learning-console:0.0.1-SNAPSHOT \
-  medol/federation-learning-participant-console:0.0.1-SNAPSHOT \
-  medol/federation-learning-support:0.0.1-SNAPSHOT \
-  medol/federation-learning-platform:0.0.1-SNAPSHOT \
-  medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT \
+  fl/federation-learning-console:0.0.1-SNAPSHOT \
+  fl/federation-learning-participant-console:0.0.1-SNAPSHOT \
+  fl/federation-learning-support:0.0.1-SNAPSHOT \
+  fl/federation-learning-platform:0.0.1-SNAPSHOT \
+  fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT \
   -c federation-learning-platform-dev
 k3d image import \
   postgres:16 \
@@ -252,11 +252,11 @@ For a plain local K3s node, export images from Docker and import them into the K
 
 ```bash
 docker save \
-  medol/federation-learning-console:0.0.1-SNAPSHOT \
-  medol/federation-learning-participant-console:0.0.1-SNAPSHOT \
-  medol/federation-learning-support:0.0.1-SNAPSHOT \
-  medol/federation-learning-platform:0.0.1-SNAPSHOT \
-  medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT \
+  fl/federation-learning-console:0.0.1-SNAPSHOT \
+  fl/federation-learning-participant-console:0.0.1-SNAPSHOT \
+  fl/federation-learning-support:0.0.1-SNAPSHOT \
+  fl/federation-learning-platform:0.0.1-SNAPSHOT \
+  fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT \
   -o /tmp/federation-learning-platform-application-images.tar
 sudo k3s ctr images import /tmp/federation-learning-platform-application-images.tar
 
@@ -276,40 +276,62 @@ sudo k3s ctr images ls | grep federation-learning-platform
 
 ## Initialize Training Prerequisites
 
-K3d/K3s runtime nodes are prepared manually, so the training seed script is split by side. Run the platform phase first, create or label the runtime node, wait for the runtime agent to become reachable, then run the runtime-agent and training-job phases:
+K3d/K3s runtime nodes are prepared as an explicit flow. The helper script keeps platform setup, node labeling, platform-managed runtime-agent deployment, runtime-agent setup, and job submission as separate steps. The default dev flow creates two participants (`participant-1` and `participant-2`) so local training can exercise multi-party selection:
 
 ```bash
-cd ../../..
+scripts/federation-learning-dev.sh seed-status
 
-# 1. Platform-owned setup: organization, federation, feature schema, model,
-# runtime infrastructure package/installation plan, runtime engine profile, and
-# training config. This does not deploy or mark the runtime agent connected.
-node scripts/init-training-prerequisites.mjs \
-  --target platform \
-  --scenario csv \
-  --runtime-environment-type K3S
+# 1. Wait for support/platform/APISIX after apply.
+scripts/federation-learning-dev.sh wait-core
 
-# 2. Manually install/configure the k3d/K3s runtime agent and verify that the
-# runtime-agent API is reachable. The platform does not control this bootstrap
-# step in local dev.
+# 2. Platform-owned setup for both participants: organizations, federation,
+# feature schema, model, runtime infrastructure packages/installation plans,
+# runtime engine profile, training configuration, and memberships.
+scripts/federation-learning-dev.sh seed-platform-all
 
-# 3. Runtime-agent-owned setup plus platform connection registration: runtime
-# identity, runtime-agent endpoint, node inventory, dataset declaration, runtime
-# dataset binding, dataset access validation/profile, and platform metadata.
-node scripts/init-training-prerequisites.mjs \
-  --target runtime-agent \
-  --scenario csv \
-  --platform-url http://<platform-api> \
-  --runtime-agent-url http://<runtime-agent-api>
+# 3. Label the first two k3d agent nodes as participant runtime nodes.
+# The script derives organizationId/runtimeInfrastructureId from each
+# participant seed, so UUIDs do not need to be copied manually.
+scripts/federation-learning-dev.sh label-runtime-node-all
 
-# 4. Submit the training job only after both sides are ready.
-node scripts/init-training-prerequisites.mjs \
-  --target training-job \
-  --scenario csv \
-  --platform-url http://<platform-api>
+# 4. Register both runtime infrastructures. This lets the platform verify the
+# labeled nodes and deploy one managed runtime-agent per participant.
+scripts/federation-learning-dev.sh register-runtime-all
+scripts/federation-learning-dev.sh wait-runtime-agent
+scripts/federation-learning-dev.sh runtime-agent-urls
+
+# 5. Runtime-agent-owned setup plus platform connection registration for both
+# participants: runtime identity, endpoint, node inventory, dataset declaration,
+# runtime dataset binding, access validation/profile, and platform metadata.
+scripts/federation-learning-dev.sh seed-runtime-agent-all
+
+# 6. Submit the training job only after both sides are ready.
+scripts/federation-learning-dev.sh seed-training-job
 ```
 
-Use `--target all` only for local single-process development where platform and runtime-agent APIs are already available.
+The helper defaults to `FL_DEV_PARTICIPANT_COUNT=2`, `FL_TRAINING_SCENARIO=csv`, platform API `http://localhost:30080/api/federation-learning-platform`, support API `http://localhost:30080/api/federation-learning-support`, and participant 1 runtime-agent API `http://localhost:30082/api/runtime-agent`. Override `FL_DEV_PARTICIPANT_COUNT`, `FL_TRAINING_SCENARIO`, `FL_PLATFORM_URL`, `FL_SUPPORT_URL`, `FL_RUNTIME_AGENT_URL`, or per-participant values such as `FL_PARTICIPANT_2_KEY` and `FL_RUNTIME_AGENT_URL_2` when using a different gateway.
+
+The flow script exports `MEDOL_SECURITY_INTERNAL_TOKEN=local-dev-internal-token` by default for local development requests. Override `MEDOL_SECURITY_INTERNAL_TOKEN` or provide `FL_API_TOKEN` when the deployed services use a different internal/API token.
+
+Single-participant commands are still available when debugging one side of the flow:
+
+```bash
+scripts/federation-learning-dev.sh seed-platform
+scripts/federation-learning-dev.sh label-runtime-node
+scripts/federation-learning-dev.sh register-runtime
+scripts/federation-learning-dev.sh seed-runtime-agent
+```
+
+The second participant can also be operated explicitly:
+
+```bash
+scripts/federation-learning-dev.sh seed-platform-2
+scripts/federation-learning-dev.sh label-runtime-node-2
+scripts/federation-learning-dev.sh register-runtime-2
+scripts/federation-learning-dev.sh seed-runtime-agent-2
+```
+
+Use `node scripts/init-training-prerequisites.mjs --target all` only for local single-process development where platform and runtime-agent APIs are already available.
 
 Check the local k3d cluster:
 

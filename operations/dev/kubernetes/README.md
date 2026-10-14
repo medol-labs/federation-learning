@@ -33,11 +33,11 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 Build, push, or import these images on every node that may run the workloads:
 
 ```bash
-medol/federation-learning-console:0.0.1-SNAPSHOT
-medol/federation-learning-participant-console:0.0.1-SNAPSHOT
-medol/federation-learning-support:0.0.1-SNAPSHOT
-medol/federation-learning-platform:0.0.1-SNAPSHOT
-medol/federation-learning-runtime-agent:0.0.1-SNAPSHOT
+fl/federation-learning-console:0.0.1-SNAPSHOT
+fl/federation-learning-participant-console:0.0.1-SNAPSHOT
+fl/federation-learning-support:0.0.1-SNAPSHOT
+fl/federation-learning-platform:0.0.1-SNAPSHOT
+fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT
 postgres:16
 umadb/umadb:0.7.8
 apache/apisix:3.13.0-debian
