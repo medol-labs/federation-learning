@@ -106,7 +106,7 @@
       "title": "Federation Learning Platform",
       "artifactName": "federation-learning-platform",
       "imageName": "fl/federation-learning-platform",
-      "servicePort": 8080,
+      "servicePort": 8081,
       "exposeExternally": false,
       "contexts": [
         "OrganizationManagement",
@@ -123,7 +123,7 @@
       "environmentVariables": [
         {
           "name": "SERVER_PORT",
-          "value": "8080"
+          "value": "8081"
         },
         {
           "name": "SPRING_DOCKER_COMPOSE_ENABLED",
@@ -183,11 +183,11 @@
         },
         {
           "name": "FEDERATION_LEARNING_RUNTIME_AGENT_URL",
-          "value": "http://federation-learning-runtime-agent:8081"
+          "value": "http://federation-learning-runtime-agent:8082"
         },
         {
           "name": "FEDERATION_LEARNING_SUPPORT_URL",
-          "value": "http://federation-learning-support:8082"
+          "value": "http://federation-learning-support:8080"
         }
       ],
       "dependencies": [
@@ -213,7 +213,7 @@
       "title": "Federation Learning Runtime Agent",
       "artifactName": "federation-learning-runtime-agent",
       "imageName": "fl/federation-learning-runtime-agent",
-      "servicePort": 8081,
+      "servicePort": 8082,
       "exposeExternally": false,
       "contexts": [
         "RuntimeAgentOperations",
@@ -223,7 +223,7 @@
       "environmentVariables": [
         {
           "name": "SERVER_PORT",
-          "value": "8081"
+          "value": "8082"
         },
         {
           "name": "SPRING_DOCKER_COMPOSE_ENABLED",
@@ -283,11 +283,11 @@
         },
         {
           "name": "FEDERATION_LEARNING_PLATFORM_URL",
-          "value": "http://federation-learning-platform:8080"
+          "value": "http://federation-learning-platform:8081"
         },
         {
           "name": "FEDERATION_LEARNING_SUPPORT_URL",
-          "value": "http://federation-learning-support:8082"
+          "value": "http://federation-learning-support:8080"
         }
       ],
       "dependencies": [
@@ -313,7 +313,7 @@
       "title": "Federation Learning Support",
       "artifactName": "federation-learning-support",
       "imageName": "fl/federation-learning-support",
-      "servicePort": 8082,
+      "servicePort": 8080,
       "exposeExternally": false,
       "contexts": [
         "SystemNotification",
@@ -326,7 +326,7 @@
       "environmentVariables": [
         {
           "name": "SERVER_PORT",
-          "value": "8082"
+          "value": "8080"
         },
         {
           "name": "SPRING_DOCKER_COMPOSE_ENABLED",
@@ -386,11 +386,11 @@
         },
         {
           "name": "FEDERATION_LEARNING_PLATFORM_URL",
-          "value": "http://federation-learning-platform:8080"
+          "value": "http://federation-learning-platform:8081"
         },
         {
           "name": "FEDERATION_LEARNING_RUNTIME_AGENT_URL",
-          "value": "http://federation-learning-runtime-agent:8081"
+          "value": "http://federation-learning-runtime-agent:8082"
         }
       ],
       "dependencies": [
@@ -602,17 +602,17 @@
       {
         "id": "federation-learning-platform",
         "serviceName": "federation-learning-platform",
-        "servicePort": 8080
+        "servicePort": 8081
       },
       {
         "id": "federation-learning-runtime-agent",
         "serviceName": "federation-learning-runtime-agent",
-        "servicePort": 8081
+        "servicePort": 8082
       },
       {
         "id": "federation-learning-support",
         "serviceName": "federation-learning-support",
-        "servicePort": 8082
+        "servicePort": 8080
       }
     ],
     "plugins": []
@@ -642,19 +642,19 @@
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": true,
-          "hostPort": 8080
+          "hostPort": 8081
         },
         "federation-learning-runtime-agent": {
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": true,
-          "hostPort": 8081
+          "hostPort": 8082
         },
         "federation-learning-support": {
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": true,
-          "hostPort": 8082
+          "hostPort": 8080
         }
       },
       "infrastructureOverrides": {
@@ -693,19 +693,19 @@
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8080
+          "hostPort": 8081
         },
         "federation-learning-runtime-agent": {
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8081
+          "hostPort": 8082
         },
         "federation-learning-support": {
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8082
+          "hostPort": 8080
         }
       },
       "infrastructureOverrides": {
@@ -744,19 +744,19 @@
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8080
+          "hostPort": 8081
         },
         "federation-learning-runtime-agent": {
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8081
+          "hostPort": 8082
         },
         "federation-learning-support": {
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8082
+          "hostPort": 8080
         }
       },
       "infrastructureOverrides": {
@@ -795,19 +795,19 @@
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8080
+          "hostPort": 8081
         },
         "federation-learning-runtime-agent": {
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8081
+          "hostPort": 8082
         },
         "federation-learning-support": {
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8082
+          "hostPort": 8080
         }
       },
       "infrastructureOverrides": {

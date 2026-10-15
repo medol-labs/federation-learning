@@ -796,7 +796,7 @@ async function getPage(baseUrl, path, query) {
     const body = await response.text();
     if (!response.ok) {
         const authHint = response.status === 401 && (args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN)
-            ? ' Internal token was configured; verify the service secret MEDOL_SECURITY_INTERNAL_TOKEN matches this script and restart the deployment after changing it.'
+            ? ' Internal token was sent; inspect the target service logs for authentication rejection or a downstream exception masked by error dispatch.'
             : '';
         fail(`GET ${url} failed: ${response.status} ${compact(body)}${authHint}`);
     }
@@ -817,7 +817,10 @@ async function postCommand(baseUrl, path, payload, label) {
     });
     const body = await response.text();
     if (!response.ok) {
-        const message = `POST ${label} failed: ${response.status} ${compact(body)} payload=${compact(JSON.stringify(payload))}`;
+        const authHint = response.status === 401
+            ? ` authMode=${authMode()} target=${baseUrl}; check the target service logs for the original failure, including downstream calls and error dispatch.`
+            : '';
+        const message = `POST ${label} failed: ${response.status} ${compact(body)}${authHint} payload=${compact(JSON.stringify(payload))}`;
         if (strict) fail(message);
         throw new Error(message);
     }
@@ -1881,25 +1884,14 @@ function unquoteEnvValue(value) {
 
 function requestHeaders(baseHeaders = {}, url = '') {
     const result = {...baseHeaders};
+    const scopedToken = authTokenForUrl(url) ?? scopedApiTokenForUrl(url);
+    if (scopedToken && !Object.hasOwn(result, 'Authorization')) {
+        result.Authorization = scopedToken.startsWith('Bearer ') ? scopedToken : `Bearer ${scopedToken}`;
+        return result;
+    }
     const internalToken = args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN;
     if (internalToken && !Object.hasOwn(result, 'X-MEDOL-INTERNAL-TOKEN')) {
         result['X-MEDOL-INTERNAL-TOKEN'] = String(internalToken).trim();
-    }
-    if (internalToken) {
-        return result;
-    }
-
-    const authToken = authTokenForUrl(url);
-    if (authToken && !Object.hasOwn(result, 'Authorization')) {
-        result.Authorization = `Bearer ${authToken}`;
-    }
-    const scopedApiToken = scopedApiTokenForUrl(url);
-    if (scopedApiToken && !Object.hasOwn(result, 'Authorization')) {
-        result.Authorization = scopedApiToken.startsWith('Bearer ') ? scopedApiToken : `Bearer ${scopedApiToken}`;
-    }
-    const apiToken = process.env.FL_API_TOKEN?.trim();
-    if (apiToken && !Object.hasOwn(result, 'Authorization')) {
-        result.Authorization = apiToken.startsWith('Bearer ') ? apiToken : `Bearer ${apiToken}`;
     }
     return result;
 }
@@ -1931,7 +1923,7 @@ function authTokenForUrl(url) {
 function scopedApiTokenForUrl(url) {
     const text = String(url ?? '');
     const scopedTokens = [
-        [platformUrl, process.env.FL_PLATFORM_API_TOKEN?.trim()],
+        [platformUrl, process.env.FL_PLATFORM_API_TOKEN?.trim() ?? process.env.FL_API_TOKEN?.trim()],
         [supportUrl, process.env.FL_SUPPORT_API_TOKEN?.trim()],
         [runtimeAgentUrl, process.env.FL_RUNTIME_AGENT_API_TOKEN?.trim()]
     ]

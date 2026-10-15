@@ -130,6 +130,8 @@ if (!existsSync(k3dScript)) {
     fail(`K3D helper script was not found: ${k3dScript}`);
 }
 
+verifyDeploymentPorts();
+
 if (dryRun) {
     console.log('[k3d-flow] dry run stops before creating cluster or calling APIs.');
     process.exit(0);
@@ -609,8 +611,7 @@ async function ensureAdminToken() {
 
 async function runInitTraining(target, options) {
     const initScript = resolve(scriptDir, 'init-training-prerequisites.mjs');
-    const extraEnv = initTrainingEnvironment(target, options.runtimeAgentUrl);
-    const initInternalToken = extraEnv.MEDOL_SECURITY_INTERNAL_TOKEN?.trim();
+    const extraEnv = initTrainingEnvironment();
     console.log(
         `[k3d-flow] run init-training target=${target} authMode=${initTrainingAuthMode(extraEnv)} ` +
         `runtimeAgentUrl=${options.runtimeAgentUrl}`
@@ -633,42 +634,48 @@ async function runInitTraining(target, options) {
         '--create-job', String(options.createJob),
         '--timeout', String(timeoutMs),
         '--poll-interval', String(Math.min(pollIntervalMs, 1000)),
-        ...(initInternalToken ? ['--internal-token', initInternalToken] : []),
         ...(dryRun ? ['--dry-run'] : [])
     ], extraEnv);
     process.stdout.write(output);
     return extractLastJsonObject(output);
 }
 
-function initTrainingEnvironment(target, runtimeAgentBaseUrl) {
-    const platformToken = explicitPlatformApiToken();
-    const supportToken = explicitSupportApiToken();
-    const runtimeAgentToken = explicitRuntimeAgentApiToken(runtimeAgentBaseUrl);
-    const hasExplicitScopedTokens = Boolean(
-        process.env.FL_PLATFORM_API_TOKEN?.trim() ||
-        process.env.FL_SUPPORT_API_TOKEN?.trim() ||
-        process.env.FL_RUNTIME_AGENT_API_TOKEN?.trim() ||
-        process.env.FL_API_TOKEN?.trim()
-    );
-    if (hasExplicitScopedTokens && (platformToken || runtimeAgentToken)) {
-        const primaryToken = target === 'runtime-agent'
-            ? runtimeAgentToken ?? platformToken
-            : platformToken ?? runtimeAgentToken;
-        return {
-            FL_API_TOKEN: '',
-            FL_PLATFORM_API_TOKEN: platformToken ?? '',
-            FL_SUPPORT_API_TOKEN: supportToken ?? platformToken ?? '',
-            FL_RUNTIME_AGENT_API_TOKEN: runtimeAgentToken ?? '',
-            MEDOL_SECURITY_INTERNAL_TOKEN: ''
-        };
+function verifyDeploymentPorts() {
+    const modelPath = resolve(repoRoot, 'operations/dev/operations-model.json');
+    const schedulingPath = resolve(repoRoot, 'operations/dev/k3s/components/runtime-scheduling/patches/runtime-scheduler-config.yaml');
+    if (!existsSync(modelPath) || !existsSync(schedulingPath)) {
+        return;
     }
-    if (internalToken) {
-        return {
-            FL_API_TOKEN: '',
-            MEDOL_SECURITY_INTERNAL_TOKEN: internalToken
-        };
+    const model = JSON.parse(readFileSync(modelPath, 'utf8'));
+    const applications = new Map((model.applications ?? []).map((application) => [application.name, application]));
+    const scheduling = readFileSync(schedulingPath, 'utf8');
+    const expected = [
+        ['federation-learning-platform', 8081],
+        ['federation-learning-runtime-agent', 8082],
+        ['federation-learning-support', 8080]
+    ];
+    const mismatches = expected.flatMap(([name, port]) => {
+        const actual = applications.get(name)?.servicePort;
+        return actual === port ? [] : [`${name}: generated Service port ${actual ?? 'missing'}, runtime configuration expects ${port}`];
+    });
+    for (const [name, port] of expected.filter(([name]) => name !== 'federation-learning-runtime-agent')) {
+        if (!scheduling.includes(`http://${name}:${port}`)) {
+            mismatches.push(`${name}: runtime-scheduling config does not point to port ${port}`);
+        }
     }
-    return {};
+    if (mismatches.length > 0) {
+        fail(`Deployment port mismatch before seeding:\n${mismatches.join('\n')}\nRegenerate operations from .medol/medol.yml, then re-apply the K3s manifests.`);
+    }
+}
+
+function initTrainingEnvironment() {
+    return {
+        FL_API_TOKEN: '',
+        FL_PLATFORM_API_TOKEN: process.env.FL_PLATFORM_API_TOKEN?.trim() ?? '',
+        FL_SUPPORT_API_TOKEN: process.env.FL_SUPPORT_API_TOKEN?.trim() ?? '',
+        FL_RUNTIME_AGENT_API_TOKEN: process.env.FL_RUNTIME_AGENT_API_TOKEN?.trim() ?? '',
+        MEDOL_SECURITY_INTERNAL_TOKEN: internalToken ?? ''
+    };
 }
 
 function initTrainingAuthMode(extraEnv) {
@@ -686,28 +693,6 @@ function initTrainingAuthMode(extraEnv) {
         return 'api-token';
     }
     return 'none';
-}
-
-function initTrainingApiToken(target, runtimeAgentBaseUrl) {
-    if (target === 'runtime-agent') {
-        return explicitRuntimeAgentApiToken(runtimeAgentBaseUrl);
-    }
-    return explicitPlatformApiToken();
-}
-
-function explicitPlatformApiToken() {
-    return process.env.FL_PLATFORM_API_TOKEN?.trim()
-        ?? process.env.FL_API_TOKEN?.trim();
-}
-
-function explicitSupportApiToken() {
-    return process.env.FL_SUPPORT_API_TOKEN?.trim()
-        ?? process.env.FL_API_TOKEN?.trim();
-}
-
-function explicitRuntimeAgentApiToken(runtimeAgentBaseUrl) {
-    return process.env.FL_RUNTIME_AGENT_API_TOKEN?.trim()
-        ?? process.env.FL_API_TOKEN?.trim();
 }
 
 function participantKeyForSlot(slot) {
@@ -925,9 +910,6 @@ async function recordManagedRuntimeAgentConnection(runtimeInfrastructure) {
 }
 
 async function startPortForward(serviceName, localPort, remotePort, label) {
-    if (await isHttpReachable(`http://127.0.0.1:${localPort}/actuator/health`)) {
-        return localPort;
-    }
     const availableLocalPort = await findAvailableLocalPort(localPort);
     if (availableLocalPort !== localPort) {
         console.log(`[k3d-flow] local port ${localPort} is not available; using ${availableLocalPort} for ${label}`);

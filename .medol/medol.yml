@@ -9,6 +9,13 @@ generators:
     output: .
 
 operations:
+  applications:
+    federation-learning-support:
+      servicePort: 8080
+    federation-learning-platform:
+      servicePort: 8081
+    federation-learning-runtime-agent:
+      servicePort: 8082
   # Keep registry settings out of committed workspace config because
   # development registry addresses vary by machine and environment.
   # Generate registry overlays from local, untracked config when needed.

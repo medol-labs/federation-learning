@@ -130,74 +130,6 @@ spec:
         - name: "federation-learning-platform"
           image: "fl/federation-learning-platform:0.0.1-SNAPSHOT"
           ports:
-            - containerPort: 8080
-          env:
-            - name: "DB_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "postgres-secret"
-                  key: "password"
-            - name: "DB_USERNAME"
-              valueFrom:
-                secretKeyRef:
-                  name: "postgres-secret"
-                  key: "username"
-          readinessProbe:
-            httpGet:
-              path: "/actuator/health"
-              port: 8080
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 12
-            initialDelaySeconds: 30
-          livenessProbe:
-            httpGet:
-              path: "/actuator/health"
-              port: 8080
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 12
-            initialDelaySeconds: 30
----
-apiVersion: "v1"
-kind: "Service"
-metadata:
-  name: "federation-learning-platform"
-  labels:
-    "app.kubernetes.io/name": "federation-learning-platform"
-    "app.kubernetes.io/component": "service"
-    "app.kubernetes.io/managed-by": "medol-operations-generator"
-spec:
-  type: "ClusterIP"
-  selector:
-    app: "federation-learning-platform"
-  ports:
-    - name: "http"
-      port: 8080
-      targetPort: 8080
----
-apiVersion: "apps/v1"
-kind: "Deployment"
-metadata:
-  name: "federation-learning-runtime-agent"
-  labels:
-    "app.kubernetes.io/name": "federation-learning-runtime-agent"
-    "app.kubernetes.io/component": "backend"
-    "app.kubernetes.io/managed-by": "medol-operations-generator"
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: "federation-learning-runtime-agent"
-  template:
-    metadata:
-      labels:
-        app: "federation-learning-runtime-agent"
-    spec:
-      containers:
-        - name: "federation-learning-runtime-agent"
-          image: "fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT"
-          ports:
             - containerPort: 8081
           env:
             - name: "DB_PASSWORD"
@@ -230,15 +162,15 @@ spec:
 apiVersion: "v1"
 kind: "Service"
 metadata:
-  name: "federation-learning-runtime-agent"
+  name: "federation-learning-platform"
   labels:
-    "app.kubernetes.io/name": "federation-learning-runtime-agent"
+    "app.kubernetes.io/name": "federation-learning-platform"
     "app.kubernetes.io/component": "service"
     "app.kubernetes.io/managed-by": "medol-operations-generator"
 spec:
   type: "ClusterIP"
   selector:
-    app: "federation-learning-runtime-agent"
+    app: "federation-learning-platform"
   ports:
     - name: "http"
       port: 8081
@@ -247,24 +179,24 @@ spec:
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "federation-learning-support"
+  name: "federation-learning-runtime-agent"
   labels:
-    "app.kubernetes.io/name": "federation-learning-support"
+    "app.kubernetes.io/name": "federation-learning-runtime-agent"
     "app.kubernetes.io/component": "backend"
     "app.kubernetes.io/managed-by": "medol-operations-generator"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "federation-learning-support"
+      app: "federation-learning-runtime-agent"
   template:
     metadata:
       labels:
-        app: "federation-learning-support"
+        app: "federation-learning-runtime-agent"
     spec:
       containers:
-        - name: "federation-learning-support"
-          image: "fl/federation-learning-support:0.0.1-SNAPSHOT"
+        - name: "federation-learning-runtime-agent"
+          image: "fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT"
           ports:
             - containerPort: 8082
           env:
@@ -298,6 +230,74 @@ spec:
 apiVersion: "v1"
 kind: "Service"
 metadata:
+  name: "federation-learning-runtime-agent"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-runtime-agent"
+    "app.kubernetes.io/component": "service"
+    "app.kubernetes.io/managed-by": "medol-operations-generator"
+spec:
+  type: "ClusterIP"
+  selector:
+    app: "federation-learning-runtime-agent"
+  ports:
+    - name: "http"
+      port: 8082
+      targetPort: 8082
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "federation-learning-support"
+  labels:
+    "app.kubernetes.io/name": "federation-learning-support"
+    "app.kubernetes.io/component": "backend"
+    "app.kubernetes.io/managed-by": "medol-operations-generator"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "federation-learning-support"
+  template:
+    metadata:
+      labels:
+        app: "federation-learning-support"
+    spec:
+      containers:
+        - name: "federation-learning-support"
+          image: "fl/federation-learning-support:0.0.1-SNAPSHOT"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: "DB_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres-secret"
+                  key: "password"
+            - name: "DB_USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres-secret"
+                  key: "username"
+          readinessProbe:
+            httpGet:
+              path: "/actuator/health"
+              port: 8080
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 12
+            initialDelaySeconds: 30
+          livenessProbe:
+            httpGet:
+              path: "/actuator/health"
+              port: 8080
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 12
+            initialDelaySeconds: 30
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
   name: "federation-learning-support"
   labels:
     "app.kubernetes.io/name": "federation-learning-support"
@@ -309,5 +309,5 @@ spec:
     app: "federation-learning-support"
   ports:
     - name: "http"
-      port: 8082
-      targetPort: 8082
+      port: 8080
+      targetPort: 8080

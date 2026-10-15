@@ -23,7 +23,7 @@ services:
     networks:
       - "medol-network"
   federation-learning-console:
-    image: "${FEDERATION_LEARNING_CONSOLE_IMAGE:-fl/federation-learning-console}"
+    image: "${FEDERATION_LEARNING_CONSOLE_IMAGE:-fl/federation-learning-console:0.0.1-SNAPSHOT}"
     container_name: "${FEDERATION_LEARNING_CONSOLE_CONTAINER_NAME:-federation-learning-console}"
     restart: "unless-stopped"
     expose:
@@ -45,7 +45,7 @@ services:
       timeout: "3s"
       retries: 5
   federation-learning-participant-console:
-    image: "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_IMAGE:-fl/federation-learning-participant-console}"
+    image: "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_IMAGE:-fl/federation-learning-participant-console:0.0.1-SNAPSHOT}"
     container_name: "${FEDERATION_LEARNING_PARTICIPANT_CONSOLE_CONTAINER_NAME:-federation-learning-participant-console}"
     restart: "unless-stopped"
     expose:
@@ -66,49 +66,8 @@ services:
       timeout: "3s"
       retries: 5
   federation-learning-platform:
-    image: "${FEDERATION_LEARNING_PLATFORM_IMAGE:-fl/federation-learning-platform}"
+    image: "${FEDERATION_LEARNING_PLATFORM_IMAGE:-fl/federation-learning-platform:0.0.1-SNAPSHOT}"
     container_name: "${FEDERATION_LEARNING_PLATFORM_CONTAINER_NAME:-federation-learning-platform}"
-    restart: "unless-stopped"
-    expose:
-      - "8080"
-    environment:
-      AXON_SERVER_ENABLED: "false"
-      AXON_SERVER_EVENT_STORE_ENABLED: "false"
-      AXON_SERVER_SERVERS: "${AXON_SERVER_SERVERS:-axon-server:8124}"
-      AXON_UPDATE_CHECK_DISABLED: "${AXON_UPDATE_CHECK_DISABLED:-true}"
-      DB_PASSWORD: "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
-      DB_URL: "jdbc:postgresql://postgres:5432/federation_learning_platform"
-      DB_USERNAME: "${POSTGRES_USER:-medol}"
-      FEDERATION_LEARNING_RUNTIME_AGENT_URL: "http://federation-learning-runtime-agent:8081"
-      FEDERATION_LEARNING_SUPPORT_URL: "http://federation-learning-support:8082"
-      MEDOL_AXON_EVENT_STORAGE: "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
-      SERVER_PORT: "8080"
-      SPRING_DOCKER_COMPOSE_ENABLED: "false"
-      UMADB_API_KEY: "${UMADB_API_KEY:-}"
-      UMADB_BATCH_SIZE: "${UMADB_BATCH_SIZE:-256}"
-      UMADB_PLAINTEXT: "${UMADB_PLAINTEXT:-true}"
-      UMADB_REQUEST_TIMEOUT: "${UMADB_REQUEST_TIMEOUT:-PT10S}"
-      UMADB_TARGET: "${UMADB_TARGET:-umadb:50051}"
-    networks:
-      - "medol-network"
-    depends_on:
-      postgres:
-        condition: "service_healthy"
-      umadb:
-        condition: "service_started"
-    healthcheck:
-      test:
-        - "CMD-SHELL"
-        - "wget -qO- http://127.0.0.1:8080/actuator/health >/dev/null 2>&1 || exit 1"
-      interval: "10s"
-      timeout: "5s"
-      retries: 12
-      start_period: "30s"
-    ports:
-      - "${FEDERATION_LEARNING_PLATFORM_PORT:-8080}:8080"
-  federation-learning-runtime-agent:
-    image: "${FEDERATION_LEARNING_RUNTIME_AGENT_IMAGE:-fl/federation-learning-runtime-agent}"
-    container_name: "${FEDERATION_LEARNING_RUNTIME_AGENT_CONTAINER_NAME:-federation-learning-runtime-agent}"
     restart: "unless-stopped"
     expose:
       - "8081"
@@ -118,10 +77,10 @@ services:
       AXON_SERVER_SERVERS: "${AXON_SERVER_SERVERS:-axon-server:8124}"
       AXON_UPDATE_CHECK_DISABLED: "${AXON_UPDATE_CHECK_DISABLED:-true}"
       DB_PASSWORD: "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
-      DB_URL: "jdbc:postgresql://postgres:5432/federation_learning_runtime_agent"
+      DB_URL: "jdbc:postgresql://postgres:5432/federation_learning_platform"
       DB_USERNAME: "${POSTGRES_USER:-medol}"
-      FEDERATION_LEARNING_PLATFORM_URL: "http://federation-learning-platform:8080"
-      FEDERATION_LEARNING_SUPPORT_URL: "http://federation-learning-support:8082"
+      FEDERATION_LEARNING_RUNTIME_AGENT_URL: "http://federation-learning-runtime-agent:8082"
+      FEDERATION_LEARNING_SUPPORT_URL: "http://federation-learning-support:8080"
       MEDOL_AXON_EVENT_STORAGE: "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
       SERVER_PORT: "8081"
       SPRING_DOCKER_COMPOSE_ENABLED: "false"
@@ -146,10 +105,10 @@ services:
       retries: 12
       start_period: "30s"
     ports:
-      - "${FEDERATION_LEARNING_RUNTIME_AGENT_PORT:-8081}:8081"
-  federation-learning-support:
-    image: "${FEDERATION_LEARNING_SUPPORT_IMAGE:-fl/federation-learning-support}"
-    container_name: "${FEDERATION_LEARNING_SUPPORT_CONTAINER_NAME:-federation-learning-support}"
+      - "${FEDERATION_LEARNING_PLATFORM_PORT:-8081}:8081"
+  federation-learning-runtime-agent:
+    image: "${FEDERATION_LEARNING_RUNTIME_AGENT_IMAGE:-fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT}"
+    container_name: "${FEDERATION_LEARNING_RUNTIME_AGENT_CONTAINER_NAME:-federation-learning-runtime-agent}"
     restart: "unless-stopped"
     expose:
       - "8082"
@@ -159,10 +118,10 @@ services:
       AXON_SERVER_SERVERS: "${AXON_SERVER_SERVERS:-axon-server:8124}"
       AXON_UPDATE_CHECK_DISABLED: "${AXON_UPDATE_CHECK_DISABLED:-true}"
       DB_PASSWORD: "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
-      DB_URL: "jdbc:postgresql://postgres:5432/federation_learning_support"
+      DB_URL: "jdbc:postgresql://postgres:5432/federation_learning_runtime_agent"
       DB_USERNAME: "${POSTGRES_USER:-medol}"
-      FEDERATION_LEARNING_PLATFORM_URL: "http://federation-learning-platform:8080"
-      FEDERATION_LEARNING_RUNTIME_AGENT_URL: "http://federation-learning-runtime-agent:8081"
+      FEDERATION_LEARNING_PLATFORM_URL: "http://federation-learning-platform:8081"
+      FEDERATION_LEARNING_SUPPORT_URL: "http://federation-learning-support:8080"
       MEDOL_AXON_EVENT_STORAGE: "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
       SERVER_PORT: "8082"
       SPRING_DOCKER_COMPOSE_ENABLED: "false"
@@ -187,7 +146,48 @@ services:
       retries: 12
       start_period: "30s"
     ports:
-      - "${FEDERATION_LEARNING_SUPPORT_PORT:-8082}:8082"
+      - "${FEDERATION_LEARNING_RUNTIME_AGENT_PORT:-8082}:8082"
+  federation-learning-support:
+    image: "${FEDERATION_LEARNING_SUPPORT_IMAGE:-fl/federation-learning-support:0.0.1-SNAPSHOT}"
+    container_name: "${FEDERATION_LEARNING_SUPPORT_CONTAINER_NAME:-federation-learning-support}"
+    restart: "unless-stopped"
+    expose:
+      - "8080"
+    environment:
+      AXON_SERVER_ENABLED: "false"
+      AXON_SERVER_EVENT_STORE_ENABLED: "false"
+      AXON_SERVER_SERVERS: "${AXON_SERVER_SERVERS:-axon-server:8124}"
+      AXON_UPDATE_CHECK_DISABLED: "${AXON_UPDATE_CHECK_DISABLED:-true}"
+      DB_PASSWORD: "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
+      DB_URL: "jdbc:postgresql://postgres:5432/federation_learning_support"
+      DB_USERNAME: "${POSTGRES_USER:-medol}"
+      FEDERATION_LEARNING_PLATFORM_URL: "http://federation-learning-platform:8081"
+      FEDERATION_LEARNING_RUNTIME_AGENT_URL: "http://federation-learning-runtime-agent:8082"
+      MEDOL_AXON_EVENT_STORAGE: "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
+      SERVER_PORT: "8080"
+      SPRING_DOCKER_COMPOSE_ENABLED: "false"
+      UMADB_API_KEY: "${UMADB_API_KEY:-}"
+      UMADB_BATCH_SIZE: "${UMADB_BATCH_SIZE:-256}"
+      UMADB_PLAINTEXT: "${UMADB_PLAINTEXT:-true}"
+      UMADB_REQUEST_TIMEOUT: "${UMADB_REQUEST_TIMEOUT:-PT10S}"
+      UMADB_TARGET: "${UMADB_TARGET:-umadb:50051}"
+    networks:
+      - "medol-network"
+    depends_on:
+      postgres:
+        condition: "service_healthy"
+      umadb:
+        condition: "service_started"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "wget -qO- http://127.0.0.1:8080/actuator/health >/dev/null 2>&1 || exit 1"
+      interval: "10s"
+      timeout: "5s"
+      retries: 12
+      start_period: "30s"
+    ports:
+      - "${FEDERATION_LEARNING_SUPPORT_PORT:-8080}:8080"
   postgres:
     image: "${POSTGRES_IMAGE:-postgres:16}"
     restart: "unless-stopped"

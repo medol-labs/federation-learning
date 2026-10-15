@@ -44,4 +44,22 @@ class InternalTokenAuthenticationFilterTest {
                 ),
             )
     }
+
+    @Test
+    fun `authenticates internal token during error dispatch`() {
+        val properties = MedolSecurityProperties(internalToken = "service-token")
+        val request = MockHttpServletRequest().apply {
+            dispatcherType = DispatcherType.ERROR
+            addHeader(InternalTokenAuthenticationFilter.INTERNAL_TOKEN_HEADER, "service-token")
+        }
+        var authentication: Authentication? = null
+
+        InternalTokenAuthenticationFilter(properties).doFilter(
+            request,
+            MockHttpServletResponse(),
+            FilterChain { _, _ -> authentication = SecurityContextHolder.getContext().authentication },
+        )
+
+        assertThat(authentication?.authorities?.map { it.authority }).contains("*:*")
+    }
 }
