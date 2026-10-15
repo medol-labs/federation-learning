@@ -29,16 +29,16 @@
           "value": "FederationLearningConsole"
         },
         {
-          "name": "VITE_FEDERATION_LEARNING_SUPPORT_API_URL",
-          "value": "/api/federation-learning-support"
-        },
-        {
           "name": "VITE_FEDERATION_LEARNING_PLATFORM_API_URL",
           "value": "/api/federation-learning-platform"
         },
         {
-          "name": "VITE_AXON_API_URL",
+          "name": "VITE_FEDERATION_LEARNING_SUPPORT_API_URL",
           "value": "/api/federation-learning-support"
+        },
+        {
+          "name": "VITE_AXON_API_URL",
+          "value": "/api/federation-learning-platform"
         }
       ],
       "dependencies": [],
@@ -102,22 +102,231 @@
     },
     {
       "kind": "backend",
+      "name": "federation-learning-platform",
+      "title": "Federation Learning Platform",
+      "artifactName": "federation-learning-platform",
+      "imageName": "fl/federation-learning-platform",
+      "servicePort": 8080,
+      "exposeExternally": false,
+      "contexts": [
+        "OrganizationManagement",
+        "FederationManagement",
+        "DatasetGovernance",
+        "ModelRepository",
+        "TrainingOrchestration",
+        "RuntimeMonitoring",
+        "RuntimeGovernance",
+        "SecureAggregation",
+        "RuntimeProvisioning"
+      ],
+      "gatewayPath": "/api/federation-learning-platform",
+      "environmentVariables": [
+        {
+          "name": "SERVER_PORT",
+          "value": "8080"
+        },
+        {
+          "name": "SPRING_DOCKER_COMPOSE_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "DB_URL",
+          "value": "jdbc:postgresql://postgres:5432/federation_learning_platform"
+        },
+        {
+          "name": "DB_USERNAME",
+          "value": "${POSTGRES_USER:-medol}"
+        },
+        {
+          "name": "DB_PASSWORD",
+          "value": "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
+        },
+        {
+          "name": "MEDOL_AXON_EVENT_STORAGE",
+          "value": "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
+        },
+        {
+          "name": "UMADB_TARGET",
+          "value": "${UMADB_TARGET:-umadb:50051}"
+        },
+        {
+          "name": "UMADB_PLAINTEXT",
+          "value": "${UMADB_PLAINTEXT:-true}"
+        },
+        {
+          "name": "UMADB_API_KEY",
+          "value": "${UMADB_API_KEY:-}"
+        },
+        {
+          "name": "UMADB_BATCH_SIZE",
+          "value": "${UMADB_BATCH_SIZE:-256}"
+        },
+        {
+          "name": "UMADB_REQUEST_TIMEOUT",
+          "value": "${UMADB_REQUEST_TIMEOUT:-PT10S}"
+        },
+        {
+          "name": "AXON_SERVER_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "AXON_SERVER_EVENT_STORE_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "AXON_SERVER_SERVERS",
+          "value": "${AXON_SERVER_SERVERS:-axon-server:8124}"
+        },
+        {
+          "name": "AXON_UPDATE_CHECK_DISABLED",
+          "value": "${AXON_UPDATE_CHECK_DISABLED:-true}"
+        },
+        {
+          "name": "FEDERATION_LEARNING_RUNTIME_AGENT_URL",
+          "value": "http://federation-learning-runtime-agent:8081"
+        },
+        {
+          "name": "FEDERATION_LEARNING_SUPPORT_URL",
+          "value": "http://federation-learning-support:8082"
+        }
+      ],
+      "dependencies": [
+        "postgres",
+        "umadb"
+      ],
+      "healthCheck": {
+        "path": "/actuator/health",
+        "intervalSeconds": 10,
+        "timeoutSeconds": 5,
+        "retries": 12,
+        "startPeriodSeconds": 30
+      },
+      "deploymentProfile": {
+        "replicas": 1,
+        "resourceProfile": "standard"
+      },
+      "envVarPrefix": "FEDERATION_LEARNING_PLATFORM"
+    },
+    {
+      "kind": "backend",
+      "name": "federation-learning-runtime-agent",
+      "title": "Federation Learning Runtime Agent",
+      "artifactName": "federation-learning-runtime-agent",
+      "imageName": "fl/federation-learning-runtime-agent",
+      "servicePort": 8081,
+      "exposeExternally": false,
+      "contexts": [
+        "RuntimeAgentOperations",
+        "IdentityAccessManagement"
+      ],
+      "gatewayPath": "/api/federation-learning-runtime-agent",
+      "environmentVariables": [
+        {
+          "name": "SERVER_PORT",
+          "value": "8081"
+        },
+        {
+          "name": "SPRING_DOCKER_COMPOSE_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "DB_URL",
+          "value": "jdbc:postgresql://postgres:5432/federation_learning_runtime_agent"
+        },
+        {
+          "name": "DB_USERNAME",
+          "value": "${POSTGRES_USER:-medol}"
+        },
+        {
+          "name": "DB_PASSWORD",
+          "value": "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
+        },
+        {
+          "name": "MEDOL_AXON_EVENT_STORAGE",
+          "value": "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
+        },
+        {
+          "name": "UMADB_TARGET",
+          "value": "${UMADB_TARGET:-umadb:50051}"
+        },
+        {
+          "name": "UMADB_PLAINTEXT",
+          "value": "${UMADB_PLAINTEXT:-true}"
+        },
+        {
+          "name": "UMADB_API_KEY",
+          "value": "${UMADB_API_KEY:-}"
+        },
+        {
+          "name": "UMADB_BATCH_SIZE",
+          "value": "${UMADB_BATCH_SIZE:-256}"
+        },
+        {
+          "name": "UMADB_REQUEST_TIMEOUT",
+          "value": "${UMADB_REQUEST_TIMEOUT:-PT10S}"
+        },
+        {
+          "name": "AXON_SERVER_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "AXON_SERVER_EVENT_STORE_ENABLED",
+          "value": "false"
+        },
+        {
+          "name": "AXON_SERVER_SERVERS",
+          "value": "${AXON_SERVER_SERVERS:-axon-server:8124}"
+        },
+        {
+          "name": "AXON_UPDATE_CHECK_DISABLED",
+          "value": "${AXON_UPDATE_CHECK_DISABLED:-true}"
+        },
+        {
+          "name": "FEDERATION_LEARNING_PLATFORM_URL",
+          "value": "http://federation-learning-platform:8080"
+        },
+        {
+          "name": "FEDERATION_LEARNING_SUPPORT_URL",
+          "value": "http://federation-learning-support:8082"
+        }
+      ],
+      "dependencies": [
+        "postgres",
+        "umadb"
+      ],
+      "healthCheck": {
+        "path": "/actuator/health",
+        "intervalSeconds": 10,
+        "timeoutSeconds": 5,
+        "retries": 12,
+        "startPeriodSeconds": 30
+      },
+      "deploymentProfile": {
+        "replicas": 1,
+        "resourceProfile": "standard"
+      },
+      "envVarPrefix": "FEDERATION_LEARNING_RUNTIME_AGENT"
+    },
+    {
+      "kind": "backend",
       "name": "federation-learning-support",
       "title": "Federation Learning Support",
       "artifactName": "federation-learning-support",
       "imageName": "fl/federation-learning-support",
-      "servicePort": 8080,
+      "servicePort": 8082,
       "exposeExternally": false,
       "contexts": [
-        "DictionaryMaintenance",
+        "SystemNotification",
+        "DataExchange",
         "FileUpload",
+        "DictionaryMaintenance",
         "IdentityAccessManagement"
       ],
       "gatewayPath": "/api/federation-learning-support",
       "environmentVariables": [
         {
           "name": "SERVER_PORT",
-          "value": "8080"
+          "value": "8082"
         },
         {
           "name": "SPRING_DOCKER_COMPOSE_ENABLED",
@@ -177,11 +386,11 @@
         },
         {
           "name": "FEDERATION_LEARNING_PLATFORM_URL",
-          "value": "http://federation-learning-platform:8081"
+          "value": "http://federation-learning-platform:8080"
         },
         {
           "name": "FEDERATION_LEARNING_RUNTIME_AGENT_URL",
-          "value": "http://federation-learning-runtime-agent:8082"
+          "value": "http://federation-learning-runtime-agent:8081"
         }
       ],
       "dependencies": [
@@ -200,214 +409,6 @@
         "resourceProfile": "standard"
       },
       "envVarPrefix": "FEDERATION_LEARNING_SUPPORT"
-    },
-    {
-      "kind": "backend",
-      "name": "federation-learning-platform",
-      "title": "Federation Learning Platform",
-      "artifactName": "federation-learning-platform",
-      "imageName": "fl/federation-learning-platform",
-      "servicePort": 8081,
-      "exposeExternally": false,
-      "contexts": [
-        "OrganizationManagement",
-        "FederationManagement",
-        "DatasetGovernance",
-        "ModelRepository",
-        "TrainingOrchestration",
-        "ModelLifecycle",
-        "RuntimeMonitoring",
-        "RuntimeGovernance",
-        "SecureAggregation",
-        "RuntimeProvisioning"
-      ],
-      "gatewayPath": "/api/federation-learning-platform",
-      "environmentVariables": [
-        {
-          "name": "SERVER_PORT",
-          "value": "8081"
-        },
-        {
-          "name": "SPRING_DOCKER_COMPOSE_ENABLED",
-          "value": "false"
-        },
-        {
-          "name": "DB_URL",
-          "value": "jdbc:postgresql://postgres:5432/federation_learning_platform"
-        },
-        {
-          "name": "DB_USERNAME",
-          "value": "${POSTGRES_USER:-medol}"
-        },
-        {
-          "name": "DB_PASSWORD",
-          "value": "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
-        },
-        {
-          "name": "MEDOL_AXON_EVENT_STORAGE",
-          "value": "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
-        },
-        {
-          "name": "UMADB_TARGET",
-          "value": "${UMADB_TARGET:-umadb:50051}"
-        },
-        {
-          "name": "UMADB_PLAINTEXT",
-          "value": "${UMADB_PLAINTEXT:-true}"
-        },
-        {
-          "name": "UMADB_API_KEY",
-          "value": "${UMADB_API_KEY:-}"
-        },
-        {
-          "name": "UMADB_BATCH_SIZE",
-          "value": "${UMADB_BATCH_SIZE:-256}"
-        },
-        {
-          "name": "UMADB_REQUEST_TIMEOUT",
-          "value": "${UMADB_REQUEST_TIMEOUT:-PT10S}"
-        },
-        {
-          "name": "AXON_SERVER_ENABLED",
-          "value": "false"
-        },
-        {
-          "name": "AXON_SERVER_EVENT_STORE_ENABLED",
-          "value": "false"
-        },
-        {
-          "name": "AXON_SERVER_SERVERS",
-          "value": "${AXON_SERVER_SERVERS:-axon-server:8124}"
-        },
-        {
-          "name": "AXON_UPDATE_CHECK_DISABLED",
-          "value": "${AXON_UPDATE_CHECK_DISABLED:-true}"
-        },
-        {
-          "name": "FEDERATION_LEARNING_SUPPORT_URL",
-          "value": "http://federation-learning-support:8080"
-        },
-        {
-          "name": "FEDERATION_LEARNING_RUNTIME_AGENT_URL",
-          "value": "http://federation-learning-runtime-agent:8082"
-        }
-      ],
-      "dependencies": [
-        "postgres",
-        "umadb"
-      ],
-      "healthCheck": {
-        "path": "/actuator/health",
-        "intervalSeconds": 10,
-        "timeoutSeconds": 5,
-        "retries": 12,
-        "startPeriodSeconds": 30
-      },
-      "deploymentProfile": {
-        "replicas": 1,
-        "resourceProfile": "standard"
-      },
-      "envVarPrefix": "FEDERATION_LEARNING_PLATFORM"
-    },
-    {
-      "kind": "backend",
-      "name": "federation-learning-runtime-agent",
-      "title": "Federation Learning Runtime Agent",
-      "artifactName": "federation-learning-runtime-agent",
-      "imageName": "fl/federation-learning-runtime-agent",
-      "servicePort": 8082,
-      "exposeExternally": false,
-      "contexts": [
-        "RuntimeAgentOperations",
-        "IdentityAccessManagement"
-      ],
-      "gatewayPath": "/api/federation-learning-runtime-agent",
-      "environmentVariables": [
-        {
-          "name": "SERVER_PORT",
-          "value": "8082"
-        },
-        {
-          "name": "SPRING_DOCKER_COMPOSE_ENABLED",
-          "value": "false"
-        },
-        {
-          "name": "DB_URL",
-          "value": "jdbc:postgresql://postgres:5432/federation_learning_runtime_agent"
-        },
-        {
-          "name": "DB_USERNAME",
-          "value": "${POSTGRES_USER:-medol}"
-        },
-        {
-          "name": "DB_PASSWORD",
-          "value": "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}"
-        },
-        {
-          "name": "MEDOL_AXON_EVENT_STORAGE",
-          "value": "${MEDOL_AXON_EVENT_STORAGE:-umadb}"
-        },
-        {
-          "name": "UMADB_TARGET",
-          "value": "${UMADB_TARGET:-umadb:50051}"
-        },
-        {
-          "name": "UMADB_PLAINTEXT",
-          "value": "${UMADB_PLAINTEXT:-true}"
-        },
-        {
-          "name": "UMADB_API_KEY",
-          "value": "${UMADB_API_KEY:-}"
-        },
-        {
-          "name": "UMADB_BATCH_SIZE",
-          "value": "${UMADB_BATCH_SIZE:-256}"
-        },
-        {
-          "name": "UMADB_REQUEST_TIMEOUT",
-          "value": "${UMADB_REQUEST_TIMEOUT:-PT10S}"
-        },
-        {
-          "name": "AXON_SERVER_ENABLED",
-          "value": "false"
-        },
-        {
-          "name": "AXON_SERVER_EVENT_STORE_ENABLED",
-          "value": "false"
-        },
-        {
-          "name": "AXON_SERVER_SERVERS",
-          "value": "${AXON_SERVER_SERVERS:-axon-server:8124}"
-        },
-        {
-          "name": "AXON_UPDATE_CHECK_DISABLED",
-          "value": "${AXON_UPDATE_CHECK_DISABLED:-true}"
-        },
-        {
-          "name": "FEDERATION_LEARNING_SUPPORT_URL",
-          "value": "http://federation-learning-support:8080"
-        },
-        {
-          "name": "FEDERATION_LEARNING_PLATFORM_URL",
-          "value": "http://federation-learning-platform:8081"
-        }
-      ],
-      "dependencies": [
-        "postgres",
-        "umadb"
-      ],
-      "healthCheck": {
-        "path": "/actuator/health",
-        "intervalSeconds": 10,
-        "timeoutSeconds": 5,
-        "retries": 12,
-        "startPeriodSeconds": 30
-      },
-      "deploymentProfile": {
-        "replicas": 1,
-        "resourceProfile": "standard"
-      },
-      "envVarPrefix": "FEDERATION_LEARNING_RUNTIME_AGENT"
     }
   ],
   "infrastructure": [
@@ -527,26 +528,6 @@
         ]
       },
       {
-        "id": "federation-learning-support-api",
-        "name": "Federation Learning Support API",
-        "paths": [
-          "/api/federation-learning-support/*"
-        ],
-        "methods": [],
-        "upstreamId": "federation-learning-support",
-        "plugins": [
-          {
-            "name": "proxy-rewrite",
-            "configuration": {
-              "regex_uri": [
-                "^/api/federation-learning-support/(.*)",
-                "/$1"
-              ]
-            }
-          }
-        ]
-      },
-      {
         "id": "federation-learning-platform-api",
         "name": "Federation Learning Platform API",
         "paths": [
@@ -585,6 +566,26 @@
             }
           }
         ]
+      },
+      {
+        "id": "federation-learning-support-api",
+        "name": "Federation Learning Support API",
+        "paths": [
+          "/api/federation-learning-support/*"
+        ],
+        "methods": [],
+        "upstreamId": "federation-learning-support",
+        "plugins": [
+          {
+            "name": "proxy-rewrite",
+            "configuration": {
+              "regex_uri": [
+                "^/api/federation-learning-support/(.*)",
+                "/$1"
+              ]
+            }
+          }
+        ]
       }
     ],
     "upstreams": [
@@ -599,18 +600,18 @@
         "servicePort": 80
       },
       {
-        "id": "federation-learning-support",
-        "serviceName": "federation-learning-support",
-        "servicePort": 8080
-      },
-      {
         "id": "federation-learning-platform",
         "serviceName": "federation-learning-platform",
-        "servicePort": 8081
+        "servicePort": 8080
       },
       {
         "id": "federation-learning-runtime-agent",
         "serviceName": "federation-learning-runtime-agent",
+        "servicePort": 8081
+      },
+      {
+        "id": "federation-learning-support",
+        "serviceName": "federation-learning-support",
         "servicePort": 8082
       }
     ],
@@ -641,19 +642,19 @@
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": true,
-          "hostPort": 8081
+          "hostPort": 8080
         },
         "federation-learning-runtime-agent": {
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": true,
-          "hostPort": 8082
+          "hostPort": 8081
         },
         "federation-learning-support": {
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": true,
-          "hostPort": 8080
+          "hostPort": 8082
         }
       },
       "infrastructureOverrides": {
@@ -692,19 +693,19 @@
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8081
+          "hostPort": 8080
         },
         "federation-learning-runtime-agent": {
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8082
+          "hostPort": 8081
         },
         "federation-learning-support": {
           "replicas": 1,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8080
+          "hostPort": 8082
         }
       },
       "infrastructureOverrides": {
@@ -743,19 +744,19 @@
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8081
+          "hostPort": 8080
         },
         "federation-learning-runtime-agent": {
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8082
+          "hostPort": 8081
         },
         "federation-learning-support": {
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8080
+          "hostPort": 8082
         }
       },
       "infrastructureOverrides": {
@@ -794,19 +795,19 @@
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8081
+          "hostPort": 8080
         },
         "federation-learning-runtime-agent": {
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8082
+          "hostPort": 8081
         },
         "federation-learning-support": {
           "replicas": 2,
           "imageTag": "0.0.1-SNAPSHOT",
           "exposePorts": false,
-          "hostPort": 8080
+          "hostPort": 8082
         }
       },
       "infrastructureOverrides": {

@@ -8,9 +8,9 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 
 - `federation-learning-console` runs the generated frontend application.
 - `federation-learning-participant-console` runs the generated frontend application.
-- `federation-learning-support` runs the generated backend application.
 - `federation-learning-platform` runs the generated backend application.
 - `federation-learning-runtime-agent` runs the generated backend application.
+- `federation-learning-support` runs the generated backend application.
 - `postgres` provides postgres infrastructure.
 - `umadb` provides umadb infrastructure.
 - `apisix` is the generated external gateway.
@@ -36,9 +36,9 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 For local development with k3d, create the dev cluster from the generated config:
 
 ```bash
-scripts/federation-learning-dev.sh recreate
-eval "$(scripts/federation-learning-dev.sh kubeconfig)"
-scripts/federation-learning-dev.sh apply
+scripts/k3d-dev.sh recreate
+eval "$(scripts/k3d-dev.sh kubeconfig)"
+scripts/k3d-dev.sh apply
 ```
 
 The helper script is generated for local debugging. You can override paths and the cluster name with environment variables.
@@ -59,7 +59,7 @@ The config creates one server and two agent nodes, disables the default Traefik 
 
 ## Registry
 
-The committed `environments/dev` overlay keeps images in the `medol/<service>:<tag>` form.
+The committed `environments/dev` overlay keeps images in the `fl/<service>:<tag>` form.
 
 For machine-specific registry settings, keep `operations.registry` in `.medol/medol.local.yml` and regenerate operations files. Local registry overlays and `cluster/registries.yaml` are ignored by git.
 
@@ -74,9 +74,9 @@ Build, push, or import these images on every node that may run the workloads:
 ```bash
 fl/federation-learning-console:0.0.1-SNAPSHOT
 fl/federation-learning-participant-console:0.0.1-SNAPSHOT
-fl/federation-learning-support:0.0.1-SNAPSHOT
 fl/federation-learning-platform:0.0.1-SNAPSHOT
 fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT
+fl/federation-learning-support:0.0.1-SNAPSHOT
 postgres:16
 umadb/umadb:0.7.8
 apache/apisix:3.13.0-debian
@@ -113,7 +113,7 @@ kubectl -n federation-learning-platform get secret postgres-secret
 
 ## First Administrator
 
-Administrator bootstrap is enabled by default for `federation-learning-support`. Before creating the first administrator, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN` in that application's environment-owned Secret file.
+Administrator bootstrap is enabled by default for `federation-learning-runtime-agent`. Before creating the first administrator, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN` in that application's environment-owned Secret file.
 
 
 The dev K3s ConfigMap allows browser origins reaching APISIX on NodePort `30080`. For another gateway port, protocol, or production hostname, replace `MEDOL_SECURITY_ALLOWED_ORIGINS` with the exact comma-separated browser origins.
@@ -125,8 +125,8 @@ kubectl -n federation-learning-platform apply -f environments/<environment>/secr
 kubectl apply -k environments/<environment>
 # Or, when a local registry overlay was generated:
 # kubectl apply -k environments/<environment>-registry
-kubectl -n federation-learning-platform rollout restart deploy/federation-learning-support
-kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
+kubectl -n federation-learning-platform rollout restart deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform rollout status deploy/federation-learning-runtime-agent
 ```
 
 After the administrator is created, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED` to `"false"`, reapply the environment, and restart the IAM application.
@@ -156,9 +156,9 @@ Default routes:
 
 - `/*` -> `undefined`
 - `/federation-learning-participant-console/*` -> `undefined`
-- `/api/federation-learning-support/*` -> `undefined`
 - `/api/federation-learning-platform/*` -> `undefined`
 - `/api/federation-learning-runtime-agent/*` -> `undefined`
+- `/api/federation-learning-support/*` -> `undefined`
 
 ## Validation
 
@@ -167,13 +167,13 @@ kubectl -n federation-learning-platform rollout status deploy/postgres
 kubectl -n federation-learning-platform rollout status deploy/umadb
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-console
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-participant-console
-kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-platform
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/apisix
-curl -fsS http://<gateway-host>/api/federation-learning-support/actuator/health
 curl -fsS http://<gateway-host>/api/federation-learning-platform/actuator/health
 curl -fsS http://<gateway-host>/api/federation-learning-runtime-agent/actuator/health
+curl -fsS http://<gateway-host>/api/federation-learning-support/actuator/health
 ```
 
 For k3s with the generated NodePort, replace `<gateway-host>` with `<node-ip>:30080`.
@@ -197,30 +197,30 @@ kubectl -n federation-learning-platform apply -f environments/<environment>/secr
 ConfigMap and Secret changes are read when a Pod starts. Restart the affected Deployments after changing them:
 
 ```bash
-kubectl -n federation-learning-platform rollout restart deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform rollout restart deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-platform deploy/federation-learning-runtime-agent deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-console
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-participant-console
-kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-platform
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 ```
 
 Stop only the business services while keeping the namespace, databases, PVCs, and gateway objects:
 
 ```bash
-kubectl -n federation-learning-platform scale deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent --replicas=0
+kubectl -n federation-learning-platform scale deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-platform deploy/federation-learning-runtime-agent deploy/federation-learning-support --replicas=0
 ```
 
 Start the business services again:
 
 ```bash
-kubectl -n federation-learning-platform scale deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent --replicas=1
+kubectl -n federation-learning-platform scale deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-platform deploy/federation-learning-runtime-agent deploy/federation-learning-support --replicas=1
 ```
 
 Delete only the business service Deployments:
 
 ```bash
-kubectl -n federation-learning-platform delete deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform delete deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-platform deploy/federation-learning-runtime-agent deploy/federation-learning-support
 ```
 
 Rebuild generated application images and import them from local Docker images into the local k3d cluster:
@@ -231,9 +231,9 @@ node scripts/build-images.mjs
 k3d image import \
   fl/federation-learning-console:0.0.1-SNAPSHOT \
   fl/federation-learning-participant-console:0.0.1-SNAPSHOT \
-  fl/federation-learning-support:0.0.1-SNAPSHOT \
   fl/federation-learning-platform:0.0.1-SNAPSHOT \
   fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT \
+  fl/federation-learning-support:0.0.1-SNAPSHOT \
   -c federation-learning-platform-dev
 k3d image import \
   postgres:16 \
@@ -245,7 +245,7 @@ k3d image import \
   rancher/mirrored-coredns-coredns:1.12.3 \
   rancher/mirrored-metrics-server:v0.8.0 \
   -c federation-learning-platform-dev
-kubectl -n federation-learning-platform rollout restart deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform rollout restart deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-platform deploy/federation-learning-runtime-agent deploy/federation-learning-support
 ```
 
 For a plain local K3s node, export images from Docker and import them into the K3s containerd image store:
@@ -254,9 +254,9 @@ For a plain local K3s node, export images from Docker and import them into the K
 docker save \
   fl/federation-learning-console:0.0.1-SNAPSHOT \
   fl/federation-learning-participant-console:0.0.1-SNAPSHOT \
-  fl/federation-learning-support:0.0.1-SNAPSHOT \
   fl/federation-learning-platform:0.0.1-SNAPSHOT \
   fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT \
+  fl/federation-learning-support:0.0.1-SNAPSHOT \
   -o /tmp/federation-learning-platform-application-images.tar
 sudo k3s ctr images import /tmp/federation-learning-platform-application-images.tar
 
@@ -273,65 +273,6 @@ docker save \
 sudo k3s ctr images import /tmp/federation-learning-platform-dependency-images.tar
 sudo k3s ctr images ls | grep federation-learning-platform
 ```
-
-## Initialize Training Prerequisites
-
-K3d/K3s runtime nodes are prepared as an explicit flow. The helper script keeps platform setup, node labeling, platform-managed runtime-agent deployment, runtime-agent setup, and job submission as separate steps. The default dev flow creates two participants (`participant-1` and `participant-2`) so local training can exercise multi-party selection:
-
-```bash
-scripts/federation-learning-dev.sh seed-status
-
-# 1. Wait for support/platform/APISIX after apply.
-scripts/federation-learning-dev.sh wait-core
-
-# 2. Platform-owned setup for both participants: organizations, federation,
-# feature schema, model, runtime infrastructure packages/installation plans,
-# runtime engine profile, training configuration, and memberships.
-scripts/federation-learning-dev.sh seed-platform-all
-
-# 3. Label the first two k3d agent nodes as participant runtime nodes.
-# The script derives organizationId/runtimeInfrastructureId from each
-# participant seed, so UUIDs do not need to be copied manually.
-scripts/federation-learning-dev.sh label-runtime-node-all
-
-# 4. Register both runtime infrastructures. This lets the platform verify the
-# labeled nodes and deploy one managed runtime-agent per participant.
-scripts/federation-learning-dev.sh register-runtime-all
-scripts/federation-learning-dev.sh wait-runtime-agent
-scripts/federation-learning-dev.sh runtime-agent-urls
-
-# 5. Runtime-agent-owned setup plus platform connection registration for both
-# participants: runtime identity, endpoint, node inventory, dataset declaration,
-# runtime dataset binding, access validation/profile, and platform metadata.
-scripts/federation-learning-dev.sh seed-runtime-agent-all
-
-# 6. Submit the training job only after both sides are ready.
-scripts/federation-learning-dev.sh seed-training-job
-```
-
-The helper defaults to `FL_DEV_PARTICIPANT_COUNT=2`, `FL_TRAINING_SCENARIO=csv`, platform API `http://localhost:30080/api/federation-learning-platform`, support API `http://localhost:30080/api/federation-learning-support`, and participant 1 runtime-agent API `http://localhost:30082/api/runtime-agent`. Override `FL_DEV_PARTICIPANT_COUNT`, `FL_TRAINING_SCENARIO`, `FL_PLATFORM_URL`, `FL_SUPPORT_URL`, `FL_RUNTIME_AGENT_URL`, or per-participant values such as `FL_PARTICIPANT_2_KEY` and `FL_RUNTIME_AGENT_URL_2` when using a different gateway.
-
-The flow script exports `MEDOL_SECURITY_INTERNAL_TOKEN=local-dev-internal-token` by default for local development requests. Override `MEDOL_SECURITY_INTERNAL_TOKEN` or provide `FL_API_TOKEN` when the deployed services use a different internal/API token.
-
-Single-participant commands are still available when debugging one side of the flow:
-
-```bash
-scripts/federation-learning-dev.sh seed-platform
-scripts/federation-learning-dev.sh label-runtime-node
-scripts/federation-learning-dev.sh register-runtime
-scripts/federation-learning-dev.sh seed-runtime-agent
-```
-
-The second participant can also be operated explicitly:
-
-```bash
-scripts/federation-learning-dev.sh seed-platform-2
-scripts/federation-learning-dev.sh label-runtime-node-2
-scripts/federation-learning-dev.sh register-runtime-2
-scripts/federation-learning-dev.sh seed-runtime-agent-2
-```
-
-Use `node scripts/init-training-prerequisites.mjs --target all` only for local single-process development where platform and runtime-agent APIs are already available.
 
 Check the local k3d cluster:
 
@@ -355,9 +296,9 @@ kubectl -n federation-learning-platform get secret postgres-secret -o yaml
 
 The generated `postgres-init` ConfigMap creates one database per backend module on first Postgres container initialization:
 
-- `federation_learning_support`
 - `federation_learning_platform`
 - `federation_learning_runtime_agent`
+- `federation_learning_support`
 
 This follows the same initialization behavior as Docker Compose. If the Postgres PVC already exists, the official Postgres image will not rerun `/docker-entrypoint-initdb.d`; create missing databases manually or recreate the PVC during a disposable development reset.
 

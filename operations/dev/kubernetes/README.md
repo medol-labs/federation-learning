@@ -8,9 +8,9 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 
 - `federation-learning-console` runs the generated frontend application.
 - `federation-learning-participant-console` runs the generated frontend application.
-- `federation-learning-support` runs the generated backend application.
 - `federation-learning-platform` runs the generated backend application.
 - `federation-learning-runtime-agent` runs the generated backend application.
+- `federation-learning-support` runs the generated backend application.
 - `postgres` provides postgres infrastructure.
 - `umadb` provides umadb infrastructure.
 - `apisix` is the generated external gateway.
@@ -35,9 +35,9 @@ Build, push, or import these images on every node that may run the workloads:
 ```bash
 fl/federation-learning-console:0.0.1-SNAPSHOT
 fl/federation-learning-participant-console:0.0.1-SNAPSHOT
-fl/federation-learning-support:0.0.1-SNAPSHOT
 fl/federation-learning-platform:0.0.1-SNAPSHOT
 fl/federation-learning-runtime-agent:0.0.1-SNAPSHOT
+fl/federation-learning-support:0.0.1-SNAPSHOT
 postgres:16
 umadb/umadb:0.7.8
 apache/apisix:3.13.0-debian
@@ -62,7 +62,7 @@ kubectl -n federation-learning-platform get secret postgres-secret
 
 ## First Administrator
 
-Administrator bootstrap is enabled by default for `federation-learning-support`. Before creating the first administrator, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN` in that application's environment-owned Secret file.
+Administrator bootstrap is enabled by default for `federation-learning-runtime-agent`. Before creating the first administrator, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN` in that application's environment-owned Secret file.
 
 
 Apply both files and restart the IAM application before submitting `POST /api/auth/setup-admin`:
@@ -72,8 +72,8 @@ kubectl -n federation-learning-platform apply -f environments/<environment>/secr
 kubectl apply -k environments/<environment>
 # Or, when a local registry overlay was generated:
 # kubectl apply -k environments/<environment>-registry
-kubectl -n federation-learning-platform rollout restart deploy/federation-learning-support
-kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
+kubectl -n federation-learning-platform rollout restart deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform rollout status deploy/federation-learning-runtime-agent
 ```
 
 After the administrator is created, set `MEDOL_SECURITY_ADMIN_BOOTSTRAP_ENABLED` to `"false"`, reapply the environment, and restart the IAM application.
@@ -103,9 +103,9 @@ Default routes:
 
 - `/*` -> `undefined`
 - `/federation-learning-participant-console/*` -> `undefined`
-- `/api/federation-learning-support/*` -> `undefined`
 - `/api/federation-learning-platform/*` -> `undefined`
 - `/api/federation-learning-runtime-agent/*` -> `undefined`
+- `/api/federation-learning-support/*` -> `undefined`
 
 ## Validation
 
@@ -114,13 +114,13 @@ kubectl -n federation-learning-platform rollout status deploy/postgres
 kubectl -n federation-learning-platform rollout status deploy/umadb
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-console
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-participant-console
-kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-platform
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/apisix
-curl -fsS http://<gateway-host>/api/federation-learning-support/actuator/health
 curl -fsS http://<gateway-host>/api/federation-learning-platform/actuator/health
 curl -fsS http://<gateway-host>/api/federation-learning-runtime-agent/actuator/health
+curl -fsS http://<gateway-host>/api/federation-learning-support/actuator/health
 ```
 
 For k3s with the generated NodePort, replace `<gateway-host>` with `<node-ip>:30080`.
@@ -144,30 +144,30 @@ kubectl -n federation-learning-platform apply -f environments/<environment>/secr
 ConfigMap and Secret changes are read when a Pod starts. Restart the affected Deployments after changing them:
 
 ```bash
-kubectl -n federation-learning-platform rollout restart deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform rollout restart deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-platform deploy/federation-learning-runtime-agent deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-console
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-participant-console
-kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-platform
 kubectl -n federation-learning-platform rollout status deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform rollout status deploy/federation-learning-support
 ```
 
 Stop only the business services while keeping the namespace, databases, PVCs, and gateway objects:
 
 ```bash
-kubectl -n federation-learning-platform scale deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent --replicas=0
+kubectl -n federation-learning-platform scale deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-platform deploy/federation-learning-runtime-agent deploy/federation-learning-support --replicas=0
 ```
 
 Start the business services again:
 
 ```bash
-kubectl -n federation-learning-platform scale deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent --replicas=1
+kubectl -n federation-learning-platform scale deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-platform deploy/federation-learning-runtime-agent deploy/federation-learning-support --replicas=1
 ```
 
 Delete only the business service Deployments:
 
 ```bash
-kubectl -n federation-learning-platform delete deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-support deploy/federation-learning-platform deploy/federation-learning-runtime-agent
+kubectl -n federation-learning-platform delete deploy/federation-learning-console deploy/federation-learning-participant-console deploy/federation-learning-platform deploy/federation-learning-runtime-agent deploy/federation-learning-support
 ```
 
 Inspect common failure details:
@@ -184,9 +184,9 @@ kubectl -n federation-learning-platform get secret postgres-secret -o yaml
 
 The generated `postgres-init` ConfigMap creates one database per backend module on first Postgres container initialization:
 
-- `federation_learning_support`
 - `federation_learning_platform`
 - `federation_learning_runtime_agent`
+- `federation_learning_support`
 
 This follows the same initialization behavior as Docker Compose. If the Postgres PVC already exists, the official Postgres image will not rerun `/docker-entrypoint-initdb.d`; create missing databases manually or recreate the PVC during a disposable development reset.
 

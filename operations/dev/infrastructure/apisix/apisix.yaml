@@ -12,15 +12,6 @@ routes:
         regex_uri:
           - "^/federation-learning-participant-console/(.*)"
           - "/$1"
-  - id: "federation-learning-support-api"
-    name: "Federation Learning Support API"
-    uri: "/api/federation-learning-support/*"
-    upstream_id: "federation-learning-support"
-    plugins:
-      proxy-rewrite:
-        regex_uri:
-          - "^/api/federation-learning-support/(.*)"
-          - "/$1"
   - id: "federation-learning-platform-api"
     name: "Federation Learning Platform API"
     uri: "/api/federation-learning-platform/*"
@@ -39,6 +30,15 @@ routes:
         regex_uri:
           - "^/api/federation-learning-runtime-agent/(.*)"
           - "/$1"
+  - id: "federation-learning-support-api"
+    name: "Federation Learning Support API"
+    uri: "/api/federation-learning-support/*"
+    upstream_id: "federation-learning-support"
+    plugins:
+      proxy-rewrite:
+        regex_uri:
+          - "^/api/federation-learning-support/(.*)"
+          - "/$1"
 upstreams:
   - id: "federation-learning-console"
     type: "roundrobin"
@@ -48,16 +48,16 @@ upstreams:
     type: "roundrobin"
     nodes:
       "federation-learning-participant-console:80": 1
-  - id: "federation-learning-support"
-    type: "roundrobin"
-    nodes:
-      "federation-learning-support:8080": 1
   - id: "federation-learning-platform"
     type: "roundrobin"
     nodes:
-      "federation-learning-platform:8081": 1
+      "federation-learning-platform:8080": 1
   - id: "federation-learning-runtime-agent"
     type: "roundrobin"
     nodes:
-      "federation-learning-runtime-agent:8082": 1
+      "federation-learning-runtime-agent:8081": 1
+  - id: "federation-learning-support"
+    type: "roundrobin"
+    nodes:
+      "federation-learning-support:8082": 1
 #END

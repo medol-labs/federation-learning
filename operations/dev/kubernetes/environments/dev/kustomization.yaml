@@ -11,6 +11,6 @@ labels:
 patches:
   - path: "patches/federation-learning-console-envfrom.yaml"
   - path: "patches/federation-learning-participant-console-envfrom.yaml"
-  - path: "patches/federation-learning-support-envfrom.yaml"
   - path: "patches/federation-learning-platform-envfrom.yaml"
   - path: "patches/federation-learning-runtime-agent-envfrom.yaml"
+  - path: "patches/federation-learning-support-envfrom.yaml"

@@ -11,7 +11,7 @@ const command = args._[0] ?? 'help';
 const monorepoRoot = resolve(scriptDir, args.root ?? process.env.MONOREPO_ROOT ?? '../..');
 const platform = String(args.platform ?? process.env.DOCKER_DEFAULT_PLATFORM ?? '').trim();
 const dependencyPlatform = platform || hostDockerPlatform();
-const imagePrefix = String(args.prefix ?? process.env.DOCKER_IMAGE_PREFIX ?? 'fl').replace(/\/+$/g, '');
+const imagePrefix = String(args.prefix ?? process.env.DOCKER_IMAGE_PREFIX ?? readLocalRegistryPrefix() ?? 'fl').replace(/\/+$/g, '');
 const dependencyImagePrefix = String(args['dependency-prefix'] ?? process.env.DEPENDENCY_IMAGE_PREFIX ?? defaultDependencyImagePrefix(imagePrefix)).replace(/\/+$/g, '');
 const imageVersion = String(args.version ?? process.env.IMAGE_VERSION ?? '0.0.1-SNAPSHOT');
 const outputRoot = resolve(scriptDir, args.output ?? process.env.IMAGE_BUNDLE_OUTPUT ?? '.work/image-bundle');
@@ -27,14 +27,14 @@ const serviceExcludes = serviceFilterValues('exclude-service', 'skip-service');
 const applicationNames = [
     "federation-learning-console",
     "federation-learning-participant-console",
-    "federation-learning-support",
     "federation-learning-platform",
-    "federation-learning-runtime-agent"
+    "federation-learning-runtime-agent",
+    "federation-learning-support"
 ];
 const backendModuleNames = [
-    "federation-learning-support",
     "federation-learning-platform",
-    "federation-learning-runtime-agent"
+    "federation-learning-runtime-agent",
+    "federation-learning-support"
 ];
 const frontendApplications = [
     {
@@ -62,6 +62,13 @@ const appArchives = {
     ]))
 };
 const dependencyArchive = join(outputRoot, 'images', 'dependency-images.tar');
+
+function readLocalRegistryPrefix() {
+    const modelPath = join(scriptDir, 'operations-model.local.json');
+    if (!existsSync(modelPath)) return undefined;
+    const localModel = JSON.parse(readFileSync(modelPath, 'utf8'));
+    return localModel.registry?.imagePrefix;
+}
 
 switch (command) {
     case 'list':

@@ -31,9 +31,9 @@ image_from_registry_overlay() {
     if [[ ! -f "${registry_kustomization}" ]]; then
         return 1
     fi
-    awk -v medol_target="medol/${image_name}" -v fl_target="fl/${image_name}" '
+    awk -v image_target="fl/${image_name}" '
         $1 == "-" && $2 == "name:" {
-            in_block = ($0 ~ "\"" medol_target "\"") || ($0 ~ "\"" fl_target "\"")
+            in_block = ($0 ~ "\"" image_target "\"")
             new_name = ""
             new_tag = ""
         }
@@ -130,6 +130,7 @@ runtime_image() {
 prepare_federation_learning_runtime_component() {
     local runtime_agent_image
     local runtime_engine_image
+    local aggregation_runtime_engine_image
     local participant_console_image
     local runtime_agent_db_username
     local runtime_agent_db_password
@@ -143,6 +144,7 @@ prepare_federation_learning_runtime_component() {
     local runtime_agent_admin_bootstrap_setup_token_b64
     runtime_agent_image="$(runtime_image FL_RUNTIME_AGENT_IMAGE federation-learning-runtime-agent)"
     runtime_engine_image="$(runtime_image FL_RUNTIME_ENGINE_IMAGE federation-learning-runtime-engine)"
+    aggregation_runtime_engine_image="${FL_AGGREGATION_RUNTIME_ENGINE_IMAGE:-${runtime_engine_image%:*}:pytorch-vision-${IMAGE_VERSION}}"
     participant_console_image="$(runtime_image FL_PARTICIPANT_CONSOLE_IMAGE federation-learning-participant-console)"
     runtime_agent_db_username="${RUNTIME_AGENT_DB_USERNAME:-medol}"
     runtime_agent_db_password="${RUNTIME_AGENT_DB_PASSWORD:-medol}"
@@ -159,6 +161,8 @@ prepare_federation_learning_runtime_component() {
     mkdir -p "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches"
     cp "${K3S_DIR}/components/runtime-scheduling/runtime-scheduler-rbac.yaml" \
         "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/runtime-scheduler-rbac.yaml"
+    cp "${K3S_DIR}/components/runtime-scheduling/platform-aggregation-runtime-engine.yaml" \
+        "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/platform-aggregation-runtime-engine.yaml"
     cp "${K3S_DIR}/components/runtime-scheduling/patches/platform-runtime-scheduler.yaml" \
         "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches/platform-runtime-scheduler.yaml"
     cp "${K3S_DIR}/components/runtime-scheduling/patches/runtime-agent-engine-scheduler.yaml" \
@@ -170,6 +174,7 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 resources:
   - "runtime-scheduler-rbac.yaml"
+  - "platform-aggregation-runtime-engine.yaml"
   - "runtime-agent-managed-secret.yaml"
 patches:
   - path: "patches/platform-runtime-scheduler.yaml"
@@ -177,6 +182,19 @@ patches:
   - path: "patches/runtime-scheduler-config.yaml"
   - path: "runtime-agent-disabled.yaml"
   - path: "runtime-scheduler-images.yaml"
+  - path: "aggregation-runtime-engine-image.yaml"
+YAML
+    cat > "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/aggregation-runtime-engine-image.yaml" <<YAML
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "federation-learning-aggregation-runtime-engine"
+spec:
+  template:
+    spec:
+      containers:
+        - name: "runtime-engine"
+          image: "${aggregation_runtime_engine_image}"
 YAML
     cat > "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/runtime-agent-disabled.yaml" <<YAML
 apiVersion: "apps/v1"
