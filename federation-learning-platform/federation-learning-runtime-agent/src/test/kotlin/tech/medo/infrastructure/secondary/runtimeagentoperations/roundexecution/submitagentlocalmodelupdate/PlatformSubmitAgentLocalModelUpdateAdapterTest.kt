@@ -15,6 +15,32 @@ import java.util.UUID
 
 class PlatformSubmitAgentLocalModelUpdateAdapterTest {
     @Test
+    fun forwardsPersonalizedMetadataWithoutUploadingRuntimeLocalWeights(@TempDir tempDir: Path) {
+        val artifact = tempDir.resolve("update.json")
+        Files.writeString(artifact, "{}")
+        val request = input(artifactRef = artifact.toString()).copy(
+            personalizationMode = "LOCAL_ADAPTATION", personalizationScope = "PARTICIPANT",
+            personalizedArtifactPolicy = "REGISTER_RUNTIME_LOCAL", personalizedArtifactAvailable = true,
+            personalizationTargetType = "PARTICIPANT", personalizationTargetId = UUID.randomUUID(),
+            personalizedModelId = UUID.randomUUID(), personalizedModelArtifactRef = "file:///runtime/personalized.pt",
+            personalizedModelArtifactDigest = "sha256:" + "a".repeat(64),
+            personalizedMetricsArtifactRef = "file:///runtime/metrics.json",
+            personalizedAccuracy = BigDecimal("0.8"), personalizationLift = BigDecimal("0.1")
+        )
+        val client = RecordingClient()
+        val uploads = RecordingFileUploadClient()
+        adapter(client, uploads).execute(request)
+        val sent = client.requests.single()
+        assertEquals(request.personalizationMode, sent.personalizationMode)
+        assertEquals(request.personalizationTargetId, sent.personalizationTargetId)
+        assertEquals(request.personalizedModelId, sent.personalizedModelId)
+        assertEquals(request.personalizedModelArtifactRef, sent.personalizedModelArtifactRef)
+        assertEquals(request.personalizedModelArtifactDigest, sent.personalizedModelArtifactDigest)
+        assertEquals(request.personalizationLift, sent.personalizationLift)
+        assertEquals(listOf(artifact), uploads.paths)
+    }
+
+    @Test
     fun submitsLocalModelUpdateToPlatformWithCalculatedDigest(@TempDir tempDir: Path) {
         val artifactPath = tempDir.resolve("job-1/local-runtime/local_update.json")
         Files.createDirectories(artifactPath.parent)

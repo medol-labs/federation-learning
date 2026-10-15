@@ -20,6 +20,9 @@ def run_platform_step(config: dict) -> None:
 
 def train(config: dict) -> None:
     plugin = get_model_plugin(_model_plugin_code(config))
+    mode = config.get("modelParameter", {}).get("personalizationMode") or "GLOBAL_ONLY"
+    if mode != "GLOBAL_ONLY" and mode not in getattr(plugin, "personalization_modes", ()):
+        raise ValueError(f"Model plugin {plugin.code} does not support personalization mode {mode}")
     log.info("Resolved model plugin jobId=%s plugin=%s", config.get("jobId"), plugin.code)
     plugin.train(config)
 

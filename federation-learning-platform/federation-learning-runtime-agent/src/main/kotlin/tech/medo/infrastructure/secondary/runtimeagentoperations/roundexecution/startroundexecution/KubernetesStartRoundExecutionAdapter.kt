@@ -43,6 +43,7 @@ class KubernetesStartRoundExecutionAdapter(
             )
         val jobId = "round-${input.roundNumber}-${input.executionPlanId}"
         return try {
+            input.personalizationParameters()
             manager.ensureStarted(jobId)
             val endpoint = properties.endpointFor(jobId)
             waitUntilHealthy(endpoint)
@@ -93,16 +94,16 @@ class KubernetesStartRoundExecutionAdapter(
             operation = "train",
             input = buildMap {
                 put("dataset", datasetInput(datasetPath))
-                input.baseModelArtifactUri
-                    .takeIf { it.startsWith("/") || it.startsWith("file://") }
-                    ?.let { put("globalModel", it.removePrefix("file://")) }
+                if (!input.baseModelArtifactUri.startsWith("builtin://")) put("globalModel", input.baseModelArtifactUri)
+                input.personalizedBaseModelArtifactUri?.takeIf { it.isNotBlank() }
+                    ?.let { put("personalizedBaseModel", it) }
             },
             output = mapOf(
                 "localUpdate" to "$outputRoot/local_update.json",
                 "metrics" to "$outputRoot/metrics.json",
                 "weightArtifact" to "$outputRoot/model_state_dict.pt",
                 "modelArtifact" to "$outputRoot/model.pt"
-            ),
+            ) + personalizedOutputs(outputRoot),
             modelParameter = mapOf(
                 "modelPlugin" to modelPlugin,
                 "engine" to "python",
@@ -110,7 +111,7 @@ class KubernetesStartRoundExecutionAdapter(
                 "epochs" to properties.epoch,
                 "epoch" to properties.epoch,
                 "learningRate" to properties.learningRate
-            ),
+            ) + input.personalizationParameters(),
             jobParameter = mapOf("encryptMethod" to "plain", "loggerLevel" to "INFO"),
             runtimeRoot = properties.runtimeRoot
         )

@@ -6,6 +6,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.client.ExpectedCount
 import org.springframework.test.web.client.MockRestServiceServer
 import org.springframework.test.web.client.match.MockRestRequestMatchers.header
+import org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath
 import org.springframework.test.web.client.match.MockRestRequestMatchers.method
 import org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo
 import org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess
@@ -32,11 +33,13 @@ class RestClientRuntimeAgentExecutionPlanClientTest {
         )
             .andExpect(method(HttpMethod.POST))
             .andExpect(header(InternalTokenAuthenticationFilter.INTERNAL_TOKEN_HEADER, "service-token"))
+            .andExpect(jsonPath("$.personalizationMode").value("LOCAL_ADAPTATION"))
+            .andExpect(jsonPath("$.personalizationTargetId").value("77777777-7777-4777-8777-777777777777"))
             .andRespond(withSuccess("""{"executionPlanId":"11111111-1111-4111-8111-111111111111"}""", MediaType.APPLICATION_JSON))
 
         client.receiveParticipantExecutionPlan(
             endpoint = "http://runtime-agent:8082",
-            request = request(),
+            request = request().copy(personalizationMode = "LOCAL_ADAPTATION", personalizationTargetId = uuid("77777777-7777-4777-8777-777777777777")),
         )
 
         server.verify()

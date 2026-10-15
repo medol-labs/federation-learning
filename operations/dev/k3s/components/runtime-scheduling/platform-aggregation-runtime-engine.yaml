@@ -40,6 +40,13 @@ spec:
               value: "/workspace/tmp/runtime-engine"
             - name: "RUNTIME_ENGINE_PLUGIN_PROFILE"
               value: "pytorch-vision"
+            - name: "RUNTIME_ENGINE_FILE_ACCESS_BASE_URL"
+              value: "http://federation-learning-support:8080"
+            - name: "MEDOL_SECURITY_INTERNAL_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "federation-learning-platform-dev-secret"
+                  key: "MEDOL_SECURITY_INTERNAL_TOKEN"
           volumeMounts:
             - name: "runtime-work"
               mountPath: "/workspace/tmp/runtime-engine"

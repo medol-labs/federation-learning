@@ -48,7 +48,23 @@ class PlatformSubmitAgentLocalModelUpdateAdapter(
             artifactRef = uploadedFile.artifactUri,
             artifactDigest = uploadedFile.digest,
             updateProtectionType = input.updateProtectionType,
-            trainingLoss = input.trainingLoss
+            trainingLoss = input.trainingLoss,
+            personalizationMode = input.personalizationMode,
+            personalizationScope = input.personalizationScope,
+            personalizedArtifactPolicy = input.personalizedArtifactPolicy,
+            personalizationMetric = input.personalizationMetric,
+            minimumPersonalizationLift = input.minimumPersonalizationLift,
+            personalizationTargetType = input.personalizationTargetType,
+            personalizationTargetId = input.personalizationTargetId,
+            personalizationCohortId = input.personalizationCohortId,
+            personalizationProfileId = input.personalizationProfileId,
+            personalizedArtifactAvailable = input.personalizedArtifactAvailable,
+            personalizedModelId = input.personalizedModelId,
+            personalizedModelArtifactRef = input.personalizedModelArtifactRef,
+            personalizedModelArtifactDigest = input.personalizedModelArtifactDigest,
+            personalizedMetricsArtifactRef = input.personalizedMetricsArtifactRef,
+            personalizedAccuracy = input.personalizedAccuracy,
+            personalizationLift = input.personalizationLift
         )
 
         return try {

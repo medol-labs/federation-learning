@@ -26,6 +26,7 @@ class LocalDockerComposeStartRoundExecutionAdapter(
     override fun supports(input: StartRoundExecutionInput): Boolean = properties.enabled && properties.usesDockerCompose()
 
     override fun execute(input: StartRoundExecutionInput): StartRoundExecutionResult {
+        input.personalizationParameters()
         val binding = findBinding(input)
             ?: return StartRoundExecutionResult.Rejected(
                 runtimeEngineJobId = null,
@@ -134,15 +135,15 @@ class LocalDockerComposeStartRoundExecutionAdapter(
         val modelArtifactPath = "${properties.runtimeRoot}/$runtimeEngineJobId/${properties.nodeName}/model.pt"
         val containerDatasetPath = toContainerDatasetPath(datasetPath)
         val globalModelPath = input.baseModelArtifactUri
-            .takeIf { it.startsWith("/") || it.startsWith("file://") }
-            ?.removePrefix("file://")
 
         val runtimeInput = mutableMapOf<String, Any?>(
             "dataset" to datasetInput(datasetPath, containerDatasetPath)
         )
-        if (!globalModelPath.isNullOrBlank()) {
+        if (globalModelPath.isNotBlank() && !globalModelPath.startsWith("builtin://")) {
             runtimeInput["globalModel"] = globalModelPath
         }
+        input.personalizedBaseModelArtifactUri?.takeIf { it.isNotBlank() }
+            ?.let { runtimeInput["personalizedBaseModel"] = it }
 
         return RuntimeEngineJobRequest(
             jobId = runtimeEngineJobId,
@@ -156,7 +157,7 @@ class LocalDockerComposeStartRoundExecutionAdapter(
                 "metrics" to metricsPath,
                 "weightArtifact" to weightArtifactPath,
                 "modelArtifact" to modelArtifactPath,
-            ),
+            ) + personalizedOutputs("${properties.runtimeRoot}/$runtimeEngineJobId/${properties.nodeName}"),
             modelParameter = mapOf(
                 "modelPlugin" to modelPlugin,
                 "engine" to "python",
@@ -164,7 +165,7 @@ class LocalDockerComposeStartRoundExecutionAdapter(
                 "epochs" to properties.epoch,
                 "epoch" to properties.epoch,
                 "learningRate" to properties.learningRate,
-            ),
+            ) + input.personalizationParameters(),
             jobParameter = mapOf(
                 "encryptMethod" to "plain",
                 "loggerLevel" to "INFO"

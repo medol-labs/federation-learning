@@ -47,7 +47,7 @@ def read_json(path):
         request = Request(resolve_file_access_url(str(path)), headers=headers)
         with urlopen(request, timeout=30) as response:
             return json.load(response)
-    with open(path, "r", encoding="utf-8") as f:
+    with open(str(path).removeprefix("file://"), "r", encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -60,6 +60,17 @@ def resolve_file_access_url(file_url: str) -> str:
     if parsed.query:
         suffix += f"?{parsed.query}"
     return f"{access_base_url}{suffix}"
+
+
+def read_artifact_bytes(path: str) -> bytes:
+    if path.startswith(("http://", "https://")):
+        headers = {}
+        token = os.getenv("MEDOL_SECURITY_INTERNAL_TOKEN")
+        if token:
+            headers["X-MEDOL-INTERNAL-TOKEN"] = token
+        with urlopen(Request(resolve_file_access_url(path), headers=headers), timeout=30) as response:
+            return response.read()
+    return Path(path.removeprefix("file://")).read_bytes()
 
 
 def write_json(path, payload):

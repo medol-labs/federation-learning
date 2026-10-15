@@ -11,6 +11,9 @@ import tech.medo.runtimeagentoperations.observeruntimeenginejob.ObserveRuntimeEn
 import tech.medo.runtimeagentoperations.observeruntimeenginejob.ObserveRuntimeEngineJobService
 import java.math.BigDecimal
 import java.nio.file.Path
+import java.nio.file.Files
+import java.security.MessageDigest
+import java.util.UUID
 import java.time.Duration
 import java.time.Instant
 
@@ -65,7 +68,14 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
             )
 
             if (normalizedStatus != STATUS_RUNNING) {
-                return toResult(input, response, normalizedStatus)
+                return try {
+                    toResult(input, response, normalizedStatus)
+                } catch (ex: Exception) {
+                    toRunningResult(input, response).copy(
+                        observedStatus = STATUS_FAILED,
+                        failureReason = "Runtime engine result validation failed: ${ex.message}"
+                    )
+                }
             }
 
             if (!Instant.now().isBefore(deadline)) {
@@ -87,6 +97,7 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
                 val encryptedUpdateDigest = encryptedUpdateDigest(input, response, encryptedUpdateArtifactRef)
                 val modelUpdate = modelUpdate(input, response, localUpdateArtifactRef, encryptedUpdateArtifactRef, encryptedUpdateDigest)
                 val metricsArtifactRef = stringOutput(response, "metrics")
+                val personalized = personalizedResult(input, response)
                 ObserveRuntimeEngineJobResult.Succeeded(
                     observedStatus = STATUS_COMPLETED,
                     failureReason = null,
@@ -98,13 +109,13 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
                     updateProtectionType = modelUpdate.protectionType,
                     metricsArtifactRef = metricsArtifactRef,
                     trainingLoss = readTrainingLoss(metricsArtifactRef),
-                    personalizedArtifactAvailable = false,
-                    personalizedModelId = null,
-                    personalizedModelArtifactRef = null,
-                    personalizedModelArtifactDigest = null,
-                    personalizedMetricsArtifactRef = null,
-                    personalizedAccuracy = null,
-                    personalizationLift = null
+                    personalizedArtifactAvailable = personalized != null,
+                    personalizedModelId = personalized?.modelId,
+                    personalizedModelArtifactRef = personalized?.artifactRef,
+                    personalizedModelArtifactDigest = personalized?.digest,
+                    personalizedMetricsArtifactRef = personalized?.metricsRef,
+                    personalizedAccuracy = personalized?.accuracy,
+                    personalizationLift = personalized?.lift
                 )
             }
             STATUS_FAILED -> {
@@ -173,6 +184,54 @@ class LocalRuntimeEngineObserveRuntimeEngineJobAdapter(
 
     private fun stringOutput(response: RuntimeEngineJobResponse, key: String): String? =
         response.output[key]?.toString()?.takeIf { it.isNotBlank() }
+
+    private fun personalizedResult(input: ObserveRuntimeEngineJobInput, response: RuntimeEngineJobResponse): PersonalizedResult? {
+        if (input.personalizationMode.isNullOrBlank() || input.personalizationMode == "GLOBAL_ONLY") return null
+        require(input.personalizationMode == "LOCAL_ADAPTATION") { "Unsupported personalization mode: ${input.personalizationMode}" }
+        require(input.personalizedArtifactPolicy in setOf("REGISTER_RUNTIME_LOCAL", "KEEP_AT_RUNTIME")) {
+            "Personalized artifact policy must support runtime-local storage."
+        }
+        require(input.personalizationTargetId != null && !input.personalizationTargetType.isNullOrBlank()) {
+            "Personalized result is missing its target."
+        }
+        val artifact = requireNotNull(stringOutput(response, "personalizedModel")) { "Personalized model output is missing." }
+        val metrics = requireNotNull(stringOutput(response, "personalizedMetrics")) { "Personalized metrics output is missing." }
+        val path = toReadablePath(artifact)
+        require(Files.isRegularFile(path) && Files.size(path) > 0) { "Personalized model file is not readable: $artifact" }
+        val document = objectMapper.readTree(toReadablePath(metrics).toFile())
+        require(document.path("personalizationMode").asText() == input.personalizationMode) { "Personalized result mode does not match the execution plan." }
+        val accuracy = requireNotNull(document.get("personalizedAccuracy")?.takeIf { it.isNumber }?.decimalValue()) { "Personalized accuracy is missing." }
+        val baseline = requireNotNull(document.get("baselineAccuracy")?.takeIf { it.isNumber }?.decimalValue()) { "Baseline accuracy is missing." }
+        val lift = accuracy - baseline
+        require(accuracy >= BigDecimal.ZERO && accuracy <= BigDecimal.ONE && baseline >= BigDecimal.ZERO && baseline <= BigDecimal.ONE) {
+            "Personalized accuracy must be between zero and one."
+        }
+        require(input.minimumPersonalizationLift == null || lift >= input.minimumPersonalizationLift) { "Personalization lift is below the configured minimum." }
+        val digest = MessageDigest.getInstance("SHA-256")
+        Files.newInputStream(path).use { stream ->
+            val buffer = ByteArray(65536)
+            while (true) {
+                val size = stream.read(buffer)
+                if (size < 0) break
+                digest.update(buffer, 0, size)
+            }
+        }
+        return PersonalizedResult(
+            UUID.nameUUIDFromBytes("personalized-model:${input.runtimeId}:${input.roundExecutionId}".toByteArray(Charsets.UTF_8)),
+            Path.of(artifact.removePrefix("file://")).toUri().toString(),
+            "sha256:" + digest.digest().joinToString("") { "%02x".format(it) },
+            Path.of(metrics.removePrefix("file://")).toUri().toString(), accuracy, lift
+        )
+    }
+
+    private data class PersonalizedResult(
+        val modelId: UUID,
+        val artifactRef: String,
+        val digest: String,
+        val metricsRef: String,
+        val accuracy: BigDecimal,
+        val lift: BigDecimal
+    )
 
     private fun encryptedUpdateArtifactRef(
         input: ObserveRuntimeEngineJobInput,

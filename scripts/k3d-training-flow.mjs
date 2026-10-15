@@ -36,6 +36,8 @@ const runtimeAgentPortForwardPort = positiveInt(args['runtime-agent-port-forward
 let runtimeAgentUrl = trimSlash(configuredRuntimeAgentUrl ?? `http://127.0.0.1:${runtimeAgentPortForwardPort}`);
 const scenario = stringArg('scenario', 'FL_TRAINING_SCENARIO', 'densenet');
 const federationMode = normalizeFederationMode(args['federation-mode'] ?? process.env.FL_FEDERATION_MODE ?? 'global');
+const trainingRunKey = optionalString(args['training-run-key'] ?? process.env.FL_TRAINING_RUN_KEY);
+const waitForTraining = Boolean(args['wait-for-training']);
 const k3sDevEnvironmentDir = resolve(repoRoot, 'operations/dev/k3s/environments/dev');
 const k3sDevSecretsFile = resolve(k3sDevEnvironmentDir, 'secrets.dev.yaml');
 const k3sDevSecretsExampleFile = resolve(k3sDevEnvironmentDir, 'secrets.example.yaml');
@@ -112,6 +114,8 @@ console.log(JSON.stringify({
     federationMode,
     runtimeEnginePluginProfile,
     participantCount,
+    trainingRunKey,
+    waitForTraining,
     rebuildAppImages,
     appImagePrefix,
     runtimeEngineImage,
@@ -175,12 +179,16 @@ for (let slot = 1; slot <= participantCount; slot += 1) {
 
 let trainingSeed = null;
 if (!skipTrainingJob) {
+    await waitForDeployment('federation-learning-aggregation-runtime-engine', 'aggregation runtime engine');
     trainingSeed = await runInitTraining('training-job', {
         createJob: true,
         registerRuntimeInfrastructure: false,
         runtimeAgentUrl: participants[0]?.runtimeAgentUrl ?? runtimeAgentUrl,
         participantKey: participantKeyForSlot(1),
     });
+    if (waitForTraining) {
+        await verifyTrainingResult(trainingSeed.trainingJobId, participants);
+    }
 }
 
 console.log('[k3d-flow] ready');
@@ -480,6 +488,8 @@ function ensureRuntimeEngineImageAvailable() {
     }
     if (isRegistryImage(runtimeEngineImage)) {
         run('docker', ['push', pushImage], {});
+    } else {
+        run('k3d', ['image', 'import', '--mode', 'direct', runtimeEngineImage, '--cluster', clusterName], {});
     }
 }
 
@@ -621,6 +631,7 @@ async function runInitTraining(target, options) {
         '--target', target,
         '--scenario', scenario,
         '--federation-mode', federationMode,
+        ...(trainingRunKey ? ['--training-run-key', trainingRunKey] : []),
         ...(options.participantKey ? ['--participant-key', options.participantKey] : []),
         '--platform-url', platformUrl,
         '--support-url', supportUrl,
@@ -986,7 +997,40 @@ async function waitForDeployment(name, label = name) {
         'rollout', 'status',
         `deploy/${name}`,
         '--timeout=5s'
-    ], kubeEnv()));
+    ], kubeEnv()), () => [
+        `Expected namespace: ${namespace}`,
+        diagnosticCommand('deployment locations', ['kubectl', ['get', 'deploy', '-A', '--field-selector', `metadata.name=${name}`, '-o', 'wide']]),
+        diagnosticCommand('deployment description', ['kubectl', ['-n', namespace, 'describe', 'deploy', name]]),
+        diagnosticCommand('recent events', ['kubectl', ['-n', namespace, 'get', 'events', '--sort-by=.metadata.creationTimestamp']])
+    ].join('\n'));
+}
+
+async function verifyTrainingResult(trainingJobId, participants) {
+    const query = {'trainingJobId.equals': trainingJobId};
+    await waitForCondition('training job completion', async () => {
+        const rounds = await getPage(platformUrl, '/traininground/trainingroundprogress', query);
+        const failed = (rounds.content ?? []).find((round) => String(round.state).toUpperCase() === 'FAILED');
+        if (failed) fail(`Training round ${failed.roundId} failed: ${failed.failureReason ?? 'unknown reason'}`);
+        const jobs = await getPage(platformUrl, '/trainingjob/trainingjobdashboard', query);
+        return (jobs.content ?? []).find((job) => String(job.state).toUpperCase() === 'COMPLETED');
+    });
+    if (federationMode === 'personalized') {
+        await waitForCondition('runtime-local personalized models for all participants', async () => {
+            const page = await getPage(platformUrl, '/personalizedmodelresult/personalizedmodelcatalog', {
+                ...query, size: Math.max(20, participants.length)
+            });
+            const models = page.content ?? [];
+            return participants.every((participant) => models.some((model) =>
+                model.runtimeId === participant.runtimeAgentId &&
+                model.personalizationTargetId === participant.runtimeAgentId &&
+                model.personalizedModelStorageLocation === 'RUNTIME_LOCAL' &&
+                model.personalizedModelArtifactDigest?.match(/^sha256:[a-f\d]{64}$/i) &&
+                model.personalizedModelArtifactRef && !model.platformManagedArtifactRef &&
+                model.personalizedAccuracy != null && model.personalizationLift != null
+            ));
+        });
+    }
+    console.log(`[k3d-flow] verified completed training job ${trainingJobId}; federationMode=${federationMode}, participants=${participants.length}`);
 }
 
 async function waitForHttp(url, label) {
@@ -1399,6 +1443,8 @@ Options:
   --federation-mode <global|personalized>
                                      Select global-only or participant-personalized federation config.
   --participant-count <count>          Number of reference participants to seed and deploy. Default: 2.
+  --training-run-key <key>             Isolate a new training configuration/job while reusing participants.
+  --wait-for-training                  Wait for completion and verify personalized model records.
   --skip-cluster                      Skip cluster create/kubeconfig.
   --skip-apply                        Skip manifest apply and deployment waits.
   --skip-dictionary                   Skip dictionary bootstrap.

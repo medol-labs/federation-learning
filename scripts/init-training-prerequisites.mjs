@@ -22,6 +22,7 @@ const timeoutMs = positiveInt(args.timeout, 30000);
 const pollIntervalMs = positiveInt(args['poll-interval'], 800);
 const trainingScenario = normalizeScenario(args.scenario ?? args['training-scenario'] ?? process.env.FL_TRAINING_SCENARIO ?? 'densenet');
 const federationMode = normalizeFederationMode(args['federation-mode'] ?? process.env.FL_FEDERATION_MODE ?? 'global');
+const trainingRunKey = nullableString(args['training-run-key'] ?? process.env.FL_TRAINING_RUN_KEY);
 const initTarget = normalizeInitTarget(args.target ?? args['init-target'] ?? process.env.FL_INIT_TRAINING_TARGET ?? 'all');
 const participantKey = normalizeParticipantKey(args['participant-key'] ?? args.participant ?? process.env.FL_PARTICIPANT_KEY ?? 'participant-1');
 
@@ -79,6 +80,13 @@ const seed = buildSeed(trainingScenario, runtimeDatasetPath, runtimeAgentUrl, ru
 });
 applyParticipantKey(seed, participantKey, trainingScenario);
 applyFederationMode(seed, federationMode, trainingScenario);
+if (trainingRunKey) {
+    seed.trainingRunConfiguration.trainingRunConfigurationId = stableUuid(`fl-dev:configuration:${trainingScenario}:${federationMode}:${trainingRunKey}`);
+    seed.trainingRunConfiguration.configurationName += ` ${trainingRunKey}`;
+    seed.trainingJob.trainingRunConfigurationId = seed.trainingRunConfiguration.trainingRunConfigurationId;
+    seed.trainingJob.configurationName = seed.trainingRunConfiguration.configurationName;
+    seed.trainingJob.trainingJobId = stableUuid(`fl-dev:training-job:${trainingScenario}:${federationMode}:${trainingRunKey}`);
+}
 const authTokensByBaseUrl = new Map();
 
 if (args['print-seed-json-only']) {

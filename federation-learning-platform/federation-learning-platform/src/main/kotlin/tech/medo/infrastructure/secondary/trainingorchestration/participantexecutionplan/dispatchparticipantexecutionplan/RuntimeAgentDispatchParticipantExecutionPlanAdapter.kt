@@ -46,7 +46,19 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapter(
             encryptionScheme = input.encryptionScheme,
             publicKeyVersion = input.publicKeyVersion,
             publicKeyRef = input.publicKeyRef,
-            encryptedParameterScale = input.encryptedParameterScale
+            encryptedParameterScale = input.encryptedParameterScale,
+            personalizationMode = input.personalizationMode,
+            personalizationScope = input.personalizationScope,
+            personalizedArtifactPolicy = input.personalizedArtifactPolicy,
+            personalizationMetric = input.personalizationMetric,
+            minimumPersonalizationLift = input.minimumPersonalizationLift,
+            personalizationTargetType = input.personalizationTargetType,
+            personalizationTargetId = input.personalizationTargetId,
+            personalizationCohortId = input.personalizationCohortId,
+            personalizationProfileId = input.personalizationProfileId,
+            personalizedBaseModelId = input.personalizedBaseModelId,
+            personalizedBaseModelArtifactUri = input.personalizedBaseModelArtifactUri,
+            personalizedBaseModelArtifactDigest = input.personalizedBaseModelArtifactDigest
         )
 
         return try {

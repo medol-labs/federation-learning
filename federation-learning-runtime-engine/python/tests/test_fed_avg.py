@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from gemifl.runtime.plugins.fed_avg import FedAvgAggregationPlugin
+from gemifl.runtime.plugins.fed_avg import FedAvgJsonAggregationPlugin
 
 
 class FedAvgAggregationPluginTest(unittest.TestCase):
@@ -22,7 +22,7 @@ class FedAvgAggregationPluginTest(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            FedAvgAggregationPlugin().aggregate(
+            FedAvgJsonAggregationPlugin().aggregate(
                 {
                     "jobId": "aggregate-test",
                     "nodeName": "platform-aggregator",
@@ -35,7 +35,7 @@ class FedAvgAggregationPluginTest(unittest.TestCase):
             self.assertEqual([2.5, 4.5], result["weights"])
             self.assertEqual(2.5, result["bias"])
             self.assertEqual(4, result["train_size"])
-            self.assertEqual("FED_AVG", result["aggregationPlugin"])
+            self.assertEqual("FED_AVG_JSON", result["aggregationPlugin"])
 
 
 if __name__ == "__main__":

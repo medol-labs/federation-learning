@@ -151,9 +151,25 @@ node scripts/k3d-training-flow.mjs --recreate
 node scripts/k3d-training-flow.mjs --scenario csv
 node scripts/k3d-training-flow.mjs --federation-mode personalized
 node scripts/k3d-training-flow.mjs --participant-count 2
+node scripts/k3d-training-flow.mjs --scenario densenet --participant-count 2 --federation-mode personalized --training-run-key personal-test-1 --wait-for-training
 node scripts/k3d-training-flow.mjs --skip-cluster --skip-apply
 node scripts/k3d-training-flow.mjs --runtime-engine-image fl/federation-learning-runtime-engine:pytorch-vision
 ```
+
+The DenseNet121 runtime plugin supports participant-scoped `LOCAL_ADAPTATION`
+with `REGISTER_RUNTIME_LOCAL` storage. Each runtime saves the ordinary local
+update first, then fine-tunes and validates a separate personalized model.
+Global aggregation continues to consume the ordinary local updates. The platform
+stores personalized model references, SHA-256 content digests, target lineage,
+and measured accuracy/lift; the personalized model bytes remain on the runtime.
+Unsupported personalization modes, plugins, scopes, and storage policies fail
+explicitly.
+
+`--training-run-key` creates an independent configuration and job while reusing
+the participants. Reusing the same key reuses those identifiers.
+`--wait-for-training` waits for the asynchronous job to complete and, in personalized
+mode, checks that every participant has a runtime-local model catalog record.
+Without that flag, the flow stops after successful submission.
 
 To run the phases manually, use:
 

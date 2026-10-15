@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import logging
+import copy
+import io
 import time
 from pathlib import Path
 
@@ -9,7 +11,7 @@ from torch import nn, optim
 from torch.utils.data import DataLoader
 from torchvision import datasets, models, transforms
 
-from gemifl.runtime.plugins.io import default_artifact_path, read_json, write_json
+from gemifl.runtime.plugins.io import default_artifact_path, read_artifact_bytes, read_json, write_json
 
 
 log = logging.getLogger("gemifl.runtime.plugins.torchvision_densenet")
@@ -20,6 +22,7 @@ class TorchvisionDenseNet121ClassifierPlugin:
     aliases = ("TORCHVISION_DENSENET121", "DENSENET121", "PYTORCH_DENSENET121_CLASSIFIER")
     supported_formats = ("PYTORCH_STATE_DICT",)
     supported_tasks = ("IMAGE_CLASSIFICATION", "MEDICAL_IMAGE_CLASSIFICATION")
+    personalization_modes = ("LOCAL_ADAPTATION",)
 
     def train(self, config: dict) -> None:
         input_config = config.get("input", {})
@@ -177,6 +180,11 @@ class TorchvisionDenseNet121ClassifierPlugin:
             },
         )
         write_json(metrics_path, metrics)
+        mode = model_parameter.get("personalizationMode") or "GLOBAL_ONLY"
+        if mode != "GLOBAL_ONLY":
+            if mode not in self.personalization_modes:
+                raise ValueError(f"Unsupported DenseNet121 personalization mode: {mode}")
+            self._personalize(config, model, train_loader, val_loader, device, learning_rate)
         log.info(
             "Torchvision DenseNet121 completed jobId=%s localUpdate=%s weightArtifact=%s metrics=%s",
             config.get("jobId"),
@@ -201,19 +209,63 @@ class TorchvisionDenseNet121ClassifierPlugin:
         artifact_path = self._artifact_path(global_model)
         if not artifact_path:
             return
-        path = Path(artifact_path)
-        if not path.exists():
-            raise ValueError(f"Initial model artifact does not exist: {artifact_path}")
-        if path.suffix.lower() == ".json":
-            payload = read_json(path)
+        if artifact_path.endswith(".json"):
+            payload = read_json(artifact_path)
             artifact_path = self._artifact_path(payload.get("weightArtifact") or payload.get("modelArtifact"))
             if not artifact_path:
                 raise ValueError("Initial model JSON must contain weightArtifact or modelArtifact")
-            path = Path(artifact_path)
-        payload = torch.load(path, map_location=device)
+        payload = torch.load(io.BytesIO(read_artifact_bytes(artifact_path)), map_location=device, weights_only=True)
         state_dict = payload.get("state_dict") if isinstance(payload, dict) and "state_dict" in payload else payload
         model.load_state_dict(state_dict)
-        log.info("Loaded initial torchvision DenseNet121 artifact=%s", path)
+        log.info("Loaded initial torchvision DenseNet121 artifact=%s", artifact_path)
+
+    def _personalize(self, config, global_model, train_loader, val_loader, device, learning_rate):
+        if val_loader is None:
+            raise ValueError("LOCAL_ADAPTATION requires a validation dataset")
+        parameters = config.get("modelParameter", {})
+        if (parameters.get("personalizationMetric") or "ACCURACY") != "ACCURACY":
+            raise ValueError("DenseNet121 LOCAL_ADAPTATION supports ACCURACY evaluation")
+        epochs = int(parameters.get("personalizationEpochs", 1))
+        if epochs < 1:
+            raise ValueError("personalizationEpochs must be positive")
+        baseline_accuracy = self._evaluate(global_model, val_loader, device)["validationAccuracy"]
+        if baseline_accuracy is None:
+            raise ValueError("LOCAL_ADAPTATION requires non-empty validation data")
+        personalized = copy.deepcopy(global_model)
+        previous = config.get("input", {}).get("personalizedBaseModel")
+        if previous:
+            self._load_initial_model(personalized, previous, device)
+        optimizer = optim.Adam(personalized.parameters(), lr=learning_rate)
+        criterion = nn.CrossEntropyLoss()
+        best_accuracy = baseline_accuracy
+        best_state = copy.deepcopy(global_model.state_dict())
+        for _ in range(epochs):
+            personalized.train()
+            for inputs, labels in train_loader:
+                optimizer.zero_grad()
+                loss = criterion(personalized(inputs.to(device)), labels.to(device))
+                loss.backward()
+                optimizer.step()
+            accuracy = self._evaluate(personalized, val_loader, device)["validationAccuracy"]
+            if accuracy >= best_accuracy:
+                best_accuracy = accuracy
+                best_state = copy.deepcopy(personalized.state_dict())
+        lift = best_accuracy - baseline_accuracy
+        minimum_lift = parameters.get("minimumPersonalizationLift")
+        if minimum_lift is not None and lift < float(minimum_lift):
+            raise ValueError(f"Personalization lift {lift} is below required {minimum_lift}")
+        personalized.load_state_dict(best_state)
+        output = config.get("output", {})
+        model_path = output.get("personalizedModel") or default_artifact_path(config, "personalized_model_state_dict.pt")
+        metrics_path = output.get("personalizedMetrics") or default_artifact_path(config, "personalized_metrics.json")
+        self._save_state_dict(personalized, model_path)
+        write_json(metrics_path, {
+            "personalizationMode": "LOCAL_ADAPTATION",
+            "baselineAccuracy": baseline_accuracy,
+            "personalizedAccuracy": best_accuracy,
+            "personalizationLift": lift,
+            "adaptationEpochs": epochs,
+        })
 
     def _artifact_path(self, artifact) -> str | None:
         if isinstance(artifact, dict):

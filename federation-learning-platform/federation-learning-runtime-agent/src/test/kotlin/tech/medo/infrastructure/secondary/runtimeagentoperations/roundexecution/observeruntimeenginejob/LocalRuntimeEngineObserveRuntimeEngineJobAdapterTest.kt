@@ -20,6 +20,36 @@ import java.util.UUID
 
 class LocalRuntimeEngineObserveRuntimeEngineJobAdapterTest {
     @Test
+    fun validatesPersonalizedArtifactsAndCalculatesContentDigest(@TempDir tempDir: Path) {
+        val modelPath = tempDir.resolve("personalized.pt")
+        val metricsPath = tempDir.resolve("personalized_metrics.json")
+        Files.writeString(modelPath, "real-model-content")
+        Files.writeString(metricsPath, """{"personalizationMode":"LOCAL_ADAPTATION","baselineAccuracy":0.5,"personalizedAccuracy":0.75,"personalizationLift":0.25}""")
+        val request = input("job-1").copy(
+            personalizationMode = "LOCAL_ADAPTATION", personalizedArtifactPolicy = "REGISTER_RUNTIME_LOCAL",
+            personalizationScope = "PARTICIPANT", personalizationTargetType = "PARTICIPANT",
+            personalizationTargetId = UUID.randomUUID(), secureAggregationRequired = false
+        )
+        val client = RecordingClient(RuntimeEngineJobResponse(jobId = "job-1", status = "completed", output = mapOf(
+            "personalizedModel" to modelPath.toString(), "personalizedMetrics" to metricsPath.toString()
+        )))
+        val service = adapter(client)
+        val result = service.execute(request) as ObserveRuntimeEngineJobResult.Succeeded
+        assertEquals("COMPLETED", result.observedStatus)
+        assertEquals(true, result.personalizedArtifactAvailable)
+        assertEquals(modelPath.toUri().toString(), result.personalizedModelArtifactRef)
+        assertEquals(BigDecimal("0.75"), result.personalizedAccuracy)
+        assertEquals(BigDecimal("0.25"), result.personalizationLift)
+        assertEquals("sha256:" + java.security.MessageDigest.getInstance("SHA-256")
+            .digest(Files.readAllBytes(modelPath)).joinToString("") { "%02x".format(it) }, result.personalizedModelArtifactDigest)
+        assertEquals(result.personalizedModelId, (service.execute(request) as ObserveRuntimeEngineJobResult.Succeeded).personalizedModelId)
+        Files.delete(modelPath)
+        val missing = service.execute(request) as ObserveRuntimeEngineJobResult.Succeeded
+        assertEquals("FAILED", missing.observedStatus)
+        assertEquals(false, missing.personalizedArtifactAvailable)
+    }
+
+    @Test
     fun returnsRunningWhenJobIsStillRunning() {
         val adapter = adapter(client = RecordingClient(RuntimeEngineJobResponse(jobId = "job-1", status = "running")))
 

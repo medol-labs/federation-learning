@@ -5,6 +5,7 @@ import org.springframework.web.client.RestClient
 import tech.medo.shared.security.InternalTokenAuthenticationFilter
 import tech.medo.shared.security.MedolSecurityProperties
 import java.util.UUID
+import java.math.BigDecimal
 
 interface RuntimeAgentExecutionPlanClient {
     fun receiveParticipantExecutionPlan(
@@ -72,7 +73,19 @@ data class ReceiveParticipantExecutionPlanRequest(
     val encryptionScheme: String?,
     val publicKeyVersion: String?,
     val publicKeyRef: String?,
-    val encryptedParameterScale: Int?
+    val encryptedParameterScale: Int?,
+    val personalizationMode: String? = null,
+    val personalizationScope: String? = null,
+    val personalizedArtifactPolicy: String? = null,
+    val personalizationMetric: String? = null,
+    val minimumPersonalizationLift: BigDecimal? = null,
+    val personalizationTargetType: String? = null,
+    val personalizationTargetId: UUID? = null,
+    val personalizationCohortId: UUID? = null,
+    val personalizationProfileId: UUID? = null,
+    val personalizedBaseModelId: UUID? = null,
+    val personalizedBaseModelArtifactUri: String? = null,
+    val personalizedBaseModelArtifactDigest: String? = null
 )
 
 data class ReceiveParticipantExecutionPlanResponse(

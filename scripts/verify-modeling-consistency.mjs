@@ -120,6 +120,10 @@ step('Generated CodegenModel is up to date', () => {
     writeFileSync(generatedPath, output);
     const generated = JSON.parse(output);
     const committed = parseJsonFile('.medol/codegen-model.json');
+    // Localization enrichment runs after DSL export and does not change model semantics.
+    for (const key of ['locales', 'defaultLocale', 'translations']) {
+      if (!(key in generated)) delete committed[key];
+    }
     if (stableStringify(generated) !== stableStringify(committed)) {
       throw new Error('.medol/codegen-model.json is not synchronized with .medol/source.medol.');
     }

@@ -16,7 +16,13 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapterTest {
             client,
             StaticRuntimeAgentEndpointResolver("http://runtime-agent-1:8082")
         )
-        val input = input()
+        val input = input().copy(
+            personalizationMode = "LOCAL_ADAPTATION", personalizationScope = "PARTICIPANT",
+            personalizedArtifactPolicy = "REGISTER_RUNTIME_LOCAL", personalizationMetric = "ACCURACY",
+            personalizationTargetType = "PARTICIPANT", personalizationTargetId = input().runtimeId,
+            personalizedBaseModelId = UUID.randomUUID(), personalizedBaseModelArtifactUri = "file:///runtime/previous.pt",
+            personalizedBaseModelArtifactDigest = "sha256:" + "a".repeat(64)
+        )
 
         val result = adapter.execute(input)
 
@@ -49,6 +55,13 @@ class RuntimeAgentDispatchParticipantExecutionPlanAdapterTest {
         assertEquals(input.publicKeyVersion, client.request?.publicKeyVersion)
         assertEquals(input.publicKeyRef, client.request?.publicKeyRef)
         assertEquals(input.encryptedParameterScale, client.request?.encryptedParameterScale)
+        assertEquals(input.personalizationMode, client.request?.personalizationMode)
+        assertEquals(input.personalizationScope, client.request?.personalizationScope)
+        assertEquals(input.personalizedArtifactPolicy, client.request?.personalizedArtifactPolicy)
+        assertEquals(input.personalizationTargetId, client.request?.personalizationTargetId)
+        assertEquals(input.personalizedBaseModelId, client.request?.personalizedBaseModelId)
+        assertEquals(input.personalizedBaseModelArtifactUri, client.request?.personalizedBaseModelArtifactUri)
+        assertEquals(input.personalizedBaseModelArtifactDigest, client.request?.personalizedBaseModelArtifactDigest)
     }
 
     private class RecordingRuntimeAgentExecutionPlanClient : RuntimeAgentExecutionPlanClient {

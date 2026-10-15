@@ -9,13 +9,18 @@ import io.fabric8.kubernetes.api.model.apps.DeploymentBuilder
 import io.fabric8.kubernetes.client.KubernetesClient
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import org.springframework.beans.factory.annotation.Value
 import java.time.Duration
 import java.time.Instant
 
 @Component
 class KubernetesRuntimeEngineManager(
     private val properties: LocalRuntimeEngineProperties,
-    private val client: KubernetesClient
+    private val client: KubernetesClient,
+    @Value("\${runtime-agent.local-model-update-submission.support-url:http://localhost:8080}")
+    private val supportUrl: String = "http://localhost:8080",
+    @Value("\${medol.security.internal-token:}")
+    private val internalToken: String = ""
 ) : RuntimeEngineResourceManager {
     override fun ensureStarted(jobId: String) {
         val name = properties.kubernetesResourceName(jobId)
@@ -26,6 +31,8 @@ class KubernetesRuntimeEngineManager(
             .withImagePullPolicy(properties.kubernetesImagePullPolicy)
             .addNewPort().withName("http").withContainerPort(properties.kubernetesContainerPort).endPort()
             .addNewEnv().withName("RUNTIME_ENGINE_ROOT").withValue(properties.runtimeRoot).endEnv()
+            .addNewEnv().withName("RUNTIME_ENGINE_FILE_ACCESS_BASE_URL").withValue(supportUrl).endEnv()
+            .addNewEnv().withName("MEDOL_SECURITY_INTERNAL_TOKEN").withValue(internalToken).endEnv()
             .addToVolumeMounts(
                 VolumeMountBuilder().withName("datasets").withMountPath(properties.datasetContainerRoot).withReadOnly(true).build(),
                 VolumeMountBuilder().withName("runtime-work").withMountPath(properties.runtimeRoot).build()

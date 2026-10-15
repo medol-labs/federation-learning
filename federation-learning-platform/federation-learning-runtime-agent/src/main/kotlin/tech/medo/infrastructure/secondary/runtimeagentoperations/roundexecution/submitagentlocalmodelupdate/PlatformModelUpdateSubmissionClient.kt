@@ -38,7 +38,23 @@ data class SubmitModelUpdateSubmissionRequest(
     val artifactRef: String,
     val artifactDigest: String,
     val updateProtectionType: String,
-    val trainingLoss: BigDecimal
+    val trainingLoss: BigDecimal,
+    val personalizationMode: String?,
+    val personalizationScope: String?,
+    val personalizedArtifactPolicy: String?,
+    val personalizationMetric: String?,
+    val minimumPersonalizationLift: BigDecimal?,
+    val personalizationTargetType: String?,
+    val personalizationTargetId: UUID?,
+    val personalizationCohortId: UUID?,
+    val personalizationProfileId: UUID?,
+    val personalizedArtifactAvailable: Boolean,
+    val personalizedModelId: UUID?,
+    val personalizedModelArtifactRef: String?,
+    val personalizedModelArtifactDigest: String?,
+    val personalizedMetricsArtifactRef: String?,
+    val personalizedAccuracy: BigDecimal?,
+    val personalizationLift: BigDecimal?
 )
 
 data class SubmitModelUpdateSubmissionResponse(
