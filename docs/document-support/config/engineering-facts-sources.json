@@ -1,0 +1,50 @@
+{
+  "environment": "dev",
+  "operationsModel": "operations/dev/operations-model.json",
+  "dockerCompose": "operations/dev/docker-compose/docker-compose.yml",
+  "operationsReadmes": [
+    "operations/dev/README.md",
+    "operations/dev/docker-compose/README.md",
+    "operations/dev/k3s/README.md",
+    "operations/dev/kubernetes/README.md"
+  ],
+  "applicationFiles": [
+    "federation-learning-console/Dockerfile",
+    "federation-learning-console/docker-compose.yml",
+    "federation-learning-console/.env-example",
+    "federation-learning-participant-console/Dockerfile",
+    "federation-learning-participant-console/docker-compose.yml",
+    "federation-learning-participant-console/.env-example",
+    "federation-learning-platform/Dockerfile",
+    "federation-learning-platform/docker-compose.yml",
+    "federation-learning-platform/.env-example",
+    "federation-learning-runtime-agent/Dockerfile",
+    "federation-learning-runtime-agent/docker-compose.yml",
+    "federation-learning-runtime-agent/.env-example",
+    "federation-learning-support/Dockerfile",
+    "federation-learning-support/docker-compose.yml",
+    "federation-learning-support/.env-example"
+  ],
+  "technologyProjects": [
+    {
+      "name": "federation-learning-console",
+      "kind": "frontend"
+    },
+    {
+      "name": "federation-learning-participant-console",
+      "kind": "frontend"
+    },
+    {
+      "name": "federation-learning-platform",
+      "kind": "backend"
+    },
+    {
+      "name": "federation-learning-runtime-agent",
+      "kind": "backend"
+    },
+    {
+      "name": "federation-learning-support",
+      "kind": "backend"
+    }
+  ]
+}

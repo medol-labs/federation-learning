@@ -82,6 +82,24 @@ intentionally ignored by git. The output contains both standalone subsystem
 documents and merged drafts that can be folded into the platform-level
 documents.
 
+The 438C delivery-document adapter lives in `docs/438c/`. It keeps the 438C
+mapping, project metadata, and manual section overrides in this repository as
+project-specific delivery material:
+
+```bash
+node scripts/export-438c-source-docs.mjs
+node scripts/generate-438c-docs.mjs
+node scripts/generate-438c-docs.mjs --format=markdown
+node scripts/generate-438c-docs.mjs --only=software-requirements
+```
+
+Generated 438C Markdown and Word files are written to `docs/generated/438c/`.
+Manual content that should survive regeneration belongs under
+`docs/438c/manual/<document-id>/`.
+Deployment units, images, ports, environment variables, health checks, gateway
+routes, and install/test commands are collected from `operations/` through
+`docs/document-support/config/engineering-facts-sources.json`.
+
 ## Local Development
 
 Use the generated module README files and scripts for concrete commands. Common
