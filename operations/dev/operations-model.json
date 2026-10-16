@@ -617,6 +617,51 @@
     ],
     "plugins": []
   },
+  "networkTopology": {
+    "sites": [
+      {
+        "name": "platform",
+        "title": "Platform environment",
+        "applications": [
+          "federation-learning-console",
+          "federation-learning-platform",
+          "federation-learning-support"
+        ],
+        "infrastructure": [
+          "postgres",
+          "umadb"
+        ],
+        "gateway": true
+      },
+      {
+        "name": "participant",
+        "title": "Participant environment (per organization)",
+        "applications": [
+          "federation-learning-participant-console",
+          "federation-learning-runtime-agent"
+        ],
+        "infrastructure": [
+          "postgres",
+          "umadb"
+        ],
+        "gateway": false
+      }
+    ],
+    "connections": [
+      {
+        "from": "federation-learning-platform",
+        "to": "federation-learning-runtime-agent",
+        "protocol": "HTTP",
+        "label": "Participant execution dispatch"
+      },
+      {
+        "from": "federation-learning-runtime-agent",
+        "to": "federation-learning-platform",
+        "protocol": "HTTP",
+        "label": "Runtime reporting and model updates"
+      }
+    ]
+  },
   "environments": [
     {
       "name": "dev",

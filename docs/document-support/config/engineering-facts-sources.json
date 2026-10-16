@@ -4,6 +4,7 @@
   "dockerCompose": "operations/dev/docker-compose/docker-compose.yml",
   "operationsReadmes": [
     "operations/dev/README.md",
+    "operations/dev/network-topology.md",
     "operations/dev/docker-compose/README.md",
     "operations/dev/k3s/README.md",
     "operations/dev/kubernetes/README.md"
