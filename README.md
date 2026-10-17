@@ -171,6 +171,12 @@ the participants. Reusing the same key reuses those identifiers.
 mode, checks that every participant has a runtime-local model catalog record.
 Without that flag, the flow stops after successful submission.
 
+For non-registry application image names, the flow imports matching local Docker
+images into every k3d node. During apply, deployments are refreshed when their
+local image IDs change, even if the image tags stay the same. This does not build
+source changes; use `--rebuild-app-images` to rebuild backend images first.
+Registry-qualified images continue to use the configured registry workflow.
+
 To run the phases manually, use:
 
 ```bash

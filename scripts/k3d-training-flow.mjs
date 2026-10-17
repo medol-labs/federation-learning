@@ -149,11 +149,13 @@ if (!skipCluster) {
 }
 ensureKubeconfigUsable();
 ensureRuntimeEngineImageAvailable();
+const localApplicationImages = syncLocalApplicationImages();
 if (!skipApply) {
     await waitForKubernetesApi();
     await waitForKubernetesNodesReady();
     ensureDevSecrets();
     runK3d('apply');
+    refreshLocalApplicationDeployments(localApplicationImages);
     await waitForDeployment('postgres');
     await waitForDeployment('umadb');
     await waitForDeployment('federation-learning-support');
@@ -457,6 +459,42 @@ function rebuildApplicationImages() {
         '--version', imageVersion,
         '--skip-console'
     ], {});
+}
+
+function syncLocalApplicationImages() {
+    const images = new Map();
+    for (const service of ['platform', 'runtime-agent', 'support', 'console', 'participant-console']) {
+        const image = `${appImagePrefix}/federation-learning-${service}:${imageVersion}`;
+        if (isRegistryImage(image)) continue;
+        const id = commandOutputOrNull('docker', ['image', 'inspect', '--format', '{{.Id}}', image]);
+        if (id?.trim()) images.set(image, id.trim());
+    }
+    if (images.size) {
+        console.log(`[k3d-flow] syncing ${images.size} local application images into all cluster nodes`);
+        run('k3d', ['image', 'import', '--mode', 'direct', ...images.keys(), '--cluster', clusterName], {});
+    }
+    return images;
+}
+
+function refreshLocalApplicationDeployments(images) {
+    if (!images.size) return;
+    const deployments = JSON.parse(runCapture('kubectl', ['-n', namespace, 'get', 'deployments', '-o', 'json'], {}));
+    for (const deployment of deployments.items ?? []) {
+        const containers = deployment.spec.template.spec.containers
+            .filter((container) => images.has(container.image));
+        if (!containers.length) continue;
+        const imageIds = containers.map((container) => `${container.name}=${images.get(container.image)}`).sort().join(',');
+        const annotation = 'medol.dev/local-image-ids';
+        if (deployment.spec.template.metadata.annotations?.[annotation] === imageIds
+            && containers.every((container) => container.imagePullPolicy === 'IfNotPresent')) continue;
+        console.log(`[k3d-flow] refreshing local images for ${deployment.metadata.name}`);
+        run('kubectl', ['-n', namespace, 'patch', 'deployment', deployment.metadata.name, '--type', 'strategic', '-p', JSON.stringify({
+            spec: {template: {
+                metadata: {annotations: {[annotation]: imageIds}},
+                spec: {containers: containers.map((container) => ({name: container.name, imagePullPolicy: 'IfNotPresent'}))}
+            }}
+        })], {});
+    }
 }
 
 function ensureRuntimeEngineImageAvailable() {
