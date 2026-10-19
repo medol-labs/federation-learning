@@ -33,7 +33,12 @@ for (const kind of selected) {
   const approvedMarkdown = rows[0].markdown
     .replace(/\n*<!-- em:section id="document\.aiReview" -->[\s\S]*$/, '')
     .trim();
-  writeFileSync(output, `${approvedMarkdown}\n`, 'utf8');
+  const exportedMarkdown = kind === 'software-design' && language === 'zh-CN'
+    ? approvedMarkdown.split('\n').map((line) =>
+      /[\p{Script=Han}]/u.test(line) ? line.replace(/。?\.$/u, '。') : line
+    ).join('\n')
+    : approvedMarkdown;
+  writeFileSync(output, `${exportedMarkdown}\n`, 'utf8');
   console.log(`[438c] Exported ${kind} to ${output}`);
 }
 

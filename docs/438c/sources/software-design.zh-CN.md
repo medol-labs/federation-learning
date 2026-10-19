@@ -78,73 +78,73 @@
 <!-- em:section id="software.slice.注册组织（RegisterOrganization）" source="domain/FederationLearningPlatform/context/OrganizationManagement/slice/RegisterOrganization" -->
 ##### 2.1.2.1 注册组织（Register Organization）/EMW-SD-SECTION-2
 
-- 归属: 组织（Organization）.
-- 角色/触发条件: 组织管理员（Organization Admin）.
-- 输入: 注册组织（Register Organization）.
-- 业务结果: 组织已注册（Organization Registered）, 状态: 已注册（Registered）.
-- 读侧结果: 尚未明确.
+- 归属: 组织（Organization）。
+- 角色/触发条件: 组织管理员（Organization Admin）。
+- 输入: 注册组织（Register Organization）。
+- 业务结果: 组织已注册（Organization Registered）, 状态: 已注册（Registered）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 组织名称唯一（Organization Name Unique） / 拒绝重复组织（Reject Duplicate Organization） - 当 注册组织（Register Organization）, 则 拒绝: 组织已存在.
+- 组织名称唯一（Organization Name Unique） / 拒绝重复组织（Reject Duplicate Organization） - 当 注册组织（Register Organization）, 则 拒绝: 组织已存在。
 
 <!-- em:section id="software.slice.激活组织（ActivateOrganization）" source="domain/FederationLearningPlatform/context/OrganizationManagement/slice/ActivateOrganization" -->
 ##### 2.1.2.2 激活组织（Activate Organization）/EMW-SD-SECTION-3
 
-- 归属: 组织（Organization）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 激活组织（Activate Organization）.
-- 业务结果: 组织已激活（Organization Activated）, 状态: 已激活（Active）.
-- 读侧结果: 尚未明确.
+- 归属: 组织（Organization）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 激活组织（Activate Organization）。
+- 业务结果: 组织已激活（Organization Activated）, 状态: 已激活（Active）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.停用组织（DeactivateOrganization）" source="domain/FederationLearningPlatform/context/OrganizationManagement/slice/DeactivateOrganization" -->
 ##### 2.1.2.3 停用组织（Deactivate Organization）/EMW-SD-SECTION-4
 
-- 归属: 组织（Organization）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 停用组织（Deactivate Organization）.
-- 业务结果: 组织已停用（Organization Deactivated）, 状态: 已停用（Deactivated）.
-- 读侧结果: 尚未明确.
+- 归属: 组织（Organization）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 停用组织（Deactivate Organization）。
+- 业务结果: 组织已停用（Organization Deactivated）, 状态: 已停用（Deactivated）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.重新激活组织（ReactivateOrganization）" source="domain/FederationLearningPlatform/context/OrganizationManagement/slice/ReactivateOrganization" -->
 ##### 2.1.2.4 重新激活组织（Reactivate Organization）/EMW-SD-SECTION-5
 
-- 归属: 组织（Organization）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 重新激活组织（Reactivate Organization）.
-- 业务结果: 组织已重新激活（Organization Reactivated）, 状态: 已激活（Active）.
-- 读侧结果: 尚未明确.
+- 归属: 组织（Organization）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 重新激活组织（Reactivate Organization）。
+- 业务结果: 组织已重新激活（Organization Reactivated）, 状态: 已激活（Active）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.组织目录（OrganizationDirectory）" source="domain/FederationLearningPlatform/context/OrganizationManagement/slice/OrganizationDirectory" -->
 ##### 2.1.2.5 组织目录（Organization Directory）/EMW-SD-SECTION-6
 
-- 归属: 组织（Organization）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 组织目录（Organization Directory）.
+- 归属: 组织（Organization）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 组织目录（Organization Directory）。
 
 <!-- em:section id="software.slice.将用户账户绑定到组织（BindUserAccountToOrganization）" source="domain/FederationLearningPlatform/context/OrganizationManagement/slice/BindUserAccountToOrganization" -->
 ##### 2.1.2.6 将用户账户绑定到组织（Bind User Account To Organization）/EMW-SD-SECTION-7
 
-- 归属: 用户组织成员资格（User Organization Membership）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 将用户账户绑定到组织（Bind User Account To Organization）.
-- 业务结果: 已绑定组织的用户账户（User Account Bound To Organization）, 状态: 已激活（Active）.
-- 读侧结果: 尚未明确.
+- 归属: 用户组织成员资格（User Organization Membership）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 将用户账户绑定到组织（Bind User Account To Organization）。
+- 业务结果: 已绑定组织的用户账户（User Account Bound To Organization）, 状态: 已激活（Active）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 用户账户组织绑定唯一（User Account Organization Binding Unique） / 拒绝重复的用户组织绑定（Reject Duplicate User Organization Binding） - 当 将用户账户绑定到组织（Bind User Account To Organization）, 则 拒绝: 用户账户已绑定到此组织。.
+- 用户账户组织绑定唯一（User Account Organization Binding Unique） / 拒绝重复的用户组织绑定（Reject Duplicate User Organization Binding） - 当 将用户账户绑定到组织（Bind User Account To Organization）, 则 拒绝: 用户账户已绑定到此组织。
 
 <!-- em:section id="software.slice.用户组织成员资格目录（UserOrganizationMembershipDirectory）" source="domain/FederationLearningPlatform/context/OrganizationManagement/slice/UserOrganizationMembershipDirectory" -->
 ##### 2.1.2.7 用户组织成员资格目录（User Organization Membership Directory）/EMW-SD-SECTION-8
 
-- 归属: 用户组织成员资格（User Organization Membership）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 用户组织成员资格目录（User Organization Membership Directory）.
+- 归属: 用户组织成员资格（User Organization Membership）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 用户组织成员资格目录（User Organization Membership Directory）。
 
 #### 2.1.3 上下文数据设计/EMW-SD-CDD
 
@@ -191,119 +191,119 @@
 <!-- em:section id="software.slice.创建联邦（CreateFederation）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/CreateFederation" -->
 ##### 2.2.2.1 创建联邦（Create Federation）/EMW-SD-SECTION-10
 
-- 归属: 联邦（Federation）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 创建联邦（Create Federation）.
-- 业务结果: 联邦已创建（Federation Created）, 状态: 草稿（Draft）.
-- 读侧结果: 尚未明确.
+- 归属: 联邦（Federation）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 创建联邦（Create Federation）。
+- 业务结果: 联邦已创建（Federation Created）, 状态: 草稿（Draft）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 联邦名称唯一（Federation Name Unique） / 拒绝重复联邦（Reject Duplicate Federation） - 当 创建联邦（Create Federation）, 则 拒绝: 联邦已存在.
+- 联邦名称唯一（Federation Name Unique） / 拒绝重复联邦（Reject Duplicate Federation） - 当 创建联邦（Create Federation）, 则 拒绝: 联邦已存在。
 
 <!-- em:section id="software.slice.激活联邦（ActivateFederation）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/ActivateFederation" -->
 ##### 2.2.2.2 激活联邦（Activate Federation）/EMW-SD-SECTION-11
 
-- 归属: 联邦（Federation）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 激活联邦（Activate Federation）.
-- 业务结果: 联邦已激活（Federation Activated）, 状态: 已激活（Active）.
-- 读侧结果: 尚未明确.
+- 归属: 联邦（Federation）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 激活联邦（Activate Federation）。
+- 业务结果: 联邦已激活（Federation Activated）, 状态: 已激活（Active）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.暂停联邦（SuspendFederation）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/SuspendFederation" -->
 ##### 2.2.2.3 暂停联邦（Suspend Federation）/EMW-SD-SECTION-12
 
-- 归属: 联邦（Federation）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 暂停联邦（Suspend Federation）.
-- 业务结果: 联邦已暂停（Federation Suspended）, 状态: 已暂停（Suspended）.
-- 读侧结果: 尚未明确.
+- 归属: 联邦（Federation）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 暂停联邦（Suspend Federation）。
+- 业务结果: 联邦已暂停（Federation Suspended）, 状态: 已暂停（Suspended）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.重新激活联邦（ReactivateFederation）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/ReactivateFederation" -->
 ##### 2.2.2.4 重新激活联邦（Reactivate Federation）/EMW-SD-SECTION-13
 
-- 归属: 联邦（Federation）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 重新激活联邦（Reactivate Federation）.
-- 业务结果: 联邦已重新激活（Federation Reactivated）, 状态: 已激活（Active）.
-- 读侧结果: 尚未明确.
+- 归属: 联邦（Federation）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 重新激活联邦（Reactivate Federation）。
+- 业务结果: 联邦已重新激活（Federation Reactivated）, 状态: 已激活（Active）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.联邦概览（FederationOverview）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/FederationOverview" -->
 ##### 2.2.2.5 联邦概览（Federation Overview）/EMW-SD-SECTION-14
 
-- 归属: 联邦（Federation）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 联邦概览（Federation Overview）.
+- 归属: 联邦（Federation）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 联邦概览（Federation Overview）。
 
 <!-- em:section id="software.slice.邀请参与者（InviteParticipant）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant" -->
 ##### 2.2.2.6 邀请参与者（Invite Participant）/EMW-SD-SECTION-15
 
-- 归属: 联邦成员资格（Federation Membership）.
-- 角色/触发条件: 联邦所有者（Federation Owner）.
-- 输入: 邀请参与者（Invite Participant）.
-- 业务结果: 参与者已邀请（Participant Invited）, 状态: 已邀请（Invited）.
-- 读侧结果: 尚未明确.
+- 归属: 联邦成员资格（Federation Membership）。
+- 角色/触发条件: 联邦所有者（Federation Owner）。
+- 输入: 邀请参与者（Invite Participant）。
+- 业务结果: 参与者已邀请（Participant Invited）, 状态: 已邀请（Invited）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.联邦成员资格目录（FederationMembershipDirectory）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/FederationMembershipDirectory" -->
 ##### 2.2.2.7 联邦成员资格目录（Federation Membership Directory）/EMW-SD-SECTION-16
 
-- 归属: 联邦成员资格（Federation Membership）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 联邦成员资格目录（Federation Membership Directory）.
+- 归属: 联邦成员资格（Federation Membership）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 联邦成员资格目录（Federation Membership Directory）。
 
 <!-- em:section id="software.slice.批准参与者（ApproveParticipant）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/ApproveParticipant" -->
 ##### 2.2.2.8 批准参与者（Approve Participant）/EMW-SD-SECTION-17
 
-- 归属: 联邦成员资格（Federation Membership）.
-- 角色/触发条件: 治理审核员（Governance Reviewer）.
-- 输入: 批准参与者（Approve Participant）.
-- 业务结果: 参与者已加入（Participant Joined）, 状态: 已激活（Active）.
-- 读侧结果: 尚未明确.
+- 归属: 联邦成员资格（Federation Membership）。
+- 角色/触发条件: 治理审核员（Governance Reviewer）。
+- 输入: 批准参与者（Approve Participant）。
+- 业务结果: 参与者已加入（Participant Joined）, 状态: 已激活（Active）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 仅已邀请的激活组织加入联邦（Only Invited Active Organizations Join Federation） / 批准已邀请的参与者（Approve Invited Participant） - 当 批准参与者（Approve Participant）, 则 参与者已加入（Participant Joined）.
-- 仅已邀请的激活组织加入联邦（Only Invited Active Organizations Join Federation） / 拒绝未邀请参与者的审批（Reject Uninvited Participant Approval） - 当 批准参与者（Approve Participant）, 则 拒绝: 需要参与者邀请.
+- 仅已邀请的激活组织加入联邦（Only Invited Active Organizations Join Federation） / 批准已邀请的参与者（Approve Invited Participant） - 当 批准参与者（Approve Participant）, 则 参与者已加入（Participant Joined）。
+- 仅已邀请的激活组织加入联邦（Only Invited Active Organizations Join Federation） / 拒绝未邀请参与者的审批（Reject Uninvited Participant Approval） - 当 批准参与者（Approve Participant）, 则 拒绝: 需要参与者邀请。
 
 <!-- em:section id="software.slice.拒绝参与者（RejectParticipant）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/RejectParticipant" -->
 ##### 2.2.2.9 拒绝参与者（Reject Participant）/EMW-SD-SECTION-18
 
-- 归属: 联邦成员资格（Federation Membership）.
-- 角色/触发条件: 治理审核员（Governance Reviewer）.
-- 输入: 拒绝参与者（Reject Participant）.
-- 业务结果: 参与者已拒绝（Participant Rejected）, 状态: 已拒绝（Rejected）.
-- 读侧结果: 尚未明确.
+- 归属: 联邦成员资格（Federation Membership）。
+- 角色/触发条件: 治理审核员（Governance Reviewer）。
+- 输入: 拒绝参与者（Reject Participant）。
+- 业务结果: 参与者已拒绝（Participant Rejected）, 状态: 已拒绝（Rejected）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.撤销参与者邀请（RevokeParticipantInvitation）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/RevokeParticipantInvitation" -->
 ##### 2.2.2.10 撤销参与者邀请（Revoke Participant Invitation）/EMW-SD-SECTION-19
 
-- 归属: 联邦成员资格（Federation Membership）.
-- 角色/触发条件: 联邦所有者（Federation Owner）.
-- 输入: 撤销参与者邀请（Revoke Participant Invitation）.
-- 业务结果: 参与者邀请已撤销（Participant Invitation Revoked）, 状态: 邀请已撤销（Invitation Revoked）.
-- 读侧结果: 尚未明确.
+- 归属: 联邦成员资格（Federation Membership）。
+- 角色/触发条件: 联邦所有者（Federation Owner）。
+- 输入: 撤销参与者邀请（Revoke Participant Invitation）。
+- 业务结果: 参与者邀请已撤销（Participant Invitation Revoked）, 状态: 邀请已撤销（Invitation Revoked）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.暂停参与者（SuspendParticipant）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/SuspendParticipant" -->
 ##### 2.2.2.11 暂停参与者（Suspend Participant）/EMW-SD-SECTION-20
 
-- 归属: 联邦成员资格（Federation Membership）.
-- 角色/触发条件: 治理审核员（Governance Reviewer）.
-- 输入: 暂停参与者（Suspend Participant）.
-- 业务结果: 参与者已暂停（Participant Suspended）, 状态: 已暂停（Suspended）.
-- 读侧结果: 尚未明确.
+- 归属: 联邦成员资格（Federation Membership）。
+- 角色/触发条件: 治理审核员（Governance Reviewer）。
+- 输入: 暂停参与者（Suspend Participant）。
+- 业务结果: 参与者已暂停（Participant Suspended）, 状态: 已暂停（Suspended）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.移除参与者（RemoveParticipant）" source="domain/FederationLearningPlatform/context/FederationManagement/slice/RemoveParticipant" -->
 ##### 2.2.2.12 移除参与者（Remove Participant）/EMW-SD-SECTION-21
 
-- 归属: 联邦成员资格（Federation Membership）.
-- 角色/触发条件: 治理审核员（Governance Reviewer）.
-- 输入: 移除参与者（Remove Participant）.
-- 业务结果: 参与者已移除（Participant Removed）, 状态: 已移除（Removed）.
-- 读侧结果: 尚未明确.
+- 归属: 联邦成员资格（Federation Membership）。
+- 角色/触发条件: 治理审核员（Governance Reviewer）。
+- 输入: 移除参与者（Remove Participant）。
+- 业务结果: 参与者已移除（Participant Removed）, 状态: 已移除（Removed）。
+- 读侧结果: 尚未明确。
 
 #### 2.2.3 上下文数据设计/EMW-SD-CDD-2
 
@@ -340,78 +340,78 @@
 <!-- em:section id="software.slice.注册字典（RegisterDictionary）" source="domain/FederationLearningPlatform/context/DictionaryMaintenance/slice/RegisterDictionary" -->
 ##### 2.3.2.1 注册字典（Register Dictionary）/EMW-SD-SECTION-23
 
-- 归属: 字典（Dictionary）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 注册字典（Register Dictionary）.
-- 业务结果: 字典已注册（Dictionary Registered）, 状态: 已注册（Registered）.
-- 读侧结果: 尚未明确.
+- 归属: 字典（Dictionary）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 注册字典（Register Dictionary）。
+- 业务结果: 字典已注册（Dictionary Registered）, 状态: 已注册（Registered）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 字典代码唯一（Dictionary Code Unique） / 拒绝重复字典（Reject Duplicate Dictionary） - 当 注册字典（Register Dictionary）, 则 拒绝: 字典已存在.
+- 字典代码唯一（Dictionary Code Unique） / 拒绝重复字典（Reject Duplicate Dictionary） - 当 注册字典（Register Dictionary）, 则 拒绝: 字典已存在。
 
 <!-- em:section id="software.slice.更新字典（UpdateDictionary）" source="domain/FederationLearningPlatform/context/DictionaryMaintenance/slice/UpdateDictionary" -->
 ##### 2.3.2.2 更新字典（Update Dictionary）/EMW-SD-SECTION-24
 
-- 归属: 字典（Dictionary）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 更新字典（Update Dictionary）.
-- 业务结果: 字典已更新（Dictionary Updated）.
-- 读侧结果: 尚未明确.
+- 归属: 字典（Dictionary）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 更新字典（Update Dictionary）。
+- 业务结果: 字典已更新（Dictionary Updated）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.归档字典（ArchiveDictionary）" source="domain/FederationLearningPlatform/context/DictionaryMaintenance/slice/ArchiveDictionary" -->
 ##### 2.3.2.3 归档字典（Archive Dictionary）/EMW-SD-SECTION-25
 
-- 归属: 字典（Dictionary）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 归档字典（Archive Dictionary）.
-- 业务结果: 字典已归档（Dictionary Archived）, 状态: 已归档（Archived）.
-- 读侧结果: 尚未明确.
+- 归属: 字典（Dictionary）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 归档字典（Archive Dictionary）。
+- 业务结果: 字典已归档（Dictionary Archived）, 状态: 已归档（Archived）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.字典目录（DictionaryCatalog）" source="domain/FederationLearningPlatform/context/DictionaryMaintenance/slice/DictionaryCatalog" -->
 ##### 2.3.2.4 字典目录（Dictionary Catalog）/EMW-SD-SECTION-26
 
-- 归属: 字典（Dictionary）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 字典目录（Dictionary Catalog）.
+- 归属: 字典（Dictionary）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 字典目录（Dictionary Catalog）。
 
 <!-- em:section id="software.slice.添加字典值（AddDictionaryValue）" source="domain/FederationLearningPlatform/context/DictionaryMaintenance/slice/AddDictionaryValue" -->
 ##### 2.3.2.5 添加字典值（Add Dictionary Value）/EMW-SD-SECTION-27
 
-- 归属: 字典值（Dictionary Value）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 添加字典值（Add Dictionary Value）.
-- 业务结果: 字典值已添加（Dictionary Value Added）, 状态: 已激活（Active）.
-- 读侧结果: 尚未明确.
+- 归属: 字典值（Dictionary Value）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 添加字典值（Add Dictionary Value）。
+- 业务结果: 字典值已添加（Dictionary Value Added）, 状态: 已激活（Active）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.停用字典值（DisableDictionaryValue）" source="domain/FederationLearningPlatform/context/DictionaryMaintenance/slice/DisableDictionaryValue" -->
 ##### 2.3.2.6 停用字典值（Disable Dictionary Value）/EMW-SD-SECTION-28
 
-- 归属: 字典值（Dictionary Value）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 停用字典值（Disable Dictionary Value）.
-- 业务结果: 字典值已停用（Dictionary Value Disabled）, 状态: 已停用（Disabled）.
-- 读侧结果: 尚未明确.
+- 归属: 字典值（Dictionary Value）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 停用字典值（Disable Dictionary Value）。
+- 业务结果: 字典值已停用（Dictionary Value Disabled）, 状态: 已停用（Disabled）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.启用字典值（EnableDictionaryValue）" source="domain/FederationLearningPlatform/context/DictionaryMaintenance/slice/EnableDictionaryValue" -->
 ##### 2.3.2.7 启用字典值（Enable Dictionary Value）/EMW-SD-SECTION-29
 
-- 归属: 字典值（Dictionary Value）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 启用字典值（Enable Dictionary Value）.
-- 业务结果: 字典值已启用（Dictionary Value Enabled）, 状态: 已激活（Active）.
-- 读侧结果: 尚未明确.
+- 归属: 字典值（Dictionary Value）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 启用字典值（Enable Dictionary Value）。
+- 业务结果: 字典值已启用（Dictionary Value Enabled）, 状态: 已激活（Active）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.字典值目录（DictionaryValueCatalog）" source="domain/FederationLearningPlatform/context/DictionaryMaintenance/slice/DictionaryValueCatalog" -->
 ##### 2.3.2.8 字典值目录（Dictionary Value Catalog）/EMW-SD-SECTION-30
 
-- 归属: 字典值（Dictionary Value）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 字典值目录（Dictionary Value Catalog）.
+- 归属: 字典值（Dictionary Value）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 字典值目录（Dictionary Value Catalog）。
 
 #### 2.3.3 上下文数据设计/EMW-SD-CDD-3
 
@@ -453,79 +453,79 @@
 <!-- em:section id="software.slice.上传文件（UploadFile）" source="domain/FederationLearningPlatform/context/FileUpload/slice/UploadFile" -->
 ##### 2.4.2.1 上传文件（Upload File）/EMW-SD-SECTION-32
 
-- 归属: 已上传文件（Uploaded File）.
-- 角色/触发条件: 平台用户（Platform User）.
-- 输入: 上传文件（Upload File）.
-- 业务结果: 文件已上传（File Uploaded）, 状态: 可用（Available）.
-- 读侧结果: 尚未明确.
+- 归属: 已上传文件（Uploaded File）。
+- 角色/触发条件: 平台用户（Platform User）。
+- 输入: 上传文件（Upload File）。
+- 业务结果: 文件已上传（File Uploaded）, 状态: 可用（Available）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 已上传文件已持久化并已记录（Uploaded File Is Persisted And Recorded） / 为模型导入上传文件（Upload File For Model Import） - 当 上传文件（Upload File）, 则 文件已上传（File Uploaded）.
+- 已上传文件已持久化并已记录（Uploaded File Is Persisted And Recorded） / 为模型导入上传文件（Upload File For Model Import） - 当 上传文件（Upload File）, 则 文件已上传（File Uploaded）。
 
 <!-- em:section id="software.slice.将文件标记为已引用（MarkFileReferenced）" source="domain/FederationLearningPlatform/context/FileUpload/slice/MarkFileReferenced" -->
 ##### 2.4.2.2 将文件标记为已引用（Mark File Referenced）/EMW-SD-SECTION-33
 
-- 归属: 已上传文件（Uploaded File）.
-- 角色/触发条件: 平台服务（Platform Service）.
-- 输入: 将文件标记为已引用（Mark File Referenced）.
-- 业务结果: 文件已引用（File Referenced）, 状态: 已引用（Referenced）.
-- 读侧结果: 尚未明确.
+- 归属: 已上传文件（Uploaded File）。
+- 角色/触发条件: 平台服务（Platform Service）。
+- 输入: 将文件标记为已引用（Mark File Referenced）。
+- 业务结果: 文件已引用（File Referenced）, 状态: 已引用（Referenced）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 被引用的文件受保护以防用户丢弃（Referenced File Is Protected From User Discard） / 通过模型导入标记文件已引用（Mark File Referenced By Model Import） - 当 将文件标记为已引用（Mark File Referenced）, 则 文件已引用（File Referenced）.
+- 被引用的文件受保护以防用户丢弃（Referenced File Is Protected From User Discard） / 通过模型导入标记文件已引用（Mark File Referenced By Model Import） - 当 将文件标记为已引用（Mark File Referenced）, 则 文件已引用（File Referenced）。
 
 <!-- em:section id="software.slice.下载文件（DownloadFile）" source="domain/FederationLearningPlatform/context/FileUpload/slice/DownloadFile" -->
 ##### 2.4.2.3 下载文件（Download File）/EMW-SD-SECTION-34
 
-- 归属: 已上传文件（Uploaded File）.
-- 角色/触发条件: 平台用户（Platform User）.
-- 输入: 下载文件（Download File）.
-- 业务结果: 文件下载已授权（File Download Authorized）.
-- 读侧结果: 尚未明确.
+- 归属: 已上传文件（Uploaded File）。
+- 角色/触发条件: 平台用户（Platform User）。
+- 输入: 下载文件（Download File）。
+- 业务结果: 文件下载已授权（File Download Authorized）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 仅可用的已存储文件可被下载（Only Available Stored Files Can Be Downloaded） / 授权可用文件下载（Authorize Available File Download） - 当 下载文件（Download File）, 则 文件下载已授权（File Download Authorized）.
-- 仅可用的已存储文件可被下载（Only Available Stored Files Can Be Downloaded） / 拒绝过期文件下载（Reject Expired File Download） - 当 下载文件（Download File）, 则 错误: 文件不可下载。.
+- 仅可用的已存储文件可被下载（Only Available Stored Files Can Be Downloaded） / 授权可用文件下载（Authorize Available File Download） - 当 下载文件（Download File）, 则 文件下载已授权（File Download Authorized）。
+- 仅可用的已存储文件可被下载（Only Available Stored Files Can Be Downloaded） / 拒绝过期文件下载（Reject Expired File Download） - 当 下载文件（Download File）, 则 错误: 文件不可下载。
 
 <!-- em:section id="software.slice.丢弃文件（DiscardFile）" source="domain/FederationLearningPlatform/context/FileUpload/slice/DiscardFile" -->
 ##### 2.4.2.4 丢弃文件（Discard File）/EMW-SD-SECTION-35
 
-- 归属: 已上传文件（Uploaded File）.
-- 角色/触发条件: 平台用户（Platform User）.
-- 输入: 丢弃文件（Discard File）.
-- 业务结果: 文件已丢弃（File Discarded）, 状态: 已放弃（Discarded）.
-- 读侧结果: 尚未明确.
+- 归属: 已上传文件（Uploaded File）。
+- 角色/触发条件: 平台用户（Platform User）。
+- 输入: 丢弃文件（Discard File）。
+- 业务结果: 文件已丢弃（File Discarded）, 状态: 已放弃（Discarded）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 仅可丢弃未引用的文件（Only Unreferenced Files Can Be Discarded） / 丢弃未引用文件（Discard Unreferenced File） - 当 丢弃文件（Discard File）, 则 文件已丢弃（File Discarded）.
-- 仅可丢弃未引用的文件（Only Unreferenced Files Can Be Discarded） / 拒绝消费后丢弃（Reject Discard After Consumption） - 当 丢弃文件（Discard File）, 则 拒绝: 文件已被引用.
+- 仅可丢弃未引用的文件（Only Unreferenced Files Can Be Discarded） / 丢弃未引用文件（Discard Unreferenced File） - 当 丢弃文件（Discard File）, 则 文件已丢弃（File Discarded）。
+- 仅可丢弃未引用的文件（Only Unreferenced Files Can Be Discarded） / 拒绝消费后丢弃（Reject Discard After Consumption） - 当 丢弃文件（Discard File）, 则 拒绝: 文件已被引用。
 
 <!-- em:section id="software.slice.使文件过期（ExpireFile）" source="domain/FederationLearningPlatform/context/FileUpload/slice/ExpireFile" -->
 ##### 2.4.2.5 使文件过期（Expire File）/EMW-SD-SECTION-36
 
-- 归属: 已上传文件（Uploaded File）.
-- 角色/触发条件: 保留期过后使文件过期（Expire File When Retention Elapsed）.
-- 输入: 使文件过期（Expire File）.
-- 业务结果: 文件已过期（File Expired）, 状态: 已过期（Expired）.
-- 读侧结果: 尚未明确.
+- 归属: 已上传文件（Uploaded File）。
+- 角色/触发条件: 保留期过后使文件过期（Expire File When Retention Elapsed）。
+- 输入: 使文件过期（Expire File）。
+- 业务结果: 文件已过期（File Expired）, 状态: 已过期（Expired）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 过期文件不可被引用（Expired File Cannot Be Referenced） / 使已上传文件过期（Expire Uploaded File） - 当 使文件过期（Expire File）, 则 文件已过期（File Expired）.
-- 过期文件不可被引用（Expired File Cannot Be Referenced） / 过期后拒绝消费（Reject Consumption After Expiration） - 当 将文件标记为已引用（Mark File Referenced）, 则 拒绝: 文件已过期.
+- 过期文件不可被引用（Expired File Cannot Be Referenced） / 使已上传文件过期（Expire Uploaded File） - 当 使文件过期（Expire File）, 则 文件已过期（File Expired）。
+- 过期文件不可被引用（Expired File Cannot Be Referenced） / 过期后拒绝消费（Reject Consumption After Expiration） - 当 将文件标记为已引用（Mark File Referenced）, 则 拒绝: 文件已过期。
 
 <!-- em:section id="software.slice.已上传文件目录（UploadedFileCatalog）" source="domain/FederationLearningPlatform/context/FileUpload/slice/UploadedFileCatalog" -->
 ##### 2.4.2.6 已上传文件目录（Uploaded File Catalog）/EMW-SD-SECTION-37
 
-- 归属: 已上传文件（Uploaded File）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 已上传文件目录（Uploaded File Catalog）.
+- 归属: 已上传文件（Uploaded File）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 已上传文件目录（Uploaded File Catalog）。
 
 #### 2.4.3 上下文数据设计/EMW-SD-CDD-4
 
@@ -569,164 +569,164 @@
 <!-- em:section id="software.slice.注册运行时基础设施包（RegisterRuntimeInfrastructurePackage）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/RegisterRuntimeInfrastructurePackage" -->
 ##### 2.5.2.1 注册运行时基础设施包（Register Runtime Infrastructure Package）/EMW-SD-SECTION-39
 
-- 归属: 运行时基础设施包（Runtime Infrastructure Package）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 注册运行时基础设施包（Register Runtime Infrastructure Package）.
-- 业务结果: 运行时基础设施包已注册（Runtime Infrastructure Package Registered）, 状态: 已注册（Registered）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时基础设施包（Runtime Infrastructure Package）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 注册运行时基础设施包（Register Runtime Infrastructure Package）。
+- 业务结果: 运行时基础设施包已注册（Runtime Infrastructure Package Registered）, 状态: 已注册（Registered）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.运行时基础设施包目录（RuntimeInfrastructurePackageCatalog）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/RuntimeInfrastructurePackageCatalog" -->
 ##### 2.5.2.2 运行时基础设施包目录（Runtime Infrastructure Package Catalog）/EMW-SD-SECTION-40
 
-- 归属: 运行时基础设施包（Runtime Infrastructure Package）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时基础设施包目录（Runtime Infrastructure Package Catalog）.
+- 归属: 运行时基础设施包（Runtime Infrastructure Package）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时基础设施包目录（Runtime Infrastructure Package Catalog）。
 
 <!-- em:section id="software.slice.创建运行时安装计划（CreateRuntimeInstallationPlan）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/CreateRuntimeInstallationPlan" -->
 ##### 2.5.2.3 创建运行时安装计划（Create Runtime Installation Plan）/EMW-SD-SECTION-41
 
-- 归属: 运行时安装计划（Runtime Installation Plan）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 创建运行时安装计划（Create Runtime Installation Plan）.
-- 业务结果: 运行时安装计划已创建（Runtime Installation Plan Created）, 状态: 已规划（Planned）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时安装计划（Runtime Installation Plan）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 创建运行时安装计划（Create Runtime Installation Plan）。
+- 业务结果: 运行时安装计划已创建（Runtime Installation Plan Created）, 状态: 已规划（Planned）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.运行时安装计划目录（RuntimeInstallationPlanCatalog）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/RuntimeInstallationPlanCatalog" -->
 ##### 2.5.2.4 运行时安装计划目录（Runtime Installation Plan Catalog）/EMW-SD-SECTION-42
 
-- 归属: 运行时安装计划（Runtime Installation Plan）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时安装计划目录（Runtime Installation Plan Catalog）.
+- 归属: 运行时安装计划（Runtime Installation Plan）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时安装计划目录（Runtime Installation Plan Catalog）。
 
 <!-- em:section id="software.slice.运行时安装指南（RuntimeInstallationGuide）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/RuntimeInstallationGuide" -->
 ##### 2.5.2.5 运行时安装指南（Runtime Installation Guide）/EMW-SD-SECTION-43
 
-- 归属: 运行时安装计划（Runtime Installation Plan）.
-- 角色/触发条件: 运行时安装程序（Runtime Installer）.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时安装指南（Runtime Installation Guide）.
+- 归属: 运行时安装计划（Runtime Installation Plan）。
+- 角色/触发条件: 运行时安装程序（Runtime Installer）。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时安装指南（Runtime Installation Guide）。
 
 <!-- em:section id="software.slice.规划运行时基础设施（PlanRuntimeInfrastructure）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/PlanRuntimeInfrastructure" -->
 ##### 2.5.2.6 规划运行时基础设施（Plan Runtime Infrastructure）/EMW-SD-SECTION-44
 
-- 归属: 运行时基础设施（Runtime Infrastructure）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 规划运行时基础设施（Plan Runtime Infrastructure）.
-- 业务结果: 运行时基础设施已计划（Runtime Infrastructure Planned）, 状态: 已规划（Planned）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时基础设施（Runtime Infrastructure）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 规划运行时基础设施（Plan Runtime Infrastructure）。
+- 业务结果: 运行时基础设施已计划（Runtime Infrastructure Planned）, 状态: 已规划（Planned）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.注册运行时基础设施（RegisterRuntimeInfrastructure）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/RegisterRuntimeInfrastructure" -->
 ##### 2.5.2.7 注册运行时基础设施（Register Runtime Infrastructure）/EMW-SD-SECTION-45
 
-- 归属: 运行时基础设施（Runtime Infrastructure）.
-- 角色/触发条件: 运行时安装程序（Runtime Installer）.
-- 输入: 注册运行时基础设施（Register Runtime Infrastructure）.
-- 业务结果: 运行时基础设施已注册（Runtime Infrastructure Registered）, 状态: 已注册（Registered）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时基础设施（Runtime Infrastructure）。
+- 角色/触发条件: 运行时安装程序（Runtime Installer）。
+- 输入: 注册运行时基础设施（Register Runtime Infrastructure）。
+- 业务结果: 运行时基础设施已注册（Runtime Infrastructure Registered）, 状态: 已注册（Registered）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.确认运行时基础设施已就绪（ConfirmRuntimeInfrastructurePrepared）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/ConfirmRuntimeInfrastructurePrepared" -->
 ##### 2.5.2.8 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared）/EMW-SD-SECTION-46
 
-- 归属: 运行时基础设施（Runtime Infrastructure）.
-- 角色/触发条件: 运行时安装程序（Runtime Installer）.
-- 输入: 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared）.
-- 业务结果: 运行时基础设施已准备（Runtime Infrastructure Prepared）, 状态: 已就绪（Prepared）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时基础设施（Runtime Infrastructure）。
+- 角色/触发条件: 运行时安装程序（Runtime Installer）。
+- 输入: 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared）。
+- 业务结果: 运行时基础设施已准备（Runtime Infrastructure Prepared）, 状态: 已就绪（Prepared）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 验证前运行时基础设施已准备（Runtime Infrastructure Prepared Before Verification） / 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared） - 当 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared）, 则 运行时基础设施已准备（Runtime Infrastructure Prepared）.
+- 验证前运行时基础设施已准备（Runtime Infrastructure Prepared Before Verification） / 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared） - 当 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared）, 则 运行时基础设施已准备（Runtime Infrastructure Prepared）。
 
 <!-- em:section id="software.slice.验证运行时基础设施（VerifyRuntimeInfrastructure）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/VerifyRuntimeInfrastructure" -->
 ##### 2.5.2.9 验证运行时基础设施（Verify Runtime Infrastructure）/EMW-SD-SECTION-47
 
-- 归属: 运行时基础设施（Runtime Infrastructure）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 验证运行时基础设施（Verify Runtime Infrastructure）.
-- 业务结果: 运行时基础设施已验证（Runtime Infrastructure Verified）, 运行时基础设施验证失败（Runtime Infrastructure Verification Failed）, 状态: 已验证（Verified）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时基础设施（Runtime Infrastructure）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 验证运行时基础设施（Verify Runtime Infrastructure）。
+- 业务结果: 运行时基础设施已验证（Runtime Infrastructure Verified）, 运行时基础设施验证失败（Runtime Infrastructure Verification Failed）, 状态: 已验证（Verified）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 运行时基础设施验证结果（Runtime Infrastructure Verification Outcome） / 运行时基础设施验证通过（Runtime Infrastructure Verification Passed） - 当 验证运行时基础设施（Verify Runtime Infrastructure）, 则 运行时基础设施已验证（Runtime Infrastructure Verified）.
-- 运行时基础设施验证结果（Runtime Infrastructure Verification Outcome） / 运行时基础设施验证失败（Runtime Infrastructure Verification Failed） - 当 验证运行时基础设施（Verify Runtime Infrastructure）, 则 运行时基础设施验证失败（Runtime Infrastructure Verification Failed）.
+- 运行时基础设施验证结果（Runtime Infrastructure Verification Outcome） / 运行时基础设施验证通过（Runtime Infrastructure Verification Passed） - 当 验证运行时基础设施（Verify Runtime Infrastructure）, 则 运行时基础设施已验证（Runtime Infrastructure Verified）。
+- 运行时基础设施验证结果（Runtime Infrastructure Verification Outcome） / 运行时基础设施验证失败（Runtime Infrastructure Verification Failed） - 当 验证运行时基础设施（Verify Runtime Infrastructure）, 则 运行时基础设施验证失败（Runtime Infrastructure Verification Failed）。
 
 <!-- em:section id="software.slice.部署运行时代理（DeployRuntimeAgent）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/DeployRuntimeAgent" -->
 ##### 2.5.2.10 部署运行时代理（Deploy Runtime Agent）/EMW-SD-SECTION-48
 
-- 归属: 运行时基础设施（Runtime Infrastructure）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 部署运行时代理（Deploy Runtime Agent）.
-- 业务结果: 运行时代理安装成功（Runtime Agent Installation Succeeded）, 运行时代理安装失败（Runtime Agent Installation Failed）, 状态: 代理就绪（Agent Ready）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时基础设施（Runtime Infrastructure）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 部署运行时代理（Deploy Runtime Agent）。
+- 业务结果: 运行时代理安装成功（Runtime Agent Installation Succeeded）, 运行时代理安装失败（Runtime Agent Installation Failed）, 状态: 代理就绪（Agent Ready）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 运行时代理部署结果（Runtime Agent Deployment Outcome） / 运行时代理部署成功（Runtime Agent Deployment Succeeded） - 当 部署运行时代理（Deploy Runtime Agent）, 则 运行时代理安装成功（Runtime Agent Installation Succeeded）.
-- 运行时代理部署结果（Runtime Agent Deployment Outcome） / 运行时代理部署失败（Runtime Agent Deployment Failed） - 当 部署运行时代理（Deploy Runtime Agent）, 则 运行时代理安装失败（Runtime Agent Installation Failed）.
+- 运行时代理部署结果（Runtime Agent Deployment Outcome） / 运行时代理部署成功（Runtime Agent Deployment Succeeded） - 当 部署运行时代理（Deploy Runtime Agent）, 则 运行时代理安装成功（Runtime Agent Installation Succeeded）。
+- 运行时代理部署结果（Runtime Agent Deployment Outcome） / 运行时代理部署失败（Runtime Agent Deployment Failed） - 当 部署运行时代理（Deploy Runtime Agent）, 则 运行时代理安装失败（Runtime Agent Installation Failed）。
 
 <!-- em:section id="software.slice.重试运行时基础设施验证（RetryRuntimeInfrastructureVerification）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/RetryRuntimeInfrastructureVerification" -->
 ##### 2.5.2.11 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）/EMW-SD-SECTION-49
 
-- 归属: 运行时基础设施（Runtime Infrastructure）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）.
-- 业务结果: 运行时基础设施验证重试成功（Runtime Infrastructure Verification Retry Succeeded）, 运行时基础设施验证重试失败（Runtime Infrastructure Verification Retry Failed）, 状态: 已验证（Verified）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时基础设施（Runtime Infrastructure）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）。
+- 业务结果: 运行时基础设施验证重试成功（Runtime Infrastructure Verification Retry Succeeded）, 运行时基础设施验证重试失败（Runtime Infrastructure Verification Retry Failed）, 状态: 已验证（Verified）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 运行时基础设施验证重试成功（Runtime Infrastructure Verification Retry Succeeded） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 运行时基础设施验证重试成功（Runtime Infrastructure Verification Retry Succeeded）.
-- 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 运行时基础设施验证重试失败（Runtime Infrastructure Verification Retry Failed） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 运行时基础设施验证重试失败（Runtime Infrastructure Verification Retry Failed）.
-- 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 在已验证状态下拒绝运行时基础设施验证重试（Reject Runtime Infrastructure Verification Retry While Verified） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 拒绝: 不允许运行时基础设施验证重试.
+- 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 运行时基础设施验证重试成功（Runtime Infrastructure Verification Retry Succeeded） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 运行时基础设施验证重试成功（Runtime Infrastructure Verification Retry Succeeded）。
+- 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 运行时基础设施验证重试失败（Runtime Infrastructure Verification Retry Failed） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 运行时基础设施验证重试失败（Runtime Infrastructure Verification Retry Failed）。
+- 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 在已验证状态下拒绝运行时基础设施验证重试（Reject Runtime Infrastructure Verification Retry While Verified） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 拒绝: 不允许运行时基础设施验证重试。
 
 <!-- em:section id="software.slice.重试运行时代理部署（RetryRuntimeAgentDeployment）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/RetryRuntimeAgentDeployment" -->
 ##### 2.5.2.12 重试运行时代理部署（Retry Runtime Agent Deployment）/EMW-SD-SECTION-50
 
-- 归属: 运行时基础设施（Runtime Infrastructure）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 重试运行时代理部署（Retry Runtime Agent Deployment）.
-- 业务结果: 运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded）, 运行时代理部署重试失败（Runtime Agent Deployment Retry Failed）, 状态: 代理就绪（Agent Ready）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时基础设施（Runtime Infrastructure）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 重试运行时代理部署（Retry Runtime Agent Deployment）。
+- 业务结果: 运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded）, 运行时代理部署重试失败（Runtime Agent Deployment Retry Failed）, 状态: 代理就绪（Agent Ready）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 部署失败后运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded After Failed Deployment） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded）.
-- 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 离线后运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded After Offline） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded）.
-- 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 运行时代理部署重试失败（Runtime Agent Deployment Retry Failed） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试失败（Runtime Agent Deployment Retry Failed）.
-- 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 已连接时拒绝运行时代理部署重试（Reject Runtime Agent Deployment Retry While Connected） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 拒绝: 不允许运行时代理部署重试.
+- 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 部署失败后运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded After Failed Deployment） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded）。
+- 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 离线后运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded After Offline） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded）。
+- 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 运行时代理部署重试失败（Runtime Agent Deployment Retry Failed） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试失败（Runtime Agent Deployment Retry Failed）。
+- 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 已连接时拒绝运行时代理部署重试（Reject Runtime Agent Deployment Retry While Connected） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 拒绝: 不允许运行时代理部署重试。
 
 <!-- em:section id="software.slice.记录运行时连接已建立（RecordRuntimeConnectionEstablished）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/RecordRuntimeConnectionEstablished" -->
 ##### 2.5.2.13 记录运行时连接已建立（Record Runtime Connection Established）/EMW-SD-SECTION-51
 
-- 归属: 运行时基础设施（Runtime Infrastructure）.
-- 角色/触发条件: 系统.
-- 输入: 记录运行时连接已建立（Record Runtime Connection Established）.
-- 业务结果: 运行时连接已建立（Runtime Connection Established）, 状态: 已连接（Connected）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时基础设施（Runtime Infrastructure）。
+- 角色/触发条件: 系统。
+- 输入: 记录运行时连接已建立（Record Runtime Connection Established）。
+- 业务结果: 运行时连接已建立（Runtime Connection Established）, 状态: 已连接（Connected）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.运行时代理端点目录（RuntimeAgentEndpointCatalog）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/RuntimeAgentEndpointCatalog" -->
 ##### 2.5.2.14 运行时代理端点目录（Runtime Agent Endpoint Catalog）/EMW-SD-SECTION-52
 
-- 归属: 运行时基础设施（Runtime Infrastructure）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时代理端点目录（Runtime Agent Endpoint Catalog）.
+- 归属: 运行时基础设施（Runtime Infrastructure）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时代理端点目录（Runtime Agent Endpoint Catalog）。
 
 <!-- em:section id="software.slice.运行时基础设施访问视图（RuntimeInfrastructureAccessView）" source="domain/FederationLearningPlatform/context/RuntimeProvisioning/slice/RuntimeInfrastructureAccessView" -->
 ##### 2.5.2.15 运行时基础设施访问视图（Runtime Infrastructure Access View）/EMW-SD-SECTION-53
 
-- 归属: 运行时基础设施（Runtime Infrastructure）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时基础设施访问视图（Runtime Infrastructure Access View）.
+- 归属: 运行时基础设施（Runtime Infrastructure）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时基础设施访问视图（Runtime Infrastructure Access View）。
 
 #### 2.5.3 上下文数据设计/EMW-SD-CDD-5
 
@@ -769,117 +769,117 @@
 <!-- em:section id="software.slice.定义特征架构（DefineFeatureSchema）" source="domain/FederationLearningPlatform/context/DatasetGovernance/slice/DefineFeatureSchema" -->
 ##### 2.6.2.1 定义特征架构（Define Feature Schema）/EMW-SD-SECTION-55
 
-- 归属: 特征架构（Feature Schema）.
-- 角色/触发条件: 数据管理员（Data Steward）.
-- 输入: 定义特征架构（Define Feature Schema）.
-- 业务结果: 特征架构已定义（Feature Schema Defined）, 状态: 草稿（Draft）.
-- 读侧结果: 尚未明确.
+- 归属: 特征架构（Feature Schema）。
+- 角色/触发条件: 数据管理员（Data Steward）。
+- 输入: 定义特征架构（Define Feature Schema）。
+- 业务结果: 特征架构已定义（Feature Schema Defined）, 状态: 草稿（Draft）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 特征架构域版本唯一（Feature Schema Domain Version Unique） / 拒绝重复的特征架构版本（Reject Duplicate Feature Schema Version） - 当 定义特征架构（Define Feature Schema）, 则 拒绝: 特征架构版本已存在.
+- 特征架构域版本唯一（Feature Schema Domain Version Unique） / 拒绝重复的特征架构版本（Reject Duplicate Feature Schema Version） - 当 定义特征架构（Define Feature Schema）, 则 拒绝: 特征架构版本已存在。
 
 <!-- em:section id="software.slice.发布特征架构（PublishFeatureSchema）" source="domain/FederationLearningPlatform/context/DatasetGovernance/slice/PublishFeatureSchema" -->
 ##### 2.6.2.2 发布特征架构（Publish Feature Schema）/EMW-SD-SECTION-56
 
-- 归属: 特征架构（Feature Schema）.
-- 角色/触发条件: 数据管理员（Data Steward）.
-- 输入: 发布特征架构（Publish Feature Schema）.
-- 业务结果: 特征架构已发布（Feature Schema Published）, 状态: 已发布（Published）.
-- 读侧结果: 尚未明确.
+- 归属: 特征架构（Feature Schema）。
+- 角色/触发条件: 数据管理员（Data Steward）。
+- 输入: 发布特征架构（Publish Feature Schema）。
+- 业务结果: 特征架构已发布（Feature Schema Published）, 状态: 已发布（Published）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 仅可发布草稿架构（Only Draft Schemas Can Be Published） / 发布草稿架构（Publish Draft Schema） - 当 发布特征架构（Publish Feature Schema）, 则 特征架构已发布（Feature Schema Published）.
+- 仅可发布草稿架构（Only Draft Schemas Can Be Published） / 发布草稿架构（Publish Draft Schema） - 当 发布特征架构（Publish Feature Schema）, 则 特征架构已发布（Feature Schema Published）。
 
 <!-- em:section id="software.slice.弃用特征架构（DeprecateFeatureSchema）" source="domain/FederationLearningPlatform/context/DatasetGovernance/slice/DeprecateFeatureSchema" -->
 ##### 2.6.2.3 弃用特征架构（Deprecate Feature Schema）/EMW-SD-SECTION-57
 
-- 归属: 特征架构（Feature Schema）.
-- 角色/触发条件: 数据管理员（Data Steward）.
-- 输入: 弃用特征架构（Deprecate Feature Schema）.
-- 业务结果: 特征架构已弃用（Feature Schema Deprecated）, 状态: 已弃用（Deprecated）.
-- 读侧结果: 尚未明确.
+- 归属: 特征架构（Feature Schema）。
+- 角色/触发条件: 数据管理员（Data Steward）。
+- 输入: 弃用特征架构（Deprecate Feature Schema）。
+- 业务结果: 特征架构已弃用（Feature Schema Deprecated）, 状态: 已弃用（Deprecated）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.停用特征架构（RetireFeatureSchema）" source="domain/FederationLearningPlatform/context/DatasetGovernance/slice/RetireFeatureSchema" -->
 ##### 2.6.2.4 停用特征架构（Retire Feature Schema）/EMW-SD-SECTION-58
 
-- 归属: 特征架构（Feature Schema）.
-- 角色/触发条件: 数据管理员（Data Steward）.
-- 输入: 停用特征架构（Retire Feature Schema）.
-- 业务结果: 特征架构已停用（Feature Schema Retired）, 状态: 已停用（Retired）.
-- 读侧结果: 尚未明确.
+- 归属: 特征架构（Feature Schema）。
+- 角色/触发条件: 数据管理员（Data Steward）。
+- 输入: 停用特征架构（Retire Feature Schema）。
+- 业务结果: 特征架构已停用（Feature Schema Retired）, 状态: 已停用（Retired）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.取代特征架构版本（SupersedeFeatureSchemaVersion）" source="domain/FederationLearningPlatform/context/DatasetGovernance/slice/SupersedeFeatureSchemaVersion" -->
 ##### 2.6.2.5 取代特征架构版本（Supersede Feature Schema Version）/EMW-SD-SECTION-59
 
-- 归属: 特征架构（Feature Schema）.
-- 角色/触发条件: 数据管理员（Data Steward）.
-- 输入: 取代特征架构版本（Supersede Feature Schema Version）.
-- 业务结果: 特征架构版本已取代（Feature Schema Version Superseded）.
-- 读侧结果: 尚未明确.
+- 归属: 特征架构（Feature Schema）。
+- 角色/触发条件: 数据管理员（Data Steward）。
+- 输入: 取代特征架构版本（Supersede Feature Schema Version）。
+- 业务结果: 特征架构版本已取代（Feature Schema Version Superseded）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 使用较新版本取代已发布的架构（Supersede Published Schema With Newer Version） / 取代较旧版本（Supersede Older Version） - 当 取代特征架构版本（Supersede Feature Schema Version）, 则 特征架构版本已取代（Feature Schema Version Superseded）.
+- 使用较新版本取代已发布的架构（Supersede Published Schema With Newer Version） / 取代较旧版本（Supersede Older Version） - 当 取代特征架构版本（Supersede Feature Schema Version）, 则 特征架构版本已取代（Feature Schema Version Superseded）。
 
 <!-- em:section id="software.slice.标记当前推荐的特征架构版本（MarkCurrentRecommendedFeatureSchemaVersion）" source="domain/FederationLearningPlatform/context/DatasetGovernance/slice/MarkCurrentRecommendedFeatureSchemaVersion" -->
 ##### 2.6.2.6 标记当前推荐的特征架构版本（Mark Current Recommended Feature Schema Version）/EMW-SD-SECTION-60
 
-- 归属: 特征架构（Feature Schema）.
-- 角色/触发条件: 数据管理员（Data Steward）.
-- 输入: 标记当前推荐的特征架构版本（Mark Current Recommended Feature Schema Version）.
-- 业务结果: 已标记当前推荐特征架构版本（Current Recommended Feature Schema Version Marked）.
-- 读侧结果: 尚未明确.
+- 归属: 特征架构（Feature Schema）。
+- 角色/触发条件: 数据管理员（Data Steward）。
+- 输入: 标记当前推荐的特征架构版本（Mark Current Recommended Feature Schema Version）。
+- 业务结果: 已标记当前推荐特征架构版本（Current Recommended Feature Schema Version Marked）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 每个域仅一个推荐版本（Only One Recommended Version Per Domain） / 标记新的推荐版本（Mark New Recommended Version） - 当 标记当前推荐的特征架构版本（Mark Current Recommended Feature Schema Version）, 则 已标记当前推荐特征架构版本（Current Recommended Feature Schema Version Marked）.
+- 每个域仅一个推荐版本（Only One Recommended Version Per Domain） / 标记新的推荐版本（Mark New Recommended Version） - 当 标记当前推荐的特征架构版本（Mark Current Recommended Feature Schema Version）, 则 已标记当前推荐特征架构版本（Current Recommended Feature Schema Version Marked）。
 
 <!-- em:section id="software.slice.当前推荐的特征架构目录（CurrentRecommendedFeatureSchemaCatalog）" source="domain/FederationLearningPlatform/context/DatasetGovernance/slice/CurrentRecommendedFeatureSchemaCatalog" -->
 ##### 2.6.2.7 当前推荐的特征架构目录（Current Recommended Feature Schema Catalog）/EMW-SD-SECTION-61
 
-- 归属: 特征架构（Feature Schema）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 当前推荐的特征架构目录（Current Recommended Feature Schema Catalog）.
+- 归属: 特征架构（Feature Schema）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 当前推荐的特征架构目录（Current Recommended Feature Schema Catalog）。
 
 <!-- em:section id="software.slice.特征架构目录（FeatureSchemaCatalog）" source="domain/FederationLearningPlatform/context/DatasetGovernance/slice/FeatureSchemaCatalog" -->
 ##### 2.6.2.8 特征架构目录（Feature Schema Catalog）/EMW-SD-SECTION-62
 
-- 归属: 特征架构（Feature Schema）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 特征架构目录（Feature Schema Catalog）.
+- 归属: 特征架构（Feature Schema）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 特征架构目录（Feature Schema Catalog）。
 
 <!-- em:section id="software.slice.记录运行时数据集元数据（RecordRuntimeDatasetMetadata）" source="domain/FederationLearningPlatform/context/DatasetGovernance/slice/RecordRuntimeDatasetMetadata" -->
 ##### 2.6.2.9 记录运行时数据集元数据（Record Runtime Dataset Metadata）/EMW-SD-SECTION-63
 
-- 归属: 运行时数据集元数据（Runtime Dataset Metadata）.
-- 角色/触发条件: 在代理报告时记录数据集元数据（Record Dataset Metadata When Agent Reported）.
-- 输入: 记录运行时数据集元数据（Record Runtime Dataset Metadata）.
-- 业务结果: 数据集元数据已报告（Dataset Metadata Reported）, 状态: 已报告元数据（Metadata Reported）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时数据集元数据（Runtime Dataset Metadata）。
+- 角色/触发条件: 在代理报告时记录数据集元数据（Record Dataset Metadata When Agent Reported）。
+- 输入: 记录运行时数据集元数据（Record Runtime Dataset Metadata）。
+- 业务结果: 数据集元数据已报告（Dataset Metadata Reported）, 状态: 已报告元数据（Metadata Reported）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.记录运行时数据集重新分析元数据（RecordRuntimeDatasetReprofiledMetadata）" source="domain/FederationLearningPlatform/context/DatasetGovernance/slice/RecordRuntimeDatasetReprofiledMetadata" -->
 ##### 2.6.2.10 记录运行时数据集重新分析元数据（Record Runtime Dataset Reprofiled Metadata）/EMW-SD-SECTION-64
 
-- 归属: 运行时数据集元数据（Runtime Dataset Metadata）.
-- 角色/触发条件: 代理重新分析时记录数据集元数据（Record Dataset Metadata When Agent Reprofiled）.
-- 输入: 记录运行时数据集重新分析元数据（Record Runtime Dataset Reprofiled Metadata）.
-- 业务结果: 数据集元数据已重新分析（Dataset Metadata Reprofiled）, 状态: 已报告元数据（Metadata Reported）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时数据集元数据（Runtime Dataset Metadata）。
+- 角色/触发条件: 代理重新分析时记录数据集元数据（Record Dataset Metadata When Agent Reprofiled）。
+- 输入: 记录运行时数据集重新分析元数据（Record Runtime Dataset Reprofiled Metadata）。
+- 业务结果: 数据集元数据已重新分析（Dataset Metadata Reprofiled）, 状态: 已报告元数据（Metadata Reported）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.运行时数据集元数据目录（RuntimeDatasetMetadataCatalog）" source="domain/FederationLearningPlatform/context/DatasetGovernance/slice/RuntimeDatasetMetadataCatalog" -->
 ##### 2.6.2.11 运行时数据集元数据目录（Runtime Dataset Metadata Catalog）/EMW-SD-SECTION-65
 
-- 归属: 运行时数据集元数据（Runtime Dataset Metadata）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时数据集元数据目录（Runtime Dataset Metadata Catalog）.
+- 归属: 运行时数据集元数据（Runtime Dataset Metadata）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时数据集元数据目录（Runtime Dataset Metadata Catalog）。
 
 #### 2.6.3 上下文数据设计/EMW-SD-CDD-6
 
@@ -919,51 +919,51 @@
 <!-- em:section id="software.slice.注册模型制品（RegisterModelArtifact）" source="domain/FederationLearningPlatform/context/ModelRepository/slice/RegisterModelArtifact" -->
 ##### 2.7.2.1 注册模型制品（Register Model Artifact）/EMW-SD-SECTION-67
 
-- 归属: 模型制品（Model Artifact）.
-- 角色/触发条件: MLOps 工程师（MLOps Engineer）.
-- 输入: 注册模型制品（Register Model Artifact）.
-- 业务结果: 模型工件已注册（Model Artifact Registered）, 状态: 已注册（Registered）.
-- 读侧结果: 尚未明确.
+- 归属: 模型制品（Model Artifact）。
+- 角色/触发条件: MLOps 工程师（MLOps Engineer）。
+- 输入: 注册模型制品（Register Model Artifact）。
+- 业务结果: 模型工件已注册（Model Artifact Registered）, 状态: 已注册（Registered）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 模型工件必须可拉取且可验证（Model Artifact Must Be Pullable And Verifiable） / 注册可拉取模型工件（Register Pullable Model Artifact） - 当 注册模型制品（Register Model Artifact）, 则 模型工件已注册（Model Artifact Registered）.
+- 模型工件必须可拉取且可验证（Model Artifact Must Be Pullable And Verifiable） / 注册可拉取模型工件（Register Pullable Model Artifact） - 当 注册模型制品（Register Model Artifact）, 则 模型工件已注册（Model Artifact Registered）。
 
 <!-- em:section id="software.slice.模型制品目录（ModelArtifactCatalog）" source="domain/FederationLearningPlatform/context/ModelRepository/slice/ModelArtifactCatalog" -->
 ##### 2.7.2.2 模型制品目录（Model Artifact Catalog）/EMW-SD-SECTION-68
 
-- 归属: 模型制品（Model Artifact）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 模型制品目录（Model Artifact Catalog）.
+- 归属: 模型制品（Model Artifact）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 模型制品目录（Model Artifact Catalog）。
 
 <!-- em:section id="software.slice.下载模型工件（DownloadModelArtifact）" source="domain/FederationLearningPlatform/context/ModelRepository/slice/DownloadModelArtifact" -->
 ##### 2.7.2.3 下载模型工件（Download Model Artifact）/EMW-SD-SECTION-69
 
-- 归属: 模型制品（Model Artifact）.
-- 角色/触发条件: MLOps 工程师（MLOps Engineer）.
-- 输入: 下载模型工件（Download Model Artifact）.
-- 业务结果: 模型工件下载已授权（Model Artifact Download Authorized）.
-- 读侧结果: 尚未明确.
+- 归属: 模型制品（Model Artifact）。
+- 角色/触发条件: MLOps 工程师（MLOps Engineer）。
+- 输入: 下载模型工件（Download Model Artifact）。
+- 业务结果: 模型工件下载已授权（Model Artifact Download Authorized）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 已注册模型工件解析为存储文件下载（Registered Model Artifact Resolves To Stored File Download） / 授权已注册模型工件下载（Authorize Registered Model Artifact Download） - 当 下载模型工件（Download Model Artifact）, 则 模型工件下载已授权（Model Artifact Download Authorized）.
-- 已注册模型工件解析为存储文件下载（Registered Model Artifact Resolves To Stored File Download） / 拒绝缺失的模型工件内容（Reject Missing Model Artifact Content） - 当 下载模型工件（Download Model Artifact）, 则 错误: 模型工件内容不可下载。.
+- 已注册模型工件解析为存储文件下载（Registered Model Artifact Resolves To Stored File Download） / 授权已注册模型工件下载（Authorize Registered Model Artifact Download） - 当 下载模型工件（Download Model Artifact）, 则 模型工件下载已授权（Model Artifact Download Authorized）。
+- 已注册模型工件解析为存储文件下载（Registered Model Artifact Resolves To Stored File Download） / 拒绝缺失的模型工件内容（Reject Missing Model Artifact Content） - 当 下载模型工件（Download Model Artifact）, 则 错误: 模型工件内容不可下载。
 
 <!-- em:section id="software.slice.注册联邦模型工件（RegisterFederatedModelArtifact）" source="domain/FederationLearningPlatform/context/ModelRepository/slice/RegisterFederatedModelArtifact" -->
 ##### 2.7.2.4 注册联邦模型工件（Register Federated Model Artifact）/EMW-SD-SECTION-70
 
-- 归属: 模型制品（Model Artifact）.
-- 角色/触发条件: 全局模型更新时注册联邦模型（Register Federated Model When Global Model Updated）.
-- 输入: 注册联邦模型工件（Register Federated Model Artifact）.
-- 业务结果: 联邦模型工件已注册（Federated Model Artifact Registered）, 状态: 已注册（Registered）.
-- 读侧结果: 尚未明确.
+- 归属: 模型制品（Model Artifact）。
+- 角色/触发条件: 全局模型更新时注册联邦模型（Register Federated Model When Global Model Updated）。
+- 输入: 注册联邦模型工件（Register Federated Model Artifact）。
+- 业务结果: 联邦模型工件已注册（Federated Model Artifact Registered）, 状态: 已注册（Registered）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 联邦轮次模型已从受管存储注册（Federated Round Model Is Registered From Managed Storage） / 注册聚合轮次模型（Register Aggregated Round Model） - 当 注册联邦模型工件（Register Federated Model Artifact）, 则 联邦模型工件已注册（Federated Model Artifact Registered）.
+- 联邦轮次模型已从受管存储注册（Federated Round Model Is Registered From Managed Storage） / 注册聚合轮次模型（Register Aggregated Round Model） - 当 注册联邦模型工件（Register Federated Model Artifact）, 则 联邦模型工件已注册（Federated Model Artifact Registered）。
 
 #### 2.7.3 上下文数据设计/EMW-SD-CDD-7
 
@@ -1023,320 +1023,320 @@
 <!-- em:section id="software.slice.注册运行时引擎配置文件（RegisterRuntimeEngineProfile）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/RegisterRuntimeEngineProfile" -->
 ##### 2.8.2.1 注册运行时引擎配置文件（Register Runtime Engine Profile）/EMW-SD-SECTION-72
 
-- 归属: 运行时引擎配置文件（Runtime Engine Profile）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 注册运行时引擎配置文件（Register Runtime Engine Profile）.
-- 业务结果: 运行时引擎配置文件已注册（Runtime Engine Profile Registered）, 状态: 已注册（Registered）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时引擎配置文件（Runtime Engine Profile）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 注册运行时引擎配置文件（Register Runtime Engine Profile）。
+- 业务结果: 运行时引擎配置文件已注册（Runtime Engine Profile Registered）, 状态: 已注册（Registered）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 运行时引擎配置文件选择可拉取的引擎镜像（Runtime Engine Profile Selects Pullable Engine Image） / 注册 Py Torch Vision 运行时引擎配置文件（Register Py Torch Vision Runtime Engine Profile） - 当 注册运行时引擎配置文件（Register Runtime Engine Profile）, 则 运行时引擎配置文件已注册（Runtime Engine Profile Registered）.
+- 运行时引擎配置文件选择可拉取的引擎镜像（Runtime Engine Profile Selects Pullable Engine Image） / 注册 Py Torch Vision 运行时引擎配置文件（Register Py Torch Vision Runtime Engine Profile） - 当 注册运行时引擎配置文件（Register Runtime Engine Profile）, 则 运行时引擎配置文件已注册（Runtime Engine Profile Registered）。
 
 <!-- em:section id="software.slice.运行时引擎配置文件目录（RuntimeEngineProfileCatalog）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/RuntimeEngineProfileCatalog" -->
 ##### 2.8.2.2 运行时引擎配置文件目录（Runtime Engine Profile Catalog）/EMW-SD-SECTION-73
 
-- 归属: 运行时引擎配置文件（Runtime Engine Profile）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时引擎配置文件目录（Runtime Engine Profile Catalog）.
+- 归属: 运行时引擎配置文件（Runtime Engine Profile）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时引擎配置文件目录（Runtime Engine Profile Catalog）。
 
 <!-- em:section id="software.slice.定义训练运行配置（DefineTrainingRunConfiguration）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/DefineTrainingRunConfiguration" -->
 ##### 2.8.2.3 定义训练运行配置（Define Training Run Configuration）/EMW-SD-SECTION-74
 
-- 归属: 训练运行配置（Training Run Configuration）.
-- 角色/触发条件: MLOps 工程师（MLOps Engineer）.
-- 输入: 定义训练运行配置（Define Training Run Configuration）.
-- 业务结果: 训练运行配置已定义（Training Run Configuration Defined）, 状态: 草稿（Draft）.
-- 读侧结果: 尚未明确.
+- 归属: 训练运行配置（Training Run Configuration）。
+- 角色/触发条件: MLOps 工程师（MLOps Engineer）。
+- 输入: 定义训练运行配置（Define Training Run Configuration）。
+- 业务结果: 训练运行配置已定义（Training Run Configuration Defined）, 状态: 草稿（Draft）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 训练配置必须可运行（Training Configuration Must Be Runnable） / 定义可运行配置（Define Runnable Configuration） - 当 定义训练运行配置（Define Training Run Configuration）, 则 训练运行配置已定义（Training Run Configuration Defined）.
-- 训练配置必须可运行（Training Configuration Must Be Runnable） / 拒绝空轮次预算（Reject Empty Round Budget） - 当 定义训练运行配置（Define Training Run Configuration）, 则 拒绝: 轮次预算必须为正数.
+- 训练配置必须可运行（Training Configuration Must Be Runnable） / 定义可运行配置（Define Runnable Configuration） - 当 定义训练运行配置（Define Training Run Configuration）, 则 训练运行配置已定义（Training Run Configuration Defined）。
+- 训练配置必须可运行（Training Configuration Must Be Runnable） / 拒绝空轮次预算（Reject Empty Round Budget） - 当 定义训练运行配置（Define Training Run Configuration）, 则 拒绝: 轮次预算必须为正数。
 
 <!-- em:section id="software.slice.更新训练运行配置（UpdateTrainingRunConfiguration）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/UpdateTrainingRunConfiguration" -->
 ##### 2.8.2.4 更新训练运行配置（Update Training Run Configuration）/EMW-SD-SECTION-75
 
-- 归属: 训练运行配置（Training Run Configuration）.
-- 角色/触发条件: MLOps 工程师（MLOps Engineer）.
-- 输入: 更新训练运行配置（Update Training Run Configuration）.
-- 业务结果: 训练运行配置已更新（Training Run Configuration Updated）, 状态: 草稿（Draft）.
-- 读侧结果: 尚未明确.
+- 归属: 训练运行配置（Training Run Configuration）。
+- 角色/触发条件: MLOps 工程师（MLOps Engineer）。
+- 输入: 更新训练运行配置（Update Training Run Configuration）。
+- 业务结果: 训练运行配置已更新（Training Run Configuration Updated）, 状态: 草稿（Draft）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 草稿训练配置可以更新（Draft Training Configuration Can Be Updated） / 更新草稿可运行配置（Update Draft Runnable Configuration） - 当 更新训练运行配置（Update Training Run Configuration）, 则 训练运行配置已更新（Training Run Configuration Updated）.
-- 草稿训练配置可以更新（Draft Training Configuration Can Be Updated） / 配置锁定后拒绝更新（Reject Update After Configuration Locked） - 当 更新训练运行配置（Update Training Run Configuration）, 则 拒绝: 训练运行配置已锁定.
+- 草稿训练配置可以更新（Draft Training Configuration Can Be Updated） / 更新草稿可运行配置（Update Draft Runnable Configuration） - 当 更新训练运行配置（Update Training Run Configuration）, 则 训练运行配置已更新（Training Run Configuration Updated）。
+- 草稿训练配置可以更新（Draft Training Configuration Can Be Updated） / 配置锁定后拒绝更新（Reject Update After Configuration Locked） - 当 更新训练运行配置（Update Training Run Configuration）, 则 拒绝: 训练运行配置已锁定。
 
 <!-- em:section id="software.slice.锁定训练运行配置（LockTrainingRunConfiguration）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/LockTrainingRunConfiguration" -->
 ##### 2.8.2.5 锁定训练运行配置（Lock Training Run Configuration）/EMW-SD-SECTION-76
 
-- 归属: 训练运行配置（Training Run Configuration）.
-- 角色/触发条件: 训练提交时锁定配置（Lock Configuration When Training Submitted）.
-- 输入: 锁定训练运行配置（Lock Training Run Configuration）.
-- 业务结果: 训练运行配置已锁定（Training Run Configuration Locked）, 状态: 已锁定（Locked）.
-- 读侧结果: 尚未明确.
+- 归属: 训练运行配置（Training Run Configuration）。
+- 角色/触发条件: 训练提交时锁定配置（Lock Configuration When Training Submitted）。
+- 输入: 锁定训练运行配置（Lock Training Run Configuration）。
+- 业务结果: 训练运行配置已锁定（Training Run Configuration Locked）, 状态: 已锁定（Locked）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.训练运行配置目录（TrainingRunConfigurationCatalog）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/TrainingRunConfigurationCatalog" -->
 ##### 2.8.2.6 训练运行配置目录（Training Run Configuration Catalog）/EMW-SD-SECTION-77
 
-- 归属: 训练运行配置（Training Run Configuration）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 训练运行配置目录（Training Run Configuration Catalog）.
+- 归属: 训练运行配置（Training Run Configuration）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 训练运行配置目录（Training Run Configuration Catalog）。
 
 <!-- em:section id="software.slice.创建训练作业（CreateTrainingJob）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/CreateTrainingJob" -->
 ##### 2.8.2.7 创建训练作业（Create Training Job）/EMW-SD-SECTION-78
 
-- 归属: 训练作业（Training Job）.
-- 角色/触发条件: 研究主管（Research Lead）.
-- 输入: 创建训练作业（Create Training Job）.
-- 业务结果: 训练作业已创建（Training Job Created）, 状态: 草稿（Draft）.
-- 读侧结果: 尚未明确.
+- 归属: 训练作业（Training Job）。
+- 角色/触发条件: 研究主管（Research Lead）。
+- 输入: 创建训练作业（Create Training Job）。
+- 业务结果: 训练作业已创建（Training Job Created）, 状态: 草稿（Draft）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 训练作业需要可运行配置和运行时访问（Training Job Requires Runnable Configuration And Runtime Access） / 使用可运行配置创建训练作业（Create Training Job With Runnable Configuration） - 当 创建训练作业（Create Training Job）, 则 训练作业已创建（Training Job Created）.
-- 训练作业需要可运行配置和运行时访问（Training Job Requires Runnable Configuration And Runtime Access） / 拒绝无可运行配置的训练作业（Reject Training Job Without Runnable Configuration） - 当 创建训练作业（Create Training Job）, 则 拒绝: 需要可运行训练配置.
+- 训练作业需要可运行配置和运行时访问（Training Job Requires Runnable Configuration And Runtime Access） / 使用可运行配置创建训练作业（Create Training Job With Runnable Configuration） - 当 创建训练作业（Create Training Job）, 则 训练作业已创建（Training Job Created）。
+- 训练作业需要可运行配置和运行时访问（Training Job Requires Runnable Configuration And Runtime Access） / 拒绝无可运行配置的训练作业（Reject Training Job Without Runnable Configuration） - 当 创建训练作业（Create Training Job）, 则 拒绝: 需要可运行训练配置。
 
 <!-- em:section id="software.slice.提交训练作业（SubmitTrainingJob）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/SubmitTrainingJob" -->
 ##### 2.8.2.8 提交训练作业（Submit Training Job）/EMW-SD-SECTION-79
 
-- 归属: 训练作业（Training Job）.
-- 角色/触发条件: 研究主管（Research Lead）.
-- 输入: 提交训练作业（Submit Training Job）.
-- 业务结果: 训练作业已提交（Training Job Submitted）, 状态: 已提交（Submitted）.
-- 读侧结果: 尚未明确.
+- 归属: 训练作业（Training Job）。
+- 角色/触发条件: 研究主管（Research Lead）。
+- 输入: 提交训练作业（Submit Training Job）。
+- 业务结果: 训练作业已提交（Training Job Submitted）, 状态: 已提交（Submitted）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 只有已创建的训练作业才能提交（Only Created Training Jobs Can Be Submitted） / 提交已创建的训练作业（Submit Created Training Job） - 当 提交训练作业（Submit Training Job）, 则 训练作业已提交（Training Job Submitted）.
-- 只有已创建的训练作业才能提交（Only Created Training Jobs Can Be Submitted） / 拒绝未知训练作业（Reject Unknown Training Job） - 当 提交训练作业（Submit Training Job）, 则 拒绝: 训练作业为必填项.
+- 只有已创建的训练作业才能提交（Only Created Training Jobs Can Be Submitted） / 提交已创建的训练作业（Submit Created Training Job） - 当 提交训练作业（Submit Training Job）, 则 训练作业已提交（Training Job Submitted）。
+- 只有已创建的训练作业才能提交（Only Created Training Jobs Can Be Submitted） / 拒绝未知训练作业（Reject Unknown Training Job） - 当 提交训练作业（Submit Training Job）, 则 拒绝: 训练作业为必填项。
 
 <!-- em:section id="software.slice.训练作业仪表板（TrainingJobDashboard）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/TrainingJobDashboard" -->
 ##### 2.8.2.9 训练作业仪表板（Training Job Dashboard）/EMW-SD-SECTION-80
 
-- 归属: 训练作业（Training Job）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 训练作业仪表板（Training Job Dashboard）.
+- 归属: 训练作业（Training Job）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 训练作业仪表板（Training Job Dashboard）。
 
 <!-- em:section id="software.slice.训练参与者资格（TrainingParticipantEligibility）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/TrainingParticipantEligibility" -->
 ##### 2.8.2.10 训练参与者资格（Training Participant Eligibility）/EMW-SD-SECTION-81
 
-- 归属: 训练作业（Training Job）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 训练参与者资格（Training Participant Eligibility）.
+- 归属: 训练作业（Training Job）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 训练参与者资格（Training Participant Eligibility）。
 
 <!-- em:section id="software.slice.暂停训练作业（PauseTrainingJob）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/PauseTrainingJob" -->
 ##### 2.8.2.11 暂停训练作业（Pause Training Job）/EMW-SD-SECTION-82
 
-- 归属: 训练作业（Training Job）.
-- 角色/触发条件: MLOps 工程师（MLOps Engineer）.
-- 输入: 暂停训练作业（Pause Training Job）.
-- 业务结果: 训练作业已暂停（Training Job Paused）, 状态: 已暂停（Paused）.
-- 读侧结果: 尚未明确.
+- 归属: 训练作业（Training Job）。
+- 角色/触发条件: MLOps 工程师（MLOps Engineer）。
+- 输入: 暂停训练作业（Pause Training Job）。
+- 业务结果: 训练作业已暂停（Training Job Paused）, 状态: 已暂停（Paused）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.恢复训练作业（ResumeTrainingJob）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/ResumeTrainingJob" -->
 ##### 2.8.2.12 恢复训练作业（Resume Training Job）/EMW-SD-SECTION-83
 
-- 归属: 训练作业（Training Job）.
-- 角色/触发条件: MLOps 工程师（MLOps Engineer）.
-- 输入: 恢复训练作业（Resume Training Job）.
-- 业务结果: 训练作业已恢复（Training Job Resumed）, 状态: 运行中（Running）.
-- 读侧结果: 尚未明确.
+- 归属: 训练作业（Training Job）。
+- 角色/触发条件: MLOps 工程师（MLOps Engineer）。
+- 输入: 恢复训练作业（Resume Training Job）。
+- 业务结果: 训练作业已恢复（Training Job Resumed）, 状态: 运行中（Running）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.取消训练作业（CancelTrainingJob）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/CancelTrainingJob" -->
 ##### 2.8.2.13 取消训练作业（Cancel Training Job）/EMW-SD-SECTION-84
 
-- 归属: 训练作业（Training Job）.
-- 角色/触发条件: MLOps 工程师（MLOps Engineer）.
-- 输入: 取消训练作业（Cancel Training Job）.
-- 业务结果: 训练作业已取消（Training Job Canceled）, 状态: 已取消（Canceled）.
-- 读侧结果: 尚未明确.
+- 归属: 训练作业（Training Job）。
+- 角色/触发条件: MLOps 工程师（MLOps Engineer）。
+- 输入: 取消训练作业（Cancel Training Job）。
+- 业务结果: 训练作业已取消（Training Job Canceled）, 状态: 已取消（Canceled）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.安排下一训练轮次（ScheduleNextTrainingRound）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/ScheduleNextTrainingRound" -->
 ##### 2.8.2.14 安排下一训练轮次（Schedule Next Training Round）/EMW-SD-SECTION-85
 
-- 归属: 训练作业（Training Job）.
-- 角色/触发条件: 当训练应继续时选择下一轮参与者（Select Next Round Participants When Training Should Continue）.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 尚未明确.
+- 归属: 训练作业（Training Job）。
+- 角色/触发条件: 当训练应继续时选择下一轮参与者（Select Next Round Participants When Training Should Continue）。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.完成训练作业（CompleteTrainingJob）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/CompleteTrainingJob" -->
 ##### 2.8.2.15 完成训练作业（Complete Training Job）/EMW-SD-SECTION-86
 
-- 归属: 训练作业（Training Job）.
-- 角色/触发条件: 满足训练停止条件时完成作业（Complete Job When Training Stop Criteria Met）.
-- 输入: 完成训练作业（Complete Training Job）.
-- 业务结果: 训练作业已完成（Training Job Completed）, 状态: 已完成（Completed）.
-- 读侧结果: 尚未明确.
+- 归属: 训练作业（Training Job）。
+- 角色/触发条件: 满足训练停止条件时完成作业（Complete Job When Training Stop Criteria Met）。
+- 输入: 完成训练作业（Complete Training Job）。
+- 业务结果: 训练作业已完成（Training Job Completed）, 状态: 已完成（Completed）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.选择训练轮次参与者（SelectTrainingRoundParticipants）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/SelectTrainingRoundParticipants" -->
 ##### 2.8.2.16 选择训练轮次参与者（Select Training Round Participants）/EMW-SD-SECTION-87
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 训练提交时选择初始轮次参与者（Select Initial Round Participants When Training Submitted）.
-- 输入: 选择训练轮次参与者（Select Training Round Participants）.
-- 业务结果: 训练轮次参与者已选择（Training Round Participants Selected）, 训练轮次参与者选择失败（Training Round Participant Selection Failed）, 状态: 参与者已选择（Participants Selected）.
-- 读侧结果: 尚未明确.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 训练提交时选择初始轮次参与者（Select Initial Round Participants When Training Submitted）。
+- 输入: 选择训练轮次参与者（Select Training Round Participants）。
+- 业务结果: 训练轮次参与者已选择（Training Round Participants Selected）, 训练轮次参与者选择失败（Training Round Participant Selection Failed）, 状态: 参与者已选择（Participants Selected）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 训练轮次参与者按轮快照（Training Round Participants Are Snapshotted Per Round） / 运行时池达到法定数量时选择参与者（Select Participants When Runtime Pool Reaches Quorum） - 当 选择训练轮次参与者（Select Training Round Participants）, 则 训练轮次参与者已选择（Training Round Participants Selected）.
-- 训练轮次参与者按轮快照（Training Round Participants Are Snapshotted Per Round） / 拒绝低于法定数量的参与者快照（Reject Participant Snapshot Below Quorum） - 当 选择训练轮次参与者（Select Training Round Participants）, 则 训练轮次参与者选择失败（Training Round Participant Selection Failed）.
+- 训练轮次参与者按轮快照（Training Round Participants Are Snapshotted Per Round） / 运行时池达到法定数量时选择参与者（Select Participants When Runtime Pool Reaches Quorum） - 当 选择训练轮次参与者（Select Training Round Participants）, 则 训练轮次参与者已选择（Training Round Participants Selected）。
+- 训练轮次参与者按轮快照（Training Round Participants Are Snapshotted Per Round） / 拒绝低于法定数量的参与者快照（Reject Participant Snapshot Below Quorum） - 当 选择训练轮次参与者（Select Training Round Participants）, 则 训练轮次参与者选择失败（Training Round Participant Selection Failed）。
 
 <!-- em:section id="software.slice.重试训练轮次参与者选择（RetryTrainingRoundParticipantSelection）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/RetryTrainingRoundParticipantSelection" -->
 ##### 2.8.2.17 重试训练轮次参与者选择（Retry Training Round Participant Selection）/EMW-SD-SECTION-88
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 训练操作员（Training Operator）.
-- 输入: 重试训练轮次参与者选择（Retry Training Round Participant Selection）.
-- 业务结果: 训练轮次参与者选择重试已请求（Training Round Participant Selection Retry Requested）.
-- 读侧结果: 尚未明确.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 训练操作员（Training Operator）。
+- 输入: 重试训练轮次参与者选择（Retry Training Round Participant Selection）。
+- 业务结果: 训练轮次参与者选择重试已请求（Training Round Participant Selection Retry Requested）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 在就绪状态变化后重试参与者选择（Retry Participant Selection After Readiness Changes） / 重试参与者选择（Retry Participant Selection） - 当 重试训练轮次参与者选择（Retry Training Round Participant Selection）, 则 训练轮次参与者选择重试已请求（Training Round Participant Selection Retry Requested）.
+- 在就绪状态变化后重试参与者选择（Retry Participant Selection After Readiness Changes） / 重试参与者选择（Retry Participant Selection） - 当 重试训练轮次参与者选择（Retry Training Round Participant Selection）, 则 训练轮次参与者选择重试已请求（Training Round Participant Selection Retry Requested）。
 
 <!-- em:section id="software.slice.开始训练轮次（StartTrainingRound）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/StartTrainingRound" -->
 ##### 2.8.2.18 开始训练轮次（Start Training Round）/EMW-SD-SECTION-89
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 选择无安全聚合参与者时启动轮次（Start Round When Participants Selected Without Secure Aggregation）, 加密上下文准备就绪时启动轮次（Start Round When Encryption Context Prepared）.
-- 输入: 开始训练轮次（Start Training Round）.
-- 业务结果: 训练轮次已启动（Training Round Started）, 训练轮次启动失败（Training Round Start Failed）, 状态: 运行中（Running）.
-- 读侧结果: 尚未明确.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 选择无安全聚合参与者时启动轮次（Start Round When Participants Selected Without Secure Aggregation）, 加密上下文准备就绪时启动轮次（Start Round When Encryption Context Prepared）。
+- 输入: 开始训练轮次（Start Training Round）。
+- 业务结果: 训练轮次已启动（Training Round Started）, 训练轮次启动失败（Training Round Start Failed）, 状态: 运行中（Running）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 训练轮次需要已选择的运行时法定人数（Training Round Requires Selected Runtime Quorum） / 使用已选择的运行时法定人数启动轮次（Start Round With Selected Runtime Quorum） - 当 开始训练轮次（Start Training Round）, 则 训练轮次已启动（Training Round Started）.
-- 训练轮次需要已选择的运行时法定人数（Training Round Requires Selected Runtime Quorum） / 记录低于法定人数的失败轮次启动（Record Failed Round Start Below Quorum） - 当 开始训练轮次（Start Training Round）, 则 训练轮次启动失败（Training Round Start Failed）.
+- 训练轮次需要已选择的运行时法定人数（Training Round Requires Selected Runtime Quorum） / 使用已选择的运行时法定人数启动轮次（Start Round With Selected Runtime Quorum） - 当 开始训练轮次（Start Training Round）, 则 训练轮次已启动（Training Round Started）。
+- 训练轮次需要已选择的运行时法定人数（Training Round Requires Selected Runtime Quorum） / 记录低于法定人数的失败轮次启动（Record Failed Round Start Below Quorum） - 当 开始训练轮次（Start Training Round）, 则 训练轮次启动失败（Training Round Start Failed）。
 
 <!-- em:section id="software.slice.生成参与者执行计划（GenerateParticipantExecutionPlan）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/GenerateParticipantExecutionPlan" -->
 ##### 2.8.2.19 生成参与者执行计划（Generate Participant Execution Plan）/EMW-SD-SECTION-90
 
-- 归属: 参与者执行计划（Participant Execution Plan）.
-- 角色/触发条件: 为已选择的运行时生成计划（Generate Plan For Selected Runtime）.
-- 输入: 生成参与者执行计划（Generate Participant Execution Plan）.
-- 业务结果: 参与者执行计划已生成（Participant Execution Plan Generated）, 状态: 计划已生成（Plan Generated）.
-- 读侧结果: 尚未明确.
+- 归属: 参与者执行计划（Participant Execution Plan）。
+- 角色/触发条件: 为已选择的运行时生成计划（Generate Plan For Selected Runtime）。
+- 输入: 生成参与者执行计划（Generate Participant Execution Plan）。
+- 业务结果: 参与者执行计划已生成（Participant Execution Plan Generated）, 状态: 计划已生成（Plan Generated）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 参与者执行计划携带基础模型工件快照（Participant Execution Plan Carries Base Model Artifact Snapshot） / 使用初始模型快照生成初始轮次计划（Generate Initial Round Plan With Initial Model Snapshot） - 当 生成参与者执行计划（Generate Participant Execution Plan）, 则 参与者执行计划已生成（Participant Execution Plan Generated）.
-- 参与者执行计划携带基础模型工件快照（Participant Execution Plan Carries Base Model Artifact Snapshot） / 使用聚合模型快照生成后续轮次计划（Generate Later Round Plan With Aggregated Model Snapshot） - 当 生成参与者执行计划（Generate Participant Execution Plan）, 则 参与者执行计划已生成（Participant Execution Plan Generated）.
+- 参与者执行计划携带基础模型工件快照（Participant Execution Plan Carries Base Model Artifact Snapshot） / 使用初始模型快照生成初始轮次计划（Generate Initial Round Plan With Initial Model Snapshot） - 当 生成参与者执行计划（Generate Participant Execution Plan）, 则 参与者执行计划已生成（Participant Execution Plan Generated）。
+- 参与者执行计划携带基础模型工件快照（Participant Execution Plan Carries Base Model Artifact Snapshot） / 使用聚合模型快照生成后续轮次计划（Generate Later Round Plan With Aggregated Model Snapshot） - 当 生成参与者执行计划（Generate Participant Execution Plan）, 则 参与者执行计划已生成（Participant Execution Plan Generated）。
 
 <!-- em:section id="software.slice.分发参与者执行计划（DispatchParticipantExecutionPlan）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/DispatchParticipantExecutionPlan" -->
 ##### 2.8.2.20 分发参与者执行计划（Dispatch Participant Execution Plan）/EMW-SD-SECTION-91
 
-- 归属: 参与者执行计划（Participant Execution Plan）.
-- 角色/触发条件: 生成时分发计划（Dispatch Plan When Generated）.
-- 输入: 分发参与者执行计划（Dispatch Participant Execution Plan）.
-- 业务结果: 参与者执行计划已分发（Participant Execution Plan Dispatched）, 状态: 计划已分发（Plan Dispatched）.
-- 读侧结果: 尚未明确.
+- 归属: 参与者执行计划（Participant Execution Plan）。
+- 角色/触发条件: 生成时分发计划（Dispatch Plan When Generated）。
+- 输入: 分发参与者执行计划（Dispatch Participant Execution Plan）。
+- 业务结果: 参与者执行计划已分发（Participant Execution Plan Dispatched）, 状态: 计划已分发（Plan Dispatched）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.提交模型更新提交（SubmitModelUpdateSubmission）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/SubmitModelUpdateSubmission" -->
 ##### 2.8.2.21 提交模型更新提交（Submit Model Update Submission）/EMW-SD-SECTION-92
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 运行时代理（Runtime Agent）.
-- 输入: 提交模型更新提交（Submit Model Update Submission）.
-- 业务结果: 模型更新提交已接收（Model Update Submission Received）, 状态: 已接收（Received）.
-- 读侧结果: 尚未明确.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 运行时代理（Runtime Agent）。
+- 输入: 提交模型更新提交（Submit Model Update Submission）。
+- 业务结果: 模型更新提交已接收（Model Update Submission Received）, 状态: 已接收（Received）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.评估模型更新提交（EvaluateModelUpdateSubmission）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/EvaluateModelUpdateSubmission" -->
 ##### 2.8.2.22 评估模型更新提交（Evaluate Model Update Submission）/EMW-SD-SECTION-93
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 收到时评估模型更新（Evaluate Model Update When Received）.
-- 输入: 评估模型更新提交（Evaluate Model Update Submission）.
-- 业务结果: 模型更新提交已接受（Model Update Submission Accepted）, 模型更新提交已拒绝（Model Update Submission Rejected）, 状态: 已评估（Evaluated）.
-- 读侧结果: 尚未明确.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 收到时评估模型更新（Evaluate Model Update When Received）。
+- 输入: 评估模型更新提交（Evaluate Model Update Submission）。
+- 业务结果: 模型更新提交已接受（Model Update Submission Accepted）, 模型更新提交已拒绝（Model Update Submission Rejected）, 状态: 已评估（Evaluated）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 已排除受污染的本地更新（Poisoned Local Updates Are Excluded） / 接受正常更新（Accept Normal Update） - 当 评估模型更新提交（Evaluate Model Update Submission）, 则 模型更新提交已接受（Model Update Submission Accepted）.
-- 已排除受污染的本地更新（Poisoned Local Updates Are Excluded） / 拒绝异常更新（Reject Anomalous Update） - 当 评估模型更新提交（Evaluate Model Update Submission）, 则 拒绝: 异常模型更新已拒绝.
+- 已排除受污染的本地更新（Poisoned Local Updates Are Excluded） / 接受正常更新（Accept Normal Update） - 当 评估模型更新提交（Evaluate Model Update Submission）, 则 模型更新提交已接受（Model Update Submission Accepted）。
+- 已排除受污染的本地更新（Poisoned Local Updates Are Excluded） / 拒绝异常更新（Reject Anomalous Update） - 当 评估模型更新提交（Evaluate Model Update Submission）, 则 拒绝: 异常模型更新已拒绝。
 
 <!-- em:section id="software.slice.聚合明文模型更新（AggregatePlainModelUpdates）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/AggregatePlainModelUpdates" -->
 ##### 2.8.2.23 聚合明文模型更新（Aggregate Plain Model Updates）/EMW-SD-SECTION-94
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 达到法定人数时聚合明文更新（Aggregate Plain Updates When Quorum Reached）.
-- 输入: 聚合明文模型更新（Aggregate Plain Model Updates）.
-- 业务结果: 明文模型聚合已完成（Plain Model Aggregation Completed）, 状态: 已完成（Completed）.
-- 读侧结果: 尚未明确.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 达到法定人数时聚合明文更新（Aggregate Plain Updates When Quorum Reached）。
+- 输入: 聚合明文模型更新（Aggregate Plain Model Updates）。
+- 业务结果: 明文模型聚合已完成（Plain Model Aggregation Completed）, 状态: 已完成（Completed）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 达到法定人数后聚合明文模型更新（Plain Model Updates Are Aggregated After Quorum） / 聚合已接受的明文更新（Aggregate Accepted Plain Updates） - 当 聚合明文模型更新（Aggregate Plain Model Updates）, 则 明文模型聚合已完成（Plain Model Aggregation Completed）.
+- 达到法定人数后聚合明文模型更新（Plain Model Updates Are Aggregated After Quorum） / 聚合已接受的明文更新（Aggregate Accepted Plain Updates） - 当 聚合明文模型更新（Aggregate Plain Model Updates）, 则 明文模型聚合已完成（Plain Model Aggregation Completed）。
 
 <!-- em:section id="software.slice.请求安全聚合（RequestSecureAggregation）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/RequestSecureAggregation" -->
 ##### 2.8.2.24 请求安全聚合（Request Secure Aggregation）/EMW-SD-SECTION-95
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 当选择参与者时请求聚合（Request Aggregation When Participants Selected）.
-- 输入: 请求安全聚合（Request Secure Aggregation）.
-- 业务结果: 已请求安全聚合（Secure Aggregation Requested）.
-- 读侧结果: 尚未明确.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 当选择参与者时请求聚合（Request Aggregation When Participants Selected）。
+- 输入: 请求安全聚合（Request Secure Aggregation）。
+- 业务结果: 已请求安全聚合（Secure Aggregation Requested）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.完成模型聚合（CompleteModelAggregation）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/CompleteModelAggregation" -->
 ##### 2.8.2.25 完成模型聚合（Complete Model Aggregation）/EMW-SD-SECTION-96
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 会话完成时完成安全聚合（Complete Secure Aggregation When Session Completed）, 完成后完成明文聚合（Complete Plain Aggregation When Completed）.
-- 输入: 完成模型聚合（Complete Model Aggregation）.
-- 业务结果: 全局模型已更新（Global Model Updated）, 状态: 评估全局模型中（Evaluating Global Model）.
-- 读侧结果: 尚未明确.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 会话完成时完成安全聚合（Complete Secure Aggregation When Session Completed）, 完成后完成明文聚合（Complete Plain Aggregation When Completed）。
+- 输入: 完成模型聚合（Complete Model Aggregation）。
+- 业务结果: 全局模型已更新（Global Model Updated）, 状态: 评估全局模型中（Evaluating Global Model）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.提交全局模型评估（SubmitGlobalModelEvaluation）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/SubmitGlobalModelEvaluation" -->
 ##### 2.8.2.26 提交全局模型评估（Submit Global Model Evaluation）/EMW-SD-SECTION-97
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 当全局模型更新时提交全局模型评估（Submit Global Model Evaluation When Global Model Updated）.
-- 输入: 提交全局模型评估（Submit Global Model Evaluation）.
-- 业务结果: 全局模型评估已提交（Global Model Evaluation Submitted）.
-- 读侧结果: 尚未明确.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 当全局模型更新时提交全局模型评估（Submit Global Model Evaluation When Global Model Updated）。
+- 输入: 提交全局模型评估（Submit Global Model Evaluation）。
+- 业务结果: 全局模型评估已提交（Global Model Evaluation Submitted）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.完成训练轮次（CompleteTrainingRound）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/CompleteTrainingRound" -->
 ##### 2.8.2.27 完成训练轮次（Complete Training Round）/EMW-SD-SECTION-98
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 全局模型评估后结束轮次（Finish Round After Global Model Evaluated）.
-- 输入: 完成训练轮次（Complete Training Round）.
-- 业务结果: 训练轮次已完成（Training Round Completed）, 状态: 已完成（Completed）.
-- 读侧结果: 尚未明确.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 全局模型评估后结束轮次（Finish Round After Global Model Evaluated）。
+- 输入: 完成训练轮次（Complete Training Round）。
+- 业务结果: 训练轮次已完成（Training Round Completed）, 状态: 已完成（Completed）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 训练轮次完成需要全局评估（Training Round Completion Requires Global Evaluation） / 全局评估后完成轮次（Complete Round After Global Evaluation） - 当 完成训练轮次（Complete Training Round）, 则 训练轮次已完成（Training Round Completed）.
-- 训练轮次完成需要全局评估（Training Round Completion Requires Global Evaluation） / 无全局评估则拒绝完成轮次（Reject Round Completion Without Global Evaluation） - 当 完成训练轮次（Complete Training Round）, 则 拒绝: 需要全局模型评估.
+- 训练轮次完成需要全局评估（Training Round Completion Requires Global Evaluation） / 全局评估后完成轮次（Complete Round After Global Evaluation） - 当 完成训练轮次（Complete Training Round）, 则 训练轮次已完成（Training Round Completed）。
+- 训练轮次完成需要全局评估（Training Round Completion Requires Global Evaluation） / 无全局评估则拒绝完成轮次（Reject Round Completion Without Global Evaluation） - 当 完成训练轮次（Complete Training Round）, 则 拒绝: 需要全局模型评估。
 
 <!-- em:section id="software.slice.失败训练轮次（FailTrainingRound）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/FailTrainingRound" -->
 ##### 2.8.2.28 失败训练轮次（Fail Training Round）/EMW-SD-SECTION-99
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 聚合运行时（Aggregation Runtime）.
-- 输入: 失败训练轮次（Fail Training Round）.
-- 业务结果: 训练轮次失败（Training Round Failed）, 状态: 已失败（Failed）.
-- 读侧结果: 尚未明确.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 聚合运行时（Aggregation Runtime）。
+- 输入: 失败训练轮次（Fail Training Round）。
+- 业务结果: 训练轮次失败（Training Round Failed）, 状态: 已失败（Failed）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.训练轮次进度（TrainingRoundProgress）" source="domain/FederationLearningPlatform/context/TrainingOrchestration/slice/TrainingRoundProgress" -->
 ##### 2.8.2.29 训练轮次进度（Training Round Progress）/EMW-SD-SECTION-100
 
-- 归属: 训练轮次（Training Round）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 训练轮次进度（Training Round Progress）.
+- 归属: 训练轮次（Training Round）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 训练轮次进度（Training Round Progress）。
 
 #### 2.8.3 上下文数据设计/EMW-SD-CDD-8
 
@@ -1380,79 +1380,79 @@
 <!-- em:section id="software.slice.注册候选模型（RegisterCandidateModel）" source="domain/FederationLearningPlatform/context/ModelLifecycle/slice/RegisterCandidateModel" -->
 ##### 2.9.2.1 注册候选模型（Register Candidate Model）/EMW-SD-SECTION-102
 
-- 归属: 模型（Model）.
-- 角色/触发条件: 训练作业完成时注册最终模型（Register Final Model When Training Job Completed）.
-- 输入: 注册候选模型（Register Candidate Model）.
-- 业务结果: 模型候选已注册（Model Candidate Registered）, 状态: 候选（Candidate）.
-- 读侧结果: 尚未明确.
+- 归属: 模型（Model）。
+- 角色/触发条件: 训练作业完成时注册最终模型（Register Final Model When Training Job Completed）。
+- 输入: 注册候选模型（Register Candidate Model）。
+- 业务结果: 模型候选已注册（Model Candidate Registered）, 状态: 候选（Candidate）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.记录模型评估包（RecordModelEvaluationPackage）" source="domain/FederationLearningPlatform/context/ModelLifecycle/slice/RecordModelEvaluationPackage" -->
 ##### 2.9.2.2 记录模型评估包（Record Model Evaluation Package）/EMW-SD-SECTION-103
 
-- 归属: 模型（Model）.
-- 角色/触发条件: 治理审核员（Governance Reviewer）.
-- 输入: 记录模型评估包（Record Model Evaluation Package）.
-- 业务结果: 模型评估包已记录（Model Evaluation Package Recorded）, 状态: 评估已打包（Evaluation Packaged）.
-- 读侧结果: 尚未明确.
+- 归属: 模型（Model）。
+- 角色/触发条件: 治理审核员（Governance Reviewer）。
+- 输入: 记录模型评估包（Record Model Evaluation Package）。
+- 业务结果: 模型评估包已记录（Model Evaluation Package Recorded）, 状态: 评估已打包（Evaluation Packaged）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 模型审批需要评估包（Model Approval Requires Evaluation Package） / 记录完整评估包（Record Complete Evaluation Package） - 当 记录模型评估包（Record Model Evaluation Package）, 则 模型评估包已记录（Model Evaluation Package Recorded）.
+- 模型审批需要评估包（Model Approval Requires Evaluation Package） / 记录完整评估包（Record Complete Evaluation Package） - 当 记录模型评估包（Record Model Evaluation Package）, 则 模型评估包已记录（Model Evaluation Package Recorded）。
 
 <!-- em:section id="software.slice.批准模型（ApproveModel）" source="domain/FederationLearningPlatform/context/ModelLifecycle/slice/ApproveModel" -->
 ##### 2.9.2.3 批准模型（Approve Model）/EMW-SD-SECTION-104
 
-- 归属: 模型（Model）.
-- 角色/触发条件: 治理审核员（Governance Reviewer）.
-- 输入: 批准模型（Approve Model）.
-- 业务结果: 模型已批准（Model Approved）, 状态: 已批准（Approved）.
-- 读侧结果: 尚未明确.
+- 归属: 模型（Model）。
+- 角色/触发条件: 治理审核员（Governance Reviewer）。
+- 输入: 批准模型（Approve Model）。
+- 业务结果: 模型已批准（Model Approved）, 状态: 已批准（Approved）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 只有评估打包模型才能被批准（Only Evaluation Packaged Models Can Be Approved） / 批准评估打包模型（Approve Evaluation Packaged Model） - 当 批准模型（Approve Model）, 则 模型已批准（Model Approved）.
-- 只有评估打包模型才能被批准（Only Evaluation Packaged Models Can Be Approved） / 拒绝没有评估包的候选模型（Reject Candidate Without Evaluation Package） - 当 批准模型（Approve Model）, 则 拒绝: 需要模型评估包.
+- 只有评估打包模型才能被批准（Only Evaluation Packaged Models Can Be Approved） / 批准评估打包模型（Approve Evaluation Packaged Model） - 当 批准模型（Approve Model）, 则 模型已批准（Model Approved）。
+- 只有评估打包模型才能被批准（Only Evaluation Packaged Models Can Be Approved） / 拒绝没有评估包的候选模型（Reject Candidate Without Evaluation Package） - 当 批准模型（Approve Model）, 则 拒绝: 需要模型评估包。
 
 <!-- em:section id="software.slice.提升模型至生产（PromoteModelToProduction）" source="domain/FederationLearningPlatform/context/ModelLifecycle/slice/PromoteModelToProduction" -->
 ##### 2.9.2.4 提升模型至生产（Promote Model To Production）/EMW-SD-SECTION-105
 
-- 归属: 模型（Model）.
-- 角色/触发条件: 发布管理员（Release Manager）.
-- 输入: 提升模型至生产（Promote Model To Production）.
-- 业务结果: 模型已提升到生产环境（Model Promoted To Production）, 状态: 生产（Production）.
-- 读侧结果: 尚未明确.
+- 归属: 模型（Model）。
+- 角色/触发条件: 发布管理员（Release Manager）。
+- 输入: 提升模型至生产（Promote Model To Production）。
+- 业务结果: 模型已提升到生产环境（Model Promoted To Production）, 状态: 生产（Production）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 仅已批准的模型可提升到生产环境（Only Approved Models Can Be Promoted To Production） / 提升已批准的模型（Promote Approved Model） - 当 提升模型至生产（Promote Model To Production）, 则 模型已提升到生产环境（Model Promoted To Production）.
-- 仅已批准的模型可提升到生产环境（Only Approved Models Can Be Promoted To Production） / 拒绝未批准模型的提升（Reject Unapproved Model Promotion） - 当 提升模型至生产（Promote Model To Production）, 则 拒绝: 需要模型批准.
+- 仅已批准的模型可提升到生产环境（Only Approved Models Can Be Promoted To Production） / 提升已批准的模型（Promote Approved Model） - 当 提升模型至生产（Promote Model To Production）, 则 模型已提升到生产环境（Model Promoted To Production）。
+- 仅已批准的模型可提升到生产环境（Only Approved Models Can Be Promoted To Production） / 拒绝未批准模型的提升（Reject Unapproved Model Promotion） - 当 提升模型至生产（Promote Model To Production）, 则 拒绝: 需要模型批准。
 
 <!-- em:section id="software.slice.回滚模型（RollbackModel）" source="domain/FederationLearningPlatform/context/ModelLifecycle/slice/RollbackModel" -->
 ##### 2.9.2.5 回滚模型（Rollback Model）/EMW-SD-SECTION-106
 
-- 归属: 模型（Model）.
-- 角色/触发条件: 发布管理员（Release Manager）.
-- 输入: 回滚模型（Rollback Model）.
-- 业务结果: 模型已回滚（Model Rolled Back）, 状态: 已回滚（Rolled Back）.
-- 读侧结果: 尚未明确.
+- 归属: 模型（Model）。
+- 角色/触发条件: 发布管理员（Release Manager）。
+- 输入: 回滚模型（Rollback Model）。
+- 业务结果: 模型已回滚（Model Rolled Back）, 状态: 已回滚（Rolled Back）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.停用模型（RetireModel）" source="domain/FederationLearningPlatform/context/ModelLifecycle/slice/RetireModel" -->
 ##### 2.9.2.6 停用模型（Retire Model）/EMW-SD-SECTION-107
 
-- 归属: 模型（Model）.
-- 角色/触发条件: 发布管理员（Release Manager）.
-- 输入: 停用模型（Retire Model）.
-- 业务结果: 模型已退役（Model Retired）, 状态: 已停用（Retired）.
-- 读侧结果: 尚未明确.
+- 归属: 模型（Model）。
+- 角色/触发条件: 发布管理员（Release Manager）。
+- 输入: 停用模型（Retire Model）。
+- 业务结果: 模型已退役（Model Retired）, 状态: 已停用（Retired）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.模型目录（ModelCatalog）" source="domain/FederationLearningPlatform/context/ModelLifecycle/slice/ModelCatalog" -->
 ##### 2.9.2.7 模型目录（Model Catalog）/EMW-SD-SECTION-108
 
-- 归属: 模型（Model）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 模型目录（Model Catalog）.
+- 归属: 模型（Model）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 模型目录（Model Catalog）。
 
 #### 2.9.3 上下文数据设计/EMW-SD-CDD-9
 
@@ -1500,137 +1500,137 @@
 <!-- em:section id="software.slice.运行时最新遥测（RuntimeTelemetryLatest）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/RuntimeTelemetryLatest" -->
 ##### 2.10.2.1 运行时最新遥测（Runtime Telemetry Latest）/EMW-SD-SECTION-110
 
-- 归属: 节点运行时健康（Node Runtime Health）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时最新遥测（Runtime Telemetry Latest）.
+- 归属: 节点运行时健康（Node Runtime Health）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时最新遥测（Runtime Telemetry Latest）。
 
 <!-- em:section id="software.slice.检测运行时代理离线（DetectRuntimeAgentOffline）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/DetectRuntimeAgentOffline" -->
 ##### 2.10.2.2 检测运行时代理离线（Detect Runtime Agent Offline）/EMW-SD-SECTION-111
 
-- 归属: 节点运行时健康（Node Runtime Health）.
-- 角色/触发条件: 从遥测检测离线运行时代理（Detect Offline Runtime Agent From Telemetry）.
-- 输入: 检测运行时代理离线（Detect Runtime Agent Offline）.
-- 业务结果: 已检测到运行时代理离线（Runtime Agent Offline Detected）, 状态: 离线（Offline）.
-- 读侧结果: 尚未明确.
+- 归属: 节点运行时健康（Node Runtime Health）。
+- 角色/触发条件: 从遥测检测离线运行时代理（Detect Offline Runtime Agent From Telemetry）。
+- 输入: 检测运行时代理离线（Detect Runtime Agent Offline）。
+- 业务结果: 已检测到运行时代理离线（Runtime Agent Offline Detected）, 状态: 离线（Offline）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.标记运行时代理已恢复（MarkRuntimeAgentRecovered）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/MarkRuntimeAgentRecovered" -->
 ##### 2.10.2.3 标记运行时代理已恢复（Mark Runtime Agent Recovered）/EMW-SD-SECTION-112
 
-- 归属: 节点运行时健康（Node Runtime Health）.
-- 角色/触发条件: 从遥测标记运行时代理已恢复（Mark Recovered Runtime Agent From Telemetry）.
-- 输入: 标记运行时代理已恢复（Mark Runtime Agent Recovered）.
-- 业务结果: 运行时代理已恢复（Runtime Agent Recovered）, 状态: 健康（Healthy）.
-- 读侧结果: 尚未明确.
+- 归属: 节点运行时健康（Node Runtime Health）。
+- 角色/触发条件: 从遥测标记运行时代理已恢复（Mark Recovered Runtime Agent From Telemetry）。
+- 输入: 标记运行时代理已恢复（Mark Runtime Agent Recovered）。
+- 业务结果: 运行时代理已恢复（Runtime Agent Recovered）, 状态: 健康（Healthy）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.检测运行时节点资源压力（DetectRuntimeNodeResourcePressure）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/DetectRuntimeNodeResourcePressure" -->
 ##### 2.10.2.4 检测运行时节点资源压力（Detect Runtime Node Resource Pressure）/EMW-SD-SECTION-113
 
-- 归属: 运行时节点资源压力（Runtime Node Resource Pressure）.
-- 角色/触发条件: 从遥测检测资源压力（Detect Resource Pressure From Telemetry）.
-- 输入: 检测运行时节点资源压力（Detect Runtime Node Resource Pressure）.
-- 业务结果: 已检测到运行时节点资源压力（Runtime Node Resource Pressure Detected）, 状态: 已检测到压力（Pressure Detected）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时节点资源压力（Runtime Node Resource Pressure）。
+- 角色/触发条件: 从遥测检测资源压力（Detect Resource Pressure From Telemetry）。
+- 输入: 检测运行时节点资源压力（Detect Runtime Node Resource Pressure）。
+- 业务结果: 已检测到运行时节点资源压力（Runtime Node Resource Pressure Detected）, 状态: 已检测到压力（Pressure Detected）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.记录运行时节点清单（RecordRuntimeNodeInventory）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/RecordRuntimeNodeInventory" -->
 ##### 2.10.2.5 记录运行时节点清单（Record Runtime Node Inventory）/EMW-SD-SECTION-114
 
-- 归属: 运行时节点清单（Runtime Node Inventory）.
-- 角色/触发条件: 代理报告时记录运行时节点清单（Record Runtime Node Inventory When Agent Reported）.
-- 输入: 记录运行时节点清单（Record Runtime Node Inventory）.
-- 业务结果: 运行时节点清单已报告（Runtime Node Inventory Reported）, 状态: 已报告（Reported）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时节点清单（Runtime Node Inventory）。
+- 角色/触发条件: 代理报告时记录运行时节点清单（Record Runtime Node Inventory When Agent Reported）。
+- 输入: 记录运行时节点清单（Record Runtime Node Inventory）。
+- 业务结果: 运行时节点清单已报告（Runtime Node Inventory Reported）, 状态: 已报告（Reported）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.运行时节点清单视图（RuntimeNodeInventoryView）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/RuntimeNodeInventoryView" -->
 ##### 2.10.2.6 运行时节点清单视图（Runtime Node Inventory View）/EMW-SD-SECTION-115
 
-- 归属: 运行时节点清单（Runtime Node Inventory）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时节点清单视图（Runtime Node Inventory View）.
+- 归属: 运行时节点清单（Runtime Node Inventory）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时节点清单视图（Runtime Node Inventory View）。
 
 <!-- em:section id="software.slice.运行时节点最新资源（RuntimeNodeResourceLatest）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/RuntimeNodeResourceLatest" -->
 ##### 2.10.2.7 运行时节点最新资源（Runtime Node Resource Latest）/EMW-SD-SECTION-116
 
-- 归属: 运行时节点资源遥测（Runtime Node Resource Telemetry）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时节点最新资源（Runtime Node Resource Latest）.
+- 归属: 运行时节点资源遥测（Runtime Node Resource Telemetry）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时节点最新资源（Runtime Node Resource Latest）。
 
 <!-- em:section id="software.slice.检测运行时节点容量变更（DetectRuntimeNodeCapacityChange）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/DetectRuntimeNodeCapacityChange" -->
 ##### 2.10.2.8 检测运行时节点容量变更（Detect Runtime Node Capacity Change）/EMW-SD-SECTION-117
 
-- 归属: 运行时节点容量（Runtime Node Capacity）.
-- 角色/触发条件: 从资源遥测检测容量变化（Detect Capacity Change From Resource Telemetry）.
-- 输入: 检测运行时节点容量变更（Detect Runtime Node Capacity Change）.
-- 业务结果: 运行时节点容量已更改（Runtime Node Capacity Changed）, 状态: 容量已变更（Capacity Changed）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时节点容量（Runtime Node Capacity）。
+- 角色/触发条件: 从资源遥测检测容量变化（Detect Capacity Change From Resource Telemetry）。
+- 输入: 检测运行时节点容量变更（Detect Runtime Node Capacity Change）。
+- 业务结果: 运行时节点容量已更改（Runtime Node Capacity Changed）, 状态: 容量已变更（Capacity Changed）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.运行时健康仪表板（RuntimeHealthDashboard）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/RuntimeHealthDashboard" -->
 ##### 2.10.2.9 运行时健康仪表板（Runtime Health Dashboard）/EMW-SD-SECTION-118
 
-- 归属: 节点运行时健康（Node Runtime Health）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时健康仪表板（Runtime Health Dashboard）.
+- 归属: 节点运行时健康（Node Runtime Health）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时健康仪表板（Runtime Health Dashboard）。
 
 <!-- em:section id="software.slice.引发训练告警（RaiseTrainingAlert）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/RaiseTrainingAlert" -->
 ##### 2.10.2.10 引发训练告警（Raise Training Alert）/EMW-SD-SECTION-119
 
-- 归属: 训练告警（Training Alert）.
-- 角色/触发条件: 在节点资源压力时发出警报（Raise Alert On Node Resource Pressure）.
-- 输入: 引发训练告警（Raise Training Alert）.
-- 业务结果: 训练警报已发出（Training Alert Raised）, 状态: 已引发（Raised）.
-- 读侧结果: 尚未明确.
+- 归属: 训练告警（Training Alert）。
+- 角色/触发条件: 在节点资源压力时发出警报（Raise Alert On Node Resource Pressure）。
+- 输入: 引发训练告警（Raise Training Alert）。
+- 业务结果: 训练警报已发出（Training Alert Raised）, 状态: 已引发（Raised）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.训练告警目录（TrainingAlertCatalog）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/TrainingAlertCatalog" -->
 ##### 2.10.2.11 训练告警目录（Training Alert Catalog）/EMW-SD-SECTION-120
 
-- 归属: 训练告警（Training Alert）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 训练告警目录（Training Alert Catalog）.
+- 归属: 训练告警（Training Alert）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 训练告警目录（Training Alert Catalog）。
 
 <!-- em:section id="software.slice.确认训练告警（AcknowledgeTrainingAlert）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/AcknowledgeTrainingAlert" -->
 ##### 2.10.2.12 确认训练告警（Acknowledge Training Alert）/EMW-SD-SECTION-121
 
-- 归属: 训练告警（Training Alert）.
-- 角色/触发条件: MLOps 工程师（MLOps Engineer）.
-- 输入: 确认训练告警（Acknowledge Training Alert）.
-- 业务结果: 训练警报已确认（Training Alert Acknowledged）, 状态: 已确认（Acknowledged）.
-- 读侧结果: 尚未明确.
+- 归属: 训练告警（Training Alert）。
+- 角色/触发条件: MLOps 工程师（MLOps Engineer）。
+- 输入: 确认训练告警（Acknowledge Training Alert）。
+- 业务结果: 训练警报已确认（Training Alert Acknowledged）, 状态: 已确认（Acknowledged）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.解决训练告警（ResolveTrainingAlert）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/ResolveTrainingAlert" -->
 ##### 2.10.2.13 解决训练告警（Resolve Training Alert）/EMW-SD-SECTION-122
 
-- 归属: 训练告警（Training Alert）.
-- 角色/触发条件: MLOps 工程师（MLOps Engineer）.
-- 输入: 解决训练告警（Resolve Training Alert）.
-- 业务结果: 训练警报已解决（Training Alert Resolved）, 状态: 已解决（Resolved）.
-- 读侧结果: 尚未明确.
+- 归属: 训练告警（Training Alert）。
+- 角色/触发条件: MLOps 工程师（MLOps Engineer）。
+- 输入: 解决训练告警（Resolve Training Alert）。
+- 业务结果: 训练警报已解决（Training Alert Resolved）, 状态: 已解决（Resolved）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.追加审计跟踪（AppendAuditTrail）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/AppendAuditTrail" -->
 ##### 2.10.2.14 追加审计跟踪（Append Audit Trail）/EMW-SD-SECTION-123
 
-- 归属: 审计记录（Audit Record）.
-- 角色/触发条件: 审计关键训练事件（Audit Critical Training Events）, 审计联邦已激活（Audit Federation Activated）, 审计联邦已暂停（Audit Federation Suspended）, 审计联邦已重新激活（Audit Federation Reactivated）, 审计参与者已加入（Audit Participant Joined）, 审计参与者已暂停（Audit Participant Suspended）, 审计数据集批准（Audit Dataset Approval）, 审计数据集批准已撤销（Audit Dataset Approval Revoked）, 审计训练作业已提交（Audit Training Job Submitted）, 审计模型已提升至生产（Audit Model Promoted To Production）.
-- 输入: 追加审计跟踪（Append Audit Trail）.
-- 业务结果: 审计跟踪已追加（Audit Trail Appended）, 状态: 已追加（Appended）.
-- 读侧结果: 尚未明确.
+- 归属: 审计记录（Audit Record）。
+- 角色/触发条件: 审计关键训练事件（Audit Critical Training Events）, 审计联邦已激活（Audit Federation Activated）, 审计联邦已暂停（Audit Federation Suspended）, 审计联邦已重新激活（Audit Federation Reactivated）, 审计参与者已加入（Audit Participant Joined）, 审计参与者已暂停（Audit Participant Suspended）, 审计数据集批准（Audit Dataset Approval）, 审计数据集批准已撤销（Audit Dataset Approval Revoked）, 审计训练作业已提交（Audit Training Job Submitted）, 审计模型已提升至生产（Audit Model Promoted To Production）。
+- 输入: 追加审计跟踪（Append Audit Trail）。
+- 业务结果: 审计跟踪已追加（Audit Trail Appended）, 状态: 已追加（Appended）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.审计记录日志（AuditRecordLog）" source="domain/FederationLearningPlatform/context/RuntimeMonitoring/slice/AuditRecordLog" -->
 ##### 2.10.2.15 审计记录日志（Audit Record Log）/EMW-SD-SECTION-124
 
-- 归属: 审计记录（Audit Record）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 审计记录日志（Audit Record Log）.
+- 归属: 审计记录（Audit Record）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 审计记录日志（Audit Record Log）。
 
 #### 2.10.3 上下文数据设计/EMW-SD-CDD-10
 
@@ -1668,47 +1668,47 @@
 <!-- em:section id="software.slice.激活运行时标识（ActivateRuntimeIdentity）" source="domain/FederationLearningPlatform/context/RuntimeGovernance/slice/ActivateRuntimeIdentity" -->
 ##### 2.11.2.1 激活运行时标识（Activate Runtime Identity）/EMW-SD-SECTION-126
 
-- 归属: 运行时标识（Runtime Identity）.
-- 角色/触发条件: 平台管理员（Platform Admin）.
-- 输入: 激活运行时标识（Activate Runtime Identity）.
-- 业务结果: 运行时身份已激活（Runtime Identity Activated）, 状态: 已激活（Active）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时标识（Runtime Identity）。
+- 角色/触发条件: 平台管理员（Platform Admin）。
+- 输入: 激活运行时标识（Activate Runtime Identity）。
+- 业务结果: 运行时身份已激活（Runtime Identity Activated）, 状态: 已激活（Active）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.撤销运行时标识（RevokeRuntimeIdentity）" source="domain/FederationLearningPlatform/context/RuntimeGovernance/slice/RevokeRuntimeIdentity" -->
 ##### 2.11.2.2 撤销运行时标识（Revoke Runtime Identity）/EMW-SD-SECTION-127
 
-- 归属: 运行时标识（Runtime Identity）.
-- 角色/触发条件: 安全审核员（Security Reviewer）.
-- 输入: 撤销运行时标识（Revoke Runtime Identity）.
-- 业务结果: 运行时身份已撤销（Runtime Identity Revoked）, 状态: 已撤销（Revoked）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时标识（Runtime Identity）。
+- 角色/触发条件: 安全审核员（Security Reviewer）。
+- 输入: 撤销运行时标识（Revoke Runtime Identity）。
+- 业务结果: 运行时身份已撤销（Runtime Identity Revoked）, 状态: 已撤销（Revoked）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.检测运行时能力（DetectRuntimeCapabilities）" source="domain/FederationLearningPlatform/context/RuntimeGovernance/slice/DetectRuntimeCapabilities" -->
 ##### 2.11.2.3 检测运行时能力（Detect Runtime Capabilities）/EMW-SD-SECTION-128
 
-- 归属: 运行时能力（Runtime Capability）.
-- 角色/触发条件: 运行时代理（Runtime Agent）.
-- 输入: 检测运行时能力（Detect Runtime Capabilities）.
-- 业务结果: 运行时能力已检测（Runtime Capabilities Detected）, 状态: 已检测到（Detected）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时能力（Runtime Capability）。
+- 角色/触发条件: 运行时代理（Runtime Agent）。
+- 输入: 检测运行时能力（Detect Runtime Capabilities）。
+- 业务结果: 运行时能力已检测（Runtime Capabilities Detected）, 状态: 已检测到（Detected）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.运行时标识目录（RuntimeIdentityCatalog）" source="domain/FederationLearningPlatform/context/RuntimeGovernance/slice/RuntimeIdentityCatalog" -->
 ##### 2.11.2.4 运行时标识目录（Runtime Identity Catalog）/EMW-SD-SECTION-129
 
-- 归属: 运行时标识（Runtime Identity）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时标识目录（Runtime Identity Catalog）.
+- 归属: 运行时标识（Runtime Identity）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时标识目录（Runtime Identity Catalog）。
 
 <!-- em:section id="software.slice.运行时能力目录（RuntimeCapabilityCatalog）" source="domain/FederationLearningPlatform/context/RuntimeGovernance/slice/RuntimeCapabilityCatalog" -->
 ##### 2.11.2.5 运行时能力目录（Runtime Capability Catalog）/EMW-SD-SECTION-130
 
-- 归属: 运行时能力（Runtime Capability）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时能力目录（Runtime Capability Catalog）.
+- 归属: 运行时能力（Runtime Capability）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时能力目录（Runtime Capability Catalog）。
 
 #### 2.11.3 上下文数据设计/EMW-SD-CDD-11
 
@@ -1743,65 +1743,65 @@
 <!-- em:section id="software.slice.创建安全聚合会话（CreateSecureAggregationSession）" source="domain/FederationLearningPlatform/context/SecureAggregation/slice/CreateSecureAggregationSession" -->
 ##### 2.12.2.1 创建安全聚合会话（Create Secure Aggregation Session）/EMW-SD-SECTION-132
 
-- 归属: 安全聚合会话（Secure Aggregation Session）.
-- 角色/触发条件: 在请求聚合时创建会话（Create Session When Aggregation Requested）.
-- 输入: 创建安全聚合会话（Create Secure Aggregation Session）.
-- 业务结果: 安全聚合会话已创建（Secure Aggregation Session Created）, 状态: 已规划（Planned）.
-- 读侧结果: 尚未明确.
+- 归属: 安全聚合会话（Secure Aggregation Session）。
+- 角色/触发条件: 在请求聚合时创建会话（Create Session When Aggregation Requested）。
+- 输入: 创建安全聚合会话（Create Secure Aggregation Session）。
+- 业务结果: 安全聚合会话已创建（Secure Aggregation Session Created）, 状态: 已规划（Planned）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.选择安全聚合参与者（SelectSecureAggregationParticipants）" source="domain/FederationLearningPlatform/context/SecureAggregation/slice/SelectSecureAggregationParticipants" -->
 ##### 2.12.2.2 选择安全聚合参与者（Select Secure Aggregation Participants）/EMW-SD-SECTION-133
 
-- 归属: 安全聚合会话（Secure Aggregation Session）.
-- 角色/触发条件: 会话创建时选择参与者（Select Participants When Session Created）.
-- 输入: 选择安全聚合参与者（Select Secure Aggregation Participants）.
-- 业务结果: 安全聚合参与者已选择（Secure Aggregation Participants Selected）, 状态: 参与者已选择（Participants Selected）.
-- 读侧结果: 尚未明确.
+- 归属: 安全聚合会话（Secure Aggregation Session）。
+- 角色/触发条件: 会话创建时选择参与者（Select Participants When Session Created）。
+- 输入: 选择安全聚合参与者（Select Secure Aggregation Participants）。
+- 业务结果: 安全聚合参与者已选择（Secure Aggregation Participants Selected）, 状态: 参与者已选择（Participants Selected）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.准备同态加密上下文（PrepareHomomorphicEncryptionContext）" source="domain/FederationLearningPlatform/context/SecureAggregation/slice/PrepareHomomorphicEncryptionContext" -->
 ##### 2.12.2.3 准备同态加密上下文（Prepare Homomorphic Encryption Context）/EMW-SD-SECTION-134
 
-- 归属: 安全聚合会话（Secure Aggregation Session）.
-- 角色/触发条件: 安全聚合服务（Secure Aggregation Service）.
-- 输入: 准备同态加密上下文（Prepare Homomorphic Encryption Context）.
-- 业务结果: 同态加密上下文已准备（Homomorphic Encryption Context Prepared）, 状态: 已准备加密上下文（Encryption Context Prepared）.
-- 读侧结果: 尚未明确.
+- 归属: 安全聚合会话（Secure Aggregation Session）。
+- 角色/触发条件: 安全聚合服务（Secure Aggregation Service）。
+- 输入: 准备同态加密上下文（Prepare Homomorphic Encryption Context）。
+- 业务结果: 同态加密上下文已准备（Homomorphic Encryption Context Prepared）, 状态: 已准备加密上下文（Encryption Context Prepared）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.记录加密模型更新（RecordEncryptedModelUpdate）" source="domain/FederationLearningPlatform/context/SecureAggregation/slice/RecordEncryptedModelUpdate" -->
 ##### 2.12.2.4 记录加密模型更新（Record Encrypted Model Update）/EMW-SD-SECTION-135
 
-- 归属: 安全聚合会话（Secure Aggregation Session）.
-- 角色/触发条件: 安全聚合服务（Secure Aggregation Service）.
-- 输入: 记录加密模型更新（Record Encrypted Model Update）.
-- 业务结果: 已接收加密模型更新（Encrypted Model Update Received）.
-- 读侧结果: 尚未明确.
+- 归属: 安全聚合会话（Secure Aggregation Session）。
+- 角色/触发条件: 安全聚合服务（Secure Aggregation Service）。
+- 输入: 记录加密模型更新（Record Encrypted Model Update）。
+- 业务结果: 已接收加密模型更新（Encrypted Model Update Received）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.完成同态聚合会话（CompleteHomomorphicAggregationSession）" source="domain/FederationLearningPlatform/context/SecureAggregation/slice/CompleteHomomorphicAggregationSession" -->
 ##### 2.12.2.5 完成同态聚合会话（Complete Homomorphic Aggregation Session）/EMW-SD-SECTION-136
 
-- 归属: 安全聚合会话（Secure Aggregation Session）.
-- 角色/触发条件: 安全聚合服务（Secure Aggregation Service）.
-- 输入: 完成同态聚合会话（Complete Homomorphic Aggregation Session）.
-- 业务结果: 安全聚合已完成（Secure Aggregation Completed）, 状态: 已完成（Completed）.
-- 读侧结果: 尚未明确.
+- 归属: 安全聚合会话（Secure Aggregation Session）。
+- 角色/触发条件: 安全聚合服务（Secure Aggregation Service）。
+- 输入: 完成同态聚合会话（Complete Homomorphic Aggregation Session）。
+- 业务结果: 安全聚合已完成（Secure Aggregation Completed）, 状态: 已完成（Completed）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.失败安全聚合会话（FailSecureAggregationSession）" source="domain/FederationLearningPlatform/context/SecureAggregation/slice/FailSecureAggregationSession" -->
 ##### 2.12.2.6 失败安全聚合会话（Fail Secure Aggregation Session）/EMW-SD-SECTION-137
 
-- 归属: 安全聚合会话（Secure Aggregation Session）.
-- 角色/触发条件: 安全聚合服务（Secure Aggregation Service）.
-- 输入: 失败安全聚合会话（Fail Secure Aggregation Session）.
-- 业务结果: 安全聚合失败（Secure Aggregation Failed）, 状态: 已失败（Failed）.
-- 读侧结果: 尚未明确.
+- 归属: 安全聚合会话（Secure Aggregation Session）。
+- 角色/触发条件: 安全聚合服务（Secure Aggregation Service）。
+- 输入: 失败安全聚合会话（Fail Secure Aggregation Session）。
+- 业务结果: 安全聚合失败（Secure Aggregation Failed）, 状态: 已失败（Failed）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.安全聚合会话目录（SecureAggregationSessionCatalog）" source="domain/FederationLearningPlatform/context/SecureAggregation/slice/SecureAggregationSessionCatalog" -->
 ##### 2.12.2.7 安全聚合会话目录（Secure Aggregation Session Catalog）/EMW-SD-SECTION-138
 
-- 归属: 安全聚合会话（Secure Aggregation Session）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 安全聚合会话目录（Secure Aggregation Session Catalog）.
+- 归属: 安全聚合会话（Secure Aggregation Session）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 安全聚合会话目录（Secure Aggregation Session Catalog）。
 
 #### 2.12.3 上下文数据设计/EMW-SD-CDD-12
 
@@ -1881,468 +1881,468 @@
 <!-- em:section id="software.slice.代理组织目录（AgentOrganizationDirectory）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/AgentOrganizationDirectory" -->
 ##### 2.13.2.1 代理组织目录（Agent Organization Directory）/EMW-SD-SECTION-140
 
-- 归属: Context.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 代理组织目录（Agent Organization Directory）.
+- 归属: Context。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 代理组织目录（Agent Organization Directory）。
 
 <!-- em:section id="software.slice.代理功能架构目录（AgentFeatureSchemaCatalog）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/AgentFeatureSchemaCatalog" -->
 ##### 2.13.2.2 代理功能架构目录（Agent Feature Schema Catalog）/EMW-SD-SECTION-141
 
-- 归属: Context.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 代理功能架构目录（Agent Feature Schema Catalog）.
+- 归属: Context。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 代理功能架构目录（Agent Feature Schema Catalog）。
 
 <!-- em:section id="software.slice.代理字典值目录（AgentDictionaryValueCatalog）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/AgentDictionaryValueCatalog" -->
 ##### 2.13.2.3 代理字典值目录（Agent Dictionary Value Catalog）/EMW-SD-SECTION-142
 
-- 归属: Context.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 代理字典值目录（Agent Dictionary Value Catalog）.
+- 归属: Context。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 代理字典值目录（Agent Dictionary Value Catalog）。
 
 <!-- em:section id="software.slice.代理运行时身份目录（AgentRuntimeIdentityCatalog）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/AgentRuntimeIdentityCatalog" -->
 ##### 2.13.2.4 代理运行时身份目录（Agent Runtime Identity Catalog）/EMW-SD-SECTION-143
 
-- 归属: Context.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 代理运行时身份目录（Agent Runtime Identity Catalog）.
+- 归属: Context。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 代理运行时身份目录（Agent Runtime Identity Catalog）。
 
 <!-- em:section id="software.slice.声明数据集（DeclareDataset）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/DeclareDataset" -->
 ##### 2.13.2.5 声明数据集（Declare Dataset）/EMW-SD-SECTION-144
 
-- 归属: 数据集（Dataset）.
-- 角色/触发条件: 数据所有者（Data Owner）.
-- 输入: 声明数据集（Declare Dataset）.
-- 业务结果: 数据集已声明（Dataset Declared）, 状态: 已注册（Registered）.
-- 读侧结果: 尚未明确.
+- 归属: 数据集（Dataset）。
+- 角色/触发条件: 数据所有者（Data Owner）。
+- 输入: 声明数据集（Declare Dataset）。
+- 业务结果: 数据集已声明（Dataset Declared）, 状态: 已注册（Registered）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 数据集声明需要特征架构快照（Feature Schema Snapshot Required For Dataset Declaration） / 使用特征架构快照声明数据集（Declare Dataset With Feature Schema Snapshot） - 当 声明数据集（Declare Dataset）, 则 数据集已声明（Dataset Declared）.
-- 数据集声明需要特征架构快照（Feature Schema Snapshot Required For Dataset Declaration） / 特征架构加载失败（Feature Schema Load Failed） - 当 声明数据集（Declare Dataset）, 则 错误: 特征架构加载失败.
+- 数据集声明需要特征架构快照（Feature Schema Snapshot Required For Dataset Declaration） / 使用特征架构快照声明数据集（Declare Dataset With Feature Schema Snapshot） - 当 声明数据集（Declare Dataset）, 则 数据集已声明（Dataset Declared）。
+- 数据集声明需要特征架构快照（Feature Schema Snapshot Required For Dataset Declaration） / 特征架构加载失败（Feature Schema Load Failed） - 当 声明数据集（Declare Dataset）, 则 错误: 特征架构加载失败。
 
 <!-- em:section id="software.slice.配置运行时数据集绑定（ConfigureRuntimeDatasetBinding）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ConfigureRuntimeDatasetBinding" -->
 ##### 2.13.2.6 配置运行时数据集绑定（Configure Runtime Dataset Binding）/EMW-SD-SECTION-145
 
-- 归属: 运行时数据集绑定（Runtime Dataset Binding）.
-- 角色/触发条件: 节点操作员（Node Operator）.
-- 输入: 配置运行时数据集绑定（Configure Runtime Dataset Binding）.
-- 业务结果: 运行时数据集绑定已配置（Runtime Dataset Binding Configured）, 状态: 已配置（Configured）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时数据集绑定（Runtime Dataset Binding）。
+- 角色/触发条件: 节点操作员（Node Operator）。
+- 输入: 配置运行时数据集绑定（Configure Runtime Dataset Binding）。
+- 业务结果: 运行时数据集绑定已配置（Runtime Dataset Binding Configured）, 状态: 已配置（Configured）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 每个运行时数据集的运行时数据集绑定唯一（Runtime Dataset Binding Unique Per Runtime Dataset） / 拒绝重复的运行时数据集绑定（Reject Duplicate Runtime Dataset Binding） - 当 配置运行时数据集绑定（Configure Runtime Dataset Binding）, 则 拒绝: 运行时数据集绑定已存在.
+- 每个运行时数据集的运行时数据集绑定唯一（Runtime Dataset Binding Unique Per Runtime Dataset） / 拒绝重复的运行时数据集绑定（Reject Duplicate Runtime Dataset Binding） - 当 配置运行时数据集绑定（Configure Runtime Dataset Binding）, 则 拒绝: 运行时数据集绑定已存在。
 
 <!-- em:section id="software.slice.运行时数据集绑定目录（RuntimeDatasetBindingCatalog）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/RuntimeDatasetBindingCatalog" -->
 ##### 2.13.2.7 运行时数据集绑定目录（Runtime Dataset Binding Catalog）/EMW-SD-SECTION-146
 
-- 归属: 运行时数据集绑定（Runtime Dataset Binding）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时数据集绑定目录（Runtime Dataset Binding Catalog）.
+- 归属: 运行时数据集绑定（Runtime Dataset Binding）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时数据集绑定目录（Runtime Dataset Binding Catalog）。
 
 <!-- em:section id="software.slice.验证代理数据集访问（ValidateAgentDatasetAccess）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ValidateAgentDatasetAccess" -->
 ##### 2.13.2.8 验证代理数据集访问（Validate Agent Dataset Access）/EMW-SD-SECTION-147
 
-- 归属: 代理数据集访问验证（Agent Dataset Access Validation）.
-- 角色/触发条件: 运行时代理（Runtime Agent）.
-- 输入: 验证代理数据集访问（Validate Agent Dataset Access）.
-- 业务结果: 代理数据集访问已验证（Agent Dataset Access Validated）, 代理数据集访问验证失败（Agent Dataset Access Validation Failed）, 状态: 已检查（Checked）.
-- 读侧结果: 尚未明确.
+- 归属: 代理数据集访问验证（Agent Dataset Access Validation）。
+- 角色/触发条件: 运行时代理（Runtime Agent）。
+- 输入: 验证代理数据集访问（Validate Agent Dataset Access）。
+- 业务结果: 代理数据集访问已验证（Agent Dataset Access Validated）, 代理数据集访问验证失败（Agent Dataset Access Validation Failed）, 状态: 已检查（Checked）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 代理数据集访问验证结果（Agent Dataset Access Validation Outcome） / 代理数据集访问已验证（Agent Dataset Access Validated） - 当 验证代理数据集访问（Validate Agent Dataset Access）, 则 代理数据集访问已验证（Agent Dataset Access Validated）.
-- 代理数据集访问验证结果（Agent Dataset Access Validation Outcome） / 代理数据集访问验证失败（Agent Dataset Access Validation Failed） - 当 验证代理数据集访问（Validate Agent Dataset Access）, 则 代理数据集访问验证失败（Agent Dataset Access Validation Failed）.
+- 代理数据集访问验证结果（Agent Dataset Access Validation Outcome） / 代理数据集访问已验证（Agent Dataset Access Validated） - 当 验证代理数据集访问（Validate Agent Dataset Access）, 则 代理数据集访问已验证（Agent Dataset Access Validated）。
+- 代理数据集访问验证结果（Agent Dataset Access Validation Outcome） / 代理数据集访问验证失败（Agent Dataset Access Validation Failed） - 当 验证代理数据集访问（Validate Agent Dataset Access）, 则 代理数据集访问验证失败（Agent Dataset Access Validation Failed）。
 
 <!-- em:section id="software.slice.重新验证代理数据集访问（RevalidateAgentDatasetAccess）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/RevalidateAgentDatasetAccess" -->
 ##### 2.13.2.9 重新验证代理数据集访问（Revalidate Agent Dataset Access）/EMW-SD-SECTION-148
 
-- 归属: 代理数据集访问验证（Agent Dataset Access Validation）.
-- 角色/触发条件: 节点操作员（Node Operator）.
-- 输入: 重新验证代理数据集访问（Revalidate Agent Dataset Access）.
-- 业务结果: 代理数据集访问已重新验证（Agent Dataset Access Revalidated）, 代理数据集访问重新验证失败（Agent Dataset Access Revalidation Failed）, 状态: 已检查（Checked）.
-- 读侧结果: 尚未明确.
+- 归属: 代理数据集访问验证（Agent Dataset Access Validation）。
+- 角色/触发条件: 节点操作员（Node Operator）。
+- 输入: 重新验证代理数据集访问（Revalidate Agent Dataset Access）。
+- 业务结果: 代理数据集访问已重新验证（Agent Dataset Access Revalidated）, 代理数据集访问重新验证失败（Agent Dataset Access Revalidation Failed）, 状态: 已检查（Checked）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 代理数据集访问重新验证结果（Agent Dataset Access Revalidation Outcome） / 代理数据集访问已重新验证（Agent Dataset Access Revalidated） - 当 重新验证代理数据集访问（Revalidate Agent Dataset Access）, 则 代理数据集访问已重新验证（Agent Dataset Access Revalidated）.
-- 代理数据集访问重新验证结果（Agent Dataset Access Revalidation Outcome） / 代理数据集访问重新验证失败（Agent Dataset Access Revalidation Failed） - 当 重新验证代理数据集访问（Revalidate Agent Dataset Access）, 则 代理数据集访问重新验证失败（Agent Dataset Access Revalidation Failed）.
+- 代理数据集访问重新验证结果（Agent Dataset Access Revalidation Outcome） / 代理数据集访问已重新验证（Agent Dataset Access Revalidated） - 当 重新验证代理数据集访问（Revalidate Agent Dataset Access）, 则 代理数据集访问已重新验证（Agent Dataset Access Revalidated）。
+- 代理数据集访问重新验证结果（Agent Dataset Access Revalidation Outcome） / 代理数据集访问重新验证失败（Agent Dataset Access Revalidation Failed） - 当 重新验证代理数据集访问（Revalidate Agent Dataset Access）, 则 代理数据集访问重新验证失败（Agent Dataset Access Revalidation Failed）。
 
 <!-- em:section id="software.slice.代理数据集访问验证目录（AgentDatasetAccessValidationCatalog）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/AgentDatasetAccessValidationCatalog" -->
 ##### 2.13.2.10 代理数据集访问验证目录（Agent Dataset Access Validation Catalog）/EMW-SD-SECTION-149
 
-- 归属: 代理数据集访问验证（Agent Dataset Access Validation）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 代理数据集访问验证目录（Agent Dataset Access Validation Catalog）.
+- 归属: 代理数据集访问验证（Agent Dataset Access Validation）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 代理数据集访问验证目录（Agent Dataset Access Validation Catalog）。
 
 <!-- em:section id="software.slice.分析代理数据集（ProfileAgentDataset）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ProfileAgentDataset" -->
 ##### 2.13.2.11 分析代理数据集（Profile Agent Dataset）/EMW-SD-SECTION-150
 
-- 归属: 代理数据集配置文件（Agent Dataset Profile）.
-- 角色/触发条件: 运行时代理（Runtime Agent）.
-- 输入: 分析代理数据集（Profile Agent Dataset）.
-- 业务结果: 代理数据集元数据已报告（Agent Dataset Metadata Reported）, 代理数据集分析失败（Agent Dataset Profiling Failed）, 状态: 已报告（Reported）.
-- 读侧结果: 尚未明确.
+- 归属: 代理数据集配置文件（Agent Dataset Profile）。
+- 角色/触发条件: 运行时代理（Runtime Agent）。
+- 输入: 分析代理数据集（Profile Agent Dataset）。
+- 业务结果: 代理数据集元数据已报告（Agent Dataset Metadata Reported）, 代理数据集分析失败（Agent Dataset Profiling Failed）, 状态: 已报告（Reported）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 代理数据集分析结果（Agent Dataset Profiling Outcome） / 代理数据集元数据已报告（Agent Dataset Metadata Reported） - 当 分析代理数据集（Profile Agent Dataset）, 则 代理数据集元数据已报告（Agent Dataset Metadata Reported）.
-- 代理数据集分析结果（Agent Dataset Profiling Outcome） / 代理数据集分析失败（Agent Dataset Profiling Failed） - 当 分析代理数据集（Profile Agent Dataset）, 则 代理数据集分析失败（Agent Dataset Profiling Failed）.
+- 代理数据集分析结果（Agent Dataset Profiling Outcome） / 代理数据集元数据已报告（Agent Dataset Metadata Reported） - 当 分析代理数据集（Profile Agent Dataset）, 则 代理数据集元数据已报告（Agent Dataset Metadata Reported）。
+- 代理数据集分析结果（Agent Dataset Profiling Outcome） / 代理数据集分析失败（Agent Dataset Profiling Failed） - 当 分析代理数据集（Profile Agent Dataset）, 则 代理数据集分析失败（Agent Dataset Profiling Failed）。
 
 <!-- em:section id="software.slice.重新分析代理数据集（ReprofileAgentDataset）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ReprofileAgentDataset" -->
 ##### 2.13.2.12 重新分析代理数据集（Reprofile Agent Dataset）/EMW-SD-SECTION-151
 
-- 归属: 代理数据集配置文件（Agent Dataset Profile）.
-- 角色/触发条件: 节点操作员（Node Operator）.
-- 输入: 重新分析代理数据集（Reprofile Agent Dataset）.
-- 业务结果: 代理数据集已重新分析（Agent Dataset Reprofiled）, 代理数据集重新剖析失败（Agent Dataset Reprofiling Failed）, 状态: 已报告（Reported）.
-- 读侧结果: 尚未明确.
+- 归属: 代理数据集配置文件（Agent Dataset Profile）。
+- 角色/触发条件: 节点操作员（Node Operator）。
+- 输入: 重新分析代理数据集（Reprofile Agent Dataset）。
+- 业务结果: 代理数据集已重新分析（Agent Dataset Reprofiled）, 代理数据集重新剖析失败（Agent Dataset Reprofiling Failed）, 状态: 已报告（Reported）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 代理数据集重新剖析结果（Agent Dataset Reprofiling Outcome） / 代理数据集已重新分析（Agent Dataset Reprofiled） - 当 重新分析代理数据集（Reprofile Agent Dataset）, 则 代理数据集已重新分析（Agent Dataset Reprofiled）.
-- 代理数据集重新剖析结果（Agent Dataset Reprofiling Outcome） / 代理数据集重新剖析失败（Agent Dataset Reprofiling Failed） - 当 重新分析代理数据集（Reprofile Agent Dataset）, 则 代理数据集重新剖析失败（Agent Dataset Reprofiling Failed）.
+- 代理数据集重新剖析结果（Agent Dataset Reprofiling Outcome） / 代理数据集已重新分析（Agent Dataset Reprofiled） - 当 重新分析代理数据集（Reprofile Agent Dataset）, 则 代理数据集已重新分析（Agent Dataset Reprofiled）。
+- 代理数据集重新剖析结果（Agent Dataset Reprofiling Outcome） / 代理数据集重新剖析失败（Agent Dataset Reprofiling Failed） - 当 重新分析代理数据集（Reprofile Agent Dataset）, 则 代理数据集重新剖析失败（Agent Dataset Reprofiling Failed）。
 
 <!-- em:section id="software.slice.验证数据集合约（ValidateDatasetContract）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ValidateDatasetContract" -->
 ##### 2.13.2.13 验证数据集合约（Validate Dataset Contract）/EMW-SD-SECTION-152
 
-- 归属: 数据集（Dataset）.
-- 角色/触发条件: 自动验证数据集合约（Validate Dataset Contract Automatically）.
-- 输入: 验证数据集合约（Validate Dataset Contract）.
-- 业务结果: 数据集合约已验证（Dataset Contract Validated）, 数据集合约验证失败（Dataset Contract Validation Failed）, 状态: 合约验证已完成（Contract Validation Completed）.
-- 读侧结果: 尚未明确.
+- 归属: 数据集（Dataset）。
+- 角色/触发条件: 自动验证数据集合约（Validate Dataset Contract Automatically）。
+- 输入: 验证数据集合约（Validate Dataset Contract）。
+- 业务结果: 数据集合约已验证（Dataset Contract Validated）, 数据集合约验证失败（Dataset Contract Validation Failed）, 状态: 合约验证已完成（Contract Validation Completed）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 数据集合约验证结果（Dataset Contract Validation Outcome） / 数据集合约验证成功（Dataset Contract Validation Succeeded） - 当 验证数据集合约（Validate Dataset Contract）, 则 数据集合约已验证（Dataset Contract Validated）.
-- 数据集合约验证结果（Dataset Contract Validation Outcome） / 数据集合约验证失败（Dataset Contract Validation Failed） - 当 验证数据集合约（Validate Dataset Contract）, 则 数据集合约验证失败（Dataset Contract Validation Failed）.
+- 数据集合约验证结果（Dataset Contract Validation Outcome） / 数据集合约验证成功（Dataset Contract Validation Succeeded） - 当 验证数据集合约（Validate Dataset Contract）, 则 数据集合约已验证（Dataset Contract Validated）。
+- 数据集合约验证结果（Dataset Contract Validation Outcome） / 数据集合约验证失败（Dataset Contract Validation Failed） - 当 验证数据集合约（Validate Dataset Contract）, 则 数据集合约验证失败（Dataset Contract Validation Failed）。
 
 <!-- em:section id="software.slice.重试数据集合约验证（RetryDatasetContractValidation）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/RetryDatasetContractValidation" -->
 ##### 2.13.2.14 重试数据集合约验证（Retry Dataset Contract Validation）/EMW-SD-SECTION-153
 
-- 归属: 数据集（Dataset）.
-- 角色/触发条件: 数据所有者（Data Owner）.
-- 输入: 重试数据集合约验证（Retry Dataset Contract Validation）.
-- 业务结果: 数据集合约已重新验证（Dataset Contract Revalidated）, 数据集合约重新验证失败（Dataset Contract Revalidation Failed）, 状态: 合约验证已完成（Contract Validation Completed）.
-- 读侧结果: 尚未明确.
+- 归属: 数据集（Dataset）。
+- 角色/触发条件: 数据所有者（Data Owner）。
+- 输入: 重试数据集合约验证（Retry Dataset Contract Validation）。
+- 业务结果: 数据集合约已重新验证（Dataset Contract Revalidated）, 数据集合约重新验证失败（Dataset Contract Revalidation Failed）, 状态: 合约验证已完成（Contract Validation Completed）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 数据集合约验证重试结果（Dataset Contract Validation Retry Outcome） / 数据集合约已重新验证（Dataset Contract Revalidated） - 当 重试数据集合约验证（Retry Dataset Contract Validation）, 则 数据集合约已重新验证（Dataset Contract Revalidated）.
-- 数据集合约验证重试结果（Dataset Contract Validation Retry Outcome） / 数据集合约重新验证失败（Dataset Contract Revalidation Failed） - 当 重试数据集合约验证（Retry Dataset Contract Validation）, 则 数据集合约重新验证失败（Dataset Contract Revalidation Failed）.
+- 数据集合约验证重试结果（Dataset Contract Validation Retry Outcome） / 数据集合约已重新验证（Dataset Contract Revalidated） - 当 重试数据集合约验证（Retry Dataset Contract Validation）, 则 数据集合约已重新验证（Dataset Contract Revalidated）。
+- 数据集合约验证重试结果（Dataset Contract Validation Retry Outcome） / 数据集合约重新验证失败（Dataset Contract Revalidation Failed） - 当 重试数据集合约验证（Retry Dataset Contract Validation）, 则 数据集合约重新验证失败（Dataset Contract Revalidation Failed）。
 
 <!-- em:section id="software.slice.拒绝数据集用于训练（RejectDatasetForTraining）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/RejectDatasetForTraining" -->
 ##### 2.13.2.15 拒绝数据集用于训练（Reject Dataset For Training）/EMW-SD-SECTION-154
 
-- 归属: 数据集（Dataset）.
-- 角色/触发条件: 合规专员（Compliance Officer）.
-- 输入: 拒绝数据集用于训练（Reject Dataset For Training）.
-- 业务结果: 数据集已拒绝用于训练（Dataset Rejected For Training）, 状态: 已拒绝（Rejected）.
-- 读侧结果: 尚未明确.
+- 归属: 数据集（Dataset）。
+- 角色/触发条件: 合规专员（Compliance Officer）。
+- 输入: 拒绝数据集用于训练（Reject Dataset For Training）。
+- 业务结果: 数据集已拒绝用于训练（Dataset Rejected For Training）, 状态: 已拒绝（Rejected）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.批准数据集用于训练（ApproveDatasetForTraining）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ApproveDatasetForTraining" -->
 ##### 2.13.2.16 批准数据集用于训练（Approve Dataset For Training）/EMW-SD-SECTION-155
 
-- 归属: 数据集（Dataset）.
-- 角色/触发条件: 合规专员（Compliance Officer）.
-- 输入: 批准数据集用于训练（Approve Dataset For Training）.
-- 业务结果: 数据集已批准用于训练（Dataset Approved For Training）, 状态: 已批准（Approved）.
-- 读侧结果: 尚未明确.
+- 归属: 数据集（Dataset）。
+- 角色/触发条件: 合规专员（Compliance Officer）。
+- 输入: 批准数据集用于训练（Approve Dataset For Training）。
+- 业务结果: 数据集已批准用于训练（Dataset Approved For Training）, 状态: 已批准（Approved）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 仅批准已验证的高质量数据集（Only Validated Quality Datasets Are Approved） / 批准已验证的数据集（Approve Validated Dataset） - 当 批准数据集用于训练（Approve Dataset For Training）, 则 数据集已批准用于训练（Dataset Approved For Training）.
-- 仅批准已验证的高质量数据集（Only Validated Quality Datasets Are Approved） / 在数据集合约验证前拒绝批准（Reject Approval Before Contract Validation） - 当 批准数据集用于训练（Approve Dataset For Training）, 则 拒绝: 需要数据集合约验证.
+- 仅批准已验证的高质量数据集（Only Validated Quality Datasets Are Approved） / 批准已验证的数据集（Approve Validated Dataset） - 当 批准数据集用于训练（Approve Dataset For Training）, 则 数据集已批准用于训练（Dataset Approved For Training）。
+- 仅批准已验证的高质量数据集（Only Validated Quality Datasets Are Approved） / 在数据集合约验证前拒绝批准（Reject Approval Before Contract Validation） - 当 批准数据集用于训练（Approve Dataset For Training）, 则 拒绝: 需要数据集合约验证。
 
 <!-- em:section id="software.slice.撤销数据集训练审批（RevokeDatasetTrainingApproval）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/RevokeDatasetTrainingApproval" -->
 ##### 2.13.2.17 撤销数据集训练审批（Revoke Dataset Training Approval）/EMW-SD-SECTION-156
 
-- 归属: 数据集（Dataset）.
-- 角色/触发条件: 合规专员（Compliance Officer）.
-- 输入: 撤销数据集训练审批（Revoke Dataset Training Approval）.
-- 业务结果: 数据集训练批准已撤销（Dataset Training Approval Revoked）, 状态: 审批已撤销（Approval Revoked）.
-- 读侧结果: 尚未明确.
+- 归属: 数据集（Dataset）。
+- 角色/触发条件: 合规专员（Compliance Officer）。
+- 输入: 撤销数据集训练审批（Revoke Dataset Training Approval）。
+- 业务结果: 数据集训练批准已撤销（Dataset Training Approval Revoked）, 状态: 审批已撤销（Approval Revoked）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.数据集能力（DatasetCapability）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/DatasetCapability" -->
 ##### 2.13.2.18 数据集能力（Dataset Capability）/EMW-SD-SECTION-157
 
-- 归属: 数据集（Dataset）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 数据集能力（Dataset Capability）.
+- 归属: 数据集（Dataset）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 数据集能力（Dataset Capability）。
 
 <!-- em:section id="software.slice.数据集就绪状态（DatasetReadiness）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/DatasetReadiness" -->
 ##### 2.13.2.19 数据集就绪状态（Dataset Readiness）/EMW-SD-SECTION-158
 
-- 归属: 数据集（Dataset）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 数据集就绪状态（Dataset Readiness）.
+- 归属: 数据集（Dataset）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 数据集就绪状态（Dataset Readiness）。
 
 <!-- em:section id="software.slice.接收参与者执行计划（ReceiveParticipantExecutionPlan）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ReceiveParticipantExecutionPlan" -->
 ##### 2.13.2.20 接收参与者执行计划（Receive Participant Execution Plan）/EMW-SD-SECTION-159
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 分发时接收执行计划（Receive Execution Plan When Dispatched）.
-- 输入: 接收参与者执行计划（Receive Participant Execution Plan）.
-- 业务结果: 执行计划已接收（Execution Plan Received）, 状态: 计划已接收（Plan Received）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 分发时接收执行计划（Receive Execution Plan When Dispatched）。
+- 输入: 接收参与者执行计划（Receive Participant Execution Plan）。
+- 业务结果: 执行计划已接收（Execution Plan Received）, 状态: 计划已接收（Plan Received）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.接受执行计划（AcceptExecutionPlan）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/AcceptExecutionPlan" -->
 ##### 2.13.2.21 接受执行计划（Accept Execution Plan）/EMW-SD-SECTION-160
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 收到执行计划时接受执行计划（Accept Execution Plan When Execution Plan Received）.
-- 输入: 接受执行计划（Accept Execution Plan）.
-- 业务结果: 执行计划已接受（Execution Plan Accepted）, 执行计划已拒绝（Execution Plan Rejected）, 状态: 计划已接受（Plan Accepted）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 收到执行计划时接受执行计划（Accept Execution Plan When Execution Plan Received）。
+- 输入: 接受执行计划（Accept Execution Plan）。
+- 业务结果: 执行计划已接受（Execution Plan Accepted）, 执行计划已拒绝（Execution Plan Rejected）, 状态: 计划已接受（Plan Accepted）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 执行计划本地接受结果（Execution Plan Local Acceptance Outcome） / 执行计划已接受（Execution Plan Accepted） - 当 接受执行计划（Accept Execution Plan）, 则 执行计划已接受（Execution Plan Accepted）.
-- 执行计划本地接受结果（Execution Plan Local Acceptance Outcome） / 执行计划已拒绝（Execution Plan Rejected） - 当 接受执行计划（Accept Execution Plan）, 则 执行计划已拒绝（Execution Plan Rejected）.
+- 执行计划本地接受结果（Execution Plan Local Acceptance Outcome） / 执行计划已接受（Execution Plan Accepted） - 当 接受执行计划（Accept Execution Plan）, 则 执行计划已接受（Execution Plan Accepted）。
+- 执行计划本地接受结果（Execution Plan Local Acceptance Outcome） / 执行计划已拒绝（Execution Plan Rejected） - 当 接受执行计划（Accept Execution Plan）, 则 执行计划已拒绝（Execution Plan Rejected）。
 
 <!-- em:section id="software.slice.开始轮次执行（StartRoundExecution）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/StartRoundExecution" -->
 ##### 2.13.2.22 开始轮次执行（Start Round Execution）/EMW-SD-SECTION-161
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 计划接受时启动轮次执行（Start Round Execution When Plan Accepted）.
-- 输入: 开始轮次执行（Start Round Execution）.
-- 业务结果: 轮次执行已启动（Round Execution Started）, 轮次执行启动失败（Round Execution Start Failed）, 状态: 运行中（Running）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 计划接受时启动轮次执行（Start Round Execution When Plan Accepted）。
+- 输入: 开始轮次执行（Start Round Execution）。
+- 业务结果: 轮次执行已启动（Round Execution Started）, 轮次执行启动失败（Round Execution Start Failed）, 状态: 运行中（Running）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 轮次执行运行时引擎启动结果（Round Execution Runtime Engine Start Outcome） / 轮次执行已启动（Round Execution Started） - 当 开始轮次执行（Start Round Execution）, 则 轮次执行已启动（Round Execution Started）.
-- 轮次执行运行时引擎启动结果（Round Execution Runtime Engine Start Outcome） / 轮次执行启动失败（Round Execution Start Failed） - 当 开始轮次执行（Start Round Execution）, 则 轮次执行启动失败（Round Execution Start Failed）.
+- 轮次执行运行时引擎启动结果（Round Execution Runtime Engine Start Outcome） / 轮次执行已启动（Round Execution Started） - 当 开始轮次执行（Start Round Execution）, 则 轮次执行已启动（Round Execution Started）。
+- 轮次执行运行时引擎启动结果（Round Execution Runtime Engine Start Outcome） / 轮次执行启动失败（Round Execution Start Failed） - 当 开始轮次执行（Start Round Execution）, 则 轮次执行启动失败（Round Execution Start Failed）。
 
 <!-- em:section id="software.slice.观察运行时引擎作业（ObserveRuntimeEngineJob）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ObserveRuntimeEngineJob" -->
 ##### 2.13.2.23 观察运行时引擎作业（Observe Runtime Engine Job）/EMW-SD-SECTION-162
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 轮次执行启动时观察运行时引擎作业（Observe Runtime Engine Job When Round Execution Started）.
-- 输入: 观察运行时引擎作业（Observe Runtime Engine Job）.
-- 业务结果: 运行时引擎作业已观察（Runtime Engine Job Observed）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 轮次执行启动时观察运行时引擎作业（Observe Runtime Engine Job When Round Execution Started）。
+- 输入: 观察运行时引擎作业（Observe Runtime Engine Job）。
+- 业务结果: 运行时引擎作业已观察（Runtime Engine Job Observed）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察运行中（Runtime Engine Job Observed Running） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）.
-- 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察完成（Runtime Engine Job Observed Completed） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）.
-- 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察失败（Runtime Engine Job Observed Failed） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）.
+- 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察运行中（Runtime Engine Job Observed Running） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）。
+- 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察完成（Runtime Engine Job Observed Completed） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）。
+- 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察失败（Runtime Engine Job Observed Failed） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）。
 
 <!-- em:section id="software.slice.完成轮次执行（CompleteRoundExecution）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/CompleteRoundExecution" -->
 ##### 2.13.2.24 完成轮次执行（Complete Round Execution）/EMW-SD-SECTION-163
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 运行时引擎作业完成时完成轮次执行（Complete Round Execution When Runtime Engine Job Completed）.
-- 输入: 完成轮次执行（Complete Round Execution）.
-- 业务结果: 轮次执行已完成（Round Execution Completed）, 状态: 已完成（Completed）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 运行时引擎作业完成时完成轮次执行（Complete Round Execution When Runtime Engine Job Completed）。
+- 输入: 完成轮次执行（Complete Round Execution）。
+- 业务结果: 轮次执行已完成（Round Execution Completed）, 状态: 已完成（Completed）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.失败轮次执行（FailRoundExecution）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/FailRoundExecution" -->
 ##### 2.13.2.25 失败轮次执行（Fail Round Execution）/EMW-SD-SECTION-164
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 运行时引擎作业失败时使轮次执行失败（Fail Round Execution When Runtime Engine Job Failed）.
-- 输入: 失败轮次执行（Fail Round Execution）.
-- 业务结果: 轮次执行失败（Round Execution Failed）, 状态: 已失败（Failed）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 运行时引擎作业失败时使轮次执行失败（Fail Round Execution When Runtime Engine Job Failed）。
+- 输入: 失败轮次执行（Fail Round Execution）。
+- 业务结果: 轮次执行失败（Round Execution Failed）, 状态: 已失败（Failed）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.启动失败后重试轮次执行（RetryRoundExecutionAfterStartFailure）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/RetryRoundExecutionAfterStartFailure" -->
 ##### 2.13.2.26 启动失败后重试轮次执行（Retry Round Execution After Start Failure）/EMW-SD-SECTION-165
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 节点操作员（Node Operator）.
-- 输入: 启动失败后重试轮次执行（Retry Round Execution After Start Failure）.
-- 业务结果: 轮次执行启动重试已开始（Round Execution Start Retry Started）, 轮次执行启动重试失败（Round Execution Start Retry Failed）, 状态: 已重试（Retried）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 节点操作员（Node Operator）。
+- 输入: 启动失败后重试轮次执行（Retry Round Execution After Start Failure）。
+- 业务结果: 轮次执行启动重试已开始（Round Execution Start Retry Started）, 轮次执行启动重试失败（Round Execution Start Retry Failed）, 状态: 已重试（Retried）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.运行时失败后重试轮次执行（RetryRoundExecutionAfterRuntimeFailure）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/RetryRoundExecutionAfterRuntimeFailure" -->
 ##### 2.13.2.27 运行时失败后重试轮次执行（Retry Round Execution After Runtime Failure）/EMW-SD-SECTION-166
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 节点操作员（Node Operator）.
-- 输入: 运行时失败后重试轮次执行（Retry Round Execution After Runtime Failure）.
-- 业务结果: 轮次执行运行时重试已启动（Round Execution Runtime Retry Started）, 轮次执行运行时重试失败（Round Execution Runtime Retry Failed）, 状态: 已重试（Retried）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 节点操作员（Node Operator）。
+- 输入: 运行时失败后重试轮次执行（Retry Round Execution After Runtime Failure）。
+- 业务结果: 轮次执行运行时重试已启动（Round Execution Runtime Retry Started）, 轮次执行运行时重试失败（Round Execution Runtime Retry Failed）, 状态: 已重试（Retried）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.提交代理本地模型更新（SubmitAgentLocalModelUpdate）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/SubmitAgentLocalModelUpdate" -->
 ##### 2.13.2.28 提交代理本地模型更新（Submit Agent Local Model Update）/EMW-SD-SECTION-167
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 在轮次执行完成时提交本地模型更新（Submit Local Model Update When Round Execution Completed）.
-- 输入: 提交代理本地模型更新（Submit Agent Local Model Update）.
-- 业务结果: 代理本地模型更新已提交（Agent Local Model Update Submitted）, 状态: 更新已提交（Update Submitted）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 在轮次执行完成时提交本地模型更新（Submit Local Model Update When Round Execution Completed）。
+- 输入: 提交代理本地模型更新（Submit Agent Local Model Update）。
+- 业务结果: 代理本地模型更新已提交（Agent Local Model Update Submitted）, 状态: 更新已提交（Update Submitted）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.完成后释放运行时引擎作业（ReleaseRuntimeEngineJobAfterCompletion）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ReleaseRuntimeEngineJobAfterCompletion" -->
 ##### 2.13.2.29 完成后释放运行时引擎作业（Release Runtime Engine Job After Completion）/EMW-SD-SECTION-168
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 本地模型更新已提交时发布运行时引擎作业（Release Runtime Engine Job When Local Model Update Submitted）.
-- 输入: 完成后释放运行时引擎作业（Release Runtime Engine Job After Completion）.
-- 业务结果: 运行时引擎作业已释放（Runtime Engine Job Released）, 状态: 运行时引擎已释放（Runtime Engine Released）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 本地模型更新已提交时发布运行时引擎作业（Release Runtime Engine Job When Local Model Update Submitted）。
+- 输入: 完成后释放运行时引擎作业（Release Runtime Engine Job After Completion）。
+- 业务结果: 运行时引擎作业已释放（Runtime Engine Job Released）, 状态: 运行时引擎已释放（Runtime Engine Released）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.失败后释放运行时引擎作业（ReleaseRuntimeEngineJobAfterFailure）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ReleaseRuntimeEngineJobAfterFailure" -->
 ##### 2.13.2.30 失败后释放运行时引擎作业（Release Runtime Engine Job After Failure）/EMW-SD-SECTION-169
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 当轮次执行失败时释放运行时引擎作业（Release Runtime Engine Job When Round Execution Failed）.
-- 输入: 失败后释放运行时引擎作业（Release Runtime Engine Job After Failure）.
-- 业务结果: 运行时引擎作业释放失败或已跳过（Runtime Engine Job Release Failed Or Skipped）, 状态: 运行时引擎释放已处理（Runtime Engine Release Handled）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 当轮次执行失败时释放运行时引擎作业（Release Runtime Engine Job When Round Execution Failed）。
+- 输入: 失败后释放运行时引擎作业（Release Runtime Engine Job After Failure）。
+- 业务结果: 运行时引擎作业释放失败或已跳过（Runtime Engine Job Release Failed Or Skipped）, 状态: 运行时引擎释放已处理（Runtime Engine Release Handled）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.启动失败后释放运行时引擎作业（ReleaseRuntimeEngineJobAfterStartFailure）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ReleaseRuntimeEngineJobAfterStartFailure" -->
 ##### 2.13.2.31 启动失败后释放运行时引擎作业（Release Runtime Engine Job After Start Failure）/EMW-SD-SECTION-170
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 启动失败时释放运行时引擎作业（Release Runtime Engine Job When Start Failed）.
-- 输入: 启动失败后释放运行时引擎作业（Release Runtime Engine Job After Start Failure）.
-- 业务结果: 启动失败后运行时引擎作业释放失败或已跳过（Runtime Engine Job Release Failed Or Skipped After Start Failure）, 状态: 运行时引擎释放已处理（Runtime Engine Release Handled）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 启动失败时释放运行时引擎作业（Release Runtime Engine Job When Start Failed）。
+- 输入: 启动失败后释放运行时引擎作业（Release Runtime Engine Job After Start Failure）。
+- 业务结果: 启动失败后运行时引擎作业释放失败或已跳过（Runtime Engine Job Release Failed Or Skipped After Start Failure）, 状态: 运行时引擎释放已处理（Runtime Engine Release Handled）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.重试失败后释放运行时引擎作业（ReleaseRuntimeEngineJobAfterRetryFailure）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ReleaseRuntimeEngineJobAfterRetryFailure" -->
 ##### 2.13.2.32 重试失败后释放运行时引擎作业（Release Runtime Engine Job After Retry Failure）/EMW-SD-SECTION-171
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 启动重试失败时释放运行时引擎作业（Release Runtime Engine Job When Start Retry Failed）.
-- 输入: 重试失败后释放运行时引擎作业（Release Runtime Engine Job After Retry Failure）.
-- 业务结果: 重试后运行时引擎作业释放失败或已跳过（Runtime Engine Job Release Failed Or Skipped After Retry）, 状态: 运行时引擎释放已处理（Runtime Engine Release Handled）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 启动重试失败时释放运行时引擎作业（Release Runtime Engine Job When Start Retry Failed）。
+- 输入: 重试失败后释放运行时引擎作业（Release Runtime Engine Job After Retry Failure）。
+- 业务结果: 重试后运行时引擎作业释放失败或已跳过（Runtime Engine Job Release Failed Or Skipped After Retry）, 状态: 运行时引擎释放已处理（Runtime Engine Release Handled）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.运行时重试失败后释放运行时引擎作业（ReleaseRuntimeEngineJobAfterRuntimeRetryFailure）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ReleaseRuntimeEngineJobAfterRuntimeRetryFailure" -->
 ##### 2.13.2.33 运行时重试失败后释放运行时引擎作业（Release Runtime Engine Job After Runtime Retry Failure）/EMW-SD-SECTION-172
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 运行时重试失败时释放运行时引擎作业（Release Runtime Engine Job When Runtime Retry Failed）.
-- 输入: 运行时重试失败后释放运行时引擎作业（Release Runtime Engine Job After Runtime Retry Failure）.
-- 业务结果: 运行时重试后运行时引擎作业释放失败或跳过（Runtime Engine Job Release Failed Or Skipped After Runtime Retry）, 状态: 运行时引擎释放已处理（Runtime Engine Release Handled）.
-- 读侧结果: 尚未明确.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 运行时重试失败时释放运行时引擎作业（Release Runtime Engine Job When Runtime Retry Failed）。
+- 输入: 运行时重试失败后释放运行时引擎作业（Release Runtime Engine Job After Runtime Retry Failure）。
+- 业务结果: 运行时重试后运行时引擎作业释放失败或跳过（Runtime Engine Job Release Failed Or Skipped After Runtime Retry）, 状态: 运行时引擎释放已处理（Runtime Engine Release Handled）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.轮次执行目录（RoundExecutionCatalog）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/RoundExecutionCatalog" -->
 ##### 2.13.2.34 轮次执行目录（Round Execution Catalog）/EMW-SD-SECTION-173
 
-- 归属: 轮次执行（Round Execution）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 轮次执行目录（Round Execution Catalog）.
+- 归属: 轮次执行（Round Execution）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 轮次执行目录（Round Execution Catalog）。
 
 <!-- em:section id="software.slice.加载运行时代理引导配置（LoadRuntimeAgentBootstrapConfiguration）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/LoadRuntimeAgentBootstrapConfiguration" -->
 ##### 2.13.2.35 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）/EMW-SD-SECTION-174
 
-- 归属: 运行时代理生命周期（Runtime Agent Lifecycle）.
-- 角色/触发条件: 运行时代理（Runtime Agent）.
-- 输入: 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）.
-- 业务结果: 运行时代理引导配置已加载（Runtime Agent Bootstrap Configuration Loaded）, 运行时代理引导配置加载失败（Runtime Agent Bootstrap Configuration Load Failed）, 状态: 引导程序已加载（Bootstrap Loaded）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时代理生命周期（Runtime Agent Lifecycle）。
+- 角色/触发条件: 运行时代理（Runtime Agent）。
+- 输入: 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）。
+- 业务结果: 运行时代理引导配置已加载（Runtime Agent Bootstrap Configuration Loaded）, 运行时代理引导配置加载失败（Runtime Agent Bootstrap Configuration Load Failed）, 状态: 引导程序已加载（Bootstrap Loaded）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 运行时代理启动引导配置（Runtime Agent Startup Bootstrap Configuration） / 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration） - 当 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）, 则 运行时代理引导配置已加载（Runtime Agent Bootstrap Configuration Loaded）.
-- 运行时代理启动引导配置（Runtime Agent Startup Bootstrap Configuration） / 拒绝缺失的运行时代理引导配置（Reject Missing Runtime Agent Bootstrap Configuration） - 当 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）, 则 运行时代理引导配置加载失败（Runtime Agent Bootstrap Configuration Load Failed）.
+- 运行时代理启动引导配置（Runtime Agent Startup Bootstrap Configuration） / 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration） - 当 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）, 则 运行时代理引导配置已加载（Runtime Agent Bootstrap Configuration Loaded）。
+- 运行时代理启动引导配置（Runtime Agent Startup Bootstrap Configuration） / 拒绝缺失的运行时代理引导配置（Reject Missing Runtime Agent Bootstrap Configuration） - 当 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）, 则 运行时代理引导配置加载失败（Runtime Agent Bootstrap Configuration Load Failed）。
 
 <!-- em:section id="software.slice.报告运行时代理已启动（ReportRuntimeAgentStarted）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ReportRuntimeAgentStarted" -->
 ##### 2.13.2.36 报告运行时代理已启动（Report Runtime Agent Started）/EMW-SD-SECTION-175
 
-- 归属: 运行时代理生命周期（Runtime Agent Lifecycle）.
-- 角色/触发条件: 运行时代理（Runtime Agent）.
-- 输入: 报告运行时代理已启动（Report Runtime Agent Started）.
-- 业务结果: 运行时代理已启动（Runtime Agent Started）, 状态: 已启动（Started）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时代理生命周期（Runtime Agent Lifecycle）。
+- 角色/触发条件: 运行时代理（Runtime Agent）。
+- 输入: 报告运行时代理已启动（Report Runtime Agent Started）。
+- 业务结果: 运行时代理已启动（Runtime Agent Started）, 状态: 已启动（Started）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.报告运行时实例自检已通过（ReportRuntimeInstanceSelfCheckPassed）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ReportRuntimeInstanceSelfCheckPassed" -->
 ##### 2.13.2.37 报告运行时实例自检已通过（Report Runtime Instance Self Check Passed）/EMW-SD-SECTION-176
 
-- 归属: 运行时代理生命周期（Runtime Agent Lifecycle）.
-- 角色/触发条件: 运行时代理（Runtime Agent）.
-- 输入: 报告运行时实例自检已通过（Report Runtime Instance Self Check Passed）.
-- 业务结果: 运行时实例自检通过（Runtime Instance Self Check Passed）, 状态: 就绪（Ready）.
-- 读侧结果: 尚未明确.
+- 归属: 运行时代理生命周期（Runtime Agent Lifecycle）。
+- 角色/触发条件: 运行时代理（Runtime Agent）。
+- 输入: 报告运行时实例自检已通过（Report Runtime Instance Self Check Passed）。
+- 业务结果: 运行时实例自检通过（Runtime Instance Self Check Passed）, 状态: 就绪（Ready）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.运行时代理生命周期目录（RuntimeAgentLifecycleCatalog）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/RuntimeAgentLifecycleCatalog" -->
 ##### 2.13.2.38 运行时代理生命周期目录（Runtime Agent Lifecycle Catalog）/EMW-SD-SECTION-177
 
-- 归属: 运行时代理生命周期（Runtime Agent Lifecycle）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 运行时代理生命周期目录（Runtime Agent Lifecycle Catalog）.
+- 归属: 运行时代理生命周期（Runtime Agent Lifecycle）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 运行时代理生命周期目录（Runtime Agent Lifecycle Catalog）。
 
 <!-- em:section id="software.slice.报告运行时实例已连接（ReportRuntimeInstanceConnected）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ReportRuntimeInstanceConnected" -->
 ##### 2.13.2.39 报告运行时实例已连接（Report Runtime Instance Connected）/EMW-SD-SECTION-178
 
-- 归属: 代理运行时基础设施连接（Agent Runtime Infrastructure Connection）.
-- 角色/触发条件: 在自检后报告运行时实例已连接（Report Runtime Instance Connected After Self Check）.
-- 输入: 报告运行时实例已连接（Report Runtime Instance Connected）.
-- 业务结果: 代理运行时连接报告失败（Agent Runtime Connection Report Failed）, 代理运行时连接已建立（Agent Runtime Connection Established）, 状态: 已连接（Connected）.
-- 读侧结果: 尚未明确.
+- 归属: 代理运行时基础设施连接（Agent Runtime Infrastructure Connection）。
+- 角色/触发条件: 在自检后报告运行时实例已连接（Report Runtime Instance Connected After Self Check）。
+- 输入: 报告运行时实例已连接（Report Runtime Instance Connected）。
+- 业务结果: 代理运行时连接报告失败（Agent Runtime Connection Report Failed）, 代理运行时连接已建立（Agent Runtime Connection Established）, 状态: 已连接（Connected）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 运行时代理平台连接报告结果（Runtime Agent Platform Connection Reporting Outcome） / 报告运行时实例已连接（Report Runtime Instance Connected） - 当 报告运行时实例已连接（Report Runtime Instance Connected）, 则 代理运行时连接已建立（Agent Runtime Connection Established）.
-- 运行时代理平台连接报告结果（Runtime Agent Platform Connection Reporting Outcome） / 报告运行时实例连接失败（Report Runtime Instance Connection Failed） - 当 报告运行时实例已连接（Report Runtime Instance Connected）, 则 代理运行时连接报告失败（Agent Runtime Connection Report Failed）.
+- 运行时代理平台连接报告结果（Runtime Agent Platform Connection Reporting Outcome） / 报告运行时实例已连接（Report Runtime Instance Connected） - 当 报告运行时实例已连接（Report Runtime Instance Connected）, 则 代理运行时连接已建立（Agent Runtime Connection Established）。
+- 运行时代理平台连接报告结果（Runtime Agent Platform Connection Reporting Outcome） / 报告运行时实例连接失败（Report Runtime Instance Connection Failed） - 当 报告运行时实例已连接（Report Runtime Instance Connected）, 则 代理运行时连接报告失败（Agent Runtime Connection Report Failed）。
 
 <!-- em:section id="software.slice.代理运行时基础设施连接目录（AgentRuntimeInfrastructureConnectionCatalog）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/AgentRuntimeInfrastructureConnectionCatalog" -->
 ##### 2.13.2.40 代理运行时基础设施连接目录（Agent Runtime Infrastructure Connection Catalog）/EMW-SD-SECTION-179
 
-- 归属: 代理运行时基础设施连接（Agent Runtime Infrastructure Connection）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 代理运行时基础设施连接目录（Agent Runtime Infrastructure Connection Catalog）.
+- 归属: 代理运行时基础设施连接（Agent Runtime Infrastructure Connection）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 代理运行时基础设施连接目录（Agent Runtime Infrastructure Connection Catalog）。
 
 <!-- em:section id="software.slice.代理运行时遥测最新（AgentRuntimeTelemetryLatest）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/AgentRuntimeTelemetryLatest" -->
 ##### 2.13.2.41 代理运行时遥测最新（Agent Runtime Telemetry Latest）/EMW-SD-SECTION-180
 
-- 归属: 代理运行时遥测（Agent Runtime Telemetry）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 代理运行时遥测最新（Agent Runtime Telemetry Latest）.
+- 归属: 代理运行时遥测（Agent Runtime Telemetry）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 代理运行时遥测最新（Agent Runtime Telemetry Latest）。
 
 <!-- em:section id="software.slice.报告代理运行时节点清单（ReportAgentRuntimeNodeInventory）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/ReportAgentRuntimeNodeInventory" -->
 ##### 2.13.2.42 报告代理运行时节点清单（Report Agent Runtime Node Inventory）/EMW-SD-SECTION-181
 
-- 归属: 代理运行时节点清单（Agent Runtime Node Inventory）.
-- 角色/触发条件: 清单更改时报告节点清单（Report Node Inventory When Inventory Changed）.
-- 输入: 报告代理运行时节点清单（Report Agent Runtime Node Inventory）.
-- 业务结果: 代理运行时节点清单已报告（Agent Runtime Node Inventory Reported）, 状态: 已报告（Reported）.
-- 读侧结果: 尚未明确.
+- 归属: 代理运行时节点清单（Agent Runtime Node Inventory）。
+- 角色/触发条件: 清单更改时报告节点清单（Report Node Inventory When Inventory Changed）。
+- 输入: 报告代理运行时节点清单（Report Agent Runtime Node Inventory）。
+- 业务结果: 代理运行时节点清单已报告（Agent Runtime Node Inventory Reported）, 状态: 已报告（Reported）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.代理运行时节点清单目录（AgentRuntimeNodeInventoryCatalog）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/AgentRuntimeNodeInventoryCatalog" -->
 ##### 2.13.2.43 代理运行时节点清单目录（Agent Runtime Node Inventory Catalog）/EMW-SD-SECTION-182
 
-- 归属: 代理运行时节点清单（Agent Runtime Node Inventory）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 代理运行时节点清单目录（Agent Runtime Node Inventory Catalog）.
+- 归属: 代理运行时节点清单（Agent Runtime Node Inventory）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 代理运行时节点清单目录（Agent Runtime Node Inventory Catalog）。
 
 <!-- em:section id="software.slice.代理运行时节点资源最新（AgentRuntimeNodeResourceLatest）" source="domain/FederationLearningPlatform/context/RuntimeAgentOperations/slice/AgentRuntimeNodeResourceLatest" -->
 ##### 2.13.2.44 代理运行时节点资源最新（Agent Runtime Node Resource Latest）/EMW-SD-SECTION-183
 
-- 归属: 代理运行时节点资源遥测（Agent Runtime Node Resource Telemetry）.
-- 角色/触发条件: 系统.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 代理运行时节点资源最新（Agent Runtime Node Resource Latest）.
+- 归属: 代理运行时节点资源遥测（Agent Runtime Node Resource Telemetry）。
+- 角色/触发条件: 系统。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 代理运行时节点资源最新（Agent Runtime Node Resource Latest）。
 
 #### 2.13.3 上下文数据设计/EMW-SD-CDD-13
 
@@ -2408,138 +2408,138 @@
 <!-- em:section id="software.slice.注册用户账户（RegisterUserAccount）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/RegisterUserAccount" -->
 ##### 2.14.2.1 注册用户账户（Register User Account）/EMW-SD-SECTION-185
 
-- 归属: 用户账户（User Account）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 注册用户账户（Register User Account）.
-- 业务结果: 用户账户已注册（User Account Registered）, 状态: 已激活（Active）.
-- 读侧结果: 尚未明确.
+- 归属: 用户账户（User Account）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 注册用户账户（Register User Account）。
+- 业务结果: 用户账户已注册（User Account Registered）, 状态: 已激活（Active）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 用户账户用户名唯一（User Account Username Unique） / 拒绝重复用户名（Reject Duplicate Username） - 当 注册用户账户（Register User Account）, 则 拒绝: 用户名已存在。.
+- 用户账户用户名唯一（User Account Username Unique） / 拒绝重复用户名（Reject Duplicate Username） - 当 注册用户账户（Register User Account）, 则 拒绝: 用户名已存在。
 
 <!-- em:section id="software.slice.停用用户账户（DeactivateUserAccount）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/DeactivateUserAccount" -->
 ##### 2.14.2.2 停用用户账户（Deactivate User Account）/EMW-SD-SECTION-186
 
-- 归属: 用户账户（User Account）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 停用用户账户（Deactivate User Account）.
-- 业务结果: 用户账户已停用（User Account Deactivated）, 状态: 已停用（Deactivated）.
-- 读侧结果: 尚未明确.
+- 归属: 用户账户（User Account）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 停用用户账户（Deactivate User Account）。
+- 业务结果: 用户账户已停用（User Account Deactivated）, 状态: 已停用（Deactivated）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.生成用户账户登录密码（GenerateUserAccountLoginPassword）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/GenerateUserAccountLoginPassword" -->
 ##### 2.14.2.3 生成用户账户登录密码（Generate User Account Login Password）/EMW-SD-SECTION-187
 
-- 归属: 用户账户（User Account）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 生成用户账户登录密码（Generate User Account Login Password）.
-- 业务结果: 用户账户登录密码已生成（User Account Login Password Generated）.
-- 读侧结果: 尚未明确.
+- 归属: 用户账户（User Account）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 生成用户账户登录密码（Generate User Account Login Password）。
+- 业务结果: 用户账户登录密码已生成（User Account Login Password Generated）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.注册角色（RegisterRole）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/RegisterRole" -->
 ##### 2.14.2.4 注册角色（Register Role）/EMW-SD-SECTION-188
 
-- 归属: 角色（Role）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 注册角色（Register Role）.
-- 业务结果: 角色已注册（Role Registered）, 状态: 已注册（Registered）.
-- 读侧结果: 尚未明确.
+- 归属: 角色（Role）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 注册角色（Register Role）。
+- 业务结果: 角色已注册（Role Registered）, 状态: 已注册（Registered）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.注册权限（RegisterPermission）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/RegisterPermission" -->
 ##### 2.14.2.5 注册权限（Register Permission）/EMW-SD-SECTION-189
 
-- 归属: 权限（Permission）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 注册权限（Register Permission）.
-- 业务结果: 权限已注册（Permission Registered）, 状态: 已注册（Registered）.
-- 读侧结果: 尚未明确.
+- 归属: 权限（Permission）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 注册权限（Register Permission）。
+- 业务结果: 权限已注册（Permission Registered）, 状态: 已注册（Registered）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.为角色授予权限（GrantPermissionToRole）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/GrantPermissionToRole" -->
 ##### 2.14.2.6 为角色授予权限（Grant Permission To Role）/EMW-SD-SECTION-190
 
-- 归属: 角色（Role）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 为角色授予权限（Grant Permission To Role）.
-- 业务结果: 权限已授予角色（Permission Granted To Role）, 已从角色撤销权限（Permission Revoked From Role）, 状态: 已注册（Registered）.
-- 读侧结果: 尚未明确.
+- 归属: 角色（Role）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 为角色授予权限（Grant Permission To Role）。
+- 业务结果: 权限已授予角色（Permission Granted To Role）, 已从角色撤销权限（Permission Revoked From Role）, 状态: 已注册（Registered）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.为用户分配角色（AssignRoleToUser）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/AssignRoleToUser" -->
 ##### 2.14.2.7 为用户分配角色（Assign Role To User）/EMW-SD-SECTION-191
 
-- 归属: 用户账户（User Account）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 为用户分配角色（Assign Role To User）.
-- 业务结果: 角色已分配给用户（Role Assigned To User）, 角色已从用户取消分配（Role Unassigned From User）, 状态: 已激活（Active）.
-- 读侧结果: 尚未明确.
+- 归属: 用户账户（User Account）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 为用户分配角色（Assign Role To User）。
+- 业务结果: 角色已分配给用户（Role Assigned To User）, 角色已从用户取消分配（Role Unassigned From User）, 状态: 已激活（Active）。
+- 读侧结果: 尚未明确。
 
 <!-- em:section id="software.slice.颁发服务账户 API 令牌（IssueServiceAccountApiToken）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/IssueServiceAccountApiToken" -->
 ##### 2.14.2.8 颁发服务账户 API 令牌（Issue Service Account Api Token）/EMW-SD-A
 
-- 归属: 服务账户 API 令牌（Service Account Api Token）.
-- 角色/触发条件: 超级管理员（Super Administrator）.
-- 输入: 颁发服务账户 API 令牌（Issue Service Account Api Token）.
-- 业务结果: 服务账户 API 令牌已颁发（Service Account Api Token Issued）, 状态: 已颁发（Issued）.
-- 读侧结果: 尚未明确.
+- 归属: 服务账户 API 令牌（Service Account Api Token）。
+- 角色/触发条件: 超级管理员（Super Administrator）。
+- 输入: 颁发服务账户 API 令牌（Issue Service Account Api Token）。
+- 业务结果: 服务账户 API 令牌已颁发（Service Account Api Token Issued）, 状态: 已颁发（Issued）。
+- 读侧结果: 尚未明确。
 
 **规则与异常设计**
 
-- 仅超级管理员可颁发服务账户 API 令牌（Only Super Administrator Can Issue Service Account Api Token） / 超级管理员为服务账户颁发令牌（Super Administrator Issues Token For Service Account） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）.
-- 服务账户 API 令牌明文仅返回一次（Service Account Api Token Plaintext Returned Once） / 已颁发事件存储摘要而非明文令牌（Issued Event Stores Digest Instead Of Plaintext Token） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）.
-- 服务账户 API 令牌捕获权限快照（Service Account Api Token Captures Permission Snapshot） / 已颁发令牌捕获当前权限（Issued Token Captures Current Permissions） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）.
+- 仅超级管理员可颁发服务账户 API 令牌（Only Super Administrator Can Issue Service Account Api Token） / 超级管理员为服务账户颁发令牌（Super Administrator Issues Token For Service Account） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）。
+- 服务账户 API 令牌明文仅返回一次（Service Account Api Token Plaintext Returned Once） / 已颁发事件存储摘要而非明文令牌（Issued Event Stores Digest Instead Of Plaintext Token） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）。
+- 服务账户 API 令牌捕获权限快照（Service Account Api Token Captures Permission Snapshot） / 已颁发令牌捕获当前权限（Issued Token Captures Current Permissions） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）。
 
 <!-- em:section id="software.slice.用户账户目录（UserAccountCatalogs）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/UserAccountCatalogs" -->
 ##### 2.14.2.9 用户账户目录（User Account Catalogs）/EMW-SD-SECTION-192
 
-- 归属: 用户账户（User Account）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 用户账户目录（User Account Catalog）.
+- 归属: 用户账户（User Account）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 用户账户目录（User Account Catalog）。
 
 <!-- em:section id="software.slice.角色目录（RoleCatalogs）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/RoleCatalogs" -->
 ##### 2.14.2.10 角色目录（Role Catalogs）/EMW-SD-SECTION-193
 
-- 归属: 角色（Role）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 角色目录（Role Catalog）.
+- 归属: 角色（Role）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 角色目录（Role Catalog）。
 
 <!-- em:section id="software.slice.权限目录（PermissionCatalogs）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/PermissionCatalogs" -->
 ##### 2.14.2.11 权限目录（Permission Catalogs）/EMW-SD-SECTION-194
 
-- 归属: 权限（Permission）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 权限目录（Permission Catalog）.
+- 归属: 权限（Permission）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 权限目录（Permission Catalog）。
 
 <!-- em:section id="software.slice.用户角色分配目录（UserRoleAssignmentCatalog）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/UserRoleAssignmentCatalog" -->
 ##### 2.14.2.12 用户角色分配目录（User Role Assignment Catalog）/EMW-SD-SECTION-195
 
-- 归属: 用户角色分配（User Role Assignment）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 用户角色分配目录（User Role Assignment Catalog）.
+- 归属: 用户角色分配（User Role Assignment）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 用户角色分配目录（User Role Assignment Catalog）。
 
 <!-- em:section id="software.slice.角色权限授予目录（RolePermissionGrantCatalog）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/RolePermissionGrantCatalog" -->
 ##### 2.14.2.13 角色权限授予目录（Role Permission Grant Catalog）/EMW-SD-SECTION-196
 
-- 归属: 角色权限授予（Role Permission Grant）.
-- 角色/触发条件: 身份管理员（Identity Administrator）.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 角色权限授予目录（Role Permission Grant Catalog）.
+- 归属: 角色权限授予（Role Permission Grant）。
+- 角色/触发条件: 身份管理员（Identity Administrator）。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 角色权限授予目录（Role Permission Grant Catalog）。
 
 <!-- em:section id="software.slice.服务账户 API 令牌目录（ServiceAccountApiTokenCatalogs）" source="domain/IdentityAccessManagement/context/IdentityAccessManagement/slice/ServiceAccountApiTokenCatalogs" -->
 ##### 2.14.2.14 服务账户 API 令牌目录（Service Account Api Token Catalogs）/EMW-SD-A-2
 
-- 归属: 服务账户 API 令牌（Service Account Api Token）.
-- 角色/触发条件: 超级管理员（Super Administrator）.
-- 输入: 尚未明确.
-- 业务结果: 尚未明确.
-- 读侧结果: 服务账户 API 令牌目录（Service Account Api Token Catalog）.
+- 归属: 服务账户 API 令牌（Service Account Api Token）。
+- 角色/触发条件: 超级管理员（Super Administrator）。
+- 输入: 尚未明确。
+- 业务结果: 尚未明确。
+- 读侧结果: 服务账户 API 令牌目录（Service Account Api Token Catalog）。
 
 #### 2.14.3 上下文数据设计/EMW-SD-CDD-14
 
@@ -2653,98 +2653,98 @@
 
 ## 四、异常与规则设计/EMW-SD-ERD
 
-- 组织管理（Organization Management） / 注册组织（Register Organization）: 组织名称唯一（Organization Name Unique） / 拒绝重复组织（Reject Duplicate Organization） - 当 注册组织（Register Organization）, 则 拒绝: 组织已存在.
-- 组织管理（Organization Management） / 将用户账户绑定到组织（Bind User Account To Organization）: 用户账户组织绑定唯一（User Account Organization Binding Unique） / 拒绝重复的用户组织绑定（Reject Duplicate User Organization Binding） - 当 将用户账户绑定到组织（Bind User Account To Organization）, 则 拒绝: 用户账户已绑定到此组织。.
-- 联邦管理（Federation Management） / 创建联邦（Create Federation）: 联邦名称唯一（Federation Name Unique） / 拒绝重复联邦（Reject Duplicate Federation） - 当 创建联邦（Create Federation）, 则 拒绝: 联邦已存在.
-- 联邦管理（Federation Management） / 批准参与者（Approve Participant）: 仅已邀请的激活组织加入联邦（Only Invited Active Organizations Join Federation） / 批准已邀请的参与者（Approve Invited Participant） - 当 批准参与者（Approve Participant）, 则 参与者已加入（Participant Joined）.
-- 联邦管理（Federation Management） / 批准参与者（Approve Participant）: 仅已邀请的激活组织加入联邦（Only Invited Active Organizations Join Federation） / 拒绝未邀请参与者的审批（Reject Uninvited Participant Approval） - 当 批准参与者（Approve Participant）, 则 拒绝: 需要参与者邀请.
-- 字典维护（Dictionary Maintenance） / 注册字典（Register Dictionary）: 字典代码唯一（Dictionary Code Unique） / 拒绝重复字典（Reject Duplicate Dictionary） - 当 注册字典（Register Dictionary）, 则 拒绝: 字典已存在.
-- 文件上传（File Upload） / 上传文件（Upload File）: 已上传文件已持久化并已记录（Uploaded File Is Persisted And Recorded） / 为模型导入上传文件（Upload File For Model Import） - 当 上传文件（Upload File）, 则 文件已上传（File Uploaded）.
-- 文件上传（File Upload） / 将文件标记为已引用（Mark File Referenced）: 被引用的文件受保护以防用户丢弃（Referenced File Is Protected From User Discard） / 通过模型导入标记文件已引用（Mark File Referenced By Model Import） - 当 将文件标记为已引用（Mark File Referenced）, 则 文件已引用（File Referenced）.
-- 文件上传（File Upload） / 下载文件（Download File）: 仅可用的已存储文件可被下载（Only Available Stored Files Can Be Downloaded） / 授权可用文件下载（Authorize Available File Download） - 当 下载文件（Download File）, 则 文件下载已授权（File Download Authorized）.
-- 文件上传（File Upload） / 下载文件（Download File）: 仅可用的已存储文件可被下载（Only Available Stored Files Can Be Downloaded） / 拒绝过期文件下载（Reject Expired File Download） - 当 下载文件（Download File）, 则 错误: 文件不可下载。.
-- 文件上传（File Upload） / 丢弃文件（Discard File）: 仅可丢弃未引用的文件（Only Unreferenced Files Can Be Discarded） / 丢弃未引用文件（Discard Unreferenced File） - 当 丢弃文件（Discard File）, 则 文件已丢弃（File Discarded）.
-- 文件上传（File Upload） / 丢弃文件（Discard File）: 仅可丢弃未引用的文件（Only Unreferenced Files Can Be Discarded） / 拒绝消费后丢弃（Reject Discard After Consumption） - 当 丢弃文件（Discard File）, 则 拒绝: 文件已被引用.
-- 文件上传（File Upload） / 使文件过期（Expire File）: 过期文件不可被引用（Expired File Cannot Be Referenced） / 使已上传文件过期（Expire Uploaded File） - 当 使文件过期（Expire File）, 则 文件已过期（File Expired）.
-- 文件上传（File Upload） / 使文件过期（Expire File）: 过期文件不可被引用（Expired File Cannot Be Referenced） / 过期后拒绝消费（Reject Consumption After Expiration） - 当 将文件标记为已引用（Mark File Referenced）, 则 拒绝: 文件已过期.
-- 运行时预配（Runtime Provisioning） / 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared）: 验证前运行时基础设施已准备（Runtime Infrastructure Prepared Before Verification） / 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared） - 当 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared）, 则 运行时基础设施已准备（Runtime Infrastructure Prepared）.
-- 运行时预配（Runtime Provisioning） / 验证运行时基础设施（Verify Runtime Infrastructure）: 运行时基础设施验证结果（Runtime Infrastructure Verification Outcome） / 运行时基础设施验证通过（Runtime Infrastructure Verification Passed） - 当 验证运行时基础设施（Verify Runtime Infrastructure）, 则 运行时基础设施已验证（Runtime Infrastructure Verified）.
-- 运行时预配（Runtime Provisioning） / 验证运行时基础设施（Verify Runtime Infrastructure）: 运行时基础设施验证结果（Runtime Infrastructure Verification Outcome） / 运行时基础设施验证失败（Runtime Infrastructure Verification Failed） - 当 验证运行时基础设施（Verify Runtime Infrastructure）, 则 运行时基础设施验证失败（Runtime Infrastructure Verification Failed）.
-- 运行时预配（Runtime Provisioning） / 部署运行时代理（Deploy Runtime Agent）: 运行时代理部署结果（Runtime Agent Deployment Outcome） / 运行时代理部署成功（Runtime Agent Deployment Succeeded） - 当 部署运行时代理（Deploy Runtime Agent）, 则 运行时代理安装成功（Runtime Agent Installation Succeeded）.
-- 运行时预配（Runtime Provisioning） / 部署运行时代理（Deploy Runtime Agent）: 运行时代理部署结果（Runtime Agent Deployment Outcome） / 运行时代理部署失败（Runtime Agent Deployment Failed） - 当 部署运行时代理（Deploy Runtime Agent）, 则 运行时代理安装失败（Runtime Agent Installation Failed）.
-- 运行时预配（Runtime Provisioning） / 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）: 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 运行时基础设施验证重试成功（Runtime Infrastructure Verification Retry Succeeded） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 运行时基础设施验证重试成功（Runtime Infrastructure Verification Retry Succeeded）.
-- 运行时预配（Runtime Provisioning） / 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）: 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 运行时基础设施验证重试失败（Runtime Infrastructure Verification Retry Failed） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 运行时基础设施验证重试失败（Runtime Infrastructure Verification Retry Failed）.
-- 运行时预配（Runtime Provisioning） / 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）: 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 在已验证状态下拒绝运行时基础设施验证重试（Reject Runtime Infrastructure Verification Retry While Verified） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 拒绝: 不允许运行时基础设施验证重试.
-- 运行时预配（Runtime Provisioning） / 重试运行时代理部署（Retry Runtime Agent Deployment）: 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 部署失败后运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded After Failed Deployment） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded）.
-- 运行时预配（Runtime Provisioning） / 重试运行时代理部署（Retry Runtime Agent Deployment）: 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 离线后运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded After Offline） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded）.
-- 运行时预配（Runtime Provisioning） / 重试运行时代理部署（Retry Runtime Agent Deployment）: 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 运行时代理部署重试失败（Runtime Agent Deployment Retry Failed） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试失败（Runtime Agent Deployment Retry Failed）.
-- 运行时预配（Runtime Provisioning） / 重试运行时代理部署（Retry Runtime Agent Deployment）: 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 已连接时拒绝运行时代理部署重试（Reject Runtime Agent Deployment Retry While Connected） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 拒绝: 不允许运行时代理部署重试.
-- 数据集治理（Dataset Governance） / 定义特征架构（Define Feature Schema）: 特征架构域版本唯一（Feature Schema Domain Version Unique） / 拒绝重复的特征架构版本（Reject Duplicate Feature Schema Version） - 当 定义特征架构（Define Feature Schema）, 则 拒绝: 特征架构版本已存在.
-- 数据集治理（Dataset Governance） / 发布特征架构（Publish Feature Schema）: 仅可发布草稿架构（Only Draft Schemas Can Be Published） / 发布草稿架构（Publish Draft Schema） - 当 发布特征架构（Publish Feature Schema）, 则 特征架构已发布（Feature Schema Published）.
-- 数据集治理（Dataset Governance） / 取代特征架构版本（Supersede Feature Schema Version）: 使用较新版本取代已发布的架构（Supersede Published Schema With Newer Version） / 取代较旧版本（Supersede Older Version） - 当 取代特征架构版本（Supersede Feature Schema Version）, 则 特征架构版本已取代（Feature Schema Version Superseded）.
-- 数据集治理（Dataset Governance） / 标记当前推荐的特征架构版本（Mark Current Recommended Feature Schema Version）: 每个域仅一个推荐版本（Only One Recommended Version Per Domain） / 标记新的推荐版本（Mark New Recommended Version） - 当 标记当前推荐的特征架构版本（Mark Current Recommended Feature Schema Version）, 则 已标记当前推荐特征架构版本（Current Recommended Feature Schema Version Marked）.
-- 模型仓库（Model Repository） / 注册模型制品（Register Model Artifact）: 模型工件必须可拉取且可验证（Model Artifact Must Be Pullable And Verifiable） / 注册可拉取模型工件（Register Pullable Model Artifact） - 当 注册模型制品（Register Model Artifact）, 则 模型工件已注册（Model Artifact Registered）.
-- 模型仓库（Model Repository） / 下载模型工件（Download Model Artifact）: 已注册模型工件解析为存储文件下载（Registered Model Artifact Resolves To Stored File Download） / 授权已注册模型工件下载（Authorize Registered Model Artifact Download） - 当 下载模型工件（Download Model Artifact）, 则 模型工件下载已授权（Model Artifact Download Authorized）.
-- 模型仓库（Model Repository） / 下载模型工件（Download Model Artifact）: 已注册模型工件解析为存储文件下载（Registered Model Artifact Resolves To Stored File Download） / 拒绝缺失的模型工件内容（Reject Missing Model Artifact Content） - 当 下载模型工件（Download Model Artifact）, 则 错误: 模型工件内容不可下载。.
-- 模型仓库（Model Repository） / 注册联邦模型工件（Register Federated Model Artifact）: 联邦轮次模型已从受管存储注册（Federated Round Model Is Registered From Managed Storage） / 注册聚合轮次模型（Register Aggregated Round Model） - 当 注册联邦模型工件（Register Federated Model Artifact）, 则 联邦模型工件已注册（Federated Model Artifact Registered）.
-- 训练编排（Training Orchestration） / 注册运行时引擎配置文件（Register Runtime Engine Profile）: 运行时引擎配置文件选择可拉取的引擎镜像（Runtime Engine Profile Selects Pullable Engine Image） / 注册 Py Torch Vision 运行时引擎配置文件（Register Py Torch Vision Runtime Engine Profile） - 当 注册运行时引擎配置文件（Register Runtime Engine Profile）, 则 运行时引擎配置文件已注册（Runtime Engine Profile Registered）.
-- 训练编排（Training Orchestration） / 定义训练运行配置（Define Training Run Configuration）: 训练配置必须可运行（Training Configuration Must Be Runnable） / 定义可运行配置（Define Runnable Configuration） - 当 定义训练运行配置（Define Training Run Configuration）, 则 训练运行配置已定义（Training Run Configuration Defined）.
-- 训练编排（Training Orchestration） / 定义训练运行配置（Define Training Run Configuration）: 训练配置必须可运行（Training Configuration Must Be Runnable） / 拒绝空轮次预算（Reject Empty Round Budget） - 当 定义训练运行配置（Define Training Run Configuration）, 则 拒绝: 轮次预算必须为正数.
-- 训练编排（Training Orchestration） / 更新训练运行配置（Update Training Run Configuration）: 草稿训练配置可以更新（Draft Training Configuration Can Be Updated） / 更新草稿可运行配置（Update Draft Runnable Configuration） - 当 更新训练运行配置（Update Training Run Configuration）, 则 训练运行配置已更新（Training Run Configuration Updated）.
-- 训练编排（Training Orchestration） / 更新训练运行配置（Update Training Run Configuration）: 草稿训练配置可以更新（Draft Training Configuration Can Be Updated） / 配置锁定后拒绝更新（Reject Update After Configuration Locked） - 当 更新训练运行配置（Update Training Run Configuration）, 则 拒绝: 训练运行配置已锁定.
-- 训练编排（Training Orchestration） / 创建训练作业（Create Training Job）: 训练作业需要可运行配置和运行时访问（Training Job Requires Runnable Configuration And Runtime Access） / 使用可运行配置创建训练作业（Create Training Job With Runnable Configuration） - 当 创建训练作业（Create Training Job）, 则 训练作业已创建（Training Job Created）.
-- 训练编排（Training Orchestration） / 创建训练作业（Create Training Job）: 训练作业需要可运行配置和运行时访问（Training Job Requires Runnable Configuration And Runtime Access） / 拒绝无可运行配置的训练作业（Reject Training Job Without Runnable Configuration） - 当 创建训练作业（Create Training Job）, 则 拒绝: 需要可运行训练配置.
-- 训练编排（Training Orchestration） / 提交训练作业（Submit Training Job）: 只有已创建的训练作业才能提交（Only Created Training Jobs Can Be Submitted） / 提交已创建的训练作业（Submit Created Training Job） - 当 提交训练作业（Submit Training Job）, 则 训练作业已提交（Training Job Submitted）.
-- 训练编排（Training Orchestration） / 提交训练作业（Submit Training Job）: 只有已创建的训练作业才能提交（Only Created Training Jobs Can Be Submitted） / 拒绝未知训练作业（Reject Unknown Training Job） - 当 提交训练作业（Submit Training Job）, 则 拒绝: 训练作业为必填项.
-- 训练编排（Training Orchestration） / 选择训练轮次参与者（Select Training Round Participants）: 训练轮次参与者按轮快照（Training Round Participants Are Snapshotted Per Round） / 运行时池达到法定数量时选择参与者（Select Participants When Runtime Pool Reaches Quorum） - 当 选择训练轮次参与者（Select Training Round Participants）, 则 训练轮次参与者已选择（Training Round Participants Selected）.
-- 训练编排（Training Orchestration） / 选择训练轮次参与者（Select Training Round Participants）: 训练轮次参与者按轮快照（Training Round Participants Are Snapshotted Per Round） / 拒绝低于法定数量的参与者快照（Reject Participant Snapshot Below Quorum） - 当 选择训练轮次参与者（Select Training Round Participants）, 则 训练轮次参与者选择失败（Training Round Participant Selection Failed）.
-- 训练编排（Training Orchestration） / 重试训练轮次参与者选择（Retry Training Round Participant Selection）: 在就绪状态变化后重试参与者选择（Retry Participant Selection After Readiness Changes） / 重试参与者选择（Retry Participant Selection） - 当 重试训练轮次参与者选择（Retry Training Round Participant Selection）, 则 训练轮次参与者选择重试已请求（Training Round Participant Selection Retry Requested）.
-- 训练编排（Training Orchestration） / 开始训练轮次（Start Training Round）: 训练轮次需要已选择的运行时法定人数（Training Round Requires Selected Runtime Quorum） / 使用已选择的运行时法定人数启动轮次（Start Round With Selected Runtime Quorum） - 当 开始训练轮次（Start Training Round）, 则 训练轮次已启动（Training Round Started）.
-- 训练编排（Training Orchestration） / 开始训练轮次（Start Training Round）: 训练轮次需要已选择的运行时法定人数（Training Round Requires Selected Runtime Quorum） / 记录低于法定人数的失败轮次启动（Record Failed Round Start Below Quorum） - 当 开始训练轮次（Start Training Round）, 则 训练轮次启动失败（Training Round Start Failed）.
-- 训练编排（Training Orchestration） / 生成参与者执行计划（Generate Participant Execution Plan）: 参与者执行计划携带基础模型工件快照（Participant Execution Plan Carries Base Model Artifact Snapshot） / 使用初始模型快照生成初始轮次计划（Generate Initial Round Plan With Initial Model Snapshot） - 当 生成参与者执行计划（Generate Participant Execution Plan）, 则 参与者执行计划已生成（Participant Execution Plan Generated）.
-- 训练编排（Training Orchestration） / 生成参与者执行计划（Generate Participant Execution Plan）: 参与者执行计划携带基础模型工件快照（Participant Execution Plan Carries Base Model Artifact Snapshot） / 使用聚合模型快照生成后续轮次计划（Generate Later Round Plan With Aggregated Model Snapshot） - 当 生成参与者执行计划（Generate Participant Execution Plan）, 则 参与者执行计划已生成（Participant Execution Plan Generated）.
-- 训练编排（Training Orchestration） / 评估模型更新提交（Evaluate Model Update Submission）: 已排除受污染的本地更新（Poisoned Local Updates Are Excluded） / 接受正常更新（Accept Normal Update） - 当 评估模型更新提交（Evaluate Model Update Submission）, 则 模型更新提交已接受（Model Update Submission Accepted）.
-- 训练编排（Training Orchestration） / 评估模型更新提交（Evaluate Model Update Submission）: 已排除受污染的本地更新（Poisoned Local Updates Are Excluded） / 拒绝异常更新（Reject Anomalous Update） - 当 评估模型更新提交（Evaluate Model Update Submission）, 则 拒绝: 异常模型更新已拒绝.
-- 训练编排（Training Orchestration） / 聚合明文模型更新（Aggregate Plain Model Updates）: 达到法定人数后聚合明文模型更新（Plain Model Updates Are Aggregated After Quorum） / 聚合已接受的明文更新（Aggregate Accepted Plain Updates） - 当 聚合明文模型更新（Aggregate Plain Model Updates）, 则 明文模型聚合已完成（Plain Model Aggregation Completed）.
-- 训练编排（Training Orchestration） / 完成训练轮次（Complete Training Round）: 训练轮次完成需要全局评估（Training Round Completion Requires Global Evaluation） / 全局评估后完成轮次（Complete Round After Global Evaluation） - 当 完成训练轮次（Complete Training Round）, 则 训练轮次已完成（Training Round Completed）.
-- 训练编排（Training Orchestration） / 完成训练轮次（Complete Training Round）: 训练轮次完成需要全局评估（Training Round Completion Requires Global Evaluation） / 无全局评估则拒绝完成轮次（Reject Round Completion Without Global Evaluation） - 当 完成训练轮次（Complete Training Round）, 则 拒绝: 需要全局模型评估.
-- 模型生命周期（Model Lifecycle） / 记录模型评估包（Record Model Evaluation Package）: 模型审批需要评估包（Model Approval Requires Evaluation Package） / 记录完整评估包（Record Complete Evaluation Package） - 当 记录模型评估包（Record Model Evaluation Package）, 则 模型评估包已记录（Model Evaluation Package Recorded）.
-- 模型生命周期（Model Lifecycle） / 批准模型（Approve Model）: 只有评估打包模型才能被批准（Only Evaluation Packaged Models Can Be Approved） / 批准评估打包模型（Approve Evaluation Packaged Model） - 当 批准模型（Approve Model）, 则 模型已批准（Model Approved）.
-- 模型生命周期（Model Lifecycle） / 批准模型（Approve Model）: 只有评估打包模型才能被批准（Only Evaluation Packaged Models Can Be Approved） / 拒绝没有评估包的候选模型（Reject Candidate Without Evaluation Package） - 当 批准模型（Approve Model）, 则 拒绝: 需要模型评估包.
-- 模型生命周期（Model Lifecycle） / 提升模型至生产（Promote Model To Production）: 仅已批准的模型可提升到生产环境（Only Approved Models Can Be Promoted To Production） / 提升已批准的模型（Promote Approved Model） - 当 提升模型至生产（Promote Model To Production）, 则 模型已提升到生产环境（Model Promoted To Production）.
-- 模型生命周期（Model Lifecycle） / 提升模型至生产（Promote Model To Production）: 仅已批准的模型可提升到生产环境（Only Approved Models Can Be Promoted To Production） / 拒绝未批准模型的提升（Reject Unapproved Model Promotion） - 当 提升模型至生产（Promote Model To Production）, 则 拒绝: 需要模型批准.
-- 运行时代理操作（Runtime Agent Operations） / 声明数据集（Declare Dataset）: 数据集声明需要特征架构快照（Feature Schema Snapshot Required For Dataset Declaration） / 使用特征架构快照声明数据集（Declare Dataset With Feature Schema Snapshot） - 当 声明数据集（Declare Dataset）, 则 数据集已声明（Dataset Declared）.
-- 运行时代理操作（Runtime Agent Operations） / 声明数据集（Declare Dataset）: 数据集声明需要特征架构快照（Feature Schema Snapshot Required For Dataset Declaration） / 特征架构加载失败（Feature Schema Load Failed） - 当 声明数据集（Declare Dataset）, 则 错误: 特征架构加载失败.
-- 运行时代理操作（Runtime Agent Operations） / 配置运行时数据集绑定（Configure Runtime Dataset Binding）: 每个运行时数据集的运行时数据集绑定唯一（Runtime Dataset Binding Unique Per Runtime Dataset） / 拒绝重复的运行时数据集绑定（Reject Duplicate Runtime Dataset Binding） - 当 配置运行时数据集绑定（Configure Runtime Dataset Binding）, 则 拒绝: 运行时数据集绑定已存在.
-- 运行时代理操作（Runtime Agent Operations） / 验证代理数据集访问（Validate Agent Dataset Access）: 代理数据集访问验证结果（Agent Dataset Access Validation Outcome） / 代理数据集访问已验证（Agent Dataset Access Validated） - 当 验证代理数据集访问（Validate Agent Dataset Access）, 则 代理数据集访问已验证（Agent Dataset Access Validated）.
-- 运行时代理操作（Runtime Agent Operations） / 验证代理数据集访问（Validate Agent Dataset Access）: 代理数据集访问验证结果（Agent Dataset Access Validation Outcome） / 代理数据集访问验证失败（Agent Dataset Access Validation Failed） - 当 验证代理数据集访问（Validate Agent Dataset Access）, 则 代理数据集访问验证失败（Agent Dataset Access Validation Failed）.
-- 运行时代理操作（Runtime Agent Operations） / 重新验证代理数据集访问（Revalidate Agent Dataset Access）: 代理数据集访问重新验证结果（Agent Dataset Access Revalidation Outcome） / 代理数据集访问已重新验证（Agent Dataset Access Revalidated） - 当 重新验证代理数据集访问（Revalidate Agent Dataset Access）, 则 代理数据集访问已重新验证（Agent Dataset Access Revalidated）.
-- 运行时代理操作（Runtime Agent Operations） / 重新验证代理数据集访问（Revalidate Agent Dataset Access）: 代理数据集访问重新验证结果（Agent Dataset Access Revalidation Outcome） / 代理数据集访问重新验证失败（Agent Dataset Access Revalidation Failed） - 当 重新验证代理数据集访问（Revalidate Agent Dataset Access）, 则 代理数据集访问重新验证失败（Agent Dataset Access Revalidation Failed）.
-- 运行时代理操作（Runtime Agent Operations） / 分析代理数据集（Profile Agent Dataset）: 代理数据集分析结果（Agent Dataset Profiling Outcome） / 代理数据集元数据已报告（Agent Dataset Metadata Reported） - 当 分析代理数据集（Profile Agent Dataset）, 则 代理数据集元数据已报告（Agent Dataset Metadata Reported）.
-- 运行时代理操作（Runtime Agent Operations） / 分析代理数据集（Profile Agent Dataset）: 代理数据集分析结果（Agent Dataset Profiling Outcome） / 代理数据集分析失败（Agent Dataset Profiling Failed） - 当 分析代理数据集（Profile Agent Dataset）, 则 代理数据集分析失败（Agent Dataset Profiling Failed）.
-- 运行时代理操作（Runtime Agent Operations） / 重新分析代理数据集（Reprofile Agent Dataset）: 代理数据集重新剖析结果（Agent Dataset Reprofiling Outcome） / 代理数据集已重新分析（Agent Dataset Reprofiled） - 当 重新分析代理数据集（Reprofile Agent Dataset）, 则 代理数据集已重新分析（Agent Dataset Reprofiled）.
-- 运行时代理操作（Runtime Agent Operations） / 重新分析代理数据集（Reprofile Agent Dataset）: 代理数据集重新剖析结果（Agent Dataset Reprofiling Outcome） / 代理数据集重新剖析失败（Agent Dataset Reprofiling Failed） - 当 重新分析代理数据集（Reprofile Agent Dataset）, 则 代理数据集重新剖析失败（Agent Dataset Reprofiling Failed）.
-- 运行时代理操作（Runtime Agent Operations） / 验证数据集合约（Validate Dataset Contract）: 数据集合约验证结果（Dataset Contract Validation Outcome） / 数据集合约验证成功（Dataset Contract Validation Succeeded） - 当 验证数据集合约（Validate Dataset Contract）, 则 数据集合约已验证（Dataset Contract Validated）.
-- 运行时代理操作（Runtime Agent Operations） / 验证数据集合约（Validate Dataset Contract）: 数据集合约验证结果（Dataset Contract Validation Outcome） / 数据集合约验证失败（Dataset Contract Validation Failed） - 当 验证数据集合约（Validate Dataset Contract）, 则 数据集合约验证失败（Dataset Contract Validation Failed）.
-- 运行时代理操作（Runtime Agent Operations） / 重试数据集合约验证（Retry Dataset Contract Validation）: 数据集合约验证重试结果（Dataset Contract Validation Retry Outcome） / 数据集合约已重新验证（Dataset Contract Revalidated） - 当 重试数据集合约验证（Retry Dataset Contract Validation）, 则 数据集合约已重新验证（Dataset Contract Revalidated）.
-- 运行时代理操作（Runtime Agent Operations） / 重试数据集合约验证（Retry Dataset Contract Validation）: 数据集合约验证重试结果（Dataset Contract Validation Retry Outcome） / 数据集合约重新验证失败（Dataset Contract Revalidation Failed） - 当 重试数据集合约验证（Retry Dataset Contract Validation）, 则 数据集合约重新验证失败（Dataset Contract Revalidation Failed）.
-- 运行时代理操作（Runtime Agent Operations） / 批准数据集用于训练（Approve Dataset For Training）: 仅批准已验证的高质量数据集（Only Validated Quality Datasets Are Approved） / 批准已验证的数据集（Approve Validated Dataset） - 当 批准数据集用于训练（Approve Dataset For Training）, 则 数据集已批准用于训练（Dataset Approved For Training）.
-- 运行时代理操作（Runtime Agent Operations） / 批准数据集用于训练（Approve Dataset For Training）: 仅批准已验证的高质量数据集（Only Validated Quality Datasets Are Approved） / 在数据集合约验证前拒绝批准（Reject Approval Before Contract Validation） - 当 批准数据集用于训练（Approve Dataset For Training）, 则 拒绝: 需要数据集合约验证.
-- 运行时代理操作（Runtime Agent Operations） / 接受执行计划（Accept Execution Plan）: 执行计划本地接受结果（Execution Plan Local Acceptance Outcome） / 执行计划已接受（Execution Plan Accepted） - 当 接受执行计划（Accept Execution Plan）, 则 执行计划已接受（Execution Plan Accepted）.
-- 运行时代理操作（Runtime Agent Operations） / 接受执行计划（Accept Execution Plan）: 执行计划本地接受结果（Execution Plan Local Acceptance Outcome） / 执行计划已拒绝（Execution Plan Rejected） - 当 接受执行计划（Accept Execution Plan）, 则 执行计划已拒绝（Execution Plan Rejected）.
-- 运行时代理操作（Runtime Agent Operations） / 开始轮次执行（Start Round Execution）: 轮次执行运行时引擎启动结果（Round Execution Runtime Engine Start Outcome） / 轮次执行已启动（Round Execution Started） - 当 开始轮次执行（Start Round Execution）, 则 轮次执行已启动（Round Execution Started）.
-- 运行时代理操作（Runtime Agent Operations） / 开始轮次执行（Start Round Execution）: 轮次执行运行时引擎启动结果（Round Execution Runtime Engine Start Outcome） / 轮次执行启动失败（Round Execution Start Failed） - 当 开始轮次执行（Start Round Execution）, 则 轮次执行启动失败（Round Execution Start Failed）.
-- 运行时代理操作（Runtime Agent Operations） / 观察运行时引擎作业（Observe Runtime Engine Job）: 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察运行中（Runtime Engine Job Observed Running） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）.
-- 运行时代理操作（Runtime Agent Operations） / 观察运行时引擎作业（Observe Runtime Engine Job）: 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察完成（Runtime Engine Job Observed Completed） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）.
-- 运行时代理操作（Runtime Agent Operations） / 观察运行时引擎作业（Observe Runtime Engine Job）: 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察失败（Runtime Engine Job Observed Failed） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）.
-- 运行时代理操作（Runtime Agent Operations） / 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）: 运行时代理启动引导配置（Runtime Agent Startup Bootstrap Configuration） / 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration） - 当 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）, 则 运行时代理引导配置已加载（Runtime Agent Bootstrap Configuration Loaded）.
-- 运行时代理操作（Runtime Agent Operations） / 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）: 运行时代理启动引导配置（Runtime Agent Startup Bootstrap Configuration） / 拒绝缺失的运行时代理引导配置（Reject Missing Runtime Agent Bootstrap Configuration） - 当 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）, 则 运行时代理引导配置加载失败（Runtime Agent Bootstrap Configuration Load Failed）.
-- 运行时代理操作（Runtime Agent Operations） / 报告运行时实例已连接（Report Runtime Instance Connected）: 运行时代理平台连接报告结果（Runtime Agent Platform Connection Reporting Outcome） / 报告运行时实例已连接（Report Runtime Instance Connected） - 当 报告运行时实例已连接（Report Runtime Instance Connected）, 则 代理运行时连接已建立（Agent Runtime Connection Established）.
-- 运行时代理操作（Runtime Agent Operations） / 报告运行时实例已连接（Report Runtime Instance Connected）: 运行时代理平台连接报告结果（Runtime Agent Platform Connection Reporting Outcome） / 报告运行时实例连接失败（Report Runtime Instance Connection Failed） - 当 报告运行时实例已连接（Report Runtime Instance Connected）, 则 代理运行时连接报告失败（Agent Runtime Connection Report Failed）.
-- 身份访问管理（Identity Access Management） / 注册用户账户（Register User Account）: 用户账户用户名唯一（User Account Username Unique） / 拒绝重复用户名（Reject Duplicate Username） - 当 注册用户账户（Register User Account）, 则 拒绝: 用户名已存在。.
-- 身份访问管理（Identity Access Management） / 颁发服务账户 API 令牌（Issue Service Account Api Token）: 仅超级管理员可颁发服务账户 API 令牌（Only Super Administrator Can Issue Service Account Api Token） / 超级管理员为服务账户颁发令牌（Super Administrator Issues Token For Service Account） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）.
-- 身份访问管理（Identity Access Management） / 颁发服务账户 API 令牌（Issue Service Account Api Token）: 服务账户 API 令牌明文仅返回一次（Service Account Api Token Plaintext Returned Once） / 已颁发事件存储摘要而非明文令牌（Issued Event Stores Digest Instead Of Plaintext Token） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）.
-- 身份访问管理（Identity Access Management） / 颁发服务账户 API 令牌（Issue Service Account Api Token）: 服务账户 API 令牌捕获权限快照（Service Account Api Token Captures Permission Snapshot） / 已颁发令牌捕获当前权限（Issued Token Captures Current Permissions） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）.
+- 组织管理（Organization Management） / 注册组织（Register Organization）: 组织名称唯一（Organization Name Unique） / 拒绝重复组织（Reject Duplicate Organization） - 当 注册组织（Register Organization）, 则 拒绝: 组织已存在。
+- 组织管理（Organization Management） / 将用户账户绑定到组织（Bind User Account To Organization）: 用户账户组织绑定唯一（User Account Organization Binding Unique） / 拒绝重复的用户组织绑定（Reject Duplicate User Organization Binding） - 当 将用户账户绑定到组织（Bind User Account To Organization）, 则 拒绝: 用户账户已绑定到此组织。
+- 联邦管理（Federation Management） / 创建联邦（Create Federation）: 联邦名称唯一（Federation Name Unique） / 拒绝重复联邦（Reject Duplicate Federation） - 当 创建联邦（Create Federation）, 则 拒绝: 联邦已存在。
+- 联邦管理（Federation Management） / 批准参与者（Approve Participant）: 仅已邀请的激活组织加入联邦（Only Invited Active Organizations Join Federation） / 批准已邀请的参与者（Approve Invited Participant） - 当 批准参与者（Approve Participant）, 则 参与者已加入（Participant Joined）。
+- 联邦管理（Federation Management） / 批准参与者（Approve Participant）: 仅已邀请的激活组织加入联邦（Only Invited Active Organizations Join Federation） / 拒绝未邀请参与者的审批（Reject Uninvited Participant Approval） - 当 批准参与者（Approve Participant）, 则 拒绝: 需要参与者邀请。
+- 字典维护（Dictionary Maintenance） / 注册字典（Register Dictionary）: 字典代码唯一（Dictionary Code Unique） / 拒绝重复字典（Reject Duplicate Dictionary） - 当 注册字典（Register Dictionary）, 则 拒绝: 字典已存在。
+- 文件上传（File Upload） / 上传文件（Upload File）: 已上传文件已持久化并已记录（Uploaded File Is Persisted And Recorded） / 为模型导入上传文件（Upload File For Model Import） - 当 上传文件（Upload File）, 则 文件已上传（File Uploaded）。
+- 文件上传（File Upload） / 将文件标记为已引用（Mark File Referenced）: 被引用的文件受保护以防用户丢弃（Referenced File Is Protected From User Discard） / 通过模型导入标记文件已引用（Mark File Referenced By Model Import） - 当 将文件标记为已引用（Mark File Referenced）, 则 文件已引用（File Referenced）。
+- 文件上传（File Upload） / 下载文件（Download File）: 仅可用的已存储文件可被下载（Only Available Stored Files Can Be Downloaded） / 授权可用文件下载（Authorize Available File Download） - 当 下载文件（Download File）, 则 文件下载已授权（File Download Authorized）。
+- 文件上传（File Upload） / 下载文件（Download File）: 仅可用的已存储文件可被下载（Only Available Stored Files Can Be Downloaded） / 拒绝过期文件下载（Reject Expired File Download） - 当 下载文件（Download File）, 则 错误: 文件不可下载。
+- 文件上传（File Upload） / 丢弃文件（Discard File）: 仅可丢弃未引用的文件（Only Unreferenced Files Can Be Discarded） / 丢弃未引用文件（Discard Unreferenced File） - 当 丢弃文件（Discard File）, 则 文件已丢弃（File Discarded）。
+- 文件上传（File Upload） / 丢弃文件（Discard File）: 仅可丢弃未引用的文件（Only Unreferenced Files Can Be Discarded） / 拒绝消费后丢弃（Reject Discard After Consumption） - 当 丢弃文件（Discard File）, 则 拒绝: 文件已被引用。
+- 文件上传（File Upload） / 使文件过期（Expire File）: 过期文件不可被引用（Expired File Cannot Be Referenced） / 使已上传文件过期（Expire Uploaded File） - 当 使文件过期（Expire File）, 则 文件已过期（File Expired）。
+- 文件上传（File Upload） / 使文件过期（Expire File）: 过期文件不可被引用（Expired File Cannot Be Referenced） / 过期后拒绝消费（Reject Consumption After Expiration） - 当 将文件标记为已引用（Mark File Referenced）, 则 拒绝: 文件已过期。
+- 运行时预配（Runtime Provisioning） / 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared）: 验证前运行时基础设施已准备（Runtime Infrastructure Prepared Before Verification） / 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared） - 当 确认运行时基础设施已就绪（Confirm Runtime Infrastructure Prepared）, 则 运行时基础设施已准备（Runtime Infrastructure Prepared）。
+- 运行时预配（Runtime Provisioning） / 验证运行时基础设施（Verify Runtime Infrastructure）: 运行时基础设施验证结果（Runtime Infrastructure Verification Outcome） / 运行时基础设施验证通过（Runtime Infrastructure Verification Passed） - 当 验证运行时基础设施（Verify Runtime Infrastructure）, 则 运行时基础设施已验证（Runtime Infrastructure Verified）。
+- 运行时预配（Runtime Provisioning） / 验证运行时基础设施（Verify Runtime Infrastructure）: 运行时基础设施验证结果（Runtime Infrastructure Verification Outcome） / 运行时基础设施验证失败（Runtime Infrastructure Verification Failed） - 当 验证运行时基础设施（Verify Runtime Infrastructure）, 则 运行时基础设施验证失败（Runtime Infrastructure Verification Failed）。
+- 运行时预配（Runtime Provisioning） / 部署运行时代理（Deploy Runtime Agent）: 运行时代理部署结果（Runtime Agent Deployment Outcome） / 运行时代理部署成功（Runtime Agent Deployment Succeeded） - 当 部署运行时代理（Deploy Runtime Agent）, 则 运行时代理安装成功（Runtime Agent Installation Succeeded）。
+- 运行时预配（Runtime Provisioning） / 部署运行时代理（Deploy Runtime Agent）: 运行时代理部署结果（Runtime Agent Deployment Outcome） / 运行时代理部署失败（Runtime Agent Deployment Failed） - 当 部署运行时代理（Deploy Runtime Agent）, 则 运行时代理安装失败（Runtime Agent Installation Failed）。
+- 运行时预配（Runtime Provisioning） / 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）: 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 运行时基础设施验证重试成功（Runtime Infrastructure Verification Retry Succeeded） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 运行时基础设施验证重试成功（Runtime Infrastructure Verification Retry Succeeded）。
+- 运行时预配（Runtime Provisioning） / 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）: 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 运行时基础设施验证重试失败（Runtime Infrastructure Verification Retry Failed） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 运行时基础设施验证重试失败（Runtime Infrastructure Verification Retry Failed）。
+- 运行时预配（Runtime Provisioning） / 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）: 运行时基础设施验证重试结果（Runtime Infrastructure Verification Retry Outcome） / 在已验证状态下拒绝运行时基础设施验证重试（Reject Runtime Infrastructure Verification Retry While Verified） - 当 重试运行时基础设施验证（Retry Runtime Infrastructure Verification）, 则 拒绝: 不允许运行时基础设施验证重试。
+- 运行时预配（Runtime Provisioning） / 重试运行时代理部署（Retry Runtime Agent Deployment）: 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 部署失败后运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded After Failed Deployment） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded）。
+- 运行时预配（Runtime Provisioning） / 重试运行时代理部署（Retry Runtime Agent Deployment）: 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 离线后运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded After Offline） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试成功（Runtime Agent Deployment Retry Succeeded）。
+- 运行时预配（Runtime Provisioning） / 重试运行时代理部署（Retry Runtime Agent Deployment）: 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 运行时代理部署重试失败（Runtime Agent Deployment Retry Failed） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 运行时代理部署重试失败（Runtime Agent Deployment Retry Failed）。
+- 运行时预配（Runtime Provisioning） / 重试运行时代理部署（Retry Runtime Agent Deployment）: 运行时代理部署重试结果（Runtime Agent Deployment Retry Outcome） / 已连接时拒绝运行时代理部署重试（Reject Runtime Agent Deployment Retry While Connected） - 当 重试运行时代理部署（Retry Runtime Agent Deployment）, 则 拒绝: 不允许运行时代理部署重试。
+- 数据集治理（Dataset Governance） / 定义特征架构（Define Feature Schema）: 特征架构域版本唯一（Feature Schema Domain Version Unique） / 拒绝重复的特征架构版本（Reject Duplicate Feature Schema Version） - 当 定义特征架构（Define Feature Schema）, 则 拒绝: 特征架构版本已存在。
+- 数据集治理（Dataset Governance） / 发布特征架构（Publish Feature Schema）: 仅可发布草稿架构（Only Draft Schemas Can Be Published） / 发布草稿架构（Publish Draft Schema） - 当 发布特征架构（Publish Feature Schema）, 则 特征架构已发布（Feature Schema Published）。
+- 数据集治理（Dataset Governance） / 取代特征架构版本（Supersede Feature Schema Version）: 使用较新版本取代已发布的架构（Supersede Published Schema With Newer Version） / 取代较旧版本（Supersede Older Version） - 当 取代特征架构版本（Supersede Feature Schema Version）, 则 特征架构版本已取代（Feature Schema Version Superseded）。
+- 数据集治理（Dataset Governance） / 标记当前推荐的特征架构版本（Mark Current Recommended Feature Schema Version）: 每个域仅一个推荐版本（Only One Recommended Version Per Domain） / 标记新的推荐版本（Mark New Recommended Version） - 当 标记当前推荐的特征架构版本（Mark Current Recommended Feature Schema Version）, 则 已标记当前推荐特征架构版本（Current Recommended Feature Schema Version Marked）。
+- 模型仓库（Model Repository） / 注册模型制品（Register Model Artifact）: 模型工件必须可拉取且可验证（Model Artifact Must Be Pullable And Verifiable） / 注册可拉取模型工件（Register Pullable Model Artifact） - 当 注册模型制品（Register Model Artifact）, 则 模型工件已注册（Model Artifact Registered）。
+- 模型仓库（Model Repository） / 下载模型工件（Download Model Artifact）: 已注册模型工件解析为存储文件下载（Registered Model Artifact Resolves To Stored File Download） / 授权已注册模型工件下载（Authorize Registered Model Artifact Download） - 当 下载模型工件（Download Model Artifact）, 则 模型工件下载已授权（Model Artifact Download Authorized）。
+- 模型仓库（Model Repository） / 下载模型工件（Download Model Artifact）: 已注册模型工件解析为存储文件下载（Registered Model Artifact Resolves To Stored File Download） / 拒绝缺失的模型工件内容（Reject Missing Model Artifact Content） - 当 下载模型工件（Download Model Artifact）, 则 错误: 模型工件内容不可下载。
+- 模型仓库（Model Repository） / 注册联邦模型工件（Register Federated Model Artifact）: 联邦轮次模型已从受管存储注册（Federated Round Model Is Registered From Managed Storage） / 注册聚合轮次模型（Register Aggregated Round Model） - 当 注册联邦模型工件（Register Federated Model Artifact）, 则 联邦模型工件已注册（Federated Model Artifact Registered）。
+- 训练编排（Training Orchestration） / 注册运行时引擎配置文件（Register Runtime Engine Profile）: 运行时引擎配置文件选择可拉取的引擎镜像（Runtime Engine Profile Selects Pullable Engine Image） / 注册 Py Torch Vision 运行时引擎配置文件（Register Py Torch Vision Runtime Engine Profile） - 当 注册运行时引擎配置文件（Register Runtime Engine Profile）, 则 运行时引擎配置文件已注册（Runtime Engine Profile Registered）。
+- 训练编排（Training Orchestration） / 定义训练运行配置（Define Training Run Configuration）: 训练配置必须可运行（Training Configuration Must Be Runnable） / 定义可运行配置（Define Runnable Configuration） - 当 定义训练运行配置（Define Training Run Configuration）, 则 训练运行配置已定义（Training Run Configuration Defined）。
+- 训练编排（Training Orchestration） / 定义训练运行配置（Define Training Run Configuration）: 训练配置必须可运行（Training Configuration Must Be Runnable） / 拒绝空轮次预算（Reject Empty Round Budget） - 当 定义训练运行配置（Define Training Run Configuration）, 则 拒绝: 轮次预算必须为正数。
+- 训练编排（Training Orchestration） / 更新训练运行配置（Update Training Run Configuration）: 草稿训练配置可以更新（Draft Training Configuration Can Be Updated） / 更新草稿可运行配置（Update Draft Runnable Configuration） - 当 更新训练运行配置（Update Training Run Configuration）, 则 训练运行配置已更新（Training Run Configuration Updated）。
+- 训练编排（Training Orchestration） / 更新训练运行配置（Update Training Run Configuration）: 草稿训练配置可以更新（Draft Training Configuration Can Be Updated） / 配置锁定后拒绝更新（Reject Update After Configuration Locked） - 当 更新训练运行配置（Update Training Run Configuration）, 则 拒绝: 训练运行配置已锁定。
+- 训练编排（Training Orchestration） / 创建训练作业（Create Training Job）: 训练作业需要可运行配置和运行时访问（Training Job Requires Runnable Configuration And Runtime Access） / 使用可运行配置创建训练作业（Create Training Job With Runnable Configuration） - 当 创建训练作业（Create Training Job）, 则 训练作业已创建（Training Job Created）。
+- 训练编排（Training Orchestration） / 创建训练作业（Create Training Job）: 训练作业需要可运行配置和运行时访问（Training Job Requires Runnable Configuration And Runtime Access） / 拒绝无可运行配置的训练作业（Reject Training Job Without Runnable Configuration） - 当 创建训练作业（Create Training Job）, 则 拒绝: 需要可运行训练配置。
+- 训练编排（Training Orchestration） / 提交训练作业（Submit Training Job）: 只有已创建的训练作业才能提交（Only Created Training Jobs Can Be Submitted） / 提交已创建的训练作业（Submit Created Training Job） - 当 提交训练作业（Submit Training Job）, 则 训练作业已提交（Training Job Submitted）。
+- 训练编排（Training Orchestration） / 提交训练作业（Submit Training Job）: 只有已创建的训练作业才能提交（Only Created Training Jobs Can Be Submitted） / 拒绝未知训练作业（Reject Unknown Training Job） - 当 提交训练作业（Submit Training Job）, 则 拒绝: 训练作业为必填项。
+- 训练编排（Training Orchestration） / 选择训练轮次参与者（Select Training Round Participants）: 训练轮次参与者按轮快照（Training Round Participants Are Snapshotted Per Round） / 运行时池达到法定数量时选择参与者（Select Participants When Runtime Pool Reaches Quorum） - 当 选择训练轮次参与者（Select Training Round Participants）, 则 训练轮次参与者已选择（Training Round Participants Selected）。
+- 训练编排（Training Orchestration） / 选择训练轮次参与者（Select Training Round Participants）: 训练轮次参与者按轮快照（Training Round Participants Are Snapshotted Per Round） / 拒绝低于法定数量的参与者快照（Reject Participant Snapshot Below Quorum） - 当 选择训练轮次参与者（Select Training Round Participants）, 则 训练轮次参与者选择失败（Training Round Participant Selection Failed）。
+- 训练编排（Training Orchestration） / 重试训练轮次参与者选择（Retry Training Round Participant Selection）: 在就绪状态变化后重试参与者选择（Retry Participant Selection After Readiness Changes） / 重试参与者选择（Retry Participant Selection） - 当 重试训练轮次参与者选择（Retry Training Round Participant Selection）, 则 训练轮次参与者选择重试已请求（Training Round Participant Selection Retry Requested）。
+- 训练编排（Training Orchestration） / 开始训练轮次（Start Training Round）: 训练轮次需要已选择的运行时法定人数（Training Round Requires Selected Runtime Quorum） / 使用已选择的运行时法定人数启动轮次（Start Round With Selected Runtime Quorum） - 当 开始训练轮次（Start Training Round）, 则 训练轮次已启动（Training Round Started）。
+- 训练编排（Training Orchestration） / 开始训练轮次（Start Training Round）: 训练轮次需要已选择的运行时法定人数（Training Round Requires Selected Runtime Quorum） / 记录低于法定人数的失败轮次启动（Record Failed Round Start Below Quorum） - 当 开始训练轮次（Start Training Round）, 则 训练轮次启动失败（Training Round Start Failed）。
+- 训练编排（Training Orchestration） / 生成参与者执行计划（Generate Participant Execution Plan）: 参与者执行计划携带基础模型工件快照（Participant Execution Plan Carries Base Model Artifact Snapshot） / 使用初始模型快照生成初始轮次计划（Generate Initial Round Plan With Initial Model Snapshot） - 当 生成参与者执行计划（Generate Participant Execution Plan）, 则 参与者执行计划已生成（Participant Execution Plan Generated）。
+- 训练编排（Training Orchestration） / 生成参与者执行计划（Generate Participant Execution Plan）: 参与者执行计划携带基础模型工件快照（Participant Execution Plan Carries Base Model Artifact Snapshot） / 使用聚合模型快照生成后续轮次计划（Generate Later Round Plan With Aggregated Model Snapshot） - 当 生成参与者执行计划（Generate Participant Execution Plan）, 则 参与者执行计划已生成（Participant Execution Plan Generated）。
+- 训练编排（Training Orchestration） / 评估模型更新提交（Evaluate Model Update Submission）: 已排除受污染的本地更新（Poisoned Local Updates Are Excluded） / 接受正常更新（Accept Normal Update） - 当 评估模型更新提交（Evaluate Model Update Submission）, 则 模型更新提交已接受（Model Update Submission Accepted）。
+- 训练编排（Training Orchestration） / 评估模型更新提交（Evaluate Model Update Submission）: 已排除受污染的本地更新（Poisoned Local Updates Are Excluded） / 拒绝异常更新（Reject Anomalous Update） - 当 评估模型更新提交（Evaluate Model Update Submission）, 则 拒绝: 异常模型更新已拒绝。
+- 训练编排（Training Orchestration） / 聚合明文模型更新（Aggregate Plain Model Updates）: 达到法定人数后聚合明文模型更新（Plain Model Updates Are Aggregated After Quorum） / 聚合已接受的明文更新（Aggregate Accepted Plain Updates） - 当 聚合明文模型更新（Aggregate Plain Model Updates）, 则 明文模型聚合已完成（Plain Model Aggregation Completed）。
+- 训练编排（Training Orchestration） / 完成训练轮次（Complete Training Round）: 训练轮次完成需要全局评估（Training Round Completion Requires Global Evaluation） / 全局评估后完成轮次（Complete Round After Global Evaluation） - 当 完成训练轮次（Complete Training Round）, 则 训练轮次已完成（Training Round Completed）。
+- 训练编排（Training Orchestration） / 完成训练轮次（Complete Training Round）: 训练轮次完成需要全局评估（Training Round Completion Requires Global Evaluation） / 无全局评估则拒绝完成轮次（Reject Round Completion Without Global Evaluation） - 当 完成训练轮次（Complete Training Round）, 则 拒绝: 需要全局模型评估。
+- 模型生命周期（Model Lifecycle） / 记录模型评估包（Record Model Evaluation Package）: 模型审批需要评估包（Model Approval Requires Evaluation Package） / 记录完整评估包（Record Complete Evaluation Package） - 当 记录模型评估包（Record Model Evaluation Package）, 则 模型评估包已记录（Model Evaluation Package Recorded）。
+- 模型生命周期（Model Lifecycle） / 批准模型（Approve Model）: 只有评估打包模型才能被批准（Only Evaluation Packaged Models Can Be Approved） / 批准评估打包模型（Approve Evaluation Packaged Model） - 当 批准模型（Approve Model）, 则 模型已批准（Model Approved）。
+- 模型生命周期（Model Lifecycle） / 批准模型（Approve Model）: 只有评估打包模型才能被批准（Only Evaluation Packaged Models Can Be Approved） / 拒绝没有评估包的候选模型（Reject Candidate Without Evaluation Package） - 当 批准模型（Approve Model）, 则 拒绝: 需要模型评估包。
+- 模型生命周期（Model Lifecycle） / 提升模型至生产（Promote Model To Production）: 仅已批准的模型可提升到生产环境（Only Approved Models Can Be Promoted To Production） / 提升已批准的模型（Promote Approved Model） - 当 提升模型至生产（Promote Model To Production）, 则 模型已提升到生产环境（Model Promoted To Production）。
+- 模型生命周期（Model Lifecycle） / 提升模型至生产（Promote Model To Production）: 仅已批准的模型可提升到生产环境（Only Approved Models Can Be Promoted To Production） / 拒绝未批准模型的提升（Reject Unapproved Model Promotion） - 当 提升模型至生产（Promote Model To Production）, 则 拒绝: 需要模型批准。
+- 运行时代理操作（Runtime Agent Operations） / 声明数据集（Declare Dataset）: 数据集声明需要特征架构快照（Feature Schema Snapshot Required For Dataset Declaration） / 使用特征架构快照声明数据集（Declare Dataset With Feature Schema Snapshot） - 当 声明数据集（Declare Dataset）, 则 数据集已声明（Dataset Declared）。
+- 运行时代理操作（Runtime Agent Operations） / 声明数据集（Declare Dataset）: 数据集声明需要特征架构快照（Feature Schema Snapshot Required For Dataset Declaration） / 特征架构加载失败（Feature Schema Load Failed） - 当 声明数据集（Declare Dataset）, 则 错误: 特征架构加载失败。
+- 运行时代理操作（Runtime Agent Operations） / 配置运行时数据集绑定（Configure Runtime Dataset Binding）: 每个运行时数据集的运行时数据集绑定唯一（Runtime Dataset Binding Unique Per Runtime Dataset） / 拒绝重复的运行时数据集绑定（Reject Duplicate Runtime Dataset Binding） - 当 配置运行时数据集绑定（Configure Runtime Dataset Binding）, 则 拒绝: 运行时数据集绑定已存在。
+- 运行时代理操作（Runtime Agent Operations） / 验证代理数据集访问（Validate Agent Dataset Access）: 代理数据集访问验证结果（Agent Dataset Access Validation Outcome） / 代理数据集访问已验证（Agent Dataset Access Validated） - 当 验证代理数据集访问（Validate Agent Dataset Access）, 则 代理数据集访问已验证（Agent Dataset Access Validated）。
+- 运行时代理操作（Runtime Agent Operations） / 验证代理数据集访问（Validate Agent Dataset Access）: 代理数据集访问验证结果（Agent Dataset Access Validation Outcome） / 代理数据集访问验证失败（Agent Dataset Access Validation Failed） - 当 验证代理数据集访问（Validate Agent Dataset Access）, 则 代理数据集访问验证失败（Agent Dataset Access Validation Failed）。
+- 运行时代理操作（Runtime Agent Operations） / 重新验证代理数据集访问（Revalidate Agent Dataset Access）: 代理数据集访问重新验证结果（Agent Dataset Access Revalidation Outcome） / 代理数据集访问已重新验证（Agent Dataset Access Revalidated） - 当 重新验证代理数据集访问（Revalidate Agent Dataset Access）, 则 代理数据集访问已重新验证（Agent Dataset Access Revalidated）。
+- 运行时代理操作（Runtime Agent Operations） / 重新验证代理数据集访问（Revalidate Agent Dataset Access）: 代理数据集访问重新验证结果（Agent Dataset Access Revalidation Outcome） / 代理数据集访问重新验证失败（Agent Dataset Access Revalidation Failed） - 当 重新验证代理数据集访问（Revalidate Agent Dataset Access）, 则 代理数据集访问重新验证失败（Agent Dataset Access Revalidation Failed）。
+- 运行时代理操作（Runtime Agent Operations） / 分析代理数据集（Profile Agent Dataset）: 代理数据集分析结果（Agent Dataset Profiling Outcome） / 代理数据集元数据已报告（Agent Dataset Metadata Reported） - 当 分析代理数据集（Profile Agent Dataset）, 则 代理数据集元数据已报告（Agent Dataset Metadata Reported）。
+- 运行时代理操作（Runtime Agent Operations） / 分析代理数据集（Profile Agent Dataset）: 代理数据集分析结果（Agent Dataset Profiling Outcome） / 代理数据集分析失败（Agent Dataset Profiling Failed） - 当 分析代理数据集（Profile Agent Dataset）, 则 代理数据集分析失败（Agent Dataset Profiling Failed）。
+- 运行时代理操作（Runtime Agent Operations） / 重新分析代理数据集（Reprofile Agent Dataset）: 代理数据集重新剖析结果（Agent Dataset Reprofiling Outcome） / 代理数据集已重新分析（Agent Dataset Reprofiled） - 当 重新分析代理数据集（Reprofile Agent Dataset）, 则 代理数据集已重新分析（Agent Dataset Reprofiled）。
+- 运行时代理操作（Runtime Agent Operations） / 重新分析代理数据集（Reprofile Agent Dataset）: 代理数据集重新剖析结果（Agent Dataset Reprofiling Outcome） / 代理数据集重新剖析失败（Agent Dataset Reprofiling Failed） - 当 重新分析代理数据集（Reprofile Agent Dataset）, 则 代理数据集重新剖析失败（Agent Dataset Reprofiling Failed）。
+- 运行时代理操作（Runtime Agent Operations） / 验证数据集合约（Validate Dataset Contract）: 数据集合约验证结果（Dataset Contract Validation Outcome） / 数据集合约验证成功（Dataset Contract Validation Succeeded） - 当 验证数据集合约（Validate Dataset Contract）, 则 数据集合约已验证（Dataset Contract Validated）。
+- 运行时代理操作（Runtime Agent Operations） / 验证数据集合约（Validate Dataset Contract）: 数据集合约验证结果（Dataset Contract Validation Outcome） / 数据集合约验证失败（Dataset Contract Validation Failed） - 当 验证数据集合约（Validate Dataset Contract）, 则 数据集合约验证失败（Dataset Contract Validation Failed）。
+- 运行时代理操作（Runtime Agent Operations） / 重试数据集合约验证（Retry Dataset Contract Validation）: 数据集合约验证重试结果（Dataset Contract Validation Retry Outcome） / 数据集合约已重新验证（Dataset Contract Revalidated） - 当 重试数据集合约验证（Retry Dataset Contract Validation）, 则 数据集合约已重新验证（Dataset Contract Revalidated）。
+- 运行时代理操作（Runtime Agent Operations） / 重试数据集合约验证（Retry Dataset Contract Validation）: 数据集合约验证重试结果（Dataset Contract Validation Retry Outcome） / 数据集合约重新验证失败（Dataset Contract Revalidation Failed） - 当 重试数据集合约验证（Retry Dataset Contract Validation）, 则 数据集合约重新验证失败（Dataset Contract Revalidation Failed）。
+- 运行时代理操作（Runtime Agent Operations） / 批准数据集用于训练（Approve Dataset For Training）: 仅批准已验证的高质量数据集（Only Validated Quality Datasets Are Approved） / 批准已验证的数据集（Approve Validated Dataset） - 当 批准数据集用于训练（Approve Dataset For Training）, 则 数据集已批准用于训练（Dataset Approved For Training）。
+- 运行时代理操作（Runtime Agent Operations） / 批准数据集用于训练（Approve Dataset For Training）: 仅批准已验证的高质量数据集（Only Validated Quality Datasets Are Approved） / 在数据集合约验证前拒绝批准（Reject Approval Before Contract Validation） - 当 批准数据集用于训练（Approve Dataset For Training）, 则 拒绝: 需要数据集合约验证。
+- 运行时代理操作（Runtime Agent Operations） / 接受执行计划（Accept Execution Plan）: 执行计划本地接受结果（Execution Plan Local Acceptance Outcome） / 执行计划已接受（Execution Plan Accepted） - 当 接受执行计划（Accept Execution Plan）, 则 执行计划已接受（Execution Plan Accepted）。
+- 运行时代理操作（Runtime Agent Operations） / 接受执行计划（Accept Execution Plan）: 执行计划本地接受结果（Execution Plan Local Acceptance Outcome） / 执行计划已拒绝（Execution Plan Rejected） - 当 接受执行计划（Accept Execution Plan）, 则 执行计划已拒绝（Execution Plan Rejected）。
+- 运行时代理操作（Runtime Agent Operations） / 开始轮次执行（Start Round Execution）: 轮次执行运行时引擎启动结果（Round Execution Runtime Engine Start Outcome） / 轮次执行已启动（Round Execution Started） - 当 开始轮次执行（Start Round Execution）, 则 轮次执行已启动（Round Execution Started）。
+- 运行时代理操作（Runtime Agent Operations） / 开始轮次执行（Start Round Execution）: 轮次执行运行时引擎启动结果（Round Execution Runtime Engine Start Outcome） / 轮次执行启动失败（Round Execution Start Failed） - 当 开始轮次执行（Start Round Execution）, 则 轮次执行启动失败（Round Execution Start Failed）。
+- 运行时代理操作（Runtime Agent Operations） / 观察运行时引擎作业（Observe Runtime Engine Job）: 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察运行中（Runtime Engine Job Observed Running） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）。
+- 运行时代理操作（Runtime Agent Operations） / 观察运行时引擎作业（Observe Runtime Engine Job）: 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察完成（Runtime Engine Job Observed Completed） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）。
+- 运行时代理操作（Runtime Agent Operations） / 观察运行时引擎作业（Observe Runtime Engine Job）: 运行时引擎作业观察结果（Runtime Engine Job Observation Outcome） / 运行时引擎作业已观察失败（Runtime Engine Job Observed Failed） - 当 观察运行时引擎作业（Observe Runtime Engine Job）, 则 运行时引擎作业已观察（Runtime Engine Job Observed）。
+- 运行时代理操作（Runtime Agent Operations） / 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）: 运行时代理启动引导配置（Runtime Agent Startup Bootstrap Configuration） / 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration） - 当 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）, 则 运行时代理引导配置已加载（Runtime Agent Bootstrap Configuration Loaded）。
+- 运行时代理操作（Runtime Agent Operations） / 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）: 运行时代理启动引导配置（Runtime Agent Startup Bootstrap Configuration） / 拒绝缺失的运行时代理引导配置（Reject Missing Runtime Agent Bootstrap Configuration） - 当 加载运行时代理引导配置（Load Runtime Agent Bootstrap Configuration）, 则 运行时代理引导配置加载失败（Runtime Agent Bootstrap Configuration Load Failed）。
+- 运行时代理操作（Runtime Agent Operations） / 报告运行时实例已连接（Report Runtime Instance Connected）: 运行时代理平台连接报告结果（Runtime Agent Platform Connection Reporting Outcome） / 报告运行时实例已连接（Report Runtime Instance Connected） - 当 报告运行时实例已连接（Report Runtime Instance Connected）, 则 代理运行时连接已建立（Agent Runtime Connection Established）。
+- 运行时代理操作（Runtime Agent Operations） / 报告运行时实例已连接（Report Runtime Instance Connected）: 运行时代理平台连接报告结果（Runtime Agent Platform Connection Reporting Outcome） / 报告运行时实例连接失败（Report Runtime Instance Connection Failed） - 当 报告运行时实例已连接（Report Runtime Instance Connected）, 则 代理运行时连接报告失败（Agent Runtime Connection Report Failed）。
+- 身份访问管理（Identity Access Management） / 注册用户账户（Register User Account）: 用户账户用户名唯一（User Account Username Unique） / 拒绝重复用户名（Reject Duplicate Username） - 当 注册用户账户（Register User Account）, 则 拒绝: 用户名已存在。
+- 身份访问管理（Identity Access Management） / 颁发服务账户 API 令牌（Issue Service Account Api Token）: 仅超级管理员可颁发服务账户 API 令牌（Only Super Administrator Can Issue Service Account Api Token） / 超级管理员为服务账户颁发令牌（Super Administrator Issues Token For Service Account） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）。
+- 身份访问管理（Identity Access Management） / 颁发服务账户 API 令牌（Issue Service Account Api Token）: 服务账户 API 令牌明文仅返回一次（Service Account Api Token Plaintext Returned Once） / 已颁发事件存储摘要而非明文令牌（Issued Event Stores Digest Instead Of Plaintext Token） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）。
+- 身份访问管理（Identity Access Management） / 颁发服务账户 API 令牌（Issue Service Account Api Token）: 服务账户 API 令牌捕获权限快照（Service Account Api Token Captures Permission Snapshot） / 已颁发令牌捕获当前权限（Issued Token Captures Current Permissions） - 当 颁发服务账户 API 令牌（Issue Service Account Api Token）, 则 服务账户 API 令牌已颁发（Service Account Api Token Issued）。
 
 ## 五、质量属性、运维与可观测性设计/EMW-SD-QAOO
 

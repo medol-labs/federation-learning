@@ -13,7 +13,7 @@ test('default export preserves the current PRD and removes unapproved AI review'
       'software-design', 'database-design', 'test-outline',
       'installation-manual', 'user-manual', 'model-translations'
     ];
-    const markdown = '# 正文\n\n已确认。\n\n<!-- em:section id="document.aiReview" -->\n## AI 建议\n\n待审核。';
+    const markdown = '# 正文\n\n已确认。.\n\n<!-- em:section id="document.aiReview" -->\n## AI 建议\n\n待审核。';
     const sql = [
       'CREATE TABLE modeling_documents (workspace_id TEXT, language TEXT, kind TEXT, markdown TEXT, updated_at TEXT);',
       ...kinds.map((kind) => `INSERT INTO modeling_documents VALUES ('demo', 'zh-CN', '${kind}', '${markdown.replaceAll("'", "''")}', '2026-01-01');`)
@@ -29,6 +29,7 @@ test('default export preserves the current PRD and removes unapproved AI review'
     assert.equal(result.status, 0, result.stderr);
     assert.equal(readFileSync(prdPath, 'utf8'), '# 最新 PRD\n');
     assert.equal(readFileSync(join(directory, 'software-design.zh-CN.md'), 'utf8'), '# 正文\n\n已确认。\n');
+    assert.equal(readFileSync(join(directory, 'database-design.zh-CN.md'), 'utf8'), '# 正文\n\n已确认。.\n');
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
