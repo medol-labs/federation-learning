@@ -13,7 +13,26 @@ const draftPath = resolve(directory, '3.3.1-federation-learning.md');
 const candidatePath = resolve(root, 'docs/generated/438c/merge/3.3.1-candidate.md');
 const wordPath = resolve(root, 'docs/generated/438c/merge/3.3.1-federation-learning.docx');
 const converterPath = resolve(root, 'docs/document-pack/federation-learning/markdown_to_docx.py');
+const sourcePath = resolve(root, '.medol/source.medol');
+const useCasePath = resolve(root, '.medol/prd-use-cases.json');
 const model = JSON.parse(readFileSync(resolve(root, '.medol/codegen-model.json'), 'utf8'));
+if (!existsSync(useCasePath)) throw new Error(`Missing PRD use-case snapshot: ${useCasePath}. Export it from Medol first.`);
+const useCaseSnapshot = JSON.parse(readFileSync(useCasePath, 'utf8'));
+if (useCaseSnapshot.schemaVersion !== 1 || !Array.isArray(useCaseSnapshot.useCases)) {
+  throw new Error('Unsupported PRD use-case snapshot format. Export it from the current Medol version.');
+}
+const sourceHash = `fnv1a:${hashSource(readFileSync(sourcePath, 'utf8'))}`;
+if (useCaseSnapshot.sourceHash !== sourceHash) {
+  throw new Error('PRD use-case snapshot is stale relative to .medol/source.medol. Re-export it from Medol.');
+}
+const useCasesBySliceId = new Map(useCaseSnapshot.useCases.map((useCase) => {
+  const codegenId = `slice-${useCase.id.match(/^UC-([0-9A-F]{8})$/)?.[1]?.toLowerCase()}`;
+  if (codegenId === 'slice-undefined') throw new Error(`Invalid PRD use-case ID: ${useCase.id}`);
+  return [codegenId, useCase];
+}));
+if (useCasesBySliceId.size !== useCaseSnapshot.useCases.length) {
+  throw new Error('Duplicate PRD use-case IDs.');
+}
 const translations = model.translations?.['zh-CN'] ?? {};
 const contextCodes = [
   ['OrganizationManagement', 'ORG'],
@@ -31,6 +50,11 @@ const contextCodes = [
 ];
 const includedContexts = new Set(contextCodes.map(([name]) => name));
 const slices = model.slices.filter((slice) => includedContexts.has(slice.context));
+for (const slice of slices) {
+  if (((slice.commands ?? []).length || (slice.readmodels ?? []).length) && !useCasesBySliceId.has(slice.id)) {
+    throw new Error(`PRD use-case snapshot does not cover ${slice.context}/${slice.name}.`);
+  }
+}
 const conceptByKey = new Map(model.concepts.map((concept) => [`${concept.context}/${concept.name}`, concept]));
 const digest = (value) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const translated = (title) => translations[title] ?? title;
@@ -50,6 +74,7 @@ const current = new Map(slices.map((slice) => {
     title: translated(slice.title),
     sourceHash: digest({
       slice: semanticSlice,
+      useCase: useCasesBySliceId.get(slice.id),
       labels: [
         translated(model.contexts.find((context) => context.name === slice.context)?.title ?? slice.context),
         conceptTitle(slice.context, conceptName(slice)),
@@ -160,7 +185,10 @@ if (mode === '--word') {
   mkdirSync(dirname(wordPath), { recursive: true });
   const bundledPython = resolve(homedir(), '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3');
   const python = process.env.PYTHON ?? (existsSync(bundledPython) ? bundledPython : 'python3');
-  const conversion = spawnSync(python, [converterPath, draftPath, '--out', wordPath, '--landscape'], {
+  const conversion = spawnSync(python, [
+    converterPath, draftPath, '--out', wordPath, '--landscape',
+    '--heading-number-prefix', '3.3.1'
+  ], {
     encoding: 'utf8',
     cwd: root,
   });
@@ -208,11 +236,11 @@ function render(data) {
     '',
     '本模块覆盖组织与联邦协作、运行时接入、数据集治理、模型管理、训练编排、安全聚合及参与方本地执行。原始训练数据保留在参与方侧。',
     '',
+    '## 表 3 联邦学习模块的软件功能划分',
+    '',
     '| 序号 | 一级功能名称/标识 | 二级功能名称/标识 | 三级功能名称/标识 | 备注 |',
     '| ---: | --- | --- | --- | --- |',
     ...rows,
-    '',
-    '下述要求说明各项功能的操作角色、输入、业务约束、处理结果和查询内容。',
     '',
     ...detailSections,
   ].join('\n');
@@ -237,6 +265,8 @@ function renderRequirement(slice, item) {
   ];
   if (screens.length) result.push(`操作入口：${screens.join('、')}。`, '');
   if (triggers.length) result.push(`自动触发条件：${triggers.join('、')}。`, '');
+  const useCase = useCasesBySliceId.get(slice.id);
+  if (useCase) result.push(...renderUseCase(useCase));
   const automatedActions = [...new Set((slice.processors ?? []).flatMap((processor) => (processor.dependencies ?? [])
     .filter((dependency) => dependency.direction === 'OUTBOUND' && dependency.elementType === 'COMMAND')
     .map((dependency) => translated(dependency.title))))];
@@ -287,6 +317,55 @@ function renderRequirement(slice, item) {
     result.push('待核对：当前业务定义未明确可验收的处理结果，合并前需确认该功能要求。', '');
   }
   return result;
+}
+
+function renderUseCase(useCase) {
+  const display = (value) => translated(splitName(value));
+  const lines = [`<!-- PRD use case ${useCase.id} -->`, ''];
+  if (useCase.preconditions.length) {
+    lines.push(`前提条件：${useCase.preconditions.map((condition) => display(condition.text)).join('；')}。`, '');
+  } else {
+    lines.push('前提条件：具体业务前提仍需评审确认。', '');
+  }
+  lines.push('主事件流：', '');
+  for (const [index, step] of useCase.mainFlow.entries()) {
+    const name = display(step.text);
+    const actor = useCase.actor ? display(useCase.actor.text) : '发起方';
+    const description = step.kind === 'readmodel'
+      ? `系统提供${name}的查询结果。`
+      : step.kind === 'command'
+        ? useCase.initiation === 'automation'
+          ? `系统响应${display(useCase.trigger.text)}，执行${name}。`
+          : `${actor}提交${name}。`
+        : `系统形成${name}的业务结果。`;
+    lines.push(`${index + 1}. ${description}`);
+  }
+  lines.push('');
+  if (useCase.alternateFlows.length) {
+    lines.push('其他事件流（异常或扩展）：', '');
+    for (const flow of useCase.alternateFlows) {
+      const result = display(flow.outcome.text);
+      const handling = flow.outcome.kind === 'rejection'
+        ? `拒绝操作并说明${result}`
+        : flow.outcome.kind === 'error'
+          ? `报告${result}`
+          : `形成${result}的业务结果`;
+      lines.push(`- ${display(flow.name)}：${handling}；具体分支判定条件需评审确认。`);
+    }
+    lines.push('');
+  } else if (useCase.openQuestions.some((question) => question.includes('exceptional'))) {
+    lines.push('其他事件流（异常或扩展）：待评审确认。', '');
+  }
+  return lines;
+}
+
+function hashSource(value) {
+  let hash = 2166136261;
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(16).padStart(8, '0');
 }
 
 function renderScenario(spec) {

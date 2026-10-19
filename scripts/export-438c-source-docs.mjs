@@ -15,7 +15,8 @@ const database = resolve(repositoryRoot, args.db ?? '../medol/data/medol-documen
 const outputDirectory = resolve(repositoryRoot, args.out ?? 'docs/438c/sources');
 const language = args.language ?? 'zh-CN';
 const kinds = ['prd', 'software-design', 'database-design', 'test-outline', 'installation-manual', 'user-manual', 'model-translations'];
-const selected = args.only ? [args.only] : kinds;
+// PRD is refreshed from the current model; a stored document may be stale.
+const selected = args.only ? [args.only] : kinds.filter((kind) => kind !== 'prd');
 
 if (!existsSync(database)) fail(`Document database does not exist: ${database}`);
 if (selected.some((kind) => !kinds.includes(kind))) fail(`Unsupported document kind: ${args.only}`);
@@ -29,7 +30,10 @@ for (const kind of selected) {
   const rows = query(`SELECT markdown FROM modeling_documents WHERE workspace_id = ${sql(workspaceId)} AND language = ${sql(language)} AND kind = ${sql(kind)} ORDER BY updated_at DESC LIMIT 1`);
   if (!rows[0]?.markdown) fail(`No ${language} document found for ${kind} in workspace ${workspaceId}.`);
   const output = join(outputDirectory, `${kind}.${language}.md`);
-  writeFileSync(output, `${rows[0].markdown.trim()}\n`, 'utf8');
+  const approvedMarkdown = rows[0].markdown
+    .replace(/\n*<!-- em:section id="document\.aiReview" -->[\s\S]*$/, '')
+    .trim();
+  writeFileSync(output, `${approvedMarkdown}\n`, 'utf8');
   console.log(`[438c] Exported ${kind} to ${output}`);
 }
 

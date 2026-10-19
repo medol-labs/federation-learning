@@ -24,6 +24,7 @@ def parse_args():
     parser.add_argument("--reference", type=Path)
     parser.add_argument("--title", default="")
     parser.add_argument("--landscape", action="store_true")
+    parser.add_argument("--heading-number-prefix", default="")
     return parser.parse_args()
 
 
@@ -33,7 +34,7 @@ def main():
     document = Document()
     use_landscape = args.landscape or "数据库设计说明" in args.title or "数据库设计说明" in args.input.name
     configure_document(document, args.reference, use_landscape)
-    write_markdown(document, markdown, args.title)
+    write_markdown(document, markdown, args.title, args.heading_number_prefix)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     document.save(args.out)
 
@@ -94,13 +95,14 @@ def configure_document(document, reference, use_landscape=False):
         style.paragraph_format.space_after = Pt(6)
 
 
-def write_markdown(document, markdown, fallback_title):
+def write_markdown(document, markdown, fallback_title, heading_number_prefix=""):
     lines = strip_html_comments(markdown).splitlines()
     index = 0
     wrote_title = False
     in_code = False
     code_language = ""
     code_lines = []
+    heading_counts = []
 
     while index < len(lines):
         line = lines[index].rstrip()
@@ -140,6 +142,14 @@ def write_markdown(document, markdown, fallback_title):
                 paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
                 wrote_title = True
             else:
+                if heading_number_prefix and level > 1:
+                    depth = level - 1
+                    heading_counts = heading_counts[:depth]
+                    while len(heading_counts) < depth:
+                        heading_counts.append(0)
+                    heading_counts[depth - 1] += 1
+                    number = ".".join([heading_number_prefix, *map(str, heading_counts)])
+                    text = f"{number} {text}"
                 document.add_paragraph(text, style=f"Heading {min(level, 6)}")
             index += 1
             continue

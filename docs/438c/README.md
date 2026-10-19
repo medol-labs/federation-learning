@@ -2,13 +2,21 @@
 
 本目录维护联邦学习项目的 438C 交付文档适配层。这里的生成脚本只读取本项目保存的中文来源文档和人工章节，不运行其他项目的生成脚本。
 
-中文来源文档和术语表快照存放在 `docs/438c/sources/`。首次准备或更新快照时，从本地已保存的文档数据库导出：
+中文来源文档和术语表快照存放在 `docs/438c/sources/`。PRD 从当前模型及翻译快照重新生成，其他文档和术语表从本地已保存的文档数据库导出。按以下顺序更新：
 
 ```bash
+cd ../medol
+npm run prd:generate -- examples/fl/federation-learning.medol --use-cases --out=../federation-learning/.medol/prd-use-cases.json
+node --import tsx src/lib/generators/documentation/documentationCli.ts ../federation-learning/.medol/source.medol --kind=prd --language=zh-CN --translations=../federation-learning/.medol/codegen-model.json --out=../federation-learning/docs/438c/sources/prd.zh-CN.md
+cd ../federation-learning
 node scripts/export-438c-source-docs.mjs
 ```
 
-数据库默认路径为 `../medol/data/medol-documents.sqlite`。多工作区时指定 `--workspace-id=<id>`；也可通过 `--db=<path>` 和 `--out=<path>` 指定来源与输出。交付生成只读取这些快照；更新源文档后需重新导出。
+先确保 `.medol/source.medol` 与 `medol/examples/fl/federation-learning.medol` 是同一版模型，且 `.medol/codegen-model.json` 包含已审核的翻译。数据库默认路径为 `../medol/data/medol-documents.sqlite`。多工作区时指定 `--workspace-id=<id>`；也可通过 `--db=<path>` 和 `--out=<path>` 指定来源与输出。默认数据库导出**不覆盖 PRD**；仅在明确需要旧数据库版本时可显式指定 `--only=prd`。更新源文档后需重新生成或导出相应快照。
+
+`3.3.1` 功能需求章节另有受控合并流程：运行 `node scripts/prepare-438c-331.mjs --check` 核对模型、用例快照和稳定标识，确认后用 `--sync` 更新映射与候选稿。候选稿在 `docs/generated/438c/merge/`，人工稿在 `docs/438c/merge/`；脚本不会用候选稿覆盖人工稿。逐项审核、写入人工稿并记录变更后再执行 `--word`。详见 [合并说明](merge/README.md)。
+
+Medol 页面生成各类文档时可调用当前配置的 AI 模型，在文末附上带来源的抽样审校建议。它们不是已批准内容；数据库来源导出会剔除 `document.aiReview` 章节，需人工确认并写回正文后才能进入 438C 交付文档。CLI 也可显式加 `--enhance-with-ai` 将审校稿输出到独立文件，不要直接覆盖 `sources/` 下的正式来源快照。
 
 ## 生成命令
 
