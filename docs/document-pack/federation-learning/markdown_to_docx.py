@@ -23,6 +23,7 @@ def parse_args():
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--reference", type=Path)
     parser.add_argument("--title", default="")
+    parser.add_argument("--landscape", action="store_true")
     return parser.parse_args()
 
 
@@ -30,7 +31,7 @@ def main():
     args = parse_args()
     markdown = args.input.read_text(encoding="utf-8")
     document = Document()
-    use_landscape = "数据库设计说明" in args.title or "数据库设计说明" in args.input.name
+    use_landscape = args.landscape or "数据库设计说明" in args.title or "数据库设计说明" in args.input.name
     configure_document(document, args.reference, use_landscape)
     write_markdown(document, markdown, args.title)
     args.out.parent.mkdir(parents=True, exist_ok=True)
@@ -451,7 +452,7 @@ def add_table(document, rows):
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.style = "Table Grid"
     table.autofit = not is_wide
-    widths = table_column_widths(column_count) if is_wide else []
+    widths = table_column_widths(column_count, document.sections[0].orientation == WD_ORIENT.LANDSCAPE) if is_wide else []
     for row_index, row in enumerate(rows):
         row_cells = table.rows[row_index].cells
         if row_index == 0:
@@ -480,10 +481,12 @@ def add_table(document, rows):
     document.add_paragraph()
 
 
-def table_column_widths(column_count):
+def table_column_widths(column_count, landscape=False):
     if column_count == 4:
         return [Cm(4.6), Cm(3.8), Cm(3.8), Cm(13.0)]
     if column_count == 5:
+        if landscape:
+            return [Cm(1.1), Cm(5.1), Cm(5.1), Cm(9.0), Cm(4.1)]
         return [Cm(4.2), Cm(3.6), Cm(3.2), Cm(2.6), Cm(12.0)]
     if column_count == 6:
         return [Cm(3.4), Cm(3.2), Cm(2.1), Cm(2.2), Cm(2.1), Cm(11.8)]

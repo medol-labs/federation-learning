@@ -1,0 +1,1830 @@
+{
+  "schemaVersion": 1,
+  "revision": "0.1-draft",
+  "sectionId": "LBLS-GN-LBXX",
+  "source": ".medol/codegen-model.json",
+  "contexts": [
+    {
+      "id": "LBLS-GN-LBXX-ORG",
+      "sourceId": "context-2ba11f6f",
+      "sourceName": "OrganizationManagement",
+      "title": "组织管理",
+      "sharedSupport": false
+    },
+    {
+      "id": "LBLS-GN-LBXX-FED",
+      "sourceId": "context-2b629579",
+      "sourceName": "FederationManagement",
+      "title": "联邦管理",
+      "sharedSupport": false
+    },
+    {
+      "id": "LBLS-GN-LBXX-DICT",
+      "sourceId": "context-e8a2e445",
+      "sourceName": "DictionaryMaintenance",
+      "title": "字典维护",
+      "sharedSupport": true
+    },
+    {
+      "id": "LBLS-GN-LBXX-FILE",
+      "sourceId": "context-35ec5a6d",
+      "sourceName": "FileUpload",
+      "title": "文件上传",
+      "sharedSupport": true
+    },
+    {
+      "id": "LBLS-GN-LBXX-PROV",
+      "sourceId": "context-dec3aef8",
+      "sourceName": "RuntimeProvisioning",
+      "title": "运行时预配",
+      "sharedSupport": false
+    },
+    {
+      "id": "LBLS-GN-LBXX-DATA",
+      "sourceId": "context-31248395",
+      "sourceName": "DatasetGovernance",
+      "title": "数据集治理",
+      "sharedSupport": false
+    },
+    {
+      "id": "LBLS-GN-LBXX-REPO",
+      "sourceId": "context-25138624",
+      "sourceName": "ModelRepository",
+      "title": "模型仓库",
+      "sharedSupport": false
+    },
+    {
+      "id": "LBLS-GN-LBXX-TRAIN",
+      "sourceId": "context-43411002",
+      "sourceName": "TrainingOrchestration",
+      "title": "训练编排",
+      "sharedSupport": false
+    },
+    {
+      "id": "LBLS-GN-LBXX-MON",
+      "sourceId": "context-ce56a8f7",
+      "sourceName": "RuntimeMonitoring",
+      "title": "运行时监控",
+      "sharedSupport": false
+    },
+    {
+      "id": "LBLS-GN-LBXX-GOV",
+      "sourceId": "context-a12abe49",
+      "sourceName": "RuntimeGovernance",
+      "title": "运行时治理",
+      "sharedSupport": false
+    },
+    {
+      "id": "LBLS-GN-LBXX-SEC",
+      "sourceId": "context-2b443b10",
+      "sourceName": "SecureAggregation",
+      "title": "安全聚合",
+      "sharedSupport": false
+    },
+    {
+      "id": "LBLS-GN-LBXX-AGENT",
+      "sourceId": "context-89cfb7d8",
+      "sourceName": "RuntimeAgentOperations",
+      "title": "运行时代理操作",
+      "sharedSupport": false
+    }
+  ],
+  "concepts": [
+    {
+      "id": "LBLS-GN-LBXX-B001",
+      "sourceKey": "OrganizationManagement/Organization",
+      "title": "组织"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B002",
+      "sourceKey": "OrganizationManagement/UserOrganizationMembership",
+      "title": "用户组织成员资格"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B003",
+      "sourceKey": "FederationManagement/Federation",
+      "title": "联邦"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B004",
+      "sourceKey": "FederationManagement/FederationMembership",
+      "title": "联邦成员资格"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B005",
+      "sourceKey": "RuntimeProvisioning/RuntimeInfrastructurePackage",
+      "title": "运行时基础设施包"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B006",
+      "sourceKey": "RuntimeProvisioning/RuntimeInstallationPlan",
+      "title": "运行时安装计划"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B007",
+      "sourceKey": "RuntimeProvisioning/RuntimeInfrastructure",
+      "title": "运行时基础设施"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B008",
+      "sourceKey": "DatasetGovernance/FeatureSchema",
+      "title": "特征架构"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B009",
+      "sourceKey": "DatasetGovernance/RuntimeDatasetMetadata",
+      "title": "运行时数据集元数据"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B010",
+      "sourceKey": "ModelRepository/ModelArtifact",
+      "title": "模型制品"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B011",
+      "sourceKey": "TrainingOrchestration/RuntimeEngineProfile",
+      "title": "运行时引擎配置文件"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B012",
+      "sourceKey": "TrainingOrchestration/TrainingRunConfiguration",
+      "title": "训练运行配置"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B013",
+      "sourceKey": "TrainingOrchestration/TrainingJob",
+      "title": "训练作业"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B014",
+      "sourceKey": "TrainingOrchestration/TrainingRound",
+      "title": "训练轮次"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B015",
+      "sourceKey": "TrainingOrchestration/ParticipantExecutionPlan",
+      "title": "参与者执行计划"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B016",
+      "sourceKey": "TrainingOrchestration/PersonalizedModelResult",
+      "title": "个性化模型结果"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B017",
+      "sourceKey": "RuntimeMonitoring/NodeRuntimeHealth",
+      "title": "节点运行时健康"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B018",
+      "sourceKey": "RuntimeMonitoring/RuntimeNodeResourcePressure",
+      "title": "运行时节点资源压力"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B019",
+      "sourceKey": "RuntimeMonitoring/RuntimeNodeInventory",
+      "title": "运行时节点清单"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B020",
+      "sourceKey": "RuntimeMonitoring/RuntimeNodeResourceTelemetry",
+      "title": "运行时节点资源遥测"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B021",
+      "sourceKey": "RuntimeMonitoring/TrainingAlert",
+      "title": "训练告警"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B022",
+      "sourceKey": "RuntimeGovernance/RuntimeIdentity",
+      "title": "运行时标识"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B023",
+      "sourceKey": "RuntimeGovernance/RuntimeCapability",
+      "title": "运行时能力"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B024",
+      "sourceKey": "SecureAggregation/SecureAggregationSession",
+      "title": "安全聚合会话"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B025",
+      "sourceKey": "RuntimeAgentOperations/SharedCapability",
+      "title": "公共查询与协作"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B026",
+      "sourceKey": "RuntimeAgentOperations/Dataset",
+      "title": "数据集"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B027",
+      "sourceKey": "RuntimeAgentOperations/RuntimeDatasetBinding",
+      "title": "运行时数据集绑定"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B028",
+      "sourceKey": "RuntimeAgentOperations/AgentDatasetAccessValidation",
+      "title": "代理数据集访问验证"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B029",
+      "sourceKey": "RuntimeAgentOperations/AgentDatasetProfile",
+      "title": "代理数据集配置文件"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B030",
+      "sourceKey": "RuntimeAgentOperations/RoundExecution",
+      "title": "轮次执行"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B031",
+      "sourceKey": "RuntimeAgentOperations/RuntimeAgentLifecycle",
+      "title": "运行时代理生命周期"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B032",
+      "sourceKey": "RuntimeAgentOperations/AgentRuntimeInfrastructureConnection",
+      "title": "代理运行时基础设施连接"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B033",
+      "sourceKey": "RuntimeAgentOperations/AgentRuntimeTelemetry",
+      "title": "代理运行时遥测"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B034",
+      "sourceKey": "RuntimeAgentOperations/AgentRuntimeNodeInventory",
+      "title": "代理运行时节点清单"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B035",
+      "sourceKey": "RuntimeAgentOperations/AgentRuntimeNodeResourceTelemetry",
+      "title": "代理运行时节点资源遥测"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B036",
+      "sourceKey": "FileUpload/UploadedFile",
+      "title": "已上传文件"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B037",
+      "sourceKey": "DictionaryMaintenance/Dictionary",
+      "title": "字典"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B038",
+      "sourceKey": "DictionaryMaintenance/DictionaryValue",
+      "title": "字典值"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B039",
+      "sourceKey": "DictionaryMaintenance/DictionaryValueTranslation",
+      "title": "字典值翻译"
+    }
+  ],
+  "functions": [
+    {
+      "id": "LBLS-GN-LBXX-F0001",
+      "sourceId": "slice-90f5241d",
+      "sourceContext": "OrganizationManagement",
+      "sourceName": "RegisterOrganization",
+      "sourceConcept": "Organization",
+      "title": "注册组织",
+      "sourceHash": "2658c20ba76ccc5e25bf5bc183b3ea9fac1ff25959ead61ac1720210f58b8b15"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0002",
+      "sourceId": "slice-84070e95",
+      "sourceContext": "OrganizationManagement",
+      "sourceName": "ActivateOrganization",
+      "sourceConcept": "Organization",
+      "title": "激活组织",
+      "sourceHash": "0a507360c0e968a59014305922da97739536934f1fc5543ef11bec8fc0f00723"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0003",
+      "sourceId": "slice-a491a1fa",
+      "sourceContext": "OrganizationManagement",
+      "sourceName": "DeactivateOrganization",
+      "sourceConcept": "Organization",
+      "title": "停用组织",
+      "sourceHash": "f8671c979c8c5d32bc1cb0e41f6852a864eea9d3abd1fdbf1ad6605c1e0a50ae"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0004",
+      "sourceId": "slice-d234b640",
+      "sourceContext": "OrganizationManagement",
+      "sourceName": "ReactivateOrganization",
+      "sourceConcept": "Organization",
+      "title": "重新激活组织",
+      "sourceHash": "bfc7b4192ebe17d89ea2babeca6830bc212733ed5463f7dbd40a42c35f4582d9"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0005",
+      "sourceId": "slice-6b07d6cb",
+      "sourceContext": "OrganizationManagement",
+      "sourceName": "OrganizationDirectory",
+      "sourceConcept": "Organization",
+      "title": "组织目录",
+      "sourceHash": "4e325b8ef621eb319db13bc7e71497f8b6f34256671a9ae0978ce31d9c14ed4a"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0006",
+      "sourceId": "slice-6a19bd8c",
+      "sourceContext": "OrganizationManagement",
+      "sourceName": "BindUserAccountToOrganization",
+      "sourceConcept": "UserOrganizationMembership",
+      "title": "将用户账户绑定到组织",
+      "sourceHash": "be1fbe18303e0473ab479ff4b5a08be6fc5453997598e591c3b00f45c47336aa"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0007",
+      "sourceId": "slice-a484259a",
+      "sourceContext": "OrganizationManagement",
+      "sourceName": "UserOrganizationMembershipDirectory",
+      "sourceConcept": "UserOrganizationMembership",
+      "title": "用户组织成员资格目录",
+      "sourceHash": "c53ddd92a276863668db8585a01f2e431a8f1164035fc107b6f3f54227deb8e3"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0008",
+      "sourceId": "slice-c07f2984",
+      "sourceContext": "FederationManagement",
+      "sourceName": "CreateFederation",
+      "sourceConcept": "Federation",
+      "title": "创建联邦",
+      "sourceHash": "d87f8e131d5bf4a14cbf71e6b388a7e39b866d5c4945b3df25c41f5ed161ffb7"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0009",
+      "sourceId": "slice-23fca68d",
+      "sourceContext": "FederationManagement",
+      "sourceName": "ActivateFederation",
+      "sourceConcept": "Federation",
+      "title": "激活联邦",
+      "sourceHash": "846e986eb7581dab91b570814f391dbb06bf7356d265ac4c8679801e35b9929a"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0010",
+      "sourceId": "slice-07294882",
+      "sourceContext": "FederationManagement",
+      "sourceName": "SuspendFederation",
+      "sourceConcept": "Federation",
+      "title": "暂停联邦",
+      "sourceHash": "8c7a8dc3efe1a7974e0c431341cf651c4b00f8854a317977304745f7b8a4f26a"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0011",
+      "sourceId": "slice-45517110",
+      "sourceContext": "FederationManagement",
+      "sourceName": "ReactivateFederation",
+      "sourceConcept": "Federation",
+      "title": "重新激活联邦",
+      "sourceHash": "531b8a747f2a9a2f0f157dacc91387400b0ec594289a177c36c4b1666e7ea337"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0012",
+      "sourceId": "slice-3142237f",
+      "sourceContext": "FederationManagement",
+      "sourceName": "FederationOverview",
+      "sourceConcept": "Federation",
+      "title": "联邦概览",
+      "sourceHash": "7050e1fbdda9ed812a6a220d906946ec7af9939be6efb9266fd487519a4b37e7"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0013",
+      "sourceId": "slice-4b7f303d",
+      "sourceContext": "FederationManagement",
+      "sourceName": "InviteParticipant",
+      "sourceConcept": "FederationMembership",
+      "title": "邀请参与者",
+      "sourceHash": "1128104e3b43e7870cc26ab992b502d83a0796abc40ac501a4cad540b9707750"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0014",
+      "sourceId": "slice-06fbbc2f",
+      "sourceContext": "FederationManagement",
+      "sourceName": "FederationMembershipDirectory",
+      "sourceConcept": "FederationMembership",
+      "title": "联邦成员资格目录",
+      "sourceHash": "f990ad37ed495321335bac33d5b7620d22948414820c2a152ad7d6bbe5356609"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0015",
+      "sourceId": "slice-5b2f4d4f",
+      "sourceContext": "FederationManagement",
+      "sourceName": "ApproveParticipant",
+      "sourceConcept": "FederationMembership",
+      "title": "批准参与者",
+      "sourceHash": "8dca7f678519de60da25fb06098528889505ec1bd5af20469936ce3565bd7f1d"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0016",
+      "sourceId": "slice-079c4b5b",
+      "sourceContext": "FederationManagement",
+      "sourceName": "RejectParticipant",
+      "sourceConcept": "FederationMembership",
+      "title": "拒绝参与者",
+      "sourceHash": "c13319b14172db10b62f34dc8f3e6e4ba36e838a245d0aa9a4ba15dcf2c128e3"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0017",
+      "sourceId": "slice-82c251ab",
+      "sourceContext": "FederationManagement",
+      "sourceName": "RevokeParticipantInvitation",
+      "sourceConcept": "FederationMembership",
+      "title": "撤销参与者邀请",
+      "sourceHash": "c46b1fe5759af9c56ae9977a25681648091d2aefb5805fdb3747117c44d1bbc6"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0018",
+      "sourceId": "slice-eb9b2c84",
+      "sourceContext": "FederationManagement",
+      "sourceName": "SuspendParticipant",
+      "sourceConcept": "FederationMembership",
+      "title": "暂停参与者",
+      "sourceHash": "35693deadaa3415ceb4fa34cc49c9513b4490794632266d2af12497ffd7c088d"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0019",
+      "sourceId": "slice-e0ca60d6",
+      "sourceContext": "FederationManagement",
+      "sourceName": "RemoveParticipant",
+      "sourceConcept": "FederationMembership",
+      "title": "移除参与者",
+      "sourceHash": "b344c11095709327a48ad6ed03dae43bcef51c1ce874b27fdc324cb5d4dc3862"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0020",
+      "sourceId": "slice-fadc8c3e",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "RegisterRuntimeInfrastructurePackage",
+      "sourceConcept": "RuntimeInfrastructurePackage",
+      "title": "注册运行时基础设施包",
+      "sourceHash": "cf79efb7d3aca4da188ad22a886b7cb5548b738e704dfe486c6fe4b405ed0cae"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0021",
+      "sourceId": "slice-e15cefbe",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "RuntimeInfrastructurePackageCatalog",
+      "sourceConcept": "RuntimeInfrastructurePackage",
+      "title": "运行时基础设施包目录",
+      "sourceHash": "5fd545085dd17fd85d3c7de05e91b76efd1fa1f828bb73fee474972f921b25c3"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0022",
+      "sourceId": "slice-f35904ad",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "CreateRuntimeInstallationPlan",
+      "sourceConcept": "RuntimeInstallationPlan",
+      "title": "创建运行时安装计划",
+      "sourceHash": "7fcdd25c8e34dec66a1469f50b05f681c6bc5d10793f9639fe63d2304c175318"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0023",
+      "sourceId": "slice-0e61278c",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "RuntimeInstallationPlanCatalog",
+      "sourceConcept": "RuntimeInstallationPlan",
+      "title": "运行时安装计划目录",
+      "sourceHash": "fc275888a24d554793fa08d2cb7062e13af59f43275aacfd1c61ca60f72a799c"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0024",
+      "sourceId": "slice-7d947a8a",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "RuntimeInstallationGuide",
+      "sourceConcept": "RuntimeInstallationPlan",
+      "title": "运行时安装指南",
+      "sourceHash": "485f42d7e5ba242fd85d870d5542cb8190056e1bc493da789dca70abc15a3cf2"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0025",
+      "sourceId": "slice-ae3ed4a4",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "PlanRuntimeInfrastructure",
+      "sourceConcept": "RuntimeInfrastructure",
+      "title": "规划运行时基础设施",
+      "sourceHash": "518f746f47a4eb0ab2811559feb9d8e1c706b1cad7469c68fd30b9188598d387"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0026",
+      "sourceId": "slice-f113419e",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "RegisterRuntimeInfrastructure",
+      "sourceConcept": "RuntimeInfrastructure",
+      "title": "注册运行时基础设施",
+      "sourceHash": "b1341a067d5cae07bccca118f1bf4669201aa99961a8bce451aa2d634432ccdd"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0027",
+      "sourceId": "slice-bc1ece78",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "ConfirmRuntimeInfrastructurePrepared",
+      "sourceConcept": "RuntimeInfrastructure",
+      "title": "确认运行时基础设施已就绪",
+      "sourceHash": "1c3f632d70cfa6cf75cb1c007b720066366b5116265f78b5f4040ba3e74674d6"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0028",
+      "sourceId": "slice-1524114e",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "VerifyRuntimeInfrastructure",
+      "sourceConcept": "RuntimeInfrastructure",
+      "title": "验证运行时基础设施",
+      "sourceHash": "a69e710d6c85bde256ede0998af3277039571e50cda634bf8f8e16865d68edea"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0029",
+      "sourceId": "slice-b8a32014",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "DeployRuntimeAgent",
+      "sourceConcept": "RuntimeInfrastructure",
+      "title": "部署运行时代理",
+      "sourceHash": "40bd08b5998576e35c5dd6c25f8975bbbcc4fc06ab6a01d7ce8a7c623326ca3f"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0030",
+      "sourceId": "slice-dea247c4",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "RetryRuntimeInfrastructureVerification",
+      "sourceConcept": "RuntimeInfrastructure",
+      "title": "重试运行时基础设施验证",
+      "sourceHash": "77fb472c732d64928f5d61dfaa4a8434d8c6145208ac8f3f35214d1ade2c7116"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0031",
+      "sourceId": "slice-6432e41e",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "RetryRuntimeAgentDeployment",
+      "sourceConcept": "RuntimeInfrastructure",
+      "title": "重试运行时代理部署",
+      "sourceHash": "866bdd58ac8a1b0b21c16962bcc246cf04d48e1c7a8f1a95d58e1c62b407f3b4"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0032",
+      "sourceId": "slice-15dea9b5",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "RecordRuntimeConnectionEstablished",
+      "sourceConcept": "RuntimeInfrastructure",
+      "title": "记录运行时连接已建立",
+      "sourceHash": "31d9c7ba71ff83cd6b819870184c1b18c21a2c958caedcacf5354bd41cf73bb0"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0033",
+      "sourceId": "slice-0f1cd9f9",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "RuntimeAgentEndpointCatalog",
+      "sourceConcept": "RuntimeInfrastructure",
+      "title": "运行时代理端点目录",
+      "sourceHash": "51b1ab74073cb598c89b7dedb88359c0a75c7ab8c221c8a0ec4b2c73a933ecb9"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0034",
+      "sourceId": "slice-39822ec6",
+      "sourceContext": "RuntimeProvisioning",
+      "sourceName": "RuntimeInfrastructureAccessView",
+      "sourceConcept": "RuntimeInfrastructure",
+      "title": "运行时基础设施访问视图",
+      "sourceHash": "11fb6a23abf78b2ad2ed177b7c8f16abab9c97e4485d2d44c7af2b11bdc9b6c7"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0035",
+      "sourceId": "slice-d92096fb",
+      "sourceContext": "DatasetGovernance",
+      "sourceName": "DefineFeatureSchema",
+      "sourceConcept": "FeatureSchema",
+      "title": "定义特征架构",
+      "sourceHash": "0d9cdaa450cd0279d999df7724c20248420fb77b72929df35a5d5658f9eb1511"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0036",
+      "sourceId": "slice-9a1a067d",
+      "sourceContext": "DatasetGovernance",
+      "sourceName": "PublishFeatureSchema",
+      "sourceConcept": "FeatureSchema",
+      "title": "发布特征架构",
+      "sourceHash": "7a1fb1e9ca2a91fb9ea1ef7e4ead23ae55c421ded635538bbb77be87b6875e2b"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0037",
+      "sourceId": "slice-d0d6ce25",
+      "sourceContext": "DatasetGovernance",
+      "sourceName": "DeprecateFeatureSchema",
+      "sourceConcept": "FeatureSchema",
+      "title": "弃用特征架构",
+      "sourceHash": "2fbc4804cce255305ccb3b2905e60e0a8ccde82884afab6042484dc1d394612e"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0038",
+      "sourceId": "slice-50e78e0f",
+      "sourceContext": "DatasetGovernance",
+      "sourceName": "RetireFeatureSchema",
+      "sourceConcept": "FeatureSchema",
+      "title": "停用特征架构",
+      "sourceHash": "0e1e70c99f05851c6855cf9436ffb2a7913ef43bcecb90f66b52344f050ca832"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0039",
+      "sourceId": "slice-c6a6a6c8",
+      "sourceContext": "DatasetGovernance",
+      "sourceName": "SupersedeFeatureSchemaVersion",
+      "sourceConcept": "FeatureSchema",
+      "title": "取代特征架构版本",
+      "sourceHash": "7c1758a28517a6a8163144be620deb9ab7531e0842e088e033e8df1b1c3c14af"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0040",
+      "sourceId": "slice-76cab273",
+      "sourceContext": "DatasetGovernance",
+      "sourceName": "MarkCurrentRecommendedFeatureSchemaVersion",
+      "sourceConcept": "FeatureSchema",
+      "title": "标记当前推荐的特征架构版本",
+      "sourceHash": "7cec51646a91e7681844c1e681fd76682c724f283bc7002a1d6b7230cd92879d"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0041",
+      "sourceId": "slice-73f5eccd",
+      "sourceContext": "DatasetGovernance",
+      "sourceName": "CurrentRecommendedFeatureSchemaCatalog",
+      "sourceConcept": "FeatureSchema",
+      "title": "当前推荐的特征架构目录",
+      "sourceHash": "22985d88abc54fe9f11d5793433e61fba9351554a659963dfad4a8ce906ecfa2"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0042",
+      "sourceId": "slice-8f30e501",
+      "sourceContext": "DatasetGovernance",
+      "sourceName": "FeatureSchemaCatalog",
+      "sourceConcept": "FeatureSchema",
+      "title": "特征架构目录",
+      "sourceHash": "7f943a60867776ce4f224db65d07df116a0bb1b530dcef053fd6c6a4c85c702f"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0043",
+      "sourceId": "slice-ad05f2d9",
+      "sourceContext": "DatasetGovernance",
+      "sourceName": "RecordRuntimeDatasetMetadata",
+      "sourceConcept": "RuntimeDatasetMetadata",
+      "title": "记录运行时数据集元数据",
+      "sourceHash": "7e077d1f69366e34fe1053eb1be996700f9e816bc081b051cc8eb2c1e1dd18e7"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0044",
+      "sourceId": "slice-c7f572a3",
+      "sourceContext": "DatasetGovernance",
+      "sourceName": "RecordRuntimeDatasetReprofiledMetadata",
+      "sourceConcept": "RuntimeDatasetMetadata",
+      "title": "记录运行时数据集重新分析元数据",
+      "sourceHash": "44851f27a61e761fd6f54ff8e8a5fb17aa38ad13e091c58c019699cd2a539883"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0045",
+      "sourceId": "slice-1ed8c787",
+      "sourceContext": "DatasetGovernance",
+      "sourceName": "RuntimeDatasetMetadataCatalog",
+      "sourceConcept": "RuntimeDatasetMetadata",
+      "title": "运行时数据集元数据目录",
+      "sourceHash": "3a9c64d0017d8d52fa9cbe87f01fe742601feba3cb4cb5e414a6ba4341b57601"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0046",
+      "sourceId": "slice-7ccc677e",
+      "sourceContext": "ModelRepository",
+      "sourceName": "RegisterModelArtifact",
+      "sourceConcept": "ModelArtifact",
+      "title": "注册模型制品",
+      "sourceHash": "e6604e6daf68220caa1eea250925bc92fe724ebb5edc6f74d75167af716e79b8"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0047",
+      "sourceId": "slice-e846ef48",
+      "sourceContext": "ModelRepository",
+      "sourceName": "ModelArtifactCatalog",
+      "sourceConcept": "ModelArtifact",
+      "title": "模型制品目录",
+      "sourceHash": "9e7c3ed2c62982aae1440b42de0b0dadf47facbbf107ebd81d145cb13401d547"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0048",
+      "sourceId": "slice-d38fbaed",
+      "sourceContext": "ModelRepository",
+      "sourceName": "DownloadModelArtifact",
+      "sourceConcept": "ModelArtifact",
+      "title": "下载模型工件",
+      "sourceHash": "8a2a02be5afe5996e9e3048d06976c903e872c381acb3e507f338be24b3faa23"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0049",
+      "sourceId": "slice-eef6ed6c",
+      "sourceContext": "ModelRepository",
+      "sourceName": "RegisterFederatedModelArtifact",
+      "sourceConcept": "ModelArtifact",
+      "title": "注册联邦模型工件",
+      "sourceHash": "c8bf10fb46765d478b55723cf40a0561ac2aab9cfc2270a421ac4b23cb79103e"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0050",
+      "sourceId": "slice-51eda624",
+      "sourceContext": "ModelRepository",
+      "sourceName": "RegisterPersonalizedModelArtifact",
+      "sourceConcept": "ModelArtifact",
+      "title": "注册个性化模型制品",
+      "sourceHash": "124aa63a2055936cc426511f3de4125f7df6d7f320b09ee3c1b135b57656d974"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0051",
+      "sourceId": "slice-6c9882da",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "RegisterRuntimeEngineProfile",
+      "sourceConcept": "RuntimeEngineProfile",
+      "title": "注册运行时引擎配置文件",
+      "sourceHash": "abd50c0fccf98d73128a0088da293ecfa931d25cb4fc9935fc9f4b2c4936912d"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0052",
+      "sourceId": "slice-9dc78266",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "RuntimeEngineProfileCatalog",
+      "sourceConcept": "RuntimeEngineProfile",
+      "title": "运行时引擎配置文件目录",
+      "sourceHash": "d043e2e71a337dd1adcfd296b7bf4af405c795fa26c822468ca573faa7b3c156"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0053",
+      "sourceId": "slice-83322758",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "DefineTrainingRunConfiguration",
+      "sourceConcept": "TrainingRunConfiguration",
+      "title": "定义训练运行配置",
+      "sourceHash": "e392bdf5f297608edec7db0926a114509f640f0fba5a4f174d91e54a7d5bbe21"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0054",
+      "sourceId": "slice-017ad176",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "UpdateTrainingRunConfiguration",
+      "sourceConcept": "TrainingRunConfiguration",
+      "title": "更新训练运行配置",
+      "sourceHash": "e2a594100e6c74b87b448eaf9b4f381f250e886a8ad438ac8bba2864c1bf965b"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0055",
+      "sourceId": "slice-e7dd4f24",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "LockTrainingRunConfiguration",
+      "sourceConcept": "TrainingRunConfiguration",
+      "title": "锁定训练运行配置",
+      "sourceHash": "673376834684f24a149ef56ccda779f869daca1d057402430c1499f94375074f"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0056",
+      "sourceId": "slice-04d3f902",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "TrainingRunConfigurationCatalog",
+      "sourceConcept": "TrainingRunConfiguration",
+      "title": "训练运行配置目录",
+      "sourceHash": "554a4702c6200f85059fba92d2424ae15580a863d1b100f4fed6aa4371f99a8e"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0057",
+      "sourceId": "slice-6537d1cd",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "CreateTrainingJob",
+      "sourceConcept": "TrainingJob",
+      "title": "创建训练作业",
+      "sourceHash": "394a880d0cd02680979552de17925e46e467ebd829f0cfe76f0d6a151c572dde"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0058",
+      "sourceId": "slice-201ffbf1",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "SubmitTrainingJob",
+      "sourceConcept": "TrainingJob",
+      "title": "提交训练作业",
+      "sourceHash": "e9c2645495ed43bad4cb845c6cc7cc8f654faed32fda7afc87fa4e46d859319a"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0059",
+      "sourceId": "slice-b90f5d7f",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "TrainingJobDashboard",
+      "sourceConcept": "TrainingJob",
+      "title": "训练作业仪表板",
+      "sourceHash": "0ca72bd59a6dc739953e9dc6646575b8f90fd26d5d9b881e35544bfe7a7e7c40"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0060",
+      "sourceId": "slice-ba4b3f70",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "TrainingParticipantEligibility",
+      "sourceConcept": "TrainingJob",
+      "title": "训练参与者资格",
+      "sourceHash": "1d4e5c4d01bfc3af17bd6f5c5230a787a5a75d98ecff6aedc1299eb0d795d8cd"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0061",
+      "sourceId": "slice-dde5a363",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "PauseTrainingJob",
+      "sourceConcept": "TrainingJob",
+      "title": "暂停训练作业",
+      "sourceHash": "e14aa259b376866ba7ad3508a5d9b9170110823521f901230e03240f7983bbbe"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0062",
+      "sourceId": "slice-c1c60d34",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "ResumeTrainingJob",
+      "sourceConcept": "TrainingJob",
+      "title": "恢复训练作业",
+      "sourceHash": "6fba4fe882a7755000082ed0b3b8712dd92089bf456d95c3e1286feb57eb7d12"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0063",
+      "sourceId": "slice-3af09f8b",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "CancelTrainingJob",
+      "sourceConcept": "TrainingJob",
+      "title": "取消训练作业",
+      "sourceHash": "151d0579527233f837594aa4083a3a337f67be37fd4538be9148fa666bc61e56"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0064",
+      "sourceId": "slice-6ad9864e",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "ScheduleNextTrainingRound",
+      "sourceConcept": "TrainingJob",
+      "title": "安排下一训练轮次",
+      "sourceHash": "6f053ddc788fdeeb3e1168cc32a0785476cf69bce541b371187df35ca2a81bd1"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0065",
+      "sourceId": "slice-44fd29f8",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "CompleteTrainingJob",
+      "sourceConcept": "TrainingJob",
+      "title": "完成训练作业",
+      "sourceHash": "5528837a170cdb4603ee5d04c75b54a919bcef9a752bd4dd2ce1e0be2a01534c"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0066",
+      "sourceId": "slice-093e2668",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "SelectTrainingRoundParticipants",
+      "sourceConcept": "TrainingRound",
+      "title": "选择训练轮次参与者",
+      "sourceHash": "d68e61af8c54e076bb9abda46ea959d48fa6566be59f18b48be30e0106dd4134"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0067",
+      "sourceId": "slice-3afb3435",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "RetryTrainingRoundParticipantSelection",
+      "sourceConcept": "TrainingRound",
+      "title": "重试训练轮次参与者选择",
+      "sourceHash": "31c564f6e65647f92ab8bfeffcdfa54daed0150171bde6d23d87a3ccfb366fda"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0068",
+      "sourceId": "slice-6a16fc72",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "StartTrainingRound",
+      "sourceConcept": "TrainingRound",
+      "title": "开始训练轮次",
+      "sourceHash": "26982cd247f5635bc6fa7281d80eb31aa0195a736c3fc64051b1b53fe7686967"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0069",
+      "sourceId": "slice-fabbea45",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "GenerateParticipantExecutionPlan",
+      "sourceConcept": "ParticipantExecutionPlan",
+      "title": "生成参与者执行计划",
+      "sourceHash": "05e9a95c2fcb425323053fb74af5dcd3e8b76b64ea09864a33665ee92479a593"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0070",
+      "sourceId": "slice-04a9daf0",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "DispatchParticipantExecutionPlan",
+      "sourceConcept": "ParticipantExecutionPlan",
+      "title": "分发参与者执行计划",
+      "sourceHash": "2f4408932eafe03853053ce52336c4a7b456225dfcf98fa0309973ed08240244"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0071",
+      "sourceId": "slice-ff26cad0",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "SubmitModelUpdateSubmission",
+      "sourceConcept": "TrainingRound",
+      "title": "提交模型更新提交",
+      "sourceHash": "691e8b4395f56ea4835eb05afcb188b354f9fa1e5b697a6e07e924caba944a03"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0072",
+      "sourceId": "slice-fc1ff76d",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "EvaluateModelUpdateSubmission",
+      "sourceConcept": "TrainingRound",
+      "title": "评估模型更新提交",
+      "sourceHash": "7a8811d74277e808e666a2266b97f59dfe5ecf4dd2adb83519e676fe32c7903e"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0073",
+      "sourceId": "slice-7c327b31",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "RecordPersonalizedModelResult",
+      "sourceConcept": "PersonalizedModelResult",
+      "title": "记录个性化模型结果",
+      "sourceHash": "b2a03e0522ce3e81e89d955b3412e619afe17210b66c2dc341938330cfa917c4"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0074",
+      "sourceId": "slice-4e0f015a",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "PersonalizedModelCatalog",
+      "sourceConcept": "PersonalizedModelResult",
+      "title": "个性化模型目录",
+      "sourceHash": "378bfa31f04d75e4a1208e1bf399ee3b8b146e446d48d526b78b39191c3ac432"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0075",
+      "sourceId": "slice-1a9b72f8",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "AggregatePlainModelUpdates",
+      "sourceConcept": "TrainingRound",
+      "title": "聚合明文模型更新",
+      "sourceHash": "805caa926a7032ba71354a12fc842886f4028a54d39131beeddb3348911f75be"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0076",
+      "sourceId": "slice-a46e905e",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "RequestSecureAggregation",
+      "sourceConcept": "TrainingRound",
+      "title": "请求安全聚合",
+      "sourceHash": "41085a390caab2d9f2b08c0ce17040b85a283129e38faada5ee1eb190dce800d"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0077",
+      "sourceId": "slice-4b6bcf1e",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "CompleteModelAggregation",
+      "sourceConcept": "TrainingRound",
+      "title": "完成模型聚合",
+      "sourceHash": "b7a1bba3d59bfc85b78899af078c84345b4d4afe7ce830f07e937489207ef00f"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0078",
+      "sourceId": "slice-129ead8e",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "SubmitGlobalModelEvaluation",
+      "sourceConcept": "TrainingRound",
+      "title": "提交全局模型评估",
+      "sourceHash": "53329d4f3b63396b85c551d4115b8e0f18c17cb0a68cfcfa4b92015fa199318b"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0079",
+      "sourceId": "slice-4a16b8df",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "CompleteTrainingRound",
+      "sourceConcept": "TrainingRound",
+      "title": "完成训练轮次",
+      "sourceHash": "0a517197b271f6545ecb11ad207b9bd64c7216493efd8642e769fd2c0ba4b9f3"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0080",
+      "sourceId": "slice-8107a71a",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "FailTrainingRound",
+      "sourceConcept": "TrainingRound",
+      "title": "失败训练轮次",
+      "sourceHash": "33191e472158442f7d0de382d07e7118c181d077fce55183da1a1aff38c4bf8c"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0081",
+      "sourceId": "slice-158bd8b1",
+      "sourceContext": "TrainingOrchestration",
+      "sourceName": "TrainingRoundProgress",
+      "sourceConcept": "TrainingRound",
+      "title": "训练轮次进度",
+      "sourceHash": "712af5550f809ff4ce981a0d8e7fd1564d1a8fdf3ca67a976bc8576dff8db91b"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0082",
+      "sourceId": "slice-97531d57",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "RuntimeTelemetryLatest",
+      "sourceConcept": "NodeRuntimeHealth",
+      "title": "运行时最新遥测",
+      "sourceHash": "9e68e9377834e3b5efa6ed32f5530122b9d16907ba178edb4ece00151632fcd3"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0083",
+      "sourceId": "slice-e2404d65",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "RecordRuntimeTelemetry",
+      "sourceConcept": "NodeRuntimeHealth",
+      "title": "记录运行时遥测",
+      "sourceHash": "6fe2b33a806e42f6198e3e40bdf4c2b71977c42161286636507cec460a25c228"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0084",
+      "sourceId": "slice-d498ecb8",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "DetectRuntimeAgentOffline",
+      "sourceConcept": "NodeRuntimeHealth",
+      "title": "检测运行时代理离线",
+      "sourceHash": "be2394ce24ce254956ee1ce15f49c793eba8873f656db35f426ee532d08cabd6"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0085",
+      "sourceId": "slice-fd282504",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "MarkRuntimeAgentRecovered",
+      "sourceConcept": "NodeRuntimeHealth",
+      "title": "标记运行时代理已恢复",
+      "sourceHash": "4a8dc995ac2a164ec1bfd21ea890a582efd9a8ad28057ef33b3a843476ebfb90"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0086",
+      "sourceId": "slice-7aeba98f",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "DetectRuntimeNodeResourcePressure",
+      "sourceConcept": "RuntimeNodeResourcePressure",
+      "title": "检测运行时节点资源压力",
+      "sourceHash": "e6fa14487c93710b5a34089a0d9b4ff17c8daa6f0184671edb2c1ff31b2c70d0"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0087",
+      "sourceId": "slice-3f7c280e",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "RecordRuntimeNodeInventory",
+      "sourceConcept": "RuntimeNodeInventory",
+      "title": "记录运行时节点清单",
+      "sourceHash": "ab36284e95791511e55f00c1a0b6c57192d25a97bdaa67192946d6a349b66689"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0088",
+      "sourceId": "slice-79929d9e",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "RuntimeNodeInventoryView",
+      "sourceConcept": "RuntimeNodeInventory",
+      "title": "运行时节点清单视图",
+      "sourceHash": "c915e41f9a0b02ae0d2ad9284c9f97dd36545cd19f85016b137db3b1480a3f40"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0089",
+      "sourceId": "slice-c5ab698a",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "RuntimeNodeResourceLatest",
+      "sourceConcept": "RuntimeNodeResourceTelemetry",
+      "title": "运行时节点最新资源",
+      "sourceHash": "6271559e9d1fb70efbcd7c3b68be0bbe37974a7b00cef35e10bf538bc1bf965b"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0090",
+      "sourceId": "slice-c3869f79",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "RecordRuntimeNodeResourceTelemetry",
+      "sourceConcept": "RuntimeNodeResourceTelemetry",
+      "title": "记录运行时节点资源遥测",
+      "sourceHash": "528f617351250e276a2e85b07150bbc906742d3f20cbc1c9fdf09579553060be"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0091",
+      "sourceId": "slice-dc4e224d",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "RuntimeHealthDashboard",
+      "sourceConcept": "NodeRuntimeHealth",
+      "title": "运行时健康仪表板",
+      "sourceHash": "f0d01303fe8821178dad86538f471f4bff8ecf962af1c691d855870d086b3b0b"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0092",
+      "sourceId": "slice-f43e8d0f",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "RaiseTrainingAlert",
+      "sourceConcept": "TrainingAlert",
+      "title": "引发训练告警",
+      "sourceHash": "3536dea5055eb3831c48df962d9ebb2e1758e22c87d3e4f330400af8d23ff792"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0093",
+      "sourceId": "slice-102e6798",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "TrainingAlertCatalog",
+      "sourceConcept": "TrainingAlert",
+      "title": "训练告警目录",
+      "sourceHash": "c9cd0931a9661094d94e711fc9e31ac3b8347260865b7d173c60d45b9f0f7c46"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0094",
+      "sourceId": "slice-63ac1487",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "AcknowledgeTrainingAlert",
+      "sourceConcept": "TrainingAlert",
+      "title": "确认训练告警",
+      "sourceHash": "df88fb13ddd8ecd3e27736a0757a759ee3151aea44e065b5bacfeed1dfc786f5"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0095",
+      "sourceId": "slice-c3edeeef",
+      "sourceContext": "RuntimeMonitoring",
+      "sourceName": "ResolveTrainingAlert",
+      "sourceConcept": "TrainingAlert",
+      "title": "解决训练告警",
+      "sourceHash": "1f2b74d9fa88d4209b1af5432e50ee6461726f55bdf1409622c6d149ad863a78"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0096",
+      "sourceId": "slice-6883883e",
+      "sourceContext": "RuntimeGovernance",
+      "sourceName": "ActivateRuntimeIdentity",
+      "sourceConcept": "RuntimeIdentity",
+      "title": "激活运行时标识",
+      "sourceHash": "10c488a08e9fcd0c54a64c71464631740dacc047509f0c034183d46cc21f8d84"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0097",
+      "sourceId": "slice-6949bdab",
+      "sourceContext": "RuntimeGovernance",
+      "sourceName": "RevokeRuntimeIdentity",
+      "sourceConcept": "RuntimeIdentity",
+      "title": "撤销运行时标识",
+      "sourceHash": "a8b2f10c53508e70528e1dfdcb2e1351901bfb83103ef999385cadaa9bf4bb28"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0098",
+      "sourceId": "slice-267be0b4",
+      "sourceContext": "RuntimeGovernance",
+      "sourceName": "DetectRuntimeCapabilities",
+      "sourceConcept": "RuntimeCapability",
+      "title": "检测运行时能力",
+      "sourceHash": "5a3382cdd1aa2c313664a94b27d30a27eb0f96f01d04f5af835c2253095753e8"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0099",
+      "sourceId": "slice-53705008",
+      "sourceContext": "RuntimeGovernance",
+      "sourceName": "RuntimeIdentityCatalog",
+      "sourceConcept": "RuntimeIdentity",
+      "title": "运行时标识目录",
+      "sourceHash": "59ff25b9404967290b52e30016b8fbf998a82544ddcaee60bfc77c4a9a5809f5"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0100",
+      "sourceId": "slice-a09f6b28",
+      "sourceContext": "RuntimeGovernance",
+      "sourceName": "RuntimeCapabilityCatalog",
+      "sourceConcept": "RuntimeCapability",
+      "title": "运行时能力目录",
+      "sourceHash": "681288cf1e256485152efb35aeac418f17169977c30db0c780eb973cea8e1933"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0101",
+      "sourceId": "slice-0df6c6b1",
+      "sourceContext": "SecureAggregation",
+      "sourceName": "CreateSecureAggregationSession",
+      "sourceConcept": "SecureAggregationSession",
+      "title": "创建安全聚合会话",
+      "sourceHash": "e18bfc0c28b002f5ab624125ed99bffbd6bd6770384609ef95674784a4167870"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0102",
+      "sourceId": "slice-af59eab5",
+      "sourceContext": "SecureAggregation",
+      "sourceName": "SelectSecureAggregationParticipants",
+      "sourceConcept": "SecureAggregationSession",
+      "title": "选择安全聚合参与者",
+      "sourceHash": "ec85085bf08290dc188a8b86bb97f6a32e3db05f4a5ffc85caf63c1e7eb45690"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0103",
+      "sourceId": "slice-a903d2aa",
+      "sourceContext": "SecureAggregation",
+      "sourceName": "PrepareHomomorphicEncryptionContext",
+      "sourceConcept": "SecureAggregationSession",
+      "title": "准备同态加密上下文",
+      "sourceHash": "efe918ede8be76b888f202ab194b810a855638b8c8aced16022decfc753b044a"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0104",
+      "sourceId": "slice-5d843deb",
+      "sourceContext": "SecureAggregation",
+      "sourceName": "RecordEncryptedModelUpdate",
+      "sourceConcept": "SecureAggregationSession",
+      "title": "记录加密模型更新",
+      "sourceHash": "218cf294cee70a8498bca0dc6a384d9e582ed4cc06dfd7c8c083ef60cb85b972"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0105",
+      "sourceId": "slice-74fb7a88",
+      "sourceContext": "SecureAggregation",
+      "sourceName": "CompleteHomomorphicAggregationSession",
+      "sourceConcept": "SecureAggregationSession",
+      "title": "完成同态聚合会话",
+      "sourceHash": "b96dedc6536638ade86195a007b70c57b1c8e392ff7f50859a05b28c9a09ca68"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0106",
+      "sourceId": "slice-5c7bd7e5",
+      "sourceContext": "SecureAggregation",
+      "sourceName": "FailSecureAggregationSession",
+      "sourceConcept": "SecureAggregationSession",
+      "title": "失败安全聚合会话",
+      "sourceHash": "78486d65b1578527a9abc8c2e51063ca7fa80b874c8223b04f0e60d91e7a96bc"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0107",
+      "sourceId": "slice-ae5b24d8",
+      "sourceContext": "SecureAggregation",
+      "sourceName": "SecureAggregationSessionCatalog",
+      "sourceConcept": "SecureAggregationSession",
+      "title": "安全聚合会话目录",
+      "sourceHash": "75488617af3a9da3b080aac54162048e18507ec584d1f69987d1a547603cde72"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0108",
+      "sourceId": "slice-33df9783",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "AgentOrganizationDirectory",
+      "sourceConcept": "SharedCapability",
+      "title": "代理组织目录",
+      "sourceHash": "72c5fe1904b70fc2addaa6af9c1bac3a02293c3162643a1905182ab908e13b28"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0109",
+      "sourceId": "slice-f3bd320b",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "AgentFeatureSchemaCatalog",
+      "sourceConcept": "SharedCapability",
+      "title": "运行时代理特征架构目录",
+      "sourceHash": "760f35c4961261d6ebe8ec81ef2d86f32b2a384e7cd646a58977d7700e376cd9"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0110",
+      "sourceId": "slice-368c3f63",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "AgentDictionaryValueCatalog",
+      "sourceConcept": "SharedCapability",
+      "title": "代理字典值目录",
+      "sourceHash": "0f939b4dff4ae82223af5212ebc0fb216541322347711a75724dcb6cd69f0476"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0111",
+      "sourceId": "slice-c77ee2ba",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "AgentDictionaryValueTranslationCatalog",
+      "sourceConcept": "SharedCapability",
+      "title": "代理字典值翻译目录",
+      "sourceHash": "3a6675c06ab20bd9e7b057b8952e173dd209e4558f9b4af41870c9655f54cab1"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0112",
+      "sourceId": "slice-06111262",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "AgentRuntimeIdentityCatalog",
+      "sourceConcept": "SharedCapability",
+      "title": "代理运行时身份目录",
+      "sourceHash": "f6898ed6be8214ebd0d89476b6c90cef41be089f9a441f81f9d53ebdcef7bcc4"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0113",
+      "sourceId": "slice-725195cc",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "DeclareDataset",
+      "sourceConcept": "Dataset",
+      "title": "声明数据集",
+      "sourceHash": "42fa8328b46b713f3832f06b98da3afb4f381006c87016f209c88f35de49e57a"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0114",
+      "sourceId": "slice-5a2194a7",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ConfigureRuntimeDatasetBinding",
+      "sourceConcept": "RuntimeDatasetBinding",
+      "title": "配置运行时数据集绑定",
+      "sourceHash": "7f7fd2c1a1af8d7611fa7a69b54f41d76c38d8087a82f1b18f56317d84ba313b"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0115",
+      "sourceId": "slice-358d4122",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "RuntimeDatasetBindingCatalog",
+      "sourceConcept": "RuntimeDatasetBinding",
+      "title": "运行时数据集绑定目录",
+      "sourceHash": "db51526ef1fb5dba329895c8f22cb429ee6aa16e826a61ad5a6623fd48c5b77b"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0116",
+      "sourceId": "slice-c31ba9a1",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ValidateAgentDatasetAccess",
+      "sourceConcept": "AgentDatasetAccessValidation",
+      "title": "验证代理数据集访问",
+      "sourceHash": "aa066f40c7166408f75bb4cc83469cde66342e58ea7fabc8c6fbc4b052003915"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0117",
+      "sourceId": "slice-aa47e014",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "RevalidateAgentDatasetAccess",
+      "sourceConcept": "AgentDatasetAccessValidation",
+      "title": "重新验证代理数据集访问",
+      "sourceHash": "51ff9ba4c6a2e5c5b27c5947c9ae88404d71896db05722d0b22fd3075194c29c"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0118",
+      "sourceId": "slice-ba3dc29b",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "AgentDatasetAccessValidationCatalog",
+      "sourceConcept": "AgentDatasetAccessValidation",
+      "title": "代理数据集访问验证目录",
+      "sourceHash": "b76223e7a4dd223fa65ce3463fd594e2efd58ba6d7c3048d4c95373add86493e"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0119",
+      "sourceId": "slice-f44b66bc",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ProfileAgentDataset",
+      "sourceConcept": "AgentDatasetProfile",
+      "title": "分析代理数据集",
+      "sourceHash": "3af6b7174d8fee254c07511a23e4f827436df340508e3c4a26076dcb6646aa41"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0120",
+      "sourceId": "slice-d6f2a3cf",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReprofileAgentDataset",
+      "sourceConcept": "AgentDatasetProfile",
+      "title": "重新分析代理数据集",
+      "sourceHash": "f98e3be3d45fe159a09f9c04740d4b2a1abba19e0e0d07c65f5f8de9142cb4ae"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0121",
+      "sourceId": "slice-2529cf36",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ValidateDatasetContract",
+      "sourceConcept": "Dataset",
+      "title": "验证数据集合约",
+      "sourceHash": "58f19064576a93f7c9568b7fa9bcc94bb8c3595ad13daa75d1f506912531d1ae"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0122",
+      "sourceId": "slice-2e18bcb1",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "RetryDatasetContractValidation",
+      "sourceConcept": "Dataset",
+      "title": "重试数据集合约验证",
+      "sourceHash": "f64537046466871e7524c0632f2a11f33d932670ff169fa97ac5b96ed48d5cf4"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0123",
+      "sourceId": "slice-d28aff88",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "RejectDatasetForTraining",
+      "sourceConcept": "Dataset",
+      "title": "拒绝数据集用于训练",
+      "sourceHash": "677630d4862d414c2cc8fcebdac3aaa89bca3aa56aa8cd4a9dcd03ea4d076af9"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0124",
+      "sourceId": "slice-284a72da",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ApproveDatasetForTraining",
+      "sourceConcept": "Dataset",
+      "title": "批准数据集用于训练",
+      "sourceHash": "2d1ba3fd8514271f4c31e41a26f7d725bf2abe9a57c325205f4ac456e273b8c7"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0125",
+      "sourceId": "slice-847c2855",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "RevokeDatasetTrainingApproval",
+      "sourceConcept": "Dataset",
+      "title": "撤销数据集训练审批",
+      "sourceHash": "e1f3164ec9fa5f7eb4410a9f77a08331ef264dfb3befc07a933c69523796750c"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0126",
+      "sourceId": "slice-30869f70",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "DatasetCapability",
+      "sourceConcept": "Dataset",
+      "title": "数据集能力",
+      "sourceHash": "78aa7d10b4378a6bb785273dea670a4644eb809468dda832ef6574d7d05f3525"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0127",
+      "sourceId": "slice-ff9e2f26",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "DatasetReadiness",
+      "sourceConcept": "Dataset",
+      "title": "数据集就绪状态",
+      "sourceHash": "a0922019d2ec8381956132cf6d55550ab1c1bdee52bdcb5b11f40f07164e377a"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0128",
+      "sourceId": "slice-5bf739cd",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReceiveParticipantExecutionPlan",
+      "sourceConcept": "RoundExecution",
+      "title": "接收参与者执行计划",
+      "sourceHash": "7284b3d33ffe17269f495d2e381a18ce51b0d90545a161bddefe37429feaa331"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0129",
+      "sourceId": "slice-64faaa9b",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "AcceptExecutionPlan",
+      "sourceConcept": "RoundExecution",
+      "title": "接受执行计划",
+      "sourceHash": "96230c7fdab07177955a86583c3524b230ef10681af1186ca86ff4e8c8fbc037"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0130",
+      "sourceId": "slice-4d4016d0",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "StartRoundExecution",
+      "sourceConcept": "RoundExecution",
+      "title": "开始轮次执行",
+      "sourceHash": "638ea58042f3dc4d275c7d92f8bcce61bdf9fc1aadf238230304bc4c0d0a00ab"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0131",
+      "sourceId": "slice-0cecfd3f",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ObserveRuntimeEngineJob",
+      "sourceConcept": "RoundExecution",
+      "title": "观察运行时引擎作业",
+      "sourceHash": "8bbafb93e4dbabacd6de625b6bd04177eda0ac53dec05cba9a96a4e4391f211b"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0132",
+      "sourceId": "slice-b1a48287",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "CompleteRoundExecution",
+      "sourceConcept": "RoundExecution",
+      "title": "完成轮次执行",
+      "sourceHash": "7366226ae061a2fd6cceb928d103a0553dcd5718ca08ae1b71f89ae31212badd"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0133",
+      "sourceId": "slice-45c663e8",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "FailRoundExecution",
+      "sourceConcept": "RoundExecution",
+      "title": "失败轮次执行",
+      "sourceHash": "7c4110c9797e7cf6634628f61ba29d7a02d8408faeb91a8640c45215aec96333"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0134",
+      "sourceId": "slice-ff352882",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "RetryRoundExecutionAfterStartFailure",
+      "sourceConcept": "RoundExecution",
+      "title": "启动失败后重试轮次执行",
+      "sourceHash": "d9e44596ca342ee09f7ed6c671ad51323d4f975ecd41aafc3ca22c77ad46af75"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0135",
+      "sourceId": "slice-2cb34062",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "RetryRoundExecutionAfterRuntimeFailure",
+      "sourceConcept": "RoundExecution",
+      "title": "运行时失败后重试轮次执行",
+      "sourceHash": "34b7410309f1aeeba9958f8ca7d614c1ca5d49f13964670476ca2c6821d4623d"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0136",
+      "sourceId": "slice-d54dcc12",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "SubmitAgentLocalModelUpdate",
+      "sourceConcept": "RoundExecution",
+      "title": "提交代理本地模型更新",
+      "sourceHash": "bf30d5911cf70ee50976f9a9f53c65502018016d17b71d8c2fec6bd40c991f10"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0137",
+      "sourceId": "slice-6485fdce",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReleaseRuntimeEngineJobAfterCompletion",
+      "sourceConcept": "RoundExecution",
+      "title": "完成后释放运行时引擎作业",
+      "sourceHash": "450dd8aa75672431f6eff8e2cb393bb5f6ac35860476bd1b848f393efaadf27d"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0138",
+      "sourceId": "slice-ef8420f2",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReleaseRuntimeEngineJobAfterFailure",
+      "sourceConcept": "RoundExecution",
+      "title": "失败后释放运行时引擎作业",
+      "sourceHash": "d36cbd6462adc6bf1e3f11ecaafbbfdbaeb8c242a469603b58422e6eea65980d"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0139",
+      "sourceId": "slice-30156076",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReleaseRuntimeEngineJobAfterStartFailure",
+      "sourceConcept": "RoundExecution",
+      "title": "启动失败后释放运行时引擎作业",
+      "sourceHash": "023e25799259bc0ec9a2afe101ce31c0c28a2c97c49f0022b634b997b1580b3c"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0140",
+      "sourceId": "slice-5d7a0380",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReleaseRuntimeEngineJobAfterRetryFailure",
+      "sourceConcept": "RoundExecution",
+      "title": "重试失败后释放运行时引擎作业",
+      "sourceHash": "b69a84e27fba9f1bec4956bc65254a1a1cb9c61b9b404197a8c611b472792363"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0141",
+      "sourceId": "slice-bc1eac14",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReleaseRuntimeEngineJobAfterRuntimeRetryFailure",
+      "sourceConcept": "RoundExecution",
+      "title": "运行时重试失败后释放运行时引擎作业",
+      "sourceHash": "37fc9fe3b332de178d51fc2b10a139f751f9d968ce62006804f8358fb87c394f"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0142",
+      "sourceId": "slice-eb00f5f7",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "RoundExecutionCatalog",
+      "sourceConcept": "RoundExecution",
+      "title": "轮次执行目录",
+      "sourceHash": "4a0f1012f5d379e999ad7f507c77e890adfcef54e113f0fae9f493899eba91b7"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0143",
+      "sourceId": "slice-d248addb",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "LoadRuntimeAgentBootstrapConfiguration",
+      "sourceConcept": "RuntimeAgentLifecycle",
+      "title": "加载运行时代理引导配置",
+      "sourceHash": "1571bfcf32e8bcd40dff3c8c222fe01732c25d7df8caffb3286a43bfe1e39f99"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0144",
+      "sourceId": "slice-c7d2df46",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReportRuntimeAgentStarted",
+      "sourceConcept": "RuntimeAgentLifecycle",
+      "title": "报告运行时代理已启动",
+      "sourceHash": "95338748eab06734b0209f5dd7533988cba61611f4bfac80e33bf68364bdf544"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0145",
+      "sourceId": "slice-75635ed7",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReportRuntimeInstanceSelfCheckPassed",
+      "sourceConcept": "RuntimeAgentLifecycle",
+      "title": "报告运行时实例自检已通过",
+      "sourceHash": "3175b7af9f97910acda3c00cc3fda7d44cf708a933d1d82acd7aac8de1482871"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0146",
+      "sourceId": "slice-574f1d44",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "RuntimeAgentLifecycleCatalog",
+      "sourceConcept": "RuntimeAgentLifecycle",
+      "title": "运行时代理生命周期目录",
+      "sourceHash": "b8aa6df91f4a211c16acc556e8bd9061c0835e51aceecd51e27232cb9152a4c1"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0147",
+      "sourceId": "slice-e5b0caa2",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReportRuntimeInstanceConnected",
+      "sourceConcept": "AgentRuntimeInfrastructureConnection",
+      "title": "报告运行时实例已连接",
+      "sourceHash": "d8d983facb53113d57b91bc4521d6f53d4317fff6b75b6e134601ae0a8d7a57a"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0148",
+      "sourceId": "slice-8d5d066d",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "AgentRuntimeInfrastructureConnectionCatalog",
+      "sourceConcept": "AgentRuntimeInfrastructureConnection",
+      "title": "代理运行时基础设施连接目录",
+      "sourceHash": "2e9415c757be37d5d443d7f4037720a86c23fa4a02c2ef7ef9752d7c780fd5ef"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0149",
+      "sourceId": "slice-ff0c55e7",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "AgentRuntimeTelemetryLatest",
+      "sourceConcept": "AgentRuntimeTelemetry",
+      "title": "代理运行时遥测最新",
+      "sourceHash": "735917017d6ef79482539b9a2933af389f8a855d37aa132185bac842e3aec0a9"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0150",
+      "sourceId": "slice-ae0c7e4a",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReportAgentRuntimeTelemetry",
+      "sourceConcept": "AgentRuntimeTelemetry",
+      "title": "上报代理运行时遥测",
+      "sourceHash": "e97a9ce85a3cd58473356008fcc9d69c722196bc88b64fcf55a0224652528512"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0151",
+      "sourceId": "slice-d8eaacb9",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReportAgentRuntimeNodeInventory",
+      "sourceConcept": "AgentRuntimeNodeInventory",
+      "title": "报告代理运行时节点清单",
+      "sourceHash": "26ffc0d583757fdf59d0a94371cfc74a841dd317c4a77be771a2a8eb83fa2690"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0152",
+      "sourceId": "slice-6a815e36",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "AgentRuntimeNodeInventoryCatalog",
+      "sourceConcept": "AgentRuntimeNodeInventory",
+      "title": "代理运行时节点清单目录",
+      "sourceHash": "9660b35d4dc490696ae2e5ae75949742db14ba4d4e490f9df3bf28ab41f310d9"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0153",
+      "sourceId": "slice-a56419ba",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "AgentRuntimeNodeResourceLatest",
+      "sourceConcept": "AgentRuntimeNodeResourceTelemetry",
+      "title": "代理运行时节点资源最新",
+      "sourceHash": "713562ab9536c87ce1fd8de8d00e362abebb9e53db089ce4fd5988ec6e5310f3"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0154",
+      "sourceId": "slice-973cdae6",
+      "sourceContext": "RuntimeAgentOperations",
+      "sourceName": "ReportAgentRuntimeNodeResourceTelemetry",
+      "sourceConcept": "AgentRuntimeNodeResourceTelemetry",
+      "title": "上报代理运行时节点资源遥测",
+      "sourceHash": "6bb596e569b0c4ff5fceae39934ba68fd57476df2636c13def4fd0ec7fa32e37"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0155",
+      "sourceId": "slice-16b3a1ce",
+      "sourceContext": "FileUpload",
+      "sourceName": "UploadFile",
+      "sourceConcept": "UploadedFile",
+      "title": "上传文件",
+      "sourceHash": "751aed743940fd18a6e8fb3fafacb5144716018b2afb593d090158ac2aee745a"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0156",
+      "sourceId": "slice-06708c39",
+      "sourceContext": "FileUpload",
+      "sourceName": "MarkFileReferenced",
+      "sourceConcept": "UploadedFile",
+      "title": "将文件标记为已引用",
+      "sourceHash": "806275f45a667391245ab0a816a92576a443fc91a5042f375f3556dcf0a0c428"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0157",
+      "sourceId": "slice-3075787b",
+      "sourceContext": "FileUpload",
+      "sourceName": "DownloadFile",
+      "sourceConcept": "UploadedFile",
+      "title": "下载文件",
+      "sourceHash": "575841e7e5920e6cfba9928ca8893dc6015f3b70b942ef97ad2bc886c240b986"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0158",
+      "sourceId": "slice-d252b143",
+      "sourceContext": "FileUpload",
+      "sourceName": "DiscardFile",
+      "sourceConcept": "UploadedFile",
+      "title": "丢弃文件",
+      "sourceHash": "369c2d50206da9eb09ae40b6261ba6bda040deb7d103d5952e859f42e5b676ee"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0159",
+      "sourceId": "slice-3c9cf498",
+      "sourceContext": "FileUpload",
+      "sourceName": "ExpireFile",
+      "sourceConcept": "UploadedFile",
+      "title": "使文件过期",
+      "sourceHash": "73549b2435e50b71ba5c1807b0cb12595f5ecbdb96265584329b6e2f353a200c"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0160",
+      "sourceId": "slice-f1733462",
+      "sourceContext": "FileUpload",
+      "sourceName": "UploadedFileCatalog",
+      "sourceConcept": "UploadedFile",
+      "title": "已上传文件目录",
+      "sourceHash": "601a558a7eff42d02b280b432cde826ec66e695d47d1123ed9d7f6237f7d7ca8"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0161",
+      "sourceId": "slice-b0b0ac18",
+      "sourceContext": "DictionaryMaintenance",
+      "sourceName": "RegisterDictionary",
+      "sourceConcept": "Dictionary",
+      "title": "注册字典",
+      "sourceHash": "2d408e52c06420b98eac63fd31f4d5c1ca5a312b90548421208548cb2f9a61f3"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0162",
+      "sourceId": "slice-76eb436c",
+      "sourceContext": "DictionaryMaintenance",
+      "sourceName": "UpdateDictionary",
+      "sourceConcept": "Dictionary",
+      "title": "更新字典",
+      "sourceHash": "8d6018ed08c55067622f8fb17216c7887bf923492400233faf15ead6844b5fb6"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0163",
+      "sourceId": "slice-03e241b1",
+      "sourceContext": "DictionaryMaintenance",
+      "sourceName": "ArchiveDictionary",
+      "sourceConcept": "Dictionary",
+      "title": "归档字典",
+      "sourceHash": "e64f855a6ba50055f0fb111ac2bf73c464f07f27cd4f0205de3e181946cf3775"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0164",
+      "sourceId": "slice-6907b784",
+      "sourceContext": "DictionaryMaintenance",
+      "sourceName": "DictionaryCatalog",
+      "sourceConcept": "Dictionary",
+      "title": "字典目录",
+      "sourceHash": "c13bc9063284b419bf6f33eb06de32b825cc60353e7f9fb445d0d8c323578bd4"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0165",
+      "sourceId": "slice-70522cbd",
+      "sourceContext": "DictionaryMaintenance",
+      "sourceName": "AddDictionaryValue",
+      "sourceConcept": "DictionaryValue",
+      "title": "添加字典值",
+      "sourceHash": "36b056d7e54ad70f6b9e26a79bbfceb5ee72f115252f8a7dc4f02d4618da0039"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0166",
+      "sourceId": "slice-bd12ce54",
+      "sourceContext": "DictionaryMaintenance",
+      "sourceName": "DisableDictionaryValue",
+      "sourceConcept": "DictionaryValue",
+      "title": "停用字典值",
+      "sourceHash": "2ae994dbf56fc9d40b6f835ad399d9b80a428bedd7fe3916ff1fe7713764127b"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0167",
+      "sourceId": "slice-15905637",
+      "sourceContext": "DictionaryMaintenance",
+      "sourceName": "EnableDictionaryValue",
+      "sourceConcept": "DictionaryValue",
+      "title": "启用字典值",
+      "sourceHash": "382ba11e7fa2d383b8f6653861ab22efbce7f66106b48dc91dbc1dcca6649d42"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0168",
+      "sourceId": "slice-ef299d7d",
+      "sourceContext": "DictionaryMaintenance",
+      "sourceName": "DictionaryValueCatalog",
+      "sourceConcept": "DictionaryValue",
+      "title": "字典值目录",
+      "sourceHash": "c5dd670dbb8be88752818a970625adc7cd322d3d07781e006067948ae638eab8"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0169",
+      "sourceId": "slice-23aa6f37",
+      "sourceContext": "DictionaryMaintenance",
+      "sourceName": "SetDictionaryValueTranslation",
+      "sourceConcept": "DictionaryValueTranslation",
+      "title": "设置字典值翻译",
+      "sourceHash": "f52badb78973a12a6192b97ea5270a4b2dae7e79a37d2c65af6d7f454a959ad1"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0170",
+      "sourceId": "slice-1e01826c",
+      "sourceContext": "DictionaryMaintenance",
+      "sourceName": "UpdateDictionaryValueTranslation",
+      "sourceConcept": "DictionaryValueTranslation",
+      "title": "更新字典值翻译",
+      "sourceHash": "f1cecfc09565d19c7dd4ebd858be22918e079f851afbba9677acf94b63d70615"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0171",
+      "sourceId": "slice-de89db54",
+      "sourceContext": "DictionaryMaintenance",
+      "sourceName": "DictionaryValueTranslationCatalog",
+      "sourceConcept": "DictionaryValueTranslation",
+      "title": "字典值翻译目录",
+      "sourceHash": "e680cd4947151b0f02fea637947d7035ded413aefd35818e54d086cf40e4d4c5"
+    }
+  ]
+}
