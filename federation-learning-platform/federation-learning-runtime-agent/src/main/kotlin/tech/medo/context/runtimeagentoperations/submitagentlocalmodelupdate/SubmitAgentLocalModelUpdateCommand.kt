@@ -46,8 +46,10 @@ data class SubmitAgentLocalModelUpdateCommand(
     val personalizedAccuracy: BigDecimal?,
     val personalizationLift: BigDecimal?
 ) {
+
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
+
 
 
 }

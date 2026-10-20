@@ -22,8 +22,10 @@ data class CompleteHomomorphicAggregationSessionCommand(
     val aggregatedModelId: UUID = java.util.UUID.randomUUID(),
     val encryptedUpdateArtifactRefs: List<String>
 ) {
+
     @TargetEntityId
     val selection: SecureAggregationSessionSelection = SecureAggregationSessionSelection(secureAggregationSessionId = secureAggregationSessionId)
+
 
 
 }

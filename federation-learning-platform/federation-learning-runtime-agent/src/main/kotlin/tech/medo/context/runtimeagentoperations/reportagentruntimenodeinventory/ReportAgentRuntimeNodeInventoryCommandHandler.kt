@@ -20,6 +20,8 @@ class ReportAgentRuntimeNodeInventoryCommandHandler(
         command: ReportAgentRuntimeNodeInventoryCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

@@ -17,8 +17,10 @@ data class RecordRuntimeConnectionEstablishedCommand(
     val runtimeAgentEndpoint: String,
     val endpointScope: String
 ) {
+
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
+
 
 
 }

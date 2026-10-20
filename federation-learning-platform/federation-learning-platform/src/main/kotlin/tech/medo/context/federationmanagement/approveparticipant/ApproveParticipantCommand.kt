@@ -14,8 +14,10 @@ data class ApproveParticipantCommand(
     val organizationName: String?,
     val approvalNote: String?
 ) {
+
     @TargetEntityId
     val selection: FederationMembershipSelection = FederationMembershipSelection(federationId = federationId, organizationId = organizationId)
+
 
 
 }

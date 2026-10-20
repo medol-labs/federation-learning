@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 class PublishSystemNotificationIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun PublishSystemNotificationintegration() {
         val command = PublishSystemNotificationCommand(

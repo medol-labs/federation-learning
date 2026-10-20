@@ -22,6 +22,7 @@ import java.util.UUID
 class RegisterModelArtifactIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RegisterPullableModelArtifact() {
         val command = RegisterModelArtifactCommand(

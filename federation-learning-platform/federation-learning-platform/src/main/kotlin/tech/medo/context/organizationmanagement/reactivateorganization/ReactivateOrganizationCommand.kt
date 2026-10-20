@@ -12,8 +12,10 @@ data class ReactivateOrganizationCommand(
     val organizationName: String,
     val reactivationReason: String
 ) {
+
     @TargetEntityId
     val selection: OrganizationSelection = OrganizationSelection(organizationName = organizationName.trim().lowercase())
+
 
     val organizationNameEntityId: String = organizationName.trim().lowercase()
 

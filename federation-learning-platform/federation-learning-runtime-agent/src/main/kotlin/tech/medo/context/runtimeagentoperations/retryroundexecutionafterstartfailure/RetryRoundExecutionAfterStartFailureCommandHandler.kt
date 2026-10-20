@@ -24,6 +24,7 @@ class RetryRoundExecutionAfterStartFailureCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
+
         if (state.currentState != RoundExecutionStateEnum.StartFailed) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -41,5 +42,6 @@ class RetryRoundExecutionAfterStartFailureCommandHandler(
         val portResult = retryRoundExecutionAfterStartFailureService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))
+
     }
 }

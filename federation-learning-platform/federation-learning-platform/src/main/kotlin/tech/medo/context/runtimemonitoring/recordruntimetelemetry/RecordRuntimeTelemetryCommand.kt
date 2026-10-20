@@ -38,8 +38,10 @@ data class RecordRuntimeTelemetryCommand(
     val healthStatus: String,
     val telemetryRetentionPolicy: String
 ) {
+
     @TargetEntityId
     val selection: NodeRuntimeHealthSelection = NodeRuntimeHealthSelection(nodeId = nodeId)
+
 
 
 }

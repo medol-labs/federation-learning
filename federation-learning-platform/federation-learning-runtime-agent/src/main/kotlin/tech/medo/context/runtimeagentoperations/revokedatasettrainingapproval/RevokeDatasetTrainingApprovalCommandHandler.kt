@@ -22,6 +22,8 @@ class RevokeDatasetTrainingApprovalCommandHandler(
         @InjectEntity(idProperty = "selection") state: DatasetState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

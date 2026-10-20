@@ -23,6 +23,7 @@ import tech.medo.dictionarymaintenance.domain.types.DictionaryCode
 class RegisterDictionaryIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RegisterDictionaryintegration() {
         val command = RegisterDictionaryCommand(

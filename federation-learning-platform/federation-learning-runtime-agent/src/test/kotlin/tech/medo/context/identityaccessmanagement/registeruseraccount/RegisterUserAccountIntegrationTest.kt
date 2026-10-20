@@ -22,6 +22,7 @@ import java.util.UUID
 class RegisterUserAccountIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RegisterUserAccountintegration() {
         val command = RegisterUserAccountCommand(

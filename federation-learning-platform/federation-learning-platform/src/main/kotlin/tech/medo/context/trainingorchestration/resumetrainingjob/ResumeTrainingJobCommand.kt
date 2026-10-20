@@ -11,8 +11,10 @@ data class ResumeTrainingJobCommand(
     val trainingJobId: UUID,
     val resumeReason: String?
 ) {
+
     @TargetEntityId
     val selection: TrainingJobSelection = TrainingJobSelection(trainingJobId = trainingJobId)
+
 
 
 }

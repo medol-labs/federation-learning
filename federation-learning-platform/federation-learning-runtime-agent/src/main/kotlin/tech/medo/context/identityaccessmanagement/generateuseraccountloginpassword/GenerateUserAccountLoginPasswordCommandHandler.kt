@@ -24,10 +24,12 @@ class GenerateUserAccountLoginPasswordCommandHandler(
         @InjectEntity(idProperty = "userAccountId") state: UserAccountState,
         eventAppender: EventAppender
     ): GenerateUserAccountLoginPasswordResult {
+
         val input = GenerateUserAccountLoginPasswordInput(userAccountId = command.userAccountId, passwordResetRequired = command.passwordResetRequired)
         val portResult = generateUserAccountLoginPasswordService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))
         return portResult
+
     }
 }

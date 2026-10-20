@@ -5967,6 +5967,18 @@
         "name": "TrainingRoundParticipantsSelected",
         "title": "Training Round Participants Selected"
       },
+      "triggers": [
+        {
+          "id": "event-f36ff121",
+          "name": "TrainingRoundParticipantsSelected",
+          "title": "Training Round Participants Selected"
+        },
+        {
+          "id": "event-435a3464",
+          "name": "HomomorphicEncryptionContextPrepared",
+          "title": "Homomorphic Encryption Context Prepared"
+        }
+      ],
       "from": "ParticipantsSelected",
       "to": "Running",
       "startsLifecycle": false
@@ -6195,6 +6207,19 @@
         "name": "SecureAggregationCompleted",
         "title": "Secure Aggregation Completed"
       },
+      "triggers": [
+        {
+          "id": "event-986540d6",
+          "name": "SecureAggregationCompleted",
+          "title": "Secure Aggregation Completed"
+        },
+        {
+          "id": "event-d584a78e",
+          "name": "PlainModelAggregationCompleted",
+          "title": "Plain Model Aggregation Completed"
+        }
+      ],
+      "from": "Completed",
       "to": "EvaluatingGlobalModel",
       "startsLifecycle": false
     },
@@ -6557,6 +6582,18 @@
         "name": "RuntimeAgentInstallationSucceeded",
         "title": "Runtime Agent Installation Succeeded"
       },
+      "triggers": [
+        {
+          "id": "event-05ba48a6",
+          "name": "RuntimeAgentInstallationSucceeded",
+          "title": "Runtime Agent Installation Succeeded"
+        },
+        {
+          "id": "event-cb350a25",
+          "name": "RuntimeConnectionEstablished",
+          "title": "Runtime Connection Established"
+        }
+      ],
       "to": "Active",
       "startsLifecycle": true
     },
@@ -22360,6 +22397,12 @@
               "elementType": "PROCESSOR"
             },
             {
+              "id": "automation-c3d813f7",
+              "direction": "OUTBOUND",
+              "title": "Activate Runtime Identity When Agent Installed",
+              "elementType": "PROCESSOR"
+            },
+            {
               "id": "readmodel-1a190595",
               "direction": "OUTBOUND",
               "title": "Dataset Readiness",
@@ -28046,6 +28089,18 @@
               "elementType": "EVENT"
             },
             {
+              "id": "event-cc810ecf",
+              "direction": "INBOUND",
+              "title": "Federated Model Artifact Registered",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "event-8c827c51",
+              "direction": "INBOUND",
+              "title": "Personalized Model Artifact Registered",
+              "elementType": "EVENT"
+            },
+            {
               "id": "screen-ec8f1324",
               "direction": "INBOUND",
               "title": "Model Repository Screen",
@@ -28976,6 +29031,12 @@
               "direction": "OUTBOUND",
               "title": "Model Artifact Catalog",
               "elementType": "READMODEL"
+            },
+            {
+              "id": "command-bbffe073",
+              "direction": "OUTBOUND",
+              "title": "Download Model Artifact",
+              "elementType": "COMMAND"
             },
             {
               "id": "command-ed94cbfd",
@@ -29963,6 +30024,12 @@
               "direction": "OUTBOUND",
               "title": "Model Artifact Catalog",
               "elementType": "READMODEL"
+            },
+            {
+              "id": "command-bbffe073",
+              "direction": "OUTBOUND",
+              "title": "Download Model Artifact",
+              "elementType": "COMMAND"
             },
             {
               "id": "command-3dc1de3f",
@@ -42931,6 +42998,12 @@
               "direction": "OUTBOUND",
               "title": "Start Training Round",
               "elementType": "COMMAND"
+            },
+            {
+              "id": "event-435a3464",
+              "direction": "INBOUND",
+              "title": "Homomorphic Encryption Context Prepared",
+              "elementType": "EVENT"
             }
           ],
           "metadata": {
@@ -53058,6 +53131,12 @@
               "direction": "OUTBOUND",
               "title": "Complete Plain Aggregation When Completed",
               "elementType": "PROCESSOR"
+            },
+            {
+              "id": "automation-9183190a",
+              "direction": "OUTBOUND",
+              "title": "Complete Secure Aggregation When Session Completed",
+              "elementType": "PROCESSOR"
             }
           ]
         },
@@ -55690,6 +55769,12 @@
               "direction": "OUTBOUND",
               "title": "Complete Model Aggregation",
               "elementType": "COMMAND"
+            },
+            {
+              "id": "event-d584a78e",
+              "direction": "INBOUND",
+              "title": "Plain Model Aggregation Completed",
+              "elementType": "EVENT"
             }
           ],
           "metadata": {
@@ -64787,6 +64872,12 @@
               "direction": "OUTBOUND",
               "title": "Activate Runtime Identity",
               "elementType": "COMMAND"
+            },
+            {
+              "id": "event-cb350a25",
+              "direction": "INBOUND",
+              "title": "Runtime Connection Established",
+              "elementType": "EVENT"
             }
           ],
           "metadata": {
@@ -68502,6 +68593,12 @@
               "id": "automation-6252fade",
               "direction": "OUTBOUND",
               "title": "Start Round When Encryption Context Prepared",
+              "elementType": "PROCESSOR"
+            },
+            {
+              "id": "automation-f481636b",
+              "direction": "OUTBOUND",
+              "title": "Start Round When Participants Selected Without Secure Aggregation",
               "elementType": "PROCESSOR"
             },
             {

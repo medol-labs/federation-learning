@@ -22,6 +22,8 @@ class SubmitTrainingJobCommandHandler(
         @InjectEntity(idProperty = "trainingJobId") state: TrainingJobState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

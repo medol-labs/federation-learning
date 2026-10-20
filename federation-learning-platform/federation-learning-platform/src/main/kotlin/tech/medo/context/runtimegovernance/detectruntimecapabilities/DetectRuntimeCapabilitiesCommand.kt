@@ -11,8 +11,10 @@ data class DetectRuntimeCapabilitiesCommand(
     val runtimeId: UUID,
     val capabilityTypes: List<String>
 ) {
+
     @TargetEntityId
     val selection: RuntimeCapabilitySelection = RuntimeCapabilitySelection(runtimeId = runtimeId)
+
 
 
 }

@@ -20,6 +20,8 @@ class RegisterRuntimeInfrastructurePackageCommandHandler(
         command: RegisterRuntimeInfrastructurePackageCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

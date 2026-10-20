@@ -20,8 +20,10 @@ data class PlanRuntimeInfrastructureCommand(
     val agentInstallMode: String,
     val expectedNodeCount: Int
 ) {
+
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
+
 
 
 }

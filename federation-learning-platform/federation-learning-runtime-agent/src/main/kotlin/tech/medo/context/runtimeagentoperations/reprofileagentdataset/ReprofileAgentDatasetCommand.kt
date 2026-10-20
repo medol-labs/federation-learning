@@ -11,8 +11,10 @@ data class ReprofileAgentDatasetCommand(
     val metadataReportId: UUID = java.util.UUID.randomUUID(),
     val runtimeDatasetBindingId: UUID
 ) {
+
     @TargetEntityId
     val selection: AgentDatasetProfileSelection = AgentDatasetProfileSelection(runtimeDatasetBindingId = runtimeDatasetBindingId)
+
 
 
 }

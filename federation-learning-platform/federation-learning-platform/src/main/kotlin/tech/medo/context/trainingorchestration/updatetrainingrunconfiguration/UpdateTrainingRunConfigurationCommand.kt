@@ -47,8 +47,10 @@ data class UpdateTrainingRunConfigurationCommand(
     val minimumFairnessScore: BigDecimal?,
     val updateReason: String?
 ) {
+
     @TargetEntityId
     val selection: TrainingRunConfigurationSelection = TrainingRunConfigurationSelection(trainingRunConfigurationId = trainingRunConfigurationId)
+
 
 
 }

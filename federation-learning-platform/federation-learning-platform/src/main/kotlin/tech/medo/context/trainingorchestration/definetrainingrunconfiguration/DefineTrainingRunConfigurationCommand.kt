@@ -46,8 +46,10 @@ data class DefineTrainingRunConfigurationCommand(
     val minimumAccuracy: BigDecimal,
     val minimumFairnessScore: BigDecimal?
 ) {
+
     @TargetEntityId
     val selection: TrainingRunConfigurationSelection = TrainingRunConfigurationSelection(trainingRunConfigurationId = trainingRunConfigurationId)
+
 
 
 }

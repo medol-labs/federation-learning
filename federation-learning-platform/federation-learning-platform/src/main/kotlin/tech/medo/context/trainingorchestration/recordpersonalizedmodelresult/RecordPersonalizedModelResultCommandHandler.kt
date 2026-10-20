@@ -20,6 +20,8 @@ class RecordPersonalizedModelResultCommandHandler(
         command: RecordPersonalizedModelResultCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

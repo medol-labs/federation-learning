@@ -22,6 +22,8 @@ class RegisterOrganizationCommandHandler(
         @InjectEntity(idProperty = "organizationNameSelection") organizationNameReservation: OrganizationNameReservationState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, organizationNameReservation))
+
     }
 }

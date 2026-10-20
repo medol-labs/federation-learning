@@ -30,8 +30,10 @@ data class PublishSystemNotificationCommand(
     val publishedAt: LocalDateTime,
     val status: String
 ) {
+
     @TargetEntityId
     val selection: SystemNotificationSelection = SystemNotificationSelection(notificationId = notificationId)
+
 
 
 }

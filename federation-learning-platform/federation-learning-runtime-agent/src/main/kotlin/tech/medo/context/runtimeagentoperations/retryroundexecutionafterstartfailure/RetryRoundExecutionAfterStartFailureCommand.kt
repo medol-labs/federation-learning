@@ -22,8 +22,10 @@ data class RetryRoundExecutionAfterStartFailureCommand(
     val runtimeEngineJobId: String,
     val retryReason: String
 ) {
+
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
+
 
 
 }

@@ -18,8 +18,10 @@ data class ReportRuntimeInstanceConnectedCommand(
     val controlChannelEstablished: Boolean,
     val heartbeatAccepted: Boolean
 ) {
+
     @TargetEntityId
     val selection: AgentRuntimeInfrastructureConnectionSelection = AgentRuntimeInfrastructureConnectionSelection(runtimeInfrastructureId = runtimeInfrastructureId)
+
 
 
 }

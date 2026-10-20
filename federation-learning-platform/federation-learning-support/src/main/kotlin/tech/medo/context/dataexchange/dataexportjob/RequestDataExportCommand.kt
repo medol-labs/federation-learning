@@ -22,8 +22,10 @@ data class RequestDataExportCommand(
     val fileName: String,
     val status: String
 ) {
+
     @TargetEntityId
     val selection: DataExportJobSelection = DataExportJobSelection(dataExportJobId = dataExportJobId)
+
 
 
 }

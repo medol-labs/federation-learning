@@ -21,8 +21,10 @@ data class DeployRuntimeAgentCommand(
     val agentInstallMode: String,
     val expectedNodeCount: Int
 ) {
+
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
+
 
 
 }

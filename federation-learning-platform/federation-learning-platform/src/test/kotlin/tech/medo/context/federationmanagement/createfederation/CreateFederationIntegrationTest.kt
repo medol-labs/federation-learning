@@ -22,6 +22,7 @@ import java.util.UUID
 class CreateFederationIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun CreateFederationintegration() {
         val command = CreateFederationCommand(

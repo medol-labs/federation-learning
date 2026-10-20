@@ -11,8 +11,10 @@ data class LockTrainingRunConfigurationCommand(
     val trainingRunConfigurationId: UUID,
     val trainingJobId: UUID
 ) {
+
     @TargetEntityId
     val selection: TrainingRunConfigurationSelection = TrainingRunConfigurationSelection(trainingRunConfigurationId = trainingRunConfigurationId)
+
 
 
 }

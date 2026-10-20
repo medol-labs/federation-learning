@@ -20,8 +20,10 @@ data class RequestDataImportCommand(
     val requestHash: String,
     val status: String
 ) {
+
     @TargetEntityId
     val selection: DataImportJobSelection = DataImportJobSelection(dataImportJobId = dataImportJobId)
+
 
 
 }

@@ -18,8 +18,10 @@ data class CompleteTrainingJobCommand(
     val trainingJobObjective: String,
     val stopReason: String = ""
 ) {
+
     @TargetEntityId
     val selection: TrainingJobSelection = TrainingJobSelection(trainingJobId = trainingJobId)
+
 
 
 }

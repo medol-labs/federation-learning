@@ -14,8 +14,10 @@ data class CompleteDataImportCommand(
     val failureIndexPath: String?,
     val status: String
 ) {
+
     @TargetEntityId
     val selection: DataImportJobSelection = DataImportJobSelection(dataImportJobId = dataImportJobId)
+
 
 
 }

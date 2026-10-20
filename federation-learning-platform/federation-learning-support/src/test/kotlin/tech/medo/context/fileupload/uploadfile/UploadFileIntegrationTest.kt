@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 class UploadFileIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun UploadFileForModelImport() {
         val command = UploadFileCommand(

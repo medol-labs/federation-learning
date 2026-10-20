@@ -22,6 +22,7 @@ import java.util.UUID
 class CreateTrainingJobIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun CreateTrainingJobWithRunnableConfiguration() {
         val command = CreateTrainingJobCommand(

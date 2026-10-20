@@ -12,8 +12,10 @@ data class IssueServiceAccountApiTokenCommand(
     val userAccountId: UUID,
     val tokenName: String
 ) {
+
     @TargetEntityId
     val selection: ServiceAccountApiTokenSelection = ServiceAccountApiTokenSelection(userAccountId = userAccountId)
+
 
 
 }

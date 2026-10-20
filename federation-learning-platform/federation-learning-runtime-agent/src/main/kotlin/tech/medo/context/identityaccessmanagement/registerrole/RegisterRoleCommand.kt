@@ -12,8 +12,10 @@ data class RegisterRoleCommand(
     val roleCode: String,
     val roleName: String
 ) {
+
     @TargetEntityId
     val selection: RoleSelection = RoleSelection(roleCode = roleCode.trim().lowercase())
+
 
     val roleCodeEntityId: String = roleCode.trim().lowercase()
 

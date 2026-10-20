@@ -22,6 +22,8 @@ class MarkSystemNotificationReadCommandHandler(
         @InjectEntity(idProperty = "notificationId") state: SystemNotificationState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

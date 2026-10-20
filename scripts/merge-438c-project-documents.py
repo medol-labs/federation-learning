@@ -21,8 +21,12 @@ SOFTWARE_SCRIPT = ROOT / 'scripts/merge-438c-software-design.py'
 spec = importlib.util.spec_from_file_location('software_design_merge', SOFTWARE_SCRIPT)
 software_merge = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(software_merge)
+formatter_spec = importlib.util.spec_from_file_location('requirement_formatter', ROOT / 'scripts/format-438c-331.py')
+requirement_formatter = importlib.util.module_from_spec(formatter_spec)
+formatter_spec.loader.exec_module(requirement_formatter)
 insert_section = software_merge.insert_section
 read_model_inventory = software_merge.read_model_inventory
+from markdown_to_docx import format_requirements_tables
 
 MARKER = re.compile(r'^<!-- INSERT ([a-z-]+) -->$', re.MULTILINE)
 
@@ -66,7 +70,8 @@ def convert_requirements(source, out_dir):
 
 
 def requirement_parts():
-    source = (SOURCE_DIR / '3.3.1-federation-learning.md').read_text(encoding='utf-8')
+    draft = (SOURCE_DIR / '3.3.1-federation-learning.md').read_text(encoding='utf-8')
+    source = requirement_formatter.format_document(draft)
     lines = source.splitlines()
     start = next(index for index, line in enumerate(lines) if line.startswith('| 序号 |'))
     model_lines = [line for line in lines[start:] if line.startswith('|')]
@@ -77,6 +82,7 @@ def requirement_parts():
     if len(model_lines) < len(rows):
         raise ValueError('Requirement table is incomplete')
     intro = '\n'.join(lines[2:next(i for i, line in enumerate(lines) if line.startswith('## 表 3'))]).strip()
+    intro = re.sub(r'^- (.+)$', r'· \1\n', intro, flags=re.MULTILINE)
     details = '\n'.join(lines[end:]).strip()
     details = re.sub(r'^## ', '#### ', details, flags=re.MULTILINE)
     details = re.sub(r'^- (.+)$', r'· \1\n', details, flags=re.MULTILINE)
@@ -114,6 +120,7 @@ def merge_requirements(target, out, check):
     intro, rows, details = requirement_parts()
     if check:
         return
+    existing_tables = {item._tbl for item in document.tables}
     for paragraph in objects:
         if paragraph.style is not None and paragraph.style.name == 'Heading 4':
             paragraph._p.getparent().remove(paragraph._p)
@@ -128,6 +135,8 @@ def merge_requirements(target, out, check):
     table._tbl.addnext(marker._p)
     insert_section(document, marker, details)
     marker._p.getparent().remove(marker._p)
+    added_tables = [item for item in document.tables if item._tbl not in existing_tables]
+    format_requirements_tables(document, [table, *added_tables])
     out.parent.mkdir(parents=True, exist_ok=True)
     document.save(out)
 

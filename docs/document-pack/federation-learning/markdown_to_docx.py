@@ -7,6 +7,7 @@ from pathlib import Path
 from docx import Document
 from docx.enum.section import WD_ORIENT, WD_SECTION
 from docx.enum.table import WD_TABLE_ALIGNMENT, WD_CELL_VERTICAL_ALIGNMENT
+from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
@@ -25,6 +26,7 @@ def parse_args():
     parser.add_argument("--title", default="")
     parser.add_argument("--landscape", action="store_true")
     parser.add_argument("--heading-number-prefix", default="")
+    parser.add_argument("--requirements-tables", action="store_true")
     return parser.parse_args()
 
 
@@ -34,7 +36,17 @@ def main():
     document = Document()
     use_landscape = args.landscape or "数据库设计说明" in args.title or "数据库设计说明" in args.input.name
     configure_document(document, args.reference, use_landscape)
-    write_markdown(document, markdown, args.title, args.heading_number_prefix)
+    write_markdown(document, markdown, args.title, args.heading_number_prefix,
+                   heading_style_offset=2 if args.requirements_tables else 0,
+                   strip_heading_numbers=args.requirements_tables)
+    if args.requirements_tables:
+        if not args.reference:
+            section = document.sections[0]
+            section.page_width = Cm(21)
+            section.page_height = Cm(29.7)
+            section.left_margin = Cm(2.5)
+            section.right_margin = Cm(2.5)
+        format_requirements_tables(document)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     document.save(args.out)
 
@@ -95,7 +107,8 @@ def configure_document(document, reference, use_landscape=False):
         style.paragraph_format.space_after = Pt(6)
 
 
-def write_markdown(document, markdown, fallback_title, heading_number_prefix=""):
+def write_markdown(document, markdown, fallback_title, heading_number_prefix="", heading_style_offset=0,
+                   strip_heading_numbers=False):
     lines = strip_html_comments(markdown).splitlines()
     index = 0
     wrote_title = False
@@ -137,7 +150,9 @@ def write_markdown(document, markdown, fallback_title, heading_number_prefix="")
         if heading:
             level = len(heading.group(1))
             text = clean_inline(heading.group(2))
-            if level == 1 and not wrote_title:
+            if strip_heading_numbers:
+                text = re.sub(r"^\d+(?:\.\d+)*\s+", "", text)
+            if level == 1 and not wrote_title and not heading_style_offset:
                 paragraph = document.add_paragraph(text, style="Title")
                 paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
                 wrote_title = True
@@ -150,7 +165,17 @@ def write_markdown(document, markdown, fallback_title, heading_number_prefix="")
                     heading_counts[depth - 1] += 1
                     number = ".".join([heading_number_prefix, *map(str, heading_counts)])
                     text = f"{number} {text}"
-                document.add_paragraph(text, style=f"Heading {min(level, 6)}")
+                document.add_paragraph(text, style=f"Heading {min(level + heading_style_offset, 6)}")
+                if level == 1:
+                    wrote_title = True
+            index += 1
+            continue
+
+        if re.fullmatch(r"\*\*表 \d+：.+\*\*", stripped):
+            paragraph = document.add_paragraph()
+            paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            paragraph.paragraph_format.keep_with_next = True
+            add_inline_runs(paragraph, stripped)
             index += 1
             continue
 
@@ -462,7 +487,12 @@ def add_table(document, rows):
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.style = "Table Grid"
     table.autofit = not is_wide
-    widths = table_column_widths(column_count, document.sections[0].orientation == WD_ORIENT.LANDSCAPE) if is_wide else []
+    landscape = document.sections[0].orientation == WD_ORIENT.LANDSCAPE
+    if column_count == 6 and rows[0] == ['字段名称', '输入形式', '可修改', '默认值', '内容及规则', '必填']:
+        widths = ([Cm(3.3), Cm(3.0), Cm(2.0), Cm(2.6), Cm(11.7), Cm(2.2)] if landscape else
+                  [Cm(2.4), Cm(2.2), Cm(1.5), Cm(1.8), Cm(6.7), Cm(1.4)])
+    else:
+        widths = table_column_widths(column_count, landscape) if is_wide else []
     for row_index, row in enumerate(rows):
         row_cells = table.rows[row_index].cells
         if row_index == 0:
@@ -489,6 +519,74 @@ def add_table(document, rows):
             if len(text) < 20:
                 paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
     document.add_paragraph()
+
+
+REQUIREMENT_TABLE_WIDTHS = {
+    ("序号", "一级功能名称/标识", "二级功能名称/标识", "三级功能名称/标识", "备注"):
+        (1.27, 3.49, 4.49, 5.73, 1.02),
+    ("字段名称", "输入形式", "可修改", "默认值", "内容及规则", "必填"):
+        (3.57, 1.86, 1.51, 1.75, 5.82, 1.32),
+    ("输入项", "内容及规则"): (5.08, 10.92),
+    ("输出项", "内容及规则"): (5.08, 10.92),
+}
+
+
+def format_requirements_tables(document, tables=None):
+    """Match the joint requirements document's XG table treatment."""
+    if "XG-表" not in document.styles:
+        body = document.styles.add_style("XG-表", WD_STYLE_TYPE.PARAGRAPH)
+        body.base_style = document.styles["Normal"]
+        set_style_font(body, "宋体")
+        for attribute in ("ascii", "hAnsi", "cs"):
+            body._element.rPr.rFonts.set(qn(f"w:{attribute}"), "Times New Roman")
+        body.font.size = Pt(10.5)
+        body.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        body.paragraph_format.line_spacing = 1
+        body.paragraph_format.space_after = Pt(0)
+    if "XG-表-头" not in document.styles:
+        header = document.styles.add_style("XG-表-头", WD_STYLE_TYPE.PARAGRAPH)
+        header.base_style = document.styles["XG-表"]
+        header.font.bold = True
+
+    for table in tables if tables is not None else document.tables:
+        if not table.rows:
+            continue
+        headings = tuple(cell.text.strip() for cell in table.rows[0].cells)
+        widths = REQUIREMENT_TABLE_WIDTHS.get(headings)
+        if widths is None:
+            continue
+        table_style = table._tbl.tblPr.find(qn("w:tblStyle"))
+        if table_style is not None:
+            table._tbl.tblPr.remove(table_style)
+        table.alignment = WD_TABLE_ALIGNMENT.LEFT
+        table.autofit = False
+        for column, width in zip(table.columns, widths):
+            column.width = Cm(width)
+        repeat_table_header(table.rows[0])
+        for row_index, row in enumerate(table.rows):
+            for cell, width in zip(row.cells, widths):
+                set_cell_width(cell, Cm(width))
+                cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
+                tc_pr = cell._tc.get_or_add_tcPr()
+                for name in ("shd", "tcBorders", "tcMar"):
+                    existing = tc_pr.find(qn(f"w:{name}"))
+                    if existing is not None:
+                        tc_pr.remove(existing)
+                margin = 15 if len(widths) == 5 else 108
+                set_cell_margins(cell, top=0, start=margin, bottom=0, end=margin)
+                set_cell_border(cell, color="000000")
+                for paragraph in cell.paragraphs:
+                    paragraph.style = document.styles["XG-表-头" if row_index == 0 else "XG-表"]
+                    paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    paragraph.paragraph_format.space_before = Pt(0)
+                    paragraph.paragraph_format.space_after = Pt(0)
+                    paragraph.paragraph_format.line_spacing = 1
+                    for run in paragraph.runs:
+                        set_run_font(run, "宋体")
+                        for attribute in ("ascii", "hAnsi", "cs"):
+                            run._element.rPr.rFonts.set(qn(f"w:{attribute}"), "Times New Roman")
+                        run.font.size = Pt(10.5)
+                        run.bold = row_index == 0
 
 
 def table_column_widths(column_count, landscape=False):
@@ -528,7 +626,7 @@ def set_cell_fill(cell, fill):
     tc_pr.append(shading)
 
 
-def set_cell_border(cell):
+def set_cell_border(cell, color="D9D9D9"):
     tc_pr = cell._tc.get_or_add_tcPr()
     borders = tc_pr.first_child_found_in("w:tcBorders")
     if borders is None:
@@ -543,7 +641,7 @@ def set_cell_border(cell):
         element.set(qn("w:val"), "single")
         element.set(qn("w:sz"), "4")
         element.set(qn("w:space"), "0")
-        element.set(qn("w:color"), "D9D9D9")
+        element.set(qn("w:color"), color)
 
 
 def set_cell_margins(cell, top, start, bottom, end):

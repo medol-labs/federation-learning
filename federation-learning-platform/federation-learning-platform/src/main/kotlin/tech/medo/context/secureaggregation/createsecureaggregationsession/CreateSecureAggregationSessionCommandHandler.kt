@@ -20,6 +20,8 @@ class CreateSecureAggregationSessionCommandHandler(
         command: CreateSecureAggregationSessionCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

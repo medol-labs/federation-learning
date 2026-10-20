@@ -14,8 +14,10 @@ data class RegisterUserAccountCommand(
     val userSource: String?,
     val passwordHash: String?
 ) {
+
     @TargetEntityId
     val selection: UserAccountSelection = UserAccountSelection(userAccountId = userAccountId)
+
 
 
 }

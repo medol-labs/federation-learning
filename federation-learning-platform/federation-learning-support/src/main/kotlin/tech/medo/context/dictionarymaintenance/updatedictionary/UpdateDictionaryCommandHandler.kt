@@ -22,6 +22,8 @@ class UpdateDictionaryCommandHandler(
         @InjectEntity(idProperty = "dictionaryCode") state: DictionaryState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

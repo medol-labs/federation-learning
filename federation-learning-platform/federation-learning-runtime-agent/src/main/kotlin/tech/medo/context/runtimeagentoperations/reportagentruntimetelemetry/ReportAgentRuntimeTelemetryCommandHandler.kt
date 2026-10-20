@@ -20,6 +20,8 @@ class ReportAgentRuntimeTelemetryCommandHandler(
         command: ReportAgentRuntimeTelemetryCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

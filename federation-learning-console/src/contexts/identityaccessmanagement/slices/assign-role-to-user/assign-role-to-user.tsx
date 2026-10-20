@@ -223,13 +223,24 @@ export const UserAccountCatalogAssignRoleToUser = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.user_account_catalog.commands.assignRoleToUser.fields.userAccountId.label", "User Account Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter User Account Id"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="user_account_catalog"
+                  dataProviderName="federation-learning-support"
+                  optionLabel="username"
+                  optionValue="userAccountId"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.user_account_catalog.commands.assignRoleToUser.fields.userAccountId.placeholder", "Select User Account Id")}
+                  meta={{
+                    idField: "userAccountId",
+                    label: t("resources.user_account_catalog.commands.assignRoleToUser.fields.userAccountId.label", "User Account Catalog"),
+                    aggregateRoute: "useraccount",
+                    queryRoute: "useraccountcatalog",
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

@@ -24,7 +24,9 @@ class DataImportJobCommandHandler(
         command: RequestDataImportCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 
     @CommandHandler
@@ -33,7 +35,9 @@ class DataImportJobCommandHandler(
         @InjectEntity(idProperty = "dataImportJobId") state: DataImportJobState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 
     @CommandHandler
@@ -42,7 +46,9 @@ class DataImportJobCommandHandler(
         @InjectEntity(idProperty = "dataImportJobId") state: DataImportJobState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 
     @CommandHandler
@@ -51,6 +57,8 @@ class DataImportJobCommandHandler(
         @InjectEntity(idProperty = "dataImportJobId") state: DataImportJobState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

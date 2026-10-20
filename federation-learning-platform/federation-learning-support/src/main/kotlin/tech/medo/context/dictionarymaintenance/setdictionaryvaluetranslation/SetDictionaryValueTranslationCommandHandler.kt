@@ -22,6 +22,8 @@ class SetDictionaryValueTranslationCommandHandler(
         @InjectEntity(idProperty = "dictionaryValueTranslationDictionaryCodeValueCodeLocaleSelection") dictionaryValueTranslationDictionaryCodeValueCodeLocaleReservation: DictionaryValueTranslationDictionaryCodeValueCodeLocaleReservationState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, dictionaryValueTranslationDictionaryCodeValueCodeLocaleReservation))
+
     }
 }

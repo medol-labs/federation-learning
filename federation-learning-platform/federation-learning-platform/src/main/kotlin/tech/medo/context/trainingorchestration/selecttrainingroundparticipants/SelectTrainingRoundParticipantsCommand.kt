@@ -18,8 +18,10 @@ data class SelectTrainingRoundParticipantsCommand(
     val featureSchemaVersion: String?,
     val trainingJobObjective: String
 ) {
+
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
+
 
 
 }

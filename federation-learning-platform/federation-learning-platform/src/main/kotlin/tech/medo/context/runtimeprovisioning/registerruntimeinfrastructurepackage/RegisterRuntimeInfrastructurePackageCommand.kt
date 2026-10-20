@@ -13,8 +13,10 @@ data class RegisterRuntimeInfrastructurePackageCommand(
     val packageVersion: String,
     val runtimeEnvironmentType: String
 ) {
+
     @TargetEntityId
     val selection: RuntimeInfrastructurePackageSelection = RuntimeInfrastructurePackageSelection(packageName = packageName.trim().lowercase(), packageVersion = packageVersion)
+
 
     val packageNameEntityId: String = packageName.trim().lowercase()
 

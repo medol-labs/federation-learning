@@ -20,8 +20,10 @@ data class SetDictionaryValueTranslationCommand(
     val displayName: String,
     val description: String?
 ) {
+
     @TargetEntityId
     val selection: DictionaryValueTranslationSelection = DictionaryValueTranslationSelection(dictionaryCode = dictionaryCode, valueCode = valueCode, locale = locale)
+
 
 
     val dictionaryValueTranslationDictionaryCodeValueCodeLocaleSelection: DictionaryValueTranslationDictionaryCodeValueCodeLocaleSelection = DictionaryValueTranslationDictionaryCodeValueCodeLocaleSelection(normalizedDictionaryCode = dictionaryCode.value.trim().lowercase(), normalizedValueCode = valueCode.value.trim().lowercase(), normalizedLocale = locale.value.trim().lowercase())

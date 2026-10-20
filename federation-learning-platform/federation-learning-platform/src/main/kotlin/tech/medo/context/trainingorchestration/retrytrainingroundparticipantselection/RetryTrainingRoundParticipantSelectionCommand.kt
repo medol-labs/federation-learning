@@ -10,8 +10,10 @@ import java.util.UUID;
 data class RetryTrainingRoundParticipantSelectionCommand(
     val trainingJobId: UUID
 ) {
+
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
+
 
 
 }

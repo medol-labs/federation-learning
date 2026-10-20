@@ -22,6 +22,8 @@ class SuspendFederationCommandHandler(
         @InjectEntity(idProperty = "federationName") state: FederationState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

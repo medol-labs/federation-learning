@@ -22,6 +22,8 @@ class EnableDictionaryValueCommandHandler(
         @InjectEntity(idProperty = "selection") state: DictionaryValueState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

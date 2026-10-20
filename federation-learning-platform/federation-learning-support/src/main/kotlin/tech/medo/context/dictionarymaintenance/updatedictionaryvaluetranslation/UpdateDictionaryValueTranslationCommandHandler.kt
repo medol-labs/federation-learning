@@ -22,6 +22,8 @@ class UpdateDictionaryValueTranslationCommandHandler(
         @InjectEntity(idProperty = "selection") state: DictionaryValueTranslationState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.get
 class FederationLearningPlatformApplicationTest(
     @Autowired private val mockMvc: MockMvc
 ) {
+
     @Test
     fun contextLoads() {
     }

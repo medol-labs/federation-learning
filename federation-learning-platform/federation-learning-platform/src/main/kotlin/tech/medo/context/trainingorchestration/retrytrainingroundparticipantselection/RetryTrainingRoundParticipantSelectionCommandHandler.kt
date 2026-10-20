@@ -22,6 +22,8 @@ class RetryTrainingRoundParticipantSelectionCommandHandler(
         @InjectEntity(idProperty = "trainingJobId") state: TrainingRoundState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

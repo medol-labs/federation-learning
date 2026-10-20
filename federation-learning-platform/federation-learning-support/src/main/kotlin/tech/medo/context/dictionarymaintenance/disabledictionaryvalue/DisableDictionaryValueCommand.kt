@@ -15,8 +15,10 @@ data class DisableDictionaryValueCommand(
     val dictionaryCode: DictionaryCode,
     val valueCode: DictionaryValueCode
 ) {
+
     @TargetEntityId
     val selection: DictionaryValueSelection = DictionaryValueSelection(dictionaryCode = dictionaryCode, valueCode = valueCode)
+
 
 
 }

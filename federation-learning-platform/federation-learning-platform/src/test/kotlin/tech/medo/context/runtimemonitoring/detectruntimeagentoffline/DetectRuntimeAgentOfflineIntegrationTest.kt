@@ -22,6 +22,7 @@ import java.util.UUID
 class DetectRuntimeAgentOfflineIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun DetectRuntimeAgentOfflineintegration() {
         val command = DetectRuntimeAgentOfflineCommand(

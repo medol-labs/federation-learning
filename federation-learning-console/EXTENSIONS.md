@@ -521,7 +521,7 @@ export const pageOverrides = {
 
 | Command | Override key | Generated fallback | Fields |
 | --- | --- | --- | --- |
-| `inviteParticipant` | `federation-membership-directory:inviteParticipant` | `src/contexts/federationmanagement/slices/invite-participant/invite-participant-federation-membership-directory.tsx` | `organizationId`, `invitationNote` |
+| `inviteParticipant` | `federation-membership-directory:inviteParticipant` | `src/contexts/federationmanagement/slices/invite-participant/invite-participant-federation-membership-directory.tsx` | `federationId`, `organizationId`, `invitationNote` |
 | `removeParticipant` | `federation-membership-directory:removeParticipant` | `src/contexts/federationmanagement/slices/remove-participant/remove-participant-federation-membership-directory.tsx` | `federationName`, `organizationId`, `organizationName`, `removalReason` |
 | `approveParticipant` | `federation-membership-directory:approveParticipant` | `src/contexts/federationmanagement/slices/approve-participant/approve-participant-federation-membership-directory.tsx` | `federationName`, `organizationId`, `organizationName`, `approvalNote` |
 | `rejectParticipant` | `federation-membership-directory:rejectParticipant` | `src/contexts/federationmanagement/slices/reject-participant/reject-participant-federation-membership-directory.tsx` | `federationName`, `organizationId`, `organizationName`, `rejectionReason` |
@@ -591,7 +591,7 @@ export const pageOverrides = {
 | `activateFederation` | `federation-overview:activateFederation` | `src/contexts/federationmanagement/slices/activate-federation/activate-federation-federation-overview.tsx` | `activationNote` |
 | `suspendFederation` | `federation-overview:suspendFederation` | `src/contexts/federationmanagement/slices/suspend-federation/suspend-federation.tsx` | `suspensionReason` |
 | `reactivateFederation` | `federation-overview:reactivateFederation` | `src/contexts/federationmanagement/slices/reactivate-federation/reactivate-federation.tsx` | `reactivationReason` |
-| `inviteParticipant` | `federation-overview:inviteParticipant` | `src/contexts/federationmanagement/slices/invite-participant/invite-participant-federation-overview.tsx` | `organizationId`, `invitationNote` |
+| `inviteParticipant` | `federation-overview:inviteParticipant` | `src/contexts/federationmanagement/slices/invite-participant/invite-participant-federation-overview.tsx` | `federationId`, `organizationId`, `invitationNote` |
 | `approveParticipant` | `federation-overview:approveParticipant` | `src/contexts/federationmanagement/slices/approve-participant/approve-participant-federation-overview.tsx` | `federationName`, `organizationId`, `organizationName`, `approvalNote` |
 | `rejectParticipant` | `federation-overview:rejectParticipant` | `src/contexts/federationmanagement/slices/reject-participant/reject-participant-federation-overview.tsx` | `federationName`, `organizationId`, `organizationName`, `rejectionReason` |
 | `revokeParticipantInvitation` | `federation-overview:revokeParticipantInvitation` | `src/contexts/federationmanagement/slices/revoke-participant-invitation/revoke-participant-invitation-federation-overview.tsx` | `federationName`, `organizationId`, `organizationName`, `revokeReason` |

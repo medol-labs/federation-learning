@@ -10,8 +10,10 @@ import java.util.UUID;
 data class LoadRuntimeAgentBootstrapConfigurationCommand(
     val bootstrapRequestId: UUID = java.util.UUID.randomUUID()
 ) {
+
     @TargetEntityId
     val selection: RuntimeAgentLifecycleSelection = RuntimeAgentLifecycleSelection(bootstrapRequestId = bootstrapRequestId)
+
 
 
 }

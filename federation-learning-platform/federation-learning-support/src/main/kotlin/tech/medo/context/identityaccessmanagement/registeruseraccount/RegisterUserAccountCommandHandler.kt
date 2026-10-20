@@ -20,6 +20,8 @@ class RegisterUserAccountCommandHandler(
         command: RegisterUserAccountCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

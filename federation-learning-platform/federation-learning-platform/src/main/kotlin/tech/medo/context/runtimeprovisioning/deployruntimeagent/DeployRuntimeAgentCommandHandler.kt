@@ -24,6 +24,7 @@ class DeployRuntimeAgentCommandHandler(
         @InjectEntity(idProperty = "runtimeInfrastructureId") state: RuntimeInfrastructureState,
         eventAppender: EventAppender
     ) {
+
         if (state.currentState != RuntimeInfrastructureStateEnum.Verified) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -42,5 +43,6 @@ class DeployRuntimeAgentCommandHandler(
         val now = java.time.LocalDateTime.now()
 
         eventAppender.append(decision.decide(command, state, portResult, now))
+
     }
 }

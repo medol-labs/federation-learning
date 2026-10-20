@@ -11,8 +11,10 @@ data class RevalidateAgentDatasetAccessCommand(
     val datasetAccessValidationId: UUID = java.util.UUID.randomUUID(),
     val runtimeDatasetBindingId: UUID
 ) {
+
     @TargetEntityId
     val selection: AgentDatasetAccessValidationSelection = AgentDatasetAccessValidationSelection(datasetAccessValidationId = datasetAccessValidationId)
+
 
 
 }

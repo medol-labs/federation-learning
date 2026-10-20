@@ -26,6 +26,7 @@ class CreateRuntimeInstallationPlanCommandHandler(
         command: CreateRuntimeInstallationPlanCommand,
         eventAppender: EventAppender
     ) {
+
         val organizationDirectoryReadModelSelection = organizationDirectoryReadModelRepository.findById(command.organizationId)
         if (!(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active)) {
             throw tech.medo.shared.domain.CommandRejectedException(
@@ -58,5 +59,6 @@ class CreateRuntimeInstallationPlanCommandHandler(
         val portResult = createRuntimeInstallationPlanService.execute(input)
 
         eventAppender.append(decision.decide(command, portResult))
+
     }
 }

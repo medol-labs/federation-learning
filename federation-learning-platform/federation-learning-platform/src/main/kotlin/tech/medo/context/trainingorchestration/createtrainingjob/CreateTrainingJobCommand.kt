@@ -17,8 +17,10 @@ data class CreateTrainingJobCommand(
     val featureSchemaVersion: String?,
     val objective: String
 ) {
+
     @TargetEntityId
     val selection: TrainingJobSelection = TrainingJobSelection(trainingJobId = trainingJobId)
+
 
 
 }

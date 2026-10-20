@@ -22,6 +22,7 @@ import java.util.UUID
 class ConfigureRuntimeDatasetBindingIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun ConfigureRuntimeDatasetBindingintegration() {
         val command = ConfigureRuntimeDatasetBindingCommand(

@@ -24,6 +24,7 @@ class ReprofileAgentDatasetCommandHandler(
         @InjectEntity(idProperty = "runtimeDatasetBindingId") state: AgentDatasetProfileState,
         eventAppender: EventAppender
     ) {
+
         if (state.currentState != AgentDatasetProfileStateEnum.Reported) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -42,5 +43,6 @@ class ReprofileAgentDatasetCommandHandler(
         val now = java.time.LocalDateTime.now()
 
         eventAppender.append(decision.decide(command, state, portResult, now))
+
     }
 }

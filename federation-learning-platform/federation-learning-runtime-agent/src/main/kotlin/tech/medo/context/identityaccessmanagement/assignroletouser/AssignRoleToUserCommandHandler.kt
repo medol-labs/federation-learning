@@ -22,6 +22,8 @@ class AssignRoleToUserCommandHandler(
         @InjectEntity(idProperty = "userAccountId") state: UserAccountState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

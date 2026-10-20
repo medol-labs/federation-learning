@@ -21,8 +21,10 @@ data class FailRoundExecutionCommand(
     val runtimeEngineJobId: String?,
     val failureReason: String?
 ) {
+
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
+
 
 
 }

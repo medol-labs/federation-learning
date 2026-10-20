@@ -14,8 +14,10 @@ data class CompleteDataExportCommand(
     val rowCount: Long,
     val status: String
 ) {
+
     @TargetEntityId
     val selection: DataExportJobSelection = DataExportJobSelection(dataExportJobId = dataExportJobId)
+
 
 
 }

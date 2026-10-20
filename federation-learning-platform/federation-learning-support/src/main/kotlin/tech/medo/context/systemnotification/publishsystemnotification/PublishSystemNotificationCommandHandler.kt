@@ -20,6 +20,8 @@ class PublishSystemNotificationCommandHandler(
         command: PublishSystemNotificationCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

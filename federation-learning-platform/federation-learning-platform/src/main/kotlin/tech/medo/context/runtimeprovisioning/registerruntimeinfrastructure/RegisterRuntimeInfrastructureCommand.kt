@@ -21,8 +21,10 @@ data class RegisterRuntimeInfrastructureCommand(
     val expectedNodeCount: Int,
     val runtimeAgentId: UUID = java.util.UUID.randomUUID()
 ) {
+
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
+
 
 
 }

@@ -19,8 +19,10 @@ data class UpdateDictionaryValueTranslationCommand(
     val displayName: String,
     val description: String?
 ) {
+
     @TargetEntityId
     val selection: DictionaryValueTranslationSelection = DictionaryValueTranslationSelection(dictionaryCode = dictionaryCode, valueCode = valueCode, locale = locale)
+
 
 
 }

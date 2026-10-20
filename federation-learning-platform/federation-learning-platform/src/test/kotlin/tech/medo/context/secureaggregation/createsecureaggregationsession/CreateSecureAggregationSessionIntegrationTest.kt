@@ -23,6 +23,7 @@ import java.math.BigDecimal
 class CreateSecureAggregationSessionIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun CreateSecureAggregationSessionintegration() {
         val command = CreateSecureAggregationSessionCommand(

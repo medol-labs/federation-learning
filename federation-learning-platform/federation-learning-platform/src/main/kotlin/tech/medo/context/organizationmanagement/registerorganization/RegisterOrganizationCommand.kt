@@ -15,8 +15,10 @@ data class RegisterOrganizationCommand(
     val organizationType: OrganizationType,
     val contactEmail: String
 ) {
+
     @TargetEntityId
     val selection: OrganizationSelection = OrganizationSelection(organizationName = organizationName.trim().lowercase())
+
 
     val organizationNameEntityId: String = organizationName.trim().lowercase()
 

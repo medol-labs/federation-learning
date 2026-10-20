@@ -14,8 +14,10 @@ data class UpdateDictionaryCommand(
     val description: String?,
     val dictionaryCode: DictionaryCode
 ) {
+
     @TargetEntityId
     val selection: DictionarySelection = DictionarySelection(dictionaryCode = dictionaryCode)
+
 
 
 }

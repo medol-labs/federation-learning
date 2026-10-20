@@ -25,8 +25,10 @@ data class ReportAgentRuntimeNodeInventoryCommand(
     val architecture: String,
     val inventoryHash: String
 ) {
+
     @TargetEntityId
     val selection: AgentRuntimeNodeInventorySelection = AgentRuntimeNodeInventorySelection(nodeId = nodeId, runtimeNodeInventoryReportId = runtimeNodeInventoryReportId)
+
 
 
 }

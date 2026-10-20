@@ -22,6 +22,7 @@ import java.util.UUID
 class RecordRuntimeNodeInventoryIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RecordRuntimeNodeInventoryintegration() {
         val command = RecordRuntimeNodeInventoryCommand(

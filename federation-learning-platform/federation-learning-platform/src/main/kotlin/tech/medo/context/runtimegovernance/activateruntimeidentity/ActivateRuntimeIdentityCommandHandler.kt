@@ -20,6 +20,8 @@ class ActivateRuntimeIdentityCommandHandler(
         command: ActivateRuntimeIdentityCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

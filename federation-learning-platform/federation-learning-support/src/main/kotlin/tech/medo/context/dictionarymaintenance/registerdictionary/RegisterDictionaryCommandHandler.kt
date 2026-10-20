@@ -22,6 +22,8 @@ class RegisterDictionaryCommandHandler(
         @InjectEntity(idProperty = "dictionaryCodeSelection") dictionaryCodeReservation: DictionaryCodeReservationState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, dictionaryCodeReservation))
+
     }
 }

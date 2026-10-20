@@ -24,8 +24,10 @@ data class RetryRuntimeInfrastructureVerificationCommand(
     val currentRuntimeInfrastructureState: RuntimeInfrastructureStateEnum,
     val retryReason: String
 ) {
+
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
+
 
 
 }

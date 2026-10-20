@@ -25,8 +25,10 @@ data class RecordRuntimeNodeInventoryCommand(
     val architecture: String,
     val inventoryHash: String
 ) {
+
     @TargetEntityId
     val selection: RuntimeNodeInventorySelection = RuntimeNodeInventorySelection(nodeId = nodeId)
+
 
 
 }

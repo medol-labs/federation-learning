@@ -14,8 +14,10 @@ data class RejectParticipantCommand(
     val organizationName: String?,
     val rejectionReason: String
 ) {
+
     @TargetEntityId
     val selection: FederationMembershipSelection = FederationMembershipSelection(federationId = federationId, organizationId = organizationId)
+
 
 
 }

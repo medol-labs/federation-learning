@@ -24,6 +24,7 @@ class PrepareHomomorphicEncryptionContextCommandHandler(
         @InjectEntity(idProperty = "secureAggregationSessionId") state: SecureAggregationSessionState,
         eventAppender: EventAppender
     ) {
+
         if (state.currentState != SecureAggregationSessionStateEnum.ParticipantsSelected) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -41,5 +42,6 @@ class PrepareHomomorphicEncryptionContextCommandHandler(
         val portResult = prepareHomomorphicEncryptionContextService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))
+
     }
 }

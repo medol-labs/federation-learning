@@ -24,6 +24,7 @@ import tech.medo.datasetgovernance.domain.types.LabelDefinition
 class DefineFeatureSchemaIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun DefineFeatureSchemaintegration() {
         val command = DefineFeatureSchemaCommand(

@@ -49,8 +49,10 @@ data class DispatchParticipantExecutionPlanCommand(
     val publicKeyRef: String?,
     val encryptedParameterScale: Int?
 ) {
+
     @TargetEntityId
     val selection: ParticipantExecutionPlanSelection = ParticipantExecutionPlanSelection(executionPlanId = executionPlanId)
+
 
 
 }

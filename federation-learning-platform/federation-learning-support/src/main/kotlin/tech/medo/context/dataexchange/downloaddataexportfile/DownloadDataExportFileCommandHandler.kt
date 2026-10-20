@@ -22,6 +22,8 @@ class DownloadDataExportFileCommandHandler(
         @InjectEntity(idProperty = "dataExportJobId") state: DataExportJobState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

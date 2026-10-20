@@ -22,6 +22,8 @@ class DefineFeatureSchemaCommandHandler(
         @InjectEntity(idProperty = "featureSchemaFeatureDomainVersionSelection") featureSchemaFeatureDomainVersionReservation: FeatureSchemaFeatureDomainVersionReservationState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, featureSchemaFeatureDomainVersionReservation))
+
     }
 }

@@ -24,6 +24,7 @@ class ReleaseRuntimeEngineJobAfterRetryFailureCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: RoundExecutionState,
         eventAppender: EventAppender
     ) {
+
         if (state.currentState != RoundExecutionStateEnum.Failed) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -41,5 +42,6 @@ class ReleaseRuntimeEngineJobAfterRetryFailureCommandHandler(
         val portResult = releaseRuntimeEngineJobAfterRetryFailureService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))
+
     }
 }

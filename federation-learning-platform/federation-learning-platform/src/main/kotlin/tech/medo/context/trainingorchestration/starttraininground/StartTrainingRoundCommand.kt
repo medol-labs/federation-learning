@@ -40,8 +40,10 @@ data class StartTrainingRoundCommand(
     val publicKeyRef: String?,
     val encryptedParameterScale: Int?
 ) {
+
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
+
 
 
 }

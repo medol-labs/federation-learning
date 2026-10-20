@@ -22,6 +22,7 @@ import java.util.UUID
 class RegisterRuntimeInfrastructurePackageIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RegisterRuntimeInfrastructurePackageintegration() {
         val command = RegisterRuntimeInfrastructurePackageCommand(

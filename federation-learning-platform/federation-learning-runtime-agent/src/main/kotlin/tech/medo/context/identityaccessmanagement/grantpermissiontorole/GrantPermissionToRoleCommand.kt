@@ -12,8 +12,10 @@ data class GrantPermissionToRoleCommand(
     val roleCode: String,
     val permissionCodes: List<String>
 ) {
+
     @TargetEntityId
     val selection: RoleSelection = RoleSelection(roleCode = roleCode.trim().lowercase())
+
 
     val roleCodeEntityId: String = roleCode.trim().lowercase()
 

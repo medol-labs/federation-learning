@@ -15,5 +15,6 @@ class MedolFeignSecurityConfiguration {
             if (token.isNotBlank()) {
                 template.header(InternalTokenAuthenticationFilter.INTERNAL_TOKEN_HEADER, token)
             }
+
         }
 }

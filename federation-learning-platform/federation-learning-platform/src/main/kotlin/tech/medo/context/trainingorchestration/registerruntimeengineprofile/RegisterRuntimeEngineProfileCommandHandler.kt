@@ -20,6 +20,8 @@ class RegisterRuntimeEngineProfileCommandHandler(
         command: RegisterRuntimeEngineProfileCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

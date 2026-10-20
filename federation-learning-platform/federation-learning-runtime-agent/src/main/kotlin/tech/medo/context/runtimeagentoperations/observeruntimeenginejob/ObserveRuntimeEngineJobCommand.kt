@@ -34,8 +34,10 @@ data class ObserveRuntimeEngineJobCommand(
     val encryptionScheme: String?,
     val publicKeyVersion: String?
 ) {
+
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
+
 
 
 }

@@ -24,6 +24,7 @@ class StartTrainingRoundCommandHandler(
         @InjectEntity(idProperty = "trainingJobId") state: TrainingRoundState,
         eventAppender: EventAppender
     ) {
+
         if (state.currentState != TrainingRoundStateEnum.ParticipantsSelected) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -42,5 +43,6 @@ class StartTrainingRoundCommandHandler(
         val now = java.time.LocalDateTime.now()
 
         eventAppender.append(decision.decide(command, state, portResult, now))
+
     }
 }

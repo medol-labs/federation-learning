@@ -24,6 +24,7 @@ class InviteParticipantCommandHandler(
         command: InviteParticipantCommand,
         eventAppender: EventAppender
     ) {
+
         val federationOverviewReadModelSelection = federationOverviewReadModelRepository.findById(command.federationId)
         if (!(federationOverviewReadModelSelection != null && federationOverviewReadModelSelection.state == FederationStateEnum.Active)) {
             throw tech.medo.shared.domain.CommandRejectedException(
@@ -53,5 +54,6 @@ class InviteParticipantCommandHandler(
             )
         }
         eventAppender.append(decision.decide(command))
+
     }
 }

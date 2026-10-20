@@ -12,8 +12,10 @@ data class DownloadDataExportFileCommand(
     val fileName: String,
     val downloadUri: String
 ) {
+
     @TargetEntityId
     val selection: DataExportJobSelection = DataExportJobSelection(dataExportJobId = dataExportJobId)
+
 
 
 }

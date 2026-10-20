@@ -23,6 +23,7 @@ import java.math.BigDecimal
 class RecordRuntimeDatasetMetadataIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RecordRuntimeDatasetMetadataintegration() {
         val command = RecordRuntimeDatasetMetadataCommand(

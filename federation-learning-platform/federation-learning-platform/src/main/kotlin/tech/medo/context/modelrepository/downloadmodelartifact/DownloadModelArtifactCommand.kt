@@ -12,8 +12,10 @@ data class DownloadModelArtifactCommand(
     val modelName: String,
     val modelVersion: String
 ) {
+
     @TargetEntityId
     val selection: ModelArtifactSelection = ModelArtifactSelection(modelName = modelName, modelVersion = modelVersion)
+
 
 
 }

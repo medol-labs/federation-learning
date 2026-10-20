@@ -11,6 +11,7 @@ import java.util.concurrent.CompletionException
 
 @RestControllerAdvice
 class ApiExceptionHandler {
+
     @ExceptionHandler(ResponseStatusException::class)
     fun responseStatus(exception: ResponseStatusException): ProblemDetail =
         ProblemDetail.forStatusAndDetail(
@@ -69,6 +70,7 @@ class ApiExceptionHandler {
     @ExceptionHandler(CompletionException::class)
     fun commandFailure(exception: CompletionException): ProblemDetail {
         val cause = exception.cause ?: exception
+
         if (cause is CommandRejectedException) {
             return rejectedCommand(cause)
         }

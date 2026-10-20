@@ -21,8 +21,10 @@ data class UploadFileCommand(
     val expiresAt: LocalDateTime,
     val purpose: String
 ) {
+
     @TargetEntityId
     val selection: UploadedFileSelection = UploadedFileSelection(fileId = fileId)
+
 
 
 }

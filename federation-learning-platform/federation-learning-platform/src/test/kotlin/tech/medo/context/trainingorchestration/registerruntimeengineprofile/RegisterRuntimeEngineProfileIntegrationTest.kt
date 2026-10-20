@@ -22,6 +22,7 @@ import java.util.UUID
 class RegisterRuntimeEngineProfileIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RegisterPyTorchVisionRuntimeEngineProfile() {
         val command = RegisterRuntimeEngineProfileCommand(

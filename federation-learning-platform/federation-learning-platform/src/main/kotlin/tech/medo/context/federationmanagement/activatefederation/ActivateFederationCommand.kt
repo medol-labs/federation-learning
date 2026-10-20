@@ -12,8 +12,10 @@ data class ActivateFederationCommand(
     val activationNote: String?,
     val federationName: String
 ) {
+
     @TargetEntityId
     val selection: FederationSelection = FederationSelection(federationName = federationName)
+
 
 
 }

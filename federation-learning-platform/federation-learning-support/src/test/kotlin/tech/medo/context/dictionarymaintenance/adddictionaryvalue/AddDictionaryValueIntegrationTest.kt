@@ -25,6 +25,7 @@ import tech.medo.dictionarymaintenance.domain.types.DisplayOrder
 class AddDictionaryValueIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun AddDictionaryValueintegration() {
         val command = AddDictionaryValueCommand(

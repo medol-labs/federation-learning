@@ -22,8 +22,10 @@ data class ValidateAgentDatasetAccessCommand(
     val filePath: String,
     val dataFormat: String
 ) {
+
     @TargetEntityId
     val selection: AgentDatasetAccessValidationSelection = AgentDatasetAccessValidationSelection(datasetAccessValidationId = datasetAccessValidationId)
+
 
 
 }

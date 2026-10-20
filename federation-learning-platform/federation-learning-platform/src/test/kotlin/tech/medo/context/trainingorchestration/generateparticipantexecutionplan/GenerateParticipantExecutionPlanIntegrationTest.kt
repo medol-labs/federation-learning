@@ -23,6 +23,7 @@ import java.math.BigDecimal
 class GenerateParticipantExecutionPlanIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun GenerateInitialRoundPlanWithInitialModelSnapshot() {
         val command = GenerateParticipantExecutionPlanCommand(

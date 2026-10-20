@@ -20,6 +20,8 @@ class RegisterRoleCommandHandler(
         command: RegisterRoleCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

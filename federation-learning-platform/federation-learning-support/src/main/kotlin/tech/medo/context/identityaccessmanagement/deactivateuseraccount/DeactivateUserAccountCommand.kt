@@ -11,8 +11,10 @@ data class DeactivateUserAccountCommand(
     val userAccountId: UUID,
     val reason: String
 ) {
+
     @TargetEntityId
     val selection: UserAccountSelection = UserAccountSelection(userAccountId = userAccountId)
+
 
 
 }

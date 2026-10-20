@@ -22,6 +22,7 @@ import java.util.UUID
 class ActivateRuntimeIdentityIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun ActivateRuntimeIdentityintegration() {
         val command = ActivateRuntimeIdentityCommand(

@@ -37,8 +37,10 @@ data class CreateSecureAggregationSessionCommand(
     val minimumPersonalizationLift: BigDecimal?,
     val secureAggregationRequired: Boolean
 ) {
+
     @TargetEntityId
     val selection: SecureAggregationSessionSelection = SecureAggregationSessionSelection(secureAggregationSessionId = secureAggregationSessionId)
+
 
 
 }

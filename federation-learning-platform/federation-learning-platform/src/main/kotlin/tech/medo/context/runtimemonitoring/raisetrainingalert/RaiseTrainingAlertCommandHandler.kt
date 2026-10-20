@@ -20,6 +20,8 @@ class RaiseTrainingAlertCommandHandler(
         command: RaiseTrainingAlertCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

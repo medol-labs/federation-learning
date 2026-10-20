@@ -22,6 +22,8 @@ class LockTrainingRunConfigurationCommandHandler(
         @InjectEntity(idProperty = "trainingRunConfigurationId") state: TrainingRunConfigurationState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

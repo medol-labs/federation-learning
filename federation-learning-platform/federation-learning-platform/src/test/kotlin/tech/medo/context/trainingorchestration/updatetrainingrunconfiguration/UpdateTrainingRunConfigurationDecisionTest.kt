@@ -90,12 +90,12 @@ class UpdateTrainingRunConfigurationDecisionTest {
             nodeResponseTimeoutSeconds = 300,
             localEpochs = 2,
             batchSize = 64,
-            learningRate = BigDecimal("0.01"),
+            learningRate = java.math.BigDecimal("0.01"),
             optimizer = "SGD",
             lossFunction = "CROSS_ENTROPY",
             gradientClippingNorm = null,
             secureAggregationRequired = true,
-            minimumAccuracy = BigDecimal("0.9"),
+            minimumAccuracy = java.math.BigDecimal("0.9"),
             minimumFairnessScore = null,
             updateReason = "Tune round budget before submission."
         )
@@ -135,12 +135,12 @@ class UpdateTrainingRunConfigurationDecisionTest {
         assertEquals(300, event.nodeResponseTimeoutSeconds)
         assertEquals(2, event.localEpochs)
         assertEquals(64, event.batchSize)
-        assertEquals(BigDecimal("0.01"), event.learningRate)
+        assertEquals(java.math.BigDecimal("0.01"), event.learningRate)
         assertEquals("SGD", event.optimizer)
         assertEquals("CROSS_ENTROPY", event.lossFunction)
         assertEquals(command.gradientClippingNorm, event.gradientClippingNorm)
         assertEquals(true, event.secureAggregationRequired)
-        assertEquals(BigDecimal("0.9"), event.minimumAccuracy)
+        assertEquals(java.math.BigDecimal("0.9"), event.minimumAccuracy)
         assertEquals(command.minimumFairnessScore, event.minimumFairnessScore)
         assertEquals("Tune round budget before submission.", event.updateReason)
     }

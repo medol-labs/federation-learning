@@ -20,8 +20,10 @@ data class VerifyRuntimeInfrastructureCommand(
     val expectedNodeCount: Int,
     val runtimeAgentId: UUID
 ) {
+
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
+
 
 
 }

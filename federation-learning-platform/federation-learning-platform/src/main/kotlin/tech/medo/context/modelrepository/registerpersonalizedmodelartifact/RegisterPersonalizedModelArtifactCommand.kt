@@ -32,8 +32,10 @@ data class RegisterPersonalizedModelArtifactCommand(
     val personalizationCohortId: UUID?,
     val baseGlobalModelId: UUID?
 ) {
+
     @TargetEntityId
     val selection: ModelArtifactSelection = ModelArtifactSelection(modelName = modelName, modelVersion = modelVersion)
+
 
 
 }

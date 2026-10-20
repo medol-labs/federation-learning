@@ -12,8 +12,10 @@ data class ReleaseRuntimeEngineJobAfterCompletionCommand(
     val runtimeEngineJobId: String,
     val executionPlanId: UUID
 ) {
+
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
+
 
 
 }

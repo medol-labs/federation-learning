@@ -24,10 +24,12 @@ class RetryRuntimeInfrastructureVerificationCommandHandler(
         @InjectEntity(idProperty = "runtimeInfrastructureId") state: RuntimeInfrastructureState,
         eventAppender: EventAppender
     ) {
+
         val input = RetryRuntimeInfrastructureVerificationInput(runtimeInfrastructureId = command.runtimeInfrastructureId, runtimeInstallationPlanId = command.runtimeInstallationPlanId, organizationId = command.organizationId, organizationName = command.organizationName, runtimeInfrastructurePackageId = command.runtimeInfrastructurePackageId, runtimeInfrastructurePackageName = command.runtimeInfrastructurePackageName, runtimeInfrastructurePackageVersion = command.runtimeInfrastructurePackageVersion, runtimeEnvironmentType = command.runtimeEnvironmentType, runtimeName = command.runtimeName, runtimeAgentId = command.runtimeAgentId, agentInstallMode = command.agentInstallMode, expectedNodeCount = command.expectedNodeCount, currentRuntimeInfrastructureState = command.currentRuntimeInfrastructureState, retryReason = command.retryReason)
         val portResult = retryRuntimeInfrastructureVerificationService.execute(input)
         val now = java.time.LocalDateTime.now()
 
         eventAppender.append(decision.decide(command, state, portResult, now))
+
     }
 }

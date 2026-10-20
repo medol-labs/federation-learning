@@ -22,6 +22,7 @@ import java.util.UUID
 class ReportAgentRuntimeNodeInventoryIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun ReportAgentRuntimeNodeInventoryintegration() {
         val command = ReportAgentRuntimeNodeInventoryCommand(

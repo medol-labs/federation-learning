@@ -24,9 +24,11 @@ class DownloadModelArtifactCommandHandler(
         @InjectEntity(idProperty = "selection") state: ModelArtifactState,
         eventAppender: EventAppender
     ) {
+
         val input = DownloadModelArtifactInput(modelId = command.modelId)
         val portResult = downloadModelArtifactService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))
+
     }
 }

@@ -20,6 +20,8 @@ class PlanRuntimeInfrastructureCommandHandler(
         command: PlanRuntimeInfrastructureCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

@@ -22,6 +22,7 @@ import java.util.UUID
 class RaiseTrainingAlertIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RaiseTrainingAlertintegration() {
         val command = RaiseTrainingAlertCommand(

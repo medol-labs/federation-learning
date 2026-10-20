@@ -22,10 +22,12 @@ class LoadRuntimeAgentBootstrapConfigurationCommandHandler(
         command: LoadRuntimeAgentBootstrapConfigurationCommand,
         eventAppender: EventAppender
     ) {
+
         val input = LoadRuntimeAgentBootstrapConfigurationInput(bootstrapRequestId = command.bootstrapRequestId)
         val portResult = loadRuntimeAgentBootstrapConfigurationService.execute(input)
         val now = java.time.LocalDateTime.now()
 
         eventAppender.append(decision.decide(command, portResult, now))
+
     }
 }

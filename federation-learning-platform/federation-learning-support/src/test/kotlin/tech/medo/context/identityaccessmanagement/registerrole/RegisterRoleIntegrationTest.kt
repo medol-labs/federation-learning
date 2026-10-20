@@ -22,6 +22,7 @@ import java.util.UUID
 class RegisterRoleIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RegisterRoleintegration() {
         val command = RegisterRoleCommand(

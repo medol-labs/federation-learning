@@ -15,8 +15,10 @@ data class ActivateRuntimeIdentityCommand(
     val organizationName: String?,
     val runtimeName: String
 ) {
+
     @TargetEntityId
     val selection: RuntimeIdentitySelection = RuntimeIdentitySelection(runtimeId = runtimeId)
+
 
 
 }

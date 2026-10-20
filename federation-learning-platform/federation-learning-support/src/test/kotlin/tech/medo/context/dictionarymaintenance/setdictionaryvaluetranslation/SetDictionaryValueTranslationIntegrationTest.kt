@@ -25,6 +25,7 @@ import tech.medo.dictionarymaintenance.domain.types.LocaleCode
 class SetDictionaryValueTranslationIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun SetDictionaryValueTranslationintegration() {
         val command = SetDictionaryValueTranslationCommand(

@@ -11,8 +11,10 @@ data class GenerateUserAccountLoginPasswordCommand(
     val userAccountId: UUID,
     val passwordResetRequired: Boolean
 ) {
+
     @TargetEntityId
     val selection: UserAccountSelection = UserAccountSelection(userAccountId = userAccountId)
+
 
 
 }

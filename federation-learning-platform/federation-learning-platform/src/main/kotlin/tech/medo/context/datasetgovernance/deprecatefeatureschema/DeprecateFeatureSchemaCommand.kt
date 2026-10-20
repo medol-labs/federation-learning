@@ -13,8 +13,10 @@ data class DeprecateFeatureSchemaCommand(
     val featureDomain: String,
     val version: String
 ) {
+
     @TargetEntityId
     val selection: FeatureSchemaSelection = FeatureSchemaSelection(featureDomain = featureDomain, version = version)
+
 
 
 }

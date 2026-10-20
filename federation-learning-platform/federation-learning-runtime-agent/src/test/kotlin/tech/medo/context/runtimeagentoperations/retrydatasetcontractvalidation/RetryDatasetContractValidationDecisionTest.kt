@@ -24,8 +24,8 @@ class RetryDatasetContractValidationDecisionTest {
             metadataReportId = UUID.nameUUIDFromBytes("metadata-report-1".toByteArray()),
             schemaCompatible = false,
             labelCompatible = false,
-            qualityScore = BigDecimal("0.4"),
-            nonIidScore = BigDecimal("0.2"),
+            qualityScore = java.math.BigDecimal("0.4"),
+            nonIidScore = java.math.BigDecimal("0.2"),
             failureReason = "CSV schema mismatch",
             organizationId = java.util.UUID.randomUUID(),
             datasetName = ""
@@ -62,8 +62,8 @@ class RetryDatasetContractValidationDecisionTest {
             metadataReportId = UUID.nameUUIDFromBytes("metadata-report-2".toByteArray()),
             schemaCompatible = false,
             labelCompatible = false,
-            qualityScore = BigDecimal("0.1"),
-            nonIidScore = BigDecimal("0.3"),
+            qualityScore = java.math.BigDecimal("0.1"),
+            nonIidScore = java.math.BigDecimal("0.3"),
             failureReason = "CSV label missing",
             organizationId = java.util.UUID.randomUUID(),
             datasetName = ""

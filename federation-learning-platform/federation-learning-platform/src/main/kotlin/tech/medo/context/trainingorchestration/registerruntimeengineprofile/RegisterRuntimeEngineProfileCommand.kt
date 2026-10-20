@@ -17,8 +17,10 @@ data class RegisterRuntimeEngineProfileCommand(
     val supportedAggregationAlgorithmsDescription: String?,
     val active: Boolean
 ) {
+
     @TargetEntityId
     val selection: RuntimeEngineProfileSelection = RuntimeEngineProfileSelection(profileName = profileName)
+
 
 
 }

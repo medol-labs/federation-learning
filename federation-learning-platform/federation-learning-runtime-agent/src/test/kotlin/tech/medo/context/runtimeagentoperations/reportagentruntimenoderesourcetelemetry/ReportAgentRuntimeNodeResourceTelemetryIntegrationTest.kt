@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 class ReportAgentRuntimeNodeResourceTelemetryIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun ReportAgentRuntimeNodeResourceTelemetryintegration() {
         val command = ReportAgentRuntimeNodeResourceTelemetryCommand(

@@ -22,6 +22,7 @@ import java.util.UUID
 class RegisterPermissionIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RegisterPermissionintegration() {
         val command = RegisterPermissionCommand(

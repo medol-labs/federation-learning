@@ -22,6 +22,8 @@ class RegisterFederatedModelArtifactCommandHandler(
         @InjectEntity(idProperty = "selection") state: ModelArtifactState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

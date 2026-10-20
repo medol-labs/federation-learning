@@ -18,8 +18,10 @@ data class DetectRuntimeAgentOfflineCommand(
     val runtimeNodeName: String?,
     val offlineReason: String
 ) {
+
     @TargetEntityId
     val selection: NodeRuntimeHealthSelection = NodeRuntimeHealthSelection(nodeId = nodeId)
+
 
 
 }

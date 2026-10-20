@@ -14,8 +14,10 @@ data class InviteParticipantCommand(
     val organizationName: String?,
     val invitationNote: String
 ) {
+
     @TargetEntityId
     val selection: FederationMembershipSelection = FederationMembershipSelection(federationId = federationId, organizationId = organizationId)
+
 
 
 }

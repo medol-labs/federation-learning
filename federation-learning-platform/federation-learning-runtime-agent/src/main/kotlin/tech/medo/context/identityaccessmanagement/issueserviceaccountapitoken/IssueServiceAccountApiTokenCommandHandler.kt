@@ -22,10 +22,12 @@ class IssueServiceAccountApiTokenCommandHandler(
         command: IssueServiceAccountApiTokenCommand,
         eventAppender: EventAppender
     ): IssueServiceAccountApiTokenResult {
+
         val input = IssueServiceAccountApiTokenInput(apiTokenId = command.apiTokenId, userAccountId = command.userAccountId, tokenName = command.tokenName)
         val portResult = issueServiceAccountApiTokenService.execute(input)
 
         eventAppender.append(decision.decide(command, portResult))
         return portResult
+
     }
 }

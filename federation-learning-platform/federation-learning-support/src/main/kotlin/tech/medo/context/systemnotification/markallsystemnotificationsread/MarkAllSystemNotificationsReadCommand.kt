@@ -15,8 +15,10 @@ data class MarkAllSystemNotificationsReadCommand(
     val readAt: LocalDateTime,
     val notificationId: UUID
 ) {
+
     @TargetEntityId
     val selection: SystemNotificationSelection = SystemNotificationSelection(notificationId = notificationId)
+
 
 
 }

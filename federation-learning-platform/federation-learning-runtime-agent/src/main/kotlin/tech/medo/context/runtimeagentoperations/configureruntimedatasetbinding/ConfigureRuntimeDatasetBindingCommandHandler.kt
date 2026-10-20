@@ -22,6 +22,8 @@ class ConfigureRuntimeDatasetBindingCommandHandler(
         @InjectEntity(idProperty = "runtimeDatasetBindingRuntimeIdDatasetIdSelection") runtimeDatasetBindingRuntimeIdDatasetIdReservation: RuntimeDatasetBindingRuntimeIdDatasetIdReservationState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, runtimeDatasetBindingRuntimeIdDatasetIdReservation))
+
     }
 }

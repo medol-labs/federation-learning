@@ -11,8 +11,10 @@ data class RevokeRuntimeIdentityCommand(
     val runtimeId: UUID,
     val revocationReason: String
 ) {
+
     @TargetEntityId
     val selection: RuntimeIdentitySelection = RuntimeIdentitySelection(runtimeId = runtimeId)
+
 
 
 }

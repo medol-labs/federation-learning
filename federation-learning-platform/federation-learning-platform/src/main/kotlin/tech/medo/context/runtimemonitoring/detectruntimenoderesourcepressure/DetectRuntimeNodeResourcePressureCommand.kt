@@ -23,8 +23,10 @@ data class DetectRuntimeNodeResourcePressureCommand(
     val alertSeverity: String,
     val alertMessage: String
 ) {
+
     @TargetEntityId
     val selection: RuntimeNodeResourcePressureSelection = RuntimeNodeResourcePressureSelection(nodeId = nodeId)
+
 
 
 }

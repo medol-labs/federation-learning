@@ -22,6 +22,8 @@ class DeactivateOrganizationCommandHandler(
         @InjectEntity(idProperty = "organizationNameEntityId") state: OrganizationState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

@@ -11,8 +11,10 @@ data class AcknowledgeTrainingAlertCommand(
     val alertId: UUID,
     val acknowledgementNote: String?
 ) {
+
     @TargetEntityId
     val selection: TrainingAlertSelection = TrainingAlertSelection(alertId = alertId)
+
 
 
 }

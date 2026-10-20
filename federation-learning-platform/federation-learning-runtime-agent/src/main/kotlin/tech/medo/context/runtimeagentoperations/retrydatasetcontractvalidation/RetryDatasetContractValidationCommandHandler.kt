@@ -24,6 +24,7 @@ class RetryDatasetContractValidationCommandHandler(
         @InjectEntity(idProperty = "selection") state: DatasetState,
         eventAppender: EventAppender
     ) {
+
         if (state.currentState != DatasetStateEnum.ContractValidationCompleted) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -42,5 +43,6 @@ class RetryDatasetContractValidationCommandHandler(
         val now = java.time.LocalDateTime.now()
 
         eventAppender.append(decision.decide(command, state, portResult, now))
+
     }
 }

@@ -23,8 +23,10 @@ data class ReportAgentRuntimeTelemetryCommand(
     val lastHeartbeatAt: LocalDateTime?,
     val telemetryRetentionPolicy: String
 ) {
+
     @TargetEntityId
     val selection: AgentRuntimeTelemetrySelection = AgentRuntimeTelemetrySelection(nodeId = nodeId)
+
 
 
 }

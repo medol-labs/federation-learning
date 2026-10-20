@@ -22,6 +22,8 @@ class AcknowledgeTrainingAlertCommandHandler(
         @InjectEntity(idProperty = "alertId") state: TrainingAlertState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

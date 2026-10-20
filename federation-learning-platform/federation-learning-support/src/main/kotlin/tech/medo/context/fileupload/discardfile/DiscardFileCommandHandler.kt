@@ -22,6 +22,8 @@ class DiscardFileCommandHandler(
         @InjectEntity(idProperty = "fileId") state: UploadedFileState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

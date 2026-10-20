@@ -16,8 +16,10 @@ data class RaiseTrainingAlertCommand(
     val severity: String,
     val message: String
 ) {
+
     @TargetEntityId
     val selection: TrainingAlertSelection = TrainingAlertSelection(alertId = alertId)
+
 
 
 }

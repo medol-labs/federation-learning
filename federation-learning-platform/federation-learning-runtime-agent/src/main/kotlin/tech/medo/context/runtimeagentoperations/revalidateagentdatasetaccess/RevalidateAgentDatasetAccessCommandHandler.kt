@@ -24,6 +24,7 @@ class RevalidateAgentDatasetAccessCommandHandler(
         @InjectEntity(idProperty = "datasetAccessValidationId") state: AgentDatasetAccessValidationState,
         eventAppender: EventAppender
     ) {
+
         if (state.currentState != AgentDatasetAccessValidationStateEnum.Checked) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -42,5 +43,6 @@ class RevalidateAgentDatasetAccessCommandHandler(
         val now = java.time.LocalDateTime.now()
 
         eventAppender.append(decision.decide(command, state, portResult, now))
+
     }
 }

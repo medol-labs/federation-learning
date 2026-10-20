@@ -20,6 +20,8 @@ class UploadFileCommandHandler(
         command: UploadFileCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

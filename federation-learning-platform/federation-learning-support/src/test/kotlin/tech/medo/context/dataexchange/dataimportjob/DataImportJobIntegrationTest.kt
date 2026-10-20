@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 class DataImportJobIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RequestDataImportintegration() {
         val command = RequestDataImportCommand(

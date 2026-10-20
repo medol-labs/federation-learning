@@ -13,8 +13,10 @@ data class ArchiveDictionaryCommand(
     val archiveReason: String,
     val dictionaryCode: DictionaryCode
 ) {
+
     @TargetEntityId
     val selection: DictionarySelection = DictionarySelection(dictionaryCode = dictionaryCode)
+
 
 
 }

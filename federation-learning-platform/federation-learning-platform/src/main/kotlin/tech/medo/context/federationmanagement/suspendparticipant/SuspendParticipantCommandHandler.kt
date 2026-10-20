@@ -22,6 +22,8 @@ class SuspendParticipantCommandHandler(
         @InjectEntity(idProperty = "selection") state: FederationMembershipState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

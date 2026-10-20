@@ -15,8 +15,10 @@ data class ExpireFileCommand(
     val expiredAt: LocalDateTime,
     val expirationReason: String
 ) {
+
     @TargetEntityId
     val selection: UploadedFileSelection = UploadedFileSelection(fileId = fileId)
+
 
 
 }

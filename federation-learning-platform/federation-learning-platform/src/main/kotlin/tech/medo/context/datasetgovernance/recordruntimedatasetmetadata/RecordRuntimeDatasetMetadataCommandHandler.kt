@@ -20,6 +20,8 @@ class RecordRuntimeDatasetMetadataCommandHandler(
         command: RecordRuntimeDatasetMetadataCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

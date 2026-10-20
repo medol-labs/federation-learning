@@ -23,8 +23,10 @@ data class ConfirmRuntimeInfrastructurePreparedCommand(
     val preparedNodeCount: Int,
     val preparationNotes: String?
 ) {
+
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
+
 
 
 }

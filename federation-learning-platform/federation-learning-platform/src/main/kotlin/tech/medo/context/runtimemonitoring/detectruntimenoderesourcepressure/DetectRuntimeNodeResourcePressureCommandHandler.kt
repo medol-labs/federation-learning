@@ -20,6 +20,8 @@ class DetectRuntimeNodeResourcePressureCommandHandler(
         command: DetectRuntimeNodeResourcePressureCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

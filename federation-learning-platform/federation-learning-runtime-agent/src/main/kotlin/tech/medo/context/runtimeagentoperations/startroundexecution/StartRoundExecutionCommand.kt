@@ -50,8 +50,10 @@ data class StartRoundExecutionCommand(
     val publicKeyRef: String?,
     val encryptedParameterScale: Int?
 ) {
+
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
+
 
 
 }

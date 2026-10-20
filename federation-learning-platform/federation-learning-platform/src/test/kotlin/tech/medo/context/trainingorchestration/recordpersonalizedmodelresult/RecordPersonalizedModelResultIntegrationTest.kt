@@ -23,6 +23,7 @@ import java.math.BigDecimal
 class RecordPersonalizedModelResultIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RecordPersonalizedArtifactFromAcceptedUpdate() {
         val command = RecordPersonalizedModelResultCommand(

@@ -16,6 +16,7 @@ class MedolRestClientSecurityConfiguration {
             if (token.isNotBlank()) {
                 builder.defaultHeader(InternalTokenAuthenticationFilter.INTERNAL_TOKEN_HEADER, token)
             }
+
         }
 
     @Bean
@@ -27,6 +28,7 @@ class MedolRestClientSecurityConfiguration {
         if (token.isNotBlank()) {
             restClientBuilder.defaultHeader(InternalTokenAuthenticationFilter.INTERNAL_TOKEN_HEADER, token)
         }
+
         return restClientBuilder.build()
     }
 }

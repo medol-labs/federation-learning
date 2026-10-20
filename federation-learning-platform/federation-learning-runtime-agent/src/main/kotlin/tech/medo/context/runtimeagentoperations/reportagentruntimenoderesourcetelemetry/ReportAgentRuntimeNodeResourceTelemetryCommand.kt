@@ -30,8 +30,10 @@ data class ReportAgentRuntimeNodeResourceTelemetryCommand(
     val observedAt: LocalDateTime,
     val telemetryRetentionPolicy: String
 ) {
+
     @TargetEntityId
     val selection: AgentRuntimeNodeResourceTelemetrySelection = AgentRuntimeNodeResourceTelemetrySelection(nodeId = nodeId)
+
 
 
 }

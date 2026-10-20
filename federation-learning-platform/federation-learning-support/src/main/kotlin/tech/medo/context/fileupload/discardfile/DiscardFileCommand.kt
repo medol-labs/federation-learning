@@ -11,8 +11,10 @@ data class DiscardFileCommand(
     val fileId: UUID,
     val discardReason: String?
 ) {
+
     @TargetEntityId
     val selection: UploadedFileSelection = UploadedFileSelection(fileId = fileId)
+
 
 
 }

@@ -34,8 +34,10 @@ data class RecordPersonalizedModelResultCommand(
     val personalizedAccuracy: BigDecimal?,
     val personalizationLift: BigDecimal?
 ) {
+
     @TargetEntityId
     val selection: PersonalizedModelResultSelection = PersonalizedModelResultSelection(personalizedModelId = personalizedModelId)
+
 
 
 }

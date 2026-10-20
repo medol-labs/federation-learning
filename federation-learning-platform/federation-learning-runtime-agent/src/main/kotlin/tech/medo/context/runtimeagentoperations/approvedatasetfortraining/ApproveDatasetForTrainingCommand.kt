@@ -13,8 +13,10 @@ data class ApproveDatasetForTrainingCommand(
     val featureSchemaId: UUID,
     val datasetName: String
 ) {
+
     @TargetEntityId
     val selection: DatasetSelection = DatasetSelection(organizationId = organizationId, featureSchemaId = featureSchemaId, datasetName = datasetName)
+
 
 
 }

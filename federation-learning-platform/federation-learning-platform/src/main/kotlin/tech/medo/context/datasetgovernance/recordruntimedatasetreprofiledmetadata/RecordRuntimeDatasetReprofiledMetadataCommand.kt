@@ -30,8 +30,10 @@ data class RecordRuntimeDatasetReprofiledMetadataCommand(
     val nonIidScore: BigDecimal?,
     val classBalanceScore: BigDecimal?
 ) {
+
     @TargetEntityId
     val selection: RuntimeDatasetMetadataSelection = RuntimeDatasetMetadataSelection(runtimeDatasetBindingId = runtimeDatasetBindingId)
+
 
 
 }

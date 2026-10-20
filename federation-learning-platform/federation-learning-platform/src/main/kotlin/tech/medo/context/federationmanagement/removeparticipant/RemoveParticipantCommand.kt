@@ -14,8 +14,10 @@ data class RemoveParticipantCommand(
     val organizationName: String?,
     val removalReason: String
 ) {
+
     @TargetEntityId
     val selection: FederationMembershipSelection = FederationMembershipSelection(federationId = federationId, organizationId = organizationId)
+
 
 
 }

@@ -31,8 +31,10 @@ data class RecordRuntimeNodeResourceTelemetryCommand(
     val lastResourceSnapshotAt: LocalDateTime,
     val telemetryRetentionPolicy: String
 ) {
+
     @TargetEntityId
     val selection: RuntimeNodeResourceTelemetrySelection = RuntimeNodeResourceTelemetrySelection(nodeId = nodeId)
+
 
 
 }

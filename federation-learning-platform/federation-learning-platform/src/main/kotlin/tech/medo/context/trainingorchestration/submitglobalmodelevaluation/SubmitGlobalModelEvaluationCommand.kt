@@ -25,8 +25,10 @@ data class SubmitGlobalModelEvaluationCommand(
     val modelArtifactDigest: String,
     val aggregatedModelSignatureUri: String?
 ) {
+
     @TargetEntityId
     val selection: TrainingRoundSelection = TrainingRoundSelection(trainingJobId = trainingJobId)
+
 
 
 }

@@ -24,7 +24,9 @@ class DataExportJobCommandHandler(
         command: RequestDataExportCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 
     @CommandHandler
@@ -33,7 +35,9 @@ class DataExportJobCommandHandler(
         @InjectEntity(idProperty = "dataExportJobId") state: DataExportJobState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 
     @CommandHandler
@@ -42,7 +46,9 @@ class DataExportJobCommandHandler(
         @InjectEntity(idProperty = "dataExportJobId") state: DataExportJobState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 
     @CommandHandler
@@ -51,6 +57,8 @@ class DataExportJobCommandHandler(
         @InjectEntity(idProperty = "dataExportJobId") state: DataExportJobState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

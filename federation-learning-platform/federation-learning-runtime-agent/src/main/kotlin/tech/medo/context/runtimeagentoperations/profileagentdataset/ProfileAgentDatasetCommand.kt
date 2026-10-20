@@ -20,8 +20,10 @@ data class ProfileAgentDatasetCommand(
     val runtimeId: UUID,
     val runtimeName: String?
 ) {
+
     @TargetEntityId
     val selection: AgentDatasetProfileSelection = AgentDatasetProfileSelection(runtimeDatasetBindingId = runtimeDatasetBindingId)
+
 
 
 }

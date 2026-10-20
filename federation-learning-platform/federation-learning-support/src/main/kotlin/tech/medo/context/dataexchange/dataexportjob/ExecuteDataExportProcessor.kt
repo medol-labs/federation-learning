@@ -25,6 +25,7 @@ class ExecuteDataExportProcessor(
         if (message.metadata()[MetadataKeys.DEPLOYMENT_NAME]?.toString() != AxonDataExportJobRequestPort.DEPLOYMENT_NAME) {
             return
         }
+
         val task = DataExportExecutionTask(
             dataExportJobId = event.dataExportJobId,
             resourceName = event.resourceName,
@@ -44,5 +45,6 @@ class ExecuteDataExportProcessor(
             log.warn("Data export job {} failed", event.dataExportJobId, ex)
             lifecyclePort.fail(event.dataExportJobId, ex.message ?: "Data export failed.")
         }
+
     }
 }

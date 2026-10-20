@@ -22,6 +22,8 @@ class RevokeRuntimeIdentityCommandHandler(
         @InjectEntity(idProperty = "runtimeId") state: RuntimeIdentityState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

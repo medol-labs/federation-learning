@@ -22,9 +22,11 @@ class DetectRuntimeCapabilitiesCommandHandler(
         command: DetectRuntimeCapabilitiesCommand,
         eventAppender: EventAppender
     ) {
+
         val input = DetectRuntimeCapabilitiesInput(runtimeId = command.runtimeId, capabilityTypes = command.capabilityTypes)
         val portResult = detectRuntimeCapabilitiesService.execute(input)
 
         eventAppender.append(decision.decide(command, portResult))
+
     }
 }

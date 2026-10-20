@@ -21,7 +21,7 @@ class ApproveDatasetForTrainingDecisionTest {
             metadataReportId = java.util.UUID.randomUUID(),
             schemaCompatible = true,
             labelCompatible = true,
-            qualityScore = BigDecimal("0.86"),
+            qualityScore = java.math.BigDecimal("0.86"),
             nonIidScore = java.math.BigDecimal.ZERO,
             organizationId = java.util.UUID.randomUUID(),
             datasetName = ""

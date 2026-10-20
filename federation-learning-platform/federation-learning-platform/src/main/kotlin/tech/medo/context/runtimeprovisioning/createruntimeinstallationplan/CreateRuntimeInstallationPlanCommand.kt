@@ -20,8 +20,10 @@ data class CreateRuntimeInstallationPlanCommand(
     val agentInstallMode: String,
     val expectedNodeCount: Int
 ) {
+
     @TargetEntityId
     val selection: RuntimeInstallationPlanSelection = RuntimeInstallationPlanSelection(organizationId = organizationId)
+
 
 
 }

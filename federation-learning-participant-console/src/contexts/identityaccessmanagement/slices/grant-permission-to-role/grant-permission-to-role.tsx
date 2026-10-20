@@ -224,13 +224,24 @@ export const RoleCatalogGrantPermissionToRole = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>{t("resources.role_catalog.commands.grantPermissionToRole.fields.roleId.label", "Role Id")}</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value || ""}
-                    placeholder={"Enter Role Id"}
-                  />
-                </FormControl>
+                <ResourceSelect
+                  withFormControl
+                  resource="role_catalog"
+                  dataProviderName="federation-learning-runtime-agent"
+                  optionLabel="roleName"
+                  optionValue="roleId"
+                  value={field.value || ""}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  placeholder={t("resources.role_catalog.commands.grantPermissionToRole.fields.roleId.placeholder", "Select Role Id")}
+                  meta={{
+                    idField: "roleId",
+                    label: t("resources.role_catalog.commands.grantPermissionToRole.fields.roleId.label", "Role Catalog"),
+                    aggregateRoute: "role",
+                    queryRoute: "rolecatalog",
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

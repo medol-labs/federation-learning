@@ -20,6 +20,8 @@ class RecordRuntimeNodeInventoryCommandHandler(
         command: RecordRuntimeNodeInventoryCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

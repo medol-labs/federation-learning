@@ -14,8 +14,10 @@ data class RevokeParticipantInvitationCommand(
     val organizationName: String?,
     val revokeReason: String
 ) {
+
     @TargetEntityId
     val selection: FederationMembershipSelection = FederationMembershipSelection(federationId = federationId, organizationId = organizationId)
+
 
 
 }

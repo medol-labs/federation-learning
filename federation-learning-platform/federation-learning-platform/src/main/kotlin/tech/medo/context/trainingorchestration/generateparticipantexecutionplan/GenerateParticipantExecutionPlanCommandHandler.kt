@@ -20,6 +20,8 @@ class GenerateParticipantExecutionPlanCommandHandler(
         command: GenerateParticipantExecutionPlanCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

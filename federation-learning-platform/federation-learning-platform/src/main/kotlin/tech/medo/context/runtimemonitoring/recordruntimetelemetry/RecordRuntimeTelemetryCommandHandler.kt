@@ -22,6 +22,8 @@ class RecordRuntimeTelemetryCommandHandler(
         @InjectEntity(idProperty = "nodeId") state: NodeRuntimeHealthState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

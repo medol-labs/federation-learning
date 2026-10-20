@@ -13,8 +13,10 @@ data class RegisterPermissionCommand(
     val permissionName: String,
     val description: String?
 ) {
+
     @TargetEntityId
     val selection: PermissionSelection = PermissionSelection(permissionCode = permissionCode.trim().lowercase())
+
 
     val permissionCodeEntityId: String = permissionCode.trim().lowercase()
 

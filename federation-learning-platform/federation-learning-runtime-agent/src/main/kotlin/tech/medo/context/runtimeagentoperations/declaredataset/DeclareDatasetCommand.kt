@@ -17,8 +17,10 @@ data class DeclareDatasetCommand(
     val datasetName: String,
     val datasetUsage: String
 ) {
+
     @TargetEntityId
     val selection: DatasetSelection = DatasetSelection(organizationId = organizationId, featureSchemaId = featureSchemaId, datasetName = datasetName)
+
 
 
 }

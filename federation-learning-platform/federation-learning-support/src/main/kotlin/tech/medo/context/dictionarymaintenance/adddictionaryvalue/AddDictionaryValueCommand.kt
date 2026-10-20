@@ -20,8 +20,10 @@ data class AddDictionaryValueCommand(
     val description: String?,
     val active: Boolean
 ) {
+
     @TargetEntityId
     val selection: DictionaryValueSelection = DictionaryValueSelection(dictionaryCode = dictionaryCode, valueCode = valueCode)
+
 
 
 }

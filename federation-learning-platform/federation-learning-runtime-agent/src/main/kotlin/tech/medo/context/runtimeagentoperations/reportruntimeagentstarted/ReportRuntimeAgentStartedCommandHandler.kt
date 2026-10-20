@@ -22,6 +22,8 @@ class ReportRuntimeAgentStartedCommandHandler(
         @InjectEntity(idProperty = "bootstrapRequestId") state: RuntimeAgentLifecycleState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

@@ -91,15 +91,52 @@ export const FederationOverviewInviteParticipant = () => {
       <CreateViewHeader title={t("resources.federation_overview.commands.inviteParticipant.label", "Invite Participant")} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.error("InviteParticipant validation failed", errors))} className="space-y-8">
-          {defaultValues.federationId !== undefined && defaultValues.federationId !== null ? (
-            <input type="hidden" {...form.register("federationId" as never)} />
-          ) : null}
           {defaultValues.federationName !== undefined && defaultValues.federationName !== null ? (
             <input type="hidden" {...form.register("federationName" as never)} />
           ) : null}
           {defaultValues.organizationName !== undefined && defaultValues.organizationName !== null ? (
             <input type="hidden" {...form.register("organizationName" as never)} />
           ) : null}
+          {defaultValues.federationId !== undefined && defaultValues.federationId !== null && defaultValues.federationId !== "" ? (
+            <input type="hidden" {...form.register("federationId" as never)} />
+          ) : (
+          <FormField
+            control={form.control}
+            name="federationId"
+            rules={{ required: "Federation Id is required" }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("resources.federation_overview.commands.inviteParticipant.fields.federationId.label", "Federation Id")}</FormLabel>
+                <ResourceSelect
+                  withFormControl
+                  resource="federation_overview"
+                  dataProviderName="federation-learning-platform"
+                  optionLabel="federationName"
+                  optionValue="federationId"
+                  value={field.value || ""}
+                  onValueChange={(value, option) => {
+                    field.onChange(value);
+                    form.setValue(
+                      "federationName" as never,
+                      String(option?.record?.["federationName"] ?? option?.label ?? "") as never,
+                      { shouldDirty: true, shouldValidate: true },
+                    );
+                  }}
+                  placeholder={t("resources.federation_overview.commands.inviteParticipant.fields.federationId.placeholder", "Select Federation Id")}
+                  filters={[{"field":"state","operator":"eq","value":"Active"}]}
+                  meta={{
+                    idField: "federationId",
+                    label: t("resources.federation_overview.commands.inviteParticipant.fields.federationId.label", "Federation Overview"),
+                    aggregateRoute: "federation",
+                    queryRoute: "federationoverview",
+                    queryFields: ["state"],
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          )}
           <FormField
             control={form.control}
             name="organizationId"

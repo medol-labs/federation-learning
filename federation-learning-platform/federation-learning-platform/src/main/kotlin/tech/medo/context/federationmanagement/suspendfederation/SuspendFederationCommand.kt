@@ -12,8 +12,10 @@ data class SuspendFederationCommand(
     val suspensionReason: String,
     val federationName: String
 ) {
+
     @TargetEntityId
     val selection: FederationSelection = FederationSelection(federationName = federationName)
+
 
 
 }

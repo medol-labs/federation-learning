@@ -20,6 +20,8 @@ class RegisterModelArtifactCommandHandler(
         command: RegisterModelArtifactCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

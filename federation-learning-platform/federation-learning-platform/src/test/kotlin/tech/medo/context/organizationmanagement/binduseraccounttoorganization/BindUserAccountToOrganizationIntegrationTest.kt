@@ -22,6 +22,7 @@ import java.util.UUID
 class BindUserAccountToOrganizationIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun BindUserAccountToOrganizationintegration() {
         val command = BindUserAccountToOrganizationCommand(

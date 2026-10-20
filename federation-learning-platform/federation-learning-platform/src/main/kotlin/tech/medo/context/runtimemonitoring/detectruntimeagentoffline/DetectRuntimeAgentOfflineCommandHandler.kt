@@ -20,6 +20,8 @@ class DetectRuntimeAgentOfflineCommandHandler(
         command: DetectRuntimeAgentOfflineCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

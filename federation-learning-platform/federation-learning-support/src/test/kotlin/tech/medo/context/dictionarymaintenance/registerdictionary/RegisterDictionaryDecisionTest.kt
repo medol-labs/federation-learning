@@ -17,8 +17,8 @@ class RegisterDictionaryDecisionTest {
         dictionaryCodeReservation.evolve(
             DictionaryCodeReservedEvent(
                 dictionaryId = java.util.UUID.randomUUID(),
-                dictionaryCode = DictionaryCode(""),
-                normalizedName = DictionaryCode("").value.trim().lowercase()
+                dictionaryCode = DictionaryCode("B"),
+                normalizedName = DictionaryCode("B").value.trim().lowercase()
             )
         )
 
@@ -26,7 +26,7 @@ class RegisterDictionaryDecisionTest {
             (object : RegisterDictionaryDecision {}).decide(
                         RegisterDictionaryCommand(
                         dictionaryId = java.util.UUID.randomUUID(),
-                        dictionaryCode = DictionaryCode(""),
+                        dictionaryCode = DictionaryCode("B"),
                         dictionaryName = "",
                         description = null
                         ),

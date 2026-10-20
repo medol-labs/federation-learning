@@ -11,8 +11,10 @@ data class MarkDataImportProcessingCommand(
     val totalRows: Long,
     val status: String
 ) {
+
     @TargetEntityId
     val selection: DataImportJobSelection = DataImportJobSelection(dataImportJobId = dataImportJobId)
+
 
 
 }

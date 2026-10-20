@@ -23,6 +23,7 @@ import java.math.BigDecimal
 class DefineTrainingRunConfigurationIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun DefineRunnableConfiguration() {
         val command = DefineTrainingRunConfigurationCommand(
@@ -55,12 +56,12 @@ class DefineTrainingRunConfigurationIntegrationTest(
             nodeResponseTimeoutSeconds = 300,
             localEpochs = 2,
             batchSize = 64,
-            learningRate = BigDecimal("0.01"),
+            learningRate = java.math.BigDecimal("0.01"),
             optimizer = "SGD",
             lossFunction = "CROSS_ENTROPY",
             gradientClippingNorm = null,
             secureAggregationRequired = true,
-            minimumAccuracy = BigDecimal("0.9"),
+            minimumAccuracy = java.math.BigDecimal("0.9"),
             minimumFairnessScore = null
         )
 

@@ -22,8 +22,10 @@ data class RetryRuntimeAgentDeploymentCommand(
     val expectedNodeCount: Int,
     val retryReason: String
 ) {
+
     @TargetEntityId
     val selection: RuntimeInfrastructureSelection = RuntimeInfrastructureSelection(runtimeInfrastructureId = runtimeInfrastructureId)
+
 
 
 }

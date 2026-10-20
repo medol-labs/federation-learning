@@ -26,6 +26,7 @@ class CreateTrainingJobCommandHandler(
         @InjectEntity(idProperty = "trainingRunConfigurationId") state: TrainingRunConfigurationState,
         eventAppender: EventAppender
     ) {
+
         val federationOverviewReadModelSelection = federationOverviewReadModelRepository.findById(command.federationId)
         if (!(federationOverviewReadModelSelection != null && federationOverviewReadModelSelection.state == FederationStateEnum.Active)) {
             throw tech.medo.shared.domain.CommandRejectedException(
@@ -55,5 +56,6 @@ class CreateTrainingJobCommandHandler(
             )
         }
         eventAppender.append(decision.decide(command, state))
+
     }
 }

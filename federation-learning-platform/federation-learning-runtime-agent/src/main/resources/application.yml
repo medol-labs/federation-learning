@@ -22,12 +22,15 @@ spring:
     username: ${DB_USERNAME:medol}
     password: ${DB_PASSWORD:medol}
     driver-class-name: org.postgresql.Driver
+
   jpa:
     open-in-view: false
+
     hibernate:
       ddl-auto: update
   flyway:
     enabled: true
+
     locations: classpath:db/migration
 
 axon:
@@ -81,6 +84,7 @@ medol:
       api-key: ${UMADB_API_KEY:}
       batch-size: ${UMADB_BATCH_SIZE:256}
       request-timeout: ${UMADB_REQUEST_TIMEOUT:PT10S}
+
   sync:
     enabled: ${MEDOL_SYNC_ENABLED:true}
     mode: ${MEDOL_SYNC_MODE:outbox-delta}

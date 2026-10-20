@@ -80,7 +80,7 @@ class EvaluateModelUpdateSubmissionDecisionTest {
             artifactRef = "",
             artifactDigest = "",
             updateProtectionType = "",
-            trainingLoss = BigDecimal("0.23"),
+            trainingLoss = java.math.BigDecimal("0.23"),
             personalizedArtifactAvailable = false,
             personalizedModelId = null,
             personalizedModelArtifactRef = null,
@@ -124,7 +124,7 @@ class EvaluateModelUpdateSubmissionDecisionTest {
             personalizedMetricsArtifactRef = null,
             personalizedAccuracy = null,
             personalizationLift = null,
-            anomalyScore = BigDecimal("0.12")
+            anomalyScore = java.math.BigDecimal("0.12")
         )
 
         val events = (object : EvaluateModelUpdateSubmissionDecision {}).decide(
@@ -165,6 +165,6 @@ class EvaluateModelUpdateSubmissionDecisionTest {
         assertEquals(command.personalizedMetricsArtifactRef, event.personalizedMetricsArtifactRef)
         assertEquals(command.personalizedAccuracy, event.personalizedAccuracy)
         assertEquals(command.personalizationLift, event.personalizationLift)
-        assertEquals(BigDecimal("0.12"), event.anomalyScore)
+        assertEquals(java.math.BigDecimal("0.12"), event.anomalyScore)
     }
 }

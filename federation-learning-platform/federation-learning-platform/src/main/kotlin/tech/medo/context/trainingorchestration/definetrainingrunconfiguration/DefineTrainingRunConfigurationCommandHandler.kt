@@ -29,6 +29,7 @@ class DefineTrainingRunConfigurationCommandHandler(
         command: DefineTrainingRunConfigurationCommand,
         eventAppender: EventAppender
     ) {
+
         val federationOverviewReadModelSelection = federationOverviewReadModelRepository.findById(command.federationId)
         if (!(federationOverviewReadModelSelection != null && federationOverviewReadModelSelection.state == FederationStateEnum.Active)) {
             throw tech.medo.shared.domain.CommandRejectedException(
@@ -86,5 +87,6 @@ class DefineTrainingRunConfigurationCommandHandler(
             )
         }
         eventAppender.append(decision.decide(command))
+
     }
 }

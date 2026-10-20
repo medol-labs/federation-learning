@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.get
 class FederationLearningRuntimeAgentApplicationTest(
     @Autowired private val mockMvc: MockMvc
 ) {
+
     @Test
     fun contextLoads() {
     }

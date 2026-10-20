@@ -22,6 +22,7 @@ import java.util.UUID
 class PlanRuntimeInfrastructureIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun PlanRuntimeInfrastructureintegration() {
         val command = PlanRuntimeInfrastructureCommand(

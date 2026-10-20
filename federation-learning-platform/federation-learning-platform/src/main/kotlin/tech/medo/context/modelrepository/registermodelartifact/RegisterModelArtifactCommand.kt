@@ -17,8 +17,10 @@ data class RegisterModelArtifactCommand(
     val fileId: UUID?,
     val modelFormat: String?
 ) {
+
     @TargetEntityId
     val selection: ModelArtifactSelection = ModelArtifactSelection(modelName = modelName, modelVersion = modelVersion)
+
 
 
 }

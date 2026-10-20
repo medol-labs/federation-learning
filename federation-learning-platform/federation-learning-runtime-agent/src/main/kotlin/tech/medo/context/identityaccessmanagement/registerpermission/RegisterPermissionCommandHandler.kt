@@ -20,6 +20,8 @@ class RegisterPermissionCommandHandler(
         command: RegisterPermissionCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

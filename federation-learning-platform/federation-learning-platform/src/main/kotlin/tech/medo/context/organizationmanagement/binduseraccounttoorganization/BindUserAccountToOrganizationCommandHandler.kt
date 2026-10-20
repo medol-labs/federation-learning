@@ -23,6 +23,7 @@ class BindUserAccountToOrganizationCommandHandler(
         @InjectEntity(idProperty = "userOrganizationMembershipUserAccountIdOrganizationIdSelection") userOrganizationMembershipUserAccountIdOrganizationIdReservation: UserOrganizationMembershipUserAccountIdOrganizationIdReservationState,
         eventAppender: EventAppender
     ) {
+
         val organizationDirectoryReadModelSelection = organizationDirectoryReadModelRepository.findById(command.organizationId)
         if (!(organizationDirectoryReadModelSelection != null && organizationDirectoryReadModelSelection.state == OrganizationStateEnum.Active)) {
             throw tech.medo.shared.domain.CommandRejectedException(
@@ -38,5 +39,6 @@ class BindUserAccountToOrganizationCommandHandler(
             )
         }
         eventAppender.append(decision.decide(command, userOrganizationMembershipUserAccountIdOrganizationIdReservation))
+
     }
 }

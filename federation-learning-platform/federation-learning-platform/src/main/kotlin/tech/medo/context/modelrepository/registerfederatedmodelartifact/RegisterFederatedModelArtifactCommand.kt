@@ -25,8 +25,10 @@ data class RegisterFederatedModelArtifactCommand(
     val trainingJobObjective: String,
     val roundId: UUID
 ) {
+
     @TargetEntityId
     val selection: ModelArtifactSelection = ModelArtifactSelection(modelName = modelName, modelVersion = modelVersion)
+
 
 
 }

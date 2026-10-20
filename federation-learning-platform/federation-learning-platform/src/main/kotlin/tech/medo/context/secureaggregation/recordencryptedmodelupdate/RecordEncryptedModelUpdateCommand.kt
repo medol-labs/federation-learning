@@ -26,8 +26,10 @@ data class RecordEncryptedModelUpdateCommand(
     val encryptionScheme: String,
     val publicKeyVersion: String
 ) {
+
     @TargetEntityId
     val selection: SecureAggregationSessionSelection = SecureAggregationSessionSelection(secureAggregationSessionId = secureAggregationSessionId)
+
 
 
 }

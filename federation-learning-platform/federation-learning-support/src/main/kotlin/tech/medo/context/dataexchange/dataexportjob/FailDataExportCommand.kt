@@ -11,8 +11,10 @@ data class FailDataExportCommand(
     val errorMessage: String,
     val status: String
 ) {
+
     @TargetEntityId
     val selection: DataExportJobSelection = DataExportJobSelection(dataExportJobId = dataExportJobId)
+
 
 
 }

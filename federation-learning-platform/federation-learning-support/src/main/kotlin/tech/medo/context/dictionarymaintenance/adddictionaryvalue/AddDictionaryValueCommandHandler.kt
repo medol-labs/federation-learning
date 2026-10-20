@@ -20,6 +20,8 @@ class AddDictionaryValueCommandHandler(
         command: AddDictionaryValueCommand,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command))
+
     }
 }

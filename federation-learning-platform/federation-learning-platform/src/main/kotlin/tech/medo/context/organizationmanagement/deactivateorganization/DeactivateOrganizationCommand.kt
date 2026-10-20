@@ -12,8 +12,10 @@ data class DeactivateOrganizationCommand(
     val organizationName: String,
     val deactivationReason: String
 ) {
+
     @TargetEntityId
     val selection: OrganizationSelection = OrganizationSelection(organizationName = organizationName.trim().lowercase())
+
 
     val organizationNameEntityId: String = organizationName.trim().lowercase()
 

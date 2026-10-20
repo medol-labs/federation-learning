@@ -23,6 +23,7 @@ import tech.medo.organizationmanagement.domain.types.OrganizationType
 class RegisterOrganizationIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun RegisterOrganizationintegration() {
         val command = RegisterOrganizationCommand(

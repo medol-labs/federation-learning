@@ -22,6 +22,8 @@ class GrantPermissionToRoleCommandHandler(
         @InjectEntity(idProperty = "roleCodeEntityId") state: RoleState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

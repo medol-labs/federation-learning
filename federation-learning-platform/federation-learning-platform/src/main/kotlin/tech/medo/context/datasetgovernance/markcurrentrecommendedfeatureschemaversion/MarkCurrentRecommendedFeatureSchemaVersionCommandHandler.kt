@@ -22,6 +22,8 @@ class MarkCurrentRecommendedFeatureSchemaVersionCommandHandler(
         @InjectEntity(idProperty = "selection") state: FeatureSchemaState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, state))
+
     }
 }

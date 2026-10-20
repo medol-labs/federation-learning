@@ -24,6 +24,7 @@ class DispatchParticipantExecutionPlanCommandHandler(
         @InjectEntity(idProperty = "executionPlanId") state: ParticipantExecutionPlanState,
         eventAppender: EventAppender
     ) {
+
         if (state.currentState != ParticipantExecutionPlanStateEnum.PlanGenerated) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -41,5 +42,6 @@ class DispatchParticipantExecutionPlanCommandHandler(
         val portResult = dispatchParticipantExecutionPlanService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))
+
     }
 }

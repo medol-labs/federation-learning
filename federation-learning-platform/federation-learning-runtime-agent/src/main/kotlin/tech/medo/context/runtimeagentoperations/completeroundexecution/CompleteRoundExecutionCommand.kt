@@ -49,8 +49,10 @@ data class CompleteRoundExecutionCommand(
     val personalizedAccuracy: BigDecimal?,
     val personalizationLift: BigDecimal?
 ) {
+
     @TargetEntityId
     val selection: RoundExecutionSelection = RoundExecutionSelection(executionPlanId = executionPlanId)
+
 
 
 }

@@ -24,9 +24,11 @@ class DownloadFileCommandHandler(
         @InjectEntity(idProperty = "fileId") state: UploadedFileState,
         eventAppender: EventAppender
     ) {
+
         val input = DownloadFileInput(fileId = command.fileId)
         val portResult = downloadFileService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))
+
     }
 }

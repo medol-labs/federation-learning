@@ -10,8 +10,10 @@ import java.util.UUID;
 data class DownloadFileCommand(
     val fileId: UUID
 ) {
+
     @TargetEntityId
     val selection: UploadedFileSelection = UploadedFileSelection(fileId = fileId)
+
 
 
 }

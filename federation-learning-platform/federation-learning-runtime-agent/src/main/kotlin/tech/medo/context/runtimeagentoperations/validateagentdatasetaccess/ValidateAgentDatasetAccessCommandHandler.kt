@@ -22,10 +22,12 @@ class ValidateAgentDatasetAccessCommandHandler(
         command: ValidateAgentDatasetAccessCommand,
         eventAppender: EventAppender
     ) {
+
         val input = ValidateAgentDatasetAccessInput(datasetAccessValidationId = command.datasetAccessValidationId, runtimeDatasetBindingId = command.runtimeDatasetBindingId, datasetId = command.datasetId, organizationId = command.organizationId, organizationName = command.organizationName, featureSchemaId = command.featureSchemaId, featureDomain = command.featureDomain, featureSchemaVersion = command.featureSchemaVersion, datasetName = command.datasetName, runtimeId = command.runtimeId, runtimeName = command.runtimeName, filePath = command.filePath, dataFormat = command.dataFormat)
         val portResult = validateAgentDatasetAccessService.execute(input)
         val now = java.time.LocalDateTime.now()
 
         eventAppender.append(decision.decide(command, portResult, now))
+
     }
 }

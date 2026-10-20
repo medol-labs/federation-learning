@@ -24,6 +24,7 @@ class ReportRuntimeInstanceSelfCheckPassedCommandHandler(
         @InjectEntity(idProperty = "bootstrapRequestId") state: RuntimeAgentLifecycleState,
         eventAppender: EventAppender
     ) {
+
         if (state.currentState != RuntimeAgentLifecycleStateEnum.Started) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -41,5 +42,6 @@ class ReportRuntimeInstanceSelfCheckPassedCommandHandler(
         val portResult = reportRuntimeInstanceSelfCheckPassedService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))
+
     }
 }

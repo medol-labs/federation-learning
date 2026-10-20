@@ -11,7 +11,9 @@ const directory = resolve(root, 'docs/438c/merge');
 const registerPath = resolve(directory, '3.3.1-function-register.json');
 const draftPath = resolve(directory, '3.3.1-federation-learning.md');
 const candidatePath = resolve(root, 'docs/generated/438c/merge/3.3.1-candidate.md');
+const finalPath = resolve(root, 'docs/generated/438c/merge/3.3.1-final.md');
 const wordPath = resolve(root, 'docs/generated/438c/merge/3.3.1-federation-learning.docx');
+const formatterPath = resolve(root, 'scripts/format-438c-331.py');
 const converterPath = resolve(root, 'docs/document-pack/federation-learning/markdown_to_docx.py');
 const sourcePath = resolve(root, '.medol/source.medol');
 const useCasePath = resolve(root, '.medol/prd-use-cases.json');
@@ -185,9 +187,17 @@ if (mode === '--word') {
   mkdirSync(dirname(wordPath), { recursive: true });
   const bundledPython = resolve(homedir(), '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3');
   const python = process.env.PYTHON ?? (existsSync(bundledPython) ? bundledPython : 'python3');
+  const formatting = spawnSync(python, [formatterPath, draftPath], {
+    encoding: 'utf8',
+    cwd: root,
+    maxBuffer: 16 * 1024 * 1024,
+  });
+  if (formatting.status !== 0) {
+    throw new Error(`Requirement formatting failed: ${formatting.stderr || formatting.stdout}`);
+  }
+  writeFileSync(finalPath, formatting.stdout);
   const conversion = spawnSync(python, [
-    converterPath, draftPath, '--out', wordPath, '--landscape',
-    '--heading-number-prefix', '3.3.1'
+    converterPath, finalPath, '--out', wordPath, '--requirements-tables'
   ], {
     encoding: 'utf8',
     cwd: root,
@@ -195,6 +205,7 @@ if (mode === '--word') {
   if (conversion.status !== 0) {
     throw new Error(`Word export failed: ${conversion.stderr || conversion.stdout}`);
   }
+  console.log(`Delivery Markdown: ${finalPath}`);
   console.log(`Word chapter: ${wordPath}`);
 }
 

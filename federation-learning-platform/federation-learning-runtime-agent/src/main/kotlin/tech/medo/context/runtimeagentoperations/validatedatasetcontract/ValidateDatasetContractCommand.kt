@@ -14,8 +14,10 @@ data class ValidateDatasetContractCommand(
     val organizationId: UUID,
     val datasetName: String
 ) {
+
     @TargetEntityId
     val selection: DatasetSelection = DatasetSelection(organizationId = organizationId, featureSchemaId = featureSchemaId, datasetName = datasetName)
+
 
 
 }

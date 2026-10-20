@@ -22,6 +22,7 @@ import java.util.UUID
 class InviteParticipantIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun InviteParticipantintegration() {
         val command = InviteParticipantCommand(

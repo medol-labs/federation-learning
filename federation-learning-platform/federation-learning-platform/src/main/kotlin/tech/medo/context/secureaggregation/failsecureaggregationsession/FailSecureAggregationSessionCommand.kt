@@ -11,8 +11,10 @@ data class FailSecureAggregationSessionCommand(
     val secureAggregationSessionId: UUID,
     val failureReason: String
 ) {
+
     @TargetEntityId
     val selection: SecureAggregationSessionSelection = SecureAggregationSessionSelection(secureAggregationSessionId = secureAggregationSessionId)
+
 
 
 }

@@ -22,6 +22,8 @@ class CreateFederationCommandHandler(
         @InjectEntity(idProperty = "federationNameSelection") federationNameReservation: FederationNameReservationState,
         eventAppender: EventAppender
     ) {
+
         eventAppender.append(decision.decide(command, federationNameReservation))
+
     }
 }

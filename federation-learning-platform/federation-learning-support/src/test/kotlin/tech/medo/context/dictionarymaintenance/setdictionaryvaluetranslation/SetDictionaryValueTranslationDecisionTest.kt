@@ -19,12 +19,12 @@ class SetDictionaryValueTranslationDecisionTest {
         dictionaryValueTranslationDictionaryCodeValueCodeLocaleReservation.evolve(
             DictionaryValueTranslationDictionaryCodeValueCodeLocaleReservedEvent(
                 dictionaryValueTranslationId = java.util.UUID.randomUUID(),
-                dictionaryCode = DictionaryCode(""),
-                valueCode = DictionaryValueCode(""),
-                locale = LocaleCode(""),
-                normalizedDictionaryCode = DictionaryCode("").value.trim().lowercase(),
-                normalizedValueCode = DictionaryValueCode("").value.trim().lowercase(),
-                normalizedLocale = LocaleCode("").value.trim().lowercase()
+                dictionaryCode = DictionaryCode("RUNTIME_ENVIRONMENT_TYPE"),
+                valueCode = DictionaryValueCode("K3S"),
+                locale = LocaleCode("zh-CN"),
+                normalizedDictionaryCode = DictionaryCode("RUNTIME_ENVIRONMENT_TYPE").value.trim().lowercase(),
+                normalizedValueCode = DictionaryValueCode("K3S").value.trim().lowercase(),
+                normalizedLocale = LocaleCode("zh-CN").value.trim().lowercase()
             )
         )
 
@@ -33,9 +33,9 @@ class SetDictionaryValueTranslationDecisionTest {
                         SetDictionaryValueTranslationCommand(
                         dictionaryValueTranslationId = java.util.UUID.randomUUID(),
                         dictionaryValueId = java.util.UUID.randomUUID(),
-                        dictionaryCode = DictionaryCode(""),
-                        valueCode = DictionaryValueCode(""),
-                        locale = LocaleCode(""),
+                        dictionaryCode = DictionaryCode("RUNTIME_ENVIRONMENT_TYPE"),
+                        valueCode = DictionaryValueCode("K3S"),
+                        locale = LocaleCode("zh-CN"),
                         displayName = "",
                         description = null
                         ),

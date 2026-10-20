@@ -24,6 +24,7 @@ class SelectSecureAggregationParticipantsCommandHandler(
         @InjectEntity(idProperty = "secureAggregationSessionId") state: SecureAggregationSessionState,
         eventAppender: EventAppender
     ) {
+
         if (state.currentState != SecureAggregationSessionStateEnum.Planned) {
             throw tech.medo.shared.domain.CommandRejectedException(
                 code = "COMMAND_REQUIRES_STATE",
@@ -41,5 +42,6 @@ class SelectSecureAggregationParticipantsCommandHandler(
         val portResult = selectSecureAggregationParticipantsService.execute(input)
 
         eventAppender.append(decision.decide(command, state, portResult))
+
     }
 }

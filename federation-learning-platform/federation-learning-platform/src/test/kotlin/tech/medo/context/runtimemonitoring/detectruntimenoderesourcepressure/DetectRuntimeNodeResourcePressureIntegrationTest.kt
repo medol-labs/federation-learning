@@ -23,6 +23,7 @@ import java.math.BigDecimal
 class DetectRuntimeNodeResourcePressureIntegrationTest(
     @Autowired private val commandGateway: CommandGateway
 ) {
+
     @Test
     fun DetectRuntimeNodeResourcePressureintegration() {
         val command = DetectRuntimeNodeResourcePressureCommand(
