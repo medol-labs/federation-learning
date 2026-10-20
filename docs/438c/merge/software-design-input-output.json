@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "introduction": "联邦学习子系统由平台服务、参与方运行时代理、按需运行的训练引擎、共享支撑服务和控制台组成。输入/输出按部署边界划分：平台管理联邦、特征架构和训练过程；代理持有本地数据集的访问配置；训练引擎只在参与方侧读取训练数据。下表列出主要交换关系；接口标识、交换内容及约束在本软件设计说明的接口设计章节统一说明。具体服务地址和认证参数由部署配置确定。",
+  "items": [
+    {
+      "id": "FL-IO-01",
+      "direction": "用户经控制台到平台",
+      "input": "组织与联邦操作、特征架构、训练运行配置、初始模型引用及训练作业信息",
+      "output": "操作受理结果、业务标识、目录和状态查询结果",
+      "decision": "用户操作与后续训练结果分开反馈；查询按所属组织和授权范围返回，不将训练完成作为提交请求的同步响应。",
+      "commandRefs": ["DefineFeatureSchema", "CreateTrainingJob", "SubmitTrainingJob"],
+      "eventRefs": ["FeatureSchemaDefined", "TrainingJobCreated", "TrainingJobSubmitted"]
+    },
+    {
+      "id": "FL-IO-02",
+      "direction": "用户经控制台到共享支撑服务",
+      "input": "待上传的模型等文件及其必要描述",
+      "output": "文件标识和可引用的工件信息",
+      "decision": "文件由支撑服务保存；业务操作使用文件引用，不在管理请求或业务事件中传递大文件原文。",
+      "commandRefs": ["UploadFile", "RegisterModelArtifact"],
+      "eventRefs": ["FileUploaded", "ModelArtifactRegistered"]
+    },
+    {
+      "id": "FL-IO-03",
+      "direction": "平台到参与方代理",
+      "input": "已选定运行时的执行计划，包括作业、轮次和目标运行时标识、基础模型工件引用、引擎配置及聚合要求",
+      "output": "计划接收结果；后续的接受、拒绝和执行状态由代理分别报告",
+      "decision": "平台按已登记的目标运行时端点分发，不使用单一固定代理地址；接收成功不等于本地训练成功。",
+      "commandRefs": ["DispatchParticipantExecutionPlan", "ReceiveParticipantExecutionPlan", "AcceptExecutionPlan"],
+      "eventRefs": ["ParticipantExecutionPlanDispatched", "ExecutionPlanReceived", "ExecutionPlanAccepted", "ExecutionPlanRejected"]
+    },
+    {
+      "id": "FL-IO-04",
+      "direction": "参与方代理到平台的特征架构查询",
+      "input": "已发布特征架构的标识",
+      "output": "供代理校验使用的特征、标签和架构版本",
+      "decision": "代理按所选架构查询定义后校验本地数据，不以平台目录替代本地数据集或本地访问配置。",
+      "commandRefs": ["PublishFeatureSchema", "DeclareDataset"],
+      "eventRefs": ["FeatureSchemaPublished", "DatasetDeclared"]
+    },
+    {
+      "id": "FL-IO-05",
+      "direction": "本地数据集到参与方代理",
+      "input": "本地文件位置、数据集绑定与访问配置",
+      "output": "数据集访问校验、样本和字段统计、架构及标签兼容性等元数据",
+      "decision": "原始样本留在参与方；平台接收必要的描述、统计和校验结果，不接收原始记录或本地凭据。",
+      "commandRefs": ["ConfigureRuntimeDatasetBinding", "ValidateAgentDatasetAccess", "ProfileAgentDataset"],
+      "eventRefs": ["RuntimeDatasetBindingConfigured", "AgentDatasetAccessValidated", "AgentDatasetMetadataReported"]
+    },
+    {
+      "id": "FL-IO-06",
+      "direction": "参与方代理到平台的数据集元数据报告",
+      "input": "数据集、组织、运行时和特征架构标识，以及样本数、字段数和兼容性结果",
+      "output": "平台侧运行时数据集元数据目录及后续参与资格判断所需信息",
+      "decision": "报告只传数据集描述和统计结果；平台以报告标识及数据集绑定标识关联记录，不把同一运行时的数据集混为一条。",
+      "commandRefs": ["RecordRuntimeDatasetMetadata"],
+      "eventRefs": ["DatasetMetadataReported"]
+    },
+    {
+      "id": "FL-IO-07",
+      "direction": "参与方代理到本地训练引擎",
+      "input": "已接受的执行计划、本地可访问的数据位置、基础模型工件和训练参数",
+      "output": "引擎作业标识、执行状态、指标及本地模型更新工件",
+      "decision": "代理以作业标识查询结果并关联平台轮次；训练引擎不直接访问平台业务数据库。",
+      "commandRefs": ["StartRoundExecution", "ObserveRuntimeEngineJob"],
+      "eventRefs": ["RoundExecutionStarted", "RuntimeEngineJobObserved", "RoundExecutionCompleted"]
+    },
+    {
+      "id": "FL-IO-08",
+      "direction": "参与方代理到共享支撑服务及平台",
+      "input": "本地模型更新工件、更新提交标识、作业与轮次标识、训练指标",
+      "output": "支撑服务返回工件引用与摘要；平台返回更新提交结果，并在后续形成评估及聚合状态",
+      "decision": "先上传工件，再将引用和摘要随更新提交给平台；平台按作业、轮次、执行计划和运行时标识关联，不能用参与方本地文件路径作为跨节点下载地址。",
+      "commandRefs": ["UploadFile", "SubmitAgentLocalModelUpdate", "SubmitModelUpdateSubmission"],
+      "eventRefs": ["FileUploaded", "AgentLocalModelUpdateSubmitted", "ModelUpdateSubmissionReceived", "ModelUpdateSubmissionAccepted"]
+    },
+    {
+      "id": "FL-IO-09",
+      "direction": "平台到控制台",
+      "input": "训练作业或模型标识、查询条件",
+      "output": "轮次进度、失败原因、聚合后的模型工件信息及最终训练状态",
+      "decision": "训练过程以状态查询展示；模型目录提供工件引用，文件获取需经过相应的访问控制，不把查询结果等同于原始数据或模型文件。",
+      "commandRefs": ["CompleteTrainingJob", "RegisterFederatedModelArtifact"],
+      "eventRefs": ["TrainingJobCompleted", "FederatedModelArtifactRegistered"]
+    }
+  ],
+  "conclusion": "跨服务交换以明确的业务标识关联一次作业、轮次、执行计划、运行时和模型更新；引用只指向可由接收方访问的工件。接口拒绝或不可达时应向发起方返回可识别的错误，并在业务状态中保留失败原因，不以空结果或成功状态掩盖失败。业务状态记录与页面查询视图异步更新，故命令受理后的短暂未查询到记录不代表命令未受理；控制台应展示处理中状态并允许刷新查询。服务间调用使用部署配置的身份凭据，不以平台用户令牌代替参与方本地用户授权。"
+}
