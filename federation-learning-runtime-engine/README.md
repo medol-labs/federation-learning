@@ -64,9 +64,16 @@ Build a profile image:
 node scripts/image-bundle.mjs build \
   --plugin-profile pytorch-vision \
   --version 0.0.1-SNAPSHOT
+node scripts/image-bundle.mjs push --plugin-profile pytorch-vision --version 0.0.1-SNAPSHOT
 ```
 
-This builds:
+Inside the federation-learning workspace, the helper reads the shared generated
+`../operations/dev/image-config.mjs` configuration. No explicit `--prefix` is
+needed: build and push use the configured registry push address and namespace.
+The deployment address may differ, but must reach the same registry. See the
+[repository build and training workflow](../README.md#build-and-run).
+
+Without workspace registry configuration, the standalone default builds:
 
 ```text
 fl/federation-learning-runtime-engine:pytorch-vision-0.0.1-SNAPSHOT

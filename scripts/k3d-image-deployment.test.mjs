@@ -3,6 +3,61 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 import test from 'node:test';
 
+function trainingVerificationContext(responses) {
+    const source = readFileSync(new URL('./k3d-training-flow.mjs', import.meta.url), 'utf8');
+    const implementation = source.slice(source.indexOf('async function verifyTrainingResult('), source.indexOf('async function waitForHttp('));
+    const calls = [];
+    const context = vm.createContext({platformUrl: 'platform', federationMode: 'global', console: {log() {}},
+        fail: (message) => {throw new Error(message);},
+        waitForCondition: async (label, probe, details) => {
+            if (!await probe()) throw new Error(`timeout: ${details()}`);
+        },
+        getPage: async (url, path, query) => {
+            calls.push({url, path, query});
+            return {content: responses[path] ?? []};
+        }});
+    vm.runInContext(implementation, context);
+    return {context, calls};
+}
+
+test('training verification reports all failed participants even after engine cleanup', async () => {
+    const {context, calls} = trainingVerificationContext({
+        '/traininground/trainingroundprogress': [{roundId: 'round-1', roundNumber: 1, state: 'Running'}],
+        '/roundexecution/roundexecutioncatalog': [{state: 'RuntimeEngineReleaseHandled', failureReason: 'Personalized model missing'}],
+    });
+    await assert.rejects(context.verifyTrainingResult('job-1', [
+        {runtimeAgentId: 'a', runtimeAgentUrl: 'agent-a'}, {runtimeAgentId: 'b', runtimeAgentUrl: 'agent-b'},
+    ]), /All participants failed.*Personalized model missing/);
+    for (const call of calls.filter((call) => call.url.startsWith('agent-'))) {
+        assert.equal(call.query['trainingJobId.equals'], 'job-1');
+        assert.equal(call.query['roundId.equals'], 'round-1');
+    }
+});
+
+test('running training times out with actionable platform and participant status', async () => {
+    const {context} = trainingVerificationContext({
+        '/traininground/trainingroundprogress': [{roundId: 'round-2', roundNumber: 2, state: 'Running'}],
+        '/roundexecution/roundexecutioncatalog': [{state: 'Running'}],
+    });
+    await assert.rejects(context.verifyTrainingResult('job-1', [{runtimeAgentId: 'a', runtimeAgentUrl: 'agent-a'}]),
+        /Last training status:.*round-2.*participants.*Running/);
+});
+
+test('completed jobs do not require participant execution queries', async () => {
+    const {context, calls} = trainingVerificationContext({
+        '/trainingjob/trainingjobdashboard': [{state: 'Completed'}],
+    });
+    await context.verifyTrainingResult('job-1', []);
+    assert.equal(calls.length, 2);
+});
+
+test('failed training jobs stop immediately', async () => {
+    const {context} = trainingVerificationContext({
+        '/trainingjob/trainingjobdashboard': [{state: 'Failed', failureReason: 'quorum lost'}],
+    });
+    await assert.rejects(context.verifyTrainingResult('job-1', []), /ended in Failed: quorum lost/);
+});
+
 test('runtime scheduling is prepared before deployments and validates all slots before labeling', () => {
     const source = readFileSync(new URL('./k3d-training-flow.mjs', import.meta.url), 'utf8');
     assert(source.indexOf('prepareRuntimeSchedulingNodes();') < source.indexOf("runK3d('apply');"));
@@ -53,4 +108,10 @@ test('verified images replace base references with pinned artifacts and refresh 
     image.id = 'sha256:changed';
     context.refreshVerifiedImageDeployments(images);
     assert.equal(calls.length, 2);
+    deployment.metadata.name = 'managed-app-123';
+    deployment.spec.template.spec.containers[0].name = 'managed-container';
+    deployment.spec.template.spec.containers[0].image = 'registry.example/team/app@sha256:' + 'b'.repeat(64);
+    context.refreshVerifiedImageDeployments(images);
+    assert.equal(calls.length, 3);
+    assert.equal(JSON.parse(calls[2][1].at(-1)).spec.template.spec.containers[0].image, image.reference);
 });

@@ -505,12 +505,13 @@ function prepareApplicationImages() {
 function refreshVerifiedImageDeployments(images) {
     const engine = resolvedRuntimeEngineImage;
     const resolvedImages = [...images.values(), engine];
+    const repository = (image) => String(image).split('@')[0].replace(/:[^/:]+$/, '');
     const deployments = JSON.parse(runCapture('kubectl', ['-n', namespace, 'get', 'deployments', '-o', 'json'], {}));
     for (const deployment of deployments.items ?? []) {
         const containers = deployment.spec.template.spec.containers
             .map((container) => ({container, image: resolvedImages.find((image) =>
                 image.applicationName === deployment.metadata.name && image.applicationName === container.name
-                || image.aliases.includes(container.image))}))
+                || image.aliases.some((alias) => repository(alias) === repository(container.image)))}))
             .filter((entry) => entry.image);
         if (!containers.length) continue;
         const imageIds = containers.map(({container, image}) => `${container.name}=${image.id}`).sort().join(',');
@@ -1031,13 +1032,40 @@ async function waitForDeployment(name, label = name) {
 
 async function verifyTrainingResult(trainingJobId, participants) {
     const query = {'trainingJobId.equals': trainingJobId};
+    let lastStatus = {};
     await waitForCondition('training job completion', async () => {
         const rounds = await getPage(platformUrl, '/traininground/trainingroundprogress', query);
+        lastStatus.rounds = rounds.content ?? [];
         const failed = (rounds.content ?? []).find((round) => String(round.state).toUpperCase() === 'FAILED');
         if (failed) fail(`Training round ${failed.roundId} failed: ${failed.failureReason ?? 'unknown reason'}`);
         const jobs = await getPage(platformUrl, '/trainingjob/trainingjobdashboard', query);
-        return (jobs.content ?? []).find((job) => String(job.state).toUpperCase() === 'COMPLETED');
-    });
+        lastStatus.jobs = jobs.content ?? [];
+        const failedJob = lastStatus.jobs.find((job) => ['FAILED', 'CANCELLED', 'CANCELED'].includes(String(job.state).toUpperCase()));
+        if (failedJob) fail(`Training job ${trainingJobId} ended in ${failedJob.state}: ${failedJob.failureReason ?? 'no failure reason reported'}`);
+        const completed = lastStatus.jobs.find((job) => String(job.state).toUpperCase() === 'COMPLETED');
+        if (completed) return completed;
+        const latestRound = [...lastStatus.rounds].sort((a, b) => Number(b.roundNumber) - Number(a.roundNumber))[0];
+        lastStatus.participants = [];
+        if (latestRound?.roundId) {
+            for (const participant of participants) {
+                const page = await getPage(participant.runtimeAgentUrl, '/roundexecution/roundexecutioncatalog', {
+                    ...query, 'roundId.equals': latestRound.roundId,
+                });
+                lastStatus.participants.push({runtimeId: participant.runtimeAgentId,
+                    executions: (page.content ?? []).map(({roundExecutionId, state, failureReason, rejectionReasons}) =>
+                        ({roundExecutionId, state, failureReason, rejectionReasons}))});
+            }
+            const failures = lastStatus.participants.filter((participant) =>
+                participant.executions.length > 0 && participant.executions.every((execution) =>
+                    ['FAILED', 'STARTFAILED', 'STARTRETRYFAILED', 'RUNTIMERETRYFAILED'].includes(String(execution.state).toUpperCase()) ||
+                    String(execution.state).toUpperCase() === 'RUNTIMEENGINERELEASEHANDLED' && Boolean(execution.failureReason)
+                ));
+            if (participants.length > 0 && failures.length === participants.length) {
+                fail(`All participants failed in round ${latestRound.roundId}: ${JSON.stringify(failures)}`);
+            }
+        }
+        return false;
+    }, () => `Last training status: ${JSON.stringify(lastStatus)}`);
     if (federationMode === 'personalized') {
         await waitForCondition('runtime-local personalized models for all participants', async () => {
             const page = await getPage(platformUrl, '/personalizedmodelresult/personalizedmodelcatalog', {

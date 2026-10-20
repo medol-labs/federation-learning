@@ -153,7 +153,6 @@ node scripts/k3d-training-flow.mjs --federation-mode personalized
 node scripts/k3d-training-flow.mjs --participant-count 2
 node scripts/k3d-training-flow.mjs --scenario densenet --participant-count 2 --federation-mode personalized --training-run-key personal-test-1 --wait-for-training
 node scripts/k3d-training-flow.mjs --skip-cluster --skip-apply
-node scripts/k3d-training-flow.mjs --runtime-engine-image fl/federation-learning-runtime-engine:pytorch-vision
 ```
 
 The DenseNet121 runtime plugin supports participant-scoped `LOCAL_ADAPTATION`
@@ -170,6 +169,9 @@ the participants. Reusing the same key reuses those identifiers.
 `--wait-for-training` waits for the asynchronous job to complete and, in personalized
 mode, checks that every participant has a runtime-local model catalog record.
 Without that flag, the flow stops after successful submission.
+If every participant fails, the flow reports their execution failure reasons
+instead of waiting only for the platform job to finish. Other training timeouts
+include the last observed job, round, and participant states.
 
 Image build and flow use the same generated `operations/dev/image-config.mjs`.
 Machine-specific settings belong in the ignored `.medol/medol.local.yml`:
@@ -195,6 +197,58 @@ environment variables and the generated environment configuration.
 The runtime-engine image helper also reads this configuration when used inside
 this workspace. Build and push it with the same plugin profile selected by flow.
 
+#### Build And Run
+
+Run these commands from the repository root after configuring and generating
+operations for the local registry. No explicit `--prefix` is needed: build and
+push use `registry.pushHost` (or `registry.host` when omitted), while deployment
+uses `registry.host`, both with the configured namespace.
+
+Build and publish the three backends (platform, runtime-agent, support):
+
+```bash
+node operations/dev/images.mjs build --skip-console --platform linux/amd64
+node operations/dev/images.mjs push --skip-console
+```
+
+`--skip-console` skips both frontend images: `federation-learning-console` and
+`federation-learning-participant-console`. Remove it from both commands when
+frontend changes also need to be built and published. Set the backend platform
+to match the cluster architecture, or use amd64 only where emulation is available.
+
+The runtime engine is separate from these application images. Build and publish
+the DenseNet profile explicitly (this example targets ARM64 runtime nodes):
+
+```bash
+cd federation-learning-runtime-engine
+node scripts/image-bundle.mjs build --plugin-profile pytorch-vision --platform linux/arm64
+node scripts/image-bundle.mjs push --plugin-profile pytorch-vision
+cd ..
+```
+
+Use `linux/amd64` instead for x86_64 runtime nodes. Rebuilding backend images alone
+does not update the Python training engine. Kubernetes training engines use the
+image and optional digest recorded in each execution plan; an agent environment
+default must not override that snapshot.
+
+Run and verify two-participant personalized training:
+
+```bash
+node scripts/k3d-training-flow.mjs \
+  --scenario densenet \
+  --participant-count 2 \
+  --federation-mode personalized \
+  --training-run-key "personal-$(date +%Y%m%d-%H%M%S)" \
+  --wait-for-training \
+  --timeout 600000
+```
+
+For ordinary federation, use `--federation-mode global`. Use a new run key after
+changing the engine image so the flow creates a new configuration snapshot and
+job instead of reusing an old one. This command preserves existing cluster data;
+`--recreate` is not required for an image update and deletes cluster-local data.
+The timeout is a per-wait limit in milliseconds, not the overall flow duration.
+
 Flow `--image-source registry` (the default when a registry is configured) pulls
 the exact configured images and deploys immutable registry digests. It never
 pushes an arbitrary local image over a registry tag. `--image-source import`
@@ -202,7 +256,8 @@ imports the exact configured local images into every k3d node and refreshes
 deployments by image ID. Missing images are errors, not a reason to try a different
 prefix. `MEDOL_IMAGE_SOURCE` can also select the policy. Use
 `--rebuild-app-images` to rebuild backend images first; only registry mode pushes
-them. Without registry settings, the default policy is local import.
+them. That option does not rebuild the runtime-engine image. Without registry
+settings, the default policy is local import.
 
 To run the phases manually, use:
 

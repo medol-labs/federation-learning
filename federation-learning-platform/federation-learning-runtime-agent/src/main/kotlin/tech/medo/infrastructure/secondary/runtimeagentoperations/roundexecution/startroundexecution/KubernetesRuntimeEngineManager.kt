@@ -22,12 +22,12 @@ class KubernetesRuntimeEngineManager(
     @Value("\${medol.security.internal-token:}")
     private val internalToken: String = ""
 ) : RuntimeEngineResourceManager {
-    override fun ensureStarted(jobId: String) {
+    override fun ensureStarted(jobId: String, image: String) {
         val name = properties.kubernetesResourceName(jobId)
         val labels = mapOf("app" to name, "medol.dev/runtime-engine-job-id" to jobId)
         val container = ContainerBuilder()
             .withName("runtime-engine")
-            .withImage(properties.kubernetesImage)
+            .withImage(image)
             .withImagePullPolicy(properties.kubernetesImagePullPolicy)
             .addNewPort().withName("http").withContainerPort(properties.kubernetesContainerPort).endPort()
             .addNewEnv().withName("RUNTIME_ENGINE_ROOT").withValue(properties.runtimeRoot).endEnv()
@@ -164,7 +164,7 @@ class KubernetesRuntimeEngineManager(
 }
 
 interface RuntimeEngineResourceManager {
-    fun ensureStarted(jobId: String)
+    fun ensureStarted(jobId: String, image: String)
 
     fun delete(jobId: String)
 }

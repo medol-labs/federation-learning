@@ -2,6 +2,7 @@ package tech.medo.infrastructure.secondary.runtimeagentoperations.roundexecution
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
@@ -20,6 +21,35 @@ import java.util.UUID
 class LocalDockerComposeStartRoundExecutionAdapterTest {
     private val runtimeId = UUID.fromString("11111111-1111-4111-8111-111111111111")
     private val organizationId = UUID.fromString("22222222-2222-4222-8222-222222222222")
+
+    @Test
+    fun kubernetesUsesExecutionPlanImageInsteadOfAgentDefault() {
+        val images = mutableListOf<String>()
+        val manager = object : RuntimeEngineResourceManager {
+            override fun ensureStarted(jobId: String, image: String) { images += image }
+            override fun delete(jobId: String) = Unit
+        }
+        val adapter = KubernetesStartRoundExecutionAdapter(
+            LocalRuntimeEngineProperties(mode = "kubernetes", kubernetesImage = "registry.example/old-engine:v1"),
+            manager, RecordingClient(), bindingRepository(listOf(binding(filePath = "/workspace/datasets/images")))
+        )
+        val digest = "sha256:" + "a".repeat(64)
+        val image = "registry.example/new-engine:v2@$digest"
+        val result = adapter.execute(input().copy(runtimeEngineImage = image, runtimeEngineImageDigest = digest))
+        assertTrue(result is StartRoundExecutionResult.Succeeded)
+        assertEquals(listOf(image), images)
+    }
+
+    @Test
+    fun runtimeEngineImagePinsDigestAndRejectsConflictingSnapshots() {
+        val digest = "sha256:" + "a".repeat(64)
+        val image = "registry.example/engine:v2"
+        assertEquals("$image@$digest", runtimeEngineImageReference(image, digest))
+        assertEquals(image, runtimeEngineImageReference(image, null))
+        assertThrows(IllegalArgumentException::class.java) { runtimeEngineImageReference("$image@$digest", "sha256:" + "b".repeat(64)) }
+        assertThrows(IllegalArgumentException::class.java) { runtimeEngineImageReference(image, "invalid") }
+        assertThrows(IllegalArgumentException::class.java) { runtimeEngineImageReference("", null) }
+    }
 
     @Test
     fun startsRuntimeEngineAndSubmitsTrainingJob() {

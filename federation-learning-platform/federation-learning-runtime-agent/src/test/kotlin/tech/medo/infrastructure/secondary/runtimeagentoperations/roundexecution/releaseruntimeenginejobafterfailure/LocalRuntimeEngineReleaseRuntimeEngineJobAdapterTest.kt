@@ -70,7 +70,7 @@ class LocalRuntimeEngineReleaseRuntimeEngineJobAdapterTest {
         )
 
     private object NoOpRuntimeEngineResourceManager : RuntimeEngineResourceManager {
-        override fun ensureStarted(jobId: String) = Unit
+        override fun ensureStarted(jobId: String, image: String) = Unit
 
         override fun delete(jobId: String) = Unit
     }

@@ -44,7 +44,7 @@ class KubernetesStartRoundExecutionAdapter(
         val jobId = "round-${input.roundNumber}-${input.executionPlanId}"
         return try {
             input.personalizationParameters()
-            manager.ensureStarted(jobId)
+            manager.ensureStarted(jobId, runtimeEngineImageReference(input.runtimeEngineImage, input.runtimeEngineImageDigest))
             val endpoint = properties.endpointFor(jobId)
             waitUntilHealthy(endpoint)
             val request = jobRequest(input, jobId, modelPlugin, datasetPath)
