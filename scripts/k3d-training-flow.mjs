@@ -5,6 +5,7 @@ import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {spawn, spawnSync} from 'node:child_process';
 import {createServer} from 'node:net';
+import {resolveImageConfig, resolveImageArtifact} from '../operations/dev/image-config.mjs';
 
 if (typeof fetch !== 'function') {
     fail('This script requires Node.js 18 or newer because it uses global fetch.');
@@ -53,23 +54,23 @@ const timeoutMs = positiveInt(args.timeout ?? process.env.FL_K3D_FLOW_TIMEOUT_MS
 const pollIntervalMs = positiveInt(args['poll-interval'] ?? process.env.FL_K3D_FLOW_POLL_INTERVAL_MS, 3000);
 const participantCount = positiveInt(args['participant-count'] ?? process.env.FL_K3D_PARTICIPANT_COUNT, 2);
 const preparedNodeCount = positiveInt(args['prepared-node-count'] ?? process.env.FL_K3D_PREPARED_NODE_COUNT, 1);
-const imageVersion = stringArg('image-version', 'IMAGE_VERSION', '0.0.1-SNAPSHOT');
+const imageConfig = resolveImageConfig(resolve(repoRoot, 'operations/dev'), {
+    prefix: args['app-image-prefix'] ?? process.env.FL_APP_IMAGE_PREFIX,
+    version: args['image-version'],
+    mode: args['image-source'],
+});
+const imageVersion = imageConfig.version;
 const runtimeEnginePluginProfile = stringArg('runtime-engine-plugin-profile', 'FL_RUNTIME_ENGINE_PLUGIN_PROFILE', defaultRuntimeEnginePluginProfile(scenario));
-const configuredAppImagePrefix = optionalString(args['app-image-prefix'] ?? process.env.FL_APP_IMAGE_PREFIX ?? process.env.DOCKER_IMAGE_PREFIX);
-const defaultRuntimeEngineImage = `${configuredAppImagePrefix ?? 'fl'}/federation-learning-runtime-engine:${runtimeEngineImageVersion(runtimeEnginePluginProfile, imageVersion)}`;
-const runtimeEngineImage = stringArg(
+const appImagePrefix = imageConfig.imagePrefix;
+const defaultRuntimeEngineImage = `${appImagePrefix}/federation-learning-runtime-engine:${runtimeEngineImageVersion(runtimeEnginePluginProfile, imageVersion)}`;
+let runtimeEngineImage = stringArg(
     'runtime-engine-image',
     'FL_RUNTIME_ENGINE_IMAGE',
     defaultRuntimeEngineImage
 );
-const appImagePrefix = stringArg(
-    'app-image-prefix',
-    'FL_APP_IMAGE_PREFIX',
-    imagePrefixFromImage(runtimeEngineImage) ?? configuredAppImagePrefix ?? 'fl'
-);
 const internalToken = optionalString(args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN) ?? 'local-dev-internal-token';
-const runtimeAgentImage = optionalString(args['runtime-agent-image'] ?? process.env.FL_RUNTIME_AGENT_IMAGE);
-const participantConsoleImage = optionalString(args['participant-console-image'] ?? process.env.FL_PARTICIPANT_CONSOLE_IMAGE);
+let runtimeAgentImage = optionalString(args['runtime-agent-image'] ?? process.env.FL_RUNTIME_AGENT_IMAGE);
+let participantConsoleImage = optionalString(args['participant-console-image'] ?? process.env.FL_PARTICIPANT_CONSOLE_IMAGE);
 const k3dScript = resolve(repoRoot, 'operations/dev/k3s/scripts/federation-learning-dev.sh');
 const kubeconfigFile = resolve(
     repoRoot,
@@ -118,6 +119,8 @@ console.log(JSON.stringify({
     waitForTraining,
     rebuildAppImages,
     appImagePrefix,
+    buildImagePrefix: imageConfig.buildPrefix,
+    imageSource: imageConfig.mode,
     runtimeEngineImage,
     internalTokenConfigured: Boolean(internalToken),
     imageVersion,
@@ -148,14 +151,15 @@ if (!skipCluster) {
     await ensureCluster();
 }
 ensureKubeconfigUsable();
-ensureRuntimeEngineImageAvailable();
-const localApplicationImages = syncLocalApplicationImages();
+const resolvedRuntimeEngineImage = ensureRuntimeEngineImageAvailable();
+const applicationImages = prepareApplicationImages();
 if (!skipApply) {
     await waitForKubernetesApi();
     await waitForKubernetesNodesReady();
+    prepareRuntimeSchedulingNodes();
     ensureDevSecrets();
     runK3d('apply');
-    refreshLocalApplicationDeployments(localApplicationImages);
+    refreshVerifiedImageDeployments(applicationImages);
     await waitForDeployment('postgres');
     await waitForDeployment('umadb');
     await waitForDeployment('federation-learning-support');
@@ -349,6 +353,7 @@ function runK3d(command) {
         DOCKER_IMAGE_PREFIX: appImagePrefix,
         IMAGE_VERSION: imageVersion,
         FL_RUNTIME_ENGINE_IMAGE: runtimeEngineImage,
+        FL_AGGREGATION_RUNTIME_ENGINE_IMAGE: runtimeEngineImage,
         ...(runtimeAgentImage ? {FL_RUNTIME_AGENT_IMAGE: runtimeAgentImage} : {}),
         ...(participantConsoleImage ? {FL_PARTICIPANT_CONSOLE_IMAGE: participantConsoleImage} : {})
     });
@@ -448,121 +453,89 @@ function rebuildApplicationImages() {
     run('node', [
         imagesScript,
         'build',
-        '--prefix', appImagePrefix,
+        '--prefix', imageConfig.buildPrefix,
         '--version', imageVersion,
         '--skip-console'
     ], {});
-    run('node', [
+    if (imageConfig.mode === 'registry') run('node', [
         imagesScript,
         'push',
-        '--prefix', appImagePrefix,
+        '--prefix', imageConfig.buildPrefix,
         '--version', imageVersion,
         '--skip-console'
     ], {});
 }
 
-function syncLocalApplicationImages() {
+function resolveConfiguredImage(image, aliases = []) {
+    const artifact = resolveImageArtifact(imageConfig, image, {
+        pull: (source) => run('docker', ['pull', source], {}),
+        tag: (source, target) => run('docker', ['tag', source, target], {}),
+        inspect: (source) => {
+            const result = commandResult('docker', ['image', 'inspect', source]);
+            return result.status === 0 ? JSON.parse(result.stdout)[0] : null;
+        },
+    });
+    console.log(`[k3d-flow] verified image source=${artifact.source} deployment=${artifact.reference} id=${artifact.id}`);
+    return {...artifact, aliases: [image, artifact.reference, ...aliases]};
+}
+
+function prepareApplicationImages() {
+    if (skipApply) return new Map();
     const images = new Map();
-    for (const service of ['platform', 'runtime-agent', 'support', 'console', 'participant-console']) {
-        const image = `${appImagePrefix}/federation-learning-${service}:${imageVersion}`;
-        if (isRegistryImage(image)) continue;
-        const id = commandOutputOrNull('docker', ['image', 'inspect', '--format', '{{.Id}}', image]);
-        if (id?.trim()) images.set(image, id.trim());
+    for (const application of imageConfig.applications) {
+        const name = application.artifactName ?? application.name;
+        let image = `${appImagePrefix}/${name}:${imageVersion}`;
+        if (application.name === 'federation-learning-runtime-agent' && runtimeAgentImage) image = runtimeAgentImage;
+        if (application.name === 'federation-learning-participant-console' && participantConsoleImage) image = participantConsoleImage;
+        const resolved = resolveConfiguredImage(image, [
+            `${application.imageName}:${imageVersion}`,
+            `${application.imageName}:${application.imageTag ?? imageConfig.baseVersion}`,
+        ]);
+        resolved.applicationName = application.name;
+        images.set(image, resolved);
+        if (application.name === 'federation-learning-runtime-agent') runtimeAgentImage = resolved.reference;
+        if (application.name === 'federation-learning-participant-console') participantConsoleImage = resolved.reference;
     }
-    if (images.size) {
-        console.log(`[k3d-flow] syncing ${images.size} local application images into all cluster nodes`);
+    if (images.size && imageConfig.mode === 'import') {
         run('k3d', ['image', 'import', '--mode', 'direct', ...images.keys(), '--cluster', clusterName], {});
     }
     return images;
 }
 
-function refreshLocalApplicationDeployments(images) {
-    if (!images.size) return;
+function refreshVerifiedImageDeployments(images) {
+    const engine = resolvedRuntimeEngineImage;
+    const resolvedImages = [...images.values(), engine];
     const deployments = JSON.parse(runCapture('kubectl', ['-n', namespace, 'get', 'deployments', '-o', 'json'], {}));
     for (const deployment of deployments.items ?? []) {
         const containers = deployment.spec.template.spec.containers
-            .filter((container) => images.has(container.image));
+            .map((container) => ({container, image: resolvedImages.find((image) =>
+                image.applicationName === deployment.metadata.name && image.applicationName === container.name
+                || image.aliases.includes(container.image))}))
+            .filter((entry) => entry.image);
         if (!containers.length) continue;
-        const imageIds = containers.map((container) => `${container.name}=${images.get(container.image)}`).sort().join(',');
+        const imageIds = containers.map(({container, image}) => `${container.name}=${image.id}`).sort().join(',');
         const annotation = 'medol.dev/local-image-ids';
         if (deployment.spec.template.metadata.annotations?.[annotation] === imageIds
-            && containers.every((container) => container.imagePullPolicy === 'IfNotPresent')) continue;
-        console.log(`[k3d-flow] refreshing local images for ${deployment.metadata.name}`);
+            && containers.every(({container, image}) => container.image === image.reference && container.imagePullPolicy === 'IfNotPresent')) continue;
+        console.log(`[k3d-flow] refreshing verified images for ${deployment.metadata.name}`);
         run('kubectl', ['-n', namespace, 'patch', 'deployment', deployment.metadata.name, '--type', 'strategic', '-p', JSON.stringify({
             spec: {template: {
                 metadata: {annotations: {[annotation]: imageIds}},
-                spec: {containers: containers.map((container) => ({name: container.name, imagePullPolicy: 'IfNotPresent'}))}
+                spec: {containers: containers.map(({container, image}) => ({
+                    name: container.name, image: image.reference, imagePullPolicy: 'IfNotPresent'
+                }))}
             }}
         })], {});
     }
 }
 
 function ensureRuntimeEngineImageAvailable() {
-    const pushImage = dockerPushImage(runtimeEngineImage);
-    const registryImage = runtimeEngineRegistryImage(runtimeEngineImage);
-    const fallbackImages = [
-        pushImage,
-        runtimeEngineImage,
-        registryImage,
-        runtimeEngineImage.replace(/^[^/]+:\d+\/fl\//, 'fl/')
-    ].filter(Boolean);
-    let sourceImage = fallbackImages.find((image) => commandOk('docker', ['image', 'inspect', image]));
-    if (!sourceImage && registryImage) {
-        run('docker', ['pull', registryImage], {});
-        if (commandOk('docker', ['image', 'inspect', registryImage])) {
-            sourceImage = registryImage;
-        }
-    }
-    if (!sourceImage) {
-        fail(
-            `Runtime engine image was not found locally: ${runtimeEngineImage}. ` +
-            (registryImage ? `Also tried pulling from registry: ${registryImage}. ` : '') +
-            `Build or push it first, for example from federation-learning-runtime-engine: ` +
-            `node scripts/build-images.mjs`
-        );
-    }
-    if (sourceImage !== pushImage) {
-        run('docker', ['tag', sourceImage, pushImage], {});
-    }
-    if (isRegistryImage(runtimeEngineImage)) {
-        run('docker', ['push', pushImage], {});
-    } else {
+    const resolved = resolveConfiguredImage(runtimeEngineImage);
+    if (imageConfig.mode === 'import') {
         run('k3d', ['image', 'import', '--mode', 'direct', runtimeEngineImage, '--cluster', clusterName], {});
     }
-}
-
-function isRegistryImage(image) {
-    return /^[^/]+:\d+\//.test(image);
-}
-
-function dockerPushImage(image) {
-    return image;
-}
-
-function runtimeEngineRegistryImage(image) {
-    const normalized = String(image ?? '').trim();
-    if (!normalized.startsWith('fl/')) return null;
-    const registryPrefix = registryImagePrefixFromKustomization();
-    if (!registryPrefix) return null;
-    const slashIndex = normalized.lastIndexOf('/');
-    const imageWithTag = slashIndex >= 0 ? normalized.slice(slashIndex + 1) : normalized;
-    return `${registryPrefix}/${imageWithTag}`;
-}
-
-function registryImagePrefixFromKustomization() {
-    const registryKustomization = resolve(repoRoot, 'operations/dev/k3s/environments/dev-registry/kustomization.yaml');
-    if (!existsSync(registryKustomization)) return null;
-    const content = readFileSync(registryKustomization, 'utf8');
-    const match = content.match(/^\s*newName:\s*["']?([^"'\n]+\/)federation-learning-(?:platform|support|console|participant-console|runtime-agent)["']?\s*$/m);
-    if (!match) return null;
-    return match[1].replace(/\/+$/, '');
-}
-
-function imagePrefixFromImage(image) {
-    const normalized = String(image ?? '').trim();
-    const index = normalized.lastIndexOf('/');
-    if (index <= 0) return null;
-    return normalized.slice(0, index);
+    runtimeEngineImage = resolved.reference;
+    return resolved;
 }
 
 async function initDictionaries() {
@@ -786,7 +759,7 @@ function dockerTagPart(value) {
         .replace(/^-+|-+$/g, '');
 }
 
-async function labelRuntimeNode(runtimeInfrastructureId, slot) {
+function runtimeNodeForSlot(slot) {
     const nodes = JSON.parse(runCapture('kubectl', ['get', 'nodes', '-o', 'json'], kubeEnv()));
     const runtimeNodes = nodes.items
         .filter((node) => !isControlPlaneNode(node))
@@ -799,6 +772,19 @@ async function labelRuntimeNode(runtimeInfrastructureId, slot) {
     if (!nodeName) {
         fail(`Participant ${slot} requires a k3d agent node, but only ${runtimeNodes.length} agent node(s) were found.`);
     }
+    return nodeName;
+}
+
+function prepareRuntimeSchedulingNodes() {
+    const nodeNames = Array.from({length: participantCount}, (_, index) => runtimeNodeForSlot(index + 1));
+    for (const nodeName of nodeNames) {
+        run('kubectl', ['label', 'node', nodeName, 'medol.dev/node-role=runtime', '--overwrite'], kubeEnv());
+        run('kubectl', ['taint', 'node', nodeName, 'medol.dev/runtime-only=true:NoSchedule', '--overwrite'], kubeEnv());
+    }
+}
+
+async function labelRuntimeNode(runtimeInfrastructureId, slot) {
+    const nodeName = runtimeNodeForSlot(slot);
     console.log(`[k3d-flow] label participant ${slot} runtime node ${nodeName}`);
     run('kubectl', [
         'label', 'node', nodeName,
@@ -1475,8 +1461,9 @@ runtime-agent deployment wait, runtime-agent seed, and training job submission.
 Options:
   --recreate                         Recreate the K3D cluster before running.
                                      Use after lifecycle/tag model changes to clear stale event/projection data.
-  --rebuild-app-images               Rebuild and push backend application images before applying manifests.
-  --app-image-prefix <prefix>         Application image prefix. Default is inferred from runtime-engine image.
+  --rebuild-app-images               Rebuild backend images; push only in registry mode.
+  --app-image-prefix <prefix>         Override the shared operations image prefix.
+  --image-source <import|registry>    Import exact local images, or pull and pin registry digests.
   --scenario <densenet|csv>           Select training seed scenario.
   --federation-mode <global|personalized>
                                      Select global-only or participant-personalized federation config.

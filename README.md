@@ -171,11 +171,38 @@ the participants. Reusing the same key reuses those identifiers.
 mode, checks that every participant has a runtime-local model catalog record.
 Without that flag, the flow stops after successful submission.
 
-For non-registry application image names, the flow imports matching local Docker
-images into every k3d node. During apply, deployments are refreshed when their
-local image IDs change, even if the image tags stay the same. This does not build
-source changes; use `--rebuild-app-images` to rebuild backend images first.
-Registry-qualified images continue to use the configured registry workflow.
+Image build and flow use the same generated `operations/dev/image-config.mjs`.
+Machine-specific settings belong in the ignored `.medol/medol.local.yml`:
+
+```yaml
+operations:
+  registry:
+    host: registry.internal.example:5000
+    pushHost: registry-push.example:5000
+    namespace: fl
+    insecure: true
+```
+
+`host` is reachable from cluster nodes. Optional `pushHost` is the host-side
+address of the same registry (for example, a locally published Zot port); omit it
+when both addresses are identical. Regenerate operations after changing this
+configuration so `operations/dev/operations-model.local.json` and registry mirrors
+are updated. Recreate k3d if its registry mirror configuration changes.
+
+Both `node operations/dev/images.mjs list` and flow `--dry-run` show the resolved
+build/deployment prefixes. Explicit CLI prefixes take precedence, followed by
+environment variables and the generated environment configuration.
+The runtime-engine image helper also reads this configuration when used inside
+this workspace. Build and push it with the same plugin profile selected by flow.
+
+Flow `--image-source registry` (the default when a registry is configured) pulls
+the exact configured images and deploys immutable registry digests. It never
+pushes an arbitrary local image over a registry tag. `--image-source import`
+imports the exact configured local images into every k3d node and refreshes
+deployments by image ID. Missing images are errors, not a reason to try a different
+prefix. `MEDOL_IMAGE_SOURCE` can also select the policy. Use
+`--rebuild-app-images` to rebuild backend images first; only registry mode pushes
+them. Without registry settings, the default policy is local import.
 
 To run the phases manually, use:
 

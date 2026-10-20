@@ -5,6 +5,7 @@ import org.axonframework.modelling.annotation.TargetEntityId
 import tech.medo.federationmanagement.federationmembership.FederationMembershipSelection
 import java.util.UUID;
 
+import tech.medo.federationmanagement.federationmembership.FederationMembershipFederationIdOrganizationIdSelection
 
 @Command
 data class InviteParticipantCommand(
@@ -20,4 +21,5 @@ data class InviteParticipantCommand(
 
 
 
+    val federationMembershipFederationIdOrganizationIdSelection: FederationMembershipFederationIdOrganizationIdSelection = FederationMembershipFederationIdOrganizationIdSelection(normalizedFederationId = federationId.toString().trim().lowercase(), normalizedOrganizationId = organizationId.toString().trim().lowercase())
 }

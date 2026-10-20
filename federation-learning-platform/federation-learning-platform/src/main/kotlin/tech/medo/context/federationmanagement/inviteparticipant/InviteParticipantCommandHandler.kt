@@ -2,6 +2,7 @@ package tech.medo.federationmanagement.inviteparticipant
 
 import org.axonframework.messaging.commandhandling.annotation.CommandHandler
 import org.axonframework.messaging.eventhandling.gateway.EventAppender
+import org.axonframework.modelling.annotation.InjectEntity
 import org.springframework.stereotype.Component
 import tech.medo.federationmanagement.inviteparticipant.InviteParticipantCommand
 
@@ -11,7 +12,7 @@ import tech.medo.federationmanagement.domain.states.FederationStateEnum
 import tech.medo.organizationmanagement.domain.states.OrganizationStateEnum
 
 
-
+import tech.medo.federationmanagement.federationmembership.FederationMembershipFederationIdOrganizationIdReservationState
 
 @Component
 class InviteParticipantCommandHandler(
@@ -22,6 +23,7 @@ class InviteParticipantCommandHandler(
     @CommandHandler
     fun handle(
         command: InviteParticipantCommand,
+        @InjectEntity(idProperty = "federationMembershipFederationIdOrganizationIdSelection") federationMembershipFederationIdOrganizationIdReservation: FederationMembershipFederationIdOrganizationIdReservationState,
         eventAppender: EventAppender
     ) {
 
@@ -53,7 +55,7 @@ class InviteParticipantCommandHandler(
                 message = "Organization Directory selection is not eligible for Invite Participant."
             )
         }
-        eventAppender.append(decision.decide(command))
+        eventAppender.append(decision.decide(command, federationMembershipFederationIdOrganizationIdReservation))
 
     }
 }

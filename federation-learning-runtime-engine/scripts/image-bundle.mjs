@@ -3,6 +3,7 @@
 import {existsSync, readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
+import {pathToFileURL} from 'node:url';
 
 const defaultImageName = 'federation-learning-runtime-engine';
 const defaultTar = 'federation-learning-runtime-engine-images.tar';
@@ -11,7 +12,12 @@ const args = parseArgs(process.argv.slice(2));
 const command = args._[0] ?? 'help';
 const root = resolve(process.cwd(), args.root ?? '.');
 loadDotEnv(resolve(root, '.env'));
-const imagePrefix = String(args.prefix ?? process.env.DOCKER_IMAGE_PREFIX ?? 'fl').replace(/\/+$/, '');
+const operationsDirectory = resolve(root, '../operations/dev');
+const sharedConfigPath = resolve(operationsDirectory, 'image-config.mjs');
+const sharedConfig = existsSync(sharedConfigPath)
+    ? (await import(pathToFileURL(sharedConfigPath).href)).resolveImageConfig(operationsDirectory, {prefix: args.prefix, version: args.version})
+    : undefined;
+const imagePrefix = sharedConfig?.buildPrefix ?? String(args.prefix ?? process.env.DOCKER_IMAGE_PREFIX ?? 'fl').replace(/\/+$/, '');
 const pluginProfile = String(firstNonEmpty(
     args['plugin-profile'],
     args.profile,
@@ -19,7 +25,7 @@ const pluginProfile = String(firstNonEmpty(
     process.env.PLUGIN_PROFILE,
     'full'
 ));
-const baseImageVersion = String(args.version ?? process.env.IMAGE_VERSION ?? '0.0.1-SNAPSHOT');
+const baseImageVersion = sharedConfig?.version ?? String(args.version ?? process.env.IMAGE_VERSION ?? '0.0.1-SNAPSHOT');
 const imageVersion = runtimeEngineImageVersion(pluginProfile, baseImageVersion);
 const imageName = String(args.image ?? process.env.IMAGE_NAME ?? defaultImageName);
 const fullImageName = `${imagePrefix}/${imageName}:${imageVersion}`;

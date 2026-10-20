@@ -11612,7 +11612,81 @@
         }
       ],
       "processors": [],
-      "specifications": [],
+      "specifications": [
+        {
+          "id": "gwt-db75deb6",
+          "chapter": "FederationManagement",
+          "sliceName": "Invite Participant",
+          "title": "Reject Duplicate Participant Invitation",
+          "specification": "Federation Participant Invitation Unique",
+          "rule": "A federation and organization identify one membership. Inviting the same organization into the same federation again must be rejected, including when its membership already exists. The organization may be invited into other federations.",
+          "expressions": [
+            "unique (FederationMembership.federationId, FederationMembership.organizationId)"
+          ],
+          "validates": [
+            "unique (FederationMembership.federationId, FederationMembership.organizationId)"
+          ],
+          "given": [
+            {
+              "title": "Participant Invited",
+              "id": "event-781da59f",
+              "type": "EVENT",
+              "fields": [
+                {
+                  "name": "federationId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "federationName"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "organizationName"
+                },
+                {
+                  "name": "invitationNote"
+                }
+              ]
+            }
+          ],
+          "when": [
+            {
+              "title": "Invite Participant",
+              "id": "command-2cbd251a",
+              "type": "COMMAND",
+              "fields": [
+                {
+                  "name": "federationId",
+                  "example": "11111111-1111-4111-8111-111111111111"
+                },
+                {
+                  "name": "federationName"
+                },
+                {
+                  "name": "organizationId",
+                  "example": "22222222-2222-4222-8222-222222222222"
+                },
+                {
+                  "name": "organizationName"
+                },
+                {
+                  "name": "invitationNote",
+                  "example": "Duplicate invitation"
+                }
+              ]
+            }
+          ],
+          "then": {
+            "title": "Rejected",
+            "id": "spec-reject-db75deb6",
+            "description": "Participant Already Invited",
+            "outcome": "REJECT"
+          }
+        }
+      ],
       "actors": [
         {
           "id": "actor-05ed8d5e",
@@ -115900,7 +115974,8 @@
       "When a participant execution plan is received, the runtime agent performs a local readiness check before starting any training work. The check verifies that the plan targets this runtime, the required dataset binding exists, dataset access has already been validated, the global base model is available, any required personalized base model is available, the requested training and personalization configuration is supported, sufficient local resources are available, and the runtime agent is idle. The port records exactly one outcome: ExecutionPlanAccepted when all local requirements are satisfied, or ExecutionPlanRejected with rejection reasons when any requirement fails.": "当接收到参与者执行计划时，运行时代理在开始任何训练工作之前执行本地就绪检查。该检查验证：计划目标为此运行时、所需的数据集绑定存在、数据集访问已经过验证、全局基础模型可用、任何所需的个性化基础模型可用、所请求的训练和个性化配置受支持、本地资源充足，以及运行时代理处于空闲状态。端口恰好记录一个结果：当所有本地要求均满足时为 ExecutionPlanAccepted，当任何要求失败时为 ExecutionPlanRejected 并附上拒绝原因。",
       "Worst Personalized Accuracy": "最差个性化准确率",
       "Worst Personalized Accuracy is required": "最差个性化准确率为必填项",
-      "runtimeAlertMeanTimeToResolve": "runtimeAlertMeanTimeToResolve"
+      "runtimeAlertMeanTimeToResolve": "runtimeAlertMeanTimeToResolve",
+      "Participant Already Invited": "该组织在此联邦中已有成员关系，不能重复邀请。"
     }
   }
 }
