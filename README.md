@@ -1,5 +1,8 @@
 # Federation Learning
 
+Model baselines, document revisions, generated packages and image delivery tags
+are linked through [release traceability](docs/versioning.md).
+
 Federation Learning is a MEDOL-modeled business system workspace for Federation Learning Platform. The MEDOL source model is transformed into a CodegenModel and materialized by medol-codegen into backend, frontend, operations, and optional runtime artifacts.
 
 The generated project is intended to be open and reviewable: keep the model,

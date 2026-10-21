@@ -3,7 +3,9 @@
 import {existsSync, readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
+import {writeArchiveManifest, verifyArchiveManifest, verifyLoadedImages} from './image-archive-runtime.mjs';
 import {pathToFileURL} from 'node:url';
+import {prepareRelease, defaultImageVersion} from './release-runtime.mjs';
 
 const defaultImageName = 'federation-learning-runtime-engine';
 const defaultTar = 'federation-learning-runtime-engine-images.tar';
@@ -25,7 +27,7 @@ const pluginProfile = String(firstNonEmpty(
     process.env.PLUGIN_PROFILE,
     'full'
 ));
-const baseImageVersion = sharedConfig?.version ?? String(args.version ?? process.env.IMAGE_VERSION ?? '0.0.1-SNAPSHOT');
+const baseImageVersion = String(args.version ?? process.env.IMAGE_VERSION ?? defaultImageVersion({root, target: 'operations', generationRoot: resolve(root, '..'), operation: command, fallback: sharedConfig?.version ?? '0.0.1-SNAPSHOT'}));
 const imageVersion = runtimeEngineImageVersion(pluginProfile, baseImageVersion);
 const imageName = String(args.image ?? process.env.IMAGE_NAME ?? defaultImageName);
 const fullImageName = `${imagePrefix}/${imageName}:${imageVersion}`;
@@ -37,23 +39,28 @@ const platform = String(firstNonEmpty(
     process.env.DOCKER_DEFAULT_PLATFORM
 ) ?? hostDockerPlatform());
 const dryRun = Boolean(args['dry-run']);
+const release = ['build', 'all', 'export', 'push'].includes(command) ? prepareRelease({
+    root, version: baseImageVersion, target: 'operations', generationRoot: resolve(root, '..'),
+    operation: command === 'all' ? 'build' : command,
+    variant: dockerTagPart(pluginProfile), buildOptions: {platform, dockerfile, buildArgs: buildArgs()}, dryRun
+}) : undefined;
 
 switch (command) {
     case 'build':
         buildImage();
         break;
     case 'export':
-        exportImage();
+        await exportImage();
         break;
     case 'import':
-        importImage();
+        await importImage();
         break;
     case 'push':
         pushImage();
         break;
     case 'all':
         buildImage();
-        exportImage();
+        await exportImage();
         break;
     case 'list':
         printPlan();
@@ -65,6 +72,7 @@ switch (command) {
 
 function buildImage() {
     ensureDockerfile();
+    release.embed(['medol-build.json']);
     run('docker', [
         'build',
         '--platform',
@@ -73,25 +81,34 @@ function buildImage() {
         '-f',
         dockerfile,
         ...buildArgs(),
+        ...release.dockerArgs,
+        '--label',
+        `tech.medol.runtime.profile=${pluginProfile}`,
         '-t',
         fullImageName,
         '.'
     ], {env: {...process.env, DOCKER_BUILDKIT: process.env.DOCKER_BUILDKIT ?? '1'}});
+    release.writeManifest('.medol/build-manifest.json', [fullImageName]);
 }
 
-function exportImage() {
+async function exportImage() {
+    release.verifyImages([fullImageName]);
     run('docker', ['save', fullImageName, '-o', tarFile]);
+    const manifest = release.writeManifest('.medol/build-manifest.json', [fullImageName]);
+    await writeArchiveManifest({archiveFile: tarFile, manifest, labels: release.labels, root, dryRun});
 }
 
-function importImage() {
-    if (!dryRun && !existsSync(tarFile)) {
-        fail(`Image archive was not found: ${tarFile}`);
-    }
+async function importImage() {
+    const manifest = await verifyArchiveManifest({archiveFile: tarFile, imageVersion: args.version === undefined ? undefined : String(args.version), dryRun});
     run('docker', ['load', '-i', tarFile]);
+    verifyLoadedImages({manifest, root});
 }
 
 function pushImage() {
+    release.verifyImages([fullImageName]);
+    release.claim();
     run('docker', ['push', fullImageName]);
+    release.writeManifest('.medol/release-manifest.json', [fullImageName], {requireRepoDigests: true});
 }
 
 function printPlan() {

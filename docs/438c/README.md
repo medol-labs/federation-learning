@@ -43,7 +43,50 @@ node scripts/generate-438c-docs.mjs --only=software-requirements
 node scripts/generate-438c-docs.mjs --source-dir=docs/438c/sources
 node scripts/generate-438c-docs.mjs --facts-config=docs/document-support/config/engineering-facts-sources.json
 node scripts/generate-438c-docs.mjs --template-dir=/path/to/438C文档模版
+node scripts/generate-438c-docs.mjs --format markdown --only test-plan --release-manifest /path/to/delivery-manifest.json
 ```
+
+## 文档版本与发布追溯
+
+`project.json` 的 `documentVersion` 是独立的文档版本，不随模型或软件版本覆盖。生成器另外为每份文档维护整数 `revision`：人工章节、配置或实际输出正文变化都会递增，即使模型版本不变。相同正文重复生成不会递增；生成时间和修订计数本身不进入 `contentSha256`。最终文件的原始字节校验值在 `artifacts[].sha256`，与正文校验值分开保存。
+
+源导出同时写入 `sources/source-doc-manifest.json`，每个 `<kind>.<language>.md` 条目记录导出后正文 SHA256、数据库文档 ID、原始 `sourceHash`、最新匹配正文的修订号/来源及其工作区版本 ID、版本号和 `workspaceReleaseLabel`。已有未导出的条目（包括默认保留的 PRD）保留；文件变化后旧校验值不再有效。源导出不会运行数据库迁移；旧库缺少修订表或字段时，缺项保持为空，不能据此推断发布。
+
+文档数据库默认是 `../medol/data/medol-documents.sqlite`，工作区版本数据库默认是 `../medol/data/medol.sqlite`；分别通过 `--db` 和 `--workspace-db` 指定。测试或合库环境也支持工作区版本表位于文档数据库中。历史版本 DSL 按 SHA256 记录，并读取该版本的发布信息。旧 `fnv1a-*` 指纹仅用于与具体 DSL 字符串核对，绝不冒充 SHA256；无法查到历史版本时，可核对 `--model-source`（默认 `.medol/source.medol`），但不据此补造版本或发布标签。数据库修订快照中的发布标签独立保留。
+
+438C 生成器只读 `.medol/codegen-model.json` 中的 `metadata: {schemaVersion: 1, medolVersion, source: {sha256, workspaceId?, versionId?, versionNo?, release?: {channel, label?, releasedAt?}}}`，并核对 `.medol/source.medol` 原始字节的 SHA256。`--model`、`--model-source` 可指定其他输入，不会修改输入文件。
+
+只有基础 Markdown 与术语快照的导出校验值有效、模型源 SHA256 相同且已知工作区/版本标识不冲突，才记录 `applicableModel`。已发布模型采用 `release.label` 作为软件版本；无标签但有模型版本号时使用 `model-r<versionNo>`。`medolVersion` 是工具版本，不是软件版本。无发布元数据、缺少关联、源文件被编辑或关联过期时继续生成 `draft`，使用配置中的 `softwareVersion`，不会盖上当前模型的适用标记。当前基线仅记录为 `candidateModel`。现有独立 PRD 生成路径尚未写出源关联，因此未提供可验证 sidecar 的 PRD 保持草稿。
+
+发布模型基线并不等于某次精确软件交付。`--release-manifest path` 显式读取 `release-runtime.mjs` 写出的已构建交付清单，验证失败则退出。v1 契约结构如下：
+
+```json
+{
+  "schemaVersion": 1,
+  "imageVersion": "v1.0.0.0",
+  "packageVersion": "1.0.0",
+  "buildIdentity": "<构建身份 SHA256>",
+  "codeSha256": "<构建源码 SHA256>",
+  "git": { "revision": "<commit>", "dirty": false },
+  "generation": {
+    "schemaVersion": 1,
+    "model": {
+      "sha256": "<codegen-model.json 原始字节 SHA256>",
+      "metadata": { "schemaVersion": 1, "medolVersion": "<工具版本>", "source": { "sha256": "<DSL SHA256>", "release": { "channel": "stable", "label": "v1.0.0" } } }
+    },
+    "inputs": [{ "path": ".medol/source.medol", "sha256": "<DSL SHA256>" }]
+  },
+  "images": [
+    { "name": "platform:v1.0.0.0", "id": "sha256:<镜像 SHA256>", "repoDigests": [] }
+  ]
+}
+```
+
+校验要求稳定发布标签、匹配该标签的四段 `imageVersion`、对应 `packageVersion`、非空有效 `buildIdentity`/`codeSha256`、带镜像 ID 的非空 `images`，以及 `generation.model` 的完整 JSON SHA256 和元数据都与已核验文档基线一致。源文档和术语快照另外通过 `source-doc-manifest.json` 核对同一模型 SHA256/版本；它们通常在构建后生成，不要求列入构建输入。`generation.inputs[].path` 相对生成输出根目录，文档工具不猜测该目录，也不将它们按仓库根目录解析或重新验证；构建运行时负责核验这些构建输入。
+
+只有全部通过才输出 `delivery-verified` 和 `applicableDelivery`，其中 `deliveryId` 规范化为 `imageVersion`，并记录构建身份、源码 SHA256、镜像清单和交付清单 SHA256。嵌入应用的预构建清单、dry-run 清单或草稿标签不能用于声明交付。没有该参数时，最多输出 `released-model-baseline`。工程事实与人工内容仍是文档输入；这里的精确交付关联证明模型及基础快照一致，不代表软件行为或人工文字已经通过验收。
+
+本追溯流程覆盖 `export-438c-source-docs.mjs` 和 `generate-438c-docs.mjs`。旧 `generate-project-docs`、`document-pack` 和受控合并工具尚未接入这些清单，其输出不能继承上述发布/交付标记。
 
 ## 当前覆盖文档
 
@@ -101,7 +144,7 @@ docs/438c/manual/test-plan/5 测试进度.md
 
 ## 输出约定
 
-`docs/generated/438c/` 是生成结果目录，已被 `.gitignore` 忽略，可以安全删除后重新生成。
+`docs/generated/438c/` 是生成结果目录，已被 `.gitignore` 忽略。需要延续修订历史时必须保留并归档 `document-manifest.json`；删除它会从修订 1 重新开始。`--only` 保留清单中其他文档的上次记录，每份记录有独立生成时间和适用基线。
 
 ```text
 docs/generated/438c/
@@ -109,6 +152,15 @@ docs/generated/438c/
   markdown/
   word/
   README.md
+  document-manifest.json
 ```
 
 `facts/`、`markdown/` 和 `word/` 都是生成物，不作为人工修改源。需要长期保存的人工调整应回填到 `docs/438c/manual/`。
+
+清单按 `<document-id>.<language>` 保存文档版本、修订历史、正文 SHA256、模型与源关联、生成文件名及文件 SHA256。一次生成只登记本次实际产出的文件；仅 Markdown 生成不会将磁盘残留的 Word 文件列为本次产物。
+
+无需 Word 环境的回归测试：
+
+```bash
+node --test scripts/generate-438c-docs.test.mjs scripts/export-438c-source-docs.test.mjs
+```

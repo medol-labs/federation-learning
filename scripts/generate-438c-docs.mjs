@@ -6,6 +6,7 @@ import { basename, dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createTranslator } from '../docs/document-support/i18n.mjs';
 import { createModelTerminology } from '../docs/document-support/model-terminology.mjs';
+import { loadBaseline, readJson, sha256, sourceAssociation, verifyDelivery } from '../docs/document-support/document-traceability.mjs';
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(scriptDirectory, '..');
@@ -44,6 +45,9 @@ const options = {
   format: args.format ?? 'all',
   language: args.language ?? 'zh-CN',
   only: args.only ?? 'all',
+  modelPath: resolve(repositoryRoot, args.model ?? '.medol/codegen-model.json'),
+  modelSourcePath: resolve(repositoryRoot, args['model-source'] ?? '.medol/source.medol'),
+  releaseManifestPath: args['release-manifest'] ? resolve(repositoryRoot, args['release-manifest']) : null,
 };
 
 if (!['markdown', 'docx', 'all'].includes(options.format)) {
@@ -59,6 +63,13 @@ if (!existsSync(options.projectConfigPath)) {
 }
 
 const projectConfig = JSON.parse(readFileSync(options.projectConfigPath, 'utf8'));
+const baseline = loadBaseline(options.modelPath, options.modelSourcePath);
+const sourceManifestPath = join(options.sourceDirectory, 'source-doc-manifest.json');
+const sourceManifest = existsSync(sourceManifestPath) ? readJson(sourceManifestPath) : null;
+if (sourceManifest && (sourceManifest.schemaVersion !== 1 || !sourceManifest.documents)) fail('Unsupported source document manifest.');
+const manifestPath = join(options.outputDirectory, 'document-manifest.json');
+const manifest = existsSync(manifestPath) ? readJson(manifestPath) : { schemaVersion: 1, documents: {} };
+if (manifest.schemaVersion !== 1 || !manifest.documents) fail('Unsupported document manifest.');
 const t = createTranslator({
   language: options.language,
   fallbackLanguage: args['fallback-language'] ?? projectConfig.fallbackLanguage ?? 'en-US',
@@ -200,7 +211,37 @@ const readmeLines = [
 
 for (const spec of documentSpecs) {
   const sourceMarkdown = getSourceMarkdown(spec.sourceKind);
-  const markdown = render438cDocument(spec, sourceMarkdown, projectConfig, engineeringFacts, generatedAt);
+  const sourcePaths = [join(options.sourceDirectory, `${spec.sourceKind}.${options.language}.md`), terminologyPath];
+  const sources = sourcePaths.map((path) => ({
+    path, sha256: sha256(readFileSync(path)),
+    association: sourceManifest?.documents[basename(path)] ?? null,
+    status: sourceAssociation(sourceManifest?.documents[basename(path)], readFileSync(path), baseline),
+  }));
+  const applicable = sources.every((source) => source.status === 'verified');
+  const release = applicable ? baseline?.metadata.source.release : null;
+  const softwareVersion = release
+    ? release.label ?? (baseline.metadata.source.versionNo !== undefined ? `model-r${baseline.metadata.source.versionNo}` : null)
+    : projectConfig.softwareVersion;
+  if (release && !softwareVersion) fail('Released model needs a label or versionNo for the software version.');
+  if (options.releaseManifestPath && !applicable) fail(`${spec.id}: source snapshots are stale or unverified; cannot claim delivery applicability.`);
+  const delivery = options.releaseManifestPath
+    ? verifyDelivery(options.releaseManifestPath, baseline) : null;
+  const config = { ...projectConfig, softwareVersion };
+  const status = delivery ? 'delivery-verified' : release ? 'released-model-baseline' : 'draft';
+  const traceLines = [
+    `- 文档版本：${config.documentVersion}`,
+    `- 追溯状态：${status}`,
+    ...(applicable ? [`- 模型来源 SHA256：${baseline.metadata.source.sha256}`] : []),
+    ...(delivery ? [`- 适用交付：${delivery.deliveryId}`] : []),
+  ].join('\n');
+  const render = (timestamp) => render438cDocument(spec, sourceMarkdown, config, engineeringFacts, timestamp)
+    .replace('## 修改记录', `${traceLines}\n\n## 修改记录`);
+  // Exclude only volatile generation time and the derived revision counter.
+  const contentSha256 = sha256(render('<generation-time>'));
+  const key = `${spec.id}.${options.language}`;
+  const previous = manifest.documents[key];
+  const revision = previous?.contentSha256 === contentSha256 ? previous.revision : (previous?.revision ?? 0) + 1;
+  const markdown = render(generatedAt).replace('## 修改记录', `- 文档修订：${revision}\n\n## 修改记录`);
   if (/\b(?:derived from|from from)\b|\b(?:onKind|fanOutSource|fanOutAlias|emits):/u.test(markdown)) {
     fail(`${spec.title} contains internal source or automation syntax.`);
   }
@@ -220,9 +261,24 @@ for (const spec of documentSpecs) {
   readmeLines.push(
     `| ${spec.title} | ${relative(options.outputDirectory, markdownPath)} | ${docxPath ? relative(options.outputDirectory, docxPath) : '未生成'} |`
   );
+  manifest.documents[key] = {
+    documentId: spec.id, language: options.language, documentVersion: config.documentVersion,
+    revision, contentSha256, softwareVersion, status, generatedAt,
+    applicableModel: applicable ? baseline.metadata : null,
+    candidateModel: baseline,
+    applicableDelivery: delivery,
+    sources: sources.map(({ path, ...source }) => ({ path: relative(repositoryRoot, path), ...source })),
+    artifacts: [markdownPath, ...(docxPath ? [docxPath] : [])].map((path) => ({
+      filename: relative(options.outputDirectory, path), sha256: sha256(readFileSync(path)),
+    })),
+    history: previous?.revision === revision ? previous.history : [
+      ...(previous?.history ?? []), { revision, contentSha256, documentVersion: config.documentVersion, generatedAt },
+    ],
+  };
 }
 
 writeFileSync(join(options.outputDirectory, 'README.md'), `${readmeLines.join('\n')}\n`, 'utf8');
+writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
 
 console.log(`[438c] Generated ${documentSpecs.length} document(s) in ${relative(repositoryRoot, options.outputDirectory)}`);
 
@@ -965,11 +1021,12 @@ function convertMarkdownToDocx(markdownPath, outputPath, spec) {
 
 function parseArgs(argv) {
   const parsed = {};
-  for (const arg of argv) {
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
     if (!arg.startsWith('--')) continue;
     const body = arg.slice(2);
     const [key, ...rest] = body.split('=');
-    parsed[key] = rest.length ? rest.join('=') : 'true';
+    parsed[key] = rest.length ? rest.join('=') : argv[index + 1] && !argv[index + 1].startsWith('--') ? argv[++index] : 'true';
   }
   if (parsed.help) {
     console.log(`Usage: node scripts/${basename(fileURLToPath(import.meta.url))} [options]
@@ -980,6 +1037,9 @@ Options:
   --facts-config=docs/document-support/config/engineering-facts-sources.json
   --facts-out=docs/generated/facts/engineering-facts.json
   --manual=docs/438c/manual
+  --model=.medol/codegen-model.json
+  --model-source=.medol/source.medol
+  --release-manifest=path/to/built-delivery-manifest.json
   --out=docs/generated/438c
   --template-dir=../tmp/438C文档模版
   --format=markdown|docx|all

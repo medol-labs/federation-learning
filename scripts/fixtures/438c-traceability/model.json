@@ -1,0 +1,12 @@
+{
+  "metadata": {
+    "schemaVersion": 1,
+    "medolVersion": "0.9.0",
+    "source": {
+      "workspaceId": "demo",
+      "versionId": "model-7",
+      "versionNo": 7,
+      "release": { "channel": "stable", "label": "v2.3.0", "releasedAt": "2026-10-20T00:00:00Z" }
+    }
+  }
+}

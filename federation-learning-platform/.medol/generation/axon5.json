@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "target": "axon5",
+  "scope": "release-support",
+  "selection": {
+    "environment": "dev"
+  },
+  "generatedAt": "2026-10-21T14:52:08.882Z",
+  "generator": {
+    "name": "medol-codegen",
+    "version": "1.0.0",
+    "sha256": "2f918efba9fb522d4dd4651fb6aa8ae2c0cd313d4362cb4c9f75756ae422fcc7"
+  },
+  "model": {
+    "sha256": "99b9eee3347e33e147cc1a23b1c2eabf776c843bcd45c01d1bc97628b3a89070",
+    "metadata": {
+      "schemaVersion": 1,
+      "medolVersion": "0.1.0",
+      "source": {
+        "sha256": "0610060148b1b1c037d937161ea7d3ccea1ae0387f691f4d14e3cfef8d771815"
+      }
+    }
+  },
+  "config": {
+    "sha256": "5e05462c9c9a7c051a1c5791df67e01872bc0dc1a4e14961f16ae5c100900a97"
+  },
+  "inputs": [
+    {
+      "path": "../.medol/codegen-model.json",
+      "sha256": "99b9eee3347e33e147cc1a23b1c2eabf776c843bcd45c01d1bc97628b3a89070"
+    },
+    {
+      "path": "../.medol/medol.yml",
+      "sha256": "af230491e348036bcc313e24cce7200a649079f7bef9fabb5883579746b947fd"
+    },
+    {
+      "path": "../.medol/medol.local.yml",
+      "sha256": "17986c81b52296c8ec5d5c7b0aa660256ad8f3ee63a4b846cab713f380f422b4"
+    },
+    {
+      "path": "../.medol/source.medol",
+      "sha256": "0610060148b1b1c037d937161ea7d3ccea1ae0387f691f4d14e3cfef8d771815"
+    },
+    {
+      "path": "../dictionary-init/dictionaries.json",
+      "sha256": "efb7481cb7be3b7145a33032af8647729c3400e92725a6add352b30aee4428bc"
+    }
+  ]
+}
