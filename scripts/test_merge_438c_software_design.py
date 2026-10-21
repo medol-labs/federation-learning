@@ -77,6 +77,20 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
         self.assertIsNone(table.rows[0].cells[0]._tc.tcPr.find(qn('w:shd')))
         self.assertAlmostEqual(sum(column.width.cm for column in table.columns), 15.88, delta=0.1)
 
+    def test_performance_sections_do_not_mingle(self):
+        document = Document()
+        performance = document.add_paragraph('性能设计', style='Heading 2')
+        document.add_paragraph('其他模块原有性能内容')
+        interfaces = document.add_paragraph('接口设计', style='Heading 2')
+        merge.insert_section(document, performance, merge.OTHER_MODULES_PERFORMANCE)
+        merge.insert_before_heading(document, interfaces, '### 联邦学习模块性能设计\n\n联邦学习性能内容')
+        self.assertEqual(
+            [paragraph.text for paragraph in document.paragraphs],
+            ['性能设计', '医疗数字人及风险动态评估模块性能设计',
+             '其他模块原有性能内容', '联邦学习模块性能设计',
+             '联邦学习性能内容', '接口设计'],
+        )
+
     def test_target_sections_locate_changed_heading(self):
         original = Document()
         original.add_paragraph('模块 A', style='Heading 2')

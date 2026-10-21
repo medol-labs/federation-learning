@@ -50,6 +50,7 @@ DATABASE_PARENTS = {
 MARKER = re.compile(r'^<!-- INSERT ([a-z-]+) -->$', re.MULTILINE)
 DECISIONS_PLACEHOLDER = '{{INPUT_OUTPUT_DECISIONS}}'
 SECTION_PLACEHOLDER = '{{SOFTWARE_DESIGN_SECTION}}'
+OTHER_MODULES_PERFORMANCE = '### 医疗数字人及风险动态评估模块性能设计'
 
 
 def parse_sections(text):
@@ -377,6 +378,15 @@ def insert_section(document, anchor, markdown):
         last = copied
 
 
+def insert_before_heading(document, heading, markdown):
+    marker = document.add_paragraph()
+    heading._p.addprevious(marker._p)
+    try:
+        insert_section(document, marker, markdown)
+    finally:
+        marker._p.getparent().remove(marker._p)
+
+
 def format_inserted_tables(document, tables):
     """Use the joint design document's table style without changing existing tables."""
     reference = next(table for table in document.tables if table.rows[0].cells[0].text.strip() == '序号')
@@ -460,7 +470,11 @@ def main():
         return
     existing_tables = {table._tbl for table in document.tables}
     for key in ANCHORS:
-        insert_section(document, anchors[key], sections[key])
+        if key == 'performance':
+            insert_section(document, anchors[key], OTHER_MODULES_PERFORMANCE)
+            insert_before_heading(document, anchors['interfaces'], sections[key])
+        else:
+            insert_section(document, anchors[key], sections[key])
     added_tables = [table for table in document.tables if table._tbl not in existing_tables]
     format_inserted_tables(document, added_tables)
     args.out.parent.mkdir(parents=True, exist_ok=True)
