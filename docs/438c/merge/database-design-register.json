@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "sourceId": "readmodel-bfa22344",
+      "number": 1,
+      "name": "OrganizationDirectory",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "58feca426e1b399ed53e7a6d068b6571a0d3435bea24bdcb873f3c712be30d91"
+    },
+    {
+      "sourceId": "readmodel-5aa7412c",
+      "number": 2,
+      "name": "UserOrganizationMembershipDirectory",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "61d41b506d27683d8d50a1e0da2e5cb1624d65108a578d3948ce29262c6e84a2"
+    },
+    {
+      "sourceId": "readmodel-d32dbaa0",
+      "number": 3,
+      "name": "FederationOverview",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "e5c387c95a21cb02852a16e3240cf3bc2a7d7dca243a3c1659440e592b09d42f"
+    },
+    {
+      "sourceId": "readmodel-07bec086",
+      "number": 4,
+      "name": "FederationMembershipDirectory",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "dd7604d70c562bc13f78f51410c358e1db08b6eba28a086d9e36cce17294b7e4"
+    },
+    {
+      "sourceId": "readmodel-4ccadcb3",
+      "number": 5,
+      "name": "RuntimeInfrastructurePackageCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "d855922c739e239f10e379d6f0c75ad938a51ec643dac5a97783a014e31f7697"
+    },
+    {
+      "sourceId": "readmodel-3be9a609",
+      "number": 6,
+      "name": "RuntimeInstallationPlanCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "c92815d6535ceaaf959d9c336126967a4a77bb44eb5f3a83bebd02ac56ddd7ca"
+    },
+    {
+      "sourceId": "readmodel-da54e769",
+      "number": 7,
+      "name": "RuntimeInstallationGuide",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "93fd92f0c8d62c6f7e6f704829c556c308b060b95b82bd937ea1c7f820da6c57"
+    },
+    {
+      "sourceId": "readmodel-53e07d83",
+      "number": 8,
+      "name": "RuntimeAgentEndpointCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "402851bbf179e0a246b054bde066b581c2ce0c6f8609c1a25daf387433d6759a"
+    },
+    {
+      "sourceId": "readmodel-02ea1fc7",
+      "number": 9,
+      "name": "RuntimeInfrastructureAccessView",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "3e528d0251666c86758bb14be8a6eae804716185bdf7818ed5ba1ddbf8e91a89"
+    },
+    {
+      "sourceId": "readmodel-15a67ab4",
+      "number": 10,
+      "name": "CurrentRecommendedFeatureSchemaCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "c40ff35e5494cc06f5eb1762f6328e6b8968a7bb84f796a5d504ae32643de99f"
+    },
+    {
+      "sourceId": "readmodel-06b13d84",
+      "number": 11,
+      "name": "FeatureSchemaCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "16306048e990ea8ee91c0026c5390248b5923e12c7ec55c86249cffda475b991"
+    },
+    {
+      "sourceId": "readmodel-8dff3f72",
+      "number": 12,
+      "name": "RuntimeDatasetMetadataCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "4b2443526247a55b4d212e6615b7702305c41b1c2e29829ec3091a82336b52e0"
+    },
+    {
+      "sourceId": "readmodel-a5834dad",
+      "number": 13,
+      "name": "ModelArtifactCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "aee2f5f8bd9c582b72389c14a24ba20f1f26fe2a437273a98400b5fd53722c47"
+    },
+    {
+      "sourceId": "readmodel-bb392171",
+      "number": 14,
+      "name": "RuntimeEngineProfileCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "b8f71c548ee8811e12bde01cc3606990b8c7e0c67b2612d7928f37145cb008d7"
+    },
+    {
+      "sourceId": "readmodel-9145e101",
+      "number": 15,
+      "name": "TrainingRunConfigurationCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "52a43c96bf6bfc4c6e39c5c5e454b845d6c3b2cecf9ec02c9e2a73577fb57860"
+    },
+    {
+      "sourceId": "readmodel-37cc6ebd",
+      "number": 16,
+      "name": "TrainingJobDashboard",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "d0d02e0e0f5978508b4c000f4e07590b31ddec91526ab464cb702cd15490ddc2"
+    },
+    {
+      "sourceId": "readmodel-9aa4f7c7",
+      "number": 17,
+      "name": "TrainingParticipantEligibility",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "18a659b54e126b8f36aa58ae0690b8f9314a261723bbc211b2ba3822ffccc982"
+    },
+    {
+      "sourceId": "readmodel-8d5ec497",
+      "number": 18,
+      "name": "PersonalizedModelCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "7450ad1bef4b19d7f583ce669e5214310523776b6496bcb962db0761d4280a79"
+    },
+    {
+      "sourceId": "readmodel-b866abe9",
+      "number": 19,
+      "name": "TrainingRoundProgress",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "fb942b9d2ed057b0f7fc83137bcb6d2036b669dfc39f446e9270731573267323"
+    },
+    {
+      "sourceId": "readmodel-f5808172",
+      "number": 20,
+      "name": "RuntimeTelemetryLatest",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "92ccd50bd7f35fb829a1918dff3275fb49a7fdbf612e3eecae6ddb26e9d46914"
+    },
+    {
+      "sourceId": "readmodel-f3d9d674",
+      "number": 21,
+      "name": "RuntimeNodeInventoryView",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "16f8ad8f4fda3990815ab1f128fd4b20670f1d12b069e11c9bd7a66acce41fc9"
+    },
+    {
+      "sourceId": "readmodel-81dcb1fc",
+      "number": 22,
+      "name": "RuntimeNodeResourceLatest",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "a9612bb16470a4c251666f6f68cc61de080ce6d94c6fe6cdcf8f497bf37436f5"
+    },
+    {
+      "sourceId": "readmodel-ac829096",
+      "number": 23,
+      "name": "RuntimeHealthDashboard",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "7f0ecd3cce93058e0618e748abf872bc89a307394b76fac54957b50985599907"
+    },
+    {
+      "sourceId": "readmodel-9521fd68",
+      "number": 24,
+      "name": "TrainingAlertCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "b79e139f8f843ded1a8e1be7624a34af3ca0f4f3d75608ddab6bb7ea1797d93e"
+    },
+    {
+      "sourceId": "readmodel-4fe22052",
+      "number": 25,
+      "name": "RuntimeIdentityCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "13d4df5e69a2ff007c57b4693233154b0949485914eee3b1cc9013266b37bbb3"
+    },
+    {
+      "sourceId": "readmodel-c5d9e65e",
+      "number": 26,
+      "name": "RuntimeCapabilityCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "293550811ce436587b984b370fd65442034fca1a035b4a70d2d60280e2abb85b"
+    },
+    {
+      "sourceId": "readmodel-d6c3242f",
+      "number": 27,
+      "name": "SecureAggregationSessionCatalog",
+      "deployment": "平台",
+      "status": "active",
+      "sourceHash": "4861aa2e101fbdf8ce764cc445cc205468a89bdb22fa772c2489651892e4d0d5"
+    },
+    {
+      "sourceId": "readmodel-0083c7b7",
+      "number": 28,
+      "name": "AgentOrganizationDirectory",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "11b530d6b419e00678a25a1f1bc59d371e0a9faebd325c727a25912d4e9747fa"
+    },
+    {
+      "sourceId": "readmodel-273d5747",
+      "number": 29,
+      "name": "AgentFeatureSchemaCatalog",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "c15e30efa7e0c4da5df3909dde610b10008f18143f8ab15e34d85300c178c1da"
+    },
+    {
+      "sourceId": "readmodel-f01df15f",
+      "number": 30,
+      "name": "AgentDictionaryValueCatalog",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "bfea765dd50f75d49766627f1896a17286ee1e50585a36bf4e02ad5b922fa09f"
+    },
+    {
+      "sourceId": "readmodel-dd4735e9",
+      "number": 31,
+      "name": "AgentDictionaryValueTranslationCatalog",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "7c0894d64cbd47be9add86b2b856a68ed090f724c84cf68687238c2765f95949"
+    },
+    {
+      "sourceId": "readmodel-a21858a3",
+      "number": 32,
+      "name": "AgentRuntimeIdentityCatalog",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "c49d6f879ab4e0853ad0697fdb5e15f4cc9b04a4be610005a550387115d12fe5"
+    },
+    {
+      "sourceId": "readmodel-606bf04d",
+      "number": 33,
+      "name": "RuntimeDatasetBindingCatalog",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "3348c44961aa73cb52af7e960ab7ccffc3ac5442abfa3e08b6017b81c1cb25f0"
+    },
+    {
+      "sourceId": "readmodel-c7489867",
+      "number": 34,
+      "name": "AgentDatasetAccessValidationCatalog",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "e20d79b86b80ba12a6f6c35eeb1d8e989652ba6627071f3e1228acbd23169118"
+    },
+    {
+      "sourceId": "readmodel-b0bcb7c7",
+      "number": 35,
+      "name": "DatasetCapability",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "65c4dc9f7c182b8a29f04f115df1762ae193b1d64fda8800d225a72464157bab"
+    },
+    {
+      "sourceId": "readmodel-1a190595",
+      "number": 36,
+      "name": "DatasetReadiness",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "7fa772210577871e61d4cc3d90dcd5528261bc7b96fc2fd0063cd39ec88fc71b"
+    },
+    {
+      "sourceId": "readmodel-5686facf",
+      "number": 37,
+      "name": "RoundExecutionCatalog",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "8d44cf6cb83432799cb7c303df0c16b4ba6f9fb15c46a1f3abfe7627a7523acb"
+    },
+    {
+      "sourceId": "readmodel-8ae8c5e1",
+      "number": 38,
+      "name": "RuntimeAgentLifecycleCatalog",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "4ae905778abb0d894e24676cd116a439096eb85cb12463ad5bd5891028b310c2"
+    },
+    {
+      "sourceId": "readmodel-50fc5707",
+      "number": 39,
+      "name": "AgentRuntimeInfrastructureConnectionCatalog",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "b0e75e7e3da600bbd43d2cefb3d9ba50e6f4e6049f647795452991f8c4c3a33b"
+    },
+    {
+      "sourceId": "readmodel-7556784f",
+      "number": 40,
+      "name": "AgentRuntimeTelemetryLatest",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "0c9a1074076aa38e15e9116e3a555e8028e73b2067a734c5358badb6335e3cf6"
+    },
+    {
+      "sourceId": "readmodel-fb82aa81",
+      "number": 41,
+      "name": "AgentRuntimeNodeInventoryCatalog",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "ee6bbd4b634206365bc91472179919564dc99ef460633010fdaa3d67a083a824"
+    },
+    {
+      "sourceId": "readmodel-13723521",
+      "number": 42,
+      "name": "AgentRuntimeNodeResourceLatest",
+      "deployment": "参与方代理",
+      "status": "active",
+      "sourceHash": "e76ec432649504c95c1a5db1504004f06c6b81bd964cc31b1a55e64711c994d9"
+    }
+  ]
+}

@@ -75,6 +75,15 @@
       "eventRefs": ["FileUploaded", "AgentLocalModelUpdateSubmitted", "ModelUpdateSubmissionReceived", "ModelUpdateSubmissionAccepted"]
     },
     {
+      "id": "FL-IO-10",
+      "direction": "平台到训练引擎的模型聚合",
+      "input": "作业与轮次标识、已接受的模型更新工件引用、聚合算法和模型参数",
+      "output": "聚合作业标识与状态；完成后读取聚合模型工件和摘要，失败时保留引擎错误",
+      "decision": "聚合由平台按训练配置提交引擎作业并观察结果，不在提交请求内同步等待；聚合输入必须是目标引擎可访问的工件，明文与安全聚合分别保持各自的结果及失败路径。",
+      "commandRefs": ["AggregatePlainModelUpdates", "CompleteHomomorphicAggregationSession"],
+      "eventRefs": ["PlainModelAggregationCompleted", "PlainModelAggregationFailed", "SecureAggregationCompleted"]
+    },
+    {
       "id": "FL-IO-09",
       "direction": "平台到控制台",
       "input": "训练作业或模型标识、查询条件",
@@ -84,5 +93,57 @@
       "eventRefs": ["TrainingJobCompleted", "FederatedModelArtifactRegistered"]
     }
   ],
-  "conclusion": "跨服务交换以明确的业务标识关联一次作业、轮次、执行计划、运行时和模型更新；引用只指向可由接收方访问的工件。接口拒绝或不可达时应向发起方返回可识别的错误，并在业务状态中保留失败原因，不以空结果或成功状态掩盖失败。业务状态记录与页面查询视图异步更新，故命令受理后的短暂未查询到记录不代表命令未受理；控制台应展示处理中状态并允许刷新查询。服务间调用使用部署配置的身份凭据，不以平台用户令牌代替参与方本地用户授权。"
+  "conclusion": "跨服务交换以明确的业务标识关联一次作业、轮次、执行计划、运行时和模型更新；引用只指向可由接收方访问的工件。接口拒绝或不可达时应向发起方返回可识别的错误，并在业务状态中保留失败原因，不以空结果或成功状态掩盖失败。业务状态记录与页面查询视图异步更新，故命令受理后的短暂未查询到记录不代表命令未受理；控制台应展示处理中状态并允许刷新查询。服务间调用使用部署配置的身份凭据，不以平台用户令牌代替参与方本地用户授权。",
+  "behaviorItems": [
+    {
+      "id": "FL-BH-01",
+      "scenario": "组织与联邦准入",
+      "trigger": "组织登记、联邦建立与成员资格变更",
+      "decision": "分别校验组织、联邦及成员资格状态；成员身份不自动证明参与方运行时或数据集已可用于训练。",
+      "outcome": "业务状态变更由事件保存；标识冲突、非法状态或权限不足时拒绝操作，不生成成功事件。",
+      "display": "组织与联邦目录显示当前状态，成员资格与运行时资格分开展示。",
+      "commandRefs": ["RegisterOrganization", "CreateFederation"],
+      "eventRefs": ["OrganizationRegistered", "FederationCreated"]
+    },
+    {
+      "id": "FL-BH-02",
+      "scenario": "运行时登记与预配",
+      "trigger": "登记基础设施并请求校验或代理部署",
+      "decision": "基础设施身份、安装计划、部署方式和校验结果分别处理；校验通过不等于代理已部署、连接并就绪。",
+      "outcome": "记录校验、部署及连接的分阶段结果；外部编排失败保留原因，不将不可达解释为成功。",
+      "display": "运行时目录按阶段展示校验、部署和连接状态，允许定位失败步骤。",
+      "commandRefs": ["RegisterRuntimeInfrastructure", "VerifyRuntimeInfrastructure"],
+      "eventRefs": ["RuntimeInfrastructureRegistered", "RuntimeInfrastructureVerified", "RuntimeInfrastructureVerificationFailed"]
+    },
+    {
+      "id": "FL-BH-03",
+      "scenario": "特征架构与本地数据集",
+      "trigger": "定义或发布特征架构、参与方声明数据集并执行本地校验",
+      "decision": "平台定义架构并接收元数据；代理读取本地数据并核对访问与契约，原始样本不因声明或报告转移到平台。",
+      "outcome": "分别保存架构、声明、访问校验、契约校验及元数据报告结果；失败保留可重试上下文。",
+      "display": "架构版本、绑定、校验和元数据状态分开展示，未报告不自动等于不兼容。",
+      "commandRefs": ["DefineFeatureSchema", "DeclareDataset", "ValidateDatasetContract"],
+      "eventRefs": ["FeatureSchemaDefined", "DatasetDeclared", "DatasetContractValidated", "DatasetContractValidationFailed"]
+    },
+    {
+      "id": "FL-BH-04",
+      "scenario": "训练作业与轮次",
+      "trigger": "提交已配置的训练作业，随后选择参与方并执行轮次",
+      "decision": "先确认配置和可参与节点，再按运行时分别形成计划；达到更新数量与聚合条件后才进入评估及下一轮或完成。",
+      "outcome": "参与不足、计划拒绝、训练或聚合失败分别保留阶段与原因；不得用 HTTP 受理替代训练完成。",
+      "display": "作业、轮次、计划与本地执行分别显示状态，投影滞后时显示处理中并允许刷新。",
+      "commandRefs": ["SubmitTrainingJob", "SelectTrainingRoundParticipants"],
+      "eventRefs": ["TrainingJobSubmitted", "TrainingRoundParticipantsSelected", "TrainingRoundParticipantSelectionFailed"]
+    },
+    {
+      "id": "FL-BH-05",
+      "scenario": "模型工件与结果发布",
+      "trigger": "登记初始模型或训练形成的联邦模型",
+      "decision": "模型目录保存版本、格式、摘要和可访问工件引用；目录查询与文件下载分别授权，不以本地文件路径作为跨服务引用。",
+      "outcome": "只有工件存在且完成必要校验后才登记可用模型；上传失败或引用不可达时保留失败结果。",
+      "display": "模型列表展示来源、版本与可用状态，下载操作独立确认权限和文件可达性。",
+      "commandRefs": ["RegisterModelArtifact", "RegisterFederatedModelArtifact"],
+      "eventRefs": ["ModelArtifactRegistered", "FederatedModelArtifactRegistered"]
+    }
+  ]
 }
