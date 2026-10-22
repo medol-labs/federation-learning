@@ -3,14 +3,22 @@
 
 import argparse
 import importlib.util
+import json
 import re
 import subprocess
 import tempfile
 from pathlib import Path
 
 from docx import Document
+from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
+from docx.table import Table
 from docx.text.paragraph import Paragraph
+from docx.shared import Twips
+
+from database_design_inventory import (
+    load_catalog, markdown_table, render_logical, render_physical, traceability_rows,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,7 +33,6 @@ formatter_spec = importlib.util.spec_from_file_location('requirement_formatter',
 requirement_formatter = importlib.util.module_from_spec(formatter_spec)
 formatter_spec.loader.exec_module(requirement_formatter)
 insert_section = software_merge.insert_section
-read_model_inventory = software_merge.read_model_inventory
 from markdown_to_docx import format_requirements_tables
 
 MARKER = re.compile(r'^<!-- INSERT ([a-z-]+) -->$', re.MULTILINE)
@@ -142,8 +149,38 @@ def merge_requirements(target, out, check):
 
 
 def merge_database(target, out, check):
-    content = sections('database-design-federation-learning.md', {'conceptual', 'logical', 'physical'})
-    content['logical'] = content['logical'].replace('{{READ_MODEL_INVENTORY}}', read_model_inventory())
+    content = sections('database-design-federation-learning.md', {
+        'decisions', 'conceptual', 'logical', 'physical', 'software-units',
+        'traceability', 'traceability-forward', 'traceability-reverse',
+    })
+    catalog = load_catalog()
+    requirement_register = json.loads((SOURCE_DIR / '3.3.1-function-register.json').read_text(encoding='utf-8'))
+    logical_inventory, logical_details = render_logical(catalog, requirement_register)
+    entity_inventory, entity_details = render_physical(catalog)
+    content['logical'] = content['logical'].replace('{{READ_MODEL_INVENTORY}}', logical_inventory)
+    content['logical'] = content['logical'].replace('{{READ_MODEL_DETAILS}}', logical_details)
+    content['physical'] = content['physical'].replace('{{ENTITY_INVENTORY}}', entity_inventory)
+    content['physical'] = content['physical'].replace('{{ENTITY_DETAILS}}', entity_details)
+    trace_rows = traceability_rows(catalog, requirement_register)
+    content['traceability-forward'] = content['traceability-forward'].replace(
+        '{{TRACEABILITY_FORWARD}}', markdown_table(
+            ['序号', '需求功能', '数据库设计标识与查询表'],
+            [[index, f'{title}/{requirement_id}', f'{logical_id}；{physical_id}（{table_name}）']
+             for index, (requirement_id, title, logical_id, physical_id, table_name)
+             in enumerate(trace_rows, 1)],
+        ),
+    )
+    content['traceability-reverse'] = content['traceability-reverse'].replace(
+        '{{TRACEABILITY_REVERSE}}', markdown_table(
+            ['序号', '数据库设计标识与查询表', '对应需求功能'],
+            [[index, f'{logical_id}；{physical_id}（{table_name}）', f'{title}/{requirement_id}']
+             for index, (requirement_id, title, logical_id, physical_id, table_name)
+             in enumerate(trace_rows, 1)],
+        ),
+    )
+    for key, text in content.items():
+        if re.search(r'\{\{(?:READ_MODEL|ENTITY|DATABASE|TRACEABILITY)_[A-Z_]+\}\}', text):
+            raise ValueError(f'Unresolved database design placeholder: {key}')
     document = Document(target)
     anchors = {
         key: heading(document, '联邦学习模块', 'Heading 3', parent)
@@ -153,12 +190,91 @@ def merge_database(target, out, check):
             'physical': '数据库物理设计',
         }.items()
     }
+    anchors['decisions'] = heading(document, '数据库级设计决策', 'Heading 1')
+    anchors['software-units'] = heading(document, '用于数据库访问或操纵的软件单元的详细设计', 'Heading 1')
+    anchors['traceability'] = heading(document, '需求可追踪性', 'Heading 1')
+    corrections = json.loads((SOURCE_DIR / 'database-design-corrections.json').read_text(encoding='utf-8'))
+    if corrections.get('schemaVersion') != 1:
+        raise ValueError('Unsupported database design corrections schema')
+    for correction in corrections['items']:
+        matches = [p for p in document.paragraphs if correction['match'] in p.text]
+        if len(matches) != 1:
+            raise ValueError(f'{correction["id"]}: expected one matching paragraph, found {len(matches)}')
+    figures = {
+        'FL-DB-FIG-GOVERNANCE': (
+            {'widthCm': 12.5, 'caption': '联邦学习组织与数据治理概念关系图'},
+            SOURCE_DIR / 'figures/conceptual-data-governance.png',
+        ),
+        'FL-DB-FIG-TRAINING': (
+            {'widthCm': 9.5, 'caption': '联邦学习训练与模型更新概念关系图'},
+            SOURCE_DIR / 'figures/conceptual-data-training.png',
+        ),
+    }
+    if any(not path.is_file() for _, path in figures.values()):
+        raise ValueError('Database conceptual figure is missing')
+    forward = heading(document, '正向追溯', 'Heading 2')
+    reverse = heading(document, '逆向追溯', 'Heading 2')
+    forward_table = following_table(document, forward)
+    reverse_table = following_table(document, reverse)
+    if len(forward_table.columns) != 4 or len(reverse_table.columns) != 4:
+        raise ValueError('Database traceability table format changed')
     if check:
         return
+    for correction in corrections['items']:
+        paragraph = next(p for p in document.paragraphs if correction['match'] in p.text)
+        paragraph.text = paragraph.text.replace(correction['match'], correction['replacement'])
+    old_tables = {table._tbl for table in document.tables}
+    insert_section(document, anchors['decisions'], content['decisions'])
     for key, anchor in anchors.items():
-        insert_section(document, anchor, content[key])
+        if key == 'decisions':
+            continue
+        insert_section(document, anchor, content[key], figures if key == 'conceptual' else None)
+    training_figure_heading = next(
+        paragraph for paragraph in document.paragraphs
+        if paragraph.text.strip() == '训练链路概念关系图'
+    )
+    training_figure_heading.paragraph_format.keep_with_next = True
+    for table, key in ((forward_table, 'traceability-forward'), (reverse_table, 'traceability-reverse')):
+        marker = document.add_paragraph()
+        table._tbl.addnext(marker._p)
+        insert_section(document, marker, content[key])
+        marker._p.getparent().remove(marker._p)
+    format_database_tables(document, [t for t in document.tables if t._tbl not in old_tables])
     out.parent.mkdir(parents=True, exist_ok=True)
     document.save(out)
+
+
+def following_table(document, paragraph):
+    for element in paragraph._p.itersiblings():
+        if element.tag == qn('w:tbl'):
+            return Table(element, document._body)
+        if element.tag == qn('w:p') and Paragraph(element, document._body).style.name.startswith('Heading'):
+            break
+    raise ValueError(f'Missing table after {paragraph.text}')
+
+
+def format_database_tables(document, tables):
+    software_merge.format_inserted_tables(document, tables)
+    column_widths = {
+        ('设计标识', '部署单元', '查询视图', '逻辑标识', '对应需求'): [1600, 950, 1500, 2550, 2400],
+        ('设计标识', '部署单元', 'JPA 查询表', '主键属性', '对应实体'): [1600, 950, 2350, 2000, 2100],
+        ('数据元素', '逻辑类型', '数量', '必需', '标识'): [3300, 2200, 1000, 1000, 1500],
+        ('JPA 属性', '映射类型', '主键', '长文本', '说明'): [3000, 2500, 950, 950, 1600],
+        ('序号', '需求功能', '数据库设计标识与查询表'): [700, 3200, 5100],
+        ('序号', '数据库设计标识与查询表', '对应需求功能'): [700, 5100, 3200],
+    }
+    for table in tables:
+        widths = column_widths.get(tuple(cell.text.strip() for cell in table.rows[0].cells))
+        if widths:
+            for column, width in zip(table.columns, widths):
+                column.width = Twips(width)
+            for row in table.rows:
+                for cell, width in zip(row.cells, widths):
+                    cell.width = Twips(width)
+        if table.rows[0]._tr.get_or_add_trPr().find(qn('w:tblHeader')) is None:
+            header = OxmlElement('w:tblHeader')
+            header.set(qn('w:val'), 'true')
+            table.rows[0]._tr.get_or_add_trPr().append(header)
 
 
 def merge_user_manual(target, out, check):
@@ -198,12 +314,13 @@ def main():
     parser.add_argument('--target-dir', type=Path, default=TARGET_DIR)
     parser.add_argument('--out-dir', type=Path, default=OUTPUT_DIR)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--only', choices=('01', '03', '04', '05'), help='Generate or check one document')
     args = parser.parse_args()
     targets = {code: next(args.target_dir.glob(f'{code}*')) for code in ('01', '03', '04', '05')}
     if any(target.resolve() == (args.out_dir / f'{code}-federation-learning-merged.docx').resolve() for code, target in targets.items()):
         raise ValueError('The output must not overwrite a joint source document')
     with tempfile.TemporaryDirectory() as directory:
-        requirements_docx = convert_requirements(targets['01'], Path(directory))
+        requirements_docx = convert_requirements(targets['01'], Path(directory)) if args.only in (None, '01') else None
         jobs = [
             ('01', merge_requirements, requirements_docx),
             ('03', merge_database, targets['03']),
@@ -211,6 +328,8 @@ def main():
             ('05', merge_installation, targets['05']),
         ]
         for code, merge, target in jobs:
+            if args.only is not None and code != args.only:
+                continue
             output = args.out_dir / f'{code}-federation-learning-merged.docx'
             merge(target, output, args.check)
             print(f'{code}: {"checked" if args.check else output}')

@@ -1,0 +1,18 @@
+digraph ConceptualDataTraining {
+  graph [rankdir=TB, bgcolor="white", pad="0.12", nodesep="0.30", ranksep="0.32", splines=polyline, fontname="PingFang SC"];
+  node [shape=box, style="rounded,filled", color="#6C8298", fillcolor="#F4F8FB", fontcolor="#243447", fontname="PingFang SC", fontsize=14, margin="0.14,0.07"];
+  edge [color="#64788C", fontcolor="#44566A", fontname="PingFang SC", fontsize=11, arrowsize=0.7];
+
+  initial_model [label="初始模型制品"];
+  schema [label="特征架构"];
+  config [label="训练运行配置"];
+  job_round [label="训练作业 / 训练轮次"];
+  plan_execution [label="参与方计划 / 本地执行", fillcolor="#EAF5EF", color="#6B9780"];
+  update_model [label="模型更新提交 / 聚合模型制品"];
+
+  initial_model -> config [label="引用"];
+  schema -> config [label="引用"];
+  config -> job_round [label="用于创建"];
+  job_round -> plan_execution [label="每轮选择多个参与方"];
+  plan_execution -> update_model [label="产出、评估与聚合"];
+}

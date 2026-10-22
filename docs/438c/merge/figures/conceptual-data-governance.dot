@@ -1,0 +1,20 @@
+digraph ConceptualDataGovernance {
+  graph [rankdir=LR, bgcolor="white", pad="0.18", nodesep="0.30", ranksep="0.52", splines=polyline, fontname="PingFang SC"];
+  node [shape=box, style="rounded,filled", color="#6C8298", fillcolor="#F4F8FB", fontcolor="#243447", fontname="PingFang SC", fontsize=15, margin="0.16,0.10"];
+  edge [color="#64788C", fontcolor="#44566A", fontname="PingFang SC", fontsize=11, arrowsize=0.7];
+
+  organization [label="组织"];
+  federation [label="联邦"];
+  membership [label="联邦成员资格"];
+  runtime [label="运行时身份"];
+  schema [label="特征架构"];
+  binding [label="数据集绑定", fillcolor="#EAF5EF", color="#6B9780"];
+  dataset [label="本地数据集", fillcolor="#EAF5EF", color="#6B9780"];
+
+  organization -> membership [label="1 对多"];
+  federation -> membership [label="1 对多"];
+  organization -> runtime [label="归属"];
+  runtime -> binding [label="定位"];
+  schema -> binding [label="契约约束"];
+  binding -> dataset [label="引用"];
+}
