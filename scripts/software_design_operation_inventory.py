@@ -96,9 +96,7 @@ def operation_rows(model, register, srs_markdown):
         commands = slice_['commands']
         readmodels = slice_['readmodels']
         processors = slice_['processors']
-        if readmodels:
-            if commands or events:
-                raise ValueError(f'Mixed command and query operation requires manual design: {identifier}')
+        if readmodels and not commands and not events:
             names = '、'.join(translated(item['title'], translations) for item in readmodels)
             input_design = f'在授权范围内接收分页、排序及适用字段的筛选条件；查询对象：{concept["title"]}。'
             process = f'从本服务的{names}查询视图按条件读取；组合条件同时生效，返回满足条件的总条数。'
@@ -150,6 +148,9 @@ def operation_rows(model, register, srs_markdown):
                 result_parts.append('查询视图由已保存事件异步更新')
             else:
                 result_parts.append('本步骤分发后续操作，不单独追加业务事件')
+            if readmodels:
+                names = '、'.join(translated(item['title'], translations) for item in readmodels)
+                result_parts.append(f'可在授权范围内查询{names}的处理状态与结果')
             result = '；'.join(result_parts) + '。'
 
         current_group['rows'].append({

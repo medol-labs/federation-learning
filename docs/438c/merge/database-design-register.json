@@ -336,6 +336,118 @@
       "deployment": "参与方代理",
       "status": "active",
       "sourceHash": "e76ec432649504c95c1a5db1504004f06c6b81bd964cc31b1a55e64711c994d9"
+    },
+    {
+      "sourceId": "readmodel-93564934",
+      "number": 43,
+      "name": "SystemNotificationCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "d6c6bec54b32c989f615aa630aff6572411ecb81134ba0f9ab57e67945892ebb",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-c7ce1d77",
+      "number": 44,
+      "name": "SystemNotificationSummary",
+      "deployment": "共享支撑服务",
+      "sourceHash": "1283aa6c07bc9a8fbe52af2401e2a35a67c74cd61f825cd3d244d2119e1b82d3",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-a42b8979",
+      "number": 45,
+      "name": "DataImportJobCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "a14e38f62775d8b406eb2892c23ebe83be9370351878f8d83564997f6ea51672",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-ffa2d89d",
+      "number": 46,
+      "name": "DataExportJobCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "b286d6d7f7088f405175f4809addeeadfa0128eacf197fc9c1f81f3adedac0ac",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-5b4e09f6",
+      "number": 47,
+      "name": "UploadedFileCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "40b69733dba18afa075e7f2c2803956d2d32780581ec475468a64e7577600925",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-16e3b3ce",
+      "number": 48,
+      "name": "DictionaryCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "5da0ad2cf4a2acda745fa88f8572a82907fa8d77fa9d6e7b7e9f1db4d6b79736",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-1328bf0c",
+      "number": 49,
+      "name": "DictionaryValueCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "c3f27a46688ead3371535107245f8127e24fbdf8a8ecacfed3665ac7e59ef0e9",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-240b392e",
+      "number": 50,
+      "name": "DictionaryValueTranslationCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "6968002c3fa0c03b21e6fdb89ead41dd45b358d575a87e8cb258f13b9c8e42ab",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-dd0b05e1",
+      "number": 51,
+      "name": "UserAccountCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "b739af3db06b3f7195862dd80184a314b66821192161ecbd196d9527d9d83f93",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-a27b318f",
+      "number": 52,
+      "name": "RoleCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "0173025862be9bd4b3fa77cde20f88c60b1504942c66cf71284e5f2a8bbea93f",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-6baaa1f9",
+      "number": 53,
+      "name": "PermissionCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "e93b25be4aa40cc8644797e9f828af00a062d1e39af52296e5bdba1b8781dce5",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-55ee69e6",
+      "number": 54,
+      "name": "UserRoleAssignmentCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "d4c6d9d11385438a8209a53b7c24d53c4fdb5f550c39c85b53856315eae27fc4",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-d509ddb8",
+      "number": 55,
+      "name": "RolePermissionGrantCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "746c1fc0442fa95548becab93d88706e224e3c1b52d5b6e89419a658fe272eda",
+      "status": "active"
+    },
+    {
+      "sourceId": "readmodel-30d2c471",
+      "number": 56,
+      "name": "ServiceAccountApiTokenCatalog",
+      "deployment": "共享支撑服务",
+      "sourceHash": "7e1ef5da08955882ec21bd85be52960579bd3e60e452d88379a303207f22d11b",
+      "status": "active"
     }
   ]
 }

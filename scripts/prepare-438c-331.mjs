@@ -36,7 +36,7 @@ if (useCasesBySliceId.size !== useCaseSnapshot.useCases.length) {
   throw new Error('Duplicate PRD use-case IDs.');
 }
 const translations = model.translations?.['zh-CN'] ?? {};
-const contextCodes = [
+const legacyContextCodes = new Map([
   ['OrganizationManagement', 'ORG'],
   ['FederationManagement', 'FED'],
   ['DictionaryMaintenance', 'DICT'],
@@ -49,9 +49,29 @@ const contextCodes = [
   ['RuntimeGovernance', 'GOV'],
   ['SecureAggregation', 'SEC'],
   ['RuntimeAgentOperations', 'AGENT'],
+]);
+const deployedContexts = new Set(model.deployments.flatMap((deployment) => deployment.contexts.map((context) => context.name)));
+const previousRegister = existsSync(registerPath) ? JSON.parse(readFileSync(registerPath, 'utf8')) : null;
+const contextNames = [
+  ...(previousRegister?.contexts ?? []).map((context) => context.sourceName),
+  ...model.contexts.map((context) => context.name)
+    .filter((name) => deployedContexts.has(name) && !previousRegister?.contexts.some((context) => context.sourceName === name)),
 ];
-const includedContexts = new Set(contextCodes.map(([name]) => name));
-const slices = model.slices.filter((slice) => includedContexts.has(slice.context));
+if (contextNames.length !== deployedContexts.size || contextNames.some((name) => !deployedContexts.has(name))) {
+  throw new Error('Requirement contexts must cover every deployed context exactly once.');
+}
+const contextCodes = contextNames.map((name) => [name,
+  previousRegister?.contexts.find((context) => context.sourceName === name)?.id.split('-').at(-1)
+  ?? legacyContextCodes.get(name)
+  ?? (name.match(/[A-Z][a-z]*/g) ?? []).map((part) => part[0]).join(''),
+]);
+if (new Set(contextCodes.map(([, code]) => code)).size !== contextCodes.length) {
+  throw new Error('Requirement context codes must be unique.');
+}
+const slices = model.slices.filter((slice) => deployedContexts.has(slice.context));
+if (slices.length !== model.slices.length) {
+  throw new Error('A modeled slice is not assigned to a deployment.');
+}
 for (const slice of slices) {
   if (((slice.commands ?? []).length || (slice.readmodels ?? []).length) && !useCasesBySliceId.has(slice.id)) {
     throw new Error(`PRD use-case snapshot does not cover ${slice.context}/${slice.name}.`);
@@ -102,7 +122,8 @@ if (mode !== '--init' && !existsSync(registerPath)) throw new Error('Initialize 
 
 const register = mode === '--init'
   ? { schemaVersion: 1, revision: '0.1-draft', sectionId: 'LBLS-GN-LBXX', source: '.medol/codegen-model.json', contexts: [], concepts: [], functions: [] }
-  : JSON.parse(readFileSync(registerPath, 'utf8'));
+  : previousRegister;
+const existingContextNames = new Set(register.contexts.map((context) => context.sourceName));
 const registeredFunctions = new Map(register.functions.map((item) => [item.sourceId, item]));
 const added = [...current.values()].filter((item) => !registeredFunctions.has(item.sourceId));
 const removed = register.functions.filter((item) => item.status !== 'retired' && !current.has(item.sourceId));
@@ -121,7 +142,11 @@ if (mode === '--init' || mode === '--sync') {
     if (existing) {
       existing.title = translated(context.title);
     } else {
-      register.contexts.push({ id: `LBLS-GN-LBXX-${code}`, sourceId: context.id, sourceName: name, title: translated(context.title), sharedSupport: name === 'DictionaryMaintenance' || name === 'FileUpload' });
+      register.contexts.push({
+        id: `LBLS-GN-LBXX-${code}`, sourceId: context.id, sourceName: name,
+        title: translated(context.title), sharedSupport: model.deployments.some((deployment) =>
+          deployment.name === 'FederationLearningSupport' && deployment.contexts.some((item) => item.name === name)),
+      });
     }
   }
   for (const item of current.values()) {
@@ -144,6 +169,9 @@ if (mode === '--init' || mode === '--sync') {
   mkdirSync(directory, { recursive: true });
   writeFileSync(registerPath, `${JSON.stringify(register, null, 2)}\n`);
   if (mode === '--init') writeFileSync(draftPath, render(register));
+  if (mode === '--sync' && added.length && added.every((item) => !existingContextNames.has(item.sourceContext))) {
+    appendNewContextRequirements(render(register), added);
+  }
 }
 
 if (mode === '--candidate' || mode === '--sync') {
@@ -216,21 +244,59 @@ function report(label, items) {
   }
 }
 
+function appendNewContextRequirements(candidate, added) {
+  const draft = readFileSync(draftPath, 'utf8');
+  const rowPattern = /^\| \d+ \|[^\n]*?(LBLS-GN-LBXX-F\d+) \|[^\n]*$/gm;
+  const existingIds = new Set([...draft.matchAll(rowPattern)].map((match) => match[1]));
+  const newIds = new Set(added.map((item) => register.functions.find((entry) => entry.sourceId === item.sourceId)?.id));
+  if (newIds.has(undefined) || [...newIds].some((id) => existingIds.has(id))) {
+    throw new Error('New requirement IDs are missing or already present in the reviewed draft.');
+  }
+  const newRows = [...candidate.matchAll(rowPattern)]
+    .filter((match) => newIds.has(match[1])).map((match) => match[0]);
+  if (newRows.length !== newIds.size) throw new Error('Candidate does not contain every new function row.');
+  const oldRows = [...draft.matchAll(rowPattern)];
+  if (!oldRows.length) throw new Error('Reviewed requirement draft has no function table.');
+  const lastRow = oldRows.at(-1);
+  const insertAt = lastRow.index + lastRow[0].length;
+  let updated = draft.slice(0, insertAt) + '\n' + newRows.join('\n') + draft.slice(insertAt);
+  const headingPattern = /^## ([^\n]+) \/ (LBLS-GN-LBXX-[A-Z]+)$/gm;
+  const headings = [...candidate.matchAll(headingPattern)];
+  const contextIds = new Set(added.map((item) =>
+    register.contexts.find((context) => context.sourceName === item.sourceContext)?.id));
+  if (contextIds.has(undefined)) throw new Error('New requirement context has no stable identifier.');
+  const additions = headings.filter((heading) => contextIds.has(heading[2])).map((heading) => {
+    const next = headings.find((item) => item.index > heading.index);
+    return candidate.slice(heading.index, next?.index ?? candidate.length).trim();
+  });
+  if (additions.length !== contextIds.size || additions.some((section) => draft.includes(section.split('\n', 1)[0]))) {
+    throw new Error('New requirement context sections cannot be appended safely.');
+  }
+  updated = updated.trimEnd() + '\n\n' + additions.join('\n\n') + '\n';
+  writeFileSync(draftPath, updated);
+}
+
 function render(data) {
   const contextByName = new Map(data.contexts.map((context) => [context.sourceName, context]));
   const conceptBySource = new Map(data.concepts.map((concept) => [concept.sourceKey, concept]));
   const functionsBySource = new Map(data.functions.map((item) => [item.sourceId, item]));
-  const rows = slices.map((slice, index) => {
+  const slicesById = new Map(slices.map((slice) => [slice.id, slice]));
+  const orderedSlices = data.functions.filter((item) => item.status !== 'retired')
+    .map((item) => slicesById.get(item.sourceId));
+  if (orderedSlices.some((slice) => !slice) || orderedSlices.length !== slices.length) {
+    throw new Error('Requirement register must cover every deployed model slice.');
+  }
+  const rows = orderedSlices.map((slice, index) => {
     const item = functionsBySource.get(slice.id);
     if (!item) return null;
     const context = contextByName.get(slice.context);
     const concept = conceptBySource.get(`${slice.context}/${conceptName(slice)}`);
-    const note = context.sharedSupport ? '共享支撑能力；与系统管理章节避免重复定义' : slice.context === 'RuntimeAgentOperations' ? '参与方本地执行' : '';
+    const note = context.sharedSupport ? '共享支撑能力' : slice.context === 'RuntimeAgentOperations' ? '参与方本地执行' : '';
     return `| ${index + 1} | ${context.title} / ${context.id} | ${concept.title} / ${concept.id} | ${item.title} / ${item.id} | ${note} |`;
   }).filter(Boolean);
   const detailSections = contextCodes.flatMap(([contextName]) => {
     const context = contextByName.get(contextName);
-    const contextSlices = slices.filter((slice) => slice.context === contextName);
+    const contextSlices = orderedSlices.filter((slice) => slice.context === contextName);
     if (!context || !contextSlices.length) return [];
     return [
       `## ${context.title} / ${context.id}`,

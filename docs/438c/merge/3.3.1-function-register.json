@@ -87,6 +87,27 @@
       "sourceName": "RuntimeAgentOperations",
       "title": "运行时代理操作",
       "sharedSupport": false
+    },
+    {
+      "id": "LBLS-GN-LBXX-SN",
+      "sourceId": "context-d660287b",
+      "sourceName": "SystemNotification",
+      "title": "系统通知",
+      "sharedSupport": true
+    },
+    {
+      "id": "LBLS-GN-LBXX-DE",
+      "sourceId": "context-762d5885",
+      "sourceName": "DataExchange",
+      "title": "数据交换",
+      "sharedSupport": true
+    },
+    {
+      "id": "LBLS-GN-LBXX-IAM",
+      "sourceId": "context-90939a75",
+      "sourceName": "IdentityAccessManagement",
+      "title": "身份访问管理",
+      "sharedSupport": true
     }
   ],
   "concepts": [
@@ -284,6 +305,51 @@
       "id": "LBLS-GN-LBXX-B039",
       "sourceKey": "DictionaryMaintenance/DictionaryValueTranslation",
       "title": "字典值翻译"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B040",
+      "sourceKey": "SystemNotification/SystemNotification",
+      "title": "系统通知"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B041",
+      "sourceKey": "DataExchange/SharedCapability",
+      "title": "公共查询与协作"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B042",
+      "sourceKey": "DataExchange/DataExportJob",
+      "title": "数据导出作业"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B043",
+      "sourceKey": "IdentityAccessManagement/UserAccount",
+      "title": "用户账户"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B044",
+      "sourceKey": "IdentityAccessManagement/Role",
+      "title": "角色"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B045",
+      "sourceKey": "IdentityAccessManagement/Permission",
+      "title": "权限"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B046",
+      "sourceKey": "IdentityAccessManagement/ServiceAccountApiToken",
+      "title": "服务账户 API 令牌"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B047",
+      "sourceKey": "IdentityAccessManagement/UserRoleAssignment",
+      "title": "用户角色分配"
+    },
+    {
+      "id": "LBLS-GN-LBXX-B048",
+      "sourceKey": "IdentityAccessManagement/RolePermissionGrant",
+      "title": "角色权限授予"
     }
   ],
   "functions": [
@@ -402,7 +468,7 @@
       "sourceName": "InviteParticipant",
       "sourceConcept": "FederationMembership",
       "title": "邀请参与者",
-      "sourceHash": "ce35a3308f89735f8218c45bb8d894096875bdedf1d94183ee2b6c328aac3b39"
+      "sourceHash": "59b2ba0cd32926d216ec84e84a3784e54ed93f6088e8a16a426890d667a7da0b"
     },
     {
       "id": "LBLS-GN-LBXX-F0014",
@@ -573,7 +639,7 @@
       "sourceName": "RecordRuntimeConnectionEstablished",
       "sourceConcept": "RuntimeInfrastructure",
       "title": "记录运行时连接已建立",
-      "sourceHash": "119123b16f434f15943a57ec1d4e03a3eabf589a9a1a5bcac8742018362ea4e6"
+      "sourceHash": "4271432f44f3d1d24625a71fd098a9b0e35fffb3ef9725600d7a189bbc058806"
     },
     {
       "id": "LBLS-GN-LBXX-F0033",
@@ -717,7 +783,7 @@
       "sourceName": "DownloadModelArtifact",
       "sourceConcept": "ModelArtifact",
       "title": "下载模型工件",
-      "sourceHash": "e601df7f91a15ef7415f12fefcd208c2a949a6c6bddc6a0d762774648cb1cef2"
+      "sourceHash": "b0328fdd024dd6512ce04fa40194e6a88d332446722fb2c30ad7b6355b4326fe"
     },
     {
       "id": "LBLS-GN-LBXX-F0049",
@@ -726,7 +792,7 @@
       "sourceName": "RegisterFederatedModelArtifact",
       "sourceConcept": "ModelArtifact",
       "title": "注册联邦模型工件",
-      "sourceHash": "3cd3e2aaa99fb7ad73fc79b28ffc58b16e3011904281d568cbe9d60f535d3c4f"
+      "sourceHash": "a5a32002f107ddddf3d8a4b4fa405ac693c72d0d7aeec558196f963848c50afd"
     },
     {
       "id": "LBLS-GN-LBXX-F0050",
@@ -735,7 +801,7 @@
       "sourceName": "RegisterPersonalizedModelArtifact",
       "sourceConcept": "ModelArtifact",
       "title": "注册个性化模型制品",
-      "sourceHash": "b54fd076b9a65417f27c1b538812337ea56c4e3c183b94cbbc6a3a57d8b0b6f1"
+      "sourceHash": "ac686a2d44a6b077846784f59d280fb7b49b06be1e8e13562ef4252c286837d3"
     },
     {
       "id": "LBLS-GN-LBXX-F0051",
@@ -897,7 +963,7 @@
       "sourceName": "StartTrainingRound",
       "sourceConcept": "TrainingRound",
       "title": "开始训练轮次",
-      "sourceHash": "cc71ac8d879dc35cf13e0e763e33fb527c4868d072d43d523a091fc73311da76"
+      "sourceHash": "bf40f9cc223ac35988225f436682c21159f27d0ddcee36f33ee0200368f89f7a"
     },
     {
       "id": "LBLS-GN-LBXX-F0069",
@@ -960,7 +1026,7 @@
       "sourceName": "AggregatePlainModelUpdates",
       "sourceConcept": "TrainingRound",
       "title": "聚合明文模型更新",
-      "sourceHash": "a9d7ba12d5bf73e527577cf842dbaadcb71cbed7b00eda8be3c862fdfe728632"
+      "sourceHash": "b3d17b33026972bd1ea6a09b15e9825aeb9757cbb2ce6606803d5c57f799588b"
     },
     {
       "id": "LBLS-GN-LBXX-F0076",
@@ -978,7 +1044,7 @@
       "sourceName": "CompleteModelAggregation",
       "sourceConcept": "TrainingRound",
       "title": "完成模型聚合",
-      "sourceHash": "23b7ccebf14279215ee87a76592afc8562c9c098c97986a2e051870d53c68657"
+      "sourceHash": "368ecca7c7c7ed6933677aa08f05698ac745e7c7c3992ce7aa955b5227908bde"
     },
     {
       "id": "LBLS-GN-LBXX-F0078",
@@ -1149,7 +1215,7 @@
       "sourceName": "ActivateRuntimeIdentity",
       "sourceConcept": "RuntimeIdentity",
       "title": "激活运行时标识",
-      "sourceHash": "bc7365c874782de8acce78501bfe9ee3f462869d19575f6e1169f6f5e2c51a94"
+      "sourceHash": "933fcc8d66ece1627ec89876d8bde07dfb77c8c1e8d1dd27d5d15c719ce6ece1"
     },
     {
       "id": "LBLS-GN-LBXX-F0097",
@@ -1212,7 +1278,7 @@
       "sourceName": "PrepareHomomorphicEncryptionContext",
       "sourceConcept": "SecureAggregationSession",
       "title": "准备同态加密上下文",
-      "sourceHash": "7468e3b5f53e8ad9321a482df7378f47127e3b7dc287cfd514381f2a2be8f51d"
+      "sourceHash": "3b462b5dfff9ebcda9d7fedaa77d106094ba53112042aea014655f790790fbad"
     },
     {
       "id": "LBLS-GN-LBXX-F0104",
@@ -1825,6 +1891,195 @@
       "sourceConcept": "DictionaryValueTranslation",
       "title": "字典值翻译目录",
       "sourceHash": "2c8a2d2651634ebce371e909ea35ae9744738da7a259bf4ededd27e5cd26e4bb"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0172",
+      "sourceId": "slice-314f81ac",
+      "sourceContext": "SystemNotification",
+      "sourceName": "PublishSystemNotification",
+      "sourceConcept": "SystemNotification",
+      "title": "发布系统通知",
+      "sourceHash": "39e35a5bf06a2ef979b550a97f3085c478c6cd089a0ab0956a64511e67551611"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0173",
+      "sourceId": "slice-2fbf1194",
+      "sourceContext": "SystemNotification",
+      "sourceName": "MarkSystemNotificationRead",
+      "sourceConcept": "SystemNotification",
+      "title": "标记系统通知为已读",
+      "sourceHash": "8bf6160d6ba48731d02458e10d338a38d275f4df246dac05fc311506e59fa2bb"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0174",
+      "sourceId": "slice-2d5b5cec",
+      "sourceContext": "SystemNotification",
+      "sourceName": "MarkAllSystemNotificationsRead",
+      "sourceConcept": "SystemNotification",
+      "title": "标记所有系统通知为已读",
+      "sourceHash": "d4116f632516f93ef7bf4a129d9e23fa136cf6d830d2ceb200d4e7444761b303"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0175",
+      "sourceId": "slice-e7e1379c",
+      "sourceContext": "SystemNotification",
+      "sourceName": "SystemNotificationCatalog",
+      "sourceConcept": "SystemNotification",
+      "title": "系统通知目录",
+      "sourceHash": "463214068cf438e6a86e6e2a0aeba0a01c9cbf13453f6dcf744bea950a944206"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0176",
+      "sourceId": "slice-44017ae3",
+      "sourceContext": "DataExchange",
+      "sourceName": "DataImportJob",
+      "sourceConcept": "SharedCapability",
+      "title": "数据导入作业",
+      "sourceHash": "2f67a13a20b2256433f12a878781d29e48a5f21a17b0571e5617a6d74cefbeb3"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0177",
+      "sourceId": "slice-c6e982a6",
+      "sourceContext": "DataExchange",
+      "sourceName": "DataExportJob",
+      "sourceConcept": "DataExportJob",
+      "title": "数据导出作业",
+      "sourceHash": "db0010d26a4624c85c8694bc2ec985515e705a9423ade3cf3a987400435e6a4d"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0178",
+      "sourceId": "slice-9af02ded",
+      "sourceContext": "DataExchange",
+      "sourceName": "DownloadDataExportFile",
+      "sourceConcept": "DataExportJob",
+      "title": "下载数据导出文件",
+      "sourceHash": "cc90477a461da156c217de85a27c0827b05b67464c8879a0c7c62f8d25f1d035"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0179",
+      "sourceId": "slice-4fcce762",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "RegisterUserAccount",
+      "sourceConcept": "UserAccount",
+      "title": "注册用户账户",
+      "sourceHash": "3f328d16c6e7ceb0a9a10606506811e6f24b1545286c8a13a2a7bce0caf0c121"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0180",
+      "sourceId": "slice-2f4abaeb",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "DeactivateUserAccount",
+      "sourceConcept": "UserAccount",
+      "title": "停用用户账户",
+      "sourceHash": "36e17b139f7830ce6bc50cfa002eb0d0bb3be99e004406514e5516ab64c96b6d"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0181",
+      "sourceId": "slice-5da5f728",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "GenerateUserAccountLoginPassword",
+      "sourceConcept": "UserAccount",
+      "title": "生成用户账户登录密码",
+      "sourceHash": "3f409c7a295e341fab9bb36e39a2d8aa0b976fd085979d0d1e987301a2770273"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0182",
+      "sourceId": "slice-7b54b84c",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "RegisterRole",
+      "sourceConcept": "Role",
+      "title": "注册角色",
+      "sourceHash": "bd220308ccea8d26b87ffb4617e4351ad9286de9b7aa0e4c7ad952d798eab36c"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0183",
+      "sourceId": "slice-1bda8ebb",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "RegisterPermission",
+      "sourceConcept": "Permission",
+      "title": "注册权限",
+      "sourceHash": "d0e35797f901a8de45f60f0f70a52295565495fac91e7a43fb53b8ab771a106a"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0184",
+      "sourceId": "slice-1d773a87",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "GrantPermissionToRole",
+      "sourceConcept": "Role",
+      "title": "为角色授予权限",
+      "sourceHash": "1e2098d6914247c475e492ad557f3e1e674036259e0183e0809c94b7287cd4af"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0185",
+      "sourceId": "slice-0766b926",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "AssignRoleToUser",
+      "sourceConcept": "UserAccount",
+      "title": "为用户分配角色",
+      "sourceHash": "058a355cf1b72b73011e33d27c890f6c9e23e8fde029c1decc670fd4d0e579be"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0186",
+      "sourceId": "slice-b263007b",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "IssueServiceAccountApiToken",
+      "sourceConcept": "ServiceAccountApiToken",
+      "title": "颁发服务账户 API 令牌",
+      "sourceHash": "fa66a45f49fb563675231c7357fa6ebc0623c0bcffe6fffc96d5c651132c674c"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0187",
+      "sourceId": "slice-425842d5",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "UserAccountCatalogs",
+      "sourceConcept": "UserAccount",
+      "title": "用户账户目录",
+      "sourceHash": "49c90f78a85a9a9bf6ae98f2c90aa92da72709d87c9968bb1e212d680d85cdc5"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0188",
+      "sourceId": "slice-10714181",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "RoleCatalogs",
+      "sourceConcept": "Role",
+      "title": "角色目录",
+      "sourceHash": "a896658d4de597761f6f73551d24f8320ab92bcba287ca9e67d264c9fd70a5dc"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0189",
+      "sourceId": "slice-9f1bec7a",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "PermissionCatalogs",
+      "sourceConcept": "Permission",
+      "title": "权限目录",
+      "sourceHash": "4f83c4e246afdd2031ed7f348a0ebfd200a43c93cb76e20ca62284df749afbb5"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0190",
+      "sourceId": "slice-33855446",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "UserRoleAssignmentCatalog",
+      "sourceConcept": "UserRoleAssignment",
+      "title": "用户角色分配目录",
+      "sourceHash": "77b47976ad16617d77cca5e05417d99faf95cbe37fda97b6d6e1f758fc45e2a0"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0191",
+      "sourceId": "slice-4d6e3a7f",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "RolePermissionGrantCatalog",
+      "sourceConcept": "RolePermissionGrant",
+      "title": "角色权限授予目录",
+      "sourceHash": "0cfb960fd7e3033b5122173ebd65d18cde5101831ab6013211cac2f28ac2673b"
+    },
+    {
+      "id": "LBLS-GN-LBXX-F0192",
+      "sourceId": "slice-6047e82e",
+      "sourceContext": "IdentityAccessManagement",
+      "sourceName": "ServiceAccountApiTokenCatalogs",
+      "sourceConcept": "ServiceAccountApiToken",
+      "title": "服务账户 API 令牌目录",
+      "sourceHash": "c5cb92558789f1450a14bb9f82306f90fce51ae1bb2184adb555c1d6910e8f07"
     }
   ]
 }

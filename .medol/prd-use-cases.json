@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "fnv1a:5f4eccb1",
-  "generatedAt": "2026-10-19T02:04:44.287Z",
+  "sourceHash": "fnv1a:a5b90185",
+  "generatedAt": "2026-10-23T08:25:27.926Z",
   "useCases": [
     {
       "id": "UC-90F5241D",
@@ -1193,7 +1193,15 @@
           ]
         }
       ],
-      "businessRules": [],
+      "businessRules": [
+        {
+          "kind": "condition",
+          "text": "A federation and organization identify one membership. Inviting the same organization into the same federation again must be rejected, including when its membership already exists. The organization may be invited into other federations.",
+          "sourceRefs": [
+            "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant/gwt/Federation Participant Invitation Unique/Reject Duplicate Participant Invitation"
+          ]
+        }
+      ],
       "preconditions": [],
       "mainFlow": [
         {
@@ -1211,7 +1219,38 @@
           ]
         }
       ],
-      "alternateFlows": [],
+      "alternateFlows": [
+        {
+          "name": "Reject Duplicate Participant Invitation",
+          "scenarioContext": [
+            {
+              "kind": "condition",
+              "text": "ParticipantInvited",
+              "sourceRefs": [
+                "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant/gwt/Federation Participant Invitation Unique/Reject Duplicate Participant Invitation"
+              ]
+            }
+          ],
+          "conditions": [],
+          "rule": {
+            "kind": "condition",
+            "text": "A federation and organization identify one membership. Inviting the same organization into the same federation again must be rejected, including when its membership already exists. The organization may be invited into other federations.",
+            "sourceRefs": [
+              "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant/gwt/Federation Participant Invitation Unique/Reject Duplicate Participant Invitation"
+            ]
+          },
+          "outcome": {
+            "kind": "rejection",
+            "text": "Participant Already Invited",
+            "sourceRefs": [
+              "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant/gwt/Federation Participant Invitation Unique/Reject Duplicate Participant Invitation"
+            ]
+          },
+          "sourceRefs": [
+            "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant/gwt/Federation Participant Invitation Unique/Reject Duplicate Participant Invitation"
+          ]
+        }
+      ],
       "outcomes": [
         {
           "kind": "event",
@@ -1230,14 +1269,15 @@
       ],
       "openQuestions": [
         "Confirm the business preconditions for this use case.",
-        "Confirm the exceptional and rejection paths."
+        "Confirm the conditions that select each alternative path."
       ],
       "sourceRefs": [
         "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant",
         "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant/actor/FederationOwner",
         "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant/screen/ParticipantInvitationScreen",
         "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant/command/InviteParticipant",
-        "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant/event/ParticipantInvited"
+        "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant/event/ParticipantInvited",
+        "domain/FederationLearningPlatform/context/FederationManagement/slice/InviteParticipant/gwt/Federation Participant Invitation Unique/Reject Duplicate Participant Invitation"
       ]
     },
     {

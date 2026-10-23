@@ -38,6 +38,8 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
         self.assertIn('FL-U-SEL 参与者选择 / FL-SD-DET-05-R01', rendered['detailed'])
         self.assertIn('注册组织 / FL-SD-OP-F0001', rendered['detailed'])
         self.assertIn('字典值翻译目录 / FL-SD-OP-F0171', rendered['detailed'])
+        self.assertIn('服务账户 API 令牌目录 / FL-SD-OP-F0192', rendered['detailed'])
+        self.assertIn('FL-U-C-IAM 身份访问管理 / FL-SD-DET-26-R15', rendered['detailed'])
         self.assertIn('当前本地全局模型评估适配器返回固定精度与公平性数值', rendered['detailed'])
         self.assertIn('LBLS-GN-LBXX-F0131', rendered['detailed'])
         self.assertIn('{{FIGURE:FL-SD-DBC-04}}', rendered['db-conceptual'])
@@ -58,7 +60,7 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
     def test_operation_design_covers_commands_queries_and_automation(self):
         groups = merge.load_operation_design()
         rows = {row['requirementId']: row for group in groups for row in group['rows']}
-        self.assertEqual(len(rows), 171)
+        self.assertEqual(len(rows), 192)
         self.assertIn('组织名称必须唯一', rows['LBLS-GN-LBXX-F0001']['cells'][2])
         self.assertIn('查询视图按条件读取', rows['LBLS-GN-LBXX-F0005']['cells'][2])
         self.assertIn('选择训练轮次参与者', rows['LBLS-GN-LBXX-F0064']['cells'][2])
@@ -69,13 +71,13 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
     def test_chapter_six_traces_every_current_function_in_both_directions(self):
         source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
         traces = merge.traceability_rows(source)
-        self.assertEqual(len(traces), 171)
+        self.assertEqual(len(traces), 192)
         self.assertEqual(len({row['id'] for row in traces}), len(traces))
         selected = next(row for row in traces if row['id'] == 'LBLS-GN-LBXX-F0066')
         self.assertIn('FL-SD-OP-F0066', selected['design'])
         self.assertIn('FL-SD-DET-05-R01', selected['design'])
         self.assertIn('FL-SD-OP-F0001', traces[0]['design'])
-        self.assertIn('FL-SD-OP-F0171', traces[-1]['design'])
+        self.assertIn('FL-SD-OP-F0192', traces[-1]['design'])
         self.assertNotIn('FL-SU-', traces[0]['design'])
 
         document = Document(merge.DEFAULT_TARGET)
@@ -98,9 +100,9 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
             self.assertEqual(reverse.rows[index].cells[1].text, row['design'])
             self.assertEqual(reverse.rows[index].cells[2].text, row['requirement'])
             self.assertEqual(reverse.rows[index].cells[3].text, '')
-        self.assertIn('LBLS-GN-SZR-HOME', forward.rows[172].cells[1].text)
+        self.assertIn('LBLS-GN-SZR-HOME', forward.rows[193].cells[1].text)
         self.assertIn('LBLS-GN-SZR-HOME', reverse.rows[len(reverse_rows) + 1].cells[2].text)
-        self.assertEqual(forward.rows[172].cells[0].text, '172')
+        self.assertEqual(forward.rows[193].cells[0].text, '193')
         self.assertEqual(reverse.rows[len(reverse_rows) + 1].cells[0].text, str(len(reverse_rows) + 1))
         self.assertIn('操作处理设计行双向对照', '\n'.join(p.text for p in document.paragraphs))
 
@@ -116,7 +118,7 @@ class SoftwareDesignTrackingTest(unittest.TestCase):
     def test_context_unit_coverage_rejects_new_unmapped_context(self):
         source = merge.read_structured_sections(merge.DEFAULT_SECTIONS)
         context_table = next(block for block in source['sections']['detailed'] if block['id'] == 'FL-SD-DET-26')
-        self.assertEqual(len(context_table['rows']), 12)
+        self.assertEqual(len(context_table['rows']), 15)
         changed = deepcopy(source)
         table = next(block for block in changed['sections']['detailed'] if block['id'] == 'FL-SD-DET-26')
         table['rows'] = table['rows'][1:]

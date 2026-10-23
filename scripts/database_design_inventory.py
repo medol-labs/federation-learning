@@ -14,6 +14,7 @@ REGISTER = ROOT / 'docs/438c/merge/database-design-register.json'
 DEPLOYMENTS = {
     'FederationLearningPlatform': ('平台', 'federation-learning-platform'),
     'FederationLearningRuntimeAgent': ('参与方代理', 'federation-learning-runtime-agent'),
+    'FederationLearningSupport': ('共享支撑服务', 'federation-learning-support'),
 }
 TABLE = re.compile(r'@Table\(name\s*=\s*"([^"]+)"\)')
 PROPERTY = re.compile(r'^\s*var\s+(\w+):\s+([^=]+?)\s*=\s*null\s*$', re.MULTILINE)

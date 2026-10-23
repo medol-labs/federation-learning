@@ -497,13 +497,13 @@ def read_model_inventory():
     deployment_labels = {
         'FederationLearningPlatform': '平台',
         'FederationLearningRuntimeAgent': '参与方代理',
+        'FederationLearningSupport': '共享支撑服务',
     }
     contexts = {
         context['name']: deployment_labels[deployment['name']]
         for deployment in model['deployments']
         if deployment['name'] in deployment_labels
         for context in deployment['contexts']
-        if context['name'] != 'IdentityAccessManagement'
     }
     rows = ['| 部署单元 | 数据主题与查询视图 | 标识字段 |', '| --- | --- | --- |']
     seen = set()
