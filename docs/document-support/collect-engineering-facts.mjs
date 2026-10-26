@@ -236,11 +236,11 @@ function deploymentModes(config) {
 function operationsCommands(config) {
   const environment = config.environment ?? 'dev';
   return [
-    `cp operations/${environment}/.env-example operations/${environment}/.env`,
-    `docker compose --env-file operations/${environment}/.env -f operations/${environment}/docker-compose/docker-compose.yml up -d`,
-    `node operations/${environment}/images.mjs list`,
-    `node operations/${environment}/images.mjs all`,
-    `kubectl apply -k operations/${environment}/kubernetes/environments/${environment}`,
+    `cp operations/docker-compose/${environment}/.env-example operations/docker-compose/${environment}/.env`,
+    `docker compose --env-file operations/docker-compose/${environment}/.env -f operations/docker-compose/${environment}/docker-compose.yml up -d`,
+    `node operations/images/${environment}/images.mjs list`,
+    `node operations/images/${environment}/images.mjs all`,
+    `kubectl apply -k operations/kubernetes/environments/${environment}`,
   ];
 }
 

@@ -23,8 +23,8 @@ the fourth delivery part.
 Build and package the generated applications from the system root:
 
 ```bash
-node operations/dev/images.mjs build --version v1.0.0.0
-node operations/dev/images.mjs package --version v1.0.0.0
+node operations/images/dev/images.mjs build --version v1.0.0.0
+node operations/images/dev/images.mjs package --version v1.0.0.0
 ```
 
 The engine keeps its own build script and uses the root operations provenance:

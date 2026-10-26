@@ -1,7 +1,0 @@
-operations:
-  registry:
-    host: registry.example.com
-    # Optional host-side build/push address for the same registry.
-    pushHost: registry.example.com
-    namespace: team
-    insecure: true

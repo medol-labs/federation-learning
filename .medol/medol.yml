@@ -8,48 +8,5 @@ generators:
   operations:
     output: .
 
-operations:
-  networkTopology:
-    sites:
-      platform:
-        title: Platform environment
-        gateway: true
-        applications:
-          federation-learning-console: true
-          federation-learning-platform: true
-          federation-learning-support: true
-        infrastructure:
-          postgres: true
-          umadb: true
-      participant:
-        title: Participant environment (per organization)
-        applications:
-          federation-learning-participant-console: true
-          federation-learning-runtime-agent: true
-        infrastructure:
-          postgres: true
-          umadb: true
-    connections:
-      dispatch:
-        from: federation-learning-platform
-        to: federation-learning-runtime-agent
-        protocol: HTTP
-        label: Participant execution dispatch
-      report:
-        from: federation-learning-runtime-agent
-        to: federation-learning-platform
-        protocol: HTTP
-        label: Runtime reporting and model updates
-  applications:
-    federation-learning-support:
-      servicePort: 8080
-    federation-learning-platform:
-      servicePort: 8081
-    federation-learning-runtime-agent:
-      servicePort: 8082
-  # Keep registry settings out of committed workspace config because
-  # development registry addresses vary by machine and environment.
-  # Generate registry overlays from local, untracked config when needed.
-
 workspaceFiles:
   overwrite: false

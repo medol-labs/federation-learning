@@ -15,10 +15,9 @@ the system can be regenerated without losing domain-specific code.
   domain model.
 - `.medol/codegen-model.json` is the generated CodegenModel consumed by
   `medol-codegen`.
-- `.medol/medol.yml` configures generator output directories, frontend apps,
-  operations targets, and project-level defaults.
-- `.medol/medol.local.yml` may override local machine settings such as
-  `operations.registry`; it is intentionally ignored by git.
+- `.medol/medol.yml` configures generator output directories and workspace settings.
+- `operations/config/common.yml` holds shared deployment settings. Optional
+  `operations/config/<environment>.private.yml` files hold machine-specific settings.
 - `federation-learning-platform/` contains generated command, event, query, aggregate,
   projection, and API code derived from the business model.
 - `federation-learning-console/` contains generated application shells and resource-oriented
@@ -68,6 +67,58 @@ gen /opt/codegen/.generator/app/ --generator operations --generator-type all --e
 
 Generated code may be overwritten during regeneration. Keep custom behavior in
 the extension locations documented by each generated module.
+
+## Operations Layout
+
+Operations files are grouped by component, then environment. Generating another
+environment adds its files under the same component directory:
+
+```text
+operations/
+  model/<environment>/              portable model, local registry override, topology
+  images/<environment>/             image build, push, import, and package scripts
+  apisix/<environment>/             standalone gateway configuration
+  docker-compose/<environment>/     Compose file, env example, database init files
+  harbor/<environment>/             optional Harbor installation assets
+  zot/<environment>/                optional Zot registry assets
+  k3s/base/                         common K3s resources
+  k3s/environments/<environment>/   environment ConfigMaps and patches
+  kubernetes/base/                  common Kubernetes resources
+  kubernetes/environments/<environment>/
+```
+
+Generate each required environment explicitly, for example:
+
+```bash
+gen /opt/codegen/.generator/app/ --generator operations --generator-type all --environment dev
+gen /opt/codegen/.generator/app/ --generator operations --generator-type all --environment local
+gen /opt/codegen/.generator/app/ --generator operations --generator-type all --environment test
+gen /opt/codegen/.generator/app/ --generator operations --generator-type all --environment prod
+```
+
+Deployment settings live in `operations/config/common.yml`. Add
+`operations/config/<environment>.yml` for committed environment differences,
+or copy `operations/config/dev.private.example.yml` to
+`operations/config/dev.private.yml` for a private registry address. Private files
+are ignored by Git and apply only to their matching environment. The old
+`.medol/medol.local.yml` registry setting is not used once this configuration
+directory is present. `local` is a separate deployment environment; generate it
+with `--environment local`. There is no shared `local.yml` because local
+settings vary by machine. Use `operations/config/local.private.yml` when needed.
+
+From the repository root, use `node operations/images/dev/images.mjs list` to
+inspect image settings. For Compose, copy
+`operations/docker-compose/dev/.env-example` to `.env` in that directory and run
+`docker compose --env-file .env up -d` there. APISIX configuration is mounted
+from `operations/apisix/dev/`. For K3s, prepare the environment's Secrets
+separately, then apply `operations/k3s/environments/dev` (or its registry overlay).
+See [K3s deployment](operations/k3s/README.md) for the order of operations.
+
+Older locally generated `operations/test/` and `operations/prod/` directories
+use the previous environment-first layout. Regenerate those environments with
+the current code generator before deploying them; the generator does not delete
+old files automatically. Keep machine-specific registry addresses and Secrets
+out of git.
 
 ## Project Documents
 
@@ -176,25 +227,24 @@ If every participant fails, the flow reports their execution failure reasons
 instead of waiting only for the platform job to finish. Other training timeouts
 include the last observed job, round, and participant states.
 
-Image build and flow use the same generated `operations/dev/image-config.mjs`.
-Machine-specific settings belong in the ignored `.medol/medol.local.yml`:
+Image build and flow use the same generated `operations/images/dev/image-config.mjs`.
+Machine-specific settings belong in the ignored `operations/config/dev.private.yml`:
 
 ```yaml
-operations:
-  registry:
-    host: registry.internal.example:5000
-    pushHost: registry-push.example:5000
-    namespace: fl
-    insecure: true
+registry:
+  host: registry.internal.example:5000
+  pushHost: registry-push.example:5000
+  namespace: fl
+  insecure: true
 ```
 
 `host` is reachable from cluster nodes. Optional `pushHost` is the host-side
 address of the same registry (for example, a locally published Zot port); omit it
 when both addresses are identical. Regenerate operations after changing this
-configuration so `operations/dev/operations-model.local.json` and registry mirrors
+configuration so `operations/model/dev/operations-model.private.json` and registry mirrors
 are updated. Recreate k3d if its registry mirror configuration changes.
 
-Both `node operations/dev/images.mjs list` and flow `--dry-run` show the resolved
+Both `node operations/images/dev/images.mjs list` and flow `--dry-run` show the resolved
 build/deployment prefixes. Explicit CLI prefixes take precedence, followed by
 environment variables and the generated environment configuration.
 The runtime-engine image helper also reads this configuration when used inside
@@ -210,8 +260,8 @@ uses `registry.host`, both with the configured namespace.
 Build and publish the three backends (platform, runtime-agent, support):
 
 ```bash
-node operations/dev/images.mjs build --skip-console --platform linux/amd64
-node operations/dev/images.mjs push --skip-console
+node operations/images/dev/images.mjs build --skip-console --platform linux/amd64
+node operations/images/dev/images.mjs push --skip-console
 ```
 
 `--skip-console` skips both frontend images: `federation-learning-console` and
@@ -272,16 +322,15 @@ node scripts/init-training-prerequisites.mjs --target training-job --scenario de
 
 ## Local Registry
 
-Keep machine-specific registry settings in `.medol/medol.local.yml` and
+Keep machine-specific registry settings in `operations/config/<environment>.private.yml` and
 regenerate operations files when needed:
 
 ```yaml
-operations:
-  registry:
-    host: registry.example.com
-    namespace: team
-    insecure: true
+registry:
+  host: registry.example.com
+  namespace: team
+  insecure: true
 ```
 
-Generated registry overlays and `operations/<environment>/k3s/cluster/registries.yaml` are machine-local artifacts
+Generated registry overlays and `operations/k3s/cluster/registries.yaml` are machine-local artifacts
 and should not be committed.

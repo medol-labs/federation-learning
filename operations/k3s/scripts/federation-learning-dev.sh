@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 K3S_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
-PROJECT_ROOT="$(cd "${K3S_DIR}/../../.." && pwd)"
+PROJECT_ROOT="$(cd "${K3S_DIR}/../.." && pwd)"
 WORK_DIR="${K3S_DIR}/.work"
 COMMAND="${1:-help}"
 NAMESPACE="${NAMESPACE:-federation-learning-platform}"

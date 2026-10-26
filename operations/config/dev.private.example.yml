@@ -1,0 +1,4 @@
+registry:
+  host: registry.example.com:5000
+  namespace: team
+  insecure: true

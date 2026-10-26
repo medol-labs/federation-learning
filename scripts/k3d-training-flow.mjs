@@ -5,7 +5,7 @@ import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {spawn, spawnSync} from 'node:child_process';
 import {createServer} from 'node:net';
-import {resolveImageConfig, resolveImageArtifact} from '../operations/dev/image-config.mjs';
+import {resolveImageConfig, resolveImageArtifact} from '../operations/images/dev/image-config.mjs';
 
 if (typeof fetch !== 'function') {
     fail('This script requires Node.js 18 or newer because it uses global fetch.');
@@ -39,7 +39,7 @@ const scenario = stringArg('scenario', 'FL_TRAINING_SCENARIO', 'densenet');
 const federationMode = normalizeFederationMode(args['federation-mode'] ?? process.env.FL_FEDERATION_MODE ?? 'global');
 const trainingRunKey = optionalString(args['training-run-key'] ?? process.env.FL_TRAINING_RUN_KEY);
 const waitForTraining = Boolean(args['wait-for-training']);
-const k3sDevEnvironmentDir = resolve(repoRoot, 'operations/dev/k3s/environments/dev');
+const k3sDevEnvironmentDir = resolve(repoRoot, 'operations/k3s/environments/dev');
 const k3sDevSecretsFile = resolve(k3sDevEnvironmentDir, 'secrets.dev.yaml');
 const k3sDevSecretsExampleFile = resolve(k3sDevEnvironmentDir, 'secrets.example.yaml');
 const adminUsername = stringArg('admin-username', 'FL_K3D_ADMIN_USERNAME', 'admin');
@@ -71,10 +71,10 @@ let runtimeEngineImage = stringArg(
 const internalToken = optionalString(args['internal-token'] ?? process.env.MEDOL_SECURITY_INTERNAL_TOKEN) ?? 'local-dev-internal-token';
 let runtimeAgentImage = optionalString(args['runtime-agent-image'] ?? process.env.FL_RUNTIME_AGENT_IMAGE);
 let participantConsoleImage = optionalString(args['participant-console-image'] ?? process.env.FL_PARTICIPANT_CONSOLE_IMAGE);
-const k3dScript = resolve(repoRoot, 'operations/dev/k3s/scripts/federation-learning-dev.sh');
+const k3dScript = resolve(repoRoot, 'operations/k3s/scripts/federation-learning-dev.sh');
 const kubeconfigFile = resolve(
     repoRoot,
-    `operations/dev/k3s/.work/kubeconfig-${clusterName}.yaml`
+    `operations/k3s/.work/kubeconfig-${clusterName}.yaml`
 );
 const portForwardProcesses = [];
 const authTokensByBaseUrl = new Map();
@@ -446,7 +446,7 @@ async function prepareParticipant(slot) {
 }
 
 function rebuildApplicationImages() {
-    const imagesScript = resolve(repoRoot, 'operations/dev/images.mjs');
+    const imagesScript = resolve(repoRoot, 'operations/images/dev/images.mjs');
     if (!existsSync(imagesScript)) {
         fail(`Application image helper was not found: ${imagesScript}`);
     }
@@ -664,8 +664,8 @@ async function runInitTraining(target, options) {
 }
 
 function verifyDeploymentPorts() {
-    const modelPath = resolve(repoRoot, 'operations/dev/operations-model.json');
-    const schedulingPath = resolve(repoRoot, 'operations/dev/k3s/components/runtime-scheduling/patches/runtime-scheduler-config.yaml');
+    const modelPath = resolve(repoRoot, 'operations/model/dev/operations-model.json');
+    const schedulingPath = resolve(repoRoot, 'operations/k3s/components/runtime-scheduling/patches/runtime-scheduler-config.yaml');
     if (!existsSync(modelPath) || !existsSync(schedulingPath)) {
         return;
     }
@@ -1520,10 +1520,10 @@ Environment:
   FL_K3D_NAMESPACE                    Kubernetes namespace.
   FL_K3D_GATEWAY_URL                  Gateway URL. Default: http://localhost:30080.
 
-The flow creates operations/dev/k3s/environments/dev/secrets.dev.yaml from
+The flow creates operations/k3s/environments/dev/secrets.dev.yaml from
 secrets.example.yaml when it is missing. For manual kubectl inspection, use the
 same kubeconfig printed by the flow helper, for example:
-  export KUBECONFIG=operations/dev/k3s/.work/kubeconfig-federation-learning-platform-dev.yaml
+  export KUBECONFIG=operations/k3s/.work/kubeconfig-federation-learning-platform-dev.yaml
 `);
 }
 

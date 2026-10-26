@@ -17,11 +17,7 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 
 ## Generated Files
 
-- `base/namespace.yaml` creates the namespace.
-- `base/infrastructure.yaml` creates enabled infrastructure resources and their persistent volumes.
-- `base/applications.yaml` creates the frontend and backend Deployments and Services.
-- `base/apisix-config.yaml` contains standalone APISIX declarative route configuration.
-- `base/apisix.yaml` creates the APISIX Deployment and Service.
+- `base/` contains the common namespace, infrastructure, application, and APISIX resources.
 - `environments/<environment>/kustomization.yaml` selects the base and attaches environment labels.
 - `environments/<environment>/configmap.yaml` contains non-sensitive application variables for the environment.
 - `environments/<environment>/secrets.example.yaml` documents required and optional secrets without being applied by Kustomize.

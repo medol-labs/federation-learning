@@ -11,7 +11,7 @@ import {verifyArchiveManifest, verifyLoadedImages} from './image-archive-runtime
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const args = parseArgs(process.argv.slice(2));
 const command = args._[0] ?? 'help';
-const monorepoRoot = resolve(scriptDir, args.root ?? process.env.MONOREPO_ROOT ?? '../..');
+const monorepoRoot = resolve(scriptDir, args.root ?? process.env.MONOREPO_ROOT ?? '../../..');
 const platform = String(args.platform ?? process.env.DOCKER_DEFAULT_PLATFORM ?? '').trim();
 const dependencyPlatform = platform || hostDockerPlatform();
 const imageConfig = resolveImageConfig(scriptDir, {prefix: args.prefix, version: args.version, mode: args['image-source'], operation: command});
@@ -676,17 +676,17 @@ function parseArgs(argv) {
 
 function printUsage() {
     console.log(`Usage:
-  node operations/dev/images.mjs list [options]
-  node operations/dev/images.mjs build [options]
-  node operations/dev/images.mjs export [options]
-  node operations/dev/images.mjs import [options]
-  node operations/dev/images.mjs push --prefix <registry/namespace> [options]
-  node operations/dev/images.mjs pull-dependencies [options]
-  node operations/dev/images.mjs export-dependencies [options]
-  node operations/dev/images.mjs import-dependencies [options]
-  node operations/dev/images.mjs push-dependencies --prefix <registry/namespace> [options]
-  node operations/dev/images.mjs package [options]
-  node operations/dev/images.mjs all [options]
+  node operations/images/dev/images.mjs list [options]
+  node operations/images/dev/images.mjs build [options]
+  node operations/images/dev/images.mjs export [options]
+  node operations/images/dev/images.mjs import [options]
+  node operations/images/dev/images.mjs push --prefix <registry/namespace> [options]
+  node operations/images/dev/images.mjs pull-dependencies [options]
+  node operations/images/dev/images.mjs export-dependencies [options]
+  node operations/images/dev/images.mjs import-dependencies [options]
+  node operations/images/dev/images.mjs push-dependencies --prefix <registry/namespace> [options]
+  node operations/images/dev/images.mjs package [options]
+  node operations/images/dev/images.mjs all [options]
 
 Commands:
   build                Build backend and frontend images.
@@ -708,7 +708,7 @@ Options:
   --platform <os/arch>            Docker platform. Defaults to DOCKER_DEFAULT_PLATFORM or native for application builds.
   --output <dir>                  Bundle directory. Defaults to .work/image-bundle beside this script.
   --archive <file>                Package archive. Defaults to <output>.tar.gz.
-  --root <dir>                    Monorepo root. Defaults to ../.. from this operations environment.
+  --root <dir>                    Monorepo root. Defaults to ../../.. from this image environment.
   --backend-root <dir>            Override backend project root.
   --console-root <dir>            Override the first frontend project root for legacy workspaces.
   --<frontend-service>-root <dir> Override one frontend project root, for example --participant-console-root ./participant-console.

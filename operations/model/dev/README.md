@@ -37,20 +37,20 @@ CodegenModel
   -> Docker Compose / Kubernetes / K3s / APISIX renderers
 ```
 
-Commit `operations-model.json` as the portable deployment model. `operations-model.local.json` contains machine-specific registry settings from `.medol/medol.local.yml` and must remain ignored by Git. The image script reads that local override for its default registry prefix.
+Commit `operations-model.json` as the portable deployment model. Configure deployment settings in `operations/config/common.yml` and environment-specific settings in `operations/config/<environment>.yml`. Put machine-specific registry settings in the ignored `operations/config/<environment>.private.yml`. The generated `operations-model.private.json` is also ignored; the image script reads it for its default registry prefix.
 
 ## Image Bundle Command
 
 Use `images.mjs` to orchestrate generated backend, frontend, and infrastructure images from this monorepo:
 
 ```bash
-node operations/<environment>/images.mjs list
-node operations/<environment>/images.mjs all
-node operations/<environment>/images.mjs build --exclude-service <service>
-node operations/<environment>/images.mjs build --service <backend-module>
-node operations/<environment>/images.mjs push --prefix registry.example.com/team
-node operations/<environment>/images.mjs push-dependencies --prefix registry.example.com/team
-node operations/<environment>/images.mjs import
+node operations/images/<environment>/images.mjs list
+node operations/images/<environment>/images.mjs all
+node operations/images/<environment>/images.mjs build --exclude-service <service>
+node operations/images/<environment>/images.mjs build --service <backend-module>
+node operations/images/<environment>/images.mjs push --prefix registry.example.com/team
+node operations/images/<environment>/images.mjs push-dependencies --prefix registry.example.com/team
+node operations/images/<environment>/images.mjs import
 ```
 
 Application image builds use the native Docker platform by default. Pass `--platform linux/amd64` or `--platform linux/arm64` only when you intentionally need a fixed target architecture; cross-architecture frontend builds can be much slower.

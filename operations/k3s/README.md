@@ -17,11 +17,7 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 
 ## Generated Files
 
-- `base/namespace.yaml` creates the namespace.
-- `base/infrastructure.yaml` creates enabled infrastructure resources and their persistent volumes.
-- `base/applications.yaml` creates the frontend and backend Deployments and Services.
-- `base/apisix-config.yaml` contains standalone APISIX declarative route configuration.
-- `base/apisix.yaml` creates the APISIX Deployment and Service.
+- `base/` contains the common namespace, infrastructure, application, and APISIX resources.
 - `environments/<environment>/kustomization.yaml` selects the base and attaches environment labels.
 - `environments/<environment>/configmap.yaml` contains non-sensitive application variables for the environment.
 - `environments/<environment>/secrets.example.yaml` documents required and optional secrets without being applied by Kustomize.
@@ -61,7 +57,7 @@ The config creates one server and two agent nodes, disables the default Traefik 
 
 The committed `environments/dev` overlay keeps images in the `fl/<service>:<tag>` form.
 
-For machine-specific registry settings, keep `operations.registry` in `.medol/medol.local.yml` and regenerate operations files. Local registry overlays and `cluster/registries.yaml` are ignored by git.
+For machine-specific registry settings, keep `registry` in `operations/config/<environment>.private.yml` and regenerate operations files. Local registry overlays and `cluster/registries.yaml` are ignored by git.
 
 If `environments/dev-registry` was locally generated, use it in the Apply step after namespace and Secret objects are prepared.
 
@@ -149,6 +145,8 @@ kubectl apply -k environments/<environment>
 # kubectl apply -k environments/<environment>-registry
 kubectl -n federation-learning-platform get pods,svc,pvc
 ```
+
+When an application supplies a custom Kustomize component, compose it with the selected environment (or its registry variant) in one Kustomization and apply that result once. Do not apply the environment and component as separate releases.
 
 APISIX is exposed with a NodePort service on `30080`, so the default entrypoint is `http://<node-ip>:30080/`.
 

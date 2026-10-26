@@ -14,7 +14,7 @@ const args = parseArgs(process.argv.slice(2));
 const command = args._[0] ?? 'help';
 const root = resolve(process.cwd(), args.root ?? '.');
 loadDotEnv(resolve(root, '.env'));
-const operationsDirectory = resolve(root, '../operations/dev');
+const operationsDirectory = resolve(root, '../operations/images/dev');
 const sharedConfigPath = resolve(operationsDirectory, 'image-config.mjs');
 const sharedConfig = existsSync(sharedConfigPath)
     ? (await import(pathToFileURL(sharedConfigPath).href)).resolveImageConfig(operationsDirectory, {prefix: args.prefix, version: args.version})

@@ -68,7 +68,7 @@ node scripts/image-bundle.mjs push --plugin-profile pytorch-vision --version 0.0
 ```
 
 Inside the federation-learning workspace, the helper reads the shared generated
-`../operations/dev/image-config.mjs` configuration. No explicit `--prefix` is
+`../operations/images/dev/image-config.mjs` configuration. No explicit `--prefix` is
 needed: build and push use the configured registry push address and namespace.
 The deployment address may differ, but must reach the same registry. See the
 [repository build and training workflow](../README.md#build-and-run).
