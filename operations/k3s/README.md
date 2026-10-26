@@ -22,6 +22,7 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 - `environments/<environment>/configmap.yaml` contains non-sensitive application variables for the environment.
 - `environments/<environment>/secrets.example.yaml` documents required and optional secrets without being applied by Kustomize.
 - `environments/<environment>/patches/*-envfrom.yaml` attaches environment ConfigMaps and optional per-application Secrets to Deployments.
+- `environments/<environment>/patches/*-environment.yaml` contains resource differences from the common base.
 - `environments/<environment>-registry/` may be generated from local `operations.registry` settings. It rewrites application images to a registry without changing the committed base overlay.
 - `cluster/k3d-dev.yaml` creates a disposable local K3s development cluster with k3d.
 - `scripts/k3d-dev.sh` is a local helper for repeated k3d create, apply, restart, and status commands.

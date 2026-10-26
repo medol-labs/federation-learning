@@ -22,6 +22,7 @@ The base manifests and generated environment overlays are generator-owned. Keep 
 - `environments/<environment>/configmap.yaml` contains non-sensitive application variables for the environment.
 - `environments/<environment>/secrets.example.yaml` documents required and optional secrets without being applied by Kustomize.
 - `environments/<environment>/patches/*-envfrom.yaml` attaches environment ConfigMaps and optional per-application Secrets to Deployments.
+- `environments/<environment>/patches/*-environment.yaml` contains resource differences from the common base.
 - `environments/<environment>-registry/` may be generated from local `operations.registry` settings. It rewrites application images to a registry without changing the committed base overlay.
 
 ## Before Applying
@@ -92,6 +93,8 @@ kubectl apply -k environments/<environment>
 # kubectl apply -k environments/<environment>-registry
 kubectl -n federation-learning-platform get pods,svc,pvc
 ```
+
+When an application supplies a custom Kustomize component, compose it with the selected environment (or its registry variant) in one Kustomization and apply that result once. Do not apply the environment and component as separate releases.
 
 APISIX is exposed with a LoadBalancer service. Use the external address assigned by your cluster or cloud provider.
 

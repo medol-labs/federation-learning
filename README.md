@@ -198,6 +198,12 @@ runtime-agent dataset bootstrap, and runtime-engine images.
 node scripts/k3d-training-flow.mjs
 ```
 
+The flow defaults to the `local` operations environment and cluster
+`federation-learning-local`. Generate local operations first, then use
+`node scripts/k3d-training-flow.mjs --environment local --image-source import`
+to import the configured host images into k3d. Use `--environment dev` to select
+the dev operations files and the existing `federation-learning-platform-dev` cluster.
+
 Useful options:
 
 ```bash

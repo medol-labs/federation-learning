@@ -1,13 +1,13 @@
 {
-  "environment": "dev",
-  "operationsModel": "operations/dev/operations-model.json",
-  "dockerCompose": "operations/dev/docker-compose/docker-compose.yml",
+  "environment": "local",
+  "operationsModel": "operations/model/local/operations-model.json",
+  "dockerCompose": "operations/docker-compose/local/docker-compose.yml",
   "operationsReadmes": [
-    "operations/dev/README.md",
-    "operations/dev/network-topology.md",
-    "operations/dev/docker-compose/README.md",
-    "operations/dev/k3s/README.md",
-    "operations/dev/kubernetes/README.md"
+    "operations/model/local/README.md",
+    "operations/model/local/network-topology.md",
+    "operations/docker-compose/local/README.md",
+    "operations/k3s/README.md",
+    "operations/kubernetes/README.md"
   ],
   "applicationFiles": [
     "federation-learning-console/Dockerfile",

@@ -1,7 +1,84 @@
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync, mkdtempSync, mkdirSync, cpSync, writeFileSync, rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import vm from 'node:vm';
 import test from 'node:test';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+
+test('local operations dry run resolves the new environment layout without Docker', () => {
+    const result = spawnSync(process.execPath, [fileURLToPath(new URL('./k3d-training-flow.mjs', import.meta.url)),
+        '--environment', 'local', '--image-source', 'import', '--dry-run'], {
+        cwd: fileURLToPath(new URL('..', import.meta.url)), encoding: 'utf8',
+    });
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /"environment": "local"/);
+    assert.match(result.stdout, /"clusterName": "federation-learning-local"/);
+    assert.match(result.stdout, /"imageSource": "import"/);
+});
+
+test('runtime component assembly uses local config and secret names', () => {
+    const root = mkdtempSync(join(tmpdir(), 'k3d-local-'));
+    try {
+        const scripts = join(root, 'operations/k3s/scripts');
+        mkdirSync(scripts, {recursive: true});
+        cpSync(new URL('../operations/k3s/components', import.meta.url), join(root, 'operations/k3s/components'), {recursive: true});
+        cpSync(new URL('../operations/k3s/scripts/federation-learning-dev.sh', import.meta.url), join(scripts, 'federation-learning-dev.sh'));
+        writeFileSync(join(scripts, 'k3d-dev.sh'), '#!/bin/sh\nprintf "%s\\n" "$ENVIRONMENT_OVERLAY"\n', {mode: 0o755});
+        const bin = join(root, 'bin');
+        mkdirSync(bin);
+        writeFileSync(join(bin, 'kubectl'), '#!/bin/sh\nexit 0\n', {mode: 0o755});
+        const result = spawnSync('bash', [join(scripts, 'federation-learning-dev.sh'), 'apply'], {
+            encoding: 'utf8', env: {PATH: `${bin}:${process.env.PATH}`, FL_OPERATIONS_ENVIRONMENT: 'local'},
+        });
+        assert.equal(result.status, 0, result.stderr);
+        assert.match(result.stdout, /environments\/local/);
+        const component = join(root, 'operations/k3s/.work/runtime-scheduling-component');
+        for (const name of ['patches/runtime-scheduler-config.yaml', 'runtime-scheduler-images.yaml',
+            'runtime-agent-managed-secret.yaml', 'platform-aggregation-runtime-engine.yaml']) {
+            const content = readFileSync(join(component, name), 'utf8');
+            assert.doesNotMatch(content, /-dev-(config|secret)/);
+            assert.match(content, /-local-(config|secret)/);
+        }
+        assert.match(readFileSync(join(component, 'runtime-scheduler-images.yaml'), 'utf8'),
+            /PLATFORM_RUNTIME_K3S_AGENT_SECURITY_SECRET_NAME: "federation-learning-runtime-agent-local-secret"/);
+    } finally {
+        rmSync(root, {recursive: true, force: true});
+    }
+});
+
+test('dictionary initialization passes the support login token to its child process', async () => {
+    const source = readFileSync(new URL('./k3d-training-flow.mjs', import.meta.url), 'utf8');
+    const implementation = source.slice(source.indexOf('async function initDictionaries('), source.indexOf('async function ensureAdminUser('));
+    const calls = [];
+    const context = vm.createContext({repoRoot: '/repo', supportUrl: 'support', internalToken: 'internal',
+        resolve: (...parts) => parts.join('/'), existsSync: () => true,
+        ensureAdminToken: async () => 'support-access-token', run: (...args) => calls.push(args)});
+    vm.runInContext(implementation, context);
+    await context.initDictionaries();
+    assert.equal(calls[0][2].FL_API_TOKEN, 'support-access-token');
+});
+
+test('k3d helper receives the selected environment and matching admin setup token', () => {
+    const source = readFileSync(new URL('./k3d-training-flow.mjs', import.meta.url), 'utf8');
+    const implementation = source.slice(source.indexOf('function runK3d('), source.indexOf('async function prepareParticipant('));
+    const calls = [];
+    const context = vm.createContext({k3dScript: 'helper', environment: 'local',
+        k3sDevEnvironmentDir: 'environments/local', k3sDevSecretsFile: 'secrets.local.yaml',
+        clusterName: 'local-cluster', namespace: 'test', kubeconfigFile: 'local-kubeconfig',
+        appImagePrefix: 'fl', imageVersion: '1', adminSetupToken: 'setup-token',
+        runtimeEngineImage: 'engine', runtimeAgentImage: 'agent', participantConsoleImage: 'console',
+        run: (...args) => calls.push(args)});
+    vm.runInContext(implementation, context);
+    context.runK3d('apply');
+    const env = calls[0][2];
+    assert.equal(env.ENVIRONMENT_OVERLAY, 'environments/local');
+    assert.equal(env.REGISTRY_OVERLAY, 'environments/local-registry');
+    assert.equal(env.SECRETS_FILE, 'secrets.local.yaml');
+    assert.equal(env.KUBECONFIG, 'local-kubeconfig');
+    assert.equal(env.MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN, 'setup-token');
+});
 
 function trainingVerificationContext(responses) {
     const source = readFileSync(new URL('./k3d-training-flow.mjs', import.meta.url), 'utf8');
@@ -90,14 +167,18 @@ test('verified images replace base references with pinned artifacts and refresh 
     const deployment = {metadata: {name: 'app'}, spec: {template: {metadata: {annotations: {}},
         spec: {containers: [{name: 'app', image: 'team/app:v1', imagePullPolicy: 'Always'}]}}}};
     const calls = [];
-    const context = vm.createContext({namespace: 'test', console: {log() {}},
+    const context = vm.createContext({namespace: 'test', console: {log() {}}, kubeEnv: () => ({KUBECONFIG: 'local-config'}),
         resolvedRuntimeEngineImage: {aliases: []},
-        runCapture: () => JSON.stringify({items: [deployment]}),
+        runCapture: (command, args, env) => {
+            assert.equal(env.KUBECONFIG, 'local-config');
+            return JSON.stringify({items: [deployment]});
+        },
         run: (...args) => calls.push(args)});
     vm.runInContext(implementation, context);
     const images = new Map([['registry.example/team/app:v2', image]]);
     context.refreshVerifiedImageDeployments(images);
     assert.equal(calls.length, 1);
+    assert.equal(calls[0][2].KUBECONFIG, 'local-config');
     const template = JSON.parse(calls[0][1].at(-1)).spec.template;
     assert.equal(template.spec.containers[0].image, image.reference);
     assert.equal(template.spec.containers[0].imagePullPolicy, 'IfNotPresent');

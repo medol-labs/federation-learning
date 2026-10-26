@@ -5,29 +5,30 @@ ServiceAccounts and RBAC, runtime dataset mounts, the platform aggregation
 engine, and platform/runtime-agent configuration patches. It is maintained in
 Git and is not an environment or registry overlay.
 
-The generated `environments/dev` environment is the base configuration. A
-machine-specific `operations/config/dev.private.yml` may generate the ignored
-`environments/dev-registry` directory and `cluster/registries.yaml`. Secrets
-are applied separately from an ignored `environments/dev/secrets.dev.yaml`.
+The helper defaults to the generated `environments/local` environment. A
+machine-specific `operations/config/local.private.yml` may generate the ignored
+`environments/local-registry` directory and `cluster/registries.yaml`. Secrets
+are applied separately from an ignored `environments/local/secrets.local.yaml`.
 
 Use the project helper to combine the selected environment and this component
 in one temporary Kustomization under `k3s/.work`, then apply it once:
 
 ```bash
 operations/k3s/scripts/federation-learning-dev.sh apply
+# Select another generated environment explicitly:
+FL_OPERATIONS_ENVIRONMENT=dev operations/k3s/scripts/federation-learning-dev.sh apply
 ```
 
-Do not apply `environments/dev-registry` and this component as two separate
+Do not apply the registry overlay and this component as two separate
 releases: a second application of the base environment can restore its image
-references. The helper uses `dev-registry` when present and otherwise uses
-`dev`.
+references. The helper uses `<environment>-registry` when present and otherwise
+uses `<environment>`.
 
-This component currently names `*-dev-config` and `*-dev-secret` resources and
-uses development image tags. It is not production-ready as-is. Before using it
-with another environment, move or override those values in that environment's
-configuration, then compose the environment and component in a single
-Kustomization. Keep registry endpoints, credentials, and environment-specific
-Secret files outside Git.
+The source patches use dev resource names. The helper substitutes the selected
+environment's ConfigMap and Secret names when assembling its temporary component,
+including the managed runtime-agent security Secret. These are local debugging
+defaults; production requires environment-owned configuration. Keep registry
+endpoints, credentials, and environment-specific Secret files outside Git.
 
 Native K3s participant nodes need the dataset and runtime-work paths mounted
 at `/workspace/datasets` and `/workspace/tmp/runtime-engine`. Label each

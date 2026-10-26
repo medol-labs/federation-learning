@@ -8,7 +8,15 @@ WORK_DIR="${K3S_DIR}/.work"
 COMMAND="${1:-help}"
 NAMESPACE="${NAMESPACE:-federation-learning-platform}"
 
-CLUSTER_NAME="${CLUSTER_NAME:-federation-learning-platform-dev}"
+OPERATIONS_ENVIRONMENT="${FL_OPERATIONS_ENVIRONMENT:-local}"
+DEFAULT_CLUSTER_NAME="federation-learning-${OPERATIONS_ENVIRONMENT}"
+if [[ "${OPERATIONS_ENVIRONMENT}" == "dev" ]]; then
+    DEFAULT_CLUSTER_NAME="federation-learning-platform-dev"
+fi
+CLUSTER_NAME="${CLUSTER_NAME:-${DEFAULT_CLUSTER_NAME}}"
+export ENVIRONMENT_OVERLAY="${ENVIRONMENT_OVERLAY:-${K3S_DIR}/environments/${OPERATIONS_ENVIRONMENT}}"
+export REGISTRY_OVERLAY="${REGISTRY_OVERLAY:-${K3S_DIR}/environments/${OPERATIONS_ENVIRONMENT}-registry}"
+export SECRETS_FILE="${SECRETS_FILE:-${ENVIRONMENT_OVERLAY}/secrets.${OPERATIONS_ENVIRONMENT}.yaml}"
 DATASETS_HOST_ROOT="${FL_K3D_DATASETS_HOST_ROOT:-${PROJECT_ROOT}/volumes/datasets}"
 RUNTIME_ENGINE_HOST_ROOT="${FL_K3D_RUNTIME_ENGINE_HOST_ROOT:-${PROJECT_ROOT}/volumes/tmp/runtime-engine}"
 FEDERATION_LEARNING_K3D_CONFIG="${WORK_DIR}/k3d-federation-learning-dev.yaml"
@@ -98,7 +106,7 @@ apply_managed_runtime_agent_secret_patch() {
     local runtime_agent_admin_bootstrap_setup_token="${MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN:-medol}"
     local patched_secret="${WORK_DIR}/runtime-agent-managed-secret.yaml"
 
-    kubectl -n "${NAMESPACE}" create secret generic federation-learning-runtime-agent-dev-secret \
+    kubectl -n "${NAMESPACE}" create secret generic "federation-learning-runtime-agent-${OPERATIONS_ENVIRONMENT}-secret" \
         --from-literal=DB_PASSWORD="${runtime_agent_db_password}" \
         --from-literal=DB_USERNAME="${runtime_agent_db_username}" \
         --from-literal=MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN="${runtime_agent_admin_bootstrap_setup_token}" \
@@ -161,13 +169,13 @@ prepare_federation_learning_runtime_component() {
     mkdir -p "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches"
     cp "${K3S_DIR}/components/runtime-scheduling/runtime-scheduler-rbac.yaml" \
         "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/runtime-scheduler-rbac.yaml"
-    cp "${K3S_DIR}/components/runtime-scheduling/platform-aggregation-runtime-engine.yaml" \
+    sed "s/-dev-secret/-${OPERATIONS_ENVIRONMENT}-secret/g" "${K3S_DIR}/components/runtime-scheduling/platform-aggregation-runtime-engine.yaml" > \
         "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/platform-aggregation-runtime-engine.yaml"
     cp "${K3S_DIR}/components/runtime-scheduling/patches/platform-runtime-scheduler.yaml" \
         "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches/platform-runtime-scheduler.yaml"
     cp "${K3S_DIR}/components/runtime-scheduling/patches/runtime-agent-engine-scheduler.yaml" \
         "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches/runtime-agent-engine-scheduler.yaml"
-    cp "${K3S_DIR}/components/runtime-scheduling/patches/runtime-scheduler-config.yaml" \
+    sed -e "s/-dev-config/-${OPERATIONS_ENVIRONMENT}-config/g" -e "s/-dev-secret/-${OPERATIONS_ENVIRONMENT}-secret/g" "${K3S_DIR}/components/runtime-scheduling/patches/runtime-scheduler-config.yaml" > \
         "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/patches/runtime-scheduler-config.yaml"
     cat > "${FEDERATION_LEARNING_RUNTIME_COMPONENT}/kustomization.yaml" <<YAML
 apiVersion: kustomize.config.k8s.io/v1alpha1
@@ -208,7 +216,7 @@ YAML
 apiVersion: "v1"
 kind: "Secret"
 metadata:
-  name: "federation-learning-runtime-agent-dev-secret"
+  name: "federation-learning-runtime-agent-${OPERATIONS_ENVIRONMENT}-secret"
 type: "Opaque"
 data:
   DB_PASSWORD: "${runtime_agent_db_password_b64}"
@@ -222,16 +230,17 @@ YAML
 apiVersion: "v1"
 kind: "ConfigMap"
 metadata:
-  name: "federation-learning-platform-dev-config"
+  name: "federation-learning-platform-${OPERATIONS_ENVIRONMENT}-config"
 data:
   PLATFORM_RUNTIME_K3S_AGENT_IMAGE: "${runtime_agent_image}"
+  PLATFORM_RUNTIME_K3S_AGENT_SECURITY_SECRET_NAME: "federation-learning-runtime-agent-${OPERATIONS_ENVIRONMENT}-secret"
   PLATFORM_RUNTIME_K3S_PARTICIPANT_CONSOLE_IMAGE: "${participant_console_image}"
   PLATFORM_RUNTIME_K3S_RUNTIME_ENGINE_IMAGE: "${runtime_engine_image}"
 ---
 apiVersion: "v1"
 kind: "ConfigMap"
 metadata:
-  name: "federation-learning-runtime-agent-dev-config"
+  name: "federation-learning-runtime-agent-${OPERATIONS_ENVIRONMENT}-config"
 data:
   MEDOL_SYNC_ENABLED: "true"
   MEDOL_SYNC_FIXED_DELAY_MS: "5000"

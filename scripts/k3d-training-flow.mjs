@@ -2,10 +2,9 @@
 
 import {existsSync, readFileSync, writeFileSync} from 'node:fs';
 import {dirname, resolve} from 'node:path';
-import {fileURLToPath} from 'node:url';
+import {fileURLToPath, pathToFileURL} from 'node:url';
 import {spawn, spawnSync} from 'node:child_process';
 import {createServer} from 'node:net';
-import {resolveImageConfig, resolveImageArtifact} from '../operations/images/dev/image-config.mjs';
 
 if (typeof fetch !== 'function') {
     fail('This script requires Node.js 18 or newer because it uses global fetch.');
@@ -27,7 +26,15 @@ loadEnvFiles([
     resolve(process.cwd(), '.env')
 ]);
 
-const clusterName = stringArg('cluster-name', 'FL_K3D_CLUSTER_NAME', 'federation-learning-platform-dev');
+const environment = stringArg('environment', 'FL_OPERATIONS_ENVIRONMENT', 'local');
+if (!/^[a-z][a-z0-9-]*$/.test(environment)) fail(`Invalid operations environment: ${environment}`);
+const imageDirectory = resolve(repoRoot, 'operations/images', environment);
+const imageConfigFile = resolve(imageDirectory, 'image-config.mjs');
+if (!existsSync(imageConfigFile)) {
+    fail(`Operations environment ${environment} has not been generated. Generate operations with --environment ${environment} first.`);
+}
+const {resolveImageConfig, resolveImageArtifact} = await import(pathToFileURL(imageConfigFile).href);
+const clusterName = stringArg('cluster-name', 'FL_K3D_CLUSTER_NAME', environment === 'dev' ? 'federation-learning-platform-dev' : `federation-learning-${environment}`);
 const namespace = stringArg('namespace', 'FL_K3D_NAMESPACE', 'federation-learning-platform');
 const gatewayUrl = trimSlash(stringArg('gateway-url', 'FL_K3D_GATEWAY_URL', 'http://localhost:30080'));
 const platformUrl = trimSlash(stringArg('platform-url', 'FL_PLATFORM_URL', `${gatewayUrl}/api/federation-learning-platform`));
@@ -39,8 +46,8 @@ const scenario = stringArg('scenario', 'FL_TRAINING_SCENARIO', 'densenet');
 const federationMode = normalizeFederationMode(args['federation-mode'] ?? process.env.FL_FEDERATION_MODE ?? 'global');
 const trainingRunKey = optionalString(args['training-run-key'] ?? process.env.FL_TRAINING_RUN_KEY);
 const waitForTraining = Boolean(args['wait-for-training']);
-const k3sDevEnvironmentDir = resolve(repoRoot, 'operations/k3s/environments/dev');
-const k3sDevSecretsFile = resolve(k3sDevEnvironmentDir, 'secrets.dev.yaml');
+const k3sDevEnvironmentDir = resolve(repoRoot, 'operations/k3s/environments', environment);
+const k3sDevSecretsFile = resolve(k3sDevEnvironmentDir, `secrets.${environment}.yaml`);
 const k3sDevSecretsExampleFile = resolve(k3sDevEnvironmentDir, 'secrets.example.yaml');
 const adminUsername = stringArg('admin-username', 'FL_K3D_ADMIN_USERNAME', 'admin');
 const adminPassword = stringArg('admin-password', 'FL_K3D_ADMIN_PASSWORD', 'admin');
@@ -54,7 +61,7 @@ const timeoutMs = positiveInt(args.timeout ?? process.env.FL_K3D_FLOW_TIMEOUT_MS
 const pollIntervalMs = positiveInt(args['poll-interval'] ?? process.env.FL_K3D_FLOW_POLL_INTERVAL_MS, 3000);
 const participantCount = positiveInt(args['participant-count'] ?? process.env.FL_K3D_PARTICIPANT_COUNT, 2);
 const preparedNodeCount = positiveInt(args['prepared-node-count'] ?? process.env.FL_K3D_PREPARED_NODE_COUNT, 1);
-const imageConfig = resolveImageConfig(resolve(repoRoot, 'operations/dev'), {
+const imageConfig = resolveImageConfig(imageDirectory, {
     prefix: args['app-image-prefix'] ?? process.env.FL_APP_IMAGE_PREFIX,
     version: args['image-version'],
     mode: args['image-source'],
@@ -102,6 +109,7 @@ const dryRun = booleanOption(args['dry-run'], false);
 
 console.log('[k3d-flow] configuration');
 console.log(JSON.stringify({
+    environment,
     clusterName,
     namespace,
     gatewayUrl,
@@ -346,12 +354,17 @@ async function waitForKubernetesNodesReady() {
 
 function runK3d(command) {
     run(k3dScript, [command], {
+        FL_OPERATIONS_ENVIRONMENT: environment,
+        ENVIRONMENT_OVERLAY: k3sDevEnvironmentDir,
+        REGISTRY_OVERLAY: `${k3sDevEnvironmentDir}-registry`,
+        SECRETS_FILE: k3sDevSecretsFile,
         CLUSTER_NAME: clusterName,
         NAMESPACE: namespace,
         KUBECONFIG_FILE: kubeconfigFile,
         KUBECONFIG: kubeconfigFile,
         DOCKER_IMAGE_PREFIX: appImagePrefix,
         IMAGE_VERSION: imageVersion,
+        MEDOL_SECURITY_ADMIN_BOOTSTRAP_SETUP_TOKEN: adminSetupToken,
         FL_RUNTIME_ENGINE_IMAGE: runtimeEngineImage,
         FL_AGGREGATION_RUNTIME_ENGINE_IMAGE: runtimeEngineImage,
         ...(runtimeAgentImage ? {FL_RUNTIME_AGENT_IMAGE: runtimeAgentImage} : {}),
@@ -446,7 +459,7 @@ async function prepareParticipant(slot) {
 }
 
 function rebuildApplicationImages() {
-    const imagesScript = resolve(repoRoot, 'operations/images/dev/images.mjs');
+    const imagesScript = resolve(imageDirectory, 'images.mjs');
     if (!existsSync(imagesScript)) {
         fail(`Application image helper was not found: ${imagesScript}`);
     }
@@ -506,7 +519,7 @@ function refreshVerifiedImageDeployments(images) {
     const engine = resolvedRuntimeEngineImage;
     const resolvedImages = [...images.values(), engine];
     const repository = (image) => String(image).split('@')[0].replace(/:[^/:]+$/, '');
-    const deployments = JSON.parse(runCapture('kubectl', ['-n', namespace, 'get', 'deployments', '-o', 'json'], {}));
+    const deployments = JSON.parse(runCapture('kubectl', ['-n', namespace, 'get', 'deployments', '-o', 'json'], kubeEnv()));
     for (const deployment of deployments.items ?? []) {
         const containers = deployment.spec.template.spec.containers
             .map((container) => ({container, image: resolvedImages.find((image) =>
@@ -526,7 +539,7 @@ function refreshVerifiedImageDeployments(images) {
                     name: container.name, image: image.reference, imagePullPolicy: 'IfNotPresent'
                 }))}
             }}
-        })], {});
+        })], kubeEnv());
     }
 }
 
@@ -549,7 +562,7 @@ async function initDictionaries() {
         dictionaryScript,
         '--base-url', supportUrl,
         ...(internalToken ? ['--internal-token', internalToken] : [])
-    ], {});
+    ], {FL_API_TOKEN: await ensureAdminToken()});
 }
 
 async function ensureAdminUser(baseUrl, label) {
@@ -664,7 +677,7 @@ async function runInitTraining(target, options) {
 }
 
 function verifyDeploymentPorts() {
-    const modelPath = resolve(repoRoot, 'operations/model/dev/operations-model.json');
+    const modelPath = resolve(repoRoot, 'operations/model', environment, 'operations-model.json');
     const schedulingPath = resolve(repoRoot, 'operations/k3s/components/runtime-scheduling/patches/runtime-scheduler-config.yaml');
     if (!existsSync(modelPath) || !existsSync(schedulingPath)) {
         return;
@@ -1487,6 +1500,7 @@ manifest apply, local admin bootstrap/login, dictionary init, platform seed,
 runtime-agent deployment wait, runtime-agent seed, and training job submission.
 
 Options:
+  --environment <name>               Operations environment. Default: local.
   --recreate                         Recreate the K3D cluster before running.
                                      Use after lifecycle/tag model changes to clear stale event/projection data.
   --rebuild-app-images               Rebuild backend images; push only in registry mode.
@@ -1511,6 +1525,7 @@ Options:
   --dry-run                           Print configuration and exit before side effects.
 
 Environment:
+  FL_OPERATIONS_ENVIRONMENT           Operations environment override.
   FL_API_TOKEN                        Existing bearer token. When set, login is skipped.
   FL_K3D_ADMIN_USERNAME               Local admin username override.
   FL_K3D_ADMIN_PASSWORD               Local admin password override.
@@ -1520,10 +1535,10 @@ Environment:
   FL_K3D_NAMESPACE                    Kubernetes namespace.
   FL_K3D_GATEWAY_URL                  Gateway URL. Default: http://localhost:30080.
 
-The flow creates operations/k3s/environments/dev/secrets.dev.yaml from
+The flow creates operations/k3s/environments/<environment>/secrets.<environment>.yaml from
 secrets.example.yaml when it is missing. For manual kubectl inspection, use the
 same kubeconfig printed by the flow helper, for example:
-  export KUBECONFIG=operations/k3s/.work/kubeconfig-federation-learning-platform-dev.yaml
+  export KUBECONFIG=operations/k3s/.work/kubeconfig-federation-learning-local.yaml
 `);
 }
 
