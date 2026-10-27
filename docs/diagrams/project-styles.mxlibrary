@@ -62,5 +62,40 @@
     "h": 60,
     "aspect": "fixed",
     "title": "验证优化反馈"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"部署环境\" style=\"shape=cloud;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#7E9FB7;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#536773;\" vertex=\"1\" parent=\"1\"&gt;&lt;mxGeometry x=\"0\" y=\"0\" width=\"240\" height=\"120\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 240,
+    "h": 120,
+    "aspect": "fixed",
+    "title": "部署环境"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"模型工件\" style=\"shape=note;whiteSpace=wrap;html=0;size=14;fillColor=#FFFFFF;strokeColor=#929FB9;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;align=left;verticalAlign=middle;spacingLeft=12;fontFamily=PingFang SC;fontSize=20;fontColor=#536773;\" vertex=\"1\" parent=\"1\"&gt;&lt;mxGeometry x=\"0\" y=\"0\" width=\"240\" height=\"100\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 240,
+    "h": 100,
+    "aspect": "fixed",
+    "title": "模型工件"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"数据源\" style=\"shape=document;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#7E9FB7;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#536773;\" vertex=\"1\" parent=\"1\"&gt;&lt;mxGeometry x=\"0\" y=\"0\" width=\"240\" height=\"100\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 240,
+    "h": 100,
+    "aspect": "fixed",
+    "title": "数据源"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"数据库（详细部署图按实际使用）\" style=\"shape=cylinder;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#7E9FB7;strokeWidth=2;fontFamily=PingFang SC;fontSize=20;fontColor=#536773;\" vertex=\"1\" parent=\"1\"&gt;&lt;mxGeometry x=\"0\" y=\"0\" width=\"280\" height=\"140\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 280,
+    "h": 140,
+    "aspect": "fixed",
+    "title": "数据库（详细部署图按实际使用）"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"\" style=\"group;container=1;collapsible=0;\" vertex=\"1\" parent=\"1\"&gt;&lt;mxGeometry x=\"0\" y=\"0\" width=\"280\" height=\"110\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;mxCell id=\"3\" value=\"运行服务 / 进程\" style=\"rounded=0;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=22;fontColor=#35698B;align=center;verticalAlign=middle;\" vertex=\"1\" parent=\"2\"&gt;&lt;mxGeometry x=\"12\" y=\"0\" width=\"268\" height=\"110\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;mxCell id=\"4\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=22;fontColor=#35698B;align=center;verticalAlign=middle;\" vertex=\"1\" parent=\"2\"&gt;&lt;mxGeometry x=\"0\" y=\"25\" width=\"30\" height=\"14\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;mxCell id=\"5\" value=\"\" style=\"rounded=0;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;fontFamily=PingFang SC;fontSize=22;fontColor=#35698B;align=center;verticalAlign=middle;\" vertex=\"1\" parent=\"2\"&gt;&lt;mxGeometry x=\"0\" y=\"65\" width=\"30\" height=\"14\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 280,
+    "h": 110,
+    "aspect": "fixed",
+    "title": "运行服务或进程（组件）"
   }
 ]</mxlibrary>

@@ -33,6 +33,10 @@
 
 本图以同名 `.drawio` 为唯一编辑来源，按实际部署情况调整组件与医院组合，同步导出 PNG 和 SVG。它是部署架构图，不替代详细网络拓扑、端口清单或医院地址配置。
 
+图例使用原生可编辑符号：云形表示部署环境，组件符号表示运行服务或进程，折角文档表示被加载的模型工件，文档符号表示院内系统或数据来源。模型推理服务与其模型工件分别表示，不把模型文件本身作为服务。院内数据来源不等同于共享数据库，图中不因此新增具体数据库或服务实例；数据库、容器等细节需在实际服务级部署方案确认后展开。
+
+图例和相关通用符号已收录到[统一图库](../../diagrams/project-styles.mxlibrary)，可导入 draw.io 复用。模型工件图形作为相应推理服务的子元素维护，随服务整体移动。
+
 ```bash
 python3 docs/diagrams/drawio.py format docs/438c/merge/figures/federated-twin-deployment-overview.drawio
 python3 docs/diagrams/drawio.py check docs/438c/merge/figures/federated-twin-deployment-overview.drawio

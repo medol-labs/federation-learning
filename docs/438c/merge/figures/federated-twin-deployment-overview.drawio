@@ -5,7 +5,7 @@
       page="1"
       pageScale="1"
       pageWidth="2400"
-      pageHeight="1870"
+      pageHeight="2050"
       grid="1"
       gridSize="10"
       background="#ffffff"
@@ -60,9 +60,9 @@
           vertex="1"
           parent="cloud">
           <mxGeometry
-            x="20"
+            x="105"
             y="15"
-            width="2220"
+            width="2115"
             height="38"
             as="geometry" />
         </mxCell>
@@ -112,9 +112,9 @@
           vertex="1"
           parent="large-model">
           <mxGeometry
-            x="20"
+            x="78"
             y="15"
-            width="430"
+            width="372.0"
             height="38"
             as="geometry" />
         </mxCell>
@@ -128,7 +128,7 @@
             x="20"
             y="65"
             width="430"
-            height="110"
+            height="65"
             as="geometry" />
         </mxCell>
         <mxCell
@@ -151,9 +151,9 @@
           vertex="1"
           parent="medical-model">
           <mxGeometry
-            x="20"
+            x="78"
             y="15"
-            width="480"
+            width="422.0"
             height="38"
             as="geometry" />
         </mxCell>
@@ -167,7 +167,7 @@
             x="20"
             y="65"
             width="480"
-            height="110"
+            height="65"
             as="geometry" />
         </mxCell>
         <mxCell
@@ -190,9 +190,9 @@
           vertex="1"
           parent="federated-platform">
           <mxGeometry
-            x="20"
+            x="78"
             y="15"
-            width="700"
+            width="642.0"
             height="38"
             as="geometry" />
         </mxCell>
@@ -307,9 +307,9 @@
           vertex="1"
           parent="twin-b">
           <mxGeometry
-            x="20"
+            x="78"
             y="15"
-            width="510"
+            width="452.0"
             height="38"
             as="geometry" />
         </mxCell>
@@ -346,9 +346,9 @@
           vertex="1"
           parent="twin-a">
           <mxGeometry
-            x="20"
+            x="78"
             y="15"
-            width="300"
+            width="242.0"
             height="38"
             as="geometry" />
         </mxCell>
@@ -385,9 +385,9 @@
           vertex="1"
           parent="agent-a">
           <mxGeometry
-            x="20"
+            x="78"
             y="15"
-            width="290"
+            width="232.0"
             height="38"
             as="geometry" />
         </mxCell>
@@ -424,9 +424,9 @@
           vertex="1"
           parent="agent-c">
           <mxGeometry
-            x="20"
+            x="78"
             y="15"
-            width="470"
+            width="412.0"
             height="38"
             as="geometry" />
         </mxCell>
@@ -459,13 +459,13 @@
         <mxCell
           id="data-b-title"
           value="院内系统、设备与授权信息"
-          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#243440;fontStyle=1;spacing=0;"
           vertex="1"
           parent="data-b">
           <mxGeometry
-            x="20"
+            x="75"
             y="15"
-            width="510"
+            width="455.0"
             height="38"
             as="geometry" />
         </mxCell>
@@ -498,13 +498,13 @@
         <mxCell
           id="data-a-title"
           value="院内系统、设备与本地数据"
-          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#243440;fontStyle=1;spacing=0;"
           vertex="1"
           parent="data-a">
           <mxGeometry
-            x="20"
+            x="75"
             y="15"
-            width="680"
+            width="625.0"
             height="38"
             as="geometry" />
         </mxCell>
@@ -537,13 +537,13 @@
         <mxCell
           id="data-c-title"
           value="机构本地训练数据"
-          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#243440;fontStyle=1;spacing=0;"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#243440;fontStyle=1;spacing=0;"
           vertex="1"
           parent="data-c">
           <mxGeometry
-            x="20"
+            x="75"
             y="15"
-            width="470"
+            width="415.0"
             height="38"
             as="geometry" />
         </mxCell>
@@ -905,28 +905,28 @@
         </mxCell>
         <mxCell
           id="personalized-model-a-title"
-          value="本院个性化模型"
-          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#35698B;fontStyle=1;spacing=0;"
+          value="本地个性化推理服务"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=23;fontColor=#35698B;fontStyle=1;spacing=0;"
           vertex="1"
           parent="personalized-model-a">
           <mxGeometry
-            x="20"
+            x="78"
             y="15"
-            width="300"
+            width="242.0"
             height="38"
             as="geometry" />
         </mxCell>
         <mxCell
           id="personalized-model-a-detail"
-          value="针对本院数据与人群适配&#10;本地部署，供孪生业务推理"
+          value="加载本院适配模型，院内执行"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
           vertex="1"
           parent="personalized-model-a">
           <mxGeometry
             x="20"
-            y="65"
+            y="63"
             width="300"
-            height="60"
+            height="30"
             as="geometry" />
         </mxCell>
         <mxCell
@@ -944,28 +944,28 @@
         </mxCell>
         <mxCell
           id="personalized-model-b-title"
-          value="本院个性化模型"
-          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=26;fontColor=#35698B;fontStyle=1;spacing=0;"
+          value="本地个性化推理服务"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=23;fontColor=#35698B;fontStyle=1;spacing=0;"
           vertex="1"
           parent="personalized-model-b">
           <mxGeometry
-            x="20"
+            x="78"
             y="15"
-            width="510"
+            width="452.0"
             height="38"
             as="geometry" />
         </mxCell>
         <mxCell
           id="personalized-model-b-detail"
-          value="针对本院数据与人群适配&#10;本地部署，供孪生业务推理"
+          value="加载本院适配模型，院内执行"
           style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
           vertex="1"
           parent="personalized-model-b">
           <mxGeometry
             x="20"
-            y="65"
+            y="63"
             width="510"
-            height="60"
+            height="30"
             as="geometry" />
         </mxCell>
         <mxCell
@@ -1027,6 +1027,664 @@
               y="-25"
               as="offset" />
           </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="large-model-component-body"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="large-model">
+          <mxGeometry
+            x="28"
+            y="18"
+            width="34"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="large-model-component-upper-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="large-model">
+          <mxGeometry
+            x="18"
+            y="24"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="large-model-component-lower-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="large-model">
+          <mxGeometry
+            x="18"
+            y="38"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="medical-model-component-body"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="medical-model">
+          <mxGeometry
+            x="28"
+            y="18"
+            width="34"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="medical-model-component-upper-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="medical-model">
+          <mxGeometry
+            x="18"
+            y="24"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="medical-model-component-lower-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="medical-model">
+          <mxGeometry
+            x="18"
+            y="38"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="federated-platform-component-body"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#11786C;strokeWidth=2;"
+          vertex="1"
+          parent="federated-platform">
+          <mxGeometry
+            x="28"
+            y="18"
+            width="34"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="federated-platform-component-upper-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#11786C;strokeWidth=2;"
+          vertex="1"
+          parent="federated-platform">
+          <mxGeometry
+            x="18"
+            y="24"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="federated-platform-component-lower-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#11786C;strokeWidth=2;"
+          vertex="1"
+          parent="federated-platform">
+          <mxGeometry
+            x="18"
+            y="38"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-a-component-body"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="twin-a">
+          <mxGeometry
+            x="28"
+            y="18"
+            width="34"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-a-component-upper-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="twin-a">
+          <mxGeometry
+            x="18"
+            y="24"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-a-component-lower-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="twin-a">
+          <mxGeometry
+            x="18"
+            y="38"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-b-component-body"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="twin-b">
+          <mxGeometry
+            x="28"
+            y="18"
+            width="34"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-b-component-upper-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="twin-b">
+          <mxGeometry
+            x="18"
+            y="24"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="twin-b-component-lower-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="twin-b">
+          <mxGeometry
+            x="18"
+            y="38"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-a-component-body"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#11786C;strokeWidth=2;"
+          vertex="1"
+          parent="agent-a">
+          <mxGeometry
+            x="28"
+            y="18"
+            width="34"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-a-component-upper-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#11786C;strokeWidth=2;"
+          vertex="1"
+          parent="agent-a">
+          <mxGeometry
+            x="18"
+            y="24"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-a-component-lower-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#11786C;strokeWidth=2;"
+          vertex="1"
+          parent="agent-a">
+          <mxGeometry
+            x="18"
+            y="38"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-c-component-body"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#11786C;strokeWidth=2;"
+          vertex="1"
+          parent="agent-c">
+          <mxGeometry
+            x="28"
+            y="18"
+            width="34"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-c-component-upper-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#11786C;strokeWidth=2;"
+          vertex="1"
+          parent="agent-c">
+          <mxGeometry
+            x="18"
+            y="24"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="agent-c-component-lower-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#11786C;strokeWidth=2;"
+          vertex="1"
+          parent="agent-c">
+          <mxGeometry
+            x="18"
+            y="38"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-a-component-body"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="personalized-model-a">
+          <mxGeometry
+            x="28"
+            y="18"
+            width="34"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-a-component-upper-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="personalized-model-a">
+          <mxGeometry
+            x="18"
+            y="24"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-a-component-lower-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="personalized-model-a">
+          <mxGeometry
+            x="18"
+            y="38"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-b-component-body"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="personalized-model-b">
+          <mxGeometry
+            x="28"
+            y="18"
+            width="34"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-b-component-upper-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="personalized-model-b">
+          <mxGeometry
+            x="18"
+            y="24"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-b-component-lower-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="personalized-model-b">
+          <mxGeometry
+            x="18"
+            y="38"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="cloud-symbol"
+          value=""
+          style="shape=cloud;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#7E9FB7;strokeWidth=2;"
+          vertex="1"
+          parent="cloud">
+          <mxGeometry
+            x="20"
+            y="10"
+            width="65"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="large-model-artifact"
+          value="大模型权重 / 模型工件"
+          style="shape=note;whiteSpace=wrap;html=0;size=14;fillColor=#FFFFFF;strokeColor=#929FB9;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;align=left;verticalAlign=middle;spacingLeft=12;"
+          vertex="1"
+          parent="large-model">
+          <mxGeometry
+            x="20"
+            y="145.0"
+            width="430.0"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="medical-model-artifact"
+          value="通用医疗模型工件"
+          style="shape=note;whiteSpace=wrap;html=0;size=14;fillColor=#FFFFFF;strokeColor=#929FB9;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;align=left;verticalAlign=middle;spacingLeft=12;"
+          vertex="1"
+          parent="medical-model">
+          <mxGeometry
+            x="20"
+            y="145.0"
+            width="480.0"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-a-artifact"
+          value="本院个性化模型工件"
+          style="shape=note;whiteSpace=wrap;html=0;size=14;fillColor=#FFFFFF;strokeColor=#929FB9;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;align=left;verticalAlign=middle;spacingLeft=12;"
+          vertex="1"
+          parent="personalized-model-a">
+          <mxGeometry
+            x="20"
+            y="105.0"
+            width="300.0"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="personalized-model-b-artifact"
+          value="本院个性化模型工件"
+          style="shape=note;whiteSpace=wrap;html=0;size=14;fillColor=#FFFFFF;strokeColor=#929FB9;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;align=left;verticalAlign=middle;spacingLeft=12;"
+          vertex="1"
+          parent="personalized-model-b">
+          <mxGeometry
+            x="20"
+            y="105.0"
+            width="510.0"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-a-source-symbol"
+          value=""
+          style="shape=document;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#7E9FB7;strokeWidth=2;"
+          vertex="1"
+          parent="data-a">
+          <mxGeometry
+            x="18"
+            y="17"
+            width="40"
+            height="34"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-b-source-symbol"
+          value=""
+          style="shape=document;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#7E9FB7;strokeWidth=2;"
+          vertex="1"
+          parent="data-b">
+          <mxGeometry
+            x="18"
+            y="17"
+            width="40"
+            height="34"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="data-c-source-symbol"
+          value=""
+          style="shape=document;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#7E9FB7;strokeWidth=2;"
+          vertex="1"
+          parent="data-c">
+          <mxGeometry
+            x="18"
+            y="17"
+            width="40"
+            height="34"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-heading"
+          value="图例：部署环境、运行服务、模型工件与交互类型"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#536773;fontStyle=1;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="60"
+            y="1900"
+            width="2200"
+            height="38"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-cloud"
+          value=""
+          style="shape=cloud;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#7E9FB7;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="80"
+            y="1960"
+            width="65"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-cloud-text"
+          value="部署环境"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="160"
+            y="1960"
+            width="220"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-service-body"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="440"
+            y="1963"
+            width="34"
+            height="32"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-service-upper-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="430"
+            y="1969"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-service-lower-tab"
+          value=""
+          style="rounded=0;fillColor=#FFFFFF;strokeColor=#35698B;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="430"
+            y="1983"
+            width="19"
+            height="7"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-service-text"
+          value="运行服务 / 进程"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="495"
+            y="1960"
+            width="310"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-model"
+          value=""
+          style="shape=note;whiteSpace=wrap;html=0;size=14;fillColor=#FFFFFF;strokeColor=#929FB9;strokeWidth=1.5;fontFamily=PingFang SC;fontSize=19;fontColor=#536773;align=left;verticalAlign=middle;spacingLeft=12;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="850"
+            y="1960"
+            width="40"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-model-text"
+          value="模型工件"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="905"
+            y="1960"
+            width="240"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-data"
+          value=""
+          style="shape=document;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#7E9FB7;strokeWidth=2;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1200"
+            y="1960"
+            width="40"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-data-text"
+          value="院内系统 / 数据源"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=22;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1255"
+            y="1960"
+            width="340"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-business-edge"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint
+              x="1640"
+              y="1981"
+              as="sourcePoint" />
+            <mxPoint
+              x="1695"
+              y="1981"
+              as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="legend-business-text"
+          value="业务请求 / 结果"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="1710"
+            y="1960"
+            width="250"
+            height="42"
+            as="geometry" />
+        </mxCell>
+        <mxCell
+          id="legend-training-edge"
+          value=""
+          style="edgeStyle=orthogonalEdgeStyle;html=0;strokeColor=#11786C;strokeWidth=3;endArrow=block;endFill=1;"
+          edge="1"
+          parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint
+              x="2010"
+              y="1981"
+              as="sourcePoint" />
+            <mxPoint
+              x="2065"
+              y="1981"
+              as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell
+          id="legend-training-text"
+          value="联邦协作 / 模型交付"
+          style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=21;fontColor=#536773;fontStyle=0;spacing=0;"
+          vertex="1"
+          parent="1">
+          <mxGeometry
+            x="2080"
+            y="1960"
+            width="250"
+            height="42"
+            as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
