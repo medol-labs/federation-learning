@@ -24,7 +24,10 @@ python3 scripts/merge-438c-project-documents.py
 
 ## 统稿注意
 
-- 平台总体业务架构图及配套表述见 [联邦孪生平台业务架构](federated-twin-business-architecture.md)，以原生 draw.io 图稿维护布局，并使用[统一图库与导出工具](../../diagrams/README.md)生成 SVG、PNG。持续反馈关系表示总体目标，须与当前已对接能力区分。
+- 平台总体业务架构图及配套表述见 [联邦孪生平台业务架构](federated-twin-business-architecture.md)，以原生 draw.io 图稿维护布局，并使用[统一图库与导出工具](../../diagrams/README.md)生成 SVG、PNG。用户使用反馈为人工沟通，不表示系统提供独立评审功能或自动重训能力。
+- 训练、模型交付、应用推理及业务反馈的内部交互见[系统集成关系图](federated-twin-internal-integration.md)，同样以原生 draw.io 维护；原 `docs/mermaid-diagram.png` 已作为该图的导出入口。
+- 院内既有系统、检测与可穿戴设备的接入关系见[院内系统与设备集成关系](federated-twin-hospital-device-integration.md)，区分授权业务信息使用与原始训练数据不出域，并提供可供总稿使用的正文。
+- 联邦学习业务总流程见[端到端业务流程](federation-learning-end-to-end.md)，按当前用户旅程保留 16 个阶段及 18 条连接，以 draw.io 维护；明确前置条件、可选安全聚合、多轮训练回路和独立监控分支。
 
 - 01 原稿为 `.doc`，脚本先转为 `.docx` 再插入内容；Word 中应复核页码、目录、跨页表格与字体。
 - 03 原稿数据库级设计决策中仍有“仅由一份主数据库文件”等与联邦学习架构不符的表述；该章暂保留总稿原文，待统稿审定。

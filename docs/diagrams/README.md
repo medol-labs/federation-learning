@@ -35,4 +35,4 @@ python3 docs/diagrams/drawio.py export docs/438c/merge/figures/federated-twin-bu
 
 源文件保存为未压缩 XML，提交前运行 `format`。文字、连接关系及几何位置可逐行对照；节点移动会产生坐标差异，仍需配合预览图审阅。不要重建或随机替换原有节点 ID，不要对 XML 元素排序，以免改变图层顺序。
 
-当前业务架构图已改为 draw.io；已有概念关系图的 DOT 来源按原流程维护。
+当前业务架构图及[系统集成关系图](../438c/merge/federated-twin-internal-integration.md)均以 draw.io 维护。系统集成图保留历史文件名 `docs/mermaid-diagram`，其 `.drawio` 为图源，`.png`、`.svg` 为导出结果，与 Mermaid 无关。已有概念关系图的 DOT 来源按原流程维护。
