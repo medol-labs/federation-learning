@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxlibrary>[
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"业务应用&amp;#10;双击编辑业务能力\" style=\"rounded=1;arcSize=3;whiteSpace=wrap;html=0;fillColor=#F1F6FA;strokeColor=#7E9FB7;strokeWidth=2;fontFamily=PingFang SC;fontSize=22;fontColor=#35698B;\" vertex=\"1\" parent=\"1\"&gt;&lt;mxGeometry x=\"0\" y=\"0\" width=\"300\" height=\"130\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 300,
+    "h": 130,
+    "aspect": "fixed",
+    "title": "业务应用"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"评估管理&amp;#10;双击编辑业务能力\" style=\"rounded=1;arcSize=3;whiteSpace=wrap;html=0;fillColor=#FAF4F2;strokeColor=#B99B96;strokeWidth=2;fontFamily=PingFang SC;fontSize=22;fontColor=#8B514B;\" vertex=\"1\" parent=\"1\"&gt;&lt;mxGeometry x=\"0\" y=\"0\" width=\"300\" height=\"130\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 300,
+    "h": 130,
+    "aspect": "fixed",
+    "title": "评估管理"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"协同能力&amp;#10;双击编辑业务能力\" style=\"rounded=1;arcSize=3;whiteSpace=wrap;html=0;fillColor=#EEF7F4;strokeColor=#7AACA2;strokeWidth=2;fontFamily=PingFang SC;fontSize=22;fontColor=#11786C;\" vertex=\"1\" parent=\"1\"&gt;&lt;mxGeometry x=\"0\" y=\"0\" width=\"300\" height=\"130\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 300,
+    "h": 130,
+    "aspect": "fixed",
+    "title": "协同能力"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"模型推理&amp;#10;双击编辑业务能力\" style=\"rounded=1;arcSize=3;whiteSpace=wrap;html=0;fillColor=#F3F5F9;strokeColor=#929FB9;strokeWidth=2;fontFamily=PingFang SC;fontSize=22;fontColor=#35698B;\" vertex=\"1\" parent=\"1\"&gt;&lt;mxGeometry x=\"0\" y=\"0\" width=\"300\" height=\"130\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 300,
+    "h": 130,
+    "aspect": "fixed",
+    "title": "模型推理"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"外部系统&amp;#10;双击编辑业务能力\" style=\"rounded=1;arcSize=3;whiteSpace=wrap;html=0;fillColor=#F6F8F9;strokeColor=#BBC9D0;strokeWidth=2;fontFamily=PingFang SC;fontSize=22;fontColor=#243440;\" vertex=\"1\" parent=\"1\"&gt;&lt;mxGeometry x=\"0\" y=\"0\" width=\"300\" height=\"130\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 300,
+    "h": 130,
+    "aspect": "fixed",
+    "title": "外部系统"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"独立支撑&amp;#10;双击编辑业务能力\" style=\"rounded=1;arcSize=3;whiteSpace=wrap;html=0;fillColor=#F6F8F9;strokeColor=#BBC9D0;strokeWidth=2;fontFamily=PingFang SC;fontSize=22;fontColor=#536773;\" vertex=\"1\" parent=\"1\"&gt;&lt;mxGeometry x=\"0\" y=\"0\" width=\"300\" height=\"130\" as=\"geometry\" /&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 300,
+    "h": 130,
+    "aspect": "fixed",
+    "title": "独立支撑"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"业务信息交互\" style=\"edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#35698B;strokeWidth=3;endArrow=block;endFill=1;fontFamily=PingFang SC;fontSize=18;fontColor=#35698B;\" edge=\"1\" parent=\"1\"&gt;&lt;mxGeometry relative=\"1\" as=\"geometry\"&gt;&lt;mxPoint x=\"0\" y=\"30\" as=\"sourcePoint\" /&gt;&lt;mxPoint x=\"260\" y=\"30\" as=\"targetPoint\" /&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 260,
+    "h": 60,
+    "aspect": "fixed",
+    "title": "业务信息交互"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"模型工件交付\" style=\"edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#11786C;strokeWidth=3;endArrow=block;endFill=1;fontFamily=PingFang SC;fontSize=18;fontColor=#11786C;\" edge=\"1\" parent=\"1\"&gt;&lt;mxGeometry relative=\"1\" as=\"geometry\"&gt;&lt;mxPoint x=\"0\" y=\"30\" as=\"sourcePoint\" /&gt;&lt;mxPoint x=\"260\" y=\"30\" as=\"targetPoint\" /&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 260,
+    "h": 60,
+    "aspect": "fixed",
+    "title": "模型工件交付"
+  },
+  {
+    "xml": "&lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id=\"0\" /&gt;&lt;mxCell id=\"1\" parent=\"0\" /&gt;&lt;mxCell id=\"2\" value=\"验证优化反馈\" style=\"edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;strokeColor=#AB6826;strokeWidth=3;endArrow=block;endFill=1;fontFamily=PingFang SC;fontSize=18;fontColor=#AB6826;dashed=1;dashPattern=10 7;\" edge=\"1\" parent=\"1\"&gt;&lt;mxGeometry relative=\"1\" as=\"geometry\"&gt;&lt;mxPoint x=\"0\" y=\"30\" as=\"sourcePoint\" /&gt;&lt;mxPoint x=\"260\" y=\"30\" as=\"targetPoint\" /&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;",
+    "w": 260,
+    "h": 60,
+    "aspect": "fixed",
+    "title": "验证优化反馈"
+  }
+]</mxlibrary>

@@ -24,6 +24,8 @@ python3 scripts/merge-438c-project-documents.py
 
 ## 统稿注意
 
+- 平台总体业务架构图及配套表述见 [联邦孪生平台业务架构](federated-twin-business-architecture.md)，以原生 draw.io 图稿维护布局，并使用[统一图库与导出工具](../../diagrams/README.md)生成 SVG、PNG。持续反馈关系表示总体目标，须与当前已对接能力区分。
+
 - 01 原稿为 `.doc`，脚本先转为 `.docx` 再插入内容；Word 中应复核页码、目录、跨页表格与字体。
 - 03 原稿数据库级设计决策中仍有“仅由一份主数据库文件”等与联邦学习架构不符的表述；该章暂保留总稿原文，待统稿审定。
 - 03 合并脚本仅按 `database-design-corrections.json` 修正范围章节的全局表述，并补充联邦学习的数据元素、表映射、访问单元及双向追溯。详细更新入口与核对要求见 `database-design-README.md`。
